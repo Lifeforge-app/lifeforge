@@ -101,7 +101,9 @@ export default function CodeTime(): React.JSX.Element {
                           'Current streak': 'tabler:flame'
                         }[key]!
                       }
-                      className="text-3xl "
+                      className={`text-3xl ${
+                        index === 3 ? 'text-orange-300' : 'text-neutral-100'
+                      }`}
                     />
                   </div>
                   <div className="text-lg text-neutral-500">{key}</div>
