@@ -101,7 +101,7 @@ function Snippets(): React.JSX.Element {
             </h1>
             <button className="flex shrink-0 items-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100">
               <Icon icon="tabler:plus" className="h-5 w-5 shrink-0" />
-              <span className="shrink-0">create</span>
+              <span className="shrink-0">add new</span>
             </button>
           </div>
           <div className="mt-6 flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">

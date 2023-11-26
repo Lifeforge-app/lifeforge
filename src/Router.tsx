@@ -13,6 +13,8 @@ import NotFound from './components/NotFound'
 import IdeaBox from './modules/IdeaBox'
 import Ideas from './modules/IdeaBox/components/Ideas'
 import Snippets from './modules/Snippets'
+import Resources from './modules/Resources'
+import CodeTime from './modules/CodeTime'
 
 function AppRouter(): React.JSX.Element {
   const { auth, authLoading } = useContext(AuthContext)
@@ -53,6 +55,8 @@ function AppRouter(): React.JSX.Element {
         <Route path="idea-box" element={<IdeaBox />} />
         <Route path="idea-box/:id" element={<Ideas />} />
         <Route path="snippets" element={<Snippets />} />
+        <Route path="resources" element={<Resources />} />
+        <Route path="code-time" element={<CodeTime />} />
       </Route>
       <Route path="/auth" element={<Auth />} />
       <Route path="*" element={<NotFound />} />

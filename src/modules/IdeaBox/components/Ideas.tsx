@@ -108,9 +108,9 @@ function Ideas(): React.JSX.Element {
             }
           })}
       </Column>
-      <button className="fixed bottom-6 right-6 flex items-center gap-2 rounded-full bg-teal-500 p-4 px-6 pr-7 font-semibold uppercase tracking-wider text-neutral-100 hover:bg-teal-600">
+      <button className="fixed bottom-6 right-6 flex items-center gap-2 rounded-lg bg-teal-500 p-4 px-6 pr-7 font-semibold uppercase tracking-wider text-neutral-100 shadow-lg hover:bg-teal-600">
         <Icon icon="tabler:plus" className="h-6 w-6 shrink-0" />
-        <span className="shrink-0">create</span>
+        <span className="shrink-0">add new</span>
       </button>
     </section>
   )

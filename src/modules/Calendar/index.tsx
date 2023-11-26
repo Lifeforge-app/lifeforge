@@ -3,7 +3,6 @@
 import React from 'react'
 import ModuleHeader from '../../components/ModuleHeader'
 import { Icon } from '@iconify/react'
-import SidebarTitle from '../../components/Sidebar/components/SidebarTitle'
 
 function Calendar(): React.JSX.Element {
   return (
@@ -142,7 +141,7 @@ function Calendar(): React.JSX.Element {
               <div className="ml-4 text-3xl font-semibold text-neutral-50">
                 Nov 20 - 26, 2023
               </div>
-              <span className="ml-4 rounded-full bg-teal-900 px-4 py-1 text-sm font-semibold text-teal-500">
+              <span className="ml-4 rounded-full bg-teal-500/20 px-4 py-1.5 text-sm font-semibold text-teal-500">
                 Week{' '}
                 {(() => {
                   const currentDate = new Date()
@@ -167,15 +166,20 @@ function Calendar(): React.JSX.Element {
               </button>
             </div>
           </div>
-          <div className="mt-4 flex flex-1 flex-col overflow-hidden rounded-lg bg-neutral-800/30">
-            <div className="flex w-full divide-x divide-neutral-700">
-              <div className="h-32 w-20 shrink-0 bg-neutral-800"></div>
+          <div className="mt-4 flex flex-1 flex-col overflow-hidden">
+            <div className="mb-1.5 flex w-full">
+              <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-lg bg-neutral-800/50 py-4 text-neutral-500">
+                GMT
+                <span className="text-xl">+8</span>
+              </div>
               {Array(7)
                 .fill(0)
                 .map((_, index) => (
                   <div
                     key={index}
-                    className="flex h-32 w-full flex-col items-center justify-center gap-2 bg-neutral-800 text-neutral-500"
+                    className={`ml-1.5 flex w-full items-center justify-center gap-2 rounded-lg bg-neutral-800/50 py-4 text-neutral-500 ${
+                      index === 3 && 'bg-teal-500/20 text-teal-500'
+                    }`}
                   >
                     <span>
                       {['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'][index]}
@@ -184,19 +188,17 @@ function Calendar(): React.JSX.Element {
                   </div>
                 ))}
             </div>
-            <div className="w-full flex-1 overflow-y-auto">
+            <div className="w-full flex-1 overflow-y-auto rounded-lg">
               <div className="h-full w-full divide-y divide-neutral-700">
                 {Array(25)
                   .fill(0)
                   .map((_, hour) => (
-                    <div
-                      key={hour}
-                      className="flex h-16 divide-x divide-neutral-700"
-                    >
-                      <div className="relative h-full w-20 shrink-0 bg-neutral-800 text-neutral-500">
+                    <div key={hour} className="flex h-24">
+                      <div className="relative h-full w-20 shrink-0 bg-neutral-800/50 text-neutral-500">
                         {hour !== 24 && (
-                          <span className="absolute bottom-0 z-[9999] w-[90%] translate-y-1/2 bg-neutral-800 text-center text-sm">
-                            {String(hour + 1).padStart(2, '0')}.00
+                          <span className="absolute bottom-0 z-[9999] w-[90%] translate-y-1/2 bg-[#1e1e1e] pr-4 text-right">
+                            {hour + 1 > 12 ? hour + 1 - 12 : hour + 1}{' '}
+                            {hour + 1 >= 12 ? 'PM' : 'AM'}
                           </span>
                         )}
                       </div>
@@ -208,7 +210,7 @@ function Calendar(): React.JSX.Element {
                             className="relative w-full bg-neutral-800/50"
                           >
                             {day === 3 && hour === 1 && (
-                              <div className="absolute left-0 top-0 z-[9999] h-72 w-[90%] overflow-hidden rounded-r-md bg-neutral-900">
+                              <div className="absolute left-0 top-0 z-[9999] ml-1.5 h-72 w-[90%] overflow-hidden rounded-r-md bg-neutral-900">
                                 <div className="flex h-full w-full flex-col justify-between border-l-4 border-green-500 bg-green-500/20 px-3 py-4">
                                   <div className="flex flex-col">
                                     <Icon
