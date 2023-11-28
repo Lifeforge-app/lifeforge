@@ -22,7 +22,6 @@ const SIDEBAR_ITEMS: ISidebarItem[] = [
   { type: 'item', name: 'Snippets', icon: 'tabler:code-dots' },
   { type: 'item', name: 'Resources', icon: 'tabler:book' },
   { type: 'item', name: 'Code Time', icon: 'tabler:code' },
-  { type: 'item', name: 'Github Stats', icon: 'tabler:brand-github' },
   { type: 'divider' },
   { type: 'title', name: 'Study' },
   { type: 'item', name: 'Pomodoro Timer', icon: 'tabler:clock-bolt' },

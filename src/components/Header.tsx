@@ -20,14 +20,14 @@ export default function Header(): React.JSX.Element {
             <Icon icon="tabler:menu" className="text-2xl" />
           </button>
         )}
-        <div className="flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
+        <search className="flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
           <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
           <input
             type="text"
             placeholder="Quick navigate & search ... (Press / to focus)"
             className="w-full bg-transparent text-neutral-100 placeholder:text-neutral-500 focus:outline-none"
           />
-        </div>
+        </search>
       </div>
       <div className="flex items-center gap-4">
         <button className="relative rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-800 hover:text-neutral-100">

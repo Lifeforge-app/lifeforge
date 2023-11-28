@@ -160,14 +160,14 @@ function Projects(): React.JSX.Element {
             </button>
           </div>
           <div className="mt-6 flex items-center gap-4">
-            <div className="flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
+            <search className="flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
               <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
               <input
                 type="text"
                 placeholder="Search projects ..."
                 className="w-full bg-transparent text-neutral-100 placeholder:text-neutral-500 focus:outline-none"
               />
-            </div>
+            </search>
           </div>
           <div className="mt-6 flex flex-1 flex-col overflow-y-auto">
             <ul className="flex flex-col gap-4">

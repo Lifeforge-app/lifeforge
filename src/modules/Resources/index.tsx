@@ -55,14 +55,14 @@ export default function Resources(): React.JSX.Element {
               <span className="shrink-0">add new</span>
             </button>
           </div>
-          <div className="mt-6 flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
+          <search className="mt-6 flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
             <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
             <input
               type="text"
               placeholder="Search resources ..."
               className="w-full bg-transparent text-neutral-100 placeholder:text-neutral-500 focus:outline-none"
             />
-          </div>
+          </search>
           <ul className="mt-6 flex min-h-0 flex-col gap-4 overflow-y-auto">
             {Array(10)
               .fill(0)

@@ -22,7 +22,7 @@ function Ideas(): React.JSX.Element {
             </div>
             LifeForge.
           </h1>
-          <div className="flex items-center gap-4">
+          <search className="flex items-center gap-4">
             <div className="flex w-96 items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
               <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
               <input
@@ -34,7 +34,7 @@ function Ideas(): React.JSX.Element {
             <button className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-800 hover:text-neutral-100">
               <Icon icon="tabler:dots-vertical" className="text-2xl" />
             </button>
-          </div>
+          </search>
         </div>
       </div>
       <Column columns={4} gap="0.5rem" className="mt-8 h-max">

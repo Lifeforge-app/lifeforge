@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
@@ -42,23 +43,53 @@ export default function CodeTime(): React.JSX.Element {
   const [firstYear, setFirstYear] = useState(0)
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
   const [stats, setStats] = useState<Record<string, number>>()
+  const [lastForProjects, setLastForProjects] = useState<
+    '24 hours' | '7 days' | '30 days'
+  >('24 hours')
+  const [lastForLanguages, setLastForLanguages] = useState<
+    '24 hours' | '7 days' | '30 days'
+  >('24 hours')
+  const [topProjects, setTopProjects] = useState<
+    Array<{ name: string; count: number }>
+  >({})
+  const [topLanguages, setTopLanguages] = useState<
+    Array<{ name: string; count: number }>
+  >({})
 
   useEffect(() => {
     fetch('http://localhost:3000/api/activities?year=' + selectedYear)
       .then(async response => await response.json())
       .then(data => {
-        setActivities(data.data)
-        setFirstYear(data.firstYear)
+        setActivities(data.data.data)
+        setFirstYear(data.data.firstYear)
       })
       .catch(() => {})
 
     fetch('http://localhost:3000/api/statistics')
       .then(async response => await response.json())
       .then(data => {
-        setStats(data)
+        setStats(data.data)
       })
       .catch(() => {})
   }, [])
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/languages?last=' + lastForLanguages)
+      .then(async response => await response.json())
+      .then(data => {
+        setTopLanguages(data.data)
+      })
+      .catch(() => {})
+  }, [lastForLanguages])
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/projects?last=' + lastForProjects)
+      .then(async response => await response.json())
+      .then(data => {
+        setTopProjects(data.data)
+      })
+      .catch(() => {})
+  }, [lastForProjects])
 
   function switchSelectedYear(year: number): void {
     setSelectedYear(year)
@@ -77,9 +108,9 @@ export default function CodeTime(): React.JSX.Element {
         title="Code Time"
         desc="See how much time you spend grinding code."
       />
-      <div className="flex min-h-0 w-full flex-1 flex-col items-center">
+      <div className="mt-8 flex min-h-0 w-full flex-1 flex-col items-center overflow-y-auto">
         {stats !== undefined && (
-          <div className="mt-12 flex w-full flex-col gap-6">
+          <div className="flex w-full flex-col gap-6">
             <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
               <Icon icon="tabler:chart-bar" className="text-3xl" />
               <span className="ml-2">Statistics</span>
@@ -124,7 +155,7 @@ export default function CodeTime(): React.JSX.Element {
             </div>
           </div>
         )}
-        <div className="mt-12 flex w-full flex-col gap-6">
+        <div className="mt-16 flex w-full flex-col gap-6">
           <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
             <Icon icon="tabler:activity" className="text-3xl" />
             <span className="ml-2">Activities Calendar</span>
@@ -198,6 +229,188 @@ export default function CodeTime(): React.JSX.Element {
               </div>
             )}
           </div>
+        </div>
+        <div className="mt-16 flex w-full flex-col gap-6">
+          <div className="flex w-full items-center justify-between">
+            <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
+              <Icon icon="tabler:clipboard" className="text-3xl" />
+              <span className="ml-2">
+                Projects You&apos;ve Spent Most Time Doing
+              </span>
+            </h1>
+            <div className="flex items-center gap-2">
+              <p className="font-medium tracking-wider">in the last</p>
+              <div className="flex gap-2 rounded-lg p-2">
+                {['24 hours', '7 days', '30 days'].map((last, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setLastForProjects(
+                        last as '24 hours' | '7 days' | '30 days'
+                      )
+                    }}
+                    className={`rounded-md p-4 px-6 tracking-wide hover:bg-neutral-700/50 ${
+                      lastForProjects === last
+                        ? 'bg-neutral-700/50 font-semibold text-neutral-100'
+                        : 'text-neutral-500'
+                    }`}
+                  >
+                    {last}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="flex w-full">
+            {Object.keys(topProjects).length > 0 &&
+              Object.entries(topProjects)
+                .slice(0, 5)
+                .map(([key, value], index) => (
+                  <div
+                    className={`h-6 border ${index === 0 && 'rounded-l-lg'} ${
+                      index === 4 && 'rounded-r-lg'
+                    } ${
+                      [
+                        'bg-red-500/20 border-red-500',
+                        'bg-orange-500/20 border-orange-500',
+                        'bg-yellow-500/20 border-yellow-500',
+                        'bg-blue-500/20 border-blue-500',
+                        'bg-emerald-500/20 border-emerald-500'
+                      ][index]
+                    }`}
+                    key={key}
+                    style={{
+                      width: `${Math.round(
+                        (value /
+                          Object.entries(topProjects)
+                            .slice(0, 5)
+                            .reduce((a, b) => a + b[1], 0)) *
+                          100
+                      )}%`
+                    }}
+                  ></div>
+                ))}
+          </div>
+          <ul className="flex flex-col gap-4">
+            {Object.keys(topProjects).length > 0 &&
+              Object.entries(topProjects)
+                .slice(0, 5)
+                .map(([key, value], index) => (
+                  <li
+                    key={key}
+                    className="relative flex items-center justify-between gap-4 rounded-lg bg-neutral-800/50 p-6"
+                  >
+                    <div className="flex items-center gap-4 text-lg font-medium text-neutral-50">
+                      <div
+                        className={`h-4 w-4 rounded-md border ${
+                          [
+                            'bg-red-500/20 border-red-500',
+                            'bg-orange-500/20 border-orange-500',
+                            'bg-yellow-500/20 border-yellow-500',
+                            'bg-blue-500/20 border-blue-500',
+                            'bg-emerald-500/20 border-emerald-500'
+                          ][index]
+                        } rounded-full`}
+                      ></div>
+                      {key}
+                    </div>
+                    <div className="text-3xl font-semibold text-neutral-50">
+                      <HoursAndMinutesFromSeconds seconds={value} />
+                    </div>
+                  </li>
+                ))}
+          </ul>
+        </div>
+        <div className="mb-6 mt-16 flex w-full flex-col gap-6">
+          <div className="flex w-full items-center justify-between">
+            <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
+              <Icon icon="tabler:code" className="text-3xl" />
+              <span className="ml-2">
+                Languages You&apos;ve Spent Most Time Using
+              </span>
+            </h1>
+            <div className="flex items-center gap-2">
+              <p className="font-medium tracking-wider">in the last</p>
+              <div className="flex gap-2 rounded-lg p-2">
+                {['24 hours', '7 days', '30 days'].map((last, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setLastForLanguages(
+                        last as '24 hours' | '7 days' | '30 days'
+                      )
+                    }}
+                    className={`rounded-md p-4 px-6 tracking-wide hover:bg-neutral-700/50 ${
+                      lastForLanguages === last
+                        ? 'bg-neutral-700/50 font-semibold text-neutral-100'
+                        : 'text-neutral-500'
+                    }`}
+                  >
+                    {last}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="flex w-full">
+            {Object.keys(topLanguages).length > 0 &&
+              Object.entries(topLanguages)
+                .slice(0, 5)
+                .map(([key, value], index) => (
+                  <div
+                    className={`h-6 border ${index === 0 && 'rounded-l-lg'} ${
+                      index === 4 && 'rounded-r-lg'
+                    } ${
+                      [
+                        'bg-red-500/20 border-red-500',
+                        'bg-orange-500/20 border-orange-500',
+                        'bg-yellow-500/20 border-yellow-500',
+                        'bg-blue-500/20 border-blue-500',
+                        'bg-emerald-500/20 border-emerald-500'
+                      ][index]
+                    }`}
+                    key={key}
+                    style={{
+                      width: `${Math.round(
+                        (value /
+                          Object.entries(topLanguages)
+                            .slice(0, 5)
+                            .reduce((a, b) => a + b[1], 0)) *
+                          100
+                      )}%`
+                    }}
+                  ></div>
+                ))}
+          </div>
+          <ul className="flex flex-col gap-4">
+            {Object.keys(topLanguages).length > 0 &&
+              Object.entries(topLanguages)
+                .slice(0, 5)
+                .map(([key, value], index) => (
+                  <li
+                    key={key}
+                    className="relative flex items-center justify-between gap-4 rounded-lg bg-neutral-800/50 p-6"
+                  >
+                    <div className="flex items-center gap-4 text-lg font-medium text-neutral-50">
+                      <div
+                        className={`h-4 w-4 rounded-md border ${
+                          [
+                            'bg-red-500/20 border-red-500',
+                            'bg-orange-500/20 border-orange-500',
+                            'bg-yellow-500/20 border-yellow-500',
+                            'bg-blue-500/20 border-blue-500',
+                            'bg-emerald-500/20 border-emerald-500'
+                          ][index]
+                        } rounded-full`}
+                      ></div>
+                      {key}
+                    </div>
+                    <div className="text-3xl font-semibold text-neutral-50">
+                      <HoursAndMinutesFromSeconds seconds={value} />
+                    </div>
+                  </li>
+                ))}
+          </ul>
         </div>
       </div>
     </section>

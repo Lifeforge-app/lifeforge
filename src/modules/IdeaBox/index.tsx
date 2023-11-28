@@ -23,14 +23,14 @@ function IdeaBox(): React.JSX.Element {
         desc="Sometimes you will randomly stumble upon a great idea."
       />
       <div className="mt-8 flex min-h-0 w-full flex-1 flex-col">
-        <div className="flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
+        <search className="flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
           <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
           <input
             type="text"
             placeholder="Search idea containers ..."
             className="w-full bg-transparent text-neutral-100 placeholder:text-neutral-500 focus:outline-none"
           />
-        </div>
+        </search>
         <div className="mt-6 grid w-full flex-1 grid-cols-4 gap-6 overflow-y-auto pb-12">
           {Array(9)
             .fill(0)

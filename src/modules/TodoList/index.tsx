@@ -18,14 +18,14 @@ function TodoList(): React.JSX.Element {
               All Tasks <span className="text-base text-neutral-400">(10)</span>
             </h1>
           </div>
-          <div className="my-8 flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
+          <search className="my-8 flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
             <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
             <input
               type="text"
               placeholder="Search projects ..."
               className="w-full bg-transparent text-neutral-100 placeholder:text-neutral-500 focus:outline-none"
             />
-          </div>
+          </search>
           <ul className="mt-6 flex flex-col gap-4">
             <li className="flex items-center justify-center">
               <button className="flex w-full items-center gap-2 rounded-lg border-2 border-dashed border-neutral-700 p-6 font-semibold uppercase tracking-widest text-neutral-700 hover:bg-neutral-800/30">
