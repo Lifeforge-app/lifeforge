@@ -46,7 +46,7 @@ function Dashboard(): React.JSX.Element {
           desc={
             <>
               Good to see you here,{' '}
-              <span className="text-teal-500">{userData.name}</span>!
+              <span className="text-teal-500">{userData?.name}</span>!
             </>
           }
         />

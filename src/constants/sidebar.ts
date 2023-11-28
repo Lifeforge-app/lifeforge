@@ -44,6 +44,11 @@ const SIDEBAR_ITEMS: ISidebarItem[] = [
       ['Physics', 'tabler:atom']
     ]
   },
+  {
+    type: 'item',
+    name: 'University Analytics',
+    icon: 'tabler:school'
+  },
   { type: 'divider' },
   { type: 'title', name: 'Lifestyle' },
   { type: 'item', name: 'Blog', icon: 'tabler:file-text' },
