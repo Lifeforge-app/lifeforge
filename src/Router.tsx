@@ -16,6 +16,7 @@ import Snippets from './modules/Snippets'
 import Resources from './modules/Resources'
 import CodeTime from './modules/CodeTime'
 import PomodoroTimer from './modules/PomodoroTimer'
+import Flashcards from './modules/Flashcards'
 
 function AppRouter(): React.JSX.Element {
   const { auth, authLoading } = useContext(AuthContext)
@@ -59,6 +60,7 @@ function AppRouter(): React.JSX.Element {
         <Route path="resources" element={<Resources />} />
         <Route path="code-time" element={<CodeTime />} />
         <Route path="pomodoro-timer" element={<PomodoroTimer />} />
+        <Route path="flashcards" element={<Flashcards />} />
       </Route>
       <Route path="/auth" element={<Auth />} />
       <Route path="*" element={<NotFound />} />

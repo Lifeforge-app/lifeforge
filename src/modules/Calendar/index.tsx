@@ -160,7 +160,7 @@ function Calendar(): React.JSX.Element {
               <button className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-700/50">
                 <Icon icon="tabler:search" className="text-2xl" />
               </button>
-              <button className="flex items-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-50 transition-all hover:bg-teal-600">
+              <button className="flex items-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800 transition-all hover:bg-teal-600">
                 <Icon icon="tabler:plus" className="text-xl" />
                 create
               </button>
