@@ -6,7 +6,7 @@
 
 * {
   font-family: 'Urbanist', sans-serif;
-  scrollbar-color: rgba(64, 64, 64, 1) rgba(38, 38, 38, 1);
+  scrollbar-color: rgba(64, 64, 64, 0.5) rgba(38, 38, 38, 0.5);
   scrollbar-width: thin;
 }
 
@@ -28,14 +28,14 @@ body *:not(input) {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(38, 38, 38, 1);
+  background: rgba(38, 38, 38, 0.5);
 }
 ::-webkit-scrollbar-thumb:vertical {
-  background: rgba(64, 64, 64, 1);
+  background: rgba(64, 64, 64, 0.5);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(88, 88, 88, 1);
+  background: rgba(88, 88, 88, 0.5);
 }
 
 input:autofill {
