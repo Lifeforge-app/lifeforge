@@ -25,7 +25,7 @@ export default function Flashcards(): React.JSX.Element {
             .fill(0)
             .map((_, index) => (
               <Link
-                to={`/idea-box/${index}`}
+                to={`/flashcards/${index}`}
                 key={index}
                 className="relative flex flex-col justify-start gap-6 rounded-lg bg-neutral-800/50 p-8 hover:bg-neutral-800"
               >

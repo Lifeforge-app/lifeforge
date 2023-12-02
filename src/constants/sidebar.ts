@@ -95,7 +95,8 @@ const SIDEBAR_ITEMS: ISidebarItem[] = [
   { type: 'item', name: 'Personalization', icon: 'tabler:palette' },
   { type: 'item', name: 'Server Status', icon: 'tabler:server' },
   { type: 'divider' },
-  { type: 'item', name: 'About', icon: 'tabler:info-circle' }
+  { type: 'item', name: 'About', icon: 'tabler:info-circle' },
+  { type: 'item', name: 'Change Log', icon: 'tabler:file-text' }
 ]
 
 export default SIDEBAR_ITEMS
