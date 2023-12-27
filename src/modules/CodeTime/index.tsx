@@ -37,9 +37,10 @@ function HoursAndMinutesFromSeconds({
 }
 
 export default function CodeTime(): React.JSX.Element {
-  const [activities, setActivities] = useState<
-    Array<{ date: string; count: number }>
-  >([])
+  const [activities, setActivities] = useState<Array<{
+    date: string
+    count: number
+  }> | null>(null)
   const [firstYear, setFirstYear] = useState(0)
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
   const [stats, setStats] = useState<Record<string, number>>()
@@ -93,11 +94,12 @@ export default function CodeTime(): React.JSX.Element {
 
   function switchSelectedYear(year: number): void {
     setSelectedYear(year)
+    setActivities(null)
     fetch('http://localhost:3000/api/activities?year=' + year)
       .then(async response => await response.json())
       .then(data => {
-        setActivities(data.data)
-        setFirstYear(data.firstYear)
+        setActivities(data.data.data.length > 0 ? data.data.data : null)
+        setFirstYear(data.data.firstYear)
       })
       .catch(() => {})
   }
@@ -161,51 +163,63 @@ export default function CodeTime(): React.JSX.Element {
             <span className="ml-2">Activities Calendar</span>
           </h1>
           <div className="flex items-center justify-between">
-            <ActivityCalendar
-              data={activities}
-              blockSize={14}
-              blockMargin={6}
-              labels={{
-                totalCount: `${
-                  Math.floor(activities.reduce((a, b) => a + b.count, 0) / 60) >
-                  0
-                    ? `${Math.floor(
+            <div
+              className={`flex flex-1 items-center ${
+                Array.isArray(activities) ? 'justify-start' : 'justify-center'
+              }`}
+            >
+              {Array.isArray(activities) ? (
+                <ActivityCalendar
+                  data={activities}
+                  blockSize={14}
+                  blockMargin={6}
+                  labels={{
+                    totalCount: `${
+                      Math.floor(
                         activities.reduce((a, b) => a + b.count, 0) / 60
-                      )} hours`
-                    : ''
-                } ${
-                  Math.floor(activities.reduce((a, b) => a + b.count, 0) % 60) >
-                  0
-                    ? `${Math.floor(
+                      ) > 0
+                        ? `${Math.floor(
+                            activities.reduce((a, b) => a + b.count, 0) / 60
+                          )} hours`
+                        : ''
+                    } ${
+                      Math.floor(
                         activities.reduce((a, b) => a + b.count, 0) % 60
-                      )} minutes`
-                    : ''
-                } ${
-                  activities.reduce((a, b) => a + b.count, 0) === 0
-                    ? 'no time'
-                    : ''
-                } spent on {{year}}`
-              }}
-              renderBlock={(block, activity) =>
-                React.cloneElement(block, {
-                  'data-tooltip-id': 'react-tooltip',
-                  'data-tooltip-html': `${
-                    Math.floor(activity.count / 60) > 0
-                      ? `${Math.floor(activity.count / 60)} hours`
-                      : ''
-                  } ${
-                    Math.floor(activity.count % 60) > 0
-                      ? `${Math.floor(activity.count % 60)} minutes`
-                      : ''
-                  } ${activity.count === 0 ? 'no time' : ''} spent on ${
-                    activity.date
-                  }`.trim()
-                })
-              }
-              theme={{
-                dark: ['rgb(38, 38, 38)', 'rgb(20, 184, 166)']
-              }}
-            />
+                      ) > 0
+                        ? `${Math.floor(
+                            activities.reduce((a, b) => a + b.count, 0) % 60
+                          )} minutes`
+                        : ''
+                    } ${
+                      activities.reduce((a, b) => a + b.count, 0) === 0
+                        ? 'no time'
+                        : ''
+                    } spent on {{year}}`
+                  }}
+                  renderBlock={(block, activity) =>
+                    React.cloneElement(block, {
+                      'data-tooltip-id': 'react-tooltip',
+                      'data-tooltip-html': `${
+                        Math.floor(activity.count / 60) > 0
+                          ? `${Math.floor(activity.count / 60)} hours`
+                          : ''
+                      } ${
+                        Math.floor(activity.count % 60) > 0
+                          ? `${Math.floor(activity.count % 60)} minutes`
+                          : ''
+                      } ${activity.count === 0 ? 'no time' : ''} spent on ${
+                        activity.date
+                      }`.trim()
+                    })
+                  }
+                  theme={{
+                    dark: ['rgb(38, 38, 38)', 'rgb(20, 184, 166)']
+                  }}
+                />
+              ) : (
+                <Icon icon="svg-spinners:180-ring" className="text-4xl" />
+              )}
+            </div>
             <ReactTooltip id="react-tooltip" />
             {firstYear && (
               <div className="flex flex-col gap-2">
