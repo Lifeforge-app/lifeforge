@@ -3,8 +3,24 @@ import ModuleHeader from '../../components/ModuleHeader'
 import { Icon } from '@iconify/react'
 import { faker } from '@faker-js/faker'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
+
+export interface IIdeaBoxContainer {
+  collectionId: string
+  collectionName: string
+  color: string
+  created: string
+  icon: string
+  id: string
+  image_count: number
+  link_count: number
+  name: string
+  text_count: number
+  updated: string
+}
 
 function IdeaBox(): React.JSX.Element {
+  const [data, setData] = useState<IIdeaBoxContainer[]>([])
   const [icons, setIcons] = useState([])
 
   useEffect(() => {
@@ -14,6 +30,15 @@ function IdeaBox(): React.JSX.Element {
         setIcons(data.uncategorized)
       })
       .catch(() => {})
+
+    fetch('http://localhost:3636/idea-box/container/list')
+      .then(async response => {
+        const data = await response.json()
+        setData(data)
+      })
+      .catch(() => {
+        toast.error('Failed to fetch data from server.')
+      })
   }, [])
 
   return (
@@ -31,80 +56,64 @@ function IdeaBox(): React.JSX.Element {
             className="w-full bg-transparent text-neutral-100 placeholder:text-neutral-500 focus:outline-none"
           />
         </search>
-        <div className="mt-6 grid w-full flex-1 grid-cols-4 gap-6 overflow-y-auto pb-12">
-          {Array(9)
-            .fill(0)
-            .map((_, index) => (
-              <Link
-                to={`/idea-box/${index}`}
-                key={index}
-                className="relative flex flex-col items-center justify-start gap-6 rounded-lg bg-neutral-800/50 p-8 hover:bg-neutral-800"
+        <div className="mt-6 grid w-full grid-cols-4 gap-6 overflow-y-auto pb-12">
+          {data.map((container, index) => (
+            <Link
+              to={`/idea-box/${container.id}`}
+              key={index}
+              className="relative flex flex-col items-center justify-start gap-6 rounded-lg bg-neutral-800/50 p-8 hover:bg-neutral-800"
+            >
+              <div
+                className="rounded-lg p-4"
+                style={{
+                  backgroundColor: container.color + '20'
+                }}
               >
-                {(() => {
-                  const randomColor = [
-                    ['bg-red-700/20', 'text-red-500'],
-                    ['bg-orange-700/20', 'text-orange-500'],
-                    ['bg-yellow-700/20', 'text-yellow-500'],
-                    ['bg-green-700/20', 'text-green-500'],
-                    ['bg-teal-700/20', 'text-teal-500'],
-                    ['bg-blue-700/20', 'text-blue-500'],
-                    ['bg-indigo-700/20', 'text-indigo-500'],
-                    ['bg-purple-700/20', 'text-purple-500'],
-                    ['bg-pink-700/20', 'text-pink-500'],
-                    ['bg-rose-700/20', 'text-rose-500'],
-                    ['bg-fuchsia-700/20', 'text-fuchsia-500']
-                  ][Math.floor(Math.random() * 11)]
-
-                  return (
-                    <div className={`rounded-lg p-4 ${randomColor[0]}`}>
-                      <Icon
-                        icon={`tabler:${
-                          icons[
-                            Math.floor(Math.random() * icons.length)
-                          ] as string
-                        }`}
-                        className={`h-8 w-8 ${randomColor[1]}`}
-                      />
-                    </div>
-                  )
-                })()}
-                <div className="text-center text-2xl font-medium text-neutral-50">
-                  {faker.commerce.productName()}
+                <Icon
+                  icon={container.icon}
+                  className="h-8 w-8"
+                  style={{
+                    color: container.color
+                  }}
+                />
+              </div>
+              <div className="text-center text-2xl font-medium text-neutral-50">
+                {container.name}
+              </div>
+              <div className="mt-auto flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <Icon
+                    icon="tabler:article"
+                    className="h-5 w-5 text-neutral-500"
+                  />
+                  <span className="text-neutral-500">
+                    {container.text_count}
+                  </span>
                 </div>
-                <div className="mt-auto flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <Icon
-                      icon="tabler:article"
-                      className="h-5 w-5 text-neutral-500"
-                    />
-                    <span className="text-neutral-500">
-                      {Math.floor(Math.random() * 100)}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Icon
-                      icon="tabler:link"
-                      className="h-5 w-5 text-neutral-500"
-                    />
-                    <span className="text-neutral-500">
-                      {Math.floor(Math.random() * 100)}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Icon
-                      icon="tabler:photo"
-                      className="h-5 w-5 text-neutral-500"
-                    />
-                    <span className="text-neutral-500">
-                      {Math.floor(Math.random() * 100)}
-                    </span>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <Icon
+                    icon="tabler:link"
+                    className="h-5 w-5 text-neutral-500"
+                  />
+                  <span className="text-neutral-500">
+                    {container.link_count}
+                  </span>
                 </div>
-                <button className="absolute right-4 top-4 rounded-md p-2 text-neutral-500 hover:bg-neutral-700/30 hover:text-neutral-100">
-                  <Icon icon="tabler:dots-vertical" className="h-5 w-5" />
-                </button>
-              </Link>
-            ))}
+                <div className="flex items-center gap-2">
+                  <Icon
+                    icon="tabler:photo"
+                    className="h-5 w-5 text-neutral-500"
+                  />
+                  <span className="text-neutral-500">
+                    {container.image_count}
+                  </span>
+                </div>
+              </div>
+              <button className="absolute right-4 top-4 rounded-md p-2 text-neutral-500 hover:bg-neutral-700/30 hover:text-neutral-100">
+                <Icon icon="tabler:dots-vertical" className="h-5 w-5" />
+              </button>
+            </Link>
+          ))}
           <div className="relative flex h-full flex-col items-center justify-center gap-6 rounded-lg border-2 border-dashed border-neutral-700 p-8">
             <Icon
               icon="tabler:cube-plus"

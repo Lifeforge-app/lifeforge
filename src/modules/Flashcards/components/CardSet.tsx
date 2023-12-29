@@ -20,9 +20,14 @@ function CardSet(): React.JSX.Element {
               40 cards
             </span>
           </h1>
-          <button className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-800 hover:text-neutral-100">
-            <Icon icon="tabler:dots-vertical" className="text-2xl" />
-          </button>
+          <div className="flex items-center justify-center gap-2">
+            <button className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-800 hover:text-neutral-100">
+              <Icon icon="tabler:border-corners" className="text-2xl" />
+            </button>
+            <button className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-800 hover:text-neutral-100">
+              <Icon icon="tabler:dots-vertical" className="text-2xl" />
+            </button>
+          </div>
         </div>
       </div>
       <div className="flex w-full flex-1 flex-col items-center justify-center">

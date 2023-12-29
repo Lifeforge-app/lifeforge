@@ -39,7 +39,7 @@ export default function Flashcards(): React.JSX.Element {
                 </div>
                 <div className="flex flex-col gap-2">
                   <progress
-                    className="progress progress-accent h-3 w-full"
+                    className="progress progress-accent h-2 w-full"
                     value={faker.datatype.number(100)}
                     max="100"
                   ></progress>
