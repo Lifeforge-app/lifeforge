@@ -1,17 +1,24 @@
 import React, { useState } from 'react'
 import Modal from '../../../components/Modal'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { SketchPicker } from 'react-color'
 import ColorPickerModal from '../../../components/ColorPickerModal'
+import IconSelector from '../../../components/IconSelector'
+import { toast } from 'react-toastify'
 
 function CreateContainerModal({
-  isOpen
+  isOpen,
+  setOpen,
+  updateContainerList
 }: {
   isOpen: boolean
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  updateContainerList: () => void
 }): React.ReactElement {
   const [containerName, setContainerName] = useState('')
   const [containerColor, setContainerColor] = useState('#FFFFFF')
+  const [containerIcon, setContainerIcon] = useState('tabler:cube')
   const [colorPickerOpen, setColorPickerOpen] = useState(false)
+  const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
 
   function updateContainerName(e: React.ChangeEvent<HTMLInputElement>): void {
     setContainerName(e.target.value)
@@ -21,13 +28,60 @@ function CreateContainerModal({
     setContainerColor(e.target.value)
   }
 
+  function updateContainerIcon(e: React.ChangeEvent<HTMLInputElement>): void {
+    setContainerIcon(e.target.value)
+  }
+
+  function createContainer(): void {
+    if (containerName.length === 0) {
+      return
+    }
+
+    const container = {
+      name: containerName,
+      color: containerColor,
+      icon: containerIcon
+    }
+
+    fetch('http://localhost:3636/idea-box/container/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(container)
+    })
+      .then(async res => {
+        const data = await res.json()
+        if (res.status !== 200) {
+          throw data.message
+        }
+        toast.success('Yay! Container created. Time to fill it up.')
+        setOpen(false)
+        updateContainerList()
+      })
+      .catch(err => {
+        toast.error('Uhh ohh! Something went wrong when creating container.')
+        console.error(err)
+      })
+  }
+
   return (
     <>
       <Modal isOpen={isOpen}>
-        <h1 className="mb-8 flex items-center gap-3 text-2xl font-semibold">
-          <Icon icon="tabler:cube-plus" className="h-7 w-7" />
-          Create container
-        </h1>
+        <div className="mb-8 flex items-center justify-between ">
+          <h1 className="flex items-center gap-3 text-2xl font-semibold">
+            <Icon icon="tabler:cube-plus" className="h-7 w-7" />
+            Create container
+          </h1>
+          <button
+            onClick={() => {
+              setOpen(false)
+            }}
+            className="rounded-md p-2 text-neutral-500 transition-all hover:bg-neutral-800"
+          >
+            <Icon icon="tabler:x" className="h-6 w-6" />
+          </button>
+        </div>
         <div className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-800/50 focus-within:border-teal-500">
           <Icon
             icon="tabler:cube"
@@ -92,12 +146,62 @@ function CreateContainerModal({
             </button>
           </div>
         </div>
+        <div className="group relative mt-6 flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-800/50 focus-within:border-teal-500">
+          <Icon
+            icon="tabler:icons"
+            className="ml-6 h-6 w-6 shrink-0 text-neutral-500 group-focus-within:text-teal-500"
+          />
+
+          <div className="flex w-full items-center gap-2">
+            <span
+              className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-neutral-500 group-focus-within:text-teal-500 ${
+                containerColor.length === 0
+                  ? 'top-1/2 -translate-y-1/2 group-focus-within:top-6 group-focus-within:text-[14px]'
+                  : 'top-6 -translate-y-1/2 text-[14px]'
+              }`}
+            >
+              Container icon
+            </span>
+            <div className="mr-12 mt-6 flex w-full items-center gap-2 pl-4">
+              <Icon
+                className="h-4 w-4 shrink-0 rounded-full"
+                icon={containerIcon}
+              ></Icon>
+              <input
+                value={containerIcon}
+                onChange={updateContainerIcon}
+                placeholder="#FFFFFF"
+                className="h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-500"
+              />
+            </div>
+            <button
+              onClick={() => {
+                setIconSelectorOpen(true)
+              }}
+              className="mr-4 shrink-0 rounded-lg p-2 text-neutral-500 hover:bg-neutral-500/30 hover:text-neutral-200 focus:outline-none"
+            >
+              <Icon icon="tabler:chevron-down" className="h-6 w-6" />
+            </button>
+          </div>
+        </div>
+        <button
+          className="mt-8 flex items-center justify-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800 transition-all hover:bg-teal-600"
+          onClick={createContainer}
+        >
+          <Icon icon="tabler:plus" className="h-5 w-5" />
+          CREATE
+        </button>
       </Modal>
       <ColorPickerModal
         isOpen={colorPickerOpen}
         setOpen={setColorPickerOpen}
         color={containerColor}
         setColor={setContainerColor}
+      />
+      <IconSelector
+        isOpen={iconSelectorOpen}
+        setOpen={setIconSelectorOpen}
+        setSelectedIcon={setContainerIcon}
       />
     </>
   )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from './Modal'
 import { Colorful, EditableInput } from '@uiw/react-color'
 import { Icon } from '@iconify/react/dist/iconify.js'
@@ -22,12 +22,16 @@ function ColorPickerModal({
   color: string
   setColor: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
-  const [innerColor, setInnerColor] = useState(color)
+  const [innerColor, setInnerColor] = useState(color.toLowerCase())
 
   function confirmColor(): void {
     setColor(innerColor)
     setOpen(false)
   }
+
+  useEffect(() => {
+    setInnerColor(color.toLowerCase())
+  }, [color])
 
   return (
     <Modal isOpen={isOpen}>

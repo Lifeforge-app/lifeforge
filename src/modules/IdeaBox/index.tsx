@@ -30,17 +30,25 @@ function IdeaBox(): React.JSX.Element {
   const [createContainerModalOpen, setCreateContainerModalOpen] =
     useState(false)
 
-  useEffect(() => {
+  function updateContainerList(): void {
     setData('loading')
     fetch('http://localhost:3636/idea-box/container/list')
       .then(async response => {
         const data = await response.json()
-        setData(data)
+        setData(data.data)
+
+        if (response.status !== 200) {
+          throw data.message
+        }
       })
       .catch(() => {
         setData('error')
         toast.error('Failed to fetch data from server.')
       })
+  }
+
+  useEffect(() => {
+    updateContainerList()
   }, [])
 
   return (
@@ -128,7 +136,12 @@ function IdeaBox(): React.JSX.Element {
                         </button>
                       </Link>
                     ))}
-                    <div className="relative flex h-full flex-col items-center justify-center gap-6 rounded-lg border-2 border-dashed border-neutral-700 p-8">
+                    <button
+                      onClick={() => {
+                        setCreateContainerModalOpen(true)
+                      }}
+                      className="relative flex h-full flex-col items-center justify-center gap-6 rounded-lg border-2 border-dashed border-neutral-700 p-8 hover:bg-neutral-800/20"
+                    >
                       <Icon
                         icon="tabler:cube-plus"
                         className="h-8 w-8 text-neutral-500"
@@ -136,10 +149,10 @@ function IdeaBox(): React.JSX.Element {
                       <div className="text-xl font-semibold text-neutral-500">
                         Create container
                       </div>
-                    </div>
+                    </button>
                   </div>
                 ) : (
-                  <div className="flex h-full w-full flex-col items-center justify-center gap-6 text-neutral-500">
+                  <button className="flex h-full w-full flex-col items-center justify-center gap-6 text-neutral-500">
                     <Icon icon="tabler:cube-off" className="h-24 w-24" />
                     <h2 className="text-3xl font-semibold">
                       No idea containers
@@ -156,13 +169,17 @@ function IdeaBox(): React.JSX.Element {
                       <Icon icon="tabler:plus" className="text-xl" />
                       create one
                     </button>
-                  </div>
+                  </button>
                 )
             }
           })()}
         </>
       </div>
-      <CreateContainerModal isOpen={createContainerModalOpen} />
+      <CreateContainerModal
+        isOpen={createContainerModalOpen}
+        setOpen={setCreateContainerModalOpen}
+        updateContainerList={updateContainerList}
+      />
     </section>
   )
 }
