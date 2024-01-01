@@ -1,19 +1,25 @@
-import React, { useState } from 'react'
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable multiline-ternary */
+import React, { useEffect, useState } from 'react'
 import Modal from '../../../components/Modal'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import ColorPickerModal from '../../../components/ColorPickerModal'
 import IconSelector from '../../../components/IconSelector'
 import { toast } from 'react-toastify'
+import { type IIdeaBoxContainer } from '..'
 
 function CreateContainerModal({
-  isOpen,
+  openType,
   setOpen,
-  updateContainerList
+  updateContainerList,
+  existedData
 }: {
-  isOpen: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  openType: 'create' | 'update' | null
+  setOpen: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   updateContainerList: () => void
+  existedData: IIdeaBoxContainer | null
 }): React.ReactElement {
+  const [loading, setLoading] = useState(false)
   const [containerName, setContainerName] = useState('')
   const [containerColor, setContainerColor] = useState('#FFFFFF')
   const [containerIcon, setContainerIcon] = useState('tabler:cube')
@@ -32,10 +38,12 @@ function CreateContainerModal({
     setContainerIcon(e.target.value)
   }
 
-  function createContainer(): void {
+  function onSubmitButtonClick(): void {
     if (containerName.length === 0) {
       return
     }
+
+    setLoading(true)
 
     const container = {
       name: containerName,
@@ -43,31 +51,60 @@ function CreateContainerModal({
       icon: containerIcon
     }
 
-    fetch('http://localhost:3636/idea-box/container/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(container)
-    })
+    fetch(
+      `http://localhost:3636/idea-box/container/${openType}` +
+        (openType === 'update' ? `/${existedData!.id}` : ''),
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(container)
+      }
+    )
       .then(async res => {
         const data = await res.json()
         if (res.status !== 200) {
           throw data.message
         }
-        toast.success('Yay! Container created. Time to fill it up.')
-        setOpen(false)
+        toast.success(
+          {
+            create: 'Yay! Container created. Time to fill it up.',
+            update: 'Yay! Container updated.'
+          }[openType!]
+        )
+        setOpen(null)
         updateContainerList()
       })
       .catch(err => {
-        toast.error('Uhh ohh! Something went wrong when creating container.')
+        toast.error(
+          {
+            create: "Oops! Couldn't create the container. Please try again.",
+            update: "Oops! Couldn't update the container. Please try again."
+          }[openType!]
+        )
         console.error(err)
+      })
+      .finally(() => {
+        setLoading(false)
       })
   }
 
+  useEffect(() => {
+    if (openType === 'update' && existedData !== null) {
+      setContainerName(existedData.name)
+      setContainerColor(existedData.color)
+      setContainerIcon(existedData.icon)
+    } else {
+      setContainerName('')
+      setContainerColor('#FFFFFF')
+      setContainerIcon('tabler:cube')
+    }
+  }, [openType, existedData])
+
   return (
     <>
-      <Modal isOpen={isOpen}>
+      <Modal isOpen={openType !== null}>
         <div className="mb-8 flex items-center justify-between ">
           <h1 className="flex items-center gap-3 text-2xl font-semibold">
             <Icon icon="tabler:cube-plus" className="h-7 w-7" />
@@ -75,7 +112,7 @@ function CreateContainerModal({
           </h1>
           <button
             onClick={() => {
-              setOpen(false)
+              setOpen(null)
             }}
             className="rounded-md p-2 text-neutral-500 transition-all hover:bg-neutral-800"
           >
@@ -184,12 +221,32 @@ function CreateContainerModal({
             </button>
           </div>
         </div>
+
         <button
-          className="mt-8 flex items-center justify-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800 transition-all hover:bg-teal-600"
-          onClick={createContainer}
+          className="mt-8 flex h-16 items-center justify-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800 transition-all hover:bg-teal-600"
+          onClick={onSubmitButtonClick}
         >
-          <Icon icon="tabler:plus" className="h-5 w-5" />
-          CREATE
+          {!loading ? (
+            <>
+              <Icon
+                icon={
+                  {
+                    create: 'tabler:plus',
+                    update: 'tabler:pencil'
+                  }[openType!]
+                }
+                className="h-5 w-5"
+              />
+              {
+                {
+                  create: 'CREATE',
+                  update: 'UPDATE'
+                }[openType!]
+              }
+            </>
+          ) : (
+            <span className="small-loader-dark"></span>
+          )}
         </button>
       </Modal>
       <ColorPickerModal

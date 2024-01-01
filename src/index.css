@@ -61,6 +61,28 @@ input:-webkit-autofill:active {
   animation: rotation 1s linear infinite;
 }
 
+.small-loader-light {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgb(245 245 245);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.small-loader-dark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgb(38 38 38);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
 .w-color-editable-input {
   @apply !px-0;
 }

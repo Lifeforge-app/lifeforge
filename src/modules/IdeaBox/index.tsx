@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/indent */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
 import React, { useEffect, useState } from 'react'
 import ModuleHeader from '../../components/ModuleHeader'
@@ -6,8 +8,9 @@ import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Loading from '../../components/Loading'
 import Error from '../../components/Error'
-import Modal from '../../components/Modal'
 import CreateContainerModal from './components/CreateContainerModal'
+import { Menu, Transition } from '@headlessui/react'
+import DeleteContainerConfirmationModal from './components/DeleteContainerConfirmationModal'
 
 export interface IIdeaBoxContainer {
   collectionId: string
@@ -27,8 +30,14 @@ function IdeaBox(): React.JSX.Element {
   const [data, setData] = useState<IIdeaBoxContainer[] | 'error' | 'loading'>(
     'loading'
   )
-  const [createContainerModalOpen, setCreateContainerModalOpen] =
-    useState(false)
+  const [createContainerModalOpenType, setCreateContainerModalOpen] = useState<
+    'create' | 'update' | null
+  >(null)
+  const [
+    deleteContainerConfirmationModalOpen,
+    setDeleteContainerConfirmationModalOpen
+  ] = useState(false)
+  const [existedData, setExistedData] = useState<IIdeaBoxContainer | null>(null)
 
   function updateContainerList(): void {
     setData('loading')
@@ -77,10 +86,9 @@ function IdeaBox(): React.JSX.Element {
                 return data.length > 0 ? (
                   <div className="mt-6 grid w-full grid-cols-4 gap-6 overflow-y-auto pb-12">
                     {data.map((container, index) => (
-                      <Link
-                        to={`/idea-box/${container.id}`}
+                      <div
                         key={index}
-                        className="relative flex flex-col items-center justify-start gap-6 rounded-lg bg-neutral-800/50 p-8 hover:bg-neutral-800"
+                        className="relative flex flex-col items-center justify-start gap-6 rounded-lg bg-neutral-800/50 p-8 hover:bg-neutral-800/70"
                       >
                         <div
                           className="rounded-lg p-4"
@@ -128,17 +136,82 @@ function IdeaBox(): React.JSX.Element {
                             </span>
                           </div>
                         </div>
-                        <button className="absolute right-4 top-4 rounded-md p-2 text-neutral-500 hover:bg-neutral-700/30 hover:text-neutral-100">
-                          <Icon
-                            icon="tabler:dots-vertical"
-                            className="h-5 w-5"
-                          />
-                        </button>
-                      </Link>
+                        <Link
+                          to={`/idea-box/${container.id}`}
+                          className="absolute left-0 top-0 h-full w-full"
+                        />
+                        <Menu
+                          as="div"
+                          className="absolute right-4 top-4 overscroll-contain"
+                        >
+                          <Menu.Button className="rounded-md p-2 text-neutral-500 hover:bg-neutral-700/30 hover:text-neutral-100">
+                            <Icon
+                              icon="tabler:dots-vertical"
+                              className="h-5 w-5"
+                            />
+                          </Menu.Button>
+                          <Transition
+                            enter="transition duration-100 ease-out"
+                            enterFrom="transform scale-95 opacity-0"
+                            enterTo="transform scale-100 opacity-100"
+                            leave="transition duration-75 ease-out"
+                            leaveFrom="transform scale-100 opacity-100"
+                            leaveTo="transform scale-95 opacity-0"
+                            className="absolute right-0 top-3"
+                          >
+                            <Menu.Items className="mt-8 w-48 overflow-hidden rounded-md bg-neutral-800 shadow-lg outline-none focus:outline-none">
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <button
+                                    onClick={() => {
+                                      setExistedData(container)
+                                      setCreateContainerModalOpen('update')
+                                    }}
+                                    className={`${
+                                      active
+                                        ? 'bg-neutral-700 text-neutral-100'
+                                        : 'text-neutral-500'
+                                    } flex w-full items-center p-4`}
+                                  >
+                                    <Icon
+                                      icon="tabler:edit"
+                                      className="h-5 w-5"
+                                    />
+                                    <span className="ml-2">Edit</span>
+                                  </button>
+                                )}
+                              </Menu.Item>
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <button
+                                    onClick={() => {
+                                      setExistedData(container)
+                                      setDeleteContainerConfirmationModalOpen(
+                                        true
+                                      )
+                                    }}
+                                    className={`${
+                                      active
+                                        ? 'bg-neutral-700 text-red-600'
+                                        : 'text-red-500'
+                                    } flex w-full items-center p-4`}
+                                  >
+                                    <Icon
+                                      icon="tabler:trash"
+                                      className="h-5 w-5"
+                                    />
+                                    <span className="ml-2">Delete</span>
+                                  </button>
+                                )}
+                              </Menu.Item>
+                            </Menu.Items>
+                          </Transition>
+                        </Menu>
+                      </div>
                     ))}
                     <button
                       onClick={() => {
-                        setCreateContainerModalOpen(true)
+                        setCreateContainerModalOpen('create')
                       }}
                       className="relative flex h-full flex-col items-center justify-center gap-6 rounded-lg border-2 border-dashed border-neutral-700 p-8 hover:bg-neutral-800/20"
                     >
@@ -162,7 +235,7 @@ function IdeaBox(): React.JSX.Element {
                     </p>
                     <button
                       onClick={() => {
-                        setCreateContainerModalOpen(true)
+                        setCreateContainerModalOpen('create')
                       }}
                       className="mt-6 flex items-center gap-2 rounded-full bg-teal-500 p-4 px-6 pr-7 font-semibold uppercase tracking-wider text-neutral-800 transition-all hover:bg-teal-600"
                     >
@@ -176,8 +249,18 @@ function IdeaBox(): React.JSX.Element {
         </>
       </div>
       <CreateContainerModal
-        isOpen={createContainerModalOpen}
+        openType={createContainerModalOpenType}
         setOpen={setCreateContainerModalOpen}
+        updateContainerList={updateContainerList}
+        existedData={existedData}
+      />
+      <DeleteContainerConfirmationModal
+        isOpen={deleteContainerConfirmationModalOpen}
+        closeModal={() => {
+          setExistedData(null)
+          setDeleteContainerConfirmationModalOpen(false)
+        }}
+        containerDetails={existedData}
         updateContainerList={updateContainerList}
       />
     </section>
