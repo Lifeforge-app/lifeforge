@@ -9,7 +9,7 @@ function Modal({
 }): React.ReactElement {
   return (
     <div
-      className={`fixed left-0 top-0 h-screen w-full bg-zinc-950/70 transition-opacity ease-linear ${
+      className={`fixed left-0 top-0 h-screen w-full bg-zinc-950/60 backdrop-blur-md transition-opacity ease-linear ${
         isOpen
           ? 'z-[9999] opacity-100'
           : 'z-[-1] opacity-0 [transition:z-index_0.1s_linear_0.5s,opacity_0.1s_linear_0.1s]'

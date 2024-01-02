@@ -10,6 +10,10 @@
   scrollbar-width: thin;
 }
 
+*:focus {
+  outline: none;
+}
+
 body {
   background-color: rgba(38, 38, 38, 1);
   color: rgba(255, 255, 255, 1);
@@ -107,4 +111,8 @@ input:-webkit-autofill:active {
   100% {
     transform: rotate(360deg);
   }
+}
+
+div[data-rmiz-modal-content] {
+  @apply bg-neutral-900;
 }

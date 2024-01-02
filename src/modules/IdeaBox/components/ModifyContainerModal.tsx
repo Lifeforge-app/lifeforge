@@ -7,15 +7,16 @@ import ColorPickerModal from '../../../components/ColorPickerModal'
 import IconSelector from '../../../components/IconSelector'
 import { toast } from 'react-toastify'
 import { type IIdeaBoxContainer } from '..'
+import { useDebounce } from '@uidotdev/usehooks'
 
-function CreateContainerModal({
+function ModifyContainerModal({
   openType,
-  setOpen,
+  setOpenType,
   updateContainerList,
   existedData
 }: {
   openType: 'create' | 'update' | null
-  setOpen: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
+  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   updateContainerList: () => void
   existedData: IIdeaBoxContainer | null
 }): React.ReactElement {
@@ -25,6 +26,7 @@ function CreateContainerModal({
   const [containerIcon, setContainerIcon] = useState('tabler:cube')
   const [colorPickerOpen, setColorPickerOpen] = useState(false)
   const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
+  const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
 
   function updateContainerName(e: React.ChangeEvent<HTMLInputElement>): void {
     setContainerName(e.target.value)
@@ -52,10 +54,10 @@ function CreateContainerModal({
     }
 
     fetch(
-      `http://localhost:3636/idea-box/container/${openType}` +
-        (openType === 'update' ? `/${existedData!.id}` : ''),
+      `http://localhost:3636/idea-box/container/${innerOpenType}` +
+        (innerOpenType === 'update' ? `/${existedData!.id}` : ''),
       {
-        method: 'POST',
+        method: innerOpenType === 'create' ? 'PUT' : 'PATCH',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -71,9 +73,9 @@ function CreateContainerModal({
           {
             create: 'Yay! Container created. Time to fill it up.',
             update: 'Yay! Container updated.'
-          }[openType!]
+          }[innerOpenType!]
         )
-        setOpen(null)
+        setOpenType(null)
         updateContainerList()
       })
       .catch(err => {
@@ -81,7 +83,7 @@ function CreateContainerModal({
           {
             create: "Oops! Couldn't create the container. Please try again.",
             update: "Oops! Couldn't update the container. Please try again."
-          }[openType!]
+          }[innerOpenType!]
         )
         console.error(err)
       })
@@ -91,7 +93,7 @@ function CreateContainerModal({
   }
 
   useEffect(() => {
-    if (openType === 'update' && existedData !== null) {
+    if (innerOpenType === 'update' && existedData !== null) {
       setContainerName(existedData.name)
       setContainerColor(existedData.color)
       setContainerIcon(existedData.icon)
@@ -100,19 +102,33 @@ function CreateContainerModal({
       setContainerColor('#FFFFFF')
       setContainerIcon('tabler:cube')
     }
-  }, [openType, existedData])
+  }, [innerOpenType, existedData])
 
   return (
     <>
       <Modal isOpen={openType !== null}>
         <div className="mb-8 flex items-center justify-between ">
           <h1 className="flex items-center gap-3 text-2xl font-semibold">
-            <Icon icon="tabler:cube-plus" className="h-7 w-7" />
-            Create container
+            <Icon
+              icon={
+                {
+                  create: 'tabler:plus',
+                  update: 'tabler:pencil'
+                }[innerOpenType!]
+              }
+              className="h-7 w-7"
+            />
+            {
+              {
+                create: 'Create ',
+                update: 'Update '
+              }[innerOpenType!]
+            }{' '}
+            container
           </h1>
           <button
             onClick={() => {
-              setOpen(null)
+              setOpenType(null)
             }}
             className="rounded-md p-2 text-neutral-500 transition-all hover:bg-neutral-800"
           >
@@ -223,6 +239,7 @@ function CreateContainerModal({
         </div>
 
         <button
+          disabled={loading}
           className="mt-8 flex h-16 items-center justify-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800 transition-all hover:bg-teal-600"
           onClick={onSubmitButtonClick}
         >
@@ -233,7 +250,7 @@ function CreateContainerModal({
                   {
                     create: 'tabler:plus',
                     update: 'tabler:pencil'
-                  }[openType!]
+                  }[innerOpenType!]
                 }
                 className="h-5 w-5"
               />
@@ -241,7 +258,7 @@ function CreateContainerModal({
                 {
                   create: 'CREATE',
                   update: 'UPDATE'
-                }[openType!]
+                }[innerOpenType!]
               }
             </>
           ) : (
@@ -264,4 +281,4 @@ function CreateContainerModal({
   )
 }
 
-export default CreateContainerModal
+export default ModifyContainerModal

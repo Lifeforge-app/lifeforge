@@ -114,8 +114,8 @@ function Search({
                 className={`${
                   currentIconSet === name
                     ? 'bg-neutral-200 text-neutral-800 shadow-md'
-                    : ''
-                } flex h-8 grow items-center justify-center whitespace-nowrap rounded-full bg-neutral-800 px-6 text-sm text-neutral-500 shadow-md transition-all md:grow-0`}
+                    : 'bg-neutral-800'
+                } flex h-8 grow items-center justify-center whitespace-nowrap rounded-full px-6 text-sm text-neutral-500 shadow-md transition-all md:grow-0`}
               >
                 {iconSet.name}
               </button>

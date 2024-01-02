@@ -65,6 +65,7 @@ function DeleteContainerConfirmationModal({
           Cancel
         </button>
         <button
+          disabled={loading}
           onClick={deleteContainer}
           className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 transition-all hover:bg-red-600"
         >

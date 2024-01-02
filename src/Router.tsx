@@ -20,6 +20,7 @@ import Flashcards from './modules/Flashcards'
 import CardSet from './modules/Flashcards/components/CardSet'
 import ReferenceBooks from './modules/referenceBooks'
 import UniversityAnalytics from './modules/UniversityAnalytics'
+import Changelog from './modules/Changelog'
 
 function AppRouter(): React.JSX.Element {
   const { auth, authLoading } = useContext(AuthContext)
@@ -67,6 +68,7 @@ function AppRouter(): React.JSX.Element {
         <Route path="flashcards/:id" element={<CardSet />} />
         <Route path="reference-books" element={<ReferenceBooks />} />
         <Route path="university-analytics" element={<UniversityAnalytics />} />
+        <Route path="/change-log" element={<Changelog />} />
       </Route>
       <Route path="/auth" element={<Auth />} />
       <Route path="*" element={<NotFound />} />
