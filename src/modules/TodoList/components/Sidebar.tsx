@@ -67,7 +67,9 @@ function Sidebar(): React.JSX.Element {
             className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
           >
             <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-800">
-              <span className={`block h-1.5 w-1.5 rounded-full ${color}`} />
+              <span
+                className={`block h-2 w-2 shrink-0 rounded-full ${color}`}
+              />
               <div className="flex w-full items-center justify-between">
                 {name}
               </div>

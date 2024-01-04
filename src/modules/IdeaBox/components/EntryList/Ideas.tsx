@@ -148,6 +148,7 @@ function Ideas(): React.JSX.Element {
         setOpenType={setModifyIdeaModalOpenType}
         containerId={id as string}
         updateIdeaList={updateIdeaList}
+        existedData={existedData}
       />
       <DeleteIdeaConfirmationModal
         isOpen={deleteIdeaModalOpen}

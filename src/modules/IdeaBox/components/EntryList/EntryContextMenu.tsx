@@ -95,29 +95,32 @@ function EntryContextMenu({
               </button>
             )}
           </Menu.Item>
-          <Menu.Item>
-            {({ active }) => (
-              <button
-                onClick={() => {
-                  setTypeOfModifyIdea(entry.type)
-                  setModifyIdeaModalOpenType('update')
-                }}
-                className={`${
-                  active
-                    ? 'bg-neutral-700/50 text-neutral-100'
-                    : 'text-neutral-500'
-                } group flex w-full items-center gap-4 rounded-md p-4`}
-              >
-                <Icon
-                  icon="tabler:pencil"
+          {entry.type !== 'image' && (
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  onClick={() => {
+                    setTypeOfModifyIdea(entry.type)
+                    setExistedData(entry)
+                    setModifyIdeaModalOpenType('update')
+                  }}
                   className={`${
-                    active ? 'text-neutral-100' : 'text-neutral-500'
-                  } h-5 w-5`}
-                />
-                Edit
-              </button>
-            )}
-          </Menu.Item>
+                    active
+                      ? 'bg-neutral-700/50 text-neutral-100'
+                      : 'text-neutral-500'
+                  } group flex w-full items-center gap-4 rounded-md p-4`}
+                >
+                  <Icon
+                    icon="tabler:pencil"
+                    className={`${
+                      active ? 'text-neutral-100' : 'text-neutral-500'
+                    } h-5 w-5`}
+                  />
+                  Edit
+                </button>
+              )}
+            </Menu.Item>
+          )}
           <Menu.Item>
             {({ active }) => (
               <button

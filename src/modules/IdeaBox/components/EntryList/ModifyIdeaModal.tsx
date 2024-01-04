@@ -9,19 +9,22 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { Menu, Transition } from '@headlessui/react'
 import { useDropzone } from 'react-dropzone'
 import { toast } from 'react-toastify'
+import { type IIdeaBoxEntry } from './Ideas'
 
 function CreateIdeaModal({
   openType,
   setOpenType,
   typeOfModifyIdea,
   containerId,
-  updateIdeaList
+  updateIdeaList,
+  existedData
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   typeOfModifyIdea: 'text' | 'image' | 'link'
   containerId: string
   updateIdeaList: () => void
+  existedData: IIdeaBoxEntry | null
 }): React.ReactElement {
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
   const [innerTypeOfModifyIdea, setInnerTypeOfModifyIdea] = useState<
@@ -74,13 +77,21 @@ function CreateIdeaModal({
       setIdeaLink('')
       setIdeaImage(null)
       setPreview(null)
+    } else if (openType === 'update') {
+      if (existedData !== null) {
+        setIdeaTitle(existedData.title)
+        setIdeaContent(existedData.content)
+        setIdeaLink(existedData.content)
+        setIdeaImage(null)
+        setPreview(null)
+      }
     }
-  }, [openType])
+  }, [openType, existedData])
 
   function onSubmitButtonClick(): void {
     switch (innerTypeOfModifyIdea) {
       case 'text':
-        if (ideaContent.length === 0) {
+        if (ideaContent.trim().length === 0) {
           toast.error('Idea content cannot be empty.')
           return
         }
@@ -92,7 +103,7 @@ function CreateIdeaModal({
         }
         break
       case 'link':
-        if (ideaTitle.length === 0 || ideaLink.length === 0) {
+        if (ideaTitle.trim().length === 0 || ideaLink.trim().length === 0) {
           toast.error('Idea title and link cannot be empty.')
           return
         }
@@ -102,19 +113,33 @@ function CreateIdeaModal({
     setLoading(true)
 
     const formData = new FormData()
-    formData.append('title', ideaTitle)
-    formData.append('content', ideaContent)
-    formData.append('link', ideaLink)
+    formData.append('title', ideaTitle.trim())
+    formData.append('content', ideaContent.trim())
+    formData.append('link', ideaLink.trim())
     formData.append('image', ideaImage!)
     formData.append('type', innerTypeOfModifyIdea)
 
     fetch(
       `${import.meta.env.VITE_API_HOST}/idea-box/idea/${
         innerOpenType === 'create' ? 'create' : 'update'
-      }/${containerId}`,
+      }/${innerOpenType === 'create' ? containerId : existedData!.id}`,
       {
         method: innerOpenType === 'create' ? 'PUT' : 'PATCH',
-        body: formData
+        headers: {
+          'Content-Type':
+            innerOpenType === 'create'
+              ? 'multipart/form-data'
+              : 'application/json'
+        },
+        body:
+          innerOpenType === 'create'
+            ? formData
+            : JSON.stringify({
+                title: ideaTitle.trim(),
+                content: ideaContent.trim(),
+                link: ideaLink.trim(),
+                type: innerTypeOfModifyIdea
+              })
       }
     )
       .then(async res => {
@@ -164,76 +189,82 @@ function CreateIdeaModal({
               update: 'Update '
             }[innerOpenType!]
           }{' '}
-          <Menu as="div" className="relative inline-block text-left">
-            <Menu.Button className="inline-flex w-full items-center justify-center rounded-md border-2 border-neutral-800 p-2 px-4 text-lg font-semibold tracking-wide text-neutral-200 shadow-sm outline-none hover:bg-neutral-800/50 focus:outline-none">
-              <Icon
-                icon={
-                  {
-                    text: 'tabler:article',
-                    image: 'tabler:photo',
-                    link: 'tabler:link'
-                  }[innerTypeOfModifyIdea]
-                }
-                className="mr-2 h-5 w-5"
-              />
-              {innerTypeOfModifyIdea === 'text'
-                ? 'Text'
-                : innerTypeOfModifyIdea === 'image'
-                ? 'Image'
-                : 'Link'}
-              <Icon
-                icon="tabler:chevron-down"
-                className="-mr-1 ml-2 h-4 w-4 stroke-[2px]"
-                aria-hidden="true"
-              />
-            </Menu.Button>
-            <Transition
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-              className="absolute left-0 z-[999] mt-2"
-            >
-              <Menu.Items className="w-56 overflow-hidden rounded-lg bg-neutral-800 shadow-lg outline-none focus:outline-none">
-                {[
-                  ['text', 'tabler:article', 'Text'],
-                  ['image', 'tabler:photo', 'Image'],
-                  ['link', 'tabler:link', 'Link']
-                ].map(([type, icon, name]) => (
-                  <Menu.Item key={type}>
-                    {({ active }) => (
-                      <button
-                        onClick={() => {
-                          setInnerTypeOfModifyIdea(
-                            type as 'text' | 'image' | 'link'
-                          )
-                        }}
-                        className={`${
-                          active ? 'bg-neutral-700' : 'text-neutral-500'
-                        } group flex w-full items-center rounded-md p-4 text-base`}
-                      >
-                        <Icon
-                          icon={icon}
-                          className="mr-3 h-5 w-5 text-neutral-400 group-hover:text-neutral-300"
-                          aria-hidden="true"
-                        />
-                        {name}
-                        {innerTypeOfModifyIdea === type && (
+          {innerOpenType === 'create' ? (
+            <Menu as="div" className="relative inline-block text-left">
+              <Menu.Button className="inline-flex w-full items-center justify-center rounded-md border-2 border-neutral-800 p-2 px-4 text-lg font-semibold tracking-wide text-neutral-200 shadow-sm outline-none hover:bg-neutral-800/50 focus:outline-none">
+                <Icon
+                  icon={
+                    {
+                      text: 'tabler:article',
+                      image: 'tabler:photo',
+                      link: 'tabler:link'
+                    }[innerTypeOfModifyIdea]
+                  }
+                  className="mr-2 h-5 w-5"
+                />
+                {innerTypeOfModifyIdea === 'text'
+                  ? 'Text'
+                  : innerTypeOfModifyIdea === 'image'
+                  ? 'Image'
+                  : 'Link'}
+                <Icon
+                  icon="tabler:chevron-down"
+                  className="-mr-1 ml-2 h-4 w-4 stroke-[2px]"
+                  aria-hidden="true"
+                />
+              </Menu.Button>
+              <Transition
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+                className="absolute left-0 z-[999] mt-2"
+              >
+                <Menu.Items className="w-56 overflow-hidden rounded-lg bg-neutral-800 shadow-lg outline-none focus:outline-none">
+                  {[
+                    ['text', 'tabler:article', 'Text'],
+                    ...[['image', 'tabler:photo', 'Image']],
+                    ['link', 'tabler:link', 'Link']
+                  ].map(([type, icon, name]) => (
+                    <Menu.Item key={type}>
+                      {({ active }) => (
+                        <button
+                          onClick={() => {
+                            setInnerTypeOfModifyIdea(
+                              type as 'text' | 'image' | 'link'
+                            )
+                          }}
+                          className={`${
+                            active ? 'bg-neutral-700' : 'text-neutral-500'
+                          } group flex w-full items-center rounded-md p-4 text-base`}
+                        >
                           <Icon
-                            icon="tabler:check"
-                            className="ml-auto h-5 w-5"
+                            icon={icon}
+                            className="mr-3 h-5 w-5 text-neutral-400 group-hover:text-neutral-300"
                             aria-hidden="true"
                           />
-                        )}
-                      </button>
-                    )}
-                  </Menu.Item>
-                ))}
-              </Menu.Items>
-            </Transition>
-          </Menu>
+                          {name}
+                          {innerTypeOfModifyIdea === type && (
+                            <Icon
+                              icon="tabler:check"
+                              className="ml-auto h-5 w-5"
+                              aria-hidden="true"
+                            />
+                          )}
+                        </button>
+                      )}
+                    </Menu.Item>
+                  ))}
+                </Menu.Items>
+              </Transition>
+            </Menu>
+          ) : (
+            innerTypeOfModifyIdea[0].toUpperCase() +
+            innerTypeOfModifyIdea.slice(1) +
+            ' '
+          )}
           Idea
         </h1>
         <button

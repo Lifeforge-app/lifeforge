@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ModuleHeader from '../../components/ModuleHeader'
 import SidebarDivider from '../../components/Sidebar/components/SidebarDivider'
 import SidebarTitle from '../../components/Sidebar/components/SidebarTitle'
 import { Icon } from '@iconify/react'
 import SidebarItem from '../../components/Sidebar/components/SidebarItem'
 import { faker } from '@faker-js/faker'
+import { toast } from 'react-toastify'
+
+interface ICodeSnippetLabel {
+  name: string
+  color: string
+  item_count: number
+}
 
 function shuffle(array: any[]): any[] {
   let currentIndex = array.length
@@ -27,6 +34,27 @@ function shuffle(array: any[]): any[] {
 }
 
 function Snippets(): React.JSX.Element {
+  const [labels, setLabels] = useState<ICodeSnippetLabel[]>([])
+
+  function updateLabelList(): void {
+    fetch(`${import.meta.env.VITE_API_HOST}/code-snippets/label/list`)
+      .then(async response => {
+        const data = await response.json()
+        setLabels(data.data)
+
+        if (response.status !== 200) {
+          throw data.message
+        }
+      })
+      .catch(() => {
+        toast.error('Failed to fetch data from server.')
+      })
+  }
+
+  useEffect(() => {
+    updateLabelList()
+  }, [])
+
   return (
     <section className="flex h-full min-h-0 w-full flex-1 flex-col px-12">
       <ModuleHeader
@@ -39,28 +67,21 @@ function Snippets(): React.JSX.Element {
             <SidebarItem icon="tabler:list" name="All Snippets" />
             <SidebarItem icon="tabler:star-filled" name="Starred" />
             <SidebarDivider />
-            <SidebarTitle name="labels" />
-            {[
-              ['Important', 'bg-red-500'],
-              ['Shell Script', 'bg-green-500'],
-              ['Components', 'bg-blue-500'],
-              ['Frontend', 'bg-fuchsia-500'],
-              ['API', 'bg-yellow-500']
-            ].map(([name, color], index) => (
+            <SidebarTitle name="labels" actionButtonIcon="tabler:plus" />
+            {labels.map((item, index) => (
               <li
                 key={index}
                 className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
               >
                 <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-800">
                   <span
-                    className={`block h-1.5 w-1.5 shrink-0 rounded-full ${color}`}
+                    className="block h-2 w-2 shrink-0 rounded-full"
+                    style={{ backgroundColor: item.color }}
                   />
                   <div className="flex w-full items-center justify-between">
-                    {name}
+                    {item.name}
                   </div>
-                  <span className="text-sm">
-                    {Math.floor(Math.random() * 10)}
-                  </span>
+                  <span className="text-sm">{item.item_count}</span>
                 </div>
               </li>
             ))}

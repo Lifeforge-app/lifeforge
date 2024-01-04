@@ -41,16 +41,21 @@ function ModifyContainerModal({
   }
 
   function onSubmitButtonClick(): void {
-    if (containerName.length === 0) {
+    if (
+      containerName.trim().length === 0 ||
+      containerColor.trim().length === 0 ||
+      containerIcon.trim().length === 0
+    ) {
+      toast.error('Please fill in all the fields.')
       return
     }
 
     setLoading(true)
 
     const container = {
-      name: containerName,
-      color: containerColor,
-      icon: containerIcon
+      name: containerName.trim(),
+      color: containerColor.trim(),
+      icon: containerIcon.trim()
     }
 
     fetch(
@@ -208,7 +213,7 @@ function ModifyContainerModal({
           <div className="flex w-full items-center gap-2">
             <span
               className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-neutral-500 group-focus-within:text-teal-500 ${
-                containerColor.length === 0
+                containerIcon.length === 0
                   ? 'top-1/2 -translate-y-1/2 group-focus-within:top-6 group-focus-within:text-[14px]'
                   : 'top-6 -translate-y-1/2 text-[14px]'
               }`}
@@ -223,7 +228,7 @@ function ModifyContainerModal({
               <input
                 value={containerIcon}
                 onChange={updateContainerIcon}
-                placeholder="#FFFFFF"
+                placeholder="tabler:cube"
                 className="h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-500"
               />
             </div>
