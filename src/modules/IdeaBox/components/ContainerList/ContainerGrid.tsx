@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
 import React from 'react'
-import { type IIdeaBoxContainer } from '..'
+import { type IIdeaBoxContainer } from '../..'
 import ContainerGridItem from './ContainerGridItem'
 import { Icon } from '@iconify/react/dist/iconify.js'
 

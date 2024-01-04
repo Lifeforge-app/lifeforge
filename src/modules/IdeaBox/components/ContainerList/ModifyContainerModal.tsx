@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
 import React, { useEffect, useState } from 'react'
-import Modal from '../../../components/Modal'
+import Modal from '../../../../components/Modal'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import ColorPickerModal from '../../../components/ColorPickerModal'
-import IconSelector from '../../../components/IconSelector'
+import ColorPickerModal from '../../../../components/ColorPickerModal'
+import IconSelector from '../../../../components/IconSelector'
 import { toast } from 'react-toastify'
-import { type IIdeaBoxContainer } from '..'
+import { type IIdeaBoxContainer } from '../..'
 import { useDebounce } from '@uidotdev/usehooks'
 
 function ModifyContainerModal({
@@ -54,7 +54,7 @@ function ModifyContainerModal({
     }
 
     fetch(
-      `http://localhost:3636/idea-box/container/${innerOpenType}` +
+      `${import.meta.env.VITE_API_HOST}/idea-box/container/${innerOpenType}` +
         (innerOpenType === 'update' ? `/${existedData!.id}` : ''),
       {
         method: innerOpenType === 'create' ? 'PUT' : 'PATCH',

@@ -58,7 +58,10 @@ export default function CodeTime(): React.JSX.Element {
   >({})
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/activities?year=' + selectedYear)
+    fetch(
+      `${import.meta.env.VITE_API_HOST}/code-time/activities?year=` +
+        selectedYear
+    )
       .then(async response => await response.json())
       .then(data => {
         setActivities(data.data.data)
@@ -66,7 +69,7 @@ export default function CodeTime(): React.JSX.Element {
       })
       .catch(() => {})
 
-    fetch('http://localhost:3000/api/statistics')
+    fetch(`${import.meta.env.VITE_API_HOST}/code-time/statistics`)
       .then(async response => await response.json())
       .then(data => {
         setStats(data.data)
@@ -75,7 +78,10 @@ export default function CodeTime(): React.JSX.Element {
   }, [])
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/languages?last=' + lastForLanguages)
+    fetch(
+      `${import.meta.env.VITE_API_HOST}/code-time/languages?last=` +
+        lastForLanguages
+    )
       .then(async response => await response.json())
       .then(data => {
         setTopLanguages(data.data)
@@ -84,7 +90,10 @@ export default function CodeTime(): React.JSX.Element {
   }, [lastForLanguages])
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/projects?last=' + lastForProjects)
+    fetch(
+      `${import.meta.env.VITE_API_HOST}/code-time/projects?last=` +
+        lastForProjects
+    )
       .then(async response => await response.json())
       .then(data => {
         setTopProjects(data.data)
@@ -95,7 +104,7 @@ export default function CodeTime(): React.JSX.Element {
   function switchSelectedYear(year: number): void {
     setSelectedYear(year)
     setActivities(null)
-    fetch('http://localhost:3000/api/activities?year=' + year)
+    fetch(`${import.meta.env.VITE_API_HOST}/code-time/activities?year=` + year)
       .then(async response => await response.json())
       .then(data => {
         setActivities(data.data.data.length > 0 ? data.data.data : null)

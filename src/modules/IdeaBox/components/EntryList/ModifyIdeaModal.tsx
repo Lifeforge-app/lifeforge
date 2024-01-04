@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useEffect, useState, useCallback } from 'react'
-import Modal from '../../../components/Modal'
+import Modal from '../../../../components/Modal'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useDebounce } from '@uidotdev/usehooks'
 import { Menu, Transition } from '@headlessui/react'
@@ -15,13 +15,13 @@ function CreateIdeaModal({
   setOpenType,
   typeOfModifyIdea,
   containerId,
-  setData
+  updateIdeaList
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   typeOfModifyIdea: 'text' | 'image' | 'link'
   containerId: string
-  setData: React.Dispatch<React.SetStateAction<any>>
+  updateIdeaList: () => void
 }): React.ReactElement {
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
   const [innerTypeOfModifyIdea, setInnerTypeOfModifyIdea] = useState<
@@ -109,7 +109,7 @@ function CreateIdeaModal({
     formData.append('type', innerTypeOfModifyIdea)
 
     fetch(
-      `http://localhost:3636/idea-box/idea/${
+      `${import.meta.env.VITE_API_HOST}/idea-box/idea/${
         innerOpenType === 'create' ? 'create' : 'update'
       }/${containerId}`,
       {
@@ -125,7 +125,7 @@ function CreateIdeaModal({
               innerOpenType === 'create' ? 'created' : 'updated'
             } successfully.`
           )
-          setData((prev: any) => [data.data, ...prev])
+          updateIdeaList()
           setOpenType(null)
           return data
         } else {

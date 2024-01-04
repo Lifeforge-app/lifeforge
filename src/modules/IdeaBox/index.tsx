@@ -6,11 +6,11 @@ import { Icon } from '@iconify/react'
 import { toast } from 'react-toastify'
 import Loading from '../../components/Loading'
 import Error from '../../components/Error'
-import ModifyContainerModal from './components/ModifyContainerModal'
-import DeleteContainerConfirmationModal from './components/DeleteContainerConfirmationModal'
+import ModifyContainerModal from './components/ContainerList/ModifyContainerModal'
+import DeleteIdeaConfirmationModal from './components/EntryList/DeleteIdeaConfirmationModal'
 import { useDebounce } from '@uidotdev/usehooks'
 import EmptyStateScreen from './components/EmptyStateScreen'
-import ContainerGrid from './components/ContainerGrid'
+import ContainerGrid from './components/ContainerList/ContainerGrid'
 
 export interface IIdeaBoxContainer {
   collectionId: string
@@ -43,7 +43,7 @@ function IdeaBox(): React.JSX.Element {
 
   function updateContainerList(): void {
     setData('loading')
-    fetch('http://localhost:3636/idea-box/container/list')
+    fetch(`${import.meta.env.VITE_API_HOST}/idea-box/container/list`)
       .then(async response => {
         const data = await response.json()
         setData(data.data)
@@ -135,7 +135,7 @@ function IdeaBox(): React.JSX.Element {
         updateContainerList={updateContainerList}
         existedData={existedData}
       />
-      <DeleteContainerConfirmationModal
+      <DeleteIdeaConfirmationModal
         isOpen={deleteContainerConfirmationModalOpen}
         closeModal={() => {
           setExistedData(null)

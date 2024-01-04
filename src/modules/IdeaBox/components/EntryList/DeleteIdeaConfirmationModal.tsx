@@ -1,29 +1,32 @@
+/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable multiline-ternary */
 import React, { useState } from 'react'
-import Modal from '../../../components/Modal'
-import { type IIdeaBoxContainer } from '..'
+import Modal from '../../../../components/Modal'
 import { toast } from 'react-toastify'
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { type IIdeaBoxEntry } from './Ideas'
 
-function DeleteContainerConfirmationModal({
+function DeleteIdeaConfirmationModal({
   isOpen,
+  setData,
   closeModal,
-  containerDetails,
-  updateContainerList
+  ideaDetails
 }: {
   isOpen: boolean
+  setData: React.Dispatch<
+    React.SetStateAction<IIdeaBoxEntry[] | 'error' | 'loading'>
+  >
   closeModal: () => void
-  containerDetails: IIdeaBoxContainer | null
-  updateContainerList: () => void
+  ideaDetails: IIdeaBoxEntry | null
 }): React.ReactElement {
   const [loading, setLoading] = useState(false)
 
-  function deleteContainer(): void {
-    if (containerDetails === null) return
+  function deleteIdea(): void {
+    if (ideaDetails === null) return
 
     setLoading(true)
     fetch(
-      `http://localhost:3636/idea-box/container/delete/${containerDetails.id}`,
+      `${import.meta.env.VITE_API_HOST}/idea-box/idea/delete/${ideaDetails.id}`,
       {
         method: 'DELETE'
       }
@@ -31,16 +34,19 @@ function DeleteContainerConfirmationModal({
       .then(async res => {
         const data = await res.json()
         if (res.ok) {
-          toast.success('Yay! Container deleted successfully.')
+          toast.info("Uhh, hopefully you truly didn't need that idea.")
           closeModal()
-          updateContainerList()
+          setData(prev => {
+            if (prev === 'error' || prev === 'loading') return prev
+            return prev.filter(idea => idea.id !== ideaDetails?.id)
+          })
           return data
         } else {
           throw new Error(data.message)
         }
       })
       .catch(err => {
-        toast.error("Oops! Couldn't delete the container. Please try again.")
+        toast.error("Oops! Couldn't delete the idea. Please try again.")
         console.error(err)
       })
       .finally(() => {
@@ -51,11 +57,10 @@ function DeleteContainerConfirmationModal({
   return (
     <Modal isOpen={isOpen}>
       <h1 className="text-2xl font-bold">
-        Are you sure you want to delete {containerDetails?.name}?
+        Are you sure you want to delete this {ideaDetails?.type} idea?
       </h1>
       <p className="mt-2 text-neutral-500">
-        This will delete the container and all the ideas inside it. This action
-        is irreversible!
+        This idea will be gone forever. This action is irreversible!
       </p>
       <div className="mt-8 flex w-full justify-around gap-2">
         <button
@@ -66,7 +71,7 @@ function DeleteContainerConfirmationModal({
         </button>
         <button
           disabled={loading}
-          onClick={deleteContainer}
+          onClick={deleteIdea}
           className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 transition-all hover:bg-red-600"
         >
           {loading ? (
@@ -85,4 +90,4 @@ function DeleteContainerConfirmationModal({
   )
 }
 
-export default DeleteContainerConfirmationModal
+export default DeleteIdeaConfirmationModal

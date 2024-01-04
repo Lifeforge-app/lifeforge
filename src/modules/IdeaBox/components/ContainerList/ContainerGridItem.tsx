@@ -3,7 +3,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { type IIdeaBoxContainer } from '..'
+import { type IIdeaBoxContainer } from '../..'
 
 function ContainerGridItem({
   container,
