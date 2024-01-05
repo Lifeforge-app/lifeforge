@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import React, { useEffect, useState } from 'react'
 import ModuleHeader from '../../components/ModuleHeader'
 import SidebarDivider from '../../components/Sidebar/components/SidebarDivider'
@@ -34,7 +35,9 @@ function shuffle(array: any[]): any[] {
 }
 
 function Snippets(): React.JSX.Element {
-  const [labels, setLabels] = useState<ICodeSnippetLabel[]>([])
+  const [labels, setLabels] = useState<
+    ICodeSnippetLabel[] | 'error' | 'loading'
+  >('loading')
 
   function updateLabelList(): void {
     fetch(`${import.meta.env.VITE_API_HOST}/code-snippets/label/list`)
@@ -68,23 +71,41 @@ function Snippets(): React.JSX.Element {
             <SidebarItem icon="tabler:star-filled" name="Starred" />
             <SidebarDivider />
             <SidebarTitle name="labels" actionButtonIcon="tabler:plus" />
-            {labels.map((item, index) => (
-              <li
-                key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
-              >
-                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-800">
-                  <span
-                    className="block h-2 w-2 shrink-0 rounded-full"
-                    style={{ backgroundColor: item.color }}
-                  />
-                  <div className="flex w-full items-center justify-between">
-                    {item.name}
-                  </div>
-                  <span className="text-sm">{item.item_count}</span>
-                </div>
-              </li>
-            ))}
+            {(() => {
+              switch (labels) {
+                case 'loading':
+                  return (
+                    <div className="flex items-center justify-center gap-2 px-8 py-2">
+                      <span className="small-loader-light" />
+                    </div>
+                  )
+                case 'error':
+                  return (
+                    <div className="flex items-center justify-center gap-2 px-8 py-2 text-red-500">
+                      <Icon icon="tabler:alert-triangle" className="h-5 w-5" />
+                      <span>Failed to fetch data.</span>
+                    </div>
+                  )
+                default:
+                  return labels.map((item, index) => (
+                    <li
+                      key={index}
+                      className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
+                    >
+                      <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-800">
+                        <span
+                          className="block h-2 w-2 shrink-0 rounded-full"
+                          style={{ backgroundColor: item.color }}
+                        />
+                        <div className="flex w-full items-center justify-between">
+                          {item.name}
+                        </div>
+                        <span className="text-sm">{item.item_count}</span>
+                      </div>
+                    </li>
+                  ))
+              }
+            })()}
             <SidebarDivider />
             <SidebarTitle name="languages" />
             {[
