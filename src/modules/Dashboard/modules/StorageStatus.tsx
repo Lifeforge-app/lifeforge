@@ -50,7 +50,7 @@ const options = {
     },
     legend: {
       labels: {
-        color: 'rgb(250, 250, 250)'
+        color: 'rgb(18, 18, 18)'
       },
       position: 'bottom' as const
     }
@@ -59,12 +59,12 @@ const options = {
 
 export default function StorageStatus(): React.JSX.Element {
   return (
-    <section className="col-span-1 flex w-full flex-col gap-4 rounded-lg bg-neutral-800/50 p-6">
+    <section className="col-span-1 flex w-full flex-col gap-4 rounded-lg bg-neutral-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:server" className="text-2xl" />
         <span className="ml-2">Storage Status</span>
       </h1>
-      <div className="flex h-full w-full items-center">
+      <div className="flex h-full w-full items-center justify-center">
         <Doughnut data={data} options={options} />
       </div>
       <p className="text-center text-lg font-medium">520 GB of 1 TB used</p>

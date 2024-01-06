@@ -21,7 +21,7 @@ function ContainerGridItem({
   >
 }): React.ReactElement {
   return (
-    <div className="relative flex flex-col items-center justify-start gap-6 rounded-lg bg-neutral-800/50 p-8 hover:bg-neutral-800/70">
+    <div className="relative flex flex-col items-center justify-start gap-6 rounded-lg bg-neutral-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-neutral-100 dark:bg-neutral-800/50 dark:hover:bg-neutral-800/70">
       <div
         className="rounded-lg p-4"
         style={{
@@ -36,7 +36,7 @@ function ContainerGridItem({
           }}
         />
       </div>
-      <div className="text-center text-2xl font-medium text-neutral-50">
+      <div className="text-center text-2xl font-medium text-neutral-800 dark:text-neutral-100">
         {container.name}
       </div>
       <div className="mt-auto flex items-center gap-4">
@@ -58,7 +58,7 @@ function ContainerGridItem({
         className="absolute left-0 top-0 h-full w-full"
       />
       <Menu as="div" className="absolute right-4 top-4 overscroll-contain">
-        <Menu.Button className="rounded-md p-2 text-neutral-500 hover:bg-neutral-700/30 hover:text-neutral-100">
+        <Menu.Button className="rounded-md p-2 text-neutral-500 hover:bg-neutral-200/50 hover:text-neutral-500 dark:hover:bg-neutral-700/30">
           <Icon icon="tabler:dots-vertical" className="h-5 w-5" />
         </Menu.Button>
         <Transition
@@ -70,7 +70,7 @@ function ContainerGridItem({
           leaveTo="transform scale-95 opacity-0"
           className="absolute right-0 top-3"
         >
-          <Menu.Items className="mt-8 w-48 overflow-hidden rounded-md bg-neutral-800 shadow-lg outline-none focus:outline-none">
+          <Menu.Items className="mt-8 w-48 overflow-hidden overscroll-contain rounded-md bg-neutral-100 shadow-lg outline-none focus:outline-none dark:bg-neutral-800">
             <Menu.Item>
               {({ active }) => (
                 <button
@@ -80,7 +80,7 @@ function ContainerGridItem({
                   }}
                   className={`${
                     active
-                      ? 'bg-neutral-700 text-neutral-100'
+                      ? 'bg-neutral-200/50 text-neutral-800 dark:bg-neutral-700'
                       : 'text-neutral-500'
                   } flex w-full items-center p-4`}
                 >
@@ -97,7 +97,9 @@ function ContainerGridItem({
                     setDeleteContainerConfirmationModalOpen(true)
                   }}
                   className={`${
-                    active ? 'bg-neutral-700 text-red-600' : 'text-red-500'
+                    active
+                      ? 'bg-neutral-200/50 text-red-600 dark:bg-neutral-700'
+                      : 'text-red-500'
                   } flex w-full items-center p-4`}
                 >
                   <Icon icon="tabler:trash" className="h-5 w-5" />

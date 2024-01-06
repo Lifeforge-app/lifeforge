@@ -14,7 +14,7 @@ export default function Resources(): React.JSX.Element {
         desc="A collection of useful stuff for your coding journey."
       />
       <div className="mb-12 mt-8 flex min-h-0 w-full flex-1">
-        <aside className="h-full w-1/4 overflow-y-scroll rounded-lg bg-neutral-800/50 py-4">
+        <aside className="h-full w-1/4 overflow-y-scroll rounded-lg bg-neutral-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
           <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
             <SidebarItem icon="tabler:list" name="All Resources" />
             <SidebarItem icon="tabler:star-filled" name="Starred" />
@@ -46,21 +46,21 @@ export default function Resources(): React.JSX.Element {
         </aside>
         <div className="ml-12 flex h-full min-h-0 flex-1 flex-col">
           <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-semibold text-neutral-50">
+            <h1 className="text-4xl font-semibold text-neutral-800">
               All Resources{' '}
               <span className="text-base text-neutral-400">(10)</span>
             </h1>
-            <button className="flex shrink-0 items-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800">
+            <button className="flex shrink-0 items-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 dark:text-neutral-800">
               <Icon icon="tabler:plus" className="h-5 w-5 shrink-0" />
               <span className="shrink-0">add new</span>
             </button>
           </div>
-          <search className="mt-6 flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
+          <search className="mt-6 flex w-full items-center gap-4 rounded-lg bg-neutral-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
             <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
             <input
               type="text"
               placeholder="Search resources ..."
-              className="w-full bg-transparent text-neutral-100 placeholder:text-neutral-500 focus:outline-none"
+              className="w-full bg-transparent text-neutral-500 placeholder:text-neutral-400 focus:outline-none"
             />
           </search>
           <ul className="mt-6 flex min-h-0 flex-col gap-4 overflow-y-auto">
@@ -69,7 +69,7 @@ export default function Resources(): React.JSX.Element {
               .map((_, i) => (
                 <li
                   key={i}
-                  className="relative flex items-center justify-between gap-4 rounded-lg bg-neutral-800/50 p-6"
+                  className="relative flex items-center justify-between gap-4 rounded-lg bg-neutral-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50"
                 >
                   <div className="flex w-full flex-col gap-1">
                     {(() => {
@@ -92,14 +92,14 @@ export default function Resources(): React.JSX.Element {
                         </div>
                       )
                     })()}
-                    <div className="text-lg font-semibold text-neutral-50">
+                    <div className="text-lg font-semibold text-neutral-800">
                       {faker.lorem.words(Math.floor(Math.random() * 5) + 1)}
                     </div>
                     <p className="text-neutral-500">
                       {faker.lorem.paragraphs(1)}
                     </p>
                   </div>
-                  <button className="absolute right-4 top-4 rounded-md p-2 text-neutral-500 hover:bg-neutral-700/30 hover:text-neutral-100">
+                  <button className="absolute right-4 top-4 rounded-md p-2 text-neutral-100 hover:bg-neutral-700/30 hover:text-neutral-100">
                     <Icon icon="tabler:dots-vertical" className="h-5 w-5" />
                   </button>
                 </li>

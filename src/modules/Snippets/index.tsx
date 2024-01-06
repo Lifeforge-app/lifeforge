@@ -1,18 +1,9 @@
 /* eslint-disable @typescript-eslint/indent */
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ModuleHeader from '../../components/ModuleHeader'
-import SidebarDivider from '../../components/Sidebar/components/SidebarDivider'
-import SidebarTitle from '../../components/Sidebar/components/SidebarTitle'
 import { Icon } from '@iconify/react'
-import SidebarItem from '../../components/Sidebar/components/SidebarItem'
 import { faker } from '@faker-js/faker'
-import { toast } from 'react-toastify'
-
-interface ICodeSnippetLabel {
-  name: string
-  color: string
-  item_count: number
-}
+import Sidebar from './components/Sidebar'
 
 function shuffle(array: any[]): any[] {
   let currentIndex = array.length
@@ -35,29 +26,6 @@ function shuffle(array: any[]): any[] {
 }
 
 function Snippets(): React.JSX.Element {
-  const [labels, setLabels] = useState<
-    ICodeSnippetLabel[] | 'error' | 'loading'
-  >('loading')
-
-  function updateLabelList(): void {
-    fetch(`${import.meta.env.VITE_API_HOST}/code-snippets/label/list`)
-      .then(async response => {
-        const data = await response.json()
-        setLabels(data.data)
-
-        if (response.status !== 200) {
-          throw data.message
-        }
-      })
-      .catch(() => {
-        toast.error('Failed to fetch data from server.')
-      })
-  }
-
-  useEffect(() => {
-    updateLabelList()
-  }, [])
-
   return (
     <section className="flex h-full min-h-0 w-full flex-1 flex-col px-12">
       <ModuleHeader
@@ -65,93 +33,24 @@ function Snippets(): React.JSX.Element {
         desc="Programming is basically just putting together a bunch of code snippets."
       />
       <div className="mb-12 mt-8 flex min-h-0 w-full flex-1">
-        <aside className="h-full w-1/4 overflow-y-scroll rounded-lg bg-neutral-800/50 py-4">
-          <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
-            <SidebarItem icon="tabler:list" name="All Snippets" />
-            <SidebarItem icon="tabler:star-filled" name="Starred" />
-            <SidebarDivider />
-            <SidebarTitle name="labels" actionButtonIcon="tabler:plus" />
-            {(() => {
-              switch (labels) {
-                case 'loading':
-                  return (
-                    <div className="flex items-center justify-center gap-2 px-8 py-2">
-                      <span className="small-loader-light" />
-                    </div>
-                  )
-                case 'error':
-                  return (
-                    <div className="flex items-center justify-center gap-2 px-8 py-2 text-red-500">
-                      <Icon icon="tabler:alert-triangle" className="h-5 w-5" />
-                      <span>Failed to fetch data.</span>
-                    </div>
-                  )
-                default:
-                  return labels.map((item, index) => (
-                    <li
-                      key={index}
-                      className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
-                    >
-                      <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-800">
-                        <span
-                          className="block h-2 w-2 shrink-0 rounded-full"
-                          style={{ backgroundColor: item.color }}
-                        />
-                        <div className="flex w-full items-center justify-between">
-                          {item.name}
-                        </div>
-                        <span className="text-sm">{item.item_count}</span>
-                      </div>
-                    </li>
-                  ))
-              }
-            })()}
-            <SidebarDivider />
-            <SidebarTitle name="languages" />
-            {[
-              ['simple-icons:react', 'React'],
-              ['simple-icons:typescript', 'TypeScript'],
-              ['simple-icons:javascript', 'JavaScript'],
-              ['simple-icons:html5', 'HTML'],
-              ['simple-icons:css3', 'CSS'],
-              ['simple-icons:tailwindcss', 'Tailwind'],
-              ['simple-icons:nodedotjs', 'Node.js'],
-              ['simple-icons:express', 'Express']
-            ].map(([icon, name], index) => (
-              <li
-                key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
-              >
-                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-800">
-                  <Icon icon={icon} className="h-5 w-5 shrink-0" />
-                  <div className="flex w-full items-center justify-between">
-                    {name}
-                  </div>
-                  <span className="text-sm">
-                    {Math.floor(Math.random() * 10)}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </aside>
+        <Sidebar />
         <div className="ml-12 flex h-full min-h-0 flex-1 flex-col">
           <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-semibold text-neutral-50">
+            <h1 className="text-4xl font-semibold text-neutral-800">
               All Snippets{' '}
               <span className="text-base text-neutral-400">(10)</span>
             </h1>
-            <button className="flex shrink-0 items-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800">
+            <button className="flex shrink-0 items-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:text-neutral-800">
               <Icon icon="tabler:plus" className="h-5 w-5 shrink-0" />
               <span className="shrink-0">create</span>
             </button>
           </div>
-          <search className="mt-6 flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
+          <search className="mt-6 flex w-full items-center gap-4 rounded-lg bg-neutral-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
             <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
             <input
               type="text"
               placeholder="Search snippets ..."
-              className="w-full bg-transparent text-neutral-100 placeholder:text-neutral-500 focus:outline-none"
+              className="w-full bg-transparent text-neutral-500 placeholder:text-neutral-400 focus:outline-none"
             />
           </search>
           <ul className="mt-6 flex min-h-0 flex-col gap-4 overflow-y-auto">
@@ -160,7 +59,7 @@ function Snippets(): React.JSX.Element {
               .map((_, i) => (
                 <li
                   key={i}
-                  className="relative flex items-center justify-between gap-4 rounded-lg bg-neutral-800/50 p-6"
+                  className="relative flex items-center justify-between gap-4 rounded-lg bg-neutral-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50"
                 >
                   <div className="flex w-full flex-col gap-1">
                     {(() => {
@@ -196,7 +95,7 @@ function Snippets(): React.JSX.Element {
                         </div>
                       )
                     })()}
-                    <div className="text-lg font-semibold text-neutral-50">
+                    <div className="text-lg font-semibold text-neutral-800">
                       {faker.lorem.lines(1)}
                     </div>
                     <p className="text-neutral-500">

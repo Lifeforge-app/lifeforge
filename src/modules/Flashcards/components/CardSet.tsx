@@ -8,7 +8,7 @@ function CardSet(): React.JSX.Element {
       <div className="flex flex-col gap-1">
         <Link
           to="/flashcards"
-          className="mb-2 flex w-min items-center gap-2 rounded-lg p-2 pl-0 pr-4 text-neutral-500 hover:text-neutral-100"
+          className="mb-2 flex w-min items-center gap-2 rounded-lg p-2 pl-0 pr-4 text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-100"
         >
           <Icon icon="tabler:chevron-left" className="text-xl" />
           <span className="whitespace-nowrap text-lg font-medium">Go back</span>
@@ -21,10 +21,10 @@ function CardSet(): React.JSX.Element {
             </span>
           </h1>
           <div className="flex items-center justify-center gap-2">
-            <button className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-800 hover:text-neutral-100">
+            <button className="rounded-lg p-4 text-neutral-100 transition-all hover:bg-neutral-800 hover:text-neutral-100">
               <Icon icon="tabler:border-corners" className="text-2xl" />
             </button>
-            <button className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-800 hover:text-neutral-100">
+            <button className="rounded-lg p-4 text-neutral-100 transition-all hover:bg-neutral-800 hover:text-neutral-100">
               <Icon icon="tabler:dots-vertical" className="text-2xl" />
             </button>
           </div>
@@ -51,7 +51,7 @@ function CardSet(): React.JSX.Element {
             <Icon icon="tabler:chevron-right" className="text-3xl" />
           </button>
         </div>
-        <button className="mt-12 flex w-1/2 items-center justify-center gap-2 rounded-lg bg-neutral-800 p-4 text-lg font-medium">
+        <button className="mt-12 flex w-1/2 items-center justify-center gap-2 rounded-lg bg-neutral-200 p-4 text-lg font-medium shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800">
           <Icon icon="tabler:bulb" className="text-2xl" />
           Show answer
         </button>

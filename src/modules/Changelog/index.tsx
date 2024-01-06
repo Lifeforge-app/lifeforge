@@ -38,7 +38,7 @@ function Changelog(): React.ReactElement {
             <li>
               <span className="font-semibold">Change Log:</span> Added this
               change log with naming convention of{' '}
-              <code className="inline-block rounded-md bg-neutral-800 p-1 px-1.5 font-['Jetbrains_Mono'] text-sm">
+              <code className="inline-block rounded-md bg-neutral-200 p-1 px-1.5 font-['Jetbrains_Mono'] text-sm shadow-[2px_2px_2px_rgba(0,0,0,0.05)] dark:bg-neutral-800">
                 Ver. [year]w[week number]
               </code>
             </li>
@@ -57,10 +57,10 @@ function Changelog(): React.ReactElement {
             <li>
               <span className="font-semibold">Code Refactor:</span> Moved API
               host into{' '}
-              <code className="inline-block rounded-md bg-neutral-800 p-1 px-1.5 font-['Jetbrains_Mono'] text-sm">
+              <code className="inline-block rounded-md bg-neutral-200 p-1 px-1.5 font-['Jetbrains_Mono'] text-sm shadow-[2px_2px_2px_rgba(0,0,0,0.05)] dark:bg-neutral-800">
                 .env
-              </code>{' '}
-              file
+              </code>
+              &nbsp;file
             </li>
           </ul>
         </li>

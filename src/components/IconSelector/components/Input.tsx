@@ -19,7 +19,7 @@ function Input({
       <Icon icon={icon} className="h-5 w-5 text-neutral-200" />
       <input
         type="text"
-        className="w-full bg-transparent py-4 text-neutral-200 outline-none placeholder:text-neutral-500"
+        className="w-full bg-transparent py-4 text-neutral-200 outline-none placeholder:text-neutral-100"
         placeholder={placeholder}
         value={value}
         onChange={e => {

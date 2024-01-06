@@ -52,7 +52,7 @@ function DeleteContainerConfirmationModal({
 
   return (
     <Modal isOpen={isOpen}>
-      <h1 className="text-2xl font-bold">
+      <h1 className="text-2xl font-semibold">
         Are you sure you want to delete {containerDetails?.name}?
       </h1>
       <p className="mt-2 text-neutral-500">

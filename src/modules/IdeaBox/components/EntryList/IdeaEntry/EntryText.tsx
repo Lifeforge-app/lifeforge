@@ -24,14 +24,16 @@ function EntryText({
   updateIdeaList: () => void
 }): React.ReactElement {
   return (
-    <div className="group relative my-4 flex items-start justify-between gap-2 rounded-lg bg-neutral-800/50 p-4">
+    <div className="group relative my-4 flex items-start justify-between gap-2 rounded-lg bg-neutral-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
       {entry.pinned && (
         <Icon
           icon="tabler:pin"
           className="absolute -left-2 -top-2 z-[50] h-5 w-5 -rotate-90 text-red-500 drop-shadow-md"
         />
       )}
-      <p className="mt-1.5 text-neutral-300">{entry.content}</p>
+      <p className="mt-1.5 text-neutral-800 dark:text-neutral-100">
+        {entry.content}
+      </p>
       <EntryContextMenu
         entry={entry}
         setTypeOfModifyIdea={setTypeOfModifyIdea}

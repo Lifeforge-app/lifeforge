@@ -7,10 +7,10 @@ import { toast } from 'react-toastify'
 import Loading from '../../components/Loading'
 import Error from '../../components/Error'
 import ModifyContainerModal from './components/ContainerList/ModifyContainerModal'
-import DeleteIdeaConfirmationModal from './components/EntryList/DeleteIdeaConfirmationModal'
 import { useDebounce } from '@uidotdev/usehooks'
 import EmptyStateScreen from './components/EmptyStateScreen'
 import ContainerGrid from './components/ContainerList/ContainerGrid'
+import DeleteContainerConfirmationModal from './components/ContainerList/DeleteContainerConfirmationModal.1'
 
 export interface IIdeaBoxContainer {
   collectionId: string
@@ -85,7 +85,7 @@ function IdeaBox(): React.JSX.Element {
         desc="Sometimes you will randomly stumble upon a great idea."
       />
       <div className="mt-8 flex min-h-0 w-full flex-1 flex-col">
-        <search className="flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
+        <search className="flex w-full items-center gap-4 rounded-lg bg-neutral-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
           <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
           <input
             type="text"
@@ -94,7 +94,7 @@ function IdeaBox(): React.JSX.Element {
               setSearchQuery(e.target.value)
             }}
             placeholder="Search idea containers ..."
-            className="w-full bg-transparent text-neutral-100 placeholder:text-neutral-500 focus:outline-none"
+            className="w-full bg-transparent text-neutral-500 placeholder:text-neutral-400 focus:outline-none"
           />
         </search>
         <>
@@ -135,7 +135,7 @@ function IdeaBox(): React.JSX.Element {
         updateContainerList={updateContainerList}
         existedData={existedData}
       />
-      <DeleteIdeaConfirmationModal
+      <DeleteContainerConfirmationModal
         isOpen={deleteContainerConfirmationModalOpen}
         closeModal={() => {
           setExistedData(null)

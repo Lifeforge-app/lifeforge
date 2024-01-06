@@ -15,22 +15,22 @@ export default function Header(): React.JSX.Element {
         {!sidebarExpanded && (
           <button
             onClick={toggleSidebar}
-            className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-800 hover:text-neutral-100"
+            className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-200 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
           >
             <Icon icon="tabler:menu" className="text-2xl" />
           </button>
         )}
-        <search className="flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
+        <search className="flex w-full items-center gap-4 rounded-lg bg-neutral-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
           <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
           <input
             type="text"
             placeholder="Quick navigate & search ... (Press / to focus)"
-            className="w-full bg-transparent text-neutral-100 placeholder:text-neutral-500 focus:outline-none"
+            className="w-full bg-transparent text-neutral-800 placeholder:text-neutral-400 focus:outline-none"
           />
         </search>
       </div>
       <div className="flex items-center gap-4">
-        <button className="relative rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-800 hover:text-neutral-100">
+        <button className="relative rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-200/50 hover:text-neutral-800 dark:hover:bg-neutral-800">
           <Icon icon="tabler:bell" className="text-2xl" />
           <div className="absolute bottom-4 right-4 h-2 w-2 rounded-full bg-red-500" />
         </button>
@@ -44,14 +44,14 @@ export default function Header(): React.JSX.Element {
               />
             </div>
             <div className="flex flex-col items-start">
-              <div className="font-semibold text-neutral-50">
+              <div className="font-semibold text-neutral-800 dark:text-neutral-100">
                 {userData?.name}
               </div>
-              <div className="text-sm text-neutral-500">{userData?.email}</div>
+              <div className="text-sm text-neutral-400">{userData?.email}</div>
             </div>
             <Icon
               icon="tabler:chevron-down"
-              className="stroke-[2px] text-neutral-400"
+              className="stroke-[2px] text-neutral-500"
             />
           </Menu.Button>
           <Transition

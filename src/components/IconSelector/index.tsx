@@ -71,7 +71,7 @@ function IconSelector({
               onClick={() => {
                 setOpen(false)
               }}
-              className="rounded-md p-2 text-neutral-500 transition-all hover:bg-neutral-800"
+              className="rounded-md p-2 text-neutral-100 transition-all hover:bg-neutral-800"
             >
               <Icon icon="tabler:x" className="h-6 w-6" />
             </button>

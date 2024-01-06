@@ -35,7 +35,7 @@ function ContainerHeader({ id }: { id: string }): React.ReactElement {
     <header className="flex flex-col gap-1">
       <Link
         to="/idea-box"
-        className="mb-2 flex w-min items-center gap-2 rounded-lg p-2 pl-0 pr-4 text-neutral-500 hover:text-neutral-100"
+        className="mb-2 flex w-min items-center gap-2 rounded-lg p-2 pl-0 pr-4 text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-100"
       >
         <Icon icon="tabler:chevron-left" className="text-xl" />
         <span className="whitespace-nowrap text-lg font-medium">Go back</span>
@@ -88,7 +88,7 @@ function ContainerHeader({ id }: { id: string }): React.ReactElement {
             }
           })()}
         </h1>
-        <button className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-800 hover:text-neutral-100">
+        <button className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-200/50 hover:text-neutral-800 dark:hover:bg-neutral-800 dark:hover:text-neutral-100">
           <Icon icon="tabler:dots-vertical" className="text-2xl" />
         </button>
       </div>

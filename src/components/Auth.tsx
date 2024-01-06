@@ -70,12 +70,12 @@ function Auth(): React.JSX.Element {
           <div className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-800 focus-within:border-teal-500">
             <Icon
               icon="tabler:user"
-              className="ml-6 h-6 w-6 shrink-0 text-neutral-500 group-focus-within:text-teal-500"
+              className="text-neutral-100 ml-6 h-6 w-6 shrink-0 group-focus-within:text-teal-500"
             />
 
             <div className="flex w-full items-center gap-2">
               <span
-                className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-neutral-500 group-focus-within:text-teal-500 ${
+                className={`text-neutral-100 pointer-events-none absolute left-[4.2rem] font-medium tracking-wide group-focus-within:text-teal-500 ${
                   emailOrUsername.length === 0
                     ? 'top-1/2 -translate-y-1/2 group-focus-within:top-6 group-focus-within:text-[14px]'
                     : 'top-6 -translate-y-1/2 text-[14px]'
@@ -87,19 +87,19 @@ function Auth(): React.JSX.Element {
                 value={emailOrUsername}
                 onChange={updateEmailOrUsername}
                 placeholder="someone@example.com"
-                className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-widest placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-500"
+                className="focus:placeholder:text-neutral-100 mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-widest placeholder:text-transparent focus:outline-none"
               />
             </div>
           </div>
           <div className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-800 focus-within:border-teal-500">
             <Icon
               icon="tabler:key"
-              className="ml-6 h-6 w-6 shrink-0 text-neutral-500 group-focus-within:text-teal-500"
+              className="text-neutral-100 ml-6 h-6 w-6 shrink-0 group-focus-within:text-teal-500"
             />
 
             <div className="flex w-full items-center gap-2">
               <span
-                className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-neutral-500 group-focus-within:text-teal-500 ${
+                className={`text-neutral-100 pointer-events-none absolute left-[4.2rem] font-medium tracking-wide group-focus-within:text-teal-500 ${
                   password.length === 0
                     ? 'top-1/2 -translate-y-1/2 group-focus-within:top-6 group-focus-within:text-[14px]'
                     : 'top-6 -translate-y-1/2 text-[14px]'
@@ -112,7 +112,7 @@ function Auth(): React.JSX.Element {
                 value={password}
                 onChange={updatePassword}
                 placeholder="••••••••••••••••••••"
-                className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 text-xl tracking-widest placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-500"
+                className="focus:placeholder:text-neutral-100 mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 text-xl tracking-widest placeholder:text-transparent focus:outline-none"
               />
             </div>
           </div>
@@ -140,7 +140,7 @@ function Auth(): React.JSX.Element {
         <img src="/login.jpg" alt="Login" className="h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-br from-teal-500/30 to-teal-600/30" />
         <div className="absolute inset-0 bg-neutral-900/50" />
-        <p className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col text-center text-5xl font-semibold tracking-wide text-neutral-50">
+        <p className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col text-center text-5xl font-semibold tracking-wide text-neutral-100">
           <span className="mb-2 text-2xl text-teal-400">
             One day, You&apos;ll leave this world behind
           </span>

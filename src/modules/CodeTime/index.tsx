@@ -40,6 +40,7 @@ export default function CodeTime(): React.JSX.Element {
   const [activities, setActivities] = useState<Array<{
     date: string
     count: number
+    level: 0 | 1 | 2 | 3 | 4
   }> | null>(null)
   const [firstYear, setFirstYear] = useState(0)
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
@@ -52,10 +53,10 @@ export default function CodeTime(): React.JSX.Element {
   >('24 hours')
   const [topProjects, setTopProjects] = useState<
     Array<{ name: string; count: number }>
-  >({})
+  >([])
   const [topLanguages, setTopLanguages] = useState<
     Array<{ name: string; count: number }>
-  >({})
+  >([])
 
   useEffect(() => {
     fetch(
@@ -130,9 +131,9 @@ export default function CodeTime(): React.JSX.Element {
               {Object.entries(stats).map(([key, value], index) => (
                 <div
                   key={key}
-                  className="flex w-full flex-col items-start gap-2 rounded-lg bg-neutral-800/50 p-6"
+                  className="flex w-full flex-col items-start gap-2 rounded-lg bg-neutral-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50"
                 >
-                  <div className="flex rounded-lg bg-neutral-800 p-4">
+                  <div className="flex rounded-lg bg-neutral-200/70 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800">
                     <Icon
                       icon={
                         {
@@ -144,12 +145,14 @@ export default function CodeTime(): React.JSX.Element {
                         }[key]!
                       }
                       className={`text-3xl ${
-                        index === 3 ? 'text-orange-300' : 'text-neutral-100'
+                        index === 3
+                          ? 'text-orange-300'
+                          : 'text-neutral-500 dark:text-neutral-100'
                       }`}
                     />
                   </div>
                   <div className="text-lg text-neutral-500">{key}</div>
-                  <div className="text-4xl font-semibold text-neutral-50">
+                  <div className="text-4xl font-semibold text-neutral-800">
                     {index < 3 ? (
                       <HoursAndMinutesFromSeconds seconds={value} />
                     ) : (
@@ -222,7 +225,8 @@ export default function CodeTime(): React.JSX.Element {
                     })
                   }
                   theme={{
-                    dark: ['rgb(38, 38, 38)', 'rgb(20, 184, 166)']
+                    // dark: ['rgb(38, 38, 38)', 'rgb(20, 184, 166)'],
+                    dark: ['rgb(229, 229, 229)', 'rgb(20, 184, 166)']
                   }}
                 />
               ) : (
@@ -240,10 +244,10 @@ export default function CodeTime(): React.JSX.Element {
                       onClick={() => {
                         switchSelectedYear(firstYear + index)
                       }}
-                      className={`flex items-start gap-2 p-4 px-8 font-medium ${
+                      className={`flex items-start gap-2 rounded-lg p-4 px-8 font-medium ${
                         selectedYear === firstYear + index
-                          ? 'rounded-lg bg-neutral-700/50 text-neutral-100'
-                          : 'rounded-lg text-neutral-500 hover:bg-neutral-800/50 hover:text-neutral-100'
+                          ? 'bg-neutral-200 font-semibold text-neutral-800 dark:bg-neutral-700/50 dark:text-neutral-100'
+                          : 'text-neutral-400 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50'
                       }`}
                     >
                       <span>{firstYear + index}</span>
@@ -272,10 +276,10 @@ export default function CodeTime(): React.JSX.Element {
                         last as '24 hours' | '7 days' | '30 days'
                       )
                     }}
-                    className={`rounded-md p-4 px-6 tracking-wide hover:bg-neutral-700/50 ${
+                    className={`rounded-md p-4 px-6 tracking-wide ${
                       lastForProjects === last
-                        ? 'bg-neutral-700/50 font-semibold text-neutral-100'
-                        : 'text-neutral-500'
+                        ? 'bg-neutral-200 font-semibold text-neutral-800 dark:bg-neutral-700/50 dark:text-neutral-100'
+                        : 'text-neutral-400 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50'
                     }`}
                   >
                     {last}
@@ -321,9 +325,9 @@ export default function CodeTime(): React.JSX.Element {
                 .map(([key, value], index) => (
                   <li
                     key={key}
-                    className="relative flex items-center justify-between gap-4 rounded-lg bg-neutral-800/50 p-6"
+                    className="relative flex items-center justify-between gap-4 rounded-lg bg-neutral-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50"
                   >
-                    <div className="flex items-center gap-4 text-lg font-medium text-neutral-50">
+                    <div className="flex items-center gap-4 text-lg font-medium text-neutral-800">
                       <div
                         className={`h-4 w-4 rounded-md border ${
                           [
@@ -337,7 +341,7 @@ export default function CodeTime(): React.JSX.Element {
                       ></div>
                       {key}
                     </div>
-                    <div className="text-3xl font-semibold text-neutral-50">
+                    <div className="text-3xl font-semibold text-neutral-800">
                       <HoursAndMinutesFromSeconds seconds={value} />
                     </div>
                   </li>
@@ -365,8 +369,8 @@ export default function CodeTime(): React.JSX.Element {
                     }}
                     className={`rounded-md p-4 px-6 tracking-wide hover:bg-neutral-700/50 ${
                       lastForLanguages === last
-                        ? 'bg-neutral-700/50 font-semibold text-neutral-100'
-                        : 'text-neutral-500'
+                        ? 'bg-neutral-200 font-semibold text-neutral-800 dark:bg-neutral-700/50 dark:text-neutral-100'
+                        : 'text-neutral-400 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50'
                     }`}
                   >
                     {last}
@@ -412,9 +416,9 @@ export default function CodeTime(): React.JSX.Element {
                 .map(([key, value], index) => (
                   <li
                     key={key}
-                    className="relative flex items-center justify-between gap-4 rounded-lg bg-neutral-800/50 p-6"
+                    className="relative flex items-center justify-between gap-4 rounded-lg bg-neutral-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50"
                   >
-                    <div className="flex items-center gap-4 text-lg font-medium text-neutral-50">
+                    <div className="flex items-center gap-4 text-lg font-medium text-neutral-800">
                       <div
                         className={`h-4 w-4 rounded-md border ${
                           [
@@ -428,7 +432,7 @@ export default function CodeTime(): React.JSX.Element {
                       ></div>
                       {key}
                     </div>
-                    <div className="text-3xl font-semibold text-neutral-50">
+                    <div className="text-3xl font-semibold text-neutral-800">
                       <HoursAndMinutesFromSeconds seconds={value} />
                     </div>
                   </li>

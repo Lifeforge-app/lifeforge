@@ -52,10 +52,15 @@ function EntryContextMenu({
       <Menu.Button>
         {({ open }) => (
           <div
-            className={`shrink-0 rounded-lg bg-neutral-800/50 p-2 text-neutral-100 opacity-0 hover:bg-neutral-900 hover:text-neutral-100 group-hover:opacity-100 ${
+            className={`shrink-0 rounded-lg bg-neutral-50 p-2 text-neutral-500 opacity-0 hover:bg-neutral-100 hover:text-neutral-800 group-hover:opacity-100 dark:bg-neutral-800/50 dark:text-neutral-100 dark:hover:bg-neutral-900 dark:hover:text-neutral-100 ${
+              entry.type === 'image' &&
+              '!shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]'
+            } ${
               open &&
               `${
-                entry.type === 'image' ? '!bg-neutral-900' : '!bg-neutral-800'
+                entry.type === 'image'
+                  ? '!dark:bg-neutral-900 !bg-neutral-200'
+                  : '!dark:bg-neutral-800 !bg-neutral-200'
               } !opacity-100`
             }`}
           >
@@ -72,7 +77,7 @@ function EntryContextMenu({
         leaveTo="transform opacity-0 scale-95"
         className="absolute right-0 top-3"
       >
-        <Menu.Items className="mt-8 w-48 overflow-hidden rounded-md bg-neutral-800 shadow-lg outline-none focus:outline-none">
+        <Menu.Items className="mt-8 w-48 overflow-hidden rounded-md bg-neutral-100 shadow-lg outline-none focus:outline-none dark:bg-neutral-800">
           <Menu.Item>
             {({ active }) => (
               <button
@@ -80,16 +85,12 @@ function EntryContextMenu({
                   pinIdea(entry.id)
                 }}
                 className={`${
-                  active
-                    ? 'bg-neutral-700/50 text-neutral-100'
-                    : 'text-neutral-500'
+                  active ? 'bg-neutral-200/50 dark:bg-neutral-700/50' : ''
                 } group flex w-full items-center gap-4 rounded-md p-4`}
               >
                 <Icon
                   icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
-                  className={`${
-                    active ? 'text-neutral-100' : 'text-neutral-500'
-                  } h-5 w-5`}
+                  className="h-5 w-5"
                 />
                 {entry.pinned ? 'Unpin from' : 'Pin to'} top
               </button>
@@ -105,17 +106,10 @@ function EntryContextMenu({
                     setModifyIdeaModalOpenType('update')
                   }}
                   className={`${
-                    active
-                      ? 'bg-neutral-700/50 text-neutral-100'
-                      : 'text-neutral-500'
+                    active ? 'bg-neutral-200/50 dark:bg-neutral-700/50' : ''
                   } group flex w-full items-center gap-4 rounded-md p-4`}
                 >
-                  <Icon
-                    icon="tabler:pencil"
-                    className={`${
-                      active ? 'text-neutral-100' : 'text-neutral-500'
-                    } h-5 w-5`}
-                  />
+                  <Icon icon="tabler:pencil" className="h-5 w-5" />
                   Edit
                 </button>
               )}
@@ -129,7 +123,9 @@ function EntryContextMenu({
                   setDeleteIdeaModalOpen(true)
                 }}
                 className={`${
-                  active ? 'bg-neutral-700/50 text-red-600' : ' text-red-500'
+                  active
+                    ? 'bg-neutral-200/50 text-red-600 dark:bg-neutral-700/50'
+                    : ' text-red-500'
                 } group flex w-full items-center gap-4 rounded-md p-4`}
               >
                 <Icon icon="tabler:trash" className="h-5 w-5" />

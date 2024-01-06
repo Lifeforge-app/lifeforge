@@ -135,12 +135,12 @@ function ModifyContainerModal({
             onClick={() => {
               setOpenType(null)
             }}
-            className="rounded-md p-2 text-neutral-500 transition-all hover:bg-neutral-800"
+            className="rounded-md p-2 text-neutral-500 transition-all hover:bg-neutral-200/50 hover:text-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-800"
           >
             <Icon icon="tabler:x" className="h-6 w-6" />
           </button>
         </div>
-        <div className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-800/50 focus-within:border-teal-500">
+        <div className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-200/50 focus-within:border-teal-500 dark:bg-neutral-800/50">
           <Icon
             icon="tabler:cube"
             className="ml-6 h-6 w-6 shrink-0 text-neutral-500 group-focus-within:text-teal-500"
@@ -160,11 +160,11 @@ function ModifyContainerModal({
               value={containerName}
               onChange={updateContainerName}
               placeholder="My container"
-              className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-500"
+              className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-400"
             />
           </div>
         </div>
-        <div className="group relative mt-6 flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-800/50 focus-within:border-teal-500">
+        <div className="group relative mt-6 flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-200/50 focus-within:border-teal-500 dark:bg-neutral-800/50">
           <Icon
             icon="tabler:palette"
             className="ml-6 h-6 w-6 shrink-0 text-neutral-500 group-focus-within:text-teal-500"
@@ -191,7 +191,7 @@ function ModifyContainerModal({
                 value={containerColor}
                 onChange={updateContainerColor}
                 placeholder="#FFFFFF"
-                className="h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-500"
+                className="h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-400"
               />
             </div>
             <button
@@ -204,7 +204,7 @@ function ModifyContainerModal({
             </button>
           </div>
         </div>
-        <div className="group relative mt-6 flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-800/50 focus-within:border-teal-500">
+        <div className="group relative mt-6 flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-200/50 focus-within:border-teal-500 dark:bg-neutral-800/50">
           <Icon
             icon="tabler:icons"
             className="ml-6 h-6 w-6 shrink-0 text-neutral-500 group-focus-within:text-teal-500"
@@ -229,14 +229,14 @@ function ModifyContainerModal({
                 value={containerIcon}
                 onChange={updateContainerIcon}
                 placeholder="tabler:cube"
-                className="h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-500"
+                className="h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-400"
               />
             </div>
             <button
               onClick={() => {
                 setIconSelectorOpen(true)
               }}
-              className="mr-4 shrink-0 rounded-lg p-2 text-neutral-500 hover:bg-neutral-500/30 hover:text-neutral-200 focus:outline-none"
+              className="mr-4 shrink-0 rounded-lg p-2 text-neutral-100 hover:bg-neutral-500/30 hover:text-neutral-200 focus:outline-none"
             >
               <Icon icon="tabler:chevron-down" className="h-6 w-6" />
             </button>

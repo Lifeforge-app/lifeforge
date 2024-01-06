@@ -191,7 +191,7 @@ function CreateIdeaModal({
           }{' '}
           {innerOpenType === 'create' ? (
             <Menu as="div" className="relative inline-block text-left">
-              <Menu.Button className="inline-flex w-full items-center justify-center rounded-md border-2 border-neutral-800 p-2 px-4 text-lg font-semibold tracking-wide text-neutral-200 shadow-sm outline-none hover:bg-neutral-800/50 focus:outline-none">
+              <Menu.Button className="inline-flex w-full items-center justify-center rounded-md border-2 border-neutral-800 p-2 px-4 text-lg font-semibold tracking-wide text-neutral-200 shadow-sm outline-none hover:bg-neutral-50 focus:outline-none dark:bg-neutral-800/50">
                 <Icon
                   icon={
                     {
@@ -237,7 +237,7 @@ function CreateIdeaModal({
                             )
                           }}
                           className={`${
-                            active ? 'bg-neutral-700' : 'text-neutral-500'
+                            active ? 'bg-neutral-700' : 'text-neutral-100'
                           } group flex w-full items-center rounded-md p-4 text-base`}
                         >
                           <Icon
@@ -271,20 +271,20 @@ function CreateIdeaModal({
           onClick={() => {
             setOpenType(null)
           }}
-          className="rounded-md p-2 text-neutral-500 transition-all hover:bg-neutral-800"
+          className="rounded-md p-2 text-neutral-500 transition-all hover:bg-neutral-800 dark:text-neutral-100"
         >
           <Icon icon="tabler:x" className="h-6 w-6" />
         </button>
       </div>
       {innerTypeOfModifyIdea === 'link' && (
-        <div className="group relative mb-6 flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-800/50 focus-within:border-teal-500">
+        <div className="group relative mb-6 flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-50 focus-within:border-teal-500 dark:bg-neutral-800/50">
           <Icon
             icon="tabler:bulb"
-            className="ml-6 h-6 w-6 shrink-0 text-neutral-500 group-focus-within:text-teal-500"
+            className="ml-6 h-6 w-6 shrink-0 text-neutral-100 group-focus-within:text-teal-500"
           />
           <div className="flex w-full items-center gap-2">
             <span
-              className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-neutral-500 group-focus-within:text-teal-500 ${
+              className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-neutral-100 group-focus-within:text-teal-500 ${
                 ideaTitle.length === 0
                   ? 'top-1/2 -translate-y-1/2 group-focus-within:top-6 group-focus-within:text-[14px]'
                   : 'top-6 -translate-y-1/2 text-[14px]'
@@ -296,7 +296,7 @@ function CreateIdeaModal({
               value={ideaTitle}
               onChange={updateIdeaTitle}
               placeholder="Mind blowing idea"
-              className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-500"
+              className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-100"
             />
           </div>
         </div>
@@ -306,7 +306,7 @@ function CreateIdeaModal({
           onFocus={e => {
             e.currentTarget.querySelector('textarea input')?.focus()
           }}
-          className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-800/50 focus-within:border-teal-500"
+          className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-50 focus-within:border-teal-500 dark:bg-neutral-800/50"
         >
           <Icon
             icon={
@@ -314,11 +314,11 @@ function CreateIdeaModal({
                 ? 'tabler:file-text'
                 : 'tabler:link'
             }
-            className="ml-6 h-6 w-6 shrink-0 text-neutral-500 group-focus-within:text-teal-500"
+            className="ml-6 h-6 w-6 shrink-0 text-neutral-100 group-focus-within:text-teal-500"
           />
           <div className="flex w-full items-center gap-2">
             <span
-              className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-neutral-500 group-focus-within:text-teal-500 ${
+              className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-neutral-100 group-focus-within:text-teal-500 ${
                 {
                   text: ideaContent,
                   link: ideaLink
@@ -341,14 +341,14 @@ function CreateIdeaModal({
                   updateIdeaContent(e)
                 }}
                 placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, lorem euismod."
-                className="mt-6 min-h-[2rem] w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-500"
+                className="mt-6 min-h-[2rem] w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-100"
               />
             ) : (
               <input
                 value={ideaLink}
                 onChange={updateIdeaLink}
                 placeholder="https://example.com"
-                className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-500"
+                className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-100"
               />
             )}
           </div>
@@ -379,9 +379,9 @@ function CreateIdeaModal({
           <input {...getInputProps()} />
           <Icon
             icon="tabler:drag-drop"
-            className="h-20 w-20 text-neutral-500"
+            className="h-20 w-20 text-neutral-100"
           />
-          <div className="mt-4 text-center text-2xl font-medium text-neutral-500">
+          <div className="mt-4 text-center text-2xl font-medium text-neutral-100">
             {isDragActive ? "Drop it like it's hot" : 'Drag and drop to upload'}
           </div>
           <div className="mt-4 text-center text-lg font-semibold uppercase tracking-widest text-neutral-400">

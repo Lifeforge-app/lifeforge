@@ -24,7 +24,7 @@ function EntryLink({
   updateIdeaList: () => void
 }): React.ReactElement {
   return (
-    <div className="relative my-4 flex flex-col gap-2 rounded-lg bg-neutral-800/50 p-4">
+    <div className="relative my-4 flex flex-col gap-2 rounded-lg bg-neutral-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
       {entry.pinned && (
         <Icon
           icon="tabler:pin"

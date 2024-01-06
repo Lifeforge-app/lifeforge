@@ -14,11 +14,6 @@
   outline: none;
 }
 
-body {
-  background-color: rgba(38, 38, 38, 1);
-  color: rgba(255, 255, 255, 1);
-}
-
 body *:not(input) {
   @apply transition-all;
 }
@@ -114,5 +109,13 @@ input:-webkit-autofill:active {
 }
 
 div[data-rmiz-modal-content] {
-  @apply bg-neutral-900;
+  @apply bg-neutral-100 dark:bg-neutral-900;
+}
+
+progress::-webkit-progress-value {
+  @apply !bg-teal-500;
+}
+
+progress::-moz-progress-bar {
+  @apply !bg-teal-500;
 }

@@ -16,7 +16,7 @@ export default function UniversityAnalytics(): React.JSX.Element {
         {data.items.map(item => (
           <div
             key={item.c.id}
-            className="flex w-full items-center justify-between gap-6 rounded-lg bg-neutral-800/50 p-6"
+            className="flex w-full items-center justify-between gap-6 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 p-6"
           >
             <div className="flex items-center gap-6">
               <div className="bg-white outline outline-2 outline-offset-4 outline-teal-500">
@@ -29,11 +29,11 @@ export default function UniversityAnalytics(): React.JSX.Element {
               <div className="flex flex-col gap-1">
                 <h2 className="text-xl font-semibold">{item.c.name}</h2>
                 <div className="flex items-center gap-6">
-                  <div className="flex items-center gap-2 text-neutral-500">
+                  <div className="flex items-center gap-2 text-neutral-100">
                     <Icon icon="tabler:school" className="text-xl" />
                     <span className="font-medium">{item.u.campus_name}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-neutral-500">
+                  <div className="flex items-center gap-2 text-neutral-100">
                     <Icon icon="tabler:map-pin" className="text-xl" />
                     <span className="font-medium">{item.u.campus_name}</span>
                   </div>
@@ -64,7 +64,7 @@ export default function UniversityAnalytics(): React.JSX.Element {
                 >
                   RM {item.c.avg_nett_fee.toLocaleString()}
                 </div>
-                <span className="text-lg font-medium text-neutral-500">
+                <span className="text-lg font-medium text-neutral-100">
                   {item.c.nett_fee.startsWith('-') ? 'surplus ' : ''}/ year
                 </span>
               </div>

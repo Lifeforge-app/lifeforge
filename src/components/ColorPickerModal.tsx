@@ -44,7 +44,7 @@ function ColorPickerModal({
           onClick={() => {
             setOpen(false)
           }}
-          className="rounded-md p-2 text-neutral-500 transition-all hover:bg-neutral-800"
+          className="rounded-md p-2 text-neutral-100 transition-all hover:bg-neutral-800"
         >
           <Icon icon="tabler:x" className="h-6 w-6" />
         </button>
@@ -68,8 +68,8 @@ function ColorPickerModal({
       <EditableInput
         label="Hex"
         value={innerColor}
-        onChange={color => {
-          setInnerColor(color.hex)
+        onChange={e => {
+          setInnerColor(`#${e.target.value}`)
         }}
         className="mt-4 border-0 p-4 text-2xl font-semibold"
       />

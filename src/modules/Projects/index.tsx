@@ -48,7 +48,7 @@ function Projects(): React.JSX.Element {
         desc="It's time to stop procrastinating."
       />
       <div className="mb-12 mt-8 flex min-h-0 w-full flex-1">
-        <aside className="h-full w-1/4 overflow-y-scroll rounded-lg bg-neutral-800/50 py-4">
+        <aside className="h-full w-1/4 overflow-hidden overflow-y-scroll rounded-lg bg-neutral-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
           <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
             <SidebarItem icon="tabler:list" name="All Projects" />
             <SidebarItem icon="tabler:star-filled" name="Starred" />
@@ -85,7 +85,7 @@ function Projects(): React.JSX.Element {
                 key={index}
                 className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
               >
-                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-800">
+                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-200/50 dark:hover:bg-neutral-800">
                   <span className={`block h-8 w-1.5 rounded-full ${color}`} />
                   <Icon icon={icon} className="h-6 w-6 shrink-0" />
                   <div className="flex w-full items-center justify-between">
@@ -107,7 +107,7 @@ function Projects(): React.JSX.Element {
                 key={index}
                 className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
               >
-                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-800">
+                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-200/50 dark:hover:bg-neutral-800">
                   <Icon icon={icon} className="h-6 w-6 shrink-0" />
                   <div className="flex w-full items-center justify-between">
                     {name}
@@ -135,7 +135,7 @@ function Projects(): React.JSX.Element {
                 key={index}
                 className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
               >
-                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-800">
+                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-200/50 dark:hover:bg-neutral-800">
                   <Icon icon={icon} className="h-5 w-5 shrink-0" />
                   <div className="flex w-full items-center justify-between">
                     {name}
@@ -150,22 +150,22 @@ function Projects(): React.JSX.Element {
         </aside>
         <div className="ml-12 flex h-full flex-1 flex-col">
           <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-semibold text-neutral-50">
+            <h1 className="text-4xl font-semibold text-neutral-800 dark:text-neutral-100">
               All Projects{' '}
               <span className="text-base text-neutral-400">(10)</span>
             </h1>
-            <button className="flex shrink-0 items-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800 hover:bg-teal-600">
+            <button className="flex shrink-0 items-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]   hover:bg-teal-600 dark:text-neutral-800">
               <Icon icon="tabler:plus" className="h-5 w-5 shrink-0" />
               <span className="shrink-0">create</span>
             </button>
           </div>
           <div className="mt-6 flex items-center gap-4">
-            <search className="flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
+            <search className="flex w-full items-center gap-4 rounded-lg bg-neutral-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
               <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
               <input
                 type="text"
                 placeholder="Search projects ..."
-                className="w-full bg-transparent text-neutral-100 placeholder:text-neutral-500 focus:outline-none"
+                className="w-full bg-transparent text-neutral-500 placeholder:text-neutral-300 focus:outline-none"
               />
             </search>
           </div>
@@ -176,7 +176,7 @@ function Projects(): React.JSX.Element {
                 .map((_, i) => (
                   <li
                     key={i}
-                    className="flex items-center gap-4 rounded-lg bg-neutral-800/50 p-6"
+                    className="flex items-center gap-4 rounded-lg bg-neutral-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50"
                   >
                     <Link
                       to="./lifeforge"
@@ -190,7 +190,28 @@ function Projects(): React.JSX.Element {
                             ]
                           }`}
                         />
-                        <div className="h-12 w-12 overflow-hidden rounded-lg bg-neutral-800 p-2">
+                        <div
+                          className={`h-12 w-12 overflow-hidden rounded-lg p-2 ${
+                            [
+                              'bg-red-500/20 text-red-500',
+                              'bg-yellow-500/20 text-yellow-500',
+                              'bg-green-500/20 text-green-500',
+                              'bg-blue-500/20 text-blue-500',
+                              'bg-indigo-500/20 text-indigo-500',
+                              'bg-purple-500/20 text-purple-500',
+                              'bg-pink-500/20 text-pink-500',
+                              'bg-rose-500/20 text-rose-500',
+                              'bg-fuchsia-500/20 text-fuchsia-500',
+                              'bg-orange-500/20 text-orange-500',
+                              'bg-cyan-500/20 text-cyan-500',
+                              'bg-sky-500/20 text-sky-500',
+                              'bg-lime-500/20 text-lime-500',
+                              'bg-amber-500/20 text-amber-500',
+                              'bg-emerald-500/20 text-emerald-500',
+                              'bg-teal-500/20 text-teal-500'
+                            ][Math.floor(Math.random() * 16)]
+                          }`}
+                        >
                           <Icon
                             icon={`tabler:${
                               icons[
@@ -201,7 +222,7 @@ function Projects(): React.JSX.Element {
                           />
                         </div>
                         <div className="flex flex-col items-start">
-                          <div className="font-semibold text-neutral-50">
+                          <div className="font-semibold text-neutral-800 dark:text-neutral-100">
                             {faker.commerce.productName()}
                           </div>
                           <div className="text-sm text-neutral-500">

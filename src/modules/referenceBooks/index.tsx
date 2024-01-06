@@ -14,7 +14,7 @@ function ReferenceBooks(): React.JSX.Element {
         desc="A collection of reference books that accompany you on your learning journey."
       />
       <div className="mb-12 mt-8 flex min-h-0 w-full flex-1">
-        <aside className="h-full w-1/4 overflow-y-scroll rounded-lg bg-neutral-800/50 py-4">
+        <aside className="h-full w-1/4 overflow-y-scroll rounded-lg bg-neutral-50 dark:bg-neutral-800/50 py-4">
           <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
             <SidebarItem icon="tabler:list" name="All books" />
             <SidebarItem icon="tabler:star-filled" name="Starred" />
@@ -66,7 +66,7 @@ function ReferenceBooks(): React.JSX.Element {
         </aside>
         <div className="ml-12 flex h-full min-h-0 flex-1 flex-col">
           <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-semibold text-neutral-50">
+            <h1 className="text-4xl font-semibold text-neutral-100">
               All Books <span className="text-base text-neutral-400">(10)</span>
             </h1>
             <button className="flex shrink-0 items-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800">
@@ -74,12 +74,12 @@ function ReferenceBooks(): React.JSX.Element {
               <span className="shrink-0">upload</span>
             </button>
           </div>
-          <search className="mt-6 flex w-full items-center gap-4 rounded-lg bg-neutral-800/50 p-4">
-            <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
+          <search className="mt-6 flex w-full items-center gap-4 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 p-4">
+            <Icon icon="tabler:search" className="h-5 w-5 text-neutral-100" />
             <input
               type="text"
               placeholder="Search books ..."
-              className="w-full bg-transparent text-neutral-100 placeholder:text-neutral-500 focus:outline-none"
+              className="w-full bg-transparent text-neutral-100 placeholder:text-neutral-100 focus:outline-none"
             />
           </search>
           <ul className="mt-6 grid min-h-0 grid-cols-3 gap-6 gap-y-12 overflow-y-auto">
@@ -90,14 +90,14 @@ function ReferenceBooks(): React.JSX.Element {
                   key={i}
                   className="relative flex flex-col items-start rounded-lg"
                 >
-                  <div className="flex h-72 w-full items-center justify-center rounded-lg bg-neutral-800/50 p-8">
+                  <div className="flex h-72 w-full items-center justify-center rounded-lg bg-neutral-50 dark:bg-neutral-800/50 p-8">
                     <img
                       src={faker.image.imageUrl(300, 400, 'airport', true)}
                       alt={faker.lorem.sentence()}
                       className="h-full"
                     />
                   </div>
-                  <div className="mt-4 text-xl font-medium text-neutral-50">
+                  <div className="mt-4 text-xl font-medium text-neutral-100">
                     {faker.commerce.productName()}
                   </div>
                   <div className="mt-2 text-sm font-medium text-neutral-400">

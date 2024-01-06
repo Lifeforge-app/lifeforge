@@ -13,7 +13,7 @@ function App(): React.JSX.Element {
     <BrowserRouter>
       <GlobalStateProvider>
         <AuthProvider>
-          <div className="relative flex h-screen w-full overflow-hidden bg-neutral-900 text-neutral-50">
+          <div className="relative flex h-screen w-full overflow-hidden bg-neutral-200/50 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-100">
             <AppRouter />
           </div>
           <ToastContainer

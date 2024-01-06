@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react'
 
 function Sidebar(): React.JSX.Element {
   return (
-    <aside className="h-full w-1/4 overflow-y-scroll rounded-lg bg-neutral-800/50 py-4">
+    <aside className="h-full w-1/4 overflow-y-scroll rounded-lg bg-neutral-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
       <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
         <SidebarTitle name="tasks" />
         {[
@@ -19,7 +19,7 @@ function Sidebar(): React.JSX.Element {
             key={index}
             className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
           >
-            <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-800">
+            <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-200/50 dark:hover:bg-neutral-800">
               <Icon icon={icon} className="h-6 w-6 shrink-0" />
               <div className="flex w-full items-center justify-between">
                 {name}
@@ -42,7 +42,7 @@ function Sidebar(): React.JSX.Element {
             key={index}
             className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
           >
-            <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-800">
+            <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-200/50 dark:hover:bg-neutral-800">
               <span className={`block h-8 w-1.5 rounded-full ${color}`} />
               <Icon icon={icon} className="h-6 w-6 shrink-0" />
               <div className="flex w-full items-center justify-between">

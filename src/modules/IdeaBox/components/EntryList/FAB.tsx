@@ -19,7 +19,7 @@ function FAB({
       as="div"
       className="group fixed bottom-12 right-12 z-[9990] overscroll-contain "
     >
-      <Menu.Button className="flex items-center gap-2 rounded-lg bg-teal-500 p-4 font-semibold uppercase tracking-wider text-neutral-800 shadow-lg hover:bg-teal-600">
+      <Menu.Button className="flex items-center gap-2 rounded-lg bg-teal-500 p-4 font-semibold uppercase tracking-wider text-neutral-100 shadow-lg hover:bg-teal-600 dark:text-neutral-800">
         {({ open }) => (
           <Icon
             icon="tabler:plus"
@@ -53,13 +53,15 @@ function FAB({
                       setModifyIdeaModalOpenType('create')
                     }}
                     className={`group flex w-full items-center justify-end gap-4 rounded-md py-3 pr-2 ${
-                      active ? 'text-neutral-200' : 'text-neutral-500'
+                      active
+                        ? 'text-neutral-800 dark:text-neutral-200'
+                        : 'text-neutral-500 dark:text-neutral-100'
                     }`}
                   >
                     {name}
                     <button
                       className={`rounded-full ${
-                        active ? 'bg-neutral-400' : 'bg-neutral-200'
+                        active ? 'bg-neutral-300' : 'bg-neutral-200'
                       } p-3`}
                     >
                       <Icon
