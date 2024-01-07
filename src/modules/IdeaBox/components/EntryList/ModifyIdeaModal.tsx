@@ -125,12 +125,11 @@ function CreateIdeaModal({
       }/${innerOpenType === 'create' ? containerId : existedData!.id}`,
       {
         method: innerOpenType === 'create' ? 'PUT' : 'PATCH',
-        headers: {
-          'Content-Type':
-            innerOpenType === 'create'
-              ? 'multipart/form-data'
-              : 'application/json'
-        },
+        ...(innerOpenType === 'update' && {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }),
         body:
           innerOpenType === 'create'
             ? formData
