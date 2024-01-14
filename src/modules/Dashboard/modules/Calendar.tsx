@@ -60,7 +60,7 @@ export default function Calendar(): React.JSX.Element {
                         : 'text-neutral-800 dark:text-neutral-100'
                     } ${
                       actualIndex === date.getDate()
-                        ? "after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:h-10 after:w-10 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-md after:border after:border-teal-500 after:bg-teal-500/10 after:content-['']"
+                        ? "after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:h-10 after:w-10 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-md after:border after:border-custom-500 after:bg-custom-500/10 after:content-['']"
                         : ''
                     }`}
                   >

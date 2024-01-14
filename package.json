@@ -10,11 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.1",
     "@headlessui/react": "^1.7.17",
     "@iconify/collections": "^1.0.375",
     "@iconify/react": "^4.1.1",
     "@types/react-custom-scrollbars": "^4.0.12",
     "@uidotdev/usehooks": "^2.4.1",
+    "@uiw/codemirror-theme-atomone": "^4.21.21",
+    "@uiw/codemirror-theme-material": "^4.21.21",
+    "@uiw/codemirror-theme-nord": "^4.21.21",
+    "@uiw/react-codemirror": "^4.21.21",
     "@uiw/react-color": "^2.0.5",
     "autoprefixer": "^10.4.16",
     "chart.js": "^4.4.0",

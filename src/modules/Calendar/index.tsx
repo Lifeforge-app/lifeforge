@@ -72,7 +72,7 @@ function Calendar(): React.JSX.Element {
                               : 'text-neutral-800 dark:text-neutral-100'
                           } ${
                             actualIndex === date.getDate()
-                              ? "font-semibold after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:h-10 after:w-10 after:-translate-x-1/2 after:-translate-y-6 after:rounded-md after:border after:border-teal-500 after:bg-teal-500/10 after:content-['']"
+                              ? "font-semibold after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:h-10 after:w-10 after:-translate-x-1/2 after:-translate-y-6 after:rounded-md after:border after:border-custom-500 after:bg-custom-500/10 after:content-['']"
                               : ''
                           }`}
                         >
@@ -141,7 +141,7 @@ function Calendar(): React.JSX.Element {
               <div className="ml-4 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
                 Nov 20 - 26, 2023
               </div>
-              <span className="ml-4 rounded-full bg-teal-500/20 px-4 py-1.5 text-sm font-semibold text-teal-500  shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]">
+              <span className="ml-4 rounded-full bg-custom-500/20 px-4 py-1.5 text-sm font-semibold text-custom-500  shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]">
                 Week{' '}
                 {(() => {
                   const currentDate = new Date()
@@ -160,7 +160,7 @@ function Calendar(): React.JSX.Element {
               <button className="rounded-lg p-4 text-neutral-100 transition-all hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50">
                 <Icon icon="tabler:search" className="text-2xl" />
               </button>
-              <button className="flex items-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-teal-600 dark:text-neutral-800">
+              <button className="flex items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 dark:text-neutral-800">
                 <Icon icon="tabler:plus" className="text-xl" />
                 create
               </button>
@@ -178,7 +178,7 @@ function Calendar(): React.JSX.Element {
                   <div
                     key={index}
                     className={`ml-1.5 flex w-full items-center justify-center gap-2 rounded-lg bg-neutral-50 py-4 text-neutral-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50 ${
-                      index === 3 && 'bg-teal-500/20 text-teal-500'
+                      index === 3 && 'bg-custom-500/20 text-custom-500'
                     }`}
                   >
                     <span>

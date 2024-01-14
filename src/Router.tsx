@@ -62,6 +62,7 @@ function AppRouter(): React.JSX.Element {
         <Route path="idea-box" element={<IdeaBox />} />
         <Route path="idea-box/:id" element={<Ideas />} />
         <Route path="snippets" element={<Snippets />} />
+        <Route path="snippets/:id" element={<Snippets />} />
         <Route path="resources" element={<Resources />} />
         <Route path="code-time" element={<CodeTime />} />
         <Route path="pomodoro-timer" element={<PomodoroTimer />} />

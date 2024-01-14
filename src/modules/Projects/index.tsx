@@ -148,18 +148,18 @@ function Projects(): React.JSX.Element {
             ))}
           </ul>
         </aside>
-        <div className="ml-12 flex h-full flex-1 flex-col">
-          <div className="flex items-center justify-between">
+        <div className="ml-8 flex h-full flex-1 flex-col">
+          <div className="mx-4 flex items-center justify-between">
             <h1 className="text-4xl font-semibold text-neutral-800 dark:text-neutral-100">
               All Projects{' '}
               <span className="text-base text-neutral-400">(10)</span>
             </h1>
-            <button className="flex shrink-0 items-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]   hover:bg-teal-600 dark:text-neutral-800">
+            <button className="flex shrink-0 items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]   hover:bg-custom-600 dark:text-neutral-800">
               <Icon icon="tabler:plus" className="h-5 w-5 shrink-0" />
               <span className="shrink-0">create</span>
             </button>
           </div>
-          <div className="mt-6 flex items-center gap-4">
+          <div className="mx-4 mt-6 flex items-center gap-4">
             <search className="flex w-full items-center gap-4 rounded-lg bg-neutral-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
               <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
               <input
@@ -170,13 +170,13 @@ function Projects(): React.JSX.Element {
             </search>
           </div>
           <div className="mt-6 flex flex-1 flex-col overflow-y-auto">
-            <ul className="flex flex-col gap-4">
+            <ul className="flex flex-col">
               {Array(10)
                 .fill(0)
                 .map((_, i) => (
                   <li
                     key={i}
-                    className="flex items-center gap-4 rounded-lg bg-neutral-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50"
+                    className="m-4 mt-0 flex items-center gap-4 rounded-lg bg-neutral-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50"
                   >
                     <Link
                       to="./lifeforge"
@@ -208,7 +208,7 @@ function Projects(): React.JSX.Element {
                               'bg-lime-500/20 text-lime-500',
                               'bg-amber-500/20 text-amber-500',
                               'bg-emerald-500/20 text-emerald-500',
-                              'bg-teal-500/20 text-teal-500'
+                              'bg-custom-500/20 text-custom-500'
                             ][Math.floor(Math.random() * 16)]
                           }`}
                         >

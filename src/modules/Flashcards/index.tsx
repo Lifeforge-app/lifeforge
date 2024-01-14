@@ -33,13 +33,13 @@ export default function Flashcards(): React.JSX.Element {
                   <p className="text-sm font-medium text-neutral-400">
                     {faker.datatype.number(100)} cards
                   </p>
-                  <div className="text-xl font-medium text-neutral-800">
+                  <div className="text-xl font-medium text-neutral-800 dark:text-neutral-100">
                     {faker.commerce.productName()}
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
                   <progress
-                    className="progress h-2 w-full rounded-lg bg-neutral-200"
+                    className="progress h-2 w-full rounded-lg bg-neutral-200 dark:bg-neutral-700"
                     value={faker.datatype.number(100)}
                     max="100"
                   ></progress>
@@ -64,11 +64,11 @@ export default function Flashcards(): React.JSX.Element {
                   <p className="text-sm font-medium text-neutral-400">
                     {faker.datatype.number(100)} cards
                   </p>
-                  <div className="text-xl font-medium text-neutral-800">
+                  <div className="text-xl font-medium text-neutral-800 dark:text-neutral-100">
                     {faker.commerce.productName()}
                   </div>
                 </div>
-                <div className="flex flex-1 items-center justify-center gap-2 text-teal-500">
+                <div className="text-custom-500 flex flex-1 items-center justify-center gap-2">
                   <Icon icon="tabler:check" className="h-5 w-5" />
                   <p className="font-medium">Done</p>
                 </div>

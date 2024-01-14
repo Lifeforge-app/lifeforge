@@ -50,28 +50,28 @@ function Personalization(): React.ReactElement {
               key={name}
               type="button"
               onClick={() => {
-                setTheme(name.toLowerCase())
+                setTheme(name.toLowerCase() as 'system' | 'light' | 'dark')
               }}
               className="flex-1"
             >
               <div
                 className={`ring-2 ring-offset-8 ring-offset-neutral-50 dark:ring-offset-neutral-900 ${
                   theme === name.toLowerCase()
-                    ? 'ring-teal-500'
+                    ? 'ring-custom-500'
                     : 'ring-neutral-200 dark:ring-neutral-700'
                 } relative overflow-hidden rounded-2xl`}
               >
                 {theme === name.toLowerCase() && (
                   <Icon
                     icon="tabler:circle-check-filled"
-                    className="absolute bottom-2 right-2.5 block h-6 w-6 text-xl text-teal-500"
+                    className="text-custom-500 absolute bottom-2 right-2.5 block h-6 w-6 text-xl"
                   />
                 )}
                 <img src={Image} alt={name} className="w-full" />
               </div>
               <p
                 className={`mt-4 ${
-                  theme === name.toLowerCase() && 'font-medium text-teal-500'
+                  theme === name.toLowerCase() && 'text-custom-500 font-medium'
                 }`}
               >
                 {name}
@@ -97,8 +97,8 @@ function Personalization(): React.ReactElement {
           }}
         >
           <div className="relative mt-1 w-48">
-            <Listbox.Button className="relative flex w-full items-center gap-2 rounded-lg border-[1.5px] border-neutral-200 bg-neutral-100 py-4 pl-4 pr-10 text-left focus:outline-none focus-visible:border-teal-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 dark:border-neutral-700 dark:bg-neutral-900 sm:text-sm">
-              <span className="inline-block h-4 w-4 rounded-full bg-teal-500" />
+            <Listbox.Button className="focus-visible:border-custom-500 focus-visible:ring-offset-custom-300 relative flex w-full items-center gap-2 rounded-lg border-[1.5px] border-neutral-200 bg-neutral-100 py-4 pl-4 pr-10 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 dark:border-neutral-700 dark:bg-neutral-900 sm:text-sm">
+              <span className="bg-custom-500 inline-block h-4 w-4 rounded-full" />
               <span className="mt-[-1px] block truncate">
                 {themeColor.split('-').slice(1).join(' ')}
               </span>

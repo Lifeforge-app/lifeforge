@@ -19,7 +19,7 @@ export default function UniversityAnalytics(): React.JSX.Element {
             className="flex w-full items-center justify-between gap-6 rounded-lg bg-neutral-50 dark:bg-neutral-800/50 p-6"
           >
             <div className="flex items-center gap-6">
-              <div className="bg-white outline outline-2 outline-offset-4 outline-teal-500">
+              <div className="bg-white outline outline-2 outline-offset-4 outline-custom-500">
                 <img
                   src={item.u.logo}
                   alt=""
@@ -45,7 +45,7 @@ export default function UniversityAnalytics(): React.JSX.Element {
                         <div
                           key={badge.name}
                           className={
-                            'flex items-center gap-2 rounded-full bg-teal-500/20 px-4 py-1.5 text-xs font-medium text-teal-500'
+                            'flex items-center gap-2 rounded-full bg-custom-500/20 px-4 py-1.5 text-xs font-medium text-custom-500'
                           }
                         >
                           {badge.name}

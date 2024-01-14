@@ -19,7 +19,7 @@ function FAB({
       as="div"
       className="group fixed bottom-12 right-12 z-[9990] overscroll-contain "
     >
-      <Menu.Button className="flex items-center gap-2 rounded-lg bg-teal-500 p-4 font-semibold uppercase tracking-wider text-neutral-100 shadow-lg hover:bg-teal-600 dark:text-neutral-800">
+      <Menu.Button className="flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-neutral-100 shadow-lg hover:bg-custom-600 dark:text-neutral-800">
         {({ open }) => (
           <Icon
             icon="tabler:plus"

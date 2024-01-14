@@ -75,7 +75,7 @@ function ColorPickerModal({
       />
       <button
         onClick={confirmColor}
-        className="flex items-center justify-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800 transition-all hover:bg-teal-600"
+        className="flex items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800 transition-all hover:bg-custom-600"
       >
         <Icon icon="tabler:check" className="h-6 w-6" />
         SELECT

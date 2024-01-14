@@ -69,7 +69,7 @@ function ReferenceBooks(): React.JSX.Element {
             <h1 className="text-4xl font-semibold text-neutral-100">
               All Books <span className="text-base text-neutral-400">(10)</span>
             </h1>
-            <button className="flex shrink-0 items-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800">
+            <button className="flex shrink-0 items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800">
               <Icon icon="tabler:plus" className="h-5 w-5 shrink-0" />
               <span className="shrink-0">upload</span>
             </button>
@@ -104,7 +104,7 @@ function ReferenceBooks(): React.JSX.Element {
                     {faker.person.fullName()}
                   </div>
                   <div className="mt-6 flex w-full flex-col gap-4">
-                    <button className="flex items-center justify-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800">
+                    <button className="flex items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800">
                       <Icon icon="tabler:book" className="h-5 w-5 shrink-0" />
                       <span className="shrink-0">read</span>
                     </button>

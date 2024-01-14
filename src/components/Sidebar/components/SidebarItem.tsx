@@ -30,7 +30,7 @@ function SidebarItem({
           location.pathname
             .slice(1)
             .startsWith(name.toLowerCase().replace(' ', '-'))
-            ? "text-neutral-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-teal-500 after:content-[''] dark:text-neutral-100"
+            ? "text-neutral-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-neutral-100"
             : 'text-neutral-500 dark:text-neutral-400'
         }`}
       >
@@ -44,7 +44,16 @@ function SidebarItem({
               : ''
           }`}
         >
-          <Icon icon={icon} className="h-6 w-6 shrink-0" />
+          <Icon
+            icon={icon}
+            className={`h-6 w-6 shrink-0 ${
+              location.pathname
+                .slice(1)
+                .startsWith(name.toLowerCase().replace(' ', '-'))
+                ? 'text-custom-500'
+                : ''
+            }`}
+          />
           {sidebarExpanded && (
             <div className="flex w-full items-center justify-between">
               {name}

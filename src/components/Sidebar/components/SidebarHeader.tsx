@@ -12,10 +12,10 @@ function SidebarHeader(): React.JSX.Element {
       }`}
     >
       <h1 className="ml-1 flex shrink-0 items-center gap-2 whitespace-nowrap text-xl font-semibold text-neutral-800 dark:text-neutral-100">
-        <Icon icon="tabler:hammer" className="text-3xl text-teal-500" />
+        <Icon icon="tabler:hammer" className="text-custom-500 text-3xl" />
         {sidebarExpanded && (
           <div>
-            LifeForge<span className="text-3xl text-teal-500"> .</span>
+            LifeForge<span className="text-custom-500 text-3xl"> .</span>
           </div>
         )}
       </h1>

@@ -54,9 +54,9 @@ function Auth(): React.JSX.Element {
     <>
       <section className="flex h-full w-1/2 flex-col items-center justify-center">
         <h1 className="mb-8 flex items-center gap-2 whitespace-nowrap text-3xl font-semibold ">
-          <Icon icon="tabler:hammer" className="text-5xl text-teal-500" />
+          <Icon icon="tabler:hammer" className="text-5xl text-custom-500" />
           <div>
-            LifeForge<span className="text-4xl text-teal-500"> .</span>
+            LifeForge<span className="text-4xl text-custom-500"> .</span>
           </div>
         </h1>
         <h2 className="text-5xl font-semibold tracking-wide ">Welcome Back!</h2>
@@ -67,15 +67,15 @@ function Auth(): React.JSX.Element {
           onSubmit={signIn}
           className="mt-12 flex w-full max-w-md flex-col gap-8"
         >
-          <div className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-800 focus-within:border-teal-500">
+          <div className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-800 focus-within:border-custom-500">
             <Icon
               icon="tabler:user"
-              className="text-neutral-100 ml-6 h-6 w-6 shrink-0 group-focus-within:text-teal-500"
+              className="text-neutral-100 ml-6 h-6 w-6 shrink-0 group-focus-within:text-custom-500"
             />
 
             <div className="flex w-full items-center gap-2">
               <span
-                className={`text-neutral-100 pointer-events-none absolute left-[4.2rem] font-medium tracking-wide group-focus-within:text-teal-500 ${
+                className={`text-neutral-100 pointer-events-none absolute left-[4.2rem] font-medium tracking-wide group-focus-within:text-custom-500 ${
                   emailOrUsername.length === 0
                     ? 'top-1/2 -translate-y-1/2 group-focus-within:top-6 group-focus-within:text-[14px]'
                     : 'top-6 -translate-y-1/2 text-[14px]'
@@ -91,15 +91,15 @@ function Auth(): React.JSX.Element {
               />
             </div>
           </div>
-          <div className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-800 focus-within:border-teal-500">
+          <div className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-800 focus-within:border-custom-500">
             <Icon
               icon="tabler:key"
-              className="text-neutral-100 ml-6 h-6 w-6 shrink-0 group-focus-within:text-teal-500"
+              className="text-neutral-100 ml-6 h-6 w-6 shrink-0 group-focus-within:text-custom-500"
             />
 
             <div className="flex w-full items-center gap-2">
               <span
-                className={`text-neutral-100 pointer-events-none absolute left-[4.2rem] font-medium tracking-wide group-focus-within:text-teal-500 ${
+                className={`text-neutral-100 pointer-events-none absolute left-[4.2rem] font-medium tracking-wide group-focus-within:text-custom-500 ${
                   password.length === 0
                     ? 'top-1/2 -translate-y-1/2 group-focus-within:top-6 group-focus-within:text-[14px]'
                     : 'top-6 -translate-y-1/2 text-[14px]'
@@ -125,7 +125,7 @@ function Auth(): React.JSX.Element {
                 loading ||
                 auth
               }
-              className="flex h-[4.6rem] items-center justify-center rounded-lg bg-teal-500 p-6 font-semibold uppercase tracking-widest transition-all hover:bg-teal-600 disabled:cursor-not-allowed disabled:bg-teal-900 disabled:text-neutral-400"
+              className="flex h-[4.6rem] items-center justify-center rounded-lg bg-custom-500 p-6 font-semibold uppercase tracking-widest transition-all hover:bg-custom-600 disabled:cursor-not-allowed disabled:bg-custom-900 disabled:text-neutral-400"
             >
               {loading ? <Icon icon="svg-spinners:180-ring" /> : 'Sign In'}
             </button>
@@ -138,10 +138,10 @@ function Auth(): React.JSX.Element {
       </section>
       <section className="relative flex h-full w-1/2">
         <img src="/login.jpg" alt="Login" className="h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-500/30 to-teal-600/30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-custom-500/30 to-custom-600/30" />
         <div className="absolute inset-0 bg-neutral-900/50" />
         <p className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col text-center text-5xl font-semibold tracking-wide text-neutral-100">
-          <span className="mb-2 text-2xl text-teal-400">
+          <span className="mb-2 text-2xl text-custom-400">
             One day, You&apos;ll leave this world behind
           </span>
           So live a life you remember

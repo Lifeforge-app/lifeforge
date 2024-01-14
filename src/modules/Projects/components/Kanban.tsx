@@ -15,7 +15,7 @@ function Kanban(): React.JSX.Element {
         </Link>
         <div className="flex items-center justify-between">
           <h1 className="flex items-center gap-4 text-3xl font-semibold dark:text-neutral-100">
-            <div className="rounded-lg bg-teal-500/20 p-3 text-teal-500 dark:bg-neutral-800">
+            <div className="rounded-lg bg-custom-500/20 p-3 text-custom-500 dark:bg-neutral-800">
               <Icon icon="tabler:hammer" className="text-3xl" />
             </div>
             LifeForge.

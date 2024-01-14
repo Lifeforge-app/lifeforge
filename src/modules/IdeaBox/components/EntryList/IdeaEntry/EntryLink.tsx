@@ -46,7 +46,7 @@ function EntryLink({
         target="_blank"
         rel="noreferrer"
         href={entry.content}
-        className="text-teal-500 underline underline-offset-2"
+        className="text-custom-500 underline underline-offset-2"
       >
         {entry.content}
       </a>

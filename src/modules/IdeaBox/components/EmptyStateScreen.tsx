@@ -26,7 +26,7 @@ function EmptyStateScreen({
         onClick={() => {
           setModifyModalOpenType('create')
         }}
-        className="mt-6 flex items-center gap-2 rounded-full bg-teal-500 p-4 px-6 pr-7 font-semibold uppercase tracking-wider text-neutral-800 transition-all hover:bg-teal-600"
+        className="mt-6 flex items-center gap-2 rounded-full bg-custom-500 p-4 px-6 pr-7 font-semibold uppercase tracking-wider text-neutral-800 transition-all hover:bg-custom-600"
       >
         <Icon icon="tabler:plus" className="text-xl" />
         {ctaContent}

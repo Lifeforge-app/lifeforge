@@ -2,7 +2,7 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useContext } from 'react'
 import Modal from '../../../../components/Modal'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useDebounce } from '@uidotdev/usehooks'
@@ -10,6 +10,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { useDropzone } from 'react-dropzone'
 import { toast } from 'react-toastify'
 import { type IIdeaBoxEntry } from './Ideas'
+import { PersonalizationContext } from '../../../../providers/PersonalizationProvider'
 
 function CreateIdeaModal({
   openType,
@@ -26,6 +27,7 @@ function CreateIdeaModal({
   updateIdeaList: () => void
   existedData: IIdeaBoxEntry | null
 }): React.ReactElement {
+  const { theme } = useContext(PersonalizationContext)
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
   const [innerTypeOfModifyIdea, setInnerTypeOfModifyIdea] = useState<
     'text' | 'image' | 'link'
@@ -190,7 +192,7 @@ function CreateIdeaModal({
           }{' '}
           {innerOpenType === 'create' ? (
             <Menu as="div" className="relative inline-block text-left">
-              <Menu.Button className="inline-flex w-full items-center justify-center rounded-md border-2 border-neutral-800 p-2 px-4 text-lg font-semibold tracking-wide text-neutral-200 shadow-sm outline-none hover:bg-neutral-50 focus:outline-none dark:bg-neutral-800/50">
+              <Menu.Button className="inline-flex w-full items-center justify-center rounded-md border-2 border-neutral-300 p-2 px-4 text-lg font-semibold tracking-wide text-neutral-800 shadow-sm outline-none hover:bg-neutral-200/50 focus:outline-none dark:border-neutral-800 dark:bg-neutral-800/50 dark:text-neutral-200">
                 <Icon
                   icon={
                     {
@@ -221,7 +223,7 @@ function CreateIdeaModal({
                 leaveTo="transform opacity-0 scale-95"
                 className="absolute left-0 z-[999] mt-2"
               >
-                <Menu.Items className="w-56 overflow-hidden rounded-lg bg-neutral-800 shadow-lg outline-none focus:outline-none">
+                <Menu.Items className="w-56 overflow-hidden rounded-lg bg-neutral-100 shadow-lg outline-none focus:outline-none dark:bg-neutral-800">
                   {[
                     ['text', 'tabler:article', 'Text'],
                     ...[['image', 'tabler:photo', 'Image']],
@@ -235,13 +237,17 @@ function CreateIdeaModal({
                               type as 'text' | 'image' | 'link'
                             )
                           }}
-                          className={`${
-                            active ? 'bg-neutral-700' : 'text-neutral-100'
-                          } group flex w-full items-center rounded-md p-4 text-base`}
+                          className={`group flex w-full items-center rounded-md p-4 text-base ${
+                            type === innerTypeOfModifyIdea
+                              ? 'text-neutral-800 dark:text-neutral-100'
+                              : active
+                              ? 'bg-neutral-200/50 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100'
+                              : 'text-neutral-500 hover:bg-neutral-200/50 dark:text-neutral-400 dark:hover:bg-neutral-800'
+                          }`}
                         >
                           <Icon
                             icon={icon}
-                            className="mr-3 h-5 w-5 text-neutral-400 group-hover:text-neutral-300"
+                            className="mr-3 h-5 w-5"
                             aria-hidden="true"
                           />
                           {name}
@@ -270,20 +276,20 @@ function CreateIdeaModal({
           onClick={() => {
             setOpenType(null)
           }}
-          className="rounded-md p-2 text-neutral-500 transition-all hover:bg-neutral-800 dark:text-neutral-100"
+          className="rounded-md p-2 text-neutral-500 transition-all hover:bg-neutral-200/50 dark:text-neutral-100 dark:hover:bg-neutral-800"
         >
           <Icon icon="tabler:x" className="h-6 w-6" />
         </button>
       </div>
       {innerTypeOfModifyIdea === 'link' && (
-        <div className="group relative mb-6 flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-50 focus-within:border-teal-500 dark:bg-neutral-800/50">
+        <div className="group relative mb-6 flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-50 focus-within:border-custom-500 dark:bg-neutral-800/50">
           <Icon
             icon="tabler:bulb"
-            className="ml-6 h-6 w-6 shrink-0 text-neutral-100 group-focus-within:text-teal-500"
+            className="ml-6 h-6 w-6 shrink-0 text-neutral-500 group-focus-within:text-custom-500"
           />
           <div className="flex w-full items-center gap-2">
             <span
-              className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-neutral-100 group-focus-within:text-teal-500 ${
+              className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-neutral-500 group-focus-within:text-custom-500 ${
                 ideaTitle.length === 0
                   ? 'top-1/2 -translate-y-1/2 group-focus-within:top-6 group-focus-within:text-[14px]'
                   : 'top-6 -translate-y-1/2 text-[14px]'
@@ -295,7 +301,7 @@ function CreateIdeaModal({
               value={ideaTitle}
               onChange={updateIdeaTitle}
               placeholder="Mind blowing idea"
-              className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-100"
+              className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-400"
             />
           </div>
         </div>
@@ -305,7 +311,7 @@ function CreateIdeaModal({
           onFocus={e => {
             e.currentTarget.querySelector('textarea input')?.focus()
           }}
-          className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-50 focus-within:border-teal-500 dark:bg-neutral-800/50"
+          className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-50 focus-within:border-custom-500 dark:bg-neutral-800/50"
         >
           <Icon
             icon={
@@ -313,11 +319,11 @@ function CreateIdeaModal({
                 ? 'tabler:file-text'
                 : 'tabler:link'
             }
-            className="ml-6 h-6 w-6 shrink-0 text-neutral-100 group-focus-within:text-teal-500"
+            className="ml-6 h-6 w-6 shrink-0 text-neutral-500 group-focus-within:text-custom-500"
           />
           <div className="flex w-full items-center gap-2">
             <span
-              className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-neutral-100 group-focus-within:text-teal-500 ${
+              className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-neutral-500 group-focus-within:text-custom-500 ${
                 {
                   text: ideaContent,
                   link: ideaLink
@@ -340,14 +346,14 @@ function CreateIdeaModal({
                   updateIdeaContent(e)
                 }}
                 placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, lorem euismod."
-                className="mt-6 min-h-[2rem] w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-100"
+                className="mt-6 min-h-[2rem] w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-400"
               />
             ) : (
               <input
                 value={ideaLink}
                 onChange={updateIdeaLink}
                 placeholder="https://example.com"
-                className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-100"
+                className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-400"
               />
             )}
           </div>
@@ -364,7 +370,7 @@ function CreateIdeaModal({
               onClick={() => {
                 setPreview(null)
               }}
-              className="absolute right-4 top-4 rounded-lg bg-neutral-800 p-2 text-neutral-100 transition-all hover:bg-neutral-900"
+              className="absolute right-4 top-4 rounded-lg bg-neutral-800 p-2 text-neutral-500 transition-all hover:bg-neutral-900"
             >
               <Icon icon="tabler:x" className="h-5 w-5" />
             </button>
@@ -378,9 +384,9 @@ function CreateIdeaModal({
           <input {...getInputProps()} />
           <Icon
             icon="tabler:drag-drop"
-            className="h-20 w-20 text-neutral-100"
+            className="h-20 w-20 text-neutral-500"
           />
-          <div className="mt-4 text-center text-2xl font-medium text-neutral-100">
+          <div className="mt-4 text-center text-2xl font-medium text-neutral-500">
             {isDragActive ? "Drop it like it's hot" : 'Drag and drop to upload'}
           </div>
           <div className="mt-4 text-center text-lg font-semibold uppercase tracking-widest text-neutral-400">
@@ -388,7 +394,7 @@ function CreateIdeaModal({
           </div>
           <label
             htmlFor="idea-image"
-            className="mt-4 flex items-center gap-2 rounded-lg bg-neutral-100 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800 transition-all hover:bg-neutral-200"
+            className="mt-4 flex items-center gap-2 rounded-lg bg-neutral-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 transition-all hover:bg-neutral-600 dark:bg-neutral-100 dark:text-neutral-800 dark:hover:bg-neutral-200"
           >
             <Icon icon="tabler:upload" className="h-5 w-5" />
             Upload image
@@ -398,7 +404,7 @@ function CreateIdeaModal({
       <button
         disabled={loading}
         onClick={onSubmitButtonClick}
-        className="mt-8 flex h-16 items-center justify-center gap-2 rounded-lg bg-teal-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800 transition-all hover:bg-teal-600"
+        className="mt-8 flex h-16 items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 transition-all hover:bg-custom-600 dark:text-neutral-800"
       >
         {!loading ? (
           <>
@@ -419,7 +425,16 @@ function CreateIdeaModal({
             }
           </>
         ) : (
-          <span className="small-loader-dark"></span>
+          <span
+            className={
+              (theme === 'system' &&
+                window.matchMedia &&
+                window.matchMedia('(prefers-color-scheme: dark)').matches) ||
+              theme === 'dark'
+                ? 'small-loader-dark'
+                : 'small-loader-light'
+            }
+          ></span>
         )}
       </button>
     </Modal>

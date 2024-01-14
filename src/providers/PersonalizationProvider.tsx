@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { AuthContext } from './AuthProvider'
+import { toast } from 'react-toastify'
 
 const PERSONALIZATION_DATA: {
   theme: 'light' | 'dark' | 'system'
@@ -27,9 +28,9 @@ function PersonalizationProvider({
   const [themeColor, setThemeColor] = useState('theme-blue')
 
   useEffect(() => {
-    if (userData?.theme !== undefined && userData?.themeColor !== undefined) {
+    if (userData?.theme !== undefined && userData?.color !== undefined) {
       setTheme(userData.theme)
-      setThemeColor(userData.themeColor)
+      setThemeColor(`theme-${userData.color}`)
     }
   }, [userData])
 
@@ -46,13 +47,91 @@ function PersonalizationProvider({
     }
   }, [theme])
 
+  useEffect(() => {
+    if (themeColor) {
+      document.body.classList.remove(
+        ...[
+          'theme-red',
+          'theme-pink',
+          'theme-purple',
+          'theme-deep-purple',
+          'theme-indigo',
+          'theme-blue',
+          'theme-light-blue',
+          'theme-cyan',
+          'theme-teal',
+          'theme-green',
+          'theme-light-green',
+          'theme-lime',
+          'theme-yellow',
+          'theme-amber',
+          'theme-orange',
+          'theme-deep-orange',
+          'theme-brown',
+          'theme-grey'
+        ]
+      )
+      document.body.classList.add(themeColor)
+    }
+  }, [themeColor])
+
+  function changeTheme(color: 'light' | 'dark' | 'system'): void {
+    setTheme(color)
+    fetch(`${import.meta.env.VITE_API_HOST}/user/personalization`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: userData.id,
+        data: {
+          theme: color
+        }
+      })
+    })
+      .then(async response => {
+        const data = await response.json()
+        if (response.status !== 200) {
+          throw data.message
+        }
+      })
+      .catch(() => {
+        toast.error('Failed to update personalization settings.')
+      })
+  }
+
+  function changeThemeColor(color: string): void {
+    setThemeColor(color)
+    fetch(`${import.meta.env.VITE_API_HOST}/user/personalization`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: userData.id,
+        data: {
+          color: color.replace('theme-', '')
+        }
+      })
+    })
+      .then(async response => {
+        const data = await response.json()
+        if (response.status !== 200) {
+          throw data.message
+        }
+      })
+      .catch(() => {
+        toast.error('Failed to update personalization settings.')
+      })
+  }
+
   return (
     <PersonalizationContext.Provider
       value={{
         theme,
         themeColor,
-        setTheme,
-        setThemeColor
+        setTheme: changeTheme,
+        setThemeColor: changeThemeColor
       }}
     >
       {children}

@@ -64,6 +64,44 @@ function Changelog(): React.ReactElement {
             </li>
           </ul>
         </li>
+        <li className="flex flex-col gap-2">
+          <h3 className="text-2xl font-semibold">
+            Ver. 24w02{' '}
+            <span className="text-sm">(08 Jan 2024 - 14 Jan 2024)</span>
+          </h3>
+          <ul className="flex list-inside list-disc flex-col gap-2">
+            <li>
+              <span className="font-semibold">Personalization:</span> UI to
+              change the theme and accent color of the application from the
+              personalization page.
+            </li>
+            <li>
+              <span className="font-semibold">Personalization:</span> Added
+              option to change the accent color of the application.
+            </li>
+            <li>
+              <span className="font-semibold">Personalization:</span>{' '}
+              Personalization linked with the user account in database, so that
+              the settings are synced across devices.
+            </li>
+            <li>
+              <span className="font-semibold">Sidebar:</span> Sidebar icons are
+              colored based on the theme.
+            </li>
+            <li>
+              <span className="font-semibold">Code Snippets:</span> Data synced
+              to database, no more dummy data.
+            </li>
+            <li>
+              <span className="font-semibold">Code Snippets:</span> Create,
+              update, and delete labels and languages from the UI.
+            </li>
+            <li>
+              <span className="font-semibold">Code Snippets:</span> View
+              snippets by clicking on the list entry.
+            </li>
+          </ul>
+        </li>
       </ul>
     </section>
   )
