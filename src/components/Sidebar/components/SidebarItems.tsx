@@ -21,6 +21,7 @@ function SidebarItems(): React.JSX.Element {
                 name={name!}
                 icon={icon ?? ''}
                 subsection={subsection}
+                isMainSidebarItem
               />
             )
           case 'title':

@@ -111,7 +111,9 @@ function Snippets(): React.JSX.Element {
             <div className="mx-4 flex items-center justify-between">
               <h1 className="text-4xl font-semibold text-neutral-800 dark:text-neutral-100">
                 All Snippets{' '}
-                <span className="text-base text-neutral-400">(10)</span>
+                <span className="text-base text-neutral-400">
+                  ({Array.isArray(entries) ? entries.length : '0'})
+                </span>
               </h1>
               <button className="flex shrink-0 items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:text-neutral-800">
                 <Icon icon="tabler:plus" className="h-5 w-5 shrink-0" />
@@ -196,7 +198,7 @@ function Snippets(): React.JSX.Element {
                             </div>
                           </div>
                           <Link
-                            to={`/snippets/${entry.id}`}
+                            to={`/snippets/snippet/${entry.id}`}
                             className="absolute left-0 top-0 h-full w-full rounded-lg
                             hover:bg-[rgba(255,255,255,0.02)]"
                           />

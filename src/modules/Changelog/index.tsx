@@ -1,108 +1,118 @@
-import React from 'react'
+/* eslint-disable @typescript-eslint/no-throw-literal */
+/* eslint-disable @typescript-eslint/indent */
+import React, { Fragment, useEffect, useState } from 'react'
 import ModuleHeader from '../../components/ModuleHeader'
+import { toast } from 'react-toastify'
+import Loading from '../../components/Loading'
+import Error from '../../components/Error'
+
+interface IChangeLogVersion {
+  version: string
+  date_range: [string, string]
+  entries: IChangeLogEntry[]
+}
+
+interface IChangeLogEntry {
+  id: string
+  feature: string
+  description: string
+}
 
 function Changelog(): React.ReactElement {
+  const [data, setData] = useState<'loading' | 'error' | IChangeLogVersion[]>(
+    'loading'
+  )
+
+  function updateChangeLogEntries(): void {
+    setData('loading')
+    fetch(`${import.meta.env.VITE_API_HOST}/change-log/list`)
+      .then(async response => {
+        const data = await response.json()
+        setData(data.data)
+
+        if (response.status !== 200) {
+          throw data.message
+        }
+      })
+      .catch(() => {
+        setData('error')
+        toast.error('Failed to fetch data from server.')
+      })
+  }
+
+  useEffect(() => {
+    updateChangeLogEntries()
+  }, [])
+
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col px-12">
+    <section className="flex h-full min-h-0 w-full flex-1 flex-col overflow-y-scroll px-12">
       <ModuleHeader
         title="Change Log"
         desc="All the changes made to this application will be listed here."
       />
-      <ul className="mt-8 flex flex-col gap-4">
-        <li className="flex flex-col gap-2">
-          <h3 className="text-2xl font-semibold">
-            Ver. 24w01{' '}
-            <span className="text-sm">(01 Jan 2024 - 07 Jan 2024)</span>
-          </h3>
-          <ul className="flex list-inside list-disc flex-col gap-2">
-            <li>
-              <span className="font-semibold">Idea Box:</span> Containers and
-              ideas data synced to database, no more dummy data
-            </li>
-            <li>
-              <span className="font-semibold">Idea Box:</span> Create, update,
-              and delete containers and ideas from the UI
-            </li>
-            <li>
-              <span className="font-semibold">Idea Box:</span> Search containers
-              and ideas
-            </li>
-            <li>
-              <span className="font-semibold">Idea Box:</span> Zoom image by
-              clicking on it
-            </li>
-            <li>
-              <span className="font-semibold">Idea Box:</span> Pin ideas to the
-              top
-            </li>
-            <li>
-              <span className="font-semibold">Change Log:</span> Added this
-              change log with naming convention of{' '}
-              <code className="inline-block rounded-md bg-neutral-200 p-1 px-1.5 font-['Jetbrains_Mono'] text-sm shadow-[2px_2px_2px_rgba(0,0,0,0.05)] dark:bg-neutral-800">
-                Ver. [year]w[week number]
-              </code>
-            </li>
-            <li>
-              <span className="font-semibold">API:</span> Added API explorer at
-              the root of the API
-            </li>
-            <li>
-              <span className="font-semibold">API:</span> Integrated Code Time
-              API into the main API
-            </li>
-            <li>
-              <span className="font-semibold">UI:</span> Added backdrop blur
-              when modals are open
-            </li>
-            <li>
-              <span className="font-semibold">Code Refactor:</span> Moved API
-              host into{' '}
-              <code className="inline-block rounded-md bg-neutral-200 p-1 px-1.5 font-['Jetbrains_Mono'] text-sm shadow-[2px_2px_2px_rgba(0,0,0,0.05)] dark:bg-neutral-800">
-                .env
-              </code>
-              &nbsp;file
-            </li>
-          </ul>
-        </li>
-        <li className="flex flex-col gap-2">
-          <h3 className="text-2xl font-semibold">
-            Ver. 24w02{' '}
-            <span className="text-sm">(08 Jan 2024 - 14 Jan 2024)</span>
-          </h3>
-          <ul className="flex list-inside list-disc flex-col gap-2">
-            <li>
-              <span className="font-semibold">Personalization:</span> UI to
-              change the theme and accent color of the application from the
-              personalization page.
-            </li>
-            <li>
-              <span className="font-semibold">Personalization:</span> Added
-              option to change the accent color of the application.
-            </li>
-            <li>
-              <span className="font-semibold">Personalization:</span>{' '}
-              Personalization linked with the user account in database, so that
-              the settings are synced across devices.
-            </li>
-            <li>
-              <span className="font-semibold">Sidebar:</span> Sidebar icons are
-              colored based on the theme.
-            </li>
-            <li>
-              <span className="font-semibold">Code Snippets:</span> Data synced
-              to database, no more dummy data.
-            </li>
-            <li>
-              <span className="font-semibold">Code Snippets:</span> Create,
-              update, and delete labels and languages from the UI.
-            </li>
-            <li>
-              <span className="font-semibold">Code Snippets:</span> View
-              snippets by clicking on the list entry.
-            </li>
-          </ul>
-        </li>
-      </ul>
+      {(() => {
+        switch (data) {
+          case 'loading':
+            return <Loading />
+          case 'error':
+            return <Error message="Failed to fetch data." />
+          default:
+            return (
+              <ul className="my-8 flex flex-col gap-4">
+                {data.map(entry => (
+                  <li
+                    key={entry.version}
+                    className="flex flex-col gap-2 rounded-lg bg-neutral-50 p-6  shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50"
+                  >
+                    <h3 className="mb-2 text-2xl font-semibold">
+                      Ver. {entry.version}{' '}
+                      <span className="text-sm">
+                        (
+                        {new Date(entry.date_range[0]).toLocaleDateString(
+                          'en-US',
+                          {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric'
+                          }
+                        )}{' '}
+                        -{' '}
+                        {new Date(entry.date_range[1]).toLocaleDateString(
+                          'en-US',
+                          {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric'
+                          }
+                        )}
+                        )
+                      </span>
+                    </h3>
+                    <ul className="flex list-inside list-disc flex-col gap-2 text-neutral-500 dark:text-neutral-400">
+                      {entry.entries.map(subEntry => (
+                        <li key={subEntry.id}>
+                          <span className="font-semibold text-neutral-800 dark:text-neutral-100">
+                            {subEntry.feature}:
+                          </span>{' '}
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html: subEntry.description.replace(
+                                /<code>(.*?)<\/code>/,
+                                `
+                                <code class="inline-block rounded-md bg-neutral-200 p-1 px-1.5 font-['Jetbrains_Mono', text-sm shadow-[2px_2px_2px_rgba(0,0,0,0.05), dark:bg-neutral-800">$1</code>
+                                `
+                              )
+                            }}
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            )
+        }
+      })()}
     </section>
   )
 }

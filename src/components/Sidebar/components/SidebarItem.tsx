@@ -8,14 +8,21 @@ interface SidebarItemProps {
   icon: string
   name: string
   subsection?: string[][]
+  isMainSidebarItem?: boolean
+  active?: boolean
 }
 
 function SidebarItem({
   icon,
   name,
-  subsection
+  subsection,
+  isMainSidebarItem,
+  active
 }: SidebarItemProps): React.JSX.Element {
-  const { sidebarExpanded } = useContext(GlobalStateContext)
+  const { sidebarExpanded } =
+    isMainSidebarItem === true
+      ? useContext(GlobalStateContext)
+      : { sidebarExpanded: true }
   const [subsectionExpanded, setSubsectionExpanded] = useState(false)
   const location = useLocation()
 
@@ -35,11 +42,12 @@ function SidebarItem({
         }`}
       >
         <Link
-          to={`/${name.toLowerCase().replace(' ', '-')}`}
+          to={`./${name.toLowerCase().replace(' ', '-')}`}
           className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-200/30 dark:hover:bg-neutral-800 ${
             location.pathname
               .slice(1)
-              .startsWith(name.toLowerCase().replace(' ', '-'))
+              .startsWith(name.toLowerCase().replace(' ', '-')) ||
+            active === true
               ? 'bg-neutral-200/50 dark:bg-neutral-800'
               : ''
           }`}
@@ -49,7 +57,8 @@ function SidebarItem({
             className={`h-6 w-6 shrink-0 ${
               location.pathname
                 .slice(1)
-                .startsWith(name.toLowerCase().replace(' ', '-'))
+                .startsWith(name.toLowerCase().replace(' ', '-')) ||
+              active === true
                 ? 'text-custom-500'
                 : ''
             }`}

@@ -16,9 +16,11 @@ export interface ICodeSnippetsLanguage {
 }
 
 function Languages({
-  languages
+  languages,
+  updateLanguageList
 }: {
   languages: ICodeSnippetsLanguage[] | 'error' | 'loading'
+  updateLanguageList: () => void
 }): React.ReactElement {
   return (
     <>
