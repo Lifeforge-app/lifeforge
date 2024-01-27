@@ -8,7 +8,7 @@ import Loading from '../../components/Loading'
 import Error from '../../components/Error'
 import ModifyContainerModal from './components/ContainerList/ModifyContainerModal'
 import { useDebounce } from '@uidotdev/usehooks'
-import EmptyStateScreen from './components/EmptyStateScreen'
+import EmptyStateScreen from '../../components/EmptyStateScreen'
 import ContainerGrid from './components/ContainerList/ContainerGrid'
 import DeleteContainerConfirmationModal from './components/ContainerList/DeleteContainerConfirmationModal.1'
 

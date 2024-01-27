@@ -19,9 +19,9 @@ function EmptyStateScreen({
 }): React.ReactElement {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-6 text-neutral-100">
-      <Icon icon={icon} className="h-24 w-24" />
+      <Icon icon={icon} className="h-32 w-32" />
       <h2 className="text-3xl font-semibold">{title}</h2>
-      <p className="-mt-2 text-xl">{description}</p>
+      <p className="-mt-2 text-xl text-neutral-500">{description}</p>
       <button
         onClick={() => {
           setModifyModalOpenType('create')

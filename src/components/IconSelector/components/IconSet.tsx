@@ -9,32 +9,26 @@ import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import Input from './Input'
 
-async function getIconSet(iconSet: {
-  iconlist: any
-  version: any
-  name: any
-  iconCount: any
-  tags: any
-}): Promise<any> {
-  try {
-    const res = await fetch(
-      `https://cors-anywhere.thecodeblog.net/icon-sets.iconify.design/assets/collection.${iconSet}.js`
-    )
-    let data = await res.text()
-    data = JSON.parse(data.match(/=(.+);/)[1])
-    const iconlist = data.icons
-    const version = data.info.version || '1.0.0'
-    const { name } = data.info
-    const iconCount = data.info.total
-    const tags = data.tags || []
+export interface IIconSetData {
+  title: string
+  total: number
+  prefix: string
+  uncategorized: string[]
+  categories: Record<string, string[]>
+}
 
-    return {
-      iconlist,
-      version,
-      name,
-      iconCount,
-      tags
+async function getIconSet(prefix: string): Promise<any> {
+  try {
+    const res: IIconSetData = await fetch(
+      `https://api.iconify.design/collection?prefix=${prefix}`
+    ).then(async res => await res.json())
+
+    console.log(res)
+    if (!res.uncategorized) {
+      res.uncategorized = Object.values(res.categories).flat()
     }
+
+    return res
   } catch (err) {
     console.error(err)
     return null
@@ -51,46 +45,49 @@ function IconSet({
   setSelectedIcon: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
   const [searchTerm, setSearchTerm] = useState('')
-  const [currentTag, setCurrentTag] = useState(null)
-  const [iconData, setIconData] = useState(null)
-  const [filteredIconList, setFilteredIconList] = useState([])
+  const [currentTag, setCurrentTag] = useState<string | null>(null)
+  const [iconData, setIconData] = useState<IIconSetData | null>(null)
+  const [filteredIconList, setFilteredIconList] = useState<string[]>([])
 
   useEffect(() => {
     getIconSet(iconSet).then(data => {
       setIconData(data)
-      setFilteredIconList(data.iconlist)
+      setFilteredIconList(data.uncategorized)
     })
   }, [])
 
   useEffect(() => {
     if (iconData) {
-      setFilteredIconList(
-        iconData.iconlist.filter(
-          icon =>
-            (icon.name || icon)
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase()) &&
-            (currentTag ? icon.tags.includes(currentTag) : true)
+      if (currentTag) {
+        setFilteredIconList(
+          iconData.categories[currentTag].filter(icon =>
+            icon.toLowerCase().includes(searchTerm.toLowerCase())
+          )
         )
-      )
+      } else {
+        setFilteredIconList(
+          iconData.uncategorized.filter(icon =>
+            icon.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        )
+      }
     }
   }, [searchTerm, currentTag, iconData])
 
   return iconData ? (
     <div className="flex min-h-0 w-full flex-col overflow-scroll p-8">
       <h1 className="mb-6 flex flex-col items-center gap-1 text-center text-3xl font-semibold tracking-wide sm:inline">
-        {iconData.name}
-        <span className="text-base sm:ml-2">v{iconData.version}</span>
+        {iconData.title}
       </h1>
       <Input
         value={searchTerm}
         setValue={setSearchTerm}
-        placeholder={`Search ${iconData.iconCount.toLocaleString()} icons`}
+        placeholder={`Search ${iconData.total.toLocaleString()} icons`}
         icon="uil:search"
       />
-      {iconData.tags.length > 0 && (
+      {Object.keys(iconData.categories || {}).length > 0 && (
         <div className="mt-4 flex flex-wrap justify-center gap-2">
-          {iconData.tags.sort().map(
+          {Object.keys(iconData.categories).map(
             tag =>
               tag && (
                 <button
@@ -101,7 +98,7 @@ function IconSet({
                   }}
                   className={`${
                     currentTag === tag
-                      ? 'bg-neutral-200 text-neutral-800 shadow-md'
+                      ? '!bg-neutral-200 !text-neutral-800 shadow-md'
                       : ''
                   } flex h-8 grow items-center justify-center whitespace-nowrap rounded-full bg-neutral-800 px-6 text-sm text-neutral-100 shadow-md transition-all md:grow-0`}
                 >
@@ -117,18 +114,14 @@ function IconSet({
             key={icon}
             type="button"
             onClick={() => {
-              setSelectedIcon(`${iconSet}:${icon.name || icon}`)
+              setSelectedIcon(`${iconSet}:${icon}`)
               setOpen(false)
             }}
             className="flex cursor-pointer flex-col items-center rounded-lg p-4 transition-all hover:bg-neutral-800"
           >
-            <Icon
-              icon={`${iconSet}:${icon.name || icon}`}
-              width="32"
-              height="32"
-            />
+            <Icon icon={`${iconSet}:${icon}`} width="32" height="32" />
             <p className="-mb-0.5 mt-4 break-all  text-center text-xs font-medium tracking-wide">
-              {(icon.name || icon).replace(/-/g, ' ')}
+              {icon.replace(/-/g, ' ')}
             </p>
           </button>
         ))}

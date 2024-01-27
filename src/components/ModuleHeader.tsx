@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 
 interface ModuleHeaderProps {
-  title: string
+  title: string | React.ReactNode
   desc?: string | React.ReactNode
 }
 

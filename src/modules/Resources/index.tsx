@@ -46,7 +46,7 @@ export default function Resources(): React.JSX.Element {
         </aside>
         <div className="ml-12 flex h-full min-h-0 flex-1 flex-col">
           <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-semibold text-neutral-800">
+            <h1 className="text-4xl font-semibold text-neutral-800 dark:text-neutral-100">
               All Resources{' '}
               <span className="text-base text-neutral-400">(10)</span>
             </h1>

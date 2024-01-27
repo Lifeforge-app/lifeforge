@@ -80,7 +80,7 @@ function ContainerGridItem({
                   }}
                   className={`${
                     active
-                      ? 'bg-neutral-200/50 text-neutral-800 dark:bg-neutral-700'
+                      ? 'bg-neutral-200/50 text-neutral-800 dark:bg-neutral-700 dark:text-neutral-100'
                       : 'text-neutral-500'
                   } flex w-full items-center p-4`}
                 >

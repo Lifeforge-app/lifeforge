@@ -29,11 +29,7 @@ const SIDEBAR_ITEMS: ISidebarItem[] = [
   {
     type: 'item',
     name: 'Notes',
-    icon: 'tabler:notebook',
-    subsection: [
-      ['High School', 'tabler:bell-school'],
-      ['University', 'tabler:school']
-    ]
+    icon: 'tabler:notebook'
   },
   {
     type: 'item',
@@ -43,11 +39,6 @@ const SIDEBAR_ITEMS: ISidebarItem[] = [
       ['Mathematics', 'tabler:calculator'],
       ['Physics', 'tabler:atom']
     ]
-  },
-  {
-    type: 'item',
-    name: 'University Analytics',
-    icon: 'tabler:school'
   },
   { type: 'divider' },
   { type: 'title', name: 'Lifestyle' },

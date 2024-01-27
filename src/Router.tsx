@@ -18,10 +18,13 @@ import CodeTime from './modules/CodeTime'
 import PomodoroTimer from './modules/PomodoroTimer'
 import Flashcards from './modules/Flashcards'
 import CardSet from './modules/Flashcards/components/CardSet'
-import ReferenceBooks from './modules/referenceBooks'
+import ReferenceBooks from './modules/ReferenceBooks'
 import UniversityAnalytics from './modules/UniversityAnalytics'
 import Changelog from './modules/Changelog'
 import Personalization from './modules/Personalization'
+import Notes from './modules/Notes'
+import NotesCategory from './modules/Notes/Workspace'
+import NotesSubject from './modules/Notes/Subject'
 
 function AppRouter(): React.JSX.Element {
   const { auth, authLoading } = useContext(AuthContext)
@@ -69,6 +72,9 @@ function AppRouter(): React.JSX.Element {
         <Route path="flashcards" element={<Flashcards />} />
         <Route path="flashcards/:id" element={<CardSet />} />
         <Route path="reference-books" element={<ReferenceBooks />} />
+        <Route path="notes" element={<Notes />} />
+        <Route path="notes/:workspace" element={<NotesCategory />} />
+        <Route path="notes/:workspace/:subject/*" element={<NotesSubject />} />
         <Route path="university-analytics" element={<UniversityAnalytics />} />
         <Route path="personalization" element={<Personalization />} />
         <Route path="change-log" element={<Changelog />} />
