@@ -8,10 +8,10 @@ interface ModuleHeaderProps {
 
 function ModuleHeader({ title, desc }: ModuleHeaderProps): React.JSX.Element {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between gap-8">
       <div className="flex items-center gap-4">
         <div className="flex flex-col gap-1">
-          <h1 className="flex items-center gap-3 text-4xl font-semibold text-neutral-800 dark:text-neutral-100">
+          <h1 className="flex items-center gap-3 text-3xl font-semibold text-neutral-800 dark:text-neutral-100 md:text-4xl">
             {title}
           </h1>
           {desc !== undefined && <div className="text-neutral-500">{desc}</div>}

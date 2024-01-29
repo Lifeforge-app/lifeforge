@@ -27,7 +27,7 @@ function IconSelector({
   return (
     <div
       className={`absolute left-0 top-0 h-screen w-full bg-neutral-900 transition-colors duration-500 ${
-        isOpen ? 'z-[9999] bg-opacity-50' : 'z-[-1] bg-opacity-0'
+        isOpen ? 'z-[9999] bg-opacity-50' : 'z-[-1] bg-opacity-0 delay-500'
       }`}
     >
       <div

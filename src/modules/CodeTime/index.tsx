@@ -244,7 +244,7 @@ export default function CodeTime(): React.JSX.Element {
                       onClick={() => {
                         switchSelectedYear(firstYear + index)
                       }}
-                      className={`flex items-start gap-2 rounded-lg p-4 px-8 font-medium ${
+                      className={`flex items-start gap-2 rounded-lg p-4 px-8 sm:px-12 font-medium ${
                         selectedYear === firstYear + index
                           ? 'bg-neutral-200 font-semibold text-neutral-800 dark:bg-neutral-700/50 dark:text-neutral-100'
                           : 'text-neutral-400 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50'

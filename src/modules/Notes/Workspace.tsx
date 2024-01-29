@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import ModuleHeader from '../../components/ModuleHeader'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { type INotesWorkspace } from '.'
 import { toast } from 'react-toastify'
 import Error from '../../components/Error'
@@ -12,7 +12,8 @@ import EmptyStateScreen from '../../components/EmptyStateScreen'
 import ModifySubjectModal from './ModifySubjectModal'
 import { Link } from 'react-router-dom'
 import { Menu, Transition } from '@headlessui/react'
-import DeleteSubjectConfirmationModal from './DeleteSubjectrConfirmationModal.1'
+import DeleteSubjectConfirmationModal from './DeleteSubjectConfirmationModal'
+import GoBackButton from '../../components/GoBackButton'
 
 export interface INotesSubject {
   workspace: string
@@ -42,6 +43,7 @@ function NotesCategory(): React.ReactElement {
     setDeleteSubjectConfirmationModalOpen
   ] = useState(false)
   const [existedData, setExistedData] = useState<INotesSubject | null>(null)
+  const navigate = useNavigate()
 
   function updateTitleData(): void {
     setTitleData('loading')
@@ -83,14 +85,12 @@ function NotesCategory(): React.ReactElement {
   }, [workspace])
 
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col overflow-y-scroll px-12">
-      <Link
-        to="/notes"
-        className="mb-2 flex w-min items-center gap-2 rounded-lg p-2 pl-0 pr-4 text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-100"
-      >
-        <Icon icon="tabler:chevron-left" className="text-xl" />
-        <span className="whitespace-nowrap text-lg font-medium">Go back</span>
-      </Link>
+    <section className="flex h-full min-h-0 w-full flex-1 flex-col overflow-y-scroll px-8 md:px-12">
+      <GoBackButton
+        onClick={() => {
+          navigate('/notes')
+        }}
+      />
       <ModuleHeader
         title={
           <>
@@ -121,15 +121,15 @@ function NotesCategory(): React.ReactElement {
               return <Error message="Failed to fetch data from server." />
             default:
               return subjectsData.length > 0 ? (
-                <div className="grid grid-cols-4 items-center justify-center gap-4 py-8">
+                <div className="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] items-center justify-center gap-4 py-8">
                   {subjectsData.map((subject, index) => (
                     <div
                       key={index}
-                      className="group relative flex h-full w-full flex-col items-center rounded-lg bg-neutral-100 p-8 dark:bg-neutral-800/50"
+                      className="group relative flex h-full w-full flex-col items-center rounded-lg bg-neutral-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-neutral-100 dark:bg-neutral-800/50 dark:hover:bg-neutral-700/50"
                     >
                       <Icon
                         icon={subject.icon}
-                        className="h-20 w-20 shrink-0 group-hover:text-custom-500"
+                        className="pointer-events-none z-10 h-20 w-20 shrink-0 group-hover:text-custom-500"
                       />
                       <h2 className="mt-8 text-center text-2xl font-medium uppercase tracking-widest">
                         {subject.title}
@@ -143,7 +143,7 @@ function NotesCategory(): React.ReactElement {
                       />
                       <Menu
                         as="div"
-                        className="absolute right-4 top-4 overscroll-contain"
+                        className="absolute right-4 top-4 z-20 overscroll-contain"
                       >
                         <Menu.Button className="rounded-md p-2 text-neutral-500 hover:bg-neutral-200/50 hover:text-neutral-500 dark:hover:bg-neutral-700/30">
                           <Icon

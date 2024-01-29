@@ -43,7 +43,7 @@ function Notes(): React.ReactElement {
   }, [])
 
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col px-12">
+    <section className="flex h-full min-h-0 w-full flex-1 flex-col overflow-y-scroll px-12">
       <ModuleHeader
         title="Notes"
         desc="A place to store all your involuntarily generated thoughts."
@@ -55,12 +55,12 @@ function Notes(): React.ReactElement {
           return <Error message="Failed to fetch data from server." />
         } else {
           return (
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] items-center justify-center gap-4 py-8">
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] items-center justify-center gap-4 py-8">
               {data.map(workspace => (
                 <Link
                   to={`/notes/${workspace.id}`}
                   key={workspace.id}
-                  className="group flex h-full w-full flex-col items-center rounded-lg bg-neutral-100 p-16 hover:bg-neutral-200 dark:bg-neutral-800/50 dark:hover:bg-neutral-800"
+                  className="group flex h-full  w-full flex-col items-center rounded-lg bg-neutral-50 p-16 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-neutral-100 dark:bg-neutral-800/50 dark:hover:bg-neutral-800"
                 >
                   <Icon
                     icon={workspace.icon}

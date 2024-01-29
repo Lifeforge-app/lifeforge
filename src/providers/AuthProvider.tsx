@@ -14,6 +14,7 @@ const AUTH_DATA: {
     email: string
     password: string
   }) => Promise<string>
+  authWithOauth: (provider: string) => Promise<string>
   logout: () => void
   loginQuota: {
     quota: number
@@ -25,6 +26,7 @@ const AUTH_DATA: {
 } = {
   auth: false,
   authenticate: async () => '',
+  authWithOauth: async () => '',
   logout: () => {},
   loginQuota: {
     quota: 5,
@@ -136,6 +138,50 @@ export default function AuthProvider({
     }
   }
 
+  async function authWithOauth(provider: string): Promise<string> {
+    if (!loading && pocketbase !== null && error === null) {
+      try {
+        const w = window.open()
+
+        await pocketbase
+          .collection('users')
+          .authWithOAuth2({
+            provider,
+            urlCallback: url => {
+              w.location.href = url
+            }
+          })
+          .catch(e => {
+            throw e.message
+          })
+
+        window.localStorage.setItem('quota', '5')
+        window.localStorage.removeItem('lastQuotaExceeded')
+
+        document.cookie = `token=${
+          pocketbase.authStore.token
+        }; path=/; expires=${new Date(
+          Date.now() + 7 * 24 * 60 * 60 * 1000
+        ).toUTCString()}`
+
+        setUserData(pocketbase.authStore.model)
+
+        return 'success: ' + pocketbase.authStore.model?.name
+      } catch (error) {
+        switch (error) {
+          case 'Failed to authenticate.':
+            return AUTH_ERROR_MESSAGES.INVALID_CREDENTIALS
+          default:
+            return AUTH_ERROR_MESSAGES.UNKNOWN_ERROR
+        }
+      } finally {
+        setAuth(pocketbase.authStore.isValid)
+      }
+    } else {
+      return AUTH_ERROR_MESSAGES.DATABASE_NOT_READY
+    }
+  }
+
   function logout(): void {
     console.log(pocketbase)
     if (!loading && pocketbase !== null) {
@@ -190,6 +236,7 @@ export default function AuthProvider({
       value={{
         auth,
         authenticate,
+        authWithOauth,
         logout,
         loginQuota: {
           quota,

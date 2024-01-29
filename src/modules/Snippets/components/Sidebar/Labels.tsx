@@ -42,13 +42,13 @@ function Labels({
         switch (labels) {
           case 'loading':
             return (
-              <div className="flex items-center justify-center gap-2 px-8 py-2">
+              <div className="flex items-center justify-center gap-2 px-8 sm:px-12 py-2">
                 <span className="small-loader-light" />
               </div>
             )
           case 'error':
             return (
-              <div className="flex items-center justify-center gap-2 px-8 py-2 text-red-500">
+              <div className="flex items-center justify-center gap-2 px-8 sm:px-12 py-2 text-red-500">
                 <Icon icon="tabler:alert-triangle" className="h-5 w-5" />
                 <span>Failed to fetch data.</span>
               </div>

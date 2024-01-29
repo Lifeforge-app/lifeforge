@@ -45,7 +45,7 @@ function Changelog(): React.ReactElement {
   }, [])
 
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col overflow-y-scroll px-12">
+    <section className="flex h-full min-h-0 w-full flex-1 flex-col overflow-y-scroll px-8 sm:px-12">
       <ModuleHeader
         title="Change Log"
         desc="All the changes made to this application will be listed here."
@@ -62,11 +62,11 @@ function Changelog(): React.ReactElement {
                 {data.map(entry => (
                   <li
                     key={entry.version}
-                    className="flex flex-col gap-2 rounded-lg bg-neutral-50 p-6  shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50"
+                    className="flex flex-col gap-2 rounded-lg bg-neutral-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50"
                   >
-                    <h3 className="mb-2 text-2xl font-semibold">
+                    <h3 className="mb-2 flex flex-col gap-2 text-2xl font-semibold sm:flex-row sm:items-end">
                       Ver. {entry.version}{' '}
-                      <span className="text-sm">
+                      <span className="mb-0.5 block text-sm">
                         (
                         {new Date(entry.date_range[0]).toLocaleDateString(
                           'en-US',

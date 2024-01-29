@@ -20,7 +20,7 @@ function ContainerGrid({
   >
 }): React.ReactElement {
   return (
-    <div className="mt-6 grid w-full grid-cols-4 gap-6 overflow-y-auto pb-12">
+    <div className="mt-6 grid w-full grid-cols-[repeat(auto-fill,minmax(18rem,1fr))] gap-6 overflow-y-auto px-3 pb-12">
       {filteredList.map(container => (
         <ContainerGridItem
           key={container.id}

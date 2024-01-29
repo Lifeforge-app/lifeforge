@@ -23,7 +23,7 @@ function SidebarItem({
   isMainSidebarItem,
   active
 }: SidebarItemProps): React.JSX.Element {
-  const { sidebarExpanded } =
+  const { sidebarExpanded, toggleSidebar } =
     isMainSidebarItem === true
       ? useContext(GlobalStateContext)
       : { sidebarExpanded: true }
@@ -58,7 +58,7 @@ function SidebarItem({
               : ''
           }`}
         >
-          <div className="flex items-center gap-6">
+          <div className="flex min-w-0 items-center gap-6">
             <Icon
               icon={icon}
               className={`h-6 w-6 shrink-0 ${
@@ -68,10 +68,15 @@ function SidebarItem({
                   : ''
               }`}
             />
-            {sidebarExpanded && name}
+            <span className="w-full truncate">{sidebarExpanded && name}</span>
           </div>
 
           <Link
+            onClick={() => {
+              if (window.innerWidth < 1024) {
+                toggleSidebar()
+              }
+            }}
             to={`./${titleToPath(name)}`}
             className="absolute left-0 top-0 h-full w-full rounded-lg"
           />
@@ -80,7 +85,7 @@ function SidebarItem({
               {subsection !== undefined && (
                 <button
                   onClick={toggleSubsection}
-                  className="rounded-full p-1 hover:bg-neutral-700/50"
+                  className="rounded-full p-1 hover:bg-neutral-200 dark:hover:bg-neutral-700/50"
                 >
                   <Icon
                     icon="tabler:chevron-right"
@@ -105,11 +110,11 @@ function SidebarItem({
               <Link
                 to={`./${titleToPath(name)}/${subsectionLink}`}
                 key={subsectionName}
-                className={`mx-4 flex items-center gap-4 rounded-lg py-4 pl-[3.8rem] font-medium transition-all hover:bg-neutral-800 ${
+                className={`mx-4 flex items-center gap-4 rounded-lg py-4 pl-[3.8rem] font-medium transition-all hover:bg-neutral-200/30 dark:hover:bg-neutral-800  ${
                   location.pathname.split('/').slice(1)[0] ===
                     titleToPath(name) &&
                   location.pathname.split('/').slice(1)[1] === subsectionLink
-                    ? 'bg-neutral-800'
+                    ? 'bg-neutral-200/50 dark:bg-neutral-800'
                     : 'text-neutral-400'
                 }`}
               >

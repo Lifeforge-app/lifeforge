@@ -92,7 +92,9 @@ function ModifySubjectModal({
           {
             create: "Oops! Couldn't create the subject. Please try again.",
             update: "Oops! Couldn't update the subject. Please try again."
-          }[innerOpenType!]
+          }[innerOpenType!] +
+            ' Error: ' +
+            err
         )
         console.error(err)
       })
@@ -192,7 +194,7 @@ function ModifySubjectModal({
             />
           </div>
         </div>
-        <div className="group relative mt-6 flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-200/50 focus-within:border-custom-500 dark:bg-neutral-800/50">
+        <div className="group relative mt-6 flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-200/50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] focus-within:border-custom-500 dark:bg-neutral-800/50">
           <Icon
             icon="tabler:icons"
             className="ml-6 h-6 w-6 shrink-0 text-neutral-500 group-focus-within:text-custom-500"
@@ -224,7 +226,7 @@ function ModifySubjectModal({
               onClick={() => {
                 setIconSelectorOpen(true)
               }}
-              className="mr-4 shrink-0 rounded-lg p-2 text-neutral-100 hover:bg-neutral-500/30 hover:text-neutral-200 focus:outline-none"
+              className="mr-4 shrink-0 rounded-lg p-2 text-neutral-500 hover:bg-neutral-200 hover:text-neutral-900 focus:outline-none dark:hover:bg-neutral-500/30 dark:hover:text-neutral-200"
             >
               <Icon icon="tabler:chevron-down" className="h-6 w-6" />
             </button>
@@ -233,7 +235,7 @@ function ModifySubjectModal({
 
         <button
           disabled={loading}
-          className="mt-8 flex h-16 items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800 transition-all hover:bg-custom-600"
+          className="mt-8 flex h-16 items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 transition-all hover:bg-custom-600 dark:text-neutral-800"
           onClick={onSubmitButtonClick}
         >
           {!loading ? (

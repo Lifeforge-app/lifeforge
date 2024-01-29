@@ -2,30 +2,28 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { type INotesSubject } from './Workspace'
 import Modal from '../../components/Modal'
+import { type INotesEntry } from './Subject'
 
-function DeleteSubjectConfirmationModal({
+function DeleteFolderConfirmationModal({
   isOpen,
   closeModal,
-  subjectDetails,
-  updateSubjectList: updateContainerList
+  folderDetails,
+  updateNotesEntries
 }: {
   isOpen: boolean
   closeModal: () => void
-  subjectDetails: INotesSubject | null
-  updateSubjectList: () => void
+  folderDetails: INotesEntry | null
+  updateNotesEntries: () => void
 }): React.ReactElement {
   const [loading, setLoading] = useState(false)
 
-  function deleteContainer(): void {
-    if (subjectDetails === null) return
+  function deleteFolder(): void {
+    if (folderDetails === null) return
 
     setLoading(true)
     fetch(
-      `${import.meta.env.VITE_API_HOST}/notes/subject/delete/${
-        subjectDetails.id
-      }`,
+      `${import.meta.env.VITE_API_HOST}/notes/entry/delete/${folderDetails.id}`,
       {
         method: 'DELETE'
       }
@@ -33,16 +31,16 @@ function DeleteSubjectConfirmationModal({
       .then(async res => {
         const data = await res.json()
         if (res.ok) {
-          toast.info("Uhh, hopefully you truly didn't need that container.")
+          toast.info("Uhh, hopefully you truly didn't need that folder.")
           closeModal()
-          updateContainerList()
+          updateNotesEntries()
           return data
         } else {
           throw new Error(data.message)
         }
       })
       .catch(err => {
-        toast.error("Oops! Couldn't delete the container. Please try again.")
+        toast.error("Oops! Couldn't delete the folder. Please try again.")
         console.error(err)
       })
       .finally(() => {
@@ -52,11 +50,11 @@ function DeleteSubjectConfirmationModal({
 
   return (
     <Modal isOpen={isOpen}>
-      <h1 className="text-2xl font-semibold">
-        Are you sure you want to delete {subjectDetails?.title}?
+      <h1 className="truncate text-2xl font-semibold">
+        Are you sure you want to delete {folderDetails?.name}?
       </h1>
       <p className="mt-2 text-neutral-500">
-        This will delete the subject and all the notes inside it. This action is
+        This will delete the folder and all the notes inside it. This action is
         irreversible!
       </p>
       <div className="mt-8 flex w-full justify-around gap-2">
@@ -68,7 +66,7 @@ function DeleteSubjectConfirmationModal({
         </button>
         <button
           disabled={loading}
-          onClick={deleteContainer}
+          onClick={deleteFolder}
           className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 transition-all hover:bg-red-600"
         >
           {loading ? (
@@ -87,4 +85,4 @@ function DeleteSubjectConfirmationModal({
   )
 }
 
-export default DeleteSubjectConfirmationModal
+export default DeleteFolderConfirmationModal

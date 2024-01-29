@@ -8,6 +8,7 @@
   font-family: 'Urbanist', sans-serif;
   scrollbar-color: rgba(64, 64, 64, 0.5) rgba(38, 38, 38, 0.5);
   scrollbar-width: thin;
+  overscroll-behavior: none;
 }
 
 *:focus {
@@ -112,13 +113,13 @@ div[data-rmiz-modal-content] {
   @apply bg-neutral-100 dark:bg-neutral-900;
 }
 
-/* progress::-webkit-progress-value {
+progress::-webkit-progress-value {
   @apply !bg-custom-500;
 }
 
 progress::-moz-progress-bar {
   @apply !bg-custom-500;
-} */
+}
 
 .cm-editor * {
   font-family: 'Jetbrains Mono', monospace !important;
@@ -372,4 +373,13 @@ progress::-moz-progress-bar {
   --color-custom-700: #616161;
   --color-custom-800: #424242;
   --color-custom-900: #212121;
+}
+
+::global {
+  --toastify-color-light: var(--color-custom-500);
+}
+
+.Toastify__progress-bar--default {
+  background: var(--color-custom-500);
+  opacity: 1 !important;
 }

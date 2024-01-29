@@ -70,7 +70,7 @@ function Ideas(): React.JSX.Element {
 
   return (
     <>
-      <section className="relative min-h-0 w-full min-w-0 flex-1 overflow-y-auto px-12">
+      <section className="relative min-h-0 w-full min-w-0 flex-1 overflow-y-auto px-8 sm:px-12">
         <ContainerHeader id={id!} />
         {(() => {
           switch (data) {
@@ -80,7 +80,32 @@ function Ideas(): React.JSX.Element {
               return <Error message="Failed to fetch data from server." />
             default:
               return data.length > 0 ? (
-                <Column columns={4} gap="0.5rem" className="mt-8 h-max px-2">
+                <Column
+                  queries={[
+                    {
+                      columns: 1,
+                      query: 'min-width: 0px'
+                    },
+                    {
+                      columns: 2,
+                      query: 'min-width: 768px'
+                    },
+                    {
+                      columns: 3,
+                      query: 'min-width: 1024px'
+                    },
+                    {
+                      columns: 4,
+                      query: 'min-width: 1280px'
+                    },
+                    {
+                      columns: 5,
+                      query: 'min-width: 1536px'
+                    }
+                  ]}
+                  gap="0.5rem"
+                  className="mt-8 h-max px-3"
+                >
                   {data.map(entry => {
                     switch (entry.type) {
                       case 'image':

@@ -15,7 +15,7 @@ function App(): React.JSX.Element {
       <GlobalStateProvider>
         <AuthProvider>
           <PersonalizationProvider>
-            <div className="relative flex h-screen w-full overflow-hidden bg-neutral-200/50 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-100">
+            <div className="relative flex h-[100dvh] w-full overflow-hidden bg-neutral-200/50 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-100">
               <AppRouter />
             </div>
             <ToastContainer
@@ -29,7 +29,6 @@ function App(): React.JSX.Element {
               draggable
               pauseOnHover
               theme="colored"
-              className="w-max"
             />
           </PersonalizationProvider>
         </AuthProvider>

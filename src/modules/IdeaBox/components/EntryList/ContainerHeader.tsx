@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { type IIdeaBoxContainer } from '../..'
 import { toast } from 'react-toastify'
+import GoBackButton from '../../../../components/GoBackButton'
 
 function ContainerHeader({ id }: { id: string }): React.ReactElement {
   const [containerDetails, setContainerDetails] = useState<
     IIdeaBoxContainer | 'loading' | 'error'
   >('loading')
+  const navigate = useNavigate()
 
   function fetchContainerDetails(): void {
     setContainerDetails('loading')
@@ -33,17 +35,17 @@ function ContainerHeader({ id }: { id: string }): React.ReactElement {
 
   return (
     <header className="flex flex-col gap-1">
-      <Link
-        to="/idea-box"
-        className="mb-2 flex w-min items-center gap-2 rounded-lg p-2 pl-0 pr-4 text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-100"
-      >
-        <Icon icon="tabler:chevron-left" className="text-xl" />
-        <span className="whitespace-nowrap text-lg font-medium">Go back</span>
-      </Link>
+      <GoBackButton
+        onClick={() => {
+          navigate('/idea-box')
+        }}
+      />
       <div className="flex items-center justify-between">
         <h1
           className={`flex items-center gap-4 ${
-            typeof containerDetails !== 'string' ? 'text-3xl' : 'text-2xl'
+            typeof containerDetails !== 'string'
+              ? 'text-2xl sm:text-3xl'
+              : 'text-2xl'
           } font-semibold `}
         >
           {(() => {
@@ -76,7 +78,7 @@ function ContainerHeader({ id }: { id: string }): React.ReactElement {
                     >
                       <Icon
                         icon={containerDetails.icon}
-                        className="text-3xl"
+                        className="text-2xl sm:text-3xl"
                         style={{
                           color: containerDetails.color
                         }}

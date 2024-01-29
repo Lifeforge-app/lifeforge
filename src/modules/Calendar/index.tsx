@@ -97,7 +97,7 @@ function Calendar(): React.JSX.Element {
             </div>
           </section>
           <section className="flex w-full flex-col gap-4 overflow-y-auto rounded-lg bg-neutral-50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
-            <h2 className="flex items-center gap-4 px-8 py-4 pt-8 text-sm font-semibold uppercase tracking-widest text-neutral-600 transition-all">
+            <h2 className="flex items-center gap-4 px-8 py-4 pt-8 text-sm font-semibold uppercase tracking-widest text-neutral-600 transition-all sm:px-12">
               Categories
             </h2>
             <ul className="flex flex-col overflow-y-hidden pb-8 hover:overflow-y-scroll">
@@ -156,7 +156,7 @@ function Calendar(): React.JSX.Element {
                 })()}
               </span>
             </div>
-            <search className="flex items-center gap-4">
+            <div className="flex items-center gap-4">
               <button className="rounded-lg p-4 text-neutral-100 transition-all hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50">
                 <Icon icon="tabler:search" className="text-2xl" />
               </button>
@@ -164,7 +164,7 @@ function Calendar(): React.JSX.Element {
                 <Icon icon="tabler:plus" className="text-xl" />
                 create
               </button>
-            </search>
+            </div>
           </div>
           <div className="mt-4 flex h-full min-h-0 flex-1 flex-col">
             <div className="mb-1.5 flex w-full">

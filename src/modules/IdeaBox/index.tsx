@@ -10,7 +10,7 @@ import ModifyContainerModal from './components/ContainerList/ModifyContainerModa
 import { useDebounce } from '@uidotdev/usehooks'
 import EmptyStateScreen from '../../components/EmptyStateScreen'
 import ContainerGrid from './components/ContainerList/ContainerGrid'
-import DeleteContainerConfirmationModal from './components/ContainerList/DeleteContainerConfirmationModal.1'
+import DeleteContainerConfirmationModal from './components/ContainerList/DeleteContainerConfirmationModal'
 
 export interface IIdeaBoxContainer {
   collectionId: string
@@ -79,7 +79,7 @@ function IdeaBox(): React.JSX.Element {
   }, [debouncedSearchQuery, data])
 
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col px-12">
+    <section className="flex h-full min-h-0 w-full flex-1 flex-col px-8 sm:px-12">
       <ModuleHeader
         title="Idea Box"
         desc="Sometimes you will randomly stumble upon a great idea."

@@ -8,14 +8,14 @@ function SidebarHeader(): React.JSX.Element {
   return (
     <div
       className={`flex h-36 w-full items-center justify-between pl-6 transition-none ${
-        !sidebarExpanded && 'my-2'
+        !sidebarExpanded ? 'my-8 overflow-hidden sm:my-2' : 'my-4'
       }`}
     >
       <h1 className="ml-1 flex shrink-0 items-center gap-2 whitespace-nowrap text-xl font-semibold text-neutral-800 dark:text-neutral-100">
-        <Icon icon="tabler:hammer" className="text-custom-500 text-3xl" />
+        <Icon icon="tabler:hammer" className="text-3xl text-custom-500" />
         {sidebarExpanded && (
           <div>
-            LifeForge<span className="text-custom-500 text-3xl"> .</span>
+            LifeForge<span className="text-3xl text-custom-500"> .</span>
           </div>
         )}
       </h1>
