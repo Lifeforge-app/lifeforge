@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import usePocketbase from '../hooks/usePocketbase'
 import type Pocketbase from 'pocketbase'
 
@@ -33,6 +33,12 @@ export default function GlobalStateProvider({
   function toggleNavbarExpanded(): void {
     setNavbarExpanded(!navbarExpanded)
   }
+
+  useEffect(() => {
+    if (window.innerWidth < 1024) {
+      setNavbarExpanded(false)
+    }
+  }, [])
 
   return (
     <GlobalStateContext.Provider

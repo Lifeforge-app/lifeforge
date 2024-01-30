@@ -42,6 +42,24 @@ function EntryContextMenu({
       })
   }
 
+  function archiveIdea(ideaId: string): void {
+    fetch(`${import.meta.env.VITE_API_HOST}/idea-box/idea/archive/${ideaId}`, {
+      method: 'POST'
+    })
+      .then(async response => {
+        const data = await response.json()
+
+        if (response.status !== 200) {
+          throw data.message
+        }
+        toast.info('Idea has been archived.')
+        updateIdeaList()
+      })
+      .catch(() => {
+        toast.error('Failed to fetch data from server.')
+      })
+  }
+
   return (
     <Menu
       as="div"
@@ -93,6 +111,24 @@ function EntryContextMenu({
                   className="h-5 w-5"
                 />
                 {entry.pinned ? 'Unpin from' : 'Pin to'} top
+              </button>
+            )}
+          </Menu.Item>
+          <Menu.Item>
+            {({ active }) => (
+              <button
+                onClick={() => {
+                  archiveIdea(entry.id)
+                }}
+                className={`${
+                  active ? 'bg-neutral-200/50 dark:bg-neutral-700/50' : ''
+                } group flex w-full items-center gap-4 rounded-md p-4`}
+              >
+                <Icon
+                  icon={entry.pinned ? 'tabler:archive-off' : 'tabler:archive'}
+                  className="h-5 w-5"
+                />
+                {entry.pinned ? 'Unarchive' : 'Archive'} idea
               </button>
             )}
           </Menu.Item>
