@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import ModuleHeader from '../../components/ModuleHeader'
+import ModuleHeader from '../../components/general/ModuleHeader'
 
 export default function Flashcards(): React.JSX.Element {
   return (

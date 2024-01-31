@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import ModuleHeader from '../../components/ModuleHeader'
+import ModuleHeader from '../../components/general/ModuleHeader'
 import { toast } from 'react-toastify'
-import Loading from '../../components/Loading'
-import Error from '../../components/Error'
+import Loading from '../../components/general/Loading'
+import Error from '../../components/general/Error'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { Link } from 'react-router-dom'
 

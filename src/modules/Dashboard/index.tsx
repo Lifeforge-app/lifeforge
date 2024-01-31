@@ -20,7 +20,7 @@ import {
   Title,
   Filler
 } from 'chart.js'
-import ModuleHeader from '../../components/ModuleHeader'
+import ModuleHeader from '../../components/general/ModuleHeader'
 import { AuthContext } from '../../providers/AuthProvider'
 
 ChartJS.register(

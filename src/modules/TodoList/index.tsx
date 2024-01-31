@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import Sidebar from './components/Sidebar'
-import ModuleHeader from '../../components/ModuleHeader'
+import ModuleHeader from '../../components/general/ModuleHeader'
 
 function TodoList(): React.JSX.Element {
   return (

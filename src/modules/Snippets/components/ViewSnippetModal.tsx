@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { useContext, useEffect, useState } from 'react'
-import Modal from '../../../components/Modal'
+import Modal from '../../../components/general/Modal'
 import { toast } from 'react-toastify'
 import { type ICodeSnippetsEntry } from '..'
-import Loading from '../../../components/Loading'
+import Loading from '../../../components/general/Loading'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import CodeMirror from '@uiw/react-codemirror'
 import { javascript } from '@codemirror/lang-javascript'

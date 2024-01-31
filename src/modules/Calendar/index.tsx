@@ -1,7 +1,7 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React from 'react'
-import ModuleHeader from '../../components/ModuleHeader'
+import ModuleHeader from '../../components/general/ModuleHeader'
 import { Icon } from '@iconify/react'
 
 function Calendar(): React.JSX.Element {

@@ -9,6 +9,7 @@
   scrollbar-color: rgba(64, 64, 64, 0.5) rgba(38, 38, 38, 0.5);
   scrollbar-width: thin;
   overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 *:focus {

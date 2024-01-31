@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable multiline-ternary */
 import React, { useEffect, useState } from 'react'
-import ModuleHeader from '../../components/ModuleHeader'
+import ModuleHeader from '../../components/general/ModuleHeader'
 import { Icon } from '@iconify/react'
 import { toast } from 'react-toastify'
-import Loading from '../../components/Loading'
-import Error from '../../components/Error'
-import ModifyContainerModal from './components/ContainerList/ModifyContainerModal'
+import Loading from '../../components/general/Loading'
+import Error from '../../components/general/Error'
+import ModifyContainerModal from './components/Container/modals/ModifyContainerModal'
 import { useDebounce } from '@uidotdev/usehooks'
-import EmptyStateScreen from '../../components/EmptyStateScreen'
-import ContainerGrid from './components/ContainerList/ContainerGrid'
-import DeleteContainerConfirmationModal from './components/ContainerList/DeleteContainerConfirmationModal'
+import EmptyStateScreen from '../../components/general/EmptyStateScreen'
+import Container from './components/Container'
+import DeleteContainerConfirmationModal from './components/Container/modals/DeleteContainerConfirmationModal'
 
 export interface IIdeaBoxContainer {
   collectionId: string
@@ -106,7 +106,7 @@ function IdeaBox(): React.JSX.Element {
                 return <Error message="Failed to fetch data from server." />
               default:
                 return data.length > 0 ? (
-                  <ContainerGrid
+                  <Container
                     filteredList={filteredList}
                     setCreateContainerModalOpen={
                       setModifyContainerModalOpenType

@@ -1,6 +1,6 @@
 /* eslint-disable multiline-ternary */
 import React from 'react'
-import ModuleHeader from '../../components/ModuleHeader'
+import ModuleHeader from '../../components/general/ModuleHeader'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import Timer from './components/Timer'
 

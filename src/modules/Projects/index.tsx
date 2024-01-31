@@ -1,7 +1,7 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect, useState } from 'react'
-import ModuleHeader from '../../components/ModuleHeader'
+import ModuleHeader from '../../components/general/ModuleHeader'
 import SidebarTitle from '../../components/Sidebar/components/SidebarTitle'
 import SidebarDivider from '../../components/Sidebar/components/SidebarDivider'
 import { Icon } from '@iconify/react'

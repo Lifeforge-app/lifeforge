@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { toast } from 'react-toastify'
 import { useDebounce } from '@uidotdev/usehooks'
-import Modal from '../../../components/Modal'
-import ColorPickerModal from '../../../components/ColorPickerModal'
+import Modal from '../../../components/general/Modal'
+import ColorPickerModal from '../../../components/general/ColorPickerModal'
 import { type ICodeSnippetsLabel } from './Sidebar/Labels'
 
 function ModifyLabelModal({

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */
 /* eslint-disable @typescript-eslint/indent */
 import React, { Fragment, useEffect, useState } from 'react'
-import ModuleHeader from '../../components/ModuleHeader'
+import ModuleHeader from '../../components/general/ModuleHeader'
 import { toast } from 'react-toastify'
-import Loading from '../../components/Loading'
-import Error from '../../components/Error'
+import Loading from '../../components/general/Loading'
+import Error from '../../components/general/Error'
 
 interface IChangeLogVersion {
   version: string

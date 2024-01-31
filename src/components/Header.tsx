@@ -4,6 +4,7 @@ import { GlobalStateContext } from '../providers/GlobalStateProvider'
 import { AuthContext } from '../providers/AuthProvider'
 import { Menu, Transition } from '@headlessui/react'
 import { toast } from 'react-toastify'
+import MenuItem from './general/HamburgerMenu/MenuItem'
 
 export default function Header(): React.JSX.Element {
   const { sidebarExpanded, toggleSidebar } = useContext(GlobalStateContext)
@@ -68,39 +69,19 @@ export default function Header(): React.JSX.Element {
             >
               <Menu.Items className="absolute right-0 mt-4 w-56 overflow-hidden rounded-lg bg-neutral-100 shadow-lg focus:outline-none dark:bg-neutral-800">
                 <div className="py-1">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#"
-                        className={`${
-                          active
-                            ? 'bg-neutral-700/50 text-neutral-100'
-                            : 'text-neutral-400'
-                        } flex w-full gap-4 p-6 text-left font-medium leading-5`}
-                      >
-                        <Icon icon="tabler:user-cog" className="h-5 w-5" />
-                        Account settings
-                      </a>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        onClick={() => {
-                          logout()
-                          toast.warning('Logged out successfully!')
-                        }}
-                        className={`${
-                          active
-                            ? 'bg-neutral-700 text-rose-500'
-                            : 'text-neutral-400'
-                        } flex w-full items-center gap-4 p-6 text-left leading-5`}
-                      >
-                        <Icon icon="tabler:logout" className="h-5 w-5" />
-                        Sign out
-                      </button>
-                    )}
-                  </Menu.Item>
+                  <MenuItem
+                    onClick={() => {}}
+                    icon="tabler:user-cog"
+                    text="Account settings"
+                  />
+                  <MenuItem
+                    onClick={() => {
+                      logout()
+                      toast.warning('Logged out successfully!')
+                    }}
+                    icon="tabler:logout"
+                    text="Sign out"
+                  />
                 </div>
               </Menu.Items>
             </Transition>
