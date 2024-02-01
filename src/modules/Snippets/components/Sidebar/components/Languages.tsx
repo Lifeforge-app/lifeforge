@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
-import SidebarTitle from '../../../../components/Sidebar/components/SidebarTitle'
+import SidebarTitle from '../../../../../components/Sidebar/components/SidebarTitle'
 
 export interface ICodeSnippetsLanguage {
   collectionId: string

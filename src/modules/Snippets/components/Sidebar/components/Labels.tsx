@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/indent */
 import React, { useState } from 'react'
-import SidebarTitle from '../../../../components/Sidebar/components/SidebarTitle'
+import SidebarTitle from '../../../../../components/Sidebar/components/SidebarTitle'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import ModifyLabelModal from '../ModifyLabelModal'
+import ModifyLabelModal from '../../ModifyLabelModal'
 
 export interface ICodeSnippetsLabel {
   collectionId: string
@@ -25,9 +25,7 @@ function Labels({
   const [modifyLabelModalOpenType, setModifyLabelModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
-  const [existedData, setExistedData] = useState<ICodeSnippetsLabel | null>(
-    null
-  )
+  const [existedData] = useState<ICodeSnippetsLabel | null>(null)
 
   return (
     <>
@@ -42,13 +40,13 @@ function Labels({
         switch (labels) {
           case 'loading':
             return (
-              <div className="flex items-center justify-center gap-2 px-8 sm:px-12 py-2">
+              <div className="flex items-center justify-center gap-2 px-8 py-2 sm:px-12">
                 <span className="small-loader-light" />
               </div>
             )
           case 'error':
             return (
-              <div className="flex items-center justify-center gap-2 px-8 sm:px-12 py-2 text-red-500">
+              <div className="flex items-center justify-center gap-2 px-8 py-2 text-red-500 sm:px-12">
                 <Icon icon="tabler:alert-triangle" className="h-5 w-5" />
                 <span>Failed to fetch data.</span>
               </div>

@@ -2,8 +2,8 @@
 import React from 'react'
 import SidebarDivider from '../../../../components/Sidebar/components/SidebarDivider'
 import SidebarItem from '../../../../components/Sidebar/components/SidebarItem'
-import Labels, { type ICodeSnippetsLabel } from './Labels'
-import Languages, { type ICodeSnippetsLanguage } from './Languages'
+import Labels, { type ICodeSnippetsLabel } from './components/Labels'
+import Languages, { type ICodeSnippetsLanguage } from './components/Languages'
 
 function Sidebar({
   labels,

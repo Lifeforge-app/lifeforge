@@ -19,7 +19,6 @@ import PomodoroTimer from './modules/PomodoroTimer'
 import Flashcards from './modules/Flashcards'
 import CardSet from './modules/Flashcards/components/CardSet'
 import ReferenceBooks from './modules/ReferenceBooks'
-import UniversityAnalytics from './modules/UniversityAnalytics'
 import Changelog from './modules/Changelog'
 import Personalization from './modules/Personalization'
 import Notes from './modules/Notes'
@@ -75,7 +74,6 @@ function AppRouter(): React.JSX.Element {
         <Route path="notes" element={<Notes />} />
         <Route path="notes/:workspace" element={<NotesCategory />} />
         <Route path="notes/:workspace/:subject/*" element={<NotesSubject />} />
-        <Route path="university-analytics" element={<UniversityAnalytics />} />
         <Route path="personalization" element={<Personalization />} />
         <Route path="change-log" element={<Changelog />} />
       </Route>

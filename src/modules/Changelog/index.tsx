@@ -5,8 +5,9 @@ import ModuleHeader from '../../components/general/ModuleHeader'
 import Loading from '../../components/general/Loading'
 import Error from '../../components/general/Error'
 import useFetch from '../../hooks/useFetch'
+import LogItem from './components/LogItem'
 
-interface IChangeLogVersion {
+export interface IChangeLogVersion {
   version: string
   date_range: [string, string]
   entries: IChangeLogEntry[]
@@ -37,54 +38,7 @@ function Changelog(): React.ReactElement {
             return (
               <ul className="my-8 flex flex-col gap-4">
                 {data.map(entry => (
-                  <li
-                    key={entry.version}
-                    className="flex flex-col gap-2 rounded-lg bg-neutral-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50"
-                  >
-                    <h3 className="mb-2 flex flex-col gap-2 text-2xl font-semibold sm:flex-row sm:items-end">
-                      Ver. {entry.version}{' '}
-                      <span className="mb-0.5 block text-sm">
-                        (
-                        {new Date(entry.date_range[0]).toLocaleDateString(
-                          'en-US',
-                          {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric'
-                          }
-                        )}{' '}
-                        -{' '}
-                        {new Date(entry.date_range[1]).toLocaleDateString(
-                          'en-US',
-                          {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric'
-                          }
-                        )}
-                        )
-                      </span>
-                    </h3>
-                    <ul className="flex list-inside list-disc flex-col gap-2 text-neutral-500 dark:text-neutral-400">
-                      {entry.entries.map(subEntry => (
-                        <li key={subEntry.id}>
-                          <span className="font-semibold text-neutral-800 dark:text-neutral-100">
-                            {subEntry.feature}:
-                          </span>{' '}
-                          <span
-                            dangerouslySetInnerHTML={{
-                              __html: subEntry.description.replace(
-                                /<code>(.*?)<\/code>/,
-                                `
-                                <code class="inline-block rounded-md bg-neutral-200 p-1 px-1.5 font-['Jetbrains_Mono', text-sm shadow-[2px_2px_2px_rgba(0,0,0,0.05), dark:bg-neutral-800">$1</code>
-                                `
-                              )
-                            }}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
+                  <LogItem key={entry.version} entry={entry} />
                 ))}
               </ul>
             )

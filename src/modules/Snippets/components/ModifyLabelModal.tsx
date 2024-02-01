@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { useDebounce } from '@uidotdev/usehooks'
 import Modal from '../../../components/general/Modal'
 import ColorPickerModal from '../../../components/general/ColorPickerModal'
-import { type ICodeSnippetsLabel } from './Sidebar/Labels'
+import { type ICodeSnippetsLabel } from './Sidebar/components/Labels'
 
 function ModifyLabelModal({
   openType,
