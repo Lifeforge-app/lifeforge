@@ -32,7 +32,7 @@ function DirectoryHeader({
     '*': string
   }>()
 
-  const [currentPath, setCurrentPath] = useFetch<{
+  const [currentPath] = useFetch<{
     icon: string
     path: INotesPath[]
   }>(`notes/entry/path/${workspace}/${subject}/${path}`)
@@ -175,10 +175,6 @@ function DirectoryHeader({
       toast.success('Yay! Folders uploaded.')
     })
   }
-
-  useEffect(() => {
-    fetchCurrentPath()
-  }, [path])
 
   return (
     <>

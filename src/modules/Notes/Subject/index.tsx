@@ -4,13 +4,12 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/indent */
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { toast } from 'react-toastify'
 import Error from '../../../components/general/Error'
 import Loading from '../../../components/general/Loading'
 import EmptyStateScreen from '../../../components/general/EmptyStateScreen'
-import ModifyFolderModal from './modals/ModifyFolderModal'
+import ModifyFolderModal from './components/ModifyFolderModal'
 import DirectoryHeader from './components/Directory/components/DirectoryHeader'
 import Directory from './components/Directory'
 import DeleteConfirmationModal from '../../../components/general/DeleteConfirmationModal'

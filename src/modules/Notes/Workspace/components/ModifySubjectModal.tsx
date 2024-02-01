@@ -8,7 +8,7 @@ import Modal from '../../../../components/general/Modal'
 import { useParams } from 'react-router'
 import Input from '../../../../components/general/Input'
 import IconInput from '../../../../components/general/IconSelector/IconInput'
-import { type INotesSubject } from '../components/SubjectItem'
+import { type INotesSubject } from './SubjectItem'
 import IconSelector from '../../../../components/general/IconSelector'
 
 function ModifySubjectModal({
