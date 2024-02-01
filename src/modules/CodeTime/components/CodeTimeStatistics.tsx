@@ -18,7 +18,7 @@ function CodeTimeStatistics(): React.ReactElement {
         <Icon icon="tabler:chart-bar" className="text-3xl" />
         <span className="ml-2">Statistics</span>
       </h1>
-      <div className="flex items-center justify-between gap-4">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] items-center justify-between gap-4">
         {(() => {
           switch (stats) {
             case 'loading':

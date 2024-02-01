@@ -58,7 +58,7 @@ function IdeaBox(): React.JSX.Element {
   }, [debouncedSearchQuery, data])
 
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col px-8 sm:px-12">
+    <section className="flex h-full min-h-0 w-full flex-1 flex-col overflow-y-auto px-8 sm:px-12 ">
       <ModuleHeader
         title="Idea Box"
         desc="Sometimes you will randomly stumble upon a great idea."
