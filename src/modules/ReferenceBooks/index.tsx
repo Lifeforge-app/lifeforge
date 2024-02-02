@@ -14,7 +14,7 @@ function ReferenceBooks(): React.JSX.Element {
         desc="A collection of reference books that accompany you on your learning journey."
       />
       <div className="mb-12 mt-8 flex min-h-0 w-full flex-1">
-        <aside className="h-full w-1/4 overflow-y-scroll rounded-lg bg-bg-50 py-4 dark:bg-bg-800/50">
+        <aside className="h-full w-1/4 overflow-y-scroll rounded-lg bg-bg-50 py-4 dark:bg-bg-900">
           <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
             <SidebarItem icon="tabler:list" name="All books" />
             <SidebarItem icon="tabler:star-filled" name="Starred" />
@@ -74,7 +74,7 @@ function ReferenceBooks(): React.JSX.Element {
               <span className="shrink-0">upload</span>
             </button>
           </div>
-          <search className="mt-6 flex w-full items-center gap-4 rounded-lg bg-bg-50 p-4 dark:bg-bg-800/50">
+          <search className="mt-6 flex w-full items-center gap-4 rounded-lg bg-bg-50 p-4 dark:bg-bg-900">
             <Icon icon="tabler:search" className="h-5 w-5 text-bg-100" />
             <input
               type="text"
@@ -90,7 +90,7 @@ function ReferenceBooks(): React.JSX.Element {
                   key={i}
                   className="relative flex flex-col items-start rounded-lg"
                 >
-                  <div className="flex h-72 w-full items-center justify-center rounded-lg bg-bg-50 p-8 dark:bg-bg-800/50">
+                  <div className="flex h-72 w-full items-center justify-center rounded-lg bg-bg-50 p-8 dark:bg-bg-900">
                     <img
                       src={faker.image.imageUrl(300, 400, 'airport', true)}
                       alt={faker.lorem.sentence()}

@@ -53,7 +53,7 @@ function Kanban(): React.JSX.Element {
         ].map(([icon, name, color], i) => (
           <div
             key={i}
-            className={`flex h-min max-h-full w-72 shrink-0 flex-col rounded-lg border-t-4 bg-bg-50 p-6 pb-0 pr-4 dark:bg-bg-800/50 ${color}`}
+            className={`flex h-min max-h-full w-72 shrink-0 flex-col rounded-lg border-t-4 bg-bg-50 p-6 pb-0 pr-4 dark:bg-bg-900 ${color}`}
           >
             <div className="flex items-center justify-between">
               <h3 className="flex items-center gap-4">

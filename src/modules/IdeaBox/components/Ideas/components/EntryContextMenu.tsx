@@ -71,7 +71,7 @@ function EntryContextMenu({
       <Menu.Button>
         {({ open }) => (
           <div
-            className={`shrink-0 rounded-lg bg-bg-50 p-2 text-bg-500 opacity-0 hover:bg-bg-100 hover:text-bg-800 group-hover:opacity-100 dark:bg-bg-800/50 dark:text-bg-100 dark:hover:bg-bg-900 dark:hover:text-bg-100 ${
+            className={`shrink-0 rounded-lg bg-bg-50 p-2 text-bg-500 opacity-0 hover:bg-bg-100 hover:text-bg-800 group-hover:opacity-100 dark:bg-bg-900 dark:text-bg-100 dark:hover:bg-bg-900 dark:hover:text-bg-100 ${
               entry.type === 'image' &&
               '!shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]'
             } ${

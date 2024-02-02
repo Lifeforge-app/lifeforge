@@ -13,7 +13,7 @@ function Calendar(): React.JSX.Element {
       />
       <div className="mb-12 mt-8 flex min-h-0 w-full flex-1">
         <aside className="flex h-full flex-col gap-8">
-          <section className="flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50">
+          <section className="flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
             <div className="h-full w-full">
               <div className="mb-6 flex items-center justify-between gap-2">
                 <button className="rounded-lg p-4 text-bg-100 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-700/50">
@@ -96,7 +96,7 @@ function Calendar(): React.JSX.Element {
               </div>
             </div>
           </section>
-          <section className="flex w-full flex-col gap-4 overflow-y-auto rounded-lg bg-bg-50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50">
+          <section className="flex w-full flex-col gap-4 overflow-y-auto rounded-lg bg-bg-50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
             <h2 className="flex items-center gap-4 px-8 py-4 pt-8 text-sm font-semibold uppercase tracking-widest text-bg-600 transition-all sm:px-12">
               Categories
             </h2>
@@ -168,7 +168,7 @@ function Calendar(): React.JSX.Element {
           </div>
           <div className="mt-4 flex h-full min-h-0 flex-1 flex-col">
             <div className="mb-1.5 flex w-full">
-              <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-lg bg-bg-50 py-4 text-bg-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50">
+              <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-lg bg-bg-50 py-4 text-bg-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
                 GMT
                 <span className="text-xl">+8</span>
               </div>
@@ -177,7 +177,7 @@ function Calendar(): React.JSX.Element {
                 .map((_, index) => (
                   <div
                     key={index}
-                    className={`ml-1.5 flex w-full items-center justify-center gap-2 rounded-lg bg-bg-50 py-4 text-bg-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50 ${
+                    className={`ml-1.5 flex w-full items-center justify-center gap-2 rounded-lg bg-bg-50 py-4 text-bg-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900 ${
                       index === 3 && 'bg-custom-500/20 text-custom-500'
                     }`}
                   >
@@ -194,9 +194,9 @@ function Calendar(): React.JSX.Element {
                   .fill(0)
                   .map((_, hour) => (
                     <div key={hour} className="flex h-24">
-                      <div className="relative h-full w-20 shrink-0 bg-bg-50 text-bg-100 dark:bg-bg-800/50">
+                      <div className="relative h-full w-20 shrink-0 bg-bg-50 text-bg-100 dark:bg-bg-900">
                         {hour !== 24 && (
-                          <span className="absolute bottom-0 z-[9999] w-[90%] translate-y-1/2 bg-[#fafafa] pr-4 text-right dark:bg-bg-800/50">
+                          <span className="absolute bottom-0 z-[9999] w-[90%] translate-y-1/2 bg-[#fafafa] pr-4 text-right dark:bg-bg-900">
                             {hour + 1 > 12 ? hour + 1 - 12 : hour + 1}{' '}
                             {hour + 1 >= 12 ? 'PM' : 'AM'}
                           </span>
@@ -207,7 +207,7 @@ function Calendar(): React.JSX.Element {
                         .map((_, day) => (
                           <div
                             key={day}
-                            className="relative w-full bg-bg-50 dark:bg-bg-800/50"
+                            className="relative w-full bg-bg-50 dark:bg-bg-900"
                           >
                             {day === 3 && hour === 1 && (
                               <div className="absolute left-0 top-0 z-[9999] ml-1.5 h-96 w-[90%] overflow-hidden rounded-r-md bg-bg-50 dark:bg-bg-900">

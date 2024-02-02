@@ -24,7 +24,7 @@ function Input({
   return (
     <div
       className={`group relative flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] focus-within:border-custom-500 ${
-        darker ? 'dark:bg-bg-800/50' : 'dark:bg-bg-800'
+        darker ? 'dark:bg-bg-900' : 'dark:bg-bg-800'
       } ${additionalClassName}`}
     >
       <Icon

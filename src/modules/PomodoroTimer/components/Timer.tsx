@@ -9,7 +9,7 @@ export default function Timer(): React.ReactElement {
     <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-12">
       <div className="relative flex flex-col items-center justify-center">
         <div
-          className="radial-progress absolute text-bg-200 dark:text-bg-800/50"
+          className="radial-progress absolute text-bg-200 dark:text-bg-900"
           style={{
             '--value': '100',
             '--size': '28rem',
@@ -40,7 +40,7 @@ export default function Timer(): React.ReactElement {
                 onClick={() => {
                   setStarted(true)
                 }}
-                className="rounded-lg p-4 text-bg-800 hover:bg-bg-50 dark:bg-bg-800/50 dark:text-bg-100"
+                className="rounded-lg p-4 text-bg-800 hover:bg-bg-50 dark:bg-bg-900 dark:text-bg-100"
               >
                 <Icon icon="tabler:play" className="h-8 w-8 shrink-0" />
               </button>

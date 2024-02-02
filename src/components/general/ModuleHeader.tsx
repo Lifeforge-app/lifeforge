@@ -38,7 +38,7 @@ function ModuleHeader({
       </div>
       {hasHamburgerMenu && (
         <Menu as="div" className="relative overscroll-contain">
-          <Menu.Button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800/50 dark:hover:text-bg-100">
+          <Menu.Button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-100">
             <Icon icon="tabler:dots-vertical" className="h-5 w-5" />
           </Menu.Button>
           <Transition

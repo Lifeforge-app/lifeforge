@@ -2,6 +2,7 @@ import React from 'react'
 import ModuleHeader from '../../components/general/ModuleHeader'
 import ThemeSelector from './components/ThemeSelector'
 import ThemeColorSelector from './components/ThemeColorSelector'
+import BgTempSelector from './components/BgTempSelector'
 
 function Personalization(): React.ReactElement {
   return (
@@ -11,8 +12,10 @@ function Personalization(): React.ReactElement {
         desc="Customise your experience with the app."
       />
       <ThemeSelector />
-      <div className="my-6 w-full border-b-[1.5px] border-bg-200 dark:border-bg-700" />
+      <div className="my-6 w-full border-b-[1.5px] border-bg-200 dark:border-bg-800" />
       <ThemeColorSelector />
+      <div className="my-6 w-full border-b-[1.5px] border-bg-200 dark:border-bg-800" />
+      <BgTempSelector />
     </section>
   )
 }

@@ -17,7 +17,7 @@ function Sidebar({
   updateLanguageList: () => void
 }): React.ReactElement {
   return (
-    <aside className="h-full w-1/4 overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50">
+    <aside className="h-full w-1/4 overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
       <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
         <SidebarItem icon="tabler:list" name="All Snippets" active />
         <SidebarItem icon="tabler:star-filled" name="Starred" />

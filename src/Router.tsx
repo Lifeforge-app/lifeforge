@@ -24,6 +24,7 @@ import Personalization from './modules/Personalization'
 import Notes from './modules/Notes'
 import NotesCategory from './modules/Notes/Workspace'
 import NotesSubject from './modules/Notes/Subject'
+import Settings from './modules/Settings'
 
 function AppRouter(): React.JSX.Element {
   const { auth, authLoading } = useContext(AuthContext)
@@ -75,6 +76,7 @@ function AppRouter(): React.JSX.Element {
         <Route path="notes/:workspace" element={<NotesCategory />} />
         <Route path="notes/:workspace/:subject/*" element={<NotesSubject />} />
         <Route path="personalization" element={<Personalization />} />
+        <Route path="settings" element={<Settings />} />
         <Route path="change-log" element={<Changelog />} />
       </Route>
       <Route path="auth" element={<Auth />} />

@@ -39,18 +39,6 @@ body *:not(input) {
   background: rgba(88, 88, 88, 0.5);
 }
 
-input:autofill {
-  background: rgb(38 38 38); /* or any other */
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px rgb(38, 38, 38) inset !important;
-  -webkit-text-fill-color: rgba(250, 250, 250, 1) !important;
-}
-
 .loader {
   width: 36px;
   height: 36px;

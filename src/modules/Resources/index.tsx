@@ -14,7 +14,7 @@ export default function Resources(): React.JSX.Element {
         desc="A collection of useful stuff for your coding journey."
       />
       <div className="mb-12 mt-8 flex min-h-0 w-full flex-1">
-        <aside className="h-full w-1/4 overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50">
+        <aside className="h-full w-1/4 overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
           <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
             <SidebarItem icon="tabler:list" name="All Resources" />
             <SidebarItem icon="tabler:star-filled" name="Starred" />
@@ -54,7 +54,7 @@ export default function Resources(): React.JSX.Element {
               <span className="shrink-0">add new</span>
             </button>
           </div>
-          <search className="mt-6 flex w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50">
+          <search className="mt-6 flex w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
             <Icon icon="tabler:search" className="h-5 w-5 text-bg-500" />
             <input
               type="text"
@@ -68,7 +68,7 @@ export default function Resources(): React.JSX.Element {
               .map((_, i) => (
                 <li
                   key={i}
-                  className="relative flex items-center justify-between gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50"
+                  className="relative flex items-center justify-between gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900"
                 >
                   <div className="flex w-full flex-col gap-1">
                     {(() => {

@@ -7,7 +7,7 @@ function EntryButton({ entry }: { entry: INotesEntry }): React.ReactElement {
   return entry.type === 'folder' ? (
     <Link
       to={`./${entry.id}`}
-      className="absolute left-0 top-0 h-full w-full rounded-lg hover:bg-bg-100 dark:hover:bg-bg-800/50"
+      className="absolute left-0 top-0 h-full w-full rounded-lg hover:bg-bg-100 dark:hover:bg-bg-900"
     />
   ) : (
     <a
@@ -16,7 +16,7 @@ function EntryButton({ entry }: { entry: INotesEntry }): React.ReactElement {
       }/${entry.id}/${entry.file}`}
       target="_blank"
       rel="noreferrer"
-      className="absolute left-0 top-0 h-full w-full rounded-lg hover:bg-bg-100 dark:hover:bg-bg-800/50"
+      className="absolute left-0 top-0 h-full w-full rounded-lg hover:bg-bg-100 dark:hover:bg-bg-900"
     />
   )
 }

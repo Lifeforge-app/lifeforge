@@ -64,7 +64,7 @@ function Snippets(): React.JSX.Element {
                 <span className="shrink-0">create</span>
               </button>
             </div>
-            <search className="mx-4 mt-6 flex items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50">
+            <search className="mx-4 mt-6 flex items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
               <Icon icon="tabler:search" className="h-5 w-5 text-bg-500" />
               <input
                 type="text"
@@ -78,7 +78,7 @@ function Snippets(): React.JSX.Element {
                   {entries.map(entry => (
                     <li
                       key={entry.id}
-                      className="relative m-4 mt-0 flex items-center justify-between gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50"
+                      className="relative m-4 mt-0 flex items-center justify-between gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900"
                     >
                       <div className="flex w-full flex-col gap-1">
                         <div

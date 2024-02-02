@@ -67,7 +67,7 @@ function ThemeColorSelector(): React.ReactElement {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute mt-1 max-h-32 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800/50 sm:text-sm">
+            <Listbox.Options className="absolute mt-1 max-h-32 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-900 sm:text-sm">
               {COLORS.map((color, i) => (
                 <Listbox.Option
                   key={i}

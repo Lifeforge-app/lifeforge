@@ -23,7 +23,7 @@ function CodeTimeStatistics(): React.ReactElement {
             Object.entries(stats).map(([key, value], index) => (
               <div
                 key={key}
-                className="flex w-full flex-col items-start gap-2 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50"
+                className="flex w-full flex-col items-start gap-2 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900"
               >
                 <div className="flex rounded-lg bg-bg-200/70 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800">
                   <Icon
