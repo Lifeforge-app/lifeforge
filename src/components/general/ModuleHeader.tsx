@@ -30,15 +30,15 @@ function ModuleHeader({
     <div className="flex items-center justify-between gap-8">
       <div className="flex items-center gap-4">
         <div className="flex flex-col gap-1">
-          <h1 className="flex items-center gap-3 text-3xl font-semibold text-neutral-800 dark:text-neutral-100 md:text-4xl">
+          <h1 className="flex items-center gap-3 text-3xl font-semibold text-bg-800 dark:text-bg-100 md:text-4xl">
             {title}
           </h1>
-          {desc !== undefined && <div className="text-neutral-500">{desc}</div>}
+          {desc !== undefined && <div className="text-bg-500">{desc}</div>}
         </div>
       </div>
       {hasHamburgerMenu && (
         <Menu as="div" className="relative overscroll-contain">
-          <Menu.Button className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-200/50 hover:text-neutral-800 dark:hover:bg-neutral-800/50 dark:hover:text-neutral-100">
+          <Menu.Button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800/50 dark:hover:text-bg-100">
             <Icon icon="tabler:dots-vertical" className="h-5 w-5" />
           </Menu.Button>
           <Transition
@@ -50,7 +50,7 @@ function ModuleHeader({
             leaveTo="transform scale-95 opacity-0"
             className="absolute right-0 top-3"
           >
-            <Menu.Items className="mt-12 w-48 overflow-hidden overscroll-contain rounded-md bg-neutral-100 shadow-lg outline-none focus:outline-none dark:bg-neutral-800">
+            <Menu.Items className="mt-12 w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800">
               {hamburgerMenuItems}
             </Menu.Items>
           </Transition>

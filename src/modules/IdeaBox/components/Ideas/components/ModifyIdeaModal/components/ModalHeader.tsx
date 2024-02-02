@@ -38,7 +38,7 @@ function ModalHeader({
         }{' '}
         {innerOpenType === 'create' ? (
           <Menu as="div" className="relative inline-block text-left">
-            <Menu.Button className="inline-flex w-full items-center justify-center rounded-md border-2 border-neutral-300 p-2 px-4 text-lg font-semibold tracking-wide text-neutral-800 shadow-sm outline-none hover:bg-neutral-200/50 focus:outline-none dark:border-neutral-800 dark:bg-neutral-800/50 dark:text-neutral-200">
+            <Menu.Button className="inline-flex w-full items-center justify-center rounded-md border-2 border-bg-300 p-2 px-4 text-lg font-semibold tracking-wide text-bg-800 shadow-sm outline-none hover:bg-bg-200/50 focus:outline-none dark:border-bg-800 dark:bg-bg-800/50 dark:text-bg-200">
               <Icon
                 icon={
                   {
@@ -69,7 +69,7 @@ function ModalHeader({
               leaveTo="transform opacity-0 scale-95"
               className="absolute left-0 z-[999] mt-2"
             >
-              <Menu.Items className="w-56 overflow-hidden rounded-lg bg-neutral-100 shadow-lg outline-none focus:outline-none dark:bg-neutral-800">
+              <Menu.Items className="w-56 overflow-hidden rounded-lg bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800">
                 {[
                   ['text', 'tabler:article', 'Text'],
                   ...[['image', 'tabler:photo', 'Image']],
@@ -85,10 +85,10 @@ function ModalHeader({
                         }}
                         className={`group flex w-full items-center rounded-md p-4 text-base ${
                           type === innerTypeOfModifyIdea
-                            ? 'text-neutral-800 dark:text-neutral-100'
+                            ? 'text-bg-800 dark:text-bg-100'
                             : active
-                            ? 'bg-neutral-200/50 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100'
-                            : 'text-neutral-500 hover:bg-neutral-200/50 dark:text-neutral-400 dark:hover:bg-neutral-800'
+                            ? 'bg-bg-200/50 text-bg-800 dark:bg-bg-800 dark:text-bg-100'
+                            : 'text-bg-500 hover:bg-bg-200/50 dark:text-bg-400 dark:hover:bg-bg-800'
                         }`}
                       >
                         <Icon
@@ -122,7 +122,7 @@ function ModalHeader({
         onClick={() => {
           setOpenType(null)
         }}
-        className="rounded-md p-2 text-neutral-500 transition-all hover:bg-neutral-200/50 dark:text-neutral-100 dark:hover:bg-neutral-800"
+        className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 dark:text-bg-100 dark:hover:bg-bg-800"
       >
         <Icon icon="tabler:x" className="h-6 w-6" />
       </button>

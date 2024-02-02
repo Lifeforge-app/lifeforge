@@ -131,8 +131,8 @@ function CodeTimeActivityCalendar(): React.ReactElement {
                   }}
                   className={`flex items-start gap-2 rounded-lg p-4 px-8 font-medium sm:px-12 ${
                     selectedYear === firstYear + index
-                      ? 'bg-neutral-200 font-semibold text-neutral-800 dark:bg-neutral-700/50 dark:text-neutral-100'
-                      : 'text-neutral-400 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50'
+                      ? 'bg-bg-200 font-semibold text-bg-800 dark:bg-bg-700/50 dark:text-bg-100'
+                      : 'text-bg-400 hover:bg-bg-200/50 dark:hover:bg-bg-700/50'
                   }`}
                 >
                   <span>{firstYear + index}</span>

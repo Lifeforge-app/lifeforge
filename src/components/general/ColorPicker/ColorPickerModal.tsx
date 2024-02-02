@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Modal from './Modal'
+import Modal from '../Modal'
 import { Colorful, EditableInput } from '@uiw/react-color'
 import { Icon } from '@iconify/react/dist/iconify.js'
 
@@ -44,7 +44,7 @@ function ColorPickerModal({
           onClick={() => {
             setOpen(false)
           }}
-          className="rounded-md p-2 text-neutral-100 transition-all hover:bg-neutral-800"
+          className="rounded-md p-2 text-bg-100 transition-all hover:bg-bg-800"
         >
           <Icon icon="tabler:x" className="h-6 w-6" />
         </button>
@@ -75,7 +75,7 @@ function ColorPickerModal({
       />
       <button
         onClick={confirmColor}
-        className="flex items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800 transition-all hover:bg-custom-600"
+        className="flex items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-800 transition-all hover:bg-custom-600"
       >
         <Icon icon="tabler:check" className="h-6 w-6" />
         SELECT

@@ -48,7 +48,7 @@ function Projects(): React.JSX.Element {
         desc="It's time to stop procrastinating."
       />
       <div className="mb-12 mt-8 flex min-h-0 w-full flex-1">
-        <aside className="h-full w-1/4 overflow-hidden overflow-y-scroll rounded-lg bg-neutral-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
+        <aside className="h-full w-1/4 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50">
           <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
             <SidebarItem icon="tabler:list" name="All Projects" />
             <SidebarItem icon="tabler:star-filled" name="Starred" />
@@ -61,9 +61,9 @@ function Projects(): React.JSX.Element {
             ].map(([icon, name], index) => (
               <li
                 key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
+                className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
               >
-                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-800">
+                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-800">
                   <Icon icon={icon} className="h-6 w-6 shrink-0" />
                   <div className="flex w-full items-center justify-between">
                     {name}
@@ -83,9 +83,9 @@ function Projects(): React.JSX.Element {
             ].map(([icon, name, color], index) => (
               <li
                 key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
+                className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
               >
-                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-200/50 dark:hover:bg-neutral-800">
+                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
                   <span className={`block h-8 w-1.5 rounded-full ${color}`} />
                   <Icon icon={icon} className="h-6 w-6 shrink-0" />
                   <div className="flex w-full items-center justify-between">
@@ -105,9 +105,9 @@ function Projects(): React.JSX.Element {
             ].map(([icon, name], index) => (
               <li
                 key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
+                className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
               >
-                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-200/50 dark:hover:bg-neutral-800">
+                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
                   <Icon icon={icon} className="h-6 w-6 shrink-0" />
                   <div className="flex w-full items-center justify-between">
                     {name}
@@ -133,9 +133,9 @@ function Projects(): React.JSX.Element {
             ].map(([icon, name], index) => (
               <li
                 key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
+                className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
               >
-                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-200/50 dark:hover:bg-neutral-800">
+                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
                   <Icon icon={icon} className="h-5 w-5 shrink-0" />
                   <div className="flex w-full items-center justify-between">
                     {name}
@@ -150,22 +150,21 @@ function Projects(): React.JSX.Element {
         </aside>
         <div className="ml-8 flex h-full flex-1 flex-col">
           <div className="mx-4 flex items-center justify-between">
-            <h1 className="text-4xl font-semibold text-neutral-800 dark:text-neutral-100">
-              All Projects{' '}
-              <span className="text-base text-neutral-400">(10)</span>
+            <h1 className="text-4xl font-semibold text-bg-800 dark:text-bg-100">
+              All Projects <span className="text-base text-bg-400">(10)</span>
             </h1>
-            <button className="flex shrink-0 items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]   hover:bg-custom-600 dark:text-neutral-800">
+            <button className="flex shrink-0 items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]   hover:bg-custom-600 dark:text-bg-800">
               <Icon icon="tabler:plus" className="h-5 w-5 shrink-0" />
               <span className="shrink-0">create</span>
             </button>
           </div>
           <div className="mx-4 mt-6 flex items-center gap-4">
-            <search className="flex w-full items-center gap-4 rounded-lg bg-neutral-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
-              <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
+            <search className="flex w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50">
+              <Icon icon="tabler:search" className="h-5 w-5 text-bg-500" />
               <input
                 type="text"
                 placeholder="Search projects ..."
-                className="w-full bg-transparent text-neutral-500 placeholder:text-neutral-300 focus:outline-none"
+                className="w-full bg-transparent text-bg-500 placeholder:text-bg-300 focus:outline-none"
               />
             </search>
           </div>
@@ -176,7 +175,7 @@ function Projects(): React.JSX.Element {
                 .map((_, i) => (
                   <li
                     key={i}
-                    className="m-4 mt-0 flex items-center gap-4 rounded-lg bg-neutral-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50"
+                    className="m-4 mt-0 flex items-center gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50"
                   >
                     <Link
                       to="./lifeforge"
@@ -222,10 +221,10 @@ function Projects(): React.JSX.Element {
                           />
                         </div>
                         <div className="flex flex-col items-start">
-                          <div className="font-semibold text-neutral-800 dark:text-neutral-100">
+                          <div className="font-semibold text-bg-800 dark:text-bg-100">
                             {faker.commerce.productName()}
                           </div>
-                          <div className="text-sm text-neutral-500">
+                          <div className="text-sm text-bg-500">
                             {
                               ['Website', 'Mobile App', 'Desktop App'][
                                 Math.floor(Math.random() * 3)
@@ -280,7 +279,7 @@ function Projects(): React.JSX.Element {
                       <div className="flex items-center gap-4 ">
                         <Icon
                           icon="tabler:chevron-right"
-                          className="h-5 w-5 stroke-[2px] text-neutral-400"
+                          className="h-5 w-5 stroke-[2px] text-bg-400"
                         />
                       </div>
                     </Link>

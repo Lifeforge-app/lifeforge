@@ -18,10 +18,10 @@ function CreateSubjectButton({
         setModifySubjectModalOpenType('create')
         setExistedData(null)
       }}
-      className="relative flex h-full flex-col items-center justify-center gap-6 rounded-lg border-2 border-dashed border-neutral-400 p-8 hover:bg-neutral-200 dark:border-neutral-700 dark:hover:bg-neutral-800/20"
+      className="relative flex h-full flex-col items-center justify-center gap-6 rounded-lg border-2 border-dashed border-bg-400 p-8 hover:bg-bg-200 dark:border-bg-700 dark:hover:bg-bg-800/20"
     >
-      <Icon icon="tabler:folder-plus" className="h-16 w-16 text-neutral-500" />
-      <div className="text-2xl font-medium tracking-wide text-neutral-500">
+      <Icon icon="tabler:folder-plus" className="h-16 w-16 text-bg-500" />
+      <div className="text-2xl font-medium tracking-wide text-bg-500">
         Create subject
       </div>
     </button>

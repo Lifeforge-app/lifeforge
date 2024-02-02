@@ -69,7 +69,7 @@ function ContainerHeader({ id }: { id: string }): React.ReactElement {
             }
           })()}
         </h1>
-        <button className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-200/50 hover:text-neutral-800 dark:hover:bg-neutral-800 dark:hover:text-neutral-100">
+        <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
           <Icon icon="tabler:dots-vertical" className="text-2xl" />
         </button>
       </div>

@@ -27,7 +27,7 @@ function IconSelector({
 
   return (
     <div
-      className={`absolute left-0 top-0 h-screen w-full bg-neutral-900 transition-colors duration-500 ${
+      className={`absolute left-0 top-0 h-screen w-full bg-bg-900 transition-colors duration-500 ${
         isOpen ? 'z-[9999] bg-opacity-50' : 'z-[-1] bg-opacity-0 delay-500'
       }`}
     >
@@ -36,7 +36,7 @@ function IconSelector({
           isOpen ? 'translate-y-0' : 'translate-y-[110%]'
         }`}
       >
-        <div className="510:mx-16 relative mx-4 flex max-h-[calc(100vh-8rem)] w-full flex-col items-center justify-center rounded-lg bg-neutral-900 shadow-2xl lg:w-3/4">
+        <div className="510:mx-16 relative mx-4 flex max-h-[calc(100vh-8rem)] w-full flex-col items-center justify-center rounded-lg bg-bg-900 shadow-2xl lg:w-3/4">
           <div className="mb-6 flex w-full items-center justify-between p-8 pb-0">
             {currentIconSet ? (
               <button
@@ -72,7 +72,7 @@ function IconSelector({
               onClick={() => {
                 setOpen(false)
               }}
-              className="rounded-md p-2 text-neutral-100 transition-all hover:bg-neutral-800"
+              className="rounded-md p-2 text-bg-100 transition-all hover:bg-bg-800"
             >
               <Icon icon="tabler:x" className="h-6 w-6" />
             </button>

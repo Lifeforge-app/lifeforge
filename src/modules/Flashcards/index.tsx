@@ -12,12 +12,12 @@ export default function Flashcards(): React.JSX.Element {
         desc="Memorizing could be a pain, but not with flashcards."
       />
       <div className="mt-8 flex min-h-0 w-full flex-1 flex-col">
-        <search className="flex w-full items-center gap-4 rounded-lg bg-neutral-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
-          <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
+        <search className="flex w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50">
+          <Icon icon="tabler:search" className="h-5 w-5 text-bg-500" />
           <input
             type="text"
             placeholder="Search flashcard sets ..."
-            className="w-full bg-transparent text-neutral-500 placeholder:text-neutral-400 focus:outline-none"
+            className="w-full bg-transparent text-bg-500 placeholder:text-bg-400 focus:outline-none"
           />
         </search>
         <div className="mt-6 grid w-full grid-cols-3 gap-6 overflow-y-auto pb-12">
@@ -27,27 +27,27 @@ export default function Flashcards(): React.JSX.Element {
               <Link
                 to={`/flashcards/${index}`}
                 key={index}
-                className="relative flex flex-col justify-start gap-6 rounded-lg bg-neutral-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-neutral-200/50 dark:bg-neutral-800/50 dark:hover:bg-neutral-800"
+                className="relative flex flex-col justify-start gap-6 rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-bg-200/50 dark:bg-bg-800/50 dark:hover:bg-bg-800"
               >
                 <div className="flex flex-col gap-2">
-                  <p className="text-sm font-medium text-neutral-400">
+                  <p className="text-sm font-medium text-bg-400">
                     {faker.datatype.number(100)} cards
                   </p>
-                  <div className="text-xl font-medium text-neutral-800 dark:text-neutral-100">
+                  <div className="text-xl font-medium text-bg-800 dark:text-bg-100">
                     {faker.commerce.productName()}
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
                   <progress
-                    className="progress h-2 w-full rounded-lg bg-neutral-200 dark:bg-neutral-700"
+                    className="progress h-2 w-full rounded-lg bg-bg-200 dark:bg-bg-700"
                     value={faker.datatype.number(100)}
                     max="100"
                   ></progress>
-                  <p className="text-sm font-medium text-neutral-400">
+                  <p className="text-sm font-medium text-bg-400">
                     {faker.datatype.number(100)}% complete
                   </p>
                 </div>
-                <button className="absolute right-4 top-4 rounded-md p-2 text-neutral-500 hover:bg-neutral-700/30 hover:text-neutral-100">
+                <button className="absolute right-4 top-4 rounded-md p-2 text-bg-500 hover:bg-bg-700/30 hover:text-bg-100">
                   <Icon icon="tabler:dots-vertical" className="h-5 w-5" />
                 </button>
               </Link>
@@ -58,13 +58,13 @@ export default function Flashcards(): React.JSX.Element {
               <Link
                 to={`/idea-box/${index}`}
                 key={index}
-                className="relative flex flex-col justify-start gap-6 rounded-lg bg-neutral-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-neutral-200/50 dark:bg-neutral-800/50 dark:hover:bg-neutral-800"
+                className="relative flex flex-col justify-start gap-6 rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-bg-200/50 dark:bg-bg-800/50 dark:hover:bg-bg-800"
               >
                 <div className="flex flex-col gap-2">
-                  <p className="text-sm font-medium text-neutral-400">
+                  <p className="text-sm font-medium text-bg-400">
                     {faker.datatype.number(100)} cards
                   </p>
-                  <div className="text-xl font-medium text-neutral-800 dark:text-neutral-100">
+                  <div className="text-xl font-medium text-bg-800 dark:text-bg-100">
                     {faker.commerce.productName()}
                   </div>
                 </div>
@@ -72,14 +72,14 @@ export default function Flashcards(): React.JSX.Element {
                   <Icon icon="tabler:check" className="h-5 w-5" />
                   <p className="font-medium">Done</p>
                 </div>
-                <button className="absolute right-4 top-4 rounded-md p-2 text-neutral-500 hover:bg-neutral-700/30 hover:text-neutral-100">
+                <button className="absolute right-4 top-4 rounded-md p-2 text-bg-500 hover:bg-bg-700/30 hover:text-bg-100">
                   <Icon icon="tabler:dots-vertical" className="h-5 w-5" />
                 </button>
               </Link>
             ))}
-          <div className="relative flex h-full flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed border-neutral-400 p-12">
-            <Icon icon="tabler:plus" className="h-8 w-8 text-neutral-400" />
-            <div className="text-xl font-semibold text-neutral-400">
+          <div className="relative flex h-full flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed border-bg-400 p-12">
+            <Icon icon="tabler:plus" className="h-8 w-8 text-bg-400" />
+            <div className="text-xl font-semibold text-bg-400">
               Create new set
             </div>
           </div>

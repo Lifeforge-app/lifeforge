@@ -8,6 +8,7 @@ import Modal from '../../../../components/general/Modal'
 import { useParams } from 'react-router'
 import { type INotesEntry } from '..'
 import Input from '../../../../components/general/Input'
+import CreateOrModifyButton from '../../../../components/general/CreateOrModifyButton'
 
 function ModifyFolderModal({
   openType,
@@ -129,7 +130,7 @@ function ModifyFolderModal({
             onClick={() => {
               setOpenType(null)
             }}
-            className="rounded-md p-2 text-neutral-500 transition-all hover:bg-neutral-200/50 hover:text-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-800"
+            className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:text-bg-100 dark:hover:bg-bg-800"
           >
             <Icon icon="tabler:x" className="h-6 w-6" />
           </button>
@@ -143,33 +144,11 @@ function ModifyFolderModal({
           darker
           additionalClassName="w-[40vw]"
         />
-        <button
-          disabled={loading}
-          className="mt-8 flex h-16 items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 transition-all hover:bg-custom-600 dark:text-neutral-800"
+        <CreateOrModifyButton
+          loading={loading}
           onClick={onSubmitButtonClick}
-        >
-          {!loading ? (
-            <>
-              <Icon
-                icon={
-                  {
-                    create: 'tabler:plus',
-                    update: 'tabler:pencil'
-                  }[innerOpenType!]
-                }
-                className="h-5 w-5"
-              />
-              {
-                {
-                  create: 'CREATE',
-                  update: 'RENAME'
-                }[innerOpenType!]
-              }
-            </>
-          ) : (
-            <span className="small-loader-dark"></span>
-          )}
-        </button>
+          type={innerOpenType}
+        />
       </Modal>
     </>
   )

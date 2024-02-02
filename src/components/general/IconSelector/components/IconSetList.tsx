@@ -63,10 +63,10 @@ export default function IconSetList({
           onClick={() => {
             if (searchQuery) setCurrentIconSet({ search: searchQuery })
           }}
-          className="flex items-center justify-center gap-1 rounded-md bg-neutral-200 px-6 py-4 font-medium text-neutral-900 shadow-md transition-all hover:bg-[#b3bdc9]"
+          className="flex items-center justify-center gap-1 rounded-md bg-bg-200 px-6 py-4 font-medium text-bg-900 shadow-md transition-all hover:bg-[#b3bdc9]"
         >
           Search
-          <Icon icon="uil:arrow-right" className="h-5 w-5 text-neutral-900" />
+          <Icon icon="uil:arrow-right" className="h-5 w-5 text-bg-900" />
         </button>
       </div>
       <div className="flex w-full flex-col items-center gap-8 lg:flex-row">
@@ -80,9 +80,9 @@ export default function IconSetList({
               }}
               className={`${
                 selectedCategory === index
-                  ? 'bg-neutral-200 text-neutral-800 shadow-md'
+                  ? 'bg-bg-200 text-bg-800 shadow-md'
                   : ''
-              } flex h-8 grow items-center justify-center whitespace-nowrap rounded-full bg-neutral-800 px-6 text-sm text-neutral-100 shadow-md transition-all md:grow-0`}
+              } flex h-8 grow items-center justify-center whitespace-nowrap rounded-full bg-bg-800 px-6 text-sm text-bg-100 shadow-md transition-all md:grow-0`}
             >
               {category}
             </button>
@@ -112,7 +112,7 @@ export default function IconSetList({
                   ).length
               ) && (
                 <div key={category} className="mb-6 w-full overflow-hidden">
-                  <div className="relative mb-8 rounded-lg text-center text-2xl font-medium after:absolute after:-bottom-2 after:left-1/2 after:w-8 after:-translate-x-1/2 after:border-b-2 after:border-b-neutral-200">
+                  <div className="relative mb-8 rounded-lg text-center text-2xl font-medium after:absolute after:-bottom-2 after:left-1/2 after:w-8 after:-translate-x-1/2 after:border-b-2 after:border-b-bg-200">
                     {category}
                   </div>
                   <div className="icon-list grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] flex-wrap gap-4">
@@ -128,9 +128,9 @@ export default function IconSetList({
                             onClick={() => {
                               setCurrentIconSet({ iconSet: iconSet.prefix })
                             }}
-                            className="sssm:flex-row flex w-full grow flex-col overflow-hidden rounded-md bg-neutral-800 shadow-lg"
+                            className="sssm:flex-row flex w-full grow flex-col overflow-hidden rounded-md bg-bg-800 shadow-lg"
                           >
-                            <div className="sssm:w-36 text-neutral-00 flex w-full shrink-0 flex-col font-medium">
+                            <div className="sssm:w-36 text-bg-00 flex w-full shrink-0 flex-col font-medium">
                               <div className="sssm:gap-3 flex h-full w-full items-center justify-center gap-5 px-4 py-6 ">
                                 {iconSet.samples.map(sampleIcon => (
                                   <Icon
@@ -151,7 +151,7 @@ export default function IconSetList({
                                   {iconSet.author.name}
                                 </span>
                               </p>
-                              <div className="sssm:py-0 mt-4 flex w-full items-center justify-between border-t border-neutral-500 pt-4 text-sm">
+                              <div className="sssm:py-0 mt-4 flex w-full items-center justify-between border-t border-bg-500 pt-4 text-sm">
                                 <p>{iconSet.total} icons</p>
                                 {iconSet.height && (
                                   <div className="flex items-center">

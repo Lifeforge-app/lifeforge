@@ -11,7 +11,7 @@ function Personalization(): React.ReactElement {
         desc="Customise your experience with the app."
       />
       <ThemeSelector />
-      <div className="my-6 w-full border-b-[1.5px] border-neutral-200 dark:border-neutral-700" />
+      <div className="my-6 w-full border-b-[1.5px] border-bg-200 dark:border-bg-700" />
       <ThemeColorSelector />
     </section>
   )

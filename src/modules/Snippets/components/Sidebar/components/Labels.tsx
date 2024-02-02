@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import SidebarTitle from '../../../../../components/Sidebar/components/SidebarTitle'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import ModifyLabelModal from '../../ModifyLabelModal'
+import APIComponentWithFallback from '../../../../../components/general/APIComponentWithFallback'
 
 export interface ICodeSnippetsLabel {
   collectionId: string
@@ -36,41 +37,26 @@ function Labels({
           setModifyLabelModalOpenType('create')
         }}
       />
-      {(() => {
-        switch (labels) {
-          case 'loading':
-            return (
-              <div className="flex items-center justify-center gap-2 px-8 py-2 sm:px-12">
-                <span className="small-loader-light" />
-              </div>
-            )
-          case 'error':
-            return (
-              <div className="flex items-center justify-center gap-2 px-8 py-2 text-red-500 sm:px-12">
-                <Icon icon="tabler:alert-triangle" className="h-5 w-5" />
-                <span>Failed to fetch data.</span>
-              </div>
-            )
-          default:
-            return labels.map(item => (
-              <li
-                key={item.id}
-                className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
-              >
-                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-100 dark:hover:bg-neutral-800">
-                  <span
-                    className="block h-2 w-2 shrink-0 rounded-full"
-                    style={{ backgroundColor: item.color }}
-                  />
-                  <div className="flex w-full items-center justify-between">
-                    {item.name}
-                  </div>
-                  <span className="text-sm">{item.item_count}</span>
+      <APIComponentWithFallback data={labels}>
+        {typeof labels !== 'string' &&
+          labels.map(item => (
+            <li
+              key={item.id}
+              className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
+            >
+              <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800">
+                <span
+                  className="block h-2 w-2 shrink-0 rounded-full"
+                  style={{ backgroundColor: item.color }}
+                />
+                <div className="flex w-full items-center justify-between">
+                  {item.name}
                 </div>
-              </li>
-            ))
-        }
-      })()}
+                <span className="text-sm">{item.item_count}</span>
+              </div>
+            </li>
+          ))}
+      </APIComponentWithFallback>
       <ModifyLabelModal
         openType={modifyLabelModalOpenType}
         setOpenType={setModifyLabelModalOpenType}

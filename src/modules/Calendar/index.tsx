@@ -13,16 +13,16 @@ function Calendar(): React.JSX.Element {
       />
       <div className="mb-12 mt-8 flex min-h-0 w-full flex-1">
         <aside className="flex h-full flex-col gap-8">
-          <section className="flex w-full flex-col gap-4 rounded-lg bg-neutral-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
+          <section className="flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50">
             <div className="h-full w-full">
               <div className="mb-6 flex items-center justify-between gap-2">
-                <button className="rounded-lg p-4 text-neutral-100 transition-all hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50">
+                <button className="rounded-lg p-4 text-bg-100 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-700/50">
                   <Icon icon="tabler:chevron-left" className="text-2xl" />
                 </button>
-                <div className="text-lg font-semibold text-neutral-800 dark:text-neutral-100">
+                <div className="text-lg font-semibold text-bg-800 dark:text-bg-100">
                   November 2023
                 </div>
-                <button className="rounded-lg p-4 text-neutral-100 transition-all hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50">
+                <button className="rounded-lg p-4 text-bg-100 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-700/50">
                   <Icon icon="tabler:chevron-right" className="text-2xl" />
                 </button>
               </div>
@@ -30,7 +30,7 @@ function Calendar(): React.JSX.Element {
                 {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
                   <div
                     key={day}
-                    className="flex items-center justify-center text-sm text-neutral-500"
+                    className="flex items-center justify-center text-sm text-bg-500"
                   >
                     {day}
                   </div>
@@ -68,8 +68,8 @@ function Calendar(): React.JSX.Element {
                           key={index}
                           className={`relative isolate flex flex-col items-center gap-1 text-sm ${
                             firstDay > index || index - firstDay + 1 > lastDate
-                              ? 'text-neutral-300 dark:text-neutral-600'
-                              : 'text-neutral-800 dark:text-neutral-100'
+                              ? 'text-bg-300 dark:text-bg-600'
+                              : 'text-bg-800 dark:text-bg-100'
                           } ${
                             actualIndex === date.getDate()
                               ? "font-semibold after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:h-10 after:w-10 after:-translate-x-1/2 after:-translate-y-6 after:rounded-md after:border after:border-custom-500 after:bg-custom-500/10 after:content-['']"
@@ -96,8 +96,8 @@ function Calendar(): React.JSX.Element {
               </div>
             </div>
           </section>
-          <section className="flex w-full flex-col gap-4 overflow-y-auto rounded-lg bg-neutral-50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
-            <h2 className="flex items-center gap-4 px-8 py-4 pt-8 text-sm font-semibold uppercase tracking-widest text-neutral-600 transition-all sm:px-12">
+          <section className="flex w-full flex-col gap-4 overflow-y-auto rounded-lg bg-bg-50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50">
+            <h2 className="flex items-center gap-4 px-8 py-4 pt-8 text-sm font-semibold uppercase tracking-widest text-bg-600 transition-all sm:px-12">
               Categories
             </h2>
             <ul className="flex flex-col overflow-y-hidden pb-8 hover:overflow-y-scroll">
@@ -111,9 +111,9 @@ function Calendar(): React.JSX.Element {
               ].map(([name, color], index) => (
                 <li
                   key={index}
-                  className="relative flex items-center gap-6 px-4 font-medium text-neutral-400 transition-all"
+                  className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
                 >
-                  <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-neutral-200/50 dark:hover:bg-neutral-800">
+                  <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
                     <span
                       className={`block h-2 w-2 shrink-0 rounded-full ${color}`}
                     />
@@ -132,13 +132,13 @@ function Calendar(): React.JSX.Element {
         <div className="ml-12 flex h-full flex-1 flex-col">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <button className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50">
+              <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-700/50">
                 <Icon icon="tabler:chevron-left" className="text-2xl" />
               </button>
-              <button className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50">
+              <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-700/50">
                 <Icon icon="tabler:chevron-right" className="text-2xl" />
               </button>
-              <div className="ml-4 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
+              <div className="ml-4 text-3xl font-semibold text-bg-800 dark:text-bg-100">
                 Nov 20 - 26, 2023
               </div>
               <span className="ml-4 rounded-full bg-custom-500/20 px-4 py-1.5 text-sm font-semibold text-custom-500  shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]">
@@ -157,10 +157,10 @@ function Calendar(): React.JSX.Element {
               </span>
             </div>
             <div className="flex items-center gap-4">
-              <button className="rounded-lg p-4 text-neutral-100 transition-all hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50">
+              <button className="rounded-lg p-4 text-bg-100 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-700/50">
                 <Icon icon="tabler:search" className="text-2xl" />
               </button>
-              <button className="flex items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 dark:text-neutral-800">
+              <button className="flex items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 dark:text-bg-800">
                 <Icon icon="tabler:plus" className="text-xl" />
                 create
               </button>
@@ -168,7 +168,7 @@ function Calendar(): React.JSX.Element {
           </div>
           <div className="mt-4 flex h-full min-h-0 flex-1 flex-col">
             <div className="mb-1.5 flex w-full">
-              <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-lg bg-neutral-50 py-4 text-neutral-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
+              <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-lg bg-bg-50 py-4 text-bg-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50">
                 GMT
                 <span className="text-xl">+8</span>
               </div>
@@ -177,7 +177,7 @@ function Calendar(): React.JSX.Element {
                 .map((_, index) => (
                   <div
                     key={index}
-                    className={`ml-1.5 flex w-full items-center justify-center gap-2 rounded-lg bg-neutral-50 py-4 text-neutral-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50 ${
+                    className={`ml-1.5 flex w-full items-center justify-center gap-2 rounded-lg bg-bg-50 py-4 text-bg-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50 ${
                       index === 3 && 'bg-custom-500/20 text-custom-500'
                     }`}
                   >
@@ -189,14 +189,14 @@ function Calendar(): React.JSX.Element {
                 ))}
             </div>
             <div className="w-full flex-1 overflow-y-auto rounded-lg shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]">
-              <div className="h-full w-full divide-y divide-neutral-300 dark:divide-neutral-700">
+              <div className="h-full w-full divide-y divide-bg-300 dark:divide-bg-700">
                 {Array(25)
                   .fill(0)
                   .map((_, hour) => (
                     <div key={hour} className="flex h-24">
-                      <div className="relative h-full w-20 shrink-0 bg-neutral-50 text-neutral-100 dark:bg-neutral-800/50">
+                      <div className="relative h-full w-20 shrink-0 bg-bg-50 text-bg-100 dark:bg-bg-800/50">
                         {hour !== 24 && (
-                          <span className="absolute bottom-0 z-[9999] w-[90%] translate-y-1/2 bg-[#fafafa] pr-4 text-right dark:bg-[#1e1e1e]">
+                          <span className="absolute bottom-0 z-[9999] w-[90%] translate-y-1/2 bg-[#fafafa] pr-4 text-right dark:bg-bg-800/50">
                             {hour + 1 > 12 ? hour + 1 - 12 : hour + 1}{' '}
                             {hour + 1 >= 12 ? 'PM' : 'AM'}
                           </span>
@@ -207,10 +207,10 @@ function Calendar(): React.JSX.Element {
                         .map((_, day) => (
                           <div
                             key={day}
-                            className="relative w-full bg-neutral-50 dark:bg-neutral-800/50"
+                            className="relative w-full bg-bg-50 dark:bg-bg-800/50"
                           >
                             {day === 3 && hour === 1 && (
-                              <div className="absolute left-0 top-0 z-[9999] ml-1.5 h-96 w-[90%] overflow-hidden rounded-r-md bg-neutral-50 dark:bg-neutral-900">
+                              <div className="absolute left-0 top-0 z-[9999] ml-1.5 h-96 w-[90%] overflow-hidden rounded-r-md bg-bg-50 dark:bg-bg-900">
                                 <div className="flex h-full w-full flex-col justify-between border-l-4 border-green-500 bg-green-500/20 px-3 py-4">
                                   <div className="flex flex-col">
                                     <Icon

@@ -5,8 +5,6 @@ import ModuleHeader from '../../../components/general/ModuleHeader'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useNavigate, useParams } from 'react-router'
 import { type INotesWorkspace } from '..'
-import Error from '../../../components/general/Error'
-import Loading from '../../../components/general/Loading'
 import EmptyStateScreen from '../../../components/general/EmptyStateScreen'
 import ModifySubjectModal from './components/ModifySubjectModal'
 import GoBackButton from '../../../components/general/GoBackButton'
@@ -14,6 +12,7 @@ import SubjectItem, { type INotesSubject } from './components/SubjectItem'
 import CreateSubjectButton from './components/CreateSubjectButton'
 import DeleteConfirmationModal from '../../../components/general/DeleteConfirmationModal'
 import useFetch from '../../../hooks/useFetch'
+import APIComponentWithFallback from '../../../components/general/APIComponentWithFallback'
 
 function NotesCategory(): React.ReactElement {
   const { workspace } = useParams<{ workspace: string }>()
@@ -61,48 +60,36 @@ function NotesCategory(): React.ReactElement {
         }
         desc="A place to store all your involuntarily generated thoughts."
       />
-      <>
-        {(() => {
-          switch (subjectsData) {
-            case 'loading':
-              return <Loading />
-            case 'error':
-              return <Error message="Failed to fetch data from server." />
-            default:
-              return subjectsData.length > 0 ? (
-                <div className="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] items-center justify-center gap-4 py-8">
-                  {subjectsData.map(subject => (
-                    <SubjectItem
-                      key={subject.id}
-                      subject={subject}
-                      setModifySubjectModalOpenType={
-                        setModifySubjectModalOpenType
-                      }
-                      setDeleteSubjectConfirmationModalOpen={
-                        setDeleteSubjectConfirmationModalOpen
-                      }
-                      setExistedData={setExistedData}
-                    />
-                  ))}
-                  <CreateSubjectButton
-                    setModifySubjectModalOpenType={
-                      setModifySubjectModalOpenType
-                    }
-                    setExistedData={setExistedData}
-                  />
-                </div>
-              ) : (
-                <EmptyStateScreen
-                  title="A bit empty here. "
-                  description="Create a new subject to start storing your notes."
-                  icon="tabler:folder-off"
-                  ctaContent="Create subject"
-                  setModifyModalOpenType={setModifySubjectModalOpenType}
+      <APIComponentWithFallback data={subjectsData}>
+        {typeof subjectsData !== 'string' &&
+          (subjectsData.length > 0 ? (
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] items-center justify-center gap-4 py-8">
+              {subjectsData.map(subject => (
+                <SubjectItem
+                  key={subject.id}
+                  subject={subject}
+                  setModifySubjectModalOpenType={setModifySubjectModalOpenType}
+                  setDeleteSubjectConfirmationModalOpen={
+                    setDeleteSubjectConfirmationModalOpen
+                  }
+                  setExistedData={setExistedData}
                 />
-              )
-          }
-        })()}
-      </>
+              ))}
+              <CreateSubjectButton
+                setModifySubjectModalOpenType={setModifySubjectModalOpenType}
+                setExistedData={setExistedData}
+              />
+            </div>
+          ) : (
+            <EmptyStateScreen
+              title="A bit empty here. "
+              description="Create a new subject to start storing your notes."
+              icon="tabler:folder-off"
+              ctaContent="Create subject"
+              setModifyModalOpenType={setModifySubjectModalOpenType}
+            />
+          ))}
+      </APIComponentWithFallback>
       <DeleteConfirmationModal
         isOpen={deleteSubjectConfirmationModalOpen}
         closeModal={() => {

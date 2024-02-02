@@ -33,7 +33,7 @@ function SubjectItem({
   const { workspace } = useParams<{ workspace: string }>()
 
   return (
-    <div className="group relative flex h-full w-full flex-col items-center rounded-lg bg-neutral-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-neutral-100 dark:bg-neutral-800/50 dark:hover:bg-neutral-700/50">
+    <div className="group relative flex h-full w-full flex-col items-center rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-bg-100 dark:bg-bg-800/50 dark:hover:bg-bg-700/50">
       <Icon
         icon={subject.icon}
         className="pointer-events-none z-10 h-20 w-20 shrink-0 group-hover:text-custom-500"
@@ -41,7 +41,7 @@ function SubjectItem({
       <h2 className="mt-8 text-center text-2xl font-medium uppercase tracking-widest">
         {subject.title}
       </h2>
-      <p className="mt-2 text-center text-sm text-neutral-500">
+      <p className="mt-2 text-center text-sm text-bg-500">
         {subject.description}
       </p>
       <Link

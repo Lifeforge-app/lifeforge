@@ -98,9 +98,9 @@ function IconSet({
                   }}
                   className={`${
                     currentTag === tag
-                      ? '!bg-neutral-200 !text-neutral-800 shadow-md'
+                      ? '!bg-bg-200 !text-bg-800 shadow-md'
                       : ''
-                  } flex h-8 grow items-center justify-center whitespace-nowrap rounded-full bg-neutral-800 px-6 text-sm text-neutral-100 shadow-md transition-all md:grow-0`}
+                  } flex h-8 grow items-center justify-center whitespace-nowrap rounded-full bg-bg-800 px-6 text-sm text-bg-100 shadow-md transition-all md:grow-0`}
                 >
                   {tag}
                 </button>
@@ -117,7 +117,7 @@ function IconSet({
               setSelectedIcon(`${iconSet}:${icon}`)
               setOpen(false)
             }}
-            className="flex cursor-pointer flex-col items-center rounded-lg p-4 transition-all hover:bg-neutral-800"
+            className="flex cursor-pointer flex-col items-center rounded-lg p-4 transition-all hover:bg-bg-800"
           >
             <Icon icon={`${iconSet}:${icon}`} width="32" height="32" />
             <p className="-mb-0.5 mt-4 break-all  text-center text-xs font-medium tracking-wide">

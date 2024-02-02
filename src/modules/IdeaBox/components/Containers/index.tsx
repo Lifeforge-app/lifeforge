@@ -36,13 +36,13 @@ function Container({
         onClick={() => {
           setCreateContainerModalOpen('create')
         }}
-        className="relative flex h-full flex-col items-center justify-center gap-6 rounded-lg border-2 border-dashed border-neutral-400 p-8 hover:bg-neutral-200 dark:border-neutral-700 dark:hover:bg-neutral-800/20"
+        className="relative flex h-full flex-col items-center justify-center gap-6 rounded-lg border-2 border-dashed border-bg-400 p-8 hover:bg-bg-200 dark:border-bg-700 dark:hover:bg-bg-800/20"
       >
         <Icon
           icon="tabler:cube-plus"
-          className="h-8 w-8 text-neutral-400 dark:text-neutral-100"
+          className="h-8 w-8 text-bg-400 dark:text-bg-100"
         />
-        <div className="text-xl font-semibold text-neutral-400 dark:text-neutral-100">
+        <div className="text-xl font-semibold text-bg-400 dark:text-bg-100">
           Create container
         </div>
       </button>

@@ -56,21 +56,21 @@ function DeleteConfirmationModal({
       <h1 className="text-2xl font-semibold">
         Are you sure you want to delete {data?.[nameKey] || `the ${itemName}`}?
       </h1>
-      <p className="mt-2 text-neutral-500">
+      <p className="mt-2 text-bg-500">
         This will delete the {itemName} and everything related to it. This
         action is irreversible!
       </p>
       <div className="mt-8 flex w-full justify-around gap-2">
         <button
           onClick={closeModal}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-neutral-800 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 transition-all hover:bg-neutral-700"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700"
         >
           Cancel
         </button>
         <button
           disabled={loading}
           onClick={deleteData}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 transition-all hover:bg-red-600"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-red-600"
         >
           {loading ? (
             <>

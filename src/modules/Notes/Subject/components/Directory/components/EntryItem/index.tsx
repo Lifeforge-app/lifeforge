@@ -38,7 +38,7 @@ function EntryItem({
             folder: 'tabler:folder'
           }[entry.type]
         }
-        className="pointer-events-auto z-50 h-7 w-7 shrink-0 text-neutral-500"
+        className="pointer-events-auto z-50 h-7 w-7 shrink-0 text-bg-500"
       />
       <div className="flex w-full min-w-0 items-center justify-between gap-8">
         <EntryName name={entry.name} />

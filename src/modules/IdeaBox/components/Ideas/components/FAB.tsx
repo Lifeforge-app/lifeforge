@@ -22,7 +22,7 @@ function FAB({
       >
         {({ open }) => (
           <>
-            <Menu.Button className="relative z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-neutral-100 shadow-lg hover:bg-custom-600 dark:text-neutral-800">
+            <Menu.Button className="relative z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800">
               <Icon
                 icon="tabler:plus"
                 className={`h-6 w-6 shrink-0 transition-all ${
@@ -56,19 +56,19 @@ function FAB({
                             setModifyIdeaModalOpenType('create')
                           }}
                           className={`group flex w-full items-center justify-end gap-4 rounded-md py-3 pr-2 ${
-                            active ? 'text-neutral-200' : 'text-neutral-100'
+                            active ? 'text-bg-200' : 'text-bg-100'
                           }`}
                         >
                           {name}
                           <button
                             className={`rounded-full ${
-                              active ? 'bg-neutral-300' : 'bg-neutral-200'
+                              active ? 'bg-bg-300' : 'bg-bg-200'
                             } p-3`}
                           >
                             <Icon
                               icon={icon}
-                              className={`h-5 w-5 text-neutral-800 ${
-                                active && 'text-neutral-300'
+                              className={`h-5 w-5 text-bg-800 ${
+                                active && 'text-bg-300'
                               }`}
                             />
                           </button>
@@ -85,7 +85,7 @@ function FAB({
               }`}
             >
               <div
-                className={`h-full w-full bg-neutral-900/50 backdrop-blur-sm transition-opacity ${
+                className={`h-full w-full bg-bg-900/50 backdrop-blur-sm transition-opacity ${
                   open ? 'opacity-100' : 'opacity-0'
                 }`}
               />

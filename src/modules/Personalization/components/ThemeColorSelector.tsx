@@ -33,9 +33,7 @@ function ThemeColorSelector(): React.ReactElement {
         <h3 className="block text-xl font-medium leading-normal">
           Accent color
         </h3>
-        <p className="text-neutral-500">
-          Select or customize your UI accent color.
-        </p>
+        <p className="text-bg-500">Select or customize your UI accent color.</p>
       </div>
       <Listbox
         value={themeColor}
@@ -44,7 +42,7 @@ function ThemeColorSelector(): React.ReactElement {
         }}
       >
         <div className="relative mt-1 w-48">
-          <Listbox.Button className="relative flex w-full items-center gap-2 rounded-lg border-[1.5px] border-neutral-300/50 py-4 pl-4 pr-10 text-left focus:outline-none dark:border-neutral-700 dark:bg-neutral-900 sm:text-sm">
+          <Listbox.Button className="relative flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 py-4 pl-4 pr-10 text-left focus:outline-none dark:border-bg-700 dark:bg-bg-900 sm:text-sm">
             <span className="inline-block h-4 w-4 rounded-full bg-custom-500" />
             <span className="mt-[-1px] block truncate">
               {themeColor
@@ -56,7 +54,7 @@ function ThemeColorSelector(): React.ReactElement {
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <Icon
                 icon="tabler:chevron-down"
-                className="h-5 w-5 text-neutral-400"
+                className="h-5 w-5 text-bg-400"
               />
             </span>
           </Listbox.Button>
@@ -69,15 +67,13 @@ function ThemeColorSelector(): React.ReactElement {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute mt-1 max-h-32 w-full divide-y divide-neutral-200 overflow-auto rounded-md bg-neutral-100 py-1 text-base shadow-lg focus:outline-none dark:divide-neutral-700 dark:bg-neutral-800/50 sm:text-sm">
+            <Listbox.Options className="absolute mt-1 max-h-32 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800/50 sm:text-sm">
               {COLORS.map((color, i) => (
                 <Listbox.Option
                   key={i}
                   className={({ active }) =>
                     `relative cursor-pointer select-none transition-all p-4 flex items-center justify-between ${
-                      active
-                        ? 'bg-neutral-200/50 dark:bg-neutral-800'
-                        : '!bg-transparent'
+                      active ? 'bg-bg-200/50 dark:bg-bg-800' : '!bg-transparent'
                     }`
                   }
                   value={`theme-${color}`}

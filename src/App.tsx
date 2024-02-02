@@ -15,7 +15,7 @@ function App(): React.JSX.Element {
       <GlobalStateProvider>
         <AuthProvider>
           <PersonalizationProvider>
-            <div className="relative flex h-[100dvh] w-full overflow-hidden bg-neutral-200/50 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-100">
+            <div className="relative flex h-[100dvh] w-full overflow-hidden bg-bg-200/50 text-bg-800 dark:bg-bg-900 dark:text-bg-100">
               <AppRouter />
             </div>
             <ToastContainer

@@ -13,7 +13,7 @@ function AuthHeader(): React.ReactElement {
       <h2 className="text-center text-4xl font-semibold tracking-wide sm:text-5xl">
         Welcome Back!
       </h2>
-      <p className="mt-2 text-center text-base text-neutral-500 sm:mt-4 sm:text-xl">
+      <p className="mt-2 text-center text-base text-bg-500 sm:mt-4 sm:text-xl">
         Sign in to continue tracking your life.
       </p>
     </>

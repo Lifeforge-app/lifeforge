@@ -11,7 +11,7 @@ export default function HoursAndMinutesFromSeconds({
       {Math.floor(seconds / 60) > 0 ? (
         <>
           {Math.floor(seconds / 60)}
-          <span className="pl-1 text-3xl font-normal text-neutral-500">h</span>
+          <span className="pl-1 text-3xl font-normal text-bg-500">h</span>
         </>
       ) : (
         ''
@@ -19,7 +19,7 @@ export default function HoursAndMinutesFromSeconds({
       {Math.floor(seconds % 60) > 0 ? (
         <>
           {Math.floor(seconds % 60)}
-          <span className="pl-1 text-3xl font-normal text-neutral-500">m</span>
+          <span className="pl-1 text-3xl font-normal text-bg-500">m</span>
         </>
       ) : (
         ''

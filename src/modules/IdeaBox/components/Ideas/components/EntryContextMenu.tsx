@@ -71,15 +71,15 @@ function EntryContextMenu({
       <Menu.Button>
         {({ open }) => (
           <div
-            className={`shrink-0 rounded-lg bg-neutral-50 p-2 text-neutral-500 opacity-0 hover:bg-neutral-100 hover:text-neutral-800 group-hover:opacity-100 dark:bg-neutral-800/50 dark:text-neutral-100 dark:hover:bg-neutral-900 dark:hover:text-neutral-100 ${
+            className={`shrink-0 rounded-lg bg-bg-50 p-2 text-bg-500 opacity-0 hover:bg-bg-100 hover:text-bg-800 group-hover:opacity-100 dark:bg-bg-800/50 dark:text-bg-100 dark:hover:bg-bg-900 dark:hover:text-bg-100 ${
               entry.type === 'image' &&
               '!shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]'
             } ${
               open &&
               `${
                 entry.type === 'image'
-                  ? '!bg-neutral-200 dark:!bg-neutral-900'
-                  : '!bg-neutral-200 dark:!bg-neutral-800'
+                  ? '!bg-bg-200 dark:!bg-bg-900'
+                  : '!bg-bg-200 dark:!bg-bg-800'
               } !opacity-100`
             }`}
           >
@@ -96,7 +96,7 @@ function EntryContextMenu({
         leaveTo="transform opacity-0 scale-95"
         className="absolute right-0 top-3"
       >
-        <Menu.Items className="mt-8 w-48 overflow-hidden rounded-md bg-neutral-100 shadow-lg outline-none focus:outline-none dark:bg-neutral-800">
+        <Menu.Items className="mt-8 w-48 overflow-hidden rounded-md bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800">
           <MenuItem
             onClick={() => {
               pinIdea(entry.id)

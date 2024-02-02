@@ -6,6 +6,7 @@ import Loading from '../../components/general/Loading'
 import Error from '../../components/general/Error'
 import useFetch from '../../hooks/useFetch'
 import LogItem from './components/LogItem'
+import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
 
 export interface IChangeLogVersion {
   version: string
@@ -28,22 +29,12 @@ function Changelog(): React.ReactElement {
         title="Change Log"
         desc="All the changes made to this application will be listed here."
       />
-      {(() => {
-        switch (data) {
-          case 'loading':
-            return <Loading />
-          case 'error':
-            return <Error message="Failed to fetch data." />
-          default:
-            return (
-              <ul className="my-8 flex flex-col gap-4">
-                {data.map(entry => (
-                  <LogItem key={entry.version} entry={entry} />
-                ))}
-              </ul>
-            )
-        }
-      })()}
+      <APIComponentWithFallback data={data}>
+        <ul className="my-8 flex flex-col gap-4">
+          {typeof data !== 'string' &&
+            data.map(entry => <LogItem key={entry.version} entry={entry} />)}
+        </ul>
+      </APIComponentWithFallback>
     </section>
   )
 }

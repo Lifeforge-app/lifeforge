@@ -231,7 +231,7 @@ function DirectoryHeader({
                       <div className="absolute left-0 top-0 h-full w-full rounded-lg bg-custom-500 opacity-20" />
                     </div>
                     <div className="flex w-full min-w-0 flex-col gap-1">
-                      <div className="hidden items-center gap-1 text-sm text-neutral-500 md:flex">
+                      <div className="hidden items-center gap-1 text-sm text-bg-500 md:flex">
                         {currentPath.path.map((path, index) => (
                           <>
                             <Link
@@ -252,7 +252,7 @@ function DirectoryHeader({
                             {index !== currentPath.path.length - 1 && (
                               <Icon
                                 icon="tabler:chevron-right"
-                                className="h-4 w-4 shrink-0 text-neutral-500"
+                                className="h-4 w-4 shrink-0 text-bg-500"
                               />
                             )}
                           </>
@@ -268,14 +268,14 @@ function DirectoryHeader({
           })()}
         </div>
         <div className="flex items-center gap-4">
-          <button className="hidden rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-200/50 hover:text-neutral-900 dark:hover:bg-neutral-700/50 dark:hover:text-neutral-100 md:block">
+          <button className="hidden rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-900 dark:hover:bg-bg-700/50 dark:hover:text-bg-100 md:block">
             <Icon icon="tabler:search" className="text-2xl" />
           </button>
-          <button className="hidden rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-200/50 hover:text-neutral-900 dark:hover:bg-neutral-700/50 dark:hover:text-neutral-100 md:block">
+          <button className="hidden rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-900 dark:hover:bg-bg-700/50 dark:hover:text-bg-100 md:block">
             <Icon icon="tabler:filter" className="text-2xl" />
           </button>
           <Menu as="div" className="relative z-50 hidden md:block">
-            <Menu.Button className="flex items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 dark:text-neutral-800">
+            <Menu.Button className="flex items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 dark:text-bg-800">
               <Icon icon="tabler:plus" className="text-xl" />
               new
             </Menu.Button>
@@ -288,7 +288,7 @@ function DirectoryHeader({
               leaveTo="transform scale-95 opacity-0"
               className="absolute right-0 top-8"
             >
-              <Menu.Items className="mt-8 w-48 overflow-hidden overscroll-contain rounded-md bg-neutral-100 shadow-lg outline-none focus:outline-none dark:bg-neutral-800">
+              <Menu.Items className="mt-8 w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800">
                 <MenuItem
                   onClick={() => {
                     setModifyFolderModalOpenType('create')
@@ -297,7 +297,7 @@ function DirectoryHeader({
                   icon="tabler:folder-plus"
                   text="New Folder"
                 />
-                <div className="w-full border-b border-neutral-300 dark:border-neutral-700" />
+                <div className="w-full border-b border-bg-300 dark:border-bg-700" />
                 <MenuItem
                   onClick={uploadFiles}
                   icon="ci:file-upload"
@@ -311,13 +311,13 @@ function DirectoryHeader({
               </Menu.Items>
             </Transition>
           </Menu>
-          <button className="rounded-lg p-4 text-neutral-500 transition-all hover:bg-neutral-200/50 hover:text-neutral-800 dark:hover:bg-neutral-800 dark:hover:text-neutral-100">
+          <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
             <Icon icon="tabler:dots-vertical" className="text-xl sm:text-2xl" />
           </button>
         </div>
       </div>
       <Menu as="div" className="absolute bottom-8 right-8 z-50 md:hidden">
-        <Menu.Button className="flex items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 dark:text-neutral-800">
+        <Menu.Button className="flex items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 dark:text-bg-800">
           <Icon icon="tabler:plus" className="text-xl" />
           new
         </Menu.Button>
@@ -330,7 +330,7 @@ function DirectoryHeader({
           leaveTo="transform scale-95 opacity-0"
           className="absolute right-0 top-8"
         >
-          <Menu.Items className="mt-8 w-48 overflow-hidden overscroll-contain rounded-md bg-neutral-100 shadow-lg outline-none focus:outline-none dark:bg-neutral-800">
+          <Menu.Items className="mt-8 w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800">
             <MenuItem
               onClick={() => {
                 setModifyFolderModalOpenType('create')
@@ -339,7 +339,7 @@ function DirectoryHeader({
               icon="tabler:folder-plus"
               text="New Folder"
             />
-            <div className="w-full border-b border-neutral-300 dark:border-neutral-700" />
+            <div className="w-full border-b border-bg-300 dark:border-bg-700" />
             <MenuItem
               onClick={uploadFiles}
               icon="ci:file-upload"

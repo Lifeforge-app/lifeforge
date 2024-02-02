@@ -14,7 +14,7 @@ function EntryCreationDate({
       <div
         data-tooltip-id={`date-tooltip-${id}`}
         data-tooltip-content={moment(date).format('MMMM Do YYYY, h:mm:ss a')}
-        className="z-50 shrink-0 text-neutral-500 dark:text-neutral-400"
+        className="z-50 shrink-0 text-bg-500 dark:text-bg-400"
       >
         {moment(date).fromNow()}
       </div>

@@ -94,10 +94,10 @@ function Search({
           onClick={() => {
             if (searchQuery) setCurrentIconSetProp({ search: searchQuery })
           }}
-          className="flex items-center justify-center gap-1 rounded-md bg-neutral-200 px-6 py-4 font-medium text-neutral-800 shadow-md transition-all hover:bg-[#b3bdc9]"
+          className="flex items-center justify-center gap-1 rounded-md bg-bg-200 px-6 py-4 font-medium text-bg-800 shadow-md transition-all hover:bg-[#b3bdc9]"
         >
           Search
-          <Icon icon="uil:arrow-right" className="h-5 w-5 text-neutral-800" />
+          <Icon icon="uil:arrow-right" className="h-5 w-5 text-bg-800" />
         </button>
       </div>
       {Object.keys(iconData.iconSets).length > 0 && (
@@ -113,9 +113,9 @@ function Search({
                 }}
                 className={`${
                   currentIconSet === name
-                    ? 'bg-neutral-200 text-neutral-800 shadow-md'
-                    : 'bg-neutral-800'
-                } flex h-8 grow items-center justify-center whitespace-nowrap rounded-full px-6 text-sm text-neutral-100 shadow-md transition-all md:grow-0`}
+                    ? 'bg-bg-200 text-bg-800 shadow-md'
+                    : 'bg-bg-800'
+                } flex h-8 grow items-center justify-center whitespace-nowrap rounded-full px-6 text-sm text-bg-100 shadow-md transition-all md:grow-0`}
               >
                 {iconSet.name}
               </button>
@@ -131,7 +131,7 @@ function Search({
               setSelectedIcon(icon.name || icon)
               setOpen(false)
             }}
-            className="flex cursor-pointer flex-col items-center rounded-lg p-4 transition-all hover:bg-neutral-800"
+            className="flex cursor-pointer flex-col items-center rounded-lg p-4 transition-all hover:bg-bg-800"
           >
             <Icon icon={icon.name || icon} width="32" height="32" />
             <p className="-mb-0.5 mt-4 break-all  text-center text-xs font-medium tracking-wide">

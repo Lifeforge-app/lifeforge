@@ -10,6 +10,7 @@ const SIDEBAR_ITEMS: ISidebarItem[] = [
   { type: 'divider' },
   { type: 'title', name: 'Productivity' },
   { type: 'item', name: 'Todo List', icon: 'tabler:list-check' },
+  { type: 'item', name: 'Pomodoro Timer', icon: 'tabler:clock-bolt' },
   { type: 'item', name: 'Daily Schedule', icon: 'tabler:clipboard-list' },
   { type: 'item', name: 'Calendar', icon: 'tabler:calendar' },
   { type: 'divider' },
@@ -25,7 +26,6 @@ const SIDEBAR_ITEMS: ISidebarItem[] = [
   { type: 'item', name: 'Code Time', icon: 'tabler:code' },
   { type: 'divider' },
   { type: 'title', name: 'Study' },
-  { type: 'item', name: 'Pomodoro Timer', icon: 'tabler:clock-bolt' },
   { type: 'item', name: 'Flashcards', icon: 'tabler:cards' },
   {
     type: 'item',
@@ -41,6 +41,10 @@ const SIDEBAR_ITEMS: ISidebarItem[] = [
       ['Physics', 'tabler:atom']
     ]
   },
+  { type: 'divider' },
+  { type: 'title', name: 'Career' },
+  { type: 'item', name: 'Resume', icon: 'tabler:user-circle' },
+  { type: 'item', name: 'Portfolio', icon: 'tabler:category-2' },
   { type: 'divider' },
   { type: 'title', name: 'Lifestyle' },
   { type: 'item', name: 'Blog', icon: 'tabler:file-text' },

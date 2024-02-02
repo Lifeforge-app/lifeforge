@@ -20,12 +20,12 @@ function MenuItem({
           onClick={onClick}
           className={`${
             active
-              ? `bg-neutral-200/50 ${
-                  isRed ? 'text-red-600' : 'text-neutral-800'
-                } dark:bg-neutral-700 dark:text-neutral-100`
+              ? `bg-bg-200/50 ${
+                  isRed ? 'text-red-600' : 'text-bg-800'
+                } dark:bg-bg-700 dark:text-bg-100`
               : isRed
               ? 'text-red-500'
-              : 'text-neutral-500'
+              : 'text-bg-500'
           } flex w-full items-center p-4`}
         >
           <Icon icon={icon} className="h-5 w-5" />

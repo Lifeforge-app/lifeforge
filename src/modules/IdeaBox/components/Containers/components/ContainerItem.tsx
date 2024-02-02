@@ -22,11 +22,11 @@ function ContainerItem({
   >
 }): React.ReactElement {
   return (
-    <div className="relative flex flex-col items-center justify-start gap-6 rounded-lg bg-neutral-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-neutral-100 dark:bg-neutral-800/50 dark:hover:bg-neutral-800/70">
+    <div className="relative flex flex-col items-center justify-start gap-6 rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-bg-100 dark:bg-bg-800/50 dark:hover:bg-bg-800/70">
       <div
         className="rounded-lg p-4"
         style={{
-          backgroundColor: container.color + '20'
+          backgroundColor: container.color + '30'
         }}
       >
         <Icon
@@ -37,21 +37,21 @@ function ContainerItem({
           }}
         />
       </div>
-      <div className="text-center text-2xl font-medium text-neutral-800 dark:text-neutral-100">
+      <div className="text-center text-2xl font-medium text-bg-800 dark:text-bg-100">
         {container.name}
       </div>
       <div className="mt-auto flex items-center gap-4">
         <div className="flex items-center gap-2">
-          <Icon icon="tabler:article" className="h-5 w-5 text-neutral-500" />
-          <span className="text-neutral-500">{container.text_count}</span>
+          <Icon icon="tabler:article" className="h-5 w-5 text-bg-500" />
+          <span className="text-bg-500">{container.text_count}</span>
         </div>
         <div className="flex items-center gap-2">
-          <Icon icon="tabler:link" className="h-5 w-5 text-neutral-500" />
-          <span className="text-neutral-500">{container.link_count}</span>
+          <Icon icon="tabler:link" className="h-5 w-5 text-bg-500" />
+          <span className="text-bg-500">{container.link_count}</span>
         </div>
         <div className="flex items-center gap-2">
-          <Icon icon="tabler:photo" className="h-5 w-5 text-neutral-500" />
-          <span className="text-neutral-500">{container.image_count}</span>
+          <Icon icon="tabler:photo" className="h-5 w-5 text-bg-500" />
+          <span className="text-bg-500">{container.image_count}</span>
         </div>
       </div>
       <Link

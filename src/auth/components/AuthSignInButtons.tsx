@@ -68,14 +68,14 @@ function AuthSignInButton({
           auth
         }
         onClick={signIn}
-        className="flex h-[4.6rem] items-center justify-center rounded-lg bg-custom-500 p-6 font-semibold uppercase tracking-widest text-neutral-100 transition-all hover:bg-custom-600 disabled:cursor-not-allowed disabled:bg-custom-700 disabled:text-neutral-200 dark:disabled:bg-custom-900 dark:disabled:text-neutral-400"
+        className="flex h-[4.6rem] items-center justify-center rounded-lg bg-custom-500 p-6 font-semibold uppercase tracking-widest text-bg-100 transition-all hover:bg-custom-600 disabled:cursor-not-allowed disabled:bg-custom-700 disabled:text-bg-200 dark:disabled:bg-custom-900 dark:disabled:text-bg-400"
       >
         {loading ? <Icon icon="svg-spinners:180-ring" /> : 'Sign In'}
       </button>
       <button
         type="button"
         onClick={signInWithGithub}
-        className="flex items-center justify-center gap-3 rounded-lg bg-neutral-400 p-6 font-semibold uppercase tracking-widest text-neutral-100 transition-all hover:bg-neutral-500 dark:bg-neutral-800 dark:hover:bg-neutral-700"
+        className="flex items-center justify-center gap-3 rounded-lg bg-bg-400 p-6 font-semibold uppercase tracking-widest text-bg-100 transition-all hover:bg-bg-500 dark:bg-bg-800 dark:hover:bg-bg-700"
       >
         <Icon icon="tabler:brand-github" className="text-2xl" />
         Sign In with Github

@@ -11,7 +11,7 @@ function HamburgerMenu({
 }): React.ReactElement {
   return (
     <Menu as="div" className={position}>
-      <Menu.Button className="rounded-md p-2 text-neutral-500 hover:bg-neutral-200/50 hover:text-neutral-500 dark:hover:bg-neutral-700/30">
+      <Menu.Button className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30">
         <Icon icon="tabler:dots-vertical" className="h-5 w-5" />
       </Menu.Button>
       <Transition
@@ -23,7 +23,7 @@ function HamburgerMenu({
         leaveTo="transform scale-95 opacity-0"
         className="absolute right-0 top-3 z-50"
       >
-        <Menu.Items className="mt-8 w-48 overflow-hidden overscroll-contain rounded-md bg-neutral-100 shadow-lg outline-none focus:outline-none dark:bg-neutral-800">
+        <Menu.Items className="mt-8 w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800">
           {children}
         </Menu.Items>
       </Transition>

@@ -1,71 +1,139 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Icon } from '@iconify/react'
-import React from 'react'
-import Sidebar from './components/Sidebar'
+import React, { useState } from 'react'
+import Sidebar, {
+  type ITodoListTag,
+  type ITodoListList
+} from './components/Sidebar'
 import ModuleHeader from '../../components/general/ModuleHeader'
+import useFetch from '../../hooks/useFetch'
+import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
+import moment from 'moment'
+
+export interface ITodoListEntry {
+  collectionId: string
+  collectionName: string
+  created: string
+  due_date: string
+  id: string
+  list: string
+  notes: string
+  priority: string
+  summary: string
+  tags: string[]
+  updated: string
+}
 
 function TodoList(): React.JSX.Element {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [lists, refreshLists] = useFetch<ITodoListList[]>('todo-list/list/list')
+  const [tagsList] = useFetch<ITodoListTag[]>('todo-list/tag/list')
+  const [entries] = useFetch<ITodoListEntry[]>('todo-list/entry/list')
+
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col px-12">
+    <section className="flex h-full min-h-0 w-full flex-1 flex-col px-8 sm:px-12">
       <ModuleHeader
         title="Todo List"
         desc="Human brain is not designed to remember everything."
       />
       <div className="mb-12 mt-8 flex min-h-0 w-full flex-1">
-        <Sidebar />
-        <div className="ml-12 h-full flex-1">
+        <Sidebar
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          lists={lists}
+          refreshLists={refreshLists}
+          tags={tagsList}
+        />
+        <div className="h-full flex-1 lg:ml-12">
           <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-semibold text-neutral-800 dark:text-neutral-100">
-              All Tasks <span className="text-base text-neutral-400">(10)</span>
+            <h1 className="text-3xl font-semibold text-bg-800 dark:text-bg-100 md:text-4xl">
+              All Tasks <span className="text-base text-bg-400">(10)</span>
             </h1>
+            <button
+              onClick={() => {
+                setSidebarOpen(true)
+              }}
+              className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-100"
+            >
+              <Icon icon="tabler:menu" className="text-2xl" />
+            </button>
           </div>
-          <search className="my-8 flex w-full items-center gap-4 rounded-lg bg-neutral-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
-            <Icon icon="tabler:search" className="h-5 w-5 text-neutral-500" />
+          <search className="my-8 flex w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50">
+            <Icon icon="tabler:search" className="h-5 w-5 text-bg-500" />
             <input
               type="text"
               placeholder="Search projects ..."
-              className="w-full bg-transparent text-neutral-500 placeholder:text-neutral-400 focus:outline-none"
+              className="w-full bg-transparent text-bg-500 placeholder:text-bg-400 focus:outline-none"
             />
           </search>
           <ul className="mt-6 flex flex-col gap-4">
             <li className="flex items-center justify-center">
-              <button className="flex w-full items-center gap-2 rounded-lg border-2 border-dashed border-neutral-400 p-6 font-semibold uppercase tracking-widest text-neutral-400 hover:bg-neutral-200 dark:border-neutral-700 dark:text-neutral-700 dark:hover:bg-neutral-800/30">
+              <button className="flex w-full items-center gap-2 rounded-lg border-2 border-dashed border-bg-400 p-6 font-semibold uppercase tracking-widest text-bg-400 hover:bg-bg-200 dark:border-bg-700 dark:text-bg-700 dark:hover:bg-bg-800/30">
                 <Icon icon="tabler:plus" className="text-2xl" />
                 <span className="ml-1">Add New Task</span>
               </button>
             </li>
-            <li className="flex items-center justify-between gap-4 rounded-lg border-l-4 border-indigo-500 bg-neutral-50 p-4 px-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
-              <div className="flex flex-col gap-1">
-                <div className="font-semibold text-neutral-800 dark:text-neutral-100">
-                  Buy groceries
-                </div>
-                <div className="text-sm text-rose-500">
-                  10:00 AM, 23 Nov 2023 (overdue 8 hours)
-                </div>
-              </div>
-              <button className="h-6 w-6 rounded-full border-2 border-neutral-500 transition-all hover:border-orange-500" />
-            </li>
-            <li className="flex items-center justify-between gap-4 rounded-lg border-l-4 border-orange-500 bg-neutral-50 p-4 px-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
-              <div className="flex flex-col gap-1">
-                <div className="font-semibold text-neutral-800 dark:text-neutral-100">
-                  Do homework
-                </div>
-                <div className="text-sm text-neutral-500">
-                  00:00 AM, 31 Jan 2024
-                </div>
-              </div>
-              <button className="h-6 w-6 rounded-full border-2 border-neutral-500 transition-all hover:border-orange-500" />
-            </li>
-            <li className="flex items-center justify-between gap-4 rounded-lg border-l-4 border-orange-500 bg-neutral-50 p-4 px-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50">
-              <div className="flex flex-col gap-1">
-                <div className="font-semibold text-neutral-800 dark:text-neutral-100">
-                  Start doing revision for SPM Sejarah
-                </div>
-                <div className="text-sm text-neutral-500">
-                  00:00 AM, 31 Jan 2024
-                </div>
-              </div>
-              <button className="h-6 w-6 rounded-full border-2 border-neutral-500 transition-all hover:border-orange-500" />
-            </li>
+            <APIComponentWithFallback data={entries}>
+              {typeof entries !== 'string' &&
+                entries.map(
+                  ({ id, summary, list, tags, due_date, priority }) => (
+                    <li
+                      key={id}
+                      className="flex items-center justify-between gap-4 rounded-lg bg-bg-50 p-4 pl-5 pr-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50"
+                    >
+                      <div className="flex items-center gap-4">
+                        {typeof lists !== 'string' && list !== null && (
+                          <span
+                            className="h-10 w-1 shrink-0 rounded-full"
+                            style={{
+                              backgroundColor: lists.find(l => l.id === list)
+                                ?.color
+                            }}
+                          />
+                        )}
+                        <div className="flex flex-col gap-1">
+                          <div className="font-semibold text-bg-800 dark:text-bg-100">
+                            <span
+                              className={`mr-2 font-semibold tracking-widest ${
+                                {
+                                  low: 'text-emerald-500',
+                                  medium: 'text-yellow-500',
+                                  high: 'text-red-500'
+                                }[priority]
+                              }
+                        `}
+                            >
+                              {'!'.repeat(
+                                ['low', 'medium', 'high'].indexOf(priority) + 1
+                              )}
+                            </span>
+                            {summary}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="text-sm text-bg-500">
+                              {moment(due_date).fromNow()}
+                            </div>
+                            <div className="flex items-center">
+                              {typeof tagsList !== 'string' &&
+                                tags.length > 0 &&
+                                tags.map(tag => (
+                                  <span
+                                    key={tag}
+                                    className="relative isolate px-2 py-0.5 text-xs text-custom-500"
+                                  >
+                                    <div className="absolute left-0 top-0 z-[-1] h-full w-full rounded-full bg-custom-500 opacity-20" />
+                                    #{tagsList.find(t => t.id === tag)?.name}
+                                  </span>
+                                ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <button className="h-6 w-6 rounded-full border-2 border-bg-500 transition-all hover:border-custom-500" />
+                    </li>
+                  )
+                )}
+            </APIComponentWithFallback>
           </ul>
         </div>
       </div>

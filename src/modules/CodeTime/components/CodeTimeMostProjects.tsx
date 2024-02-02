@@ -4,8 +4,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useState } from 'react'
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 import useFetch from '../../../hooks/useFetch'
-import Error from '../../../components/general/Error'
-import Loading from '../../../components/general/Loading'
+import APIComponentWithFallback from '../../../components/general/APIComponentWithFallback'
 
 function CodeTimeMostProjects(): React.ReactElement {
   const [lastForProjects, setLastForProjects] = useState<
@@ -35,8 +34,8 @@ function CodeTimeMostProjects(): React.ReactElement {
                 }}
                 className={`rounded-md p-4 px-6 tracking-wide ${
                   lastForProjects === last
-                    ? 'bg-neutral-200 font-semibold text-neutral-800 dark:bg-neutral-700/50 dark:text-neutral-100'
-                    : 'text-neutral-400 hover:bg-neutral-200/50 dark:hover:bg-neutral-700/50'
+                    ? 'bg-bg-200 font-semibold text-bg-800 dark:bg-bg-700/50 dark:text-bg-100'
+                    : 'text-bg-400 hover:bg-bg-200/50 dark:hover:bg-bg-700/50'
                 }`}
               >
                 {last}
@@ -46,80 +45,69 @@ function CodeTimeMostProjects(): React.ReactElement {
         </div>
       </div>
 
-      {(() => {
-        switch (topProjects) {
-          case 'loading':
-            return <Loading />
-          case 'error':
-            return <Error message="Failed to fetch data from server." />
-          default:
-            return (
-              <>
-                <div className="flex w-full">
-                  {topProjects !== null &&
-                    Object.keys(topProjects).length > 0 &&
-                    Object.entries(topProjects)
-                      .slice(0, 5)
-                      .map(([key, value], index) => (
-                        <div
-                          className={`h-6 border ${
-                            index === 0 && 'rounded-l-lg'
-                          } ${index === 4 && 'rounded-r-lg'} ${
-                            [
-                              'bg-red-500/20 border-red-500',
-                              'bg-orange-500/20 border-orange-500',
-                              'bg-yellow-500/20 border-yellow-500',
-                              'bg-blue-500/20 border-blue-500',
-                              'bg-emerald-500/20 border-emerald-500'
-                            ][index]
-                          }`}
-                          key={key}
-                          style={{
-                            width: `${Math.round(
-                              (value /
-                                Object.entries(topProjects)
-                                  .slice(0, 5)
-                                  .reduce((a, b) => a + b[1], 0)) *
-                                100
-                            )}%`
-                          }}
-                        ></div>
-                      ))}
-                </div>
-                <ul className="flex flex-col gap-4">
-                  {topProjects !== null &&
-                    Object.keys(topProjects).length > 0 &&
-                    Object.entries(topProjects)
-                      .slice(0, 5)
-                      .map(([key, value], index) => (
-                        <li
-                          key={key}
-                          className="relative flex items-center justify-between gap-4 rounded-lg bg-neutral-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800/50"
-                        >
-                          <div className="flex items-center gap-4 text-lg font-medium">
-                            <div
-                              className={`h-4 w-4 rounded-md border ${
-                                [
-                                  'bg-red-500/20 border-red-500',
-                                  'bg-orange-500/20 border-orange-500',
-                                  'bg-yellow-500/20 border-yellow-500',
-                                  'bg-blue-500/20 border-blue-500',
-                                  'bg-emerald-500/20 border-emerald-500'
-                                ][index]
-                              } rounded-full`}
-                            ></div>
-                            {key}
-                          </div>
-                          <div className="text-3xl font-semibold">
-                            <HoursAndMinutesFromSeconds seconds={value} />
-                          </div>
-                        </li>
-                      ))}
-                </ul>
-              </>
-            )
-        }
-      })()}
+      <APIComponentWithFallback data={topProjects}>
+        <div className="flex w-full">
+          {typeof topProjects !== 'string' &&
+            Object.keys(topProjects).length > 0 &&
+            Object.entries(topProjects)
+              .slice(0, 5)
+              .map(([key, value], index) => (
+                <div
+                  className={`h-6 border ${index === 0 && 'rounded-l-lg'} ${
+                    index === 4 && 'rounded-r-lg'
+                  } ${
+                    [
+                      'bg-red-500/20 border-red-500',
+                      'bg-orange-500/20 border-orange-500',
+                      'bg-yellow-500/20 border-yellow-500',
+                      'bg-blue-500/20 border-blue-500',
+                      'bg-emerald-500/20 border-emerald-500'
+                    ][index]
+                  }`}
+                  key={key}
+                  style={{
+                    width: `${Math.round(
+                      (value /
+                        Object.entries(topProjects)
+                          .slice(0, 5)
+                          .reduce((a, b) => a + b[1], 0)) *
+                        100
+                    )}%`
+                  }}
+                ></div>
+              ))}
+        </div>
+        <ul className="flex flex-col gap-4">
+          {topProjects !== null &&
+            Object.keys(topProjects).length > 0 &&
+            Object.entries(topProjects)
+              .slice(0, 5)
+              .map(([key, value], index) => (
+                <li
+                  key={key}
+                  className="relative flex items-center justify-between gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800/50"
+                >
+                  <div className="flex items-center gap-4 text-lg font-medium">
+                    <div
+                      className={`h-4 w-4 rounded-md border ${
+                        [
+                          'bg-red-500/20 border-red-500',
+                          'bg-orange-500/20 border-orange-500',
+                          'bg-yellow-500/20 border-yellow-500',
+                          'bg-blue-500/20 border-blue-500',
+                          'bg-emerald-500/20 border-emerald-500'
+                        ][index]
+                      } rounded-full`}
+                    ></div>
+                    {key}
+                  </div>
+                  <div className="text-3xl font-semibold">
+                    <HoursAndMinutesFromSeconds seconds={value} />
+                  </div>
+                </li>
+              ))}
+        </ul>
+      </APIComponentWithFallback>
     </div>
   )
 }

@@ -5,8 +5,11 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import { toast } from 'react-toastify'
 import { useDebounce } from '@uidotdev/usehooks'
 import Modal from '../../../components/general/Modal'
-import ColorPickerModal from '../../../components/general/ColorPickerModal'
+import ColorPickerModal from '../../../components/general/ColorPicker/ColorPickerModal'
 import { type ICodeSnippetsLabel } from './Sidebar/components/Labels'
+import CreateOrModifyButton from '../../../components/general/CreateOrModifyButton'
+import Input from '../../../components/general/Input'
+import ColorInput from '../../../components/general/ColorPicker/ColorInput'
 
 function ModifyLabelModal({
   openType,
@@ -121,102 +124,30 @@ function ModifyLabelModal({
             onClick={() => {
               setOpenType(null)
             }}
-            className="rounded-md p-2 text-neutral-500 transition-all hover:bg-neutral-200/50 hover:text-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-800"
+            className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:text-bg-100 dark:hover:bg-bg-800"
           >
             <Icon icon="tabler:x" className="h-6 w-6" />
           </button>
         </div>
-        <div className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-200/50 focus-within:border-custom-500 dark:bg-neutral-800/50">
-          <Icon
-            icon="tabler:tag"
-            className="ml-6 h-6 w-6 shrink-0 text-neutral-500 group-focus-within:text-custom-500"
-          />
-
-          <div className="flex w-full items-center gap-2">
-            <span
-              className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-neutral-500 group-focus-within:text-custom-500 ${
-                labelName.length === 0
-                  ? 'top-1/2 -translate-y-1/2 group-focus-within:top-6 group-focus-within:text-[14px]'
-                  : 'top-6 -translate-y-1/2 text-[14px]'
-              }`}
-            >
-              Label name
-            </span>
-            <input
-              value={labelName}
-              onChange={updateLabelName}
-              placeholder="My label"
-              className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-400"
-            />
-          </div>
-        </div>
-        <div className="group relative mt-6 flex items-center gap-1 rounded-t-lg border-b-2 border-neutral-500 bg-neutral-200/50 focus-within:border-custom-500 dark:bg-neutral-800/50">
-          <Icon
-            icon="tabler:palette"
-            className="ml-6 h-6 w-6 shrink-0 text-neutral-500 group-focus-within:text-custom-500"
-          />
-
-          <div className="flex w-full items-center gap-2">
-            <span
-              className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-neutral-500 group-focus-within:text-custom-500 ${
-                labelColor.length === 0
-                  ? 'top-1/2 -translate-y-1/2 group-focus-within:top-6 group-focus-within:text-[14px]'
-                  : 'top-6 -translate-y-1/2 text-[14px]'
-              }`}
-            >
-              Label color
-            </span>
-            <div className="mr-12 mt-6 flex w-full items-center gap-2 pl-4">
-              <div
-                className="mt-0.5 h-3 w-3 shrink-0 rounded-full"
-                style={{
-                  backgroundColor: labelColor
-                }}
-              ></div>
-              <input
-                value={labelColor}
-                onChange={updateLabelColor}
-                placeholder="#FFFFFF"
-                className="h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-neutral-400"
-              />
-            </div>
-            <button
-              onClick={() => {
-                setColorPickerOpen(true)
-              }}
-              className="mr-4 shrink-0 rounded-lg p-2 text-neutral-500 hover:bg-neutral-500/30 hover:text-neutral-200 focus:outline-none"
-            >
-              <Icon icon="tabler:color-picker" className="h-6 w-6" />
-            </button>
-          </div>
-        </div>
-        <button
-          disabled={loading}
-          className="mt-8 flex h-16 items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-neutral-800 transition-all hover:bg-custom-600"
+        <Input
+          icon="tabler:tag"
+          name="Label name"
+          placeholder="My label"
+          value={labelName}
+          updateValue={updateLabelName}
+          darker
+        />
+        <ColorInput
+          name="Label color"
+          color={labelColor}
+          updateColor={updateLabelColor}
+          setColorPickerOpen={setColorPickerOpen}
+        />
+        <CreateOrModifyButton
+          loading={loading}
           onClick={onSubmitButtonClick}
-        >
-          {!loading ? (
-            <>
-              <Icon
-                icon={
-                  {
-                    create: 'tabler:plus',
-                    update: 'tabler:pencil'
-                  }[innerOpenType!]
-                }
-                className="h-5 w-5"
-              />
-              {
-                {
-                  create: 'CREATE',
-                  update: 'UPDATE'
-                }[innerOpenType!]
-              }
-            </>
-          ) : (
-            <span className="small-loader-dark"></span>
-          )}
-        </button>
+          type={innerOpenType}
+        />
       </Modal>
       <ColorPickerModal
         isOpen={colorPickerOpen}

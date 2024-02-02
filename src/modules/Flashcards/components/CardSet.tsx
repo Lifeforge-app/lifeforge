@@ -21,10 +21,10 @@ function CardSet(): React.JSX.Element {
             </span>
           </h1>
           <div className="flex items-center justify-center gap-2">
-            <button className="rounded-lg p-4 text-neutral-100 transition-all hover:bg-neutral-800 hover:text-neutral-100">
+            <button className="rounded-lg p-4 text-bg-100 transition-all hover:bg-bg-800 hover:text-bg-100">
               <Icon icon="tabler:border-corners" className="text-2xl" />
             </button>
-            <button className="rounded-lg p-4 text-neutral-100 transition-all hover:bg-neutral-800 hover:text-neutral-100">
+            <button className="rounded-lg p-4 text-bg-100 transition-all hover:bg-bg-800 hover:text-bg-100">
               <Icon icon="tabler:dots-vertical" className="text-2xl" />
             </button>
           </div>
@@ -36,7 +36,7 @@ function CardSet(): React.JSX.Element {
             <Icon icon="tabler:chevron-left" className="text-3xl" />
           </button>
           <div className="stack h-full w-full">
-            <div className="card h-full bg-custom-500 text-neutral-800 shadow-md">
+            <div className="card h-full bg-custom-500 text-bg-800 shadow-md">
               <div className="card-body flex h-full flex-col">
                 <h2 className="card-title text-custom-700">#1</h2>
                 <div className="flex w-full flex-1 flex-col items-center justify-center text-3xl">
@@ -44,14 +44,14 @@ function CardSet(): React.JSX.Element {
                 </div>
               </div>
             </div>
-            <div className="card h-full bg-custom-700 text-neutral-800 !opacity-100 shadow"></div>
-            <div className="card h-full bg-custom-900 text-neutral-800 !opacity-100 shadow-sm"></div>
+            <div className="card h-full bg-custom-700 text-bg-800 !opacity-100 shadow"></div>
+            <div className="card h-full bg-custom-900 text-bg-800 !opacity-100 shadow-sm"></div>
           </div>
           <button className="flex h-full shrink-0 items-center justify-center p-4">
             <Icon icon="tabler:chevron-right" className="text-3xl" />
           </button>
         </div>
-        <button className="mt-12 flex w-1/2 items-center justify-center gap-2 rounded-lg bg-neutral-200 p-4 text-lg font-medium shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-neutral-800">
+        <button className="mt-12 flex w-1/2 items-center justify-center gap-2 rounded-lg bg-bg-200 p-4 text-lg font-medium shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800">
           <Icon icon="tabler:bulb" className="text-2xl" />
           Show answer
         </button>

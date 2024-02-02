@@ -20,7 +20,7 @@ function Notes(): React.ReactElement {
   const [data] = useFetch<INotesWorkspace[]>('notes/workspace/list')
 
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col overflow-y-scroll px-12">
+    <section className="flex h-full min-h-0 w-full flex-1 flex-col overflow-y-scroll px-8 sm:px-12">
       <ModuleHeader
         title="Notes"
         desc="A place to store all your involuntarily generated thoughts."
@@ -37,7 +37,7 @@ function Notes(): React.ReactElement {
                 <Link
                   to={`/notes/${workspace.id}`}
                   key={workspace.id}
-                  className="group flex h-full  w-full flex-col items-center rounded-lg bg-neutral-50 p-16 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-neutral-100 dark:bg-neutral-800/50 dark:hover:bg-neutral-800"
+                  className="group flex h-full  w-full flex-col items-center rounded-lg bg-bg-50 p-16 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-bg-100 dark:bg-bg-800/50 dark:hover:bg-bg-800"
                 >
                   <Icon
                     icon={workspace.icon}
