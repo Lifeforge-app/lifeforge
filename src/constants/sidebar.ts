@@ -81,7 +81,7 @@ const SIDEBAR_ITEMS: ISidebarItem[] = [
   { type: 'divider' },
   { type: 'title', name: 'Settings' },
   { type: 'item', name: 'Settings', icon: 'tabler:settings' },
-  { type: 'item', name: 'Plugins', icon: 'tabler:plug' },
+  { type: 'item', name: 'Modules', icon: 'tabler:plug' },
   { type: 'item', name: 'Personalization', icon: 'tabler:palette' },
   { type: 'item', name: 'Server Status', icon: 'tabler:server' },
   { type: 'divider' },

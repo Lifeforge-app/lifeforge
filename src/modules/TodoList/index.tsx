@@ -9,6 +9,7 @@ import ModuleHeader from '../../components/general/ModuleHeader'
 import useFetch from '../../hooks/useFetch'
 import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
 import moment from 'moment'
+import { toast } from 'react-toastify'
 
 export interface ITodoListEntry {
   collectionId: string
@@ -22,13 +23,38 @@ export interface ITodoListEntry {
   summary: string
   tags: string[]
   updated: string
+  done: boolean
 }
 
 function TodoList(): React.JSX.Element {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [lists, refreshLists] = useFetch<ITodoListList[]>('todo-list/list/list')
   const [tagsList] = useFetch<ITodoListTag[]>('todo-list/tag/list')
-  const [entries] = useFetch<ITodoListEntry[]>('todo-list/entry/list')
+  const [entries, refreshEntries] = useFetch<ITodoListEntry[]>(
+    'todo-list/entry/list'
+  )
+
+  function toggleTaskCompletion(id: string): void {
+    fetch(`${import.meta.env.VITE_API_HOST}/todo-list/entry/toggle/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(async res => {
+        const data = await res.json()
+
+        if (data.state !== 'success') {
+          throw new Error(data.message)
+        }
+
+        refreshEntries()
+      })
+      .catch(err => {
+        toast.error("Oops! Couldn't update the task. Please try again.")
+        console.error(err)
+      })
+  }
 
   return (
     <section className="flex h-full min-h-0 w-full flex-1 flex-col px-8 sm:px-12">
@@ -76,7 +102,7 @@ function TodoList(): React.JSX.Element {
             <APIComponentWithFallback data={entries}>
               {typeof entries !== 'string' &&
                 entries.map(
-                  ({ id, summary, list, tags, due_date, priority }) => (
+                  ({ id, summary, list, tags, due_date, priority, done }) => (
                     <li
                       key={id}
                       className="flex items-center justify-between gap-4 rounded-lg bg-bg-50 p-4 pl-5 pr-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900"
@@ -129,7 +155,16 @@ function TodoList(): React.JSX.Element {
                           </div>
                         </div>
                       </div>
-                      <button className="h-6 w-6 rounded-full border-2 border-bg-500 transition-all hover:border-custom-500" />
+                      <button
+                        onClick={() => {
+                          toggleTaskCompletion(id)
+                        }}
+                        className={`flex h-4 w-4 items-center justify-center rounded-full ring-2 ring-offset-4 ring-offset-bg-900 transition-all hover:border-custom-500 ${
+                          done
+                            ? 'bg-custom-500 ring-custom-500'
+                            : 'bg-bg-900 ring-bg-500'
+                        }`}
+                      />
                     </li>
                   )
                 )}

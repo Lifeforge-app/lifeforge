@@ -20,11 +20,12 @@ import Flashcards from './modules/Flashcards'
 import CardSet from './modules/Flashcards/components/CardSet'
 import ReferenceBooks from './modules/ReferenceBooks'
 import Changelog from './modules/Changelog'
-import Personalization from './modules/Personalization'
 import Notes from './modules/Notes'
 import NotesCategory from './modules/Notes/Workspace'
 import NotesSubject from './modules/Notes/Subject'
 import Settings from './modules/Settings'
+import Personalization from './modules/Personalization'
+import ServerStatus from './modules/ServerStatus'
 
 function AppRouter(): React.JSX.Element {
   const { auth, authLoading } = useContext(AuthContext)
@@ -77,6 +78,7 @@ function AppRouter(): React.JSX.Element {
         <Route path="notes/:workspace/:subject/*" element={<NotesSubject />} />
         <Route path="personalization" element={<Personalization />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="server-status" element={<ServerStatus />} />
         <Route path="change-log" element={<Changelog />} />
       </Route>
       <Route path="auth" element={<Auth />} />

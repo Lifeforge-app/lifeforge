@@ -15,7 +15,7 @@ function CodeTimeMostLanguages(): React.ReactElement {
   )
 
   return (
-    <div className="mb-6 mt-16 flex w-full flex-col gap-6">
+    <div className="mb-6 mt-16 flex w-full flex-col gap-6 pb-6">
       <div className="flex w-full items-center justify-between">
         <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
           <Icon icon="tabler:code" className="text-3xl" />
