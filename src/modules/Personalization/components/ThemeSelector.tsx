@@ -8,7 +8,7 @@ function ThemeSelector(): React.ReactElement {
   return (
     <div className="mt-4 w-full">
       <h3 className="mt-6 block text-xl font-medium leading-normal">Theme</h3>
-      <p className="text-bg-500">Select or customize your UI theme.</p>
+      <p className="text-neutral-500">Select or customize your UI theme.</p>
       <div className="mt-6 flex w-full flex-col gap-8 md:flex-row">
         {[
           { name: 'System', Image: './mockup/system.png' },
@@ -24,10 +24,10 @@ function ThemeSelector(): React.ReactElement {
             className="flex-1"
           >
             <div
-              className={`ring-2 ring-offset-8 ring-offset-bg-50 dark:ring-offset-bg-900 ${
+              className={`ring-2 ring-offset-8 ring-offset-neutral-50 dark:ring-offset-neutral-900 ${
                 theme === name.toLowerCase()
                   ? 'ring-custom-500'
-                  : 'ring-bg-200 dark:ring-bg-700'
+                  : 'ring-neutral-200 dark:ring-neutral-700'
               } relative overflow-hidden rounded-lg lg:rounded-2xl`}
             >
               {theme === name.toLowerCase() && (

@@ -10,14 +10,12 @@
   scrollbar-width: thin;
   overscroll-behavior: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 *:focus {
   outline: none;
-}
-
-body *:not(input) {
-  @apply transition-all;
 }
 
 .stroke-\[2px\] > path {

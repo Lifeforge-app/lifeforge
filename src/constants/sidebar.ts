@@ -13,6 +13,7 @@ const SIDEBAR_ITEMS: ISidebarItem[] = [
   { type: 'item', name: 'Pomodoro Timer', icon: 'tabler:clock-bolt' },
   { type: 'item', name: 'Daily Schedule', icon: 'tabler:clipboard-list' },
   { type: 'item', name: 'Calendar', icon: 'tabler:calendar' },
+  { type: 'item', name: 'Spotify', icon: 'tabler:brand-spotify' },
   { type: 'divider' },
   { type: 'title', name: 'Development' },
   {
@@ -84,6 +85,7 @@ const SIDEBAR_ITEMS: ISidebarItem[] = [
   { type: 'item', name: 'Modules', icon: 'tabler:plug' },
   { type: 'item', name: 'Personalization', icon: 'tabler:palette' },
   { type: 'item', name: 'Server Status', icon: 'tabler:server' },
+  { type: 'item', name: 'Data Backup', icon: 'tabler:database' },
   { type: 'divider' },
   { type: 'item', name: 'About', icon: 'tabler:info-circle' },
   { type: 'item', name: 'Change Log', icon: 'tabler:file-text' }

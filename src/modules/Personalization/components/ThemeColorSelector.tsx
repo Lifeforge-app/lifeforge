@@ -28,8 +28,8 @@ function ThemeColorSelector(): React.ReactElement {
   const { themeColor, setThemeColor } = useContext(PersonalizationContext)
 
   return (
-    <div className="mb-12 mt-4 flex w-full items-center justify-between">
-      <div>
+    <div className="flex w-full flex-col items-center justify-between gap-6 md:flex-row">
+      <div className="w-full md:w-auto">
         <h3 className="block text-xl font-medium leading-normal">
           Accent color
         </h3>
@@ -41,7 +41,7 @@ function ThemeColorSelector(): React.ReactElement {
           setThemeColor(color)
         }}
       >
-        <div className="relative mt-1 w-48">
+        <div className="relative mt-1 w-full md:w-48">
           <Listbox.Button className="relative flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 py-4 pl-4 pr-10 text-left focus:outline-none dark:border-bg-700 dark:bg-bg-900 sm:text-sm">
             <span className="inline-block h-4 w-4 rounded-full bg-custom-500" />
             <span className="mt-[-1px] block truncate">
@@ -67,7 +67,7 @@ function ThemeColorSelector(): React.ReactElement {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute mt-1 max-h-32 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-900 sm:text-sm">
+            <Listbox.Options className="absolute mt-1 max-h-56 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-900 sm:text-sm">
               {COLORS.map((color, i) => (
                 <Listbox.Option
                   key={i}
@@ -94,7 +94,7 @@ function ThemeColorSelector(): React.ReactElement {
                       {selected && (
                         <Icon
                           icon="tabler:check"
-                          className="texy-lg block text-gray-400 group-hover:text-custom-200"
+                          className="block text-lg text-custom-500"
                         />
                       )}
                     </>

@@ -6,7 +6,11 @@ import { toast } from 'react-toastify'
 function useFetch<T>(
   endpoint: string,
   criteriaMet: boolean = true
-): [data: T | 'loading' | 'error', refresh: () => void] {
+): [
+  data: T | 'loading' | 'error',
+  refresh: () => void,
+  setData: React.Dispatch<React.SetStateAction<T | 'loading' | 'error'>>
+] {
   const [data, setData] = useState<T | 'loading' | 'error'>('loading')
 
   function fetchData(): void {
@@ -34,7 +38,7 @@ function useFetch<T>(
     }
   }, [endpoint, criteriaMet])
 
-  return [data, fetchData]
+  return [data, fetchData, setData]
 }
 
 export default useFetch

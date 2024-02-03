@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/indent */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SidebarDivider from '../../../components/Sidebar/components/SidebarDivider'
 import SidebarTitle from '../../../components/Sidebar/components/SidebarTitle'
 import { Icon } from '@iconify/react'
 import APIComponentWithFallback from '../../../components/general/APIComponentWithFallback'
 import GoBackButton from '../../../components/general/GoBackButton'
 import ModifyListModal from './ModifyListModal'
+import MenuItem from '../../../components/general/HamburgerMenu/MenuItem'
+import ModifyTagModal from './ModifyTagModal'
 
 export interface ITodoListList {
   collectionId: string
@@ -35,18 +38,42 @@ function Sidebar({
   setSidebarOpen,
   lists,
   refreshLists,
-  tags
+  tags,
+  refreshTagsList
 }: {
   sidebarOpen: boolean
   setSidebarOpen: (value: boolean) => void
   lists: ITodoListList[] | 'loading' | 'error'
   refreshLists: () => void
   tags: ITodoListTag[] | 'loading' | 'error'
+  refreshTagsList: () => void
 }): React.JSX.Element {
   const [modifyListModalOpenType, setModifyListModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
-  const [existedData, setExistedData] = useState<ITodoListList | null>(null)
+  const [modifyTagModalOpenType, setModifyTagModalOpenType] = useState<
+    'create' | 'update' | null
+  >(null)
+  const [existedListData, setExistedListData] = useState<ITodoListList | null>(
+    null
+  )
+  const [contextMenuOpen, setContextMenuOpen] = useState(false)
+  const [contextMenuPosition, setContextMenuPosition] = useState({
+    x: 0,
+    y: 0
+  })
+
+  useEffect(() => {
+    const handleClick = (): void => {
+      setContextMenuOpen(false)
+    }
+
+    window.addEventListener('click', handleClick)
+
+    return () => {
+      window.removeEventListener('click', handleClick)
+    }
+  }, [])
 
   return (
     <>
@@ -93,7 +120,7 @@ function Sidebar({
             actionButtonIcon="tabler:plus"
             actionButtonOnClick={() => {
               setModifyListModalOpenType('create')
-              setExistedData(null)
+              setExistedListData(null)
             }}
           />
           <APIComponentWithFallback data={lists}>
@@ -102,6 +129,17 @@ function Sidebar({
                 {lists.map(({ icon, name, color, id, amount }) => (
                   <li
                     key={id}
+                    onContextMenu={e => {
+                      e.preventDefault()
+                      setContextMenuOpen(true)
+                      setContextMenuPosition({
+                        x: e.pageX,
+                        y: e.pageY
+                      })
+                    }}
+                    onContextMenuCapture={() => {
+                      setContextMenuOpen(false)
+                    }}
                     className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
                   >
                     <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
@@ -123,7 +161,14 @@ function Sidebar({
             )}
           </APIComponentWithFallback>
           <SidebarDivider />
-          <SidebarTitle name="Tags" />
+          <SidebarTitle
+            name="Tags"
+            actionButtonIcon="tabler:plus"
+            actionButtonOnClick={() => {
+              setModifyTagModalOpenType('create')
+              setExistedListData(null)
+            }}
+          />
           <APIComponentWithFallback data={tags}>
             {typeof tags !== 'string' && (
               <>
@@ -150,8 +195,32 @@ function Sidebar({
         openType={modifyListModalOpenType}
         setOpenType={setModifyListModalOpenType}
         updateListsList={refreshLists}
-        existedData={existedData}
+        existedData={existedListData}
       />
+      <ModifyTagModal
+        openType={modifyTagModalOpenType}
+        setOpenType={setModifyTagModalOpenType}
+        updateTagsList={refreshTagsList}
+        existedData={existedListData}
+      />
+      <div
+        className={`fixed z-[9999] flex flex-col overflow-hidden rounded-md bg-bg-100 text-bg-500 dark:bg-bg-800 ${
+          contextMenuOpen ? '' : 'hidden'
+        } shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]`}
+        style={{
+          top: `${contextMenuPosition.y}px`,
+          left: `${contextMenuPosition.x}px`
+        }}
+      >
+        <button className="flex items-center gap-2 p-4 hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-700 dark:hover:text-bg-100">
+          <Icon icon="tabler:pencil" className="h-5 w-5" />
+          <span>Edit</span>
+        </button>
+        <button className="flex items-center gap-2 p-4 text-red-500 hover:bg-bg-200/50 hover:text-red-600 dark:hover:bg-bg-700 dark:hover:text-red-600">
+          <Icon icon="tabler:trash" className="h-5 w-5" />
+          <span>Delete</span>
+        </button>
+      </div>
     </>
   )
 }

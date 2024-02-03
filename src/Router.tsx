@@ -26,6 +26,7 @@ import NotesSubject from './modules/Notes/Subject'
 import Settings from './modules/Settings'
 import Personalization from './modules/Personalization'
 import ServerStatus from './modules/ServerStatus'
+import Spotify from './modules/Spotify'
 
 function AppRouter(): React.JSX.Element {
   const { auth, authLoading } = useContext(AuthContext)
@@ -61,6 +62,7 @@ function AppRouter(): React.JSX.Element {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="todo-list" element={<TodoList />} />
         <Route path="calendar" element={<Calendar />} />
+        <Route path="spotify" element={<Spotify />} />
         <Route path="projects" element={<Projects />} />
         <Route path="projects/:id" element={<Kanban />} />
         <Route path="idea-box" element={<IdeaBox />} />

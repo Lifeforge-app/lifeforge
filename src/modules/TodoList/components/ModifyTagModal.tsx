@@ -5,68 +5,50 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import { toast } from 'react-toastify'
 import { useDebounce } from '@uidotdev/usehooks'
 import Modal from '../../../components/general/Modal'
-import ColorPickerModal from '../../../components/general/ColorPicker/ColorPickerModal'
-import { type ITodoListList } from './Sidebar'
 import CreateOrModifyButton from '../../../components/general/CreateOrModifyButton'
-import IconSelector from '../../../components/general/IconSelector'
 import Input from '../../../components/general/Input'
-import IconInput from '../../../components/general/IconSelector/IconInput'
-import ColorInput from '../../../components/general/ColorPicker/ColorInput'
+import { type ITodoListTag } from './Sidebar'
 
-function ModifyListModal({
+function ModifyTagModal({
   openType,
   setOpenType,
-  updateListsList,
+  updateTagsList,
   existedData
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  updateListsList: () => void
-  existedData: ITodoListList | null
+  updateTagsList: () => void
+  existedData: ITodoListTag | null
 }): React.ReactElement {
   const [loading, setLoading] = useState(false)
-  const [listName, setListName] = useState('')
-  const [listIcon, setListIcon] = useState('')
-  const [listColor, setListColor] = useState('#FFFFFF')
-  const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
-  const [colorPickerOpen, setColorPickerOpen] = useState(false)
+  const [tagName, setTagName] = useState('')
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
 
-  function updateListName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setListName(e.target.value)
-  }
-
-  function updateListColor(e: React.ChangeEvent<HTMLInputElement>): void {
-    setListColor(e.target.value)
+  function updateTagName(e: React.ChangeEvent<HTMLInputElement>): void {
+    setTagName(e.target.value)
   }
 
   function onSubmitButtonClick(): void {
-    if (
-      listName.trim().length === 0 ||
-      listIcon.trim().length === 0 ||
-      listColor.trim().length === 0
-    ) {
+    if (tagName.trim().length === 0) {
       toast.error('Please fill in all the fields.')
       return
     }
 
     setLoading(true)
 
-    const list = {
-      name: listName.trim(),
-      icon: listIcon.trim(),
-      color: listColor.trim()
+    const tag = {
+      name: tagName.trim()
     }
 
     fetch(
-      `${import.meta.env.VITE_API_HOST}/todo-list/list/${innerOpenType}` +
+      `${import.meta.env.VITE_API_HOST}/todo-list/tag/${innerOpenType}` +
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
       {
         method: innerOpenType === 'create' ? 'PUT' : 'PATCH',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(list)
+        body: JSON.stringify(tag)
       }
     )
       .then(async res => {
@@ -76,18 +58,18 @@ function ModifyListModal({
         }
         toast.success(
           {
-            create: 'Yay! List created. Time to fill it up.',
-            update: 'Yay! List updated.'
+            create: 'Yay! Tag created. Time to fill it up.',
+            update: 'Yay! Tag updated.'
           }[innerOpenType!]
         )
         setOpenType(null)
-        updateListsList()
+        updateTagsList()
       })
       .catch(err => {
         toast.error(
           {
-            create: "Oops! Couldn't create the list. Please try again.",
-            update: "Oops! Couldn't update the list. Please try again."
+            create: "Oops! Couldn't create the tag. Please try again.",
+            update: "Oops! Couldn't update the tag. Please try again."
           }[innerOpenType!]
         )
         console.error(err)
@@ -99,13 +81,9 @@ function ModifyListModal({
 
   useEffect(() => {
     if (innerOpenType === 'update' && existedData !== null) {
-      setListName(existedData.name)
-      setListColor(existedData.color)
-      setListIcon(existedData.icon)
+      setTagName(existedData.name)
     } else {
-      setListName('')
-      setListColor('#FFFFFF')
-      setListIcon('')
+      setTagName('')
     }
   }, [innerOpenType, existedData])
 
@@ -129,7 +107,7 @@ function ModifyListModal({
                 update: 'Update '
               }[innerOpenType!]
             }{' '}
-            list
+            tag
           </h1>
           <button
             onClick={() => {
@@ -141,24 +119,12 @@ function ModifyListModal({
           </button>
         </div>
         <Input
-          name="List name"
-          value={listName}
-          updateValue={updateListName}
-          placeholder="List name"
-          icon="tabler:list"
+          name="Tag name"
+          value={tagName}
+          updateValue={updateTagName}
+          placeholder="Tag name"
+          icon="tabler:tag"
           darker
-        />
-        <IconInput
-          name="List icon"
-          icon={listIcon}
-          setIcon={setListIcon}
-          setIconSelectorOpen={setIconSelectorOpen}
-        />
-        <ColorInput
-          name="List color"
-          color={listColor}
-          updateColor={updateListColor}
-          setColorPickerOpen={setColorPickerOpen}
         />
 
         <CreateOrModifyButton
@@ -167,19 +133,8 @@ function ModifyListModal({
           type={innerOpenType}
         />
       </Modal>
-      <IconSelector
-        isOpen={iconSelectorOpen}
-        setOpen={setIconSelectorOpen}
-        setSelectedIcon={setListIcon}
-      />
-      <ColorPickerModal
-        isOpen={colorPickerOpen}
-        setOpen={setColorPickerOpen}
-        color={listColor}
-        setColor={setListColor}
-      />
     </>
   )
 }
 
-export default ModifyListModal
+export default ModifyTagModal

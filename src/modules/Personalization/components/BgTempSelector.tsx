@@ -7,14 +7,14 @@ function BgTempSelector(): React.ReactElement {
   const { bgTemp, setBgTemp } = useContext(PersonalizationContext)
 
   return (
-    <div className="mb-12 mt-4 flex w-full items-center justify-between">
+    <div className="mb-12 flex w-full flex-col items-center justify-between gap-6 md:flex-row">
       <div>
-        <h3 className="block text-xl font-medium leading-normal">
+        <h3 className="block w-full text-xl font-medium leading-normal md:w-auto">
           Background temperature
         </h3>
         <p className="text-bg-500">Choose the background from cold to warm.</p>
       </div>
-      <div className="flex flex-col items-center gap-2">
+      <div className="flex w-full flex-col items-center gap-2 md:w-auto">
         <div className="flex items-center gap-4">
           {COLORS.map((color, index) => (
             <button

@@ -17,7 +17,7 @@ function AuthForm(): React.ReactElement {
   }
 
   return (
-    <div className="mt-12 flex w-full max-w-md flex-col gap-8">
+    <div className="mt-8 flex w-full max-w-md flex-col gap-8 sm:mt-12">
       <Input
         name="Email or Username"
         placeholder="someone@somemail.com"

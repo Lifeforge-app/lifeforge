@@ -22,7 +22,7 @@ function IdeaContentInput({
           e.currentTarget.querySelector('textarea input') as HTMLInputElement
         )?.focus()
       }}
-      className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-50 focus-within:border-custom-500 dark:bg-bg-900"
+      className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 focus-within:border-custom-500 dark:bg-bg-900"
     >
       <Icon
         icon={

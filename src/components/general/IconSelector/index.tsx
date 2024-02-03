@@ -27,12 +27,12 @@ function IconSelector({
 
   return (
     <div
-      className={`absolute left-0 top-0 h-screen w-full bg-bg-900 transition-colors duration-500 ${
+      className={`absolute left-0 top-0 h-[100dvh] w-full bg-bg-900 transition-colors duration-500 ${
         isOpen ? 'z-[9999] bg-opacity-50' : 'z-[-1] bg-opacity-0 delay-500'
       }`}
     >
       <div
-        className={`absolute left-0 top-0 flex h-screen w-full items-center justify-center transition-all duration-500 ${
+        className={`absolute left-0 top-0 flex h-[100dvh] w-full items-center justify-center transition-all duration-500 ${
           isOpen ? 'translate-y-0' : 'translate-y-[110%]'
         }`}
       >

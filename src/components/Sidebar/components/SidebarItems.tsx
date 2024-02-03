@@ -38,7 +38,7 @@ function SidebarItems(): React.JSX.Element {
   }, [notesCategories])
 
   return (
-    <ul className="flex flex-col gap-1 overflow-y-hidden overscroll-none pb-6 hover:overflow-y-scroll">
+    <ul className="flex flex-col gap-1 overflow-y-scroll overscroll-none pb-6">
       {sidebarItems.map(({ type, name, icon, subsection }, index) => {
         switch (type) {
           case 'item':
