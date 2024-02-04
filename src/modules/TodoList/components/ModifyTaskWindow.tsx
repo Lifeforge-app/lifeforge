@@ -172,7 +172,6 @@ function ModifyTaskWindow({
           additionalClassName="w-full mt-4"
         />
         <Listbox
-          multiple
           value={priority}
           onChange={color => {
             setPriority(color)
@@ -305,6 +304,32 @@ function ModifyTaskWindow({
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute bottom-[120%] z-50 mt-1 max-h-56 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-900 sm:text-sm">
+              <Listbox.Option
+                key={'none'}
+                className={({ active }) =>
+                  `relative cursor-pointer select-none transition-all p-4 flex items-center justify-between ${
+                    active ? 'bg-bg-200/50 dark:bg-bg-800' : '!bg-transparent'
+                  }`
+                }
+                value={null}
+              >
+                {({ selected }) => (
+                  <>
+                    <div>
+                      <span className="flex items-center gap-2">
+                        <span className="h-3 w-3 rounded-full border border-bg-300" />
+                        None
+                      </span>
+                    </div>
+                    {selected && (
+                      <Icon
+                        icon="tabler:check"
+                        className="block text-lg text-custom-500"
+                      />
+                    )}
+                  </>
+                )}
+              </Listbox.Option>
               {lists.map(({ name, color, id }, i) => (
                 <Listbox.Option
                   key={i}
