@@ -3,10 +3,11 @@ import React from 'react'
 import ModuleHeader from '../../components/general/ModuleHeader'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import Timer from './components/Timer'
+import ModuleWrapper from '../../components/general/ModuleWrapper'
 
 export default function PomodoroTimer(): React.JSX.Element {
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col px-12">
+    <ModuleWrapper>
       <ModuleHeader
         title="Pomodoro Timer"
         desc="Increase your productivity by using the Pomodoro technique."
@@ -47,6 +48,6 @@ export default function PomodoroTimer(): React.JSX.Element {
           </ul>
         </aside>
       </div>
-    </section>
+    </ModuleWrapper>
   )
 }

@@ -69,7 +69,7 @@ function DirectoryHeader({
           import.meta.env.VITE_API_HOST
         }/notes/entry/upload/${workspace}/${subject}/${path}`,
         {
-          method: 'PUT',
+          method: 'POST',
           body: formData
         }
       )

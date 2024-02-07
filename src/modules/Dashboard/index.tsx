@@ -22,6 +22,7 @@ import {
 } from 'chart.js'
 import ModuleHeader from '../../components/general/ModuleHeader'
 import { AuthContext } from '../../providers/AuthProvider'
+import ModuleWrapper from '../../components/general/ModuleWrapper'
 
 ChartJS.register(
   ArcElement,
@@ -39,7 +40,7 @@ function Dashboard(): React.JSX.Element {
   const { userData } = useContext(AuthContext)
 
   return (
-    <section className="flex w-full flex-col overflow-y-auto px-12">
+    <ModuleWrapper>
       <div className="mb-8 flex w-full flex-col">
         <ModuleHeader
           title="Dashboard"
@@ -59,7 +60,7 @@ function Dashboard(): React.JSX.Element {
           <Calendar />
         </div>
       </div>
-    </section>
+    </ModuleWrapper>
   )
 }
 

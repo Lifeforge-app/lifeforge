@@ -3,10 +3,11 @@
 import React from 'react'
 import ModuleHeader from '../../components/general/ModuleHeader'
 import { Icon } from '@iconify/react'
+import ModuleWrapper from '../../components/general/ModuleWrapper'
 
 function Calendar(): React.JSX.Element {
   return (
-    <section className="flex w-full flex-col overflow-y-auto px-12">
+    <ModuleWrapper>
       <ModuleHeader
         title="Calendar"
         desc="Make sure you don't miss important event."
@@ -249,7 +250,7 @@ function Calendar(): React.JSX.Element {
           </div>
         </div>
       </div>
-    </section>
+    </ModuleWrapper>
   )
 }
 

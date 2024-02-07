@@ -5,6 +5,7 @@ import ModuleHeader from '../../components/general/ModuleHeader'
 import useFetch from '../../hooks/useFetch'
 import LogItem from './components/LogItem'
 import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
+import ModuleWrapper from '../../components/general/ModuleWrapper'
 
 export interface IChangeLogVersion {
   version: string
@@ -22,7 +23,7 @@ function Changelog(): React.ReactElement {
   const [data] = useFetch<IChangeLogVersion[]>('change-log/list')
 
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col overflow-y-scroll px-8 sm:px-12">
+    <ModuleWrapper>
       <ModuleHeader
         title="Change Log"
         desc="All the changes made to this application will be listed here."
@@ -33,7 +34,7 @@ function Changelog(): React.ReactElement {
             data.map(entry => <LogItem key={entry.version} entry={entry} />)}
         </ul>
       </APIComponentWithFallback>
-    </section>
+    </ModuleWrapper>
   )
 }
 

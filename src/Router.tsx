@@ -27,6 +27,7 @@ import Settings from './modules/Settings'
 import Personalization from './modules/Personalization'
 import ServerStatus from './modules/ServerStatus'
 import Spotify from './modules/Spotify'
+import Modules from './modules/Modules'
 
 function AppRouter(): React.JSX.Element {
   const { auth, authLoading } = useContext(AuthContext)
@@ -80,6 +81,7 @@ function AppRouter(): React.JSX.Element {
         <Route path="notes/:workspace/:subject/*" element={<NotesSubject />} />
         <Route path="personalization" element={<Personalization />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="modules" element={<Modules />} />
         <Route path="server-status" element={<ServerStatus />} />
         <Route path="change-log" element={<Changelog />} />
       </Route>

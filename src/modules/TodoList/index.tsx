@@ -12,6 +12,7 @@ import APIComponentWithFallback from '../../components/general/APIComponentWithF
 import TaskItem from './components/TaskItem'
 import { toast } from 'react-toastify'
 import ModifyTaskWindow from './components/ModifyTaskWindow'
+import ModuleWrapper from '../../components/general/ModuleWrapper'
 
 export interface ITodoListEntry {
   collectionId: string
@@ -72,7 +73,7 @@ function TodoList(): React.JSX.Element {
 
   return (
     <>
-      <section className="flex h-full min-h-0 w-full flex-1 flex-col px-8 sm:px-12">
+      <ModuleWrapper>
         <ModuleHeader
           title="Todo List"
           desc="Human brain is not designed to remember everything."
@@ -131,12 +132,12 @@ function TodoList(): React.JSX.Element {
             </ul>
           </div>
         </div>
-      </section>
+      </ModuleWrapper>
       <ModifyTaskWindow
         isOpen={isModifyTaskWindowOpen}
         setIsOpen={setIsModifyTaskWindowOpen}
         lists={lists as unknown as ITodoListList[]}
-        tagsList={tagsList}
+        tagsList={tagsList as unknown as ITodoListTag[]}
       />
     </>
   )

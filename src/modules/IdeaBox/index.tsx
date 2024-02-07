@@ -10,6 +10,7 @@ import Containers from './components/Containers'
 import DeleteConfirmationModal from '../../components/general/DeleteConfirmationModal'
 import useFetch from '../../hooks/useFetch'
 import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
+import ModuleWrapper from '../../components/general/ModuleWrapper'
 
 export interface IIdeaBoxContainer {
   collectionId: string
@@ -57,7 +58,7 @@ function IdeaBox(): React.JSX.Element {
   }, [debouncedSearchQuery, data])
 
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col overflow-y-auto px-8 sm:px-12 ">
+    <ModuleWrapper>
       <ModuleHeader
         title="Idea Box"
         desc="Sometimes you will randomly stumble upon a great idea."
@@ -114,7 +115,7 @@ function IdeaBox(): React.JSX.Element {
         itemName="container"
         updateDataList={refreshData}
       />
-    </section>
+    </ModuleWrapper>
   )
 }
 

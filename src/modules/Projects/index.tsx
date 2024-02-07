@@ -8,6 +8,7 @@ import { Icon } from '@iconify/react'
 import { Link } from 'react-router-dom'
 import SidebarItem from '../../components/Sidebar/components/SidebarItem'
 import { faker } from '@faker-js/faker'
+import ModuleWrapper from '../../components/general/ModuleWrapper'
 
 function shuffle(array: any[]): any[] {
   let currentIndex = array.length
@@ -42,7 +43,7 @@ function Projects(): React.JSX.Element {
   }, [])
 
   return (
-    <section className="flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-y-auto px-12">
+    <ModuleWrapper>
       <ModuleHeader
         title="Projects"
         desc="It's time to stop procrastinating."
@@ -289,7 +290,7 @@ function Projects(): React.JSX.Element {
           </div>
         </div>
       </div>
-    </section>
+    </ModuleWrapper>
   )
 }
 

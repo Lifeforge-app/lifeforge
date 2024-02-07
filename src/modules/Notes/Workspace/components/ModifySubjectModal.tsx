@@ -65,7 +65,7 @@ function ModifySubjectModal({
       `${import.meta.env.VITE_API_HOST}/notes/subject/${innerOpenType}` +
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
       {
-        method: innerOpenType === 'create' ? 'PUT' : 'PATCH',
+        method: innerOpenType === 'create' ? 'POST' : 'PATCH',
         headers: {
           'Content-Type': 'application/json'
         },

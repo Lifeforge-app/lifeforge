@@ -3,10 +3,11 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ModuleHeader from '../../components/general/ModuleHeader'
+import ModuleWrapper from '../../components/general/ModuleWrapper'
 
 export default function Flashcards(): React.JSX.Element {
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col px-12">
+    <ModuleWrapper>
       <ModuleHeader
         title="Flashcards"
         desc="Memorizing could be a pain, but not with flashcards."
@@ -20,7 +21,7 @@ export default function Flashcards(): React.JSX.Element {
             className="w-full bg-transparent text-bg-500 placeholder:text-bg-400 focus:outline-none"
           />
         </search>
-        <div className="mt-6 grid w-full grid-cols-3 gap-6 overflow-y-auto pb-12">
+        <div className="mt-6 grid w-full grid-cols-3 gap-6 pb-12">
           {Array(5)
             .fill(0)
             .map((_, index) => (
@@ -68,7 +69,7 @@ export default function Flashcards(): React.JSX.Element {
                     {faker.commerce.productName()}
                   </div>
                 </div>
-                <div className="text-custom-500 flex flex-1 items-center justify-center gap-2">
+                <div className="flex flex-1 items-center justify-center gap-2 text-custom-500">
                   <Icon icon="tabler:check" className="h-5 w-5" />
                   <p className="font-medium">Done</p>
                 </div>
@@ -85,6 +86,6 @@ export default function Flashcards(): React.JSX.Element {
           </div>
         </div>
       </div>
-    </section>
+    </ModuleWrapper>
   )
 }

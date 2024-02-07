@@ -10,6 +10,7 @@ import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
 import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
+import ModuleWrapper from '../../components/general/ModuleWrapper'
 
 export interface ICodeSnippetsEntry {
   collectionId: string
@@ -39,7 +40,7 @@ function Snippets(): React.JSX.Element {
 
   return (
     <>
-      <section className="flex h-full min-h-0 w-full flex-1 flex-col px-12">
+      <ModuleWrapper>
         <ModuleHeader
           title="Code Snippets"
           desc="Programming is basically just putting together a bunch of code snippets."
@@ -147,7 +148,7 @@ function Snippets(): React.JSX.Element {
             </APIComponentWithFallback>
           </div>
         </div>
-      </section>
+      </ModuleWrapper>
       <ViewSnippetModal snippetId={viewSnippetId} />
     </>
   )

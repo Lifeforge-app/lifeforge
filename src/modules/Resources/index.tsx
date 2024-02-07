@@ -5,10 +5,11 @@ import SidebarItem from '../../components/Sidebar/components/SidebarItem'
 import SidebarDivider from '../../components/Sidebar/components/SidebarDivider'
 import SidebarTitle from '../../components/Sidebar/components/SidebarTitle'
 import { faker } from '@faker-js/faker'
+import ModuleWrapper from '../../components/general/ModuleWrapper'
 
 export default function Resources(): React.JSX.Element {
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col px-12">
+    <ModuleWrapper>
       <ModuleHeader
         title="Resources"
         desc="A collection of useful stuff for your coding journey."
@@ -104,6 +105,6 @@ export default function Resources(): React.JSX.Element {
           </ul>
         </div>
       </div>
-    </section>
+    </ModuleWrapper>
   )
 }

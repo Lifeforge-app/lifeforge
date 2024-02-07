@@ -131,7 +131,7 @@ function ModifyIdeaModal({
         innerOpenType === 'create' ? 'create' : 'update'
       }/${innerOpenType === 'create' ? containerId : existedData!.id}`,
       {
-        method: innerOpenType === 'create' ? 'PUT' : 'PATCH',
+        method: innerOpenType === 'create' ? 'POST' : 'PATCH',
         ...(innerOpenType === 'update' && {
           headers: {
             'Content-Type': 'application/json'

@@ -5,10 +5,11 @@ import ModuleHeader from '../../components/general/ModuleHeader'
 import SidebarDivider from '../../components/Sidebar/components/SidebarDivider'
 import SidebarItem from '../../components/Sidebar/components/SidebarItem'
 import SidebarTitle from '../../components/Sidebar/components/SidebarTitle'
+import ModuleWrapper from '../../components/general/ModuleWrapper'
 
 function ReferenceBooks(): React.JSX.Element {
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col px-12">
+    <ModuleWrapper>
       <ModuleHeader
         title="Reference Books"
         desc="A collection of reference books that accompany you on your learning journey."
@@ -121,7 +122,7 @@ function ReferenceBooks(): React.JSX.Element {
           </ul>
         </div>
       </div>
-    </section>
+    </ModuleWrapper>
   )
 }
 

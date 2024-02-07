@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import ModuleHeader from '../../components/general/ModuleHeader'
 import { AuthContext } from '../../providers/AuthProvider'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import WebPlayback from './WebPlayback'
+import ModuleWrapper from '../../components/general/ModuleWrapper'
 
 function Spotify(): React.ReactElement {
   const { userData } = useContext(AuthContext)
@@ -16,7 +17,7 @@ function Spotify(): React.ReactElement {
   }
 
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col px-8 sm:px-12">
+    <ModuleWrapper>
       <ModuleHeader
         title="Spotify"
         desc="Listen to your favourite music. Anywhere, anytime."
@@ -35,7 +36,7 @@ function Spotify(): React.ReactElement {
           </button>
         </div>
       )}
-    </section>
+    </ModuleWrapper>
   )
 }
 

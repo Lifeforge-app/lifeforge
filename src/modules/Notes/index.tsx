@@ -5,6 +5,7 @@ import Error from '../../components/general/Error'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { Link } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
+import ModuleWrapper from '../../components/general/ModuleWrapper'
 
 export interface INotesWorkspace {
   collectionId: string
@@ -20,7 +21,7 @@ function Notes(): React.ReactElement {
   const [data] = useFetch<INotesWorkspace[]>('notes/workspace/list')
 
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col overflow-y-scroll px-8 sm:px-12">
+    <ModuleWrapper>
       <ModuleHeader
         title="Notes"
         desc="A place to store all your involuntarily generated thoughts."
@@ -52,7 +53,7 @@ function Notes(): React.ReactElement {
           )
         }
       })()}
-    </section>
+    </ModuleWrapper>
   )
 }
 
