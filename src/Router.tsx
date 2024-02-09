@@ -8,7 +8,7 @@ import MainApplication from './MainApplication'
 import { AuthContext } from './providers/AuthProvider'
 import TodoList from './modules/TodoList'
 import Calendar from './modules/Calendar'
-import Projects from './modules/ProjectsM'
+import ProjectsM from './modules/ProjectsM'
 import Kanban from './modules/ProjectsM/components/Kanban'
 import NotFound from './components/general/NotFound'
 import IdeaBox from './modules/IdeaBox'
@@ -27,6 +27,8 @@ import ServerStatus from './modules/ServerStatus'
 import Spotify from './modules/Spotify'
 import Modules from './modules/Modules'
 import { titleToPath } from './components/Sidebar/components/SidebarItem'
+import ProjectsK from './modules/ProjectsK'
+import Project from './modules/ProjectsK/components/Project'
 
 interface IRoutesItem {
   name: string
@@ -61,7 +63,7 @@ export const ROUTES: IRoutes[] = [
         name: 'Projects (M)',
         icon: 'tabler:clipboard',
         routes: [
-          <Route key="projects-m" path="projects-m" element={<Projects />} />,
+          <Route key="projects-m" path="projects-m" element={<ProjectsM />} />,
           <Route
             key="projects-m-id"
             path="projects-m/:id"
@@ -74,11 +76,11 @@ export const ROUTES: IRoutes[] = [
         name: 'Projects (K)',
         icon: 'tabler:clipboard',
         routes: [
-          <Route key="projects-k" path="projects-k" element={<Projects />} />,
+          <Route key="projects-k" path="projects-k" element={<ProjectsK />} />,
           <Route
             key="projects-k-id"
             path="projects-k/:id"
-            element={<Kanban />}
+            element={<Project />}
           />
         ],
         togglable: true
@@ -251,17 +253,17 @@ export const ROUTES: IRoutes[] = [
         togglable: false
       },
       {
+        name: 'Modules',
+        icon: 'tabler:plug',
+        routes: [<Route key="modules" path="modules" element={<Modules />} />],
+        togglable: false
+      },
+      {
         name: 'Data Backup',
         icon: 'tabler:database',
         routes: [
           <Route key="data-backup" path="data-backup" element={<></>} />
         ],
-        togglable: false
-      },
-      {
-        name: 'Modules',
-        icon: 'tabler:plug',
-        routes: [<Route key="modules" path="modules" element={<Modules />} />],
         togglable: false
       },
       {

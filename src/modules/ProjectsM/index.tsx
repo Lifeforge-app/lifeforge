@@ -30,7 +30,7 @@ function shuffle(array: any[]): any[] {
   return array
 }
 
-function Projects(): React.JSX.Element {
+function ProjectsM(): React.JSX.Element {
   const [icons, setIcons] = useState([])
 
   useEffect(() => {
@@ -294,4 +294,4 @@ function Projects(): React.JSX.Element {
   )
 }
 
-export default Projects
+export default ProjectsM
