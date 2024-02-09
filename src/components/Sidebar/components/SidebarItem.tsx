@@ -12,8 +12,11 @@ interface SidebarItemProps {
   active?: boolean
 }
 
-function titleToPath(title: string): string {
-  return title.toLowerCase().replace(' ', '-')
+export function titleToPath(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^\w ]+/g, '')
+    .replace(/ +/g, '-')
 }
 
 function SidebarItem({

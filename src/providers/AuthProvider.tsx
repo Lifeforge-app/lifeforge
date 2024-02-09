@@ -22,6 +22,7 @@ const AUTH_DATA: {
   }
   authLoading: boolean
   userData: any
+  setUserData: React.Dispatch<React.SetStateAction<any>>
   getAvatarURL: () => string
 } = {
   auth: false,
@@ -34,6 +35,7 @@ const AUTH_DATA: {
   },
   authLoading: true,
   userData: null,
+  setUserData: () => {},
   getAvatarURL: () => ''
 }
 
@@ -244,6 +246,7 @@ export default function AuthProvider({
         },
         authLoading,
         userData,
+        setUserData,
         getAvatarURL
       }}
     >

@@ -7,8 +7,8 @@ function SidebarHeader(): React.JSX.Element {
 
   return (
     <div
-      className={`flex h-36 w-full items-center justify-between pl-6 transition-none ${
-        !sidebarExpanded ? 'my-8 overflow-hidden sm:my-2' : 'my-4'
+      className={`flex h-24 w-full items-center justify-between pl-6 transition-none ${
+        !sidebarExpanded ? 'my-6 overflow-hidden sm:my-5' : 'my-4'
       }`}
     >
       <h1 className="ml-1 flex shrink-0 items-center gap-2 whitespace-nowrap text-xl font-semibold text-bg-800 dark:text-bg-100">
