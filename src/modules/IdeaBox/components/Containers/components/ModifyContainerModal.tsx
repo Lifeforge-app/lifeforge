@@ -12,6 +12,7 @@ import Input from '../../../../../components/general/Input'
 import IconSelector from '../../../../../components/general/IconSelector'
 import CreateOrModifyButton from '../../../../../components/general/CreateOrModifyButton'
 import ColorInput from '../../../../../components/general/ColorPicker/ColorInput'
+import { cookieParse } from 'pocketbase'
 
 function ModifyContainerModal({
   openType,
@@ -64,7 +65,8 @@ function ModifyContainerModal({
       {
         method: innerOpenType === 'create' ? 'POST' : 'PATCH',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
         },
         body: JSON.stringify(container)
       }

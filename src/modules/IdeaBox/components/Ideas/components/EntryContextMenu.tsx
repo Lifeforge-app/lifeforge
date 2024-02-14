@@ -5,6 +5,7 @@ import React from 'react'
 import { type IIdeaBoxEntry } from '..'
 import { toast } from 'react-toastify'
 import MenuItem from '../../../../../components/general/HamburgerMenu/MenuItem'
+import { cookieParse } from 'pocketbase'
 
 function EntryContextMenu({
   entry,
@@ -27,7 +28,10 @@ function EntryContextMenu({
 }): React.ReactElement {
   function pinIdea(ideaId: string): void {
     fetch(`${import.meta.env.VITE_API_HOST}/idea-box/idea/pin/${ideaId}`, {
-      method: 'POST'
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+      }
     })
       .then(async response => {
         const data = await response.json()
@@ -45,7 +49,10 @@ function EntryContextMenu({
 
   function archiveIdea(ideaId: string): void {
     fetch(`${import.meta.env.VITE_API_HOST}/idea-box/idea/archive/${ideaId}`, {
-      method: 'POST'
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+      }
     })
       .then(async response => {
         const data = await response.json()

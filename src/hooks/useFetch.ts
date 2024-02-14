@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/member-delimiter-style */
+import { cookieParse } from 'pocketbase'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 function useFetch<T>(
   endpoint: string,
-  criteriaMet: boolean = true
+  criteriaMet: boolean = true,
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET'
 ): [
   data: T | 'loading' | 'error',
   refresh: () => void,
@@ -15,7 +17,12 @@ function useFetch<T>(
 
   function fetchData(): void {
     setData('loading')
-    fetch(`${import.meta.env.VITE_API_HOST}/${endpoint}`)
+    fetch(`${import.meta.env.VITE_API_HOST}/${endpoint}`, {
+      method,
+      headers: {
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+      }
+    })
       .then(async res => await res.json())
       .then(data => {
         if (data.state !== 'success') {

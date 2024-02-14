@@ -10,6 +10,7 @@ import MenuItem from '../../../../../../components/general/HamburgerMenu/MenuIte
 import { type INotesEntry, type INotesPath } from '../../..'
 import { toast } from 'react-toastify'
 import useFetch from '../../../../../../hooks/useFetch'
+import { cookieParse } from 'pocketbase'
 
 function DirectoryHeader({
   updateNotesEntries,
@@ -70,6 +71,9 @@ function DirectoryHeader({
         }/notes/entry/upload/${workspace}/${subject}/${path}`,
         {
           method: 'POST',
+          headers: {
+            Authorization: `Bearer ${cookieParse(document.cookie).token}`
+          },
           body: formData
         }
       )
@@ -135,6 +139,9 @@ function DirectoryHeader({
           }/notes/entry/upload/${workspace}/${subject}/${path}`,
           {
             method: 'POST',
+            headers: {
+              Authorization: `Bearer ${cookieParse(document.cookie).token}`
+            },
             body: formData
           }
         )

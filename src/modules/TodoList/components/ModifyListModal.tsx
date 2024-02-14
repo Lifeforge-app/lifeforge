@@ -12,6 +12,7 @@ import IconSelector from '../../../components/general/IconSelector'
 import Input from '../../../components/general/Input'
 import IconInput from '../../../components/general/IconSelector/IconInput'
 import ColorInput from '../../../components/general/ColorPicker/ColorInput'
+import { cookieParse } from 'pocketbase'
 
 function ModifyListModal({
   openType,
@@ -64,7 +65,8 @@ function ModifyListModal({
       {
         method: innerOpenType === 'create' ? 'POST' : 'PATCH',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
         },
         body: JSON.stringify(list)
       }

@@ -13,6 +13,7 @@ import TaskItem from './components/TaskItem'
 import { toast } from 'react-toastify'
 import ModifyTaskWindow from './components/ModifyTaskWindow'
 import ModuleWrapper from '../../components/general/ModuleWrapper'
+import { cookieParse } from 'pocketbase'
 
 export interface ITodoListEntry {
   collectionId: string
@@ -54,7 +55,8 @@ function TodoList(): React.JSX.Element {
     fetch(`${import.meta.env.VITE_API_HOST}/todo-list/entry/toggle/${id}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
       }
     })
       .then(async res => {

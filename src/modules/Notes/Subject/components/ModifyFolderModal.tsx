@@ -9,6 +9,7 @@ import { useParams } from 'react-router'
 import { type INotesEntry } from '..'
 import Input from '../../../../components/general/Input'
 import CreateOrModifyButton from '../../../../components/general/CreateOrModifyButton'
+import { cookieParse } from 'pocketbase'
 
 function ModifyFolderModal({
   openType,
@@ -61,7 +62,8 @@ function ModifyFolderModal({
       {
         method: innerOpenType === 'create' ? 'POST' : 'PATCH',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
         },
         body: JSON.stringify(entry)
       }

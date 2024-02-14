@@ -8,6 +8,7 @@ import Modal from '../../../components/general/Modal'
 import CreateOrModifyButton from '../../../components/general/CreateOrModifyButton'
 import Input from '../../../components/general/Input'
 import { type ITodoListTag } from './Sidebar'
+import { cookieParse } from 'pocketbase'
 
 function ModifyTagModal({
   openType,
@@ -46,7 +47,8 @@ function ModifyTagModal({
       {
         method: innerOpenType === 'create' ? 'POST' : 'PATCH',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
         },
         body: JSON.stringify(tag)
       }

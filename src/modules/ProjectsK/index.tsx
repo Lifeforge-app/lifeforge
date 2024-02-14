@@ -26,6 +26,7 @@ export interface IProjectsKEntry {
   thumbnail: string
   type: 'personal' | 'commercial'
   updated: string
+  files: string[]
 }
 
 export const PROJECT_STATUS = {

@@ -16,6 +16,7 @@ import ModalHeader from './components/ModalHeader'
 import IdeaContentInput from './components/IdeaContentInput'
 import IdeaImagePreview from './components/IdeaImagePreview'
 import IdeaImageUpload from './components/IdeaImageUpload'
+import { cookieParse } from 'pocketbase'
 
 function ModifyIdeaModal({
   openType,
@@ -132,11 +133,12 @@ function ModifyIdeaModal({
       }/${innerOpenType === 'create' ? containerId : existedData!.id}`,
       {
         method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-        ...(innerOpenType === 'update' && {
-          headers: {
+        headers: {
+          ...(innerOpenType === 'update' && {
             'Content-Type': 'application/json'
-          }
-        }),
+          }),
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        },
         body:
           innerOpenType === 'create'
             ? formData

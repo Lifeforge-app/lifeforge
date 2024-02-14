@@ -11,6 +11,7 @@ import IconInput from '../../../../components/general/IconSelector/IconInput'
 import { type INotesSubject } from './SubjectItem'
 import IconSelector from '../../../../components/general/IconSelector'
 import CreateOrModifyButton from '../../../../components/general/CreateOrModifyButton'
+import { cookieParse } from 'pocketbase'
 
 function ModifySubjectModal({
   openType,
@@ -67,7 +68,8 @@ function ModifySubjectModal({
       {
         method: innerOpenType === 'create' ? 'POST' : 'PATCH',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
         },
         body: JSON.stringify(subject)
       }
