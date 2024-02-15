@@ -60,10 +60,14 @@ function TodoList(): React.JSX.Element {
       }
     })
       .then(async res => {
-        const data = await res.json()
+        try {
+          const data = await res.json()
 
-        if (data.state !== 'success') {
-          throw new Error(data.message)
+          if (res.status !== 200 || data.state !== 'success') {
+            throw new Error(data.message)
+          }
+        } catch (err) {
+          throw new Error(err as string)
         }
       })
       .catch(err => {

@@ -23,12 +23,16 @@ function useFetch<T>(
         Authorization: `Bearer ${cookieParse(document.cookie).token}`
       }
     })
-      .then(async res => await res.json())
-      .then(data => {
-        if (data.state !== 'success') {
-          throw new Error(data.message)
+      .then(async res => {
+        try {
+          const data = await res.json()
+          if (res.status !== 200 || data.state !== 'success') {
+            throw new Error(data.message)
+          }
+          setData(data.data)
+        } catch (err) {
+          throw new Error(err as string)
         }
-        setData(data.data)
       })
       .catch(err => {
         setData('error')

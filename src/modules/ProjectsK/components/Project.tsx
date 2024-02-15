@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+/* eslint-disable multiline-ternary */
 import React, { useEffect } from 'react'
 import { Icon } from '@iconify/react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -22,7 +24,8 @@ function Project(): React.JSX.Element {
   const navigate = useNavigate()
   const { id } = useParams()
   const [projectData, refreshProjectData] = useFetch<IProjectsKEntry>(
-    `projects-k/entry/get/${id}`
+    `projects-k/entry/get/${id}`,
+    id !== undefined
   )
   const location = useLocation()
 
@@ -70,21 +73,29 @@ function Project(): React.JSX.Element {
                 default:
                   return (
                     <>
-                      <div className="overflow-hidden rounded-md">
-                        <img
-                          src={`${
-                            import.meta.env.VITE_POCKETBASE_ENDPOINT
-                          }/api/files/${projectData.collectionId}/${
-                            projectData.id
-                          }/${projectData.thumbnail}?thumb=50x50`}
-                        />
+                      <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-md bg-bg-800">
+                        {projectData.thumbnail ? (
+                          <img
+                            src={`${
+                              import.meta.env.VITE_POCKETBASE_ENDPOINT
+                            }/api/files/${projectData.collectionId}/${
+                              projectData.id
+                            }/${projectData.thumbnail}?thumb=50x50`}
+                            className="h-full w-full"
+                          />
+                        ) : (
+                          <Icon
+                            icon="tabler:brush"
+                            className="h-7 w-7 text-bg-500"
+                          />
+                        )}
                       </div>
                       {projectData.name}
                       <button
-                        className={`ml-2 flex items-center rounded-full bg-yellow-500/20 px-4 py-1.5 text-xs font-medium uppercase tracking-widest ${
-                          PROJECT_STATUS[projectData.status].bg
+                        className={`ml-2 flex items-center rounded-full px-4 py-1.5 text-xs font-medium uppercase tracking-widest ${
+                          PROJECT_STATUS[projectData.status].bg_transparent
                         } ${
-                          PROJECT_STATUS[projectData.status].text
+                          PROJECT_STATUS[projectData.status].text_transparent
                         } shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]`}
                       >
                         {PROJECT_STATUS[projectData.status].name}

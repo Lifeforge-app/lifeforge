@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+/* eslint-disable multiline-ternary */
 import { Icon } from '@iconify/react'
 import React, { useContext, useEffect, useState } from 'react'
 import { GlobalStateContext } from '../../../providers/GlobalStateProvider'
@@ -8,6 +10,7 @@ interface SidebarItemProps {
   icon: string
   name: string
   subsection?: string[][]
+  onClick?: () => void
   isMainSidebarItem?: boolean
   active?: boolean
 }
@@ -24,6 +27,7 @@ function SidebarItem({
   name,
   subsection,
   isMainSidebarItem,
+  onClick,
   active
 }: SidebarItemProps): React.JSX.Element {
   const { sidebarExpanded, toggleSidebar } =
@@ -74,15 +78,27 @@ function SidebarItem({
             <span className="w-full truncate">{sidebarExpanded && name}</span>
           </div>
 
-          <Link
-            onClick={() => {
-              if (window.innerWidth < 1024) {
-                toggleSidebar()
-              }
-            }}
-            to={`./${titleToPath(name)}`}
-            className="absolute left-0 top-0 h-full w-full rounded-lg"
-          />
+          {onClick ? (
+            <button
+              onClick={() => {
+                onClick()
+                if (window.innerWidth < 1024) {
+                  toggleSidebar()
+                }
+              }}
+              className="absolute left-0 top-0 h-full w-full rounded-lg"
+            />
+          ) : (
+            <Link
+              onClick={() => {
+                if (window.innerWidth < 1024) {
+                  toggleSidebar()
+                }
+              }}
+              to={`./${titleToPath(name)}`}
+              className="absolute left-0 top-0 h-full w-full rounded-lg"
+            />
+          )}
           {sidebarExpanded && (
             <div className="relative flex items-center justify-between">
               {subsection !== undefined && (

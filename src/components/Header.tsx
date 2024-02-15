@@ -26,7 +26,7 @@ export default function Header(): React.JSX.Element {
           <input
             type="text"
             placeholder="Quick navigate & search ... (Press / to focus)"
-            className="w-full bg-transparent text-bg-800 placeholder:text-bg-400 focus:outline-none"
+            className="w-full bg-transparent text-bg-800 placeholder:text-bg-500 focus:outline-none"
           />
         </search>
       </div>

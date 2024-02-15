@@ -78,7 +78,7 @@ function ModifyListModal({
         }
         toast.success(
           {
-            create: 'Yay! List created. Time to fill it up.',
+            create: 'Yay! List created. Time to start adding tasks.',
             update: 'Yay! List updated.'
           }[innerOpenType!]
         )

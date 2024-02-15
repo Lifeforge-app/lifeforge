@@ -303,7 +303,7 @@ function AppRouter(): React.JSX.Element {
   useEffect(() => {
     if (!authLoading) {
       if (!auth && location.pathname !== '/auth') {
-        navigate('/auth?redirect=' + location.pathname)
+        navigate('/auth?redirect=' + location.pathname + location.search)
       } else if (auth) {
         if (location.pathname === '/auth') {
           if (location.search) {

@@ -60,7 +60,7 @@ function ModifyTagModal({
         }
         toast.success(
           {
-            create: 'Yay! Tag created. Time to fill it up.',
+            create: 'Yay! Tag created. Time to start adding tasks.',
             update: 'Yay! Tag updated.'
           }[innerOpenType!]
         )

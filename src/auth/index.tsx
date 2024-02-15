@@ -7,7 +7,7 @@ import AuthForm from './components/AuthForm'
 function Auth(): React.JSX.Element {
   return (
     <>
-      <section className="flex h-full w-full flex-col items-center overflow-y-auto px-8 py-12 sm:px-12 lg:w-1/2">
+      <section className="flex h-full w-full flex-col items-center justify-center overflow-y-auto px-8 py-12 sm:px-12 lg:w-1/2">
         <AuthHeader />
         <AuthForm />
       </section>

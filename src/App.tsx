@@ -22,7 +22,7 @@ function App(): React.JSX.Element {
               </div>
               <ToastContainer
                 position="bottom-center"
-                autoClose={1000}
+                autoClose={3000}
                 newestOnTop={false}
                 closeOnClick
                 rtl={false}
