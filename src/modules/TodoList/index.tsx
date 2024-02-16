@@ -63,7 +63,7 @@ function TodoList(): React.JSX.Element {
         try {
           const data = await res.json()
 
-          if (res.status !== 200 || data.state !== 'success') {
+          if (!res.ok || data.state !== 'success') {
             throw new Error(data.message)
           }
         } catch (err) {

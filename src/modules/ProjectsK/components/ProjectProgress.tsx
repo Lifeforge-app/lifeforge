@@ -56,7 +56,7 @@ export default function ProjectProgress({
         try {
           const data = await res.json()
 
-          if (res.status !== 200 || data.state !== 'success') {
+          if (!res.ok || data.state !== 'success') {
             throw data.message
           }
           refreshProgress()

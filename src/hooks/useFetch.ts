@@ -26,7 +26,7 @@ function useFetch<T>(
       .then(async res => {
         try {
           const data = await res.json()
-          if (res.status !== 200 || data.state !== 'success') {
+          if (!res.ok || data.state !== 'success') {
             throw new Error(data.message)
           }
           setData(data.data)

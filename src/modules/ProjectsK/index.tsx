@@ -110,7 +110,7 @@ function ProjectsK(): React.JSX.Element {
         />
         <div className="mb-12 mt-8 flex min-h-0 w-full flex-1">
           <aside className="h-full w-1/4 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
-            <ul className="flex flex-col gap-1 overflow-y-hidden hover:overflow-y-scroll">
+            <ul className="flex flex-col gap-1">
               <SidebarItem
                 active={
                   !searchParams.get('status') && !searchParams.get('type')
@@ -133,10 +133,14 @@ function ProjectsK(): React.JSX.Element {
                       >
                         <button
                           onClick={() => {
-                            setSearchParams({
-                              ...Object.fromEntries(searchParams.entries()),
-                              status: id
-                            })
+                            if (
+                              searchParams.has('status') &&
+                              searchParams.get('status') === id
+                            ) {
+                              searchParams.delete('status')
+                              setSearchParams(searchParams)
+                              return
+                            }
                             setSearchParams({
                               ...Object.fromEntries(searchParams.entries()),
                               status: id
@@ -181,7 +185,10 @@ function ProjectsK(): React.JSX.Element {
                     >
                       <button
                         onClick={() => {
-                          if (searchParams.has('type')) {
+                          if (
+                            searchParams.has('type') &&
+                            searchParams.get('type') === name.toLowerCase()
+                          ) {
                             searchParams.delete('type')
                             setSearchParams(searchParams)
                             return
@@ -217,7 +224,18 @@ function ProjectsK(): React.JSX.Element {
           <div className="ml-8 flex h-full flex-1 flex-col">
             <div className="mx-4 flex items-center justify-between">
               <h1 className="text-4xl font-semibold text-bg-800 dark:text-bg-100">
-                All Projects <span className="text-base text-bg-400">(10)</span>
+                {Object.entries(PROJECT_STATUS).find(
+                  ([id]) => id === searchParams.get('status')
+                )?.[1].name || 'All'}{' '}
+                {searchParams.get('type') === 'personal'
+                  ? 'Personal'
+                  : searchParams.get('type') === 'commercial'
+                  ? 'Commercial'
+                  : ''}{' '}
+                Projects{' '}
+                <span className="text-base text-bg-400">
+                  ({filteredProjectList.length})
+                </span>
               </h1>
               <button
                 onClick={() => {

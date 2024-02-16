@@ -67,7 +67,7 @@ function CreateProjectModal({
     })
       .then(async res => {
         const data = await res.json()
-        if (res.status !== 200) {
+        if (!res.ok) {
           throw data.message
         }
         toast.success('Yay! Project created. Time to start working on it.')
@@ -252,7 +252,7 @@ function CreateProjectModal({
                         {selected && (
                           <Icon
                             icon="tabler:check"
-                            className="block text-lg text-custom-500"
+                            className="block text-lg text-bg-100"
                           />
                         )}
                       </>

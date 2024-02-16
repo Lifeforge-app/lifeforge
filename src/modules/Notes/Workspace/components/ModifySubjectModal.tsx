@@ -76,7 +76,7 @@ function ModifySubjectModal({
     )
       .then(async res => {
         const data = await res.json()
-        if (res.status !== 200) {
+        if (!res.ok) {
           throw data.message
         }
         toast.success(

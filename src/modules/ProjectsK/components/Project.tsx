@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
-import React, { useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Icon } from '@iconify/react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import GoBackButton from '../../../components/general/GoBackButton'
@@ -8,6 +8,9 @@ import { PROJECT_STATUS, type IProjectsKEntry } from '..'
 import useFetch from '../../../hooks/useFetch'
 import ProjectProgress from './ProjectProgress'
 import ProjectFiles from './ProjectFiles'
+import { Listbox, Transition } from '@headlessui/react'
+import { toast } from 'react-toastify'
+import { cookieParse } from 'pocketbase'
 
 export interface IProjectsKVersion {
   collectionId: string
@@ -28,6 +31,37 @@ function Project(): React.JSX.Element {
     id !== undefined
   )
   const location = useLocation()
+
+  async function updateProjectStatus(status: string): Promise<void> {
+    fetch(
+      `${import.meta.env.VITE_API_HOST}/projects-k/entry/update-status/${id}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        },
+        body: JSON.stringify({ status })
+      }
+    )
+      .then(async res => {
+        try {
+          const data = await res.json()
+          if (!res.ok || data.state !== 'success') {
+            throw new Error(data.message)
+          }
+          toast.success('Project status updated successfully.')
+        } catch (err) {
+          throw new Error('Failed to update project status.')
+        }
+      })
+      .catch(() => {
+        toast.error('Failed to update project status.')
+      })
+      .finally(() => {
+        refreshProjectData()
+      })
+  }
 
   useEffect(() => {
     if (!location.hash) {
@@ -91,19 +125,74 @@ function Project(): React.JSX.Element {
                         )}
                       </div>
                       {projectData.name}
-                      <button
-                        className={`ml-2 flex items-center rounded-full px-4 py-1.5 text-xs font-medium uppercase tracking-widest ${
-                          PROJECT_STATUS[projectData.status].bg_transparent
-                        } ${
-                          PROJECT_STATUS[projectData.status].text_transparent
-                        } shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]`}
+                      <Listbox
+                        onChange={status => {
+                          updateProjectStatus(status)
+                        }}
+                        value={projectData.status}
+                        as="div"
+                        className="relative"
                       >
-                        {PROJECT_STATUS[projectData.status].name}
-                        <Icon
-                          icon="tabler:pencil"
-                          className="ml-2 h-3.5 w-3.5"
-                        />
-                      </button>
+                        <Listbox.Button
+                          className={`ml-2 flex items-center rounded-full px-4 py-1.5 text-xs font-medium uppercase tracking-widest ${
+                            PROJECT_STATUS[projectData.status].bg_transparent
+                          } ${
+                            PROJECT_STATUS[projectData.status].text_transparent
+                          } shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]`}
+                        >
+                          {PROJECT_STATUS[projectData.status].name}
+                          <Icon
+                            icon="tabler:pencil"
+                            className="ml-2 h-3.5 w-3.5"
+                          />
+                        </Listbox.Button>
+                        <Transition
+                          as={Fragment}
+                          enter="transition ease-in duration-100"
+                          enterFrom="opacity-0"
+                          enterTo="opacity-100"
+                          leave="transition ease-in duration-100"
+                          leaveFrom="opacity-100"
+                          leaveTo="opacity-0"
+                        >
+                          <Listbox.Options className="absolute top-[2rem] z-50 mt-1 max-h-56 w-48 divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800 sm:text-sm">
+                            {Object.entries(PROJECT_STATUS).map(
+                              ([id, { name, color }], i) => (
+                                <Listbox.Option
+                                  key={id}
+                                  className={({ active }) =>
+                                    `relative cursor-pointer select-none transition-all p-4 flex items-center justify-between ${
+                                      active
+                                        ? 'bg-bg-200/50 dark:bg-bg-700/50'
+                                        : '!bg-transparent'
+                                    }`
+                                  }
+                                  value={id}
+                                >
+                                  {({ selected }) => (
+                                    <>
+                                      <div>
+                                        <span className="flex items-center gap-2">
+                                          <span
+                                            className={`mr-2 h-2 w-2 rounded-md text-center font-semibold ${color}`}
+                                          ></span>
+                                          {name}
+                                        </span>
+                                      </div>
+                                      {selected && (
+                                        <Icon
+                                          icon="tabler:check"
+                                          className="block text-lg text-bg-100"
+                                        />
+                                      )}
+                                    </>
+                                  )}
+                                </Listbox.Option>
+                              )
+                            )}
+                          </Listbox.Options>
+                        </Transition>
+                      </Listbox>
                     </>
                   )
               }
