@@ -4,6 +4,7 @@ import { AuthContext } from './AuthProvider'
 import { toast } from 'react-toastify'
 import { Helmet } from 'react-helmet'
 import THEME_COLOR_HEX from '../constants/theme_color_hex'
+import { cookieParse } from 'pocketbase'
 
 const PERSONALIZATION_DATA: {
   theme: 'light' | 'dark' | 'system'
@@ -107,7 +108,8 @@ function PersonalizationProvider({
     fetch(`${import.meta.env.VITE_API_HOST}/user/personalization`, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
       },
       body: JSON.stringify({
         id: userData.id,
@@ -132,7 +134,8 @@ function PersonalizationProvider({
     fetch(`${import.meta.env.VITE_API_HOST}/user/personalization`, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
       },
       body: JSON.stringify({
         id: userData.id,
@@ -157,7 +160,8 @@ function PersonalizationProvider({
     fetch(`${import.meta.env.VITE_API_HOST}/user/personalization`, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
       },
       body: JSON.stringify({
         id: userData.id,

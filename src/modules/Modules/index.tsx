@@ -9,6 +9,7 @@ import { AuthContext } from '../../providers/AuthProvider'
 import Loading from '../../components/general/Loading'
 import { titleToPath } from '../../components/Sidebar/components/SidebarItem'
 import { toast } from 'react-toastify'
+import { cookieParse } from 'pocketbase'
 
 const MODULES = [
   {
@@ -73,7 +74,8 @@ function Modules(): React.ReactElement {
     fetch(`${import.meta.env.VITE_API_HOST}/user/module`, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
       },
       body: JSON.stringify({
         id: userData.id,
