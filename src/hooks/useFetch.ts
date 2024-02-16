@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 import { cookieParse } from 'pocketbase'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 
 function useFetch<T>(
   endpoint: string,
   criteriaMet: boolean = true,
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET'
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET',
+  changeStateWhenLoading: boolean = true
 ): [
   data: T | 'loading' | 'error',
   refresh: () => void,
@@ -16,7 +17,9 @@ function useFetch<T>(
   const [data, setData] = useState<T | 'loading' | 'error'>('loading')
 
   function fetchData(): void {
-    setData('loading')
+    if (changeStateWhenLoading) {
+      setData('loading')
+    }
     fetch(`${import.meta.env.VITE_API_HOST}/${endpoint}`, {
       method,
       headers: {
@@ -43,7 +46,7 @@ function useFetch<T>(
       })
   }
 
-  useEffect(() => {
+  useMemo(() => {
     if (criteriaMet) {
       fetchData()
     }

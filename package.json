@@ -40,6 +40,7 @@
     "react-custom-scrollbars-2": "^4.5.0",
     "react-dom": "^0.0.0-experimental-4b2a1115a-20240202",
     "react-dropzone": "^14.2.3",
+    "react-gauge-component": "^1.2.0",
     "react-helmet": "^6.1.0",
     "react-medium-image-zoom": "^5.1.9",
     "react-router": "^6.20.0",
