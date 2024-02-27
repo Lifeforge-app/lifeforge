@@ -69,26 +69,14 @@ function EntryContextMenu({
   }
 
   return (
-    <Menu
-      as="div"
-      className={`${
-        entry.type === 'image' ? 'absolute right-2 top-2' : 'relative'
-      } z-[999]`}
-    >
+    <Menu as="div" className={`${'absolute right-2 top-2'} z-[999]`}>
       <Menu.Button>
         {({ open }) => (
           <div
-            className={`shrink-0 rounded-lg bg-bg-50 p-2 text-bg-500 opacity-0 hover:bg-bg-100 hover:text-bg-800 group-hover:opacity-100 dark:bg-bg-900 dark:text-bg-100 dark:hover:bg-bg-900 dark:hover:text-bg-100 ${
+            className={`shrink-0 rounded-lg bg-bg-50 p-2 text-bg-500 opacity-0 hover:bg-bg-100 hover:text-bg-800 group-hover:opacity-100 dark:bg-bg-800 dark:text-bg-100 dark:hover:bg-bg-700 dark:hover:text-bg-100 ${
               entry.type === 'image' &&
               '!shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]'
-            } ${
-              open &&
-              `${
-                entry.type === 'image'
-                  ? '!bg-bg-200 dark:!bg-bg-900'
-                  : '!bg-bg-200 dark:!bg-bg-800'
-              } !opacity-100`
-            }`}
+            } ${open && '!opacity-100'}`}
           >
             <Icon icon="tabler:dots-vertical" className="text-xl" />
           </div>

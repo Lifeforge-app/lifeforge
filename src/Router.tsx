@@ -1,6 +1,6 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Dashboard from './modules/Dashboard'
 import Auth from './auth'
@@ -300,7 +300,7 @@ function AppRouter(): React.JSX.Element {
   const location = useLocation()
   const navigate = useNavigate()
 
-  useEffect(() => {
+  useMemo(() => {
     if (!authLoading) {
       if (!auth && location.pathname !== '/auth') {
         navigate('/auth?redirect=' + location.pathname + location.search)

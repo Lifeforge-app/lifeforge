@@ -31,7 +31,9 @@ function EntryText({
           className="absolute -left-2 -top-2 z-[50] h-5 w-5 -rotate-90 text-red-500 drop-shadow-md"
         />
       )}
-      <p className="mt-1.5 text-bg-800 dark:text-bg-100">{entry.content}</p>
+      <p className="mt-1.5 select-text text-bg-800 dark:text-bg-100">
+        {entry.content}
+      </p>
       <EntryContextMenu
         entry={entry}
         setTypeOfModifyIdea={setTypeOfModifyIdea}
