@@ -344,15 +344,17 @@ function ServerStatus(): React.ReactElement {
                   key={disk.name}
                   className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900"
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
+                  <div className="flex w-full min-w-0 items-center justify-between">
+                    <div className="flex min-w-0 flex-1 items-center gap-2">
                       <Icon
                         icon="streamline:hard-disk"
                         className="text-2xl text-bg-500"
                       />
-                      <h2 className="text-xl text-bg-500">{disk.name}</h2>
+                      <h2 className="mr-8 min-w-0 truncate text-xl text-bg-500">
+                        {disk.name}
+                      </h2>
                     </div>
-                    <p className="rounded-md border border-bg-400 px-4 py-2 text-lg text-bg-400">
+                    <p className="shrink-0 rounded-md border border-bg-400 px-4 py-2 text-lg text-bg-400">
                       {disk.size}B
                     </p>
                   </div>
