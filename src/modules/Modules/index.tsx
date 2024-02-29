@@ -1,20 +1,42 @@
+/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import ModuleHeader from '../../components/general/ModuleHeader'
 import ModuleWrapper from '../../components/general/ModuleWrapper'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import { Switch } from '@headlessui/react'
 import { AuthContext } from '../../providers/AuthProvider'
 import Loading from '../../components/general/Loading'
 import { titleToPath } from '../../components/Sidebar/components/SidebarItem'
 import { toast } from 'react-toastify'
 import { cookieParse } from 'pocketbase'
+import ModuleItem from './ModuleItem'
 
-const MODULES = [
+export interface Module {
+  name: string
+  icon: string
+  config?: Record<
+    string,
+    {
+      icon: string
+      name: string
+      placeholder: string
+      isPassword?: boolean
+    }
+  >
+}
+
+const MODULES: Module[] = [
   {
     name: 'Projects (M)',
-    icon: 'tabler:clipboard'
+    icon: 'tabler:clipboard',
+    config: {
+      githubAPIKey: {
+        icon: 'tabler:brand-github',
+        name: 'GitHub API Key',
+        placeholder: 'Enter your GitHub API Key here',
+        isPassword: true
+      }
+    }
   },
   {
     name: 'Projects (K)',
@@ -34,21 +56,11 @@ const MODULES = [
   },
   {
     name: 'Reference Books',
-    icon: 'tabler:books',
-    subsection: [
-      ['Mathematics', 'tabler:calculator'],
-      ['Physics', 'tabler:atom']
-    ]
+    icon: 'tabler:books'
   },
   {
     name: 'Wallet',
-    icon: 'tabler:currency-dollar',
-    subsection: [
-      ['Balance', 'tabler:wallet'],
-      ['Transactions', 'tabler:arrows-exchange'],
-      ['Budgets', 'tabler:coin'],
-      ['Reports', 'tabler:chart-bar']
-    ]
+    icon: 'tabler:currency-dollar'
   },
   { name: 'Wish List', icon: 'tabler:heart' },
   { name: 'Contacts', icon: 'tabler:users' },
@@ -102,46 +114,14 @@ function Modules(): React.ReactElement {
       {userData ? (
         <ul className="mb-12 mt-8 flex flex-col gap-4">
           {MODULES.map((module, index) => (
-            <li
+            <ModuleItem
               key={index}
-              className="flex items-center justify-between gap-4 rounded-lg bg-bg-50 p-4 dark:bg-bg-900"
-            >
-              <div className="flex items-center gap-4">
-                <div className="rounded-lg bg-custom-500/20 p-3 dark:bg-bg-800">
-                  <Icon icon={module.icon} className="text-2xl" />
-                </div>
-                <h3 className="text-xl font-semibold dark:text-bg-100">
-                  {module.name}
-                </h3>
-              </div>
-              <div className="flex items-center gap-4">
-                <Switch
-                  checked={userData.enabledModules.includes(
-                    titleToPath(module.name)
-                  )}
-                  onChange={() => {
-                    toggleModule(module.name)
-                  }}
-                  className={`${
-                    userData.enabledModules.includes(titleToPath(module.name))
-                      ? 'bg-custom-500'
-                      : 'bg-bg-800'
-                  } relative inline-flex h-6 w-11 items-center rounded-full`}
-                >
-                  <span className="sr-only">Enable notifications</span>
-                  <span
-                    className={`${
-                      userData.enabledModules.includes(titleToPath(module.name))
-                        ? 'translate-x-6 bg-bg-100'
-                        : 'translate-x-1 bg-bg-500'
-                    } inline-block h-4 w-4 rounded-full transition`}
-                  />
-                </Switch>
-                <button className="rounded-lg p-2 text-bg-500 hover:bg-bg-800/50">
-                  <Icon icon="tabler:chevron-right" className="text-xl" />
-                </button>
-              </div>
-            </li>
+              module={module}
+              enabled={userData.enabledModules.includes(
+                titleToPath(module.name)
+              )}
+              toggleModule={toggleModule}
+            />
           ))}
         </ul>
       ) : (

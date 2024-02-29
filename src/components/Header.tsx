@@ -11,7 +11,7 @@ export default function Header(): React.JSX.Element {
   const { userData, getAvatarURL, logout } = useContext(AuthContext)
 
   return (
-    <header className="relative z-[9990] flex w-full items-center justify-between gap-8 p-8 sm:p-12">
+    <header className="relative z-[9990] flex w-full items-center justify-between gap-8 p-4 sm:p-12">
       <div className="flex w-full items-center gap-4">
         {!sidebarExpanded && (
           <button

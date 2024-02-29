@@ -29,6 +29,7 @@ import Modules from './modules/Modules'
 import { titleToPath } from './components/Sidebar/components/SidebarItem'
 import ProjectsK from './modules/ProjectsK'
 import Project from './modules/ProjectsK/components/Project'
+import Photos from './modules/Photos'
 
 interface IRoutesItem {
   name: string
@@ -132,7 +133,7 @@ export const ROUTES: IRoutes[] = [
       {
         name: 'Photos',
         icon: 'tabler:camera',
-        routes: [],
+        routes: [<Route key="photos" path="photos" element={<Photos />} />],
         togglable: true
       }
     ]

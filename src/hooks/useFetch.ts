@@ -8,7 +8,8 @@ function useFetch<T>(
   endpoint: string,
   criteriaMet: boolean = true,
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET',
-  changeStateWhenLoading: boolean = true
+  changeStateWhenLoading: boolean = true,
+  showError: boolean = true
 ): [
   data: T | 'loading' | 'error',
   refresh: () => void,
@@ -39,9 +40,9 @@ function useFetch<T>(
       })
       .catch(err => {
         setData('error')
-        toast.error(
-          'Failed to fetch data from the server. Please try again later.'
-        )
+        if (showError) {
+          toast.error(`Failed to fetch data from server. Error: ${err.message}`)
+        }
         console.error(err)
       })
   }

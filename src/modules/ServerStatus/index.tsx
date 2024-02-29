@@ -7,6 +7,7 @@ import useFetch from '../../hooks/useFetch'
 import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
 import ModuleWrapper from '../../components/general/ModuleWrapper'
 import GaugeComponent from 'react-gauge-component'
+import moment from 'moment'
 
 function formatBytes(bytes: number, decimals = 2): string {
   if (!+bytes) return '0 Bytes'
@@ -43,7 +44,7 @@ export interface IMemoryUsage {
 
 export interface ICPUUSage {
   usage: number
-  core_count: number
+  uptime: number
 }
 
 export interface ISystemInfo {
@@ -182,16 +183,24 @@ function ServerStatus(): React.ReactElement {
     'server/memory',
     true,
     'GET',
+    false,
     false
   )
   const [cpuUsage, refreshCPUUsage] = useFetch<ICPUUSage>(
     'server/cpu',
     true,
     'GET',
+    false,
     false
   )
   const [systemInfo] = useFetch<ISystemInfo>('server/info')
-  const [cpuTemp] = useFetch<ICPUTemp>('server/cpu-temp')
+  const [cpuTemp] = useFetch<ICPUTemp>(
+    'server/cpu-temp',
+    true,
+    'GET',
+    false,
+    false
+  )
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -230,7 +239,10 @@ function ServerStatus(): React.ReactElement {
                 </div>
                 <GaugeComponent value={cpuUsage.usage} />
                 <p className="text-center text-lg text-bg-400">
-                  {cpuUsage.core_count} Cores
+                  {moment(cpuUsage.uptime * 1000).format(
+                    'D [days], H [hrs], m [mins]'
+                  )}{' '}
+                  uptime
                 </p>
               </div>
             )}
@@ -312,7 +324,7 @@ function ServerStatus(): React.ReactElement {
                   }}
                 />
                 <p className="text-center text-lg text-bg-400">
-                  {cpuTemp.max}°C Max
+                  {cpuTemp.max}°C max
                 </p>
               </div>
             )}
@@ -386,7 +398,7 @@ function ServerStatus(): React.ReactElement {
                         <span className="text-lg text-bg-400">
                           {camelCaseToTitleCase(k)}
                         </span>
-                        <span className="w-1/2 text-lg text-bg-400">
+                        <span className="w-1/2 break-all text-lg text-bg-400">
                           {typeof v === 'object' ? (
                             <ul className="flex flex-col divide-y divide-bg-700">
                               {Object.entries(v).map(([k, v]) => (
@@ -423,7 +435,7 @@ function ServerStatus(): React.ReactElement {
                           <span className="text-lg text-bg-400">
                             {camelCaseToTitleCase(k)}
                           </span>
-                          <span className="w-1/2 text-lg text-bg-400">
+                          <span className="w-1/2 break-all text-lg text-bg-400">
                             {k.includes('byte')
                               ? formatBytes(v)
                               : String(v) || 'N/A'}
