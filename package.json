@@ -36,7 +36,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-color": "^2.19.3",
     "react-columns": "^1.2.1",
-    "react-dom": "^0.0.0-experimental-4b2a1115a-20240202",
+    "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-gauge-component": "^1.2.0",
     "react-helmet": "^6.1.0",
