@@ -10,7 +10,9 @@ function Input({
   updateValue,
   isPassword = false,
   darker = false,
-  additionalClassName = ''
+  additionalClassName = '',
+  onKeyDown = () => {},
+  noAutoComplete = false
 }: {
   name: string
   placeholder: string
@@ -20,6 +22,8 @@ function Input({
   isPassword?: boolean
   darker?: boolean
   additionalClassName?: string
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  noAutoComplete?: boolean
 }): React.ReactElement {
   return (
     <div
@@ -48,7 +52,11 @@ function Input({
           value={value}
           onChange={updateValue}
           placeholder={placeholder}
-          className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
+          onKeyDown={onKeyDown}
+          autoComplete={noAutoComplete ? 'false' : 'true'}
+          className={`mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500 ${
+            isPassword && 'text-2xl'
+          }`}
         />
       </div>
     </div>

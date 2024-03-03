@@ -11,7 +11,6 @@ import ModuleWrapper from '../../components/general/ModuleWrapper'
 import useFetch from '../../hooks/useFetch'
 import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
 import moment from 'moment'
-import HamburgerMenu from '../../components/general/HamburgerMenu'
 import { Link, useSearchParams } from 'react-router-dom'
 import { type IProjectsKProgress } from './components/ProjectProgress'
 import CreateProjectModal from './components/CreateProjectModal'
@@ -226,7 +225,7 @@ function ProjectsK(): React.JSX.Element {
               <h1 className="text-4xl font-semibold text-bg-800 dark:text-bg-100">
                 {Object.entries(PROJECT_STATUS).find(
                   ([id]) => id === searchParams.get('status')
-                )?.[1].name || 'All'}{' '}
+                )?.[1].name ?? 'All'}{' '}
                 {searchParams.get('type') === 'personal'
                   ? 'Personal'
                   : searchParams.get('type') === 'commercial'
@@ -253,7 +252,7 @@ function ProjectsK(): React.JSX.Element {
                 <input
                   type="text"
                   placeholder="Search projects ..."
-                  className="w-full bg-transparent text-bg-100 placeholder:text-bg-500 focus:outline-none"
+                  className="w-full bg-transparent placeholder:text-bg-500 focus:outline-none"
                 />
               </search>
             </div>
@@ -302,7 +301,7 @@ function ProjectsK(): React.JSX.Element {
                                 </div>
                               </div>
                               <div className="relative z-[9999]">
-                                <HamburgerMenu />
+                                {/* <HamburgerMenu /> */}
                               </div>
                             </div>
                           </div>

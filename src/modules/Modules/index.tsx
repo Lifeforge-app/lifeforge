@@ -33,7 +33,7 @@ const MODULES: Module[] = [
       githubAPIKey: {
         icon: 'tabler:brand-github',
         name: 'GitHub API Key',
-        placeholder: 'Enter your GitHub API Key here',
+        placeholder: '••••••••••••••••',
         isPassword: true
       }
     }

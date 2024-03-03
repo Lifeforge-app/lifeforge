@@ -18,7 +18,7 @@ export default function Flashcards(): React.JSX.Element {
           <input
             type="text"
             placeholder="Search flashcard sets ..."
-            className="w-full bg-transparent text-bg-500 placeholder:text-bg-400 focus:outline-none"
+            className="w-full bg-transparent placeholder:text-bg-400 focus:outline-none"
           />
         </search>
         <div className="mt-6 grid w-full grid-cols-3 gap-6 pb-12">

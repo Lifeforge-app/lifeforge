@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react/dist/iconify.js'
-import moment from 'moment'
 import React from 'react'
 
 function MobileSlidingScrollbar({

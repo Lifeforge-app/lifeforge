@@ -112,7 +112,7 @@ function TodoList(): React.JSX.Element {
               <input
                 type="text"
                 placeholder="Search projects ..."
-                className="w-full bg-transparent text-bg-500 placeholder:text-bg-400 focus:outline-none"
+                className="w-full bg-transparent placeholder:text-bg-400 focus:outline-none"
               />
             </search>
             <ul className="mt-6 flex flex-col gap-4">

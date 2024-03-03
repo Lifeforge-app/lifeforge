@@ -23,11 +23,14 @@ export default function Header(): React.JSX.Element {
         )}
         <search className="hidden w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900 lg:flex">
           <Icon icon="tabler:search" className="h-5 w-5 text-bg-500" />
-          <input
-            type="text"
-            placeholder="Quick navigate & search ... (Press / to focus)"
-            className="w-full bg-transparent text-bg-800 placeholder:text-bg-500 focus:outline-none"
-          />
+          <form className="w-full">
+            <input
+              type="text"
+              autoComplete="false"
+              placeholder="Quick navigate & search ... (Press / to focus)"
+              className="w-full bg-transparent placeholder:text-bg-500 focus:outline-none"
+            />
+          </form>
         </search>
       </div>
       <div className="flex items-center">

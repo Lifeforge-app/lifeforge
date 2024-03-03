@@ -1,62 +1,21 @@
-import React, { type FormEvent, useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { AuthContext } from '../../providers/AuthProvider'
-import { toast } from 'react-toastify'
-import { AUTH_ERROR_MESSAGES } from '../../constants/auth'
 import { Icon } from '@iconify/react/dist/iconify.js'
 
 function AuthSignInButton({
   emailOrUsername,
-  password
+  password,
+  loading,
+  signIn,
+  signInWithGithub
 }: {
   emailOrUsername: string
   password: string
+  loading: boolean
+  signIn: () => void
+  signInWithGithub: () => void
 }): React.ReactElement {
-  const [loading, setLoading] = useState(false)
-  const {
-    auth,
-    authenticate,
-    authWithOauth,
-    loginQuota: { quota, dismissQuota }
-  } = useContext(AuthContext)
-
-  function signIn(): void {
-    if (quota === 0) {
-      dismissQuota()
-      return
-    }
-    setLoading(true)
-    authenticate({ email: emailOrUsername, password })
-      .then(res => {
-        if (!res.startsWith('success')) {
-          toast.error(res)
-          if (res === AUTH_ERROR_MESSAGES.INVALID_CREDENTIALS) {
-            dismissQuota()
-          }
-        } else {
-          toast.success('Welcome back, ' + res.split(' ').slice(1).join(' '))
-        }
-        setLoading(false)
-      })
-      .catch(() => {
-        toast.error(AUTH_ERROR_MESSAGES.UNKNOWN_ERROR)
-      })
-  }
-
-  function signInWithGithub(): void {
-    setLoading(true)
-    authWithOauth('github')
-      .then(res => {
-        if (!res.startsWith('success')) {
-          toast.error(res)
-        } else {
-          toast.success('Welcome back, ' + res.split(' ').slice(1).join(' '))
-        }
-        setLoading(false)
-      })
-      .catch(() => {
-        toast.error(AUTH_ERROR_MESSAGES.UNKNOWN_ERROR)
-      })
-  }
+  const { auth } = useContext(AuthContext)
 
   return (
     <div className="mt-6 flex flex-col gap-6">

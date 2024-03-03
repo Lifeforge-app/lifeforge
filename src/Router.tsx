@@ -1,6 +1,6 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import React, { useContext, useEffect, useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Dashboard from './modules/Dashboard'
 import Auth from './auth'

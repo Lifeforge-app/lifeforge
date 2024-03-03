@@ -127,7 +127,7 @@ function Project(): React.JSX.Element {
                       {projectData.name}
                       <Listbox
                         onChange={status => {
-                          updateProjectStatus(status)
+                          updateProjectStatus(status).catch(() => {})
                         }}
                         value={projectData.status}
                         as="div"
@@ -157,7 +157,7 @@ function Project(): React.JSX.Element {
                         >
                           <Listbox.Options className="absolute top-[2rem] z-50 mt-1 max-h-56 w-48 divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800 sm:text-sm">
                             {Object.entries(PROJECT_STATUS).map(
-                              ([id, { name, color }], i) => (
+                              ([id, { name, color }]) => (
                                 <Listbox.Option
                                   key={id}
                                   className={({ active }) =>
@@ -232,12 +232,7 @@ function Project(): React.JSX.Element {
       </div>
       {
         {
-          '#progress': (
-            <ProjectProgress
-              projectData={projectData}
-              refreshProjectData={refreshProjectData}
-            />
-          ),
+          '#progress': <ProjectProgress projectData={projectData} />,
           '#files': (
             <ProjectFiles
               projectData={projectData}

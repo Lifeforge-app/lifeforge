@@ -39,7 +39,6 @@ function ModifyTaskWindow({
   const [list, setList] = useState<string | null>(null)
   const [tags, setTags] = useState<string[]>([])
   const [innerIsOpen, setInnerIsOpen] = useState(isOpen)
-  const [tagsSelectorOpen, setTagsSelectorOpen] = useState(false)
 
   function updateSummary(event: React.ChangeEvent<HTMLInputElement>): void {
     setSummary(event.target.value)
@@ -58,23 +57,6 @@ function ModifyTaskWindow({
       setInnerIsOpen(isOpen)
     }, 100)
   }, [isOpen])
-
-  useEffect(() => {
-    function hideTagsSelector(event: MouseEvent): void {
-      if (
-        !(event.target as HTMLElement).closest('.group') &&
-        !(event.target as HTMLElement).closest('.group')
-      ) {
-        setTagsSelectorOpen(false)
-      }
-    }
-
-    window.addEventListener('click', hideTagsSelector)
-
-    return () => {
-      window.removeEventListener('click', hideTagsSelector)
-    }
-  }, [])
 
   return isOpen ? (
     <div
@@ -268,7 +250,7 @@ function ModifyTaskWindow({
             <Icon
               icon="tabler:list"
               className={`ml-6 h-6 w-6 shrink-0 ${
-                list ? 'text-bg-900 dark:text-bg-100' : 'text-bg-500'
+                list !== null ? 'text-bg-900 dark:text-bg-100' : 'text-bg-500'
               } group-focus-within:text-custom-500`}
             />
             <span

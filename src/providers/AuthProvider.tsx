@@ -123,6 +123,7 @@ export default function AuthProvider({
         ).toUTCString()}`
 
         setUserData(pocketbase.authStore.model)
+        setAuth(pocketbase.authStore.isValid)
 
         return 'success: ' + pocketbase.authStore.model?.name
       } catch (error) {
@@ -132,8 +133,6 @@ export default function AuthProvider({
           default:
             return AUTH_ERROR_MESSAGES.UNKNOWN_ERROR
         }
-      } finally {
-        setAuth(pocketbase.authStore.isValid)
       }
     } else {
       return AUTH_ERROR_MESSAGES.DATABASE_NOT_READY
@@ -150,7 +149,9 @@ export default function AuthProvider({
           .authWithOAuth2({
             provider,
             urlCallback: url => {
-              w.location.href = url
+              if (w !== null) {
+                w.location.href = url
+              }
             }
           })
           .catch(e => {

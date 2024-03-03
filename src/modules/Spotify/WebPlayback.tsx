@@ -13,7 +13,7 @@ function WebPlayback(): React.ReactElement {
 
   function getPlayDuration(): void {
     if (isActive) {
-      player.getCurrentState().then(state => {
+      player.getCurrentState().then((state: any) => {
         if (!state) {
           console.error(
             'User is not playing music through the Web Playback SDK'
@@ -59,8 +59,8 @@ function WebPlayback(): React.ReactElement {
           <div className="flex w-full flex-col">
             <div className="flex items-center justify-center gap-6">
               <p className="hidden w-20 justify-end sm:flex">{`${Math.floor(
-                position / 60000
-              )}:${`${Math.floor((position % 60000) / 1000)}`.padStart(
+                Number(position) / 60000
+              )}:${`${Math.floor((Number(position) % 60000) / 1000)}`.padStart(
                 2,
                 '0'
               )}`}</p>
@@ -83,8 +83,8 @@ function WebPlayback(): React.ReactElement {
             </div>
             <div className="flex w-full items-center justify-between sm:hidden">
               <p className="text-sm text-bg-500">
-                {`${Math.floor(position / 60000)}:${`${Math.floor(
-                  (position % 60000) / 1000
+                {`${Math.floor(Number(position) / 60000)}:${`${Math.floor(
+                  (Number(position) % 60000) / 1000
                 )}`.padStart(2, '0')}`}
               </p>
               <p className="text-sm text-bg-500">

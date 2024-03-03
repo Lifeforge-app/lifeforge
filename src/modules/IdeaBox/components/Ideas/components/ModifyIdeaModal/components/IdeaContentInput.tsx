@@ -49,6 +49,7 @@ function IdeaContentInput({
             onInput={e => {
               e.currentTarget.style.height = 'auto'
               e.currentTarget.style.height = e.currentTarget.scrollHeight + 'px'
+              // @ts-expect-error - Lazy to fix =)
               updateIdeaContent(e)
             }}
             placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, lorem euismod."

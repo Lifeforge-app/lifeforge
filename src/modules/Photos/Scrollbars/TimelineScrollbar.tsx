@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import moment from 'moment'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { type IPhotosEntry } from '..'
 
 function TimelineScrollbar({
@@ -9,59 +9,25 @@ function TimelineScrollbar({
   galleryWrapperRef,
   timelineDateDisplayRef,
   isDragging,
-  setIsDragging
+  setIsDragging,
+  eachDayDimensions,
+  currentDateInViewPort
 }: {
   photos: IPhotosEntry | 'loading' | 'error'
   timelineDateDisplayRef: React.RefObject<HTMLDivElement>
   galleryWrapperRef: React.RefObject<HTMLDivElement>
   isDragging: boolean
   setIsDragging: React.Dispatch<React.SetStateAction<boolean>>
+  eachDayDimensions: Record<
+    string,
+    {
+      inTimeline: number
+      inGallery: number
+    }
+  >
+  currentDateInViewPort: string
 }): React.ReactElement {
-  const [eachDayDimensions, setEachDayDimensions] = useState<
-    Record<
-      string,
-      {
-        inTimeline: number
-        inGallery: number
-      }
-    >
-  >({})
-  const [currentDateInViewPort, setCurrentDateInViewPort] = useState<string>('')
-
   const movingTimelineDateDisplayRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (typeof photos !== 'string' && galleryWrapperRef.current !== null) {
-        const galleryContainerHeight = galleryWrapperRef.current.scrollHeight
-        const wrapperHeight = galleryWrapperRef.current.offsetHeight
-
-        setCurrentDateInViewPort(Object.keys(photos.items)[0])
-
-        const eachDayHeight: Record<
-          string,
-          {
-            inTimeline: number
-            inGallery: number
-          }
-        > = {}
-
-        for (const day of Object.keys(photos.items)) {
-          const element = document.getElementById(day)!
-          const { y, height } = element.getBoundingClientRect()
-          eachDayHeight[day] = {
-            inTimeline:
-              Number(((y + height) / galleryContainerHeight).toPrecision(2)) *
-              wrapperHeight,
-            inGallery: y
-          }
-        }
-
-        console.log(eachDayDimensions)
-        setEachDayDimensions(eachDayHeight)
-      }
-    }, 1000)
-  }, [photos, galleryWrapperRef])
 
   return (
     <>

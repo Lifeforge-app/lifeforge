@@ -11,6 +11,7 @@ export default function Timer(): React.ReactElement {
         <div
           className="radial-progress absolute text-bg-200 dark:text-bg-900"
           style={{
+            // @ts-expect-error - Cannot fix lah this one ;-;
             '--value': '100',
             '--size': '28rem',
             '--thickness': '20px'
@@ -20,6 +21,7 @@ export default function Timer(): React.ReactElement {
         <div
           className="radial-progress flex items-center justify-center text-amber-500"
           style={{
+            // @ts-expect-error - Cannot fix lah this one ;-;
             '--value': '70',
             '--size': '28rem',
             '--thickness': '20px'

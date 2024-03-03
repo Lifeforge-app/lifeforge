@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { AuthContext } from './AuthProvider'
@@ -27,7 +28,7 @@ function SpotifyProvider({
 }: {
   children: React.ReactNode
 }): React.ReactElement {
-  const { userData } = useContext(AuthContext)
+  const { userData, auth } = useContext(AuthContext)
   const track = {
     name: '',
     album: {
@@ -57,22 +58,22 @@ function SpotifyProvider({
     }
   }
 
-  async function fetchWebApi(
-    endpoint: string,
-    method: string,
-    body?: string
-  ): Promise<any> {
-    await refreshToken()
+  // async function fetchWebApi(
+  //   endpoint: string,
+  //   method: string,
+  //   body?: string
+  // ): Promise<any> {
+  //   await refreshToken()
 
-    const res = await fetch(`https://api.spotify.com/${endpoint}`, {
-      headers: {
-        Authorization: `Bearer ${userData?.spotifyAccessToken}`
-      },
-      method,
-      body: body ? JSON.stringify(body) : undefined
-    })
-    return await res.json()
-  }
+  //   const res = await fetch(`https://api.spotify.com/${endpoint}`, {
+  //     headers: {
+  //       Authorization: `Bearer ${userData?.spotifyAccessToken}`
+  //     },
+  //     method,
+  //     body: body ? JSON.stringify(body) : undefined
+  //   })
+  //   return await res.json()
+  // }
 
   const [player, setPlayer] = useState<any>(undefined)
   const [isPaused, setPaused] = useState(true)
@@ -80,7 +81,18 @@ function SpotifyProvider({
   const [currentTrack, setTrack] = useState(track)
 
   useEffect(() => {
-    if (userData?.spotifyAccessToken) {
+    if (!auth) {
+      if (player) {
+        player.disconnect()
+        setPlayer(undefined)
+        setActive(false)
+        setPaused(true)
+        setTrack(track)
+      }
+      return
+    }
+
+    if (userData?.spotifyAccessToken && !player) {
       const script = document.createElement('script')
       script.src = 'https://sdk.scdn.co/spotify-player.js'
       script.async = true
@@ -130,7 +142,7 @@ function SpotifyProvider({
         player.connect()
       }
     }
-  }, [userData])
+  }, [userData, auth])
 
   return (
     <SpotifyContext.Provider

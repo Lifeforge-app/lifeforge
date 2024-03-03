@@ -3,7 +3,6 @@
 /* eslint-disable multiline-ternary */
 import React, { useEffect, useRef, useState } from 'react'
 import useFetch from '../../hooks/useFetch'
-import moment from 'moment'
 import GalleryWrapper from './Gallery/GalleryWrapper'
 import MobileSlidingScrollbar from './Scrollbars/MobileSlidingScrollbar'
 import TimelineScrollbar from './Scrollbars/TimelineScrollbar'
@@ -32,8 +31,9 @@ export interface IPhotosEntry {
   firstDayOfMonth: Record<string, string>
 }
 
-function Photos(): JSX.Element {
+function Photos(): React.ReactElement {
   const [photos, refreshPhotos] = useFetch<IPhotosEntry>('photos/entry/list')
+  const [currentDateInViewPort, setCurrentDateInViewPort] = useState<string>('')
   const [isDragging, setIsDragging] = useState(false)
 
   const sideSliderRef = useRef<HTMLDivElement>(null)
@@ -41,16 +41,59 @@ function Photos(): JSX.Element {
   const mobileDateDisplayRef = useRef<HTMLDivElement>(null)
   const galleryWrapperRef = useRef<HTMLDivElement>(null)
 
+  const [eachDayDimensions, setEachDayDimensions] = useState<
+    Record<
+      string,
+      {
+        inTimeline: number
+        inGallery: number
+      }
+    >
+  >({})
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (typeof photos !== 'string' && galleryWrapperRef.current !== null) {
+        const galleryContainerHeight = galleryWrapperRef.current.scrollHeight
+        const wrapperHeight = galleryWrapperRef.current.offsetHeight
+
+        setCurrentDateInViewPort(Object.keys(photos.items)[0])
+
+        const eachDayHeight: Record<
+          string,
+          {
+            inTimeline: number
+            inGallery: number
+          }
+        > = {}
+
+        for (const day of Object.keys(photos.items)) {
+          const element = document.getElementById(day)!
+          const { y, height } = element.getBoundingClientRect()
+          eachDayHeight[day] = {
+            inTimeline:
+              Number(((y + height) / galleryContainerHeight).toPrecision(2)) *
+              wrapperHeight,
+            inGallery: y
+          }
+        }
+
+        console.log(eachDayDimensions)
+        setEachDayDimensions(eachDayHeight)
+      }
+    }, 1000)
+  }, [photos, galleryWrapperRef])
+
   return (
     <section className="relative flex min-h-0 w-full">
       <GalleryWrapper
         photos={photos}
         refreshPhotos={refreshPhotos}
         timelineDateDisplayRef={timelineDateDisplayRef}
-        mobileDateDisplayRef={mobileDateDisplayRef}
         sideSliderRef={sideSliderRef}
         isDragging={isDragging}
         galleryWrapperRef={galleryWrapperRef}
+        eachDayDimensions={eachDayDimensions}
       />
       <TimelineScrollbar
         photos={photos}
@@ -58,6 +101,8 @@ function Photos(): JSX.Element {
         timelineDateDisplayRef={timelineDateDisplayRef}
         isDragging={isDragging}
         setIsDragging={setIsDragging}
+        eachDayDimensions={eachDayDimensions}
+        currentDateInViewPort={currentDateInViewPort}
       />
       <MobileSlidingScrollbar
         galleryWrapperRef={galleryWrapperRef}

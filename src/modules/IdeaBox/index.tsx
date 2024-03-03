@@ -73,7 +73,7 @@ function IdeaBox(): React.JSX.Element {
               setSearchQuery(e.target.value)
             }}
             placeholder="Search idea containers ..."
-            className="w-full bg-transparent text-bg-500 placeholder:text-bg-400 focus:outline-none"
+            className="w-full bg-transparent placeholder:text-bg-400 focus:outline-none"
           />
         </search>
         <APIComponentWithFallback data={data}>

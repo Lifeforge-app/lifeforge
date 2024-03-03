@@ -1,41 +1,52 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import moment from 'moment'
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import Gallery from 'react-photo-gallery'
-import useOnScreen from '../../../hooks/useOnScreen'
 import { type IPhotosEntryItem } from '..'
 import ImageObject from './ImageObject'
+import { Icon } from '@iconify/react/dist/iconify.js'
 
 function DateGroup({
   date,
   photos,
-  timelineDateDisplayRef,
-  mobileDateDisplayRef
+  selectedPhotos,
+  setSelectedPhotos,
+  toggleSelectAll,
+  isSelectedAll
 }: {
   date: string
   photos: IPhotosEntryItem[]
-  timelineDateDisplayRef: React.RefObject<HTMLDivElement>
-  mobileDateDisplayRef: React.RefObject<HTMLDivElement>
+  selectedPhotos: string[]
+  setSelectedPhotos: React.Dispatch<React.SetStateAction<string[]>>
+  toggleSelectAll: () => void
+  isSelectedAll: boolean
 }): React.ReactElement {
-  const ref = useRef<HTMLDivElement>(null)
-  const isVisible = useOnScreen(ref)
-
-  useEffect(() => {
-    if (isVisible) {
-      if (timelineDateDisplayRef.current !== null) {
-        timelineDateDisplayRef.current.innerHTML =
-          moment(date).format('MMM D, YYYY')
-      }
-      if (mobileDateDisplayRef.current !== null) {
-        mobileDateDisplayRef.current.innerHTML =
-          moment(date).format('MMM D, YYYY')
-      }
-    }
-  }, [isVisible])
-
   return (
-    <div id={date} ref={ref} key={date}>
+    <div id={date} key={date} className="group">
       <h2 className="mb-2 flex items-end gap-2 text-xl font-semibold">
+        <div
+          className={`mb-0.5 overflow-hidden transition-all ${
+            !isSelectedAll && 'max-w-0 group-hover:max-w-[2rem]'
+          }`}
+        >
+          <button
+            onClick={toggleSelectAll}
+            className={`group/checkbox flex items-center justify-center rounded-full border-2  p-0.5 transition-all ${
+              isSelectedAll
+                ? 'border-custom-500 bg-custom-500'
+                : 'border-bg-500 hover:!border-custom-500'
+            }`}
+          >
+            <Icon
+              icon="uil:check"
+              className={`h-4 w-4  !stroke-[1px]  transition-all  ${
+                isSelectedAll
+                  ? 'stroke-bg-100 text-bg-100 dark:stroke-bg-900 dark:text-bg-900'
+                  : 'stroke-bg-500 text-bg-500 group-hover/checkbox:!stroke-custom-500 group-hover/checkbox:!text-custom-500'
+              }`}
+            />
+          </button>
+        </div>
         {moment(date).format('LL')}
         <span className="mb-0.5 block text-sm font-normal text-bg-500">
           ({photos.length})
@@ -57,6 +68,24 @@ function DateGroup({
             photo={photo}
             details={photos.find(image => image.id === photo.key)!}
             margin={margin ?? ''}
+            selected={
+              selectedPhotos.find(image => image === photo.key) !== undefined
+            }
+            toggleSelected={() => {
+              if (photo.key !== undefined) {
+                if (
+                  selectedPhotos.find(image => image === photo.key) !==
+                  undefined
+                ) {
+                  setSelectedPhotos(
+                    selectedPhotos.filter(image => image !== photo.key)
+                  )
+                } else {
+                  setSelectedPhotos([...selectedPhotos, photo.key])
+                }
+              }
+            }}
+            selectedPhotosLength={selectedPhotos.length}
           />
         )}
       />

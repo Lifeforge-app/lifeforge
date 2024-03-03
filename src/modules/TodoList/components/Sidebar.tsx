@@ -7,7 +7,6 @@ import { Icon } from '@iconify/react'
 import APIComponentWithFallback from '../../../components/general/APIComponentWithFallback'
 import GoBackButton from '../../../components/general/GoBackButton'
 import ModifyListModal from './ModifyListModal'
-import MenuItem from '../../../components/general/HamburgerMenu/MenuItem'
 import ModifyTagModal from './ModifyTagModal'
 
 export interface ITodoListList {

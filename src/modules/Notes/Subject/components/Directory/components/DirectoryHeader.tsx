@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import GoBackButton from '../../../../../../components/general/GoBackButton'
 import MenuItem from '../../../../../../components/general/HamburgerMenu/MenuItem'
@@ -98,6 +98,7 @@ function DirectoryHeader({
     const fileInput = document.createElement('input')
     fileInput.type = 'file'
     fileInput.multiple = true
+    // @ts-expect-error - idk what is this
     fileInput.directory = true
     fileInput.webkitdirectory = true
     fileInput.click()

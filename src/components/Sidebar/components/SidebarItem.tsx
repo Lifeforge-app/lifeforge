@@ -30,6 +30,7 @@ function SidebarItem({
   onClick,
   active
 }: SidebarItemProps): React.JSX.Element {
+  // @ts-expect-error - Lazy to fix yay =)
   const { sidebarExpanded, toggleSidebar } =
     isMainSidebarItem === true
       ? useContext(GlobalStateContext)

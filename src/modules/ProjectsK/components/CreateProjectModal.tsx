@@ -4,7 +4,6 @@
 import React, { Fragment, useState } from 'react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { toast } from 'react-toastify'
-import { useDebounce } from '@uidotdev/usehooks'
 import Modal from '../../../components/general/Modal'
 import CreateOrModifyButton from '../../../components/general/CreateOrModifyButton'
 import Input from '../../../components/general/Input'
@@ -32,7 +31,6 @@ function CreateProjectModal({
   >('commercial')
   const [customerName, setCustomerName] = useState('')
   const [stepsToggled, setStepsToggled] = useState<string[]>([])
-  const innerOpen = useDebounce(isOpen, !isOpen ? 300 : 0)
   const [projectStatus, setProjectStatus] = useState<
     'scheduled' | 'wip' | 'completed'
   >('scheduled')
@@ -92,11 +90,11 @@ function CreateProjectModal({
   }
 
   function updateTotalPayable(e: React.ChangeEvent<HTMLInputElement>): void {
-    setTotalPayable(Number(e.target.value) || 0)
+    setTotalPayable(Number(e.target.value) ?? 0)
   }
 
   function updateDeposit(e: React.ChangeEvent<HTMLInputElement>): void {
-    setDeposit(Number(e.target.value) || 0)
+    setDeposit(Number(e.target.value) ?? 0)
   }
 
   function toggleStep(id: string): void {
@@ -164,7 +162,7 @@ function CreateProjectModal({
             <div className="mt-6 flex items-center gap-4">
               <Input
                 name="Total payable"
-                value={totalPayable}
+                value={`${totalPayable}`}
                 updateValue={updateTotalPayable}
                 placeholder="Total payable"
                 icon="tabler:currency-dollar"
@@ -173,7 +171,7 @@ function CreateProjectModal({
               />
               <Input
                 name="Deposit"
-                value={deposit}
+                value={`${deposit}`}
                 updateValue={updateDeposit}
                 placeholder="Deposit"
                 icon="tabler:currency-dollar"
@@ -226,40 +224,38 @@ function CreateProjectModal({
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute top-[4.5rem] z-50 mt-1 max-h-56 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800 sm:text-sm">
-              {Object.entries(PROJECT_STATUS).map(
-                ([id, { name, color }], i) => (
-                  <Listbox.Option
-                    key={id}
-                    className={({ active }) =>
-                      `relative cursor-pointer select-none transition-all p-4 flex items-center justify-between ${
-                        active
-                          ? 'bg-bg-200/50 dark:bg-bg-700/50'
-                          : '!bg-transparent'
-                      }`
-                    }
-                    value={id}
-                  >
-                    {({ selected }) => (
-                      <>
-                        <div>
-                          <span className="flex items-center gap-2">
-                            <span
-                              className={`mr-2 h-2 w-2 rounded-md text-center font-semibold ${color}`}
-                            ></span>
-                            {name}
-                          </span>
-                        </div>
-                        {selected && (
-                          <Icon
-                            icon="tabler:check"
-                            className="block text-lg text-bg-100"
-                          />
-                        )}
-                      </>
-                    )}
-                  </Listbox.Option>
-                )
-              )}
+              {Object.entries(PROJECT_STATUS).map(([id, { name, color }]) => (
+                <Listbox.Option
+                  key={id}
+                  className={({ active }) =>
+                    `relative cursor-pointer select-none transition-all p-4 flex items-center justify-between ${
+                      active
+                        ? 'bg-bg-200/50 dark:bg-bg-700/50'
+                        : '!bg-transparent'
+                    }`
+                  }
+                  value={id}
+                >
+                  {({ selected }) => (
+                    <>
+                      <div>
+                        <span className="flex items-center gap-2">
+                          <span
+                            className={`mr-2 h-2 w-2 rounded-md text-center font-semibold ${color}`}
+                          ></span>
+                          {name}
+                        </span>
+                      </div>
+                      {selected && (
+                        <Icon
+                          icon="tabler:check"
+                          className="block text-lg text-bg-100"
+                        />
+                      )}
+                    </>
+                  )}
+                </Listbox.Option>
+              ))}
             </Listbox.Options>
           </Transition>
         </Listbox>
@@ -321,7 +317,9 @@ function CreateProjectModal({
         </APIComponentWithFallback>
         <CreateOrModifyButton
           loading={loading}
-          onClick={onSubmitButtonClick}
+          onClick={() => {
+            onSubmitButtonClick().catch(() => {})
+          }}
           type="create"
         />
       </Modal>

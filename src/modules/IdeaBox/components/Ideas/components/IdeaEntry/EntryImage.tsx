@@ -33,11 +33,19 @@ function EntryImage({
           className="absolute -left-2 -top-2 z-[50] h-5 w-5 -rotate-90 text-red-500 drop-shadow-md"
         />
       )}
-      <Zoom zoomMargin={40} ZoomContent={CustomZoomContent}>
+      <Zoom
+        zoomMargin={40}
+        ZoomContent={CustomZoomContent}
+        zoomImg={{
+          src: `${import.meta.env.VITE_POCKETBASE_ENDPOINT}/api/files/${
+            entry.collectionId
+          }/${entry.id}/${entry.image}`
+        }}
+      >
         <img
           src={`${import.meta.env.VITE_POCKETBASE_ENDPOINT}/api/files/${
             entry.collectionId
-          }/${entry.id}/${entry.image}`}
+          }/${entry.id}/${entry.image}?thumb=500x0`}
           alt={''}
           className="my-4 rounded-lg shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]"
         />

@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { Icon } from '@iconify/react'
 
 import StorageStatus from './modules/StorageStatus'
 import CodeTime from './modules/CodeTime'

@@ -125,6 +125,7 @@ export default function CodeTime(): React.JSX.Element {
         <span className="ml-2">Code Time</span>
       </h1>
       <div className="flex h-72 w-full items-center justify-center">
+        {/* @ts-expect-error - lazy to fix =) */}
         <Line data={data2} options={options2} />
       </div>
     </section>

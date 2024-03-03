@@ -19,6 +19,7 @@ function GalleryHeader({
   const [showImportButton, setShowImportButton] = useState(false)
   const [fileImportLoading, setFileImportLoading] = useState(false)
   const [progress, setProgress] = useState(0)
+  const [isFirstLoad, setIsFirstLoad] = useState(true)
 
   const [ip] = useFetch<string>('projects-k/ip')
 
@@ -113,12 +114,15 @@ function GalleryHeader({
         setFileImportLoading(true)
         setProgress(progressData.data)
       } else {
-        setFileImportLoading(false)
-        refreshPhotos()
-        clearInterval(progressFetchInterval)
+        if (!isFirstLoad) {
+          setFileImportLoading(false)
+          refreshPhotos()
+          clearInterval(progressFetchInterval)
+        }
       }
 
       setShowImportButton(true)
+      setIsFirstLoad(false)
     }, 1000)
 
     return () => {

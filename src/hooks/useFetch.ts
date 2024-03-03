@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 import { cookieParse } from 'pocketbase'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 
 function useFetch<T>(

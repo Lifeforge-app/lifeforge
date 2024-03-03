@@ -80,7 +80,7 @@ function ReferenceBooks(): React.JSX.Element {
             <input
               type="text"
               placeholder="Search books ..."
-              className="w-full bg-transparent text-bg-100 placeholder:text-bg-100 focus:outline-none"
+              className="w-full bg-transparent placeholder:text-bg-100 focus:outline-none"
             />
           </search>
           <ul className="mt-6 grid min-h-0 grid-cols-3 gap-6 gap-y-12 overflow-y-auto">

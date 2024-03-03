@@ -165,7 +165,7 @@ function ProjectsM(): React.JSX.Element {
               <input
                 type="text"
                 placeholder="Search projects ..."
-                className="w-full bg-transparent text-bg-500 placeholder:text-bg-300 focus:outline-none"
+                className="w-full bg-transparent placeholder:text-bg-300 focus:outline-none"
               />
             </search>
           </div>
