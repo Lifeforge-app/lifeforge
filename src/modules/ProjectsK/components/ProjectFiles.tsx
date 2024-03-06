@@ -192,7 +192,7 @@ export default function ProjectFiles({
       <div className="mr-8 flex flex-1 flex-col gap-4 sm:mr-12">
         {typeof projectData !== 'string' && (
           <>
-            <div className="mt-8 flex items-center justify-between text-bg-500">
+            <div className="mt-6 flex items-center justify-between text-bg-500">
               <div>
                 <p className="flex items-center gap-2">
                   IP Address: {ip}

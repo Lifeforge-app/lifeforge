@@ -12,7 +12,7 @@ export default function Flashcards(): React.JSX.Element {
         title="Flashcards"
         desc="Memorizing could be a pain, but not with flashcards."
       />
-      <div className="mt-8 flex min-h-0 w-full flex-1 flex-col">
+      <div className="mt-6 flex min-h-0 w-full flex-1 flex-col">
         <search className="flex w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
           <Icon icon="tabler:search" className="h-5 w-5 text-bg-500" />
           <input

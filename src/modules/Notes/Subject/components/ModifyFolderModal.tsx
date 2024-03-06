@@ -145,6 +145,11 @@ function ModifyFolderModal({
           updateValue={updateFolderName}
           darker
           additionalClassName="w-[40vw]"
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              onSubmitButtonClick()
+            }
+          }}
         />
         <CreateOrModifyButton
           loading={loading}

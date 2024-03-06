@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
-import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useParams, useSearchParams } from 'react-router-dom'
 // @ts-expect-error - no types available
 import Column from 'react-columns'
 import EmptyStateScreen from '../../../../components/general/EmptyStateScreen'
@@ -32,10 +32,14 @@ export interface IIdeaBoxEntry {
 }
 
 function Ideas(): React.JSX.Element {
+  const [searchParams, setSearchParams] = useSearchParams()
   const { id } = useParams<{ id: string }>()
+  const [viewArchived, setViewArchived] = useState(
+    searchParams.get('archived') === 'true'
+  )
 
   const [data, refreshData] = useFetch<IIdeaBoxEntry[]>(
-    `idea-box/idea/list/${id}`
+    `idea-box/idea/list/${id}?archived=${viewArchived}`
   )
 
   const [modifyIdeaModalOpenType, setModifyIdeaModalOpenType] = useState<
@@ -47,10 +51,18 @@ function Ideas(): React.JSX.Element {
   const [existedData, setExistedData] = useState<IIdeaBoxEntry | null>(null)
   const [deleteIdeaModalOpen, setDeleteIdeaModalOpen] = useState(false)
 
+  useEffect(() => {
+    setSearchParams({ archived: viewArchived.toString() })
+  }, [viewArchived])
+
   return (
     <>
       <section className="relative min-h-0 w-full min-w-0 flex-1 overflow-y-auto">
-        <ContainerHeader id={id!} />
+        <ContainerHeader
+          id={id!}
+          viewArchived={viewArchived}
+          setViewArchived={setViewArchived}
+        />
         <APIComponentWithFallback data={data}>
           {typeof data !== 'string' &&
             (data.length > 0 ? (
@@ -78,7 +90,7 @@ function Ideas(): React.JSX.Element {
                   }
                 ]}
                 gap="0.5rem"
-                className="mt-8 h-max px-8 sm:px-12"
+                className="mt-6 min-h-full flex-1 px-8 sm:px-12"
               >
                 {data.map(entry => {
                   const Component = {

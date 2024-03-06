@@ -45,7 +45,7 @@ export default function ProjectProgress({
         state === -1 ? 'un' : ''
       }complete-step/${(projectData as IProjectsKEntry).id}`,
       {
-        method: 'POST',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${cookieParse(document.cookie).token}`
@@ -78,7 +78,7 @@ export default function ProjectProgress({
   return (
     <APIComponentWithFallback data={projectData}>
       {typeof projectData !== 'string' && (
-        <div className="mb-12 mt-8 flex h-full min-h-0 w-full pr-8 sm:pr-12">
+        <div className="mb-12 mt-6 flex h-full min-h-0 w-full pr-8 sm:pr-12">
           <APIComponentWithFallback data={progress}>
             {typeof progress !== 'string' && (
               <div className="flex w-full flex-col px-6">

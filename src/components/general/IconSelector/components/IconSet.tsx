@@ -108,7 +108,7 @@ function IconSet({
           )}
         </div>
       )}
-      <div className="mt-8 grid min-h-0 w-full grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-3 pb-8">
+      <div className="mt-6 grid min-h-0 w-full grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-3 pb-8">
         {filteredIconList.map(icon => (
           <button
             key={icon}

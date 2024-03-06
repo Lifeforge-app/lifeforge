@@ -44,7 +44,7 @@ function Kanban(): React.JSX.Element {
           </div>
         </div>
       </div>
-      <div className="mb-12 mt-8 flex min-h-0 min-w-0 flex-1 gap-4 overflow-x-auto overflow-y-hidden">
+      <div className="mb-12 mt-6 flex min-h-0 min-w-0 flex-1 gap-4 overflow-x-auto overflow-y-hidden">
         {[
           ['tabler:brain', 'Brainstorm', 'border-fuchsia-500'],
           ['tabler:settings', 'In Progress', 'border-yellow-500'],

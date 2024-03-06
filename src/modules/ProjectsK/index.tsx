@@ -107,7 +107,7 @@ function ProjectsK(): React.JSX.Element {
           title="Projects"
           desc="It's time to stop procrastinating."
         />
-        <div className="mb-12 mt-8 flex min-h-0 w-full flex-1">
+        <div className="mb-12 mt-6 flex min-h-0 w-full flex-1">
           <aside className="h-full w-1/4 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
             <ul className="flex flex-col gap-1">
               <SidebarItem

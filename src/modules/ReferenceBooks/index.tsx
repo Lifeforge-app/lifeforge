@@ -14,7 +14,7 @@ function ReferenceBooks(): React.JSX.Element {
         title="Reference Books"
         desc="A collection of reference books that accompany you on your learning journey."
       />
-      <div className="mb-12 mt-8 flex min-h-0 w-full flex-1">
+      <div className="mb-12 mt-6 flex min-h-0 w-full flex-1">
         <aside className="h-full w-1/4 overflow-y-scroll rounded-lg bg-bg-50 py-4 dark:bg-bg-900">
           <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
             <SidebarItem icon="tabler:list" name="All books" />

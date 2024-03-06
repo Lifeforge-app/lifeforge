@@ -115,10 +115,10 @@ function GalleryHeader({
         setProgress(progressData.data)
       } else {
         if (!isFirstLoad) {
-          setFileImportLoading(false)
           refreshPhotos()
-          clearInterval(progressFetchInterval)
         }
+        setFileImportLoading(false)
+        clearInterval(progressFetchInterval)
       }
 
       setShowImportButton(true)
@@ -131,14 +131,8 @@ function GalleryHeader({
   }, [])
 
   return (
-    <div className="my-8 flex flex-col items-center justify-between gap-4 text-bg-500 sm:flex-row">
+    <div className="my-8 mr-16 flex flex-col items-center justify-between gap-4 text-bg-500 sm:flex-row">
       <div className="w-full">
-        <p className="flex items-center gap-2">
-          Total images:{' '}
-          {typeof photos === 'string'
-            ? photos
-            : photos.totalItems.toLocaleString()}
-        </p>
         <p className="flex items-center gap-2">
           IP Address: {ip}
           <button

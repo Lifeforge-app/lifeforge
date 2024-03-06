@@ -36,17 +36,22 @@ function ImageObject({
     >
       <LazyLoadImage
         src={photo.src}
-        className={`h-full w-full object-cover ${selected && 'rounded-md'}`}
+        className={`relative h-full w-full object-cover ${
+          selected && 'rounded-md'
+        }`}
         delayTime={300}
         threshold={50}
         useIntersectionObserver={false}
       />
+      {!selected && (
+        <div className="absolute top-0 h-12 w-full bg-gradient-to-t from-transparent to-black/50 opacity-0 transition-all group-hover/image:opacity-100" />
+      )}
       <button
         onClick={toggleSelected}
         className={`group/select-button absolute left-2.5 top-2.5 h-6 w-6 items-center justify-center rounded-full transition-all  ${
           selected
-            ? 'flex bg-custom-500'
-            : 'hidden bg-bg-500 hover:!bg-bg-100 group-hover/image:flex'
+            ? 'flex bg-custom-500 opacity-100'
+            : 'hidden bg-bg-200 opacity-50 hover:!bg-bg-100 hover:!opacity-100 group-hover/image:flex'
         }`}
       >
         <Icon

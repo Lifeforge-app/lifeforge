@@ -14,7 +14,7 @@ export default function CodeTime(): React.JSX.Element {
         title="Code Time"
         desc="See how much time you spend grinding code."
       />
-      <div className="mt-8 flex min-h-0 w-full flex-1 flex-col items-center">
+      <div className="mt-6 flex min-h-0 w-full flex-1 flex-col items-center">
         <CodeTimeStatistics />
         <CodeTimeActivityCalendar />
         <CodeTimeMostProjects />

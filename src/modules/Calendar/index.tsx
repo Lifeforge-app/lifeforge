@@ -12,7 +12,7 @@ function Calendar(): React.JSX.Element {
         title="Calendar"
         desc="Make sure you don't miss important event."
       />
-      <div className="mb-12 mt-8 flex min-h-0 w-full flex-1">
+      <div className="mb-12 mt-6 flex min-h-0 w-full flex-1">
         <aside className="flex h-full flex-col gap-8">
           <section className="flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
             <div className="h-full w-full">

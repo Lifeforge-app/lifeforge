@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable multiline-ternary */
-import React, { useEffect, useRef, useState } from 'react'
+import React, { createContext, useState } from 'react'
 import useFetch from '../../hooks/useFetch'
-import GalleryWrapper from './Gallery/GalleryWrapper'
-import MobileSlidingScrollbar from './Scrollbars/MobileSlidingScrollbar'
-import TimelineScrollbar from './Scrollbars/TimelineScrollbar'
+import ModuleHeader from '../../components/general/ModuleHeader'
+import GalleryHeader from './Gallery/GalleryHeader'
+import GallerySidebar from './Gallery/GallerySidebar'
+import GalleryContainer from './Gallery/GalleryContainer'
+import CreateAlbumModal from './CreateAlbumModal'
+import AddPhotosToAlbumModal from './AddPhotosToAlbumModal'
 
 export interface IPhotosEntryItem {
   collectionId: string
@@ -31,85 +34,79 @@ export interface IPhotosEntry {
   firstDayOfMonth: Record<string, string>
 }
 
+export interface IPhotosAlbum {
+  amount: number
+  collectionId: string
+  collectionName: string
+  created: string
+  id: string
+  name: string
+  thumbnail: string
+  updated: string
+}
+
+const PHOTOS_DATA: {
+  photos: IPhotosEntry | 'loading' | 'error'
+  albumList: IPhotosAlbum[] | 'loading' | 'error'
+  selectedPhotos: string[]
+  isCreateAlbumModalOpen: boolean
+  isAddPhotosToAlbumModalOpen: boolean
+  setSelectedPhotos: React.Dispatch<React.SetStateAction<string[]>>
+  setCreateAlbumModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setAddPhotosToAlbumModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  refreshAlbumList: () => void
+} = {
+  photos: 'loading',
+  albumList: 'loading',
+  selectedPhotos: [],
+  isCreateAlbumModalOpen: false,
+  isAddPhotosToAlbumModalOpen: false,
+  setSelectedPhotos: () => {},
+  setCreateAlbumModalOpen: () => {},
+  setAddPhotosToAlbumModalOpen: () => {},
+  refreshAlbumList: () => {}
+}
+
+export const PhotosContext = createContext(PHOTOS_DATA)
+
 function Photos(): React.ReactElement {
   const [photos, refreshPhotos] = useFetch<IPhotosEntry>('photos/entry/list')
-  const [currentDateInViewPort, setCurrentDateInViewPort] = useState<string>('')
-  const [isDragging, setIsDragging] = useState(false)
+  const [albumList, refreshAlbumList] =
+    useFetch<IPhotosAlbum[]>('photos/album/list')
 
-  const sideSliderRef = useRef<HTMLDivElement>(null)
-  const timelineDateDisplayRef = useRef<HTMLDivElement>(null)
-  const mobileDateDisplayRef = useRef<HTMLDivElement>(null)
-  const galleryWrapperRef = useRef<HTMLDivElement>(null)
-
-  const [eachDayDimensions, setEachDayDimensions] = useState<
-    Record<
-      string,
-      {
-        inTimeline: number
-        inGallery: number
-      }
-    >
-  >({})
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (typeof photos !== 'string' && galleryWrapperRef.current !== null) {
-        const galleryContainerHeight = galleryWrapperRef.current.scrollHeight
-        const wrapperHeight = galleryWrapperRef.current.offsetHeight
-
-        setCurrentDateInViewPort(Object.keys(photos.items)[0])
-
-        const eachDayHeight: Record<
-          string,
-          {
-            inTimeline: number
-            inGallery: number
-          }
-        > = {}
-
-        for (const day of Object.keys(photos.items)) {
-          const element = document.getElementById(day)!
-          const { y, height } = element.getBoundingClientRect()
-          eachDayHeight[day] = {
-            inTimeline:
-              Number(((y + height) / galleryContainerHeight).toPrecision(2)) *
-              wrapperHeight,
-            inGallery: y
-          }
-        }
-
-        console.log(eachDayDimensions)
-        setEachDayDimensions(eachDayHeight)
-      }
-    }, 1000)
-  }, [photos, galleryWrapperRef])
+  const [selectedPhotos, setSelectedPhotos] = useState<string[]>([])
+  const [isCreateAlbumModalOpen, setCreateAlbumModalOpen] = useState(false)
+  const [isAddPhotosToAlbumModalOpen, setAddPhotosToAlbumModalOpen] =
+    useState(false)
 
   return (
-    <section className="relative flex min-h-0 w-full">
-      <GalleryWrapper
-        photos={photos}
-        refreshPhotos={refreshPhotos}
-        timelineDateDisplayRef={timelineDateDisplayRef}
-        sideSliderRef={sideSliderRef}
-        isDragging={isDragging}
-        galleryWrapperRef={galleryWrapperRef}
-        eachDayDimensions={eachDayDimensions}
-      />
-      <TimelineScrollbar
-        photos={photos}
-        galleryWrapperRef={galleryWrapperRef}
-        timelineDateDisplayRef={timelineDateDisplayRef}
-        isDragging={isDragging}
-        setIsDragging={setIsDragging}
-        eachDayDimensions={eachDayDimensions}
-        currentDateInViewPort={currentDateInViewPort}
-      />
-      <MobileSlidingScrollbar
-        galleryWrapperRef={galleryWrapperRef}
-        sideSliderRef={sideSliderRef}
-        mobileDateDisplayRef={mobileDateDisplayRef}
-      />
-    </section>
+    <PhotosContext.Provider
+      value={{
+        photos,
+        albumList,
+        selectedPhotos,
+        isCreateAlbumModalOpen,
+        isAddPhotosToAlbumModalOpen,
+        setSelectedPhotos,
+        setCreateAlbumModalOpen,
+        setAddPhotosToAlbumModalOpen,
+        refreshAlbumList
+      }}
+    >
+      <section className="relative flex h-full min-h-0 w-full flex-1 flex-col pl-4 sm:pl-12">
+        <ModuleHeader
+          title="Photos"
+          desc="View and manage all your precious memories."
+        />
+        <GalleryHeader photos={photos} refreshPhotos={refreshPhotos} />
+        <div className="relative flex h-full min-h-0 w-full gap-8">
+          <GallerySidebar />
+          <GalleryContainer />
+        </div>
+        <CreateAlbumModal />
+        <AddPhotosToAlbumModal />
+      </section>
+    </PhotosContext.Provider>
   )
 }
 

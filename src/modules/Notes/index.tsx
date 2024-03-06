@@ -44,7 +44,7 @@ function Notes(): React.ReactElement {
                     icon={workspace.icon}
                     className="h-20 w-20 shrink-0 group-hover:text-custom-500"
                   />
-                  <h2 className="mt-8 text-center text-2xl font-medium uppercase tracking-widest">
+                  <h2 className="mt-6 text-center text-2xl font-medium uppercase tracking-widest">
                     {workspace.name}
                   </h2>
                 </Link>

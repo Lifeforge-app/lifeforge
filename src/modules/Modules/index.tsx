@@ -112,7 +112,7 @@ function Modules(): React.ReactElement {
         desc="A place to toggle which modules you want to use."
       />
       {userData ? (
-        <ul className="mb-12 mt-8 flex flex-col gap-4">
+        <ul className="mb-12 mt-6 flex flex-col gap-4">
           {MODULES.map((module, index) => (
             <ModuleItem
               key={index}

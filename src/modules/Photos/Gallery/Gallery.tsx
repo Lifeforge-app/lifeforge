@@ -1,15 +1,21 @@
+/* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import DateGroup from './DateGroup'
-import { type IPhotosEntry } from '..'
+import { PhotosContext } from '..'
 import { Icon } from '@iconify/react/dist/iconify.js'
 
-function Gallery({ photos }: { photos: IPhotosEntry }): React.ReactElement {
-  const [selectedPhotos, setSelectedPhotos] = useState<string[]>([])
+function Gallery(): React.ReactElement {
+  const {
+    photos,
+    selectedPhotos,
+    setSelectedPhotos,
+    setAddPhotosToAlbumModalOpen
+  } = useContext(PhotosContext)
 
-  return (
+  return typeof photos !== 'string' ? (
     <>
-      <div className="flex w-full flex-col gap-8">
+      <div className="flex min-h-full min-w-0 flex-col gap-8 pb-8">
         {Object.entries(photos.items).map(([date, photos]) => (
           <DateGroup
             key={date}
@@ -60,7 +66,12 @@ function Gallery({ photos }: { photos: IPhotosEntry }): React.ReactElement {
           <button className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30">
             <Icon icon="tabler:share" className="h-5 w-5" />
           </button>
-          <button className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30">
+          <button
+            onClick={() => {
+              setAddPhotosToAlbumModalOpen(true)
+            }}
+            className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30"
+          >
             <Icon icon="tabler:plus" className="h-5 w-5" />
           </button>
           <button className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30">
@@ -72,6 +83,8 @@ function Gallery({ photos }: { photos: IPhotosEntry }): React.ReactElement {
         </div>
       </div>
     </>
+  ) : (
+    <></>
   )
 }
 

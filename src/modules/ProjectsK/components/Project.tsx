@@ -208,7 +208,7 @@ function Project(): React.JSX.Element {
           </div>
         </div>
       </div>
-      <div className="mt-8 flex w-full items-center pr-8 sm:pr-12">
+      <div className="mt-6 flex w-full items-center pr-8 sm:pr-12">
         {[
           ['Progress', 'tabler:chart-bar', 'progress'],
           ['Files', 'tabler:files', 'files'],

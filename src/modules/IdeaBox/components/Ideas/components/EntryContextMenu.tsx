@@ -28,7 +28,7 @@ function EntryContextMenu({
 }): React.ReactElement {
   function pinIdea(ideaId: string): void {
     fetch(`${import.meta.env.VITE_API_HOST}/idea-box/idea/pin/${ideaId}`, {
-      method: 'POST',
+      method: 'PATCH',
       headers: {
         Authorization: `Bearer ${cookieParse(document.cookie).token}`
       }
@@ -49,7 +49,7 @@ function EntryContextMenu({
 
   function archiveIdea(ideaId: string): void {
     fetch(`${import.meta.env.VITE_API_HOST}/idea-box/idea/archive/${ideaId}`, {
-      method: 'POST',
+      method: 'PATCH',
       headers: {
         Authorization: `Bearer ${cookieParse(document.cookie).token}`
       }
@@ -69,7 +69,7 @@ function EntryContextMenu({
   }
 
   return (
-    <Menu as="div" className={`${'absolute right-2 top-2'} z-[999]`}>
+    <Menu as="div" className="absolute right-2 top-2">
       <Menu.Button>
         {({ open }) => (
           <div
@@ -89,16 +89,18 @@ function EntryContextMenu({
         leave="transition duration-75 ease-out"
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
-        className="absolute right-0 top-3"
+        className="absolute right-0 top-3 z-[999]"
       >
-        <Menu.Items className="mt-8 w-48 overflow-hidden rounded-md bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800">
-          <MenuItem
-            onClick={() => {
-              pinIdea(entry.id)
-            }}
-            icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
-            text={`${entry.pinned ? 'Unpin from' : 'Pin to'} top`}
-          />
+        <Menu.Items className="mt-6 w-48 overflow-hidden rounded-md bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800">
+          {!entry.archived && (
+            <MenuItem
+              onClick={() => {
+                pinIdea(entry.id)
+              }}
+              icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
+              text={`${entry.pinned ? 'Unpin from' : 'Pin to'} top`}
+            />
+          )}
           <MenuItem
             onClick={() => {
               archiveIdea(entry.id)

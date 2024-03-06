@@ -55,7 +55,7 @@ function WebPlayback(): React.ReactElement {
             {currentTrack.artists[0].name}
           </div>
         </div>
-        <div className="mt-8 flex w-full flex-col items-center justify-center gap-4">
+        <div className="mt-6 flex w-full flex-col items-center justify-center gap-4">
           <div className="flex w-full flex-col">
             <div className="flex items-center justify-center gap-6">
               <p className="hidden w-20 justify-end sm:flex">{`${Math.floor(

@@ -43,6 +43,7 @@ function TimelineScrollbar({
 
                 const galleryContainerHeight =
                   galleryWrapperRef.current.scrollHeight
+
                 const mousePositionInGalleryContainer =
                   (mousePosition / rect.height) * galleryContainerHeight
 

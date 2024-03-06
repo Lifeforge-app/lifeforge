@@ -12,8 +12,8 @@ interface ModuleHeaderPropsWithHamburgerMenu {
 interface ModuleHeaderPropsWithHamburgerMenuItems {
   title: string | React.ReactNode
   desc?: string | React.ReactNode
-  hasHamburgerMenu?: true
-  hamburgerMenuItems?: React.ReactNode
+  hasHamburgerMenu: true
+  hamburgerMenuItems: React.ReactNode
 }
 
 type ModuleHeaderProps =

@@ -127,6 +127,11 @@ function ModifyTagModal({
           placeholder="Tag name"
           icon="tabler:tag"
           darker
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              onSubmitButtonClick()
+            }
+          }}
         />
 
         <CreateOrModifyButton

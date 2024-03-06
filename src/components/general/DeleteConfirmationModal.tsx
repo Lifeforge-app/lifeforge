@@ -60,7 +60,7 @@ function DeleteConfirmationModal({
         This will delete the {itemName} and everything related to it. This
         action is irreversible!
       </p>
-      <div className="mt-8 flex w-full justify-around gap-2">
+      <div className="mt-6 flex w-full justify-around gap-2">
         <button
           onClick={closeModal}
           className="flex w-full items-center justify-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700"

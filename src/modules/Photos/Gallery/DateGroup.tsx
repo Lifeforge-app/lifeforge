@@ -49,11 +49,11 @@ function DateGroup({
         </div>
         {moment(date).format('LL')}
         <span className="mb-0.5 block text-sm font-normal text-bg-500">
-          ({photos.length})
+          ({photos.length.toLocaleString()})
         </span>
       </h2>
       <Gallery
-        targetRowHeight={300}
+        targetRowHeight={200}
         photos={photos.map(image => ({
           src: `${import.meta.env.VITE_POCKETBASE_ENDPOINT}/api/files/${
             image.collectionId

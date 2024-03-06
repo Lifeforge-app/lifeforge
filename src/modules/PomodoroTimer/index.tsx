@@ -12,7 +12,7 @@ export default function PomodoroTimer(): React.JSX.Element {
         title="Pomodoro Timer"
         desc="Increase your productivity by using the Pomodoro technique."
       />
-      <div className="mt-8 flex w-full flex-1">
+      <div className="mt-6 flex w-full flex-1">
         <Timer />
         <aside className="mb-12 w-2/6 overflow-y-scroll rounded-lg bg-bg-50 p-6 dark:bg-bg-900">
           <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">

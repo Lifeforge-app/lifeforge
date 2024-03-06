@@ -121,7 +121,7 @@ function SidebarItem({
       </li>
       {sidebarExpanded && subsection !== undefined && (
         <li
-          className={`flex h-auto shrink-0 flex-col gap-2 overflow-hidden ${
+          className={`flex h-auto shrink-0 flex-col gap-2 overflow-hidden transition-all ${
             subsectionExpanded ? 'max-h-[1000px] py-2' : 'max-h-0 py-0'
           }`}
         >

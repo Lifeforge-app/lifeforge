@@ -84,7 +84,7 @@ function TodoList(): React.JSX.Element {
           title="Todo List"
           desc="Human brain is not designed to remember everything."
         />
-        <div className="mb-12 mt-8 flex min-h-0 w-full flex-1">
+        <div className="mb-12 mt-6 flex min-h-0 w-full flex-1">
           <Sidebar
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}

@@ -5,8 +5,18 @@ import { useNavigate } from 'react-router-dom'
 import { type IIdeaBoxContainer } from '../../..'
 import GoBackButton from '../../../../../components/general/GoBackButton'
 import useFetch from '../../../../../hooks/useFetch'
+import HamburgerMenu from '../../../../../components/general/HamburgerMenu'
+import MenuItem from '../../../../../components/general/HamburgerMenu/MenuItem'
 
-function ContainerHeader({ id }: { id: string }): React.ReactElement {
+function ContainerHeader({
+  id,
+  viewArchived,
+  setViewArchived
+}: {
+  id: string
+  viewArchived: boolean
+  setViewArchived: React.Dispatch<React.SetStateAction<boolean>>
+}): React.ReactElement {
   const [containerDetails] = useFetch<IIdeaBoxContainer>(
     `idea-box/container/get/${id}`
   )
@@ -16,6 +26,11 @@ function ContainerHeader({ id }: { id: string }): React.ReactElement {
     <header className="flex flex-col gap-1 px-8 sm:px-12">
       <GoBackButton
         onClick={() => {
+          if (viewArchived) {
+            setViewArchived(false)
+            return
+          }
+
           navigate('/idea-box')
         }}
       />
@@ -63,15 +78,24 @@ function ContainerHeader({ id }: { id: string }): React.ReactElement {
                         }}
                       />
                     </div>
+                    {viewArchived && 'Archived ideas in '}
                     {containerDetails.name}
                   </>
                 )
             }
           })()}
         </h1>
-        <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
-          <Icon icon="tabler:dots-vertical" className="text-2xl" />
-        </button>
+        {!viewArchived && (
+          <HamburgerMenu position="relative">
+            <MenuItem
+              icon="tabler:archive"
+              text="Archived"
+              onClick={() => {
+                setViewArchived(true)
+              }}
+            />
+          </HamburgerMenu>
+        )}
       </div>
     </header>
   )
