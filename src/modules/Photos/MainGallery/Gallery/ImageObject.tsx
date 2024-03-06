@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React from 'react'
-import { type IPhotosEntryItem } from '..'
+import React, { useContext } from 'react'
+import { PhotosContext, type IPhotosEntryItem } from '..'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Icon } from '@iconify/react/dist/iconify.js'
 
 function ImageObject({
   photo,
   margin,
+  details,
   selected,
   toggleSelected,
   selectedPhotosLength
@@ -18,8 +19,10 @@ function ImageObject({
   toggleSelected: () => void
   selectedPhotosLength: number
 }): React.ReactElement {
+  const { galleryWrapperRef } = useContext(PhotosContext)
+
   return (
-    <button
+    <div
       onClick={() => {
         if (selectedPhotosLength > 0) {
           toggleSelected()
@@ -30,7 +33,8 @@ function ImageObject({
         height: photo.height,
         width: photo.width
       }}
-      className={`group/image relative overflow-hidden ${
+      on
+      className={`group/image relative min-w-[5rem] overflow-hidden ${
         selected ? 'bg-custom-500/20 p-4' : 'bg-bg-200 dark:bg-bg-800'
       } transition-all`}
     >
@@ -62,7 +66,12 @@ function ImageObject({
           }`}
         />
       </button>
-    </button>
+      {details.album !== '' && (
+        <span className="absolute right-2 top-2 text-bg-200 opacity-50">
+          <Icon icon="tabler:library-photo" className="h-5 w-5" />
+        </span>
+      )}
+    </div>
   )
 }
 

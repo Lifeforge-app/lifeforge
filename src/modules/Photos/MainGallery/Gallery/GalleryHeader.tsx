@@ -2,19 +2,14 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable react/jsx-no-undef */
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React, { useEffect, useState } from 'react'
-import { type IPhotosEntry } from '..'
-import useFetch from '../../../hooks/useFetch'
+import React, { useContext, useEffect, useState } from 'react'
+import { PhotosContext } from '..'
+import useFetch from '../../../../hooks/useFetch'
 import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
 
-function GalleryHeader({
-  photos,
-  refreshPhotos
-}: {
-  photos: IPhotosEntry | 'loading' | 'error'
-  refreshPhotos: () => void
-}): React.ReactElement {
+function GalleryHeader(): React.ReactElement {
+  const { refreshPhotos } = useContext(PhotosContext)
   const [copiedToClipboard, setCopiedToClipboard] = useState(false)
   const [showImportButton, setShowImportButton] = useState(false)
   const [fileImportLoading, setFileImportLoading] = useState(false)
@@ -64,6 +59,7 @@ function GalleryHeader({
         }
       })
       .catch(error => {
+        setFileImportLoading(false)
         toast.error('Failed to upload files. Error: ' + error)
       })
   }
@@ -150,29 +146,31 @@ function GalleryHeader({
           </button>
         </p>
       </div>
-      {showImportButton && (
-        <button
-          onClick={() => {
-            importFiles().catch(() => {})
-          }}
-          disabled={fileImportLoading}
-          className="flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-auto"
-        >
-          {!fileImportLoading ? (
-            <>
-              <Icon icon="tabler:upload" className="text-xl" />
-              import
-            </>
-          ) : (
-            <>
-              <Icon icon="svg-spinners:180-ring" className="text-xl" />
-              {progress > 0
-                ? `Importing ${Math.round(progress * 100)}%`
-                : 'Importing'}
-            </>
-          )}
-        </button>
-      )}
+      <div className="h-14">
+        {showImportButton && (
+          <button
+            onClick={() => {
+              importFiles().catch(() => {})
+            }}
+            disabled={fileImportLoading}
+            className="flex h-full w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-custom-500 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-auto"
+          >
+            {!fileImportLoading ? (
+              <>
+                <Icon icon="tabler:upload" className="text-xl" />
+                import
+              </>
+            ) : (
+              <>
+                <Icon icon="svg-spinners:180-ring" className="text-xl" />
+                {progress > 0
+                  ? `Importing ${Math.round(progress * 100)}%`
+                  : 'Importing'}
+              </>
+            )}
+          </button>
+        )}
+      </div>
     </div>
   )
 }

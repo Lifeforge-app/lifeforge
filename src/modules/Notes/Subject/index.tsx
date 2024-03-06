@@ -4,8 +4,8 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/indent */
-import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import EmptyStateScreen from '../../../components/general/EmptyStateScreen'
 import ModifyFolderModal from './components/ModifyFolderModal'
 import DirectoryHeader from './components/Directory/components/DirectoryHeader'
@@ -35,8 +35,16 @@ export interface INotesPath {
 }
 
 function NotesSubject(): React.ReactElement {
-  const { subject, '*': path } = useParams<{ subject: string; '*': string }>()
+  const {
+    subject,
+    '*': path,
+    workspace
+  } = useParams<{ subject: string; '*': string; workspace: string }>()
+  const navigate = useNavigate()
 
+  const [valid] = useFetch<boolean>(
+    `notes/entry/valid/${workspace}/${subject}/${path}`
+  )
   const [notesEntries, refreshNotesEntries] = useFetch<INotesEntry[]>(
     `notes/entry/list/${subject}/${path}`
   )
@@ -49,52 +57,60 @@ function NotesSubject(): React.ReactElement {
   ] = useState(false)
   const [existedData, setExistedData] = useState<INotesEntry | null>(null)
 
+  useEffect(() => {
+    if (typeof valid === 'boolean' && !valid) {
+      navigate('/notes')
+    }
+  }, [valid])
+
   return (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col overflow-y-scroll px-8 md:px-12">
-      <DirectoryHeader
-        updateNotesEntries={refreshNotesEntries}
-        setModifyFolderModalOpenType={setModifyFolderModalOpenType}
-        setExistedData={setExistedData}
-      />
-      <APIComponentWithFallback data={notesEntries}>
-        {typeof notesEntries !== 'string' &&
-          (notesEntries.length > 0 ? (
-            <Directory
-              notesEntries={notesEntries}
-              setDeleteFolderConfirmationModalOpen={
-                setDeleteFolderConfirmationModalOpen
-              }
-              setModifyFolderModalOpenType={setModifyFolderModalOpenType}
-              setExistedData={setExistedData}
-            />
-          ) : (
-            <EmptyStateScreen
-              ctaContent="New Note"
-              icon="tabler:file-off"
-              title="Hmm... it seems a bit empty here."
-              description="Time to upload some notes!"
-              setModifyModalOpenType={() => {}}
-            />
-          ))}
-      </APIComponentWithFallback>
-      <ModifyFolderModal
-        openType={modifyFolderModalOpenType}
-        setOpenType={setModifyFolderModalOpenType}
-        existedData={existedData}
-        updateNotesEntries={refreshNotesEntries}
-      />
-      <DeleteConfirmationModal
-        isOpen={deleteFolderConfirmationModalOpen}
-        closeModal={() => {
-          setExistedData(null)
-          setDeleteFolderConfirmationModalOpen(false)
-        }}
-        apiEndpoint="notes/entry/delete"
-        itemName="folder"
-        data={existedData}
-        updateDataList={refreshNotesEntries}
-      />
-    </section>
+    <APIComponentWithFallback data={valid}>
+      <section className="flex h-full min-h-0 w-full flex-1 flex-col overflow-y-scroll px-8 md:px-12">
+        <DirectoryHeader
+          updateNotesEntries={refreshNotesEntries}
+          setModifyFolderModalOpenType={setModifyFolderModalOpenType}
+          setExistedData={setExistedData}
+        />
+        <APIComponentWithFallback data={notesEntries}>
+          {typeof notesEntries !== 'string' &&
+            (notesEntries.length > 0 ? (
+              <Directory
+                notesEntries={notesEntries}
+                setDeleteFolderConfirmationModalOpen={
+                  setDeleteFolderConfirmationModalOpen
+                }
+                setModifyFolderModalOpenType={setModifyFolderModalOpenType}
+                setExistedData={setExistedData}
+              />
+            ) : (
+              <EmptyStateScreen
+                ctaContent="New Note"
+                icon="tabler:file-off"
+                title="Hmm... it seems a bit empty here."
+                description="Time to upload some notes!"
+                setModifyModalOpenType={() => {}}
+              />
+            ))}
+        </APIComponentWithFallback>
+        <ModifyFolderModal
+          openType={modifyFolderModalOpenType}
+          setOpenType={setModifyFolderModalOpenType}
+          existedData={existedData}
+          updateNotesEntries={refreshNotesEntries}
+        />
+        <DeleteConfirmationModal
+          isOpen={deleteFolderConfirmationModalOpen}
+          closeModal={() => {
+            setExistedData(null)
+            setDeleteFolderConfirmationModalOpen(false)
+          }}
+          apiEndpoint="notes/entry/delete"
+          itemName="folder"
+          data={existedData}
+          updateDataList={refreshNotesEntries}
+        />
+      </section>
+    </APIComponentWithFallback>
   )
 }
 

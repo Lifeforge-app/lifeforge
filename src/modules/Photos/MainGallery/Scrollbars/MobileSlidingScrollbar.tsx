@@ -1,16 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React from 'react'
+import React, { useContext } from 'react'
+import { PhotosContext } from '..'
 
-function MobileSlidingScrollbar({
-  sideSliderRef,
-  galleryWrapperRef,
-  mobileDateDisplayRef
-}: {
-  sideSliderRef: React.RefObject<HTMLDivElement>
-  galleryWrapperRef: React.RefObject<HTMLDivElement>
-  mobileDateDisplayRef: React.RefObject<HTMLDivElement>
-}): React.ReactElement {
+function MobileSlidingScrollbar(): React.ReactElement {
+  const { galleryWrapperRef, sideSliderRef, mobileDateDisplayRef } =
+    useContext(PhotosContext)
+
   return (
     <div
       ref={sideSliderRef}

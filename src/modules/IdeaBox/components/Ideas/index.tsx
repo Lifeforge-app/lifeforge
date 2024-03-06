@@ -2,7 +2,7 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 // @ts-expect-error - no types available
 import Column from 'react-columns'
 import EmptyStateScreen from '../../../../components/general/EmptyStateScreen'
@@ -33,6 +33,7 @@ export interface IIdeaBoxEntry {
 
 function Ideas(): React.JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
   const [viewArchived, setViewArchived] = useState(
     searchParams.get('archived') === 'true'
@@ -41,6 +42,7 @@ function Ideas(): React.JSX.Element {
   const [data, refreshData] = useFetch<IIdeaBoxEntry[]>(
     `idea-box/idea/list/${id}?archived=${viewArchived}`
   )
+  const [valid] = useFetch<boolean>(`idea-box/container/valid/${id}`)
 
   const [modifyIdeaModalOpenType, setModifyIdeaModalOpenType] = useState<
     null | 'create' | 'update'
@@ -55,8 +57,14 @@ function Ideas(): React.JSX.Element {
     setSearchParams({ archived: viewArchived.toString() })
   }, [viewArchived])
 
+  useEffect(() => {
+    if (typeof valid === 'boolean' && !valid) {
+      navigate('/idea-box')
+    }
+  }, [valid])
+
   return (
-    <>
+    <APIComponentWithFallback data={valid}>
       <section className="relative min-h-0 w-full min-w-0 flex-1 overflow-y-auto">
         <ContainerHeader
           id={id!}
@@ -145,7 +153,7 @@ function Ideas(): React.JSX.Element {
         data={existedData}
         updateDataList={refreshData}
       />
-    </>
+    </APIComponentWithFallback>
   )
 }
 

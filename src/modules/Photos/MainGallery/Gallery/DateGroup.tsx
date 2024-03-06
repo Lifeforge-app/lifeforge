@@ -1,28 +1,40 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import moment from 'moment'
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Gallery from 'react-photo-gallery'
-import { type IPhotosEntryItem } from '..'
 import ImageObject from './ImageObject'
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { type IPhotosEntryItem, PhotosContext } from '..'
+import useResizeObserver from 'use-resize-observer'
 
 function DateGroup({
   date,
   photos,
-  selectedPhotos,
-  setSelectedPhotos,
   toggleSelectAll,
   isSelectedAll
 }: {
   date: string
   photos: IPhotosEntryItem[]
-  selectedPhotos: string[]
-  setSelectedPhotos: React.Dispatch<React.SetStateAction<string[]>>
   toggleSelectAll: () => void
   isSelectedAll: boolean
 }): React.ReactElement {
+  const { photos: allPhotos, updateEachDayDimensions } =
+    useContext(PhotosContext)
+  const { setSelectedPhotos, selectedPhotos } = useContext(PhotosContext)
+  const { ref, height = 1 } = useResizeObserver<HTMLDivElement>()
+
+  useEffect(() => {
+    if (typeof allPhotos !== 'string') {
+      if (date === Object.keys(allPhotos.items)[0]) {
+        if (height > 20) {
+          updateEachDayDimensions()
+        }
+      }
+    }
+  }, [allPhotos, height])
+
   return (
-    <div id={date} key={date} className="group">
+    <div ref={ref} id={date} key={date} className="group">
       <h2 className="mb-2 flex items-end gap-2 text-xl font-semibold">
         <div
           className={`mb-0.5 overflow-hidden transition-all ${

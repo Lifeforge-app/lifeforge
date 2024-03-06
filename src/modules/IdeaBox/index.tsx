@@ -11,7 +11,6 @@ import DeleteConfirmationModal from '../../components/general/DeleteConfirmation
 import useFetch from '../../hooks/useFetch'
 import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
 import ModuleWrapper from '../../components/general/ModuleWrapper'
-import MenuItem from '../../components/general/HamburgerMenu/MenuItem'
 
 export interface IIdeaBoxContainer {
   collectionId: string

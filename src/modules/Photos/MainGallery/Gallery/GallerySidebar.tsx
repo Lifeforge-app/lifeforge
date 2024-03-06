@@ -1,11 +1,11 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useContext } from 'react'
-import SidebarItem from '../../../components/Sidebar/components/SidebarItem'
-import SidebarDivider from '../../../components/Sidebar/components/SidebarDivider'
-import SidebarTitle from '../../../components/Sidebar/components/SidebarTitle'
+import SidebarItem from '../../../../components/Sidebar/components/SidebarItem'
+import SidebarDivider from '../../../../components/Sidebar/components/SidebarDivider'
+import SidebarTitle from '../../../../components/Sidebar/components/SidebarTitle'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import APIComponentWithFallback from '../../../components/general/APIComponentWithFallback'
+import APIComponentWithFallback from '../../../../components/general/APIComponentWithFallback'
 import { PhotosContext } from '..'
 
 function GallerySidebar(): React.ReactElement {

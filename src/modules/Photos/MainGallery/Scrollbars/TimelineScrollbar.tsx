@@ -1,32 +1,18 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import moment from 'moment'
-import React, { useRef } from 'react'
-import { type IPhotosEntry } from '..'
+import React, { useContext, useRef } from 'react'
+import { PhotosContext } from '..'
 
-function TimelineScrollbar({
-  photos,
-  galleryWrapperRef,
-  timelineDateDisplayRef,
-  isDragging,
-  setIsDragging,
-  eachDayDimensions,
-  currentDateInViewPort
-}: {
-  photos: IPhotosEntry | 'loading' | 'error'
-  timelineDateDisplayRef: React.RefObject<HTMLDivElement>
-  galleryWrapperRef: React.RefObject<HTMLDivElement>
-  isDragging: boolean
-  setIsDragging: React.Dispatch<React.SetStateAction<boolean>>
-  eachDayDimensions: Record<
-    string,
-    {
-      inTimeline: number
-      inGallery: number
-    }
-  >
-  currentDateInViewPort: string
-}): React.ReactElement {
+function TimelineScrollbar(): React.ReactElement {
+  const {
+    photos,
+    eachDayDimensions,
+    galleryWrapperRef,
+    timelineDateDisplayRef,
+    isDragging,
+    setIsDragging
+  } = useContext(PhotosContext)
   const movingTimelineDateDisplayRef = useRef<HTMLDivElement>(null)
 
   return (
@@ -127,7 +113,7 @@ function TimelineScrollbar({
                       key={year}
                       className="pointer-events-none absolute z-[5] hidden h-8 w-full -translate-y-8 items-center justify-center bg-bg-100 text-sm text-bg-500 dark:bg-bg-950 sm:flex"
                       style={{
-                        top: `${eachDayDimensions[date].inTimeline}px`
+                        top: `${eachDayDimensions[date]?.inTimeline}px`
                       }}
                     >
                       {year}
@@ -138,9 +124,9 @@ function TimelineScrollbar({
                   .map(([month, date]) => (
                     <span
                       key={month}
-                      className="pointer-events-none absolute right-1/2 hidden h-1 w-1 -translate-y-1 translate-x-1/2 rounded-full bg-bg-400 dark:bg-bg-700 sm:flex"
+                      className="pointer-events-none absolute right-1/2 hidden h-1 w-1 -translate-y-1 translate-x-1/2 rounded-full bg-bg-400 dark:bg-bg-500 sm:flex"
                       style={{
-                        top: `${eachDayDimensions[date].inTimeline}px`
+                        top: `${eachDayDimensions[date]?.inTimeline}px`
                       }}
                     ></span>
                   ))}
@@ -153,16 +139,12 @@ function TimelineScrollbar({
               'pointer-events-none absolute right-14 z-[10] hidden rounded-t-md border-b-2 border-custom-500 bg-bg-200 p-2 text-sm shadow-md dark:bg-bg-800 sm:right-3 sm:peer-hover:block'
             }
           ></div>
-          {currentDateInViewPort !== '' && (
-            <div
-              ref={timelineDateDisplayRef}
-              className={`pointer-events-none absolute right-14 z-[10] hidden rounded-t-md border-b-2 border-custom-500 bg-bg-200 p-2 text-sm shadow-md dark:bg-bg-800 sm:right-3 sm:block ${
-                isDragging && '!hidden'
-              }`}
-            >
-              {moment(currentDateInViewPort).format('MMM D, YYYY')}
-            </div>
-          )}
+          <div
+            ref={timelineDateDisplayRef}
+            className={`pointer-events-none absolute right-14 z-[10] hidden rounded-t-md border-b-2 border-custom-500 bg-bg-200 p-2 text-sm shadow-md dark:bg-bg-800 sm:right-3 sm:block ${
+              isDragging && '!hidden'
+            }`}
+          ></div>
         </>
       )}
     </>

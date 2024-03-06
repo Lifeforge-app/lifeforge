@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Modal from '../../components/general/Modal'
+import Modal from '../../../components/general/Modal'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import Input from '../../components/general/Input'
-import CreateOrModifyButton from '../../components/general/CreateOrModifyButton'
+import Input from '../../../components/general/Input'
+import CreateOrModifyButton from '../../../components/general/CreateOrModifyButton'
 import { toast } from 'react-toastify'
 import { cookieParse } from 'pocketbase'
 import { PhotosContext } from '.'
 
 function CreateAlbumModal(): React.ReactElement {
   const {
-    isAddPhotosToAlbumModalOpen: isOpen,
-    setAddPhotosToAlbumModalOpen: setOpen,
+    isCreateAlbumModalOpen: isOpen,
+    setCreateAlbumModalOpen: setOpen,
     refreshAlbumList: updateAlbumList
   } = useContext(PhotosContext)
   const [albumName, setAlbumName] = useState('')

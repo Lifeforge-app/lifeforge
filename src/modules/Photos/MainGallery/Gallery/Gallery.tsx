@@ -4,6 +4,7 @@ import React, { useContext } from 'react'
 import DateGroup from './DateGroup'
 import { PhotosContext } from '..'
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { toast } from 'react-toastify'
 
 function Gallery(): React.ReactElement {
   const {
@@ -21,8 +22,6 @@ function Gallery(): React.ReactElement {
             key={date}
             date={date}
             photos={photos}
-            selectedPhotos={selectedPhotos}
-            setSelectedPhotos={setSelectedPhotos}
             toggleSelectAll={() => {
               if (photos.every(photo => selectedPhotos.includes(photo.id))) {
                 setSelectedPhotos(
@@ -59,7 +58,7 @@ function Gallery(): React.ReactElement {
             <Icon icon="tabler:x" className="h-5 w-5 text-bg-500" />
           </button>
           <p className="text-lg text-bg-500">
-            {selectedPhotos.length} selected
+            {selectedPhotos.length.toLocaleString()} selected
           </p>
         </div>
         <div className="flex items-center gap-4">
@@ -68,6 +67,18 @@ function Gallery(): React.ReactElement {
           </button>
           <button
             onClick={() => {
+              if (
+                selectedPhotos.filter(
+                  photo =>
+                    Object.values(photos.items)
+                      .flat()
+                      .find(p => p.id === photo)?.album === ''
+                ).length === 0
+              ) {
+                toast.warning('All the selected photos are already in an album')
+                return
+              }
+
               setAddPhotosToAlbumModalOpen(true)
             }}
             className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30"

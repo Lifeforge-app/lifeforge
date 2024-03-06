@@ -41,7 +41,7 @@ function useFetch<T>(
       .catch(err => {
         setData('error')
         if (showError) {
-          toast.error(`Failed to fetch data from server. Error: ${err.message}`)
+          toast.error(`Failed to fetch data from server. ${err.message}`)
         }
         console.error(err)
       })
