@@ -6,7 +6,7 @@ import APIComponentWithFallback from '../../../../components/general/APIComponen
 import MobileSlidingScrollbar from '../Scrollbars/MobileSlidingScrollbar'
 import TimelineScrollbar from '../Scrollbars/TimelineScrollbar'
 import Gallery from './Gallery'
-import { PhotosContext } from '..'
+import { PhotosContext } from '../..'
 
 function GalleryContainer(): React.ReactElement {
   const {

@@ -4,8 +4,8 @@ import React, { useContext, useEffect } from 'react'
 import Gallery from 'react-photo-gallery'
 import ImageObject from './ImageObject'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { type IPhotosEntryItem, PhotosContext } from '..'
 import useResizeObserver from 'use-resize-observer'
+import { type IPhotosEntryItem, PhotosContext } from '../..'
 
 function DateGroup({
   date,

@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import Modal from './Modal'
+import { cookieParse } from 'pocketbase'
 
 function DeleteConfirmationModal({
   itemName,
@@ -12,6 +13,7 @@ function DeleteConfirmationModal({
   data,
   updateDataList,
   apiEndpoint,
+  customText,
   nameKey = 'name'
 }: {
   itemName: string
@@ -20,6 +22,7 @@ function DeleteConfirmationModal({
   data: any
   updateDataList: () => void
   apiEndpoint: string
+  customText?: string
   nameKey?: string
 }): React.ReactElement {
   const [loading, setLoading] = useState(false)
@@ -29,7 +32,11 @@ function DeleteConfirmationModal({
 
     setLoading(true)
     fetch(`${import.meta.env.VITE_API_HOST}/${apiEndpoint}/${data.id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+      }
     })
       .then(async res => {
         const data = await res.json()
@@ -57,8 +64,12 @@ function DeleteConfirmationModal({
         Are you sure you want to delete {data?.[nameKey] || `the ${itemName}`}?
       </h1>
       <p className="mt-2 text-bg-500">
-        This will delete the {itemName} and everything related to it. This
-        action is irreversible!
+        {customText ?? (
+          <>
+            This will delete the {itemName} and everything related to it. This
+            action is irreversible!
+          </>
+        )}
       </p>
       <div className="mt-6 flex w-full justify-around gap-2">
         <button

@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Modal from '../../../components/general/Modal'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { PhotosContext } from '.'
+import { PhotosContext } from '..'
 import APIComponentWithFallback from '../../../components/general/APIComponentWithFallback'
 import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
@@ -123,21 +123,23 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                         }}
                         className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all ${
                           selectedAlbum === album.id
-                            ? 'bg-bg-800'
-                            : 'hover:bg-bg-800/50'
+                            ? 'bg-bg-300 dark:bg-bg-800'
+                            : 'hover:bg-bg-200 dark:hover:bg-bg-800/50'
                         }`}
                       >
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-bg-700/50">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                           <Icon
                             icon="tabler:library-photo"
-                            className="h-5 w-5 text-bg-500"
+                            className="h-5 w-5 text-bg-400 dark:text-bg-500"
                           />
                         </div>
-                        <div className="w-full text-left">{album.name}</div>
+                        <div className="w-full text-left text-bg-500 ">
+                          {album.name}
+                        </div>
                         {selectedAlbum === album.id ? (
                           <Icon
                             icon="tabler:check"
-                            className="h-6 w-6  text-custom-500"
+                            className="h-6 w-6 text-bg-900 dark:text-custom-500"
                           />
                         ) : (
                           <span className="text-sm text-bg-500">
@@ -155,7 +157,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
             <button
               onClick={onSubmitButtonClick}
               disabled={selectedAlbum === '' || loading}
-              className="mt-6 flex h-16 items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800"
+              className="mt-6 flex h-16 items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-md transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800"
             >
               {!loading ? (
                 <>

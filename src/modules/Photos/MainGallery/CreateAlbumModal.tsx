@@ -5,7 +5,7 @@ import Input from '../../../components/general/Input'
 import CreateOrModifyButton from '../../../components/general/CreateOrModifyButton'
 import { toast } from 'react-toastify'
 import { cookieParse } from 'pocketbase'
-import { PhotosContext } from '.'
+import { PhotosContext } from '..'
 
 function CreateAlbumModal(): React.ReactElement {
   const {

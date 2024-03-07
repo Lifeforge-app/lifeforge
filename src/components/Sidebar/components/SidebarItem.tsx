@@ -59,7 +59,7 @@ function SidebarItem({
         }`}
       >
         <div
-          className={`relative flex w-full items-center justify-between gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/30 dark:hover:bg-bg-800 ${
+          className={`relative flex w-full items-center justify-between gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 hover:bg-bg-200/30 dark:hover:bg-bg-800 ${
             location.pathname.slice(1).startsWith(titleToPath(name)) ||
             active === true
               ? 'bg-bg-200/50 dark:bg-bg-800'

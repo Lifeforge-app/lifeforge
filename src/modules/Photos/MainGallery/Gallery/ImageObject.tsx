@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useContext } from 'react'
-import { PhotosContext, type IPhotosEntryItem } from '..'
+import { PhotosContext, type IPhotosEntryItem } from '../..'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Icon } from '@iconify/react/dist/iconify.js'
 
@@ -10,7 +10,8 @@ function ImageObject({
   details,
   selected,
   toggleSelected,
-  selectedPhotosLength
+  selectedPhotosLength,
+  beingDisplayedInAlbum
 }: {
   photo: any
   details: IPhotosEntryItem
@@ -18,6 +19,7 @@ function ImageObject({
   selected: boolean
   toggleSelected: () => void
   selectedPhotosLength: number
+  beingDisplayedInAlbum: boolean
 }): React.ReactElement {
   const { galleryWrapperRef } = useContext(PhotosContext)
 
@@ -33,7 +35,6 @@ function ImageObject({
         height: photo.height,
         width: photo.width
       }}
-      on
       className={`group/image relative min-w-[5rem] overflow-hidden ${
         selected ? 'bg-custom-500/20 p-4' : 'bg-bg-200 dark:bg-bg-800'
       } transition-all`}
@@ -60,13 +61,13 @@ function ImageObject({
       >
         <Icon
           icon="tabler:check"
-          className={`stroke-bg-100 stroke-[2px] text-bg-100 transition-all dark:stroke-bg-900 dark:text-bg-900 ${
+          className={`stroke-bg-900 stroke-[2px] text-bg-900 transition-all ${
             !selected &&
             'group-hover/select-button:stroke-bg-900 group-hover/select-button:text-bg-900'
           }`}
         />
       </button>
-      {details.album !== '' && (
+      {!beingDisplayedInAlbum && details.album !== '' && (
         <span className="absolute right-2 top-2 text-bg-200 opacity-50">
           <Icon icon="tabler:library-photo" className="h-5 w-5" />
         </span>

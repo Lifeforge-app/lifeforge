@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-no-undef */
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useContext, useEffect, useState } from 'react'
-import { PhotosContext } from '..'
+import { PhotosContext } from '../..'
 import useFetch from '../../../../hooks/useFetch'
 import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'

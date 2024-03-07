@@ -1,10 +1,10 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import DateGroup from './DateGroup'
-import { PhotosContext } from '..'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { toast } from 'react-toastify'
+import { PhotosContext } from '../..'
 
 function Gallery(): React.ReactElement {
   const {
@@ -13,6 +13,12 @@ function Gallery(): React.ReactElement {
     setSelectedPhotos,
     setAddPhotosToAlbumModalOpen
   } = useContext(PhotosContext)
+
+  useEffect(() => {
+    return () => {
+      setSelectedPhotos([])
+    }
+  }, [])
 
   return typeof photos !== 'string' ? (
     <>
