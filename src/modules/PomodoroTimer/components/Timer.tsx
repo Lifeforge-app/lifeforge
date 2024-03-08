@@ -9,7 +9,7 @@ export default function Timer(): React.ReactElement {
     <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-12">
       <div className="relative flex flex-col items-center justify-center">
         <div
-          className="radial-progress absolute text-bg-200 dark:text-bg-900"
+          className="radial-progress absolute text-bg-200 dark:text-bg-800"
           style={{
             // @ts-expect-error - Cannot fix lah this one ;-;
             '--value': '100',
@@ -60,7 +60,7 @@ export default function Timer(): React.ReactElement {
             onClick={() => {
               setStarted(false)
             }}
-            className="flex shrink-0 items-center gap-2 rounded-lg bg-bg-200 p-4 px-6 pr-7 font-semibold uppercase tracking-wider text-bg-500 hover:bg-bg-300 dark:bg-bg-800 dark:text-bg-400 dark:hover:bg-bg-700/50"
+            className="flex shrink-0 items-center gap-2 rounded-lg bg-bg-200 p-4 px-6 pr-7 font-semibold uppercase tracking-wider text-bg-500 hover:bg-bg-300 dark:bg-bg-800 dark:text-bg-500 dark:hover:bg-bg-700/50"
           >
             <Icon icon="tabler:square" className="h-5 w-5 shrink-0" />
             <span className="shrink-0">end session</span>

@@ -4,14 +4,24 @@ import React from 'react'
 
 function HamburgerMenu({
   children,
-  position
+  position,
+  lighter,
+  customWidth
 }: {
   children: React.ReactNode
   position: string
+  lighter?: boolean
+  customWidth?: string
 }): React.ReactElement {
   return (
     <Menu as="div" className={position}>
-      <Menu.Button className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30">
+      <Menu.Button
+        className={`rounded-md p-2 ${
+          lighter === true
+            ? 'text-bg-100 hover:bg-bg-500/50'
+            : 'text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30'
+        }`}
+      >
         <Icon icon="tabler:dots-vertical" className="h-5 w-5" />
       </Menu.Button>
       <Transition
@@ -23,7 +33,11 @@ function HamburgerMenu({
         leaveTo="transform scale-95 opacity-0"
         className="absolute right-0 top-3 z-50"
       >
-        <Menu.Items className="mt-6 w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800">
+        <Menu.Items
+          className={`mt-6 ${
+            customWidth ?? 'w-48'
+          } overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800`}
+        >
           {children}
         </Menu.Items>
       </Transition>

@@ -240,7 +240,7 @@ function ServerStatus(): React.ReactElement {
                   </div>
                 </div>
                 <GaugeComponent value={cpuUsage.usage} />
-                <p className="text-center text-lg text-bg-400">
+                <p className="text-center text-lg text-bg-500">
                   {moment(cpuUsage.uptime * 1000).format(
                     'D [days], H [hrs], m [mins]'
                   )}{' '}
@@ -262,7 +262,7 @@ function ServerStatus(): React.ReactElement {
                   </div>
                 </div>
                 <GaugeComponent value={memoryUsage.percent} />
-                <p className="text-center text-lg text-bg-400">
+                <p className="text-center text-lg text-bg-500">
                   {formatBytes(memoryUsage.used)} /{' '}
                   {formatBytes(memoryUsage.total)} used
                 </p>
@@ -325,7 +325,7 @@ function ServerStatus(): React.ReactElement {
                     ]
                   }}
                 />
-                <p className="text-center text-lg text-bg-400">
+                <p className="text-center text-lg text-bg-500">
                   {cpuTemp.max}°C max
                 </p>
               </div>
@@ -356,17 +356,17 @@ function ServerStatus(): React.ReactElement {
                         {disk.name}
                       </h2>
                     </div>
-                    <p className="shrink-0 rounded-md border border-bg-400 px-4 py-2 text-lg text-bg-400">
+                    <p className="shrink-0 rounded-md border border-bg-400 px-4 py-2 text-lg text-bg-500">
                       {disk.size}B
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
-                    <p className="text-lg text-bg-400">Used</p>
-                    <p className="text-lg text-bg-400">{disk.used}B</p>
+                    <p className="text-lg text-bg-500">Used</p>
+                    <p className="text-lg text-bg-500">{disk.used}B</p>
                   </div>
                   <div className="flex items-center justify-between">
-                    <p className="text-lg text-bg-400">Available</p>
-                    <p className="text-lg text-bg-400">{disk.avail}B</p>
+                    <p className="text-lg text-bg-500">Available</p>
+                    <p className="text-lg text-bg-500">{disk.avail}B</p>
                   </div>
                   <div className="mt-4 h-3 w-full overflow-hidden rounded-full border border-bg-500">
                     <div
@@ -399,10 +399,10 @@ function ServerStatus(): React.ReactElement {
                   <ul className="flex flex-col divide-y divide-bg-700">
                     {Object.entries(value).map(([k, v]) => (
                       <li key={k} className="flex justify-between p-4">
-                        <span className="text-lg text-bg-400">
+                        <span className="text-lg text-bg-500">
                           {camelCaseToTitleCase(k)}
                         </span>
-                        <span className="w-1/2 break-all text-lg text-bg-400">
+                        <span className="w-1/2 break-all text-lg text-bg-500">
                           {typeof v === 'object' ? (
                             <ul className="flex flex-col divide-y divide-bg-700">
                               {/* @ts-expect-error - uhh lazy to fix for now =) */}
@@ -411,10 +411,10 @@ function ServerStatus(): React.ReactElement {
                                   key={k}
                                   className="flex justify-between p-4"
                                 >
-                                  <span className="text-lg text-bg-400">
+                                  <span className="text-lg text-bg-500">
                                     {camelCaseToTitleCase(k)}
                                   </span>
-                                  <span className="text-lg text-bg-400">
+                                  <span className="text-lg text-bg-500">
                                     {/* @ts-expect-error - uhh lazy to fix for now =) */}
                                     {formatBytes(v) || 'N/A'}
                                   </span>
@@ -439,10 +439,10 @@ function ServerStatus(): React.ReactElement {
                     >
                       {Object.entries(v).map(([k, v]) => (
                         <li key={k} className="flex justify-between p-4">
-                          <span className="text-lg text-bg-400">
+                          <span className="text-lg text-bg-500">
                             {camelCaseToTitleCase(k)}
                           </span>
-                          <span className="w-1/2 break-all text-lg text-bg-400">
+                          <span className="w-1/2 break-all text-lg text-bg-500">
                             {k.includes('byte')
                               ? // @ts-expect-error - uhh lazy to fix for now =)
                                 formatBytes(v)

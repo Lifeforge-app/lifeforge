@@ -7,8 +7,8 @@ import useFetch from '../../hooks/useFetch'
 import LogItem from './components/LogItem'
 import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
 import ModuleWrapper from '../../components/general/ModuleWrapper'
-import { Icon } from '@iconify/react/dist/iconify.js'
 import EmptyStateScreen from '../../components/general/EmptyStateScreen'
+import SearchInput from '../../components/general/SearchInput'
 
 export interface IChangeLogVersion {
   version: string
@@ -60,18 +60,11 @@ function Changelog(): React.ReactElement {
         title="Change Log"
         desc="All the changes made to this application will be listed here."
       />
-      <search className="mt-6 flex w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
-        <Icon icon="tabler:search" className="h-5 w-5 text-bg-500" />
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={e => {
-            setSearchQuery(e.target.value)
-          }}
-          placeholder="Search idea containers ..."
-          className="w-full bg-transparent placeholder:text-bg-400 focus:outline-none"
-        />
-      </search>
+      <SearchInput
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        stuffToSearch="features"
+      />
       <APIComponentWithFallback data={data}>
         <ul className="my-8 flex flex-1 flex-col gap-4">
           {typeof data !== 'string' &&

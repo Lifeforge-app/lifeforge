@@ -276,10 +276,10 @@ function DirectoryHeader({
           })()}
         </div>
         <div className="flex items-center gap-4">
-          <button className="hidden rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-900 dark:hover:bg-bg-700/50 dark:hover:text-bg-100 md:block">
+          <button className="hidden rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-700/50 dark:hover:text-bg-100 md:block">
             <Icon icon="tabler:search" className="text-2xl" />
           </button>
-          <button className="hidden rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-900 dark:hover:bg-bg-700/50 dark:hover:text-bg-100 md:block">
+          <button className="hidden rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-700/50 dark:hover:text-bg-100 md:block">
             <Icon icon="tabler:filter" className="text-2xl" />
           </button>
           <Menu as="div" className="relative z-50 hidden md:block">

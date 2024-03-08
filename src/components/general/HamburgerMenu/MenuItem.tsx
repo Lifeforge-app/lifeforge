@@ -26,7 +26,7 @@ function MenuItem({
               : isRed
               ? 'text-red-500'
               : 'text-bg-500'
-          } flex w-full items-center p-4`}
+          } flex w-full items-center p-4 text-left`}
         >
           <Icon icon={icon} className="h-5 w-5" />
           <span className="ml-2">{text}</span>

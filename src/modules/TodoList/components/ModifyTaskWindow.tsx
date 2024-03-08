@@ -164,7 +164,7 @@ function ModifyTaskWindow({
           <Listbox.Button className="flex w-full items-center">
             <Icon
               icon="tabler:alert-triangle"
-              className={`ml-6 h-6 w-6 shrink-0 ${'text-bg-900 dark:text-bg-100'} group-focus-within:text-custom-500`}
+              className={`ml-6 h-6 w-6 shrink-0 ${'text-bg-800 dark:text-bg-100'} group-focus-within:text-custom-500`}
             />
             <span
               className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:text-custom-500 ${'top-6 -translate-y-1/2 text-[14px]'}`}
@@ -189,7 +189,7 @@ function ModifyTaskWindow({
             <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
               <Icon
                 icon="tabler:chevron-down"
-                className="h-5 w-5 text-bg-400"
+                className="h-5 w-5 text-bg-500"
               />
             </span>
           </Listbox.Button>
@@ -250,7 +250,7 @@ function ModifyTaskWindow({
             <Icon
               icon="tabler:list"
               className={`ml-6 h-6 w-6 shrink-0 ${
-                list !== null ? 'text-bg-900 dark:text-bg-100' : 'text-bg-500'
+                list !== null ? 'text-bg-800 dark:text-bg-100' : 'text-bg-500'
               } group-focus-within:text-custom-500`}
             />
             <span
@@ -272,7 +272,7 @@ function ModifyTaskWindow({
             <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
               <Icon
                 icon="tabler:chevron-down"
-                className="h-5 w-5 text-bg-400"
+                className="h-5 w-5 text-bg-500"
               />
             </span>
           </Listbox.Button>
@@ -366,7 +366,7 @@ function ModifyTaskWindow({
                   icon="tabler:tags"
                   className={`ml-6 h-6 w-6 shrink-0 ${
                     tags.length > 0
-                      ? 'text-bg-900 dark:text-bg-100'
+                      ? 'text-bg-800 dark:text-bg-100'
                       : 'text-bg-500'
                   } group-focus-within:text-custom-500`}
                 />
@@ -389,7 +389,7 @@ function ModifyTaskWindow({
                 <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
                   <Icon
                     icon="tabler:chevron-down"
-                    className="h-5 w-5 text-bg-400"
+                    className="h-5 w-5 text-bg-500"
                   />
                 </span>
               </Listbox.Button>

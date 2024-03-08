@@ -1,13 +1,15 @@
 import { faker } from '@faker-js/faker'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React from 'react'
+import React, { useState } from 'react'
 import ModuleHeader from '../../components/general/ModuleHeader'
 import SidebarDivider from '../../components/Sidebar/components/SidebarDivider'
 import SidebarItem from '../../components/Sidebar/components/SidebarItem'
 import SidebarTitle from '../../components/Sidebar/components/SidebarTitle'
 import ModuleWrapper from '../../components/general/ModuleWrapper'
+import SearchInput from '../../components/general/SearchInput'
 
 function ReferenceBooks(): React.JSX.Element {
+  const [searchQuery, setSearchQuery] = useState('')
   return (
     <ModuleWrapper>
       <ModuleHeader
@@ -29,7 +31,7 @@ function ReferenceBooks(): React.JSX.Element {
             ].map(([icon, name], index) => (
               <li
                 key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
+                className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
               >
                 <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-800">
                   <Icon icon={icon} className="h-5 w-5 shrink-0" />
@@ -50,7 +52,7 @@ function ReferenceBooks(): React.JSX.Element {
             ].map(([icon, name], index) => (
               <li
                 key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
+                className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
               >
                 <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-800">
                   <Icon icon={icon} className="h-5 w-5 shrink-0" />
@@ -68,21 +70,18 @@ function ReferenceBooks(): React.JSX.Element {
         <div className="ml-12 flex h-full min-h-0 flex-1 flex-col">
           <div className="flex items-center justify-between">
             <h1 className="text-4xl font-semibold text-bg-100">
-              All Books <span className="text-base text-bg-400">(10)</span>
+              All Books <span className="text-base text-bg-500">(10)</span>
             </h1>
             <button className="flex shrink-0 items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-800">
               <Icon icon="tabler:plus" className="h-5 w-5 shrink-0" />
               <span className="shrink-0">upload</span>
             </button>
           </div>
-          <search className="mt-6 flex w-full items-center gap-4 rounded-lg bg-bg-50 p-4 dark:bg-bg-900">
-            <Icon icon="tabler:search" className="h-5 w-5 text-bg-100" />
-            <input
-              type="text"
-              placeholder="Search books ..."
-              className="w-full bg-transparent placeholder:text-bg-100 focus:outline-none"
-            />
-          </search>
+          <SearchInput
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            stuffToSearch="books"
+          />
           <ul className="mt-6 grid min-h-0 grid-cols-3 gap-6 gap-y-12 overflow-y-auto">
             {Array(10)
               .fill(0)
@@ -101,7 +100,7 @@ function ReferenceBooks(): React.JSX.Element {
                   <div className="mt-4 text-xl font-medium text-bg-100">
                     {faker.commerce.productName()}
                   </div>
-                  <div className="mt-2 text-sm font-medium text-bg-400">
+                  <div className="mt-2 text-sm font-medium text-bg-500">
                     {faker.person.fullName()}
                   </div>
                   <div className="mt-6 flex w-full flex-col gap-4">

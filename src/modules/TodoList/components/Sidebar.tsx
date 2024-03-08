@@ -99,7 +99,7 @@ function Sidebar({
           ].map(([icon, name], index) => (
             <li
               key={index}
-              className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
+              className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
             >
               <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
                 <Icon icon={icon} className="h-6 w-6 shrink-0" />
@@ -139,7 +139,7 @@ function Sidebar({
                     onContextMenuCapture={() => {
                       setContextMenuOpen(false)
                     }}
-                    className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
+                    className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
                   >
                     <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
                       <span
@@ -174,7 +174,7 @@ function Sidebar({
                 {tags.map(({ id, name, amount }) => (
                   <li
                     key={id}
-                    className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
+                    className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
                   >
                     <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-800">
                       <Icon icon="tabler:hash" className="h-5 w-5 shrink-0" />

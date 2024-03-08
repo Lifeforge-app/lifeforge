@@ -34,7 +34,7 @@ function Input({
       <Icon
         icon={icon}
         className={`ml-6 h-6 w-6 shrink-0 ${
-          value ? 'text-bg-900 dark:text-bg-100' : 'text-bg-500'
+          value ? 'text-bg-800 dark:text-bg-100' : 'text-bg-500'
         } group-focus-within:!text-custom-500`}
       />
       <div className="flex w-full items-center gap-2">

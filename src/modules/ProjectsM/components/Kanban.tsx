@@ -35,7 +35,7 @@ function Kanban(): React.JSX.Element {
                 className={`rounded-md p-4 ${
                   index === 0
                     ? 'bg-bg-300/50 dark:bg-bg-700/50 dark:text-bg-100'
-                    : 'text-bg-400 hover:bg-bg-200/50 dark:hover:bg-bg-700/50'
+                    : 'text-bg-500 hover:bg-bg-200/50 dark:hover:bg-bg-700/50'
                 }`}
               >
                 <Icon icon={icon} className="text-2xl" />

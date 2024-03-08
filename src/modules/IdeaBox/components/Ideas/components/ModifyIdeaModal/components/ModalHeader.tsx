@@ -88,7 +88,7 @@ function ModalHeader({
                             ? 'text-bg-800 dark:text-bg-100'
                             : active
                             ? 'bg-bg-200/50 text-bg-800 dark:bg-bg-800 dark:text-bg-100'
-                            : 'text-bg-500 hover:bg-bg-200/50 dark:text-bg-400 dark:hover:bg-bg-800'
+                            : 'text-bg-500 hover:bg-bg-200/50 dark:text-bg-500 dark:hover:bg-bg-800'
                         }`}
                       >
                         <Icon

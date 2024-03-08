@@ -111,7 +111,7 @@ function WebPlayback(): React.ReactElement {
               }}
               className={`rounded-full p-4 ${
                 isPaused
-                  ? 'bg-custom-500 text-bg-100 dark:text-bg-900'
+                  ? 'bg-custom-500 text-bg-100 dark:text-bg-800'
                   : 'bg-bg-200 dark:bg-bg-700/50'
               }`}
             >

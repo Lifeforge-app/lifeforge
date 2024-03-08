@@ -23,7 +23,7 @@ function IconInput({
         <Icon
           icon="tabler:icons"
           className={`ml-6 h-6 w-6 shrink-0 ${
-            icon ? 'text-bg-900 dark:text-bg-100' : 'text-bg-500'
+            icon ? 'text-bg-800 dark:text-bg-100' : 'text-bg-500'
           } group-focus-within:text-custom-500`}
         />
 
@@ -48,14 +48,14 @@ function IconInput({
               value={icon}
               onChange={updateIcon}
               placeholder="tabler:cube"
-              className="h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-400"
+              className="h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
             />
           </div>
           <button
             onClick={() => {
               setIconSelectorOpen(true)
             }}
-            className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-200 hover:text-bg-900 focus:outline-none dark:hover:bg-bg-500/30 dark:hover:text-bg-200"
+            className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-200 hover:text-bg-800 focus:outline-none dark:hover:bg-bg-500/30 dark:hover:text-bg-200"
           >
             <Icon icon="tabler:chevron-down" className="h-6 w-6" />
           </button>

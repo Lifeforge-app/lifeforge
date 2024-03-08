@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import SidebarItem from '../../components/Sidebar/components/SidebarItem'
 import { faker } from '@faker-js/faker'
 import ModuleWrapper from '../../components/general/ModuleWrapper'
+import SearchInput from '../../components/general/SearchInput'
 
 function shuffle(array: any[]): any[] {
   let currentIndex = array.length
@@ -32,6 +33,7 @@ function shuffle(array: any[]): any[] {
 
 function ProjectsM(): React.JSX.Element {
   const [icons, setIcons] = useState([])
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     fetch('http://api.iconify.design/collection?prefix=tabler')
@@ -62,7 +64,7 @@ function ProjectsM(): React.JSX.Element {
             ].map(([icon, name], index) => (
               <li
                 key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
+                className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
               >
                 <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-800">
                   <Icon icon={icon} className="h-6 w-6 shrink-0" />
@@ -84,7 +86,7 @@ function ProjectsM(): React.JSX.Element {
             ].map(([icon, name, color], index) => (
               <li
                 key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
+                className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
               >
                 <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
                   <span className={`block h-8 w-1.5 rounded-full ${color}`} />
@@ -106,7 +108,7 @@ function ProjectsM(): React.JSX.Element {
             ].map(([icon, name], index) => (
               <li
                 key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
+                className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
               >
                 <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
                   <Icon icon={icon} className="h-6 w-6 shrink-0" />
@@ -134,7 +136,7 @@ function ProjectsM(): React.JSX.Element {
             ].map(([icon, name], index) => (
               <li
                 key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
+                className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
               >
                 <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
                   <Icon icon={icon} className="h-5 w-5 shrink-0" />
@@ -152,23 +154,18 @@ function ProjectsM(): React.JSX.Element {
         <div className="ml-8 flex h-full flex-1 flex-col">
           <div className="mx-4 flex items-center justify-between">
             <h1 className="text-4xl font-semibold text-bg-800 dark:text-bg-100">
-              All Projects <span className="text-base text-bg-400">(10)</span>
+              All Projects <span className="text-base text-bg-500">(10)</span>
             </h1>
             <button className="flex shrink-0 items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]   hover:bg-custom-600 dark:text-bg-800">
               <Icon icon="tabler:plus" className="h-5 w-5 shrink-0" />
               <span className="shrink-0">create</span>
             </button>
           </div>
-          <div className="mx-4 mt-6 flex items-center gap-4">
-            <search className="flex w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
-              <Icon icon="tabler:search" className="h-5 w-5 text-bg-500" />
-              <input
-                type="text"
-                placeholder="Search projects ..."
-                className="w-full bg-transparent placeholder:text-bg-300 focus:outline-none"
-              />
-            </search>
-          </div>
+          <SearchInput
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            stuffToSearch="projects"
+          />
           <div className="mt-6 flex flex-1 flex-col overflow-y-auto">
             <ul className="flex flex-col">
               {Array(10)
@@ -280,7 +277,7 @@ function ProjectsM(): React.JSX.Element {
                       <div className="flex items-center gap-4 ">
                         <Icon
                           icon="tabler:chevron-right"
-                          className="h-5 w-5 stroke-[2px] text-bg-400"
+                          className="h-5 w-5 stroke-[2px] text-bg-500"
                         />
                       </div>
                     </Link>

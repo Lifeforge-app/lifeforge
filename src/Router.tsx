@@ -27,12 +27,12 @@ import ServerStatus from './modules/ServerStatus'
 import Spotify from './modules/Spotify'
 import Modules from './modules/Modules'
 import { titleToPath } from './components/Sidebar/components/SidebarItem'
-import ProjectsK from './modules/ProjectsK'
-import Project from './modules/ProjectsK/components/Project'
-import PhotosMainGallery from './modules/Photos/MainGallery'
-import PhotosAlbumGallery from './modules/Photos/AlbumGallery'
-import PhotosAlbumList from './modules/Photos/AlbumList'
-import Photos from './modules/Photos'
+import ProjectsKList from './modules/ProjectsK/pages/ProjectList'
+import ProjectsKEntry from './modules/ProjectsK/pages/ProjectEntry'
+import PhotosMainGallery from './modules/Photos/pages/MainGallery'
+import PhotosAlbumGallery from './modules/Photos/pages/AlbumGallery'
+import PhotosAlbumList from './modules/Photos/pages/AlbumList'
+import Photos from './providers/PhotosProvider'
 
 interface IRoutesItem {
   name: string
@@ -80,11 +80,15 @@ export const ROUTES: IRoutes[] = [
         name: 'Projects (K)',
         icon: 'tabler:clipboard',
         routes: [
-          <Route key="projects-k" path="projects-k" element={<ProjectsK />} />,
+          <Route
+            key="projects-k"
+            path="projects-k"
+            element={<ProjectsKList />}
+          />,
           <Route
             key="projects-k-id"
             path="projects-k/:id"
-            element={<Project />}
+            element={<ProjectsKEntry />}
           />
         ],
         togglable: true

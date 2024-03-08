@@ -53,9 +53,9 @@ function SidebarItem({
     <>
       <li
         className={`relative flex items-center gap-6 px-4 font-medium transition-all ${
-          location.pathname.slice(1).startsWith(titleToPath(name))
+          location.pathname.slice(1).startsWith(titleToPath(name)) || active
             ? "text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-100"
-            : 'text-bg-500 dark:text-bg-400'
+            : 'text-bg-500 dark:text-bg-500'
         }`}
       >
         <div
@@ -109,7 +109,7 @@ function SidebarItem({
                 >
                   <Icon
                     icon="tabler:chevron-right"
-                    className={`stroke-[2px] text-bg-400 transition-all ${
+                    className={`stroke-[2px] text-bg-500 transition-all ${
                       subsectionExpanded ? 'rotate-90' : ''
                     }`}
                   />
@@ -135,7 +135,7 @@ function SidebarItem({
                     titleToPath(name) &&
                   location.pathname.split('/').slice(1)[1] === subsectionLink
                     ? 'bg-bg-200/50 dark:bg-bg-800'
-                    : 'text-bg-400'
+                    : 'text-bg-500'
                 }`}
               >
                 <Icon icon={subsectionIcon} className="h-6 w-6" />

@@ -20,7 +20,7 @@ function IdeaImageUpload({
       <div className="mt-4 text-center text-2xl font-medium text-bg-500">
         {isDragActive ? "Drop it like it's hot" : 'Drag and drop to upload'}
       </div>
-      <div className="mt-4 text-center text-lg font-semibold uppercase tracking-widest text-bg-400">
+      <div className="mt-4 text-center text-lg font-semibold uppercase tracking-widest text-bg-500">
         or
       </div>
       <label

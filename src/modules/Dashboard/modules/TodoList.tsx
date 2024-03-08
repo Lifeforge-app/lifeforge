@@ -25,7 +25,7 @@ export default function TodoList(): React.JSX.Element {
             <div className="font-semibold text-bg-800 dark:text-bg-100">
               Do homework
             </div>
-            <div className="text-sm text-bg-400">00:00 AM, 31 Jan 2024</div>
+            <div className="text-sm text-bg-500">00:00 AM, 31 Jan 2024</div>
           </div>
           <button className="h-6 w-6 rounded-full border-2 border-bg-400 transition-all hover:border-orange-500" />
         </li>
@@ -34,7 +34,7 @@ export default function TodoList(): React.JSX.Element {
             <div className="font-semibold text-bg-800 dark:text-bg-100">
               Start doing revision for SPM Sejarah
             </div>
-            <div className="text-sm text-bg-400">00:00 AM, 31 Jan 2024</div>
+            <div className="text-sm text-bg-500">00:00 AM, 31 Jan 2024</div>
           </div>
           <button className="h-6 w-6 rounded-full border-2 border-bg-400 transition-all hover:border-orange-500" />
         </li>

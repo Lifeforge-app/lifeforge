@@ -112,7 +112,7 @@ function Calendar(): React.JSX.Element {
               ].map(([name, color], index) => (
                 <li
                   key={index}
-                  className="relative flex items-center gap-6 px-4 font-medium text-bg-400 transition-all"
+                  className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
                 >
                   <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
                     <span

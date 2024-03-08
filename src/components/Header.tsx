@@ -54,7 +54,7 @@ export default function Header(): React.JSX.Element {
               <div className="font-semibold text-bg-800 dark:text-bg-100">
                 {userData?.name}
               </div>
-              <div className="text-sm text-bg-400">{userData?.email}</div>
+              <div className="text-sm text-bg-500">{userData?.email}</div>
             </div>
             <Icon
               icon="tabler:chevron-down"

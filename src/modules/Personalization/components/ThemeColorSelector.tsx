@@ -54,7 +54,7 @@ function ThemeColorSelector(): React.ReactElement {
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <Icon
                 icon="tabler:chevron-down"
-                className="h-5 w-5 text-bg-400"
+                className="h-5 w-5 text-bg-500"
               />
             </span>
           </Listbox.Button>

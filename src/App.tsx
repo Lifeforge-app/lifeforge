@@ -29,7 +29,7 @@ function App(): React.JSX.Element {
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
-                theme="dark"
+                theme="colored"
               />
             </SpotifyProvider>
           </PersonalizationProvider>

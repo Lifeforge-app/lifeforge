@@ -15,7 +15,7 @@ export default function TodaysEvent(): React.JSX.Element {
             <div className="font-semibold text-bg-800 dark:text-bg-100">
               Coldplay&apos;s concert
             </div>
-            <div className="text-sm text-bg-400">8:00 PM</div>
+            <div className="text-sm text-bg-500">8:00 PM</div>
           </div>
         </li>
         <li className="flex flex-1 items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] dark:bg-bg-800">
@@ -24,7 +24,7 @@ export default function TodaysEvent(): React.JSX.Element {
             <div className="font-semibold text-bg-800 dark:text-bg-100">
               Meeting with client
             </div>
-            <div className="text-sm text-bg-400">10:00 PM</div>
+            <div className="text-sm text-bg-500">10:00 PM</div>
           </div>
         </li>
         <li className="flex flex-1 items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] dark:bg-bg-800">
@@ -33,7 +33,7 @@ export default function TodaysEvent(): React.JSX.Element {
             <div className="font-semibold text-bg-800 dark:text-bg-100">
               Deadline for project
             </div>
-            <div className="text-sm text-bg-400">11:59 PM</div>
+            <div className="text-sm text-bg-500">11:59 PM</div>
           </div>
         </li>
       </ul>

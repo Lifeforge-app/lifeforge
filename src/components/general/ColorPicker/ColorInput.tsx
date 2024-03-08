@@ -40,7 +40,7 @@ function ColorInput({
             value={color}
             onChange={updateColor}
             placeholder="#FFFFFF"
-            className="h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-400"
+            className="h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
           />
         </div>
         <button

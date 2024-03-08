@@ -19,7 +19,7 @@ export default function WalletBalance(): React.JSX.Element {
               <div className="text-sm text-bg-500">RM 520.00</div>
             </div>
           </div>
-          <button className="rounded-lg p-4 text-bg-400 transition-all">
+          <button className="rounded-lg p-4 text-bg-500 transition-all">
             <Icon icon="tabler:chevron-right" className="text-2xl" />
           </button>
         </li>
@@ -33,7 +33,7 @@ export default function WalletBalance(): React.JSX.Element {
               <div className="text-sm text-bg-500">RM 128.00</div>
             </div>
           </div>
-          <button className="rounded-lg p-4 text-bg-400 transition-all">
+          <button className="rounded-lg p-4 text-bg-500 transition-all">
             <Icon icon="tabler:chevron-right" className="text-2xl" />
           </button>
         </li>
@@ -47,7 +47,7 @@ export default function WalletBalance(): React.JSX.Element {
               <div className="text-sm text-bg-500">RM 12,487.00</div>
             </div>
           </div>
-          <button className="rounded-lg p-4 text-bg-400 transition-all">
+          <button className="rounded-lg p-4 text-bg-500 transition-all">
             <Icon icon="tabler:chevron-right" className="text-2xl" />
           </button>
         </li>

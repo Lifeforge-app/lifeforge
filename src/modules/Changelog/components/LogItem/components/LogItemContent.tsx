@@ -7,7 +7,7 @@ function LogItemContent({
   entry: IChangeLogVersion
 }): React.ReactElement {
   return (
-    <ul className="flex list-inside list-disc flex-col gap-2 text-bg-500 dark:text-bg-400">
+    <ul className="flex list-inside list-disc flex-col gap-2 text-bg-500 dark:text-bg-500">
       {entry.entries
         .sort((a, b) => a.feature.localeCompare(b.feature))
         .map(subEntry => (
