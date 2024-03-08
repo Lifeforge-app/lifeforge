@@ -1,13 +1,16 @@
 /* eslint-disable multiline-ternary */
-import React from 'react'
+import React, { useContext } from 'react'
 import ModuleHeader from '../../../components/general/ModuleHeader'
 import GalleryHeader from './Gallery/GalleryHeader'
 import PhotosSidebar from '../PhotosSidebar'
 import GalleryContainer from './Gallery/GalleryContainer'
 import CreateAlbumModal from './CreateAlbumModal'
 import AddPhotosToAlbumModal from './AddPhotosToAlbumModal'
+import DeletePhotosConfirmationModal from './DeletePhotosConfirmationModal'
+import { PhotosContext } from '..'
 
 function Photos(): React.ReactElement {
+  const { refreshPhotos } = useContext(PhotosContext)
   return (
     <section className="relative flex h-full min-h-0 w-full flex-1 flex-col pl-4 sm:pl-12">
       <ModuleHeader
@@ -21,6 +24,7 @@ function Photos(): React.ReactElement {
       </div>
       <CreateAlbumModal />
       <AddPhotosToAlbumModal />
+      <DeletePhotosConfirmationModal refreshPhotos={refreshPhotos} />
     </section>
   )
 }

@@ -3,6 +3,21 @@ import React, { useContext } from 'react'
 import { PhotosContext, type IPhotosEntryItem } from '../..'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Icon } from '@iconify/react/dist/iconify.js'
+import Zoom from 'react-medium-image-zoom'
+
+function CustomZoomContent({
+  img
+}: {
+  buttonUnzoom: React.ReactElement
+  modalState: 'LOADING' | 'LOADED' | 'UNLOADING' | 'UNLOADED'
+  img: any
+}): React.ReactElement {
+  return (
+    <div className="flex h-[100dvh] w-full items-center justify-center">
+      {img}
+    </div>
+  )
+}
 
 function ImageObject({
   photo,
@@ -17,7 +32,7 @@ function ImageObject({
   details: IPhotosEntryItem
   margin: string
   selected: boolean
-  toggleSelected: () => void
+  toggleSelected: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
   selectedPhotosLength: number
   beingDisplayedInAlbum: boolean
 }): React.ReactElement {
@@ -25,9 +40,9 @@ function ImageObject({
 
   return (
     <div
-      onClick={() => {
+      onClick={e => {
         if (selectedPhotosLength > 0) {
-          toggleSelected()
+          toggleSelected(e)
         }
       }}
       style={{
@@ -37,19 +52,29 @@ function ImageObject({
       }}
       className={`group/image relative min-w-[5rem] overflow-hidden ${
         selected ? 'bg-custom-500/20 p-4' : 'bg-bg-200 dark:bg-bg-800'
-      } transition-all`}
+      } transition-all ${selectedPhotosLength > 0 && 'cursor-pointer'}`}
     >
-      <LazyLoadImage
-        src={photo.src}
-        className={`relative h-full w-full object-cover ${
-          selected && 'rounded-md'
-        }`}
-        delayTime={300}
-        threshold={50}
-        useIntersectionObserver={false}
-      />
+      <div className={selectedPhotosLength > 0 ? 'pointer-events-none' : ''}>
+        <Zoom
+          zoomMargin={100}
+          ZoomContent={CustomZoomContent}
+          zoomImg={{
+            src: photo.src.split('?')[0]
+          }}
+        >
+          <LazyLoadImage
+            src={photo.src}
+            className={`relative h-full w-full object-cover ${
+              selected && 'rounded-md'
+            }`}
+            delayTime={300}
+            threshold={50}
+            useIntersectionObserver={false}
+          />
+        </Zoom>
+      </div>
       {!selected && (
-        <div className="absolute top-0 h-12 w-full bg-gradient-to-t from-transparent to-black/50 opacity-0 transition-all group-hover/image:opacity-100" />
+        <div className="pointer-events-none absolute top-0 h-12 w-full bg-gradient-to-t from-transparent to-black/50 opacity-0 transition-all group-hover/image:opacity-100" />
       )}
       <button
         onClick={toggleSelected}

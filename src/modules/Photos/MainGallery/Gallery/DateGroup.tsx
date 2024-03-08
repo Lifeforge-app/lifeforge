@@ -6,6 +6,7 @@ import ImageObject from './ImageObject'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import useResizeObserver from 'use-resize-observer'
 import { type IPhotosEntryItem, PhotosContext } from '../..'
+import { LazyLoadComponent } from 'react-lazy-load-image-component'
 
 function DateGroup({
   date,
@@ -83,7 +84,7 @@ function DateGroup({
             selected={
               selectedPhotos.find(image => image === photo.key) !== undefined
             }
-            toggleSelected={() => {
+            toggleSelected={(e: React.MouseEvent<HTMLDivElement>): void => {
               if (photo.key !== undefined) {
                 if (
                   selectedPhotos.find(image => image === photo.key) !==
@@ -93,7 +94,29 @@ function DateGroup({
                     selectedPhotos.filter(image => image !== photo.key)
                   )
                 } else {
-                  setSelectedPhotos([...selectedPhotos, photo.key])
+                  if (e.shiftKey && typeof allPhotos !== 'string') {
+                    const lastSelectedIndex = allPhotos.items[date].findIndex(
+                      image =>
+                        image.id === selectedPhotos[selectedPhotos.length - 1]
+                    )
+                    const currentIndex = allPhotos.items[date].findIndex(
+                      image => image.id === photo.key
+                    )
+                    const range = allPhotos.items[date].slice(
+                      Math.min(lastSelectedIndex, currentIndex),
+                      Math.max(lastSelectedIndex, currentIndex) + 1
+                    )
+                    setSelectedPhotos(
+                      Array.from(
+                        new Set([
+                          ...selectedPhotos,
+                          ...range.map(image => image.id)
+                        ])
+                      )
+                    )
+                  } else {
+                    setSelectedPhotos([...selectedPhotos, photo.key])
+                  }
                 }
               }
             }}

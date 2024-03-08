@@ -15,7 +15,8 @@ function AddPhotosToAlbumModal(): React.ReactElement {
     setSelectedPhotos,
     isAddPhotosToAlbumModalOpen: isOpen,
     setAddPhotosToAlbumModalOpen: setOpen,
-    refreshAlbumList: updateAlbumList
+    refreshAlbumList: updateAlbumList,
+    refreshPhotos: updatePhotos
   } = useContext(PhotosContext)
   const [selectedAlbum, setSelectedAlbum] = useState('')
   const [loading, setLoading] = useState(false)
@@ -64,6 +65,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
         setLoading(false)
         setOpen(false)
         updateAlbumList()
+        updatePhotos()
         toast.success('Yay! Photos added to album.')
       })
       .catch(err => {

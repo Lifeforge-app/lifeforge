@@ -54,10 +54,14 @@ const PHOTOS_DATA: {
   selectedPhotos: string[]
   isCreateAlbumModalOpen: boolean
   isAddPhotosToAlbumModalOpen: boolean
+  isDeletePhotosConfirmationModalOpen: boolean
   isDragging: boolean
   setSelectedPhotos: React.Dispatch<React.SetStateAction<string[]>>
   setCreateAlbumModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   setAddPhotosToAlbumModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setDeletePhotosConfirmationModalOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >
   setIsDragging: React.Dispatch<React.SetStateAction<boolean>>
   updateEachDayDimensions: () => void
   refreshAlbumList: () => void
@@ -89,10 +93,12 @@ const PHOTOS_DATA: {
   selectedPhotos: [],
   isCreateAlbumModalOpen: false,
   isAddPhotosToAlbumModalOpen: false,
+  isDeletePhotosConfirmationModalOpen: false,
   isDragging: false,
   setSelectedPhotos: () => {},
   setCreateAlbumModalOpen: () => {},
   setAddPhotosToAlbumModalOpen: () => {},
+  setDeletePhotosConfirmationModalOpen: () => {},
   setIsDragging: () => {},
   updateEachDayDimensions: () => {},
   refreshPhotos: () => {},
@@ -122,6 +128,10 @@ function Photos(): React.ReactElement {
   const [isCreateAlbumModalOpen, setCreateAlbumModalOpen] = useState(false)
   const [isAddPhotosToAlbumModalOpen, setAddPhotosToAlbumModalOpen] =
     useState(false)
+  const [
+    isDeletePhotosConfirmationModalOpen,
+    setDeletePhotosConfirmationModalOpen
+  ] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
 
   const sideSliderRef = useRef<HTMLDivElement>(null)
@@ -184,10 +194,12 @@ function Photos(): React.ReactElement {
         selectedPhotos,
         isCreateAlbumModalOpen,
         isAddPhotosToAlbumModalOpen,
+        isDeletePhotosConfirmationModalOpen,
         isDragging,
         setSelectedPhotos,
         setCreateAlbumModalOpen,
         setAddPhotosToAlbumModalOpen,
+        setDeletePhotosConfirmationModalOpen,
         setIsDragging,
         updateEachDayDimensions,
         refreshAlbumList,

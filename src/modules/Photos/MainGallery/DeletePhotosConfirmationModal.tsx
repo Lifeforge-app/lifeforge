@@ -1,62 +1,55 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import Modal from './Modal'
 import { cookieParse } from 'pocketbase'
+import Modal from '../../../components/general/Modal'
+import { PhotosContext } from '..'
 
-function DeleteConfirmationModal({
-  itemName,
-  isOpen,
-  closeModal,
-  data,
-  updateDataList,
-  apiEndpoint,
-  customText,
-  nameKey = 'name',
-  customCallback
+function DeletePhotosConfirmationModal({
+  refreshPhotos
 }: {
-  itemName: string
-  isOpen: boolean
-  closeModal: () => void
-  data: any
-  updateDataList: () => void
-  apiEndpoint: string
-  customText?: string
-  nameKey?: string
-  customCallback?: () => void
+  refreshPhotos: () => void
 }): React.ReactElement {
+  const {
+    selectedPhotos,
+    setSelectedPhotos,
+    isDeletePhotosConfirmationModalOpen,
+    setDeletePhotosConfirmationModalOpen,
+    refreshAlbumList
+  } = useContext(PhotosContext)
   const [loading, setLoading] = useState(false)
 
   function deleteData(): void {
-    if (data === null) return
-    if (customCallback) {
-      customCallback()
-      return
-    }
+    if (selectedPhotos.length === 0) return
 
     setLoading(true)
-    fetch(`${import.meta.env.VITE_API_HOST}/${apiEndpoint}/${data.id}`, {
+    fetch(`${import.meta.env.VITE_API_HOST}/photos/entry/delete`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${cookieParse(document.cookie).token}`
-      }
+      },
+      body: JSON.stringify({
+        photos: selectedPhotos
+      })
     })
       .then(async res => {
         const data = await res.json()
         if (res.ok) {
-          toast.info(`Uhh, hopefully you truly didn't need that ${itemName}.`)
-          closeModal()
-          updateDataList()
+          toast.info("Uhh, hopefully you truly didn't need those photos.")
+          setDeletePhotosConfirmationModalOpen(false)
+          refreshAlbumList()
+          refreshPhotos()
+          setSelectedPhotos([])
           return data
         } else {
           throw new Error(data.message)
         }
       })
       .catch(err => {
-        toast.error(`Oops! Couldn't delete the ${itemName}. Please try again.`)
+        toast.error("Oops! Couldn't delete the photos. Please try again.")
         console.error(err)
       })
       .finally(() => {
@@ -65,21 +58,19 @@ function DeleteConfirmationModal({
   }
 
   return (
-    <Modal isOpen={isOpen}>
+    <Modal isOpen={isDeletePhotosConfirmationModalOpen}>
       <h1 className="text-2xl font-semibold">
-        Are you sure you want to delete {data?.[nameKey] || `the ${itemName}`}?
+        Are you sure you want to delete {selectedPhotos.length} photo
+        {selectedPhotos.length > 1 ? 's' : ''}?
       </h1>
       <p className="mt-2 text-bg-500">
-        {customText ?? (
-          <>
-            This will delete the {itemName} and everything related to it. This
-            action is irreversible!
-          </>
-        )}
+        This will move the photos to the trash. You can restore them from there.
       </p>
       <div className="mt-6 flex w-full justify-around gap-2">
         <button
-          onClick={closeModal}
+          onClick={() => {
+            setDeletePhotosConfirmationModalOpen(false)
+          }}
           className="flex w-full items-center justify-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700"
         >
           Cancel
@@ -105,4 +96,4 @@ function DeleteConfirmationModal({
   )
 }
 
-export default DeleteConfirmationModal
+export default DeletePhotosConfirmationModal
