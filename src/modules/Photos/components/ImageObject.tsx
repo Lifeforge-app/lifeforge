@@ -64,19 +64,20 @@ function CustomZoomContent({
   return (
     <div className="flex h-[100dvh] w-full items-center justify-center">
       {img}
-      {beingDisplayedInAlbum && (
-        <HamburgerMenu
-          lighter
-          position="absolute top-8 right-8"
-          customWidth="w-56"
-        >
+
+      <HamburgerMenu
+        lighter
+        position="absolute top-8 right-8"
+        customWidth="w-56"
+      >
+        {beingDisplayedInAlbum && (
           <MenuItem
             icon="tabler:album"
             onClick={setAsCover}
             text="Set as album cover"
           />
-        </HamburgerMenu>
-      )}
+        )}
+      </HamburgerMenu>
     </div>
   )
 }
@@ -102,7 +103,7 @@ function ImageObject({
   beingDisplayedInAlbum: boolean
   refreshAlbumData?: () => void
 }): React.ReactElement {
-  const { galleryWrapperRef } = useContext(PhotosContext)
+  const { galleryWrapperRef, ready } = useContext(PhotosContext)
 
   return (
     <div
@@ -116,35 +117,42 @@ function ImageObject({
         height: photo.height,
         width: photo.width
       }}
-      className={`group/image relative min-w-[5rem] overflow-hidden ${
+      className={`group/image relative h-full w-full min-w-[5rem] overflow-hidden ${
         selected ? 'bg-custom-500/20 p-4' : 'bg-bg-200 dark:bg-bg-800'
       } transition-all ${selectedPhotosLength > 0 && 'cursor-pointer'}`}
     >
-      <div className={selectedPhotosLength > 0 ? 'pointer-events-none' : ''}>
-        <Zoom
-          zoomMargin={100}
-          ZoomContent={props => (
-            <CustomZoomContent
-              {...props}
-              data={details}
-              beingDisplayedInAlbum={beingDisplayedInAlbum}
-              refreshAlbumData={refreshAlbumData}
+      <div
+        className={`h-full w-full ${
+          selectedPhotosLength > 0 ? 'pointer-events-none' : ''
+        }`}
+      >
+        {(ready || beingDisplayedInAlbum) && (
+          <Zoom
+            zoomMargin={100}
+            ZoomContent={props => (
+              <CustomZoomContent
+                {...props}
+                data={details}
+                beingDisplayedInAlbum={beingDisplayedInAlbum}
+                refreshAlbumData={refreshAlbumData}
+              />
+            )}
+            zoomImg={{
+              src: photo.src.split('?')[0]
+            }}
+          >
+            <LazyLoadImage
+              src={photo.src}
+              className={`relative h-full w-full object-cover ${
+                selected && 'rounded-md'
+              }`}
+              delayTime={300}
+              delayMethod="debounce"
+              threshold={50}
+              useIntersectionObserver={false}
             />
-          )}
-          zoomImg={{
-            src: photo.src.split('?')[0]
-          }}
-        >
-          <LazyLoadImage
-            src={photo.src}
-            className={`relative h-full w-full object-cover ${
-              selected && 'rounded-md'
-            }`}
-            delayTime={300}
-            threshold={50}
-            useIntersectionObserver={false}
-          />
-        </Zoom>
+          </Zoom>
+        )}
       </div>
       {!selected && (
         <div className="pointer-events-none absolute top-0 h-12 w-full bg-gradient-to-t from-transparent to-black/50 opacity-0 transition-all group-hover/image:opacity-100" />

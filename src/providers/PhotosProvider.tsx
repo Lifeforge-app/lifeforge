@@ -11,7 +11,7 @@ export interface IPhotosEntryItem {
   image: string
   is_deleted: boolean
   name: string
-  raw: string
+  hasRaw: boolean
   shot_time: string
   width: number
   height: number
@@ -38,6 +38,7 @@ export interface IPhotosAlbum {
 }
 
 const PHOTOS_DATA: {
+  ready: boolean
   photos: IPhotosEntry | 'loading' | 'error'
   albumList: IPhotosAlbum[] | 'loading' | 'error'
   eachDayDimensions: Record<
@@ -48,17 +49,19 @@ const PHOTOS_DATA: {
     }
   >
   selectedPhotos: string[]
+  hidePhotosInAlbum: boolean
   isCreateAlbumModalOpen: boolean
   isAddPhotosToAlbumModalOpen: boolean
   isDeletePhotosConfirmationModalOpen: boolean
   isDragging: boolean
+  setReady: React.Dispatch<React.SetStateAction<boolean>>
+  setHidePhotosInAlbum: React.Dispatch<React.SetStateAction<boolean>>
   setSelectedPhotos: React.Dispatch<React.SetStateAction<string[]>>
   setCreateAlbumModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   setAddPhotosToAlbumModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   setDeletePhotosConfirmationModalOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
-  setIsDragging: React.Dispatch<React.SetStateAction<boolean>>
   updateEachDayDimensions: () => void
   refreshAlbumList: () => void
   refreshPhotos: () => void
@@ -83,19 +86,21 @@ const PHOTOS_DATA: {
         current: null
       }
 } = {
+  ready: false,
   photos: 'loading',
   albumList: 'loading',
   eachDayDimensions: {},
   selectedPhotos: [],
+  hidePhotosInAlbum: false,
   isCreateAlbumModalOpen: false,
   isAddPhotosToAlbumModalOpen: false,
   isDeletePhotosConfirmationModalOpen: false,
-  isDragging: false,
+  setReady: () => {},
+  setHidePhotosInAlbum: () => {},
   setSelectedPhotos: () => {},
   setCreateAlbumModalOpen: () => {},
   setAddPhotosToAlbumModalOpen: () => {},
   setDeletePhotosConfirmationModalOpen: () => {},
-  setIsDragging: () => {},
   updateEachDayDimensions: () => {},
   refreshPhotos: () => {},
   refreshAlbumList: () => {},
@@ -116,7 +121,11 @@ const PHOTOS_DATA: {
 export const PhotosContext = createContext(PHOTOS_DATA)
 
 function Photos(): React.ReactElement {
-  const [photos, refreshPhotos] = useFetch<IPhotosEntry>('photos/entry/list')
+  const [ready, setReady] = useState(false)
+  const [hidePhotosInAlbum, setHidePhotosInAlbum] = useState(false)
+  const [photos, refreshPhotos] = useFetch<IPhotosEntry>(
+    `photos/entry/list${hidePhotosInAlbum ? '?hideInAlbum=true' : ''}`
+  )
   const [albumList, refreshAlbumList] =
     useFetch<IPhotosAlbum[]>('photos/album/list')
 
@@ -177,6 +186,7 @@ function Photos(): React.ReactElement {
         }
       }
 
+      setReady(true)
       setEachDayDimensions(eachDayHeight)
     }
   }
@@ -184,19 +194,22 @@ function Photos(): React.ReactElement {
   return (
     <PhotosContext.Provider
       value={{
+        ready,
         photos,
         albumList,
         eachDayDimensions,
         selectedPhotos,
+        hidePhotosInAlbum,
         isCreateAlbumModalOpen,
         isAddPhotosToAlbumModalOpen,
         isDeletePhotosConfirmationModalOpen,
         isDragging,
+        setReady,
         setSelectedPhotos,
+        setHidePhotosInAlbum,
         setCreateAlbumModalOpen,
         setAddPhotosToAlbumModalOpen,
         setDeletePhotosConfirmationModalOpen,
-        setIsDragging,
         updateEachDayDimensions,
         refreshAlbumList,
         refreshPhotos,

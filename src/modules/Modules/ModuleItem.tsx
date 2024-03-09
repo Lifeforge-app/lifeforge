@@ -42,7 +42,6 @@ function ModuleItem({
               enabled ? 'bg-custom-500' : 'bg-bg-300 dark:bg-bg-800'
             } relative inline-flex h-6 w-11 items-center rounded-full`}
           >
-            <span className="sr-only">Enable notifications</span>
             <span
               className={`${
                 enabled

@@ -7,9 +7,12 @@ import { PhotosContext } from '../../../../../providers/PhotosProvider'
 import useFetch from '../../../../../hooks/useFetch'
 import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
+import HamburgerMenu from '../../../../../components/general/HamburgerMenu'
+import MenuItem from '../../../../../components/general/HamburgerMenu/MenuItem'
 
 function GalleryHeader(): React.ReactElement {
-  const { refreshPhotos } = useContext(PhotosContext)
+  const { refreshPhotos, hidePhotosInAlbum, setHidePhotosInAlbum } =
+    useContext(PhotosContext)
   const [copiedToClipboard, setCopiedToClipboard] = useState(false)
   const [showImportButton, setShowImportButton] = useState(false)
   const [fileImportLoading, setFileImportLoading] = useState(false)
@@ -146,7 +149,7 @@ function GalleryHeader(): React.ReactElement {
           </button>
         </p>
       </div>
-      <div className="h-14">
+      <div className="flex h-14 items-center gap-4">
         {showImportButton && (
           <button
             onClick={() => {
@@ -170,6 +173,16 @@ function GalleryHeader(): React.ReactElement {
             )}
           </button>
         )}
+        <HamburgerMenu position="relative z-[9999]" customWidth="w-72">
+          <MenuItem
+            icon="tabler:photo-off"
+            onClick={() => {
+              setHidePhotosInAlbum(!hidePhotosInAlbum)
+            }}
+            text="Hide photos in albums"
+            isToggled={hidePhotosInAlbum}
+          />
+        </HamburgerMenu>
       </div>
     </div>
   )

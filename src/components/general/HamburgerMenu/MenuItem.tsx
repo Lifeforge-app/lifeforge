@@ -6,12 +6,14 @@ function MenuItem({
   icon,
   text,
   isRed = false,
-  onClick
+  onClick,
+  isToggled
 }: {
   icon: string
   text: string
   isRed?: boolean
   onClick: () => void
+  isToggled?: boolean
 }): React.ReactElement {
   return (
     <Menu.Item>
@@ -28,8 +30,16 @@ function MenuItem({
               : 'text-bg-500'
           } flex w-full items-center p-4 text-left`}
         >
-          <Icon icon={icon} className="h-5 w-5" />
-          <span className="ml-2">{text}</span>
+          <Icon icon={icon} className="h-5 w-5 shrink-0" />
+          <span className="ml-4 w-full">{text}</span>
+          {isToggled === true && (
+            <Icon
+              icon="tabler:check"
+              className={`${
+                isRed ? 'text-red-600' : 'text-custom-500'
+              } ml-4 h-5 w-5 shrink-0`}
+            />
+          )}
         </button>
       )}
     </Menu.Item>

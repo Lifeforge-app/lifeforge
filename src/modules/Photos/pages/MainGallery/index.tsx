@@ -1,5 +1,5 @@
 /* eslint-disable multiline-ternary */
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ModuleHeader from '../../../../components/general/ModuleHeader'
 import GalleryHeader from './Gallery/GalleryHeader'
 import PhotosSidebar from '../../components/PhotosSidebar'
@@ -8,10 +8,26 @@ import CreateAlbumModal from './CreateAlbumModal'
 import AddPhotosToAlbumModal from './AddPhotosToAlbumModal'
 import DeletePhotosConfirmationModal from './DeletePhotosConfirmationModal'
 import { PhotosContext } from '../../../../providers/PhotosProvider'
+import { GlobalStateContext } from '../../../../providers/GlobalStateProvider'
 
 function Photos(): React.ReactElement {
+  const { sidebarExpanded } = useContext(GlobalStateContext)
   const { refreshPhotos } = useContext(PhotosContext)
-  return (
+  const [showGallery, setShowGallery] = useState(true)
+
+  useEffect(() => {
+    setShowGallery(false)
+
+    const timeout = setTimeout(() => {
+      setShowGallery(true)
+    }, 1000)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [sidebarExpanded])
+
+  return showGallery ? (
     <section className="relative flex h-full min-h-0 w-full flex-1 flex-col pl-4 sm:pl-12">
       <ModuleHeader
         title="Photos"
@@ -26,6 +42,8 @@ function Photos(): React.ReactElement {
       <AddPhotosToAlbumModal />
       <DeletePhotosConfirmationModal refreshPhotos={refreshPhotos} />
     </section>
+  ) : (
+    <></>
   )
 }
 

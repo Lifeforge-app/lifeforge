@@ -14,7 +14,7 @@ function PhotosSidebar(): React.ReactElement {
     useContext(PhotosContext)
 
   return (
-    <aside className="h-[calc(100%-2rem)] w-80 shrink-0 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+    <aside className="hidden h-[calc(100%-2rem)] w-80 shrink-0 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900 sm:block">
       <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
         <li className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all">
           <Link

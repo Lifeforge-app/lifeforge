@@ -1,13 +1,13 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DateGroup from './DateGroup'
 import { PhotosContext } from '../../../../../providers/PhotosProvider'
 import BottomBar from '../../../components/BottomBar'
 
 function Gallery(): React.ReactElement {
-  const { photos, selectedPhotos, setSelectedPhotos } =
-    useContext(PhotosContext)
+  const { photos } = useContext(PhotosContext)
+  const [selectedPhotos, setSelectedPhotos] = useState<string[]>([])
 
   useEffect(() => {
     return () => {
@@ -17,12 +17,14 @@ function Gallery(): React.ReactElement {
 
   return typeof photos !== 'string' ? (
     <>
-      <div className="flex min-h-full min-w-0 flex-col gap-8 pb-8">
+      <div className="relative flex min-h-full min-w-0 flex-col gap-8 pb-8">
         {Object.entries(photos.items).map(([date, photos]) => (
           <DateGroup
             key={date}
             date={date}
             photos={photos}
+            selectedPhotos={selectedPhotos}
+            setSelectedPhotos={setSelectedPhotos}
             toggleSelectAll={() => {
               if (photos.every(photo => selectedPhotos.includes(photo.id))) {
                 setSelectedPhotos(

@@ -9,11 +9,10 @@ function TimelineScrollbar(): React.ReactElement {
     photos,
     eachDayDimensions,
     galleryWrapperRef,
-    timelineDateDisplayRef,
-    isDragging,
-    setIsDragging
+    timelineDateDisplayRef
   } = useContext(PhotosContext)
   const movingTimelineDateDisplayRef = useRef<HTMLDivElement>(null)
+  const isDraggingRef = useRef(false)
 
   return (
     <>
@@ -55,23 +54,23 @@ function TimelineScrollbar(): React.ReactElement {
                     moment(targetDate).format('MMM D, YYYY')
                 }
 
-                if (isDragging && galleryWrapperRef.current !== null) {
+                if (
+                  isDraggingRef.current &&
+                  galleryWrapperRef.current !== null
+                ) {
                   galleryWrapperRef.current.scrollTop =
                     mousePositionInGalleryContainer
                 }
               }
             }}
             onMouseLeave={() => {
-              setIsDragging(false)
+              isDraggingRef.current = false
             }}
             onMouseDown={() => {
-              setIsDragging(true)
+              isDraggingRef.current = true
             }}
             onMouseUp={() => {
-              setIsDragging(false)
-            }}
-            onMouseUpCapture={() => {
-              setIsDragging(false)
+              isDraggingRef.current = false
             }}
             onMouseOut={() => {
               if (
@@ -90,16 +89,16 @@ function TimelineScrollbar(): React.ReactElement {
               if (galleryWrapperRef.current !== null) {
                 const galleryContainerHeight =
                   galleryWrapperRef.current.scrollHeight
-                const rect = (
+
+                const { top, height } = (
                   e.target as HTMLDivElement
                 ).getBoundingClientRect()
-                const mousePosition = Math.round(e.clientY - rect.top)
                 const mousePositionInGalleryContainer =
-                  (mousePosition / rect.height) * galleryContainerHeight
+                  ((e.clientY - top) / height) * galleryContainerHeight
 
-                galleryWrapperRef.current.scrollTop = Math.round(
-                  mousePositionInGalleryContainer
-                )
+                galleryWrapperRef.current.scrollTo({
+                  top: Math.round(mousePositionInGalleryContainer)
+                })
               }
             }}
             className="group peer absolute right-0 top-0 h-full w-0 sm:w-16"
@@ -142,8 +141,11 @@ function TimelineScrollbar(): React.ReactElement {
           <div
             ref={timelineDateDisplayRef}
             className={`pointer-events-none absolute right-14 z-[10] hidden rounded-t-md border-b-2 border-custom-500 bg-bg-200 p-2 text-sm shadow-md dark:bg-bg-800 sm:right-3 sm:block ${
-              isDragging && '!hidden'
+              isDraggingRef.current && '!hidden'
             }`}
+            style={{
+              top: '-36px'
+            }}
           ></div>
         </>
       )}

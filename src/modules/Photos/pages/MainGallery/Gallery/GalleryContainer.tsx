@@ -15,14 +15,13 @@ function GalleryContainer(): React.ReactElement {
     timelineDateDisplayRef,
     galleryWrapperRef,
     mobileDateDisplayRef,
-    eachDayDimensions,
-    isDragging
+    eachDayDimensions
   } = useContext(PhotosContext)
 
   return (
     <>
       <div
-        className="w-full flex-1 overflow-y-scroll scroll-smooth pr-16"
+        className="w-full flex-1 overflow-y-scroll pr-16"
         onScroll={e => {
           if (
             sideSliderRef.current !== null &&
@@ -49,8 +48,6 @@ function GalleryContainer(): React.ReactElement {
               mobileDateDisplayRef.current.textContent =
                 moment(targetDate).format('MMM D, YYYY')
             }
-
-            if (isDragging) return
 
             if (window.innerWidth < 640) {
               sideSliderRef.current.style.top = `${Math.round(

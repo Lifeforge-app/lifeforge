@@ -96,6 +96,11 @@
   }
 }
 
+[data-rmiz],
+[data-rmiz-content] {
+  @apply w-full h-full;
+}
+
 div[data-rmiz-modal-overlay] {
   @apply bg-black/70;
 }
