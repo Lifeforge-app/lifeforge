@@ -127,17 +127,17 @@ function DateGroup({
                       )
                     } else {
                       if (e.shiftKey && typeof allPhotos !== 'string') {
-                        const lastSelectedIndex = allPhotos.items[
-                          date
-                        ].findIndex(
+                        const photos = Object.values(allPhotos.items).flat()
+
+                        const lastSelectedIndex = photos.findIndex(
                           image =>
                             image.id ===
                             selectedPhotos[selectedPhotos.length - 1]
                         )
-                        const currentIndex = allPhotos.items[date].findIndex(
+                        const currentIndex = photos.findIndex(
                           image => image.id === photo.key
                         )
-                        const range = allPhotos.items[date].slice(
+                        const range = photos.slice(
                           Math.min(lastSelectedIndex, currentIndex),
                           Math.max(lastSelectedIndex, currentIndex) + 1
                         )

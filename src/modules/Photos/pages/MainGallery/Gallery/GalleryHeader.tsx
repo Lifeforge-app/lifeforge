@@ -11,7 +11,7 @@ import HamburgerMenu from '../../../../../components/general/HamburgerMenu'
 import MenuItem from '../../../../../components/general/HamburgerMenu/MenuItem'
 
 function GalleryHeader(): React.ReactElement {
-  const { refreshPhotos, hidePhotosInAlbum, setHidePhotosInAlbum } =
+  const { refreshPhotos, hidePhotosInAlbum, setHidePhotosInAlbum, setReady } =
     useContext(PhotosContext)
   const [copiedToClipboard, setCopiedToClipboard] = useState(false)
   const [showImportButton, setShowImportButton] = useState(false)
@@ -53,6 +53,7 @@ function GalleryHeader(): React.ReactElement {
 
             if (progressData.data >= 1) {
               clearInterval(progressFetchInterval)
+              setReady(false)
               refreshPhotos()
               setFileImportLoading(false)
             }
@@ -114,6 +115,7 @@ function GalleryHeader(): React.ReactElement {
         setProgress(progressData.data)
       } else {
         if (!isFirstLoad) {
+          setReady(false)
           refreshPhotos()
         }
         setFileImportLoading(false)
@@ -181,6 +183,13 @@ function GalleryHeader(): React.ReactElement {
             }}
             text="Hide photos in albums"
             isToggled={hidePhotosInAlbum}
+          />
+          <MenuItem
+            icon="tabler:reload"
+            onClick={() => {
+              refreshPhotos()
+            }}
+            text="Refresh"
           />
         </HamburgerMenu>
       </div>

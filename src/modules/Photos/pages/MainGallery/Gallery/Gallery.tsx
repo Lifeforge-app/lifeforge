@@ -1,13 +1,13 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import DateGroup from './DateGroup'
 import { PhotosContext } from '../../../../../providers/PhotosProvider'
 import BottomBar from '../../../components/BottomBar'
 
 function Gallery(): React.ReactElement {
-  const { photos } = useContext(PhotosContext)
-  const [selectedPhotos, setSelectedPhotos] = useState<string[]>([])
+  const { photos, selectedPhotos, setSelectedPhotos } =
+    useContext(PhotosContext)
 
   useEffect(() => {
     return () => {

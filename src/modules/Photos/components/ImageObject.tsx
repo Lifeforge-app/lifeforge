@@ -173,11 +173,14 @@ function ImageObject({
           }`}
         />
       </button>
-      {!beingDisplayedInAlbum && details.album !== '' && (
-        <span className="absolute right-2 top-2 text-bg-200 opacity-50">
+      <div className="absolute right-2 top-2 flex items-center text-bg-200 opacity-50">
+        {details.hasRaw && (
+          <Icon icon="tabler:letter-r-small" className="h-8 w-8" />
+        )}
+        {!beingDisplayedInAlbum && details.album !== '' && (
           <Icon icon="tabler:library-photo" className="h-5 w-5" />
-        </span>
-      )}
+        )}
+      </div>
     </div>
   )
 }

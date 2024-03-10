@@ -12,7 +12,8 @@ import { GlobalStateContext } from '../../../../providers/GlobalStateProvider'
 
 function Photos(): React.ReactElement {
   const { sidebarExpanded } = useContext(GlobalStateContext)
-  const { refreshPhotos } = useContext(PhotosContext)
+  const { refreshPhotos, hidePhotosInAlbum, setReady } =
+    useContext(PhotosContext)
   const [showGallery, setShowGallery] = useState(true)
 
   useEffect(() => {
@@ -26,6 +27,10 @@ function Photos(): React.ReactElement {
       clearTimeout(timeout)
     }
   }, [sidebarExpanded])
+
+  useEffect(() => {
+    setReady(false)
+  }, [hidePhotosInAlbum])
 
   return showGallery ? (
     <section className="relative flex h-full min-h-0 w-full flex-1 flex-col pl-4 sm:pl-12">

@@ -9,8 +9,6 @@ export interface IPhotosEntryItem {
   album: string
   id: string
   image: string
-  is_deleted: boolean
-  name: string
   hasRaw: boolean
   shot_time: string
   width: number
@@ -53,7 +51,6 @@ const PHOTOS_DATA: {
   isCreateAlbumModalOpen: boolean
   isAddPhotosToAlbumModalOpen: boolean
   isDeletePhotosConfirmationModalOpen: boolean
-  isDragging: boolean
   setReady: React.Dispatch<React.SetStateAction<boolean>>
   setHidePhotosInAlbum: React.Dispatch<React.SetStateAction<boolean>>
   setSelectedPhotos: React.Dispatch<React.SetStateAction<string[]>>
@@ -137,7 +134,6 @@ function Photos(): React.ReactElement {
     isDeletePhotosConfirmationModalOpen,
     setDeletePhotosConfirmationModalOpen
   ] = useState(false)
-  const [isDragging, setIsDragging] = useState(false)
 
   const sideSliderRef = useRef<HTMLDivElement>(null)
   const timelineDateDisplayRef = useRef<HTMLDivElement>(null)
@@ -191,6 +187,11 @@ function Photos(): React.ReactElement {
     }
   }
 
+  function _refreshPhotos(): void {
+    setReady(false)
+    refreshPhotos()
+  }
+
   return (
     <PhotosContext.Provider
       value={{
@@ -203,7 +204,6 @@ function Photos(): React.ReactElement {
         isCreateAlbumModalOpen,
         isAddPhotosToAlbumModalOpen,
         isDeletePhotosConfirmationModalOpen,
-        isDragging,
         setReady,
         setSelectedPhotos,
         setHidePhotosInAlbum,
@@ -212,7 +212,7 @@ function Photos(): React.ReactElement {
         setDeletePhotosConfirmationModalOpen,
         updateEachDayDimensions,
         refreshAlbumList,
-        refreshPhotos,
+        refreshPhotos: _refreshPhotos,
         sideSliderRef,
         timelineDateDisplayRef,
         mobileDateDisplayRef,
