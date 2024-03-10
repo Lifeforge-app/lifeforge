@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 
 function Input({
+  reference,
   name,
   placeholder,
   icon,
@@ -14,6 +15,7 @@ function Input({
   onKeyDown = () => {},
   noAutoComplete = false
 }: {
+  reference?: React.RefObject<HTMLInputElement>
   name: string
   placeholder: string
   icon: string
@@ -48,6 +50,7 @@ function Input({
           {name}
         </span>
         <input
+          ref={reference}
           type={isPassword ? 'password' : 'text'}
           value={value}
           onChange={updateValue}

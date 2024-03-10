@@ -4,9 +4,9 @@ import ModuleHeader from '../../../../components/general/ModuleHeader'
 import GalleryHeader from './Gallery/GalleryHeader'
 import PhotosSidebar from '../../components/PhotosSidebar'
 import GalleryContainer from './Gallery/GalleryContainer'
-import CreateAlbumModal from './CreateAlbumModal'
-import AddPhotosToAlbumModal from './AddPhotosToAlbumModal'
-import DeletePhotosConfirmationModal from './DeletePhotosConfirmationModal'
+import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
+import AddPhotosToAlbumModal from '../../components/modals/AddPhotosToAlbumModal'
+import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosConfirmationModal'
 import { PhotosContext } from '../../../../providers/PhotosProvider'
 import { GlobalStateContext } from '../../../../providers/GlobalStateProvider'
 
@@ -43,7 +43,7 @@ function Photos(): React.ReactElement {
         <PhotosSidebar />
         <GalleryContainer />
       </div>
-      <CreateAlbumModal />
+      <ModifyAlbumModal />
       <AddPhotosToAlbumModal />
       <DeletePhotosConfirmationModal refreshPhotos={refreshPhotos} />
     </section>

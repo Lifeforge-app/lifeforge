@@ -1,26 +1,29 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import moment from 'moment'
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Gallery from 'react-photo-gallery'
 import ImageObject from '../../../components/ImageObject'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import useResizeObserver from 'use-resize-observer'
 import {
-  type IPhotosEntryItem,
-  PhotosContext
+  type IPhotosEntryDimensionsItem,
+  PhotosContext,
+  type IPhotosEntry
 } from '../../../../../providers/PhotosProvider'
 import useOnScreen from '../../../../../hooks/useOnScreen'
+import { cookieParse } from 'pocketbase'
+import { toast } from 'react-toastify'
 
 function DateGroup({
   date,
-  photos,
+  photosDimensions,
   selectedPhotos,
   setSelectedPhotos,
   toggleSelectAll,
   isSelectedAll
 }: {
   date: string
-  photos: IPhotosEntryItem[]
+  photosDimensions: IPhotosEntryDimensionsItem[]
   selectedPhotos: string[]
   setSelectedPhotos: (photos: string[]) => void
   toggleSelectAll: () => void
@@ -32,6 +35,7 @@ function DateGroup({
     ready
   } = useContext(PhotosContext)
   const thisRef = useRef<HTMLDivElement>(null)
+  const [photos, setPhotos] = useState<IPhotosEntry[]>()
   const isOnScreen = useOnScreen(thisRef)
   const { ref, height = 1 } = useResizeObserver<HTMLDivElement>()
 
@@ -51,6 +55,32 @@ function DateGroup({
       }
     }
   }, [allPhotos, height])
+
+  useEffect(() => {
+    if (photos === undefined && ready && isOnScreen) {
+      fetch(`${import.meta.env.VITE_API_HOST}/photos/entry/list?date=${date}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        }
+      })
+        .then(async res => {
+          try {
+            const data = await res.json()
+            if (!res.ok || data.state !== 'success') {
+              throw new Error(data.message)
+            }
+            setPhotos(data.data)
+          } catch (err) {
+            throw new Error(err as string)
+          }
+        })
+        .catch(err => {
+          toast.error(`Failed to fetch data from server. ${err.message}`)
+          console.error(err)
+        })
+    }
+  }, [isOnScreen, ready, photosDimensions])
 
   return (
     <div
@@ -90,15 +120,17 @@ function DateGroup({
             </div>
             {moment(date).format('LL')}
             <span className="mb-0.5 block text-sm font-normal text-bg-500">
-              ({photos.length.toLocaleString()})
+              ({photosDimensions.length.toLocaleString()})
             </span>
           </h2>
           <Gallery
             targetRowHeight={200}
-            photos={photos.map(image => ({
+            photos={photosDimensions.map(image => ({
               src: `${import.meta.env.VITE_POCKETBASE_ENDPOINT}/api/files/${
                 typeof allPhotos !== 'string' ? allPhotos.collectionId : ''
-              }/${image.id}/${image.image}?thumb=0x300`,
+              }/${image.id}/${
+                photos?.find(photo => photo.id === image.id)?.image
+              }?thumb=0x300`,
               width: image.width / 20,
               height: image.height / 20,
               key: image.id
@@ -108,7 +140,11 @@ function DateGroup({
               <ImageObject
                 beingDisplayedInAlbum={false}
                 photo={photo}
-                details={photos.find(image => image.id === photo.key)!}
+                details={
+                  photos !== undefined
+                    ? photos.find(image => image.id === photo.key) ?? {}
+                    : {}
+                }
                 margin={margin ?? ''}
                 selected={
                   selectedPhotos.find(image => image === photo.key) !==

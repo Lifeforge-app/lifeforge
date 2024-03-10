@@ -9,7 +9,7 @@ import GoBackButton from '../../../../components/general/GoBackButton'
 import useFetch from '../../../../hooks/useFetch'
 import APIComponentWithFallback from '../../../../components/general/APIComponentWithFallback'
 import {
-  type IPhotosEntryItem,
+  type IPhotosEntryDimensionsItem,
   type IPhotosAlbum,
   PhotosContext
 } from '../../../../providers/PhotosProvider'
@@ -17,19 +17,24 @@ import Gallery from 'react-photo-gallery'
 import ImageObject from '../../components/ImageObject'
 import moment from 'moment'
 import BottomBar from '../../components/BottomBar'
-import DeletePhotosConfirmationModal from '../MainGallery/DeletePhotosConfirmationModal'
+import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosConfirmationModal.tsx'
+import RemovePhotosFromAlbumConfirmationModal from '../../components/modals/RemovePhotosFromAlbumConfirmationModal.tsx.tsx'
+import HamburgerMenu from '../../../../components/general/HamburgerMenu/index.tsx'
+import MenuItem from '../../../../components/general/HamburgerMenu/MenuItem.tsx'
+import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal.tsx'
 
 function PhotosAlbumGallery(): React.ReactElement {
   const { id } = useParams<{
     id: string
   }>()
-  const { selectedPhotos, setSelectedPhotos } = useContext(PhotosContext)
+  const { selectedPhotos, setSelectedPhotos, setModifyAlbumModalOpenType } =
+    useContext(PhotosContext)
   const navigate = useNavigate()
   const [valid] = useFetch<boolean>(`photos/album/valid/${id}`)
   const [albumData, refreshAlbumData] = useFetch<IPhotosAlbum>(
     `photos/album/get/${id}`
   )
-  const [photos, refreshPhotos] = useFetch<IPhotosEntryItem[]>(
+  const [photos, refreshPhotos] = useFetch<IPhotosEntryDimensionsItem[]>(
     `photos/entry/list/${id}`
   )
 
@@ -157,6 +162,15 @@ function PhotosAlbumGallery(): React.ReactElement {
                 <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
                   <Icon icon="tabler:share" className="text-2xl" />
                 </button>
+                <HamburgerMenu position="relative">
+                  <MenuItem
+                    icon="tabler:pencil"
+                    text="Rename"
+                    onClick={() => {
+                      setModifyAlbumModalOpenType('rename')
+                    }}
+                  />
+                </HamburgerMenu>
               </div>
             </div>
           </div>
@@ -237,9 +251,20 @@ function PhotosAlbumGallery(): React.ReactElement {
             </APIComponentWithFallback>
           </div>
         </ModuleWrapper>
-        <BottomBar photos={photos} />
+        <BottomBar
+          photos={photos as IPhotosEntryDimensionsItem[]}
+          inAlbumGallery
+        />
       </div>
       <DeletePhotosConfirmationModal refreshPhotos={refreshPhotos} />
+      <RemovePhotosFromAlbumConfirmationModal
+        albumId={(albumData as IPhotosAlbum).id}
+        refreshPhotos={refreshPhotos}
+      />
+      <ModifyAlbumModal
+        targetAlbum={albumData as IPhotosAlbum}
+        refreshAlbumData={refreshAlbumData}
+      />
     </APIComponentWithFallback>
   )
 }

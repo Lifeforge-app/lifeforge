@@ -5,22 +5,28 @@ import React, { createContext, useRef, useState } from 'react'
 import useFetch from '../hooks/useFetch'
 import { Outlet } from 'react-router'
 
-export interface IPhotosEntryItem {
-  album: string
+export interface IPhotosEntryDimensionsItem {
+  is_in_album: string
+  is_deleted: string
   id: string
-  image: string
-  hasRaw: boolean
   shot_time: string
   width: number
   height: number
 }
 
-export interface IPhotosEntry {
+export interface IPhotosEntryDimensions {
   totalItems: number
-  items: Record<string, IPhotosEntryItem[]>
+  items: Record<string, IPhotosEntryDimensionsItem[]>
   firstDayOfYear: Record<string, string>
   firstDayOfMonth: Record<string, string>
   collectionId: string
+}
+
+export interface IPhotosEntry {
+  id: string
+  image: string
+  has_raw: boolean
+  is_in_album: boolean
 }
 
 export interface IPhotosAlbum {
@@ -37,7 +43,7 @@ export interface IPhotosAlbum {
 
 const PHOTOS_DATA: {
   ready: boolean
-  photos: IPhotosEntry | 'loading' | 'error'
+  photos: IPhotosEntryDimensions | 'loading' | 'error'
   albumList: IPhotosAlbum[] | 'loading' | 'error'
   eachDayDimensions: Record<
     string,
@@ -48,15 +54,21 @@ const PHOTOS_DATA: {
   >
   selectedPhotos: string[]
   hidePhotosInAlbum: boolean
-  isCreateAlbumModalOpen: boolean
+  modifyAlbumModalOpenType: 'create' | 'rename' | false
   isAddPhotosToAlbumModalOpen: boolean
   isDeletePhotosConfirmationModalOpen: boolean
+  isRemovePhotosFromAlbumConfirmationModalOpen: boolean
   setReady: React.Dispatch<React.SetStateAction<boolean>>
   setHidePhotosInAlbum: React.Dispatch<React.SetStateAction<boolean>>
   setSelectedPhotos: React.Dispatch<React.SetStateAction<string[]>>
-  setCreateAlbumModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setModifyAlbumModalOpenType: React.Dispatch<
+    React.SetStateAction<'create' | 'rename' | false>
+  >
   setAddPhotosToAlbumModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   setDeletePhotosConfirmationModalOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >
+  setRemovePhotosFromAlbumConfirmationModalOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
   updateEachDayDimensions: () => void
@@ -89,15 +101,17 @@ const PHOTOS_DATA: {
   eachDayDimensions: {},
   selectedPhotos: [],
   hidePhotosInAlbum: false,
-  isCreateAlbumModalOpen: false,
+  modifyAlbumModalOpenType: false,
   isAddPhotosToAlbumModalOpen: false,
   isDeletePhotosConfirmationModalOpen: false,
+  isRemovePhotosFromAlbumConfirmationModalOpen: false,
   setReady: () => {},
   setHidePhotosInAlbum: () => {},
   setSelectedPhotos: () => {},
-  setCreateAlbumModalOpen: () => {},
+  setModifyAlbumModalOpenType: () => {},
   setAddPhotosToAlbumModalOpen: () => {},
   setDeletePhotosConfirmationModalOpen: () => {},
+  setRemovePhotosFromAlbumConfirmationModalOpen: () => {},
   updateEachDayDimensions: () => {},
   refreshPhotos: () => {},
   refreshAlbumList: () => {},
@@ -120,19 +134,26 @@ export const PhotosContext = createContext(PHOTOS_DATA)
 function Photos(): React.ReactElement {
   const [ready, setReady] = useState(false)
   const [hidePhotosInAlbum, setHidePhotosInAlbum] = useState(false)
-  const [photos, refreshPhotos] = useFetch<IPhotosEntry>(
-    `photos/entry/list${hidePhotosInAlbum ? '?hideInAlbum=true' : ''}`
-  )
+  const [photoDimensions, refreshPhotoDimensions] =
+    useFetch<IPhotosEntryDimensions>(
+      `photos/entry/dimensions${hidePhotosInAlbum ? '?hideInAlbum=true' : ''}`
+    )
   const [albumList, refreshAlbumList] =
     useFetch<IPhotosAlbum[]>('photos/album/list')
 
   const [selectedPhotos, setSelectedPhotos] = useState<string[]>([])
-  const [isCreateAlbumModalOpen, setCreateAlbumModalOpen] = useState(false)
+  const [modifyAlbumModalOpenType, setModifyAlbumModalOpenType] = useState<
+    'create' | 'rename' | false
+  >(false)
   const [isAddPhotosToAlbumModalOpen, setAddPhotosToAlbumModalOpen] =
     useState(false)
   const [
     isDeletePhotosConfirmationModalOpen,
     setDeletePhotosConfirmationModalOpen
+  ] = useState(false)
+  const [
+    isRemovePhotosFromAlbumConfirmationModalOpen,
+    setRemovePhotosFromAlbumConfirmationModalOpen
   ] = useState(false)
 
   const sideSliderRef = useRef<HTMLDivElement>(null)
@@ -152,7 +173,7 @@ function Photos(): React.ReactElement {
 
   function updateEachDayDimensions(): void {
     if (
-      typeof photos !== 'string' &&
+      typeof photoDimensions !== 'string' &&
       galleryWrapperRef.current !== null &&
       timelineDateDisplayRef.current !== null
     ) {
@@ -160,7 +181,7 @@ function Photos(): React.ReactElement {
       const wrapperHeight = galleryWrapperRef.current.offsetHeight
 
       timelineDateDisplayRef.current.innerHTML = moment(
-        Object.keys(photos.items)[0]
+        Object.keys(photoDimensions.items)[0]
       ).format('MMM D, YYYY')
 
       const eachDayHeight: Record<
@@ -171,7 +192,7 @@ function Photos(): React.ReactElement {
         }
       > = {}
 
-      for (const day of Object.keys(photos.items)) {
+      for (const day of Object.keys(photoDimensions.items)) {
         const element = document.getElementById(day)!
         const { y, height } = element.getBoundingClientRect()
         eachDayHeight[day] = {
@@ -189,27 +210,29 @@ function Photos(): React.ReactElement {
 
   function _refreshPhotos(): void {
     setReady(false)
-    refreshPhotos()
+    refreshPhotoDimensions()
   }
 
   return (
     <PhotosContext.Provider
       value={{
         ready,
-        photos,
+        photos: photoDimensions,
         albumList,
         eachDayDimensions,
         selectedPhotos,
         hidePhotosInAlbum,
-        isCreateAlbumModalOpen,
+        modifyAlbumModalOpenType,
         isAddPhotosToAlbumModalOpen,
         isDeletePhotosConfirmationModalOpen,
+        isRemovePhotosFromAlbumConfirmationModalOpen,
         setReady,
         setSelectedPhotos,
         setHidePhotosInAlbum,
-        setCreateAlbumModalOpen,
+        setModifyAlbumModalOpenType,
         setAddPhotosToAlbumModalOpen,
         setDeletePhotosConfirmationModalOpen,
+        setRemovePhotosFromAlbumConfirmationModalOpen,
         updateEachDayDimensions,
         refreshAlbumList,
         refreshPhotos: _refreshPhotos,

@@ -1,14 +1,25 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useContext } from 'react'
-import { PhotosContext } from '../../../providers/PhotosProvider'
+import {
+  type IPhotosEntryDimensions,
+  PhotosContext,
+  type IPhotosEntryDimensionsItem
+} from '../../../providers/PhotosProvider'
 import { toast } from 'react-toastify'
 
-function BottomBar({ photos }: { photos: any }): React.ReactElement {
+function BottomBar({
+  photos,
+  inAlbumGallery
+}: {
+  photos: IPhotosEntryDimensions | IPhotosEntryDimensionsItem[]
+  inAlbumGallery?: boolean
+}): React.ReactElement {
   const {
     selectedPhotos,
     setSelectedPhotos,
     setAddPhotosToAlbumModalOpen,
-    setDeletePhotosConfirmationModalOpen
+    setDeletePhotosConfirmationModalOpen,
+    setRemovePhotosFromAlbumConfirmationModalOpen
   } = useContext(PhotosContext)
 
   return (
@@ -35,23 +46,34 @@ function BottomBar({ photos }: { photos: any }): React.ReactElement {
         </button>
         <button
           onClick={() => {
-            if (
-              selectedPhotos.filter(
-                photo =>
-                  Object.values(photos.items)
-                    .flat()
-                    .find(p => p.id === photo)?.album === ''
-              ).length === 0
-            ) {
-              toast.warning('All the selected photos are already in an album')
-              return
-            }
+            if (inAlbumGallery === true) {
+              setRemovePhotosFromAlbumConfirmationModalOpen(true)
+            } else {
+              if (
+                selectedPhotos.filter(
+                  photo =>
+                    Object.values(Array.isArray(photos) ? photos : photos.items)
+                      .flat()
+                      .find(p => p.id === photo)?.album === ''
+                ).length === 0
+              ) {
+                toast.warning('All the selected photos are already in an album')
+                return
+              }
 
-            setAddPhotosToAlbumModalOpen(true)
+              setAddPhotosToAlbumModalOpen(true)
+            }
           }}
           className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30"
         >
-          <Icon icon="tabler:plus" className="h-5 w-5" />
+          <Icon
+            icon={
+              inAlbumGallery === true
+                ? 'tabler:layout-grid-remove'
+                : 'tabler:plus'
+            }
+            className="h-5 w-5"
+          />
         </button>
         <button className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30">
           <Icon icon="tabler:download" className="h-5 w-5" />

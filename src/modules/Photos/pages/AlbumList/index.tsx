@@ -9,7 +9,7 @@ import {
   PhotosContext
 } from '../../../../providers/PhotosProvider'
 import APIComponentWithFallback from '../../../../components/general/APIComponentWithFallback'
-import CreateAlbumModal from '../MainGallery/CreateAlbumModal'
+import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
 import DeleteConfirmationModal from '../../../../components/general/DeleteConfirmationModal'
 import AlbumItem from './components/AlbumItem'
 import AlbumListHeader from './components/AlbumListHeader'
@@ -92,7 +92,7 @@ function PhotosAlbumList(): React.ReactElement {
           </div>
         </div>
       </ModuleWrapper>
-      <CreateAlbumModal />
+      <ModifyAlbumModal targetAlbum={selectedAlbum} />
       <DeleteConfirmationModal
         apiEndpoint="photos/album/delete"
         data={selectedAlbum}

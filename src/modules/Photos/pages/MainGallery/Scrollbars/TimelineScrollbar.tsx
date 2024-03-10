@@ -16,7 +16,7 @@ function TimelineScrollbar(): React.ReactElement {
 
   return (
     <>
-      {typeof photos !== 'string' && (
+      {typeof photos !== 'string' && photos.totalItems !== 0 && (
         <>
           <div
             onMouseMove={e => {

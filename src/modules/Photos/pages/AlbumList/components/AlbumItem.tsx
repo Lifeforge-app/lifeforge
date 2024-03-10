@@ -1,10 +1,13 @@
 /* eslint-disable multiline-ternary */
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import HamburgerMenu from '../../../../../components/general/HamburgerMenu'
 import MenuItem from '../../../../../components/general/HamburgerMenu/MenuItem'
-import { type IPhotosAlbum } from '../../../../../providers/PhotosProvider'
+import {
+  PhotosContext,
+  type IPhotosAlbum
+} from '../../../../../providers/PhotosProvider'
 
 function AlbumItem({
   album,
@@ -15,6 +18,8 @@ function AlbumItem({
   setSelectedAlbum: (album: IPhotosAlbum) => void
   setDeleteModalOpen: (open: boolean) => void
 }): React.ReactElement {
+  const { setModifyAlbumModalOpenType } = useContext(PhotosContext)
+
   return (
     <li key={album.id} className="relative flex h-min flex-col gap-1 p-4">
       <Link
@@ -37,7 +42,7 @@ function AlbumItem({
           />
         )}
       </div>
-      <div className="pointer-events-none relative w-full min-w-0">
+      <div className="pointer-events-none relative w-full min-w-0 pr-8">
         <h2 className="truncate text-lg font-semibold text-bg-800 dark:text-bg-100">
           {album.name}
         </h2>
@@ -48,7 +53,14 @@ function AlbumItem({
         </p>
       </div>
       <HamburgerMenu position="absolute bottom-6 right-4">
-        <MenuItem icon="tabler:pencil" onClick={() => {}} text="Edit" />
+        <MenuItem
+          icon="tabler:pencil"
+          onClick={() => {
+            setSelectedAlbum(album)
+            setModifyAlbumModalOpenType('rename')
+          }}
+          text="Rename"
+        />
         <MenuItem
           icon="tabler:trash"
           onClick={() => {

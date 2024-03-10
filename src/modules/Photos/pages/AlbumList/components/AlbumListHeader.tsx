@@ -3,7 +3,7 @@ import { PhotosContext } from '../../../../../providers/PhotosProvider'
 import { Icon } from '@iconify/react/dist/iconify.js'
 
 function AlbumListHeader(): React.ReactElement {
-  const { albumList, setCreateAlbumModalOpen } = useContext(PhotosContext)
+  const { albumList, setModifyAlbumModalOpenType } = useContext(PhotosContext)
 
   return (
     <header className="mx-4 flex items-center justify-between">
@@ -15,7 +15,7 @@ function AlbumListHeader(): React.ReactElement {
       </h1>
       <button
         onClick={() => {
-          setCreateAlbumModalOpen(true)
+          setModifyAlbumModalOpenType('create')
         }}
         className="flex shrink-0 items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]   hover:bg-custom-600 dark:text-bg-800"
       >

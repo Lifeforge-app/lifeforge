@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/indent */
+/* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useContext } from 'react'
 import { PhotosContext } from '../../../../../providers/PhotosProvider'
 
 function MobileSlidingScrollbar(): React.ReactElement {
-  const { galleryWrapperRef, sideSliderRef, mobileDateDisplayRef } =
+  const { galleryWrapperRef, sideSliderRef, mobileDateDisplayRef, photos } =
     useContext(PhotosContext)
 
-  return (
+  return typeof photos !== 'string' && photos.totalItems !== 0 ? (
     <div
       ref={sideSliderRef}
       onTouchMove={e => {
@@ -49,6 +51,8 @@ function MobileSlidingScrollbar(): React.ReactElement {
         <Icon icon="tabler:caret-up-down-filled" className="text-bg-500" />
       </div>
     </div>
+  ) : (
+    <></>
   )
 }
 

@@ -10,8 +10,11 @@ import { Link } from 'react-router-dom'
 import { PhotosContext } from '../../../providers/PhotosProvider'
 
 function PhotosSidebar(): React.ReactElement {
-  const { photos, albumList, setCreateAlbumModalOpen } =
-    useContext(PhotosContext)
+  const {
+    photos,
+    albumList,
+    setModifyAlbumModalOpenType: setCreateAlbumModalOpen
+  } = useContext(PhotosContext)
 
   return (
     <aside className="hidden h-[calc(100%-2rem)] w-80 shrink-0 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900 sm:block">
@@ -40,7 +43,7 @@ function PhotosSidebar(): React.ReactElement {
           name="albums"
           actionButtonIcon="tabler:plus"
           actionButtonOnClick={() => {
-            setCreateAlbumModalOpen(true)
+            setCreateAlbumModalOpen('create')
           }}
         />
         <APIComponentWithFallback data={albumList}>
@@ -70,7 +73,9 @@ function PhotosSidebar(): React.ReactElement {
                       />
                     )}
                   </div>
-                  <div className="w-full text-bg-500">{album.name}</div>
+                  <div className="w-full truncate text-bg-500">
+                    {album.name}
+                  </div>
                   <span className="text-sm text-bg-500">
                     {album.amount.toLocaleString()}
                   </span>

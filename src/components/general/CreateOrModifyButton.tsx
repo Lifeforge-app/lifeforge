@@ -9,7 +9,7 @@ function CreateOrModifyButton({
   loading,
   onClick
 }: {
-  type: 'create' | 'update' | null
+  type: 'create' | 'update' | 'rename' | null
   loading: boolean
   onClick: () => void
 }): React.ReactElement {
@@ -27,7 +27,8 @@ function CreateOrModifyButton({
             icon={
               {
                 create: 'tabler:plus',
-                update: 'tabler:pencil'
+                update: 'tabler:pencil',
+                rename: 'tabler:pencil'
               }[type]
             }
             className="h-5 w-5"
@@ -35,7 +36,8 @@ function CreateOrModifyButton({
           {
             {
               create: 'CREATE',
-              update: 'UPDATE'
+              update: 'UPDATE',
+              rename: 'RENAME'
             }[type]
           }
         </>
