@@ -83,7 +83,6 @@ function ModifyAlbumModal({
 
   useEffect(() => {
     if (ref.current !== null) {
-      console.log(ref.current)
       ref.current.focus()
     }
 
@@ -133,6 +132,7 @@ function ModifyAlbumModal({
             onSubmitButtonClick()
           }
         }}
+        autoFocus
       />
       <CreateOrModifyButton
         type={openType as 'create' | 'rename'}

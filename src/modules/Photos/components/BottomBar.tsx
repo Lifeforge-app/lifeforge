@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useContext } from 'react'
 import {
@@ -6,12 +7,16 @@ import {
   type IPhotosEntryDimensionsItem
 } from '../../../providers/PhotosProvider'
 import { toast } from 'react-toastify'
+import { type IPhotoAlbumEntryItem } from '../pages/AlbumGallery'
 
 function BottomBar({
   photos,
   inAlbumGallery
 }: {
-  photos: IPhotosEntryDimensions | IPhotosEntryDimensionsItem[]
+  photos:
+    | IPhotosEntryDimensions
+    | IPhotosEntryDimensionsItem[]
+    | IPhotoAlbumEntryItem[]
   inAlbumGallery?: boolean
 }): React.ReactElement {
   const {
@@ -50,12 +55,14 @@ function BottomBar({
               setRemovePhotosFromAlbumConfirmationModalOpen(true)
             } else {
               if (
-                selectedPhotos.filter(
-                  photo =>
-                    Object.values(Array.isArray(photos) ? photos : photos.items)
-                      .flat()
-                      .find(p => p.id === photo)?.album === ''
-                ).length === 0
+                selectedPhotos.filter(photo =>
+                  Array.isArray(photos)
+                    ? photos
+                    : photos.items
+                        .map(p => p[1])
+                        .flat()
+                        .find(p => p.id === photo)?.is_in_album
+                ).length !== 0
               ) {
                 toast.warning('All the selected photos are already in an album')
                 return

@@ -18,6 +18,7 @@ function Photos(): React.ReactElement {
 
   useEffect(() => {
     setShowGallery(false)
+    setReady(false)
 
     const timeout = setTimeout(() => {
       setShowGallery(true)

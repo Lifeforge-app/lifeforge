@@ -13,7 +13,8 @@ function Input({
   darker = false,
   additionalClassName = '',
   onKeyDown = () => {},
-  noAutoComplete = false
+  noAutoComplete = false,
+  autoFocus = false
 }: {
   reference?: React.RefObject<HTMLInputElement>
   name: string
@@ -26,6 +27,7 @@ function Input({
   additionalClassName?: string
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   noAutoComplete?: boolean
+  autoFocus?: boolean
 }): React.ReactElement {
   return (
     <div
@@ -60,6 +62,7 @@ function Input({
           className={`mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500 ${
             isPassword && 'text-2xl'
           }`}
+          autoFocus={autoFocus}
         />
       </div>
     </div>

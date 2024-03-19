@@ -31,7 +31,7 @@ function HamburgerMenu({
         leave="transition duration-75 ease-out"
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
-        className="absolute right-0 top-3 z-50"
+        className="absolute right-0 top-4 z-50"
       >
         <Menu.Items
           className={`mt-6 ${

@@ -10,10 +10,8 @@ import ModuleHeader from '../../components/general/ModuleHeader'
 import useFetch from '../../hooks/useFetch'
 import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
 import TaskItem from './components/TaskItem'
-import { toast } from 'react-toastify'
 import ModifyTaskWindow from './components/ModifyTaskWindow'
 import ModuleWrapper from '../../components/general/ModuleWrapper'
-import { cookieParse } from 'pocketbase'
 import SearchInput from '../../components/general/SearchInput'
 
 export interface ITodoListEntry {
@@ -39,45 +37,11 @@ function TodoList(): React.JSX.Element {
   const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry[]>(
     'todo-list/entry/list'
   )
-  const [isModifyTaskWindowOpen, setIsModifyTaskWindowOpen] = useState(false)
+  const [modifyTaskWindowOpenType, setModifyTaskWindowOpenType] = useState<
+    'create' | 'update' | null
+  >(null)
   const [searchQuery, setSearchQuery] = useState('')
-
-  function toggleTaskCompletion(id: string): void {
-    if (typeof entries === 'string') return
-
-    setEntries(
-      entries.map(entry => {
-        if (entry.id === id) {
-          return { ...entry, done: !entry.done }
-        }
-        return entry
-      })
-    )
-
-    fetch(`${import.meta.env.VITE_API_HOST}/todo-list/entry/toggle/${id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
-      }
-    })
-      .then(async res => {
-        try {
-          const data = await res.json()
-
-          if (!res.ok || data.state !== 'success') {
-            throw new Error(data.message)
-          }
-        } catch (err) {
-          throw new Error(err as string)
-        }
-      })
-      .catch(err => {
-        toast.error("Oops! Couldn't update the task. Please try again.")
-        refreshEntries()
-        console.error(err)
-      })
-  }
+  const [selectedTask, setSelectedTask] = useState<ITodoListEntry | null>(null)
 
   return (
     <>
@@ -100,36 +64,45 @@ function TodoList(): React.JSX.Element {
               <h1 className="text-3xl font-semibold text-bg-800 dark:text-bg-100 md:text-4xl">
                 All Tasks <span className="text-base text-bg-500">(10)</span>
               </h1>
-              <button
-                onClick={() => {
-                  setSidebarOpen(true)
-                }}
-                className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-100 lg:hidden"
-              >
-                <Icon icon="tabler:menu" className="text-2xl" />
-              </button>
+              <div className="flex items-center gap-6">
+                <button
+                  onClick={() => {
+                    setSelectedTask(null)
+                    setModifyTaskWindowOpenType('create')
+                  }}
+                  className="hidden items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 dark:text-bg-800 sm:flex"
+                >
+                  <Icon icon="tabler:plus" className="text-xl" />
+                  new task
+                </button>
+                <button
+                  onClick={() => {
+                    setSidebarOpen(true)
+                  }}
+                  className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-100 lg:hidden"
+                >
+                  <Icon icon="tabler:menu" className="text-2xl" />
+                </button>
+              </div>
             </div>
             <SearchInput
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
               stuffToSearch="tasks"
             />
-            <ul className="mt-6 flex flex-col gap-4">
-              <li className="flex items-center justify-center">
-                <button className="flex w-full items-center gap-2 rounded-lg border-2 border-dashed border-bg-400 p-6 font-semibold uppercase tracking-widest text-bg-500 hover:bg-bg-200 dark:border-bg-700 dark:text-bg-700 dark:hover:bg-bg-800/30">
-                  <Icon icon="tabler:plus" className="text-2xl" />
-                  <span className="ml-1">Add New Task</span>
-                </button>
-              </li>
+            <ul className="mt-6 flex flex-col gap-4 pb-24">
               <APIComponentWithFallback data={entries}>
                 {typeof entries !== 'string' &&
                   entries.map(entry => (
                     <TaskItem
                       entry={entry}
+                      entries={entries}
+                      setEntries={setEntries}
+                      refreshEntries={refreshEntries}
                       lists={lists}
                       tagsList={tagsList}
-                      toggleTaskCompletion={toggleTaskCompletion}
-                      setIsModifyTaskWindowOpen={setIsModifyTaskWindowOpen}
+                      setIsModifyTaskWindowOpen={setModifyTaskWindowOpenType}
+                      setSelectedTask={setSelectedTask}
                       key={entry.id}
                     />
                   ))}
@@ -139,11 +112,25 @@ function TodoList(): React.JSX.Element {
         </div>
       </ModuleWrapper>
       <ModifyTaskWindow
-        isOpen={isModifyTaskWindowOpen}
-        setIsOpen={setIsModifyTaskWindowOpen}
+        openType={modifyTaskWindowOpenType}
+        setOpenType={setModifyTaskWindowOpenType}
         lists={lists as unknown as ITodoListList[]}
         tagsList={tagsList as unknown as ITodoListTag[]}
+        selectedTask={selectedTask}
+        setSelectedTask={setSelectedTask}
+        refreshEntries={refreshEntries}
+        refreshTagsList={refreshTagsList}
+        refreshLists={refreshLists}
       />
+      <button
+        onClick={() => {
+          setSelectedTask(null)
+          setModifyTaskWindowOpenType('create')
+        }}
+        className="absolute bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800 sm:hidden"
+      >
+        <Icon icon="tabler:plus" className="h-6 w-6 shrink-0 transition-all" />
+      </button>
     </>
   )
 }

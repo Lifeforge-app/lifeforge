@@ -23,6 +23,14 @@ import HamburgerMenu from '../../../../components/general/HamburgerMenu/index.ts
 import MenuItem from '../../../../components/general/HamburgerMenu/MenuItem.tsx'
 import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal.tsx'
 
+export interface IPhotoAlbumEntryItem extends IPhotosEntryDimensionsItem {
+  collectionId: string
+  photoId: string
+  image: string
+  has_raw: boolean
+  is_in_album: boolean
+}
+
 function PhotosAlbumGallery(): React.ReactElement {
   const { id } = useParams<{
     id: string
@@ -34,7 +42,7 @@ function PhotosAlbumGallery(): React.ReactElement {
   const [albumData, refreshAlbumData] = useFetch<IPhotosAlbum>(
     `photos/album/get/${id}`
   )
-  const [photos, refreshPhotos] = useFetch<IPhotosEntryDimensionsItem[]>(
+  const [photos, refreshPhotos] = useFetch<IPhotoAlbumEntryItem[]>(
     `photos/entry/list/${id}`
   )
 
@@ -85,7 +93,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                       return (
                         <>
                           <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
-                            {albumData.cover ? (
+                            {albumData.cover !== '' ? (
                               <img
                                 src={`${
                                   import.meta.env.VITE_POCKETBASE_ENDPOINT
@@ -182,7 +190,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                   photos={photos.map(image => ({
                     src: `${
                       import.meta.env.VITE_POCKETBASE_ENDPOINT
-                    }/api/files/${image.collectionId}/${image.id}/${
+                    }/api/files/${image.collectionId}/${image.photoId}/${
                       image.image
                     }?thumb=0x300`,
                     width: image.width / 20,
@@ -251,10 +259,7 @@ function PhotosAlbumGallery(): React.ReactElement {
             </APIComponentWithFallback>
           </div>
         </ModuleWrapper>
-        <BottomBar
-          photos={photos as IPhotosEntryDimensionsItem[]}
-          inAlbumGallery
-        />
+        <BottomBar photos={photos as IPhotoAlbumEntryItem[]} inAlbumGallery />
       </div>
       <DeletePhotosConfirmationModal refreshPhotos={refreshPhotos} />
       <RemovePhotosFromAlbumConfirmationModal

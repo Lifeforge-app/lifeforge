@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import moment from 'moment'
 import React, { useContext, useEffect, useRef, useState } from 'react'
@@ -46,10 +47,7 @@ function DateGroup({
           thisRef.current.style.height = `${height}px`
         }
 
-        if (
-          date ===
-          Object.keys(allPhotos.items)[Object.keys(allPhotos.items).length - 1]
-        ) {
+        if (date === allPhotos.items[allPhotos.items.length - 1][0]) {
           updateEachDayDimensions()
         }
       }
@@ -86,6 +84,8 @@ function DateGroup({
     <div
       ref={el => {
         ref(el)
+
+        // @ts-expect-error - I know what I'm doing
         thisRef.current = el
       }}
       id={date}
@@ -142,8 +142,18 @@ function DateGroup({
                 photo={photo}
                 details={
                   photos !== undefined
-                    ? photos.find(image => image.id === photo.key) ?? {}
-                    : {}
+                    ? photos.find(image => image.id === photo.key) ?? {
+                        id: photo.key ?? '',
+                        image: '',
+                        has_raw: false,
+                        is_in_album: false
+                      }
+                    : {
+                        id: photo.key ?? '',
+                        image: '',
+                        has_raw: false,
+                        is_in_album: false
+                      }
                 }
                 margin={margin ?? ''}
                 selected={
@@ -163,7 +173,7 @@ function DateGroup({
                       )
                     } else {
                       if (e.shiftKey && typeof allPhotos !== 'string') {
-                        const photos = Object.values(allPhotos.items).flat()
+                        const photos = allPhotos.items.flatMap(e => e[1])
 
                         const lastSelectedIndex = photos.findIndex(
                           image =>

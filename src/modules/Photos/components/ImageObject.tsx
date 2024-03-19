@@ -2,8 +2,7 @@
 import React, { useContext } from 'react'
 import {
   type IPhotosEntry,
-  PhotosContext,
-  type IPhotosEntryDimensionsItem
+  PhotosContext
 } from '../../../providers/PhotosProvider'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Icon } from '@iconify/react/dist/iconify.js'
@@ -12,6 +11,7 @@ import HamburgerMenu from '../../../components/general/HamburgerMenu'
 import MenuItem from '../../../components/general/HamburgerMenu/MenuItem'
 import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
+import { useParams } from 'react-router'
 
 function CustomZoomContent({
   img,
@@ -27,10 +27,11 @@ function CustomZoomContent({
   refreshAlbumData?: () => void
 }): React.ReactElement {
   const { refreshAlbumList } = useContext(PhotosContext)
+  const { id: albumId } = useParams<{ id: string }>()
 
   function setAsCover(): void {
     fetch(
-      `${import.meta.env.VITE_API_HOST}/photos/album/set-cover/${data.album}/${
+      `${import.meta.env.VITE_API_HOST}/photos/album/set-cover/${albumId}/${
         data.id
       }`,
       {
@@ -104,7 +105,7 @@ function ImageObject({
   beingDisplayedInAlbum: boolean
   refreshAlbumData?: () => void
 }): React.ReactElement {
-  const { galleryWrapperRef, ready } = useContext(PhotosContext)
+  const { ready } = useContext(PhotosContext)
 
   return (
     <div

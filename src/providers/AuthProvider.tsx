@@ -186,10 +186,8 @@ export default function AuthProvider({
   }
 
   function logout(): void {
-    console.log(pocketbase)
     if (!loading && pocketbase !== null) {
       pocketbase.authStore.clear()
-      console.log('sus')
       setAuth(false)
       document.cookie = `token=; path=/; expires=${new Date(
         Date.now() + 7 * 24 * 60 * 60 * 1000

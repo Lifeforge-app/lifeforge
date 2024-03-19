@@ -1,38 +1,60 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import React, { useContext, useMemo } from 'react'
+import React, { Suspense, lazy, useContext, useMemo } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import Dashboard from './modules/Dashboard'
-import Auth from './auth'
-import MainApplication from './MainApplication'
 import { AuthContext } from './providers/AuthProvider'
-import TodoList from './modules/TodoList'
-import Calendar from './modules/Calendar'
-import ProjectsM from './modules/ProjectsM'
-import Kanban from './modules/ProjectsM/components/Kanban'
-import NotFound from './components/general/NotFound'
-import IdeaBox from './modules/IdeaBox'
-import Ideas from './modules/IdeaBox/components/Ideas'
-import CodeTime from './modules/CodeTime'
-import PomodoroTimer from './modules/PomodoroTimer'
-import Flashcards from './modules/Flashcards'
-import CardSet from './modules/Flashcards/components/CardSet'
-import ReferenceBooks from './modules/ReferenceBooks'
-import Changelog from './modules/Changelog'
-import Notes from './modules/Notes'
-import NotesCategory from './modules/Notes/Workspace'
-import NotesSubject from './modules/Notes/Subject'
-import Personalization from './modules/Personalization'
-import ServerStatus from './modules/ServerStatus'
-import Spotify from './modules/Spotify'
-import Modules from './modules/Modules'
 import { titleToPath } from './components/Sidebar/components/SidebarItem'
-import ProjectsKList from './modules/ProjectsK/pages/ProjectList'
-import ProjectsKEntry from './modules/ProjectsK/pages/ProjectEntry'
-import PhotosMainGallery from './modules/Photos/pages/MainGallery'
-import PhotosAlbumGallery from './modules/Photos/pages/AlbumGallery'
-import PhotosAlbumList from './modules/Photos/pages/AlbumList'
-import Photos from './providers/PhotosProvider'
+const Dashboard = lazy(async () => await import('./modules/Dashboard'))
+const Auth = lazy(async () => await import('./auth'))
+const MainApplication = lazy(async () => await import('./MainApplication'))
+const TodoList = lazy(async () => await import('./modules/TodoList'))
+const Calendar = lazy(async () => await import('./modules/Calendar'))
+const ProjectsM = lazy(async () => await import('./modules/ProjectsM'))
+const Kanban = lazy(
+  async () => await import('./modules/ProjectsM/components/Kanban')
+)
+const NotFound = lazy(async () => await import('./components/general/NotFound'))
+const IdeaBox = lazy(async () => await import('./modules/IdeaBox'))
+const Ideas = lazy(
+  async () => await import('./modules/IdeaBox/components/Ideas')
+)
+const CodeTime = lazy(async () => await import('./modules/CodeTime'))
+const PomodoroTimer = lazy(async () => await import('./modules/PomodoroTimer'))
+const Flashcards = lazy(async () => await import('./modules/Flashcards'))
+const CardSet = lazy(
+  async () => await import('./modules/Flashcards/components/CardSet')
+)
+const ReferenceBooks = lazy(
+  async () => await import('./modules/ReferenceBooks')
+)
+const Changelog = lazy(async () => await import('./modules/Changelog'))
+const Notes = lazy(async () => await import('./modules/Notes'))
+const NotesCategory = lazy(
+  async () => await import('./modules/Notes/Workspace')
+)
+const NotesSubject = lazy(async () => await import('./modules/Notes/Subject'))
+const Personalization = lazy(
+  async () => await import('./modules/Personalization')
+)
+const ServerStatus = lazy(async () => await import('./modules/ServerStatus'))
+const Spotify = lazy(async () => await import('./modules/Spotify'))
+const Modules = lazy(async () => await import('./modules/Modules'))
+const ProjectsKList = lazy(
+  async () => await import('./modules/ProjectsK/pages/ProjectList')
+)
+const ProjectsKEntry = lazy(
+  async () => await import('./modules/ProjectsK/pages/ProjectEntry')
+)
+const PhotosMainGallery = lazy(
+  async () => await import('./modules/Photos/pages/MainGallery')
+)
+const PhotosAlbumGallery = lazy(
+  async () => await import('./modules/Photos/pages/AlbumGallery')
+)
+const PhotosAlbumList = lazy(
+  async () => await import('./modules/Photos/pages/AlbumList')
+)
+const Photos = lazy(async () => await import('./providers/PhotosProvider'))
 
 interface IRoutesItem {
   name: string
@@ -352,23 +374,25 @@ function AppRouter(): React.JSX.Element {
   }, [auth, location, authLoading])
 
   return (
-    <Routes>
-      <Route path="/" element={<MainApplication />}>
-        {userData ? (
-          ROUTES.flatMap(e => e.items)
-            .filter(
-              item =>
-                !item.togglable ||
-                userData.enabledModules.includes(titleToPath(item.name))
-            )
-            .map(item => item.routes)
-        ) : (
-          <Route path="*" element={<NotFound />} />
-        )}
-      </Route>
-      <Route path="auth" element={<Auth />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <Suspense>
+      <Routes>
+        <Route path="/" element={<MainApplication />}>
+          {userData ? (
+            ROUTES.flatMap(e => e.items)
+              .filter(
+                item =>
+                  !item.togglable ||
+                  userData.enabledModules.includes(titleToPath(item.name))
+              )
+              .map(item => item.routes)
+          ) : (
+            <Route path="*" element={<NotFound />} />
+          )}
+        </Route>
+        <Route path="auth" element={<Auth />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
   )
 }
 

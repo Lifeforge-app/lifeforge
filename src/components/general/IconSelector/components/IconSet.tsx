@@ -23,7 +23,6 @@ async function getIconSet(prefix: string): Promise<any> {
       `https://api.iconify.design/collection?prefix=${prefix}`
     ).then(async res => await res.json())
 
-    console.log(res)
     if (!res.uncategorized) {
       res.uncategorized = Object.values(res.categories).flat()
     }

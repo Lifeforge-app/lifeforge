@@ -6,7 +6,7 @@ import useFetch from '../hooks/useFetch'
 import { Outlet } from 'react-router'
 
 export interface IPhotosEntryDimensionsItem {
-  is_in_album: string
+  is_in_album: boolean
   is_deleted: string
   id: string
   shot_time: string
@@ -16,7 +16,7 @@ export interface IPhotosEntryDimensionsItem {
 
 export interface IPhotosEntryDimensions {
   totalItems: number
-  items: Record<string, IPhotosEntryDimensionsItem[]>
+  items: Array<[string, IPhotosEntryDimensionsItem[]]>
   firstDayOfYear: Record<string, string>
   firstDayOfMonth: Record<string, string>
   collectionId: string
@@ -181,7 +181,7 @@ function Photos(): React.ReactElement {
       const wrapperHeight = galleryWrapperRef.current.offsetHeight
 
       timelineDateDisplayRef.current.innerHTML = moment(
-        Object.keys(photoDimensions.items)[0]
+        photoDimensions.items[0][0]
       ).format('MMM D, YYYY')
 
       const eachDayHeight: Record<
@@ -192,7 +192,7 @@ function Photos(): React.ReactElement {
         }
       > = {}
 
-      for (const day of Object.keys(photoDimensions.items)) {
+      for (const [day] of photoDimensions.items) {
         const element = document.getElementById(day)!
         const { y, height } = element.getBoundingClientRect()
         eachDayHeight[day] = {

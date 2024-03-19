@@ -49,9 +49,10 @@ function AddPhotosToAlbumModal(): React.ReactElement {
         body: JSON.stringify({
           photos: selectedPhotos.filter(
             photo =>
-              Object.values(photos.items)
+              (photos.items
+                .map(p => p[1])
                 .flat()
-                .find(p => p.id === photo)?.album === ''
+                .find(p => p.id === photo)?.is_in_album ?? false) === false
           )
         })
       }
@@ -93,9 +94,11 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                 {selectedPhotos
                   .filter(
                     photo =>
-                      Object.values(photos.items)
+                      (photos.items
+                        .map(p => p[1])
                         .flat()
-                        .find(p => p.id === photo)?.album === ''
+                        .find(p => p.id === photo)?.is_in_album ?? false) ===
+                      false
                   )
                   .length.toLocaleString()}{' '}
                 photos to album

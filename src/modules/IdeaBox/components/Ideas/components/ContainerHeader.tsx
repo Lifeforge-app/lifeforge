@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { type IIdeaBoxContainer } from '../../..'
 import GoBackButton from '../../../../../components/general/GoBackButton'

@@ -1,23 +1,73 @@
+/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React from 'react'
 import { type ITodoListEntry } from '..'
 import { type ITodoListTag, type ITodoListList } from './Sidebar'
 import moment from 'moment'
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { cookieParse } from 'pocketbase'
+import { toast } from 'react-toastify'
 
 function TaskItem({
   entry,
+  entries,
+  setEntries,
+  refreshEntries,
   lists,
   tagsList,
-  toggleTaskCompletion,
-  setIsModifyTaskWindowOpen
+  setIsModifyTaskWindowOpen,
+  setSelectedTask
 }: {
   entry: ITodoListEntry
+  entries: ITodoListEntry[] | 'loading' | 'error'
+  setEntries: React.Dispatch<
+    React.SetStateAction<ITodoListEntry[] | 'loading' | 'error'>
+  >
+  refreshEntries: () => void
   lists: ITodoListList[] | 'loading' | 'error'
   tagsList: ITodoListTag[] | 'loading' | 'error'
-  toggleTaskCompletion: (id: string) => void
-  setIsModifyTaskWindowOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setIsModifyTaskWindowOpen: React.Dispatch<
+    React.SetStateAction<'create' | 'update' | null>
+  >
+  setSelectedTask: React.Dispatch<React.SetStateAction<ITodoListEntry | null>>
 }): React.ReactElement {
+  function toggleTaskCompletion(id: string): void {
+    if (typeof entries === 'string') return
+
+    setEntries(
+      entries.map(entry => {
+        if (entry.id === id) {
+          return { ...entry, done: !entry.done }
+        }
+        return entry
+      })
+    )
+
+    fetch(`${import.meta.env.VITE_API_HOST}/todo-list/entry/toggle/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+      }
+    })
+      .then(async res => {
+        try {
+          const data = await res.json()
+
+          if (!res.ok || data.state !== 'success') {
+            throw new Error(data.message)
+          }
+        } catch (err) {
+          throw new Error(err as string)
+        }
+      })
+      .catch(err => {
+        toast.error("Oops! Couldn't update the task. Please try again.")
+        refreshEntries()
+        console.error(err)
+      })
+  }
+
   return (
     <li
       key={entry.id}
@@ -52,7 +102,7 @@ function TaskItem({
           </div>
           <div className="flex items-center gap-2">
             <div className="text-sm text-bg-500">
-              {moment(entry.due_date).fromNow()}
+              {moment(entry.due_date).subtract(8, 'hour').fromNow()}
             </div>
             <div className="flex items-center">
               {typeof tagsList !== 'string' &&
@@ -72,7 +122,8 @@ function TaskItem({
       </div>
       <button
         onClick={() => {
-          setIsModifyTaskWindowOpen(true)
+          setIsModifyTaskWindowOpen('update')
+          setSelectedTask(entry)
         }}
         className="absolute left-0 top-0 h-full w-full"
       />

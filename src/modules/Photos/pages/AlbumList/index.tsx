@@ -92,7 +92,7 @@ function PhotosAlbumList(): React.ReactElement {
           </div>
         </div>
       </ModuleWrapper>
-      <ModifyAlbumModal targetAlbum={selectedAlbum} />
+      <ModifyAlbumModal targetAlbum={selectedAlbum ?? undefined} />
       <DeleteConfirmationModal
         apiEndpoint="photos/album/delete"
         data={selectedAlbum}

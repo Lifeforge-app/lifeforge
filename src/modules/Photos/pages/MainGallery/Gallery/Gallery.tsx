@@ -20,7 +20,7 @@ function Gallery(): React.ReactElement {
     <>
       <div className="relative flex min-h-full min-w-0 flex-col gap-8 pb-8">
         {photos.totalItems !== 0 ? (
-          Object.entries(photos.items).map(([date, photos]) => (
+          photos.items.map(([date, photos]) => (
             <DateGroup
               key={date}
               date={date}
