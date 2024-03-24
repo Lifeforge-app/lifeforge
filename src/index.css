@@ -102,7 +102,7 @@
 }
 
 div[data-rmiz-modal-overlay] {
-  @apply bg-black/70;
+  @apply bg-black/80;
 }
 
 progress::-webkit-progress-value {

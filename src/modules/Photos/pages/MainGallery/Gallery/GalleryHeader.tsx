@@ -132,8 +132,8 @@ function GalleryHeader(): React.ReactElement {
   }, [])
 
   return (
-    <div className="my-8 mr-16 flex flex-col items-center justify-between gap-4 text-bg-500 sm:flex-row">
-      <div className="w-full">
+    <div className="my-8 mr-4 flex flex-col items-center justify-between gap-4 text-bg-500 sm:mr-16 sm:flex-row">
+      <div className="flex w-full items-center justify-between">
         <p className="flex items-center gap-2">
           IP Address: {ip}
           <button
@@ -150,8 +150,28 @@ function GalleryHeader(): React.ReactElement {
             />
           </button>
         </p>
+        <HamburgerMenu
+          position="relative z-[9999] block md:hidden"
+          customWidth="w-72"
+        >
+          <MenuItem
+            icon="tabler:photo-off"
+            onClick={() => {
+              setHidePhotosInAlbum(!hidePhotosInAlbum)
+            }}
+            text="Hide photos in albums"
+            isToggled={hidePhotosInAlbum}
+          />
+          <MenuItem
+            icon="tabler:reload"
+            onClick={() => {
+              refreshPhotos()
+            }}
+            text="Refresh"
+          />
+        </HamburgerMenu>
       </div>
-      <div className="flex h-14 items-center gap-4">
+      <div className="flex h-14 w-full items-center gap-4 sm:w-auto">
         {showImportButton && (
           <button
             onClick={() => {
@@ -175,7 +195,10 @@ function GalleryHeader(): React.ReactElement {
             )}
           </button>
         )}
-        <HamburgerMenu position="relative z-[9999]" customWidth="w-72">
+        <HamburgerMenu
+          position="relative z-[9999] hidden md:block"
+          customWidth="w-72"
+        >
           <MenuItem
             icon="tabler:photo-off"
             onClick={() => {

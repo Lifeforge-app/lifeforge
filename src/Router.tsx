@@ -4,6 +4,19 @@ import React, { Suspense, lazy, useContext, useMemo } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { AuthContext } from './providers/AuthProvider'
 import { titleToPath } from './components/Sidebar/components/SidebarItem'
+import Loading from './components/general/Loading'
+const PhotosProvider = lazy(
+  async () => await import('./providers/PhotosProvider')
+)
+const PhotosMainGallery = lazy(
+  async () => await import('./modules/Photos/pages/MainGallery')
+)
+const PhotosAlbumList = lazy(
+  async () => await import('./modules/Photos/pages/AlbumList')
+)
+const PhotosAlbumGallery = lazy(
+  async () => await import('./modules/Photos/pages/AlbumGallery')
+)
 const Dashboard = lazy(async () => await import('./modules/Dashboard'))
 const Auth = lazy(async () => await import('./auth'))
 const MainApplication = lazy(async () => await import('./MainApplication'))
@@ -45,16 +58,6 @@ const ProjectsKList = lazy(
 const ProjectsKEntry = lazy(
   async () => await import('./modules/ProjectsK/pages/ProjectEntry')
 )
-const PhotosMainGallery = lazy(
-  async () => await import('./modules/Photos/pages/MainGallery')
-)
-const PhotosAlbumGallery = lazy(
-  async () => await import('./modules/Photos/pages/AlbumGallery')
-)
-const PhotosAlbumList = lazy(
-  async () => await import('./modules/Photos/pages/AlbumList')
-)
-const Photos = lazy(async () => await import('./providers/PhotosProvider'))
 
 interface IRoutesItem {
   name: string
@@ -163,7 +166,7 @@ export const ROUTES: IRoutes[] = [
         name: 'Photos',
         icon: 'tabler:camera',
         routes: [
-          <Route key="photos" path="/photos" element={<Photos />}>
+          <Route key="photos" path="/photos" element={<PhotosProvider />}>
             <Route
               key="photos-main-gallery"
               path=""
@@ -374,7 +377,7 @@ function AppRouter(): React.JSX.Element {
   }, [auth, location, authLoading])
 
   return (
-    <Suspense>
+    <Suspense fallback={<Loading customMessage="Loading module" />}>
       <Routes>
         <Route path="/" element={<MainApplication />}>
           {userData ? (

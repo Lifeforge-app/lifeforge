@@ -8,9 +8,11 @@ import Modal from '../../../../components/general/Modal'
 import { PhotosContext } from '../../../../providers/PhotosProvider'
 
 function DeletePhotosConfirmationModal({
-  refreshPhotos
+  refreshPhotos,
+  isInAlbumGallery = false
 }: {
   refreshPhotos: () => void
+  isInAlbumGallery?: boolean
 }): React.ReactElement {
   const {
     selectedPhotos,
@@ -25,16 +27,21 @@ function DeletePhotosConfirmationModal({
     if (selectedPhotos.length === 0) return
 
     setLoading(true)
-    fetch(`${import.meta.env.VITE_API_HOST}/photos/entry/delete`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
-      },
-      body: JSON.stringify({
-        photos: selectedPhotos
-      })
-    })
+    fetch(
+      `${
+        import.meta.env.VITE_API_HOST
+      }/photos/entry/delete?isInAlbum=${isInAlbumGallery}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        },
+        body: JSON.stringify({
+          photos: selectedPhotos
+        })
+      }
+    )
       .then(async res => {
         const data = await res.json()
         if (res.ok) {

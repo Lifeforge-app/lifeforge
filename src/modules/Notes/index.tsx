@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ModuleHeader from '../../components/general/ModuleHeader'
 import Loading from '../../components/general/Loading'
 import Error from '../../components/general/Error'
@@ -18,7 +18,12 @@ export interface INotesWorkspace {
 }
 
 function Notes(): React.ReactElement {
-  const [data] = useFetch<INotesWorkspace[]>('notes/workspace/list')
+  const [bounded, setBounded] = useState(false)
+  const [data] = useFetch<INotesWorkspace[]>('notes/workspace/list', bounded)
+
+  useEffect(() => {
+    setBounded(true)
+  }, [])
 
   return (
     <ModuleWrapper>

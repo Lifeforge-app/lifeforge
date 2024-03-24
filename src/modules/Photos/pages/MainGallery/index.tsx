@@ -10,7 +10,7 @@ import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosC
 import { PhotosContext } from '../../../../providers/PhotosProvider'
 import { GlobalStateContext } from '../../../../providers/GlobalStateProvider'
 
-function Photos(): React.ReactElement {
+function PhotosMainGallery(): React.ReactElement {
   const { sidebarExpanded } = useContext(GlobalStateContext)
   const { refreshPhotos, hidePhotosInAlbum, setReady } =
     useContext(PhotosContext)
@@ -53,4 +53,4 @@ function Photos(): React.ReactElement {
   )
 }
 
-export default Photos
+export default PhotosMainGallery

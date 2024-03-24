@@ -261,7 +261,10 @@ function PhotosAlbumGallery(): React.ReactElement {
         </ModuleWrapper>
         <BottomBar photos={photos as IPhotoAlbumEntryItem[]} inAlbumGallery />
       </div>
-      <DeletePhotosConfirmationModal refreshPhotos={refreshPhotos} />
+      <DeletePhotosConfirmationModal
+        refreshPhotos={refreshPhotos}
+        isInAlbumGallery={true}
+      />
       <RemovePhotosFromAlbumConfirmationModal
         albumId={(albumData as IPhotosAlbum).id}
         refreshPhotos={refreshPhotos}

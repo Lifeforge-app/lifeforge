@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/indent */
 import moment from 'moment'
-import React, { createContext, useRef, useState } from 'react'
+import React, { createContext, useEffect, useRef, useState } from 'react'
 import useFetch from '../hooks/useFetch'
 import { Outlet } from 'react-router'
 
@@ -134,10 +134,6 @@ export const PhotosContext = createContext(PHOTOS_DATA)
 function Photos(): React.ReactElement {
   const [ready, setReady] = useState(false)
   const [hidePhotosInAlbum, setHidePhotosInAlbum] = useState(false)
-  const [photoDimensions, refreshPhotoDimensions] =
-    useFetch<IPhotosEntryDimensions>(
-      `photos/entry/dimensions${hidePhotosInAlbum ? '?hideInAlbum=true' : ''}`
-    )
   const [albumList, refreshAlbumList] =
     useFetch<IPhotosAlbum[]>('photos/album/list')
 
@@ -160,6 +156,13 @@ function Photos(): React.ReactElement {
   const timelineDateDisplayRef = useRef<HTMLDivElement>(null)
   const mobileDateDisplayRef = useRef<HTMLDivElement>(null)
   const galleryWrapperRef = useRef<HTMLDivElement>(null)
+  const [isBounded, setIsBounded] = useState(false)
+
+  const [photoDimensions, refreshPhotoDimensions] =
+    useFetch<IPhotosEntryDimensions>(
+      `photos/entry/dimensions${hidePhotosInAlbum ? '?hideInAlbum=true' : ''}`,
+      isBounded
+    )
 
   const [eachDayDimensions, setEachDayDimensions] = useState<
     Record<
@@ -212,6 +215,10 @@ function Photos(): React.ReactElement {
     setReady(false)
     refreshPhotoDimensions()
   }
+
+  useEffect(() => {
+    setIsBounded(true)
+  }, [])
 
   return (
     <PhotosContext.Provider

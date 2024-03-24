@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React from 'react'
-import { type ITodoListEntry } from '..'
+import { type ITodoListEntryItem, type ITodoListEntry } from '..'
 import { type ITodoListTag, type ITodoListList } from './Sidebar'
 import moment from 'moment'
 import { Icon } from '@iconify/react/dist/iconify.js'
@@ -18,10 +18,10 @@ function TaskItem({
   setIsModifyTaskWindowOpen,
   setSelectedTask
 }: {
-  entry: ITodoListEntry
-  entries: ITodoListEntry[] | 'loading' | 'error'
+  entry: ITodoListEntryItem
+  entries: ITodoListEntry | 'loading' | 'error'
   setEntries: React.Dispatch<
-    React.SetStateAction<ITodoListEntry[] | 'loading' | 'error'>
+    React.SetStateAction<ITodoListEntry | 'loading' | 'error'>
   >
   refreshEntries: () => void
   lists: ITodoListList[] | 'loading' | 'error'
@@ -29,19 +29,38 @@ function TaskItem({
   setIsModifyTaskWindowOpen: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
-  setSelectedTask: React.Dispatch<React.SetStateAction<ITodoListEntry | null>>
+  setSelectedTask: React.Dispatch<
+    React.SetStateAction<ITodoListEntryItem | null>
+  >
 }): React.ReactElement {
   function toggleTaskCompletion(id: string): void {
     if (typeof entries === 'string') return
 
-    setEntries(
-      entries.map(entry => {
-        if (entry.id === id) {
-          return { ...entry, done: !entry.done }
-        }
-        return entry
-      })
-    )
+    if (!entry.done) {
+      const newEntries = {
+        pending: entries.pending.filter(e => e.id !== id),
+        done: entries.done.concat([
+          {
+            ...(entries.pending.find(e => e.id === id) as ITodoListEntryItem),
+            done: true
+          }
+        ])
+      }
+
+      setEntries(newEntries)
+    } else {
+      const newEntries = {
+        pending: entries.pending.concat([
+          {
+            ...(entries.done.find(e => e.id === id) as ITodoListEntryItem),
+            done: false
+          }
+        ]),
+        done: entries.done.filter(e => e.id !== id)
+      }
+
+      setEntries(newEntries)
+    }
 
     fetch(`${import.meta.env.VITE_API_HOST}/todo-list/entry/toggle/${id}`, {
       method: 'PATCH',
@@ -106,7 +125,7 @@ function TaskItem({
             </div>
             <div className="flex items-center">
               {typeof tagsList !== 'string' &&
-                entry.tags.length > 0 &&
+                entry.tags?.length > 0 &&
                 entry.tags.map(tag => (
                   <span
                     key={tag}

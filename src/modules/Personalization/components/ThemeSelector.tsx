@@ -9,7 +9,7 @@ function ThemeSelector(): React.ReactElement {
     <div className="mt-4 w-full">
       <h3 className="mt-6 block text-xl font-medium leading-normal">Theme</h3>
       <p className="text-neutral-500">Select or customize your UI theme.</p>
-      <div className="mt-6 flex w-full flex-col gap-8 md:flex-row">
+      <div className="mt-6 flex w-full flex-col gap-8 px-2 md:flex-row">
         {[
           { name: 'System', Image: './mockup/system.png' },
           { name: 'Light', Image: './mockup/light.png' },

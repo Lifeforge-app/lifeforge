@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useEffect, useRef, useState } from 'react'
 import Input from '../../../../components/general/Input'
 import { type ITodoListTag, type ITodoListList } from '../Sidebar'
-import { type ITodoListEntry } from '../..'
+import { type ITodoListEntryItem } from '../..'
 import HamburgerMenu from '../../../../components/general/HamburgerMenu'
 import MenuItem from '../../../../components/general/HamburgerMenu/MenuItem'
 import { toast } from 'react-toastify'
@@ -30,8 +30,10 @@ function ModifyTaskWindow({
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   lists: ITodoListList[]
   tagsList: ITodoListTag[]
-  selectedTask: ITodoListEntry | null
-  setSelectedTask: React.Dispatch<React.SetStateAction<ITodoListEntry | null>>
+  selectedTask: ITodoListEntryItem | null
+  setSelectedTask: React.Dispatch<
+    React.SetStateAction<ITodoListEntryItem | null>
+  >
   refreshEntries: () => void
   refreshTagsList: () => void
   refreshLists: () => void

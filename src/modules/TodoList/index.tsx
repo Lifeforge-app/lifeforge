@@ -14,7 +14,7 @@ import ModifyTaskWindow from './components/ModifyTaskWindow'
 import ModuleWrapper from '../../components/general/ModuleWrapper'
 import SearchInput from '../../components/general/SearchInput'
 
-export interface ITodoListEntry {
+export interface ITodoListEntryItem {
   collectionId: string
   collectionName: string
   created: string
@@ -29,19 +29,26 @@ export interface ITodoListEntry {
   done: boolean
 }
 
+export interface ITodoListEntry {
+  done: ITodoListEntryItem[]
+  pending: ITodoListEntryItem[]
+}
+
 function TodoList(): React.JSX.Element {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [lists, refreshLists] = useFetch<ITodoListList[]>('todo-list/list/list')
   const [tagsList, refreshTagsList] =
     useFetch<ITodoListTag[]>('todo-list/tag/list')
-  const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry[]>(
+  const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry>(
     'todo-list/entry/list'
   )
   const [modifyTaskWindowOpenType, setModifyTaskWindowOpenType] = useState<
     'create' | 'update' | null
   >(null)
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedTask, setSelectedTask] = useState<ITodoListEntry | null>(null)
+  const [selectedTask, setSelectedTask] = useState<ITodoListEntryItem | null>(
+    null
+  )
 
   return (
     <>
@@ -50,7 +57,7 @@ function TodoList(): React.JSX.Element {
           title="Todo List"
           desc="Human brain is not designed to remember everything."
         />
-        <div className="mb-12 mt-6 flex min-h-0 w-full flex-1">
+        <div className="mt-6 flex min-h-0 w-full flex-1">
           <Sidebar
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
@@ -59,7 +66,7 @@ function TodoList(): React.JSX.Element {
             tags={tagsList}
             refreshTagsList={refreshTagsList}
           />
-          <div className="h-full flex-1 lg:ml-12">
+          <div className="flex h-full flex-1 flex-col lg:ml-8">
             <div className="flex items-center justify-between">
               <h1 className="text-3xl font-semibold text-bg-800 dark:text-bg-100 md:text-4xl">
                 All Tasks <span className="text-base text-bg-500">(10)</span>
@@ -90,24 +97,54 @@ function TodoList(): React.JSX.Element {
               setSearchQuery={setSearchQuery}
               stuffToSearch="tasks"
             />
-            <ul className="mt-6 flex flex-col gap-4 pb-24">
-              <APIComponentWithFallback data={entries}>
-                {typeof entries !== 'string' &&
-                  entries.map(entry => (
-                    <TaskItem
-                      entry={entry}
-                      entries={entries}
-                      setEntries={setEntries}
-                      refreshEntries={refreshEntries}
-                      lists={lists}
-                      tagsList={tagsList}
-                      setIsModifyTaskWindowOpen={setModifyTaskWindowOpenType}
-                      setSelectedTask={setSelectedTask}
-                      key={entry.id}
-                    />
-                  ))}
-              </APIComponentWithFallback>
-            </ul>
+            <APIComponentWithFallback data={entries}>
+              {typeof entries !== 'string' && (
+                <div className="mt-6 flex flex-1 flex-col overflow-y-scroll px-4">
+                  <h2 className="text-2xl font-semibold text-bg-800 dark:text-bg-100">
+                    Pending Tasks{' '}
+                    <span className="text-base text-bg-500">
+                      ({entries.pending.length})
+                    </span>
+                  </h2>
+                  <ul className="mt-4 flex flex-1 flex-col gap-4 pb-24 sm:pb-8">
+                    {entries.pending.map(entry => (
+                      <TaskItem
+                        entry={entry}
+                        entries={entries}
+                        setEntries={setEntries}
+                        refreshEntries={refreshEntries}
+                        lists={lists}
+                        tagsList={tagsList}
+                        setIsModifyTaskWindowOpen={setModifyTaskWindowOpenType}
+                        setSelectedTask={setSelectedTask}
+                        key={entry.id}
+                      />
+                    ))}
+                  </ul>
+                  <h2 className="text-2xl font-semibold text-bg-800 dark:text-bg-100">
+                    Completed Tasks{' '}
+                    <span className="text-base text-bg-500">
+                      ({entries.done.length})
+                    </span>
+                  </h2>
+                  <ul className="mt-4 flex flex-1 flex-col gap-4 pb-24 sm:pb-8">
+                    {entries.done.map(entry => (
+                      <TaskItem
+                        entry={entry}
+                        entries={entries}
+                        setEntries={setEntries}
+                        refreshEntries={refreshEntries}
+                        lists={lists}
+                        tagsList={tagsList}
+                        setIsModifyTaskWindowOpen={setModifyTaskWindowOpenType}
+                        setSelectedTask={setSelectedTask}
+                        key={entry.id}
+                      />
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </APIComponentWithFallback>
           </div>
         </div>
       </ModuleWrapper>

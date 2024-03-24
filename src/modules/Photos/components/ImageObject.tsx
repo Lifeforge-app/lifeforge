@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   type IPhotosEntry,
   PhotosContext
@@ -12,12 +12,27 @@ import MenuItem from '../../../components/general/HamburgerMenu/MenuItem'
 import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
 import { useParams } from 'react-router'
+import useFetch from '../../../hooks/useFetch'
+
+function forceDown(url: string, filename: string): void {
+  fetch(url)
+    .then(async function (t) {
+      await t.blob().then(b => {
+        const a = document.createElement('a')
+        a.href = URL.createObjectURL(b)
+        a.setAttribute('download', filename)
+        a.click()
+      })
+    })
+    .catch(console.error)
+}
 
 function CustomZoomContent({
   img,
   data,
   beingDisplayedInAlbum,
-  refreshAlbumData
+  refreshAlbumData,
+  modalState
 }: {
   buttonUnzoom: React.ReactElement
   modalState: 'LOADING' | 'LOADED' | 'UNLOADING' | 'UNLOADED'
@@ -28,6 +43,41 @@ function CustomZoomContent({
 }): React.ReactElement {
   const { refreshAlbumList } = useContext(PhotosContext)
   const { id: albumId } = useParams<{ id: string }>()
+  const [name] = useFetch<string>(
+    'photos/entry/name/' + data.id,
+    modalState === 'LOADED'
+  )
+
+  async function requestDownload(isRaw: boolean): Promise<void> {
+    try {
+      const { url, fileName } = await fetch(
+        `${import.meta.env.VITE_API_HOST}/photos/entry/download/${
+          data.id
+        }?raw=${isRaw}&isInAlbum=${beingDisplayedInAlbum}`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookieParse(document.cookie).token}`
+          }
+        }
+      )
+        .then(async response => {
+          if (response.status !== 200) {
+            throw new Error('Failed to get download link.')
+          }
+          return await response.json()
+        })
+        .then(data => {
+          return data.data
+        })
+        .catch(error => {
+          throw new Error(error as string)
+        })
+
+      forceDown(url, fileName)
+    } catch (error: any) {
+      toast.error(`Failed to get download link. Error: ${error}`)
+    }
+  }
 
   function setAsCover(): void {
     fetch(
@@ -66,20 +116,61 @@ function CustomZoomContent({
   return (
     <div className="flex h-[100dvh] w-full items-center justify-center">
       {img}
-
-      <HamburgerMenu
-        lighter
-        position="absolute top-8 right-8"
-        customWidth="w-56"
-      >
-        {beingDisplayedInAlbum && (
-          <MenuItem
-            icon="tabler:album"
-            onClick={setAsCover}
-            text="Set as album cover"
-          />
-        )}
-      </HamburgerMenu>
+      <header className="absolute left-0 top-0 flex w-full items-center justify-between gap-2 p-8">
+        {(() => {
+          switch (name) {
+            case 'loading':
+              return (
+                <div className="animate-pulse text-lg text-bg-100">
+                  Loading...
+                </div>
+              )
+            case 'error':
+              return (
+                <div className="flex items-center gap-2 text-lg text-red-500">
+                  <Icon icon="tabler:alert-triangle" className="h-5 w-5" />
+                  Failed to load image name
+                </div>
+              )
+            default:
+              return <div className="text-lg text-bg-100">{name}</div>
+          }
+        })()}
+        <div className="flex items-center gap-4">
+          <HamburgerMenu
+            lighter
+            position="relative"
+            customWidth="w-56"
+            customIcon="tabler:download"
+          >
+            {data.has_raw && (
+              <MenuItem
+                icon="tabler:download"
+                onClick={() => {
+                  requestDownload(true).catch(console.error)
+                }}
+                text="Download RAW"
+              />
+            )}
+            <MenuItem
+              icon="tabler:download"
+              onClick={() => {
+                requestDownload(false).catch(console.error)
+              }}
+              text="Download JPEG"
+            />
+          </HamburgerMenu>
+          <HamburgerMenu lighter position="relative" customWidth="w-56">
+            {beingDisplayedInAlbum && (
+              <MenuItem
+                icon="tabler:album"
+                onClick={setAsCover}
+                text="Set as album cover"
+              />
+            )}
+          </HamburgerMenu>
+        </div>
+      </header>
     </div>
   )
 }

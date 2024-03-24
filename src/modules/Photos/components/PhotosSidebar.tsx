@@ -17,7 +17,7 @@ function PhotosSidebar(): React.ReactElement {
   } = useContext(PhotosContext)
 
   return (
-    <aside className="hidden h-[calc(100%-2rem)] w-80 shrink-0 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900 sm:block">
+    <aside className="hidden h-[calc(100%-2rem)] w-80 shrink-0 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900 lg:block">
       <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
         <li className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all">
           <Link
@@ -58,7 +58,7 @@ function PhotosSidebar(): React.ReactElement {
                   className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 hover:bg-bg-100 dark:hover:bg-bg-800"
                 >
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-bg-200/50 shadow-sm dark:bg-bg-700/50">
-                    {album.cover ? (
+                    {album.cover !== '' ? (
                       <img
                         src={`${
                           import.meta.env.VITE_POCKETBASE_ENDPOINT

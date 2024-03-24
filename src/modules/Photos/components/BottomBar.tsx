@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   type IPhotosEntryDimensions,
   PhotosContext,
@@ -8,10 +8,11 @@ import {
 } from '../../../providers/PhotosProvider'
 import { toast } from 'react-toastify'
 import { type IPhotoAlbumEntryItem } from '../pages/AlbumGallery'
+import { cookieParse } from 'pocketbase'
 
 function BottomBar({
   photos,
-  inAlbumGallery
+  inAlbumGallery = false
 }: {
   photos:
     | IPhotosEntryDimensions
@@ -26,6 +27,53 @@ function BottomBar({
     setDeletePhotosConfirmationModalOpen,
     setRemovePhotosFromAlbumConfirmationModalOpen
   } = useContext(PhotosContext)
+  const [isDownloadLoading, setIsDownloadLoading] = useState(false)
+
+  async function requestBulkDownload(): Promise<void> {
+    if (selectedPhotos.length === 0) {
+      return
+    }
+
+    setIsDownloadLoading(true)
+
+    try {
+      console.log(selectedPhotos)
+      await fetch(
+        `${
+          import.meta.env.VITE_API_HOST
+        }/photos/entry/bulk-download?isInAlbum=${inAlbumGallery}`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${cookieParse(document.cookie).token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            photos: selectedPhotos
+          })
+        }
+      )
+        .then(async response => {
+          if (response.status !== 200) {
+            throw new Error('Failed to download images')
+          }
+          const data = await response.json()
+          if (data.state !== 'success') {
+            throw new Error(data.message)
+          }
+
+          toast.success('Images are now ready for download. Head to your NAS')
+        })
+        .catch(error => {
+          throw new Error(error as string)
+        })
+        .finally(() => {
+          setIsDownloadLoading(false)
+        })
+    } catch (error: any) {
+      toast.error(`Failed to download images. Error: ${error}`)
+    }
+  }
 
   return (
     <div
@@ -51,7 +99,7 @@ function BottomBar({
         </button>
         <button
           onClick={() => {
-            if (inAlbumGallery === true) {
+            if (inAlbumGallery) {
               setRemovePhotosFromAlbumConfirmationModalOpen(true)
             } else {
               if (
@@ -74,16 +122,23 @@ function BottomBar({
           className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30"
         >
           <Icon
-            icon={
-              inAlbumGallery === true
-                ? 'tabler:layout-grid-remove'
-                : 'tabler:plus'
-            }
+            icon={inAlbumGallery ? 'tabler:layout-grid-remove' : 'tabler:plus'}
             className="h-5 w-5"
           />
         </button>
-        <button className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30">
-          <Icon icon="tabler:download" className="h-5 w-5" />
+        <button
+          disabled={isDownloadLoading}
+          onClick={() => {
+            requestBulkDownload().catch(() => {})
+          }}
+          className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30"
+        >
+          <Icon
+            icon={
+              isDownloadLoading ? 'svg-spinners:180-ring' : 'tabler:download'
+            }
+            className="h-5 w-5"
+          />
         </button>
         <button
           onClick={() => {
