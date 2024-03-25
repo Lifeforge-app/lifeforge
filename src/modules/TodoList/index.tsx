@@ -13,6 +13,7 @@ import TaskItem from './components/TaskItem'
 import ModifyTaskWindow from './components/ModifyTaskWindow'
 import ModuleWrapper from '../../components/general/ModuleWrapper'
 import SearchInput from '../../components/general/SearchInput'
+import DeleteConfirmationModal from '../../components/general/DeleteConfirmationModal'
 
 export interface ITodoListEntryItem {
   collectionId: string
@@ -34,7 +35,7 @@ export interface ITodoListEntry {
   pending: ITodoListEntryItem[]
 }
 
-function TodoList(): React.JSX.Element {
+function TodoList(): React.ReactElement {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [lists, refreshLists] = useFetch<ITodoListList[]>('todo-list/list/list')
   const [tagsList, refreshTagsList] =
@@ -45,6 +46,8 @@ function TodoList(): React.JSX.Element {
   const [modifyTaskWindowOpenType, setModifyTaskWindowOpenType] = useState<
     'create' | 'update' | null
   >(null)
+  const [deleteTaskConfirmationModalOpen, setDeleteTaskConfirmationModalOpen] =
+    useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedTask, setSelectedTask] = useState<ITodoListEntryItem | null>(
     null
@@ -158,6 +161,18 @@ function TodoList(): React.JSX.Element {
         refreshEntries={refreshEntries}
         refreshTagsList={refreshTagsList}
         refreshLists={refreshLists}
+        setDeleteTaskConfirmationModalOpen={setDeleteTaskConfirmationModalOpen}
+      />
+      <DeleteConfirmationModal
+        apiEndpoint="todo-list/entry/delete"
+        isOpen={deleteTaskConfirmationModalOpen}
+        closeModal={() => {
+          setDeleteTaskConfirmationModalOpen(false)
+        }}
+        data={selectedTask}
+        itemName="task"
+        updateDataList={refreshEntries}
+        nameKey="summary"
       />
       <button
         onClick={() => {

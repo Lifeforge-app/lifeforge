@@ -6,22 +6,24 @@ function HamburgerMenu({
   children,
   position,
   lighter,
+  largerPadding,
   customWidth,
   customIcon
 }: {
   children: React.ReactNode
   position: string
   lighter?: boolean
+  largerPadding?: boolean
   customWidth?: string
   customIcon?: string
 }): React.ReactElement {
   return (
     <Menu as="div" className={position}>
       <Menu.Button
-        className={`rounded-md p-2 ${
+        className={`rounded-md ${largerPadding === true ? 'p-4' : 'p-2'} ${
           lighter === true
             ? 'text-bg-100 hover:bg-bg-700/50'
-            : 'text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30'
+            : 'text-bg-500 hover:bg-bg-200/50 hover:text-bg-100 dark:hover:bg-bg-700/30'
         }`}
       >
         <Icon icon={customIcon ?? 'tabler:dots-vertical'} className="h-5 w-5" />

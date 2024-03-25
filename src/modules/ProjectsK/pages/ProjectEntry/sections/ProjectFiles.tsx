@@ -20,7 +20,7 @@ export default function ProjectFiles({
 }: {
   projectData: IProjectsKEntry | 'loading' | 'error'
   refreshProjectData: () => void
-}): React.JSX.Element {
+}): React.ReactElement {
   const [fileReplaceLoading, setFileReplaceLoading] = useState(false)
   const [fileDownloadLoading, setFileDownloadLoading] = useState(false)
   const [mediumClearLoading, setMediumClearLoading] = useState(false)
@@ -303,7 +303,7 @@ export default function ProjectFiles({
                         )}
                       </p>
                     </div>
-                    <HamburgerMenu position="relative">
+                    <HamburgerMenu largerPadding position="relative">
                       <MenuItem
                         icon="tabler:photo"
                         onClick={() => {

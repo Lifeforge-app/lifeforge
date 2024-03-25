@@ -24,7 +24,7 @@ export interface IProjectsKVersion {
   updated: string
 }
 
-function ProjectsKEntry(): React.JSX.Element {
+function ProjectsKEntry(): React.ReactElement {
   const navigate = useNavigate()
   const location = useLocation()
   const { id } = useParams()

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { GlobalStateContext } from '../../../providers/GlobalStateProvider'
 import { Icon } from '@iconify/react'
 
-function SidebarHeader(): React.JSX.Element {
+function SidebarHeader(): React.ReactElement {
   const { sidebarExpanded, toggleSidebar } = useContext(GlobalStateContext)
 
   return (

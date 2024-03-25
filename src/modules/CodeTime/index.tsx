@@ -7,7 +7,7 @@ import CodeTimeMostProjects from './components/CodeTimeMostProjects'
 import CodeTimeMostLanguages from './components/CodeTimeMostLanguages'
 import ModuleWrapper from '../../components/general/ModuleWrapper'
 
-export default function CodeTime(): React.JSX.Element {
+export default function CodeTime(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader

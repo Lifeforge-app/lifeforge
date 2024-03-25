@@ -3,7 +3,7 @@ import Sidebar from './components/Sidebar'
 import Header from './components/Header'
 import { Outlet } from 'react-router'
 
-function MainApplication(): React.JSX.Element {
+function MainApplication(): React.ReactElement {
   return (
     <>
       <Sidebar />

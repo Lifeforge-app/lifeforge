@@ -5,7 +5,7 @@ import ModuleHeader from '../../components/general/ModuleHeader'
 import { Icon } from '@iconify/react'
 import ModuleWrapper from '../../components/general/ModuleWrapper'
 
-function Calendar(): React.JSX.Element {
+function Calendar(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader

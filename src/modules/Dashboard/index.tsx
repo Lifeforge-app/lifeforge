@@ -35,7 +35,7 @@ ChartJS.register(
   Filler
 )
 
-function Dashboard(): React.JSX.Element {
+function Dashboard(): React.ReactElement {
   const { userData } = useContext(AuthContext)
 
   return (

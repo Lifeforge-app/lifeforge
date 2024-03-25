@@ -19,7 +19,7 @@ function SidebarTitle({
   name,
   actionButtonIcon,
   actionButtonOnClick
-}: SidebarItemProps): React.JSX.Element {
+}: SidebarItemProps): React.ReactElement {
   return (
     <li className="flex items-center justify-between gap-4 py-4 pl-8 pr-5 pt-2 transition-all">
       <h3 className="text-sm font-semibold uppercase tracking-widest text-bg-600">

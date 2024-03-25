@@ -29,7 +29,7 @@ function SidebarItem({
   isMainSidebarItem,
   onClick,
   active
-}: SidebarItemProps): React.JSX.Element {
+}: SidebarItemProps): React.ReactElement {
   // @ts-expect-error - Lazy to fix yay =)
   const { sidebarExpanded, toggleSidebar } =
     isMainSidebarItem === true

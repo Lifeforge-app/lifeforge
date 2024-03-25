@@ -151,6 +151,7 @@ function GalleryHeader(): React.ReactElement {
           </button>
         </p>
         <HamburgerMenu
+          largerPadding
           position="relative z-[9999] block md:hidden"
           customWidth="w-72"
         >
@@ -196,6 +197,7 @@ function GalleryHeader(): React.ReactElement {
           </button>
         )}
         <HamburgerMenu
+          largerPadding
           position="relative z-[9999] hidden md:block"
           customWidth="w-72"
         >

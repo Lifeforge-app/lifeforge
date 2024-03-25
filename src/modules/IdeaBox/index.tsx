@@ -26,7 +26,7 @@ export interface IIdeaBoxContainer {
   updated: string
 }
 
-function IdeaBox(): React.JSX.Element {
+function IdeaBox(): React.ReactElement {
   const [data, refreshData] = useFetch<IIdeaBoxContainer[]>(
     'idea-box/container/list'
   )

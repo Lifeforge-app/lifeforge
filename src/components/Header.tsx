@@ -6,7 +6,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { toast } from 'react-toastify'
 import MenuItem from './general/HamburgerMenu/MenuItem'
 
-export default function Header(): React.JSX.Element {
+export default function Header(): React.ReactElement {
   const { sidebarExpanded, toggleSidebar } = useContext(GlobalStateContext)
   const { userData, getAvatarURL, logout } = useContext(AuthContext)
 

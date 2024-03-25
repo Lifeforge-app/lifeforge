@@ -348,7 +348,7 @@ export const ROUTES: IRoutes[] = [
   }
 ]
 
-function AppRouter(): React.JSX.Element {
+function AppRouter(): React.ReactElement {
   const { auth, authLoading, userData } = useContext(AuthContext)
   const location = useLocation()
   const navigate = useNavigate()

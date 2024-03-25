@@ -33,7 +33,7 @@ export default function ProjectProgress({
   projectData
 }: {
   projectData: IProjectsKEntry | 'loading' | 'error'
-}): React.JSX.Element {
+}): React.ReactElement {
   const [progress, refreshProgress] = useFetch<IProjectsKProgress>(
     `projects-k/progress/get/${(projectData as IProjectsKEntry).id}`,
     (projectData as IProjectsKEntry).id !== undefined

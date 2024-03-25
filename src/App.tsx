@@ -10,7 +10,7 @@ import AuthProvider from './providers/AuthProvider'
 import PersonalizationProvider from './providers/PersonalizationProvider'
 import SpotifyProvider from './providers/SpotifyProvider'
 
-function App(): React.JSX.Element {
+function App(): React.ReactElement {
   return (
     <BrowserRouter>
       <GlobalStateProvider>

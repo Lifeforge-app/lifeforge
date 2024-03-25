@@ -12,7 +12,7 @@ import useFetch from '../../../hooks/useFetch'
 import { AuthContext } from '../../../providers/AuthProvider'
 import { ROUTES } from '../../../Router'
 
-function SidebarItems(): React.JSX.Element {
+function SidebarItems(): React.ReactElement {
   const { userData } = useContext(AuthContext)
   const { sidebarExpanded } = useContext(GlobalStateContext)
   const [sidebarItems, setSidebarItems] = useState(ROUTES)

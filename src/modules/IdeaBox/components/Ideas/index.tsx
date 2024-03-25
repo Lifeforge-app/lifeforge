@@ -31,7 +31,7 @@ export interface IIdeaBoxEntry {
   archived: boolean
 }
 
-function Ideas(): React.JSX.Element {
+function Ideas(): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()

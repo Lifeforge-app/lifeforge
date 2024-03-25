@@ -45,7 +45,7 @@ export default function AuthProvider({
   children
 }: {
   children: React.ReactNode
-}): React.JSX.Element {
+}): React.ReactElement {
   const [auth, setAuth] = useState(false)
   const [userData, setUserData] = useState<any>(null)
   const [quota, setQuota] = useState(5)

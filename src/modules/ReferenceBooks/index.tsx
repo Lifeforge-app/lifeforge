@@ -8,7 +8,7 @@ import SidebarTitle from '../../components/Sidebar/components/SidebarTitle'
 import ModuleWrapper from '../../components/general/ModuleWrapper'
 import SearchInput from '../../components/general/SearchInput'
 
-function ReferenceBooks(): React.JSX.Element {
+function ReferenceBooks(): React.ReactElement {
   const [searchQuery, setSearchQuery] = useState('')
   return (
     <ModuleWrapper>

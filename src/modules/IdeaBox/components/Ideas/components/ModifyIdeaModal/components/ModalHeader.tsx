@@ -17,7 +17,7 @@ function ModalHeader({
   setInnerTypeOfModifyIdea: React.Dispatch<
     React.SetStateAction<'text' | 'image' | 'link'>
   >
-}): React.JSX.Element {
+}): React.ReactElement {
   return (
     <div className="mb-8 flex w-[50vw] items-center justify-between">
       <h1 className="flex items-center gap-3 text-2xl font-semibold">

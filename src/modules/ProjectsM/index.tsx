@@ -31,7 +31,7 @@ function shuffle(array: any[]): any[] {
   return array
 }
 
-function ProjectsM(): React.JSX.Element {
+function ProjectsM(): React.ReactElement {
   const [icons, setIcons] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
 

@@ -71,7 +71,7 @@ export const PROJECT_STATUS = {
   }
 }
 
-function ProjectsKList(): React.JSX.Element {
+function ProjectsKList(): React.ReactElement {
   const [searchParams] = useSearchParams()
   const [projectList, refreshProjectList] = useFetch<IProjectsKEntry[]>(
     'projects-k/entry/list'

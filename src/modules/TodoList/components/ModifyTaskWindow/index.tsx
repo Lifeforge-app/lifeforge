@@ -24,7 +24,8 @@ function ModifyTaskWindow({
   setSelectedTask,
   refreshEntries,
   refreshTagsList,
-  refreshLists
+  refreshLists,
+  setDeleteTaskConfirmationModalOpen
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
@@ -37,6 +38,9 @@ function ModifyTaskWindow({
   refreshEntries: () => void
   refreshTagsList: () => void
   refreshLists: () => void
+  setDeleteTaskConfirmationModalOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >
 }): React.ReactElement {
   const [summary, setSummary] = useState('')
   const [notes, setNotes] = useState('')
@@ -145,7 +149,7 @@ function ModifyTaskWindow({
       setList(null)
       setTags([])
     }
-  }, [selectedTask])
+  }, [selectedTask, openType])
 
   return openType !== null ? (
     <div
@@ -183,11 +187,14 @@ function ModifyTaskWindow({
             }{' '}
             task
           </h1>
-          <HamburgerMenu position="relative">
+          <HamburgerMenu largerPadding position="relative">
             <MenuItem
               isRed
               icon="tabler:trash"
-              onClick={() => {}}
+              onClick={() => {
+                setDeleteTaskConfirmationModalOpen(true)
+                setOpenType(null)
+              }}
               text="Delete"
             />
           </HamburgerMenu>
@@ -257,7 +264,7 @@ function ModifyTaskWindow({
           <button
             disabled={loading}
             onClick={closeWindow}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
+            className="flex h-16 w-full items-center justify-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
           >
             cancel
           </button>

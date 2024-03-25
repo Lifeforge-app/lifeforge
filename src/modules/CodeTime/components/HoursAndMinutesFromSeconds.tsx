@@ -5,7 +5,7 @@ export default function HoursAndMinutesFromSeconds({
   seconds
 }: {
   seconds: number
-}): React.JSX.Element {
+}): React.ReactElement {
   return (
     <>
       {Math.floor(seconds / 60) > 0 ? (

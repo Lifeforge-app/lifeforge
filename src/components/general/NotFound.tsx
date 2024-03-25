@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function NotFound(): React.JSX.Element {
+function NotFound(): React.ReactElement {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-6">
       <h1 className="text-[10rem] text-custom-500">;-;</h1>

@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import { useNavigate } from 'react-router-dom'
 import GoBackButton from '../../../components/general/GoBackButton'
 
-function Kanban(): React.JSX.Element {
+function Kanban(): React.ReactElement {
   const navigate = useNavigate()
 
   return (

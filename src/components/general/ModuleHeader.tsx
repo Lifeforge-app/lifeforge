@@ -25,7 +25,7 @@ function ModuleHeader({
   desc,
   hasHamburgerMenu = false,
   hamburgerMenuItems
-}: ModuleHeaderProps): React.JSX.Element {
+}: ModuleHeaderProps): React.ReactElement {
   return (
     <div className="flex items-center justify-between gap-8">
       <div className="flex items-center gap-4">
