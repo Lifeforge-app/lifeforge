@@ -6,7 +6,7 @@ function AlbumListHeader(): React.ReactElement {
   const { albumList, setModifyAlbumModalOpenType } = useContext(PhotosContext)
 
   return (
-    <header className="mx-4 flex items-center justify-between">
+    <header className="flex items-center justify-between">
       <h1 className="text-4xl font-semibold text-bg-800 dark:text-bg-100">
         Albums{' '}
         <span className="text-base text-bg-500">

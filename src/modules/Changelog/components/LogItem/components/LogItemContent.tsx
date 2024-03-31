@@ -18,7 +18,7 @@ function LogItemContent({
             <span
               dangerouslySetInnerHTML={{
                 __html: subEntry.description.replace(
-                  /<code>(.*?)<\/code>/,
+                  /<code>(.*?)<\/code>/g,
                   `
                                 <code class="inline-block rounded-md bg-bg-200 p-1 px-1.5 font-['Jetbrains_Mono', text-sm shadow-[2px_2px_2px_rgba(0,0,0,0.05), dark:bg-bg-800">$1</code>
                                 `

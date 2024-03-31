@@ -44,7 +44,7 @@ function CustomZoomContent({
   const { refreshAlbumList } = useContext(PhotosContext)
   const { id: albumId } = useParams<{ id: string }>()
   const [name] = useFetch<string>(
-    'photos/entry/name/' + data.id,
+    `photos/entry/name/${data.id}?isInAlbum=${beingDisplayedInAlbum}`,
     modalState === 'LOADED'
   )
 
@@ -83,7 +83,7 @@ function CustomZoomContent({
     fetch(
       `${import.meta.env.VITE_API_HOST}/photos/album/set-cover/${albumId}/${
         data.id
-      }`,
+      }?isInAlbum=${beingDisplayedInAlbum}`,
       {
         method: 'PUT',
         headers: {
