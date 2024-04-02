@@ -85,7 +85,7 @@ function CustomZoomContent({
         data.id
       }?isInAlbum=${beingDisplayedInAlbum}`,
       {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${cookieParse(document.cookie).token}`

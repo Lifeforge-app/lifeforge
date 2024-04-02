@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable multiline-ternary */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from '../../../components/general/Modal'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { type IFlashcardCard } from './CardSet'
@@ -84,6 +84,45 @@ function EditCardModal({
         setLoading(false)
       })
   }
+
+  useEffect(() => {
+    // onpaste
+    const handlePaste = (e: ClipboardEvent) => {
+      e.preventDefault()
+      const text = e.clipboardData?.getData('text')
+
+      if (text === undefined) {
+        return
+      }
+
+      const lines = text.split('\n')
+
+      let newCards = [...innerCards]
+
+      lines.forEach(line => {
+        const [question, answer] = line.split('：')
+
+        newCards.push({
+          question,
+          answer,
+          type: 'create'
+        })
+      })
+
+      newCards = newCards.filter(
+        card =>
+          card.question.trim().length !== 0 || card.answer.trim().length !== 0
+      )
+
+      setInnerCards(newCards)
+    }
+
+    document.addEventListener('paste', handlePaste)
+
+    return () => {
+      document.removeEventListener('paste', handlePaste)
+    }
+  }, [])
 
   return (
     <Modal isOpen={isOpen}>

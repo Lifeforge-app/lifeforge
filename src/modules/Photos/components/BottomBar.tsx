@@ -75,6 +75,44 @@ function BottomBar({
     }
   }
 
+  async function addToFavourites(): Promise<void> {
+    if (selectedPhotos.length === 0) {
+      return
+    }
+
+    try {
+      await fetch(
+        `${import.meta.env.VITE_API_HOST}/photos/entry/add-to-favourites`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${cookieParse(document.cookie).token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            photos: selectedPhotos
+          })
+        }
+      )
+        .then(async response => {
+          if (response.status !== 200) {
+            throw new Error('Failed to add images to favorites')
+          }
+          const data = await response.json()
+          if (data.state !== 'success') {
+            throw new Error(data.message)
+          }
+
+          toast.success('Images added to favorites')
+        })
+        .catch(error => {
+          throw new Error(error as string)
+        })
+    } catch (error: any) {
+      toast.error(`Failed to add images to favorites. Error: ${error}`)
+    }
+  }
+
   return (
     <div
       className={`absolute bottom-0 left-1/2 z-20 flex w-[calc(100%-6rem)] -translate-x-1/2 items-center justify-between rounded-t-md bg-bg-50 p-4 shadow-[0px_0px_20px_0px_rgba(0,0,0,0.05)] transition-all dark:bg-bg-900 ${
@@ -96,6 +134,13 @@ function BottomBar({
       <div className="flex items-center gap-4">
         <button className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30">
           <Icon icon="tabler:share" className="h-5 w-5" />
+        </button>
+        <button
+          onClick={() => {
+            addToFavourites().catch(() => {})
+          }}
+        className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30">
+          <Icon icon="tabler:star" className="h-5 w-5" />
         </button>
         <button
           onClick={() => {
