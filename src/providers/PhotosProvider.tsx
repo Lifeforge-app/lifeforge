@@ -27,6 +27,7 @@ export interface IPhotosEntry {
   image: string
   has_raw: boolean
   is_in_album: boolean
+  is_favourite: boolean
 }
 
 export interface IPhotosAlbum {

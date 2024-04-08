@@ -25,7 +25,8 @@ function BottomBar({
     setSelectedPhotos,
     setAddPhotosToAlbumModalOpen,
     setDeletePhotosConfirmationModalOpen,
-    setRemovePhotosFromAlbumConfirmationModalOpen
+    setRemovePhotosFromAlbumConfirmationModalOpen,
+    refreshPhotos
   } = useContext(PhotosContext)
   const [isDownloadLoading, setIsDownloadLoading] = useState(false)
 
@@ -82,9 +83,11 @@ function BottomBar({
 
     try {
       await fetch(
-        `${import.meta.env.VITE_API_HOST}/photos/entry/add-to-favourites`,
+        `${
+          import.meta.env.VITE_API_HOST
+        }/photos/favourites/add-photos?isInAlbum=${inAlbumGallery}`,
         {
-          method: 'POST',
+          method: 'PATCH',
           headers: {
             Authorization: `Bearer ${cookieParse(document.cookie).token}`,
             'Content-Type': 'application/json'
@@ -96,20 +99,22 @@ function BottomBar({
       )
         .then(async response => {
           if (response.status !== 200) {
-            throw new Error('Failed to add images to favorites')
+            throw new Error('Failed to add images to favourites')
           }
           const data = await response.json()
           if (data.state !== 'success') {
             throw new Error(data.message)
           }
 
-          toast.success('Images added to favorites')
+          toast.success('Images added to favourites')
+
+          refreshPhotos()
         })
         .catch(error => {
           throw new Error(error as string)
         })
     } catch (error: any) {
-      toast.error(`Failed to add images to favorites. Error: ${error}`)
+      toast.error(`${error}`)
     }
   }
 
@@ -139,7 +144,8 @@ function BottomBar({
           onClick={() => {
             addToFavourites().catch(() => {})
           }}
-        className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30">
+          className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30"
+        >
           <Icon icon="tabler:star" className="h-5 w-5" />
         </button>
         <button

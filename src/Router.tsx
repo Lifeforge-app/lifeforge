@@ -5,6 +5,8 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { AuthContext } from './providers/AuthProvider'
 import { titleToPath } from './components/Sidebar/components/SidebarItem'
 import Loading from './components/general/Loading'
+import PhotosFavouritesGallery from './modules/Photos/pages/FavouritesGallery'
+import NotesFile from './modules/Notes/FIle'
 const PhotosProvider = lazy(
   async () => await import('./providers/PhotosProvider')
 )
@@ -184,6 +186,12 @@ export const ROUTES: IRoutes[] = [
               path="album/:id"
               element={<PhotosAlbumGallery />}
             />
+            ,
+            <Route
+              key="photos-album-favourites"
+              path="favourites"
+              element={<PhotosFavouritesGallery />}
+            />
           </Route>
         ],
         togglable: true
@@ -228,6 +236,11 @@ export const ROUTES: IRoutes[] = [
             path="notes/:workspace"
             element={<NotesCategory />}
           />,
+          <Route
+          key="notes-file"
+          path="notes/:workspace/:subject/file/:id"
+          element={<NotesFile />}
+        />,
           <Route
             key="notes-subject"
             path="notes/:workspace/:subject/*"

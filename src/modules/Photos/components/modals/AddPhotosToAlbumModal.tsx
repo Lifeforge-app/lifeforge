@@ -39,7 +39,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
     fetch(
       `${
         import.meta.env.VITE_API_HOST
-      }/photos/album/add-photo/${selectedAlbum}`,
+      }/photos/album/add-photos/${selectedAlbum}`,
       {
         method: 'PATCH',
         headers: {
@@ -49,10 +49,12 @@ function AddPhotosToAlbumModal(): React.ReactElement {
         body: JSON.stringify({
           photos: selectedPhotos.filter(
             photo =>
-              (photos.items
-                .map(p => p[1])
-                .flat()
-                .find(p => p.id === photo)?.is_in_album ?? false) === false
+              !(
+                photos.items
+                  .map(p => p[1])
+                  .flat()
+                  .find(p => p.id === photo)?.is_in_album ?? false
+              )
           )
         })
       }
@@ -94,11 +96,12 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                 {selectedPhotos
                   .filter(
                     photo =>
-                      (photos.items
-                        .map(p => p[1])
-                        .flat()
-                        .find(p => p.id === photo)?.is_in_album ?? false) ===
-                      false
+                      !(
+                        photos.items
+                          .map(p => p[1])
+                          .flat()
+                          .find(p => p.id === photo)?.is_in_album ?? false
+                      )
                   )
                   .length.toLocaleString()}{' '}
                 photos to album

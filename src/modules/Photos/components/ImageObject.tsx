@@ -267,12 +267,15 @@ function ImageObject({
               }`}
             />
           </button>
-          <div className="absolute right-2 top-2 flex items-center text-bg-200 opacity-50">
+          <div className="absolute right-2 top-2 flex items-center gap-2 text-bg-200 opacity-50">
             {details.has_raw && (
-              <Icon icon="tabler:letter-r-small" className="h-8 w-8" />
+              <Icon icon="tabler:letter-r" className="h-5 w-5" />
             )}
             {!beingDisplayedInAlbum && details.is_in_album && (
               <Icon icon="tabler:library-photo" className="h-5 w-5" />
+            )}
+            {details.is_favourite && (
+              <Icon icon="tabler:star" className="h-5 w-5" />
             )}
           </div>
         </>

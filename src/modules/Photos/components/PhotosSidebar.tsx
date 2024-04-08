@@ -6,7 +6,7 @@ import SidebarDivider from '../../../components/Sidebar/components/SidebarDivide
 import SidebarTitle from '../../../components/Sidebar/components/SidebarTitle'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import APIComponentWithFallback from '../../../components/general/APIComponentWithFallback'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { PhotosContext } from '../../../providers/PhotosProvider'
 
 function PhotosSidebar(): React.ReactElement {
@@ -15,6 +15,8 @@ function PhotosSidebar(): React.ReactElement {
     albumList,
     setModifyAlbumModalOpenType: setCreateAlbumModalOpen
   } = useContext(PhotosContext)
+
+  const navigate = useNavigate()
 
   return (
     <aside className="hidden h-[calc(100%-2rem)] w-80 shrink-0 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900 lg:block">
@@ -37,7 +39,13 @@ function PhotosSidebar(): React.ReactElement {
             </span>
           </Link>
         </li>
-        <SidebarItem icon="tabler:star-filled" name="Favorites" />
+        <SidebarItem
+          icon="tabler:star-filled"
+          name="Favourites"
+          onClick={() => {
+            navigate('/photos/favourites')
+          }}
+        />
         <SidebarDivider />
         <SidebarTitle
           name="albums"
