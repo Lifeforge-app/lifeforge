@@ -6,7 +6,7 @@ import { AuthContext } from './providers/AuthProvider'
 import { titleToPath } from './components/Sidebar/components/SidebarItem'
 import Loading from './components/general/Loading'
 import PhotosFavouritesGallery from './modules/Photos/pages/FavouritesGallery'
-import NotesFile from './modules/Notes/FIle'
+
 const PhotosProvider = lazy(
   async () => await import('./providers/PhotosProvider')
 )
@@ -60,6 +60,8 @@ const ProjectsKList = lazy(
 const ProjectsKEntry = lazy(
   async () => await import('./modules/ProjectsK/pages/ProjectEntry')
 )
+const NotesFile = lazy(async () => await import('./modules/Notes/File'))
+const Passwords = lazy(async () => await import('./modules/Passwords'))
 
 interface IRoutesItem {
   name: string
@@ -237,10 +239,10 @@ export const ROUTES: IRoutes[] = [
             element={<NotesCategory />}
           />,
           <Route
-          key="notes-file"
-          path="notes/:workspace/:subject/file/:id"
-          element={<NotesFile />}
-        />,
+            key="notes-file"
+            path="notes/:workspace/:subject/file/:id"
+            element={<NotesFile />}
+          />,
           <Route
             key="notes-subject"
             path="notes/:workspace/:subject/*"
@@ -298,7 +300,9 @@ export const ROUTES: IRoutes[] = [
       {
         name: 'Passwords',
         icon: 'tabler:key',
-        routes: [],
+        routes: [
+          <Route key="passwords" path="passwords" element={<Passwords />} />
+        ],
         togglable: true
       }
     ]

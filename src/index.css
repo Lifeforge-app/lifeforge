@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600&family=Outfit:wght@100..900&family=Urbanist:wght@100;200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Text:ital,wght@0,400..800;1,400..800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
-  font-family: 'Urbanist', sans-serif;
+  font-family: 'Wix Madefor Text', sans-serif;
   scrollbar-color: rgba(64, 64, 64, 0.5) rgba(38, 38, 38, 0.5);
   scrollbar-width: thin;
   overscroll-behavior: none;
@@ -444,4 +445,8 @@ progress::-moz-progress-bar {
 .Toastify__progress-bar--default {
   background: var(--color-custom-500);
   opacity: 1 !important;
+}
+
+input:autofill {
+  background: transparent; /* or any other */
 }

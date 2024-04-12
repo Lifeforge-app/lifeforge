@@ -11,9 +11,9 @@ function ThemeSelector(): React.ReactElement {
       <p className="text-neutral-500">Select or customize your UI theme.</p>
       <div className="mt-6 flex w-full flex-col gap-8 px-2 md:flex-row">
         {[
-          { name: 'System', Image: './mockup/system.png' },
-          { name: 'Light', Image: './mockup/light.png' },
-          { name: 'Dark', Image: './mockup/dark.png' }
+          { name: 'System', Image: '/assets/mockup/system.png' },
+          { name: 'Light', Image: '/assets/mockup/light.png' },
+          { name: 'Dark', Image: '/assets/mockup/dark.png' }
         ].map(({ name, Image }) => (
           <button
             key={name}

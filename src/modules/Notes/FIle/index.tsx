@@ -55,7 +55,7 @@ function NotesFile(): React.ReactElement {
                   <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
                     <Icon
                       icon="tabler:dots-vertical"
-                      className="text-xl sm:text-2xl"
+u="text-xl sm:text-2xl"
                     />
                   </button>
                 </div>

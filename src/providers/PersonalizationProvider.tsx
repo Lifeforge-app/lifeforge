@@ -32,7 +32,7 @@ function PersonalizationProvider({
   const { userData } = useContext(AuthContext)
 
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system')
-  const [themeColor, setThemeColor] = useState('theme-blue')
+  const [themeColor, setThemeColor] = useState('theme-teal')
   const [bgTemp, setBgTemp] = useState('bg-neutral')
 
   useEffect(() => {

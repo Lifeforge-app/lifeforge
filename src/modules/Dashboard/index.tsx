@@ -50,7 +50,7 @@ function Dashboard(): React.ReactElement {
             </>
           }
         />
-        <div className="mt-6 grid w-full grid-cols-4 grid-rows-3 gap-6">
+        <div className="mt-6 flex w-full grid-cols-4 grid-rows-3 flex-col gap-6 lg:grid">
           <StorageStatus />
           <CodeTime />
           <TodaysEvent />

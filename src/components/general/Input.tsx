@@ -14,7 +14,9 @@ function Input({
   additionalClassName = '',
   onKeyDown = () => {},
   noAutoComplete = false,
-  autoFocus = false
+  autoFocus = false,
+  actionButtonIcon = '',
+  onActionButtonClick = () => {}
 }: {
   reference?: React.RefObject<HTMLInputElement>
   name: string
@@ -28,6 +30,8 @@ function Input({
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   noAutoComplete?: boolean
   autoFocus?: boolean
+  actionButtonIcon?: string
+  onActionButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }): React.ReactElement {
   return (
     <div
@@ -60,10 +64,28 @@ function Input({
           onKeyDown={onKeyDown}
           autoComplete={noAutoComplete ? 'false' : 'true'}
           className={`mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500 ${
-            isPassword && 'text-2xl'
+            isPassword && value && 'text-2xl focus:text-base'
           }`}
           autoFocus={autoFocus}
+          onFocus={e => {
+            if (isPassword) {
+              e.target.type = 'text'
+            }
+          }}
+          onBlur={e => {
+            if (isPassword) {
+              e.target.type = 'password'
+            }
+          }}
         />
+        {actionButtonIcon && (
+          <button
+            onClick={onActionButtonClick}
+            className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-500/30 hover:text-bg-200 focus:outline-none"
+          >
+            <Icon icon={actionButtonIcon} className="h-6 w-6" />
+          </button>
+        )}
       </div>
     </div>
   )
