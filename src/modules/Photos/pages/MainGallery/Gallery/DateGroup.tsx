@@ -11,7 +11,7 @@ import {
   PhotosContext,
   type IPhotosEntry
 } from '../../../../../providers/PhotosProvider'
-import useOnScreen from '../../../../../hooks/useOnScreen'
+import useOnScreen from '@hooks/useOnScreen'
 import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
 

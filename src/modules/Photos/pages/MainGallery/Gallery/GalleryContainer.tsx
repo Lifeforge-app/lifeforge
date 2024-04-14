@@ -2,11 +2,11 @@
 /* eslint-disable @typescript-eslint/indent */
 import React, { useContext } from 'react'
 import moment from 'moment'
-import APIComponentWithFallback from '../../../../../components/general/APIComponentWithFallback'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import MobileSlidingScrollbar from '../Scrollbars/MobileSlidingScrollbar'
 import TimelineScrollbar from '../Scrollbars/TimelineScrollbar'
 import Gallery from './Gallery'
-import { PhotosContext } from '../../../../../providers/PhotosProvider'
+import { PhotosContext } from '@providers/PhotosProvider'
 
 function GalleryContainer(): React.ReactElement {
   const {

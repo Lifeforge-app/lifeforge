@@ -1,12 +1,12 @@
 /* eslint-disable multiline-ternary */
 import React, { useEffect, useState } from 'react'
-import Modal from '../../components/general/Modal'
+import Modal from '@components/Modal'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import Input from '../../components/general/Input'
-import IconInput from '../../components/general/IconSelector/IconInput'
-import IconSelector from '../../components/general/IconSelector'
-import ColorInput from '../../components/general/ColorPicker/ColorInput'
-import ColorPickerModal from '../../components/general/ColorPicker/ColorPickerModal'
+import Input from '@components/Input'
+import IconInput from '@components/IconSelector/IconInput'
+import IconSelector from '@components/IconSelector'
+import ColorInput from '@components/ColorPicker/ColorInput'
+import ColorPickerModal from '@components/ColorPicker/ColorPickerModal'
 import { toast } from 'react-toastify'
 import { cookieParse } from 'pocketbase'
 

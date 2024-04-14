@@ -5,16 +5,16 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 // @ts-expect-error - no types available
 import Column from 'react-columns'
-import EmptyStateScreen from '../../../../components/general/EmptyStateScreen'
+import EmptyStateScreen from '@components/EmptyStateScreen'
 import ModifyIdeaModal from './components/ModifyIdeaModal'
 import EntryImage from './components/IdeaEntry/EntryImage'
 import EntryText from './components/IdeaEntry/EntryText'
 import EntryLink from './components/IdeaEntry/EntryLink'
 import ContainerHeader from './components/ContainerHeader'
 import FAB from './components/FAB'
-import DeleteConfirmationModal from '../../../../components/general/DeleteConfirmationModal'
-import useFetch from '../../../../hooks/useFetch'
-import APIComponentWithFallback from '../../../../components/general/APIComponentWithFallback'
+import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
+import useFetch from '@hooks/useFetch'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 
 export interface IIdeaBoxEntry {
   collectionId: string

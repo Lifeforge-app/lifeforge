@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/member-delimiter-style */
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import { GlobalStateContext } from './GlobalStateProvider'
+import React, { createContext, useEffect, useState } from 'react'
 import { AUTH_ERROR_MESSAGES } from '../constants/auth'
 import { toast } from 'react-toastify'
 
 const AUTH_DATA: {
   auth: boolean
+  setAuth: React.Dispatch<React.SetStateAction<boolean>>
   authenticate: ({
     email,
     password
@@ -14,7 +14,7 @@ const AUTH_DATA: {
     email: string
     password: string
   }) => Promise<string>
-  authWithOauth: (provider: string) => Promise<string>
+  verifyToken: (token: string) => Promise<{ success: boolean; userData: any }>
   logout: () => void
   loginQuota: {
     quota: number
@@ -26,8 +26,9 @@ const AUTH_DATA: {
   getAvatarURL: () => string
 } = {
   auth: false,
+  setAuth: () => {},
   authenticate: async () => '',
-  authWithOauth: async () => '',
+  verifyToken: async () => ({ success: false, userData: null }),
   logout: () => {},
   loginQuota: {
     quota: 5,
@@ -50,9 +51,6 @@ export default function AuthProvider({
   const [userData, setUserData] = useState<any>(null)
   const [quota, setQuota] = useState(5)
   const [authLoading, setAuthLoading] = useState(true)
-  const {
-    pocketbase: { pocketbase, loading, error }
-  } = useContext(GlobalStateContext)
 
   function updateQuota(): number {
     const storedQuota = window.localStorage.getItem('quota')
@@ -97,6 +95,29 @@ export default function AuthProvider({
     toast.error(AUTH_ERROR_MESSAGES.QUOTA_EXCEEDED)
   }
 
+  async function verifyToken(token: string): Promise<{
+    success: boolean
+    userData: any
+  }> {
+    return await fetch(`${import.meta.env.VITE_API_HOST}/user/auth/verify`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(async res => {
+        const data = await res.json()
+        if (res.ok && data.state === 'success') {
+          return { success: true, userData: data.userData }
+        } else {
+          return { success: false, userData: null }
+        }
+      })
+      .catch(() => {
+        return { success: false, userData: null }
+      })
+  }
+
   async function authenticate({
     email,
     password
@@ -104,109 +125,65 @@ export default function AuthProvider({
     email: string
     password: string
   }): Promise<string> {
-    if (!loading && pocketbase !== null && error === null) {
-      try {
-        await pocketbase
-          .collection('users')
-          .authWithPassword(email, password)
-          .catch(e => {
-            throw e.message
-          })
+    const res = fetch(`${import.meta.env.VITE_API_HOST}/user/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    })
+      .then(async res => {
+        const data = await res.json()
+        if (res.ok && data.state === 'success') {
+          window.localStorage.setItem('quota', '5')
+          window.localStorage.removeItem('lastQuotaExceeded')
 
-        window.localStorage.setItem('quota', '5')
-        window.localStorage.removeItem('lastQuotaExceeded')
+          document.cookie = `token=${data.token}; path=/; expires=${new Date(
+            Date.now() + 7 * 24 * 60 * 60 * 1000
+          ).toUTCString()}`
 
-        document.cookie = `token=${
-          pocketbase.authStore.token
-        }; path=/; expires=${new Date(
-          Date.now() + 7 * 24 * 60 * 60 * 1000
-        ).toUTCString()}`
+          setUserData(data.userData)
+          setAuth(true)
 
-        setUserData(pocketbase.authStore.model)
-        setAuth(pocketbase.authStore.isValid)
-
-        return 'success: ' + pocketbase.authStore.model?.name
-      } catch (error) {
-        switch (error) {
+          return 'success: ' + data.userData.name
+        } else {
+          throw new Error(data.message)
+        }
+      })
+      .catch(err => {
+        switch (err) {
           case 'Failed to authenticate.':
             return AUTH_ERROR_MESSAGES.INVALID_CREDENTIALS
           default:
             return AUTH_ERROR_MESSAGES.UNKNOWN_ERROR
         }
-      }
-    } else {
-      return AUTH_ERROR_MESSAGES.DATABASE_NOT_READY
-    }
-  }
+      })
 
-  async function authWithOauth(provider: string): Promise<string> {
-    if (!loading && pocketbase !== null && error === null) {
-      try {
-        const w = window.open()
-
-        await pocketbase
-          .collection('users')
-          .authWithOAuth2({
-            provider,
-            urlCallback: url => {
-              if (w !== null) {
-                w.location.href = url
-              }
-            }
-          })
-          .catch(e => {
-            throw e.message
-          })
-
-        window.localStorage.setItem('quota', '5')
-        window.localStorage.removeItem('lastQuotaExceeded')
-
-        document.cookie = `token=${
-          pocketbase.authStore.token
-        }; path=/; expires=${new Date(
-          Date.now() + 7 * 24 * 60 * 60 * 1000
-        ).toUTCString()}`
-
-        setUserData(pocketbase.authStore.model)
-
-        return 'success: ' + pocketbase.authStore.model?.name
-      } catch (error) {
-        switch (error) {
-          case 'Failed to authenticate.':
-            return AUTH_ERROR_MESSAGES.INVALID_CREDENTIALS
-          default:
-            return AUTH_ERROR_MESSAGES.UNKNOWN_ERROR
-        }
-      } finally {
-        setAuth(pocketbase.authStore.isValid)
-      }
-    } else {
-      return AUTH_ERROR_MESSAGES.DATABASE_NOT_READY
-    }
+    return await res
   }
 
   function logout(): void {
-    if (!loading && pocketbase !== null) {
-      pocketbase.authStore.clear()
-      setAuth(false)
-      document.cookie = `token=; path=/; expires=${new Date(
-        Date.now() + 7 * 24 * 60 * 60 * 1000
-      ).toUTCString()}`
-      setUserData(null)
+    setAuth(false)
+    document.cookie = `token=; path=/; expires=${new Date(
+      Date.now() + 7 * 24 * 60 * 60 * 1000
+    ).toUTCString()}`
+    setUserData(null)
 
-      window.localStorage.setItem('quota', '5')
-      window.localStorage.removeItem('lastQuotaExceeded')
-    }
+    window.localStorage.setItem('quota', '5')
+    window.localStorage.removeItem('lastQuotaExceeded')
   }
 
   useEffect(() => {
     setAuthLoading(true)
-    if (!loading && pocketbase !== null && document.cookie.includes('token')) {
-      ;(async () => {
-        await pocketbase.collection('users').authRefresh()
-        setAuth(pocketbase.authStore.isValid)
-        setUserData(pocketbase.authStore.model)
-      })()
+    updateQuota()
+    if (document.cookie.includes('token')) {
+      verifyToken(document.cookie.split('=')[1])
+        .then(async ({ success, userData }) => {
+          if (success) {
+            setUserData(userData)
+            setAuth(true)
+          }
+        })
         .catch(() => {
           setAuth(false)
         })
@@ -216,18 +193,13 @@ export default function AuthProvider({
     } else {
       setAuthLoading(false)
     }
-  }, [loading])
-
-  useEffect(() => {
-    updateQuota()
   }, [])
 
   function getAvatarURL(): string {
-    const _userData = pocketbase?.authStore.model
-    if (_userData) {
+    if (userData) {
       return `${import.meta.env.VITE_POCKETBASE_ENDPOINT}/api/files/${
-        _userData.collectionId
-      }/${_userData.id}/${_userData.avatar}`
+        userData.collectionId
+      }/${userData.id}/${userData.avatar}`
     }
     return ''
   }
@@ -236,8 +208,9 @@ export default function AuthProvider({
     <AuthContext.Provider
       value={{
         auth,
+        setAuth,
         authenticate,
-        authWithOauth,
+        verifyToken,
         logout,
         loginQuota: {
           quota,

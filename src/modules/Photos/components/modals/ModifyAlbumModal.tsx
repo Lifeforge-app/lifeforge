@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import Modal from '../../../../components/general/Modal'
+import Modal from '@components/Modal'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import Input from '../../../../components/general/Input'
-import CreateOrModifyButton from '../../../../components/general/CreateOrModifyButton'
+import Input from '@components/Input'
+import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import { toast } from 'react-toastify'
 import { cookieParse } from 'pocketbase'
 import {

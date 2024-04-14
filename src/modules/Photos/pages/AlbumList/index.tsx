@@ -1,21 +1,21 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useContext, useEffect, useState } from 'react'
-import ModuleWrapper from '../../../../components/general/ModuleWrapper'
-import ModuleHeader from '../../../../components/general/ModuleHeader'
+import ModuleWrapper from '@components/ModuleWrapper'
+import ModuleHeader from '@components/ModuleHeader'
 import PhotosSidebar from '../../components/PhotosSidebar'
 import {
   type IPhotosAlbum,
   PhotosContext
 } from '../../../../providers/PhotosProvider'
-import APIComponentWithFallback from '../../../../components/general/APIComponentWithFallback'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
-import DeleteConfirmationModal from '../../../../components/general/DeleteConfirmationModal'
+import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
 import AlbumItem from './components/AlbumItem'
 import AlbumListHeader from './components/AlbumListHeader'
-import SearchInput from '../../../../components/general/SearchInput'
+import SearchInput from '@components/SearchInput'
 import { useDebounce } from '@uidotdev/usehooks'
-import EmptyStateScreen from '../../../../components/general/EmptyStateScreen'
+import EmptyStateScreen from '@components/EmptyStateScreen'
 
 function PhotosAlbumList(): React.ReactElement {
   const { albumList, refreshAlbumList, refreshPhotos } =

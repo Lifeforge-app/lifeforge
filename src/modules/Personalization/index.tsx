@@ -1,9 +1,9 @@
 import React from 'react'
-import ModuleHeader from '../../components/general/ModuleHeader'
+import ModuleHeader from '@components/ModuleHeader'
 import ThemeSelector from './components/ThemeSelector'
 import ThemeColorSelector from './components/ThemeColorSelector'
 import BgTempSelector from './components/BgTempSelector'
-import ModuleWrapper from '../../components/general/ModuleWrapper'
+import ModuleWrapper from '@components/ModuleWrapper'
 
 function Personalization(): React.ReactElement {
   return (

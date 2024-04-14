@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable multiline-ternary */
 import React, { useEffect, useState } from 'react'
-import ModuleHeader from '../../../components/general/ModuleHeader'
+import ModuleHeader from '@components/ModuleHeader'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useNavigate, useParams } from 'react-router'
 import { type INotesWorkspace } from '..'
-import EmptyStateScreen from '../../../components/general/EmptyStateScreen'
+import EmptyStateScreen from '@components/EmptyStateScreen'
 import ModifySubjectModal from './components/ModifySubjectModal'
-import GoBackButton from '../../../components/general/GoBackButton'
+import GoBackButton from '@components/GoBackButton'
 import SubjectItem, { type INotesSubject } from './components/SubjectItem'
 import CreateSubjectButton from './components/CreateSubjectButton'
-import DeleteConfirmationModal from '../../../components/general/DeleteConfirmationModal'
-import useFetch from '../../../hooks/useFetch'
-import APIComponentWithFallback from '../../../components/general/APIComponentWithFallback'
+import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
+import useFetch from '@hooks/useFetch'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 
 function NotesCategory(): React.ReactElement {
   const { workspace } = useParams<{ workspace: string }>()

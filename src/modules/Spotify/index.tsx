@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
 import React, { useContext } from 'react'
-import ModuleHeader from '../../components/general/ModuleHeader'
-import { AuthContext } from '../../providers/AuthProvider'
+import ModuleHeader from '@components/ModuleHeader'
+import { AuthContext } from '@providers/AuthProvider'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import WebPlayback from './WebPlayback'
-import ModuleWrapper from '../../components/general/ModuleWrapper'
+import ModuleWrapper from '@components/ModuleWrapper'
 
 function Spotify(): React.ReactElement {
   const { userData } = useContext(AuthContext)

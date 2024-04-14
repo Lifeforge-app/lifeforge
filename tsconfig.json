@@ -19,7 +19,14 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "paths": {
+      "@components/*": ["./src/components/general/*"],
+      "@providers/*": ["./src/providers/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@sidebar/*": ["./src/components/Sidebar/*"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

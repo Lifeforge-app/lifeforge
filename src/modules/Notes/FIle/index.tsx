@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React from 'react'
-import ModuleWrapper from '../../../components/general/ModuleWrapper'
+import ModuleWrapper from '@components/ModuleWrapper'
 import { Worker, Viewer, type RenderPageProps } from '@react-pdf-viewer/core'
 
 // Import the styles
 import '@react-pdf-viewer/core/lib/styles/index.css'
 import { useNavigate, useParams } from 'react-router'
-import useFetch from '../../../hooks/useFetch'
-import APIComponentWithFallback from '../../../components/general/APIComponentWithFallback'
+import useFetch from '@hooks/useFetch'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import { type INotesEntry } from '../Subject'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import FILE_ICONS from '../../../constants/file_icons'
-import GoBackButton from '../../../components/general/GoBackButton'
+import GoBackButton from '@components/GoBackButton'
 
 function NotesFile(): React.ReactElement {
   const { id } = useParams<{ id: string }>()
@@ -53,10 +53,7 @@ function NotesFile(): React.ReactElement {
                     <Icon icon="tabler:download" className="text-2xl" />
                   </button>
                   <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
-                    <Icon
-                      icon="tabler:dots-vertical"
-u="text-xl sm:text-2xl"
-                    />
+                    <Icon icon="tabler:dots-vertical" u="text-xl sm:text-2xl" />
                   </button>
                 </div>
               </div>

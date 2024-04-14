@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
 import React, { useEffect, useState } from 'react'
-import Modal from '../../../../../components/general/Modal'
+import Modal from '@components/Modal'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import ColorPickerModal from '../../../../../components/general/ColorPicker/ColorPickerModal'
+import ColorPickerModal from '@components/ColorPicker/ColorPickerModal'
 import { toast } from 'react-toastify'
 import { type IIdeaBoxContainer } from '../../..'
 import { useDebounce } from '@uidotdev/usehooks'
-import IconInput from '../../../../../components/general/IconSelector/IconInput'
-import Input from '../../../../../components/general/Input'
-import IconSelector from '../../../../../components/general/IconSelector'
-import CreateOrModifyButton from '../../../../../components/general/CreateOrModifyButton'
-import ColorInput from '../../../../../components/general/ColorPicker/ColorInput'
+import IconInput from '@components/IconSelector/IconInput'
+import Input from '@components/Input'
+import IconSelector from '@components/IconSelector'
+import CreateOrModifyButton from '@components/CreateOrModifyButton'
+import ColorInput from '@components/ColorPicker/ColorInput'
 import { cookieParse } from 'pocketbase'
 
 function ModifyContainerModal({

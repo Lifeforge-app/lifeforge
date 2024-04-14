@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import ModuleHeader from '../../components/general/ModuleHeader'
-import Loading from '../../components/general/Loading'
-import Error from '../../components/general/Error'
+import ModuleHeader from '@components/ModuleHeader'
+import Loading from '@components/Loading'
+import Error from '@components/Error'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { Link } from 'react-router-dom'
-import useFetch from '../../hooks/useFetch'
-import ModuleWrapper from '../../components/general/ModuleWrapper'
+import useFetch from '@hooks/useFetch'
+import ModuleWrapper from '@components/ModuleWrapper'
 
 export interface INotesWorkspace {
   collectionId: string

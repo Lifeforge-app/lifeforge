@@ -1,11 +1,10 @@
 import React from 'react'
 
-import ModuleHeader from '../../components/general/ModuleHeader'
+import ModuleHeader from '@components/ModuleHeader'
 import CodeTimeStatistics from './components/CodeTimeStatistics'
 import CodeTimeActivityCalendar from './components/CodeTimeActivityCalendar'
-import CodeTimeMostProjects from './components/CodeTimeMostProjects'
-import CodeTimeMostLanguages from './components/CodeTimeMostLanguages'
-import ModuleWrapper from '../../components/general/ModuleWrapper'
+import CodeTimeTopEntries from './components/CodeTimeTopEntries'
+import ModuleWrapper from '@components/ModuleWrapper'
 
 export default function CodeTime(): React.ReactElement {
   return (
@@ -14,11 +13,15 @@ export default function CodeTime(): React.ReactElement {
         title="Code Time"
         desc="See how much time you spend grinding code."
       />
-      <div className="mt-6 flex min-h-0 w-full flex-1 flex-col items-center">
+      <div className="mt-8 min-h-0 w-full space-y-12">
         <CodeTimeStatistics />
         <CodeTimeActivityCalendar />
-        <CodeTimeMostProjects />
-        <CodeTimeMostLanguages />
+        {['projects', 'languages'].map(type => (
+          <CodeTimeTopEntries
+            key={type}
+            type={type as 'projects' | 'languages'}
+          />
+        ))}
       </div>
     </ModuleWrapper>
   )
