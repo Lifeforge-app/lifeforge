@@ -3,13 +3,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
 import React, { useContext, useEffect, useState } from 'react'
-import { GlobalStateContext } from '@providers/GlobalStateProvider'
-import SidebarItem, { titleToPath } from './SidebarItem'
-import SidebarTitle from './SidebarTitle'
-import SidebarDivider from './SidebarDivider'
-import { type INotesWorkspace } from '../../../modules/Notes'
 import useFetch from '@hooks/useFetch'
 import { AuthContext } from '@providers/AuthProvider'
+import { GlobalStateContext } from '@providers/GlobalStateProvider'
+import { type INotesWorkspace } from '@typedec/Notes'
+import SidebarDivider from './SidebarDivider'
+import SidebarItem, { titleToPath } from './SidebarItem'
+import SidebarTitle from './SidebarTitle'
 import { ROUTES } from '../../../Router'
 
 function SidebarItems(): React.ReactElement {

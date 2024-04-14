@@ -1,30 +1,17 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable multiline-ternary */
-import React, { useEffect, useState } from 'react'
-import ModuleHeader from '@components/ModuleHeader'
-import ModifyContainerModal from './components/Containers/components/ModifyContainerModal'
 import { useDebounce } from '@uidotdev/usehooks'
-import EmptyStateScreen from '@components/EmptyStateScreen'
-import Containers from './components/Containers'
-import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
-import useFetch from '@hooks/useFetch'
+import React, { useEffect, useState } from 'react'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
+import EmptyStateScreen from '@components/EmptyStateScreen'
+import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 import SearchInput from '@components/SearchInput'
-
-export interface IIdeaBoxContainer {
-  collectionId: string
-  collectionName: string
-  color: string
-  created: string
-  icon: string
-  id: string
-  image_count: number
-  link_count: number
-  name: string
-  text_count: number
-  updated: string
-}
+import useFetch from '@hooks/useFetch'
+import { type IIdeaBoxContainer } from '@typedec/IdeaBox'
+import Containers from './components/Containers'
+import ModifyContainerModal from './components/Containers/components/ModifyContainerModal'
 
 function IdeaBox(): React.ReactElement {
   const [data, refreshData] = useFetch<IIdeaBoxContainer[]>(

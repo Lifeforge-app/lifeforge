@@ -1,39 +1,26 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
+import { Icon } from '@iconify/react'
 import React, { useContext, useEffect } from 'react'
-import ModuleWrapper from '@components/ModuleWrapper.tsx'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import { useNavigate, useParams } from 'react-router'
-import GoBackButton from '@components/GoBackButton.tsx'
-import useFetch from '@hooks/useFetch.ts'
-import APIComponentWithFallback from '@components/APIComponentWithFallback.tsx'
-import {
-  type IPhotosEntryDimensionsItem,
-  PhotosContext
-} from '../../../../providers/PhotosProvider.tsx'
 import Gallery from 'react-photo-gallery'
-import ImageObject from '../../components/ImageObject.tsx'
-import BottomBar from '../../components/BottomBar.tsx'
+import { useNavigate } from 'react-router'
+import APIComponentWithFallback from '@components/APIComponentWithFallback.tsx'
+import GoBackButton from '@components/GoBackButton.tsx'
 import HamburgerMenu from '@components/HamburgerMenu/index.tsx'
 import MenuItem from '@components/HamburgerMenu/MenuItem.tsx'
-
-export interface IPhotoAlbumEntryItem extends IPhotosEntryDimensionsItem {
-  collectionId: string
-  photoId: string
-  image: string
-  has_raw: boolean
-  is_in_album: boolean
-  is_favourite: boolean
-}
+import ModuleWrapper from '@components/ModuleWrapper.tsx'
+import useFetch from '@hooks/useFetch.ts'
+import { type IPhotoAlbumEntryItem } from '@typedec/Photos.ts'
+import { PhotosContext } from '../../../../providers/PhotosProvider.tsx'
+import BottomBar from '../../components/BottomBar.tsx'
+import ImageObject from '../../components/ImageObject.tsx'
 
 function PhotosFavouritesGallery(): React.ReactElement {
   const { selectedPhotos, setSelectedPhotos, setModifyAlbumModalOpenType } =
     useContext(PhotosContext)
   const navigate = useNavigate()
-  const [photos, refreshPhotos] = useFetch<IPhotoAlbumEntryItem[]>(
-    'photos/favourites/list'
-  )
+  const [photos] = useFetch<IPhotoAlbumEntryItem[]>('photos/favourites/list')
 
   useEffect(() => {
     return () => {

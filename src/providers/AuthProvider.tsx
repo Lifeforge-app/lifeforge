@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 import React, { createContext, useEffect, useState } from 'react'
-import { AUTH_ERROR_MESSAGES } from '../constants/auth'
 import { toast } from 'react-toastify'
+import { AUTH_ERROR_MESSAGES } from '../constants/auth'
 
 const AUTH_DATA: {
   auth: boolean

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import { AuthContext } from './AuthProvider'
-import { toast } from 'react-toastify'
-import { Helmet } from 'react-helmet'
-import THEME_COLOR_HEX from '../constants/theme_color_hex'
 import { cookieParse } from 'pocketbase'
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
+import { toast } from 'react-toastify'
+import { AuthContext } from './AuthProvider'
+import THEME_COLOR_HEX from '../constants/theme_color_hex'
 
 const PERSONALIZATION_DATA: {
   theme: 'light' | 'dark' | 'system'

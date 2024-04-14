@@ -1,7 +1,7 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
-import React from 'react'
 import { Icon } from '@iconify/react'
+import React from 'react'
 
 export default function Calendar(): React.ReactElement {
   return (
@@ -12,13 +12,13 @@ export default function Calendar(): React.ReactElement {
       </h1>
       <div className="h-full w-full">
         <div className="mb-6 flex items-center justify-between">
-          <button className="text-bg-100 rounded-lg p-4 transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50">
+          <button className="rounded-lg p-4 text-bg-100 transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50">
             <Icon icon="tabler:chevron-left" className="text-2xl" />
           </button>
           <div className="text-lg font-semibold text-bg-800 dark:text-bg-100">
             November 2023
           </div>
-          <button className="text-bg-100 rounded-lg p-4 transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50">
+          <button className="rounded-lg p-4 text-bg-100 transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50">
             <Icon icon="tabler:chevron-right" className="text-2xl" />
           </button>
         </div>
@@ -26,7 +26,7 @@ export default function Calendar(): React.ReactElement {
           {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
             <div
               key={day}
-              className="text-bg-100 flex items-center justify-center text-sm"
+              className="flex items-center justify-center text-sm text-bg-100"
             >
               {day}
             </div>

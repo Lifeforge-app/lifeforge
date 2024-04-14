@@ -1,9 +1,9 @@
 /* eslint-disable multiline-ternary */
+import { Icon } from '@iconify/react'
 import React from 'react'
 import ModuleHeader from '@components/ModuleHeader'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import Timer from './components/Timer'
 import ModuleWrapper from '@components/ModuleWrapper'
+import Timer from './components/Timer'
 
 export default function PomodoroTimer(): React.ReactElement {
   return (

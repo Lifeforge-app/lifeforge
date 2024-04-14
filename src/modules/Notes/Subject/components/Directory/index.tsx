@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/indent */
 import React from 'react'
-import { type INotesEntry } from '../..'
+import { type INotesEntry } from '@typedec/Notes'
 import EntryItem from './components/EntryItem'
 
 function Directory({

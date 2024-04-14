@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
-import React, { useEffect, useState } from 'react'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import { toast } from 'react-toastify'
+import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
-import Modal from '@components/Modal'
+import { cookieParse } from 'pocketbase'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import ColorInput from '@components/ColorPicker/ColorInput'
 import ColorPickerModal from '@components/ColorPicker/ColorPickerModal'
-import { type ITodoListList } from './Sidebar'
 import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import IconSelector from '@components/IconSelector'
-import Input from '@components/Input'
 import IconInput from '@components/IconSelector/IconInput'
-import ColorInput from '@components/ColorPicker/ColorInput'
-import { cookieParse } from 'pocketbase'
+import Input from '@components/Input'
+import Modal from '@components/Modal'
+import { type ITodoListList } from '@typedec/TodoList'
 
 function ModifyListModal({
   openType,

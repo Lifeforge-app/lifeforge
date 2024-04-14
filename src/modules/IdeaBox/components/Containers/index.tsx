@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/indent */
+import { Icon } from '@iconify/react'
 import React from 'react'
-import { type IIdeaBoxContainer } from '../..'
+import { type IIdeaBoxContainer } from '@typedec/IdeaBox'
 import ContainerItem from './components/ContainerItem'
-import { Icon } from '@iconify/react/dist/iconify.js'
 
 function Container({
   filteredList,

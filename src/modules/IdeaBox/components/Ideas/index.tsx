@@ -2,34 +2,20 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-// @ts-expect-error - no types available
+// @ts-expect-error no types available
 import Column from 'react-columns'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
 import EmptyStateScreen from '@components/EmptyStateScreen'
-import ModifyIdeaModal from './components/ModifyIdeaModal'
-import EntryImage from './components/IdeaEntry/EntryImage'
-import EntryText from './components/IdeaEntry/EntryText'
-import EntryLink from './components/IdeaEntry/EntryLink'
+import useFetch from '@hooks/useFetch'
+import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
 import ContainerHeader from './components/ContainerHeader'
 import FAB from './components/FAB'
-import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
-import useFetch from '@hooks/useFetch'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
-
-export interface IIdeaBoxEntry {
-  collectionId: string
-  collectionName: string
-  container: string
-  content: string
-  created: string
-  id: string
-  image: string
-  title: string
-  type: 'text' | 'image' | 'link'
-  updated: string
-  pinned: boolean
-  archived: boolean
-}
+import EntryImage from './components/IdeaEntry/EntryImage'
+import EntryLink from './components/IdeaEntry/EntryLink'
+import EntryText from './components/IdeaEntry/EntryText'
+import ModifyIdeaModal from './components/ModifyIdeaModal'
 
 function Ideas(): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()

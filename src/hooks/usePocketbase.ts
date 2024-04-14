@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import type Client from 'pocketbase'
-import { useEffect, useRef, useState } from 'react'
 import Pocketbase from 'pocketbase'
+import { useEffect, useRef, useState } from 'react'
 
 export default function usePocketbase(): {
   pocketbase: any

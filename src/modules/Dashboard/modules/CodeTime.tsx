@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react'
 import { Icon } from '@iconify/react'
 import { type ScriptableContext } from 'chart.js'
+import React from 'react'
 import { Line } from 'react-chartjs-2'
 
 function msToTime(ms: number): string {

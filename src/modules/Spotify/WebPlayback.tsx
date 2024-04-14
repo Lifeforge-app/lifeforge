@@ -1,10 +1,10 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/naming-convention */
+import { Icon } from '@iconify/react'
 import React, { useContext, useEffect, useState } from 'react'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import { SpotifyContext } from '@providers/SpotifyProvider'
 import EmptyStateScreen from '@components/EmptyStateScreen'
+import { SpotifyContext } from '@providers/SpotifyProvider'
 
 function WebPlayback(): React.ReactElement {
   const { player, isPaused, isActive, currentTrack } =

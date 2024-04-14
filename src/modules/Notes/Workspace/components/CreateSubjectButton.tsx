@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
-import { type INotesSubject } from './SubjectItem'
+import { type INotesSubject } from '@typedec/Notes'
 
 function CreateSubjectButton({
   setModifySubjectModalOpenType,

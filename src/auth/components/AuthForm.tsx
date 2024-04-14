@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react'
-import Input from '@components/Input'
-import AuthSignInButton from './AuthSignInButtons'
-import { AuthContext } from '@providers/AuthProvider'
-import { toast } from 'react-toastify'
-import { AUTH_ERROR_MESSAGES } from '../../constants/auth'
 import * as webauthn from '@passwordless-id/webauthn'
+import React, { useContext, useState } from 'react'
+import { toast } from 'react-toastify'
+import Input from '@components/Input'
+import { AuthContext } from '@providers/AuthProvider'
+import AuthSignInButton from './AuthSignInButtons'
+import { AUTH_ERROR_MESSAGES } from '../../constants/auth'
 
 function AuthForm(): React.ReactElement {
   const [emailOrUsername, setEmail] = useState('')

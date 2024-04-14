@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable multiline-ternary */
+import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
-import ModuleHeader from '@components/ModuleHeader'
-import { Icon } from '@iconify/react/dist/iconify.js'
 import { useNavigate, useParams } from 'react-router'
-import { type INotesWorkspace } from '..'
-import EmptyStateScreen from '@components/EmptyStateScreen'
-import ModifySubjectModal from './components/ModifySubjectModal'
-import GoBackButton from '@components/GoBackButton'
-import SubjectItem, { type INotesSubject } from './components/SubjectItem'
-import CreateSubjectButton from './components/CreateSubjectButton'
-import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
-import useFetch from '@hooks/useFetch'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
+import EmptyStateScreen from '@components/EmptyStateScreen'
+import GoBackButton from '@components/GoBackButton'
+import ModuleHeader from '@components/ModuleHeader'
+import useFetch from '@hooks/useFetch'
+import { type INotesSubject, type INotesWorkspace } from '@typedec/Notes'
+import CreateSubjectButton from './components/CreateSubjectButton'
+import ModifySubjectModal from './components/ModifySubjectModal'
+import SubjectItem from './components/SubjectItem'
 
 function NotesCategory(): React.ReactElement {
   const { workspace } = useParams<{ workspace: string }>()

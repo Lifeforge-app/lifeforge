@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
-import React, { useEffect, useState } from 'react'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import { toast } from 'react-toastify'
+import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
-import Modal from '@components/Modal'
-import { useParams } from 'react-router'
-import { type INotesEntry } from '..'
-import Input from '@components/Input'
-import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import { cookieParse } from 'pocketbase'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router'
+import { toast } from 'react-toastify'
+import CreateOrModifyButton from '@components/CreateOrModifyButton'
+import Input from '@components/Input'
+import Modal from '@components/Modal'
+import { type INotesEntry } from '@typedec/Notes'
 
 function ModifyFolderModal({
   openType,
@@ -58,7 +58,7 @@ function ModifyFolderModal({
 
     fetch(
       `${import.meta.env.VITE_API_HOST}/notes/entry/${innerOpenType}/folder` +
-        (innerOpenType === 'update' ? `/${existedData!.id}` : ''),
+        (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
       {
         method: innerOpenType === 'create' ? 'POST' : 'PATCH',
         headers: {

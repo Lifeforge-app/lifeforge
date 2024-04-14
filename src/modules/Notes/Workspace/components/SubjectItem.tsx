@@ -1,21 +1,10 @@
 /* eslint-disable @typescript-eslint/indent */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
-
-export interface INotesSubject {
-  workspace: string
-  collectionId: string
-  collectionName: string
-  created: string
-  description: string
-  icon: string
-  id: string
-  title: string
-  updated: string
-}
+import { type INotesSubject } from '@typedec/Notes'
 
 function SubjectItem({
   subject,

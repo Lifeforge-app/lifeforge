@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Menu, Transition } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
+import { cookieParse } from 'pocketbase'
 import React from 'react'
-import { type IIdeaBoxEntry } from '..'
 import { toast } from 'react-toastify'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
-import { cookieParse } from 'pocketbase'
+import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
 
 function EntryContextMenu({
   entry,

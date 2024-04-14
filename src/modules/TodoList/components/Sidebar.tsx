@@ -1,36 +1,14 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/indent */
-import React, { useEffect, useState } from 'react'
-import SidebarDivider from '@sidebar/components/SidebarDivider'
-import SidebarTitle from '@sidebar/components/SidebarTitle'
 import { Icon } from '@iconify/react'
+import React, { useEffect, useState } from 'react'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import GoBackButton from '@components/GoBackButton'
+import SidebarDivider from '@sidebar/components/SidebarDivider'
+import SidebarTitle from '@sidebar/components/SidebarTitle'
+import { type ITodoListList, type ITodoListTag } from '@typedec/TodoList'
 import ModifyListModal from './ModifyListModal'
 import ModifyTagModal from './ModifyTagModal'
-
-export interface ITodoListList {
-  collectionId: string
-  collectionName: string
-  color: string
-  created: string
-  icon: string
-  id: string
-  name: string
-  updated: string
-  amount: number
-}
-
-export interface ITodoListTag {
-  amount: number
-  collectionId: string
-  collectionName: string
-  color: string
-  created: string
-  id: string
-  name: string
-  updated: string
-}
 
 function Sidebar({
   sidebarOpen,

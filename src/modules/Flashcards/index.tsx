@@ -1,34 +1,19 @@
 import { faker } from '@faker-js/faker'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 import SearchInput from '@components/SearchInput'
-import Sidebar, { type IFlashcardTag } from '@sidebar'
 import useFetch from '@hooks/useFetch'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
-
-export interface IFlashcardDeck {
-  card_amount: number
-  collectionId: string
-  collectionName: string
-  created: string
-  id: string
-  name: string
-  tag: string
-  updated: string
-  expand: {
-    tag: IFlashcardTag
-  }
-}
+import { type IFlashcardDeck } from '@typedec/Flashcard'
+import Sidebar from './components/Sidebar'
 
 export default function Flashcards(): React.ReactElement {
   const [searchQuery, setSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [decks, refreshDecks] = useFetch<IFlashcardDeck[]>(
-    'flashcards/deck/list'
-  )
+  const [decks] = useFetch<IFlashcardDeck[]>('flashcards/deck/list')
 
   return (
     <ModuleWrapper>

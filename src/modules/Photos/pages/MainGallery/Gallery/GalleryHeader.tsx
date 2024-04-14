@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
 /* eslint-disable react/jsx-no-undef */
-import { Icon } from '@iconify/react/dist/iconify.js'
-import React, { useContext, useEffect, useState } from 'react'
-import { PhotosContext } from '@providers/PhotosProvider'
-import useFetch from '@hooks/useFetch'
+import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
+import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
+import useFetch from '@hooks/useFetch'
+import { PhotosContext } from '@providers/PhotosProvider'
 
 function GalleryHeader(): React.ReactElement {
   const { refreshPhotos, hidePhotosInAlbum, setHidePhotosInAlbum, setReady } =

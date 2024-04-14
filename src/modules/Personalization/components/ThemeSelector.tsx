@@ -1,6 +1,6 @@
+import { Icon } from '@iconify/react'
 import React, { useContext } from 'react'
 import { PersonalizationContext } from '@providers/PersonalizationProvider'
-import { Icon } from '@iconify/react/dist/iconify.js'
 
 function ThemeSelector(): React.ReactElement {
   const { theme, setTheme } = useContext(PersonalizationContext)

@@ -1,7 +1,7 @@
+import { Icon } from '@iconify/react'
+import { Colorful, EditableInput } from '@uiw/react-color'
 import React, { useEffect, useState } from 'react'
 import Modal from '../Modal'
-import { Colorful, EditableInput } from '@uiw/react-color'
-import { Icon } from '@iconify/react/dist/iconify.js'
 
 function checkContrast(hexcolor: string): string {
   const r = parseInt(hexcolor.substr(1, 2), 16)

@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
-import React, { useEffect, useState } from 'react'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import { toast } from 'react-toastify'
+import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
-import Modal from '@components/Modal'
-import { useParams } from 'react-router'
-import Input from '@components/Input'
-import IconInput from '@components/IconSelector/IconInput'
-import { type INotesSubject } from './SubjectItem'
-import IconSelector from '@components/IconSelector'
-import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import { cookieParse } from 'pocketbase'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router'
+import { toast } from 'react-toastify'
+import CreateOrModifyButton from '@components/CreateOrModifyButton'
+import IconSelector from '@components/IconSelector'
+import IconInput from '@components/IconSelector/IconInput'
+import Input from '@components/Input'
+import Modal from '@components/Modal'
+import { type INotesSubject } from '@typedec/Notes'
 
 function ModifySubjectModal({
   openType,

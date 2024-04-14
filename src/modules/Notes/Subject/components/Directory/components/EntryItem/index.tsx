@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
-import FILE_ICONS from '../../../../../../../constants/file_icons'
-import { type INotesEntry } from '../../../..'
-import EntryName from './components/EntryName'
-import EntryCreationDate from './components/EntryCreationDate'
+import { type INotesEntry } from '@typedec/Notes'
 import EntryButton from './components/EntryButton'
+import EntryCreationDate from './components/EntryCreationDate'
 import EntryMenu from './components/EntryMenu'
+import EntryName from './components/EntryName'
+import FILE_ICONS from '../../../../../../../constants/file_icons'
 
 function EntryItem({
   entry,

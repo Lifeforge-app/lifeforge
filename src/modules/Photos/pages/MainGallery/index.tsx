@@ -1,14 +1,14 @@
 /* eslint-disable multiline-ternary */
 import React, { useContext, useEffect, useState } from 'react'
 import ModuleHeader from '@components/ModuleHeader'
-import GalleryHeader from './Gallery/GalleryHeader'
-import PhotosSidebar from '../../components/PhotosSidebar'
+import { GlobalStateContext } from '@providers/GlobalStateProvider'
+import { PhotosContext } from '@providers/PhotosProvider'
 import GalleryContainer from './Gallery/GalleryContainer'
-import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
+import GalleryHeader from './Gallery/GalleryHeader'
 import AddPhotosToAlbumModal from '../../components/modals/AddPhotosToAlbumModal'
 import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosConfirmationModal'
-import { PhotosContext } from '@providers/PhotosProvider'
-import { GlobalStateContext } from '@providers/GlobalStateProvider'
+import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
+import PhotosSidebar from '../../components/PhotosSidebar'
 
 function PhotosMainGallery(): React.ReactElement {
   const { sidebarExpanded } = useContext(GlobalStateContext)

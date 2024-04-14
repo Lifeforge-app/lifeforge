@@ -1,33 +1,14 @@
 /* eslint-disable @typescript-eslint/indent */
+import { Icon } from '@iconify/react'
+import { cookieParse } from 'pocketbase'
 import React from 'react'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import { type IProjectsKEntry } from '../../ProjectList'
+import { toast } from 'react-toastify'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
-import { toast } from 'react-toastify'
-import { cookieParse } from 'pocketbase'
-
-export interface IProjectsKProgress {
-  collectionId: string
-  collectionName: string
-  completed: number
-  created: string
-  expand: Expand
-  id: string
-  project: string
-  steps: string[]
-  updated: string
-}
-
-export interface Expand {
-  steps: Record<string, Step>
-}
-
-export interface Step {
-  id: string
-  name: string
-  icon: string
-}
+import {
+  type IProjectsKEntry,
+  type IProjectsKProgress
+} from '../../../../../types/ProjectK'
 
 export default function ProjectProgress({
   projectData

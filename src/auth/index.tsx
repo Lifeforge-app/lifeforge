@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React from 'react'
-import AuthSideImage from './components/AuthSideImage'
-import AuthHeader from './components/AuthHeader'
 import AuthForm from './components/AuthForm'
+import AuthHeader from './components/AuthHeader'
+import AuthSideImage from './components/AuthSideImage'
 
 function Auth(): React.ReactElement {
   return (

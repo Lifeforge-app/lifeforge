@@ -1,5 +1,5 @@
 import { Menu } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 
 function MenuItem({

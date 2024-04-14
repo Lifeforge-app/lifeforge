@@ -1,24 +1,14 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/indent */
-import React from 'react'
-import SidebarDivider from '@sidebar/components/SidebarDivider'
-import SidebarTitle from '@sidebar/components/SidebarTitle'
 import { Icon } from '@iconify/react'
-import GoBackButton from '@components/GoBackButton'
-import SidebarItem from '@sidebar/components/SidebarItem'
-import useFetch from '@hooks/useFetch'
+import React from 'react'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
-
-export interface IFlashcardTag {
-  amount: number
-  collectionId: string
-  collectionName: string
-  color: string
-  created: string
-  id: string
-  name: string
-  updated: string
-}
+import GoBackButton from '@components/GoBackButton'
+import useFetch from '@hooks/useFetch'
+import SidebarDivider from '@sidebar/components/SidebarDivider'
+import SidebarItem from '@sidebar/components/SidebarItem'
+import SidebarTitle from '@sidebar/components/SidebarTitle'
+import { type IFlashcardTag } from '@typedec/Flashcard'
 
 function Sidebar({
   sidebarOpen,
@@ -27,9 +17,7 @@ function Sidebar({
   sidebarOpen: boolean
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
-  const [tagsList, refreshTagsList] = useFetch<IFlashcardTag[]>(
-    'flashcards/tag/list'
-  )
+  const [tagsList] = useFetch<IFlashcardTag[]>('flashcards/tag/list')
 
   return (
     <>

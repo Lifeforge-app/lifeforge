@@ -1,21 +1,19 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
+import { useDebounce } from '@uidotdev/usehooks'
 import React, { useContext, useEffect, useState } from 'react'
-import ModuleWrapper from '@components/ModuleWrapper'
-import ModuleHeader from '@components/ModuleHeader'
-import PhotosSidebar from '../../components/PhotosSidebar'
-import {
-  type IPhotosAlbum,
-  PhotosContext
-} from '../../../../providers/PhotosProvider'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
 import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
+import EmptyStateScreen from '@components/EmptyStateScreen'
+import ModuleHeader from '@components/ModuleHeader'
+import ModuleWrapper from '@components/ModuleWrapper'
+import SearchInput from '@components/SearchInput'
+import { type IPhotosAlbum } from '@typedec/Photos'
 import AlbumItem from './components/AlbumItem'
 import AlbumListHeader from './components/AlbumListHeader'
-import SearchInput from '@components/SearchInput'
-import { useDebounce } from '@uidotdev/usehooks'
-import EmptyStateScreen from '@components/EmptyStateScreen'
+import { PhotosContext } from '../../../../providers/PhotosProvider'
+import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
+import PhotosSidebar from '../../components/PhotosSidebar'
 
 function PhotosAlbumList(): React.ReactElement {
   const { albumList, refreshAlbumList, refreshPhotos } =

@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
-import { type IProjectsKEntry, PROJECT_STATUS } from '..'
+import { useSearchParams } from 'react-router-dom'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import SidebarDivider from '@sidebar/components/SidebarDivider'
 import SidebarItem from '@sidebar/components/SidebarItem'
 import SidebarTitle from '@sidebar/components/SidebarTitle'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import { useSearchParams } from 'react-router-dom'
+import { type IProjectsKEntry } from '@typedec/ProjectK'
+import { PROJECT_STATUS } from '..'
 
 function Sidebar({
   projectList

@@ -1,6 +1,6 @@
+import { Icon } from '@iconify/react'
 import React, { useContext } from 'react'
 import { AuthContext } from '@providers/AuthProvider'
-import { Icon } from '@iconify/react/dist/iconify.js'
 
 function AuthSignInButton({
   emailOrUsername,

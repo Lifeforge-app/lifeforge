@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
-import React, { useEffect, useState } from 'react'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import { toast } from 'react-toastify'
+import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
-import Modal from '@components/Modal'
+import { cookieParse } from 'pocketbase'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import Input from '@components/Input'
-import { type ITodoListTag } from './Sidebar'
-import { cookieParse } from 'pocketbase'
+import Modal from '@components/Modal'
+import { type ITodoListTag } from '@typedec/TodoList'
 
 function ModifyTagModal({
   openType,

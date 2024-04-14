@@ -8,9 +8,9 @@
 /* eslint-disable react/jsx-indent */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-param-reassign */
-import React, { useState } from 'react'
-import { Icon } from '@iconify/react'
 import { collections } from '@iconify/collections'
+import { Icon } from '@iconify/react'
+import React, { useState } from 'react'
 import Input from './Input'
 
 const ICON_SETS = {

@@ -1,6 +1,6 @@
 import React from 'react'
-import Loading from './Loading'
 import Error from './Error'
+import Loading from './Loading'
 
 function APIComponentWithFallback({
   data,

@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/indent */
-import { Icon } from '@iconify/react/dist/iconify.js'
-import React, { useContext, useState } from 'react'
-import {
-  type IPhotosEntryDimensions,
-  PhotosContext,
-  type IPhotosEntryDimensionsItem
-} from '../../../providers/PhotosProvider'
-import { toast } from 'react-toastify'
-import { type IPhotoAlbumEntryItem } from '../pages/AlbumGallery'
+import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
+import React, { useContext, useState } from 'react'
+import { toast } from 'react-toastify'
+import { PhotosContext } from '../../../providers/PhotosProvider'
+import {
+  type IPhotosEntryDimensionsItem,
+  type IPhotosEntryDimensions,
+  type IPhotoAlbumEntryItem
+} from '../../../types/Photos'
 
 function BottomBar({
   photos,

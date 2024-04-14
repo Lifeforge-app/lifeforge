@@ -25,7 +25,8 @@
       "@components/*": ["./src/components/general/*"],
       "@providers/*": ["./src/providers/*"],
       "@hooks/*": ["./src/hooks/*"],
-      "@sidebar/*": ["./src/components/Sidebar/*"]
+      "@sidebar/*": ["./src/components/Sidebar/*"],
+      "@typedec/*": ["./src/types/*"]
     }
   },
   "include": ["src"],
