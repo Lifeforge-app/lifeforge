@@ -1,6 +1,6 @@
 /* eslint-disable multiline-ternary */
+import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
-import { Icon } from '@iconify/react/dist/iconify.js'
 
 export default function Timer(): React.ReactElement {
   const [started, setStarted] = useState(false)

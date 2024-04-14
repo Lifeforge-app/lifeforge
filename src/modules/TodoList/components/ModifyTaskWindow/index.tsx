@@ -1,19 +1,22 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable multiline-ternary */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
+import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
-import Input from '@components/Input'
-import { type ITodoListTag, type ITodoListList } from '../Sidebar'
-import { type ITodoListEntryItem } from '../..'
+import { toast } from 'react-toastify'
+import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
-import { toast } from 'react-toastify'
-import { cookieParse } from 'pocketbase'
-import CreateOrModifyButton from '@components/CreateOrModifyButton'
-import PrioritySelector from './components/PrioritySelector'
+import Input from '@components/Input'
 import ListSelector from './components/ListSelector'
+import PrioritySelector from './components/PrioritySelector'
 import TagsSelector from './components/TagsSelector'
+import {
+  type ITodoListList,
+  type ITodoListTag,
+  type ITodoListEntryItem
+} from '../../../../types/TodoList'
 
 function ModifyTaskWindow({
   openType,

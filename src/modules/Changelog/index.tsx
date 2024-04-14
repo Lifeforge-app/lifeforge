@@ -2,25 +2,14 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect, useState } from 'react'
-import ModuleHeader from '@components/ModuleHeader'
-import useFetch from '@hooks/useFetch'
-import LogItem from './components/LogItem'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import ModuleWrapper from '@components/ModuleWrapper'
 import EmptyStateScreen from '@components/EmptyStateScreen'
+import ModuleHeader from '@components/ModuleHeader'
+import ModuleWrapper from '@components/ModuleWrapper'
 import SearchInput from '@components/SearchInput'
-
-export interface IChangeLogVersion {
-  version: string
-  date_range: [string, string]
-  entries: IChangeLogEntry[]
-}
-
-interface IChangeLogEntry {
-  id: string
-  feature: string
-  description: string
-}
+import useFetch from '@hooks/useFetch'
+import { type IChangeLogVersion } from '@typedec/Changelog'
+import LogItem from './components/LogItem'
 
 function Changelog(): React.ReactElement {
   const [data] = useFetch<IChangeLogVersion[]>('change-log/list')

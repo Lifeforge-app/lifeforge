@@ -1,33 +1,19 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
+import { Icon } from '@iconify/react'
+import { cookieParse } from 'pocketbase'
 import React, { useContext, useState } from 'react'
-import ModuleWrapper from '@components/ModuleWrapper'
-import ModuleHeader from '@components/ModuleHeader'
+import { toast } from 'react-toastify'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import EmptyStateScreen from '@components/EmptyStateScreen'
 import Input from '@components/Input'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import ModuleHeader from '@components/ModuleHeader'
+import ModuleWrapper from '@components/ModuleWrapper'
+import useFetch from '@hooks/useFetch'
 import { AuthContext } from '@providers/AuthProvider'
 import CreatePassword from './CreatePassword'
-import { toast } from 'react-toastify'
-import { cookieParse } from 'pocketbase'
 import CreatePasswordModal from './CreatePasswordModal'
-import EmptyStateScreen from '@components/EmptyStateScreen'
-import useFetch from '@hooks/useFetch'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import PasswordEntryITem from './PasswordEntryITem'
-
-export interface IPasswordEntry {
-  collectionId: string
-  collectionName: string
-  color: string
-  created: string
-  icon: string
-  id: string
-  name: string
-  password: string
-  updated: string
-  username: string
-  website: string
-}
+import PasswordEntryITem from './PasswordEntryItem'
 
 function Passwords(): React.ReactElement {
   const { userData } = useContext(AuthContext)

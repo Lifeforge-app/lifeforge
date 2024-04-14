@@ -1,11 +1,11 @@
 /* eslint-disable multiline-ternary */
-import React, { useContext, useEffect, useState } from 'react'
-import Modal from '@components/Modal'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import { PhotosContext } from '@providers/PhotosProvider'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
+import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import Modal from '@components/Modal'
+import { PhotosContext } from '@providers/PhotosProvider'
 
 function AddPhotosToAlbumModal(): React.ReactElement {
   const {

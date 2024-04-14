@@ -1,13 +1,11 @@
 /* eslint-disable multiline-ternary */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
-import {
-  PhotosContext,
-  type IPhotosAlbum
-} from '../../../../../providers/PhotosProvider'
+import { type IPhotosAlbum } from '@typedec/Photos'
+import { PhotosContext } from '../../../../../providers/PhotosProvider'
 
 function AlbumItem({
   album,

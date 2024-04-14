@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import React from 'react'
-import { type ITodoListEntryItem, type ITodoListEntry } from '..'
-import { type ITodoListTag, type ITodoListList } from './Sidebar'
+import { Icon } from '@iconify/react'
 import moment from 'moment'
-import { Icon } from '@iconify/react/dist/iconify.js'
 import { cookieParse } from 'pocketbase'
+import React from 'react'
 import { toast } from 'react-toastify'
+import {
+  type ITodoListEntryItem,
+  type ITodoListEntry,
+  type ITodoListList,
+  type ITodoListTag
+} from '../../../types/TodoList'
 
 function TaskItem({
   entry,

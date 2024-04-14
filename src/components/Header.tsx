@@ -1,9 +1,9 @@
-import React, { Fragment, useContext } from 'react'
-import { Icon } from '@iconify/react'
-import { GlobalStateContext } from '@providers/GlobalStateProvider'
-import { AuthContext } from '@providers/AuthProvider'
 import { Menu, Transition } from '@headlessui/react'
+import { Icon } from '@iconify/react'
+import React, { Fragment, useContext } from 'react'
 import { toast } from 'react-toastify'
+import { AuthContext } from '@providers/AuthProvider'
+import { GlobalStateContext } from '@providers/GlobalStateProvider'
 import MenuItem from './general/HamburgerMenu/MenuItem'
 
 export default function Header(): React.ReactElement {

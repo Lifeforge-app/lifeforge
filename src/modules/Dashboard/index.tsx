@@ -1,12 +1,3 @@
-import React, { useContext } from 'react'
-
-import StorageStatus from './modules/StorageStatus'
-import CodeTime from './modules/CodeTime'
-import WalletBalance from './modules/WalletBalance'
-import TodaysEvent from './modules/TodaysEvent'
-import Calendar from './modules/Calendar'
-import TodoList from './modules/TodoList'
-
 import {
   Chart as ChartJS,
   ArcElement,
@@ -19,9 +10,17 @@ import {
   Title,
   Filler
 } from 'chart.js'
+import React, { useContext } from 'react'
+
 import ModuleHeader from '@components/ModuleHeader'
-import { AuthContext } from '@providers/AuthProvider'
 import ModuleWrapper from '@components/ModuleWrapper'
+import { AuthContext } from '@providers/AuthProvider'
+import Calendar from './modules/Calendar'
+import CodeTime from './modules/CodeTime'
+import StorageStatus from './modules/StorageStatus'
+import TodaysEvent from './modules/TodaysEvent'
+import TodoList from './modules/TodoList'
+import WalletBalance from './modules/WalletBalance'
 
 ChartJS.register(
   ArcElement,

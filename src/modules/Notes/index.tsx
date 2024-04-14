@@ -1,21 +1,12 @@
+import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
-import ModuleHeader from '@components/ModuleHeader'
-import Loading from '@components/Loading'
-import Error from '@components/Error'
-import { Icon } from '@iconify/react/dist/iconify.js'
 import { Link } from 'react-router-dom'
-import useFetch from '@hooks/useFetch'
+import Error from '@components/Error'
+import Loading from '@components/Loading'
+import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
-
-export interface INotesWorkspace {
-  collectionId: string
-  collectionName: string
-  created: string
-  icon: string
-  id: string
-  name: string
-  updated: string
-}
+import useFetch from '@hooks/useFetch'
+import { type INotesWorkspace } from '@typedec/Notes'
 
 function Notes(): React.ReactElement {
   const [bounded, setBounded] = useState(false)

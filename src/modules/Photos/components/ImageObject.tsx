@@ -1,18 +1,16 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React, { useContext, useState } from 'react'
-import {
-  type IPhotosEntry,
-  PhotosContext
-} from '../../../providers/PhotosProvider'
+import { Icon } from '@iconify/react'
+import { cookieParse } from 'pocketbase'
+import React, { useContext } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { Icon } from '@iconify/react/dist/iconify.js'
 import Zoom from 'react-medium-image-zoom'
+import { useParams } from 'react-router'
+import { toast } from 'react-toastify'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
-import { cookieParse } from 'pocketbase'
-import { toast } from 'react-toastify'
-import { useParams } from 'react-router'
 import useFetch from '@hooks/useFetch'
+import { type IPhotosEntry } from '@typedec/Photos'
+import { PhotosContext } from '../../../providers/PhotosProvider'
 
 function forceDown(url: string, filename: string): void {
   fetch(url)

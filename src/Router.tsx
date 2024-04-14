@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { Suspense, lazy, useContext, useMemo } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import Loading from '@components/Loading'
 import { AuthContext } from '@providers/AuthProvider'
 import { titleToPath } from '@sidebar/components/SidebarItem'
-import Loading from '@components/Loading'
 import PhotosFavouritesGallery from './modules/Photos/pages/FavouritesGallery'
 
 const PhotosProvider = lazy(

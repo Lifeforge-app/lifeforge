@@ -2,15 +2,18 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/indent */
 import { Menu, Transition } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
+import { cookieParse } from 'pocketbase'
 import React from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import GoBackButton from '@components/GoBackButton'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
-import { type INotesEntry, type INotesPath } from '../../..'
-import { toast } from 'react-toastify'
 import useFetch from '@hooks/useFetch'
-import { cookieParse } from 'pocketbase'
+import {
+  type INotesPath,
+  type INotesEntry
+} from '../../../../../../types/Notes'
 
 function DirectoryHeader({
   updateNotesEntries,

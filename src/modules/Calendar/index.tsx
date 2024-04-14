@@ -1,8 +1,8 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
+import { Icon } from '@iconify/react'
 import React from 'react'
 import ModuleHeader from '@components/ModuleHeader'
-import { Icon } from '@iconify/react'
 import ModuleWrapper from '@components/ModuleWrapper'
 
 function Calendar(): React.ReactElement {

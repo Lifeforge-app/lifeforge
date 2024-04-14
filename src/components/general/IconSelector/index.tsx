@@ -10,11 +10,10 @@
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react'
 import { Icon } from '@iconify/react'
-
-import IconSetList from './components/IconSetList'
+import React, { useState } from 'react'
 import IconSet from './components/IconSet.tsx'
+import IconSetList from './components/IconSetList'
 import Search from './components/Search'
 
 function IconSelector({

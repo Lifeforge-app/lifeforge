@@ -2,7 +2,7 @@
 import React from 'react'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
-import { type INotesEntry } from '../../../../..'
+import { type INotesEntry } from '@typedec/Notes'
 
 function EntryMenu({
   entry,

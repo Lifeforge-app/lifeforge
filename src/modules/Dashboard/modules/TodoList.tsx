@@ -1,5 +1,5 @@
-import React from 'react'
 import { Icon } from '@iconify/react'
+import React from 'react'
 
 export default function TodoList(): React.ReactElement {
   return (

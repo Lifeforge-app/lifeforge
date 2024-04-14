@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import React, { useState } from 'react'
-import { type Module } from '.'
 import { Switch } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
+import React, { useState } from 'react'
 import Input from '@components/Input'
+import { type ModuleEntry } from '@typedec/Module'
 
 function ModuleItem({
   module,
   enabled,
   toggleModule
 }: {
-  module: Module
+  module: ModuleEntry
   enabled: boolean
   toggleModule: (moduleName: string) => void
 }): React.ReactElement {

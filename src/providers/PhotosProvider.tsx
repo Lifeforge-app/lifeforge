@@ -2,45 +2,9 @@
 /* eslint-disable @typescript-eslint/indent */
 import moment from 'moment'
 import React, { createContext, useEffect, useRef, useState } from 'react'
-import useFetch from '@hooks/useFetch'
 import { Outlet } from 'react-router'
-
-export interface IPhotosEntryDimensionsItem {
-  is_in_album: boolean
-  is_deleted: string
-  id: string
-  shot_time: string
-  width: number
-  height: number
-}
-
-export interface IPhotosEntryDimensions {
-  totalItems: number
-  items: Array<[string, IPhotosEntryDimensionsItem[]]>
-  firstDayOfYear: Record<string, string>
-  firstDayOfMonth: Record<string, string>
-  collectionId: string
-}
-
-export interface IPhotosEntry {
-  id: string
-  image: string
-  has_raw: boolean
-  is_in_album: boolean
-  is_favourite: boolean
-}
-
-export interface IPhotosAlbum {
-  amount: number
-  is_public: boolean
-  collectionId: string
-  collectionName: string
-  created: string
-  id: string
-  name: string
-  cover: string
-  updated: string
-}
+import useFetch from '@hooks/useFetch'
+import { type IPhotosAlbum, type IPhotosEntryDimensions } from '@typedec/Photos'
 
 const PHOTOS_DATA: {
   ready: boolean

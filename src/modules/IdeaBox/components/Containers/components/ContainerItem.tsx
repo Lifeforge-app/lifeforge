@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/indent */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { type IIdeaBoxContainer } from '../../..'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
+import { type IIdeaBoxContainer } from '../../..'
 
 function ContainerItem({
   container,

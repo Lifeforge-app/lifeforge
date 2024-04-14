@@ -2,9 +2,9 @@
 /* eslint-disable multiline-ternary */
 import { Icon } from '@iconify/react'
 import React, { useContext, useEffect, useState } from 'react'
-import { GlobalStateContext } from '@providers/GlobalStateProvider'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
+import { GlobalStateContext } from '@providers/GlobalStateProvider'
 
 interface SidebarItemProps {
   icon: string

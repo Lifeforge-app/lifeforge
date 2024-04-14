@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Icon } from '@iconify/react'
 import moment from 'moment'
+import { cookieParse } from 'pocketbase'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import Gallery from 'react-photo-gallery'
-import ImageObject from '../../../components/ImageObject'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import useResizeObserver from 'use-resize-observer'
-import {
-  type IPhotosEntryDimensionsItem,
-  PhotosContext,
-  type IPhotosEntry
-} from '../../../../../providers/PhotosProvider'
-import useOnScreen from '@hooks/useOnScreen'
-import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
+import useResizeObserver from 'use-resize-observer'
+import useOnScreen from '@hooks/useOnScreen'
+import { PhotosContext } from '../../../../../providers/PhotosProvider'
+import {
+  type IPhotosEntry,
+  type IPhotosEntryDimensionsItem
+} from '../../../../../types/Photos'
+import ImageObject from '../../../components/ImageObject'
 
 function DateGroup({
   date,

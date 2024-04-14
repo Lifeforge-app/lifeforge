@@ -2,44 +2,18 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import EmptyStateScreen from '@components/EmptyStateScreen'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
-import useFetch from '@hooks/useFetch'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import { useSearchParams } from 'react-router-dom'
-import { type IProjectsKProgress } from '../ProjectEntry/sections/ProjectProgress'
-import CreateProjectModal from './components/CreateProjectModal'
-import EmptyStateScreen from '@components/EmptyStateScreen'
-import Sidebar from '@sidebar'
-import ProjectList from './components/ProjectList'
-import Header from './components/Header'
 import SearchInput from '@components/SearchInput'
-
-export interface IProjectsKEntry {
-  collectionId: string
-  collectionName: string
-  created: string
-  customer_name: string
-  id: string
-  is_released: boolean
-  name: string
-  payment_status?: {
-    total_amt: number
-    deposit_amt: number
-    fully_paid: boolean
-    deposit_paid: boolean
-    fully_paid_date: string
-    deposit_paid_date: string
-  }
-  status: 'scheduled' | 'wip' | 'completed'
-  thumbnail: string
-  type: 'personal' | 'commercial'
-  updated: string
-  files: string[]
-  last_file_replacement_time: string
-  thumb_original_filename: string
-  progress: IProjectsKProgress
-}
+import useFetch from '@hooks/useFetch'
+import { type IProjectsKEntry } from '@typedec/ProjectK'
+import CreateProjectModal from './components/CreateProjectModal'
+import Header from './components/Header'
+import ProjectList from './components/ProjectList'
+import Sidebar from './components/Sidebar'
 
 export const PROJECT_STATUS = {
   scheduled: {

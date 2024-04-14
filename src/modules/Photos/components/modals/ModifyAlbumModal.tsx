@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import Modal from '@components/Modal'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import Input from '@components/Input'
-import CreateOrModifyButton from '@components/CreateOrModifyButton'
-import { toast } from 'react-toastify'
+import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import {
-  type IPhotosAlbum,
-  PhotosContext
-} from '../../../../providers/PhotosProvider'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
+import CreateOrModifyButton from '@components/CreateOrModifyButton'
+import Input from '@components/Input'
+import Modal from '@components/Modal'
+import { type IPhotosAlbum } from '@typedec/Photos'
+import { PhotosContext } from '../../../../providers/PhotosProvider'
 
 function ModifyAlbumModal({
   targetAlbum,

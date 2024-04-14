@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useContext, useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
-import THEME_COLOR_HEX from '../../../constants/theme_color_hex'
-import { PersonalizationContext } from '@providers/PersonalizationProvider'
 import { Tooltip } from 'react-tooltip'
+import { PersonalizationContext } from '@providers/PersonalizationProvider'
+import THEME_COLOR_HEX from '../../../constants/theme_color_hex'
 
 function CodeTimeActivityCalendar(): React.ReactElement {
   const { theme, themeColor } = useContext(PersonalizationContext)
