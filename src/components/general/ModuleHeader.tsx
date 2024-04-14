@@ -1,6 +1,8 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { toCamelCase } from '../../utils/strings'
 
 interface ModuleHeaderPropsWithHamburgerMenu {
   title: string | React.ReactNode
@@ -26,14 +28,22 @@ function ModuleHeader({
   hasHamburgerMenu = false,
   hamburgerMenuItems
 }: ModuleHeaderProps): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <div className="flex items-center justify-between gap-8">
       <div className="flex items-center gap-4">
         <div className="flex flex-col gap-1">
           <h1 className="flex items-center gap-3 text-3xl font-semibold text-bg-800 dark:text-bg-100 md:text-4xl">
-            {title}
+            {t(`modules.${toCamelCase(title?.toString() ?? '')}`)}
           </h1>
-          {desc !== undefined && <div className="text-bg-500">{desc}</div>}
+          {desc !== undefined && (
+            <div className="text-bg-500">
+              {t(
+                `modules.descriptions.${toCamelCase(title?.toString() ?? '')}`
+              )}
+            </div>
+          )}
         </div>
       </div>
       {hasHamburgerMenu && (

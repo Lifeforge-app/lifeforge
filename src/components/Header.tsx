@@ -1,6 +1,7 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React, { Fragment, useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { AuthContext } from '@providers/AuthProvider'
 import { GlobalStateContext } from '@providers/GlobalStateProvider'
@@ -9,6 +10,7 @@ import MenuItem from './general/HamburgerMenu/MenuItem'
 export default function Header(): React.ReactElement {
   const { sidebarExpanded, toggleSidebar } = useContext(GlobalStateContext)
   const { userData, getAvatarURL, logout } = useContext(AuthContext)
+  const { t } = useTranslation()
 
   return (
     <header className="relative z-[9990] flex w-full items-center justify-between gap-8 p-4 sm:p-12">
@@ -27,7 +29,7 @@ export default function Header(): React.ReactElement {
             <input
               type="text"
               autoComplete="false"
-              placeholder="Quick navigate & search ... (Press / to focus)"
+              placeholder={t('header.searchBarPlaceholder')}
               className="w-full bg-transparent placeholder:text-bg-500 focus:outline-none"
             />
           </form>

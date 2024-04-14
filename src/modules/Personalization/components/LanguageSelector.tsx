@@ -4,62 +4,52 @@ import { Icon } from '@iconify/react'
 import React, { Fragment, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PersonalizationContext } from '@providers/PersonalizationProvider'
-import { toCamelCase } from '../../../utils/strings'
 
-const COLORS = [
-  'red',
-  'pink',
-  'purple',
-  'deep-purple',
-  'indigo',
-  'blue',
-  'light-blue',
-  'cyan',
-  'teal',
-  'green',
-  'light-green',
-  'lime',
-  'yellow',
-  'amber',
-  'orange',
-  'deep-orange',
-  'brown',
-  'grey'
+const LANGUAGES: Array<{
+  name: string
+  code: string
+  icon: string
+}> = [
+  {
+    name: 'English',
+    code: 'en',
+    icon: 'circle-flags:us'
+  },
+  {
+    name: '简体中文',
+    code: 'zh-CN',
+    icon: 'circle-flags:zh'
+  }
 ]
 
-function ThemeColorSelector(): React.ReactElement {
-  const { themeColor, setThemeColor } = useContext(PersonalizationContext)
+function LanguageSelector(): React.ReactElement {
+  const { language, setLanguage } = useContext(PersonalizationContext)
   const { t } = useTranslation()
 
   return (
-    <div className="flex w-full flex-col items-center justify-between gap-6 md:flex-row">
-      <div className="w-full md:w-auto">
+    <div className="mt-4 flex w-full flex-col items-center justify-between gap-6 md:flex-row">
+      <div className="mt-6 w-full md:w-auto">
         <h3 className="block text-xl font-medium leading-normal">
-          {t('personalization.themeColorSelector.title')}
+          {t('personalization.languageSelector.title')}
         </h3>
         <p className="text-bg-500">
-          {t('personalization.themeColorSelector.desc')}
+          {t('personalization.languageSelector.desc')}
         </p>
       </div>
       <Listbox
-        value={themeColor}
-        onChange={color => {
-          setThemeColor(color)
+        value={language}
+        onChange={language => {
+          setLanguage(language)
         }}
       >
         <div className="relative mt-1 w-full md:w-48">
           <Listbox.Button className="relative flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 py-4 pl-4 pr-10 text-left focus:outline-none dark:border-bg-700 dark:bg-bg-900 sm:text-sm">
-            <span className="inline-block h-4 w-4 shrink-0 rounded-full bg-custom-500" />
+            <Icon
+              icon={LANGUAGES.find(({ code }) => code === language)?.icon}
+              className="h-5 w-5"
+            />
             <span className="mt-[-1px] block truncate">
-              {t(
-                `personalization.themeColorSelector.colors.${toCamelCase(
-                  themeColor
-                    .split('-')
-                    .slice(1)
-                    .map(e => e[0].toUpperCase() + e.slice(1))
-                    .join(' ')
-                )}`
-              )}
+              {LANGUAGES.find(({ code }) => code === language)?.name}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <Icon
@@ -78,31 +68,22 @@ function ThemeColorSelector(): React.ReactElement {
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute mt-1 max-h-56 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-900 sm:text-sm">
-              {COLORS.map((color, i) => (
+              {LANGUAGES.map(({ name, code, icon }) => (
                 <Listbox.Option
-                  key={i}
+                  key={code}
                   className={({ active }) =>
                     `relative cursor-pointer select-none transition-all p-4 flex items-center justify-between ${
                       active ? 'bg-bg-200/50 dark:bg-bg-800' : '!bg-transparent'
                     }`
                   }
-                  value={`theme-${color}`}
+                  value={code}
                 >
                   {({ selected }) => (
                     <>
                       <div>
                         <span className="flex items-center gap-2">
-                          <span
-                            className={`theme-${color} inline-block h-4 w-4 rounded-full bg-custom-500`}
-                          />
-                          {t(
-                            `personalization.themeColorSelector.colors.${toCamelCase(
-                              color
-                                .split('-')
-                                .map(e => e[0].toUpperCase() + e.slice(1))
-                                .join(' ')
-                            )}`
-                          )}
+                          <Icon icon={icon} className="h-5 w-5" />
+                          {name}
                         </span>
                       </div>
                       {selected && (
@@ -123,4 +104,4 @@ function ThemeColorSelector(): React.ReactElement {
   )
 }
 
-export default ThemeColorSelector
+export default LanguageSelector

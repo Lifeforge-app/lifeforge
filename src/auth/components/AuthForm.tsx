@@ -1,5 +1,6 @@
 import * as webauthn from '@passwordless-id/webauthn'
 import React, { useContext, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import Input from '@components/Input'
 import { AuthContext } from '@providers/AuthProvider'
@@ -10,6 +11,7 @@ function AuthForm(): React.ReactElement {
   const [emailOrUsername, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const { t } = useTranslation()
 
   const {
     setAuth,
@@ -38,14 +40,14 @@ function AuthForm(): React.ReactElement {
         }
       })
       .catch(err => {
-        toast.error('Couldn’t fetch the challenge. Please try again.')
+        toast.error(t('auth.errorMessages.passkeyChallenge'))
         console.error(err)
       })
   }
 
   function signIn(): void {
     if (emailOrUsername.length === 0 || password.length === 0) {
-      toast.error(AUTH_ERROR_MESSAGES.EMPTY_FIELDS)
+      toast.error(t(AUTH_ERROR_MESSAGES.EMPTY_FIELDS))
       return
     }
     if (quota === 0) {
@@ -61,12 +63,12 @@ function AuthForm(): React.ReactElement {
             dismissQuota()
           }
         } else {
-          toast.success('Welcome back, ' + res.split(' ').slice(1).join(' '))
+          toast.success(t('auth.welcome') + res.split(' ').slice(1).join(' '))
         }
         setLoading(false)
       })
       .catch(() => {
-        toast.error(AUTH_ERROR_MESSAGES.UNKNOWN_ERROR)
+        toast.error(t(AUTH_ERROR_MESSAGES.UNKNOWN_ERROR))
       })
   }
 
@@ -93,13 +95,13 @@ function AuthForm(): React.ReactElement {
       .then(async res => {
         const data = await res.json()
         if (res.ok && data.state === 'success') {
-          toast.success('Passkey created successfully')
+          toast.success(t('auth.passkey.createSuccess'))
         } else {
           throw new Error(data.message)
         }
       })
       .catch(err => {
-        toast.error("Couldn't create the passkey. Please try again.")
+        toast.error(t('auth.errorMessages.passkeyRegister'))
         console.error(err)
       })
       .finally(() => {
@@ -134,7 +136,7 @@ function AuthForm(): React.ReactElement {
                 setUserData(userData)
                 setAuth(true)
 
-                toast.success(`Welcome back, ${userData.name}!`)
+                toast.success(t('auth.welcome') + userData.username)
               }
             })
             .catch(() => {
@@ -148,9 +150,7 @@ function AuthForm(): React.ReactElement {
         }
       })
       .catch(err => {
-        toast.error(
-          'Failed to authenticate with the passkey. Please try again.'
-        )
+        toast.error(t('auth.errorMessages.passkeyLogin'))
         console.error(err)
       })
       .finally(() => {
@@ -171,7 +171,7 @@ function AuthForm(): React.ReactElement {
   return (
     <div className="mt-6 flex w-full max-w-md flex-col gap-8 sm:mt-12">
       <Input
-        name="Email or Username"
+        name={t('auth.emailOrUsername')}
         placeholder="someone@somemail.com"
         icon="tabler:user"
         value={emailOrUsername}
@@ -184,7 +184,7 @@ function AuthForm(): React.ReactElement {
         darker
       />
       <Input
-        name="Password"
+        name={t('auth.password')}
         placeholder="••••••••••••••••"
         icon="tabler:key"
         isPassword

@@ -2,9 +2,11 @@
 /* eslint-disable multiline-ternary */
 import { Icon } from '@iconify/react'
 import React, { useContext, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 import { GlobalStateContext } from '@providers/GlobalStateProvider'
+import { titleToPath, toCamelCase } from '../../../utils/strings'
 
 interface SidebarItemProps {
   icon: string
@@ -13,13 +15,6 @@ interface SidebarItemProps {
   onClick?: () => void
   isMainSidebarItem?: boolean
   active?: boolean
-}
-
-export function titleToPath(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^\w ]+/g, '')
-    .replace(/ +/g, '-')
 }
 
 function SidebarItem({
@@ -36,6 +31,7 @@ function SidebarItem({
       ? useContext(GlobalStateContext)
       : { sidebarExpanded: true }
   const [subsectionExpanded, setSubsectionExpanded] = useState(false)
+  const { t } = useTranslation()
 
   function toggleSubsection(): void {
     setSubsectionExpanded(!subsectionExpanded)
@@ -76,7 +72,10 @@ function SidebarItem({
                   : ''
               }`}
             />
-            <span className="w-full truncate">{sidebarExpanded && name}</span>
+            <span className="w-full truncate">
+              {sidebarExpanded &&
+                (isMainSidebarItem ? t(`modules.${toCamelCase(name)}`) : name)}
+            </span>
           </div>
 
           {onClick ? (
