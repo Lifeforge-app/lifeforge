@@ -8,9 +8,9 @@ import Loading from '@components/Loading'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 import { AuthContext } from '@providers/AuthProvider'
-import { titleToPath } from '@sidebar/components/SidebarItem'
 import { type ModuleEntry } from '@typedec/Module'
 import ModuleItem from './ModuleItem'
+import { titleToPath } from '../../utils/strings'
 
 const MODULES: ModuleEntry[] = [
   {

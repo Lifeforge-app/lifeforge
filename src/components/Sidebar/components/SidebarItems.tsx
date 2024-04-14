@@ -8,9 +8,10 @@ import { AuthContext } from '@providers/AuthProvider'
 import { GlobalStateContext } from '@providers/GlobalStateProvider'
 import { type INotesWorkspace } from '@typedec/Notes'
 import SidebarDivider from './SidebarDivider'
-import SidebarItem, { titleToPath } from './SidebarItem'
+import SidebarItem from './SidebarItem'
 import SidebarTitle from './SidebarTitle'
 import { ROUTES } from '../../../Router'
+import { titleToPath } from '../../../utils/strings'
 
 function SidebarItems(): React.ReactElement {
   const { userData } = useContext(AuthContext)

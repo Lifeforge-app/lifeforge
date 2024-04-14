@@ -1,7 +1,10 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React, { Fragment, useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import { PersonalizationContext } from '@providers/PersonalizationProvider'
+import { toCamelCase } from '../../../utils/strings'
 
 const COLORS = [
   'red',
@@ -26,14 +29,17 @@ const COLORS = [
 
 function ThemeColorSelector(): React.ReactElement {
   const { themeColor, setThemeColor } = useContext(PersonalizationContext)
+  const { t } = useTranslation()
 
   return (
     <div className="flex w-full flex-col items-center justify-between gap-6 md:flex-row">
       <div className="w-full md:w-auto">
         <h3 className="block text-xl font-medium leading-normal">
-          Accent color
+          {t('personalization.themeColorSelector.title')}
         </h3>
-        <p className="text-bg-500">Select or customize your UI accent color.</p>
+        <p className="text-bg-500">
+          {t('personalization.themeColorSelector.desc')}
+        </p>
       </div>
       <Listbox
         value={themeColor}
@@ -43,13 +49,17 @@ function ThemeColorSelector(): React.ReactElement {
       >
         <div className="relative mt-1 w-full md:w-48">
           <Listbox.Button className="relative flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 py-4 pl-4 pr-10 text-left focus:outline-none dark:border-bg-700 dark:bg-bg-900 sm:text-sm">
-            <span className="inline-block h-4 w-4 rounded-full bg-custom-500" />
+            <span className="inline-block h-4 w-4 shrink-0 rounded-full bg-custom-500" />
             <span className="mt-[-1px] block truncate">
-              {themeColor
-                .split('-')
-                .slice(1)
-                .map(e => e[0].toUpperCase() + e.slice(1))
-                .join(' ')}
+              {t(
+                `personalization.themeColorSelector.colors.${toCamelCase(
+                  themeColor
+                    .split('-')
+                    .slice(1)
+                    .map(e => e[0].toUpperCase() + e.slice(1))
+                    .join(' ')
+                )}`
+              )}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <Icon
@@ -85,10 +95,14 @@ function ThemeColorSelector(): React.ReactElement {
                           <span
                             className={`theme-${color} inline-block h-4 w-4 rounded-full bg-custom-500`}
                           />
-                          {color
-                            .split('-')
-                            .map(e => e[0].toUpperCase() + e.slice(1))
-                            .join(' ')}
+                          {t(
+                            `personalization.themeColorSelector.colors.${toCamelCase(
+                              color
+                                .split('-')
+                                .map(e => e[0].toUpperCase() + e.slice(1))
+                                .join(' ')
+                            )}`
+                          )}
                         </span>
                       </div>
                       {selected && (
