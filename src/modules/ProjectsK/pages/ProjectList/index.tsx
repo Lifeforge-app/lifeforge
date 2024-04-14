@@ -78,7 +78,7 @@ function ProjectsKList(): React.ReactElement {
     <>
       <ModuleWrapper>
         <ModuleHeader
-          title="Projects"
+          title="Projects (K)"
           desc="It's time to stop procrastinating."
         />
         <div className="mb-12 mt-6 flex min-h-0 w-full flex-1">

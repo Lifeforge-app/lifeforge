@@ -2,6 +2,7 @@
 import { cookieParse } from 'pocketbase'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { AuthContext } from './AuthProvider'
 import THEME_COLOR_HEX from '../constants/theme_color_hex'
@@ -10,16 +11,20 @@ const PERSONALIZATION_DATA: {
   theme: 'light' | 'dark' | 'system'
   themeColor: string
   bgTemp: string
+  language
   setTheme: (theme: 'light' | 'dark' | 'system') => void
   setThemeColor: (color: string) => void
   setBgTemp: (color: string) => void
+  setLanguage: (language: string) => void
 } = {
   theme: 'system',
   themeColor: 'theme-blue',
   bgTemp: 'bg-neutral',
+  language: 'en',
   setTheme: () => {},
   setThemeColor: () => {},
-  setBgTemp: () => {}
+  setBgTemp: () => {},
+  setLanguage: () => {}
 }
 
 export const PersonalizationContext = createContext(PERSONALIZATION_DATA)
@@ -30,10 +35,12 @@ function PersonalizationProvider({
   children: React.ReactNode
 }): React.ReactElement {
   const { userData } = useContext(AuthContext)
+  const { i18n } = useTranslation()
 
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system')
   const [themeColor, setThemeColor] = useState('theme-teal')
   const [bgTemp, setBgTemp] = useState('bg-neutral')
+  const [language, setLanguage] = useState('en')
 
   useEffect(() => {
     if (userData?.theme !== undefined) {
@@ -46,6 +53,10 @@ function PersonalizationProvider({
 
     if (userData?.bgTemp !== undefined) {
       setBgTemp(`bg-${userData.bgTemp}`)
+    }
+
+    if (userData?.language !== undefined) {
+      setLanguage(userData.language)
     }
   }, [userData])
 
@@ -102,6 +113,12 @@ function PersonalizationProvider({
       document.body.classList.add(bgTemp)
     }
   }, [bgTemp])
+
+  useEffect(() => {
+    i18n.changeLanguage(language).catch(() => {
+      toast.error('Failed to change language.')
+    })
+  }, [language])
 
   function changeTheme(color: 'light' | 'dark' | 'system'): void {
     setTheme(color)
@@ -181,15 +198,43 @@ function PersonalizationProvider({
       })
   }
 
+  function changeLanguage(language: string): void {
+    setLanguage(language)
+    fetch(`${import.meta.env.VITE_API_HOST}/user/personalization`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+      },
+      body: JSON.stringify({
+        id: userData.id,
+        data: {
+          language
+        }
+      })
+    })
+      .then(async response => {
+        const data = await response.json()
+        if (response.status !== 200) {
+          throw data.message
+        }
+      })
+      .catch(() => {
+        toast.error('Failed to update personalization settings.')
+      })
+  }
+
   return (
     <PersonalizationContext.Provider
       value={{
         theme,
         themeColor,
         bgTemp,
+        language,
         setTheme: changeTheme,
         setThemeColor: changeThemeColor,
-        setBgTemp: changeBgTemp
+        setBgTemp: changeBgTemp,
+        setLanguage: changeLanguage
       }}
     >
       <Helmet>
