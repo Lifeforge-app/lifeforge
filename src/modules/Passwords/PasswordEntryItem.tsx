@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React, { useState } from 'react'
-import { type IPasswordEntry } from '.'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
+import { type IPasswordEntry } from '@typedec/Password'
 
 function PasswordEntryITem({
   password,

@@ -1,10 +1,10 @@
 import React from 'react'
 
 import ModuleHeader from '@components/ModuleHeader'
-import CodeTimeStatistics from './components/CodeTimeStatistics'
-import CodeTimeActivityCalendar from './components/CodeTimeActivityCalendar'
-import CodeTimeTopEntries from './components/CodeTimeTopEntries'
 import ModuleWrapper from '@components/ModuleWrapper'
+import CodeTimeActivityCalendar from './components/CodeTimeActivityCalendar'
+import CodeTimeStatistics from './components/CodeTimeStatistics'
+import CodeTimeTopEntries from './components/CodeTimeTopEntries'
 
 export default function CodeTime(): React.ReactElement {
   return (

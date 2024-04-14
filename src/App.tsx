@@ -3,12 +3,12 @@
 import React from 'react'
 
 import { BrowserRouter } from 'react-router-dom'
-import AppRouter from './Router'
-import GlobalStateProvider from '@providers/GlobalStateProvider'
 import { ToastContainer } from 'react-toastify'
 import AuthProvider from '@providers/AuthProvider'
+import GlobalStateProvider from '@providers/GlobalStateProvider'
 import PersonalizationProvider from '@providers/PersonalizationProvider'
 import SpotifyProvider from '@providers/SpotifyProvider'
+import AppRouter from './Router'
 
 function App(): React.ReactElement {
   return (

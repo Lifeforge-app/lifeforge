@@ -2,38 +2,21 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
-import Sidebar, {
-  type ITodoListTag,
-  type ITodoListList
-} from './components/Sidebar'
-import ModuleHeader from '@components/ModuleHeader'
-import useFetch from '@hooks/useFetch'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import TaskItem from './components/TaskItem'
-import ModifyTaskWindow from './components/ModifyTaskWindow'
+import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
+import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 import SearchInput from '@components/SearchInput'
-import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
-
-export interface ITodoListEntryItem {
-  collectionId: string
-  collectionName: string
-  created: string
-  due_date: string
-  id: string
-  list: string
-  notes: string
-  priority: string
-  summary: string
-  tags: string[]
-  updated: string
-  done: boolean
-}
-
-export interface ITodoListEntry {
-  done: ITodoListEntryItem[]
-  pending: ITodoListEntryItem[]
-}
+import useFetch from '@hooks/useFetch'
+import ModifyTaskWindow from './components/ModifyTaskWindow'
+import Sidebar from './components/Sidebar'
+import TaskItem from './components/TaskItem'
+import {
+  type ITodoListList,
+  type ITodoListTag,
+  type ITodoListEntry,
+  type ITodoListEntryItem
+} from '../../types/TodoList'
 
 function TodoList(): React.ReactElement {
   const [sidebarOpen, setSidebarOpen] = useState(false)

@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/indent */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { type IIdeaBoxContainer } from '../../..'
 import GoBackButton from '@components/GoBackButton'
-import useFetch from '@hooks/useFetch'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
+import useFetch from '@hooks/useFetch'
+import { type IIdeaBoxContainer } from '@typedec/IdeaBox'
 
 function ContainerHeader({
   id,

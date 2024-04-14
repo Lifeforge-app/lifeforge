@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
+import { Listbox, Transition } from '@headlessui/react'
+import { Icon } from '@iconify/react'
+import { cookieParse } from 'pocketbase'
 import React, { Fragment, useState } from 'react'
-import { Icon } from '@iconify/react/dist/iconify.js'
 import { toast } from 'react-toastify'
-import Modal from '@components/Modal'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import Input from '@components/Input'
-import { cookieParse } from 'pocketbase'
+import Modal from '@components/Modal'
 import useFetch from '@hooks/useFetch'
-import { type Step } from '../../ProjectEntry/sections/ProjectProgress'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import { Listbox, Transition } from '@headlessui/react'
+import { type IProjectsKProgressStep } from '@typedec/ProjectK'
 import { PROJECT_STATUS } from '..'
 
 function CreateProjectModal({
@@ -23,7 +23,9 @@ function CreateProjectModal({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   updateProjectsList: () => void
 }): React.ReactElement {
-  const [steps] = useFetch<Step[]>('projects-k/progress/list-steps')
+  const [steps] = useFetch<IProjectsKProgressStep[]>(
+    'projects-k/progress/list-steps'
+  )
   const [loading, setLoading] = useState(false)
   const [projectName, setProjectName] = useState('')
   const [projectVisibility, setProjectVisibility] = useState<

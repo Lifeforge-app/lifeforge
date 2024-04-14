@@ -1,5 +1,5 @@
-import React from 'react'
 import { Icon } from '@iconify/react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import GoBackButton from '@components/GoBackButton'
 

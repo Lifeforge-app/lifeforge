@@ -2,20 +2,20 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React, { useEffect, useState, useCallback, useContext } from 'react'
-import Modal from '@components/Modal'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
+import { cookieParse } from 'pocketbase'
+import React, { useEffect, useState, useCallback, useContext } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { toast } from 'react-toastify'
-import { type IIdeaBoxEntry } from '../..'
-import { PersonalizationContext } from '@providers/PersonalizationProvider'
 import Input from '@components/Input'
-import ModalHeader from './components/ModalHeader'
+import Modal from '@components/Modal'
+import { PersonalizationContext } from '@providers/PersonalizationProvider'
+import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
 import IdeaContentInput from './components/IdeaContentInput'
 import IdeaImagePreview from './components/IdeaImagePreview'
 import IdeaImageUpload from './components/IdeaImageUpload'
-import { cookieParse } from 'pocketbase'
+import ModalHeader from './components/ModalHeader'
 
 function ModifyIdeaModal({
   openType,
@@ -129,7 +129,7 @@ function ModifyIdeaModal({
     fetch(
       `${import.meta.env.VITE_API_HOST}/idea-box/idea/${
         innerOpenType === 'create' ? 'create' : 'update'
-      }/${innerOpenType === 'create' ? containerId : existedData!.id}`,
+      }/${innerOpenType === 'create' ? containerId : existedData.id}`,
       {
         method: innerOpenType === 'create' ? 'POST' : 'PATCH',
         headers: {

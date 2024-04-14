@@ -2,17 +2,17 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
-import React, { useState } from 'react'
-import { type IProjectsKEntry } from '../../ProjectList'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import EmptyStateScreen from '@components/EmptyStateScreen'
-import { toast } from 'react-toastify'
+import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import FILE_ICONS from '../../../../../constants/file_icons'
-import useFetch from '@hooks/useFetch'
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import EmptyStateScreen from '@components/EmptyStateScreen'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
+import useFetch from '@hooks/useFetch'
+import { type IProjectsKEntry } from '@typedec/ProjectK'
+import FILE_ICONS from '../../../../../constants/file_icons'
 
 export default function ProjectFiles({
   projectData,

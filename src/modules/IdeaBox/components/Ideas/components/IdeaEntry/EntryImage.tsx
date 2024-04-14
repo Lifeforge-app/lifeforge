@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/indent */
+import { Icon } from '@iconify/react'
 import React from 'react'
-import { type IIdeaBoxEntry } from '../..'
+import Zoom from 'react-medium-image-zoom'
+import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
 import CustomZoomContent from '../CustomZoomContent'
 import EntryContextMenu from '../EntryContextMenu'
-import Zoom from 'react-medium-image-zoom'
-import { Icon } from '@iconify/react/dist/iconify.js'
 
 function EntryImage({
   entry,

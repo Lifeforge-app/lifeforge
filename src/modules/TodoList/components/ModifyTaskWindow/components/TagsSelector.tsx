@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Listbox, Transition } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { Fragment } from 'react'
 
 function TagsSelector({

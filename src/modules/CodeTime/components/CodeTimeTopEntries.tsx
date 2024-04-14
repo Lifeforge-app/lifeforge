@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/indent */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
-import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
-import useFetch from '@hooks/useFetch'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import useFetch from '@hooks/useFetch'
+import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
 function CodeTimeTopEntries({
   type

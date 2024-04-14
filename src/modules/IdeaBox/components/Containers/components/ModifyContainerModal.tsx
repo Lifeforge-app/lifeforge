@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
-import React, { useEffect, useState } from 'react'
-import Modal from '@components/Modal'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import ColorPickerModal from '@components/ColorPicker/ColorPickerModal'
-import { toast } from 'react-toastify'
-import { type IIdeaBoxContainer } from '../../..'
+import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
+import { cookieParse } from 'pocketbase'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import ColorInput from '@components/ColorPicker/ColorInput'
+import ColorPickerModal from '@components/ColorPicker/ColorPickerModal'
+import CreateOrModifyButton from '@components/CreateOrModifyButton'
+import IconSelector from '@components/IconSelector'
 import IconInput from '@components/IconSelector/IconInput'
 import Input from '@components/Input'
-import IconSelector from '@components/IconSelector'
-import CreateOrModifyButton from '@components/CreateOrModifyButton'
-import ColorInput from '@components/ColorPicker/ColorInput'
-import { cookieParse } from 'pocketbase'
+import Modal from '@components/Modal'
+import { type IIdeaBoxContainer } from '@typedec/IdeaBox'
 
 function ModifyContainerModal({
   openType,
@@ -61,7 +61,7 @@ function ModifyContainerModal({
 
     fetch(
       `${import.meta.env.VITE_API_HOST}/idea-box/container/${innerOpenType}` +
-        (innerOpenType === 'update' ? `/${existedData!.id}` : ''),
+        (innerOpenType === 'update' ? `/${existedData.id}` : ''),
       {
         method: innerOpenType === 'create' ? 'POST' : 'PATCH',
         headers: {

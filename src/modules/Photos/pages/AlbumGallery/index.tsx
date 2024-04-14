@@ -1,35 +1,27 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
-import React, { useContext, useEffect } from 'react'
-import ModuleWrapper from '@components/ModuleWrapper'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import { useNavigate, useParams } from 'react-router'
-import GoBackButton from '@components/GoBackButton'
-import useFetch from '@hooks/useFetch'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import {
-  type IPhotosEntryDimensionsItem,
-  type IPhotosAlbum,
-  PhotosContext
-} from '../../../../providers/PhotosProvider'
-import Gallery from 'react-photo-gallery'
-import ImageObject from '../../components/ImageObject'
+import { Icon } from '@iconify/react'
 import moment from 'moment'
-import BottomBar from '../../components/BottomBar'
-import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosConfirmationModal.tsx'
-import RemovePhotosFromAlbumConfirmationModal from '../../components/modals/RemovePhotosFromAlbumConfirmationModal.tsx.tsx'
+import React, { useContext, useEffect } from 'react'
+import Gallery from 'react-photo-gallery'
+import { useNavigate, useParams } from 'react-router'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import GoBackButton from '@components/GoBackButton'
 import HamburgerMenu from '@components/HamburgerMenu/index.tsx'
 import MenuItem from '@components/HamburgerMenu/MenuItem.tsx'
+import ModuleWrapper from '@components/ModuleWrapper'
+import useFetch from '@hooks/useFetch'
+import { PhotosContext } from '../../../../providers/PhotosProvider'
+import {
+  type IPhotoAlbumEntryItem,
+  type IPhotosAlbum
+} from '../../../../types/Photos.ts'
+import BottomBar from '../../components/BottomBar'
+import ImageObject from '../../components/ImageObject'
+import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosConfirmationModal.tsx'
 import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal.tsx'
-
-export interface IPhotoAlbumEntryItem extends IPhotosEntryDimensionsItem {
-  collectionId: string
-  photoId: string
-  image: string
-  has_raw: boolean
-  is_in_album: boolean
-}
+import RemovePhotosFromAlbumConfirmationModal from '../../components/modals/RemovePhotosFromAlbumConfirmationModal.tsx.tsx'
 
 function PhotosAlbumGallery(): React.ReactElement {
   const { id } = useParams<{

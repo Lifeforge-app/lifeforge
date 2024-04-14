@@ -1,15 +1,15 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
-import React, { useEffect, useState } from 'react'
-import ModuleHeader from '@components/ModuleHeader'
-import SidebarTitle from '@sidebar/components/SidebarTitle'
-import SidebarDivider from '@sidebar/components/SidebarDivider'
-import { Icon } from '@iconify/react'
-import { Link } from 'react-router-dom'
-import SidebarItem from '@sidebar/components/SidebarItem'
 import { faker } from '@faker-js/faker'
+import { Icon } from '@iconify/react'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 import SearchInput from '@components/SearchInput'
+import SidebarDivider from '@sidebar/components/SidebarDivider'
+import SidebarItem from '@sidebar/components/SidebarItem'
+import SidebarTitle from '@sidebar/components/SidebarTitle'
 
 function shuffle(array: any[]): any[] {
   let currentIndex = array.length

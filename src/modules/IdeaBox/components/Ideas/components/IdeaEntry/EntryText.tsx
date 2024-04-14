@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/indent */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
+import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
 import EntryContextMenu from '../EntryContextMenu'
-import { type IIdeaBoxEntry } from '../..'
 
 function EntryText({
   entry,

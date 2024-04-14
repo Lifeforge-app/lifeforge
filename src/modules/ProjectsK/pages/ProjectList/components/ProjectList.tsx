@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { type IProjectsKEntry, PROJECT_STATUS } from '..'
+import { type IProjectsKEntry } from '@typedec/ProjectK'
+import { PROJECT_STATUS } from '..'
 
 function ProjectList({
   filteredProjectList

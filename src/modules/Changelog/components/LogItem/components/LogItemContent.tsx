@@ -1,5 +1,5 @@
 import React from 'react'
-import { type IChangeLogVersion } from '../../..'
+import { type IChangeLogVersion } from '@typedec/Changelog'
 
 function LogItemContent({
   entry

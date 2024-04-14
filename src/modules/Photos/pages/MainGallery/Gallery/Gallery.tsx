@@ -1,10 +1,10 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useContext, useEffect } from 'react'
-import DateGroup from './DateGroup'
-import { PhotosContext } from '@providers/PhotosProvider'
-import BottomBar from '../../../components/BottomBar'
 import EmptyStateScreen from '@components/EmptyStateScreen'
+import { PhotosContext } from '@providers/PhotosProvider'
+import DateGroup from './DateGroup'
+import BottomBar from '../../../components/BottomBar'
 
 function Gallery(): React.ReactElement {
   const { photos, selectedPhotos, setSelectedPhotos } =

@@ -1,28 +1,18 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
-import React, { Fragment, useEffect } from 'react'
-import { Icon } from '@iconify/react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import GoBackButton from '@components/GoBackButton'
-import { PROJECT_STATUS, type IProjectsKEntry } from '../ProjectList'
-import useFetch from '@hooks/useFetch'
-import ProjectProgress from './sections/ProjectProgress'
-import ProjectFiles from './sections/ProjectFiles'
 import { Listbox, Transition } from '@headlessui/react'
-import { toast } from 'react-toastify'
+import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
+import React, { Fragment, useEffect } from 'react'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
-
-export interface IProjectsKVersion {
-  collectionId: string
-  collectionName: string
-  created: string
-  files: string[]
-  id: string
-  project_id: string
-  thumbnail: string
-  updated: string
-}
+import GoBackButton from '@components/GoBackButton'
+import useFetch from '@hooks/useFetch'
+import { type IProjectsKEntry } from '@typedec/ProjectK'
+import ProjectFiles from './sections/ProjectFiles'
+import ProjectProgress from './sections/ProjectProgress'
+import { PROJECT_STATUS } from '../ProjectList'
 
 function ProjectsKEntry(): React.ReactElement {
   const navigate = useNavigate()

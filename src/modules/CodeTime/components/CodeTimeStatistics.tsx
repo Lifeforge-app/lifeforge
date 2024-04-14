@@ -2,11 +2,11 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
-import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
-import useFetch from '@hooks/useFetch'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import useFetch from '@hooks/useFetch'
+import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
 function CodeTimeStatistics(): React.ReactElement {
   const [stats] = useFetch<Record<string, number>>('code-time/statistics')

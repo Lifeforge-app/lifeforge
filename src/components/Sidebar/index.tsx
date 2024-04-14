@@ -1,8 +1,7 @@
-/* eslint-disable multiline-ternary */
 import React, { useContext } from 'react'
 import { GlobalStateContext } from '@providers/GlobalStateProvider'
-import SidebarItems from './components/SidebarItems'
 import SidebarHeader from './components/SidebarHeader'
+import SidebarItems from './components/SidebarItems'
 
 export default function Sidebar(): React.ReactElement {
   const { sidebarExpanded } = useContext(GlobalStateContext)

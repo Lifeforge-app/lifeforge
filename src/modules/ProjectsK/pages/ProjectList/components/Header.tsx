@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/indent */
+import { Icon } from '@iconify/react'
 import React from 'react'
-import { type IProjectsKEntry, PROJECT_STATUS } from '..'
-import { Icon } from '@iconify/react/dist/iconify.js'
 import { useSearchParams } from 'react-router-dom'
+import { type IProjectsKEntry } from '@typedec/ProjectK'
+import { PROJECT_STATUS } from '..'
 
 function Header({
   filteredProjectList,

@@ -1,14 +1,14 @@
 /* eslint-disable multiline-ternary */
+import { Icon } from '@iconify/react'
+import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
-import Modal from '@components/Modal'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import Input from '@components/Input'
-import IconInput from '@components/IconSelector/IconInput'
-import IconSelector from '@components/IconSelector'
+import { toast } from 'react-toastify'
 import ColorInput from '@components/ColorPicker/ColorInput'
 import ColorPickerModal from '@components/ColorPicker/ColorPickerModal'
-import { toast } from 'react-toastify'
-import { cookieParse } from 'pocketbase'
+import IconSelector from '@components/IconSelector'
+import IconInput from '@components/IconSelector/IconInput'
+import Input from '@components/Input'
+import Modal from '@components/Modal'
 
 function CreatePasswordModal({
   isOpen,

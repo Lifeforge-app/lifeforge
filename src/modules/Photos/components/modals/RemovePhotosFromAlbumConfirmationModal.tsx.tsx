@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
+import { Icon } from '@iconify/react'
+import { cookieParse } from 'pocketbase'
 import React, { useContext, useState } from 'react'
 import { toast } from 'react-toastify'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import { cookieParse } from 'pocketbase'
 import Modal from '@components/Modal'
 import { PhotosContext } from '@providers/PhotosProvider'
 

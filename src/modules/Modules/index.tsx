@@ -1,31 +1,18 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
+import { cookieParse } from 'pocketbase'
 import React, { useContext } from 'react'
+import { toast } from 'react-toastify'
+import Loading from '@components/Loading'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 import { AuthContext } from '@providers/AuthProvider'
-import Loading from '@components/Loading'
 import { titleToPath } from '@sidebar/components/SidebarItem'
-import { toast } from 'react-toastify'
-import { cookieParse } from 'pocketbase'
+import { type ModuleEntry } from '@typedec/Module'
 import ModuleItem from './ModuleItem'
 
-export interface Module {
-  name: string
-  icon: string
-  config?: Record<
-    string,
-    {
-      icon: string
-      name: string
-      placeholder: string
-      isPassword?: boolean
-    }
-  >
-}
-
-const MODULES: Module[] = [
+const MODULES: ModuleEntry[] = [
   {
     name: 'Projects (M)',
     icon: 'tabler:clipboard',
