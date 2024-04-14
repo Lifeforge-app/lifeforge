@@ -1,13 +1,13 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useContext } from 'react'
-import SidebarItem from '../../../components/Sidebar/components/SidebarItem'
-import SidebarDivider from '../../../components/Sidebar/components/SidebarDivider'
-import SidebarTitle from '../../../components/Sidebar/components/SidebarTitle'
+import SidebarItem from '@sidebar/components/SidebarItem'
+import SidebarDivider from '@sidebar/components/SidebarDivider'
+import SidebarTitle from '@sidebar/components/SidebarTitle'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import APIComponentWithFallback from '../../../components/general/APIComponentWithFallback'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import { Link, useNavigate } from 'react-router-dom'
-import { PhotosContext } from '../../../providers/PhotosProvider'
+import { PhotosContext } from '@providers/PhotosProvider'
 
 function PhotosSidebar(): React.ReactElement {
   const {

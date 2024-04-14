@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { PhotosContext } from '../../../../../providers/PhotosProvider'
+import { PhotosContext } from '@providers/PhotosProvider'
 import { Icon } from '@iconify/react/dist/iconify.js'
 
 function AlbumListHeader(): React.ReactElement {

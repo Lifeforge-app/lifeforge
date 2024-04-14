@@ -1,11 +1,11 @@
 /* eslint-disable multiline-ternary */
 import React, { useContext, useRef, useState } from 'react'
-import Input from '../../components/general/Input'
+import Input from '@components/Input'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { toast } from 'react-toastify'
 import { cookieParse } from 'pocketbase'
-import { AuthContext } from '../../providers/AuthProvider'
-import Modal from '../../components/general/Modal'
+import { AuthContext } from '@providers/AuthProvider'
+import Modal from '@components/Modal'
 
 function CreatePassword(): React.ReactElement {
   const { setUserData, userData } = useContext(AuthContext)

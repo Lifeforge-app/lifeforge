@@ -2,8 +2,8 @@
 import React from 'react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { type IProjectsKEntry } from '../../ProjectList'
-import APIComponentWithFallback from '../../../../../components/general/APIComponentWithFallback'
-import useFetch from '../../../../../hooks/useFetch'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import useFetch from '@hooks/useFetch'
 import { toast } from 'react-toastify'
 import { cookieParse } from 'pocketbase'
 
@@ -96,7 +96,7 @@ export default function ProjectProgress({
                     </span>
                   </p>
                 </div>
-                <ul className="mt-6 flex flex-col gap-2">
+                <ul className="mt-6 space-y-2">
                   {progress.steps.map((id: string, index: number) => (
                     <li
                       key={id}

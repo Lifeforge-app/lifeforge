@@ -2,12 +2,12 @@ import { faker } from '@faker-js/faker'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import ModuleHeader from '../../components/general/ModuleHeader'
-import ModuleWrapper from '../../components/general/ModuleWrapper'
-import SearchInput from '../../components/general/SearchInput'
-import Sidebar, { type IFlashcardTag } from './components/Sidebar'
-import useFetch from '../../hooks/useFetch'
-import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
+import ModuleHeader from '@components/ModuleHeader'
+import ModuleWrapper from '@components/ModuleWrapper'
+import SearchInput from '@components/SearchInput'
+import Sidebar, { type IFlashcardTag } from '@sidebar'
+import useFetch from '@hooks/useFetch'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 
 export interface IFlashcardDeck {
   card_amount: number
@@ -73,7 +73,7 @@ export default function Flashcards(): React.ReactElement {
                     key={deck.id}
                     className="group relative flex flex-col justify-start gap-6 rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800"
                   >
-                    <div className="flex flex-col gap-2">
+                    <div className="space-y-2">
                       {deck.tag !== '' && (
                         <span
                           className="relative isolate mb-1 w-min whitespace-nowrap rounded-full px-3 py-0.5 text-sm"
@@ -92,7 +92,7 @@ export default function Flashcards(): React.ReactElement {
                         {deck.card_amount} cards
                       </p>
                     </div>
-                    <div className="mt-auto flex flex-col gap-2">
+                    <div className="mt-auto space-y-2">
                       <progress
                         className="progress h-2 w-full rounded-lg bg-bg-200 dark:bg-bg-700"
                         value={faker.datatype.number(100)}
@@ -124,7 +124,7 @@ export default function Flashcards(): React.ReactElement {
                   key={index}
                   className="group relative flex flex-col justify-start gap-6 rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/50"
                 >
-                  <div className="flex flex-col gap-2">
+                  <div className="space-y-2">
                     <p className="text-sm font-medium text-bg-500">
                       {faker.datatype.number(100)} cards
                     </p>

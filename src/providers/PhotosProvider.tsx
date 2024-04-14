@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import moment from 'moment'
 import React, { createContext, useEffect, useRef, useState } from 'react'
-import useFetch from '../hooks/useFetch'
+import useFetch from '@hooks/useFetch'
 import { Outlet } from 'react-router'
 
 export interface IPhotosEntryDimensionsItem {

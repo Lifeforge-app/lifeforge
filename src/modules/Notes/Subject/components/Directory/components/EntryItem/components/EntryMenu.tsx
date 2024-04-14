@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import React from 'react'
-import HamburgerMenu from '../../../../../../../../components/general/HamburgerMenu'
-import MenuItem from '../../../../../../../../components/general/HamburgerMenu/MenuItem'
+import HamburgerMenu from '@components/HamburgerMenu'
+import MenuItem from '@components/HamburgerMenu/MenuItem'
 import { type INotesEntry } from '../../../../..'
 
 function EntryMenu({

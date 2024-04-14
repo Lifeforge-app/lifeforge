@@ -2,7 +2,7 @@
 /* eslint-disable multiline-ternary */
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useContext } from 'react'
-import { PersonalizationContext } from '../../providers/PersonalizationProvider'
+import { PersonalizationContext } from '@providers/PersonalizationProvider'
 
 function CreateOrModifyButton({
   type,

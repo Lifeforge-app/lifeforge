@@ -2,8 +2,8 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
-import HamburgerMenu from '../../../../components/general/HamburgerMenu'
-import MenuItem from '../../../../components/general/HamburgerMenu/MenuItem'
+import HamburgerMenu from '@components/HamburgerMenu'
+import MenuItem from '@components/HamburgerMenu/MenuItem'
 
 export interface INotesSubject {
   workspace: string

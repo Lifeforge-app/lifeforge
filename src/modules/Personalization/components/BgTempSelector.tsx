@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { PersonalizationContext } from '../../../providers/PersonalizationProvider'
+import { PersonalizationContext } from '@providers/PersonalizationProvider'
 
 const COLORS = ['bg-slate', 'bg-gray', 'bg-zinc', 'bg-neutral', 'bg-stone']
 

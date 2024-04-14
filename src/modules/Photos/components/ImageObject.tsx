@@ -7,12 +7,12 @@ import {
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import Zoom from 'react-medium-image-zoom'
-import HamburgerMenu from '../../../components/general/HamburgerMenu'
-import MenuItem from '../../../components/general/HamburgerMenu/MenuItem'
+import HamburgerMenu from '@components/HamburgerMenu'
+import MenuItem from '@components/HamburgerMenu/MenuItem'
 import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
 import { useParams } from 'react-router'
-import useFetch from '../../../hooks/useFetch'
+import useFetch from '@hooks/useFetch'
 
 function forceDown(url: string, filename: string): void {
   fetch(url)

@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
 import React, { useContext, useState } from 'react'
-import ModuleWrapper from '../../components/general/ModuleWrapper'
-import ModuleHeader from '../../components/general/ModuleHeader'
-import Input from '../../components/general/Input'
+import ModuleWrapper from '@components/ModuleWrapper'
+import ModuleHeader from '@components/ModuleHeader'
+import Input from '@components/Input'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { AuthContext } from '../../providers/AuthProvider'
+import { AuthContext } from '@providers/AuthProvider'
 import CreatePassword from './CreatePassword'
 import { toast } from 'react-toastify'
 import { cookieParse } from 'pocketbase'
 import CreatePasswordModal from './CreatePasswordModal'
-import EmptyStateScreen from '../../components/general/EmptyStateScreen'
-import useFetch from '../../hooks/useFetch'
-import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
+import EmptyStateScreen from '@components/EmptyStateScreen'
+import useFetch from '@hooks/useFetch'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import PasswordEntryITem from './PasswordEntryITem'
 
 export interface IPasswordEntry {

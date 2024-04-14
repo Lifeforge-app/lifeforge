@@ -3,11 +3,11 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { useEffect } from 'react'
-import ModuleHeader from '../../components/general/ModuleHeader'
+import ModuleHeader from '@components/ModuleHeader'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import useFetch from '../../hooks/useFetch'
-import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
-import ModuleWrapper from '../../components/general/ModuleWrapper'
+import useFetch from '@hooks/useFetch'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import ModuleWrapper from '@components/ModuleWrapper'
 import GaugeComponent from 'react-gauge-component'
 import moment from 'moment'
 

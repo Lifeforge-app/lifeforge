@@ -1,9 +1,9 @@
 /* eslint-disable multiline-ternary */
 import React, { useContext, useEffect, useState } from 'react'
-import Modal from '../../../../components/general/Modal'
+import Modal from '@components/Modal'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { PhotosContext } from '../../../../providers/PhotosProvider'
-import APIComponentWithFallback from '../../../../components/general/APIComponentWithFallback'
+import { PhotosContext } from '@providers/PhotosProvider'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
 

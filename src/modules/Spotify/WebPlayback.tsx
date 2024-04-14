@@ -3,8 +3,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useContext, useEffect, useState } from 'react'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { SpotifyContext } from '../../providers/SpotifyProvider'
-import EmptyStateScreen from '../../components/general/EmptyStateScreen'
+import { SpotifyContext } from '@providers/SpotifyProvider'
+import EmptyStateScreen from '@components/EmptyStateScreen'
 
 function WebPlayback(): React.ReactElement {
   const { player, isPaused, isActive, currentTrack } =

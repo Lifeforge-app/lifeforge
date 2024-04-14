@@ -3,15 +3,15 @@
 import React, { Fragment, useEffect } from 'react'
 import { Icon } from '@iconify/react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import GoBackButton from '../../../../components/general/GoBackButton'
+import GoBackButton from '@components/GoBackButton'
 import { PROJECT_STATUS, type IProjectsKEntry } from '../ProjectList'
-import useFetch from '../../../../hooks/useFetch'
+import useFetch from '@hooks/useFetch'
 import ProjectProgress from './sections/ProjectProgress'
 import ProjectFiles from './sections/ProjectFiles'
 import { Listbox, Transition } from '@headlessui/react'
 import { toast } from 'react-toastify'
 import { cookieParse } from 'pocketbase'
-import APIComponentWithFallback from '../../../../components/general/APIComponentWithFallback'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 
 export interface IProjectsKVersion {
   collectionId: string

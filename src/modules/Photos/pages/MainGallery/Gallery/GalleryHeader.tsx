@@ -3,12 +3,12 @@
 /* eslint-disable react/jsx-no-undef */
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useContext, useEffect, useState } from 'react'
-import { PhotosContext } from '../../../../../providers/PhotosProvider'
-import useFetch from '../../../../../hooks/useFetch'
+import { PhotosContext } from '@providers/PhotosProvider'
+import useFetch from '@hooks/useFetch'
 import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
-import HamburgerMenu from '../../../../../components/general/HamburgerMenu'
-import MenuItem from '../../../../../components/general/HamburgerMenu/MenuItem'
+import HamburgerMenu from '@components/HamburgerMenu'
+import MenuItem from '@components/HamburgerMenu/MenuItem'
 
 function GalleryHeader(): React.ReactElement {
   const { refreshPhotos, hidePhotosInAlbum, setHidePhotosInAlbum, setReady } =

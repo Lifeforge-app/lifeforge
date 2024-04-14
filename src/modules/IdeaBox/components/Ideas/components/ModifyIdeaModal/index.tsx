@@ -3,14 +3,14 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useEffect, useState, useCallback, useContext } from 'react'
-import Modal from '../../../../../../components/general/Modal'
+import Modal from '@components/Modal'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useDropzone } from 'react-dropzone'
 import { toast } from 'react-toastify'
 import { type IIdeaBoxEntry } from '../..'
-import { PersonalizationContext } from '../../../../../../providers/PersonalizationProvider'
-import Input from '../../../../../../components/general/Input'
+import { PersonalizationContext } from '@providers/PersonalizationProvider'
+import Input from '@components/Input'
 import ModalHeader from './components/ModalHeader'
 import IdeaContentInput from './components/IdeaContentInput'
 import IdeaImagePreview from './components/IdeaImagePreview'

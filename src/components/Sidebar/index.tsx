@@ -1,6 +1,6 @@
 /* eslint-disable multiline-ternary */
 import React, { useContext } from 'react'
-import { GlobalStateContext } from '../../providers/GlobalStateProvider'
+import { GlobalStateContext } from '@providers/GlobalStateProvider'
 import SidebarItems from './components/SidebarItems'
 import SidebarHeader from './components/SidebarHeader'
 

@@ -4,8 +4,8 @@ import React, { useContext, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { cookieParse } from 'pocketbase'
-import Modal from '../../../../components/general/Modal'
-import { PhotosContext } from '../../../../providers/PhotosProvider'
+import Modal from '@components/Modal'
+import { PhotosContext } from '@providers/PhotosProvider'
 
 function RemovePhotosFromAlbumConfirmationModal({
   refreshPhotos,

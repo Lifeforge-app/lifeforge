@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { type Module } from '.'
 import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import Input from '../../components/general/Input'
+import Input from '@components/Input'
 
 function ModuleItem({
   module,

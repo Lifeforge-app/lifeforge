@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable multiline-ternary */
 import React, { useEffect, useState } from 'react'
-import Modal from '../../../components/general/Modal'
+import Modal from '@components/Modal'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { type IFlashcardCard } from './CardSet'
-import CreateOrModifyButton from '../../../components/general/CreateOrModifyButton'
+import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import { toast } from 'react-toastify'
 import { cookieParse } from 'pocketbase'
 

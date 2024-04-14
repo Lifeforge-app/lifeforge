@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect, useState } from 'react'
-import SidebarDivider from '../../../components/Sidebar/components/SidebarDivider'
-import SidebarTitle from '../../../components/Sidebar/components/SidebarTitle'
+import SidebarDivider from '@sidebar/components/SidebarDivider'
+import SidebarTitle from '@sidebar/components/SidebarTitle'
 import { Icon } from '@iconify/react'
-import APIComponentWithFallback from '../../../components/general/APIComponentWithFallback'
-import GoBackButton from '../../../components/general/GoBackButton'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import GoBackButton from '@components/GoBackButton'
 import ModifyListModal from './ModifyListModal'
 import ModifyTagModal from './ModifyTagModal'
 

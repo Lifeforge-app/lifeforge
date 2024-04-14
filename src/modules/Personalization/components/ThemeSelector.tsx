@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { PersonalizationContext } from '../../../providers/PersonalizationProvider'
+import { PersonalizationContext } from '@providers/PersonalizationProvider'
 import { Icon } from '@iconify/react/dist/iconify.js'
 
 function ThemeSelector(): React.ReactElement {

@@ -5,8 +5,8 @@ import { type IPasswordEntry } from '.'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
-import HamburgerMenu from '../../components/general/HamburgerMenu'
-import MenuItem from '../../components/general/HamburgerMenu/MenuItem'
+import HamburgerMenu from '@components/HamburgerMenu'
+import MenuItem from '@components/HamburgerMenu/MenuItem'
 
 function PasswordEntryITem({
   password,

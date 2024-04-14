@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { AuthContext } from '../../providers/AuthProvider'
+import { AuthContext } from '@providers/AuthProvider'
 import { Icon } from '@iconify/react/dist/iconify.js'
 
 function AuthSignInButton({
@@ -7,13 +7,13 @@ function AuthSignInButton({
   password,
   loading,
   signIn,
-  signInWithGithub
+  signInWithPasskey
 }: {
   emailOrUsername: string
   password: string
   loading: boolean
   signIn: () => void
-  signInWithGithub: () => void
+  signInWithPasskey: () => void
 }): React.ReactElement {
   const { auth } = useContext(AuthContext)
 
@@ -31,14 +31,21 @@ function AuthSignInButton({
       >
         {loading ? <Icon icon="svg-spinners:180-ring" /> : 'Sign In'}
       </button>
-      <button
-        type="button"
-        onClick={signInWithGithub}
-        className="flex items-center justify-center gap-3 rounded-lg bg-bg-400 p-6 font-semibold uppercase tracking-widest text-bg-100 transition-all hover:bg-bg-500 dark:bg-bg-800 dark:hover:bg-bg-700"
-      >
-        <Icon icon="tabler:brand-github" className="text-2xl" />
-        Sign In with Github
-      </button>
+      <div className="flex items-center gap-3">
+        <div className="h-[2px] w-full bg-bg-600"></div>
+        <div className="shrink-0 font-medium text-bg-600">Or Sign In With</div>
+        <div className="h-[2px] w-full bg-bg-600"></div>
+      </div>
+      <div className="flex w-full gap-4">
+        <button
+          type="button"
+          onClick={signInWithPasskey}
+          className="flex w-full items-center justify-center gap-3 rounded-lg bg-bg-400 p-6 font-semibold uppercase tracking-widest text-bg-100 transition-all hover:bg-bg-500 dark:bg-bg-800 dark:hover:bg-bg-700"
+        >
+          <Icon icon="tabler:key" className="text-2xl" />
+          Passkey
+        </button>
+      </div>
     </div>
   )
 }
