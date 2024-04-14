@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
 import { Icon } from '@iconify/react'
@@ -6,13 +7,26 @@ import React, { useContext, useState } from 'react'
 import { toast } from 'react-toastify'
 import Modal from '@components/Modal'
 import { PhotosContext } from '@providers/PhotosProvider'
+import {
+  type IPhotosEntryDimensions,
+  type IPhotoAlbumEntryItem,
+  type IPhotosEntry
+} from '@typedec/Photos'
 
 function DeletePhotosConfirmationModal({
-  refreshPhotos,
-  isInAlbumGallery = false
+  isInAlbumGallery = false,
+  customIsOpen,
+  customSetIsOpen,
+  customPhotoToBeDeleted,
+  setPhotos
 }: {
-  refreshPhotos: () => void
   isInAlbumGallery?: boolean
+  customIsOpen?: boolean
+  customSetIsOpen?: (isOpen: boolean) => void
+  customPhotoToBeDeleted?: IPhotosEntry
+  setPhotos:
+    | React.Dispatch<React.SetStateAction<IPhotoAlbumEntryItem[]>>
+    | React.Dispatch<React.SetStateAction<IPhotosEntryDimensions>>
 }): React.ReactElement {
   const {
     selectedPhotos,
@@ -24,7 +38,9 @@ function DeletePhotosConfirmationModal({
   const [loading, setLoading] = useState(false)
 
   function deleteData(): void {
-    if (selectedPhotos.length === 0) return
+    if (!customPhotoToBeDeleted && selectedPhotos.length === 0) {
+      return
+    }
 
     setLoading(true)
     fetch(
@@ -38,7 +54,9 @@ function DeletePhotosConfirmationModal({
           Authorization: `Bearer ${cookieParse(document.cookie).token}`
         },
         body: JSON.stringify({
-          photos: selectedPhotos
+          photos: customPhotoToBeDeleted
+            ? [customPhotoToBeDeleted.id]
+            : selectedPhotos
         })
       }
     )
@@ -47,9 +65,34 @@ function DeletePhotosConfirmationModal({
         if (res.ok) {
           toast.info("Uhh, hopefully you truly didn't need those photos.")
           setDeletePhotosConfirmationModalOpen(false)
-          refreshAlbumList()
-          refreshPhotos()
           setSelectedPhotos([])
+
+          if (isInAlbumGallery) {
+            if (customPhotoToBeDeleted) {
+              setPhotos(prevPhotos =>
+                prevPhotos.filter(
+                  photo => photo.id !== customPhotoToBeDeleted.id
+                )
+              )
+            } else {
+              setPhotos(prevPhotos =>
+                prevPhotos.filter(photo => !selectedPhotos.includes(photo.id))
+              )
+            }
+          } else {
+            setPhotos(prevPhotos => ({
+              ...prevPhotos,
+              items: prevPhotos.items.map(([date, photos]) => [
+                date,
+                photos.filter(photo =>
+                  customPhotoToBeDeleted
+                    ? photo.id !== customPhotoToBeDeleted.id
+                    : !selectedPhotos.includes(photo.id)
+                )
+              ])
+            }))
+          }
+
           return data
         } else {
           throw new Error(data.message)
@@ -65,9 +108,12 @@ function DeletePhotosConfirmationModal({
   }
 
   return (
-    <Modal isOpen={isDeletePhotosConfirmationModalOpen}>
-      <h1 className="text-2xl font-semibold">
-        Are you sure you want to delete {selectedPhotos.length} photo
+    <Modal isOpen={customIsOpen ?? isDeletePhotosConfirmationModalOpen}>
+      <h1 className="text-2xl font-semibold text-bg-100">
+        Are you sure you want to delete{' '}
+        {customPhotoToBeDeleted
+          ? 'this photo'
+          : `${selectedPhotos.length} photos`}{' '}
         {selectedPhotos.length > 1 ? 's' : ''}?
       </h1>
       <p className="mt-2 text-bg-500">
@@ -76,7 +122,9 @@ function DeletePhotosConfirmationModal({
       <div className="mt-6 flex w-full justify-around gap-2">
         <button
           onClick={() => {
-            setDeletePhotosConfirmationModalOpen(false)
+            customSetIsOpen
+              ? customSetIsOpen(false)
+              : setDeletePhotosConfirmationModalOpen(false)
           }}
           className="flex w-full items-center justify-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700"
         >
