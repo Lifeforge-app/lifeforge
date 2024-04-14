@@ -33,7 +33,7 @@ function AuthSignInButton({
       </button>
       <div className="flex items-center gap-3">
         <div className="h-[2px] w-full bg-bg-600"></div>
-        <div className="shrink-0 font-medium text-bg-600">Or Sign In With</div>
+        <div className="shrink-0 font-medium text-bg-600">OR</div>
         <div className="h-[2px] w-full bg-bg-600"></div>
       </div>
       <div className="flex w-full gap-4">
@@ -43,7 +43,7 @@ function AuthSignInButton({
           className="flex w-full items-center justify-center gap-3 rounded-lg bg-bg-400 p-6 font-semibold uppercase tracking-widest text-bg-100 transition-all hover:bg-bg-500 dark:bg-bg-800 dark:hover:bg-bg-700"
         >
           <Icon icon="tabler:key" className="text-2xl" />
-          Passkey
+          Sign in with Passkey
         </button>
       </div>
     </div>
