@@ -3,10 +3,10 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { type IIdeaBoxContainer } from '../../..'
-import GoBackButton from '../../../../../components/general/GoBackButton'
-import useFetch from '../../../../../hooks/useFetch'
-import HamburgerMenu from '../../../../../components/general/HamburgerMenu'
-import MenuItem from '../../../../../components/general/HamburgerMenu/MenuItem'
+import GoBackButton from '@components/GoBackButton'
+import useFetch from '@hooks/useFetch'
+import HamburgerMenu from '@components/HamburgerMenu'
+import MenuItem from '@components/HamburgerMenu/MenuItem'
 
 function ContainerHeader({
   id,

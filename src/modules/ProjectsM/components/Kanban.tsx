@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon } from '@iconify/react'
 import { useNavigate } from 'react-router-dom'
-import GoBackButton from '../../../components/general/GoBackButton'
+import GoBackButton from '@components/GoBackButton'
 
 function Kanban(): React.ReactElement {
   const navigate = useNavigate()
@@ -66,7 +66,7 @@ function Kanban(): React.ReactElement {
                 <Icon icon="tabler:dots-vertical" className="text-xl" />
               </button>
             </div>
-            <ul className="mt-6 flex flex-col gap-2 overflow-y-auto pr-2">
+            <ul className="mt-6 space-y-2 overflow-y-auto pr-2">
               {Array(Math.floor(Math.random() * 10))
                 .fill(0)
                 .map((_, index) => (

@@ -6,14 +6,14 @@ import Sidebar, {
   type ITodoListTag,
   type ITodoListList
 } from './components/Sidebar'
-import ModuleHeader from '../../components/general/ModuleHeader'
-import useFetch from '../../hooks/useFetch'
-import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
+import ModuleHeader from '@components/ModuleHeader'
+import useFetch from '@hooks/useFetch'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import TaskItem from './components/TaskItem'
 import ModifyTaskWindow from './components/ModifyTaskWindow'
-import ModuleWrapper from '../../components/general/ModuleWrapper'
-import SearchInput from '../../components/general/SearchInput'
-import DeleteConfirmationModal from '../../components/general/DeleteConfirmationModal'
+import ModuleWrapper from '@components/ModuleWrapper'
+import SearchInput from '@components/SearchInput'
+import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
 
 export interface ITodoListEntryItem {
   collectionId: string

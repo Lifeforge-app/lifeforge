@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { GlobalStateContext } from '../../../providers/GlobalStateProvider'
+import { GlobalStateContext } from '@providers/GlobalStateProvider'
 import { Icon } from '@iconify/react'
 
 function SidebarHeader(): React.ReactElement {

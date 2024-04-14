@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/indent */
 import React from 'react'
-import SidebarDivider from '../../../components/Sidebar/components/SidebarDivider'
-import SidebarTitle from '../../../components/Sidebar/components/SidebarTitle'
+import SidebarDivider from '@sidebar/components/SidebarDivider'
+import SidebarTitle from '@sidebar/components/SidebarTitle'
 import { Icon } from '@iconify/react'
-import GoBackButton from '../../../components/general/GoBackButton'
-import SidebarItem from '../../../components/Sidebar/components/SidebarItem'
-import useFetch from '../../../hooks/useFetch'
-import APIComponentWithFallback from '../../../components/general/APIComponentWithFallback'
+import GoBackButton from '@components/GoBackButton'
+import SidebarItem from '@sidebar/components/SidebarItem'
+import useFetch from '@hooks/useFetch'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 
 export interface IFlashcardTag {
   amount: number

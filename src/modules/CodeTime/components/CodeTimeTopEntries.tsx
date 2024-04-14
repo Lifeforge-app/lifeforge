@@ -2,25 +2,30 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useState } from 'react'
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
-import useFetch from '../../../hooks/useFetch'
-import APIComponentWithFallback from '../../../components/general/APIComponentWithFallback'
+import useFetch from '@hooks/useFetch'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 
-function CodeTimeMostLanguages(): React.ReactElement {
-  const [lastForLanguages, setLastForLanguages] = useState<
-    '24 hours' | '7 days' | '30 days'
-  >('24 hours')
+function CodeTimeTopEntries({
+  type
+}: {
+  type: 'languages' | 'projects'
+}): React.ReactElement {
+  const [lastFor, setLastFor] = useState<'24 hours' | '7 days' | '30 days'>(
+    '24 hours'
+  )
 
-  const [topLanguages] = useFetch<Record<string, number>>(
-    `code-time/languages?last=${lastForLanguages}`
+  const [topEntries] = useFetch<Record<string, number>>(
+    `code-time/${type}?last=${lastFor}`
   )
 
   return (
-    <div className="mb-6 mt-16 flex w-full flex-col gap-6 pb-6">
-      <div className="flex w-full items-center justify-between">
+    <div className="space-y-6 pb-8">
+      <div className="flex items-center justify-between">
         <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
           <Icon icon="tabler:code" className="text-3xl" />
           <span className="ml-2">
-            Languages You&apos;ve Spent Most Time Using
+            {type[0].toUpperCase()}
+            {type.slice(1)} You&apos;ve Spent Most Time Using
           </span>
         </h1>
         <div className="flex items-center gap-2">
@@ -30,10 +35,10 @@ function CodeTimeMostLanguages(): React.ReactElement {
               <button
                 key={index}
                 onClick={() => {
-                  setLastForLanguages(last as '24 hours' | '7 days' | '30 days')
+                  setLastFor(last as '24 hours' | '7 days' | '30 days')
                 }}
                 className={`rounded-md p-4 px-6 tracking-wide hover:bg-bg-700/50 ${
-                  lastForLanguages === last
+                  lastFor === last
                     ? 'bg-bg-200 font-semibold text-bg-800 dark:bg-bg-700/50 dark:text-bg-100'
                     : 'text-bg-500 hover:bg-bg-200/50 dark:hover:bg-bg-700/50'
                 }`}
@@ -44,16 +49,17 @@ function CodeTimeMostLanguages(): React.ReactElement {
           </div>
         </div>
       </div>
-      <APIComponentWithFallback data={topLanguages}>
+      <APIComponentWithFallback data={topEntries}>
         <div className="flex w-full">
-          {typeof topLanguages !== 'string' &&
-            Object.keys(topLanguages).length > 0 &&
-            Object.entries(topLanguages)
+          {typeof topEntries !== 'string' &&
+            Object.keys(topEntries).length > 0 &&
+            Object.entries(topEntries)
               .slice(0, 5)
               .map(([key, value], index) => (
                 <div
                   className={`h-6 border ${index === 0 && 'rounded-l-lg'} ${
-                    index === 4 && 'rounded-r-lg'
+                    index === Object.entries(topEntries).length - 1 &&
+                    'rounded-r-lg'
                   } ${
                     [
                       'bg-red-500/20 border-red-500',
@@ -67,7 +73,7 @@ function CodeTimeMostLanguages(): React.ReactElement {
                   style={{
                     width: `${Math.round(
                       (value /
-                        Object.entries(topLanguages)
+                        Object.entries(topEntries)
                           .slice(0, 5)
                           .reduce((a, b) => a + b[1], 0)) *
                         100
@@ -77,9 +83,9 @@ function CodeTimeMostLanguages(): React.ReactElement {
               ))}
         </div>
         <ul className="flex flex-col gap-4">
-          {topLanguages !== null &&
-            Object.keys(topLanguages).length > 0 &&
-            Object.entries(topLanguages)
+          {topEntries !== null &&
+            Object.keys(topEntries).length > 0 &&
+            Object.entries(topEntries)
               .slice(0, 5)
               .map(([key, value], index) => (
                 <li
@@ -111,4 +117,4 @@ function CodeTimeMostLanguages(): React.ReactElement {
   )
 }
 
-export default CodeTimeMostLanguages
+export default CodeTimeTopEntries

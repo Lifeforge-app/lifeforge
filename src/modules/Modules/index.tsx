@@ -2,11 +2,11 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
 import React, { useContext } from 'react'
-import ModuleHeader from '../../components/general/ModuleHeader'
-import ModuleWrapper from '../../components/general/ModuleWrapper'
-import { AuthContext } from '../../providers/AuthProvider'
-import Loading from '../../components/general/Loading'
-import { titleToPath } from '../../components/Sidebar/components/SidebarItem'
+import ModuleHeader from '@components/ModuleHeader'
+import ModuleWrapper from '@components/ModuleWrapper'
+import { AuthContext } from '@providers/AuthProvider'
+import Loading from '@components/Loading'
+import { titleToPath } from '@sidebar/components/SidebarItem'
 import { toast } from 'react-toastify'
 import { cookieParse } from 'pocketbase'
 import ModuleItem from './ModuleItem'

@@ -44,8 +44,18 @@ module.exports = {
                     ".ts",
                     ".tsx",
                     ".d.ts"
-                ]
+                ],
+                "moduleDirectory": ["node_modules", "src/"]
             },
+            "alias": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx", ".d.ts"],
+                "map": [
+                    ['@components', './src/components/general/'],
+                    ['@providers', './src/providers/'],
+                    ['@hooks', './src/hooks/'],
+                    ['@sidebar', './src/components/Sidebar/'],
+                ],
+            }
         },
         "react": {
             "version": "detect"

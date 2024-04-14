@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable multiline-ternary */
 import React, { useEffect, useState } from 'react'
-import ModuleHeader from '../../components/general/ModuleHeader'
+import ModuleHeader from '@components/ModuleHeader'
 import ModifyContainerModal from './components/Containers/components/ModifyContainerModal'
 import { useDebounce } from '@uidotdev/usehooks'
-import EmptyStateScreen from '../../components/general/EmptyStateScreen'
+import EmptyStateScreen from '@components/EmptyStateScreen'
 import Containers from './components/Containers'
-import DeleteConfirmationModal from '../../components/general/DeleteConfirmationModal'
-import useFetch from '../../hooks/useFetch'
-import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
-import ModuleWrapper from '../../components/general/ModuleWrapper'
-import SearchInput from '../../components/general/SearchInput'
+import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
+import useFetch from '@hooks/useFetch'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import ModuleWrapper from '@components/ModuleWrapper'
+import SearchInput from '@components/SearchInput'
 
 export interface IIdeaBoxContainer {
   collectionId: string

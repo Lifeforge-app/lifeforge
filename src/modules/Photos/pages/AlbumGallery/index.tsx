@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
 import React, { useContext, useEffect } from 'react'
-import ModuleWrapper from '../../../../components/general/ModuleWrapper'
+import ModuleWrapper from '@components/ModuleWrapper'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useNavigate, useParams } from 'react-router'
-import GoBackButton from '../../../../components/general/GoBackButton'
-import useFetch from '../../../../hooks/useFetch'
-import APIComponentWithFallback from '../../../../components/general/APIComponentWithFallback'
+import GoBackButton from '@components/GoBackButton'
+import useFetch from '@hooks/useFetch'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import {
   type IPhotosEntryDimensionsItem,
   type IPhotosAlbum,
@@ -19,8 +19,8 @@ import moment from 'moment'
 import BottomBar from '../../components/BottomBar'
 import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosConfirmationModal.tsx'
 import RemovePhotosFromAlbumConfirmationModal from '../../components/modals/RemovePhotosFromAlbumConfirmationModal.tsx.tsx'
-import HamburgerMenu from '../../../../components/general/HamburgerMenu/index.tsx'
-import MenuItem from '../../../../components/general/HamburgerMenu/MenuItem.tsx'
+import HamburgerMenu from '@components/HamburgerMenu/index.tsx'
+import MenuItem from '@components/HamburgerMenu/MenuItem.tsx'
 import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal.tsx'
 
 export interface IPhotoAlbumEntryItem extends IPhotosEntryDimensionsItem {

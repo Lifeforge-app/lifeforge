@@ -2,10 +2,10 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import { type IProjectsKEntry, PROJECT_STATUS } from '..'
-import SidebarDivider from '../../../../../components/Sidebar/components/SidebarDivider'
-import SidebarItem from '../../../../../components/Sidebar/components/SidebarItem'
-import SidebarTitle from '../../../../../components/Sidebar/components/SidebarTitle'
-import APIComponentWithFallback from '../../../../../components/general/APIComponentWithFallback'
+import SidebarDivider from '@sidebar/components/SidebarDivider'
+import SidebarItem from '@sidebar/components/SidebarItem'
+import SidebarTitle from '@sidebar/components/SidebarTitle'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import { useSearchParams } from 'react-router-dom'
 
 function Sidebar({

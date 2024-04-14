@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import moment from 'moment'
 import React, { useContext, useRef } from 'react'
-import { PhotosContext } from '../../../../../providers/PhotosProvider'
+import { PhotosContext } from '@providers/PhotosProvider'
 
 function TimelineScrollbar(): React.ReactElement {
   const {

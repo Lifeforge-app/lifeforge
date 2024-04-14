@@ -19,9 +19,9 @@ import {
   Title,
   Filler
 } from 'chart.js'
-import ModuleHeader from '../../components/general/ModuleHeader'
-import { AuthContext } from '../../providers/AuthProvider'
-import ModuleWrapper from '../../components/general/ModuleWrapper'
+import ModuleHeader from '@components/ModuleHeader'
+import { AuthContext } from '@providers/AuthProvider'
+import ModuleWrapper from '@components/ModuleWrapper'
 
 ChartJS.register(
   ArcElement,

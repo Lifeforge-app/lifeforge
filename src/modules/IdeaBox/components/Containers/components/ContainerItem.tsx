@@ -3,8 +3,8 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { type IIdeaBoxContainer } from '../../..'
-import HamburgerMenu from '../../../../../components/general/HamburgerMenu'
-import MenuItem from '../../../../../components/general/HamburgerMenu/MenuItem'
+import HamburgerMenu from '@components/HamburgerMenu'
+import MenuItem from '@components/HamburgerMenu/MenuItem'
 
 function ContainerItem({
   container,

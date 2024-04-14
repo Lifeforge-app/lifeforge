@@ -2,13 +2,13 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect, useState } from 'react'
-import ModuleHeader from '../../components/general/ModuleHeader'
-import useFetch from '../../hooks/useFetch'
+import ModuleHeader from '@components/ModuleHeader'
+import useFetch from '@hooks/useFetch'
 import LogItem from './components/LogItem'
-import APIComponentWithFallback from '../../components/general/APIComponentWithFallback'
-import ModuleWrapper from '../../components/general/ModuleWrapper'
-import EmptyStateScreen from '../../components/general/EmptyStateScreen'
-import SearchInput from '../../components/general/SearchInput'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import ModuleWrapper from '@components/ModuleWrapper'
+import EmptyStateScreen from '@components/EmptyStateScreen'
+import SearchInput from '@components/SearchInput'
 
 export interface IChangeLogVersion {
   version: string
@@ -66,7 +66,7 @@ function Changelog(): React.ReactElement {
         stuffToSearch="features"
       />
       <APIComponentWithFallback data={data}>
-        <ul className="my-8 flex flex-1 flex-col gap-4">
+        <ul className="my-8 space-y-4">
           {typeof data !== 'string' &&
             (filteredData.length > 0 ? (
               filteredData.map(entry => (

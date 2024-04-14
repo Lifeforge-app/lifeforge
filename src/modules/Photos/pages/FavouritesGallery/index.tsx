@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
 import React, { useContext, useEffect } from 'react'
-import ModuleWrapper from '../../../../components/general/ModuleWrapper.tsx'
+import ModuleWrapper from '@components/ModuleWrapper.tsx'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useNavigate, useParams } from 'react-router'
-import GoBackButton from '../../../../components/general/GoBackButton.tsx'
-import useFetch from '../../../../hooks/useFetch.ts'
-import APIComponentWithFallback from '../../../../components/general/APIComponentWithFallback.tsx'
+import GoBackButton from '@components/GoBackButton.tsx'
+import useFetch from '@hooks/useFetch.ts'
+import APIComponentWithFallback from '@components/APIComponentWithFallback.tsx'
 import {
   type IPhotosEntryDimensionsItem,
   PhotosContext
@@ -15,8 +15,8 @@ import {
 import Gallery from 'react-photo-gallery'
 import ImageObject from '../../components/ImageObject.tsx'
 import BottomBar from '../../components/BottomBar.tsx'
-import HamburgerMenu from '../../../../components/general/HamburgerMenu/index.tsx'
-import MenuItem from '../../../../components/general/HamburgerMenu/MenuItem.tsx'
+import HamburgerMenu from '@components/HamburgerMenu/index.tsx'
+import MenuItem from '@components/HamburgerMenu/MenuItem.tsx'
 
 export interface IPhotoAlbumEntryItem extends IPhotosEntryDimensionsItem {
   collectionId: string

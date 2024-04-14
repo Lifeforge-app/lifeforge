@@ -4,15 +4,15 @@
 /* eslint-disable multiline-ternary */
 import React, { useState } from 'react'
 import { type IProjectsKEntry } from '../../ProjectList'
-import APIComponentWithFallback from '../../../../../components/general/APIComponentWithFallback'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import EmptyStateScreen from '../../../../../components/general/EmptyStateScreen'
+import EmptyStateScreen from '@components/EmptyStateScreen'
 import { toast } from 'react-toastify'
 import { cookieParse } from 'pocketbase'
 import FILE_ICONS from '../../../../../constants/file_icons'
-import useFetch from '../../../../../hooks/useFetch'
-import HamburgerMenu from '../../../../../components/general/HamburgerMenu'
-import MenuItem from '../../../../../components/general/HamburgerMenu/MenuItem'
+import useFetch from '@hooks/useFetch'
+import HamburgerMenu from '@components/HamburgerMenu'
+import MenuItem from '@components/HamburgerMenu/MenuItem'
 
 export default function ProjectFiles({
   projectData,

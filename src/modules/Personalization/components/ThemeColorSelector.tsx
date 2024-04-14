@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react'
-import { PersonalizationContext } from '../../../providers/PersonalizationProvider'
+import { PersonalizationContext } from '@providers/PersonalizationProvider'
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 

@@ -5,8 +5,8 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
-import useFetch from '../../../hooks/useFetch'
-import APIComponentWithFallback from '../../../components/general/APIComponentWithFallback'
+import useFetch from '@hooks/useFetch'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 
 function CodeTimeStatistics(): React.ReactElement {
   const [stats] = useFetch<Record<string, number>>('code-time/statistics')

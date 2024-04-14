@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useContext, useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 import THEME_COLOR_HEX from '../../../constants/theme_color_hex'
-import { PersonalizationContext } from '../../../providers/PersonalizationProvider'
+import { PersonalizationContext } from '@providers/PersonalizationProvider'
 import { Tooltip } from 'react-tooltip'
 
 function CodeTimeActivityCalendar(): React.ReactElement {
@@ -43,8 +43,8 @@ function CodeTimeActivityCalendar(): React.ReactElement {
   }, [])
 
   return (
-    <div className="mt-16 flex w-full flex-col gap-6">
-      <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
+    <div className="space-y-2">
+      <h1 className="flex items-center gap-2 text-2xl font-semibold">
         <Icon icon="tabler:activity" className="text-3xl" />
         <span className="ml-2">Activities Calendar</span>
       </h1>
@@ -120,7 +120,7 @@ function CodeTimeActivityCalendar(): React.ReactElement {
         </div>
         <Tooltip id="react-tooltip" className="z-[9999]" />
         {firstYear && (
-          <div className="flex flex-col gap-2">
+          <div className="space-y-2">
             {Array(new Date().getFullYear() - firstYear + 1)
               .fill(0)
               .map((_, index) => (

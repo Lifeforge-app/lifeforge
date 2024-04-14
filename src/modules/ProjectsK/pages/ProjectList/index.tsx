@@ -2,18 +2,18 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect, useState } from 'react'
-import ModuleHeader from '../../../../components/general/ModuleHeader'
-import ModuleWrapper from '../../../../components/general/ModuleWrapper'
-import useFetch from '../../../../hooks/useFetch'
-import APIComponentWithFallback from '../../../../components/general/APIComponentWithFallback'
+import ModuleHeader from '@components/ModuleHeader'
+import ModuleWrapper from '@components/ModuleWrapper'
+import useFetch from '@hooks/useFetch'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import { useSearchParams } from 'react-router-dom'
 import { type IProjectsKProgress } from '../ProjectEntry/sections/ProjectProgress'
 import CreateProjectModal from './components/CreateProjectModal'
-import EmptyStateScreen from '../../../../components/general/EmptyStateScreen'
-import Sidebar from './components/Sidebar'
+import EmptyStateScreen from '@components/EmptyStateScreen'
+import Sidebar from '@sidebar'
 import ProjectList from './components/ProjectList'
 import Header from './components/Header'
-import SearchInput from '../../../../components/general/SearchInput'
+import SearchInput from '@components/SearchInput'
 
 export interface IProjectsKEntry {
   collectionId: string
