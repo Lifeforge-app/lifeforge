@@ -10,6 +10,7 @@ import useResizeObserver from 'use-resize-observer'
 import useOnScreen from '@hooks/useOnScreen'
 import { PhotosContext } from '../../../../../providers/PhotosProvider'
 import {
+  type IPhotosEntryDimensions,
   type IPhotosEntry,
   type IPhotosEntryDimensionsItem
 } from '../../../../../types/Photos'
@@ -32,6 +33,8 @@ function DateGroup({
 }): React.ReactElement {
   const {
     photos: allPhotos,
+    setPhotoDimensions,
+    refreshPhotos,
     updateEachDayDimensions,
     ready
   } = useContext(PhotosContext)
@@ -140,6 +143,12 @@ function DateGroup({
               <ImageObject
                 beingDisplayedInAlbum={false}
                 photo={photo}
+                refreshPhotos={refreshPhotos}
+                setPhotos={
+                  setPhotoDimensions as React.Dispatch<
+                    React.SetStateAction<IPhotosEntryDimensions>
+                  >
+                }
                 details={
                   photos !== undefined
                     ? photos.find(image => image.id === photo.key) ?? {

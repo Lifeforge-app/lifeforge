@@ -24,6 +24,9 @@ const PHOTOS_DATA: {
   isDeletePhotosConfirmationModalOpen: boolean
   isRemovePhotosFromAlbumConfirmationModalOpen: boolean
   setReady: React.Dispatch<React.SetStateAction<boolean>>
+  setPhotoDimensions: React.Dispatch<
+    React.SetStateAction<IPhotosEntryDimensions | 'loading' | 'error'>
+  >
   setHidePhotosInAlbum: React.Dispatch<React.SetStateAction<boolean>>
   setSelectedPhotos: React.Dispatch<React.SetStateAction<string[]>>
   setModifyAlbumModalOpenType: React.Dispatch<
@@ -71,6 +74,7 @@ const PHOTOS_DATA: {
   isDeletePhotosConfirmationModalOpen: false,
   isRemovePhotosFromAlbumConfirmationModalOpen: false,
   setReady: () => {},
+  setPhotoDimensions: () => {},
   setHidePhotosInAlbum: () => {},
   setSelectedPhotos: () => {},
   setModifyAlbumModalOpenType: () => {},
@@ -99,8 +103,6 @@ export const PhotosContext = createContext(PHOTOS_DATA)
 function Photos(): React.ReactElement {
   const [ready, setReady] = useState(false)
   const [hidePhotosInAlbum, setHidePhotosInAlbum] = useState(false)
-  const [albumList, refreshAlbumList] =
-    useFetch<IPhotosAlbum[]>('photos/album/list')
 
   const [selectedPhotos, setSelectedPhotos] = useState<string[]>([])
   const [modifyAlbumModalOpenType, setModifyAlbumModalOpenType] = useState<
@@ -123,11 +125,16 @@ function Photos(): React.ReactElement {
   const galleryWrapperRef = useRef<HTMLDivElement>(null)
   const [isBounded, setIsBounded] = useState(false)
 
-  const [photoDimensions, refreshPhotoDimensions] =
+  const [photoDimensions, refreshPhotoDimensions, setPhotoDimensions] =
     useFetch<IPhotosEntryDimensions>(
       `photos/entry/dimensions${hidePhotosInAlbum ? '?hideInAlbum=true' : ''}`,
       isBounded
     )
+
+  const [albumList, refreshAlbumList] = useFetch<IPhotosAlbum[]>(
+    'photos/album/list',
+    isBounded
+  )
 
   const [eachDayDimensions, setEachDayDimensions] = useState<
     Record<
@@ -199,6 +206,7 @@ function Photos(): React.ReactElement {
         isDeletePhotosConfirmationModalOpen,
         isRemovePhotosFromAlbumConfirmationModalOpen,
         setReady,
+        setPhotoDimensions,
         setSelectedPhotos,
         setHidePhotosInAlbum,
         setModifyAlbumModalOpenType,

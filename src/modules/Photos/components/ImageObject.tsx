@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Icon } from '@iconify/react'
+import { Icon } from '@iconify/react/dist/iconify.js'
 import { cookieParse } from 'pocketbase'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Zoom from 'react-medium-image-zoom'
 import { useParams } from 'react-router'
@@ -9,7 +10,8 @@ import { toast } from 'react-toastify'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
-import { type IPhotosEntry } from '@typedec/Photos'
+import { type IPhotosEntryDimensions, type IPhotosEntry } from '@typedec/Photos'
+import DeletePhotosConfirmationModal from './modals/DeletePhotosConfirmationModal'
 import { PhotosContext } from '../../../providers/PhotosProvider'
 
 function forceDown(url: string, filename: string): void {
@@ -30,6 +32,8 @@ function CustomZoomContent({
   data,
   beingDisplayedInAlbum,
   refreshAlbumData,
+  refreshPhotos,
+  setPhotos,
   modalState
 }: {
   buttonUnzoom: React.ReactElement
@@ -38,6 +42,10 @@ function CustomZoomContent({
   data: IPhotosEntry
   beingDisplayedInAlbum: boolean
   refreshAlbumData?: () => void
+  setPhotos:
+    | React.Dispatch<React.SetStateAction<IPhotosEntryDimensions>>
+    | React.Dispatch<React.SetStateAction<IPhotoAlbumEntryItem[]>>
+  refreshPhotos: () => void
 }): React.ReactElement {
   const { refreshAlbumList } = useContext(PhotosContext)
   const { id: albumId } = useParams<{ id: string }>()
@@ -45,6 +53,8 @@ function CustomZoomContent({
     `photos/entry/name/${data.id}?isInAlbum=${beingDisplayedInAlbum}`,
     modalState === 'LOADED'
   )
+  const [deleteConfirmationModalOpen, setDeletePhotosConfirmationModalOpen] =
+    useState(false)
 
   async function requestDownload(isRaw: boolean): Promise<void> {
     try {
@@ -102,6 +112,7 @@ function CustomZoomContent({
           if (refreshAlbumData !== undefined) {
             refreshAlbumData()
           }
+          refreshPhotos()
         } catch (error) {
           throw new Error(error as string)
         }
@@ -112,64 +123,81 @@ function CustomZoomContent({
   }
 
   return (
-    <div className="flex h-[100dvh] w-full items-center justify-center">
-      {img}
-      <header className="absolute left-0 top-0 flex w-full items-center justify-between gap-2 p-8">
-        {(() => {
-          switch (name) {
-            case 'loading':
-              return (
-                <div className="animate-pulse text-lg text-bg-100">
-                  Loading...
-                </div>
-              )
-            case 'error':
-              return (
-                <div className="flex items-center gap-2 text-lg text-red-500">
-                  <Icon icon="tabler:alert-triangle" className="h-5 w-5" />
-                  Failed to load image name
-                </div>
-              )
-            default:
-              return <div className="text-lg text-bg-100">{name}</div>
-          }
-        })()}
-        <div className="flex items-center gap-4">
-          <HamburgerMenu
-            lighter
-            position="relative"
-            customWidth="w-56"
-            customIcon="tabler:download"
-          >
-            {data.has_raw && (
+    <>
+      <div className="flex h-[100dvh] w-full items-center justify-center">
+        {img}
+        <header className="absolute left-0 top-0 flex w-full items-center justify-between gap-2 p-8">
+          {(() => {
+            switch (name) {
+              case 'loading':
+                return (
+                  <div className="animate-pulse text-lg text-bg-100">
+                    Loading...
+                  </div>
+                )
+              case 'error':
+                return (
+                  <div className="flex items-center gap-2 text-lg text-red-500">
+                    <Icon icon="tabler:alert-triangle" className="h-5 w-5" />
+                    Failed to load image name
+                  </div>
+                )
+              default:
+                return <div className="text-lg text-bg-100">{name}</div>
+            }
+          })()}
+          <div className="flex items-center gap-4">
+            <HamburgerMenu
+              lighter
+              position="relative"
+              customWidth="w-56"
+              customIcon="tabler:download"
+            >
+              {data.has_raw && (
+                <MenuItem
+                  icon="tabler:download"
+                  onClick={() => {
+                    requestDownload(true).catch(console.error)
+                  }}
+                  text="Download RAW"
+                />
+              )}
               <MenuItem
                 icon="tabler:download"
                 onClick={() => {
-                  requestDownload(true).catch(console.error)
+                  requestDownload(false).catch(console.error)
                 }}
-                text="Download RAW"
+                text="Download JPEG"
               />
-            )}
-            <MenuItem
-              icon="tabler:download"
+            </HamburgerMenu>
+            <button
               onClick={() => {
-                requestDownload(false).catch(console.error)
+                setDeletePhotosConfirmationModalOpen(true)
               }}
-              text="Download JPEG"
-            />
-          </HamburgerMenu>
-          <HamburgerMenu lighter position="relative" customWidth="w-56">
-            {beingDisplayedInAlbum && (
-              <MenuItem
-                icon="tabler:album"
-                onClick={setAsCover}
-                text="Set as album cover"
-              />
-            )}
-          </HamburgerMenu>
-        </div>
-      </header>
-    </div>
+              className="rounded-md p-2 text-bg-100 hover:bg-bg-700/50"
+            >
+              <Icon icon="tabler:trash" className="h-5 w-5" />
+            </button>
+            <HamburgerMenu lighter position="relative" customWidth="w-56">
+              {beingDisplayedInAlbum && (
+                <MenuItem
+                  icon="tabler:album"
+                  onClick={setAsCover}
+                  text="Set as album cover"
+                />
+              )}
+            </HamburgerMenu>
+          </div>
+        </header>
+      </div>
+      <DeletePhotosConfirmationModal
+        setPhotos={setPhotos}
+        isInAlbumGallery={beingDisplayedInAlbum}
+        customIsOpen={deleteConfirmationModalOpen}
+        customSetIsOpen={setDeletePhotosConfirmationModalOpen}
+        customPhotoToBeDeleted={data}
+      />
+    </>
   )
 }
 
@@ -181,7 +209,9 @@ function ImageObject({
   toggleSelected,
   selectedPhotosLength,
   beingDisplayedInAlbum,
-  refreshAlbumData
+  refreshAlbumData,
+  refreshPhotos,
+  setPhotos
 }: {
   photo: any
   details: IPhotosEntry
@@ -193,6 +223,10 @@ function ImageObject({
   selectedPhotosLength: number
   beingDisplayedInAlbum: boolean
   refreshAlbumData?: () => void
+  refreshPhotos: () => void
+  setPhotos:
+    | React.Dispatch<React.SetStateAction<IPhotosEntryDimensions>>
+    | React.Dispatch<React.SetStateAction<IPhotoAlbumEntryItem[]>>
 }): React.ReactElement {
   const { ready } = useContext(PhotosContext)
 
@@ -225,8 +259,10 @@ function ImageObject({
                 <CustomZoomContent
                   {...props}
                   data={details}
+                  setPhotos={setPhotos}
                   beingDisplayedInAlbum={beingDisplayedInAlbum}
                   refreshAlbumData={refreshAlbumData}
+                  refreshPhotos={refreshPhotos}
                 />
               )}
               zoomImg={{

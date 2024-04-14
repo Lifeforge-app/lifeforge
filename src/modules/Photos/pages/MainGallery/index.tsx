@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import ModuleHeader from '@components/ModuleHeader'
 import { GlobalStateContext } from '@providers/GlobalStateProvider'
 import { PhotosContext } from '@providers/PhotosProvider'
+import { type IPhotosEntryDimensions } from '@typedec/Photos'
 import GalleryContainer from './Gallery/GalleryContainer'
 import GalleryHeader from './Gallery/GalleryHeader'
 import AddPhotosToAlbumModal from '../../components/modals/AddPhotosToAlbumModal'
@@ -12,7 +13,7 @@ import PhotosSidebar from '../../components/PhotosSidebar'
 
 function PhotosMainGallery(): React.ReactElement {
   const { sidebarExpanded } = useContext(GlobalStateContext)
-  const { refreshPhotos, hidePhotosInAlbum, setReady } =
+  const { setPhotoDimensions, hidePhotosInAlbum, setReady } =
     useContext(PhotosContext)
   const [showGallery, setShowGallery] = useState(true)
 
@@ -46,7 +47,13 @@ function PhotosMainGallery(): React.ReactElement {
       </div>
       <ModifyAlbumModal />
       <AddPhotosToAlbumModal />
-      <DeletePhotosConfirmationModal refreshPhotos={refreshPhotos} />
+      <DeletePhotosConfirmationModal
+        setPhotos={
+          setPhotoDimensions as React.Dispatch<
+            React.SetStateAction<IPhotosEntryDimensions>
+          >
+        }
+      />
     </section>
   ) : (
     <></>

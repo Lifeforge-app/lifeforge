@@ -34,7 +34,7 @@ function PhotosAlbumGallery(): React.ReactElement {
   const [albumData, refreshAlbumData] = useFetch<IPhotosAlbum>(
     `photos/album/get/${id}`
   )
-  const [photos, refreshPhotos] = useFetch<IPhotoAlbumEntryItem[]>(
+  const [photos, refreshPhotos, setPhotos] = useFetch<IPhotoAlbumEntryItem[]>(
     `photos/entry/list/${id}`
   )
 
@@ -197,6 +197,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                       photo={photo}
                       details={photos.find(image => image.id === photo.key)!}
                       margin={margin ?? ''}
+                      refreshPhotos={refreshPhotos}
                       selected={
                         selectedPhotos.find(image => image === photo.key) !==
                         undefined
@@ -244,6 +245,11 @@ function PhotosAlbumGallery(): React.ReactElement {
                         }
                       }}
                       selectedPhotosLength={selectedPhotos.length}
+                      setPhotos={
+                        setPhotos as React.Dispatch<
+                          React.SetStateAction<IPhotoAlbumEntryItem[]>
+                        >
+                      }
                     />
                   )}
                 />
@@ -254,7 +260,11 @@ function PhotosAlbumGallery(): React.ReactElement {
         <BottomBar photos={photos as IPhotoAlbumEntryItem[]} inAlbumGallery />
       </div>
       <DeletePhotosConfirmationModal
-        refreshPhotos={refreshPhotos}
+        setPhotos={
+          setPhotos as React.Dispatch<
+            React.SetStateAction<IPhotoAlbumEntryItem[]>
+          >
+        }
         isInAlbumGallery={true}
       />
       <RemovePhotosFromAlbumConfirmationModal
