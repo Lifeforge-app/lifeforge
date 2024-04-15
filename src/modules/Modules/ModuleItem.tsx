@@ -2,8 +2,10 @@
 import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import Input from '@components/Input'
 import { type ModuleEntry } from '@typedec/Module'
+import { toCamelCase } from '../../utils/strings'
 
 function ModuleItem({
   module,
@@ -15,6 +17,7 @@ function ModuleItem({
   toggleModule: (moduleName: string) => void
 }): React.ReactElement {
   const [expandConfig, setExpandConfig] = useState(false)
+  const { t } = useTranslation()
 
   function toggleExpandConfig(): void {
     setExpandConfig(!expandConfig)
@@ -30,7 +33,9 @@ function ModuleItem({
               className="text-2xl text-custom-500 dark:text-bg-100"
             />
           </div>
-          <h3 className="text-xl font-semibold">{module.name}</h3>
+          <h3 className="text-xl font-semibold">
+            {t(`modules.${toCamelCase(module.name)}`)}
+          </h3>
         </div>
         <div className="flex items-center gap-4">
           <Switch

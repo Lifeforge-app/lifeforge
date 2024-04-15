@@ -197,6 +197,12 @@ export const ROUTES: IRoutes[] = [
           </Route>
         ],
         togglable: true
+      },
+      {
+        name: 'Repositories',
+        icon: 'tabler:git-branch',
+        routes: [],
+        togglable: true
       }
     ]
   },
