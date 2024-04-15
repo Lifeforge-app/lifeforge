@@ -2,13 +2,16 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function Calendar(): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <section className="col-span-2 row-span-1 flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:calendar" className="text-2xl" />
-        <span className="ml-2">Calendar</span>
+        <span className="ml-2">{t('dashboard.modules.calendar.title')}</span>
       </h1>
       <div className="h-full w-full">
         <div className="mb-6 flex items-center justify-between">

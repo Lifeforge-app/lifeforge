@@ -1,12 +1,15 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function TodaysEvent(): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <section className="col-span-1 flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:calendar" className="text-2xl" />
-        <span className="ml-2">Today&apos;s Event</span>
+        <span className="ml-2">{t('dashboard.modules.todayEvent.title')}</span>
       </h1>
       <ul className="flex h-full flex-col gap-4">
         <li className="flex flex-1 items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] dark:bg-bg-800">

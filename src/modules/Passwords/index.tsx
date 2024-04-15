@@ -85,7 +85,7 @@ function Passwords(): React.ReactElement {
           </button>
         )}
       </div>
-      {(userData?.masterPasswordHash ?? '') === '' ? (
+      {userData?.hasMasterPasswordHash === true ? (
         <CreatePassword />
       ) : masterPassword === '' ? (
         <div className="flex h-full w-full flex-1 flex-col items-center justify-center gap-4">
