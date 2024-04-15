@@ -133,5 +133,27 @@
             "title": "Language",
             "desc": "Select a language that you prefer."
         }
+    },
+    "dashboard": {
+        "modules": {
+            "calendar": {
+                "title": "Calendar"
+            },
+            "storageStatus": {
+                "title": "Storage Status"
+            },
+            "codeTime": {
+                "title": "Code Time"
+            },
+            "todayEvent": {
+                "title": "Today's Event"
+            },
+            "walletBalance": {
+                "title": "Wallet Balance"
+            },
+            "todoList": {
+                "title": "Todo List"
+            }
+        }
     }
 }

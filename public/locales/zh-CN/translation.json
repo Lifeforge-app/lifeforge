@@ -27,7 +27,7 @@
         "todoList": "待办事项列表",
         "calendar": "日历",
         "spotify": "Spotify",
-        "codeTime": "编码时间记录",
+        "codeTime": "编程时间记录",
         "photos": "照片库",
         "pomodoroTimer": "番茄钟",
         "flashcards": "记忆闪卡",
@@ -132,6 +132,28 @@
         "languageSelector": {
             "title": "语言",
             "desc": "选择最适合你的语言。"
+        }
+    },
+    "dashboard": {
+        "modules": {
+            "calendar": {
+                "title": "日历"
+            },
+            "storageStatus": {
+                "title": "存储空间状态"
+            },
+            "codeTime": {
+                "title": "编程时间记录"
+            },
+            "todayEvent": {
+                "title": "今日事件"
+            },
+            "walletBalance": {
+                "title": "钱包余额"
+            },
+            "todoList": {
+                "title": "待办事项列表"
+            }
         }
     }
 }

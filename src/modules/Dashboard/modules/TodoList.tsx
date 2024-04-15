@@ -1,12 +1,15 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function TodoList(): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <section className="col-span-2 row-span-2 flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:clipboard-list" className="text-2xl" />
-        <span className="ml-2">Todo List</span>
+        <span className="ml-2">{t('dashboard.modules.todoList.title')}</span>
       </h1>
       <ul className="flex flex-col gap-4">
         <li className="flex items-center justify-between gap-4 rounded-lg border-l-4 border-indigo-500 bg-bg-100 p-4 px-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] dark:bg-bg-800">
