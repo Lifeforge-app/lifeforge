@@ -35,6 +35,7 @@ const MODULES: ModuleEntry[] = [
   { name: 'Spotify', icon: 'tabler:brand-spotify' },
   { name: 'Code Time', icon: 'tabler:code' },
   { name: 'Photos', icon: 'tabler:camera' },
+  { name: 'Repositories', icon: 'tabler:git-branch' },
   { name: 'Pomodoro Timer', icon: 'tabler:clock-bolt' },
   { name: 'Flashcards', icon: 'tabler:cards' },
   {
