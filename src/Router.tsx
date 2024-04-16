@@ -5,6 +5,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Loading from '@components/Loading'
 import { AuthContext } from '@providers/AuthProvider'
 import PhotosFavouritesGallery from './modules/Photos/pages/FavouritesGallery'
+import Repositories from './modules/Repositories'
 import { titleToPath } from './utils/strings'
 
 const PhotosProvider = lazy(
@@ -201,7 +202,13 @@ export const ROUTES: IRoutes[] = [
       {
         name: 'Repositories',
         icon: 'tabler:git-branch',
-        routes: [],
+        routes: [
+          <Route
+            key="repositories"
+            path="repositories"
+            element={<Repositories />}
+          />
+        ],
         togglable: true
       }
     ]
