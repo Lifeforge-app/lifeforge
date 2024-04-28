@@ -2,17 +2,18 @@
 /* eslint-disable @typescript-eslint/indent */
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useContext, useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
 import EmptyStateScreen from '@components/EmptyStateScreen'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
-import SearchInput from '@components/SearchInput'
 import { type IPhotosAlbum } from '@typedec/Photos'
 import AlbumItem from './components/AlbumItem'
 import AlbumListHeader from './components/AlbumListHeader'
 import { PhotosContext } from '../../../../providers/PhotosProvider'
 import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
+import UpdateAlbumTagsModal from '../../components/modals/UpdateAlbumTagsModal'
 import PhotosSidebar from '../../components/PhotosSidebar'
 
 function PhotosAlbumList(): React.ReactElement {
@@ -20,27 +21,44 @@ function PhotosAlbumList(): React.ReactElement {
     useContext(PhotosContext)
   const [selectedAlbum, setSelectedAlbum] = useState<IPhotosAlbum | null>(null)
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
+  const [updateAlbumTagsModalOpen, setUpdateAlbumTagsModalOpen] =
+    useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 300)
   const [filteredAlbumList, setFilteredAlbumList] = useState<
     IPhotosAlbum[] | 'loading' | 'error'
   >(albumList)
+  const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
+    const tags =
+      searchParams
+        .get('tags')
+        ?.split(',')
+        .filter(e => e) ?? []
+    console.log(tags)
+
     if (Array.isArray(albumList)) {
       if (debouncedSearchQuery.length === 0) {
-        setFilteredAlbumList(albumList)
+        setFilteredAlbumList(
+          albumList.filter(
+            album =>
+              tags.length === 0 || tags.every(tag => album.tags.includes(tag))
+          )
+        )
       } else {
         setFilteredAlbumList(
-          albumList.filter(album =>
-            album.name
-              .toLowerCase()
-              .includes(debouncedSearchQuery.toLowerCase())
+          albumList.filter(
+            album =>
+              album.name
+                .toLowerCase()
+                .includes(debouncedSearchQuery.toLowerCase()) &&
+              (tags.length === 0 || tags.every(tag => album.tags.includes(tag)))
           )
         )
       }
     }
-  }, [debouncedSearchQuery, albumList])
+  }, [debouncedSearchQuery, albumList, searchParams])
 
   return (
     <>
@@ -52,11 +70,9 @@ function PhotosAlbumList(): React.ReactElement {
         <div className="relative mt-6 flex h-full min-h-0 w-full gap-8">
           <PhotosSidebar />
           <div className="flex h-full flex-1 flex-col">
-            <AlbumListHeader />
-            <SearchInput
+            <AlbumListHeader
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
-              stuffToSearch="albums"
             />
             <APIComponentWithFallback data={albumList}>
               {typeof filteredAlbumList !== 'string' &&
@@ -68,6 +84,9 @@ function PhotosAlbumList(): React.ReactElement {
                           key={album.id}
                           album={album}
                           setDeleteModalOpen={setDeleteModalOpen}
+                          setUpdateAlbumTagsModalOpen={
+                            setUpdateAlbumTagsModalOpen
+                          }
                           setSelectedAlbum={setSelectedAlbum}
                         />
                       ))}
@@ -105,6 +124,11 @@ function PhotosAlbumList(): React.ReactElement {
         }}
         nameKey="name"
         customText="Are you sure you want to delete this album? The photos inside this album will not be deleted."
+      />
+      <UpdateAlbumTagsModal
+        isOpen={updateAlbumTagsModalOpen}
+        setOpen={setUpdateAlbumTagsModalOpen}
+        selectedAlbum={selectedAlbum}
       />
     </>
   )

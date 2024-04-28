@@ -10,13 +10,16 @@ import { PhotosContext } from '../../../../../providers/PhotosProvider'
 function AlbumItem({
   album,
   setSelectedAlbum,
-  setDeleteModalOpen
+  setDeleteModalOpen,
+  setUpdateAlbumTagsModalOpen
 }: {
   album: IPhotosAlbum
   setSelectedAlbum: (album: IPhotosAlbum) => void
   setDeleteModalOpen: (open: boolean) => void
+  setUpdateAlbumTagsModalOpen: (open: boolean) => void
 }): React.ReactElement {
-  const { setModifyAlbumModalOpenType } = useContext(PhotosContext)
+  const { setModifyAlbumModalOpenType, albumTagList } =
+    useContext(PhotosContext)
 
   return (
     <li key={album.id} className="relative flex h-min flex-col gap-1 p-4">
@@ -41,6 +44,18 @@ function AlbumItem({
         )}
       </div>
       <div className="pointer-events-none relative w-full min-w-0 pr-8">
+        {album.tags.length !== 0 && typeof albumTagList !== 'string' && (
+          <div className="flex flex-wrap gap-2">
+            {album.tags.map(tag => (
+              <button
+                key={tag}
+                className="mb-1 rounded-full bg-custom-500/20 px-3 py-1 text-xs uppercase tracking-wider text-custom-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-bg-300"
+              >
+                {albumTagList.find(t => t.id === tag)?.name}
+              </button>
+            ))}
+          </div>
+        )}
         <h2 className="truncate text-lg font-semibold text-bg-800 dark:text-bg-100">
           {album.name}
         </h2>
@@ -58,6 +73,14 @@ function AlbumItem({
             setModifyAlbumModalOpenType('rename')
           }}
           text="Rename"
+        />
+        <MenuItem
+          icon="tabler:tags"
+          onClick={() => {
+            setSelectedAlbum(album)
+            setUpdateAlbumTagsModalOpen(true)
+          }}
+          text="Edit Tags"
         />
         <MenuItem
           icon="tabler:trash"

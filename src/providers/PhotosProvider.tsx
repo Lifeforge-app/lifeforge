@@ -4,12 +4,17 @@ import moment from 'moment'
 import React, { createContext, useEffect, useRef, useState } from 'react'
 import { Outlet } from 'react-router'
 import useFetch from '@hooks/useFetch'
-import { type IPhotosAlbum, type IPhotosEntryDimensions } from '@typedec/Photos'
+import {
+  type IPhotoAlbumTag,
+  type IPhotosAlbum,
+  type IPhotosEntryDimensions
+} from '@typedec/Photos'
 
 const PHOTOS_DATA: {
   ready: boolean
   photos: IPhotosEntryDimensions | 'loading' | 'error'
   albumList: IPhotosAlbum[] | 'loading' | 'error'
+  albumTagList: IPhotoAlbumTag[] | 'loading' | 'error'
   eachDayDimensions: Record<
     string,
     {
@@ -27,6 +32,9 @@ const PHOTOS_DATA: {
   setPhotoDimensions: React.Dispatch<
     React.SetStateAction<IPhotosEntryDimensions | 'loading' | 'error'>
   >
+  setAlbumList: React.Dispatch<
+    React.SetStateAction<IPhotosAlbum[] | 'loading' | 'error'>
+  >
   setHidePhotosInAlbum: React.Dispatch<React.SetStateAction<boolean>>
   setSelectedPhotos: React.Dispatch<React.SetStateAction<string[]>>
   setModifyAlbumModalOpenType: React.Dispatch<
@@ -41,6 +49,7 @@ const PHOTOS_DATA: {
   >
   updateEachDayDimensions: () => void
   refreshAlbumList: () => void
+  refreshAlbumTagList: () => void
   refreshPhotos: () => void
   sideSliderRef:
     | React.RefObject<HTMLDivElement>
@@ -66,6 +75,7 @@ const PHOTOS_DATA: {
   ready: false,
   photos: 'loading',
   albumList: 'loading',
+  albumTagList: 'loading',
   eachDayDimensions: {},
   selectedPhotos: [],
   hidePhotosInAlbum: false,
@@ -75,6 +85,7 @@ const PHOTOS_DATA: {
   isRemovePhotosFromAlbumConfirmationModalOpen: false,
   setReady: () => {},
   setPhotoDimensions: () => {},
+  setAlbumList: () => {},
   setHidePhotosInAlbum: () => {},
   setSelectedPhotos: () => {},
   setModifyAlbumModalOpenType: () => {},
@@ -84,6 +95,7 @@ const PHOTOS_DATA: {
   updateEachDayDimensions: () => {},
   refreshPhotos: () => {},
   refreshAlbumList: () => {},
+  refreshAlbumTagList: () => {},
   sideSliderRef: {
     current: null
   },
@@ -131,9 +143,13 @@ function Photos(): React.ReactElement {
       isBounded
     )
 
-  const [albumList, refreshAlbumList] = useFetch<IPhotosAlbum[]>(
+  const [albumList, refreshAlbumList, setAlbumList] = useFetch<IPhotosAlbum[]>(
     'photos/album/list',
     isBounded
+  )
+
+  const [albumTagList, refreshAlbumTagList] = useFetch<IPhotoAlbumTag[]>(
+    'photos/album/tag/list'
   )
 
   const [eachDayDimensions, setEachDayDimensions] = useState<
@@ -198,6 +214,7 @@ function Photos(): React.ReactElement {
         ready,
         photos: photoDimensions,
         albumList,
+        albumTagList,
         eachDayDimensions,
         selectedPhotos,
         hidePhotosInAlbum,
@@ -207,6 +224,7 @@ function Photos(): React.ReactElement {
         isRemovePhotosFromAlbumConfirmationModalOpen,
         setReady,
         setPhotoDimensions,
+        setAlbumList,
         setSelectedPhotos,
         setHidePhotosInAlbum,
         setModifyAlbumModalOpenType,
@@ -215,6 +233,7 @@ function Photos(): React.ReactElement {
         setRemovePhotosFromAlbumConfirmationModalOpen,
         updateEachDayDimensions,
         refreshAlbumList,
+        refreshAlbumTagList,
         refreshPhotos: _refreshPhotos,
         sideSliderRef,
         timelineDateDisplayRef,

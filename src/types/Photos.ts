@@ -32,6 +32,7 @@ interface IPhotosAlbum {
   id: string
   name: string
   cover: string
+  tags: string[]
   updated: string
 }
 
@@ -44,10 +45,21 @@ export interface IPhotoAlbumEntryItem extends IPhotosEntryDimensionsItem {
   is_favourite: boolean
 }
 
+export interface IPhotoAlbumTag {
+  collectionId: string
+  collectionName: string
+  created: Date
+  id: string
+  name: string
+  updated: Date
+  count: number
+}
+
 export type {
   IPhotosEntryDimensionsItem,
   IPhotosEntryDimensions,
   IPhotosEntry,
   IPhotosAlbum,
+  IPhotoAlbumTag,
   IPhotoAlbumEntryItem
 }

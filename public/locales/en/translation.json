@@ -60,7 +60,8 @@
             "projectType": "Project Type",
             "progress": "Progress",
             "categories": "Categories",
-            "languages": "Languages"
+            "languages": "Languages",
+            "albums": "Albums"
         },
         "descriptions": {
             "dashboard": "Your mission control center for awesome. 🚀",
