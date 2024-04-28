@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useContext, useEffect, useRef, useState } from 'react'
@@ -18,7 +19,7 @@ function ModifyAlbumModal({
   const {
     modifyAlbumModalOpenType: openType,
     setModifyAlbumModalOpenType: setOpenType,
-    refreshAlbumList: updateAlbumList
+    setAlbumList
   } = useContext(PhotosContext)
   const [albumName, setAlbumName] = useState('')
   const [loading, setLoading] = useState(false)
@@ -65,7 +66,24 @@ function ModifyAlbumModal({
           }[openType as 'create' | 'rename']
         )
         setOpenType(false)
-        updateAlbumList()
+        setAlbumList(prev => {
+          if (typeof prev === 'string') {
+            return prev
+          }
+
+          return openType === 'create'
+            ? [...prev, data]
+            : prev.map(album => {
+                if (album.id === targetAlbum?.id) {
+                  return {
+                    ...album,
+                    name: albumName
+                  }
+                }
+
+                return album
+              })
+        })
         if (refreshAlbumData !== undefined) {
           refreshAlbumData()
         }
