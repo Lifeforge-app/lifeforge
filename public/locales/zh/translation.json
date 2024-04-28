@@ -60,7 +60,8 @@
             "projectType": "项目类型",
             "progress": "进度",
             "categories": "类别",
-            "languages": "语言"
+            "languages": "语言",
+            "albums": "相册"
         },
         "descriptions": {
             "dashboard": "您的任务控制中心，妙不可言！",

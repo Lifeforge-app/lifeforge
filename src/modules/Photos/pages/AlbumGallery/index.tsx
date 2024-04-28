@@ -174,7 +174,7 @@ function PhotosAlbumGallery(): React.ReactElement {
               </div>
             </div>
           </div>
-          <div className="relative my-6 w-full flex-1">
+          <div className="relative my-6 w-full flex-1 overflow-y-auto">
             <APIComponentWithFallback data={photos}>
               {typeof photos !== 'string' && (
                 <Gallery
