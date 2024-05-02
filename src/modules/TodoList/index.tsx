@@ -1,16 +1,18 @@
+/* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
+import EmptyStateScreen from '@components/EmptyStateScreen'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 import SearchInput from '@components/SearchInput'
 import useFetch from '@hooks/useFetch'
 import ModifyTaskWindow from './components/ModifyTaskWindow'
 import Sidebar from './components/Sidebar'
-import TaskItem from './components/TaskItem'
+import TaskList from './components/TaskList'
 import {
   type ITodoListList,
   type ITodoListTag,
@@ -84,51 +86,25 @@ function TodoList(): React.ReactElement {
               stuffToSearch="tasks"
             />
             <APIComponentWithFallback data={entries}>
-              {typeof entries !== 'string' && (
-                <div className="mt-6 flex flex-1 flex-col overflow-y-scroll px-4">
-                  <h2 className="text-2xl font-semibold text-bg-800 dark:text-bg-100">
-                    Pending Tasks{' '}
-                    <span className="text-base text-bg-500">
-                      ({entries.pending.length})
-                    </span>
-                  </h2>
-                  <ul className="mt-4 flex flex-1 flex-col gap-4 pb-24 sm:pb-8">
-                    {entries.pending.map(entry => (
-                      <TaskItem
-                        entry={entry}
-                        entries={entries}
-                        setEntries={setEntries}
-                        refreshEntries={refreshEntries}
-                        lists={lists}
-                        tagsList={tagsList}
-                        setIsModifyTaskWindowOpen={setModifyTaskWindowOpenType}
-                        setSelectedTask={setSelectedTask}
-                        key={entry.id}
-                      />
-                    ))}
-                  </ul>
-                  <h2 className="text-2xl font-semibold text-bg-800 dark:text-bg-100">
-                    Completed Tasks{' '}
-                    <span className="text-base text-bg-500">
-                      ({entries.done.length})
-                    </span>
-                  </h2>
-                  <ul className="mt-4 flex flex-1 flex-col gap-4 pb-24 sm:pb-8">
-                    {entries.done.map(entry => (
-                      <TaskItem
-                        entry={entry}
-                        entries={entries}
-                        setEntries={setEntries}
-                        refreshEntries={refreshEntries}
-                        lists={lists}
-                        tagsList={tagsList}
-                        setIsModifyTaskWindowOpen={setModifyTaskWindowOpenType}
-                        setSelectedTask={setSelectedTask}
-                        key={entry.id}
-                      />
-                    ))}
-                  </ul>
-                </div>
+              {typeof entries !== 'string' &&
+              (entries.pending.length > 0 || entries.done.length > 0) ? (
+                <TaskList
+                  entries={entries}
+                  lists={lists}
+                  tagsList={tagsList}
+                  setEntries={setEntries}
+                  refreshEntries={refreshEntries}
+                  setModifyTaskWindowOpenType={setModifyTaskWindowOpenType}
+                  setSelectedTask={setSelectedTask}
+                />
+              ) : (
+                <EmptyStateScreen
+                  title="No tasks found"
+                  description="You can create a new task by clicking the button below."
+                  icon="tabler:article-off"
+                  ctaContent="Create a new task"
+                  setModifyModalOpenType={setModifyTaskWindowOpenType}
+                />
               )}
             </APIComponentWithFallback>
           </div>

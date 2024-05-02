@@ -63,6 +63,7 @@
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",
     "@types/": "uidotdev/usehooks",
+    "@types/node": "^20.12.7",
     "@types/react": "^18.2.52",
     "@types/react-color": "^3.0.10",
     "@types/react-dom": "^18.2.18",

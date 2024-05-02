@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/indent */
 import moment from 'moment'
+import { cookieParse } from 'pocketbase'
 import React, { createContext, useEffect, useRef, useState } from 'react'
 import { Outlet } from 'react-router'
 import useFetch from '@hooks/useFetch'
@@ -9,6 +12,43 @@ import {
   type IPhotosAlbum,
   type IPhotosEntryDimensions
 } from '@typedec/Photos'
+
+class IntervalManager {
+  private static instance: IntervalManager
+  private readonly intervals: Set<NodeJS.Timeout>
+
+  private constructor() {
+    this.intervals = new Set<NodeJS.Timeout>()
+  }
+
+  public static getInstance(): IntervalManager {
+    if (!IntervalManager.instance) {
+      IntervalManager.instance = new IntervalManager()
+    }
+
+    return IntervalManager.instance
+  }
+
+  public setInterval(callback: () => void, delay: number): NodeJS.Timeout {
+    const id = setInterval(callback, delay)
+    this.intervals.add(id)
+    return id
+  }
+
+  public clearInterval(id: NodeJS.Timeout): void {
+    clearInterval(id)
+    this.intervals.delete(id)
+  }
+
+  public clearAllIntervals(): void {
+    for (const id of this.intervals) {
+      clearInterval(id)
+    }
+    this.intervals.clear()
+  }
+}
+
+const intervalManager = IntervalManager.getInstance()
 
 const PHOTOS_DATA: {
   ready: boolean
@@ -136,12 +176,11 @@ function Photos(): React.ReactElement {
   const mobileDateDisplayRef = useRef<HTMLDivElement>(null)
   const galleryWrapperRef = useRef<HTMLDivElement>(null)
   const [isBounded, setIsBounded] = useState(false)
+  const isPhotoLoading = useRef(false)
 
-  const [photoDimensions, refreshPhotoDimensions, setPhotoDimensions] =
-    useFetch<IPhotosEntryDimensions>(
-      `photos/entry/dimensions${hidePhotosInAlbum ? '?hideInAlbum=true' : ''}`,
-      isBounded
-    )
+  const [photoDimensions, setPhotoDimensions] = useState<
+    IPhotosEntryDimensions | 'loading' | 'error'
+  >('loading')
 
   const [albumList, refreshAlbumList, setAlbumList] = useFetch<IPhotosAlbum[]>(
     'photos/album/list',
@@ -207,6 +246,72 @@ function Photos(): React.ReactElement {
   useEffect(() => {
     setIsBounded(true)
   }, [])
+
+  async function fetchPhotoDimensionsData(): Promise<IPhotosEntryDimensions | null> {
+    const data = await fetch(
+      `${import.meta.env.VITE_API_HOST}/photos/entry/dimensions/async-res`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        }
+      }
+    )
+      .then(async response => {
+        if (response.status === 200) {
+          const data = await response.json()
+          if (data.state === 'success') {
+            return data.data
+          } else {
+            return null
+          }
+        }
+        return null
+      })
+      .catch(() => null)
+
+    return data
+  }
+
+  function refreshPhotoDimensions(): void {
+    setPhotoDimensions('loading')
+    fetch(
+      `${import.meta.env.VITE_API_HOST}/photos/entry/dimensions/async-get${
+        hidePhotosInAlbum ? '?hideInAlbum=true' : ''
+      }`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        }
+      }
+    )
+      .then(async response => {
+        if (response.status === 202) {
+          const data = await response.json()
+          if (data.state === 'accepted') {
+            intervalManager.setInterval(async () => {
+              const data = await fetchPhotoDimensionsData()
+              if (data !== null) {
+                setPhotoDimensions(data)
+                isPhotoLoading.current = false
+                intervalManager.clearAllIntervals()
+              }
+            }, 3000)
+          }
+        } else {
+          setPhotoDimensions('error')
+        }
+      })
+      .catch(() => {
+        setPhotoDimensions('error')
+      })
+  }
+
+  useEffect(() => {
+    if (!isPhotoLoading.current) {
+      isPhotoLoading.current = true
+      refreshPhotoDimensions()
+    }
+  }, [hidePhotosInAlbum, isBounded])
 
   return (
     <PhotosContext.Provider

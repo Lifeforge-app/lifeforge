@@ -129,7 +129,7 @@ function Passwords(): React.ReactElement {
       ) : (
         <APIComponentWithFallback data={passwordList}>
           {typeof passwordList !== 'string' && passwordList.length > 0 ? (
-            <div className="mt-8 flex w-full flex-col gap-4">
+            <div className="mb-12 mt-8 flex w-full flex-col gap-4">
               {passwordList.map(password => (
                 <PasswordEntryITem
                   key={password.id}
