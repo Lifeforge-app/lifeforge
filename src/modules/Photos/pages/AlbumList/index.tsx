@@ -28,7 +28,7 @@ function PhotosAlbumList(): React.ReactElement {
   const [filteredAlbumList, setFilteredAlbumList] = useState<
     IPhotosAlbum[] | 'loading' | 'error'
   >(albumList)
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
 
   useEffect(() => {
     const tags =
