@@ -7,6 +7,7 @@ import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
 import EmptyStateScreen from '@components/EmptyStateScreen'
 import SearchInput from '@components/SearchInput'
 import { TodoListContext } from '@providers/TodoListProvider'
+import { type ITodoListList, type ITodoListTag } from '@typedec/TodoList'
 import ModifyTaskWindow from './ModifyTaskWindow'
 import Sidebar from './Sidebar'
 import TaskList from './TaskList'
@@ -14,6 +15,8 @@ import TaskList from './TaskList'
 function TodoListContainer(): React.ReactElement {
   const {
     entries,
+    tags,
+    lists,
     refreshLists,
     refreshTagsList,
     refreshEntries,
@@ -34,15 +37,61 @@ function TodoListContainer(): React.ReactElement {
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className="flex h-full flex-1 flex-col lg:ml-8">
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-semibold text-bg-800 dark:text-bg-100 md:text-4xl">
-              {(() => {
-                const status = searchParams.get('status')
-                if (status === null || status === '') return 'All'
-                return status.charAt(0).toUpperCase() + status.slice(1)
-              })()}{' '}
-              Tasks{' '}
-              <span className="text-base text-bg-500">({entries.length})</span>
-            </h1>
+            <div>
+              <h1 className="text-3xl font-semibold text-bg-800 dark:text-bg-100 md:text-4xl">
+                {(() => {
+                  const status = searchParams.get('status')
+                  if (status === null || status === '') return 'All'
+                  return status.charAt(0).toUpperCase() + status.slice(1)
+                })()}{' '}
+                Tasks{' '}
+                <span className="text-base text-bg-500">
+                  ({entries.length})
+                </span>
+              </h1>
+              <div className="mt-2 flex items-center gap-2">
+                {searchParams.get('list') && (
+                  <span className="flex items-center justify-center gap-1 rounded-full bg-custom-500/20 px-2 py-1 text-sm text-custom-500">
+                    <Icon icon="tabler:list" className="h-4 w-4" />
+                    {
+                      (lists as ITodoListList[]).find(
+                        list => list.id === searchParams.get('list')
+                      )?.name
+                    }
+                    <button
+                      onClick={() => {
+                        setSearchParams(searchParams => {
+                          searchParams.delete('list')
+                          return searchParams
+                        })
+                      }}
+                    >
+                      <Icon icon="tabler:x" className="h-4 w-4" />
+                    </button>
+                  </span>
+                )}
+                {searchParams.get('tag') && (
+                  <span className="flex items-center justify-center gap-1 rounded-full bg-custom-500/20 px-2 py-1 text-sm text-custom-500">
+                    <Icon icon="tabler:hash" className="h-4 w-4" />
+                    {
+                      (tags as ITodoListTag[]).find(
+                        tag => tag.id === searchParams.get('tag')
+                      )?.name
+                    }
+                    <button
+                      onClick={() => {
+                        setSearchParams(searchParams => {
+                          searchParams.delete('tag')
+                          return searchParams
+                        })
+                      }}
+                    >
+                      <Icon icon="tabler:x" className="h-4 w-4" />
+                    </button>
+                  </span>
+                )}
+              </div>
+            </div>
             <div className="flex items-center gap-6">
               <button
                 onClick={() => {
