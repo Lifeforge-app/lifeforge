@@ -10,7 +10,10 @@ import { toast } from 'react-toastify'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
-import { type IPhotosEntryDimensions, type IPhotosEntry } from '@typedec/Photos'
+import {
+  type IPhotosEntryDimensionsAll,
+  type IPhotosEntry
+} from '@typedec/Photos'
 import DeletePhotosConfirmationModal from './modals/DeletePhotosConfirmationModal'
 import { PhotosContext } from '../../../providers/PhotosProvider'
 
@@ -43,7 +46,7 @@ function CustomZoomContent({
   beingDisplayedInAlbum: boolean
   refreshAlbumData?: () => void
   setPhotos:
-    | React.Dispatch<React.SetStateAction<IPhotosEntryDimensions>>
+    | React.Dispatch<React.SetStateAction<IPhotosEntryDimensionsAll>>
     | React.Dispatch<React.SetStateAction<IPhotoAlbumEntryItem[]>>
   refreshPhotos: () => void
 }): React.ReactElement {
@@ -225,7 +228,7 @@ function ImageObject({
   refreshAlbumData?: () => void
   refreshPhotos: () => void
   setPhotos:
-    | React.Dispatch<React.SetStateAction<IPhotosEntryDimensions>>
+    | React.Dispatch<React.SetStateAction<IPhotosEntryDimensionsAll>>
     | React.Dispatch<React.SetStateAction<IPhotoAlbumEntryItem[]>>
 }): React.ReactElement {
   const { ready } = useContext(PhotosContext)

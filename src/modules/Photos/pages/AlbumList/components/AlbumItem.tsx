@@ -60,7 +60,7 @@ function AlbumItem({
           {album.name}
         </h2>
         <p className="flex items-center gap-2 text-sm text-bg-500">
-          {album.amount.toLocaleString()} photos
+          {album.amount?.toLocaleString()} photos
           <Icon icon="tabler:circle-filled" className="h-1 w-1" />
           {album.is_public ? 'Public' : 'Private'}
         </p>

@@ -30,7 +30,7 @@ function PrioritySelector({
       value={priority}
       onChange={setPriority}
       as="div"
-      className="group relative mt-6 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] focus-within:border-custom-500 dark:bg-bg-800/50"
+      className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] focus-within:border-custom-500 dark:bg-bg-800/50"
     >
       <Listbox.Button className="flex w-full items-center">
         <Icon

@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import ModuleHeader from '@components/ModuleHeader'
 import { GlobalStateContext } from '@providers/GlobalStateProvider'
 import { PhotosContext } from '@providers/PhotosProvider'
-import { type IPhotosEntryDimensions } from '@typedec/Photos'
+import { type IPhotosEntryDimensionsAll } from '@typedec/Photos'
 import GalleryContainer from './Gallery/GalleryContainer'
 import GalleryHeader from './Gallery/GalleryHeader'
 import AddPhotosToAlbumModal from '../../components/modals/AddPhotosToAlbumModal'
@@ -51,7 +51,7 @@ function PhotosMainGallery(): React.ReactElement {
       <DeletePhotosConfirmationModal
         setPhotos={
           setPhotoDimensions as React.Dispatch<
-            React.SetStateAction<IPhotosEntryDimensions>
+            React.SetStateAction<IPhotosEntryDimensionsAll>
           >
         }
       />

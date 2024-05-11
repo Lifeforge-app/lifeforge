@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 import Modal from '@components/Modal'
 import { PhotosContext } from '@providers/PhotosProvider'
 import {
-  type IPhotosEntryDimensions,
+  type IPhotosEntryDimensionsAll,
   type IPhotoAlbumEntryItem,
   type IPhotosEntry
 } from '@typedec/Photos'
@@ -26,7 +26,7 @@ function DeletePhotosConfirmationModal({
   customPhotoToBeDeleted?: IPhotosEntry
   setPhotos:
     | React.Dispatch<React.SetStateAction<IPhotoAlbumEntryItem[]>>
-    | React.Dispatch<React.SetStateAction<IPhotosEntryDimensions>>
+    | React.Dispatch<React.SetStateAction<IPhotosEntryDimensionsAll>>
 }): React.ReactElement {
   const {
     selectedPhotos,

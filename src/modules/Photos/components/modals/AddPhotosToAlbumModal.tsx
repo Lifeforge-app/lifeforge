@@ -161,7 +161,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                           />
                         ) : (
                           <span className="text-sm text-bg-500">
-                            {album.amount.toLocaleString()}
+                            {album.amount?.toLocaleString()}
                           </span>
                         )}
                       </button>

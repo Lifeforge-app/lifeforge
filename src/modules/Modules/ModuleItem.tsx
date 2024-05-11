@@ -1,10 +1,18 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React, { useState } from 'react'
+import { cookieParse } from 'pocketbase'
+import React, { useContext, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import Input from '@components/Input'
-import { type ModuleEntry } from '@typedec/Module'
+import { AuthContext } from '@providers/AuthProvider'
+import {
+  type ModuleConfigSelect,
+  type ModuleConfigSwitch,
+  type ModuleConfigInput,
+  type ModuleEntry
+} from '@typedec/Module'
 import { toCamelCase } from '../../utils/strings'
 
 function ModuleItem({
@@ -18,9 +26,54 @@ function ModuleItem({
 }): React.ReactElement {
   const [expandConfig, setExpandConfig] = useState(false)
   const { t } = useTranslation()
+  const [saveLoading, setButtonLoading] = useState(false)
 
   function toggleExpandConfig(): void {
     setExpandConfig(!expandConfig)
+  }
+  const { userData, setUserData } = useContext(AuthContext)
+
+  const [originalModuleConfig, setOriginalModuleConfig] = useState(
+    JSON.stringify(userData.moduleConfigs)
+  )
+
+  const [moduleConfig, setModuleConfig] = useState(
+    Object.assign({}, userData.moduleConfigs)
+  )
+
+  function saveConfig(): void {
+    setButtonLoading(true)
+    fetch(`${import.meta.env.VITE_API_HOST}/user/module/config`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+      },
+      body: JSON.stringify({
+        id: userData.id,
+        data: moduleConfig
+      })
+    })
+      .then(async res => {
+        const data = await res.json()
+        if (res.ok) {
+          toast.info('Module configuration saved successfully.')
+          setUserData({ ...userData, moduleConfigs: moduleConfig })
+          setOriginalModuleConfig(JSON.stringify(moduleConfig))
+          return data
+        } else {
+          throw new Error(data.message)
+        }
+      })
+      .catch(err => {
+        toast.error(
+          "Oops! Couldn't save the module configuration. Please try again."
+        )
+        console.error(err)
+      })
+      .finally(() => {
+        setButtonLoading(false)
+      })
   }
 
   return (
@@ -81,20 +134,104 @@ function ModuleItem({
 
         {module.config &&
           Object.entries(module.config).map(
-            ([key, { icon, name, placeholder, isPassword }]) => (
-              <Input
-                key={key}
-                icon={icon}
-                name={name}
-                placeholder={placeholder}
-                value={''}
-                updateValue={() => {}}
-                darker
-                isPassword={isPassword}
-                noAutoComplete
-              />
-            )
+            ([key, property]: [
+              string,
+              ModuleConfigInput | ModuleConfigSelect | ModuleConfigSwitch
+            ]) =>
+              (() => {
+                const { type } = property
+                switch (type) {
+                  case 'input':
+                    return (
+                      <Input
+                        key={key}
+                        icon={property.icon}
+                        name={property.name}
+                        placeholder={property.placeholder}
+                        value={''}
+                        updateValue={() => {}}
+                        darker
+                        isPassword={property.isPassword}
+                        noAutoComplete
+                      />
+                    )
+                  case 'select':
+                    return (
+                      <div key={key} className="flex flex-col gap-2">
+                        <label htmlFor={key} className="text-sm text-bg-500">
+                          {property.name}
+                        </label>
+                        <select
+                          id={key}
+                          className="rounded-lg bg-bg-100 p-2 dark:bg-bg-800"
+                        >
+                          {property.options.map(option => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )
+                  case 'switch':
+                    return (
+                      <div
+                        key={key}
+                        className="flex items-center justify-between gap-4"
+                      >
+                        <div>
+                          <label htmlFor={key} className="text-lg font-medium">
+                            {property.name}
+                          </label>
+                          <p className="text-bg-500">{property.description}</p>
+                        </div>
+                        <Switch
+                          checked={moduleConfig[module.name][key]}
+                          onChange={() => {
+                            moduleConfig[module.name][key] =
+                              !moduleConfig[module.name][key]
+                            setModuleConfig({ ...moduleConfig })
+                          }}
+                          className={`${
+                            moduleConfig[module.name][key]
+                              ? 'bg-custom-500'
+                              : 'bg-bg-300 dark:bg-bg-800'
+                          } relative inline-flex h-6 w-11 items-center rounded-full`}
+                        >
+                          <span
+                            className={`${
+                              moduleConfig[module.name][key]
+                                ? 'translate-x-6 bg-bg-100'
+                                : 'translate-x-1 bg-bg-100 dark:bg-bg-500'
+                            } inline-block h-4 w-4 rounded-full transition`}
+                          />
+                        </Switch>
+                      </div>
+                    )
+                }
+              })()
           )}
+        {originalModuleConfig !== JSON.stringify(userData.moduleConfigs) && (
+          <button
+            type="button"
+            disabled={saveLoading}
+            onClick={saveConfig}
+            className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-custom-600 dark:text-bg-800"
+          >
+            <>
+              {saveLoading ? (
+                <>
+                  <span className="small-loader-light"></span>
+                </>
+              ) : (
+                <>
+                  <Icon icon="uil:save" className="h-6 w-6" />
+                  Save
+                </>
+              )}
+            </>
+          </button>
+        )}
       </form>
     </li>
   )

@@ -2,60 +2,50 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable multiline-ternary */
 import { Icon } from '@iconify/react'
+import moment from 'moment'
 import { cookieParse } from 'pocketbase'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import DatePicker from 'react-date-picker'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
 import Input from '@components/Input'
+import { PersonalizationContext } from '@providers/PersonalizationProvider'
+import { TodoListContext } from '@providers/TodoListProvider'
 import ListSelector from './components/ListSelector'
 import PrioritySelector from './components/PrioritySelector'
 import TagsSelector from './components/TagsSelector'
-import {
-  type ITodoListList,
-  type ITodoListTag,
-  type ITodoListEntryItem
-} from '../../../../types/TodoList'
 
-function ModifyTaskWindow({
-  openType,
-  setOpenType,
-  lists,
-  tagsList,
-  selectedTask,
-  setSelectedTask,
-  refreshEntries,
-  refreshTagsList,
-  refreshLists,
-  setDeleteTaskConfirmationModalOpen
-}: {
-  openType: 'create' | 'update' | null
-  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  lists: ITodoListList[]
-  tagsList: ITodoListTag[]
-  selectedTask: ITodoListEntryItem | null
-  setSelectedTask: React.Dispatch<
-    React.SetStateAction<ITodoListEntryItem | null>
-  >
-  refreshEntries: () => void
-  refreshTagsList: () => void
-  refreshLists: () => void
-  setDeleteTaskConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
-}): React.ReactElement {
+function ModifyTaskWindow(): React.ReactElement {
+  const {
+    modifyTaskWindowOpenType: openType,
+    setModifyTaskWindowOpenType: setOpenType,
+    selectedTask,
+    setSelectedTask,
+    refreshEntries,
+    refreshTagsList,
+    refreshLists,
+    refreshStatusCounter,
+    setDeleteTaskConfirmationModalOpen
+  } = useContext(TodoListContext)
+
+  const { language } = useContext(PersonalizationContext)
   const [summary, setSummary] = useState('')
   const [notes, setNotes] = useState('')
   const [dueDate, setDueDate] = useState('')
   const [priority, setPriority] = useState('low')
   const [list, setList] = useState<string | null>(null)
   const [tags, setTags] = useState<string[]>([])
-  const [innerOpenType, setInnerOpenType] = useState(openType)
+  const [innerOpenType, setInnerOpenType] = useState<
+    'create' | 'update' | null
+  >(openType)
   const [loading, setLoading] = useState(false)
   const summaryInputRef = useRef<HTMLInputElement>(null)
 
   function onSubmitButtonClick(): void {
+    if (openType === null) return
+
     if (summary.trim().length === 0) {
       toast.error('Task summary cannot be empty.')
       return
@@ -66,7 +56,7 @@ function ModifyTaskWindow({
     const task = {
       summary: summary.trim(),
       notes: notes.trim(),
-      due_date: dueDate.trim(),
+      due_date: moment(dueDate).format('yyyy-MM-DD 23:59:59Z'),
       priority,
       list,
       tags
@@ -94,12 +84,13 @@ function ModifyTaskWindow({
           {
             create: 'Yay! Task created. Time to start working on it.',
             update: 'Yay! Task updated.'
-          }[openType!]
+          }[openType]
         )
         setOpenType(null)
         refreshEntries()
         refreshTagsList()
         refreshLists()
+        refreshStatusCounter()
       })
       .catch(err => {
         toast.error(`Oops! Couldn't ${openType} the task. Please try again.`)
@@ -118,10 +109,6 @@ function ModifyTaskWindow({
     setNotes(event.currentTarget.value)
   }
 
-  function updateDueDate(event: React.ChangeEvent<HTMLInputElement>): void {
-    setDueDate(event.target.value)
-  }
-
   function closeWindow(): void {
     setInnerOpenType(null)
     setTimeout(() => {
@@ -133,7 +120,7 @@ function ModifyTaskWindow({
   useEffect(() => {
     setTimeout(() => {
       setInnerOpenType(openType)
-    }, 100)
+    }, 5)
   }, [openType])
 
   useEffect(() => {
@@ -154,12 +141,12 @@ function ModifyTaskWindow({
     }
   }, [selectedTask, openType])
 
-  return openType !== null ? (
+  return (
     <div
-      className={`fixed left-0 top-0 z-[9999] h-[100dvh] w-full bg-bg-900/20 backdrop-blur-sm transition-all ${
+      className={`fixed left-0 top-0 h-[100dvh] w-full bg-bg-900/20 backdrop-blur-sm transition-all ${
         innerOpenType !== null
-          ? 'opacity-100'
-          : ' opacity-0 [transition:z-index_0.1s_linear_0.5s,opacity_0.1s_linear_0.1s]'
+          ? 'z-[9999] opacity-100'
+          : ' z-[-9999]  opacity-0 [transition:z-index_0.1s_linear_0.5s,opacity_0.1s_linear_0.1s]'
       }`}
     >
       <button
@@ -178,7 +165,7 @@ function ModifyTaskWindow({
                 {
                   create: 'tabler:plus',
                   update: 'tabler:pencil'
-                }[innerOpenType!]
+                }[innerOpenType ?? 'create']
               }
               className="h-7 w-7"
             />
@@ -186,7 +173,7 @@ function ModifyTaskWindow({
               {
                 create: 'Create ',
                 update: 'Modify '
-              }[innerOpenType!]
+              }[innerOpenType ?? 'create']
             }{' '}
             task
           </h1>
@@ -251,18 +238,60 @@ function ModifyTaskWindow({
             />
           </div>
         </div>
-        <Input
-          name="Due date"
-          value={dueDate}
-          placeholder="7/8/2087"
-          icon="tabler:calendar"
-          darker
-          updateValue={updateDueDate}
-          additionalClassName="w-full mt-4"
-        />
+        <div
+          className={`group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] focus-within:!border-custom-500 
+            dark:bg-bg-800/50
+          `}
+        >
+          <Icon
+            icon={'tabler:calendar'}
+            className={`ml-6 h-6 w-6 shrink-0 text-bg-800
+            group-focus-within:!text-custom-500 dark:text-bg-100`}
+          />
+          <div className="flex w-full items-center gap-2">
+            <span
+              className={`pointer-events-none absolute left-[4.2rem] top-6 -translate-y-1/2 text-[14px] font-medium tracking-wide 
+                 text-bg-500 transition-all group-focus-within:!text-custom-500
+              `}
+            >
+              Due Date
+            </span>
+            <DatePicker
+              value={dueDate}
+              minDate={new Date()}
+              onChange={setDueDate}
+              format="dd-MM-y"
+              clearIcon={null}
+              calendarIcon={null}
+              calendarProps={{
+                className:
+                  'bg-bg-200 dark:bg-bg-800 outline-none border-none rounded-lg p-4',
+                tileClassName:
+                  'hover:bg-bg-300 dark:hover:bg-bg-700/50 rounded-md disabled:text-bg-500 disabled:bg-transparent disabled:cursor-not-allowed disabled:hover:!bg-transparent disabled:dark:hover:!bg-transparent',
+                locale: language,
+                prevLabel: <Icon icon="tabler:chevron-left" />,
+                nextLabel: <Icon icon="tabler:chevron-right" />,
+                prev2Label: <Icon icon="tabler:chevrons-left" />,
+                next2Label: <Icon icon="tabler:chevrons-right" />
+              }}
+              className="mt-8 h-8 w-full rounded-lg border-none bg-transparent px-4 tracking-wider outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
+            />
+            {dueDate && (
+              <button
+                onClick={() => {
+                  setDueDate('')
+                }}
+                className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-500/30 hover:text-bg-200 focus:outline-none"
+              >
+                <Icon icon="tabler:x" className="h-6 w-6" />
+              </button>
+            )}
+          </div>
+        </div>
+
         <PrioritySelector priority={priority} setPriority={setPriority} />
-        <ListSelector lists={lists} list={list} setList={setList} />
-        <TagsSelector tagsList={tagsList} tags={tags} setTags={setTags} />
+        <ListSelector list={list} setList={setList} />
+        <TagsSelector tags={tags} setTags={setTags} />
         <div className="mt-12 flex flex-1 flex-col-reverse items-end gap-2 sm:flex-row">
           <button
             disabled={loading}
@@ -279,8 +308,6 @@ function ModifyTaskWindow({
         </div>
       </div>
     </div>
-  ) : (
-    <></>
   )
 }
 

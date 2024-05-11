@@ -85,7 +85,7 @@ function PhotosSidebar(): React.ReactElement {
                     {album.name}
                   </div>
                   <span className="text-sm text-bg-500">
-                    {album.amount.toLocaleString()}
+                    {album.amount?.toLocaleString()}
                   </span>
                 </Link>
               </li>

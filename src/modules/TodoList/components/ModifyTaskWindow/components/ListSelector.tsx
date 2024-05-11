@@ -1,17 +1,19 @@
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React, { Fragment } from 'react'
-import { type ITodoListList } from '@typedec/TodoList'
+import React, { Fragment, useContext } from 'react'
+import { TodoListContext } from '@providers/TodoListProvider'
 
 function ListSelector({
-  lists,
   list,
   setList
 }: {
-  lists: ITodoListList[]
   list: string | null
   setList: (list: string) => void
 }): React.ReactElement {
+  const { lists } = useContext(TodoListContext)
+
+  if (typeof lists === 'string') return <></>
+
   return (
     <Listbox
       value={list}
@@ -19,7 +21,7 @@ function ListSelector({
         setList(color ?? '')
       }}
       as="div"
-      className="group relative mt-6 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] focus-within:border-custom-500 dark:bg-bg-800/50"
+      className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] focus-within:border-custom-500 dark:bg-bg-800/50"
     >
       <Listbox.Button className="flex w-full items-center">
         <Icon

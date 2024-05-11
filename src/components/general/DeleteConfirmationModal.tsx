@@ -80,7 +80,7 @@ function DeleteConfirmationModal({
       <div className="mt-6 flex w-full justify-around gap-2">
         <button
           onClick={closeModal}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700 dark:text-bg-900"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700 dark:text-bg-100"
         >
           Cancel
         </button>

@@ -4,14 +4,22 @@
 /* eslint-disable @typescript-eslint/indent */
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
-import React, { createContext, useEffect, useRef, useState } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import { Outlet } from 'react-router'
 import useFetch from '@hooks/useFetch'
 import {
+  type IPhotosEntryDimensionsPagination,
   type IPhotoAlbumTag,
   type IPhotosAlbum,
-  type IPhotosEntryDimensions
+  type IPhotosEntryDimensionsAll
 } from '@typedec/Photos'
+import { AuthContext } from './AuthProvider'
 
 class IntervalManager {
   private static instance: IntervalManager
@@ -51,8 +59,13 @@ class IntervalManager {
 const intervalManager = IntervalManager.getInstance()
 
 const PHOTOS_DATA: {
+  useTimelineScrollbar: boolean
   ready: boolean
-  photos: IPhotosEntryDimensions | 'loading' | 'error'
+  photos:
+    | IPhotosEntryDimensionsAll
+    | IPhotosEntryDimensionsPagination
+    | 'loading'
+    | 'error'
   albumList: IPhotosAlbum[] | 'loading' | 'error'
   albumTagList: IPhotoAlbumTag[] | 'loading' | 'error'
   eachDayDimensions: Record<
@@ -70,7 +83,12 @@ const PHOTOS_DATA: {
   isRemovePhotosFromAlbumConfirmationModalOpen: boolean
   setReady: React.Dispatch<React.SetStateAction<boolean>>
   setPhotoDimensions: React.Dispatch<
-    React.SetStateAction<IPhotosEntryDimensions | 'loading' | 'error'>
+    React.SetStateAction<
+      | IPhotosEntryDimensionsAll
+      | IPhotosEntryDimensionsPagination
+      | 'loading'
+      | 'error'
+    >
   >
   setAlbumList: React.Dispatch<
     React.SetStateAction<IPhotosAlbum[] | 'loading' | 'error'>
@@ -112,6 +130,7 @@ const PHOTOS_DATA: {
         current: null
       }
 } = {
+  useTimelineScrollbar: false,
   ready: false,
   photos: 'loading',
   albumList: 'loading',
@@ -153,7 +172,12 @@ const PHOTOS_DATA: {
 export const PhotosContext = createContext(PHOTOS_DATA)
 
 function Photos(): React.ReactElement {
-  const [ready, setReady] = useState(false)
+  const { userData } = useContext(AuthContext)
+
+  const [useTimelineScrollbar] = useState(
+    userData?.moduleConfigs.Photos.useTimelineScrollbar ?? false
+  )
+  const [ready, setReady] = useState(!useTimelineScrollbar)
   const [hidePhotosInAlbum, setHidePhotosInAlbum] = useState(false)
 
   const [selectedPhotos, setSelectedPhotos] = useState<string[]>([])
@@ -179,7 +203,10 @@ function Photos(): React.ReactElement {
   const isPhotoLoading = useRef(false)
 
   const [photoDimensions, setPhotoDimensions] = useState<
-    IPhotosEntryDimensions | 'loading' | 'error'
+    | IPhotosEntryDimensionsAll
+    | IPhotosEntryDimensionsPagination
+    | 'loading'
+    | 'error'
   >('loading')
 
   const [albumList, refreshAlbumList, setAlbumList] = useFetch<IPhotosAlbum[]>(
@@ -247,7 +274,7 @@ function Photos(): React.ReactElement {
     setIsBounded(true)
   }, [])
 
-  async function fetchPhotoDimensionsData(): Promise<IPhotosEntryDimensions | null> {
+  async function fetchPhotoDimensionsData(): Promise<IPhotosEntryDimensionsAll | null> {
     const data = await fetch(
       `${import.meta.env.VITE_API_HOST}/photos/entry/dimensions/async-res`,
       {
@@ -291,6 +318,12 @@ function Photos(): React.ReactElement {
             intervalManager.setInterval(async () => {
               const data = await fetchPhotoDimensionsData()
               if (data !== null) {
+                data.items = data.items.map(([day, photos]) => [
+                  day,
+                  photos.sort((a, b) =>
+                    moment(b.shot_time).diff(moment(a.shot_time))
+                  )
+                ])
                 setPhotoDimensions(data)
                 isPhotoLoading.current = false
                 intervalManager.clearAllIntervals()
@@ -316,6 +349,7 @@ function Photos(): React.ReactElement {
   return (
     <PhotosContext.Provider
       value={{
+        useTimelineScrollbar,
         ready,
         photos: photoDimensions,
         albumList,

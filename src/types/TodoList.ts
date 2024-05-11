@@ -1,4 +1,4 @@
-interface ITodoListEntryItem {
+interface ITodoListEntry {
   collectionId: string
   collectionName: string
   created: string
@@ -11,11 +11,7 @@ interface ITodoListEntryItem {
   tags: string[]
   updated: string
   done: boolean
-}
-
-interface ITodoListEntry {
-  done: ITodoListEntryItem[]
-  pending: ITodoListEntryItem[]
+  completed_at: string
 }
 
 interface ITodoListList {
@@ -41,4 +37,17 @@ interface ITodoListTag {
   updated: string
 }
 
-export type { ITodoListEntryItem, ITodoListEntry, ITodoListList, ITodoListTag }
+interface ITodoListStatusCounter {
+  all: number
+  today: number
+  scheduled: number
+  overdue: number
+  completed: number
+}
+
+export type {
+  ITodoListEntry,
+  ITodoListList,
+  ITodoListTag,
+  ITodoListStatusCounter
+}
