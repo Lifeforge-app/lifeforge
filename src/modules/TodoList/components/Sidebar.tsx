@@ -91,12 +91,14 @@ function Sidebar({
                           searchParams.delete('status')
                           return searchParams
                         })
+                        setSidebarOpen(false)
                         return
                       }
                       setSearchParams({
                         ...Object.fromEntries(searchParams.entries()),
                         status: name.toLowerCase()
                       })
+                      setSidebarOpen(false)
                     }}
                     className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800"
                   >
@@ -154,6 +156,7 @@ function Sidebar({
                           ...Object.fromEntries(searchParams.entries()),
                           list: id
                         })
+                        setSidebarOpen(false)
                       }}
                       className="group flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-200/50 dark:hover:bg-bg-800"
                     >
@@ -181,6 +184,7 @@ function Sidebar({
                               searchParams.delete('list')
                               return searchParams
                             })
+                            setSidebarOpen(false)
                           }}
                           className="hidden overscroll-contain group-hover:block"
                         >
@@ -221,6 +225,7 @@ function Sidebar({
                           ...Object.fromEntries(searchParams.entries()),
                           tag: id
                         })
+                        setSidebarOpen(false)
                       }}
                       className="group flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-800"
                     >
@@ -241,6 +246,7 @@ function Sidebar({
                               searchParams.delete('tag')
                               return searchParams
                             })
+                            setSidebarOpen(false)
                           }}
                           className="hidden overscroll-contain group-hover:block"
                         >
