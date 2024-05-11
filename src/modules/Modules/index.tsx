@@ -18,6 +18,7 @@ const MODULES: ModuleEntry[] = [
     icon: 'tabler:clipboard',
     config: {
       githubAPIKey: {
+        type: 'input',
         icon: 'tabler:brand-github',
         name: 'GitHub API Key',
         placeholder: '••••••••••••••••',
@@ -34,7 +35,6 @@ const MODULES: ModuleEntry[] = [
   { name: 'Calendar', icon: 'tabler:calendar' },
   { name: 'Spotify', icon: 'tabler:brand-spotify' },
   { name: 'Code Time', icon: 'tabler:code' },
-  { name: 'Photos', icon: 'tabler:camera' },
   { name: 'Repositories', icon: 'tabler:git-branch' },
   { name: 'Pomodoro Timer', icon: 'tabler:clock-bolt' },
   { name: 'Flashcards', icon: 'tabler:cards' },

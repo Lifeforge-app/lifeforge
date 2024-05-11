@@ -1,17 +1,20 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
+import { TodoListContext } from '@providers/TodoListProvider'
 
 function TagsSelector({
   tags,
-  setTags,
-  tagsList
+  setTags
 }: {
   tags: string[]
   setTags: (tags: string[]) => void
-  tagsList: Array<{ name: string; id: string }>
 }): React.ReactElement {
+  const { tags: tagsList } = useContext(TodoListContext)
+
+  if (typeof tagsList === 'string') return <></>
+
   return (
     <Listbox
       value={tags}
@@ -22,7 +25,7 @@ function TagsSelector({
     >
       {({ open }) => (
         <div
-          className={`group relative mt-6 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] ${
+          className={`group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] ${
             open && '!border-custom-500 '
           } dark:bg-bg-800/50`}
         >

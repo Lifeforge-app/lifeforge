@@ -1,70 +1,39 @@
+/* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
-import React from 'react'
+import React, { useContext } from 'react'
 import { toast } from 'react-toastify'
-import {
-  type ITodoListEntryItem,
-  type ITodoListEntry,
-  type ITodoListList,
-  type ITodoListTag
-} from '../../../types/TodoList'
+import { TodoListContext } from '@providers/TodoListProvider'
+import { type ITodoListEntry } from '../../../types/TodoList'
 
-function TaskItem({
-  entry,
-  entries,
-  setEntries,
-  refreshEntries,
-  lists,
-  tagsList,
-  setIsModifyTaskWindowOpen,
-  setSelectedTask
-}: {
-  entry: ITodoListEntryItem
-  entries: ITodoListEntry | 'loading' | 'error'
-  setEntries: React.Dispatch<
-    React.SetStateAction<ITodoListEntry | 'loading' | 'error'>
-  >
-  refreshEntries: () => void
-  lists: ITodoListList[] | 'loading' | 'error'
-  tagsList: ITodoListTag[] | 'loading' | 'error'
-  setIsModifyTaskWindowOpen: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setSelectedTask: React.Dispatch<
-    React.SetStateAction<ITodoListEntryItem | null>
-  >
-}): React.ReactElement {
+function TaskItem({ entry }: { entry: ITodoListEntry }): React.ReactElement {
+  const {
+    entries,
+    lists,
+    tags,
+    setEntries,
+    refreshEntries,
+    refreshStatusCounter,
+    setSelectedTask,
+    setModifyTaskWindowOpenType
+  } = useContext(TodoListContext)
+
   function toggleTaskCompletion(id: string): void {
     if (typeof entries === 'string') return
 
-    if (!entry.done) {
-      const newEntries = {
-        pending: entries.pending.filter(e => e.id !== id),
-        done: entries.done.concat([
-          {
-            ...(entries.pending.find(e => e.id === id) as ITodoListEntryItem),
-            done: true
-          }
-        ])
-      }
-
-      setEntries(newEntries)
-    } else {
-      const newEntries = {
-        pending: entries.pending.concat([
-          {
-            ...(entries.done.find(e => e.id === id) as ITodoListEntryItem),
-            done: false
-          }
-        ]),
-        done: entries.done.filter(e => e.id !== id)
-      }
-
-      setEntries(newEntries)
-    }
+    setEntries(
+      entries.map(e =>
+        e.id === id
+          ? {
+              ...e,
+              done: !e.done
+            }
+          : e
+      )
+    )
 
     fetch(`${import.meta.env.VITE_API_HOST}/todo-list/entry/toggle/${id}`, {
       method: 'PATCH',
@@ -80,6 +49,11 @@ function TaskItem({
           if (!res.ok || data.state !== 'success') {
             throw new Error(data.message)
           }
+
+          setTimeout(() => {
+            refreshEntries()
+            refreshStatusCounter()
+          }, 500)
         } catch (err) {
           throw new Error(err as string)
         }
@@ -105,7 +79,7 @@ function TaskItem({
             }}
           />
         )}
-        <div className="flex flex-col gap-1">
+        <div>
           <div className="font-semibold text-bg-800 dark:text-bg-100">
             <span
               className={`mr-2 font-semibold tracking-widest ${
@@ -123,29 +97,45 @@ function TaskItem({
             </span>
             {entry.summary}
           </div>
-          <div className="flex items-center gap-2">
-            <div className="text-sm text-bg-500">
-              {moment(entry.due_date).subtract(8, 'hour').fromNow()}
-            </div>
-            <div className="flex items-center">
-              {typeof tagsList !== 'string' &&
-                entry.tags?.length > 0 &&
-                entry.tags.map(tag => (
-                  <span
-                    key={tag}
-                    className="relative isolate px-2 py-0.5 text-xs text-custom-500"
+          {(entry.due_date || entry.tags.length > 0) && (
+            <div className="mt-1 flex items-center gap-2">
+              {entry.done && entry.completed_at ? (
+                <div className="text-sm text-bg-500">
+                  Completed: {moment(entry.completed_at).fromNow()}
+                </div>
+              ) : (
+                entry.due_date && (
+                  <div
+                    className={`text-sm ${
+                      moment(entry.due_date).isBefore(moment())
+                        ? 'text-red-500'
+                        : 'text-bg-500'
+                    }`}
                   >
-                    <div className="absolute left-0 top-0 z-[-1] h-full w-full rounded-full bg-custom-500 opacity-20" />
-                    #{tagsList.find(t => t.id === tag)?.name}
-                  </span>
-                ))}
+                    Due {moment(entry.due_date).fromNow()}
+                  </div>
+                )
+              )}
+              <div className="flex items-center gap-1">
+                {typeof tags !== 'string' &&
+                  entry.tags?.length > 0 &&
+                  entry.tags.map(tag => (
+                    <span
+                      key={tag}
+                      className="relative isolate px-2 py-0.5 text-xs text-custom-500"
+                    >
+                      <div className="absolute left-0 top-0 z-[-1] h-full w-full rounded-full bg-custom-500 opacity-20" />
+                      #{tags.find(t => t.id === tag)?.name}
+                    </span>
+                  ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
       <button
         onClick={() => {
-          setIsModifyTaskWindowOpen('update')
+          setModifyTaskWindowOpenType('update')
           setSelectedTask(entry)
         }}
         className="absolute left-0 top-0 h-full w-full"

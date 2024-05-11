@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { PhotosContext } from '../../../providers/PhotosProvider'
 import {
   type IPhotosEntryDimensionsItem,
-  type IPhotosEntryDimensions,
+  type IPhotosEntryDimensionsAll,
   type IPhotoAlbumEntryItem
 } from '../../../types/Photos'
 
@@ -15,7 +15,7 @@ function BottomBar({
   inAlbumGallery = false
 }: {
   photos:
-    | IPhotosEntryDimensions
+    | IPhotosEntryDimensionsAll
     | IPhotosEntryDimensionsItem[]
     | IPhotoAlbumEntryItem[]
   inAlbumGallery?: boolean
