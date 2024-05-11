@@ -7,11 +7,17 @@ interface IPhotosEntryDimensionsItem {
   height: number
 }
 
-interface IPhotosEntryDimensions {
+interface IPhotosEntryDimensionsAll {
   totalItems: number
   items: Array<[string, IPhotosEntryDimensionsItem[]]>
   firstDayOfYear: Record<string, string>
   firstDayOfMonth: Record<string, string>
+  collectionId: string
+}
+
+interface IPhotosEntryDimensionsPagination {
+  totalItems: number
+  items: Array<[string, IPhotosEntryDimensionsItem[]]>
   collectionId: string
 }
 
@@ -57,7 +63,8 @@ export interface IPhotoAlbumTag {
 
 export type {
   IPhotosEntryDimensionsItem,
-  IPhotosEntryDimensions,
+  IPhotosEntryDimensionsAll,
+  IPhotosEntryDimensionsPagination,
   IPhotosEntry,
   IPhotosAlbum,
   IPhotoAlbumTag,

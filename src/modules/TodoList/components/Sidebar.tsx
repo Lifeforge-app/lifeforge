@@ -1,30 +1,26 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import GoBackButton from '@components/GoBackButton'
+import { TodoListContext } from '@providers/TodoListProvider'
 import SidebarDivider from '@sidebar/components/SidebarDivider'
 import SidebarTitle from '@sidebar/components/SidebarTitle'
-import { type ITodoListList, type ITodoListTag } from '@typedec/TodoList'
+import { type ITodoListList } from '@typedec/TodoList'
 import ModifyListModal from './ModifyListModal'
 import ModifyTagModal from './ModifyTagModal'
 
 function Sidebar({
   sidebarOpen,
-  setSidebarOpen,
-  lists,
-  refreshLists,
-  tags,
-  refreshTagsList
+  setSidebarOpen
 }: {
   sidebarOpen: boolean
   setSidebarOpen: (value: boolean) => void
-  lists: ITodoListList[] | 'loading' | 'error'
-  refreshLists: () => void
-  tags: ITodoListTag[] | 'loading' | 'error'
-  refreshTagsList: () => void
 }): React.ReactElement {
+  const { statusCounter, lists, tags, refreshLists, refreshTagsList } =
+    useContext(TodoListContext)
   const [modifyListModalOpenType, setModifyListModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
@@ -39,6 +35,7 @@ function Sidebar({
     x: 0,
     y: 0
   })
+  const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
     const handleClick = (): void => {
@@ -68,29 +65,56 @@ function Sidebar({
         </div>
         <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
           <SidebarTitle name="tasks" />
-          {[
-            ['tabler:article', 'All'],
-            ['tabler:calendar-exclamation', 'Today'],
-            ['tabler:calendar-up', 'Scheduled'],
-            ['tabler:calendar-x', 'Overdue'],
-            ['tabler:calendar-check', 'Completed']
-          ].map(([icon, name], index) => (
-            <li
-              key={index}
-              className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
-            >
-              <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
-                <Icon icon={icon} className="h-6 w-6 shrink-0" />
-                <div className="flex w-full items-center justify-between">
-                  {name}
-                </div>
-                <span className="text-sm">
-                  {Math.floor(Math.random() * 10)}
-                </span>
-              </div>
-            </li>
-          ))}
-
+          <APIComponentWithFallback data={statusCounter}>
+            {typeof statusCounter !== 'string' &&
+              [
+                ['tabler:article', 'All'],
+                ['tabler:calendar-exclamation', 'Today'],
+                ['tabler:calendar-up', 'Scheduled'],
+                ['tabler:calendar-x', 'Overdue'],
+                ['tabler:calendar-check', 'Completed']
+              ].map(([icon, name], index) => (
+                <li
+                  key={index}
+                  className={`relative flex items-center gap-6 px-4 font-medium transition-all ${
+                    searchParams.get('status') === name.toLowerCase() ||
+                    (name === 'All' && !searchParams.get('status'))
+                      ? "text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-100"
+                      : 'text-bg-500 dark:text-bg-500'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (name === 'All') {
+                        setSearchParams(searchParams => {
+                          searchParams.delete('status')
+                          return searchParams
+                        })
+                        return
+                      }
+                      setSearchParams({
+                        ...Object.fromEntries(searchParams.entries()),
+                        status: name.toLowerCase()
+                      })
+                    }}
+                    className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800"
+                  >
+                    <Icon icon={icon} className="h-6 w-6 shrink-0" />
+                    <div className="flex w-full items-center justify-between">
+                      {name}
+                    </div>
+                    <span className="text-sm">
+                      {
+                        statusCounter[
+                          name.toLowerCase() as keyof typeof statusCounter
+                        ]
+                      }
+                    </span>
+                  </button>
+                </li>
+              ))}
+          </APIComponentWithFallback>
           <SidebarDivider />
           <SidebarTitle
             name="lists"
@@ -117,9 +141,22 @@ function Sidebar({
                     onContextMenuCapture={() => {
                       setContextMenuOpen(false)
                     }}
-                    className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
+                    className={`relative flex items-center gap-6 px-4 font-medium transition-all ${
+                      searchParams.get('list') === id
+                        ? "text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-100"
+                        : 'text-bg-500 dark:text-bg-500'
+                    }`}
                   >
-                    <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
+                    <div
+                      role="button"
+                      onClick={() => {
+                        setSearchParams({
+                          ...Object.fromEntries(searchParams.entries()),
+                          list: id
+                        })
+                      }}
+                      className="group flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-200/50 dark:hover:bg-bg-800"
+                    >
                       <span
                         className="block h-8 w-1.5 shrink-0 rounded-full"
                         style={{
@@ -128,7 +165,28 @@ function Sidebar({
                       />
                       <Icon icon={icon} className="h-6 w-6 shrink-0" />
                       <div className="w-full truncate">{name}</div>
-                      <span className="text-sm">{amount}</span>
+                      <span
+                        className={`text-sm ${
+                          searchParams.get('list') === id &&
+                          'group-hover:hidden'
+                        }`}
+                      >
+                        {amount}
+                      </span>
+                      {searchParams.get('list') === id && (
+                        <button
+                          onClick={e => {
+                            e.stopPropagation()
+                            setSearchParams(searchParams => {
+                              searchParams.delete('list')
+                              return searchParams
+                            })
+                          }}
+                          className="hidden overscroll-contain group-hover:block"
+                        >
+                          <Icon icon="tabler:x" className="h-5 w-5" />
+                        </button>
+                      )}
                     </div>
                   </li>
                 ))}
@@ -150,12 +208,45 @@ function Sidebar({
                 {tags.map(({ id, name, amount }) => (
                   <li
                     key={id}
-                    className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
+                    className={`relative flex items-center gap-6 px-4 font-medium transition-all ${
+                      searchParams.get('tag') === id
+                        ? "text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-100"
+                        : 'text-bg-500 dark:text-bg-500'
+                    }`}
                   >
-                    <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-800">
+                    <div
+                      role="button"
+                      onClick={() => {
+                        setSearchParams({
+                          ...Object.fromEntries(searchParams.entries()),
+                          tag: id
+                        })
+                      }}
+                      className="group flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-800"
+                    >
                       <Icon icon="tabler:hash" className="h-5 w-5 shrink-0" />
                       <p className="w-full truncate">{name}</p>
-                      <span className="text-sm">{amount}</span>
+                      <span
+                        className={`text-sm ${
+                          searchParams.get('tag') === id && 'group-hover:hidden'
+                        }`}
+                      >
+                        {amount}
+                      </span>
+                      {searchParams.get('tag') === id && (
+                        <button
+                          onClick={e => {
+                            e.stopPropagation()
+                            setSearchParams(searchParams => {
+                              searchParams.delete('tag')
+                              return searchParams
+                            })
+                          }}
+                          className="hidden overscroll-contain group-hover:block"
+                        >
+                          <Icon icon="tabler:x" className="h-5 w-5" />
+                        </button>
+                      )}
                     </div>
                   </li>
                 ))}

@@ -10,7 +10,7 @@ import useResizeObserver from 'use-resize-observer'
 import useOnScreen from '@hooks/useOnScreen'
 import { PhotosContext } from '../../../../../providers/PhotosProvider'
 import {
-  type IPhotosEntryDimensions,
+  type IPhotosEntryDimensionsAll,
   type IPhotosEntry,
   type IPhotosEntryDimensionsItem
 } from '../../../../../types/Photos'
@@ -146,7 +146,7 @@ function DateGroup({
                 refreshPhotos={refreshPhotos}
                 setPhotos={
                   setPhotoDimensions as React.Dispatch<
-                    React.SetStateAction<IPhotosEntryDimensions>
+                    React.SetStateAction<IPhotosEntryDimensionsAll>
                   >
                 }
                 details={
