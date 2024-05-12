@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
-import { Icon } from '@iconify/react'
 import React, { useContext } from 'react'
+import Button from '@components/Button'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 import { AuthContext } from '@providers/AuthProvider'
@@ -26,14 +26,10 @@ function Spotify(): React.ReactElement {
       {userData?.spotifyAccessToken ? (
         <WebPlayback />
       ) : (
-        <div className="flex h-full w-full flex-col items-center justify-center gap-12">
-          <button
-            onClick={loginWithSpotify}
-            className="flex items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 dark:text-bg-800"
-          >
-            <Icon icon="tabler:brand-spotify" className="text-xl" />
+        <div className="flex-center flex h-full w-full flex-col gap-12">
+          <Button onClick={loginWithSpotify} icon="tabler:brand-spotify">
             login with spotify
-          </button>
+          </Button>
         </div>
       )}
     </ModuleWrapper>

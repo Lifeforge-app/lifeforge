@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import Button from '@components/Button'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 import SearchInput from '@components/SearchInput'
@@ -29,13 +30,9 @@ export default function Flashcards(): React.ReactElement {
               All Decks <span className="text-base text-bg-500">(10)</span>
             </h1>
             <div className="flex items-center gap-6">
-              <button
-                onClick={() => {}}
-                className="hidden items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 dark:text-bg-800 sm:flex"
-              >
-                <Icon icon="tabler:plus" className="text-xl" />
+              <Button onClick={() => {}} icon="tabler:plus">
                 new deck
-              </button>
+              </Button>
               <button
                 onClick={() => {}}
                 className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-100 lg:hidden"
@@ -92,7 +89,7 @@ export default function Flashcards(): React.ReactElement {
                     </button>
                   </Link>
                 ))}
-                <div className="relative flex h-full flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed border-bg-500 p-12">
+                <div className="flex-center relative flex h-full flex-col gap-4 rounded-lg border-2 border-dashed border-bg-500 p-12">
                   <Icon icon="tabler:plus" className="h-8 w-8 text-bg-500" />
                   <div className="text-xl font-semibold text-bg-500">
                     Create new set
@@ -117,7 +114,7 @@ export default function Flashcards(): React.ReactElement {
                       {faker.commerce.productName()}
                     </div>
                   </div>
-                  <div className="mt-auto flex flex-1 items-center justify-center gap-2 text-custom-500">
+                  <div className="mt-auto flex flex-1 flex-center gap-2 text-custom-500">
                     <Icon icon="tabler:check" className="h-5 w-5" />
                     <p className="font-medium">Done</p>
                   </div>

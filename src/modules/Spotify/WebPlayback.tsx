@@ -40,7 +40,7 @@ function WebPlayback(): React.ReactElement {
   return isActive ? (
     <>
       <div className="flex h-full w-full flex-col items-center justify-between py-12">
-        <div className="flex flex-1 flex-col items-center justify-center ">
+        <div className="flex flex-1 flex-col flex-center ">
           {currentTrack.album.images[0].url && (
             <img
               src={currentTrack.album.images[0].url}
@@ -55,9 +55,9 @@ function WebPlayback(): React.ReactElement {
             {currentTrack.artists[0].name}
           </div>
         </div>
-        <div className="mt-6 flex w-full flex-col items-center justify-center gap-4">
+        <div className="mt-6 flex w-full flex-col flex-center gap-4">
           <div className="flex w-full flex-col">
-            <div className="flex items-center justify-center gap-6">
+            <div className="flex flex-center gap-6">
               <p className="hidden w-20 justify-end sm:flex">{`${Math.floor(
                 Number(position) / 60000
               )}:${`${Math.floor((Number(position) % 60000) / 1000)}`.padStart(
@@ -96,7 +96,7 @@ function WebPlayback(): React.ReactElement {
               </p>
             </div>
           </div>
-          <div className="flex items-center justify-center gap-6">
+          <div className="flex flex-center gap-6">
             <button
               onClick={() => {
                 player.previousTrack()

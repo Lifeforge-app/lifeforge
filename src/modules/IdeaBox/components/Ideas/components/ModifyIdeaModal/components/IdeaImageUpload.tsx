@@ -12,7 +12,7 @@ function IdeaImageUpload({
 }): React.ReactElement {
   return (
     <div
-      className="flex w-full flex-col items-center justify-center rounded-lg border-[3px] border-dashed border-bg-500 py-12"
+      className="flex w-full flex-col flex-center rounded-lg border-[3px] border-dashed border-bg-500 py-12"
       {...getRootProps()}
     >
       <input {...getInputProps()} />

@@ -62,7 +62,7 @@ function Changelog(): React.ReactElement {
                 <LogItem key={entry.version} entry={entry} />
               ))
             ) : (
-              <div className="flex h-full w-full items-center justify-center">
+              <div className="flex h-full w-full flex-center">
                 <EmptyStateScreen
                   title="Oops, no results found"
                   description="Your search query did not match any results."

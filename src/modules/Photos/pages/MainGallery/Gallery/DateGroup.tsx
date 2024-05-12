@@ -13,7 +13,7 @@ import {
   type IPhotosEntryDimensionsAll,
   type IPhotosEntry,
   type IPhotosEntryDimensionsItem
-} from '../../../../../types/Photos'
+} from '@typedec/Photos'
 import ImageObject from '../../../components/ImageObject'
 
 function DateGroup({
@@ -105,7 +105,7 @@ function DateGroup({
             >
               <button
                 onClick={toggleSelectAll}
-                className={`group/checkbox flex items-center justify-center rounded-full border-2  p-0.5 transition-all ${
+                className={`group/checkbox flex flex-center rounded-full border-2  p-0.5 transition-all ${
                   isSelectedAll
                     ? 'border-custom-500 bg-custom-500'
                     : 'border-bg-500 hover:!border-custom-500'

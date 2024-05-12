@@ -9,7 +9,7 @@ import Modal from './Modal'
 function DeleteConfirmationModal({
   itemName,
   isOpen,
-  closeModal,
+  onClose,
   data,
   updateDataList,
   apiEndpoint,
@@ -19,7 +19,7 @@ function DeleteConfirmationModal({
 }: {
   itemName: string
   isOpen: boolean
-  closeModal: () => void
+  onClose: () => void
   data: any
   updateDataList: () => void
   apiEndpoint: string
@@ -48,7 +48,7 @@ function DeleteConfirmationModal({
         const data = await res.json()
         if (res.ok) {
           toast.info(`Uhh, hopefully you truly didn't need that ${itemName}.`)
-          closeModal()
+          onClose()
           updateDataList()
           return data
         } else {
@@ -79,15 +79,15 @@ function DeleteConfirmationModal({
       </p>
       <div className="mt-6 flex w-full justify-around gap-2">
         <button
-          onClick={closeModal}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700 dark:text-bg-100"
+          onClick={onClose}
+          className="flex w-full flex-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700 dark:text-bg-100"
         >
           Cancel
         </button>
         <button
           disabled={loading}
           onClick={deleteData}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-red-600"
+          className="flex w-full flex-center gap-2 rounded-lg bg-red-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-red-600"
         >
           {loading ? (
             <>

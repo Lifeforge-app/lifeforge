@@ -113,7 +113,7 @@ function PhotosAlbumList(): React.ReactElement {
       <DeleteConfirmationModal
         apiEndpoint="photos/album/delete"
         data={selectedAlbum}
-        closeModal={() => {
+        onClose={() => {
           setDeleteModalOpen(false)
         }}
         isOpen={isDeleteModalOpen}

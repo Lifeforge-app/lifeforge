@@ -8,7 +8,7 @@ import useFetch from '@hooks/useFetch'
 import {
   type IProjectsKEntry,
   type IProjectsKProgress
-} from '../../../../../types/ProjectK'
+} from '@typedec/ProjectK'
 
 export default function ProjectProgress({
   projectData
@@ -108,7 +108,7 @@ export default function ProjectProgress({
                           onClick={() => {
                             completeStep(index < progress.completed ? -1 : 1)
                           }}
-                          className={`relative z-50 flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all hover:border-custom-500 ${
+                          className={`flex-center relative z-50 flex h-6 w-6 rounded-full border-2 transition-all hover:border-custom-500 ${
                             index < progress.completed
                               ? 'border-custom-500 bg-custom-500'
                               : 'border-bg-500 bg-bg-50 hover:border-bg-100 dark:bg-bg-900'

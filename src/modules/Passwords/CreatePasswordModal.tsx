@@ -9,6 +9,7 @@ import IconSelector from '@components/IconSelector'
 import IconInput from '@components/IconSelector/IconInput'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
+import ModalHeader from '@components/ModalHeader'
 
 function CreatePasswordModal({
   isOpen,
@@ -111,18 +112,11 @@ function CreatePasswordModal({
   return (
     <>
       <Modal isOpen={isOpen}>
-        <div className="mb-8 flex items-center justify-between ">
-          <h1 className="flex items-center gap-3 text-2xl font-semibold">
-            <Icon icon="tabler:plus" className="h-7 w-7" />
-            New Password
-          </h1>
-          <button
-            onClick={onClose}
-            className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:text-bg-100 dark:hover:bg-bg-800"
-          >
-            <Icon icon="tabler:x" className="h-6 w-6" />
-          </button>
-        </div>
+        <ModalHeader
+          title="New Password"
+          icon="tabler:plus"
+          onClose={onClose}
+        />
         <form
           onSubmit={e => {
             e.preventDefault()
@@ -186,7 +180,7 @@ function CreatePasswordModal({
           <button
             type="button"
             onClick={onSubmit}
-            className="mt-8 flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800"
+            className="flex-center mt-8 flex w-full gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800"
           >
             {loading ? (
               <Icon icon="svg-spinners:180-ring" className="h-6 w-6" />

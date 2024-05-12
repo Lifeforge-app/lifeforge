@@ -6,8 +6,8 @@ export default function Timer(): React.ReactElement {
   const [started, setStarted] = useState(false)
 
   return (
-    <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-12">
-      <div className="relative flex flex-col items-center justify-center">
+    <div className="flex min-h-0 w-full flex-1 flex-col flex-center gap-12">
+      <div className="relative flex flex-col flex-center">
         <div
           className="radial-progress absolute text-bg-200 dark:text-bg-800"
           style={{
@@ -19,7 +19,7 @@ export default function Timer(): React.ReactElement {
           role="progressbar"
         ></div>
         <div
-          className="radial-progress flex items-center justify-center text-amber-500"
+          className="radial-progress flex flex-center text-amber-500"
           style={{
             // @ts-expect-error - Cannot fix lah this one ;-;
             '--value': '70',

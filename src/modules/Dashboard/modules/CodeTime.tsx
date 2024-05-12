@@ -114,7 +114,7 @@ export default function CodeTime(): React.ReactElement {
         <Icon icon="tabler:chart-line" className="text-2xl" />
         <span className="ml-2">{t('dashboard.modules.codeTime.title')}</span>
       </h1>
-      <div className="flex w-full flex-1 items-center justify-center">
+      <div className="flex w-full flex-1 flex-center">
         {/* @ts-expect-error - lazy to fix =) */}
         {chartData ? <Line data={chartData} options={options2} /> : <Loading />}
       </div>
