@@ -179,7 +179,7 @@ function ModifyTaskWindow(): React.ReactElement {
             }{' '}
             task
           </h1>
-          <HamburgerMenu largerPadding position="relative">
+          <HamburgerMenu largerPadding className="relative">
             <MenuItem
               isRed
               icon="tabler:trash"

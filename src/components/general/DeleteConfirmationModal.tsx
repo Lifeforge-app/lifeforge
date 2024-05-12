@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
+import Button from './Button'
 import Modal from './Modal'
 
 function DeleteConfirmationModal({
@@ -79,28 +80,18 @@ function DeleteConfirmationModal({
         )}
       </p>
       <div className="mt-6 flex w-full justify-around gap-2">
-        <button
-          onClick={onClose}
-          className="flex-center flex w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700 dark:text-bg-100"
-        >
+        <Button onClick={onClose} icon="" type="secondary" className="w-full">
           Cancel
-        </button>
-        <button
+        </Button>
+        <Button
           disabled={loading}
           onClick={deleteData}
-          className="flex-center flex w-full gap-2 rounded-lg bg-red-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-red-600"
+          icon={loading ? 'svg-spinners:180-ring' : 'tabler:trash'}
+          className="w-full"
+          isRed
         >
-          {loading ? (
-            <>
-              <span className="small-loader-light"></span>
-            </>
-          ) : (
-            <>
-              <Icon icon="tabler:trash" className="h-5 w-5" />
-              DELETE
-            </>
-          )}
-        </button>
+          Delete
+        </Button>
       </div>
     </Modal>
   )

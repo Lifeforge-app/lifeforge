@@ -85,7 +85,7 @@ function ContainerHeader({
           })()}
         </h1>
         {!viewArchived && (
-          <HamburgerMenu largerPadding position="relative">
+          <HamburgerMenu largerPadding className="relative">
             <MenuItem
               icon="tabler:archive"
               text="Archived"

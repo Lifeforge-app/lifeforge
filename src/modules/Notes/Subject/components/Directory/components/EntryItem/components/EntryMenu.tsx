@@ -18,7 +18,7 @@ function EntryMenu({
   setDeleteFolderConfirmationModalOpen: (state: boolean) => void
 }): React.ReactElement {
   return (
-    <HamburgerMenu position="relative">
+    <HamburgerMenu className="relative">
       <MenuItem
         icon="tabler:edit"
         onClick={() => {

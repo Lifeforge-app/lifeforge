@@ -5,6 +5,7 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useContext, useState } from 'react'
 import { toast } from 'react-toastify'
+import Button from '@components/Button'
 import Modal from '@components/Modal'
 import { PhotosContext } from '@providers/PhotosProvider'
 import {
@@ -113,39 +114,34 @@ function DeletePhotosConfirmationModal({
         Are you sure you want to delete{' '}
         {customPhotoToBeDeleted
           ? 'this photo'
-          : `${selectedPhotos.length} photos`}{' '}
+          : `${selectedPhotos.length} photo`}
         {selectedPhotos.length > 1 ? 's' : ''}?
       </h1>
       <p className="mt-2 text-bg-500">
         This will move the photos to the trash. You can restore them from there.
       </p>
       <div className="mt-6 flex w-full justify-around gap-2">
-        <button
+        <Button
           onClick={() => {
             customSetIsOpen
               ? customSetIsOpen(false)
               : setDeletePhotosConfirmationModalOpen(false)
           }}
-          className="flex w-full flex-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700"
+          type="secondary"
+          icon=""
+          className="w-full"
         >
           Cancel
-        </button>
-        <button
+        </Button>
+        <Button
           disabled={loading}
           onClick={deleteData}
-          className="flex w-full flex-center gap-2 rounded-lg bg-red-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-red-600"
+          icon={loading ? 'svg-spinners:180-ring' : 'tabler:trash'}
+          className="w-full"
+          isRed
         >
-          {loading ? (
-            <>
-              <span className="small-loader-light"></span>
-            </>
-          ) : (
-            <>
-              <Icon icon="tabler:trash" className="h-5 w-5" />
-              DELETE
-            </>
-          )}
-        </button>
+          Delete
+        </Button>
       </div>
     </Modal>
   )

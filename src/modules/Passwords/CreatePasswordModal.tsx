@@ -1,26 +1,29 @@
 /* eslint-disable multiline-ternary */
-import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import ColorInput from '@components/ColorPicker/ColorInput'
 import ColorPickerModal from '@components/ColorPicker/ColorPickerModal'
+import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import IconSelector from '@components/IconSelector'
 import IconInput from '@components/IconSelector/IconInput'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
 import ModalHeader from '@components/ModalHeader'
+import { type IPasswordEntry } from '@typedec/Password'
 
 function CreatePasswordModal({
-  isOpen,
+  openType,
   onClose,
   refreshPasswordList,
-  masterPassword
+  masterPassword,
+  existedData
 }: {
-  isOpen: boolean
+  openType: 'create' | 'update' | null
   onClose: () => void
   refreshPasswordList: () => void
   masterPassword: string
+  existedData: IPasswordEntry | null
 }): React.ReactElement {
   const [name, setName] = useState('')
   const [icon, setIcon] = useState('')
@@ -63,22 +66,27 @@ function CreatePasswordModal({
 
     setLoading(true)
 
-    fetch(`${import.meta.env.VITE_API_HOST}/passwords/password/create`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
-      },
-      body: JSON.stringify({
-        name,
-        icon,
-        color,
-        website,
-        username,
-        password,
-        masterPassword
-      })
-    })
+    fetch(
+      `${import.meta.env.VITE_API_HOST}/passwords/password/${openType}${
+        openType === 'update' ? `/${existedData?.id}` : ''
+      }`,
+      {
+        method: openType === 'create' ? 'POST' : 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        },
+        body: JSON.stringify({
+          name,
+          icon,
+          color,
+          website,
+          username,
+          password,
+          masterPassword
+        })
+      }
+    )
       .then(async res => {
         const data = await res.json()
         if (res.ok && data.state === 'success') {
@@ -99,22 +107,39 @@ function CreatePasswordModal({
   }
 
   useEffect(() => {
-    if (isOpen) {
+    if (openType === 'create') {
       setName('')
       setIcon('')
       setColor('')
       setWebsite('')
       setUsername('')
       setPassword('')
+    } else if (openType === 'update' && existedData !== null) {
+      setName(existedData.name)
+      setIcon(existedData.icon)
+      setColor(existedData.color)
+      setWebsite(existedData.website)
+      setUsername(existedData.username)
+      setPassword(existedData.decrypted)
     }
-  }, [isOpen])
+  }, [openType])
 
   return (
     <>
-      <Modal isOpen={isOpen}>
+      <Modal isOpen={openType !== null}>
         <ModalHeader
-          title="New Password"
-          icon="tabler:plus"
+          title={
+            {
+              create: 'Create Password',
+              update: 'Update Password'
+            }[openType as 'create' | 'update']
+          }
+          icon={
+            {
+              create: 'tabler:plus',
+              update: 'tabler:pencil'
+            }[openType as 'create' | 'update']
+          }
           onClose={onClose}
         />
         <form
@@ -177,20 +202,12 @@ function CreatePasswordModal({
             additionalClassName="mt-6"
             noAutoComplete
           />
-          <button
-            type="button"
+          <CreateOrModifyButton
             onClick={onSubmit}
-            className="flex-center mt-8 flex w-full gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800"
-          >
-            {loading ? (
-              <Icon icon="svg-spinners:180-ring" className="h-6 w-6" />
-            ) : (
-              <>
-                <Icon icon="tabler:plus" className="text-xl" />
-                Create
-              </>
-            )}
-          </button>
+            loading={loading}
+            className="mt-6"
+            type={openType}
+          />
         </form>
       </Modal>
       <IconSelector

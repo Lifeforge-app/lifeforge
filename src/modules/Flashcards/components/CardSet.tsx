@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import Button from '@components/Button'
 import GoBackButton from '@components/GoBackButton'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
@@ -121,7 +122,7 @@ function CardSet(): React.ReactElement {
             <button className="rounded-md p-4 text-bg-500 transition-all hover:bg-bg-800 hover:text-bg-100">
               <Icon icon="tabler:border-corners" className="text-xl" />
             </button>
-            <HamburgerMenu largerPadding position="relative">
+            <HamburgerMenu largerPadding className="relative">
               <MenuItem
                 icon="tabler:edit"
                 text="Edit Cards"
@@ -178,13 +179,14 @@ function CardSet(): React.ReactElement {
                   <Icon icon="tabler:chevron-right" className="text-3xl" />
                 </button>
               </div>
-              <button
+              <Button
+                type="secondary"
                 onClick={pickRandomCard}
-                className="flex-center mt-12 flex w-1/2 gap-2 rounded-lg bg-bg-200 p-4 text-lg font-medium shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800"
+                icon="tabler:dice"
+                className="mt-12 w-1/2"
               >
-                <Icon icon="tabler:dice" className="text-2xl" />
                 Pick Random Card
-              </button>
+              </Button>
               <EditCardModal
                 deck={id}
                 isOpen={editCardModalOpen}

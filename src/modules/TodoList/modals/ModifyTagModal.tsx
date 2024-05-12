@@ -2,25 +2,21 @@
 /* eslint-disable multiline-ternary */
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
 import ModalHeader from '@components/ModalHeader'
-import { type ITodoListTag } from '@typedec/TodoList'
+import { TodoListContext } from '@providers/TodoListProvider'
 
-function ModifyTagModal({
-  openType,
-  setOpenType,
-  updateTagsList,
-  existedData
-}: {
-  openType: 'create' | 'update' | null
-  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  updateTagsList: () => void
-  existedData: ITodoListTag | null
-}): React.ReactElement {
+function ModifyTagModal(): React.ReactElement {
+  const {
+    modifyTagModalOpenType: openType,
+    setModifyListModalOpenType: setOpenType,
+    refreshTagsList,
+    selectedTag
+  } = useContext(TodoListContext)
   const [loading, setLoading] = useState(false)
   const [tagName, setTagName] = useState('')
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
@@ -43,7 +39,7 @@ function ModifyTagModal({
 
     fetch(
       `${import.meta.env.VITE_API_HOST}/todo-list/tag/${innerOpenType}` +
-        (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
+        (innerOpenType === 'update' ? `/${selectedTag?.id}` : ''),
       {
         method: innerOpenType === 'create' ? 'POST' : 'PATCH',
         headers: {
@@ -65,7 +61,7 @@ function ModifyTagModal({
           }[innerOpenType!]
         )
         setOpenType(null)
-        updateTagsList()
+        refreshTagsList()
       })
       .catch(err => {
         toast.error(
@@ -82,12 +78,12 @@ function ModifyTagModal({
   }
 
   useEffect(() => {
-    if (innerOpenType === 'update' && existedData !== null) {
-      setTagName(existedData.name)
+    if (innerOpenType === 'update' && selectedTag !== null) {
+      setTagName(selectedTag.name)
     } else {
       setTagName('')
     }
-  }, [innerOpenType, existedData])
+  }, [innerOpenType, selectedTag])
 
   return (
     <>

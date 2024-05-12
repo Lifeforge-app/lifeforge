@@ -5,6 +5,7 @@ import { cookieParse } from 'pocketbase'
 import React, { useContext, useState } from 'react'
 import { toast } from 'react-toastify'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import Button from '@components/Button'
 import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
 import EmptyStateScreen from '@components/EmptyStateScreen'
 import Input from '@components/Input'
@@ -23,8 +24,8 @@ function Passwords(): React.ReactElement {
     useState<string>('')
   const [masterPassword, setMasterPassword] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
-  const [createPasswordModalOpen, setCreatePasswordModalOpen] =
-    useState<boolean>(false)
+  const [createPasswordModalOpenType, setCreatePasswordModalOpenType] =
+    useState<'create' | 'update' | null>(null)
   const [passwordList, refreshPasswordList] = useFetch<IPasswordEntry[]>(
     'passwords/password/list',
     masterPassword !== ''
@@ -35,6 +36,7 @@ function Passwords(): React.ReactElement {
     isDeletePasswordConfirmationModalOpen,
     setIsDeletePasswordConfirmationModalOpen
   ] = useState<boolean>(false)
+  const [existedData, setExistedData] = useState<IPasswordEntry | null>(null)
 
   function onSubmit(): void {
     if (masterPassWordInputContent.trim() === '') {
@@ -82,18 +84,17 @@ function Passwords(): React.ReactElement {
           desc="A vault to store your passwords securely."
         />
         {masterPassword !== '' && (
-          <button
+          <Button
             onClick={() => {
-              setCreatePasswordModalOpen(true)
+              setCreatePasswordModalOpenType('create')
             }}
-            className="flex-center flex  w-full gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-auto"
+            icon="tabler:plus"
           >
-            <Icon icon="tabler:plus" className="text-xl" />
             new password
-          </button>
+          </Button>
         )}
       </div>
-      {userData?.hasMasterPasswordHash === true ? (
+      {userData?.hasMasterPassword === false ? (
         <CreatePassword />
       ) : masterPassword === '' ? (
         <div className="flex-center flex h-full w-full flex-1 flex-col gap-4">
@@ -120,19 +121,14 @@ function Passwords(): React.ReactElement {
             }}
             darker
           />
-          <button
+          <Button
             onClick={onSubmit}
-            className="flex-center flex w-full gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-1/2"
+            disabled={loading}
+            className="w-1/2"
+            icon={loading ? 'svg-spinners:180-ring' : 'tabler:lock'}
           >
-            {loading ? (
-              <Icon icon="svg-spinners:180-ring" className="h-6 w-6" />
-            ) : (
-              <>
-                <Icon icon="tabler:lock" className="text-xl" />
-                Unlock
-              </>
-            )}
-          </button>
+            Unlock
+          </Button>
         </div>
       ) : (
         <APIComponentWithFallback data={passwordList}>
@@ -147,6 +143,10 @@ function Passwords(): React.ReactElement {
                   setIsDeletePasswordConfirmationModalOpen={
                     setIsDeletePasswordConfirmationModalOpen
                   }
+                  setCreatePasswordModalOpenType={
+                    setCreatePasswordModalOpenType
+                  }
+                  setExistedData={setExistedData}
                 />
               ))}
             </div>
@@ -157,19 +157,20 @@ function Passwords(): React.ReactElement {
               icon="tabler:key-off"
               ctaContent="add password"
               setModifyModalOpenType={() => {
-                setCreatePasswordModalOpen(true)
+                setCreatePasswordModalOpenType('create')
               }}
             />
           )}
         </APIComponentWithFallback>
       )}
       <CreatePasswordModal
-        isOpen={createPasswordModalOpen}
+        openType={createPasswordModalOpenType}
         onClose={() => {
-          setCreatePasswordModalOpen(false)
+          setCreatePasswordModalOpenType(null)
         }}
         refreshPasswordList={refreshPasswordList}
         masterPassword={masterPassword}
+        existedData={existedData}
       />
       <DeleteConfirmationModal
         apiEndpoint="passwords/password/delete"

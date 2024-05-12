@@ -10,6 +10,8 @@ import ModifyTaskWindow from './ModifyTaskWindow'
 import Sidebar from './Sidebar'
 import TaskList from './tasks/TaskList'
 import TodoListHeader from './TodoListHeader'
+import ModifyListModal from '../modals/ModifyListModal'
+import ModifyTagModal from '../modals/ModifyTagModal'
 
 function TodoListContainer(): React.ReactElement {
   const {
@@ -22,16 +24,22 @@ function TodoListContainer(): React.ReactElement {
     deleteTaskConfirmationModalOpen,
     setDeleteTaskConfirmationModalOpen,
     selectedTask,
-    setSelectedTask
+    selectedList,
+    selectedTag,
+    setSelectedTask,
+    deleteListConfirmationModalOpen,
+    setDeleteListConfirmationModalOpen,
+    deleteTagConfirmationModalOpen,
+    setDeleteTagConfirmationModalOpen
   } = useContext(TodoListContext)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 
   return (
     <>
-      <div className="mt-6 flex min-h-0 w-full flex-1">
+      <div className="isolate mt-6 flex min-h-0 w-full flex-1">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <div className="flex h-full flex-1 flex-col lg:ml-8">
+        <div className="relative z-10 flex h-full flex-1 flex-col lg:ml-8">
           <TodoListHeader setSidebarOpen={setSidebarOpen} />
           <SearchInput
             searchQuery={searchQuery}
@@ -77,6 +85,30 @@ function TodoListContainer(): React.ReactElement {
       >
         <Icon icon="tabler:plus" className="h-6 w-6 shrink-0 transition-all" />
       </button>
+      <ModifyListModal />
+      <DeleteConfirmationModal
+        apiEndpoint="todo-list/list/delete"
+        data={selectedList}
+        isOpen={deleteListConfirmationModalOpen}
+        itemName="list"
+        onClose={() => {
+          setDeleteListConfirmationModalOpen(false)
+        }}
+        updateDataList={refreshLists}
+        customText="Are you sure you want to delete this list? The tasks inside this list will not be deleted."
+      />
+      <ModifyTagModal />
+      <DeleteConfirmationModal
+        apiEndpoint="todo-list/tag/delete"
+        data={selectedTag}
+        isOpen={deleteTagConfirmationModalOpen}
+        itemName="tag"
+        onClose={() => {
+          setDeleteTagConfirmationModalOpen(false)
+        }}
+        updateDataList={refreshTagsList}
+        customText="Are you sure you want to delete this tag? The tasks with this tag will not be deleted."
+      />
     </>
   )
 }
