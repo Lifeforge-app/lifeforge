@@ -4,6 +4,7 @@ import React, { Suspense, lazy, useContext, useMemo } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Loading from '@components/Loading'
 import { AuthContext } from '@providers/AuthProvider'
+import About from './modules/About'
 import PhotosFavouritesGallery from './modules/Photos/pages/FavouritesGallery'
 import Repositories from './modules/Repositories'
 import { titleToPath } from './utils/strings'
@@ -372,6 +373,12 @@ export const ROUTES: IRoutes[] = [
         routes: [
           <Route key="change-log" path="change-log" element={<Changelog />} />
         ],
+        togglable: false
+      },
+      {
+        name: 'about',
+        icon: 'tabler:info-circle',
+        routes: [<Route key="about" path="about" element={<About />} />],
         togglable: false
       }
     ]

@@ -43,6 +43,7 @@
         "modules": "Modules",
         "serverStatus": "Server Status",
         "changeLog": "Change Log",
+        "about": "About This Project",
         "title": {
             "productivity": "Productivity",
             "storage": "Storage",
@@ -86,7 +87,8 @@
             "dataBackup": "Your digital safety net, because stuff happens. 🪂",
             "modules": "All the tools you need, all in one place. 🧰",
             "serverStatus": "Keep your server healthy, happy, and humming. 🩺",
-            "changeLog": "Track the development progress, one change at a time. 📈"
+            "changeLog": "Track the development progress, one change at a time. 📈",
+            "about": "The story behind how this project came to be. 📖"
         }
     },
     "header": {
