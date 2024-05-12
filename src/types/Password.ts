@@ -11,6 +11,7 @@ interface IPasswordEntry {
   username: string
   website: string
   decrypted?: string
+  pinned: boolean
 }
 
 export type { IPasswordEntry }
