@@ -1,9 +1,21 @@
+/* eslint-disable multiline-ternary */
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import EmptyStateScreen from '@components/EmptyStateScreen'
+import useFetch from '@hooks/useFetch'
+import { TodoListProvider } from '@providers/TodoListProvider'
+import { type ITodoListEntry } from '@typedec/TodoList'
+import TaskItem from '../../TodoList/components/tasks/TaskItem'
 
 export default function TodoList(): React.ReactElement {
   const { t } = useTranslation()
+  const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry[]>(
+    'todo-list/entry/list?status=today'
+  )
+  const navigate = useNavigate()
 
   return (
     <section className="col-span-2 row-span-2 flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
@@ -11,37 +23,39 @@ export default function TodoList(): React.ReactElement {
         <Icon icon="tabler:clipboard-list" className="text-2xl" />
         <span className="ml-2">{t('dashboard.modules.todoList.title')}</span>
       </h1>
-      <ul className="flex flex-col gap-4">
-        <li className="flex items-center justify-between gap-4 rounded-lg border-l-4 border-indigo-500 bg-bg-100 p-4 px-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] dark:bg-bg-800">
-          <div className="flex flex-col gap-1">
-            <div className="font-semibold text-bg-800 dark:text-bg-100">
-              Buy groceries
-            </div>
-            <div className="text-sm text-rose-500">
-              10:00 AM, 23 Nov 2023 (overdue 8 hours)
-            </div>
+      <TodoListProvider>
+        <APIComponentWithFallback data={entries}>
+          <div className="flex flex-1 flex-col overflow-y-scroll ">
+            {typeof entries !== 'string' && (
+              <ul className="mt-4 flex flex-1 flex-col gap-4 pb-24 sm:pb-8">
+                {entries.length > 0 ? (
+                  entries.map(entry => (
+                    <TaskItem
+                      entry={entry}
+                      key={entry.id}
+                      lighter
+                      isOuter
+                      entries={entries}
+                      refreshEntries={refreshEntries}
+                      setEntries={setEntries}
+                    />
+                  ))
+                ) : (
+                  <EmptyStateScreen
+                    title="No tasks for today"
+                    description="Head to the Todo List module to create a new task."
+                    icon="tabler:mood-smile"
+                    ctaContent="Create a new task"
+                    setModifyModalOpenType={() => {
+                      navigate('/todo-list')
+                    }}
+                  />
+                )}
+              </ul>
+            )}
           </div>
-          <button className="h-6 w-6 rounded-full border-2 border-bg-400 transition-all hover:border-orange-500" />
-        </li>
-        <li className="flex items-center justify-between gap-4 rounded-lg border-l-4 border-orange-500 bg-bg-100 p-4 px-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] dark:bg-bg-800">
-          <div className="flex flex-col gap-1">
-            <div className="font-semibold text-bg-800 dark:text-bg-100">
-              Do homework
-            </div>
-            <div className="text-sm text-bg-500">00:00 AM, 31 Jan 2024</div>
-          </div>
-          <button className="h-6 w-6 rounded-full border-2 border-bg-400 transition-all hover:border-orange-500" />
-        </li>
-        <li className="flex items-center justify-between gap-4 rounded-lg border-l-4 border-orange-500 bg-bg-100 p-4 px-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] dark:bg-bg-800">
-          <div className="flex flex-col gap-1">
-            <div className="font-semibold text-bg-800 dark:text-bg-100">
-              Start doing revision for SPM Sejarah
-            </div>
-            <div className="text-sm text-bg-500">00:00 AM, 31 Jan 2024</div>
-          </div>
-          <button className="h-6 w-6 rounded-full border-2 border-bg-400 transition-all hover:border-orange-500" />
-        </li>
-      </ul>
+        </APIComponentWithFallback>
+      </TodoListProvider>
     </section>
   )
 }
