@@ -15,7 +15,7 @@ function TaskCompletionCheckbox({
         toggleTaskCompletion(entry.id)
       }}
       className={`flex-center relative z-50 flex h-5 w-5 rounded-full ring-2 ring-offset-2 ring-offset-bg-50 transition-all hover:border-custom-500 dark:ring-offset-bg-900 ${
-        entry.done ? 'ring-custom-500' : 'bg-bg-50 ring-bg-500 dark:bg-bg-900'
+        entry.done ? 'ring-custom-500' : 'ring-bg-500'
       }`}
     >
       {entry.done && (

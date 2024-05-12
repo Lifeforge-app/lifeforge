@@ -11,30 +11,62 @@ import TaskDueDate from './components/TaskDueDate'
 import TaskHeader from './components/TaskHeader'
 import TaskTags from './components/TaskTags'
 
-function TaskItem({ entry }: { entry: ITodoListEntry }): React.ReactElement {
+function TaskItem({
+  entry,
+  lighter,
+  isOuter,
+  entries,
+  setEntries,
+  refreshEntries
+}: {
+  entry: ITodoListEntry
+  lighter?: boolean
+  isOuter?: boolean
+  entries?: ITodoListEntry[]
+  setEntries?: React.Dispatch<
+    React.SetStateAction<ITodoListEntry[] | 'loading' | 'error'>
+  >
+  refreshEntries?: () => void
+}): React.ReactElement {
   const {
-    entries,
+    entries: innerEntries,
     lists,
-    setEntries,
-    refreshEntries,
+    setEntries: setInnerEntries,
+    refreshEntries: refreshInnerEntries,
     refreshStatusCounter,
     setSelectedTask,
     setModifyTaskWindowOpenType
   } = useContext(TodoListContext)
 
   function toggleTaskCompletion(id: string): void {
-    if (typeof entries === 'string') return
+    if (typeof innerEntries === 'string') return
 
-    setEntries(
-      entries.map(e =>
-        e.id === id
-          ? {
-              ...e,
-              done: !e.done
-            }
-          : e
+    if (!isOuter) {
+      setInnerEntries(
+        innerEntries.map(e =>
+          e.id === id
+            ? {
+                ...e,
+                done: !e.done
+              }
+            : e
+        )
       )
-    )
+    } else {
+      if (entries && setEntries) {
+        console.log('sus')
+        setEntries(
+          entries.map(e =>
+            e.id === id
+              ? {
+                  ...e,
+                  done: !e.done
+                }
+              : e
+          )
+        )
+      }
+    }
 
     fetch(`${import.meta.env.VITE_API_HOST}/todo-list/entry/toggle/${id}`, {
       method: 'PATCH',
@@ -52,7 +84,13 @@ function TaskItem({ entry }: { entry: ITodoListEntry }): React.ReactElement {
           }
 
           setTimeout(() => {
-            refreshEntries()
+            if (!isOuter) {
+              refreshInnerEntries()
+            } else {
+              if (refreshEntries) {
+                refreshEntries()
+              }
+            }
             refreshStatusCounter()
           }, 500)
         } catch (err) {
@@ -61,7 +99,13 @@ function TaskItem({ entry }: { entry: ITodoListEntry }): React.ReactElement {
       })
       .catch(err => {
         toast.error("Oops! Couldn't update the task. Please try again.")
-        refreshEntries()
+        if (!isOuter) {
+          refreshInnerEntries()
+        } else {
+          if (refreshEntries) {
+            refreshEntries()
+          }
+        }
         console.error(err)
       })
   }
@@ -69,7 +113,9 @@ function TaskItem({ entry }: { entry: ITodoListEntry }): React.ReactElement {
   return (
     <li
       key={entry.id}
-      className="relative isolate flex items-center justify-between gap-4 rounded-lg bg-bg-50 p-4 pl-5 pr-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900"
+      className={`relative isolate flex items-center justify-between gap-4 rounded-lg bg-bg-50 p-4 pl-5 pr-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] ${
+        lighter ? 'dark:bg-bg-800' : 'dark:bg-bg-900'
+      }`}
     >
       <div className="flex items-center gap-4">
         {typeof lists !== 'string' && entry.list !== null && (
