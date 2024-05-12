@@ -19,7 +19,7 @@ function EmptyStateScreen({
   ctaContent?: string
 }): React.ReactElement {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-6 ">
+    <div className="flex h-full w-full flex-col flex-center gap-6 ">
       <Icon icon={icon} className="h-32 w-32" />
       <h2 className="text-center text-3xl font-semibold">{title}</h2>
       <p className="-mt-2 text-center text-lg text-bg-500">{description}</p>

@@ -79,14 +79,14 @@ function RemovePhotosFromAlbumConfirmationModal({
           onClick={() => {
             setRemovePhotosFromAlbumConfirmationModalOpen(false)
           }}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700"
+          className="flex w-full flex-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700"
         >
           Cancel
         </button>
         <button
           disabled={loading}
           onClick={deleteData}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-red-600"
+          className="flex w-full flex-center gap-2 rounded-lg bg-red-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-red-600"
         >
           {loading ? (
             <>

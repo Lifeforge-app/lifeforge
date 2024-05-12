@@ -5,6 +5,7 @@ import { cookieParse } from 'pocketbase'
 import React, { useContext, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import Button from '@components/Button'
 import Input from '@components/Input'
 import { AuthContext } from '@providers/AuthProvider'
 import {
@@ -212,25 +213,14 @@ function ModuleItem({
               })()
           )}
         {originalModuleConfig !== JSON.stringify(userData.moduleConfigs) && (
-          <button
-            type="button"
+          <Button
             disabled={saveLoading}
             onClick={saveConfig}
-            className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-custom-600 dark:text-bg-800"
+            className="mt-6"
+            icon={!saveLoading ? 'uil:save' : 'svg-spinners:180-ring'}
           >
-            <>
-              {saveLoading ? (
-                <>
-                  <span className="small-loader-light"></span>
-                </>
-              ) : (
-                <>
-                  <Icon icon="uil:save" className="h-6 w-6" />
-                  Save
-                </>
-              )}
-            </>
-          </button>
+            {!saveLoading && 'Save'}
+          </Button>
         )}
       </form>
     </li>

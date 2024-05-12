@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import { Colorful, EditableInput } from '@uiw/react-color'
 import React, { useEffect, useState } from 'react'
+import Button from '@components/Button'
 import Modal from '../Modal'
 
 function checkContrast(hexcolor: string): string {
@@ -73,13 +74,9 @@ function ColorPickerModal({
         }}
         className="mt-4 border-0 p-4 text-2xl font-semibold"
       />
-      <button
-        onClick={confirmColor}
-        className="flex items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-800 transition-all hover:bg-custom-600"
-      >
-        <Icon icon="tabler:check" className="h-6 w-6" />
-        SELECT
-      </button>
+      <Button onClick={confirmColor} icon="tabler:check">
+        Select
+      </Button>
     </Modal>
   )
 }

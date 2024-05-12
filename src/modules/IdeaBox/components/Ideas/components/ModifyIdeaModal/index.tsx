@@ -8,6 +8,7 @@ import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState, useCallback, useContext } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { toast } from 'react-toastify'
+import Button from '@components/Button'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
 import { PersonalizationContext } from '@providers/PersonalizationProvider'
@@ -213,42 +214,25 @@ function ModifyIdeaModal({
           isDragActive={isDragActive}
         />
       )}
-      <button
+      <Button
+        className="mt-6"
         disabled={loading}
         onClick={onSubmitButtonClick}
-        className="mt-6 flex h-16 items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-custom-600 dark:text-bg-800"
-      >
-        {!loading ? (
-          <>
-            <Icon
-              icon={
-                {
-                  create: 'tabler:plus',
-                  update: 'tabler:pencil'
-                }[innerOpenType!]
-              }
-              className="h-5 w-5"
-            />
-            {
-              {
-                create: 'CREATE',
-                update: 'UPDATE'
+        icon={
+          !loading
+            ? {
+                create: 'tabler:plus',
+                update: 'tabler:pencil'
               }[innerOpenType!]
-            }
-          </>
-        ) : (
-          <span
-            className={
-              (theme === 'system' &&
-                window.matchMedia &&
-                window.matchMedia('(prefers-color-scheme: dark)').matches) ||
-              theme === 'dark'
-                ? 'small-loader-dark'
-                : 'small-loader-light'
-            }
-          ></span>
-        )}
-      </button>
+            : 'svg-spinners:180-ring'
+        }
+      >
+        {!loading &&
+          {
+            create: 'CREATE',
+            update: 'UPDATE'
+          }[innerOpenType!]}
+      </Button>
     </Modal>
   )
 }

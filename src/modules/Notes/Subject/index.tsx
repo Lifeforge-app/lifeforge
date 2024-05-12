@@ -81,7 +81,7 @@ function NotesSubject(): React.ReactElement {
         />
         <DeleteConfirmationModal
           isOpen={deleteFolderConfirmationModalOpen}
-          closeModal={() => {
+          onClose={() => {
             setExistedData(null)
             setDeleteFolderConfirmationModalOpen(false)
           }}

@@ -4,6 +4,7 @@ import { faker } from '@faker-js/faker'
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Button from '@components/Button'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 import SearchInput from '@components/SearchInput'
@@ -156,10 +157,7 @@ function ProjectsM(): React.ReactElement {
             <h1 className="text-4xl font-semibold text-bg-800 dark:text-bg-100">
               All Projects <span className="text-base text-bg-500">(10)</span>
             </h1>
-            <button className="flex shrink-0 items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]   hover:bg-custom-600 dark:text-bg-800">
-              <Icon icon="tabler:plus" className="h-5 w-5 shrink-0" />
-              <span className="shrink-0">create</span>
-            </button>
+            <Button icon="tabler:plus">create</Button>
           </div>
           <SearchInput
             searchQuery={searchQuery}

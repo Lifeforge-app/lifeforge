@@ -38,7 +38,7 @@ function ModalHeader({
         }{' '}
         {innerOpenType === 'create' ? (
           <Menu as="div" className="relative inline-block text-left">
-            <Menu.Button className="inline-flex w-full items-center justify-center rounded-md border-2 border-bg-300 p-2 px-4 text-lg font-semibold tracking-wide text-bg-800 shadow-sm outline-none hover:bg-bg-200/50 focus:outline-none dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200">
+            <Menu.Button className="inline-flex w-full flex-center rounded-md border-2 border-bg-300 p-2 px-4 text-lg font-semibold tracking-wide text-bg-800 shadow-sm outline-none hover:bg-bg-200/50 focus:outline-none dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200">
               <Icon
                 icon={
                   {

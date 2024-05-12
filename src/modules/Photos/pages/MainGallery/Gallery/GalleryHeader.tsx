@@ -179,7 +179,7 @@ function GalleryHeader(): React.ReactElement {
               importFiles().catch(() => {})
             }}
             disabled={fileImportLoading}
-            className="flex h-full w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-custom-500 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-auto"
+            className="flex h-full w-full flex-center gap-2 whitespace-nowrap rounded-lg bg-custom-500 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-auto"
           >
             {!fileImportLoading ? (
               <>

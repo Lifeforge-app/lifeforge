@@ -49,7 +49,7 @@ function Gallery(): React.ReactElement {
             />
           ))
         ) : (
-          <div className="flex h-full w-full flex-1 items-center justify-center">
+          <div className="flex h-full w-full flex-1 flex-center">
             <EmptyStateScreen
               icon="tabler:photo-off"
               title="Hmm... Seems a bit empty here"

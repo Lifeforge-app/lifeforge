@@ -71,7 +71,7 @@ function NotesCategory(): React.ReactElement {
         <APIComponentWithFallback data={subjectsData}>
           {typeof subjectsData !== 'string' &&
             (subjectsData.length > 0 ? (
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] items-center justify-center gap-4 py-8">
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] flex-center gap-4 py-8">
                 {subjectsData.map(subject => (
                   <SubjectItem
                     key={subject.id}
@@ -102,7 +102,7 @@ function NotesCategory(): React.ReactElement {
         </APIComponentWithFallback>
         <DeleteConfirmationModal
           isOpen={deleteSubjectConfirmationModalOpen}
-          closeModal={() => {
+          onClose={() => {
             setDeleteSubjectConfirmationModalOpen(false)
           }}
           apiEndpoint="notes/subject/delete"

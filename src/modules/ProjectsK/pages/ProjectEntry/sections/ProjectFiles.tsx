@@ -7,6 +7,7 @@ import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import Button from '@components/Button'
 import EmptyStateScreen from '@components/EmptyStateScreen'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
@@ -219,7 +220,7 @@ export default function ProjectFiles({
                     : 'N/A'}
                 </p>
               </div>
-              <div className="flex items-center justify-center gap-4">
+              <div className="flex-center flex gap-4">
                 <button
                   onClick={() => {
                     clearMedium().catch(() => {})
@@ -252,22 +253,19 @@ export default function ProjectFiles({
                     <Icon icon="svg-spinners:180-ring" className="text-xl" />
                   )}
                 </button>
-                <button
+                <Button
                   onClick={() => {
                     downloadFiles().catch(() => {})
                   }}
                   disabled={fileReplaceLoading}
-                  className="flex items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 dark:text-bg-800"
+                  icon={
+                    fileDownloadLoading
+                      ? 'svg-spinners:180-ring'
+                      : 'tabler:download'
+                  }
                 >
-                  {!fileDownloadLoading ? (
-                    <>
-                      <Icon icon="tabler:download" className="text-xl" />
-                      download
-                    </>
-                  ) : (
-                    <Icon icon="svg-spinners:180-ring" className="text-xl" />
-                  )}
-                </button>
+                  {!fileDownloadLoading && 'download'}
+                </Button>
               </div>
             </div>
             {projectData.files.length > 0 ? (

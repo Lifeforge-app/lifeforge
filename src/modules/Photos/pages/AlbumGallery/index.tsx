@@ -16,7 +16,7 @@ import { PhotosContext } from '../../../../providers/PhotosProvider'
 import {
   type IPhotoAlbumEntryItem,
   type IPhotosAlbum
-} from '../../../../types/Photos.ts'
+} from '@typedec/Photos.ts'
 import BottomBar from '../../components/BottomBar'
 import ImageObject from '../../components/ImageObject'
 import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosConfirmationModal.tsx'
@@ -84,7 +84,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                     default:
                       return (
                         <>
-                          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
+                          <div className="flex h-14 w-14 shrink-0 flex-center rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                             {albumData.cover !== '' ? (
                               <img
                                 src={`${
@@ -158,7 +158,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                   }
                 })()}
               </h1>
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex flex-center gap-2">
                 <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
                   <Icon icon="tabler:share" className="text-2xl" />
                 </button>
