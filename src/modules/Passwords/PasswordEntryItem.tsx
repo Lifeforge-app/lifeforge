@@ -12,7 +12,9 @@ function PasswordEntryITem({
   password,
   masterPassword,
   setSelectedPassword,
-  setIsDeletePasswordConfirmationModalOpen
+  setIsDeletePasswordConfirmationModalOpen,
+  setCreatePasswordModalOpenType,
+  setExistedData
 }: {
   password: IPasswordEntry
   masterPassword: string
@@ -22,6 +24,10 @@ function PasswordEntryITem({
   setIsDeletePasswordConfirmationModalOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
+  setCreatePasswordModalOpenType: React.Dispatch<
+    React.SetStateAction<'create' | 'update' | null>
+  >
+  setExistedData: React.Dispatch<React.SetStateAction<IPasswordEntry | null>>
 }): React.ReactElement {
   const [decryptedPassword, setDecryptedPassword] = useState<string | null>(
     null
@@ -141,8 +147,22 @@ function PasswordEntryITem({
         >
           <Icon icon="tabler:copy" className="h-6 w-6" />
         </button>
-        <HamburgerMenu position="relative">
-          <MenuItem icon="tabler:edit" text="Edit" />
+        <HamburgerMenu className="relative">
+          <MenuItem
+            onClick={() => {
+              getDecryptedPassword(password.id)
+                .then(decrypted => {
+                  setCreatePasswordModalOpenType('update')
+                  password.decrypted = decrypted
+                  setExistedData(password)
+                })
+                .catch(() => {
+                  toast.error('Couldn’t fetch the password. Please try again.')
+                })
+            }}
+            icon="tabler:edit"
+            text="Edit"
+          />
           <MenuItem
             onClick={() => {
               setSelectedPassword(password)

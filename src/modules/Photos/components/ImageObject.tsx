@@ -127,7 +127,7 @@ function CustomZoomContent({
 
   return (
     <>
-      <div className="flex h-[100dvh] w-full flex-center">
+      <div className="flex-center flex h-[100dvh] w-full">
         {img}
         <header className="absolute left-0 top-0 flex w-full items-center justify-between gap-2 p-8">
           {(() => {
@@ -152,7 +152,7 @@ function CustomZoomContent({
           <div className="flex items-center gap-4">
             <HamburgerMenu
               lighter
-              position="relative"
+              className="relative"
               customWidth="w-56"
               customIcon="tabler:download"
             >
@@ -181,7 +181,7 @@ function CustomZoomContent({
             >
               <Icon icon="tabler:trash" className="h-5 w-5" />
             </button>
-            <HamburgerMenu lighter position="relative" customWidth="w-56">
+            <HamburgerMenu lighter className="relative" customWidth="w-56">
               {beingDisplayedInAlbum && (
                 <MenuItem
                   icon="tabler:album"
@@ -290,7 +290,7 @@ function ImageObject({
           )}
           <button
             onClick={toggleSelected}
-            className={`group/select-button absolute left-2.5 top-2.5 h-6 w-6 flex-center rounded-full transition-all  ${
+            className={`group/select-button flex-center absolute left-2.5 top-2.5 h-6 w-6 rounded-full transition-all  ${
               selected
                 ? 'flex bg-custom-500 opacity-100'
                 : 'hidden bg-bg-200 opacity-50 hover:!bg-bg-100 hover:!opacity-100 group-hover/image:flex'

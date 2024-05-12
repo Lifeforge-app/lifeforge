@@ -10,6 +10,7 @@ interface IPasswordEntry {
   updated: string
   username: string
   website: string
+  decrypted?: string
 }
 
 export type { IPasswordEntry }

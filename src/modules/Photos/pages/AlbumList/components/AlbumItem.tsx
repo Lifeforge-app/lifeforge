@@ -27,7 +27,7 @@ function AlbumItem({
         to={`/photos/album/${album.id}`}
         className="absolute left-0 top-0 h-full w-full rounded-md transition-all duration-100 hover:bg-bg-900/[0.03] dark:hover:bg-bg-100/5"
       />
-      <div className="pointer-events-none relative mb-2 flex h-52 flex-center rounded-lg bg-bg-200 shadow-lg dark:bg-bg-800/50">
+      <div className="flex-center pointer-events-none relative mb-2 flex h-52 rounded-lg bg-bg-200 shadow-lg dark:bg-bg-800/50">
         {album.cover ? (
           <img
             src={`${import.meta.env.VITE_POCKETBASE_ENDPOINT}/api/files/${
@@ -65,7 +65,7 @@ function AlbumItem({
           {album.is_public ? 'Public' : 'Private'}
         </p>
       </div>
-      <HamburgerMenu position="absolute bottom-6 right-4">
+      <HamburgerMenu className="absolute bottom-6 right-4">
         <MenuItem
           icon="tabler:pencil"
           onClick={() => {

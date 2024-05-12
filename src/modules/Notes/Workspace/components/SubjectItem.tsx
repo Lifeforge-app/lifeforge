@@ -37,7 +37,7 @@ function SubjectItem({
         to={`/notes/${workspace}/${subject.id}`}
         className="absolute left-0 top-0 h-full w-full hover:bg-white/[0.05]"
       />
-      <HamburgerMenu position="absolute right-4 top-4 z-20">
+      <HamburgerMenu className="absolute right-4 top-4 z-20">
         <MenuItem
           onClick={() => {
             setExistedData(subject)

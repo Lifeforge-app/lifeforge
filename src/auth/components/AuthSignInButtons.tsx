@@ -2,6 +2,7 @@
 import { Icon } from '@iconify/react'
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
+import Button from '@components/Button'
 import { AuthContext } from '@providers/AuthProvider'
 
 function AuthSignInButton({
@@ -22,7 +23,7 @@ function AuthSignInButton({
 
   return (
     <div className="mt-6 flex flex-col gap-6">
-      <button
+      <Button
         disabled={
           emailOrUsername.length === 0 ||
           password.length === 0 ||
@@ -30,28 +31,25 @@ function AuthSignInButton({
           auth
         }
         onClick={signIn}
-        className="flex h-[4.6rem] flex-center rounded-lg bg-custom-500 p-6 font-semibold uppercase tracking-widest text-bg-100 transition-all hover:bg-custom-600 disabled:cursor-not-allowed disabled:bg-custom-700 disabled:text-bg-200 dark:disabled:bg-custom-900 dark:disabled:text-bg-500"
+        icon={loading ? 'svg-spinners:180-ring' : undefined}
       >
-        {loading ? (
-          <Icon icon="svg-spinners:180-ring" />
-        ) : (
-          t('auth.signInButton')
-        )}
-      </button>
+        {t('auth.signInButton')}
+      </Button>
       <div className="flex items-center gap-3">
         <div className="h-[2px] w-full bg-bg-600"></div>
         <div className="shrink-0 font-medium text-bg-600">{t('auth.or')}</div>
         <div className="h-[2px] w-full bg-bg-600"></div>
       </div>
       <div className="flex w-full gap-4">
-        <button
-          type="button"
+        <Button
           onClick={signInWithPasskey}
-          className="flex w-full flex-center gap-3 rounded-lg bg-bg-400 p-6 font-semibold uppercase tracking-widest text-bg-100 transition-all hover:bg-bg-500 dark:bg-bg-800 dark:hover:bg-bg-700"
+          disabled={loading || auth}
+          icon={loading ? 'svg-spinners:180-ring' : 'tabler:key'}
+          type="secondary"
+          className="w-full"
         >
-          <Icon icon="tabler:key" className="text-2xl" />
           {t('auth.signInWithPasskey')}
-        </button>
+        </Button>
       </div>
     </div>
   )

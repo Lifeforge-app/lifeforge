@@ -12,7 +12,7 @@ function MenuItem({
   icon: string
   text: string
   isRed?: boolean
-  onClick: () => void
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
   isToggled?: boolean
 }): React.ReactElement {
   return (

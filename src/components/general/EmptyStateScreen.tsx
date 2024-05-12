@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
 import React from 'react'
+import Button from './Button'
 
 function EmptyStateScreen({
   setModifyModalOpenType,
@@ -19,20 +20,20 @@ function EmptyStateScreen({
   ctaContent?: string
 }): React.ReactElement {
   return (
-    <div className="flex h-full w-full flex-col flex-center gap-6 ">
+    <div className="flex-center flex h-full w-full flex-col gap-6 ">
       <Icon icon={icon} className="h-32 w-32" />
       <h2 className="text-center text-3xl font-semibold">{title}</h2>
       <p className="-mt-2 text-center text-lg text-bg-500">{description}</p>
       {ctaContent && setModifyModalOpenType && (
-        <button
+        <Button
           onClick={() => {
             setModifyModalOpenType('create')
           }}
-          className="mt-6 flex items-center gap-2 rounded-full bg-custom-500 p-4 px-6 pr-7 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-custom-600 dark:text-bg-800"
+          icon="tabler:plus"
+          className="mt-6"
         >
-          <Icon icon="tabler:plus" className="text-xl" />
           {ctaContent}
-        </button>
+        </Button>
       )}
     </div>
   )

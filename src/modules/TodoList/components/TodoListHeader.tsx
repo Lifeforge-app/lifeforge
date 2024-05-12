@@ -14,6 +14,8 @@ function TodoListHeader({
     useContext(TodoListContext)
   const [searchParams, setSearchParams] = useSearchParams()
 
+  if (typeof entries === 'string' || typeof lists === 'string') return <></>
+
   return (
     <div className="flex items-center justify-between">
       <div>
@@ -30,11 +32,7 @@ function TodoListHeader({
           {Boolean(searchParams.get('list')) && (
             <span className="flex-center flex gap-1 rounded-full bg-custom-500/20 px-2 py-1 text-sm text-custom-500">
               <Icon icon="tabler:list" className="h-4 w-4" />
-              {
-                (lists as ITodoListList[]).find(
-                  list => list.id === searchParams.get('list')
-                )?.name
-              }
+              {lists.find(list => list.id === searchParams.get('list'))?.name}
               <button
                 onClick={() => {
                   setSearchParams(searchParams => {

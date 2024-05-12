@@ -1,30 +1,40 @@
-import { Icon } from '@iconify/react'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import Button from './Button'
 
 function NotFound(): React.ReactElement {
+  const navigate = useNavigate()
+
   return (
-    <div className="flex h-full w-full flex-col flex-center gap-6">
+    <div className="flex-center flex h-full w-full flex-col gap-6">
       <h1 className="text-[10rem] text-custom-500">;-;</h1>
       <h1 className="text-4xl font-semibold">Page not found</h1>
       <h2 className="-mt-2 text-xl text-bg-500">
         The page you are looking for does not exist.
       </h2>
       <div className="mt-6 flex items-center gap-4">
-        <Link
-          to="/"
-          className="flex items-center rounded-lg bg-custom-500 px-6 py-4 font-medium uppercase tracking-widest text-white shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-custom-600"
+        <Button
+          icon="tabler:arrow-left"
+          onClick={() => {
+            navigate('/')
+          }}
         >
-          <Icon icon="tabler:arrow-left" className="mr-2 h-5 w-5" />
           Return home
-        </Link>
-        <Link
-          to="bug-report"
-          className="flex items-center rounded-lg bg-bg-200 px-6 py-4 font-medium uppercase tracking-widest shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-bg-300 dark:bg-bg-800"
+        </Button>
+        <Button
+          icon="tabler:bug"
+          onClick={() => {
+            const a = document.createElement('a')
+            a.href =
+              'https://github.com/melvinchia3636/personalManagementSystem/issues'
+            a.target = '_blank'
+            a.rel = 'noopener noreferrer'
+            a.click()
+          }}
+          type="secondary"
         >
-          <Icon icon="tabler:bug" className="mr-2 h-5 w-5" />
           Report a bug
-        </Link>
+        </Button>
       </div>
     </div>
   )
