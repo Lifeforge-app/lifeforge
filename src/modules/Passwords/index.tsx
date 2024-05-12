@@ -26,10 +26,9 @@ function Passwords(): React.ReactElement {
   const [loading, setLoading] = useState<boolean>(false)
   const [createPasswordModalOpenType, setCreatePasswordModalOpenType] =
     useState<'create' | 'update' | null>(null)
-  const [passwordList, refreshPasswordList] = useFetch<IPasswordEntry[]>(
-    'passwords/password/list',
-    masterPassword !== ''
-  )
+  const [passwordList, refreshPasswordList, setPasswordList] = useFetch<
+    IPasswordEntry[]
+  >('passwords/password/list', masterPassword !== '')
   const [selectedPassword, setSelectedPassword] =
     useState<IPasswordEntry | null>(null)
   const [
@@ -147,6 +146,7 @@ function Passwords(): React.ReactElement {
                     setCreatePasswordModalOpenType
                   }
                   setExistedData={setExistedData}
+                  setPasswordList={setPasswordList}
                 />
               ))}
             </div>

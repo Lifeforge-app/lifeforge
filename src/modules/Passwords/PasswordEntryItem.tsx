@@ -14,7 +14,8 @@ function PasswordEntryITem({
   setSelectedPassword,
   setIsDeletePasswordConfirmationModalOpen,
   setCreatePasswordModalOpenType,
-  setExistedData
+  setExistedData,
+  setPasswordList
 }: {
   password: IPasswordEntry
   masterPassword: string
@@ -28,17 +29,18 @@ function PasswordEntryITem({
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedData: React.Dispatch<React.SetStateAction<IPasswordEntry | null>>
+  setPasswordList: React.Dispatch<React.SetStateAction<IPasswordEntry[]>>
 }): React.ReactElement {
   const [decryptedPassword, setDecryptedPassword] = useState<string | null>(
     null
   )
   const [loading, setLoading] = useState(false)
 
-  async function getDecryptedPassword(id: string): Promise<string> {
+  async function getDecryptedPassword(): Promise<string> {
     const decrypted = await fetch(
-      `${
-        import.meta.env.VITE_API_HOST
-      }/passwords/password/decrypt/${id}?master=${masterPassword}`,
+      `${import.meta.env.VITE_API_HOST}/passwords/password/decrypt/${
+        password.id
+      }?master=${masterPassword}`,
       {
         method: 'GET',
         headers: {
@@ -60,6 +62,65 @@ function PasswordEntryITem({
       })
 
     return decrypted
+  }
+
+  function copyPassword(): void {
+    if (decryptedPassword !== null) {
+      navigator.clipboard
+        .writeText(decryptedPassword)
+        .then(() => {
+          toast.success('Password copied!')
+        })
+        .catch(() => {
+          toast.error('Couldn’t copy the password. Please try again.')
+        })
+    } else {
+      getDecryptedPassword()
+        .then(password => {
+          navigator.clipboard
+            .writeText(password)
+            .then(() => {
+              toast.success('Password copied!')
+            })
+            .catch(() => {
+              toast.error('Couldn’t copy the password. Please try again.')
+            })
+        })
+        .catch(() => {})
+    }
+  }
+
+  async function pinPassword(): Promise<void> {
+    await fetch(
+      `${import.meta.env.VITE_API_HOST}/passwords/password/pin/${password.id}`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        }
+      }
+    )
+      .then(async res => {
+        const data = await res.json()
+        if (res.ok && data.state === 'success') {
+          setPasswordList(prev =>
+            prev
+              .map(p =>
+                p.id === password.id ? { ...p, pinned: !p.pinned } : p
+              )
+              .sort((a, b) => (a.pinned ? -1 : 1))
+          )
+          toast.info(
+            `Password ${password.pinned ? 'unpinned' : 'pinned'} successfully`
+          )
+        } else {
+          throw new Error(data.message)
+        }
+      })
+      .catch(err => {
+        toast.error('Couldn’t pin the password. Please try again.')
+        console.error(err)
+      })
   }
 
   return (
@@ -93,7 +154,7 @@ function PasswordEntryITem({
             decryptedPassword === null
               ? (() => {
                   setLoading(true)
-                  getDecryptedPassword(password.id)
+                  getDecryptedPassword()
                     .then(setDecryptedPassword)
                     .catch(() => {})
                     .finally(() => {
@@ -116,41 +177,30 @@ function PasswordEntryITem({
           />
         </button>
         <button
-          onClick={() => {
-            if (decryptedPassword !== null) {
-              navigator.clipboard
-                .writeText(decryptedPassword)
-                .then(() => {
-                  toast.success('Password copied!')
-                })
-                .catch(() => {
-                  toast.error('Couldn’t copy the password. Please try again.')
-                })
-            } else {
-              getDecryptedPassword(password.id)
-                .then(password => {
-                  navigator.clipboard
-                    .writeText(password)
-                    .then(() => {
-                      toast.success('Password copied!')
-                    })
-                    .catch(() => {
-                      toast.error(
-                        'Couldn’t copy the password. Please try again.'
-                      )
-                    })
-                })
-                .catch(() => {})
-            }
-          }}
+          onClick={copyPassword}
           className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-800/70 hover:text-bg-100"
         >
           <Icon icon="tabler:copy" className="h-6 w-6" />
         </button>
+        <button
+          onClick={() => {
+            pinPassword().catch(() => {})
+          }}
+          className={`rounded-lg p-2 transition-all hover:bg-bg-800/70 ${
+            !password.pinned
+              ? 'text-bg-500 hover:text-bg-100'
+              : 'text-custom-500 hover:text-custom-400'
+          }`}
+        >
+          <Icon
+            icon={password.pinned ? 'tabler:pin-filled' : 'tabler:pin'}
+            className="h-6 w-6"
+          />
+        </button>
         <HamburgerMenu className="relative">
           <MenuItem
             onClick={() => {
-              getDecryptedPassword(password.id)
+              getDecryptedPassword()
                 .then(decrypted => {
                   setCreatePasswordModalOpenType('update')
                   password.decrypted = decrypted
