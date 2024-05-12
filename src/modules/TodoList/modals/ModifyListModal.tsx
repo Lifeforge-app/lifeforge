@@ -2,7 +2,7 @@
 /* eslint-disable multiline-ternary */
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import ColorInput from '@components/ColorPicker/ColorInput'
 import ColorPickerModal from '@components/ColorPicker/ColorPickerModal'
@@ -12,19 +12,15 @@ import IconInput from '@components/IconSelector/IconInput'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
 import ModalHeader from '@components/ModalHeader'
-import { type ITodoListList } from '@typedec/TodoList'
+import { TodoListContext } from '@providers/TodoListProvider'
 
-function ModifyListModal({
-  openType,
-  setOpenType,
-  updateListsList,
-  existedData
-}: {
-  openType: 'create' | 'update' | null
-  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  updateListsList: () => void
-  existedData: ITodoListList | null
-}): React.ReactElement {
+function ModifyListModal(): React.ReactElement {
+  const {
+    modifyListModalOpenType: openType,
+    setModifyListModalOpenType: setOpenType,
+    refreshLists,
+    selectedList
+  } = useContext(TodoListContext)
   const [loading, setLoading] = useState(false)
   const [listName, setListName] = useState('')
   const [listIcon, setListIcon] = useState('')
@@ -61,7 +57,7 @@ function ModifyListModal({
 
     fetch(
       `${import.meta.env.VITE_API_HOST}/todo-list/list/${innerOpenType}` +
-        (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
+        (innerOpenType === 'update' ? `/${selectedList?.id}` : ''),
       {
         method: innerOpenType === 'create' ? 'POST' : 'PATCH',
         headers: {
@@ -83,7 +79,7 @@ function ModifyListModal({
           }[innerOpenType!]
         )
         setOpenType(null)
-        updateListsList()
+        refreshLists()
       })
       .catch(err => {
         toast.error(
@@ -100,16 +96,16 @@ function ModifyListModal({
   }
 
   useEffect(() => {
-    if (innerOpenType === 'update' && existedData !== null) {
-      setListName(existedData.name)
-      setListColor(existedData.color)
-      setListIcon(existedData.icon)
+    if (innerOpenType === 'update' && selectedList !== null) {
+      setListName(selectedList.name)
+      setListColor(selectedList.color)
+      setListIcon(selectedList.icon)
     } else {
       setListName('')
       setListColor('#FFFFFF')
       setListIcon('')
     }
-  }, [innerOpenType, existedData])
+  }, [innerOpenType, selectedList])
 
   return (
     <>

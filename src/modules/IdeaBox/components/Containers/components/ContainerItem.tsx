@@ -58,7 +58,7 @@ function ContainerItem({
         to={`/idea-box/${container.id}`}
         className="absolute left-0 top-0 h-full w-full"
       />
-      <HamburgerMenu position="absolute right-4 top-4 overscroll-contain">
+      <HamburgerMenu className="absolute right-4 top-4 overscroll-contain">
         <MenuItem
           onClick={() => {
             setExistedData(container)

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
 /* eslint-disable react/jsx-no-undef */
@@ -5,6 +6,7 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import Button from '@components/Button'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
@@ -152,7 +154,7 @@ function GalleryHeader(): React.ReactElement {
         </p>
         <HamburgerMenu
           largerPadding
-          position="relative z-[9999] block md:hidden"
+          className="relative z-[9999] block md:hidden"
           customWidth="w-72"
         >
           <MenuItem
@@ -174,31 +176,27 @@ function GalleryHeader(): React.ReactElement {
       </div>
       <div className="flex h-14 w-full items-center gap-4 sm:w-auto">
         {showImportButton && (
-          <button
+          <Button
             onClick={() => {
               importFiles().catch(() => {})
             }}
             disabled={fileImportLoading}
-            className="flex h-full w-full flex-center gap-2 whitespace-nowrap rounded-lg bg-custom-500 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-auto"
+            icon={fileImportLoading ? 'svg-spinners:180-ring' : 'tabler:upload'}
           >
             {!fileImportLoading ? (
-              <>
-                <Icon icon="tabler:upload" className="text-xl" />
-                import
-              </>
+              <>import</>
             ) : (
               <>
-                <Icon icon="svg-spinners:180-ring" className="text-xl" />
                 {progress > 0
                   ? `Importing ${Math.round(progress * 100)}%`
                   : 'Importing'}
               </>
             )}
-          </button>
+          </Button>
         )}
         <HamburgerMenu
           largerPadding
-          position="relative z-[9999] hidden md:block"
+          className="relative z-[9999] hidden md:block"
           customWidth="w-72"
         >
           <MenuItem

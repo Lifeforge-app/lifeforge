@@ -301,7 +301,7 @@ export default function ProjectFiles({
                         )}
                       </p>
                     </div>
-                    <HamburgerMenu largerPadding position="relative">
+                    <HamburgerMenu largerPadding className="relative">
                       <MenuItem
                         icon="tabler:photo"
                         onClick={() => {

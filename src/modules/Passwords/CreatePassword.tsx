@@ -134,19 +134,13 @@ function CreatePassword(): React.ReactElement {
           }}
           darker
         />
-        <button
+        <Button
           onClick={confirmAction}
-          className="flex-center flex w-full gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-1/2"
+          icon={loading ? 'svg-spinners:180-ring' : 'tabler:check'}
+          className="w-1/2"
         >
-          {loading ? (
-            <Icon icon="svg-spinners:180-ring" className="h-6 w-6" />
-          ) : (
-            <>
-              <Icon icon="tabler:check" className="text-xl" />
-              Submit
-            </>
-          )}
-        </button>
+          Submit
+        </Button>
       </div>
       <Modal isOpen={confirmationModalOpen}>
         <h1 className="text-2xl font-semibold">
@@ -154,24 +148,26 @@ function CreatePassword(): React.ReactElement {
         </h1>
         <p className="mt-2 text-bg-500">
           This master password is unchangable for now! If you accidentally
-          forget the password, go to your database to reset it. This password is
-          hashed and stored in your user profile, and it is not decryptable. It
-          will be used to encrypt and decrypt the passwords you store in your
-          vault.
+          forget the password, you lose everything. This password is hashed and
+          stored in your user profile, and it is not decryptable. It will be
+          used to encrypt and decrypt the passwords you store in your vault.
         </p>
         <div className="mt-6 flex w-full justify-around gap-2">
-          <button
+          <Button
             onClick={() => {
               setConfirmationModalOpen(false)
             }}
-            className="flex-center flex w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700"
+            type="secondary"
+            icon=""
+            className="w-full"
           >
             Cancel
-          </button>
+          </Button>
           <Button
             disabled={loading}
             onClick={onSubmit}
             icon={loading ? 'svg-spinners:180-ring' : 'tabler:check'}
+            className="w-full"
           >
             {!loading && 'Confirm'}
           </Button>

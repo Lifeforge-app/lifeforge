@@ -12,11 +12,11 @@ import HamburgerMenu from '@components/HamburgerMenu/index.tsx'
 import MenuItem from '@components/HamburgerMenu/MenuItem.tsx'
 import ModuleWrapper from '@components/ModuleWrapper'
 import useFetch from '@hooks/useFetch'
-import { PhotosContext } from '../../../../providers/PhotosProvider'
 import {
   type IPhotoAlbumEntryItem,
   type IPhotosAlbum
 } from '@typedec/Photos.ts'
+import { PhotosContext } from '../../../../providers/PhotosProvider'
 import BottomBar from '../../components/BottomBar'
 import ImageObject from '../../components/ImageObject'
 import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosConfirmationModal.tsx'
@@ -84,7 +84,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                     default:
                       return (
                         <>
-                          <div className="flex h-14 w-14 shrink-0 flex-center rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
+                          <div className="flex-center flex h-14 w-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                             {albumData.cover !== '' ? (
                               <img
                                 src={`${
@@ -158,11 +158,11 @@ function PhotosAlbumGallery(): React.ReactElement {
                   }
                 })()}
               </h1>
-              <div className="flex flex-center gap-2">
+              <div className="flex-center flex gap-2">
                 <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
                   <Icon icon="tabler:share" className="text-2xl" />
                 </button>
-                <HamburgerMenu largerPadding position="relative">
+                <HamburgerMenu largerPadding className="relative">
                   <MenuItem
                     icon="tabler:pencil"
                     text="Rename"

@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useContext, useState } from 'react'
 import { toast } from 'react-toastify'
+import Button from '@components/Button'
 import Modal from '@components/Modal'
 import { PhotosContext } from '@providers/PhotosProvider'
 
@@ -75,30 +76,25 @@ function RemovePhotosFromAlbumConfirmationModal({
         can add them back whenever you want.
       </p>
       <div className="mt-6 flex w-full justify-around gap-2">
-        <button
+        <Button
           onClick={() => {
             setRemovePhotosFromAlbumConfirmationModalOpen(false)
           }}
-          className="flex w-full flex-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700"
+          type="secondary"
+          icon=""
+          className="w-full"
         >
           Cancel
-        </button>
-        <button
+        </Button>
+        <Button
           disabled={loading}
           onClick={deleteData}
-          className="flex w-full flex-center gap-2 rounded-lg bg-red-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-red-600"
+          isRed
+          className="w-full"
+          icon={loading ? 'svg-spinners:180-ring' : 'tabler:layout-grid-remove'}
         >
-          {loading ? (
-            <>
-              <span className="small-loader-light"></span>
-            </>
-          ) : (
-            <>
-              <Icon icon="tabler:layout-grid-remove" className="h-5 w-5" />
-              remove
-            </>
-          )}
-        </button>
+          remove
+        </Button>
       </div>
     </Modal>
   )
