@@ -10,10 +10,18 @@ import { type IPasswordEntry } from '@typedec/Password'
 
 function PasswordEntryITem({
   password,
-  masterPassword
+  masterPassword,
+  setSelectedPassword,
+  setIsDeletePasswordConfirmationModalOpen
 }: {
   password: IPasswordEntry
   masterPassword: string
+  setSelectedPassword: React.Dispatch<
+    React.SetStateAction<IPasswordEntry | null>
+  >
+  setIsDeletePasswordConfirmationModalOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >
 }): React.ReactElement {
   const [decryptedPassword, setDecryptedPassword] = useState<string | null>(
     null
@@ -135,7 +143,15 @@ function PasswordEntryITem({
         </button>
         <HamburgerMenu position="relative">
           <MenuItem icon="tabler:edit" text="Edit" />
-          <MenuItem icon="tabler:trash" text="Delete" isRed />
+          <MenuItem
+            onClick={() => {
+              setSelectedPassword(password)
+              setIsDeletePasswordConfirmationModalOpen(true)
+            }}
+            icon="tabler:trash"
+            text="Delete"
+            isRed
+          />
         </HamburgerMenu>
       </div>
     </div>

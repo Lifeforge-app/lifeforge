@@ -7,6 +7,7 @@ import { cookieParse } from 'pocketbase'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import DatePicker from 'react-date-picker'
 import { toast } from 'react-toastify'
+import Button from '@components/Button'
 import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
@@ -208,17 +209,20 @@ function ModifyTaskWindow(): React.ReactElement {
         <ListSelector list={list} setList={setList} />
         <TagsSelector tags={tags} setTags={setTags} />
         <div className="mt-12 flex flex-1 flex-col-reverse items-end gap-2 sm:flex-row">
-          <button
+          <Button
             disabled={loading}
             onClick={closeWindow}
-            className="flex-center flex h-16 w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
+            icon={''}
+            className="w-full"
+            type="secondary"
           >
             cancel
-          </button>
+          </Button>
           <CreateOrModifyButton
             loading={loading}
             onClick={onSubmitButtonClick}
             type={innerOpenType}
+            className="w-full"
           />
         </div>
       </div>

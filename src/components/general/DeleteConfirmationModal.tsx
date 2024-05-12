@@ -14,7 +14,7 @@ function DeleteConfirmationModal({
   updateDataList,
   apiEndpoint,
   customText,
-  nameKey = 'name',
+  nameKey,
   customCallback
 }: {
   itemName: string
@@ -67,7 +67,8 @@ function DeleteConfirmationModal({
   return (
     <Modal isOpen={isOpen}>
       <h1 className="text-2xl font-semibold">
-        Are you sure you want to delete {data?.[nameKey] || `the ${itemName}`}?
+        Are you sure you want to delete{' '}
+        {nameKey ? data?.[nameKey] : `the ${itemName}`}?
       </h1>
       <p className="mt-2 text-bg-500">
         {customText ?? (
@@ -80,14 +81,14 @@ function DeleteConfirmationModal({
       <div className="mt-6 flex w-full justify-around gap-2">
         <button
           onClick={onClose}
-          className="flex w-full flex-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700 dark:text-bg-100"
+          className="flex-center flex w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700 dark:text-bg-100"
         >
           Cancel
         </button>
         <button
           disabled={loading}
           onClick={deleteData}
-          className="flex w-full flex-center gap-2 rounded-lg bg-red-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-red-600"
+          className="flex-center flex w-full gap-2 rounded-lg bg-red-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-red-600"
         >
           {loading ? (
             <>
