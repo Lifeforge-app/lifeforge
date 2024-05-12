@@ -471,9 +471,13 @@ input:-webkit-autofill:active {
 }
 
 button[class^='react-calendar__navigation'] {
-  @apply flex items-center justify-center rounded-md hover:bg-bg-200 dark:hover:bg-bg-700/50 focus:bg-bg-200 dark:focus:bg-bg-700/50 disabled:text-bg-500 disabled:bg-transparent disabled:hover:bg-transparent disabled:dark:hover:bg-transparent;
+  @apply flex flex-center rounded-md hover:bg-bg-200 dark:hover:bg-bg-700/50 focus:bg-bg-200 dark:focus:bg-bg-700/50 disabled:text-bg-500 disabled:bg-transparent disabled:hover:bg-transparent disabled:dark:hover:bg-transparent;
 }
 
 .react-calendar__tile--now {
   @apply bg-custom-500 text-bg-50 dark:text-bg-800;
+}
+
+.flex-center {
+  @apply items-center justify-center;
 }

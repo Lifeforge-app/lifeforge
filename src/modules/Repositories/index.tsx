@@ -1,7 +1,8 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useState } from 'react'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import Button from '@components/Button'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 import SearchInput from '@components/SearchInput'
@@ -41,13 +42,9 @@ function Repositories(): React.ReactElement {
               {/* <span className="text-base text-bg-500">(10)</span> */}
             </h1>
             <div className="flex items-center gap-6">
-              <button
-                onClick={() => {}}
-                className="hidden items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 dark:text-bg-800 sm:flex"
-              >
-                <Icon icon="tabler:plus" className="text-xl" />
+              <Button onClick={() => {}} icon="tabler:plus">
                 new repo
-              </button>
+              </Button>
               <button
                 onClick={() => {
                   setSidebarOpen(true)
@@ -80,7 +77,7 @@ function Repositories(): React.ReactElement {
                           {repo.description}
                         </p>
                       </div>
-                      {repo.language && (
+                      {repo.language !== '' && (
                         <span
                           className="relative isolate mb-1 block w-min whitespace-nowrap rounded-full px-3 py-1 text-xs shadow-sm"
                           style={{

@@ -131,7 +131,7 @@ function Ideas(): React.ReactElement {
       />
       <DeleteConfirmationModal
         isOpen={deleteIdeaModalOpen}
-        closeModal={() => {
+        onClose={() => {
           setDeleteIdeaModalOpen(false)
         }}
         apiEndpoint="idea-box/idea/delete"

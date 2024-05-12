@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
 import React from 'react'
+import Button from '@components/Button'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 
@@ -31,7 +32,7 @@ function Calendar(): React.ReactElement {
                 {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
                   <div
                     key={day}
-                    className="flex items-center justify-center text-sm text-bg-500"
+                    className="flex-center flex text-sm text-bg-500"
                   >
                     {day}
                   </div>
@@ -162,15 +163,12 @@ function Calendar(): React.ReactElement {
               <button className="rounded-lg p-4 text-bg-100 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-700/50">
                 <Icon icon="tabler:search" className="text-2xl" />
               </button>
-              <button className="flex items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 dark:text-bg-800">
-                <Icon icon="tabler:plus" className="text-xl" />
-                create
-              </button>
+              <Button icon="tabler:plus">Create</Button>
             </div>
           </div>
           <div className="mt-4 flex h-full min-h-0 flex-1 flex-col">
             <div className="mb-1.5 flex w-full">
-              <div className="flex w-20 shrink-0 flex-col items-center justify-center rounded-lg bg-bg-50 py-4 text-bg-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+              <div className="flex-center flex w-20 shrink-0 flex-col rounded-lg bg-bg-50 py-4 text-bg-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
                 GMT
                 <span className="text-xl">+8</span>
               </div>
@@ -179,7 +177,7 @@ function Calendar(): React.ReactElement {
                 .map((_, index) => (
                   <div
                     key={index}
-                    className={`ml-1.5 flex w-full items-center justify-center gap-2 rounded-lg bg-bg-50 py-4 text-bg-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900 ${
+                    className={`flex-center ml-1.5 flex w-full gap-2 rounded-lg bg-bg-50 py-4 text-bg-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900 ${
                       index === 3 && 'bg-custom-500/20 text-custom-500'
                     }`}
                   >

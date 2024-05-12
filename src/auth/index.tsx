@@ -7,7 +7,7 @@ import AuthSideImage from './components/AuthSideImage'
 function Auth(): React.ReactElement {
   return (
     <>
-      <section className="flex h-full w-full flex-col items-center justify-center overflow-y-auto px-8 py-12 sm:px-12 lg:w-1/2">
+      <section className="flex h-full w-full flex-col flex-center overflow-y-auto px-8 py-12 sm:px-12 lg:w-1/2">
         <AuthHeader />
         <AuthForm />
       </section>

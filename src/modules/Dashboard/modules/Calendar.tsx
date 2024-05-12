@@ -27,10 +27,7 @@ export default function Calendar(): React.ReactElement {
         </div>
         <div className="grid grid-cols-7 gap-4">
           {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
-            <div
-              key={day}
-              className="flex items-center justify-center text-sm text-bg-100"
-            >
+            <div key={day} className="flex flex-center text-sm text-bg-100">
               {day}
             </div>
           ))}

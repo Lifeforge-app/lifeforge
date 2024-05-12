@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable multiline-ternary */
-import { Icon } from '@iconify/react'
-import React, { useContext } from 'react'
-import { PersonalizationContext } from '@providers/PersonalizationProvider'
+import React from 'react'
+import Button from './Button'
 
 function CreateOrModifyButton({
   type,
@@ -13,47 +12,29 @@ function CreateOrModifyButton({
   loading: boolean
   onClick: () => void
 }): React.ReactElement {
-  const { theme } = useContext(PersonalizationContext)
-
   return (
-    <button
+    <Button
       disabled={loading}
-      className="mt-6 flex h-16 w-full items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-custom-600 dark:text-bg-800"
+      className="mt-6"
       onClick={onClick}
-    >
-      {!loading && type !== null ? (
-        <>
-          <Icon
-            icon={
-              {
-                create: 'tabler:plus',
-                update: 'tabler:pencil',
-                rename: 'tabler:pencil'
-              }[type]
-            }
-            className="h-5 w-5"
-          />
-          {
-            {
-              create: 'CREATE',
-              update: 'UPDATE',
-              rename: 'RENAME'
+      icon={
+        !loading && type !== null
+          ? {
+              create: 'tabler:plus',
+              update: 'tabler:pencil',
+              rename: 'tabler:pencil'
             }[type]
-          }
-        </>
-      ) : (
-        <span
-          className={
-            (theme === 'system' &&
-              window.matchMedia &&
-              window.matchMedia('(prefers-color-scheme: dark)').matches) ||
-            theme === 'dark'
-              ? 'small-loader-dark'
-              : 'small-loader-light'
-          }
-        ></span>
-      )}
-    </button>
+          : 'svg-spinners:180-ring'
+      }
+    >
+      {!loading &&
+        type !== null &&
+        {
+          create: 'CREATE',
+          update: 'UPDATE',
+          rename: 'RENAME'
+        }[type]}
+    </Button>
   )
 }
 

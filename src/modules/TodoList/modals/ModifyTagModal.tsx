@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable multiline-ternary */
-import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
@@ -8,6 +7,7 @@ import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
+import ModalHeader from '@components/ModalHeader'
 import { type ITodoListTag } from '@typedec/TodoList'
 
 function ModifyTagModal({
@@ -92,41 +92,29 @@ function ModifyTagModal({
   return (
     <>
       <Modal isOpen={openType !== null}>
-        <div className="mb-8 flex items-center justify-between ">
-          <h1 className="flex items-center gap-3 text-2xl font-semibold">
-            <Icon
-              icon={
-                {
-                  create: 'tabler:plus',
-                  update: 'tabler:pencil'
-                }[innerOpenType!]
-              }
-              className="h-7 w-7"
-            />
+        <ModalHeader
+          title={`${
             {
-              {
-                create: 'Create ',
-                update: 'Update '
-              }[innerOpenType!]
-            }{' '}
-            tag
-          </h1>
-          <button
-            onClick={() => {
-              setOpenType(null)
-            }}
-            className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:text-bg-100 dark:hover:bg-bg-800"
-          >
-            <Icon icon="tabler:x" className="h-6 w-6" />
-          </button>
-        </div>
+              create: 'Create ',
+              update: 'Update '
+            }[innerOpenType!]
+          } tag`}
+          icon={`${
+            {
+              create: 'tabler:plus',
+              update: 'tabler:pencil'
+            }[innerOpenType!]
+          }`}
+          onClose={() => {
+            setOpenType(null)
+          }}
+        />
         <Input
           name="Tag name"
           value={tagName}
           updateValue={updateTagName}
           placeholder="Tag name"
           icon="tabler:tag"
-          darker
           onKeyDown={e => {
             if (e.key === 'Enter') {
               onSubmitButtonClick()

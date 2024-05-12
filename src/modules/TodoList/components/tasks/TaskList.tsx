@@ -2,6 +2,7 @@
 import React, { useContext } from 'react'
 import { TodoListContext } from '@providers/TodoListProvider'
 import TaskItem from './TaskItem'
+
 function TaskList(): React.ReactElement {
   const { entries } = useContext(TodoListContext)
 

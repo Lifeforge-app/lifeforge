@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
+import Button from '@components/Button'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 import SearchInput from '@components/SearchInput'
@@ -72,10 +73,7 @@ function ReferenceBooks(): React.ReactElement {
             <h1 className="text-4xl font-semibold text-bg-100">
               All Books <span className="text-base text-bg-500">(10)</span>
             </h1>
-            <button className="flex shrink-0 items-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-800">
-              <Icon icon="tabler:plus" className="h-5 w-5 shrink-0" />
-              <span className="shrink-0">upload</span>
-            </button>
+            <Button icon="tabler:plus">upload</Button>
           </div>
           <SearchInput
             searchQuery={searchQuery}
@@ -90,7 +88,7 @@ function ReferenceBooks(): React.ReactElement {
                   key={i}
                   className="relative flex flex-col items-start rounded-lg"
                 >
-                  <div className="flex h-72 w-full items-center justify-center rounded-lg bg-bg-50 p-8 dark:bg-bg-900">
+                  <div className="flex-center flex h-72 w-full rounded-lg bg-bg-50 p-8 dark:bg-bg-900">
                     <img
                       src={faker.image.imageUrl(300, 400, 'airport', true)}
                       alt={faker.lorem.sentence()}
@@ -104,17 +102,10 @@ function ReferenceBooks(): React.ReactElement {
                     {faker.person.fullName()}
                   </div>
                   <div className="mt-6 flex w-full flex-col gap-4">
-                    <button className="flex items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-800">
-                      <Icon icon="tabler:book" className="h-5 w-5 shrink-0" />
-                      <span className="shrink-0">read</span>
-                    </button>
-                    <button className="flex items-center justify-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider">
-                      <Icon
-                        icon="tabler:download"
-                        className="h-5 w-5 shrink-0"
-                      />
-                      <span className="shrink-0">download</span>
-                    </button>
+                    <Button icon="tabler:book">Read</Button>
+                    <Button icon="tabler:download" type="secondary">
+                      Download
+                    </Button>
                   </div>
                 </li>
               ))}

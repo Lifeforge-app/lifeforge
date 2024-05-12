@@ -6,11 +6,8 @@ import GoBackButton from '@components/GoBackButton'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
+import { type IFlashcardDeck, type IFlashcardCard } from '@typedec/Flashcard'
 import EditCardModal from './EditCardModal'
-import {
-  type IFlashcardDeck,
-  type IFlashcardCard
-} from '../../../types/Flashcard'
 
 function CardSet(): React.ReactElement {
   const { id } = useParams<{ id: string }>()
@@ -120,7 +117,7 @@ function CardSet(): React.ReactElement {
               }
             })()}
           </h1>
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex-center flex gap-2">
             <button className="rounded-md p-4 text-bg-500 transition-all hover:bg-bg-800 hover:text-bg-100">
               <Icon icon="tabler:border-corners" className="text-xl" />
             </button>
@@ -136,14 +133,14 @@ function CardSet(): React.ReactElement {
           </div>
         </div>
       </div>
-      <div className="flex w-full flex-1 flex-col items-center justify-center">
+      <div className="flex-center flex w-full flex-1 flex-col">
         <APIComponentWithFallback data={cards}>
           {typeof cards !== 'string' && (
             <>
-              <div className="flex h-1/2 w-3/5 items-center justify-center gap-4">
+              <div className="flex-center flex h-1/2 w-3/5 gap-4">
                 <button
                   onClick={gotoLastCard}
-                  className="flex h-full shrink-0 items-center justify-center p-4"
+                  className="flex-center flex h-full shrink-0 p-4"
                 >
                   <Icon icon="tabler:chevron-left" className="text-3xl" />
                 </button>
@@ -164,7 +161,7 @@ function CardSet(): React.ReactElement {
                           />
                         </button>
                       </div>
-                      <div className="flex w-full flex-1 flex-col items-center justify-center text-center text-3xl">
+                      <div className="flex-center flex w-full flex-1 flex-col text-center text-3xl">
                         {isShowingAnswer
                           ? cards[currentIndex]?.answer
                           : cards[currentIndex]?.question}
@@ -176,14 +173,14 @@ function CardSet(): React.ReactElement {
                 </div>
                 <button
                   onClick={gotoNextCard}
-                  className="flex h-full shrink-0 items-center justify-center p-4"
+                  className="flex-center flex h-full shrink-0 p-4"
                 >
                   <Icon icon="tabler:chevron-right" className="text-3xl" />
                 </button>
               </div>
               <button
                 onClick={pickRandomCard}
-                className="mt-12 flex w-1/2 items-center justify-center gap-2 rounded-lg bg-bg-200 p-4 text-lg font-medium shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800"
+                className="flex-center mt-12 flex w-1/2 gap-2 rounded-lg bg-bg-200 p-4 text-lg font-medium shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-800"
               >
                 <Icon icon="tabler:dice" className="text-2xl" />
                 Pick Random Card

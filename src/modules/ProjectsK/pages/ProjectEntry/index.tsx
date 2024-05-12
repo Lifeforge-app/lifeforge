@@ -106,7 +106,7 @@ function ProjectsKEntry(): React.ReactElement {
                   default:
                     return (
                       <>
-                        <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-md bg-bg-800">
+                        <div className="flex-center flex h-12 w-12 overflow-hidden rounded-md bg-bg-800">
                           {projectData.thumbnail ? (
                             <img
                               src={`${
@@ -198,7 +198,7 @@ function ProjectsKEntry(): React.ReactElement {
                 }
               })()}
             </h1>
-            <div className="flex items-center justify-center gap-2">
+            <div className="flex-center flex gap-2">
               <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
                 <Icon icon="tabler:bulb" className="text-2xl" />
               </button>
@@ -219,7 +219,7 @@ function ProjectsKEntry(): React.ReactElement {
               onClick={() => {
                 navigate(`#${id}`)
               }}
-              className={`flex w-full items-center justify-center gap-2 p-6 text-bg-500 transition-all hover:text-bg-800 dark:hover:text-bg-100 ${
+              className={`flex-center flex w-full gap-2 p-6 text-bg-500 transition-all hover:text-bg-800 dark:hover:text-bg-100 ${
                 location.hash === `#${id}`
                   ? 'border-b-2 border-bg-100 !text-bg-100'
                   : ''

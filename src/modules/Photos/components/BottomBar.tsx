@@ -8,7 +8,7 @@ import {
   type IPhotosEntryDimensionsItem,
   type IPhotosEntryDimensionsAll,
   type IPhotoAlbumEntryItem
-} from '../../../types/Photos'
+} from '@typedec/Photos'
 
 function BottomBar({
   photos,

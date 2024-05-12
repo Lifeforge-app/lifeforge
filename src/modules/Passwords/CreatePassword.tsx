@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useContext, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
+import Button from '@components/Button'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
 import { AuthContext } from '@providers/AuthProvider'
@@ -77,7 +78,7 @@ function CreatePassword(): React.ReactElement {
 
   return (
     <>
-      <div className="flex h-full w-full flex-1 flex-col items-center justify-center gap-4">
+      <div className="flex-center flex h-full w-full flex-1 flex-col gap-4">
         <Icon icon="tabler:lock-plus" className="h-28 w-28" />
         <h2 className="text-4xl font-semibold">Create your master password</h2>
         <p className="mb-8 w-1/2 text-center text-lg text-bg-500">
@@ -135,7 +136,7 @@ function CreatePassword(): React.ReactElement {
         />
         <button
           onClick={confirmAction}
-          className="flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-1/2"
+          className="flex-center flex w-full gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-1/2"
         >
           {loading ? (
             <Icon icon="svg-spinners:180-ring" className="h-6 w-6" />
@@ -163,24 +164,17 @@ function CreatePassword(): React.ReactElement {
             onClick={() => {
               setConfirmationModalOpen(false)
             }}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700"
+            className="flex-center flex w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-700"
           >
             Cancel
           </button>
-          <button
+          <Button
             disabled={loading}
             onClick={onSubmit}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-custom-600 dark:text-bg-900"
+            icon={loading ? 'svg-spinners:180-ring' : 'tabler:check'}
           >
-            {loading ? (
-              <Icon icon="svg-spinners:180-ring" className="h-6 w-6" />
-            ) : (
-              <>
-                <Icon icon="tabler:check" className="h-5 w-5" />
-                Confirm
-              </>
-            )}
-          </button>
+            {!loading && 'Confirm'}
+          </Button>
         </div>
       </Modal>
     </>

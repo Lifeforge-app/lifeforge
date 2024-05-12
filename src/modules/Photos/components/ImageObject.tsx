@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useContext, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
@@ -127,7 +127,7 @@ function CustomZoomContent({
 
   return (
     <>
-      <div className="flex h-[100dvh] w-full items-center justify-center">
+      <div className="flex h-[100dvh] w-full flex-center">
         {img}
         <header className="absolute left-0 top-0 flex w-full items-center justify-between gap-2 p-8">
           {(() => {
@@ -290,7 +290,7 @@ function ImageObject({
           )}
           <button
             onClick={toggleSelected}
-            className={`group/select-button absolute left-2.5 top-2.5 h-6 w-6 items-center justify-center rounded-full transition-all  ${
+            className={`group/select-button absolute left-2.5 top-2.5 h-6 w-6 flex-center rounded-full transition-all  ${
               selected
                 ? 'flex bg-custom-500 opacity-100'
                 : 'hidden bg-bg-200 opacity-50 hover:!bg-bg-100 hover:!opacity-100 group-hover/image:flex'

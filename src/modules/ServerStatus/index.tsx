@@ -16,7 +16,7 @@ import {
   type IDiskUsage,
   type IMemoryUsage,
   type ISystemInfo
-} from '../../types/ServerStatus'
+} from '@typedec/ServerStatus'
 
 function formatBytes(bytes: number, decimals = 2): string {
   if (!+bytes) return '0 Bytes'

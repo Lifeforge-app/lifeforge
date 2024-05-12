@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
+import ModalHeader from '@components/ModalHeader'
 import { type INotesEntry } from '@typedec/Notes'
 
 function ModifyFolderModal({
@@ -109,34 +110,23 @@ function ModifyFolderModal({
   return (
     <>
       <Modal isOpen={openType !== null}>
-        <div className="mb-8 flex items-center justify-between ">
-          <h1 className="flex items-center gap-3 text-2xl font-semibold">
-            <Icon
-              icon={
-                {
-                  create: 'tabler:plus',
-                  update: 'tabler:pencil'
-                }[innerOpenType!]
-              }
-              className="h-7 w-7"
-            />
+        <ModalHeader
+          title={`${
             {
-              {
-                create: 'Create ',
-                update: 'Rename '
-              }[innerOpenType!]
-            }{' '}
-            folder
-          </h1>
-          <button
-            onClick={() => {
-              setOpenType(null)
-            }}
-            className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:text-bg-100 dark:hover:bg-bg-800"
-          >
-            <Icon icon="tabler:x" className="h-6 w-6" />
-          </button>
-        </div>
+              create: 'Create ',
+              update: 'Rename '
+            }[innerOpenType!]
+          } folder`}
+          icon={
+            {
+              create: 'tabler:plus',
+              update: 'tabler:pencil'
+            }[innerOpenType!]
+          }
+          onClose={() => {
+            setOpenType(null)
+          }}
+        />
         <Input
           name="Folder Name"
           placeholder="My lovely folder"

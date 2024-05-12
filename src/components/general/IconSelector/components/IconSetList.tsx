@@ -65,7 +65,7 @@ export default function IconSetList({
           onClick={() => {
             if (searchQuery) setCurrentIconSet({ search: searchQuery })
           }}
-          className="flex items-center justify-center gap-1 rounded-md bg-bg-200 px-6 py-4 font-medium text-bg-800 shadow-md transition-all hover:bg-[#b3bdc9]"
+          className="flex flex-center gap-1 rounded-md bg-bg-200 px-6 py-4 font-medium text-bg-800 shadow-md transition-all hover:bg-[#b3bdc9]"
         >
           Search
           <Icon icon="uil:arrow-right" className="h-5 w-5 text-bg-800" />
@@ -84,7 +84,7 @@ export default function IconSetList({
                 selectedCategory === index
                   ? 'bg-bg-200 text-bg-800 shadow-md'
                   : ''
-              } flex h-8 grow items-center justify-center whitespace-nowrap rounded-full bg-bg-800 px-6 text-sm text-bg-100 shadow-md transition-all md:grow-0`}
+              } flex h-8 grow flex-center whitespace-nowrap rounded-full bg-bg-800 px-6 text-sm text-bg-100 shadow-md transition-all md:grow-0`}
             >
               {category}
             </button>
@@ -133,7 +133,7 @@ export default function IconSetList({
                             className="sssm:flex-row flex w-full grow flex-col overflow-hidden rounded-md bg-bg-800 shadow-lg"
                           >
                             <div className="sssm:w-36 text-bg-00 flex w-full shrink-0 flex-col font-medium">
-                              <div className="sssm:gap-3 flex h-full w-full items-center justify-center gap-5 px-4 py-6 ">
+                              <div className="sssm:gap-3 flex h-full w-full flex-center gap-5 px-4 py-6 ">
                                 {iconSet.samples.map(sampleIcon => (
                                   <Icon
                                     key={sampleIcon}

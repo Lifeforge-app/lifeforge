@@ -13,7 +13,9 @@ import MenuItem from '@components/HamburgerMenu/MenuItem'
 import Input from '@components/Input'
 import { PersonalizationContext } from '@providers/PersonalizationProvider'
 import { TodoListContext } from '@providers/TodoListProvider'
+import DueDateInput from './components/DueDateInput'
 import ListSelector from './components/ListSelector'
+import NotesInput from './components/NotesInput'
 import PrioritySelector from './components/PrioritySelector'
 import TagsSelector from './components/TagsSelector'
 
@@ -30,7 +32,6 @@ function ModifyTaskWindow(): React.ReactElement {
     setDeleteTaskConfirmationModalOpen
   } = useContext(TodoListContext)
 
-  const { language } = useContext(PersonalizationContext)
   const [summary, setSummary] = useState('')
   const [notes, setNotes] = useState('')
   const [dueDate, setDueDate] = useState('')
@@ -200,94 +201,8 @@ function ModifyTaskWindow(): React.ReactElement {
           reference={summaryInputRef}
           autoFocus
         />
-        <div
-          onFocus={e => {
-            ;(
-              e.currentTarget.querySelector(
-                'textarea input'
-              ) as HTMLInputElement
-            )?.focus()
-          }}
-          className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 focus-within:!border-custom-500 dark:bg-bg-800/50"
-        >
-          <Icon
-            icon="tabler:file-text"
-            className="ml-6 h-6 w-6 shrink-0 text-bg-500 group-focus-within:!text-custom-500"
-          />
-          <div className="flex w-full items-center gap-2">
-            <span
-              className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 transition-all group-focus-within:!text-custom-500 ${
-                notes.length === 0
-                  ? 'top-1/2 -translate-y-1/2 group-focus-within:top-6 group-focus-within:text-[14px]'
-                  : 'top-6 -translate-y-1/2 text-[14px]'
-              }
-          `}
-            >
-              Notes
-            </span>
-            <textarea
-              value={notes}
-              onInput={e => {
-                e.currentTarget.style.height = 'auto'
-                e.currentTarget.style.height =
-                  e.currentTarget.scrollHeight + 'px'
-                updateNotes(e)
-              }}
-              placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-              className="mt-4 min-h-[2rem] w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
-            />
-          </div>
-        </div>
-        <div
-          className={`group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] focus-within:!border-custom-500 
-            dark:bg-bg-800/50
-          `}
-        >
-          <Icon
-            icon={'tabler:calendar'}
-            className={`ml-6 h-6 w-6 shrink-0 text-bg-800
-            group-focus-within:!text-custom-500 dark:text-bg-100`}
-          />
-          <div className="flex w-full items-center gap-2">
-            <span
-              className={`pointer-events-none absolute left-[4.2rem] top-6 -translate-y-1/2 text-[14px] font-medium tracking-wide 
-                 text-bg-500 transition-all group-focus-within:!text-custom-500
-              `}
-            >
-              Due Date
-            </span>
-            <DatePicker
-              value={dueDate}
-              minDate={new Date()}
-              onChange={setDueDate}
-              format="dd-MM-y"
-              clearIcon={null}
-              calendarIcon={null}
-              calendarProps={{
-                className:
-                  'bg-bg-200 dark:bg-bg-800 outline-none border-none rounded-lg p-4',
-                tileClassName:
-                  'hover:bg-bg-300 dark:hover:bg-bg-700/50 rounded-md disabled:text-bg-500 disabled:bg-transparent disabled:cursor-not-allowed disabled:hover:!bg-transparent disabled:dark:hover:!bg-transparent',
-                locale: language,
-                prevLabel: <Icon icon="tabler:chevron-left" />,
-                nextLabel: <Icon icon="tabler:chevron-right" />,
-                prev2Label: <Icon icon="tabler:chevrons-left" />,
-                next2Label: <Icon icon="tabler:chevrons-right" />
-              }}
-              className="mt-8 h-8 w-full rounded-lg border-none bg-transparent px-4 tracking-wider outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
-            />
-            {dueDate && (
-              <button
-                onClick={() => {
-                  setDueDate('')
-                }}
-                className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-500/30 hover:text-bg-200 focus:outline-none"
-              >
-                <Icon icon="tabler:x" className="h-6 w-6" />
-              </button>
-            )}
-          </div>
-        </div>
+        <NotesInput notes={notes} updateNotes={updateNotes} />
+        <DueDateInput dueDate={dueDate} setDueDate={setDueDate} />
 
         <PrioritySelector priority={priority} setPriority={setPriority} />
         <ListSelector list={list} setList={setList} />
@@ -296,7 +211,7 @@ function ModifyTaskWindow(): React.ReactElement {
           <button
             disabled={loading}
             onClick={closeWindow}
-            className="flex h-16 w-full items-center justify-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
+            className="flex-center flex h-16 w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
           >
             cancel
           </button>

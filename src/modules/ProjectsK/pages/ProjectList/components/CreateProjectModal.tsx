@@ -10,6 +10,7 @@ import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
+import ModalHeader from '@components/ModalHeader'
 import useFetch from '@hooks/useFetch'
 import { type IProjectsKProgressStep } from '@typedec/ProjectK'
 import { PROJECT_STATUS } from '..'
@@ -108,20 +109,13 @@ function CreateProjectModal({
   return (
     <>
       <Modal isOpen={isOpen}>
-        <div className="mb-8 flex items-center justify-between ">
-          <h1 className="flex items-center gap-3 text-2xl font-semibold">
-            <Icon icon="tabler:plus" className="h-7 w-7" />
-            Create project
-          </h1>
-          <button
-            onClick={() => {
-              setOpen(false)
-            }}
-            className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:text-bg-100 dark:hover:bg-bg-800"
-          >
-            <Icon icon="tabler:x" className="h-6 w-6" />
-          </button>
-        </div>
+        <ModalHeader
+          title="Create project"
+          icon="tabler:plus"
+          onClose={() => {
+            setOpen(false)
+          }}
+        />
         <div className="flex gap-4">
           {[
             ['Commercial', 'commercial', 'tabler:currency-dollar'],

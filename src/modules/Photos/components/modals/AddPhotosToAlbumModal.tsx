@@ -4,6 +4,7 @@ import { cookieParse } from 'pocketbase'
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import Button from '@components/Button'
 import Modal from '@components/Modal'
 import { PhotosContext } from '@providers/PhotosProvider'
 
@@ -135,7 +136,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                             : 'hover:bg-bg-200 dark:hover:bg-bg-800/50'
                         }`}
                       >
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
+                        <div className="flex-center flex h-10 w-10 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                           {album.cover ? (
                             <img
                               src={`${
@@ -172,20 +173,14 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                 <div className="absolute left-0 top-0 h-full w-full"></div>
               )}
             </ul>
-            <button
+            <Button
               onClick={onSubmitButtonClick}
               disabled={selectedAlbum === '' || loading}
-              className="mt-6 flex h-16 items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-md transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800"
+              className="mt-6"
+              icon={loading ? 'svg-spinners:180-ring' : 'tabler:photo-plus'}
             >
-              {!loading ? (
-                <>
-                  <Icon icon="tabler:photo-plus" className="h-5 w-5" />
-                  Add to album
-                </>
-              ) : (
-                <Icon icon="svg-spinners:180-ring" className="h-5 w-5" />
-              )}
-            </button>
+              {!loading && 'Add to album'}
+            </Button>
           </>
         )}
       </APIComponentWithFallback>

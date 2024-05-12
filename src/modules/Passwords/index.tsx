@@ -78,7 +78,7 @@ function Passwords(): React.ReactElement {
             onClick={() => {
               setCreatePasswordModalOpen(true)
             }}
-            className="flex w-full  items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-auto"
+            className="flex w-full  flex-center gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-auto"
           >
             <Icon icon="tabler:plus" className="text-xl" />
             new password
@@ -88,7 +88,7 @@ function Passwords(): React.ReactElement {
       {userData?.hasMasterPasswordHash === true ? (
         <CreatePassword />
       ) : masterPassword === '' ? (
-        <div className="flex h-full w-full flex-1 flex-col items-center justify-center gap-4">
+        <div className="flex h-full w-full flex-1 flex-col flex-center gap-4">
           <Icon icon="tabler:lock-access" className="h-28 w-28" />
           <h2 className="text-4xl font-semibold">Your vault is locked</h2>
           <p className="mb-8 text-center text-lg text-bg-500">
@@ -114,7 +114,7 @@ function Passwords(): React.ReactElement {
           />
           <button
             onClick={onSubmit}
-            className="flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-1/2"
+            className="flex w-full flex-center gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-1/2"
           >
             {loading ? (
               <Icon icon="svg-spinners:180-ring" className="h-6 w-6" />

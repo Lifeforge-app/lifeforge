@@ -86,7 +86,7 @@ function IdeaBox(): React.ReactElement {
       />
       <DeleteConfirmationModal
         isOpen={deleteContainerConfirmationModalOpen}
-        closeModal={() => {
+        onClose={() => {
           setExistedData(null)
           setDeleteContainerConfirmationModalOpen(false)
         }}

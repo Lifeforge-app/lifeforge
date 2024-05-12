@@ -5,6 +5,7 @@ import { cookieParse } from 'pocketbase'
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import Button from '@components/Button'
 import Modal from '@components/Modal'
 import { PhotosContext } from '@providers/PhotosProvider'
 import { type IPhotosAlbum } from '@typedec/Photos'
@@ -130,20 +131,14 @@ function UpdateAlbumTagsModal({
           </div>
         )}
       </APIComponentWithFallback>
-      <button
+      <Button
         onClick={onSubmitButtonClick}
         disabled={loading}
-        className="mt-12 flex h-16 items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-md transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800"
+        className="mt-12"
+        icon={loading ? 'svg-spinners:180-ring' : 'tabler:tags'}
       >
-        {!loading ? (
-          <>
-            <Icon icon="tabler:tags" className="h-5 w-5" />
-            Update Tags
-          </>
-        ) : (
-          <Icon icon="svg-spinners:180-ring" className="h-5 w-5" />
-        )}
-      </button>
+        {!loading && 'Update Tags'}
+      </Button>
     </Modal>
   )
 }

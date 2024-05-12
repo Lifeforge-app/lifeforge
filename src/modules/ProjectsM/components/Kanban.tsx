@@ -86,7 +86,7 @@ function Kanban(): React.ReactElement {
                     </span>
                   </li>
                 ))}
-              <li className="flex items-center justify-center">
+              <li className="flex flex-center">
                 <button className="mb-4 flex w-full items-center gap-2 rounded-lg border-bg-500 p-4 pl-3 font-medium text-bg-500 hover:bg-bg-700/30">
                   <Icon icon="tabler:plus" className="text-xl" />
                   <span>Add a card</span>

@@ -41,7 +41,7 @@ function PhotosFavouritesGallery(): React.ReactElement {
             <div className="flex items-center justify-between">
               <h1 className="flex items-center gap-4 text-2xl font-semibold">
                 <>
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
+                  <div className="flex h-14 w-14 shrink-0 flex-center rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                     <Icon icon="tabler:star-filled" className="h-7 w-7" />
                   </div>
                   <span className="flex flex-col gap-1">
@@ -72,7 +72,7 @@ function PhotosFavouritesGallery(): React.ReactElement {
                   </span>
                 </>
               </h1>
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex flex-center gap-2">
                 <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
                   <Icon icon="tabler:share" className="text-2xl" />
                 </button>
