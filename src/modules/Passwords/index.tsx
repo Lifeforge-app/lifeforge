@@ -5,12 +5,14 @@ import { cookieParse } from 'pocketbase'
 import React, { useContext, useState } from 'react'
 import { toast } from 'react-toastify'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
 import EmptyStateScreen from '@components/EmptyStateScreen'
 import Input from '@components/Input'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 import useFetch from '@hooks/useFetch'
 import { AuthContext } from '@providers/AuthProvider'
+import { type IPasswordEntry } from '@typedec/Password'
 import CreatePassword from './CreatePassword'
 import CreatePasswordModal from './CreatePasswordModal'
 import PasswordEntryITem from './PasswordEntryItem'
@@ -27,6 +29,12 @@ function Passwords(): React.ReactElement {
     'passwords/password/list',
     masterPassword !== ''
   )
+  const [selectedPassword, setSelectedPassword] =
+    useState<IPasswordEntry | null>(null)
+  const [
+    isDeletePasswordConfirmationModalOpen,
+    setIsDeletePasswordConfirmationModalOpen
+  ] = useState<boolean>(false)
 
   function onSubmit(): void {
     if (masterPassWordInputContent.trim() === '') {
@@ -78,7 +86,7 @@ function Passwords(): React.ReactElement {
             onClick={() => {
               setCreatePasswordModalOpen(true)
             }}
-            className="flex w-full  flex-center gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-auto"
+            className="flex-center flex  w-full gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-auto"
           >
             <Icon icon="tabler:plus" className="text-xl" />
             new password
@@ -88,7 +96,7 @@ function Passwords(): React.ReactElement {
       {userData?.hasMasterPasswordHash === true ? (
         <CreatePassword />
       ) : masterPassword === '' ? (
-        <div className="flex h-full w-full flex-1 flex-col flex-center gap-4">
+        <div className="flex-center flex h-full w-full flex-1 flex-col gap-4">
           <Icon icon="tabler:lock-access" className="h-28 w-28" />
           <h2 className="text-4xl font-semibold">Your vault is locked</h2>
           <p className="mb-8 text-center text-lg text-bg-500">
@@ -114,7 +122,7 @@ function Passwords(): React.ReactElement {
           />
           <button
             onClick={onSubmit}
-            className="flex w-full flex-center gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-1/2"
+            className="flex-center flex w-full gap-2 whitespace-nowrap rounded-lg bg-custom-500 py-4 pl-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-custom-600 disabled:bg-bg-500 dark:text-bg-800 sm:w-1/2"
           >
             {loading ? (
               <Icon icon="svg-spinners:180-ring" className="h-6 w-6" />
@@ -135,6 +143,10 @@ function Passwords(): React.ReactElement {
                   key={password.id}
                   password={password}
                   masterPassword={masterPassword}
+                  setSelectedPassword={setSelectedPassword}
+                  setIsDeletePasswordConfirmationModalOpen={
+                    setIsDeletePasswordConfirmationModalOpen
+                  }
                 />
               ))}
             </div>
@@ -158,6 +170,17 @@ function Passwords(): React.ReactElement {
         }}
         refreshPasswordList={refreshPasswordList}
         masterPassword={masterPassword}
+      />
+      <DeleteConfirmationModal
+        apiEndpoint="passwords/password/delete"
+        data={selectedPassword}
+        isOpen={isDeletePasswordConfirmationModalOpen}
+        itemName="password"
+        onClose={() => {
+          setIsDeletePasswordConfirmationModalOpen(false)
+        }}
+        updateDataList={refreshPasswordList}
+        customText={`Are you sure you want to delete the password for ${selectedPassword?.name}? This action is irreversible.`}
       />
     </ModuleWrapper>
   )
