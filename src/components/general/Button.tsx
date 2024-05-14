@@ -9,7 +9,8 @@ function Button({
   disabled,
   className = '',
   type = 'primary',
-  isRed = false
+  isRed = false,
+  ...props
 }: {
   children: React.ReactNode
   CustomElement?: React.ElementType
@@ -19,11 +20,13 @@ function Button({
   className?: string
   type?: 'primary' | 'secondary'
   isRed?: boolean
+  [key: string]: any
 }): React.ReactElement {
   const FinalElement = CustomElement ?? 'button'
 
   return (
     <FinalElement
+      {...props}
       type="button"
       onClick={onClick}
       disabled={disabled}

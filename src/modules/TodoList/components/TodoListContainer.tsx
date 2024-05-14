@@ -76,15 +76,20 @@ function TodoListContainer(): React.ReactElement {
         updateDataList={refreshEntries}
         nameKey="summary"
       />
-      <button
-        onClick={() => {
-          setSelectedTask(null)
-          setModifyTaskWindowOpenType('create')
-        }}
-        className="absolute bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800 sm:hidden"
-      >
-        <Icon icon="tabler:plus" className="h-6 w-6 shrink-0 transition-all" />
-      </button>
+      {entries.length > 0 && (
+        <button
+          onClick={() => {
+            setSelectedTask(null)
+            setModifyTaskWindowOpenType('create')
+          }}
+          className="absolute bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800 sm:hidden"
+        >
+          <Icon
+            icon="tabler:plus"
+            className="h-6 w-6 shrink-0 transition-all"
+          />
+        </button>
+      )}
       <ModifyListModal />
       <DeleteConfirmationModal
         apiEndpoint="todo-list/list/delete"

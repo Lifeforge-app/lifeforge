@@ -52,7 +52,8 @@ const MODULES: ModuleEntry[] = [
   },
   { name: 'Wish List', icon: 'tabler:heart' },
   { name: 'Contacts', icon: 'tabler:users' },
-  { name: 'Passwords', icon: 'tabler:key' }
+  { name: 'Passwords', icon: 'tabler:key' },
+  { name: 'Journal', icon: 'tabler:book' }
 ]
 
 function Modules(): React.ReactElement {
