@@ -29,7 +29,9 @@ function PasswordEntryITem({
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedData: React.Dispatch<React.SetStateAction<IPasswordEntry | null>>
-  setPasswordList: React.Dispatch<React.SetStateAction<IPasswordEntry[]>>
+  setPasswordList: React.Dispatch<
+    React.SetStateAction<IPasswordEntry[] | 'loading' | 'error'>
+  >
 }): React.ReactElement {
   const [decryptedPassword, setDecryptedPassword] = useState<string | null>(
     null
@@ -103,13 +105,14 @@ function PasswordEntryITem({
       .then(async res => {
         const data = await res.json()
         if (res.ok && data.state === 'success') {
-          setPasswordList(prev =>
-            prev
+          setPasswordList(prev => {
+            if (prev === 'loading' || prev === 'error') return prev
+            return prev
               .map(p =>
                 p.id === password.id ? { ...p, pinned: !p.pinned } : p
               )
               .sort((a, b) => (a.pinned ? -1 : 1))
-          )
+          })
           toast.info(
             `Password ${password.pinned ? 'unpinned' : 'pinned'} successfully`
           )

@@ -44,6 +44,7 @@
         "serverStatus": "服务器状态",
         "changeLog": "更改日志",
         "about": "关于此项目",
+        "journal": "日记",
         "title": {
             "productivity": "生产力",
             "storage": "存储",
@@ -88,7 +89,8 @@
             "modules": "您所需的所有工具，都在一个地方。",
             "serverStatus": "保持您的服务器健康、快乐并运行良好。",
             "changeLog": "跟踪开发的进度，每一次更改都很重要。",
-            "about": "一个关于此项目是如何开始的故事。"
+            "about": "一个关于此项目是如何开始的故事。",
+            "journal": "记录您的生活旅程，每一步都是一个故事。"
         }
     },
     "header": {

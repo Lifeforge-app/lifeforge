@@ -5,6 +5,9 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Loading from '@components/Loading'
 import { AuthContext } from '@providers/AuthProvider'
 import About from './modules/About'
+import Journal from './modules/Journal'
+import JournalEdit from './modules/Journal/JournalEdit'
+import JournalView from './modules/Journal/JournalView'
 import PhotosFavouritesGallery from './modules/Photos/pages/FavouritesGallery'
 import Repositories from './modules/Repositories'
 import { titleToPath } from './utils/strings'
@@ -316,6 +319,24 @@ export const ROUTES: IRoutes[] = [
         icon: 'tabler:key',
         routes: [
           <Route key="passwords" path="passwords" element={<Passwords />} />
+        ],
+        togglable: true
+      },
+      {
+        name: 'Journal',
+        icon: 'tabler:book',
+        routes: [
+          <Route key="journal" path="journal" element={<Journal />} />,
+          <Route
+            key="journal-view"
+            path="journal/view/:id"
+            element={<JournalView />}
+          />,
+          <Route
+            key="journal-edit"
+            path="journal/edit/:id"
+            element={<JournalEdit />}
+          />
         ],
         togglable: true
       }
