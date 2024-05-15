@@ -17,7 +17,7 @@ function Sidebar({
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (
-    <aside className="h-full w-1/4 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+    <aside className="h-full w-1/4 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom dark:bg-bg-900">
       <ul className="flex flex-col gap-1">
         <SidebarItem
           active={!searchParams.get('status') && !searchParams.get('type')}

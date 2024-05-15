@@ -47,7 +47,7 @@ function EntryImage({
             entry.collectionId
           }/${entry.id}/${entry.image}?thumb=500x0`}
           alt={''}
-          className="my-4 rounded-lg shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]"
+          className="my-4 rounded-lg shadow-custom"
         />
       </Zoom>
       <EntryContextMenu

@@ -2,16 +2,14 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
-import React, { useEffect, useState, useCallback, useContext } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { toast } from 'react-toastify'
 import Button from '@components/Button'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
-import { PersonalizationContext } from '@providers/PersonalizationProvider'
 import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
 import IdeaContentInput from './components/IdeaContentInput'
 import IdeaImagePreview from './components/IdeaImagePreview'
@@ -33,7 +31,6 @@ function ModifyIdeaModal({
   updateIdeaList: () => void
   existedData: IIdeaBoxEntry | null
 }): React.ReactElement {
-  const { theme } = useContext(PersonalizationContext)
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
   const [innerTypeOfModifyIdea, setInnerTypeOfModifyIdea] = useState<
     'text' | 'image' | 'link'
@@ -130,7 +127,7 @@ function ModifyIdeaModal({
     fetch(
       `${import.meta.env.VITE_API_HOST}/idea-box/idea/${
         innerOpenType === 'create' ? 'create' : 'update'
-      }/${innerOpenType === 'create' ? containerId : existedData.id}`,
+      }/${innerOpenType === 'create' ? containerId : existedData?.id}`,
       {
         method: innerOpenType === 'create' ? 'POST' : 'PATCH',
         headers: {

@@ -226,7 +226,7 @@ export default function ProjectFiles({
                     clearMedium().catch(() => {})
                   }}
                   disabled={mediumClearLoading}
-                  className="flex items-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-bg-700"
+                  className="flex items-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-custom transition-all hover:bg-bg-700"
                 >
                   {!mediumClearLoading ? (
                     <>
@@ -242,7 +242,7 @@ export default function ProjectFiles({
                     replaceFiles().catch(() => {})
                   }}
                   disabled={fileReplaceLoading}
-                  className="flex items-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-bg-700"
+                  className="flex items-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-custom transition-all hover:bg-bg-700"
                 >
                   {!fileReplaceLoading ? (
                     <>
@@ -291,7 +291,7 @@ export default function ProjectFiles({
                           .slice(0, -1)
                           .join('_')}.${file.split('.').pop()}`}
                         {file === projectData.thumb_original_filename && (
-                          <span className="ml-2 flex items-center rounded-full bg-custom-500/20 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-custom-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]">
+                          <span className="ml-2 flex items-center rounded-full bg-custom-500/20 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-custom-500 shadow-custom">
                             <Icon
                               icon="tabler:photo"
                               className="mr-2 h-3.5 w-3.5"

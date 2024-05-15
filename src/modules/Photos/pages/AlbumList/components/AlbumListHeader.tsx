@@ -60,7 +60,7 @@ function AlbumListHeader({
                     tags: existingTags.filter(e => e).join(',')
                   })
                 }}
-                className={`rounded-full px-3 py-1 text-sm uppercase tracking-wider shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] ${
+                className={`rounded-full px-3 py-1 text-sm uppercase tracking-wider shadow-custom ${
                   searchParams.getAll('tags')?.[0]?.split(',').includes(tag.id)
                     ? 'bg-custom-500/20 text-custom-500 hover:bg-custom-500/40'
                     : 'bg-bg-900 text-bg-500 hover:bg-bg-800'
@@ -69,7 +69,7 @@ function AlbumListHeader({
                 {tag.name} ({tag.count})
               </button>
             ))}
-            <button className="rounded-full bg-bg-900 px-3 py-1 text-sm uppercase tracking-wider text-bg-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-bg-300">
+            <button className="rounded-full bg-bg-900 px-3 py-1 text-sm uppercase tracking-wider text-bg-500 shadow-custom hover:bg-bg-300">
               <Icon icon="tabler:plus" className="h-4 w-4" />
             </button>
           </div>

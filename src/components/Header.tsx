@@ -23,7 +23,7 @@ export default function Header(): React.ReactElement {
             <Icon icon="tabler:menu" className="text-2xl" />
           </button>
         )}
-        <search className="hidden w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900 lg:flex">
+        <search className="hidden w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900 lg:flex">
           <Icon icon="tabler:search" className="h-5 w-5 text-bg-500" />
           <form className="w-full">
             <input

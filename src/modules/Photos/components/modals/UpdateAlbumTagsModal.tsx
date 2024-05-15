@@ -116,7 +116,7 @@ function UpdateAlbumTagsModal({
                     }
                   })
                 }}
-                className={`rounded-full px-4 py-1 uppercase tracking-wider shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]  transition-all ${
+                className={`rounded-full px-4 py-1 uppercase tracking-wider shadow-custom  transition-all ${
                   selectedTags.includes(tag.id)
                     ? 'bg-custom-500/20 text-custom-500 hover:bg-custom-500/40'
                     : 'bg-bg-800 text-bg-500 hover:bg-bg-700'
@@ -125,7 +125,7 @@ function UpdateAlbumTagsModal({
                 {tag.name}
               </button>
             ))}
-            <button className="rounded-full bg-bg-800 px-4 py-1 uppercase tracking-wider text-bg-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]">
+            <button className="rounded-full bg-bg-800 px-4 py-1 uppercase tracking-wider text-bg-500 shadow-custom">
               <Icon icon="tabler:plus" className="h-4 w-4" />
             </button>
           </div>

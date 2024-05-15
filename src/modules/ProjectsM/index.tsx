@@ -52,7 +52,7 @@ function ProjectsM(): React.ReactElement {
         desc="It's time to stop procrastinating."
       />
       <div className="mb-12 mt-6 flex min-h-0 w-full flex-1">
-        <aside className="h-full w-1/4 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+        <aside className="h-full w-1/4 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom dark:bg-bg-900">
           <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
             <SidebarItem icon="tabler:list" name="All Projects" />
             <SidebarItem icon="tabler:star-filled" name="Starred" />
@@ -171,7 +171,7 @@ function ProjectsM(): React.ReactElement {
                 .map((_, i) => (
                   <li
                     key={i}
-                    className="m-4 mt-0 flex items-center gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900"
+                    className="m-4 mt-0 flex items-center gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
                   >
                     <Link
                       to="./lifeforge"

@@ -18,7 +18,7 @@ function ProjectList({
       {filteredProjectList.map(project => (
         <li
           key={project.id}
-          className="relative flex h-min w-full flex-col gap-4 overflow-hidden rounded-lg bg-bg-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900"
+          className="relative flex h-min w-full flex-col gap-4 overflow-hidden rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900"
         >
           <div className="relative w-full overflow-hidden rounded-lg">
             <div className="relative flex aspect-square h-auto w-full flex-center rounded-md bg-bg-200/50 dark:bg-bg-800">
