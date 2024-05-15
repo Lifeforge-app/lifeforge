@@ -1,12 +1,75 @@
 /* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
-import { Icon } from '@iconify/react'
-import React from 'react'
+import { Icon } from '@iconify/react/dist/iconify.js'
+import moment from 'moment'
+import { cookieParse } from 'pocketbase'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { Calendar, momentLocalizer } from 'react-big-calendar'
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
+import { toast } from 'react-toastify'
 import Button from '@components/Button'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
+import useFetch from '@hooks/useFetch'
+import { PersonalizationContext } from '@providers/PersonalizationProvider'
+import { type ICalendarEvent } from '@typedec/Calendar'
 
-function Calendar(): React.ReactElement {
+const localizer = momentLocalizer(moment)
+const DnDCalendar = withDragAndDrop(Calendar)
+
+function CalendarModule(): React.ReactElement {
+  const [rawEvents, refreshRawEvents, setRawEvents] = useFetch<
+    ICalendarEvent[]
+  >('calendar/event/list')
+  const [events, setEvents] = useState<ICalendarEvent[]>([])
+  const { language } = useContext(PersonalizationContext)
+
+  const handleSelectSlot = useCallback(
+    ({ start, end }: { start: Date; end: Date }) => {
+      const title = window.prompt('New Event name')
+      if (title !== null && title.trim() !== '') {
+        fetch(`${import.meta.env.VITE_API_HOST}/calendar/event/create`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${cookieParse(document.cookie).token}`
+          },
+          body: JSON.stringify({
+            title,
+            start: moment(start).toISOString(),
+            end: moment(end).toISOString()
+          })
+        })
+          .then(async res => {
+            const data = await res.json()
+            if (!res.ok) {
+              throw data.message
+            }
+
+            refreshRawEvents()
+            toast.success('Yay! Event created.')
+          })
+          .catch(err => {
+            toast.error("Oops! Couldn't create the event. Please try again.")
+            console.error(err)
+          })
+      }
+    },
+    [setRawEvents]
+  )
+
+  useEffect(() => {
+    if (typeof rawEvents !== 'string') {
+      setEvents(
+        rawEvents.map(event => ({
+          ...event,
+          start: new Date(event.start),
+          end: new Date(event.end)
+        }))
+      )
+    }
+  }, [rawEvents])
+
   return (
     <ModuleWrapper>
       <ModuleHeader
@@ -14,19 +77,21 @@ function Calendar(): React.ReactElement {
         desc="Make sure you don't miss important event."
       />
       <div className="mb-12 mt-6 flex min-h-0 w-full flex-1">
-        <aside className="flex h-full flex-col gap-8">
-          <section className="flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-custom dark:bg-bg-900">
+        <aside className="flex h-full flex-col gap-4">
+          <section className="flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 pt-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
             <div className="h-full w-full">
               <div className="mb-6 flex items-center justify-between gap-2">
-                <button className="rounded-lg p-4 text-bg-100 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-700/50">
-                  <Icon icon="tabler:chevron-left" className="text-2xl" />
-                </button>
-                <div className="text-lg font-semibold text-bg-800 dark:text-bg-100">
-                  November 2023
+                <div className="whitespace-nowrap text-lg font-semibold text-bg-800 dark:text-bg-100">
+                  {moment().format('MMMM YYYY')}
                 </div>
-                <button className="rounded-lg p-4 text-bg-100 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-700/50">
-                  <Icon icon="tabler:chevron-right" className="text-2xl" />
-                </button>
+                <div className="-mr-4 flex gap-1">
+                  <button className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-100 dark:hover:bg-bg-700/50">
+                    <Icon icon="uil:angle-left" className="h-6 w-6" />
+                  </button>
+                  <button className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-100 dark:hover:bg-bg-700/50">
+                    <Icon icon="uil:angle-right" className="h-6 w-6" />
+                  </button>
+                </div>
               </div>
               <div className="grid grid-cols-7 gap-4">
                 {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
@@ -48,23 +113,27 @@ function Calendar(): React.ReactElement {
                           date.getMonth(),
                           1
                         ).getDay() - 1
+
                       const lastDate = new Date(
                         date.getFullYear(),
                         date.getMonth() + 1,
                         0
                       ).getDate()
+
                       const lastDateOfPrevMonth =
                         new Date(
                           date.getFullYear(),
                           date.getMonth(),
                           0
                         ).getDate() - 1
+
                       const actualIndex =
                         firstDay > index
                           ? lastDateOfPrevMonth - firstDay + index + 2
                           : index - firstDay + 1 > lastDate
                           ? index - lastDate - firstDay + 1
                           : index - firstDay + 1
+
                       return (
                         <div
                           key={index}
@@ -80,15 +149,12 @@ function Calendar(): React.ReactElement {
                         >
                           <span>{actualIndex}</span>
                           {(() => {
-                            const randomTrue = Math.random() > 0.7
-                            return randomTrue &&
-                              !(
-                                firstDay > index ||
-                                index - firstDay + 1 > lastDate
-                              ) ? (
-                              <div className="h-0.5 w-3 rounded-full bg-rose-500" />
-                            ) : (
-                              ''
+                            const hasEvent = Math.random() > 0.7
+
+                            return (
+                              hasEvent && (
+                                <div className="h-0.5 w-3 rounded-full bg-rose-500" />
+                              )
                             )
                           })()}
                         </div>
@@ -98,18 +164,17 @@ function Calendar(): React.ReactElement {
               </div>
             </div>
           </section>
-          <section className="flex w-full flex-col gap-4 overflow-y-auto rounded-lg bg-bg-50 shadow-custom dark:bg-bg-900">
-            <h2 className="flex items-center gap-4 px-8 py-4 pt-8 text-sm font-semibold uppercase tracking-widest text-bg-600 transition-all sm:px-12">
+          <section className="flex w-full flex-col gap-4 overflow-y-auto rounded-lg bg-bg-50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+            <h2 className="px-8 pt-8 text-sm font-semibold uppercase tracking-widest text-bg-600 transition-all">
               Categories
             </h2>
-            <ul className="flex flex-col overflow-y-hidden pb-8 hover:overflow-y-scroll">
+            <ul className="flex flex-col overflow-y-hidden pb-4 hover:overflow-y-scroll">
               {[
-                ['Design', 'bg-green-500'],
-                ['Frontend', 'bg-blue-500'],
-                ['Backend', 'bg-yellow-500'],
-                ['Marketing', 'bg-red-500'],
-                ['Sales', 'bg-purple-500'],
-                ['Support', 'bg-pink-500']
+                ['Holidays', 'bg-lime-500'],
+                ['Tests / Exams', 'bg-blue-500'],
+                ['Trips', 'bg-yellow-500'],
+                ['Deadlines', 'bg-red-500'],
+                ['Events', 'bg-purple-500']
               ].map(([name, color], index) => (
                 <li
                   key={index}
@@ -117,7 +182,7 @@ function Calendar(): React.ReactElement {
                 >
                   <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
                     <span
-                      className={`block h-2 w-2 shrink-0 rounded-full ${color}`}
+                      className={`block h-6 w-1 shrink-0 rounded-full ${color}`}
                     />
                     <div className="flex w-full items-center justify-between">
                       {name}
@@ -131,126 +196,147 @@ function Calendar(): React.ReactElement {
             </ul>
           </section>
         </aside>
-        <div className="ml-12 flex h-full flex-1 flex-col">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-700/50">
-                <Icon icon="tabler:chevron-left" className="text-2xl" />
-              </button>
-              <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-700/50">
-                <Icon icon="tabler:chevron-right" className="text-2xl" />
-              </button>
-              <div className="ml-4 text-3xl font-semibold text-bg-800 dark:text-bg-100">
-                Nov 20 - 26, 2023
-              </div>
-              <span className="ml-4 rounded-full bg-custom-500/20 px-4 py-1.5 text-sm font-semibold text-custom-500  shadow-custom">
-                Week{' '}
-                {(() => {
-                  const currentDate = new Date()
-                  const startDate = new Date(currentDate.getFullYear(), 0, 1)
-                  const days = Math.floor(
-                    (Number(currentDate) - Number(startDate)) /
-                      (24 * 60 * 60 * 1000)
+        <div className="ml-8 h-full min-h-[40rem] w-full overflow-y-auto">
+          <DnDCalendar
+            localizer={localizer}
+            draggableAccessor={event => {
+              return true
+            }}
+            onEventDrop={({ event, start, end }) => {
+              fetch(`${import.meta.env.VITE_API_HOST}/calendar/event/update`, {
+                method: 'PATCH',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${cookieParse(document.cookie).token}`
+                },
+                body: JSON.stringify({
+                  id: event.id,
+                  start: moment(start).toISOString(),
+                  end: moment(end).toISOString()
+                })
+              })
+                .then(async res => {
+                  const data = await res.json()
+                  if (!res.ok) {
+                    throw data.message
+                  }
+                  refreshRawEvents()
+                  toast.success('Yay! Event updated.')
+                })
+                .catch(err => {
+                  toast.error(
+                    "Oops! Couldn't update the event. Please try again."
                   )
-
-                  const weekNumber = Math.ceil(days / 7)
-
-                  return weekNumber
-                })()}
-              </span>
-            </div>
-            <div className="flex items-center gap-4">
-              <button className="rounded-lg p-4 text-bg-100 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-700/50">
-                <Icon icon="tabler:search" className="text-2xl" />
-              </button>
-              <Button icon="tabler:plus">Create</Button>
-            </div>
-          </div>
-          <div className="mt-4 flex h-full min-h-0 flex-1 flex-col">
-            <div className="mb-1.5 flex w-full">
-              <div className="flex-center flex w-20 shrink-0 flex-col rounded-lg bg-bg-50 py-4 text-bg-500 shadow-custom dark:bg-bg-900">
-                GMT
-                <span className="text-xl">+8</span>
-              </div>
-              {Array(7)
-                .fill(0)
-                .map((_, index) => (
-                  <div
-                    key={index}
-                    className={`flex-center ml-1.5 flex w-full gap-2 rounded-lg bg-bg-50 py-4 text-bg-500 shadow-custom dark:bg-bg-900 ${
-                      index === 3 && 'bg-custom-500/20 text-custom-500'
-                    }`}
-                  >
-                    <span>
-                      {['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'][index]}
-                    </span>
-                    <span className="text-4xl font-semibold">{20 + index}</span>
-                  </div>
-                ))}
-            </div>
-            <div className="w-full flex-1 overflow-y-auto rounded-lg shadow-custom">
-              <div className="h-full w-full divide-y divide-bg-300 dark:divide-bg-700">
-                {Array(25)
-                  .fill(0)
-                  .map((_, hour) => (
-                    <div key={hour} className="flex h-24">
-                      <div className="relative h-full w-20 shrink-0 bg-bg-50 text-bg-100 dark:bg-bg-900">
-                        {hour !== 24 && (
-                          <span className="absolute bottom-0 z-[9999] w-[90%] translate-y-1/2 bg-[#fafafa] pr-4 text-right dark:bg-bg-900">
-                            {hour + 1 > 12 ? hour + 1 - 12 : hour + 1}{' '}
-                            {hour + 1 >= 12 ? 'PM' : 'AM'}
-                          </span>
-                        )}
+                  console.error(err)
+                })
+            }}
+            onEventResize={({ event, start, end }) => {
+              fetch(`${import.meta.env.VITE_API_HOST}/calendar/event/update`, {
+                method: 'PATCH',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${cookieParse(document.cookie).token}`
+                },
+                body: JSON.stringify({
+                  id: event.id,
+                  start: moment(start).toISOString(),
+                  end: moment(end).toISOString()
+                })
+              })
+                .then(async res => {
+                  const data = await res.json()
+                  if (!res.ok) {
+                    throw data.message
+                  }
+                  refreshRawEvents()
+                  toast.success('Yay! Event updated.')
+                })
+                .catch(err => {
+                  toast.error(
+                    "Oops! Couldn't update the event. Please try again."
+                  )
+                  console.error(err)
+                })
+            }}
+            onSelectSlot={handleSelectSlot}
+            selectable
+            events={events}
+            components={{
+              toolbar: ({ label, onNavigate, onView, view: currentView }) => {
+                return (
+                  <div className="mb-4 flex w-full items-end justify-between">
+                    <div className="flex items-center gap-4">
+                      <button
+                        onClick={() => {
+                          onNavigate('PREV')
+                        }}
+                        className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-900"
+                      >
+                        <Icon icon="uil:angle-left" className="h-6 w-6" />
+                      </button>
+                      <div className="text-center text-2xl font-bold">
+                        {label}
                       </div>
-                      {Array(7)
-                        .fill(0)
-                        .map((_, day) => (
-                          <div
-                            key={day}
-                            className="relative w-full bg-bg-50 dark:bg-bg-900"
-                          >
-                            {day === 3 && hour === 1 && (
-                              <div className="absolute left-0 top-0 z-[9999] ml-1.5 h-96 w-[90%] overflow-hidden rounded-r-md bg-bg-50 dark:bg-bg-900">
-                                <div className="flex h-full w-full flex-col justify-between border-l-4 border-green-500 bg-green-500/20 px-3 py-4">
-                                  <div className="flex flex-col">
-                                    <Icon
-                                      icon="tabler:plane-departure"
-                                      className="mb-2 h-6 w-6 text-green-500"
-                                    />
-                                    <span className="text-lg font-semibold text-green-500">
-                                      Flight to Taiwan
-                                    </span>
-                                  </div>
-                                  <div className="flex flex-col gap-1">
-                                    <div className="flex flex-col gap-1 text-lg font-medium">
-                                      SIN
-                                      <Icon
-                                        icon="tabler:arrow-down"
-                                        className="inline-block h-4 w-4 shrink-0 text-green-500"
-                                      />
-                                      TPE
-                                    </div>
-                                    <span className="text-sm">FN: TR 898</span>
-                                  </div>
-                                  <div>
-                                    <span className="text-sm text-green-500">
-                                      01.00 AM - 05.00 AM
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        ))}
+                      <button
+                        onClick={() => {
+                          onNavigate('NEXT')
+                        }}
+                        className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-900"
+                      >
+                        <Icon icon="uil:angle-right" className="h-6 w-6" />
+                      </button>
                     </div>
-                  ))}
-              </div>
-            </div>
-          </div>
+                    <div className="flex gap-4">
+                      <div className="flex gap-1 rounded-md bg-bg-900 p-2">
+                        {['Month', 'Week', 'Day', 'Agenda'].map(view => (
+                          <button
+                            key={view}
+                            onClick={() => {
+                              onView(
+                                view.toLowerCase() as
+                                  | 'month'
+                                  | 'week'
+                                  | 'day'
+                                  | 'agenda'
+                              )
+                            }}
+                            className={`rounded-md p-2 px-4 transition-all hover:bg-bg-800 ${
+                              view.toLowerCase() === currentView
+                                ? 'bg-bg-800 text-bg-200'
+                                : 'text-bg-500'
+                            }`}
+                          >
+                            {view}
+                          </button>
+                        ))}
+                      </div>
+                      <Button icon="tabler:plus">Add Event</Button>
+                    </div>
+                  </div>
+                )
+              },
+              event: ({ event }) => {
+                return (
+                  <div
+                    onClick={() => {
+                      alert('clicked')
+                    }}
+                    className="rbc-event flex items-center gap-2 rounded-md bg-bg-800"
+                    style={{
+                      border: 'none'
+                    }}
+                  >
+                    <span className="h-4 w-1 rounded-full bg-custom-500" />
+                    <span className="truncate">{event.title}</span>
+                  </div>
+                )
+              }
+            }}
+          />
         </div>
       </div>
     </ModuleWrapper>
   )
 }
 
-export default Calendar
+export default CalendarModule

@@ -37,6 +37,7 @@
     "quokka-treasure-chest": "^1.0.2",
     "react": "^18.2.0",
     "react-activity-calendar": "^2.2.0",
+    "react-big-calendar": "^1.12.2",
     "react-calendar": "^5.0.0",
     "react-chartjs-2": "^5.2.0",
     "react-columns": "^1.2.1",
@@ -61,6 +62,7 @@
     "@types/": "uidotdev/usehooks",
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.52",
+    "@types/react-big-calendar": "^1.8.9",
     "@types/react-color": "^3.0.10",
     "@types/react-dom": "^18.2.18",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
@@ -76,6 +78,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
     "eslint-plugin-tailwindcss": "^3.14.3",
+    "sass": "^1.77.1",
     "typescript": "*",
     "vite": "^5.0.0",
     "vite-plugin-mkcert": "^1.17.5"
