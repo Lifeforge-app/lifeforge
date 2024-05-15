@@ -20,7 +20,7 @@ function Kanban(): React.ReactElement {
               <Icon icon="tabler:hammer" className="text-3xl" />
             </div>
             LifeForge.
-            <div className="ml-2 rounded-full bg-yellow-500/20 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-yellow-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]">
+            <div className="ml-2 rounded-full bg-yellow-500/20 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-yellow-500 shadow-custom">
               In progress
             </div>
           </h1>

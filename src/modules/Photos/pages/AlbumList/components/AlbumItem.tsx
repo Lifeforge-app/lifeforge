@@ -49,7 +49,7 @@ function AlbumItem({
             {album.tags.map(tag => (
               <button
                 key={tag}
-                className="mb-1 rounded-full bg-custom-500/20 px-3 py-1 text-xs uppercase tracking-wider text-custom-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-bg-300"
+                className="mb-1 rounded-full bg-custom-500/20 px-3 py-1 text-xs uppercase tracking-wider text-custom-500 shadow-custom hover:bg-bg-300"
               >
                 {albumTagList.find(t => t.id === tag)?.name}
               </button>

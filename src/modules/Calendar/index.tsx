@@ -15,7 +15,7 @@ function Calendar(): React.ReactElement {
       />
       <div className="mb-12 mt-6 flex min-h-0 w-full flex-1">
         <aside className="flex h-full flex-col gap-8">
-          <section className="flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+          <section className="flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-custom dark:bg-bg-900">
             <div className="h-full w-full">
               <div className="mb-6 flex items-center justify-between gap-2">
                 <button className="rounded-lg p-4 text-bg-100 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-700/50">
@@ -98,7 +98,7 @@ function Calendar(): React.ReactElement {
               </div>
             </div>
           </section>
-          <section className="flex w-full flex-col gap-4 overflow-y-auto rounded-lg bg-bg-50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+          <section className="flex w-full flex-col gap-4 overflow-y-auto rounded-lg bg-bg-50 shadow-custom dark:bg-bg-900">
             <h2 className="flex items-center gap-4 px-8 py-4 pt-8 text-sm font-semibold uppercase tracking-widest text-bg-600 transition-all sm:px-12">
               Categories
             </h2>
@@ -143,7 +143,7 @@ function Calendar(): React.ReactElement {
               <div className="ml-4 text-3xl font-semibold text-bg-800 dark:text-bg-100">
                 Nov 20 - 26, 2023
               </div>
-              <span className="ml-4 rounded-full bg-custom-500/20 px-4 py-1.5 text-sm font-semibold text-custom-500  shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]">
+              <span className="ml-4 rounded-full bg-custom-500/20 px-4 py-1.5 text-sm font-semibold text-custom-500  shadow-custom">
                 Week{' '}
                 {(() => {
                   const currentDate = new Date()
@@ -168,7 +168,7 @@ function Calendar(): React.ReactElement {
           </div>
           <div className="mt-4 flex h-full min-h-0 flex-1 flex-col">
             <div className="mb-1.5 flex w-full">
-              <div className="flex-center flex w-20 shrink-0 flex-col rounded-lg bg-bg-50 py-4 text-bg-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+              <div className="flex-center flex w-20 shrink-0 flex-col rounded-lg bg-bg-50 py-4 text-bg-500 shadow-custom dark:bg-bg-900">
                 GMT
                 <span className="text-xl">+8</span>
               </div>
@@ -177,7 +177,7 @@ function Calendar(): React.ReactElement {
                 .map((_, index) => (
                   <div
                     key={index}
-                    className={`flex-center ml-1.5 flex w-full gap-2 rounded-lg bg-bg-50 py-4 text-bg-500 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900 ${
+                    className={`flex-center ml-1.5 flex w-full gap-2 rounded-lg bg-bg-50 py-4 text-bg-500 shadow-custom dark:bg-bg-900 ${
                       index === 3 && 'bg-custom-500/20 text-custom-500'
                     }`}
                   >
@@ -188,7 +188,7 @@ function Calendar(): React.ReactElement {
                   </div>
                 ))}
             </div>
-            <div className="w-full flex-1 overflow-y-auto rounded-lg shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]">
+            <div className="w-full flex-1 overflow-y-auto rounded-lg shadow-custom">
               <div className="h-full w-full divide-y divide-bg-300 dark:divide-bg-700">
                 {Array(25)
                   .fill(0)

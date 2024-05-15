@@ -9,8 +9,8 @@ function IdeaImagePreview({
   setPreview: React.Dispatch<React.SetStateAction<string | ArrayBuffer | null>>
 }): React.ReactElement {
   return (
-    <div className="flex flex-center">
-      <div className="relative flex h-[30rem] min-h-[8rem] w-full flex-center overflow-hidden rounded-lg bg-bg-800">
+    <div className="flex-center flex">
+      <div className="flex-center relative flex h-[30rem] min-h-[8rem] w-full overflow-hidden rounded-lg bg-bg-800">
         <img
           src={preview as string}
           alt="preview"

@@ -87,7 +87,7 @@ function ServerStatus(): React.ReactElement {
         <div className="grid gap-6 lg:grid-cols-3">
           <APIComponentWithFallback data={cpuUsage}>
             {typeof cpuUsage !== 'string' && (
-              <div className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+              <div className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Icon icon="tabler:cpu" className="text-2xl text-bg-500" />
@@ -106,7 +106,7 @@ function ServerStatus(): React.ReactElement {
           </APIComponentWithFallback>
           <APIComponentWithFallback data={memoryUsage}>
             {typeof memoryUsage !== 'string' && (
-              <div className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+              <div className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Icon
@@ -126,7 +126,7 @@ function ServerStatus(): React.ReactElement {
           </APIComponentWithFallback>
           <APIComponentWithFallback data={cpuTemp}>
             {typeof cpuTemp !== 'string' && (
-              <div className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+              <div className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Icon
@@ -199,7 +199,7 @@ function ServerStatus(): React.ReactElement {
               {diskUsage.map(disk => (
                 <div
                   key={disk.name}
-                  className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900"
+                  className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
                 >
                   <div className="flex w-full min-w-0 items-center justify-between">
                     <div className="flex min-w-0 flex-1 items-center gap-2">
@@ -245,7 +245,7 @@ function ServerStatus(): React.ReactElement {
             Object.entries(systemInfo).map(([key, value]) => (
               <div
                 key={key}
-                className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900"
+                className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
               >
                 <h2 className="text-xl text-bg-500">
                   {key === 'mem' ? 'Memory' : camelCaseToTitleCase(key)}

@@ -66,7 +66,7 @@ export default function StorageStatus(): React.ReactElement {
   const [diskUsage] = useFetch<IDiskUsage[]>('server/disks')
 
   return (
-    <section className="col-span-1 flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+    <section className="col-span-1 flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:server" className="text-2xl" />
         <span className="ml-2">
