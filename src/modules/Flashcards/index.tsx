@@ -53,7 +53,7 @@ export default function Flashcards(): React.ReactElement {
                   <Link
                     to={`/flashcards/${deck.id}`}
                     key={deck.id}
-                    className="group relative flex flex-col justify-start gap-6 rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800"
+                    className="group relative flex flex-col justify-start gap-6 rounded-lg bg-bg-50 p-8 shadow-custom hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800"
                   >
                     <div className="space-y-2">
                       {deck.tag !== '' && (
@@ -104,7 +104,7 @@ export default function Flashcards(): React.ReactElement {
                 <Link
                   to={`/idea-box/${index}`}
                   key={index}
-                  className="group relative flex flex-col justify-start gap-6 rounded-lg bg-bg-50 p-8 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/50"
+                  className="group relative flex flex-col justify-start gap-6 rounded-lg bg-bg-50 p-8 shadow-custom transition-all hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/50"
                 >
                   <div className="space-y-2">
                     <p className="text-sm font-medium text-bg-500">

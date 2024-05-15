@@ -20,7 +20,7 @@ export default function PomodoroTimer(): React.ReactElement {
             <span className="ml-2">Things to do</span>
           </h1>
           <ul className="mt-6 flex flex-col gap-4">
-            <li className="flex items-center justify-between gap-4 rounded-lg border-l-4 border-indigo-500 bg-bg-100 p-4 px-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+            <li className="flex items-center justify-between gap-4 rounded-lg border-l-4 border-indigo-500 bg-bg-100 p-4 px-6 shadow-custom dark:bg-bg-900">
               <div className="flex flex-col gap-1">
                 <div className="font-semibold text-bg-800">Buy groceries</div>
                 <div className="text-sm text-rose-500">
@@ -29,14 +29,14 @@ export default function PomodoroTimer(): React.ReactElement {
               </div>
               <button className="h-6 w-6 rounded-full border-2 border-bg-500 transition-all hover:border-orange-500" />
             </li>
-            <li className="flex items-center justify-between gap-4 rounded-lg border-l-4 border-orange-500 bg-bg-100 p-4 px-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+            <li className="flex items-center justify-between gap-4 rounded-lg border-l-4 border-orange-500 bg-bg-100 p-4 px-6 shadow-custom dark:bg-bg-900">
               <div className="flex flex-col gap-1">
                 <div className="font-semibold text-bg-800">Do homework</div>
                 <div className="text-sm text-bg-500">00:00 AM, 31 Jan 2024</div>
               </div>
               <button className="h-6 w-6 rounded-full border-2 border-bg-500 transition-all hover:border-orange-500" />
             </li>
-            <li className="flex items-center justify-between gap-4 rounded-lg border-l-4 border-orange-500 bg-bg-100 p-4 px-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+            <li className="flex items-center justify-between gap-4 rounded-lg border-l-4 border-orange-500 bg-bg-100 p-4 px-6 shadow-custom dark:bg-bg-900">
               <div className="flex flex-col gap-1">
                 <div className="font-semibold text-bg-800">
                   Start doing revision for SPM Sejarah

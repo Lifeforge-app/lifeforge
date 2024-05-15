@@ -138,7 +138,7 @@ function ProjectsKEntry(): React.ReactElement {
                             } ${
                               PROJECT_STATUS[projectData.status]
                                 .text_transparent
-                            } shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]`}
+                            } shadow-custom`}
                           >
                             {PROJECT_STATUS[projectData.status].name}
                             <Icon

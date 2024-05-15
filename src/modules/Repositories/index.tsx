@@ -66,7 +66,7 @@ function Repositories(): React.ReactElement {
                 {repos.map((repo, index) => (
                   <li
                     key={index}
-                    className="flex flex-col gap-4 rounded-lg bg-bg-50 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:shadow-[4px_4px_10px_0px_rgba(0,0,0,0.1)] dark:bg-bg-900"
+                    className="flex flex-col gap-4 rounded-lg bg-bg-50 p-4 shadow-custom transition-all hover:shadow-[4px_4px_10px_0px_rgba(0,0,0,0.1)] dark:bg-bg-900"
                   >
                     <div className="flex items-center justify-between gap-4">
                       <div>

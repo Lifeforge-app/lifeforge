@@ -35,7 +35,7 @@ function Journal(): React.ReactElement {
                 <Link
                   to={`/journal/view/${entry.id}`}
                   key={entry.id}
-                  className="rounded-lg bg-bg-100 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/70"
+                  className="rounded-lg bg-bg-100 p-6 shadow-custom hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/70"
                 >
                   <div className="text-xl font-semibold text-custom-500">
                     {entry.title}
