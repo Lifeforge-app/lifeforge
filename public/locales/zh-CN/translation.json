@@ -1,0 +1,166 @@
+{
+    "auth": {
+        "header": "欢迎回来",
+        "desc": "继续记录你的生活旅程，请登录。",
+        "sideImageDesc.part1": "有一天你会离开这个世界",
+        "sideImageDesc.part2": "所以过一个你会记住的生活",
+        "or": "或者",
+        "signInButton": "登录",
+        "signInWithPasskey": "使用用通行密钥登录",
+        "emailOrUsername": "邮箱或用户名",
+        "password": "密码",
+        "welcome": "欢迎回来，",
+        "errorMessages": {
+            "passkeyChallenge": "获取通行密钥挑战失败",
+            "passkeyRegister": "注册通行密钥失败",
+            "passkeyLogin": "使用通行密钥登录失败"
+        },
+        "passkey": {
+            "createSuccess": "通行密钥创建成功"
+        }
+    },
+    "modules": {
+        "dashboard": "仪表板",
+        "projectsM": "项目管理 (M)",
+        "projectsK": "项目管理 (K)",
+        "ideaBox": "创意盒子",
+        "todoList": "待办事项列表",
+        "calendar": "日历",
+        "spotify": "Spotify",
+        "codeTime": "编程时间记录",
+        "photos": "照片库",
+        "repositories": "代码仓库",
+        "pomodoroTimer": "番茄钟",
+        "flashcards": "记忆闪卡",
+        "notes": "笔记资料库",
+        "referenceBooks": "参考书库",
+        "wallet": "钱包",
+        "wishList": "愿望清单",
+        "contacts": "联系人",
+        "passwords": "密码",
+        "personalization": "个性化",
+        "dataBackup": "数据备份",
+        "modules": "模块管理",
+        "serverStatus": "服务器状态",
+        "changeLog": "更改日志",
+        "about": "关于此项目",
+        "journal": "日记",
+        "title": {
+            "productivity": "生产力",
+            "storage": "存储",
+            "study": "学习",
+            "finance": "财务",
+            "confidential": "机密",
+            "settings": "设置",
+            "technologies": "技术",
+            "tasks": "任务",
+            "lists": "列表",
+            "tags": "标签",
+            "category": "类别",
+            "status": "状态",
+            "visibility": "可见性",
+            "projectType": "项目类型",
+            "progress": "进度",
+            "categories": "类别",
+            "languages": "语言",
+            "albums": "相册"
+        },
+        "descriptions": {
+            "dashboard": "您的任务控制中心，妙不可言！",
+            "projectsM": "驯服那些庞大的项目，一步一步来。",
+            "projectsK": "跟踪无数个小项目，而不至于发疯。",
+            "ideaBox": "抓住那些奇妙的想法，别让它们溜走！",
+            "todoList": "永远不要忘记待办事项 (除了洗衣房的衣服吧)。",
+            "calendar": "不要迟到与命运 (或牙医) 的约会。",
+            "spotify": "征服每一天的完美配乐。",
+            "codeTime": "看看你创造了多少编码魔法。",
+            "photos": "生动的回忆，它们几乎会从屏幕上跳下来。",
+            "repositories": "您的代码仓库，您的代码王国。",
+            "pomodoroTimer": "像老板一样工作，利用激光般专注的休息时间。",
+            "flashcards": "快速学习并永远记住它 (或至少记住到下个星期二)。",
+            "notes": "永远不会从冰箱上掉下来的数码粘贴纸条。",
+            "referenceBooks": "您的个人图书馆，逾期无需被罚款。",
+            "wallet": "成为你自己的财务超级英雄。",
+            "wishList": "做些白日梦，然后想方设法实现它。",
+            "contacts": "与您最喜爱的人保持联系 (即使是那些从来不回复短信的人)。",
+            "passwords": "确保您的密码安全，甚至有时要防止泄露给自己。",
+            "personalization": "打造您的专属风格！因为谁想要一个无聊的程式呢？",
+            "dataBackup": "您的数吗安全保镖，因为意外会发生。",
+            "modules": "您所需的所有工具，都在一个地方。",
+            "serverStatus": "保持您的服务器健康、快乐并运行良好。",
+            "changeLog": "跟踪开发的进度，每一次更改都很重要。",
+            "about": "一个关于此项目是如何开始的故事。",
+            "journal": "记录您的生活旅程，每一步都是一个故事。"
+        }
+    },
+    "header": {
+        "searchBarPlaceholder": "快速导航和搜索...（按 / 聚焦）"
+    },
+    "personalization": {
+        "themeSelector": {
+            "title": "主题",
+            "desc": "选择适合你风格的主题。",
+            "theme": {
+                "system": "系统",
+                "light": "亮色",
+                "dark": "暗色"
+            }
+        },
+        "themeColorSelector": {
+            "title": "主题颜色",
+            "desc": "为你的用户界面选择最佳颜色。",
+            "colors": {
+                "red": "红色",
+                "pink": "粉色",
+                "purple": "紫色",
+                "deepPurple": "深紫色",
+                "indigo": "靛蓝色",
+                "blue": "蓝色",
+                "lightBlue": "浅蓝色",
+                "cyan": "青色",
+                "teal": "蓝绿色",
+                "green": "绿色",
+                "lightGreen": "浅绿色",
+                "lime": "酸橙色",
+                "yellow": "黄色",
+                "amber": "琥珀色",
+                "orange": "橙色",
+                "deepOrange": "深橙色",
+                "brown": "棕色",
+                "grey": "灰色"
+            }
+        },
+        "bgTempSelector": {
+            "title": "背景温度",
+            "desc": "选择适合你心情的背景温度。",
+            "cool": "冷色",
+            "warm": "暖色"
+        },
+        "languageSelector": {
+            "title": "语言",
+            "desc": "选择最适合你的语言。"
+        }
+    },
+    "dashboard": {
+        "modules": {
+            "calendar": {
+                "title": "日历"
+            },
+            "storageStatus": {
+                "title": "存储空间状态"
+            },
+            "codeTime": {
+                "title": "编程时间记录"
+            },
+            "todayEvent": {
+                "title": "今日事件"
+            },
+            "walletBalance": {
+                "title": "钱包余额"
+            },
+            "todoList": {
+                "title": "待办事项列表"
+            }
+        }
+    }
+}
