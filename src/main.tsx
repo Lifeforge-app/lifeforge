@@ -8,6 +8,8 @@ import 'react-calendar/dist/Calendar.css'
 import 'react-tooltip/dist/react-tooltip.css'
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-medium-image-zoom/dist/styles.css'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<App />)

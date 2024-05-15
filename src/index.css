@@ -481,3 +481,46 @@ button[class^='react-calendar__navigation'] {
 .flex-center {
   @apply items-center justify-center;
 }
+
+.rbc-off-range-bg {
+  @apply bg-bg-200 dark:bg-bg-900;
+}
+
+.rbc-today {
+  @apply bg-custom-500/20;
+}
+
+.rbc-now {
+  @apply text-custom-500;
+}
+
+.rbc-month-view,
+.rbc-day-bg,
+.rbc-month-row,
+.rbc-header {
+  @apply dark:border-bg-700;
+}
+
+.rbc-date-cell {
+  @apply text-lg text-left p-2;
+}
+
+.rbc-header {
+  @apply p-2;
+}
+
+.rbc-show-more {
+  @apply text-custom-500;
+}
+
+.rbc-show-more:hover {
+  @apply text-custom-600;
+}
+
+.rbc-event {
+  @apply !bg-bg-800 text-bg-50;
+}
+
+.rbc-selected-cell {
+  @apply !bg-bg-500/20;
+}
