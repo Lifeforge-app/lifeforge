@@ -14,17 +14,19 @@ import Modal from '@components/Modal'
 import ModalHeader from '@components/ModalHeader'
 import { type ICalendarCategory } from '@typedec/Calendar'
 
+interface ModifyCategoryModalProps {
+  openType: 'create' | 'update' | null
+  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
+  existedData: ICalendarCategory | null
+  refreshCategories: () => void
+}
+
 function ModifyCategoryModal({
   openType,
   setOpenType,
   existedData,
   refreshCategories
-}: {
-  openType: 'create' | 'update' | null
-  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  existedData: ICalendarCategory | null
-  refreshCategories: () => void
-}): React.ReactElement {
+}: ModifyCategoryModalProps): React.ReactElement {
   const [loading, setLoading] = useState(false)
   const [categoryName, setCategoryName] = useState('')
   const [categoryIcon, setCategoryIcon] = useState('')

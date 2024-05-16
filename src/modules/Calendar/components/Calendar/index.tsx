@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/indent */
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
@@ -12,14 +13,7 @@ import EventItem from './components/EventItem'
 const localizer = momentLocalizer(moment)
 const DnDCalendar = withDragAndDrop(Calendar)
 
-function CalendarComponent({
-  events,
-  setRawEvents,
-  categories,
-  setModifyEventModalOpenType,
-  setExistedData,
-  refreshRawEvents
-}: {
+interface CalendarComponentProps {
   events: ICalendarEvent[]
   setRawEvents: React.Dispatch<
     React.SetStateAction<ICalendarEvent[] | 'loading' | 'error'>
@@ -30,7 +24,72 @@ function CalendarComponent({
   >
   setExistedData: React.Dispatch<React.SetStateAction<ICalendarEvent | null>>
   refreshRawEvents: () => void
-}): React.ReactElement {
+}
+
+function CalendarComponent({
+  events,
+  setRawEvents,
+  categories,
+  setModifyEventModalOpenType,
+  setExistedData,
+  refreshRawEvents
+}: CalendarComponentProps): React.ReactElement {
+  function updateEvent({
+    event,
+    start,
+    end
+  }: {
+    event: ICalendarEvent
+    start: Date
+    end: Date
+  }): void {
+    setRawEvents(prevEvents => {
+      if (typeof prevEvents === 'string') {
+        return prevEvents
+      }
+
+      return prevEvents.map(prevEvent => {
+        if (prevEvent.id === event.id) {
+          return {
+            ...prevEvent,
+            start,
+            end
+          }
+        }
+        return prevEvent
+      })
+    })
+
+    fetch(
+      `${import.meta.env.VITE_API_HOST}/calendar/event/update/${event.id}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        },
+        body: JSON.stringify({
+          title: event.title,
+          start: moment(start).toISOString(),
+          end: moment(end).toISOString(),
+          category: event.category
+        })
+      }
+    )
+      .then(async res => {
+        const data = await res.json()
+        if (!res.ok) {
+          throw data.message
+        }
+        toast.success('Yay! Event updated.')
+      })
+      .catch(err => {
+        refreshRawEvents()
+        toast.error("Oops! Couldn't update the event. Please try again.")
+        console.error(err)
+      })
+  }
+
   const handleSelectSlot = useCallback(
     ({ start, end }: { start: Date; end: Date }) => {
       setModifyEventModalOpenType('create')
@@ -55,82 +114,8 @@ function CalendarComponent({
       draggableAccessor={() => {
         return true
       }}
-      onEventDrop={({
-        event,
-        start,
-        end
-      }: {
-        event: ICalendarEvent
-        start: Date
-        end: Date
-      }) => {
-        fetch(
-          `${import.meta.env.VITE_API_HOST}/calendar/event/update/${event.id}`,
-          {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${cookieParse(document.cookie).token}`
-            },
-            body: JSON.stringify({
-              title: event.title,
-              start: moment(start).toISOString(),
-              end: moment(end).toISOString(),
-              category: event.category
-            })
-          }
-        )
-          .then(async res => {
-            const data = await res.json()
-            if (!res.ok) {
-              throw data.message
-            }
-            refreshRawEvents()
-            toast.success('Yay! Event updated.')
-          })
-          .catch(err => {
-            toast.error("Oops! Couldn't update the event. Please try again.")
-            console.error(err)
-          })
-      }}
-      onEventResize={({
-        event,
-        start,
-        end
-      }: {
-        event: ICalendarEvent
-        start: Date
-        end: Date
-      }) => {
-        fetch(
-          `${import.meta.env.VITE_API_HOST}/calendar/event/update/${event.id}`,
-          {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${cookieParse(document.cookie).token}`
-            },
-            body: JSON.stringify({
-              title: event.title,
-              start: moment(start).toISOString(),
-              end: moment(end).toISOString(),
-              category: event.category
-            })
-          }
-        )
-          .then(async res => {
-            const data = await res.json()
-            if (!res.ok) {
-              throw data.message
-            }
-            refreshRawEvents()
-            toast.success('Yay! Event updated.')
-          })
-          .catch(err => {
-            toast.error("Oops! Couldn't update the event. Please try again.")
-            console.error(err)
-          })
-      }}
+      onEventDrop={updateEvent}
+      onEventResize={updateEvent}
       onSelectSlot={handleSelectSlot}
       selectable
       events={events}
