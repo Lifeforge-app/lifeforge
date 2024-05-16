@@ -4,8 +4,8 @@ import React, { useState } from 'react'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import SidebarTitle from '@sidebar/components/SidebarTitle'
 import { type ICalendarCategory } from '@typedec/Calendar'
-import CategoryListItem from './CategoryListItem'
-import ModifyCategoryModal from './ModifyCategoryModal'
+import CategoryListItem from './components/CategoryListItem'
+import ModifyCategoryModal from '../../../../modals/ModifyCategoryModal'
 
 function CategoryList({
   categories,

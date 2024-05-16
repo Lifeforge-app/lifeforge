@@ -11,7 +11,7 @@ import Input from '@components/Input'
 import Modal from '@components/Modal'
 import ModalHeader from '@components/ModalHeader'
 import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
-import CategorySelector from './CategorySelector'
+import CategorySelector from './ModifyCategoryModal/components/CategorySelector'
 
 function ModifyEventModal({
   openType,
