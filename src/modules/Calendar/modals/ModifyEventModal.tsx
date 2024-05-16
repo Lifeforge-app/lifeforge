@@ -13,19 +13,21 @@ import ModalHeader from '@components/ModalHeader'
 import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
 import CategorySelector from './ModifyCategoryModal/components/CategorySelector'
 
+interface ModifyEventModalProps {
+  openType: 'create' | 'update' | null
+  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
+  updateEventList: () => void
+  existedData: ICalendarEvent | null
+  categories: ICalendarCategory[] | 'loading' | 'error'
+}
+
 function ModifyEventModal({
   openType,
   setOpenType,
   updateEventList,
   existedData,
   categories
-}: {
-  openType: 'create' | 'update' | null
-  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  updateEventList: () => void
-  existedData: ICalendarEvent | null
-  categories: ICalendarCategory[] | 'loading' | 'error'
-}): React.ReactElement {
+}: ModifyEventModalProps): React.ReactElement {
   const [loading, setLoading] = useState(false)
   const [eventTitle, setEventTitle] = useState('')
   const [eventStartTime, setEventStartTime] = useState('')

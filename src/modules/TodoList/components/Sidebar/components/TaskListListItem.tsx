@@ -1,5 +1,5 @@
 /* eslint-disable multiline-ternary */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useContext, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import HamburgerMenu from '@components/HamburgerMenu'
