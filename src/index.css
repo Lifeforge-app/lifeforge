@@ -524,3 +524,29 @@ button[class^='react-calendar__navigation'] {
 .rbc-selected-cell {
   @apply !bg-bg-500/20;
 }
+
+.rbc-selected-cell.rbc-today {
+  @apply !bg-custom-700/20;
+}
+
+.rbc-agenda-view table.rbc-agenda-table thead > tr > th {
+  @apply bg-bg-200 dark:bg-bg-900 border-bg-700 dark:border-bg-700;
+}
+
+.rbc-agenda-view table.rbc-agenda-table tbody > tr > td + td,
+.rbc-agenda-view table.rbc-agenda-table,
+.rbc-agenda-view table.rbc-agenda-table tbody > tr + tr {
+  @apply border-bg-700 dark:border-bg-700;
+}
+
+.rbc-header {
+  @apply !p-2;
+}
+
+.rbc-month-view {
+  @apply overflow-y-auto;
+}
+
+.rbc-month-row {
+  @apply min-h-[7rem];
+}

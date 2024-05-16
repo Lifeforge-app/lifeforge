@@ -7,12 +7,16 @@ type ValuePiece = Date | null
 
 type Value = ValuePiece | [ValuePiece, ValuePiece]
 
-function DueDateInput({
-  dueDate,
-  setDueDate
+function DateInput({
+  date,
+  setDate,
+  name,
+  icon
 }: {
-  dueDate: string
-  setDueDate: React.Dispatch<React.SetStateAction<string>>
+  date: string
+  setDate: React.Dispatch<React.SetStateAction<string>>
+  name: string
+  icon: string
 }): React.ReactElement {
   const { language } = useContext(PersonalizationContext)
 
@@ -23,9 +27,11 @@ function DueDateInput({
           `}
     >
       <Icon
-        icon={'tabler:calendar'}
-        className={`ml-6 h-6 w-6 shrink-0 text-bg-800
-            group-focus-within:!text-custom-500 dark:text-bg-100`}
+        icon={icon}
+        className={`ml-6 h-6 w-6 shrink-0 
+            group-focus-within:!text-custom-500 ${
+              date !== '' ? 'text-bg-800 dark:text-bg-100' : 'text-bg-500'
+            }`}
       />
       <div className="flex w-full items-center gap-2">
         <span
@@ -33,13 +39,13 @@ function DueDateInput({
                  text-bg-500 transition-all group-focus-within:!text-custom-500
               `}
         >
-          Due Date
+          {name}
         </span>
         <DatePicker
-          value={dueDate}
+          value={date}
           minDate={new Date()}
           onChange={(date: Value) => {
-            setDueDate(date?.toString() ?? '')
+            setDate(date?.toString() ?? '')
           }}
           format="dd-MM-y"
           clearIcon={null}
@@ -57,10 +63,10 @@ function DueDateInput({
           }}
           className="mt-8 h-8 w-full rounded-lg border-none bg-transparent px-4 tracking-wider outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
         />
-        {dueDate !== '' && (
+        {date !== '' && (
           <button
             onClick={() => {
-              setDueDate('')
+              setDate('')
             }}
             className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-500/30 hover:text-bg-200 focus:outline-none"
           >
@@ -72,4 +78,4 @@ function DueDateInput({
   )
 }
 
-export default DueDateInput
+export default DateInput

@@ -7,6 +7,19 @@ interface ICalendarEvent {
   title: string
   start: string | Date
   end: string | Date
+  category: string
 }
 
-export type { ICalendarEvent }
+interface ICalendarCategory {
+  collectionId: string
+  collectionName: string
+  color: string
+  created: string
+  icon: string
+  id: string
+  name: string
+  updated: string
+  amount: number
+}
+
+export type { ICalendarEvent, ICalendarCategory }
