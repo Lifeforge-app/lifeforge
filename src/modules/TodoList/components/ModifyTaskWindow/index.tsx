@@ -14,11 +14,11 @@ import MenuItem from '@components/HamburgerMenu/MenuItem'
 import Input from '@components/Input'
 import { PersonalizationContext } from '@providers/PersonalizationProvider'
 import { TodoListContext } from '@providers/TodoListProvider'
-import DueDateInput from './components/DueDateInput'
 import ListSelector from './components/ListSelector'
 import NotesInput from './components/NotesInput'
 import PrioritySelector from './components/PrioritySelector'
 import TagsSelector from './components/TagsSelector'
+import DateInput from '../../../../components/general/DateInput'
 
 function ModifyTaskWindow(): React.ReactElement {
   const {
@@ -203,7 +203,12 @@ function ModifyTaskWindow(): React.ReactElement {
           autoFocus
         />
         <NotesInput notes={notes} updateNotes={updateNotes} />
-        <DueDateInput dueDate={dueDate} setDueDate={setDueDate} />
+        <DateInput
+          date={dueDate}
+          setDate={setDueDate}
+          name="Due date"
+          icon="tabler:calendar"
+        />
 
         <PrioritySelector priority={priority} setPriority={setPriority} />
         <ListSelector list={list} setList={setList} />
