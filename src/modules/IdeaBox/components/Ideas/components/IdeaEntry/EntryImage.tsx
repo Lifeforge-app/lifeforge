@@ -37,15 +37,15 @@ function EntryImage({
         zoomMargin={40}
         ZoomContent={CustomZoomContent}
         zoomImg={{
-          src: `${import.meta.env.VITE_POCKETBASE_ENDPOINT}/api/files/${
-            entry.collectionId
-          }/${entry.id}/${entry.image}`
+          src: `${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
+            entry.id
+          }/${entry.image}`
         }}
       >
         <img
-          src={`${import.meta.env.VITE_POCKETBASE_ENDPOINT}/api/files/${
-            entry.collectionId
-          }/${entry.id}/${entry.image}?thumb=500x0`}
+          src={`${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
+            entry.id
+          }/${entry.image}?thumb=500x0`}
           alt={''}
           className="my-4 rounded-lg shadow-custom"
         />

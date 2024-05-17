@@ -24,7 +24,7 @@ function ProjectList({
             <div className="relative flex aspect-square h-auto w-full flex-center rounded-md bg-bg-200/50 dark:bg-bg-800">
               {project.thumbnail ? (
                 <img
-                  src={`${import.meta.env.VITE_POCKETBASE_ENDPOINT}/api/files/${
+                  src={`${import.meta.env.VITE_API_HOST}/media/${
                     project.collectionId
                   }/${project.id}/${project.thumbnail}?thumb=0x500`}
                   className="aspect-square h-auto w-full rounded-md object-contain"

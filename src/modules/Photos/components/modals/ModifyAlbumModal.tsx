@@ -72,7 +72,7 @@ function ModifyAlbumModal({
           }
 
           return openType === 'create'
-            ? [...prev, data]
+            ? [data.data, ...prev]
             : prev.map(album => {
                 if (album.id === targetAlbum?.id) {
                   return {

@@ -8,12 +8,12 @@ import Gallery from 'react-photo-gallery'
 import { toast } from 'react-toastify'
 import useResizeObserver from 'use-resize-observer'
 import useOnScreen from '@hooks/useOnScreen'
-import { PhotosContext } from '../../../../../providers/PhotosProvider'
 import {
   type IPhotosEntryDimensionsAll,
   type IPhotosEntry,
   type IPhotosEntryDimensionsItem
 } from '@typedec/Photos'
+import { PhotosContext } from '../../../../../providers/PhotosProvider'
 import ImageObject from '../../../components/ImageObject'
 
 function DateGroup({
@@ -105,7 +105,7 @@ function DateGroup({
             >
               <button
                 onClick={toggleSelectAll}
-                className={`group/checkbox flex flex-center rounded-full border-2  p-0.5 transition-all ${
+                className={`group/checkbox flex-center flex rounded-full border-2  p-0.5 transition-all ${
                   isSelectedAll
                     ? 'border-custom-500 bg-custom-500'
                     : 'border-bg-500 hover:!border-custom-500'
@@ -129,7 +129,7 @@ function DateGroup({
           <Gallery
             targetRowHeight={200}
             photos={photosDimensions.map(image => ({
-              src: `${import.meta.env.VITE_POCKETBASE_ENDPOINT}/api/files/${
+              src: `${import.meta.env.VITE_API_HOST}/media/${
                 typeof allPhotos !== 'string' ? allPhotos.collectionId : ''
               }/${image.id}/${
                 photos?.find(photo => photo.id === image.id)?.image
