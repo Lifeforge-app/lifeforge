@@ -42,7 +42,7 @@ interface IPhotosAlbum {
   updated: string
 }
 
-export interface IPhotoAlbumEntryItem extends IPhotosEntryDimensionsItem {
+interface IPhotoAlbumEntryItem extends IPhotosEntryDimensionsItem {
   collectionId: string
   photoId: string
   image: string
@@ -51,7 +51,7 @@ export interface IPhotoAlbumEntryItem extends IPhotosEntryDimensionsItem {
   is_favourite: boolean
 }
 
-export interface IPhotoAlbumTag {
+interface IPhotoAlbumTag {
   collectionId: string
   collectionName: string
   created: Date
