@@ -197,9 +197,9 @@ export default function AuthProvider({
 
   function getAvatarURL(): string {
     if (userData) {
-      return `${import.meta.env.VITE_POCKETBASE_ENDPOINT}/api/files/${
-        userData.collectionId
-      }/${userData.id}/${userData.avatar}`
+      return `${import.meta.env.VITE_API_HOST}/media/${userData.collectionId}/${
+        userData.id
+      }/${userData.avatar}`
     }
     return ''
   }

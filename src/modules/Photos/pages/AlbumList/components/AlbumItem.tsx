@@ -30,7 +30,7 @@ function AlbumItem({
       <div className="flex-center pointer-events-none relative mb-2 flex h-52 rounded-lg bg-bg-200 shadow-lg dark:bg-bg-800/50">
         {album.cover ? (
           <img
-            src={`${import.meta.env.VITE_POCKETBASE_ENDPOINT}/api/files/${
+            src={`${import.meta.env.VITE_API_HOST}/media/${
               album.cover
             }?thumb=0x300`}
             alt=""
@@ -45,15 +45,21 @@ function AlbumItem({
       </div>
       <div className="pointer-events-none relative w-full min-w-0 pr-8">
         {album.tags.length !== 0 && typeof albumTagList !== 'string' && (
-          <div className="flex flex-wrap gap-2">
-            {album.tags.map(tag => (
-              <button
-                key={tag}
-                className="mb-1 rounded-full bg-custom-500/20 px-3 py-1 text-xs uppercase tracking-wider text-custom-500 shadow-custom hover:bg-bg-300"
-              >
-                {albumTagList.find(t => t.id === tag)?.name}
-              </button>
-            ))}
+          <div className="flex flex-wrap gap-1">
+            {album.tags
+              .sort(
+                (a, b) =>
+                  albumTagList.findIndex(t => t.id === a) -
+                  albumTagList.findIndex(t => t.id === b)
+              )
+              .map(tag => (
+                <button
+                  key={tag}
+                  className="mb-1 rounded-full bg-custom-500/20 px-3 py-1 text-xs uppercase tracking-wider text-custom-500 shadow-custom hover:bg-bg-300"
+                >
+                  {albumTagList.find(t => t.id === tag)?.name}
+                </button>
+              ))}
           </div>
         )}
         <h2 className="truncate text-lg font-semibold text-bg-800 dark:text-bg-100">

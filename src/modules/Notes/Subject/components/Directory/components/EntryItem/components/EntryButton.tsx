@@ -21,9 +21,9 @@ function EntryButton({ entry }: { entry: INotesEntry }): React.ReactElement {
       to={
         ['pdf', 'md', 'tex'].includes(entry.name.split('.').pop()!)
           ? `/notes/${workspace}/${subject}/file/${entry.id}`
-          : `${import.meta.env.VITE_POCKETBASE_ENDPOINT}/api/files/${
-              entry.collectionId
-            }/${entry.id}/${entry.file}`
+          : `${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
+              entry.id
+            }/${entry.file}`
       }
       className="absolute left-0 top-0 h-full w-full rounded-lg hover:bg-bg-100 dark:hover:bg-bg-900"
     />

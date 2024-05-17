@@ -182,6 +182,7 @@ function GalleryHeader(): React.ReactElement {
             }}
             disabled={fileImportLoading}
             icon={fileImportLoading ? 'svg-spinners:180-ring' : 'tabler:upload'}
+            className="shrink-0"
           >
             {!fileImportLoading ? (
               <>import</>
