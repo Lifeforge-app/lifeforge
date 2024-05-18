@@ -91,11 +91,11 @@ export default function StorageStatus(): React.ReactElement {
                       {disk.name}
                     </h2>
                   </div>
-                  <p className="shrink-0 rounded-md border border-bg-500 px-4 py-2 text-sm text-bg-500">
+                  <p className="shrink-0 rounded-md border border-bg-200 px-4 py-2 text-sm text-bg-500 dark:border-bg-500">
                     {disk.size}B
                   </p>
                 </div>
-                <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-bg-800">
+                <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-bg-200 dark:bg-bg-800">
                   <div
                     className="h-full rounded-full bg-green-500"
                     style={{ width: disk.usedPercent }}

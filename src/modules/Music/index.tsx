@@ -334,7 +334,7 @@ function Music(): React.ReactElement {
                 .includes(debouncedSearchQuery.toLowerCase())
             ).length > 0 ? (
               <table className="mb-36 mt-6 w-full min-w-0 table-auto">
-                <tbody className="divide-y divide-bg-800">
+                <tbody className="divide-y divide-bg-200 dark:divide-bg-800">
                   {musics
                     .filter(music =>
                       music.name
@@ -503,10 +503,10 @@ function Music(): React.ReactElement {
           </APIComponentWithFallback>
         </div>
         {currentMusic !== null && (
-          <div className="absolute bottom-4 left-0 flex w-full flex-col items-center justify-between gap-4 rounded-lg bg-bg-900 p-4 shadow-md">
+          <div className="absolute bottom-4 left-0 flex w-full flex-col items-center justify-between gap-4 rounded-lg bg-bg-50 p-4 shadow-lg dark:bg-bg-900">
             <div className="flex w-full items-center justify-between gap-8">
               <div className="flex w-1/3 min-w-0 items-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-md bg-custom-500/20">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-custom-500/20">
                   <Icon
                     icon="tabler:disc"
                     className={`${
@@ -551,7 +551,7 @@ function Music(): React.ReactElement {
                       toast.error(`Failed to play music. Error: ${err}`)
                     })
                   }}
-                  className="mx-2 rounded-full bg-bg-100 p-4 text-bg-800 transition-all hover:!bg-custom-500"
+                  className="mx-2 rounded-full bg-bg-500 p-4 text-white transition-all hover:!bg-custom-500 dark:bg-bg-100 dark:text-bg-800"
                 >
                   <Icon
                     icon={
@@ -617,7 +617,7 @@ function Music(): React.ReactElement {
                       audio.volume = +e.target.value / 100
                       setVolume(+e.target.value)
                     }}
-                    className="secondary h-1 w-32 cursor-pointer overflow-hidden rounded-full bg-bg-700"
+                    className="secondary h-1 w-32 cursor-pointer overflow-hidden rounded-full bg-bg-200 dark:bg-bg-700"
                     value={volume}
                     max="100"
                   ></input>
@@ -640,7 +640,7 @@ function Music(): React.ReactElement {
                   audio.currentTime = +e.target.value
                   setCurrentDuration(+e.target.value)
                 }}
-                className="main h-1 w-full cursor-pointer overflow-hidden rounded-full bg-bg-700"
+                className="main h-1 w-full cursor-pointer overflow-hidden rounded-full bg-bg-200 dark:bg-bg-700"
                 value={currentDuration}
                 max={currentMusic.duration}
               ></input>
