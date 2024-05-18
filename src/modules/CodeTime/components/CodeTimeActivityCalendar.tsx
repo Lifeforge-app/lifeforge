@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable multiline-ternary */
+
 import { Icon } from '@iconify/react'
 import React, { useContext, useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'

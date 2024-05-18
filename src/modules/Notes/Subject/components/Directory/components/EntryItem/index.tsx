@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable multiline-ternary */
+
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
 import React from 'react'

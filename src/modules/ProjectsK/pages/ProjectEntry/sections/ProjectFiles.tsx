@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable multiline-ternary */
+
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'

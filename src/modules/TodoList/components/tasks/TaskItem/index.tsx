@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { cookieParse } from 'pocketbase'

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/indent */
-/* eslint-disable multiline-ternary */
+
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useDebounce } from '@uidotdev/usehooks'

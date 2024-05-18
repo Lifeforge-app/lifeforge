@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable multiline-ternary */
+
 import React, { useContext } from 'react'
 import Button from '@components/Button'
 import ModuleHeader from '@components/ModuleHeader'

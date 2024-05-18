@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Icon } from '@iconify/react'

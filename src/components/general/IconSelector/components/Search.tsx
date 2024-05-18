@@ -2,7 +2,7 @@
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/require-array-sort-compare */
-/* eslint-disable multiline-ternary */
+
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable operator-linebreak */

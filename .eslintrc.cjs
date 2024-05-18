@@ -33,6 +33,8 @@ module.exports = {
         "tailwindcss"
     ],
     "rules": {
+        "multiline-ternary": "off",
+        "@typescript-eslint/indent": "off",
         "@typescript-eslint/space-before-function-paren": "off",
         "import/order":
             [

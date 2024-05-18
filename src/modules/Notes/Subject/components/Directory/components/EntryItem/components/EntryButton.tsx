@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable multiline-ternary */
+
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { type INotesEntry } from '@typedec/Notes'

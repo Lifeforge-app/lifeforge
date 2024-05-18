@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/indent */

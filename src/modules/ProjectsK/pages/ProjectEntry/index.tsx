@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable multiline-ternary */
+
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'

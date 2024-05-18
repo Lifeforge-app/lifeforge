@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 import { Icon } from '@iconify/react'
 import React from 'react'
 import ModuleHeader from '@components/ModuleHeader'

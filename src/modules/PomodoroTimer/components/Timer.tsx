@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Button from '@components/Button'

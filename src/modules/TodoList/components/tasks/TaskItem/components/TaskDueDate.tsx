@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 import moment from 'moment'
 import React from 'react'
 import { type ITodoListEntry } from '@typedec/TodoList'

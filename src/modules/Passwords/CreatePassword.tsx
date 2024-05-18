@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useContext, useRef, useState } from 'react'

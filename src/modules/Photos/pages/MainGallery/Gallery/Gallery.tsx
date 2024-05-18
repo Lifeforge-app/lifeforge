@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useContext, useEffect } from 'react'
 import EmptyStateScreen from '@components/EmptyStateScreen'

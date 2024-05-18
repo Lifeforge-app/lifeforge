@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useContext, useEffect, useState } from 'react'
