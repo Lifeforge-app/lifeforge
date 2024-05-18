@@ -31,7 +31,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
       <div className="text-center text-2xl font-bold">{label}</div>
     </div>
     <div className="flex gap-4">
-      <div className="flex gap-1 rounded-md bg-bg-900 p-2">
+      <div className="flex gap-1 rounded-md bg-bg-50 p-2 shadow-custom dark:bg-bg-900">
         {['Month', 'Week', 'Day', 'Agenda'].map(view => (
           <ChangeViewButton
             key={view}

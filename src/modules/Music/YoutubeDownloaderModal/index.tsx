@@ -145,8 +145,11 @@ function YoutubeDownloaderModal({
           <APIComponentWithFallback data={videoInfo}>
             {typeof videoInfo !== 'string' && (
               <>
-                <div className="relative w-1/3 overflow-hidden rounded-md border border-bg-800">
-                  <img src={videoInfo.thumbnail} className="w-full" />
+                <div className="relative w-1/3 shrink-0 overflow-hidden rounded-md border border-bg-800">
+                  <img
+                    src={videoInfo.thumbnail}
+                    className="h-full w-full object-cover"
+                  />
                   <p className="absolute bottom-2 right-2 rounded-md bg-bg-900/70 px-1.5 py-0.5 text-bg-100">
                     {moment
                       .utc(
