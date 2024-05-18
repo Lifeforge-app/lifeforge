@@ -9,7 +9,8 @@ function EmptyStateScreen({
   title,
   description,
   icon,
-  ctaContent
+  ctaContent,
+  customCTAButton
 }: {
   setModifyModalOpenType?: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
@@ -18,23 +19,25 @@ function EmptyStateScreen({
   description: string
   icon: string
   ctaContent?: string
+  customCTAButton?: React.ReactElement
 }): React.ReactElement {
   return (
     <div className="flex-center flex h-full w-full flex-col gap-6 ">
       <Icon icon={icon} className="h-32 w-32" />
       <h2 className="text-center text-3xl font-semibold">{title}</h2>
       <p className="-mt-2 text-center text-lg text-bg-500">{description}</p>
-      {ctaContent && setModifyModalOpenType && (
-        <Button
-          onClick={() => {
-            setModifyModalOpenType('create')
-          }}
-          icon="tabler:plus"
-          className="mt-6"
-        >
-          {ctaContent}
-        </Button>
-      )}
+      {customCTAButton ??
+        (ctaContent && setModifyModalOpenType && (
+          <Button
+            onClick={() => {
+              setModifyModalOpenType('create')
+            }}
+            icon="tabler:plus"
+            className="mt-6"
+          >
+            {ctaContent}
+          </Button>
+        ))}
     </div>
   )
 }
