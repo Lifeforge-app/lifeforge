@@ -1,20 +1,24 @@
 import { faker } from '@faker-js/faker'
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
+import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import Button from '@components/Button'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 import SearchInput from '@components/SearchInput'
+import useFetch from '@hooks/useFetch'
 import SidebarDivider from '@sidebar/components/SidebarDivider'
 import SidebarItem from '@sidebar/components/SidebarItem'
 import SidebarTitle from '@sidebar/components/SidebarTitle'
 
 function ReferenceBooks(): React.ReactElement {
   const [searchQuery, setSearchQuery] = useState('')
+  const [books] = useFetch('books-library/list')
+
   return (
     <ModuleWrapper>
       <ModuleHeader
-        title="Reference Books"
+        title="Books Library"
         desc="A collection of reference books that accompany you on your learning journey."
       />
       <div className="mb-12 mt-6 flex min-h-0 w-full flex-1">
@@ -80,36 +84,41 @@ function ReferenceBooks(): React.ReactElement {
             setSearchQuery={setSearchQuery}
             stuffToSearch="books"
           />
-          <ul className="mt-6 grid min-h-0 grid-cols-3 gap-6 gap-y-12 overflow-y-auto">
-            {Array(10)
-              .fill(0)
-              .map((_, i) => (
-                <li
-                  key={i}
-                  className="relative flex flex-col items-start rounded-lg"
-                >
-                  <div className="flex-center flex h-72 w-full rounded-lg bg-bg-50 p-8 dark:bg-bg-900">
-                    <img
-                      src={faker.image.imageUrl(300, 400, 'airport', true)}
-                      alt={faker.lorem.sentence()}
-                      className="h-full"
-                    />
-                  </div>
-                  <div className="mt-4 text-xl font-medium text-bg-100">
-                    {faker.commerce.productName()}
-                  </div>
-                  <div className="mt-2 text-sm font-medium text-bg-500">
-                    {faker.person.fullName()}
-                  </div>
-                  <div className="mt-6 flex w-full flex-col gap-4">
-                    <Button icon="tabler:book">Read</Button>
-                    <Button icon="tabler:download" type="secondary">
-                      Download
-                    </Button>
-                  </div>
-                </li>
-              ))}
-          </ul>
+          <APIComponentWithFallback data={books}>
+            {typeof books !== 'string' && (
+              <ul className="mt-6 grid min-h-0 grid-cols-3 gap-6 gap-y-12 overflow-y-auto">
+                {books.map(item => (
+                  <li
+                    key={item.id}
+                    className="relative flex flex-col items-start rounded-lg"
+                  >
+                    <div className="flex-center flex h-72 w-full rounded-lg bg-bg-50 p-8 dark:bg-bg-900">
+                      <img
+                        src={`${
+                          import.meta.env.VITE_API_HOST
+                        }/books-library/cover/${item.cover}`}
+                        className="h-full"
+                      />
+                    </div>
+                    <div className="mt-4 text-xl font-medium text-bg-100">
+                      {item.title}
+                    </div>
+                    <div className="mt-2 text-sm font-medium text-bg-500">
+                      {item.authors}
+                    </div>
+                    <div className="mt-auto w-full">
+                      <div className="mt-6 flex w-full flex-col gap-2">
+                        <Button icon="tabler:book">Read</Button>
+                        <Button icon="tabler:download" type="secondary">
+                          Download
+                        </Button>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </APIComponentWithFallback>
         </div>
       </div>
     </ModuleWrapper>

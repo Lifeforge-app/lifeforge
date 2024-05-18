@@ -43,7 +43,7 @@ const MODULES: ModuleEntry[] = [
     icon: 'tabler:notebook'
   },
   {
-    name: 'Reference Books',
+    name: 'Books Library',
     icon: 'tabler:books'
   },
   {

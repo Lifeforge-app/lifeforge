@@ -267,12 +267,12 @@ export const ROUTES: IRoutes[] = [
         togglable: true
       },
       {
-        name: 'Reference Books',
+        name: 'Books Library',
         icon: 'tabler:books',
         routes: [
           <Route
-            key="reference-books"
-            path="reference-books"
+            key="books-library"
+            path="books-library"
             element={<ReferenceBooks />}
           />
         ],

@@ -28,7 +28,7 @@ export default function EventItem({
     >
       {typeof categories !== 'string' && event.category !== '' && (
         <span
-          className="h-4 w-1 rounded-full"
+          className="h-4 w-1 shrink-0 rounded-full"
           style={{
             backgroundColor: categories.find(
               category => category.id === event.category
