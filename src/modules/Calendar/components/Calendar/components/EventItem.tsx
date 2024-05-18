@@ -21,7 +21,7 @@ export default function EventItem({
         setModifyEventModalOpenType('update')
         setExistedData(event)
       }}
-      className="rbc-event flex items-center gap-2 rounded-md bg-bg-800"
+      className="rbc-event flex !flex-row items-center gap-2 rounded-md bg-bg-800"
       style={{
         border: 'none'
       }}

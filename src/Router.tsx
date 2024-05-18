@@ -2,12 +2,6 @@ import React, { Suspense, lazy, useContext, useMemo } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Loading from '@components/Loading'
 import { AuthContext } from '@providers/AuthProvider'
-import About from './modules/About'
-import Journal from './modules/Journal'
-import JournalEdit from './modules/Journal/JournalEdit'
-import JournalView from './modules/Journal/JournalView'
-import PhotosFavouritesGallery from './modules/Photos/pages/FavouritesGallery'
-import Repositories from './modules/Repositories'
 import { titleToPath } from './utils/strings'
 
 const PhotosProvider = lazy(
@@ -21,6 +15,9 @@ const PhotosAlbumList = lazy(
 )
 const PhotosAlbumGallery = lazy(
   async () => await import('./modules/Photos/pages/AlbumGallery')
+)
+const PhotosFavouritesGallery = lazy(
+  async () => await import('./modules/Photos/pages/FavouritesGallery')
 )
 const Dashboard = lazy(async () => await import('./modules/Dashboard'))
 const Auth = lazy(async () => await import('./auth'))
@@ -65,6 +62,16 @@ const ProjectsKEntry = lazy(
 )
 const NotesFile = lazy(async () => await import('./modules/Notes/File'))
 const Passwords = lazy(async () => await import('./modules/Passwords'))
+const Journal = lazy(async () => await import('./modules/Journal'))
+const JournalView = lazy(
+  async () => await import('./modules/Journal/JournalView')
+)
+const JournalEdit = lazy(
+  async () => await import('./modules/Journal/JournalEdit')
+)
+const Music = lazy(async () => await import('./modules/Music'))
+const Repositories = lazy(async () => await import('./modules/Repositories'))
+const About = lazy(async () => await import('./modules/About'))
 
 interface IRoutesItem {
   name: string
@@ -199,6 +206,12 @@ export const ROUTES: IRoutes[] = [
             />
           </Route>
         ],
+        togglable: true
+      },
+      {
+        name: 'Music',
+        icon: 'tabler:music',
+        routes: [<Route key="music" path="music" element={<Music />} />],
         togglable: true
       },
       {

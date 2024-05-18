@@ -17,19 +17,7 @@ import {
 } from '@typedec/Photos'
 import DeletePhotosConfirmationModal from './modals/DeletePhotosConfirmationModal'
 import { PhotosContext } from '../../../providers/PhotosProvider'
-
-function forceDown(url: string, filename: string): void {
-  fetch(url)
-    .then(async function (t) {
-      await t.blob().then(b => {
-        const a = document.createElement('a')
-        a.href = URL.createObjectURL(b)
-        a.setAttribute('download', filename)
-        a.click()
-      })
-    })
-    .catch(console.error)
-}
+import forceDown from '../../../utils/forceDown'
 
 function CustomZoomContent({
   img,
