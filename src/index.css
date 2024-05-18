@@ -550,3 +550,27 @@ button[class^='react-calendar__navigation'] {
 .rbc-month-row {
   @apply min-h-[7rem];
 }
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+input[type='range']::-webkit-slider-thumb {
+  @apply appearance-none w-0 h-0 border-none;
+}
+
+input[type='range']::-moz-range-thumb {
+  @apply appearance-none w-0 h-0 border-none;
+}
+
+input[type='range']::-webkit-progress-value,
+input[type='range']::-moz-range-progress {
+  @apply rounded-full h-full;
+}
+
+input[type='range'].main::-webkit-progress-value,
+input[type='range'].main::-moz-range-progress {
+  @apply bg-custom-500 rounded-full h-full;
+}
+
+input[type='range'].secondary::-webkit-progress-value,
+input[type='range'].secondary::-moz-range-progress {
+  @apply bg-bg-100 rounded-full h-full;
+}
