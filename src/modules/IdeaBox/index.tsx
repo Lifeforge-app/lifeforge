@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/indent */
-/* eslint-disable multiline-ternary */
+
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'

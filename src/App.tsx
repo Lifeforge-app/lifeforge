@@ -1,8 +1,4 @@
-/* eslint-disable multiline-ternary */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
-// test
-
 import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import AuthProvider from '@providers/AuthProvider'

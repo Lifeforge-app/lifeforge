@@ -2,7 +2,7 @@
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
-/* eslint-disable multiline-ternary */
+
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/jsx-indent */

@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect, useState } from 'react'
 import ModuleHeader from '@components/ModuleHeader'

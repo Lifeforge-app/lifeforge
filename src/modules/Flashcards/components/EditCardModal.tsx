@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/indent */
-/* eslint-disable multiline-ternary */
+
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'

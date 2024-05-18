@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/indent */
-/* eslint-disable multiline-ternary */
+
 import React, { useContext, useEffect, useState } from 'react'
 import ModuleHeader from '@components/ModuleHeader'
 import { GlobalStateContext } from '@providers/GlobalStateProvider'

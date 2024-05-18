@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable multiline-ternary */
+
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
@@ -21,7 +21,7 @@ function ProjectList({
           className="relative flex h-min w-full flex-col gap-4 overflow-hidden rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900"
         >
           <div className="relative w-full overflow-hidden rounded-lg">
-            <div className="relative flex aspect-square h-auto w-full flex-center rounded-md bg-bg-200/50 dark:bg-bg-800">
+            <div className="flex-center relative flex aspect-square h-auto w-full rounded-md bg-bg-200/50 dark:bg-bg-800">
               {project.thumbnail ? (
                 <img
                   src={`${import.meta.env.VITE_API_HOST}/media/${

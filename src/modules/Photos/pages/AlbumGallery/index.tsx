@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable multiline-ternary */
+
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useContext, useEffect } from 'react'
@@ -176,11 +176,9 @@ function PhotosAlbumGallery(): React.ReactElement {
                     <Gallery
                       targetRowHeight={200}
                       photos={photos.map(image => ({
-                        src: `${
-                          import.meta.env.VITE_POCKETBASE_ENDPOINT
-                        }/api/files/${image.collectionId}/${image.photoId}/${
-                          image.image
-                        }?thumb=0x300`,
+                        src: `${import.meta.env.VITE_API_HOST}/media/${
+                          image.collectionId
+                        }/${image.photoId}/${image.image}?thumb=0x300`,
                         width: image.width / 20,
                         height: image.height / 20,
                         key: image.id

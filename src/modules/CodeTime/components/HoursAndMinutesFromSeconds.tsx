@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 import React from 'react'
 
 export default function HoursAndMinutesFromSeconds({

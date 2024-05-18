@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/indent */
-/* eslint-disable multiline-ternary */
+
 import React, { useContext } from 'react'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import { TodoListContext } from '@providers/TodoListProvider'
