@@ -120,7 +120,15 @@ function ModifyAlbumModal({
     <Modal isOpen={openType !== false}>
       <div className="mb-8 flex items-center justify-between ">
         <h1 className="flex items-center gap-3 text-2xl font-semibold">
-          <Icon icon="tabler:plus" className="h-7 w-7" />
+          <Icon
+            icon={
+              {
+                create: 'tabler:plus',
+                rename: 'tabler:pencil'
+              }[openType as 'create' | 'rename']
+            }
+            className="h-7 w-7"
+          />
           {typeof openType === 'string' &&
             openType[0].toUpperCase() + openType.slice(1)}{' '}
           album

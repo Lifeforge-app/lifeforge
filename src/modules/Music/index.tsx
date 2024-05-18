@@ -17,6 +17,7 @@ import ModuleWrapper from '@components/ModuleWrapper'
 import SearchInput from '@components/SearchInput'
 import useFetch from '@hooks/useFetch'
 import { type IMusicEntry } from '@typedec/Music'
+import ModifyMusicModal from './UpdateMusicModal'
 import YoutubeDownloaderModal from './YoutubeDownloaderModal'
 import forceDown from '../../utils/forceDown'
 import IntervalManager from '../../utils/intervalManager'
@@ -42,6 +43,7 @@ function Music(): React.ReactElement {
     isDeleteMusicConfirmationModalOpen,
     setIsDeleteMusicConfirmationModalOpen
   ] = useState(false)
+  const [isModifyMusicModalOpen, setIsModifyMusicModalOpen] = useState(false)
 
   function toggleFavourite(targetMusic: IMusicEntry): void {
     setMusics(prevMusics => {
@@ -142,6 +144,7 @@ function Music(): React.ReactElement {
           musics[currentIndex - 1].collectionId
         }/${musics[currentIndex - 1].id}/${musics[currentIndex - 1].file}`
         setCurrentDuration(0)
+        setIsPlaying(true)
         audio.play()
       }
     }
@@ -158,6 +161,7 @@ function Music(): React.ReactElement {
           musics[currentIndex + 1].collectionId
         }/${musics[currentIndex + 1].id}/${musics[currentIndex + 1].file}`
         setCurrentDuration(0)
+        setIsPlaying(true)
         audio.play()
       } else {
         audio.pause()
@@ -176,6 +180,7 @@ function Music(): React.ReactElement {
         musics[randomIndex].collectionId
       }/${musics[randomIndex].id}/${musics[randomIndex].file}`
       setCurrentDuration(0)
+      setIsPlaying(true)
       audio.play()
     }
   }
@@ -186,6 +191,7 @@ function Music(): React.ReactElement {
         shuffleMusic()
       } else if (isRepeat) {
         audio.currentTime = 0
+        setIsPlaying(true)
         audio.play()
       } else {
         nextMusic()
@@ -313,13 +319,13 @@ function Music(): React.ReactElement {
           </Menu>
         }
       />
-      <div className="relative flex h-full min-h-0 flex-col">
+      <div className="relative flex h-full min-h-0 min-w-0 flex-col">
         <SearchInput
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           stuffToSearch="musics"
         />
-        <div className="relative h-full overflow-y-auto">
+        <div className="relative h-full min-w-0 overflow-y-auto">
           <APIComponentWithFallback data={musics}>
             {typeof musics !== 'string' &&
             musics.filter(music =>
@@ -327,7 +333,7 @@ function Music(): React.ReactElement {
                 .toLowerCase()
                 .includes(debouncedSearchQuery.toLowerCase())
             ).length > 0 ? (
-              <table className="mb-36 mt-6 w-full">
+              <table className="mb-36 mt-6 w-full min-w-0 table-auto">
                 <tbody className="divide-y divide-bg-800">
                   {musics
                     .filter(music =>
@@ -366,9 +372,13 @@ function Music(): React.ReactElement {
                             />
                           </button>
                         </td>
-                        <td className="w-2/4 truncate px-4">{music.name}</td>
+                        <td className="w-2/4 px-4">
+                          <p className="w-96 min-w-0 truncate">{music.name}</p>
+                        </td>
                         <td className="w-1/4 px-4 text-bg-500">
-                          {music.author}
+                          <p className="w-96 min-w-0 truncate">
+                            {music.author}
+                          </p>
                         </td>
                         <td className="w-1/4 px-4 text-bg-500">
                           {moment
@@ -413,7 +423,14 @@ function Music(): React.ReactElement {
                                 icon="tabler:download"
                                 text="Download"
                               />
-                              <MenuItem icon="tabler:pencil" text="Edit" />
+                              <MenuItem
+                                onClick={() => {
+                                  setIsModifyMusicModalOpen(true)
+                                  setExistedData(music)
+                                }}
+                                icon="tabler:pencil"
+                                text="Edit"
+                              />
                               <MenuItem
                                 onClick={() => {
                                   setExistedData(music)
@@ -657,6 +674,12 @@ function Music(): React.ReactElement {
         }}
         updateDataList={refreshMusics}
         nameKey="name"
+      />
+      <ModifyMusicModal
+        isOpen={isModifyMusicModalOpen}
+        setOpen={setIsModifyMusicModalOpen}
+        setMusics={setMusics}
+        targetMusic={existedData}
       />
     </ModuleWrapper>
   )
