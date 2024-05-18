@@ -127,9 +127,9 @@ function PasswordEntryITem({
   }
 
   return (
-    <div className="flex items-center gap-4 rounded-md bg-bg-900 p-4">
+    <div className="flex items-center gap-4 rounded-md bg-bg-50 p-4 shadow-custom dark:bg-bg-900">
       <div
-        className="rounded-md p-4"
+        className="rounded-md p-4 shadow-md"
         style={{ backgroundColor: password.color + '50' }}
       >
         <Icon

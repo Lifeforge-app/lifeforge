@@ -518,7 +518,7 @@ button[class^='react-calendar__navigation'] {
 }
 
 .rbc-event {
-  @apply !bg-bg-800 text-bg-50;
+  @apply !bg-bg-50 dark:!bg-bg-800 text-bg-800 dark:text-bg-50 shadow-sm;
 }
 
 .rbc-selected-cell {
@@ -556,7 +556,7 @@ input[type='range'].main {
 }
 
 input[type='range'].secondary {
-  @apply accent-bg-100;
+  @apply accent-bg-500 dark:accent-bg-100;
 }
 
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
@@ -580,5 +580,5 @@ input[type='range'].main::-moz-range-progress {
 
 input[type='range'].secondary::-webkit-progress-value,
 input[type='range'].secondary::-moz-range-progress {
-  @apply appearance-none bg-bg-100 rounded-full h-full;
+  @apply appearance-none bg-bg-500 dark:bg-bg-100 rounded-full h-full;
 }

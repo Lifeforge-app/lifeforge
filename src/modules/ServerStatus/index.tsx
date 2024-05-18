@@ -223,7 +223,7 @@ function ServerStatus(): React.ReactElement {
                     <p className="text-lg text-bg-500">Available</p>
                     <p className="text-lg text-bg-500">{disk.avail}B</p>
                   </div>
-                  <div className="mt-4 h-3 w-full overflow-hidden rounded-full border border-bg-500">
+                  <div className="mt-4 h-3 w-full overflow-hidden rounded-full border border-bg-200 dark:border-bg-500">
                     <div
                       className="h-full rounded-full bg-green-500"
                       style={{ width: disk.usedPercent }}
@@ -251,7 +251,7 @@ function ServerStatus(): React.ReactElement {
                   {key === 'mem' ? 'Memory' : camelCaseToTitleCase(key)}
                 </h2>
                 {!Array.isArray(value) ? (
-                  <ul className="flex flex-col divide-y divide-bg-700">
+                  <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-700">
                     {Object.entries(value).map(([k, v]) => (
                       <li key={k} className="flex justify-between p-4">
                         <span className="text-lg text-bg-500">
@@ -259,7 +259,7 @@ function ServerStatus(): React.ReactElement {
                         </span>
                         <span className="w-1/2 break-all text-lg text-bg-500">
                           {typeof v === 'object' ? (
-                            <ul className="flex flex-col divide-y divide-bg-700">
+                            <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-700">
                               {/* @ts-expect-error - uhh lazy to fix for now =) */}
                               {Object.entries(v).map(([k, v]) => (
                                 <li
@@ -290,7 +290,7 @@ function ServerStatus(): React.ReactElement {
                   value.map((v, i) => (
                     <ul
                       key={i}
-                      className="flex flex-col divide-y divide-bg-700"
+                      className="flex flex-col divide-y divide-bg-200 dark:divide-bg-700"
                     >
                       {Object.entries(v).map(([k, v]) => (
                         <li key={k} className="flex justify-between p-4">
