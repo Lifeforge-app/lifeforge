@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable multiline-ternary */
+
 import React, { useContext, useEffect, useState } from 'react'
 import useFetch from '@hooks/useFetch'
 import { AuthContext } from '@providers/AuthProvider'

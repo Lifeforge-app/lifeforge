@@ -1,5 +1,3 @@
-/* eslint-disable multiline-ternary */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { Suspense, lazy, useContext, useMemo } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Loading from '@components/Loading'
@@ -417,15 +415,11 @@ function AppRouter(): React.ReactElement {
         navigate('/auth?redirect=' + location.pathname + location.search)
       } else if (auth) {
         if (location.pathname === '/auth') {
-          if (location.search) {
-            const redirect = new URLSearchParams(location.search).get(
-              'redirect'
-            )
-            if (redirect) {
-              navigate(redirect)
-            } else {
-              navigate('/dashboard')
-            }
+          const redirect = new URLSearchParams(location.search).get('redirect')
+          if (redirect !== null) {
+            navigate(redirect)
+          } else {
+            navigate('/dashboard')
           }
         } else if (location.pathname === '/') {
           navigate('/dashboard')
@@ -438,7 +432,7 @@ function AppRouter(): React.ReactElement {
     <Suspense fallback={<Loading customMessage="Loading module" />}>
       <Routes>
         <Route path="/" element={<MainApplication />}>
-          {userData ? (
+          {userData !== null ? (
             ROUTES.flatMap(e => e.items)
               .filter(
                 item =>

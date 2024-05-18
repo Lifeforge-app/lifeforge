@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   MDXEditor,

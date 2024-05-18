@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/indent */
-/* eslint-disable multiline-ternary */
+
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'

@@ -12,7 +12,8 @@ import MenuItem from '@components/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
 import {
   type IPhotosEntryDimensionsAll,
-  type IPhotosEntry
+  type IPhotosEntry,
+  type IPhotoAlbumEntryItem
 } from '@typedec/Photos'
 import DeletePhotosConfirmationModal from './modals/DeletePhotosConfirmationModal'
 import { PhotosContext } from '../../../providers/PhotosProvider'

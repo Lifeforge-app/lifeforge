@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable multiline-ternary */
+
 /* eslint-disable react/jsx-no-undef */
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'

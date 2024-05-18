@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable multiline-ternary */
+
 import { cookieParse } from 'pocketbase'
 import React, { useContext } from 'react'
 import { toast } from 'react-toastify'

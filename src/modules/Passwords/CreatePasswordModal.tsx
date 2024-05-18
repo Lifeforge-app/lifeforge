@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
