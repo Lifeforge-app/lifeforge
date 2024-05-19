@@ -5,8 +5,6 @@ import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import Button from '@components/Button'
-import Input from '@components/Input'
 import { useAuthContext } from '@providers/AuthProvider'
 import {
   type ModuleConfigSelect,
@@ -14,6 +12,8 @@ import {
   type ModuleConfigInput,
   type ModuleEntry
 } from '@typedec/Module'
+import Button from '../../components/ButtonsAndInputs/Button'
+import Input from '../../components/ButtonsAndInputs/Input'
 import { toCamelCase } from '../../utils/strings'
 
 function ModuleItem({

@@ -3,9 +3,9 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '@components/CreateOrModifyButton'
-import Input from '@components/Input'
-import Modal from '@components/Modal'
+import CreateOrModifyButton from '../../../../components/ButtonsAndInputs/CreateOrModifyButton'
+import Input from '../../../../components/ButtonsAndInputs/Input'
+import Modal from '../../../../components/Modals/Modal'
 import { type IPhotosAlbum } from '@typedec/Photos'
 import { usePhotosContext } from '../../../../providers/PhotosProvider'
 
@@ -20,7 +20,7 @@ function ModifyAlbumModal({
     modifyAlbumModalOpenType: openType,
     setModifyAlbumModalOpenType: setOpenType,
     setAlbumList
-  } = usePhotosContext
+  } = usePhotosContext()
   const [albumName, setAlbumName] = useState('')
   const [loading, setLoading] = useState(false)
   const ref = useRef<HTMLInputElement>(null)

@@ -3,14 +3,14 @@
 
 import { Icon } from '@iconify/react'
 import moment from 'moment'
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Gallery from 'react-photo-gallery'
 import { useNavigate, useParams } from 'react-router'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import GoBackButton from '@components/GoBackButton'
-import HamburgerMenu from '@components/HamburgerMenu/index.tsx'
-import MenuItem from '@components/HamburgerMenu/MenuItem.tsx'
-import ModuleWrapper from '@components/ModuleWrapper'
+import GoBackButton from '../../../../components/ButtonsAndInputs/GoBackButton.tsx'
+import HamburgerMenu from '../../../../components/ButtonsAndInputs/HamburgerMenu/index.tsx'
+import MenuItem from '../../../../components/ButtonsAndInputs/HamburgerMenu/MenuItem.tsx'
+import ModuleWrapper from '../../../../components/Module/ModuleWrapper.tsx'
+import APIComponentWithFallback from '../../../../components/Screens/APIComponentWithFallback.tsx'
 import useFetch from '@hooks/useFetch'
 import {
   type IPhotoAlbumEntryItem,

@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
-import Button from '@components/Button'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import { type ITodoListTag } from '@typedec/TodoList'
+import Button from '../../../components/ButtonsAndInputs/Button'
 
 function TodoListHeader({
   setSidebarOpen

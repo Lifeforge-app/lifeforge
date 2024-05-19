@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import ModuleHeader from '@components/ModuleHeader'
-import ModuleWrapper from '@components/ModuleWrapper'
+import ModuleHeader from '../../components/Module/ModuleHeader'
+import ModuleWrapper from '../../components/Module/ModuleWrapper'
 import Timer from './components/Timer'
 
 export default function PomodoroTimer(): React.ReactElement {

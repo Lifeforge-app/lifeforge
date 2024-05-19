@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect, useState } from 'react'
-import ModuleHeader from '@components/ModuleHeader'
-import ModuleWrapper from '@components/ModuleWrapper'
+import ModuleHeader from '../../components/Module/ModuleHeader'
+import ModuleWrapper from '../../components/Module/ModuleWrapper'
 import useFetch from '@hooks/useFetch'
 import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
 import CalendarComponent from './components/Calendar'

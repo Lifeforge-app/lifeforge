@@ -3,9 +3,9 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '@components/CreateOrModifyButton'
-import Input from '@components/Input'
-import Modal from '@components/Modal'
+import CreateOrModifyButton from '../../../components/ButtonsAndInputs/CreateOrModifyButton'
+import Input from '../../../components/ButtonsAndInputs/Input'
+import Modal from '../../../components/Modals/Modal'
 import { useMusicContext } from '@providers/MusicProvider'
 
 function ModifyMusicModal(): React.ReactElement {

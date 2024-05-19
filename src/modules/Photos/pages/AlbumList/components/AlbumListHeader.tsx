@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import Button from '@components/Button'
-import SearchInput from '@components/SearchInput'
+import Button from '../../../../../components/ButtonsAndInputs/Button'
+import SearchInput from '../../../../../components/ButtonsAndInputs/SearchInput'
+import APIComponentWithFallback from '../../../../../components/Screens/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
 
 function AlbumListHeader({

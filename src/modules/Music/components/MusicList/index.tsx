@@ -1,7 +1,7 @@
 import React from 'react'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import { useMusicContext } from '@providers/MusicProvider'
 import MusicListItem from './components/MusicListItem'
+import APIComponentWithFallback from '../../../../components/Screens/APIComponentWithFallback'
 
 function MusicList({
   debouncedSearchQuery

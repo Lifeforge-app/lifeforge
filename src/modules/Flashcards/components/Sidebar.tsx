@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
 import React from 'react'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import GoBackButton from '@components/GoBackButton'
+import APIComponentWithFallback from '../../../components/Screens/APIComponentWithFallback'
+import GoBackButton from '../../../components/ButtonsAndInputs/GoBackButton'
 import useFetch from '@hooks/useFetch'
 import SidebarDivider from '@sidebar/components/SidebarDivider'
 import SidebarItem from '@sidebar/components/SidebarItem'

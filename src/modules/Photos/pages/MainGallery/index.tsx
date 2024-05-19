@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/indent */
 
 import React, { useEffect, useState } from 'react'
-import ModuleHeader from '@components/ModuleHeader'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import { type IPhotosEntryDimensionsAll } from '@typedec/Photos'
 import GalleryContainer from './Gallery/GalleryContainer'
 import GalleryHeader from './Gallery/GalleryHeader'
+import ModuleHeader from '../../../../components/Module/ModuleHeader'
 import AddPhotosToAlbumModal from '../../components/modals/AddPhotosToAlbumModal'
 import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosConfirmationModal'
 import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'

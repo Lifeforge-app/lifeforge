@@ -3,10 +3,10 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import HamburgerMenu from '@components/HamburgerMenu'
-import MenuItem from '@components/HamburgerMenu/MenuItem'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import { type ITodoListTag } from '@typedec/TodoList'
+import HamburgerMenu from '../../../../../components/ButtonsAndInputs/HamburgerMenu'
+import MenuItem from '../../../../../components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 
 function TaskTagListItem({
   item,

@@ -9,6 +9,7 @@ interface ModuleHeaderPropsWithHamburgerMenu {
   desc?: string | React.ReactNode
   hasHamburgerMenu?: false
   hamburgerMenuItems?: never
+  actionButton?: React.ReactNode
 }
 
 interface ModuleHeaderPropsWithHamburgerMenuItems {

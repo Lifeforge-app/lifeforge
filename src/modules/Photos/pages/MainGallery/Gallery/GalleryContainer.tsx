@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/indent */
 import moment from 'moment'
 import React from 'react'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import Gallery from './Gallery'
+import APIComponentWithFallback from '../../../../../components/Screens/APIComponentWithFallback'
 import MobileSlidingScrollbar from '../Scrollbars/MobileSlidingScrollbar'
 import TimelineScrollbar from '../Scrollbars/TimelineScrollbar'
 

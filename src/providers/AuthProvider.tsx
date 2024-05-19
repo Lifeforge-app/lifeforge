@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { useAnyContext } from '@hooks/useAnyContext'
 import { AUTH_ERROR_MESSAGES } from '../constants/auth'
 
 interface IAuthData {

@@ -4,8 +4,8 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '@components/CreateOrModifyButton'
-import Modal from '@components/Modal'
+import CreateOrModifyButton from '../../../components/ButtonsAndInputs/CreateOrModifyButton'
+import Modal from '../../../components/Modals/Modal'
 import { type IFlashcardCard } from '@typedec/Flashcard'
 
 function EditCardModal({
