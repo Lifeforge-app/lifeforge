@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { useAuthContext } from '@providers/AuthProvider'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
-import MenuItem from './general/HamburgerMenu/MenuItem'
+import MenuItem from './ButtonsAndInputs/HamburgerMenu/MenuItem'
 
 export default function Header(): React.ReactElement {
   const { sidebarExpanded, toggleSidebar } = useGlobalStateContext()

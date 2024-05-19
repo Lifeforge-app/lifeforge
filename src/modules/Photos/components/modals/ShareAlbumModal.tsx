@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/Button'
+import Button from '../../../../components/ButtonsAndInputs/Button'
 import { type IPhotosAlbum } from '@typedec/Photos'
 
 function ShareAlbumModal({

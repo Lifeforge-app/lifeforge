@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import APIComponentWithFallback from '../../../../../../components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@sidebar/components/SidebarTitle'
 import { type ICalendarCategory } from '@typedec/Calendar'
 import CategoryListItem from './components/CategoryListItem'

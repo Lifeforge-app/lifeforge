@@ -2,10 +2,10 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import moment from 'moment'
 import React from 'react'
 import { toast } from 'react-toastify'
-import HamburgerMenu from '@components/HamburgerMenu'
-import MenuItem from '@components/HamburgerMenu/MenuItem'
 import { useMusicContext } from '@providers/MusicProvider'
 import { type IMusicEntry } from '@typedec/Music'
+import HamburgerMenu from '../../../../../components/ButtonsAndInputs/HamburgerMenu'
+import MenuItem from '../../../../../components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import forceDown from '../../../../../utils/forceDown'
 
 function MusicListItem({ music }: { music: IMusicEntry }): React.ReactElement {

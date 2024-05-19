@@ -6,11 +6,11 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/Button'
-import HamburgerMenu from '@components/HamburgerMenu'
-import MenuItem from '@components/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
 import { usePhotosContext } from '@providers/PhotosProvider'
+import Button from '../../../../../components/ButtonsAndInputs/Button'
+import HamburgerMenu from '../../../../../components/ButtonsAndInputs/HamburgerMenu'
+import MenuItem from '../../../../../components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 
 function GalleryHeader(): React.ReactElement {
   const { refreshPhotos, hidePhotosInAlbum, setHidePhotosInAlbum, setReady } =

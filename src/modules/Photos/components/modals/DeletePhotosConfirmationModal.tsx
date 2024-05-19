@@ -4,8 +4,8 @@
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/Button'
-import Modal from '@components/Modal'
+import Button from '../../../../components/ButtonsAndInputs/Button'
+import Modal from '../../../../components/Modals/Modal'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import {
   type IPhotosEntryDimensionsAll,

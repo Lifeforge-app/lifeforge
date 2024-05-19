@@ -2,9 +2,9 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/Button'
-import Input from '@components/Input'
-import Modal from '@components/Modal'
+import Button from '../../components/ButtonsAndInputs/Button'
+import Input from '../../components/ButtonsAndInputs/Input'
+import Modal from '../../components/Modals/Modal'
 import { useAuthContext } from '@providers/AuthProvider'
 
 function CreatePassword(): React.ReactElement {

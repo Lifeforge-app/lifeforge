@@ -13,8 +13,8 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import IconSet from './components/IconSet.tsx'
-import IconSetList from './components/IconSetList'
-import Search from './components/Search'
+import IconSetList from './components/IconSetList.tsx'
+import Search from './components/Search.tsx'
 
 function IconSelector({
   isOpen,

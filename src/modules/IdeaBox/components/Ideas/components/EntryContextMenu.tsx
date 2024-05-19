@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React from 'react'
 import { toast } from 'react-toastify'
-import MenuItem from '@components/HamburgerMenu/MenuItem'
+import MenuItem from '../../../../../components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
 
 function EntryContextMenu({

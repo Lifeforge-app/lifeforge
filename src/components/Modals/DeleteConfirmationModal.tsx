@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
-import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from './Button'
 import Modal from './Modal'
+import Button from '../ButtonsAndInputs/Button'
 
 function DeleteConfirmationModal({
   itemName,

@@ -1,7 +1,7 @@
 import React, { Suspense, lazy, useMemo } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import Loading from '@components/Loading'
 import { useAuthContext } from '@providers/AuthProvider'
+import Loading from './components/Screens/Loading'
 import { titleToPath } from './utils/strings'
 
 const PhotosProvider = lazy(
@@ -28,7 +28,7 @@ const ProjectsM = lazy(async () => await import('./modules/ProjectsM'))
 const Kanban = lazy(
   async () => await import('./modules/ProjectsM/components/Kanban')
 )
-const NotFound = lazy(async () => await import('./components/general/NotFound'))
+const NotFound = lazy(async () => await import('./components/Screens/NotFound'))
 const IdeaBox = lazy(async () => await import('./modules/IdeaBox'))
 const Ideas = lazy(
   async () => await import('./modules/IdeaBox/components/Ideas')

@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
 import React from 'react'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import APIComponentWithFallback from '../../../components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 

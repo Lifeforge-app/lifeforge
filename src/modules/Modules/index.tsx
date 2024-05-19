@@ -4,12 +4,12 @@
 import { cookieParse } from 'pocketbase'
 import React from 'react'
 import { toast } from 'react-toastify'
-import Loading from '@components/Loading'
-import ModuleHeader from '@components/ModuleHeader'
-import ModuleWrapper from '@components/ModuleWrapper'
 import { useAuthContext } from '@providers/AuthProvider'
 import { type ModuleEntry } from '@typedec/Module'
 import ModuleItem from './ModuleItem'
+import ModuleHeader from '../../components/Module/ModuleHeader'
+import ModuleWrapper from '../../components/Module/ModuleWrapper'
+import Loading from '../../components/Screens/Loading'
 import { titleToPath } from '../../utils/strings'
 
 const MODULES: ModuleEntry[] = [

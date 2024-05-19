@@ -4,8 +4,8 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import HamburgerMenu from '@components/HamburgerMenu'
-import MenuItem from '@components/HamburgerMenu/MenuItem'
+import HamburgerMenu from '../../components/ButtonsAndInputs/HamburgerMenu'
+import MenuItem from '../../components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { type IPasswordEntry } from '@typedec/Password'
 
 function PasswordEntryITem({
