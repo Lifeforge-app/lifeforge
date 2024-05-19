@@ -2,12 +2,12 @@
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
-import React, { useContext } from 'react'
-import { PhotosContext } from '@providers/PhotosProvider'
+import React from 'react'
+import { usePhotosContext } from '@providers/PhotosProvider'
 
 function MobileSlidingScrollbar(): React.ReactElement {
   const { galleryWrapperRef, sideSliderRef, mobileDateDisplayRef, photos } =
-    useContext(PhotosContext)
+    usePhotosContext()
 
   return typeof photos !== 'string' && photos.totalItems !== 0 ? (
     <div

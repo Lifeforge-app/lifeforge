@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
-import React, { useContext } from 'react'
+import React from 'react'
 import Button from '@components/Button'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
-import { AuthContext } from '@providers/AuthProvider'
+import { useAuthContext } from '@providers/AuthProvider'
 import WebPlayback from './WebPlayback'
 
 function Spotify(): React.ReactElement {
-  const { userData } = useContext(AuthContext)
+  const { userData } = useAuthContext()
 
   function loginWithSpotify(): void {
     window.location.href = `${

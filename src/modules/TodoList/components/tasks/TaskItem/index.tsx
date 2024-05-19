@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { cookieParse } from 'pocketbase'
-import React, { useContext } from 'react'
+import React from 'react'
 import { toast } from 'react-toastify'
-import { TodoListContext } from '@providers/TodoListProvider'
+import { useTodoListContext } from '@providers/TodoListProvider'
 import { type ITodoListEntry } from '@typedec/TodoList'
 import TaskCompletionCheckbox from './components/TaskCompletionCheckbox'
 import TaskDueDate from './components/TaskDueDate'
@@ -35,7 +35,7 @@ function TaskItem({
     refreshStatusCounter,
     setSelectedTask,
     setModifyTaskWindowOpenType
-  } = useContext(TodoListContext)
+  } = useTodoListContext()
 
   function toggleTaskCompletion(id: string): void {
     if (typeof innerEntries === 'string') return

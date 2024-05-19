@@ -2,12 +2,12 @@
 
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import Button from '@components/Button'
 import Modal from '@components/Modal'
-import { PhotosContext } from '@providers/PhotosProvider'
+import { usePhotosContext } from '@providers/PhotosProvider'
 import { type IPhotosAlbum } from '@typedec/Photos'
 
 function UpdateAlbumTagsModal({
@@ -19,8 +19,7 @@ function UpdateAlbumTagsModal({
   setOpen: (value: boolean) => void
   selectedAlbum: IPhotosAlbum | null
 }): React.ReactElement {
-  const { albumTagList, setAlbumList, refreshAlbumTagList } =
-    useContext(PhotosContext)
+  const { albumTagList, setAlbumList, refreshAlbumTagList } = usePhotosContext()
   const [loading, setLoading] = useState(false)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
 

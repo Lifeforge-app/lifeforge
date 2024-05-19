@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import moment from 'moment'
-import React, { useContext, useRef } from 'react'
-import { PhotosContext } from '@providers/PhotosProvider'
+import React, { useRef } from 'react'
+import { usePhotosContext } from '@providers/PhotosProvider'
 
 function TimelineScrollbar(): React.ReactElement {
   const {
@@ -10,7 +10,7 @@ function TimelineScrollbar(): React.ReactElement {
     eachDayDimensions,
     galleryWrapperRef,
     timelineDateDisplayRef
-  } = useContext(PhotosContext)
+  } = usePhotosContext()
   const movingTimelineDateDisplayRef = useRef<HTMLDivElement>(null)
   const isDraggingRef = useRef(false)
 
@@ -110,7 +110,7 @@ function TimelineScrollbar(): React.ReactElement {
                   .map(([year, date]) => (
                     <span
                       key={year}
-                      className="pointer-events-none absolute z-[5] hidden h-4 w-full -translate-y-4 flex-center bg-bg-100 text-sm text-bg-500 dark:bg-bg-950 sm:flex"
+                      className="flex-center pointer-events-none absolute z-[5] hidden h-4 w-full -translate-y-4 bg-bg-100 text-sm text-bg-500 dark:bg-bg-950 sm:flex"
                       style={{
                         top: `${eachDayDimensions[date]?.inTimeline}px`
                       }}

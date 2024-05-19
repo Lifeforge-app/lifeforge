@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import Button from '@components/Button'
 import Modal from '@components/Modal'
-import { PhotosContext } from '@providers/PhotosProvider'
+import { usePhotosContext } from '@providers/PhotosProvider'
 
 function AddPhotosToAlbumModal(): React.ReactElement {
   const {
@@ -17,7 +17,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
     setAddPhotosToAlbumModalOpen: setOpen,
     refreshAlbumList: updateAlbumList,
     refreshPhotos: updatePhotos
-  } = useContext(PhotosContext)
+  } = usePhotosContext()
   const [selectedAlbum, setSelectedAlbum] = useState('')
   const [loading, setLoading] = useState(false)
 

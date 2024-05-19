@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
-import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/Button'
 import Modal from '@components/Modal'
-import { PhotosContext } from '@providers/PhotosProvider'
+import { usePhotosContext } from '@providers/PhotosProvider'
 import {
   type IPhotosEntryDimensionsAll,
   type IPhotoAlbumEntryItem,
@@ -33,9 +32,8 @@ function DeletePhotosConfirmationModal({
     selectedPhotos,
     setSelectedPhotos,
     isDeletePhotosConfirmationModalOpen,
-    setDeletePhotosConfirmationModalOpen,
-    refreshAlbumList
-  } = useContext(PhotosContext)
+    setDeletePhotosConfirmationModalOpen
+  } = usePhotosContext()
   const [loading, setLoading] = useState(false)
 
   function deleteData(): void {

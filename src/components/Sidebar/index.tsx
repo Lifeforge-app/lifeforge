@@ -1,10 +1,10 @@
-import React, { useContext } from 'react'
-import { GlobalStateContext } from '@providers/GlobalStateProvider'
+import React from 'react'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import SidebarHeader from './components/SidebarHeader'
 import SidebarItems from './components/SidebarItems'
 
 export default function Sidebar(): React.ReactElement {
-  const { sidebarExpanded } = useContext(GlobalStateContext)
+  const { sidebarExpanded } = useGlobalStateContext()
 
   return (
     <aside

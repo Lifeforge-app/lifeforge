@@ -2,12 +2,12 @@
 import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import Button from '@components/Button'
 import Input from '@components/Input'
-import { AuthContext } from '@providers/AuthProvider'
+import { useAuthContext } from '@providers/AuthProvider'
 import {
   type ModuleConfigSelect,
   type ModuleConfigSwitch,
@@ -32,7 +32,7 @@ function ModuleItem({
   function toggleExpandConfig(): void {
     setExpandConfig(!expandConfig)
   }
-  const { userData, setUserData } = useContext(AuthContext)
+  const { userData, setUserData } = useAuthContext()
 
   const [originalModuleConfig, setOriginalModuleConfig] = useState(
     JSON.stringify(userData.moduleConfigs)

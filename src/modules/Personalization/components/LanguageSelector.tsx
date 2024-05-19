@@ -1,9 +1,9 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 const LANGUAGES: Array<{
   name: string
@@ -23,7 +23,7 @@ const LANGUAGES: Array<{
 ]
 
 function LanguageSelector(): React.ReactElement {
-  const { language, setLanguage } = useContext(PersonalizationContext)
+  const { language, setLanguage } = usePersonalizationContext()
   const { t } = useTranslation()
 
   return (

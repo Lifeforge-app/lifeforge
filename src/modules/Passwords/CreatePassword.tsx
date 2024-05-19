@@ -1,14 +1,14 @@
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import React, { useContext, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/Button'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
-import { AuthContext } from '@providers/AuthProvider'
+import { useAuthContext } from '@providers/AuthProvider'
 
 function CreatePassword(): React.ReactElement {
-  const { setUserData, userData } = useContext(AuthContext)
+  const { setUserData, userData } = useAuthContext()
   const [newPassword, setNewPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)

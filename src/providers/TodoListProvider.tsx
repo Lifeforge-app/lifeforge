@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/indent */
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import useFetch from '@hooks/useFetch'
 import {
@@ -9,7 +9,7 @@ import {
   type ITodoListStatusCounter
 } from '@typedec/TodoList'
 
-const TODO_LIST_DATA: {
+interface ITodoListData {
   lists: ITodoListList[] | 'loading' | 'error'
   tags: ITodoListTag[] | 'loading' | 'error'
   entries: ITodoListEntry[] | 'loading' | 'error'
@@ -51,37 +51,11 @@ const TODO_LIST_DATA: {
   setEntries: React.Dispatch<
     React.SetStateAction<ITodoListEntry[] | 'loading' | 'error'>
   >
-} = {
-  lists: 'loading',
-  tags: 'loading',
-  entries: 'loading',
-  statusCounter: 'loading',
-  modifyTaskWindowOpenType: null,
-  modifyListModalOpenType: null,
-  modifyTagModalOpenType: null,
-  deleteTaskConfirmationModalOpen: false,
-  deleteListConfirmationModalOpen: false,
-  deleteTagConfirmationModalOpen: false,
-  selectedTask: null,
-  selectedList: null,
-  selectedTag: null,
-  refreshLists: () => {},
-  refreshTagsList: () => {},
-  refreshEntries: () => {},
-  refreshStatusCounter: () => {},
-  setModifyTaskWindowOpenType: () => {},
-  setModifyListModalOpenType: () => {},
-  setModifyTagModalOpenType: () => {},
-  setDeleteTaskConfirmationModalOpen: () => {},
-  setDeleteListConfirmationModalOpen: () => {},
-  setDeleteTagConfirmationModalOpen: () => {},
-  setSelectedTask: () => {},
-  setSelectedList: () => {},
-  setSelectedTag: () => {},
-  setEntries: () => {}
 }
 
-export const TodoListContext = React.createContext(TODO_LIST_DATA)
+export const TodoListContext = React.createContext<ITodoListData | undefined>(
+  undefined
+)
 
 export function TodoListProvider({
   children
@@ -153,4 +127,12 @@ export function TodoListProvider({
       {children}
     </TodoListContext.Provider>
   )
+}
+
+export function useTodoListContext(): ITodoListData {
+  const context = useContext(TodoListContext)
+  if (context === undefined) {
+    throw new Error('useTodoListContext must be used within a TodoListProvider')
+  }
+  return context
 }

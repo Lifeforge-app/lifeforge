@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Zoom from 'react-medium-image-zoom'
 import { useParams } from 'react-router'
@@ -16,7 +16,7 @@ import {
   type IPhotoAlbumEntryItem
 } from '@typedec/Photos'
 import DeletePhotosConfirmationModal from './modals/DeletePhotosConfirmationModal'
-import { PhotosContext } from '../../../providers/PhotosProvider'
+import { usePhotosContext } from '../../../providers/PhotosProvider'
 import forceDown from '../../../utils/forceDown'
 
 function CustomZoomContent({
@@ -39,7 +39,7 @@ function CustomZoomContent({
     | React.Dispatch<React.SetStateAction<IPhotoAlbumEntryItem[]>>
   refreshPhotos: () => void
 }): React.ReactElement {
-  const { refreshAlbumList } = useContext(PhotosContext)
+  const { refreshAlbumList } = usePhotosContext()
   const { id: albumId } = useParams<{ id: string }>()
   const [name] = useFetch<string>(
     `photos/entry/name/${data.id}?isInAlbum=${beingDisplayedInAlbum}`,
@@ -220,7 +220,7 @@ function ImageObject({
     | React.Dispatch<React.SetStateAction<IPhotosEntryDimensionsAll>>
     | React.Dispatch<React.SetStateAction<IPhotoAlbumEntryItem[]>>
 }): React.ReactElement {
-  const { ready } = useContext(PhotosContext)
+  const { ready } = usePhotosContext()
 
   return (
     <div

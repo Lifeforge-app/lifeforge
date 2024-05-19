@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
-import React, { useContext } from 'react'
+import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import { TodoListContext } from '@providers/TodoListProvider'
+import { useTodoListContext } from '@providers/TodoListProvider'
 
 function TaskStatusList({
   setSidebarOpen
 }: {
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
-  const { statusCounter } = useContext(TodoListContext)
+  const { statusCounter } = useTodoListContext()
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (

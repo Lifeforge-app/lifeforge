@@ -2,10 +2,10 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useFetch from '@hooks/useFetch'
-import { AuthContext } from '@providers/AuthProvider'
-import { GlobalStateContext } from '@providers/GlobalStateProvider'
+import { useAuthContext } from '@providers/AuthProvider'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { type INotesWorkspace } from '@typedec/Notes'
 import SidebarDivider from './SidebarDivider'
 import SidebarItem from './SidebarItem'
@@ -14,8 +14,8 @@ import { ROUTES } from '../../../Router'
 import { titleToPath } from '../../../utils/strings'
 
 function SidebarItems(): React.ReactElement {
-  const { userData } = useContext(AuthContext)
-  const { sidebarExpanded } = useContext(GlobalStateContext)
+  const { userData } = useAuthContext()
+  const { sidebarExpanded } = useGlobalStateContext()
   const [sidebarItems, setSidebarItems] = useState(ROUTES)
 
   const [notesCategories] = useFetch<INotesWorkspace[]>('notes/workspace/list')

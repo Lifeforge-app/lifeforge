@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
 import { cookieParse } from 'pocketbase'
-import React, { useContext } from 'react'
+import React from 'react'
 import { toast } from 'react-toastify'
 import Loading from '@components/Loading'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
-import { AuthContext } from '@providers/AuthProvider'
+import { useAuthContext } from '@providers/AuthProvider'
 import { type ModuleEntry } from '@typedec/Module'
 import ModuleItem from './ModuleItem'
 import { titleToPath } from '../../utils/strings'
@@ -59,7 +59,7 @@ const MODULES: ModuleEntry[] = [
 ]
 
 function Modules(): React.ReactElement {
-  const { userData, setUserData } = useContext(AuthContext)
+  const { userData, setUserData } = useAuthContext()
 
   function toggleModule(moduleName: string): void {
     if (userData.enabledModules.includes(titleToPath(moduleName))) {

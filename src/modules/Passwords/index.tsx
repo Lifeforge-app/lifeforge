@@ -3,7 +3,7 @@
 
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import Button from '@components/Button'
@@ -13,14 +13,14 @@ import Input from '@components/Input'
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
 import useFetch from '@hooks/useFetch'
-import { AuthContext } from '@providers/AuthProvider'
+import { useAuthContext } from '@providers/AuthProvider'
 import { type IPasswordEntry } from '@typedec/Password'
 import CreatePassword from './CreatePassword'
 import CreatePasswordModal from './CreatePasswordModal'
 import PasswordEntryITem from './PasswordEntryItem'
 
 function Passwords(): React.ReactElement {
-  const { userData } = useContext(AuthContext)
+  const { userData } = useAuthContext()
   const [masterPassWordInputContent, setMasterPassWordInputContent] =
     useState<string>('')
   const [masterPassword, setMasterPassword] = useState<string>('')

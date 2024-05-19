@@ -2,7 +2,7 @@
 
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import ColorInput from '@components/ColorPicker/ColorInput'
 import ColorPickerModal from '@components/ColorPicker/ColorPickerModal'
@@ -12,7 +12,7 @@ import IconInput from '@components/IconSelector/IconInput'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
 import ModalHeader from '@components/ModalHeader'
-import { TodoListContext } from '@providers/TodoListProvider'
+import { useTodoListContext } from '@providers/TodoListProvider'
 
 function ModifyListModal(): React.ReactElement {
   const {
@@ -20,7 +20,7 @@ function ModifyListModal(): React.ReactElement {
     setModifyListModalOpenType: setOpenType,
     refreshLists,
     selectedList
-  } = useContext(TodoListContext)
+  } = useTodoListContext()
   const [loading, setLoading] = useState(false)
   const [listName, setListName] = useState('')
   const [listIcon, setListIcon] = useState('')

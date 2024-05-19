@@ -3,7 +3,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Gallery from 'react-photo-gallery'
 import { toast } from 'react-toastify'
 import useResizeObserver from 'use-resize-observer'
@@ -13,7 +13,7 @@ import {
   type IPhotosEntry,
   type IPhotosEntryDimensionsItem
 } from '@typedec/Photos'
-import { PhotosContext } from '../../../../../providers/PhotosProvider'
+import { usePhotosContext } from '../../../../../providers/PhotosProvider'
 import ImageObject from '../../../components/ImageObject'
 
 function DateGroup({
@@ -37,7 +37,7 @@ function DateGroup({
     refreshPhotos,
     updateEachDayDimensions,
     ready
-  } = useContext(PhotosContext)
+  } = usePhotosContext()
   const thisRef = useRef<HTMLDivElement>(null)
   const [photos, setPhotos] = useState<IPhotosEntry[]>()
   const isOnScreen = useOnScreen(thisRef)

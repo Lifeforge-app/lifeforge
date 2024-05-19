@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/indent */
 
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ModuleHeader from '@components/ModuleHeader'
-import { GlobalStateContext } from '@providers/GlobalStateProvider'
-import { PhotosContext } from '@providers/PhotosProvider'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
+import { usePhotosContext } from '@providers/PhotosProvider'
 import { type IPhotosEntryDimensionsAll } from '@typedec/Photos'
 import GalleryContainer from './Gallery/GalleryContainer'
 import GalleryHeader from './Gallery/GalleryHeader'
@@ -13,9 +13,8 @@ import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
 import PhotosSidebar from '../../components/PhotosSidebar'
 
 function PhotosMainGallery(): React.ReactElement {
-  const { sidebarExpanded } = useContext(GlobalStateContext)
-  const { setPhotoDimensions, hidePhotosInAlbum, setReady } =
-    useContext(PhotosContext)
+  const { sidebarExpanded } = useGlobalStateContext()
+  const { setPhotoDimensions, hidePhotosInAlbum, setReady } = usePhotosContext()
   const [showGallery, setShowGallery] = useState(true)
 
   useEffect(() => {

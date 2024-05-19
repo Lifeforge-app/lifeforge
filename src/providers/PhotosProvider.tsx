@@ -19,12 +19,12 @@ import {
   type IPhotosAlbum,
   type IPhotosEntryDimensionsAll
 } from '@typedec/Photos'
-import { AuthContext } from './AuthProvider'
+import { useAuthContext } from './AuthProvider'
 import IntervalManager from '../utils/intervalManager'
 
 const intervalManager = IntervalManager.getInstance()
 
-const PHOTOS_DATA: {
+interface IPhotosData {
   useTimelineScrollbar: boolean
   ready: boolean
   photos:
@@ -95,50 +95,12 @@ const PHOTOS_DATA: {
     | {
         current: null
       }
-} = {
-  useTimelineScrollbar: false,
-  ready: false,
-  photos: 'loading',
-  albumList: 'loading',
-  albumTagList: 'loading',
-  eachDayDimensions: {},
-  selectedPhotos: [],
-  hidePhotosInAlbum: false,
-  modifyAlbumModalOpenType: false,
-  isAddPhotosToAlbumModalOpen: false,
-  isDeletePhotosConfirmationModalOpen: false,
-  isRemovePhotosFromAlbumConfirmationModalOpen: false,
-  setReady: () => {},
-  setPhotoDimensions: () => {},
-  setAlbumList: () => {},
-  setHidePhotosInAlbum: () => {},
-  setSelectedPhotos: () => {},
-  setModifyAlbumModalOpenType: () => {},
-  setAddPhotosToAlbumModalOpen: () => {},
-  setDeletePhotosConfirmationModalOpen: () => {},
-  setRemovePhotosFromAlbumConfirmationModalOpen: () => {},
-  updateEachDayDimensions: () => {},
-  refreshPhotos: () => {},
-  refreshAlbumList: () => {},
-  refreshAlbumTagList: () => {},
-  sideSliderRef: {
-    current: null
-  },
-  timelineDateDisplayRef: {
-    current: null
-  },
-  mobileDateDisplayRef: {
-    current: null
-  },
-  galleryWrapperRef: {
-    current: null
-  }
 }
 
-export const PhotosContext = createContext(PHOTOS_DATA)
+export const PhotosContext = createContext<IPhotosData | undefined>(undefined)
 
-function Photos(): React.ReactElement {
-  const { userData } = useContext(AuthContext)
+export default function PhotosProvider(): React.ReactElement {
+  const { userData } = useAuthContext()
 
   const [useTimelineScrollbar] = useState(
     userData?.moduleConfigs.Photos.useTimelineScrollbar ?? false
@@ -351,4 +313,10 @@ function Photos(): React.ReactElement {
   )
 }
 
-export default Photos
+export function usePhotosContext(): IPhotosData {
+  const context = useContext(PhotosContext)
+  if (context === undefined) {
+    throw new Error('usePhotosContext must be used within a PhotosProvider')
+  }
+  return context
+}
