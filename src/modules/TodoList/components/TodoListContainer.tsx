@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
 import EmptyStateScreen from '@components/EmptyStateScreen'
 import SearchInput from '@components/SearchInput'
-import { TodoListContext } from '@providers/TodoListProvider'
+import { useTodoListContext } from '@providers/TodoListProvider'
 import ModifyTaskWindow from './ModifyTaskWindow'
 import Sidebar from './Sidebar'
 import TaskList from './tasks/TaskList'
@@ -30,7 +30,7 @@ function TodoListContainer(): React.ReactElement {
     setDeleteListConfirmationModalOpen,
     deleteTagConfirmationModalOpen,
     setDeleteTagConfirmationModalOpen
-  } = useContext(TodoListContext)
+  } = useTodoListContext()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
@@ -10,14 +10,13 @@ import ModuleWrapper from '@components/ModuleWrapper'
 import { type IPhotosAlbum } from '@typedec/Photos'
 import AlbumItem from './components/AlbumItem'
 import AlbumListHeader from './components/AlbumListHeader'
-import { PhotosContext } from '../../../../providers/PhotosProvider'
+import { usePhotosContext } from '../../../../providers/PhotosProvider'
 import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
 import UpdateAlbumTagsModal from '../../components/modals/UpdateAlbumTagsModal'
 import PhotosSidebar from '../../components/PhotosSidebar'
 
 function PhotosAlbumList(): React.ReactElement {
-  const { albumList, refreshAlbumList, refreshPhotos } =
-    useContext(PhotosContext)
+  const { albumList, refreshAlbumList, refreshPhotos } = usePhotosContext()
   const [selectedAlbum, setSelectedAlbum] = useState<IPhotosAlbum | null>(null)
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
   const [updateAlbumTagsModalOpen, setUpdateAlbumTagsModalOpen] =

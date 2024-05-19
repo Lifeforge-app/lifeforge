@@ -4,17 +4,18 @@
 /* eslint-disable react/jsx-no-undef */
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/Button'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
-import { PhotosContext } from '@providers/PhotosProvider'
+import { usePhotosContext } from '@providers/PhotosProvider'
 
 function GalleryHeader(): React.ReactElement {
   const { refreshPhotos, hidePhotosInAlbum, setHidePhotosInAlbum, setReady } =
-    useContext(PhotosContext)
+    usePhotosContext()
+
   const [copiedToClipboard, setCopiedToClipboard] = useState(false)
   const [showImportButton, setShowImportButton] = useState(false)
   const [fileImportLoading, setFileImportLoading] = useState(false)

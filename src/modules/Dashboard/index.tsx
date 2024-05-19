@@ -10,11 +10,11 @@ import {
   Title,
   Filler
 } from 'chart.js'
-import React, { useContext } from 'react'
+import React from 'react'
 
 import ModuleHeader from '@components/ModuleHeader'
 import ModuleWrapper from '@components/ModuleWrapper'
-import { AuthContext } from '@providers/AuthProvider'
+import { useAuthContext } from '@providers/AuthProvider'
 import Calendar from './modules/Calendar'
 import CodeTime from './modules/CodeTime'
 import StorageStatus from './modules/StorageStatus'
@@ -35,7 +35,7 @@ ChartJS.register(
 )
 
 function Dashboard(): React.ReactElement {
-  const { userData } = useContext(AuthContext)
+  const { userData } = useAuthContext()
 
   return (
     <ModuleWrapper>

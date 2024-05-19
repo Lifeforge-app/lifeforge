@@ -1,7 +1,7 @@
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React, { Fragment, useContext } from 'react'
-import { TodoListContext } from '@providers/TodoListProvider'
+import React, { Fragment } from 'react'
+import { useTodoListContext } from '@providers/TodoListProvider'
 
 function ListSelector({
   list,
@@ -10,7 +10,7 @@ function ListSelector({
   list: string | null
   setList: (list: string) => void
 }): React.ReactElement {
-  const { lists } = useContext(TodoListContext)
+  const { lists } = useTodoListContext()
 
   if (typeof lists === 'string') return <></>
 

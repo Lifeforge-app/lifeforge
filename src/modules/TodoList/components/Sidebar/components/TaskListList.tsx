@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/indent */
 
-import React, { useContext } from 'react'
+import React from 'react'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import { TodoListContext } from '@providers/TodoListProvider'
+import { useTodoListContext } from '@providers/TodoListProvider'
 import SidebarTitle from '@sidebar/components/SidebarTitle'
 import TaskListListItem from './TaskListListItem'
 
@@ -13,9 +13,9 @@ function TaskListList({
 }): React.ReactElement {
   const {
     setModifyListModalOpenType: setModifyModalOpenType,
-    setSelectedList: setSelectedData
-  } = useContext(TodoListContext)
-  const { lists } = useContext(TodoListContext)
+    setSelectedList: setSelectedData,
+    lists
+  } = useTodoListContext()
 
   return (
     <>

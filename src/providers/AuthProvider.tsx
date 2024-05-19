@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/member-delimiter-style */
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { useAnyContext } from '@hooks/useAnyContext'
 import { AUTH_ERROR_MESSAGES } from '../constants/auth'
 
-const AUTH_DATA: {
+interface IAuthData {
   auth: boolean
   setAuth: React.Dispatch<React.SetStateAction<boolean>>
   authenticate: ({
@@ -24,23 +25,9 @@ const AUTH_DATA: {
   userData: any
   setUserData: React.Dispatch<React.SetStateAction<any>>
   getAvatarURL: () => string
-} = {
-  auth: false,
-  setAuth: () => {},
-  authenticate: async () => '',
-  verifyToken: async () => ({ success: false, userData: null }),
-  logout: () => {},
-  loginQuota: {
-    quota: 5,
-    dismissQuota: () => {}
-  },
-  authLoading: true,
-  userData: null,
-  setUserData: () => {},
-  getAvatarURL: () => ''
 }
 
-export const AuthContext = createContext(AUTH_DATA)
+const AuthContext = createContext<IAuthData | undefined>(undefined)
 
 export default function AuthProvider({
   children
@@ -225,4 +212,12 @@ export default function AuthProvider({
       {children}
     </AuthContext.Provider>
   )
+}
+
+export function useAuthContext(): IAuthData {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error('useAuthContext must be used within an AuthProvider')
+  }
+  return context
 }

@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { PersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 const COLORS = ['bg-slate', 'bg-gray', 'bg-zinc', 'bg-neutral', 'bg-stone']
 
 function BgTempSelector(): React.ReactElement {
-  const { bgTemp, setBgTemp } = useContext(PersonalizationContext)
+  const { bgTemp, setBgTemp } = usePersonalizationContext()
   const { t } = useTranslation()
 
   return (

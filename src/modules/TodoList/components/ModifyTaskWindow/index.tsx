@@ -4,16 +4,14 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import DatePicker from 'react-date-picker'
+import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/Button'
 import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
 import Input from '@components/Input'
-import { PersonalizationContext } from '@providers/PersonalizationProvider'
-import { TodoListContext } from '@providers/TodoListProvider'
+import { useTodoListContext } from '@providers/TodoListProvider'
 import ListSelector from './components/ListSelector'
 import NotesInput from './components/NotesInput'
 import PrioritySelector from './components/PrioritySelector'
@@ -31,7 +29,7 @@ function ModifyTaskWindow(): React.ReactElement {
     refreshLists,
     refreshStatusCounter,
     setDeleteTaskConfirmationModalOpen
-  } = useContext(TodoListContext)
+  } = useTodoListContext()
 
   const [summary, setSummary] = useState('')
   const [notes, setNotes] = useState('')

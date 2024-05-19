@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/indent */
 
 import { Icon } from '@iconify/react'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
-import { TodoListContext } from '@providers/TodoListProvider'
+import { useTodoListContext } from '@providers/TodoListProvider'
 import { type ITodoListTag } from '@typedec/TodoList'
 
 function TaskTagListItem({
@@ -19,7 +19,7 @@ function TaskTagListItem({
     setModifyTagModalOpenType: setModifyModalOpenType,
     setSelectedTag: setSelectedData,
     setDeleteTagConfirmationModalOpen: setDeleteConfirmationModalOpen
-  } = useContext(TodoListContext)
+  } = useTodoListContext()
   const [searchParams, setSearchParams] = useSearchParams()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 

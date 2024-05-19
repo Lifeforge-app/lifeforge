@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React, { Fragment, useContext } from 'react'
-import { TodoListContext } from '@providers/TodoListProvider'
+import React, { Fragment } from 'react'
+import { useTodoListContext } from '@providers/TodoListProvider'
 
 function TagsSelector({
   tags,
@@ -11,7 +11,7 @@ function TagsSelector({
   tags: string[]
   setTags: (tags: string[]) => void
 }): React.ReactElement {
-  const { tags: tagsList } = useContext(TodoListContext)
+  const { tags: tagsList } = useTodoListContext()
 
   if (typeof tagsList === 'string') return <></>
 

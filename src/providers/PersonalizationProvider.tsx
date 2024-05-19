@@ -4,10 +4,10 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { AuthContext } from './AuthProvider'
+import { useAuthContext } from './AuthProvider'
 import THEME_COLOR_HEX from '../constants/theme_color_hex'
 
-const PERSONALIZATION_DATA: {
+interface IPersonalizationData {
   theme: 'light' | 'dark' | 'system'
   themeColor: string
   bgTemp: string
@@ -16,25 +16,18 @@ const PERSONALIZATION_DATA: {
   setThemeColor: (color: string) => void
   setBgTemp: (color: string) => void
   setLanguage: (language: string) => void
-} = {
-  theme: 'system',
-  themeColor: 'theme-blue',
-  bgTemp: 'bg-neutral',
-  language: 'en',
-  setTheme: () => {},
-  setThemeColor: () => {},
-  setBgTemp: () => {},
-  setLanguage: () => {}
 }
 
-export const PersonalizationContext = createContext(PERSONALIZATION_DATA)
+const PersonalizationContext = createContext<IPersonalizationData | undefined>(
+  undefined
+)
 
-function PersonalizationProvider({
+export default function PersonalizationProvider({
   children
 }: {
   children: React.ReactNode
 }): React.ReactElement {
-  const { userData } = useContext(AuthContext)
+  const { userData } = useAuthContext()
   const { i18n } = useTranslation()
 
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system')
@@ -252,4 +245,12 @@ function PersonalizationProvider({
   )
 }
 
-export default PersonalizationProvider
+export function usePersonalizationContext(): IPersonalizationData {
+  const context = useContext(PersonalizationContext)
+  if (context === undefined) {
+    throw new Error(
+      'usePersonalizationContext must be used within a PersonalizationProvider'
+    )
+  }
+  return context
+}

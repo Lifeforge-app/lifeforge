@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
-import React, { useContext } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import HamburgerMenu from '@components/HamburgerMenu'
 import MenuItem from '@components/HamburgerMenu/MenuItem'
 import { type IPhotosAlbum } from '@typedec/Photos'
-import { PhotosContext } from '../../../../../providers/PhotosProvider'
+import { usePhotosContext } from '../../../../../providers/PhotosProvider'
 
 function AlbumItem({
   album,
@@ -17,8 +17,7 @@ function AlbumItem({
   setDeleteModalOpen: (open: boolean) => void
   setUpdateAlbumTagsModalOpen: (open: boolean) => void
 }): React.ReactElement {
-  const { setModifyAlbumModalOpenType, albumTagList } =
-    useContext(PhotosContext)
+  const { setModifyAlbumModalOpenType, albumTagList } = usePhotosContext()
 
   return (
     <li key={album.id} className="relative flex h-min flex-col gap-1 p-4">

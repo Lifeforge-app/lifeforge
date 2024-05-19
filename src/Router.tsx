@@ -1,7 +1,7 @@
-import React, { Suspense, lazy, useContext, useMemo } from 'react'
+import React, { Suspense, lazy, useMemo } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Loading from '@components/Loading'
-import { AuthContext } from '@providers/AuthProvider'
+import { useAuthContext } from '@providers/AuthProvider'
 import { titleToPath } from './utils/strings'
 
 const PhotosProvider = lazy(
@@ -418,7 +418,7 @@ export const ROUTES: IRoutes[] = [
 ]
 
 function AppRouter(): React.ReactElement {
-  const { auth, authLoading, userData } = useContext(AuthContext)
+  const { auth, authLoading, userData } = useAuthContext()
   const location = useLocation()
   const navigate = useNavigate()
 

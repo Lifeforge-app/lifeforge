@@ -1,9 +1,9 @@
 import * as webauthn from '@passwordless-id/webauthn'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import Input from '@components/Input'
-import { AuthContext } from '@providers/AuthProvider'
+import { useAuthContext } from '@providers/AuthProvider'
 import AuthSignInButton from './AuthSignInButtons'
 import { AUTH_ERROR_MESSAGES } from '../../constants/auth'
 
@@ -19,7 +19,7 @@ function AuthForm(): React.ReactElement {
     authenticate,
     loginQuota: { quota, dismissQuota },
     verifyToken
-  } = useContext(AuthContext)
+  } = useAuthContext()
 
   async function fetchPassKeyChallenge(): Promise<string> {
     return await fetch(

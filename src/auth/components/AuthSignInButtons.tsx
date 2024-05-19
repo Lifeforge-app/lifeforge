@@ -1,8 +1,7 @@
-import { Icon } from '@iconify/react'
-import React, { useContext } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import Button from '@components/Button'
-import { AuthContext } from '@providers/AuthProvider'
+import { useAuthContext } from '@providers/AuthProvider'
 
 function AuthSignInButton({
   emailOrUsername,
@@ -17,7 +16,7 @@ function AuthSignInButton({
   signIn: () => void
   signInWithPasskey: () => void
 }): React.ReactElement {
-  const { auth } = useContext(AuthContext)
+  const { auth } = useAuthContext()
   const { t } = useTranslation()
 
   return (

@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { PhotosContext } from '../../../providers/PhotosProvider'
 import {
   type IPhotosEntryDimensionsItem,
   type IPhotosEntryDimensionsAll,
   type IPhotoAlbumEntryItem
 } from '@typedec/Photos'
+import { usePhotosContext } from '../../../providers/PhotosProvider'
 
 function BottomBar({
   photos,
@@ -27,7 +27,7 @@ function BottomBar({
     setDeletePhotosConfirmationModalOpen,
     setRemovePhotosFromAlbumConfirmationModalOpen,
     refreshPhotos
-  } = useContext(PhotosContext)
+  } = usePhotosContext()
   const [isDownloadLoading, setIsDownloadLoading] = useState(false)
 
   async function requestBulkDownload(): Promise<void> {

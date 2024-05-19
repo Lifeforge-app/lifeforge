@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
-import React, { useContext } from 'react'
+import React from 'react'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import { TodoListContext } from '@providers/TodoListProvider'
+import { useTodoListContext } from '@providers/TodoListProvider'
 import SidebarTitle from '@sidebar/components/SidebarTitle'
 import TaskTagListItem from './TaskTagListItem'
 
@@ -14,7 +14,7 @@ function TaskTagList({
     tags,
     setModifyListModalOpenType: setModifyModalOpenType,
     setSelectedList: setSelectedData
-  } = useContext(TodoListContext)
+  } = useTodoListContext()
 
   return (
     <>

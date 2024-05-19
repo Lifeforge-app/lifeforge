@@ -1,15 +1,15 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { AuthContext } from '@providers/AuthProvider'
-import { GlobalStateContext } from '@providers/GlobalStateProvider'
+import { useAuthContext } from '@providers/AuthProvider'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import MenuItem from './general/HamburgerMenu/MenuItem'
 
 export default function Header(): React.ReactElement {
-  const { sidebarExpanded, toggleSidebar } = useContext(GlobalStateContext)
-  const { userData, getAvatarURL, logout } = useContext(AuthContext)
+  const { sidebarExpanded, toggleSidebar } = useGlobalStateContext()
+  const { userData, getAvatarURL, logout } = useAuthContext()
   const { t } = useTranslation()
 
   return (

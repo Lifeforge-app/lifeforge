@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/indent */
 import moment from 'moment'
-import React, { useContext } from 'react'
+import React from 'react'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import { PhotosContext } from '@providers/PhotosProvider'
+import { usePhotosContext } from '@providers/PhotosProvider'
 import Gallery from './Gallery'
 import MobileSlidingScrollbar from '../Scrollbars/MobileSlidingScrollbar'
 import TimelineScrollbar from '../Scrollbars/TimelineScrollbar'
@@ -16,7 +16,7 @@ function GalleryContainer(): React.ReactElement {
     galleryWrapperRef,
     mobileDateDisplayRef,
     eachDayDimensions
-  } = useContext(PhotosContext)
+  } = usePhotosContext()
 
   return (
     <>

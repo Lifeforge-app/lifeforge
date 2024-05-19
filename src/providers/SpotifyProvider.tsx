@@ -1,34 +1,23 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { AuthContext } from './AuthProvider'
+import { useAuthContext } from './AuthProvider'
 
-const SPOTIFY_DATA: {
+interface ISpotifyData {
   player: any
   isPaused: boolean
   isActive: boolean
   currentTrack: any
-} = {
-  player: undefined,
-  isPaused: true,
-  isActive: false,
-  currentTrack: {
-    name: '',
-    album: {
-      images: [{ url: '' }]
-    },
-    artists: [{ name: '' }]
-  }
 }
 
-export const SpotifyContext = createContext(SPOTIFY_DATA)
+const SpotifyContext = createContext<ISpotifyData | undefined>(undefined)
 
-function SpotifyProvider({
+export default function SpotifyProvider({
   children
 }: {
   children: React.ReactNode
 }): React.ReactElement {
-  const { userData, auth } = useContext(AuthContext)
+  const { userData, auth } = useAuthContext()
   const track = {
     name: '',
     album: {
@@ -158,4 +147,10 @@ function SpotifyProvider({
   )
 }
 
-export default SpotifyProvider
+export function useSpotifyContext(): ISpotifyData {
+  const context = useContext(SpotifyContext)
+  if (context === undefined) {
+    throw new Error('useSpotifyContext must be used within a SpotifyProvider')
+  }
+  return context
+}

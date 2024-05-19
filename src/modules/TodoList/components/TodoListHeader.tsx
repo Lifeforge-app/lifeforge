@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
-import React, { useContext } from 'react'
+import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 import Button from '@components/Button'
-import { TodoListContext } from '@providers/TodoListProvider'
-import { type ITodoListList, type ITodoListTag } from '@typedec/TodoList'
+import { useTodoListContext } from '@providers/TodoListProvider'
+import { type ITodoListTag } from '@typedec/TodoList'
 
 function TodoListHeader({
   setSidebarOpen
@@ -11,7 +11,7 @@ function TodoListHeader({
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
   const { entries, lists, tags, setSelectedTask, setModifyTaskWindowOpenType } =
-    useContext(TodoListContext)
+    useTodoListContext()
   const [searchParams, setSearchParams] = useSearchParams()
 
   if (typeof entries === 'string' || typeof lists === 'string') return <></>

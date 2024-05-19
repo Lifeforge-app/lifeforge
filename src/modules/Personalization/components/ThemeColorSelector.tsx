@@ -1,9 +1,9 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { toCamelCase } from '../../../utils/strings'
 
 const COLORS = [
@@ -28,7 +28,7 @@ const COLORS = [
 ]
 
 function ThemeColorSelector(): React.ReactElement {
-  const { themeColor, setThemeColor } = useContext(PersonalizationContext)
+  const { themeColor, setThemeColor } = usePersonalizationContext()
   const { t } = useTranslation()
 
   return (

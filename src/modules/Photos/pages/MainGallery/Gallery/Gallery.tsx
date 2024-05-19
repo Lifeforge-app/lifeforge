@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/indent */
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import EmptyStateScreen from '@components/EmptyStateScreen'
-import { PhotosContext } from '@providers/PhotosProvider'
+import { usePhotosContext } from '@providers/PhotosProvider'
 import DateGroup from './DateGroup'
 import BottomBar from '../../../components/BottomBar'
 
 function Gallery(): React.ReactElement {
-  const { photos, selectedPhotos, setSelectedPhotos } =
-    useContext(PhotosContext)
+  const { photos, selectedPhotos, setSelectedPhotos } = usePhotosContext()
 
   useEffect(() => {
     return () => {
@@ -48,7 +47,7 @@ function Gallery(): React.ReactElement {
             />
           ))
         ) : (
-          <div className="flex h-full w-full flex-1 flex-center">
+          <div className="flex-center flex h-full w-full flex-1">
             <EmptyStateScreen
               icon="tabler:photo-off"
               title="Hmm... Seems a bit empty here"

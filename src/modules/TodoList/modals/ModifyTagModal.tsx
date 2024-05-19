@@ -2,13 +2,13 @@
 
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
 import ModalHeader from '@components/ModalHeader'
-import { TodoListContext } from '@providers/TodoListProvider'
+import { useTodoListContext } from '@providers/TodoListProvider'
 
 function ModifyTagModal(): React.ReactElement {
   const {
@@ -16,7 +16,7 @@ function ModifyTagModal(): React.ReactElement {
     setModifyListModalOpenType: setOpenType,
     refreshTagsList,
     selectedTag
-  } = useContext(TodoListContext)
+  } = useTodoListContext()
   const [loading, setLoading] = useState(false)
   const [tagName, setTagName] = useState('')
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
