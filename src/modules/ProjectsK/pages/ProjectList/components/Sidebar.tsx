@@ -2,7 +2,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
+import APIComponentWithFallback from '../../../../../components/Screens/APIComponentWithFallback'
 import SidebarDivider from '@sidebar/components/SidebarDivider'
 import SidebarItem from '@sidebar/components/SidebarItem'
 import SidebarTitle from '@sidebar/components/SidebarTitle'

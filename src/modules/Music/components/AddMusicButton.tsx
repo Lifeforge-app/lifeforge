@@ -3,9 +3,9 @@ import { Menu, Transition } from '@headlessui/react'
 import { cookieParse } from 'pocketbase'
 import React from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/Button'
-import MenuItem from '@components/HamburgerMenu/MenuItem'
 import { useMusicContext } from '@providers/MusicProvider'
+import Button from '../../../components/ButtonsAndInputs/Button'
+import MenuItem from '../../../components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import IntervalManager from '../../../utils/intervalManager'
 
 const intervalManager = IntervalManager.getInstance()

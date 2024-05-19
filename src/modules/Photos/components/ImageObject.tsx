@@ -7,8 +7,6 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Zoom from 'react-medium-image-zoom'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import HamburgerMenu from '@components/HamburgerMenu'
-import MenuItem from '@components/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
 import {
   type IPhotosEntryDimensionsAll,
@@ -16,6 +14,8 @@ import {
   type IPhotoAlbumEntryItem
 } from '@typedec/Photos'
 import DeletePhotosConfirmationModal from './modals/DeletePhotosConfirmationModal'
+import HamburgerMenu from '../../../components/ButtonsAndInputs/HamburgerMenu'
+import MenuItem from '../../../components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { usePhotosContext } from '../../../providers/PhotosProvider'
 import forceDown from '../../../utils/forceDown'
 

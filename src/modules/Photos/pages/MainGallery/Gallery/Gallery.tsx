@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect } from 'react'
-import EmptyStateScreen from '@components/EmptyStateScreen'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import DateGroup from './DateGroup'
+import EmptyStateScreen from '../../../../../components/Screens/EmptyStateScreen'
 import BottomBar from '../../../components/BottomBar'
 
 function Gallery(): React.ReactElement {

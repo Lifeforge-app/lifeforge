@@ -6,9 +6,9 @@
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import DeleteConfirmationModal from '@components/DeleteConfirmationModal'
-import EmptyStateScreen from '@components/EmptyStateScreen'
+import APIComponentWithFallback from '../../../components/Screens/APIComponentWithFallback'
+import DeleteConfirmationModal from '../../../components/Modals/DeleteConfirmationModal'
+import EmptyStateScreen from '../../../components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type INotesEntry } from '@typedec/Notes'
 import Directory from './components/Directory'

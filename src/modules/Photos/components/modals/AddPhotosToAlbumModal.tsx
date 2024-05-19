@@ -2,9 +2,9 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import Button from '@components/Button'
-import Modal from '@components/Modal'
+import Button from '../../../../components/ButtonsAndInputs/Button'
+import Modal from '../../../../components/Modals/Modal'
+import APIComponentWithFallback from '../../../../components/Screens/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
 
 function AddPhotosToAlbumModal(): React.ReactElement {

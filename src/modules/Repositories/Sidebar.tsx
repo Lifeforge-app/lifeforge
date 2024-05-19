@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
 import React from 'react'
-import GoBackButton from '@components/GoBackButton'
+import GoBackButton from '../../components/ButtonsAndInputs/GoBackButton'
 import SidebarDivider from '@sidebar/components/SidebarDivider'
 import SidebarTitle from '@sidebar/components/SidebarTitle'
 

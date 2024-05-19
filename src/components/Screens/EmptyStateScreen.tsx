@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
 import React from 'react'
-import Button from './Button'
+import Button from '../ButtonsAndInputs/Button'
 
 function EmptyStateScreen({
   setModifyModalOpenType,

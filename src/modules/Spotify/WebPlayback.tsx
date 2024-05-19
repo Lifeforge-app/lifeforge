@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
-import EmptyStateScreen from '@components/EmptyStateScreen'
 import { useSpotifyContext } from '@providers/SpotifyProvider'
+import EmptyStateScreen from '../../components/Screens/EmptyStateScreen'
 
 function WebPlayback(): React.ReactElement {
   const { player, isPaused, isActive, currentTrack } = useSpotifyContext()

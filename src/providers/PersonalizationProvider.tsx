@@ -11,7 +11,7 @@ interface IPersonalizationData {
   theme: 'light' | 'dark' | 'system'
   themeColor: string
   bgTemp: string
-  language
+  language: string
   setTheme: (theme: 'light' | 'dark' | 'system') => void
   setThemeColor: (color: string) => void
   setBgTemp: (color: string) => void
