@@ -6,21 +6,15 @@ import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
-import { type IMusicEntry } from '@typedec/Music'
+import { useMusicContext } from '@providers/MusicProvider'
 
-function ModifyMusicModal({
-  targetMusic,
-  isOpen,
-  setOpen,
-  setMusics
-}: {
-  targetMusic: IMusicEntry | null
-  isOpen: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setMusics: React.Dispatch<
-    React.SetStateAction<IMusicEntry[] | 'loading' | 'error'>
-  >
-}): React.ReactElement {
+function ModifyMusicModal(): React.ReactElement {
+  const {
+    isModifyMusicModalOpen: isOpen,
+    setIsModifyMusicModalOpen: setOpen,
+    existedData: targetMusic,
+    setMusics
+  } = useMusicContext()
   const [musicName, setMusicName] = useState('')
   const [musicAuthor, setMusicAuthor] = useState('')
   const [loading, setLoading] = useState(false)

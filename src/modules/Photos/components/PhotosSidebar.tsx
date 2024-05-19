@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
-import React, { useContext } from 'react'
+import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
-import { PhotosContext } from '@providers/PhotosProvider'
+import { usePhotosContext } from '@providers/PhotosProvider'
 import SidebarDivider from '@sidebar/components/SidebarDivider'
 import SidebarItem from '@sidebar/components/SidebarItem'
 import SidebarTitle from '@sidebar/components/SidebarTitle'
@@ -13,7 +13,7 @@ function PhotosSidebar(): React.ReactElement {
     photos,
     albumList,
     setModifyAlbumModalOpenType: setCreateAlbumModalOpen
-  } = useContext(PhotosContext)
+  } = usePhotosContext()
 
   const navigate = useNavigate()
 
@@ -64,7 +64,7 @@ function PhotosSidebar(): React.ReactElement {
                   to={`/photos/album/${album.id}`}
                   className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 hover:bg-bg-100 dark:hover:bg-bg-800"
                 >
-                  <div className="flex h-10 w-10 shrink-0 flex-center rounded-md bg-bg-200/50 shadow-sm dark:bg-bg-700/50">
+                  <div className="flex-center flex h-10 w-10 shrink-0 rounded-md bg-bg-200/50 shadow-sm dark:bg-bg-700/50">
                     {album.cover !== '' ? (
                       <img
                         src={`${
@@ -94,7 +94,7 @@ function PhotosSidebar(): React.ReactElement {
               to="/photos/album"
               className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800"
             >
-              <div className="flex h-10 w-10 shrink-0 flex-center">
+              <div className="flex-center flex h-10 w-10 shrink-0">
                 <Icon
                   icon="tabler:arrow-right"
                   className="h-6 w-6 text-bg-500"

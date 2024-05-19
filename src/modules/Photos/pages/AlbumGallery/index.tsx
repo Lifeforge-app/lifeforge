@@ -16,7 +16,7 @@ import {
   type IPhotoAlbumEntryItem,
   type IPhotosAlbum
 } from '@typedec/Photos.ts'
-import { PhotosContext } from '../../../../providers/PhotosProvider'
+import { usePhotosContext } from '../../../../providers/PhotosProvider'
 import BottomBar from '../../components/BottomBar'
 import ImageObject from '../../components/ImageObject'
 import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosConfirmationModal.tsx'
@@ -33,7 +33,7 @@ function PhotosAlbumGallery(): React.ReactElement {
     setSelectedPhotos,
     setModifyAlbumModalOpenType,
     setAlbumList
-  } = useContext(PhotosContext)
+  } = usePhotosContext()
   const navigate = useNavigate()
   const [valid] = useFetch<boolean>(`photos/album/valid/${id}`)
   const [albumData, refreshAlbumData, setAlbumData] = useFetch<IPhotosAlbum>(

@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/CreateOrModifyButton'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
 import { type IPhotosAlbum } from '@typedec/Photos'
-import { PhotosContext } from '../../../../providers/PhotosProvider'
+import { usePhotosContext } from '../../../../providers/PhotosProvider'
 
 function ModifyAlbumModal({
   targetAlbum,
@@ -20,7 +20,7 @@ function ModifyAlbumModal({
     modifyAlbumModalOpenType: openType,
     setModifyAlbumModalOpenType: setOpenType,
     setAlbumList
-  } = useContext(PhotosContext)
+  } = usePhotosContext
   const [albumName, setAlbumName] = useState('')
   const [loading, setLoading] = useState(false)
   const ref = useRef<HTMLInputElement>(null)

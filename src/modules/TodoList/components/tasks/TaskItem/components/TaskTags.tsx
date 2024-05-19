@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
-import { TodoListContext } from '@providers/TodoListProvider'
+import React from 'react'
+import { useTodoListContext } from '@providers/TodoListProvider'
 import { type ITodoListEntry } from '@typedec/TodoList'
 
 function TaskTags({ entry }: { entry: ITodoListEntry }): React.ReactElement {
-  const { tags } = useContext(TodoListContext)
+  const { tags } = useTodoListContext()
 
   return (
     <div className="flex items-center gap-1">

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/indent */
-import React, { useContext } from 'react'
-import { TodoListContext } from '@providers/TodoListProvider'
+import React from 'react'
+import { useTodoListContext } from '@providers/TodoListProvider'
 import TaskItem from './TaskItem'
 
 function TaskList(): React.ReactElement {
-  const { entries } = useContext(TodoListContext)
+  const { entries } = useTodoListContext()
 
   return (
     <div className="mt-6 flex flex-1 flex-col overflow-y-scroll px-4">

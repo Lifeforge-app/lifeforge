@@ -1,14 +1,11 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
-const GLOBAL_STATE: {
+interface IGlobalState {
   sidebarExpanded: boolean
   toggleSidebar: () => void
-} = {
-  sidebarExpanded: true,
-  toggleSidebar: () => {}
 }
 
-export const GlobalStateContext = createContext(GLOBAL_STATE)
+const GlobalStateContext = createContext<IGlobalState | undefined>(undefined)
 
 export default function GlobalStateProvider({
   children
@@ -37,4 +34,14 @@ export default function GlobalStateProvider({
       {children}
     </GlobalStateContext.Provider>
   )
+}
+
+export function useGlobalStateContext(): IGlobalState {
+  const context = useContext(GlobalStateContext)
+  if (context === undefined) {
+    throw new Error(
+      'useGlobalStateContext must be used within a GlobalStateProvider'
+    )
+  }
+  return context
 }

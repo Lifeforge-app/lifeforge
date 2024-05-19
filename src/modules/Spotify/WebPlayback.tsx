@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Icon } from '@iconify/react'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import EmptyStateScreen from '@components/EmptyStateScreen'
-import { SpotifyContext } from '@providers/SpotifyProvider'
+import { useSpotifyContext } from '@providers/SpotifyProvider'
 
 function WebPlayback(): React.ReactElement {
-  const { player, isPaused, isActive, currentTrack } =
-    useContext(SpotifyContext)
+  const { player, isPaused, isActive, currentTrack } = useSpotifyContext()
   const [position, setPosition] = useState('0:00')
 
   function getPlayDuration(): void {
@@ -39,7 +38,7 @@ function WebPlayback(): React.ReactElement {
   return isActive ? (
     <>
       <div className="flex h-full w-full flex-col items-center justify-between py-12">
-        <div className="flex flex-1 flex-col flex-center ">
+        <div className="flex-center flex flex-1 flex-col ">
           {currentTrack.album.images[0].url && (
             <img
               src={currentTrack.album.images[0].url}
@@ -54,9 +53,9 @@ function WebPlayback(): React.ReactElement {
             {currentTrack.artists[0].name}
           </div>
         </div>
-        <div className="mt-6 flex w-full flex-col flex-center gap-4">
+        <div className="flex-center mt-6 flex w-full flex-col gap-4">
           <div className="flex w-full flex-col">
-            <div className="flex flex-center gap-6">
+            <div className="flex-center flex gap-6">
               <p className="hidden w-20 justify-end sm:flex">{`${Math.floor(
                 Number(position) / 60000
               )}:${`${Math.floor((Number(position) % 60000) / 1000)}`.padStart(
@@ -95,7 +94,7 @@ function WebPlayback(): React.ReactElement {
               </p>
             </div>
           </div>
-          <div className="flex flex-center gap-6">
+          <div className="flex-center flex gap-6">
             <button
               onClick={() => {
                 player.previousTrack()

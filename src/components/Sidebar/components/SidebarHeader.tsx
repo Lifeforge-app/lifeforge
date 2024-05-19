@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
-import React, { useContext } from 'react'
-import { GlobalStateContext } from '@providers/GlobalStateProvider'
+import React from 'react'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 
 function SidebarHeader(): React.ReactElement {
-  const { sidebarExpanded, toggleSidebar } = useContext(GlobalStateContext)
+  const { sidebarExpanded, toggleSidebar } = useGlobalStateContext()
 
   return (
     <div

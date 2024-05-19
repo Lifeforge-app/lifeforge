@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
 import { Icon } from '@iconify/react'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
-import { GlobalStateContext } from '@providers/GlobalStateProvider'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { titleToPath, toCamelCase } from '../../../utils/strings'
 
 interface SidebarItemProps {
@@ -28,7 +28,7 @@ function SidebarItem({
   // @ts-expect-error - Lazy to fix yay =)
   const { sidebarExpanded, toggleSidebar } =
     isMainSidebarItem === true
-      ? useContext(GlobalStateContext)
+      ? useGlobalStateContext()
       : { sidebarExpanded: true }
   const [subsectionExpanded, setSubsectionExpanded] = useState(false)
   const { t } = useTranslation()

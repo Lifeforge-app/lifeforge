@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
-import React, { useContext } from 'react'
+import React from 'react'
 import DatePicker from 'react-date-picker'
-import { PersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 type ValuePiece = Date | null
 
@@ -18,7 +18,7 @@ function DateInput({
   name: string
   icon: string
 }): React.ReactElement {
-  const { language } = useContext(PersonalizationContext)
+  const { language } = usePersonalizationContext()
 
   return (
     <div

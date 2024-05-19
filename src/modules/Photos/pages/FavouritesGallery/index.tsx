@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { Icon } from '@iconify/react'
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Gallery from 'react-photo-gallery'
 import { useNavigate } from 'react-router'
 import APIComponentWithFallback from '@components/APIComponentWithFallback.tsx'
@@ -12,13 +12,13 @@ import MenuItem from '@components/HamburgerMenu/MenuItem.tsx'
 import ModuleWrapper from '@components/ModuleWrapper.tsx'
 import useFetch from '@hooks/useFetch.ts'
 import { type IPhotoAlbumEntryItem } from '@typedec/Photos.ts'
-import { PhotosContext } from '../../../../providers/PhotosProvider.tsx'
+import { usePhotosContext } from '../../../../providers/PhotosProvider.tsx'
 import BottomBar from '../../components/BottomBar.tsx'
 import ImageObject from '../../components/ImageObject.tsx'
 
 function PhotosFavouritesGallery(): React.ReactElement {
   const { selectedPhotos, setSelectedPhotos, setModifyAlbumModalOpenType } =
-    useContext(PhotosContext)
+    usePhotosContext()
   const navigate = useNavigate()
   const [photos] = useFetch<IPhotoAlbumEntryItem[]>('photos/favourites/list')
 

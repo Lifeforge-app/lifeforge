@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
-import React, { useContext } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { PersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 function ThemeSelector(): React.ReactElement {
-  const { theme, setTheme } = useContext(PersonalizationContext)
+  const { theme, setTheme } = usePersonalizationContext()
   const { t } = useTranslation()
 
   return (

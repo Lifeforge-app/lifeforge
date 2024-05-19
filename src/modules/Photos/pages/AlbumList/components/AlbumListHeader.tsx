@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
-import React, { useContext } from 'react'
+import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/APIComponentWithFallback'
 import Button from '@components/Button'
 import SearchInput from '@components/SearchInput'
-import { PhotosContext } from '@providers/PhotosProvider'
+import { usePhotosContext } from '@providers/PhotosProvider'
 
 function AlbumListHeader({
   searchQuery,
@@ -14,7 +14,7 @@ function AlbumListHeader({
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
   const { albumList, setModifyAlbumModalOpenType, albumTagList } =
-    useContext(PhotosContext)
+    usePhotosContext()
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (
