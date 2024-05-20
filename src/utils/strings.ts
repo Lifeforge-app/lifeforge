@@ -10,7 +10,30 @@ export function toCamelCase(str: string): string {
     .replace(/\s(.)/g, $1 => $1.toUpperCase())
     .replace(/\s/g, '')
     .replace(/^(.)/, $1 => $1.toLowerCase())
-    .replace(/[^\w ]+/g, '')
+}
+
+export function camelToDashCase(str: string): string {
+  // Convert camelCase to dash-case
+  return str
+    .replace(/([a-zA-Z])(?=[A-Z])/g, '$1-')
+    .replace(/[^a-zA-Z0-9-]/g, '')
+    .toLowerCase()
+}
+
+export function stringToDashCase(str: string): string {
+  return str
+    .replace(/\s+/g, '-')
+    .replace(/[^a-zA-Z0-9-]/g, '')
+    .toLowerCase()
+}
+
+export function convertToDashCase(str: string): string {
+  // Check if string is camelCase
+  if (str === toCamelCase(str)) {
+    return camelToDashCase(str)
+  } else {
+    return stringToDashCase(str)
+  }
 }
 
 export function shortenBigNumber(num: number): string {

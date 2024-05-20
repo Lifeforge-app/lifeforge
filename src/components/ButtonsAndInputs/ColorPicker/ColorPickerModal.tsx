@@ -1,13 +1,13 @@
 import { Icon } from '@iconify/react'
-import { Colorful, EditableInput } from '@uiw/react-color'
-import React, { useEffect, useState } from 'react'
-import Button from '../Button'
+import { type ColorResult, Colorful, EditableInput } from '@uiw/react-color'
+import React, { useCallback, useEffect, useState } from 'react'
 import Modal from '../../Modals/Modal'
+import Button from '../Button'
 
-function checkContrast(hexcolor: string): string {
-  const r = parseInt(hexcolor.substr(1, 2), 16)
-  const g = parseInt(hexcolor.substr(3, 2), 16)
-  const b = parseInt(hexcolor.substr(5, 2), 16)
+function checkContrast(hexColor: string): string {
+  const r = parseInt(hexColor.substr(1, 2), 16)
+  const g = parseInt(hexColor.substr(3, 2), 16)
+  const b = parseInt(hexColor.substr(5, 2), 16)
   const yiq = (r * 299 + g * 587 + b * 114) / 1000
   return yiq >= 128 ? '#000000' : '#ffffff'
 }
@@ -25,10 +25,25 @@ function ColorPickerModal({
 }): React.ReactElement {
   const [innerColor, setInnerColor] = useState(color.toLowerCase())
 
-  function confirmColor(): void {
+  const confirmColor = useCallback(() => {
     setColor(innerColor)
     setOpen(false)
-  }
+  }, [innerColor, setColor, setOpen])
+
+  const handleClose = useCallback(() => {
+    setOpen(false)
+  }, [setOpen])
+
+  const handleColorChange = useCallback((color: ColorResult) => {
+    setInnerColor(color.hex)
+  }, [])
+
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInnerColor(`#${e.target.value}`)
+    },
+    []
+  )
 
   useEffect(() => {
     setInnerColor(color.toLowerCase())
@@ -42,9 +57,7 @@ function ColorPickerModal({
           Color picker
         </h1>
         <button
-          onClick={() => {
-            setOpen(false)
-          }}
+          onClick={handleClose}
           className="rounded-md p-2 text-bg-100 transition-all hover:bg-bg-800"
         >
           <Icon icon="tabler:x" className="h-6 w-6" />
@@ -52,9 +65,7 @@ function ColorPickerModal({
       </div>
       <Colorful
         color={innerColor}
-        onChange={color => {
-          setInnerColor(color.hex)
-        }}
+        onChange={handleColorChange}
         disableAlpha
         className="!w-full"
       />
@@ -69,9 +80,7 @@ function ColorPickerModal({
       <EditableInput
         label="Hex"
         value={innerColor}
-        onChange={e => {
-          setInnerColor(`#${e.target.value}`)
-        }}
+        onChange={handleInputChange}
         className="mt-4 border-0 p-4 text-2xl font-semibold"
       />
       <Button onClick={confirmColor} icon="tabler:check">
