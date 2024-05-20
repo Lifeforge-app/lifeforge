@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
+import React, { useCallback } from 'react'
 
 function ColorInput({
   name,
@@ -12,6 +12,10 @@ function ColorInput({
   updateColor: (e: React.ChangeEvent<HTMLInputElement>) => void
   setColorPickerOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
+  const handleColorPickerOpen = useCallback(() => {
+    setColorPickerOpen(true)
+  }, [setColorPickerOpen])
+
   return (
     <div className="group relative mt-6 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 focus-within:border-custom-500 dark:bg-bg-800/50">
       <Icon
@@ -45,7 +49,7 @@ function ColorInput({
         </div>
         <button
           onClick={() => {
-            setColorPickerOpen(true)
+            handleColorPickerOpen()
           }}
           className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-500/30 hover:text-bg-200 focus:outline-none"
         >
