@@ -10,23 +10,30 @@ import {
 } from '@typedec/TodoList'
 
 interface ITodoListData {
+  // Data
   lists: ITodoListList[] | 'loading' | 'error'
   tags: ITodoListTag[] | 'loading' | 'error'
   entries: ITodoListEntry[] | 'loading' | 'error'
   statusCounter: ITodoListStatusCounter | 'loading' | 'error'
+  selectedTask: ITodoListEntry | null
+  selectedList: ITodoListList | null
+  selectedTag: ITodoListTag | null
+
+  // Modals
   modifyTaskWindowOpenType: 'create' | 'update' | null
   modifyListModalOpenType: 'create' | 'update' | null
   modifyTagModalOpenType: 'create' | 'update' | null
   deleteTaskConfirmationModalOpen: boolean
   deleteListConfirmationModalOpen: boolean
   deleteTagConfirmationModalOpen: boolean
-  selectedTask: ITodoListEntry | null
-  selectedList: ITodoListList | null
-  selectedTag: ITodoListTag | null
+
+  // Refresh Functions
   refreshLists: () => void
   refreshTagsList: () => void
   refreshEntries: () => void
   refreshStatusCounter: () => void
+
+  // Setters
   setModifyTaskWindowOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
@@ -95,23 +102,30 @@ export function TodoListProvider({
   return (
     <TodoListContext.Provider
       value={{
+        // Data
         lists,
         tags: tagsList,
         entries,
         statusCounter,
+        selectedTask,
+        selectedList,
+        selectedTag,
+
+        // Modals
         modifyTaskWindowOpenType,
         modifyListModalOpenType,
         modifyTagModalOpenType,
         deleteTaskConfirmationModalOpen,
         deleteListConfirmationModalOpen,
         deleteTagConfirmationModalOpen,
-        selectedTask,
-        selectedList,
-        selectedTag,
+
+        // Refresh Functions
         refreshLists,
         refreshTagsList,
         refreshEntries,
         refreshStatusCounter,
+
+        // Setters
         setModifyTaskWindowOpenType,
         setModifyListModalOpenType,
         setModifyTagModalOpenType,

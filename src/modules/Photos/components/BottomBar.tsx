@@ -38,7 +38,6 @@ function BottomBar({
     setIsDownloadLoading(true)
 
     try {
-      console.log(selectedPhotos)
       await fetch(
         `${
           import.meta.env.VITE_API_HOST

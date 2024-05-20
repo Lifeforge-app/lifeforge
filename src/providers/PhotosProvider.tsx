@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -25,8 +26,16 @@ import IntervalManager from '../utils/intervalManager'
 const intervalManager = IntervalManager.getInstance()
 
 interface IPhotosData {
+  // State variables
   useTimelineScrollbar: boolean
   ready: boolean
+  hidePhotosInAlbum: boolean
+  isAddPhotosToAlbumModalOpen: boolean
+  isDeletePhotosConfirmationModalOpen: boolean
+  isRemovePhotosFromAlbumConfirmationModalOpen: boolean
+  modifyAlbumModalOpenType: 'create' | 'rename' | false
+
+  // Data
   photos:
     | IPhotosEntryDimensionsAll
     | IPhotosEntryDimensionsPagination
@@ -34,19 +43,10 @@ interface IPhotosData {
     | 'error'
   albumList: IPhotosAlbum[] | 'loading' | 'error'
   albumTagList: IPhotoAlbumTag[] | 'loading' | 'error'
-  eachDayDimensions: Record<
-    string,
-    {
-      inTimeline: number
-      inGallery: number
-    }
-  >
+  eachDayDimensions: Record<string, { inTimeline: number; inGallery: number }>
   selectedPhotos: string[]
-  hidePhotosInAlbum: boolean
-  modifyAlbumModalOpenType: 'create' | 'rename' | false
-  isAddPhotosToAlbumModalOpen: boolean
-  isDeletePhotosConfirmationModalOpen: boolean
-  isRemovePhotosFromAlbumConfirmationModalOpen: boolean
+
+  // State setters
   setReady: React.Dispatch<React.SetStateAction<boolean>>
   setPhotoDimensions: React.Dispatch<
     React.SetStateAction<
@@ -71,30 +71,18 @@ interface IPhotosData {
   setRemovePhotosFromAlbumConfirmationModalOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
+
+  // Actions
   updateEachDayDimensions: () => void
   refreshAlbumList: () => void
   refreshAlbumTagList: () => void
   refreshPhotos: () => void
-  sideSliderRef:
-    | React.RefObject<HTMLDivElement>
-    | {
-        current: null
-      }
-  timelineDateDisplayRef:
-    | React.RefObject<HTMLDivElement>
-    | {
-        current: null
-      }
-  mobileDateDisplayRef:
-    | React.RefObject<HTMLDivElement>
-    | {
-        current: null
-      }
-  galleryWrapperRef:
-    | React.RefObject<HTMLDivElement>
-    | {
-        current: null
-      }
+
+  // Refs
+  sideSliderRef: React.RefObject<HTMLDivElement> | { current: null }
+  timelineDateDisplayRef: React.RefObject<HTMLDivElement> | { current: null }
+  mobileDateDisplayRef: React.RefObject<HTMLDivElement> | { current: null }
+  galleryWrapperRef: React.RefObject<HTMLDivElement> | { current: null }
 }
 
 export const PhotosContext = createContext<IPhotosData | undefined>(undefined)
@@ -277,18 +265,23 @@ export default function PhotosProvider(): React.ReactElement {
   return (
     <PhotosContext.Provider
       value={{
+        // State variables
         useTimelineScrollbar,
         ready,
+        hidePhotosInAlbum,
+        isAddPhotosToAlbumModalOpen,
+        isDeletePhotosConfirmationModalOpen,
+        isRemovePhotosFromAlbumConfirmationModalOpen,
+        modifyAlbumModalOpenType,
+
+        // Data
         photos: photoDimensions,
         albumList,
         albumTagList,
         eachDayDimensions,
         selectedPhotos,
-        hidePhotosInAlbum,
-        modifyAlbumModalOpenType,
-        isAddPhotosToAlbumModalOpen,
-        isDeletePhotosConfirmationModalOpen,
-        isRemovePhotosFromAlbumConfirmationModalOpen,
+
+        // State setters
         setReady,
         setPhotoDimensions,
         setAlbumList,
@@ -298,10 +291,14 @@ export default function PhotosProvider(): React.ReactElement {
         setAddPhotosToAlbumModalOpen,
         setDeletePhotosConfirmationModalOpen,
         setRemovePhotosFromAlbumConfirmationModalOpen,
+
+        // Actions
         updateEachDayDimensions,
         refreshAlbumList,
         refreshAlbumTagList,
         refreshPhotos: _refreshPhotos,
+
+        // Refs
         sideSliderRef,
         timelineDateDisplayRef,
         mobileDateDisplayRef,

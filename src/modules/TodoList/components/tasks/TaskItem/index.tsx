@@ -53,7 +53,6 @@ function TaskItem({
       )
     } else {
       if (entries && setEntries) {
-        console.log('sus')
         setEntries(
           entries.map(e =>
             e.id === id

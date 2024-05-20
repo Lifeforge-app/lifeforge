@@ -34,7 +34,6 @@ function PhotosAlbumList(): React.ReactElement {
         .get('tags')
         ?.split(',')
         .filter(e => e) ?? []
-    console.log(tags)
 
     if (Array.isArray(albumList)) {
       if (debouncedSearchQuery.length === 0) {

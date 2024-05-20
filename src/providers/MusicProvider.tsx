@@ -9,62 +9,77 @@ import React, {
 import { toast } from 'react-toastify'
 import useFetch from '@hooks/useFetch'
 import { type IMusicEntry } from '@typedec/Music'
+import { useAuthContext } from './AuthProvider'
 
 interface IMusicContext {
+  // Audio related
   audio: HTMLAudioElement
-  searchQuery: string
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>
-  loading: boolean
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
-  musics: IMusicEntry[] | 'loading' | 'error'
-  refreshMusics: () => void
-  setMusics: React.Dispatch<
-    React.SetStateAction<IMusicEntry[] | 'loading' | 'error'>
-  >
-  isYoutubeDownloaderOpen: boolean
-  setIsYoutubeDownloaderOpen: React.Dispatch<React.SetStateAction<boolean>>
   isPlaying: boolean
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>
   currentMusic: IMusicEntry | null
   setCurrentMusic: React.Dispatch<React.SetStateAction<IMusicEntry | null>>
   currentDuration: number
   setCurrentDuration: React.Dispatch<React.SetStateAction<number>>
-  existedData: IMusicEntry | null
-  setExistedData: React.Dispatch<React.SetStateAction<IMusicEntry | null>>
+  volume: number
+  setVolume: React.Dispatch<React.SetStateAction<number>>
+  togglePlay: (music: IMusicEntry) => Promise<void>
+  playMusic: (music: IMusicEntry) => Promise<void>
+  stopMusic: () => void
+  lastMusic: () => void
+  nextMusic: () => void
+
+  // Music list related
+  musics: IMusicEntry[] | 'loading' | 'error'
+  refreshMusics: () => void
+  setMusics: React.Dispatch<
+    React.SetStateAction<IMusicEntry[] | 'loading' | 'error'>
+  >
+  toggleFavourite: (music: IMusicEntry) => Promise<void>
+
+  // Search related
+  searchQuery: string
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>
+
+  // Loading state
+  loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+
+  // Modal states
+  isYoutubeDownloaderOpen: boolean
+  setIsYoutubeDownloaderOpen: React.Dispatch<React.SetStateAction<boolean>>
   isDeleteMusicConfirmationModalOpen: boolean
   setIsDeleteMusicConfirmationModalOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
   isModifyMusicModalOpen: boolean
   setIsModifyMusicModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+
+  // Music data
+  existedData: IMusicEntry | null
+  setExistedData: React.Dispatch<React.SetStateAction<IMusicEntry | null>>
+
+  // Playback options
   isShuffle: boolean
   setIsShuffle: React.Dispatch<React.SetStateAction<boolean>>
   isRepeat: boolean
   setIsRepeat: React.Dispatch<React.SetStateAction<boolean>>
-  volume: number
-  setVolume: React.Dispatch<React.SetStateAction<number>>
-  togglePlay: (music: IMusicEntry) => Promise<void>
-  toggleFavourite: (music: IMusicEntry) => Promise<void>
-  playMusic: (music: IMusicEntry) => Promise<void>
-  stopMusic: () => void
-  lastMusic: () => void
-  nextMusic: () => void
 }
 
 const MusicContext = createContext<IMusicContext | undefined>(undefined)
 
-interface MusicProviderProps {
-  children: ReactNode
-}
-
 export function MusicProvider({
   children
-}: MusicProviderProps): React.ReactElement {
+}: {
+  children: ReactNode
+}): React.ReactElement {
+  const { auth } = useAuthContext()
   const [audio] = useState(new Audio())
   const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(false)
-  const [musics, refreshMusics, setMusics] =
-    useFetch<IMusicEntry[]>('music/entry/list')
+  const [musics, refreshMusics, setMusics] = useFetch<IMusicEntry[]>(
+    'music/entry/list',
+    auth
+  )
   const [isYoutubeDownloaderOpen, setIsYoutubeDownloaderOpen] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentMusic, setCurrentMusic] = useState<IMusicEntry | null>(null)
@@ -229,40 +244,53 @@ export function MusicProvider({
   return (
     <MusicContext.Provider
       value={{
+        // Audio related
         audio,
-        searchQuery,
-        setSearchQuery,
-        loading,
-        setLoading,
-        musics,
-        refreshMusics,
-        setMusics,
-        isYoutubeDownloaderOpen,
-        setIsYoutubeDownloaderOpen,
         isPlaying,
         setIsPlaying,
         currentMusic,
         setCurrentMusic,
         currentDuration,
         setCurrentDuration,
-        existedData,
-        setExistedData,
+        volume,
+        setVolume,
+        togglePlay,
+        playMusic,
+        stopMusic,
+        lastMusic,
+        nextMusic,
+
+        // Music list related
+        musics,
+        refreshMusics,
+        setMusics,
+        toggleFavourite,
+
+        // Search related
+        searchQuery,
+        setSearchQuery,
+
+        // Loading state
+        loading,
+        setLoading,
+
+        // Modal states
+        isYoutubeDownloaderOpen,
+        setIsYoutubeDownloaderOpen,
         isDeleteMusicConfirmationModalOpen,
         setIsDeleteMusicConfirmationModalOpen,
         isModifyMusicModalOpen,
         setIsModifyMusicModalOpen,
+
+        // Music data
+        existedData,
+        setExistedData,
+
+        // Playback options
         isShuffle,
         setIsShuffle,
         isRepeat,
-        setIsRepeat,
-        volume,
-        setVolume,
-        togglePlay,
-        toggleFavourite,
-        playMusic,
-        stopMusic,
-        lastMusic,
-        nextMusic
+        setIsRepeat
       }}
     >
       {children}

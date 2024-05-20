@@ -150,9 +150,7 @@ export default function AuthProvider({
 
   function logout(): void {
     setAuth(false)
-    document.cookie = `token=; path=/; expires=${new Date(
-      Date.now() + 7 * 24 * 60 * 60 * 1000
-    ).toUTCString()}`
+    document.cookie = `token=; path=/; expires=${new Date(0).toUTCString()}`
     setUserData(null)
 
     window.localStorage.setItem('quota', '5')
