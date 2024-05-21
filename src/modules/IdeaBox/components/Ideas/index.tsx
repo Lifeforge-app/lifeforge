@@ -5,9 +5,6 @@ import React, { useEffect, useState } from 'react'
 // @ts-expect-error no types available
 import Column from 'react-columns'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import APIComponentWithFallback from '../../../../components/Screens/APIComponentWithFallback'
-import DeleteConfirmationModal from '../../../../components/Modals/DeleteConfirmationModal'
-import EmptyStateScreen from '../../../../components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
 import ContainerHeader from './components/ContainerHeader'
@@ -16,6 +13,9 @@ import EntryImage from './components/IdeaEntry/EntryImage'
 import EntryLink from './components/IdeaEntry/EntryLink'
 import EntryText from './components/IdeaEntry/EntryText'
 import ModifyIdeaModal from './components/ModifyIdeaModal'
+import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 
 function Ideas(): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()

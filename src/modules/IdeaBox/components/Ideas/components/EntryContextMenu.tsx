@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/indent */
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { cookieParse } from 'pocketbase'
 import React from 'react'
-import { toast } from 'react-toastify'
-import MenuItem from '../../../../../components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
+import APIRequest from '../../../../../utils/fetchData'
 
 function EntryContextMenu({
   entry,
@@ -26,46 +25,25 @@ function EntryContextMenu({
   setDeleteIdeaModalOpen: (state: boolean) => void
   updateIdeaList: () => void
 }): React.ReactElement {
-  function pinIdea(ideaId: string): void {
-    fetch(`${import.meta.env.VITE_API_HOST}/idea-box/idea/pin/${ideaId}`, {
+  async function pinIdea(ideaId: string): Promise<void> {
+    await APIRequest({
+      endpoint: `idea-box/idea/pin/${ideaId}`,
       method: 'PATCH',
-      headers: {
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
-      }
+      body: { ideaId },
+      successInfo: "Idea's position has been updated.",
+      failureInfo: 'Failed to fetch data from server.',
+      callback: updateIdeaList
     })
-      .then(async response => {
-        const data = await response.json()
-
-        if (response.status !== 200) {
-          throw data.message
-        }
-        toast.info("Idea's position has been updated.")
-        updateIdeaList()
-      })
-      .catch(() => {
-        toast.error('Failed to fetch data from server.')
-      })
   }
 
-  function archiveIdea(ideaId: string): void {
-    fetch(`${import.meta.env.VITE_API_HOST}/idea-box/idea/archive/${ideaId}`, {
+  async function archiveIdea(ideaId: string): Promise<void> {
+    await APIRequest({
+      endpoint: `idea-box/idea/archive/${ideaId}`,
       method: 'PATCH',
-      headers: {
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
-      }
+      successInfo: 'Idea has been archived.',
+      failureInfo: 'Failed to fetch data from server.',
+      callback: updateIdeaList
     })
-      .then(async response => {
-        const data = await response.json()
-
-        if (response.status !== 200) {
-          throw data.message
-        }
-        toast.info('Idea has been archived.')
-        updateIdeaList()
-      })
-      .catch(() => {
-        toast.error('Failed to fetch data from server.')
-      })
   }
 
   return (
@@ -94,7 +72,7 @@ function EntryContextMenu({
           {!entry.archived && (
             <MenuItem
               onClick={() => {
-                pinIdea(entry.id)
+                pinIdea(entry.id).catch(console.error)
               }}
               icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
               text={`${entry.pinned ? 'Unpin from' : 'Pin to'} top`}
@@ -102,7 +80,7 @@ function EntryContextMenu({
           )}
           <MenuItem
             onClick={() => {
-              archiveIdea(entry.id)
+              archiveIdea(entry.id).catch(console.error)
             }}
             icon={entry.archived ? 'tabler:archive-off' : 'tabler:archive'}
             text={`${entry.archived ? 'Unarchive' : 'Archive'} idea`}

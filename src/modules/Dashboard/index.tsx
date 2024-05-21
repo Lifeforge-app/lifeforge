@@ -12,6 +12,8 @@ import {
 } from 'chart.js'
 import React from 'react'
 
+import ModuleHeader from '@components/Module/ModuleHeader'
+import ModuleWrapper from '@components/Module/ModuleWrapper'
 import { useAuthContext } from '@providers/AuthProvider'
 import Calendar from './modules/Calendar'
 import CodeTime from './modules/CodeTime'
@@ -19,8 +21,6 @@ import StorageStatus from './modules/StorageStatus'
 import TodaysEvent from './modules/TodaysEvent'
 import TodoList from './modules/TodoList'
 import WalletBalance from './modules/WalletBalance'
-import ModuleHeader from '../../components/Module/ModuleHeader'
-import ModuleWrapper from '../../components/Module/ModuleWrapper'
 
 ChartJS.register(
   ArcElement,

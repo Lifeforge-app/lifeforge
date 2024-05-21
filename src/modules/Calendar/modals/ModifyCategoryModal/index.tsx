@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { useDebounce } from '@uidotdev/usehooks'
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import ColorInput from '../../../../components/ButtonsAndInputs/ColorPicker/ColorInput'
-import ColorPickerModal from '../../../../components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
-import CreateOrModifyButton from '../../../../components/ButtonsAndInputs/CreateOrModifyButton'
-import IconSelector from '../../../../components/ButtonsAndInputs/IconSelector'
-import IconInput from '../../../../components/ButtonsAndInputs/IconSelector/IconInput'
-import Input from '../../../../components/ButtonsAndInputs/Input'
-import Modal from '../../../../components/Modals/Modal'
-import ModalHeader from '../../../../components/Modals/ModalHeader'
+import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
+import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
+import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
+import IconSelector from '@components/ButtonsAndInputs/IconSelector'
+import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
+import Input from '@components/ButtonsAndInputs/Input'
+import Modal from '@components/Modals/Modal'
+import ModalHeader from '@components/Modals/ModalHeader'
 import { type ICalendarCategory } from '@typedec/Calendar'
+import APIRequest from '../../../../utils/fetchData'
 
 interface ModifyCategoryModalProps {
   openType: 'create' | 'update' | null
@@ -43,7 +43,7 @@ function ModifyCategoryModal({
     setCategoryColor(e.target.value)
   }
 
-  function onSubmitButtonClick(): void {
+  async function onSubmitButtonClick(): Promise<void> {
     if (
       categoryName.trim().length === 0 ||
       categoryIcon.trim().length === 0 ||
@@ -61,44 +61,28 @@ function ModifyCategoryModal({
       color: categoryColor.trim()
     }
 
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/calendar/category/${innerOpenType}` +
+    await APIRequest({
+      endpoint:
+        `calendar/category/${innerOpenType}` +
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
-      {
-        method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify(category)
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (!res.ok) {
-          throw data.message
-        }
-        toast.success(
-          {
-            create: 'Yay! Category created. Time to start adding tasks.',
-            update: 'Yay! Category updated.'
-          }[innerOpenType!]
-        )
+      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
+      body: category,
+      successInfo: {
+        create: 'Yay! Category created. Time to start adding tasks.',
+        update: 'Yay! Category updated.'
+      }[innerOpenType!],
+      failureInfo: {
+        create: "Oops! Couldn't create the category. Please try again.",
+        update: "Oops! Couldn't update the category. Please try again."
+      }[innerOpenType!],
+      finalCallback: () => {
+        setLoading(false)
+      },
+      callback: () => {
         setOpenType(null)
         refreshCategories()
-      })
-      .catch(err => {
-        toast.error(
-          {
-            create: "Oops! Couldn't create the category. Please try again.",
-            update: "Oops! Couldn't update the category. Please try again."
-          }[innerOpenType!]
-        )
-        console.error(err)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+      }
+    })
   }
 
   useEffect(() => {
@@ -156,7 +140,9 @@ function ModifyCategoryModal({
 
         <CreateOrModifyButton
           loading={loading}
-          onClick={onSubmitButtonClick}
+          onClick={() => {
+            onSubmitButtonClick().catch(console.error)
+          }}
           type={innerOpenType}
         />
       </Modal>

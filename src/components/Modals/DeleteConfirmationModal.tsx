@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
-import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
-import { toast } from 'react-toastify'
 import Modal from './Modal'
+import APIRequest from '../../utils/fetchData'
 import Button from '../ButtonsAndInputs/Button'
 
 function DeleteConfirmationModal({
@@ -29,7 +28,7 @@ function DeleteConfirmationModal({
 }): React.ReactElement {
   const [loading, setLoading] = useState(false)
 
-  function deleteData(): void {
+  async function deleteData(): Promise<void> {
     if (data === null) return
     if (customCallback) {
       customCallback()
@@ -37,31 +36,16 @@ function DeleteConfirmationModal({
     }
 
     setLoading(true)
-    fetch(`${import.meta.env.VITE_API_HOST}/${apiEndpoint}/${data.id}`, {
+    await APIRequest({
+      endpoint: `${apiEndpoint}/${data.id}`,
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+      successInfo: `Uhh, hopefully you truly didn't need that ${itemName}.`,
+      failureInfo: `Oops! Couldn't delete the ${itemName}. Please try again.`,
+      callback: () => {
+        onClose()
+        updateDataList()
       }
     })
-      .then(async res => {
-        const data = await res.json()
-        if (res.ok) {
-          toast.info(`Uhh, hopefully you truly didn't need that ${itemName}.`)
-          onClose()
-          updateDataList()
-          return data
-        } else {
-          throw new Error(data.message)
-        }
-      })
-      .catch(err => {
-        toast.error(`Oops! Couldn't delete the ${itemName}. Please try again.`)
-        console.error(err)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
   }
 
   return (
@@ -84,7 +68,9 @@ function DeleteConfirmationModal({
         </Button>
         <Button
           disabled={loading}
-          onClick={deleteData}
+          onClick={() => {
+            deleteData().catch(console.error)
+          }}
           icon={loading ? 'svg-spinners:180-ring' : 'tabler:trash'}
           className="w-full"
           isRed

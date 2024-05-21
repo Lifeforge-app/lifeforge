@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react'
-import { cookieParse } from 'pocketbase'
 import React, { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '../../components/ButtonsAndInputs/Button'
-import Input from '../../components/ButtonsAndInputs/Input'
-import Modal from '../../components/Modals/Modal'
+import Button from '@components/ButtonsAndInputs/Button'
+import Input from '@components/ButtonsAndInputs/Input'
+import Modal from '@components/Modals/Modal'
 import { useAuthContext } from '@providers/AuthProvider'
+import APIRequest from '../../utils/fetchData'
 
 function CreatePassword(): React.ReactElement {
   const { setUserData, userData } = useAuthContext()
@@ -15,7 +15,7 @@ function CreatePassword(): React.ReactElement {
   const inputRef = useRef<HTMLInputElement>(null)
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false)
 
-  function onSubmit(): void {
+  async function onSubmit(): Promise<void> {
     if (newPassword.trim() === '' || confirmPassword.trim() === '') {
       toast.error('Please fill in both fields')
 
@@ -29,35 +29,22 @@ function CreatePassword(): React.ReactElement {
 
     setLoading(true)
 
-    fetch(`${import.meta.env.VITE_API_HOST}/passwords/master/create`, {
+    await APIRequest({
+      endpoint: 'passwords/master/create',
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
-      },
-      body: JSON.stringify({ password: newPassword, id: userData.id })
-    })
-      .then(async res => {
-        const data = await res.json()
-        if (res.ok) {
-          toast.success(
-            'Alright! Your master password has been created. You can now start storing your passwords.'
-          )
-          setUserData({ ...userData, masterPasswordHash: data.hash })
-        } else {
-          throw new Error(data.message)
-        }
-      })
-      .catch(err => {
-        toast.error(
-          "Oops! Couldn't create your master password. Please try again."
-        )
-        console.error(err)
-      })
-      .finally(() => {
+      body: { password: newPassword, id: userData.id },
+      successInfo:
+        'Alright! Your master password has been created. You can now start storing your passwords.',
+      failureInfo:
+        "Oops! Couldn't create your master password. Please try again.",
+      finalCallback: () => {
         setLoading(false)
         setConfirmationModalOpen(false)
-      })
+      },
+      callback: data => {
+        setUserData({ ...userData, masterPasswordHash: data.hash })
+      }
+    })
   }
 
   function confirmAction(): void {
@@ -164,7 +151,9 @@ function CreatePassword(): React.ReactElement {
           </Button>
           <Button
             disabled={loading}
-            onClick={onSubmit}
+            onClick={() => {
+              onSubmit().catch(console.error)
+            }}
             icon={loading ? 'svg-spinners:180-ring' : 'tabler:check'}
             className="w-full"
           >

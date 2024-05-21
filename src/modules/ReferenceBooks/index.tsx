@@ -1,15 +1,15 @@
 import { faker } from '@faker-js/faker'
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
-import APIComponentWithFallback from '../../components/Screens/APIComponentWithFallback'
-import Button from '../../components/ButtonsAndInputs/Button'
-import ModuleHeader from '../../components/Module/ModuleHeader'
-import ModuleWrapper from '../../components/Module/ModuleWrapper'
-import SearchInput from '../../components/ButtonsAndInputs/SearchInput'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import Button from '@components/ButtonsAndInputs/Button'
+import ModuleHeader from '@components/Module/ModuleHeader'
+import ModuleWrapper from '@components/Module/ModuleWrapper'
+import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import useFetch from '@hooks/useFetch'
-import SidebarDivider from '@sidebar/components/SidebarDivider'
-import SidebarItem from '@sidebar/components/SidebarItem'
-import SidebarTitle from '@sidebar/components/SidebarTitle'
+import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
+import SidebarItem from '@components/Sidebar/components/SidebarItem'
+import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 
 function ReferenceBooks(): React.ReactElement {
   const [searchQuery, setSearchQuery] = useState('')

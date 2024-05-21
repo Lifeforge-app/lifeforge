@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React from 'react'
 import { toast } from 'react-toastify'
-import APIComponentWithFallback from '../../../../../components/Screens/APIComponentWithFallback'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import {
   type IProjectsKEntry,

@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '../../../../components/ButtonsAndInputs/CreateOrModifyButton'
-import Input from '../../../../components/ButtonsAndInputs/Input'
-import Modal from '../../../../components/Modals/Modal'
-import ModalHeader from '../../../../components/Modals/ModalHeader'
+import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
+import Input from '@components/ButtonsAndInputs/Input'
+import Modal from '@components/Modals/Modal'
+import ModalHeader from '@components/Modals/ModalHeader'
 import { type INotesEntry } from '@typedec/Notes'
+import APIRequest from '../../../../utils/fetchData'
 
 function ModifyFolderModal({
   openType,
@@ -41,7 +40,7 @@ function ModifyFolderModal({
     setFolderName(e.target.value)
   }
 
-  function onSubmitButtonClick(): void {
+  async function onSubmitButtonClick(): Promise<void> {
     if (folderName.trim().length === 0) {
       toast.error('Please fill in all the fields.')
       return
@@ -57,46 +56,28 @@ function ModifyFolderModal({
       subject
     }
 
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/notes/entry/${innerOpenType}/folder` +
+    await APIRequest({
+      endpoint:
+        `notes/entry/${innerOpenType}/folder` +
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
-      {
-        method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify(entry)
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (!res.ok) {
-          throw data.message
-        }
-        toast.success(
-          {
-            create: 'Yay! Folder created. Time to fill it up.',
-            update: 'Yay! Folder renamed.'
-          }[innerOpenType!]
-        )
+      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
+      body: entry,
+      successInfo: {
+        create: 'Yay! Folder created. Time to fill it up.',
+        update: 'Yay! Folder renamed.'
+      }[innerOpenType!],
+      failureInfo: {
+        create: "Oops! Couldn't create the folder. Please try again.",
+        update: "Oops! Couldn't rename the folder. Please try again."
+      }[innerOpenType!],
+      finalCallback: () => {
+        setLoading(false)
+      },
+      callback: () => {
         setOpenType(null)
         updateNotesEntries()
-      })
-      .catch(err => {
-        toast.error(
-          {
-            create: "Oops! Couldn't create the folder. Please try again.",
-            update: "Oops! Couldn't rename the folder. Please try again."
-          }[innerOpenType!] +
-            ' Error: ' +
-            err
-        )
-        console.error(err)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+      }
+    })
   }
 
   useEffect(() => {
@@ -137,13 +118,15 @@ function ModifyFolderModal({
           additionalClassName="w-[40vw]"
           onKeyDown={e => {
             if (e.key === 'Enter') {
-              onSubmitButtonClick()
+              onSubmitButtonClick().catch(console.error)
             }
           }}
         />
         <CreateOrModifyButton
           loading={loading}
-          onClick={onSubmitButtonClick}
+          onClick={() => {
+            onSubmitButtonClick().catch(console.error)
+          }}
           type={innerOpenType}
         />
       </Modal>

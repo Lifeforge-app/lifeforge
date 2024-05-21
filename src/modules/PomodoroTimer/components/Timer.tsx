@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
-import Button from '../../../components/ButtonsAndInputs/Button'
+import Button from '@components/ButtonsAndInputs/Button'
 
 export default function Timer(): React.ReactElement {
   const [started, setStarted] = useState(false)

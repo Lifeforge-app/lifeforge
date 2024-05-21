@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/indent */
 import moment from 'moment'
-import { cookieParse } from 'pocketbase'
 import React, { useCallback } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
-import { toast } from 'react-toastify'
 import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
 import CalendarHeader from './components/CalendarHeader'
 import EventItem from './components/EventItem'
+import APIRequest from '../../../../utils/fetchData'
 
 const localizer = momentLocalizer(moment)
 const DnDCalendar = withDragAndDrop(Calendar)
@@ -34,7 +33,7 @@ function CalendarComponent({
   setExistedData,
   refreshRawEvents
 }: CalendarComponentProps): React.ReactElement {
-  function updateEvent({
+  async function updateEvent({
     event,
     start,
     end
@@ -42,7 +41,7 @@ function CalendarComponent({
     event: ICalendarEvent
     start: Date
     end: Date
-  }): void {
+  }): Promise<void> {
     setRawEvents(prevEvents => {
       if (typeof prevEvents === 'string') {
         return prevEvents
@@ -60,34 +59,18 @@ function CalendarComponent({
       })
     })
 
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/calendar/event/update/${event.id}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify({
-          title: event.title,
-          start: moment(start).toISOString(),
-          end: moment(end).toISOString(),
-          category: event.category
-        })
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (!res.ok) {
-          throw data.message
-        }
-        toast.success('Yay! Event updated.')
-      })
-      .catch(err => {
-        refreshRawEvents()
-        toast.error("Oops! Couldn't update the event. Please try again.")
-        console.error(err)
-      })
+    await APIRequest({
+      endpoint: `calendar/event/update/${event.id}`,
+      method: 'PATCH',
+      body: {
+        title: event.title,
+        start: moment(start).toISOString(),
+        end: moment(end).toISOString(),
+        category: event.category
+      },
+      failureInfo: "Oops! Couldn't update the event. Please try again.",
+      onFailure: refreshRawEvents
+    })
   }
 
   const handleSelectSlot = useCallback(
@@ -114,8 +97,12 @@ function CalendarComponent({
       draggableAccessor={() => {
         return true
       }}
-      onEventDrop={updateEvent}
-      onEventResize={updateEvent}
+      onEventDrop={e => {
+        updateEvent(e).catch(console.error)
+      }}
+      onEventResize={e => {
+        updateEvent(e).catch(console.error)
+      }}
       onSelectSlot={handleSelectSlot}
       selectable
       events={events}

@@ -12,8 +12,8 @@ import {
   type ModuleConfigInput,
   type ModuleEntry
 } from '@typedec/Module'
-import Button from '../../components/ButtonsAndInputs/Button'
-import Input from '../../components/ButtonsAndInputs/Input'
+import Button from '@components/ButtonsAndInputs/Button'
+import Input from '@components/ButtonsAndInputs/Input'
 import { toCamelCase } from '../../utils/strings'
 
 function ModuleItem({

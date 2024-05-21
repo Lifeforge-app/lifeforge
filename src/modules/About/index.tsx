@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import Button from '../../components/ButtonsAndInputs/Button'
-import ModuleHeader from '../../components/Module/ModuleHeader'
-import ModuleWrapper from '../../components/Module/ModuleWrapper'
+import Button from '@components/ButtonsAndInputs/Button'
+import ModuleHeader from '@components/Module/ModuleHeader'
+import ModuleWrapper from '@components/Module/ModuleWrapper'
 
 function About(): React.ReactElement {
   return (

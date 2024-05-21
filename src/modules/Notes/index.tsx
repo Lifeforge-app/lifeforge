@@ -1,12 +1,12 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Error from '../../components/Screens/Error'
-import Loading from '../../components/Screens/Loading'
-import ModuleHeader from '../../components/Module/ModuleHeader'
-import ModuleWrapper from '../../components/Module/ModuleWrapper'
+import ModuleHeader from '@components/Module/ModuleHeader'
+import ModuleWrapper from '@components/Module/ModuleWrapper'
 import useFetch from '@hooks/useFetch'
 import { type INotesWorkspace } from '@typedec/Notes'
+import Error from '@components/Screens/Error'
+import Loading from '@components/Screens/Loading'
 
 function Notes(): React.ReactElement {
   const [bounded, setBounded] = useState(false)
@@ -29,7 +29,7 @@ function Notes(): React.ReactElement {
           return <Error message="Failed to fetch data from server." />
         } else {
           return (
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] flex-center gap-4 py-8">
+            <div className="flex-center grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-4 py-8">
               {data.map(workspace => (
                 <Link
                   to={`/notes/${workspace.id}`}

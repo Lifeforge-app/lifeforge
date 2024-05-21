@@ -14,8 +14,8 @@ import {
   type IPhotoAlbumEntryItem
 } from '@typedec/Photos'
 import DeletePhotosConfirmationModal from './modals/DeletePhotosConfirmationModal'
-import HamburgerMenu from '../../../components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '../../../components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { usePhotosContext } from '../../../providers/PhotosProvider'
 import forceDown from '../../../utils/forceDown'
 

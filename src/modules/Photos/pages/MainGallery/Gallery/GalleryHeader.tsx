@@ -8,9 +8,9 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import useFetch from '@hooks/useFetch'
 import { usePhotosContext } from '@providers/PhotosProvider'
-import Button from '../../../../../components/ButtonsAndInputs/Button'
-import HamburgerMenu from '../../../../../components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '../../../../../components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import Button from '@components/ButtonsAndInputs/Button'
+import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 
 function GalleryHeader(): React.ReactElement {
   const { refreshPhotos, hidePhotosInAlbum, setHidePhotosInAlbum, setReady } =

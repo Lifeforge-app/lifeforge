@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
 import React from 'react'
-import GoBackButton from '../../components/ButtonsAndInputs/GoBackButton'
-import SidebarDivider from '@sidebar/components/SidebarDivider'
-import SidebarTitle from '@sidebar/components/SidebarTitle'
+import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
+import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
+import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 
 function Sidebar({
   sidebarOpen,
