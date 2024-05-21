@@ -1,17 +1,15 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React, { Fragment } from 'react'
-import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { useAuthContext } from '@providers/AuthProvider'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import MenuItem from './ButtonsAndInputs/HamburgerMenu/MenuItem'
+import QuickActions from './QuickActions'
 
 export default function Header(): React.ReactElement {
   const { sidebarExpanded, toggleSidebar } = useGlobalStateContext()
   const { userData, getAvatarURL, logout } = useAuthContext()
-  const { t } = useTranslation()
-
   return (
     <header className="relative z-[9990] flex w-full items-center justify-between gap-8 p-4 sm:p-12">
       <div className="flex w-full items-center gap-4">
@@ -23,17 +21,7 @@ export default function Header(): React.ReactElement {
             <Icon icon="tabler:menu" className="text-2xl" />
           </button>
         )}
-        <search className="hidden w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900 lg:flex">
-          <Icon icon="tabler:search" className="h-5 w-5 text-bg-500" />
-          <form className="w-full">
-            <input
-              type="text"
-              autoComplete="false"
-              placeholder={t('header.searchBarPlaceholder')}
-              className="w-full bg-transparent placeholder:text-bg-500 focus:outline-none"
-            />
-          </form>
-        </search>
+        <QuickActions />
       </div>
       <div className="flex items-center">
         <button className="relative flex rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 lg:hidden">

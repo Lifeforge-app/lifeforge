@@ -96,7 +96,7 @@
         }
     },
     "header": {
-        "searchBarPlaceholder": "Quick navigate & search ... (Press / to focus)"
+        "searchBarPlaceholder": "Quick navigate & search ... (Press Ctrl or ⌘ + / to focus)"
     },
     "personalization": {
         "themeSelector": {
