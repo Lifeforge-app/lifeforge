@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/indent */
+
 import moment from 'moment'
 import React from 'react'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'

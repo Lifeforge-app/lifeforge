@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'

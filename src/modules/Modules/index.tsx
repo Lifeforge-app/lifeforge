@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
-import { cookieParse } from 'pocketbase'
 import React from 'react'
-import { toast } from 'react-toastify'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import Loading from '@components/Screens/Loading'
@@ -62,7 +59,7 @@ const MODULES: ModuleEntry[] = [
 function Modules(): React.ReactElement {
   const { userData, setUserData } = useAuthContext()
 
-  async function toggleModule(moduleName: string): void {
+  async function toggleModule(moduleName: string): Promise<void> {
     if (userData.enabledModules.includes(titleToPath(moduleName))) {
       userData.enabledModules = userData.enabledModules.filter(
         (module: string) => module !== titleToPath(moduleName)
@@ -101,7 +98,9 @@ function Modules(): React.ReactElement {
               enabled={userData.enabledModules.includes(
                 titleToPath(module.name)
               )}
-              toggleModule={toggleModule}
+              toggleModule={() => {
+                toggleModule(module.name).catch(console.error)
+              }}
             />
           ))}
         </ul>

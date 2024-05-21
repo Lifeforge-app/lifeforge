@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/indent */
-import Button from '@components/ButtonsAndInputs/Button'
-import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import Button from '@components/ButtonsAndInputs/Button'
+import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
 import { type INotesPath, type INotesEntry } from '@typedec/Notes'
 

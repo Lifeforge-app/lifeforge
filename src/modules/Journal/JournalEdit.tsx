@@ -68,7 +68,9 @@ function JournalEdit(): React.ReactElement {
           })
           setSaveLoading(false)
         },
-        finalCallback: setSaveLoading
+        finalCallback: () => {
+          setSaveLoading(false)
+        }
       })
     }
   }
@@ -92,7 +94,9 @@ function JournalEdit(): React.ReactElement {
           })
           setIsTitleUpdating(false)
         },
-        finalCallback: setSaveLoading
+        finalCallback: () => {
+          setIsTitleUpdating(false)
+        }
       })
     }
   }

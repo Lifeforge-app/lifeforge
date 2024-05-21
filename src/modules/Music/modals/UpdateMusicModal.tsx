@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'

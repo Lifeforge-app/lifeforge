@@ -83,7 +83,7 @@ function CreatePassword(): React.ReactElement {
           noAutoComplete
           additionalClassName="w-1/2"
           actionButtonIcon="tabler:dice"
-          onActionButtonClick={e => {
+          onActionButtonClick={() => {
             const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
             const lowerCase = 'abcdefghijklmnopqrstuvwxyz'
             const special = '!@#$%^&*()_+'

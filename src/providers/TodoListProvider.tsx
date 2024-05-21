@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import React, { useContext, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import useFetch from '@hooks/useFetch'

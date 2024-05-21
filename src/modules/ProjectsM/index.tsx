@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import { faker } from '@faker-js/faker'
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'

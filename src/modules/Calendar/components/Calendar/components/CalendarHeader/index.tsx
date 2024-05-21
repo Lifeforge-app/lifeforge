@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import Button from '@components/ButtonsAndInputs/Button'
 import React from 'react'
 import { type NavigateAction, type View } from 'react-big-calendar'
