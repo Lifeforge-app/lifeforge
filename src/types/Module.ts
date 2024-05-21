@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 interface ModuleConfigInput {
   type: 'input'
   icon: string

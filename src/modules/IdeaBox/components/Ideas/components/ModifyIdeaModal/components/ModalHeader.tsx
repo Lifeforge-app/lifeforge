@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-/* eslint-disable @typescript-eslint/indent */
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'

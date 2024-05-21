@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 /* eslint-disable @typescript-eslint/member-delimiter-style */
-/* eslint-disable @typescript-eslint/indent */
+
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'

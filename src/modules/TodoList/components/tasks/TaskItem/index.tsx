@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { cookieParse } from 'pocketbase'
 import React from 'react'
-import { toast } from 'react-toastify'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import { type ITodoListEntry } from '@typedec/TodoList'
 import TaskCompletionCheckbox from './components/TaskCompletionCheckbox'
 import TaskDueDate from './components/TaskDueDate'
 import TaskHeader from './components/TaskHeader'
 import TaskTags from './components/TaskTags'
+import APIRequest from '../../../../../utils/fetchData'
 
 function TaskItem({
   entry,
@@ -37,13 +35,13 @@ function TaskItem({
     setModifyTaskWindowOpenType
   } = useTodoListContext()
 
-  function toggleTaskCompletion(id: string): void {
+  async function toggleTaskCompletion(): Promise<void> {
     if (typeof innerEntries === 'string') return
 
     if (!isOuter) {
       setInnerEntries(
         innerEntries.map(e =>
-          e.id === id
+          e.id === entry.id
             ? {
                 ...e,
                 done: !e.done
@@ -55,7 +53,7 @@ function TaskItem({
       if (entries && setEntries) {
         setEntries(
           entries.map(e =>
-            e.id === id
+            e.id === entry.id
               ? {
                   ...e,
                   done: !e.done
@@ -66,37 +64,11 @@ function TaskItem({
       }
     }
 
-    fetch(`${import.meta.env.VITE_API_HOST}/todo-list/entry/toggle/${id}`, {
+    await APIRequest({
+      endpoint: `todo-list/entry/toggle/${entry.id}`,
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
-      }
-    })
-      .then(async res => {
-        try {
-          const data = await res.json()
-
-          if (!res.ok || data.state !== 'success') {
-            throw new Error(data.message)
-          }
-
-          setTimeout(() => {
-            if (!isOuter) {
-              refreshInnerEntries()
-            } else {
-              if (refreshEntries) {
-                refreshEntries()
-              }
-            }
-            refreshStatusCounter()
-          }, 500)
-        } catch (err) {
-          throw new Error(err as string)
-        }
-      })
-      .catch(err => {
-        toast.error("Oops! Couldn't update the task. Please try again.")
+      failureInfo: "Couldn't update the task. Please try again.",
+      onFailure: () => {
         if (!isOuter) {
           refreshInnerEntries()
         } else {
@@ -104,8 +76,20 @@ function TaskItem({
             refreshEntries()
           }
         }
-        console.error(err)
-      })
+      },
+      callback: () => {
+        setTimeout(() => {
+          if (!isOuter) {
+            refreshInnerEntries()
+          } else {
+            if (refreshEntries) {
+              refreshEntries()
+            }
+          }
+          refreshStatusCounter()
+        }, 500)
+      }
+    })
   }
 
   return (
@@ -143,7 +127,9 @@ function TaskItem({
       />
       <TaskCompletionCheckbox
         entry={entry}
-        toggleTaskCompletion={toggleTaskCompletion}
+        toggleTaskCompletion={() => {
+          toggleTaskCompletion().catch(console.error)
+        }}
       />
     </li>
   )

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import React from 'react'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import TaskItem from './TaskItem'

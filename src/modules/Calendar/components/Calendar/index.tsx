@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
-/* eslint-disable @typescript-eslint/indent */
+
 import moment from 'moment'
 import React, { useCallback } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
