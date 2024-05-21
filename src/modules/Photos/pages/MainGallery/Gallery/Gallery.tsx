@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import React, { useEffect } from 'react'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { usePhotosContext } from '@providers/PhotosProvider'

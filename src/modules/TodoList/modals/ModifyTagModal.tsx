@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { useDebounce } from '@uidotdev/usehooks'
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
@@ -9,6 +8,7 @@ import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { useTodoListContext } from '@providers/TodoListProvider'
+import APIRequest from '../../../utils/fetchData'
 
 function ModifyTagModal(): React.ReactElement {
   const {
@@ -25,7 +25,7 @@ function ModifyTagModal(): React.ReactElement {
     setTagName(e.target.value)
   }
 
-  function onSubmitButtonClick(): void {
+  async function onSubmitButtonClick(): Promise<void> {
     if (tagName.trim().length === 0) {
       toast.error('Please fill in all the fields.')
       return
@@ -37,44 +37,28 @@ function ModifyTagModal(): React.ReactElement {
       name: tagName.trim()
     }
 
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/todo-list/tag/${innerOpenType}` +
+    await APIRequest({
+      endpoint:
+        `todo-list/tag/${innerOpenType}` +
         (innerOpenType === 'update' ? `/${selectedTag?.id}` : ''),
-      {
-        method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify(tag)
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (!res.ok) {
-          throw data.message
-        }
-        toast.success(
-          {
-            create: 'Yay! Tag created. Time to start adding tasks.',
-            update: 'Yay! Tag updated.'
-          }[innerOpenType!]
-        )
+      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
+      body: tag,
+      successInfo: {
+        create: 'Yay! Tag created. Time to start adding tasks.',
+        update: 'Yay! Tag updated.'
+      }[innerOpenType!],
+      failureInfo: {
+        create: "Oops! Couldn't create the tag. Please try again.",
+        update: "Oops! Couldn't update the tag. Please try again."
+      }[innerOpenType!],
+      finalCallback: () => {
+        setLoading(false)
+      },
+      callback: () => {
         setOpenType(null)
         refreshTagsList()
-      })
-      .catch(err => {
-        toast.error(
-          {
-            create: "Oops! Couldn't create the tag. Please try again.",
-            update: "Oops! Couldn't update the tag. Please try again."
-          }[innerOpenType!]
-        )
-        console.error(err)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+      }
+    })
   }
 
   useEffect(() => {
@@ -113,7 +97,7 @@ function ModifyTagModal(): React.ReactElement {
           icon="tabler:tag"
           onKeyDown={e => {
             if (e.key === 'Enter') {
-              onSubmitButtonClick()
+              onSubmitButtonClick().catch(console.error)
             }
           }}
         />

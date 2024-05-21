@@ -1,19 +1,17 @@
-/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { Icon } from '@iconify/react'
-import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
-import { toast } from 'react-toastify'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import Button from '@components/ButtonsAndInputs/Button'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IProjectsKEntry } from '@typedec/ProjectK'
 import FILE_ICONS from '../../../../../constants/file_icons'
+import APIRequest from '../../../../../utils/fetchData'
 
 export default function ProjectFiles({
   projectData,
@@ -30,101 +28,51 @@ export default function ProjectFiles({
 
   async function replaceFiles(): Promise<void> {
     setFileReplaceLoading(true)
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/projects-k/files/replace/${
+
+    await APIRequest({
+      endpoint: `projects-k/files/replace/${
         (projectData as IProjectsKEntry).id
       }`,
-      {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        }
-      }
-    )
-      .then(async response => {
-        try {
-          const data = await response.json()
-
-          if (response.status !== 200 || data.state !== 'success') {
-            throw data.message
-          }
-          toast.info('Files have been replaced.')
-          refreshProjectData()
-        } catch (error) {
-          throw new Error(error as string)
-        }
-      })
-      .catch(error => {
-        toast.error('Failed to update files. Error: ' + error)
-      })
-      .finally(() => {
+      method: 'PUT',
+      successInfo: 'Files have been replaced.',
+      failureInfo: 'Failed to update files.',
+      callback: refreshProjectData,
+      finalCallback: () => {
         setFileReplaceLoading(false)
-      })
+      }
+    })
   }
 
   async function downloadFiles(): Promise<void> {
     setFileDownloadLoading(true)
 
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/projects-k/files/download/${
+    await APIRequest({
+      endpoint: `projects-k/files/download/${
         (projectData as IProjectsKEntry).id
       }`,
-      {
-        headers: {
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        }
-      }
-    )
-      .then(async response => {
-        try {
-          const data = await response.json()
-
-          if (response.status !== 200 || data.state !== 'success') {
-            throw data.message
-          }
-
-          toast.success(
-            'Files are ready. Head over to your file explorer to download them.'
-          )
-        } catch (error) {
-          throw new Error(error as string)
-        }
-      })
-      .catch(error => {
-        toast.error('Failed to download files. Error: ' + error)
-      })
-      .finally(() => {
+      method: 'GET',
+      successInfo:
+        'Files are ready. Head over to your file explorer to download them.',
+      failureInfo: 'Failed to download files.',
+      finalCallback: () => {
         setFileDownloadLoading(false)
-      })
+      }
+    })
   }
 
   async function clearMedium(): Promise<void> {
     setMediumClearLoading(true)
-    fetch(`${import.meta.env.VITE_API_HOST}/projects-k/files/clear-medium/`, {
+
+    await APIRequest({
+      endpoint: 'projects-k/files/clear-medium/',
       method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+      successInfo: 'Upload medium have been cleared.',
+      failureInfo: 'Failed to clear files.',
+      callback: refreshProjectData,
+      finalCallback: () => {
+        setMediumClearLoading(false)
       }
     })
-      .then(async response => {
-        try {
-          const data = await response.json()
-
-          if (response.status !== 200 || data.state !== 'success') {
-            throw data.message
-          }
-          toast.info('Upload medium have been cleared.')
-          refreshProjectData()
-        } catch (error) {
-          throw new Error(error as string)
-        }
-      })
-      .catch(error => {
-        toast.error('Failed to clear files. Error: ' + error)
-      })
-      .finally(() => {
-        setMediumClearLoading(false)
-      })
   }
 
   async function copyToClipboard(text: string): Promise<void> {
@@ -157,35 +105,16 @@ export default function ProjectFiles({
   }
 
   async function setAsThumbnail(file: string): Promise<void> {
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/projects-k/files/set-thumbnail/${
+    await APIRequest({
+      endpoint: `projects-k/files/set-thumbnail/${
         (projectData as IProjectsKEntry).id
       }`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify({ file })
-      }
-    )
-      .then(async response => {
-        try {
-          const data = await response.json()
-
-          if (response.status !== 200 || data.state !== 'success') {
-            throw data.message
-          }
-          toast.info('Thumbnail has been set.')
-          refreshProjectData()
-        } catch (error) {
-          throw new Error(error as string)
-        }
-      })
-      .catch(error => {
-        toast.error('Failed to set thumbnail. Error: ' + error)
-      })
+      method: 'PUT',
+      body: { file },
+      successInfo: 'Thumbnail has been set.',
+      failureInfo: 'Failed to set thumbnail.',
+      callback: refreshProjectData
+    })
   }
 
   return (

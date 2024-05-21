@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/indent */
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
 import APIRequest from '../../../../../utils/fetchData'
 

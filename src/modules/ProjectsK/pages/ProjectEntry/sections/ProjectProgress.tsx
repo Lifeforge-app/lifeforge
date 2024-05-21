@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
-import { cookieParse } from 'pocketbase'
 import React from 'react'
-import { toast } from 'react-toastify'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import {
   type IProjectsKEntry,
   type IProjectsKProgress
 } from '@typedec/ProjectK'
+import APIRequest from '../../../../../utils/fetchData'
 
 export default function ProjectProgress({
   projectData
@@ -20,40 +18,19 @@ export default function ProjectProgress({
     (projectData as IProjectsKEntry).id !== undefined
   )
 
-  function completeStep(state: 1 | -1): void {
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/projects-k/progress/${
-        state === -1 ? 'un' : ''
-      }complete-step/${(projectData as IProjectsKEntry).id}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        }
-      }
-    )
-      .then(async res => {
-        try {
-          const data = await res.json()
-
-          if (!res.ok || data.state !== 'success') {
-            throw data.message
-          }
-          refreshProgress()
-          state === -1
-            ? toast.info('Step reverted.')
-            : toast.success(
-                'Yay! You are one step closer to completing the project.'
-              )
-        } catch (err) {
-          throw new Error(err as string)
-        }
-      })
-      .catch(err => {
-        toast.error("Oops! Couldn't update the progress. Please try again.")
-        console.error(err)
-      })
+  async function completeStep(state: 1 | -1): Promise<void> {
+    await APIRequest({
+      endpoint: `projects-k/progress/${state === -1 ? 'un' : ''}complete-step/${
+        (projectData as IProjectsKEntry).id
+      }`,
+      method: 'PATCH',
+      successInfo:
+        state === -1
+          ? 'Step reverted.'
+          : 'Yay! You are one step closer to completing the project.',
+      failureInfo: "Oops! Couldn't update the progress. Please try again.",
+      finalCallback: refreshProgress
+    })
   }
 
   return (
@@ -106,7 +83,9 @@ export default function ProjectProgress({
                         <button
                           disabled={index < progress.completed - 1}
                           onClick={() => {
-                            completeStep(index < progress.completed ? -1 : 1)
+                            completeStep(
+                              index < progress.completed ? -1 : 1
+                            ).catch(console.error)
                           }}
                           className={`flex-center relative z-50 flex h-6 w-6 rounded-full border-2 transition-all hover:border-custom-500 ${
                             index < progress.completed

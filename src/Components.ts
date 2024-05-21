@@ -141,7 +141,7 @@ export const COMPONENTS = {
     'server-status': ServerStatus
   },
   'data-backup': {
-    'data-backup': ServerStatus
+    'data-backup': ServerStatus // TODO
   },
   'change-log': {
     'change-log': Changelog

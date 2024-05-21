@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/indent */
 
+import { Icon } from '@iconify/react'
+import moment from 'moment'
+import React, { useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import Input from '@components/ButtonsAndInputs/Input'
-import { Icon } from '@iconify/react'
-import moment from 'moment'
-import React, { useEffect, useRef, useState } from 'react'
-import { toast } from 'react-toastify'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import ListSelector from './components/ListSelector'
 import NotesInput from './components/NotesInput'

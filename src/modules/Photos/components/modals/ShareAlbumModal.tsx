@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/indent */
-import Button from '@components/ButtonsAndInputs/Button'
 import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useState } from 'react'
+import Button from '@components/ButtonsAndInputs/Button'
 import { type IPhotosAlbum } from '@typedec/Photos'
 import APIRequest from '../../../../utils/fetchData'
 

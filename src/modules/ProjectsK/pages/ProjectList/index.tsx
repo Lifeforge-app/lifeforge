@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
-/* eslint-disable @typescript-eslint/indent */
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'

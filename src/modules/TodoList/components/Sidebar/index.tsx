@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable @typescript-eslint/indent */
+
 import React from 'react'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import SidebarDivider from '@components/Sidebar/components/SidebarDivider'

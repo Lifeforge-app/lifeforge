@@ -38,12 +38,12 @@ function About(): React.ReactElement {
               <p className="mt-4 text-bg-500">
                 As an aviation enthusiast, I have always been fascinated by
                 those interfaces and buttons in the cockpit. It was last year
-                when I was watching a vlog about a pilot's life, and I saw the
-                pilot manipulating the FMC (Flight Management Computer) in the
-                cockpit. I was so intrigued by the interface that at the spur of
-                the moment, I decided to create an all-in-one system, for me to
-                manage my own life, just like a pilot manages the aircraft in
-                the cockpit.
+                when I was watching a vlog about a pilot&apos;s life, and I saw
+                the pilot manipulating the FMC (Flight Management Computer) in
+                the cockpit. I was so intrigued by the interface that at the
+                spur of the moment, I decided to create an all-in-one system,
+                for me to manage my own life, just like a pilot manages the
+                aircraft in the cockpit.
               </p>
             </div>
           </div>

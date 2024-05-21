@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'

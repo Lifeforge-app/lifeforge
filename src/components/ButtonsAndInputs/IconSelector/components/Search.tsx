@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
-/* eslint-disable @typescript-eslint/indent */
+
 /* eslint-disable @typescript-eslint/require-array-sort-compare */
 
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */

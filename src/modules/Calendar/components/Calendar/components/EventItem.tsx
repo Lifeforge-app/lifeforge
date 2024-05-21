@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import React from 'react'
 import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
 

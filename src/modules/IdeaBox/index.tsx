@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
-
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'

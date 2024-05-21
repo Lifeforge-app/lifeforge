@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 interface IProjectsKVersion {
   collectionId: string
   collectionName: string

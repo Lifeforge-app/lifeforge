@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
