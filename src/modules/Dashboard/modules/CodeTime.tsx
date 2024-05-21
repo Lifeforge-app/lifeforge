@@ -5,7 +5,7 @@ import { type ScriptableContext } from 'chart.js'
 import React, { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-import Loading from '../../../components/Screens/Loading'
+import Loading from '@components/Screens/Loading'
 import useFetch from '@hooks/useFetch'
 
 function msToTime(ms: number): string {

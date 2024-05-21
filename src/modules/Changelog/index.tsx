@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect, useState } from 'react'
-import APIComponentWithFallback from '../../components/Screens/APIComponentWithFallback'
-import EmptyStateScreen from '../../components/Screens/EmptyStateScreen'
-import ModuleHeader from '../../components/Module/ModuleHeader'
-import ModuleWrapper from '../../components/Module/ModuleWrapper'
-import SearchInput from '../../components/ButtonsAndInputs/SearchInput'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import ModuleHeader from '@components/Module/ModuleHeader'
+import ModuleWrapper from '@components/Module/ModuleWrapper'
+import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import useFetch from '@hooks/useFetch'
 import { type IChangeLogVersion } from '@typedec/Changelog'
 import LogItem from './components/LogItem'

@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
 import { Icon } from '@iconify/react'
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import Button from '../../../../components/ButtonsAndInputs/Button'
-import Modal from '../../../../components/Modals/Modal'
-import APIComponentWithFallback from '../../../../components/Screens/APIComponentWithFallback'
+import Button from '@components/ButtonsAndInputs/Button'
+import Modal from '@components/Modals/Modal'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import { type IPhotosAlbum } from '@typedec/Photos'
+import APIRequest from '../../../../utils/fetchData'
 
 function UpdateAlbumTagsModal({
   isOpen,
@@ -29,57 +28,39 @@ function UpdateAlbumTagsModal({
     }
   }, [selectedAlbum])
 
-  function onSubmitButtonClick(): void {
+  async function onSubmitButtonClick(): Promise<void> {
     setLoading(true)
 
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/photos/album/tag/update-album/${
-        selectedAlbum?.id
-      }`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify({
-          tags: selectedTags
-        })
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (res.ok) {
-          toast.info('Tags updated successfully.')
-          setOpen(false)
-          setAlbumList(prev => {
-            if (typeof prev === 'string') {
-              return prev
+    await APIRequest({
+      endpoint: `photos/album/tag/update-album/${selectedAlbum?.id}`,
+      method: 'PATCH',
+      body: { tags: selectedTags },
+      successInfo: 'Tags updated successfully.',
+      failureInfo: 'Failed to update tags. Please try again.',
+      callback: () => {
+        setOpen(false)
+        setAlbumList(prev => {
+          if (typeof prev === 'string') {
+            return prev
+          }
+
+          return prev.map(album => {
+            if (album.id === selectedAlbum?.id) {
+              return {
+                ...album,
+                tags: selectedTags
+              }
             }
 
-            return prev.map(album => {
-              if (album.id === selectedAlbum?.id) {
-                return {
-                  ...album,
-                  tags: selectedTags
-                }
-              }
-
-              return album
-            })
+            return album
           })
-          refreshAlbumTagList()
-        } else {
-          throw new Error(data.message)
-        }
-      })
-      .catch(err => {
-        toast.error('Failed to update tags. Please try again.')
-        console.error(err)
-      })
-      .finally(() => {
+        })
+        refreshAlbumTagList()
+      },
+      finalCallback: () => {
         setLoading(false)
-      })
+      }
+    })
   }
 
   return (
@@ -131,7 +112,9 @@ function UpdateAlbumTagsModal({
         )}
       </APIComponentWithFallback>
       <Button
-        onClick={onSubmitButtonClick}
+        onClick={() => {
+          onSubmitButtonClick().catch(console.error)
+        }}
         disabled={loading}
         className="mt-12"
         icon={loading ? 'svg-spinners:180-ring' : 'tabler:tags'}

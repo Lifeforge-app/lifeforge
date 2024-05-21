@@ -5,8 +5,8 @@ import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import { type ITodoListTag } from '@typedec/TodoList'
-import HamburgerMenu from '../../../../../components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '../../../../../components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 
 function TaskTagListItem({
   item,

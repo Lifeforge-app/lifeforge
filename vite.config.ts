@@ -11,10 +11,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@components': path.resolve(__dirname, './src/components/general'),
+      '@components': path.resolve(__dirname, './src/components'),
       '@providers': path.resolve(__dirname, './src/providers'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
-      '@sidebar': path.resolve(__dirname, './src/components/Sidebar'),
       '@typedec': path.resolve(__dirname, './src/types')
     }
   }

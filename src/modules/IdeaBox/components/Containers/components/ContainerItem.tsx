@@ -2,8 +2,8 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import HamburgerMenu from '../../../../../components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '../../../../../components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { type IIdeaBoxContainer } from '@typedec/IdeaBox'
 
 function ContainerItem({

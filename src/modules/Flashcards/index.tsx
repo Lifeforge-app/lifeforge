@@ -1,15 +1,15 @@
+import Button from '@components/ButtonsAndInputs/Button'
+import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import { faker } from '@faker-js/faker'
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import APIComponentWithFallback from '../../components/Screens/APIComponentWithFallback'
-import Button from '../../components/ButtonsAndInputs/Button'
-import ModuleHeader from '../../components/Module/ModuleHeader'
-import ModuleWrapper from '../../components/Module/ModuleWrapper'
-import SearchInput from '../../components/ButtonsAndInputs/SearchInput'
 import useFetch from '@hooks/useFetch'
 import { type IFlashcardDeck } from '@typedec/Flashcard'
 import Sidebar from './components/Sidebar'
+import ModuleHeader from '@components/Module/ModuleHeader'
+import ModuleWrapper from '@components/Module/ModuleWrapper'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 
 export default function Flashcards(): React.ReactElement {
   const [searchQuery, setSearchQuery] = useState('')

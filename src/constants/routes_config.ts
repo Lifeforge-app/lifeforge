@@ -171,8 +171,8 @@ export const ROUTES: IRoutes[] = [
         icon: 'tabler:book',
         routes: {
           journal: 'journal',
-          'journal-view': 'journal-view/:id',
-          'journal-edit': 'journal-edit/:id'
+          'journal-view': 'journal/view/:id',
+          'journal-edit': 'journal/edit/:id'
         },
         togglable: true
       }

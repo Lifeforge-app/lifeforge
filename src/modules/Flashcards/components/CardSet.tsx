@@ -1,14 +1,14 @@
+import Button from '@components/ButtonsAndInputs/Button'
+import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
+import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import APIComponentWithFallback from '../../../components/Screens/APIComponentWithFallback'
-import Button from '../../../components/ButtonsAndInputs/Button'
-import GoBackButton from '../../../components/ButtonsAndInputs/GoBackButton'
-import HamburgerMenu from '../../../components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '../../../components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
 import { type IFlashcardDeck, type IFlashcardCard } from '@typedec/Flashcard'
 import EditCardModal from './EditCardModal'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 
 function CardSet(): React.ReactElement {
   const { id } = useParams<{ id: string }>()

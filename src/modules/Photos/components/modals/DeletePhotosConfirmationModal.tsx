@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
-import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
-import { toast } from 'react-toastify'
-import Button from '../../../../components/ButtonsAndInputs/Button'
-import Modal from '../../../../components/Modals/Modal'
+import Button from '@components/ButtonsAndInputs/Button'
+import Modal from '@components/Modals/Modal'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import {
   type IPhotosEntryDimensionsAll,
   type IPhotoAlbumEntryItem,
   type IPhotosEntry
 } from '@typedec/Photos'
+import APIRequest from '../../../../utils/fetchData'
 
 function DeletePhotosConfirmationModal({
   isInAlbumGallery = false,
@@ -36,74 +35,58 @@ function DeletePhotosConfirmationModal({
   } = usePhotosContext()
   const [loading, setLoading] = useState(false)
 
-  function deleteData(): void {
+  async function deleteData(): Promise<void> {
     if (!customPhotoToBeDeleted && selectedPhotos.length === 0) {
       return
     }
 
     setLoading(true)
-    fetch(
-      `${
-        import.meta.env.VITE_API_HOST
-      }/photos/entry/delete?isInAlbum=${isInAlbumGallery}`,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify({
-          photos: customPhotoToBeDeleted
-            ? [customPhotoToBeDeleted.id]
-            : selectedPhotos
-        })
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (res.ok) {
-          toast.info("Uhh, hopefully you truly didn't need those photos.")
-          setDeletePhotosConfirmationModalOpen(false)
-          setSelectedPhotos([])
 
-          if (isInAlbumGallery) {
-            if (customPhotoToBeDeleted) {
-              setPhotos(prevPhotos =>
-                prevPhotos.filter(
-                  photo => photo.id !== customPhotoToBeDeleted.id
-                )
-              )
-            } else {
-              setPhotos(prevPhotos =>
-                prevPhotos.filter(photo => !selectedPhotos.includes(photo.id))
-              )
-            }
+    await APIRequest({
+      endpoint: `photos/entry/delete?isInAlbum=${isInAlbumGallery}`,
+      method: 'DELETE',
+      body: {
+        photos: customPhotoToBeDeleted
+          ? [customPhotoToBeDeleted.id]
+          : selectedPhotos
+      },
+      successInfo: "Uhh, hopefully you truly didn't need those photos.",
+      failureInfo: "Oops! Couldn't delete the photos. Please try again.",
+      callback: () => {
+        setDeletePhotosConfirmationModalOpen(false)
+        setSelectedPhotos([])
+
+        if (isInAlbumGallery) {
+          if (customPhotoToBeDeleted) {
+            setPhotos(prevPhotos =>
+              prevPhotos.filter(photo => photo.id !== customPhotoToBeDeleted.id)
+            )
           } else {
-            setPhotos(prevPhotos => ({
-              ...prevPhotos,
-              items: prevPhotos.items.map(([date, photos]) => [
-                date,
-                photos.filter(photo =>
-                  customPhotoToBeDeleted
-                    ? photo.id !== customPhotoToBeDeleted.id
-                    : !selectedPhotos.includes(photo.id)
-                )
-              ])
-            }))
+            setPhotos(prevPhotos =>
+              prevPhotos.filter(photo => !selectedPhotos.includes(photo.id))
+            )
           }
-
-          return data
         } else {
-          throw new Error(data.message)
+          setPhotos(prevPhotos => ({
+            ...prevPhotos,
+            items: prevPhotos.items.map(([date, photos]) => [
+              date,
+              photos.filter(photo =>
+                customPhotoToBeDeleted
+                  ? photo.id !== customPhotoToBeDeleted.id
+                  : !selectedPhotos.includes(photo.id)
+              )
+            ])
+          }))
         }
-      })
-      .catch(err => {
-        toast.error("Oops! Couldn't delete the photos. Please try again.")
-        console.error(err)
-      })
-      .finally(() => {
+      },
+      onFailure: () => {
+        setDeletePhotosConfirmationModalOpen(false)
+      },
+      finalCallback: () => {
         setLoading(false)
-      })
+      }
+    })
   }
 
   return (
@@ -133,7 +116,9 @@ function DeletePhotosConfirmationModal({
         </Button>
         <Button
           disabled={loading}
-          onClick={deleteData}
+          onClick={() => {
+            deleteData().catch(console.error)
+          }}
           icon={loading ? 'svg-spinners:180-ring' : 'tabler:trash'}
           className="w-full"
           isRed

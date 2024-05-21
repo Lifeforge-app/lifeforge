@@ -2,22 +2,22 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { Icon } from '@iconify/react'
-import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '../../components/ButtonsAndInputs/Button'
-import Input from '../../components/ButtonsAndInputs/Input'
-import DeleteConfirmationModal from '../../components/Modals/DeleteConfirmationModal'
-import ModuleHeader from '../../components/Module/ModuleHeader'
-import ModuleWrapper from '../../components/Module/ModuleWrapper'
-import APIComponentWithFallback from '../../components/Screens/APIComponentWithFallback'
-import EmptyStateScreen from '../../components/Screens/EmptyStateScreen'
+import Button from '@components/ButtonsAndInputs/Button'
+import Input from '@components/ButtonsAndInputs/Input'
+import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
+import ModuleHeader from '@components/Module/ModuleHeader'
+import ModuleWrapper from '@components/Module/ModuleWrapper'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { useAuthContext } from '@providers/AuthProvider'
 import { type IPasswordEntry } from '@typedec/Password'
 import CreatePassword from './CreatePassword'
 import CreatePasswordModal from './CreatePasswordModal'
 import PasswordEntryITem from './PasswordEntryItem'
+import APIRequest from '../../utils/fetchData'
 
 function Passwords(): React.ReactElement {
   const { userData } = useAuthContext()
@@ -38,42 +38,32 @@ function Passwords(): React.ReactElement {
   ] = useState<boolean>(false)
   const [existedData, setExistedData] = useState<IPasswordEntry | null>(null)
 
-  function onSubmit(): void {
+  async function onSubmit(): Promise<void> {
     if (masterPassWordInputContent.trim() === '') {
       toast.error('Please fill in the field')
       return
     }
 
     setLoading(true)
-
-    fetch(`${import.meta.env.VITE_API_HOST}/passwords/master/verify`, {
+    await APIRequest({
+      endpoint: 'passwords/master/verify',
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
-      },
-      body: JSON.stringify({
+      body: {
         password: masterPassWordInputContent,
         id: userData.id
-      })
-    })
-      .then(async res => {
-        const data = await res.json()
-        if (res.ok && data.data === true) {
+      },
+      callback: data => {
+        if (data.data === true) {
           setMasterPassword(masterPassWordInputContent)
           setMasterPassWordInputContent('')
-          toast.success('Vault unlocked')
-        } else {
-          throw new Error(data.message)
         }
-      })
-      .catch(err => {
-        toast.error('Incorrect password')
-        console.error(err)
-      })
-      .finally(() => {
+      },
+      successInfo: 'Vault unlocked',
+      failureInfo: 'Incorrect password',
+      finalCallback: () => {
         setLoading(false)
-      })
+      }
+    })
   }
 
   return (
@@ -116,7 +106,7 @@ function Passwords(): React.ReactElement {
             additionalClassName="w-1/2"
             onKeyDown={e => {
               if (e.key === 'Enter') {
-                onSubmit()
+                onSubmit().catch(console.error)
               }
             }}
             darker

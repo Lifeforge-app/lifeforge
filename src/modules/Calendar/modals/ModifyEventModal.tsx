@@ -2,16 +2,16 @@
 
 import { useDebounce } from '@uidotdev/usehooks'
 import moment from 'moment'
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '../../../components/ButtonsAndInputs/CreateOrModifyButton'
-import DateInput from '../../../components/ButtonsAndInputs/DateInput'
-import Input from '../../../components/ButtonsAndInputs/Input'
-import Modal from '../../../components/Modals/Modal'
-import ModalHeader from '../../../components/Modals/ModalHeader'
+import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
+import DateInput from '@components/ButtonsAndInputs/DateInput'
+import Input from '@components/ButtonsAndInputs/Input'
+import Modal from '@components/Modals/Modal'
+import ModalHeader from '@components/Modals/ModalHeader'
 import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
 import CategorySelector from './ModifyCategoryModal/components/CategorySelector'
+import APIRequest from '../../../utils/fetchData'
 
 interface ModifyEventModalProps {
   openType: 'create' | 'update' | null
@@ -39,7 +39,7 @@ function ModifyEventModal({
     setEventTitle(e.target.value)
   }
 
-  function onSubmitButtonClick(): void {
+  async function onSubmitButtonClick(): Promise<void> {
     if (
       eventTitle.trim().length === 0 ||
       eventStartTime === '' ||
@@ -58,44 +58,28 @@ function ModifyEventModal({
       category: eventCategory
     }
 
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/calendar/event/${innerOpenType}` +
+    await APIRequest({
+      endpoint:
+        `calendar/event/${innerOpenType}` +
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
-      {
-        method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify(event)
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (!res.ok) {
-          throw data.message
-        }
-        toast.success(
-          {
-            create: 'Yay! Event created.',
-            update: 'Yay! Event updated.'
-          }[innerOpenType!]
-        )
+      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
+      body: event,
+      successInfo: {
+        create: 'Yay! Event created.',
+        update: 'Yay! Event updated.'
+      }[innerOpenType!],
+      failureInfo: {
+        create: "Oops! Couldn't create the event. Please try again.",
+        update: "Oops! Couldn't update the event. Please try again."
+      }[innerOpenType!],
+      finalCallback: () => {
+        setLoading(false)
+      },
+      callback: () => {
         setOpenType(null)
         updateEventList()
-      })
-      .catch(err => {
-        toast.error(
-          {
-            create: "Oops! Couldn't create the event. Please try again.",
-            update: "Oops! Couldn't update the event. Please try again."
-          }[innerOpenType!]
-        )
-        console.error(err)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+      }
+    })
   }
 
   useEffect(() => {
@@ -161,7 +145,9 @@ function ModifyEventModal({
         />
         <CreateOrModifyButton
           loading={loading}
-          onClick={onSubmitButtonClick}
+          onClick={() => {
+            onSubmitButtonClick().catch(console.error)
+          }}
           type={innerOpenType}
         />
       </Modal>

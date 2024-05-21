@@ -2,8 +2,8 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { type IPhotosAlbum } from '@typedec/Photos'
-import HamburgerMenu from '../../../../../components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '../../../../../components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { usePhotosContext } from '../../../../../providers/PhotosProvider'
 
 function AlbumItem({

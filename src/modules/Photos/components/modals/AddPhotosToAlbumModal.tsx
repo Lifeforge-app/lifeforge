@@ -1,11 +1,10 @@
 import { Icon } from '@iconify/react'
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import Button from '../../../../components/ButtonsAndInputs/Button'
-import Modal from '../../../../components/Modals/Modal'
-import APIComponentWithFallback from '../../../../components/Screens/APIComponentWithFallback'
+import Button from '@components/ButtonsAndInputs/Button'
+import Modal from '@components/Modals/Modal'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
+import APIRequest from '../../../../utils/fetchData'
 
 function AddPhotosToAlbumModal(): React.ReactElement {
   const {
@@ -25,7 +24,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
     setSelectedAlbum(id)
   }
 
-  function onSubmitButtonClick(): void {
+  async function onSubmitButtonClick(): Promise<void> {
     if (typeof photos === 'string' || typeof albumList === 'string') {
       return
     }
@@ -36,45 +35,30 @@ function AddPhotosToAlbumModal(): React.ReactElement {
 
     setLoading(true)
 
-    fetch(
-      `${
-        import.meta.env.VITE_API_HOST
-      }/photos/album/add-photos/${selectedAlbum}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify({
-          photos: selectedPhotos.filter(
-            photo =>
-              !(
-                photos.items
-                  .map(p => p[1])
-                  .flat()
-                  .find(p => p.id === photo)?.is_in_album ?? false
-              )
-          )
-        })
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (!res.ok) {
-          throw data.message
-        }
+    await APIRequest({
+      endpoint: `photos/album/add-photos/${selectedAlbum}`,
+      method: 'PATCH',
+      body: {
+        photos: selectedPhotos.filter(
+          photo =>
+            !(
+              photos.items
+                .map(p => p[1])
+                .flat()
+                .find(p => p.id === photo)?.is_in_album ?? false
+            )
+        )
+      },
+      successInfo: 'Yay! Photos added to album.',
+      failureInfo: "Oops! Couldn't add the photos to album. Please try again.",
+      callback: () => {
         setSelectedPhotos([])
         setLoading(false)
         setOpen(false)
         updateAlbumList()
         updatePhotos()
-        toast.success('Yay! Photos added to album.')
-      })
-      .catch(err => {
-        console.error(err)
-        toast.error("Oops! Couldn't add the photos to album. Please try again.")
-      })
+      }
+    })
   }
 
   useEffect(() => {
@@ -173,7 +157,9 @@ function AddPhotosToAlbumModal(): React.ReactElement {
               )}
             </ul>
             <Button
-              onClick={onSubmitButtonClick}
+              onClick={() => {
+                onSubmitButtonClick().catch(console.error)
+              }}
               disabled={selectedAlbum === '' || loading}
               className="mt-6"
               icon={loading ? 'svg-spinners:180-ring' : 'tabler:photo-plus'}

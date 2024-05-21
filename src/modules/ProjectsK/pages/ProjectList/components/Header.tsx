@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
-import Button from '../../../../../components/ButtonsAndInputs/Button'
+import Button from '@components/ButtonsAndInputs/Button'
 import { type IProjectsKEntry } from '@typedec/ProjectK'
 import { PROJECT_STATUS } from '..'
 

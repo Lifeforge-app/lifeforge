@@ -6,14 +6,14 @@
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import APIComponentWithFallback from '../../../components/Screens/APIComponentWithFallback'
-import DeleteConfirmationModal from '../../../components/Modals/DeleteConfirmationModal'
-import EmptyStateScreen from '../../../components/Screens/EmptyStateScreen'
+import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import useFetch from '@hooks/useFetch'
 import { type INotesEntry } from '@typedec/Notes'
 import Directory from './components/Directory'
 import DirectoryHeader from './components/Directory/components/DirectoryHeader'
 import ModifyFolderModal from './components/ModifyFolderModal'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 
 function NotesSubject(): React.ReactElement {
   const {

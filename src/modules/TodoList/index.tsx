@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import ModuleHeader from '../../components/Module/ModuleHeader'
-import ModuleWrapper from '../../components/Module/ModuleWrapper'
+import ModuleHeader from '@components/Module/ModuleHeader'
+import ModuleWrapper from '@components/Module/ModuleWrapper'
 import { TodoListProvider } from '@providers/TodoListProvider'
 import TodoListContainer from './components/TodoListContainer'
 

@@ -3,16 +3,16 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
-import APIComponentWithFallback from '../../../components/Screens/APIComponentWithFallback'
-import DeleteConfirmationModal from '../../../components/Modals/DeleteConfirmationModal'
-import EmptyStateScreen from '../../../components/Screens/EmptyStateScreen'
-import GoBackButton from '../../../components/ButtonsAndInputs/GoBackButton'
-import ModuleHeader from '../../../components/Module/ModuleHeader'
+import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
+import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
+import ModuleHeader from '@components/Module/ModuleHeader'
 import useFetch from '@hooks/useFetch'
 import { type INotesSubject, type INotesWorkspace } from '@typedec/Notes'
 import CreateSubjectButton from './components/CreateSubjectButton'
 import ModifySubjectModal from './components/ModifySubjectModal'
 import SubjectItem from './components/SubjectItem'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 
 function NotesCategory(): React.ReactElement {
   const { workspace } = useParams<{ workspace: string }>()
@@ -71,7 +71,7 @@ function NotesCategory(): React.ReactElement {
         <APIComponentWithFallback data={subjectsData}>
           {typeof subjectsData !== 'string' &&
             (subjectsData.length > 0 ? (
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] flex-center gap-4 py-8">
+              <div className="flex-center grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-4 py-8">
                 {subjectsData.map(subject => (
                   <SubjectItem
                     key={subject.id}

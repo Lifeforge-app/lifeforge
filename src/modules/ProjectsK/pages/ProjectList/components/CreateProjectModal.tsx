@@ -3,17 +3,17 @@
 
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { cookieParse } from 'pocketbase'
 import React, { Fragment, useState } from 'react'
 import { toast } from 'react-toastify'
-import APIComponentWithFallback from '../../../../../components/Screens/APIComponentWithFallback'
-import CreateOrModifyButton from '../../../../../components/ButtonsAndInputs/CreateOrModifyButton'
-import Input from '../../../../../components/ButtonsAndInputs/Input'
-import Modal from '../../../../../components/Modals/Modal'
-import ModalHeader from '../../../../../components/Modals/ModalHeader'
+import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
+import Input from '@components/ButtonsAndInputs/Input'
+import Modal from '@components/Modals/Modal'
+import ModalHeader from '@components/Modals/ModalHeader'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IProjectsKProgressStep } from '@typedec/ProjectK'
 import { PROJECT_STATUS } from '..'
+import APIRequest from '../../../../../utils/fetchData'
 
 function CreateProjectModal({
   isOpen,
@@ -58,30 +58,20 @@ function CreateProjectModal({
       steps: stepsToggled
     }
 
-    fetch(`${import.meta.env.VITE_API_HOST}/projects-k/entry/create`, {
+    await APIRequest({
+      endpoint: 'projects-k/entry/create',
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+      body: project,
+      successInfo: 'Yay! Project created. Time to start working on it.',
+      failureInfo: "Oops! Couldn't create the project. Please try again.",
+      finalCallback: () => {
+        setLoading(false)
       },
-      body: JSON.stringify(project)
-    })
-      .then(async res => {
-        const data = await res.json()
-        if (!res.ok) {
-          throw data.message
-        }
-        toast.success('Yay! Project created. Time to start working on it.')
+      callback: () => {
         setOpen(false)
         updateProjectsList()
-      })
-      .catch(err => {
-        toast.error("Oops! Couldn't create the project. Please try again.")
-        console.error(err)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+      }
+    })
   }
 
   function updateProjectName(e: React.ChangeEvent<HTMLInputElement>): void {

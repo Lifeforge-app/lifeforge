@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/indent */
 
 import { Icon } from '@iconify/react'
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '../../../components/ButtonsAndInputs/CreateOrModifyButton'
-import Modal from '../../../components/Modals/Modal'
+import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
+import Modal from '@components/Modals/Modal'
 import { type IFlashcardCard } from '@typedec/Flashcard'
+import APIRequest from '../../../utils/fetchData'
 
 function EditCardModal({
   deck,
@@ -34,7 +34,7 @@ function EditCardModal({
   const [currentlyEditingIndex, setCurrentlyEditingIndex] = useState<number>(-1)
   const [toBeDeletedId, setToBeDeletedId] = useState<string[]>([])
 
-  function onSubmitButtonClick(): void {
+  async function onSubmitButtonClick(): Promise<void> {
     const updatedCards = innerCards.filter(card => card.type !== null)
 
     if (updatedCards.length === 0 && toBeDeletedId.length === 0) {
@@ -54,40 +54,30 @@ function EditCardModal({
 
     setLoading(true)
 
-    fetch(`${import.meta.env.VITE_API_HOST}/flashcards/card/update`, {
+    await APIRequest({
+      endpoint: 'flashcards/card/update',
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
-      },
-      body: JSON.stringify({
+      body: {
         deck,
         cards: updatedCards,
         toBeDeletedId
-      })
-    })
-      .then(async res => {
-        const data = await res.json()
-        if (!res.ok) {
-          throw data.message
-        }
-        toast.success('Yay! Cards updated.')
+      },
+      successInfo: 'Yay! Cards updated.',
+      failureInfo: "Oops! Couldn't update the cards. Please try again.",
+      callback: () => {
         onClose()
         refreshCards()
         refreshContainerDetails()
-      })
-      .catch(err => {
-        toast.error("Oops! Couldn't update the cards. Please try again.")
-        console.error(err)
-      })
-      .finally(() => {
+      },
+      finalCallback: () => {
         setLoading(false)
-      })
+      }
+    })
   }
 
   useEffect(() => {
     // onpaste
-    const handlePaste = (e: ClipboardEvent) => {
+    const handlePaste = (e: ClipboardEvent): void => {
       e.preventDefault()
       const text = e.clipboardData?.getData('text')
 
@@ -233,7 +223,7 @@ function EditCardModal({
             behavior: 'smooth'
           })
         }}
-        className="mt-4 hidden w-full flex-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-custom transition-all hover:bg-bg-800/50 dark:text-bg-100 sm:flex"
+        className="flex-center mt-4 hidden w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-custom transition-all hover:bg-bg-800/50 dark:text-bg-100 sm:flex"
       >
         <Icon icon="tabler:plus" className="text-xl" />
         new card
@@ -243,13 +233,15 @@ function EditCardModal({
         <button
           disabled={loading}
           onClick={onClose}
-          className="flex h-16 w-full flex-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-custom transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
+          className="flex-center flex h-16 w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-custom transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
         >
           cancel
         </button>
         <CreateOrModifyButton
           loading={loading}
-          onClick={onSubmitButtonClick}
+          onClick={() => {
+            onSubmitButtonClick().catch(console.error)
+          }}
           type={'update'}
         />
       </div>

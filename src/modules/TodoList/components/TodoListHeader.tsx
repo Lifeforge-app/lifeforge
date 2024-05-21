@@ -3,7 +3,7 @@ import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import { type ITodoListTag } from '@typedec/TodoList'
-import Button from '../../../components/ButtonsAndInputs/Button'
+import Button from '@components/ButtonsAndInputs/Button'
 
 function TodoListHeader({
   setSidebarOpen
