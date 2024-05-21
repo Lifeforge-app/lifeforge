@@ -1,0 +1,168 @@
+{
+    "auth": {
+        "header": "Welcome Back",
+        "desc": "Sign in to continue recording your life journey.",
+        "sideImageDesc.part1": "One day you'll leave this world behind",
+        "sideImageDesc.part2": "So live a life you will remember",
+        "or": "OR",
+        "signInButton": "Sign In",
+        "signInWithPasskey": "Sign in with passkey",
+        "emailOrUsername": "Email or Username",
+        "password": "Password",
+        "welcome": "Welcome back, ",
+        "errorMessages": {
+            "passkeyChallenge": "Failed to fetch passkey challenge",
+            "passkeyRegister": "Failed to register passkey",
+            "passkeyLogin": "Failed to login with passkey"
+        },
+        "passkey": {
+            "createSuccess": "Passkey created successfully"
+        }
+    },
+    "modules": {
+        "dashboard": "Dashboard",
+        "projects(M)": "Projects (M)",
+        "projects(K)": "Projects (K)",
+        "ideaBox": "Idea Box",
+        "todoList": "Todo List",
+        "calendar": "Calendar",
+        "spotify": "Spotify",
+        "codeTime": "Code Time",
+        "photos": "Photos",
+        "music": "Music",
+        "repositories": "Repositories",
+        "pomodoroTimer": "Pomodoro Timer",
+        "flashcards": "Flashcards",
+        "notes": "Notes",
+        "booksLibrary": "Books Library",
+        "wallet": "Wallet",
+        "wishList": "Wish List",
+        "contacts": "Contacts",
+        "passwords": "Passwords",
+        "personalization": "Personalization",
+        "dataBackup": "Data Backup",
+        "modules": "Modules",
+        "serverStatus": "Server Status",
+        "changeLog": "Change Log",
+        "about": "About This Project",
+        "journal": "Journal",
+        "title": {
+            "productivity": "Productivity",
+            "storage": "Storage",
+            "study": "Study",
+            "finance": "Finance",
+            "confidential": "Confidential",
+            "settings": "Settings",
+            "technologies": "Technologies",
+            "tasks": "Tasks",
+            "lists": "Lists",
+            "tags": "Tags",
+            "category": "Category",
+            "status": "Status",
+            "visibility": "Visibility",
+            "projectType": "Project Type",
+            "progress": "Progress",
+            "categories": "Categories",
+            "languages": "Languages",
+            "albums": "Albums"
+        },
+        "descriptions": {
+            "dashboard": "Your mission control center for awesome. 🚀",
+            "projects(M)": "Tame those giant projects, one step at a time. 🦄",
+            "projects(K)": "Track a zillion little projects without losing your mind. 🧠",
+            "ideaBox": "Catch those brilliant ideas before they fly away! 💡",
+            "todoList": "Never forget to-do again (except maybe laundry). 📝",
+            "calendar": "Don't be late for your date with destiny (or the dentist). 📅",
+            "spotify": "The right soundtrack for conquering your day. 🎵",
+            "codeTime": "See how much coding magic you make happen. 👾",
+            "photos": "Memories so vivid, they'll practically jump off the screen. 📸",
+            "music": "Your personal soundtrack for life's greatest moments. 🎶",
+            "repositories": "Your code, your projects, your world. 🌎",
+            "pomodoroTimer": "Work like a boss with laser focus breaks. 🍅",
+            "flashcards": "Learn stuff fast and remember it forever (or at least until next Tuesday). 🧠",
+            "notes": "Digital sticky notes that never fall off the fridge. 📝",
+            "booksLibrary": "Your personal library, minus the late fees. 📚",
+            "wallet": "Be your own financial superhero. 💸",
+            "wishList": "Dream big and plan to make it happen. ✨",
+            "contacts": "Stay connected with your favourite people (even the ones who never text back). 📱",
+            "passwords": "Keep your secrets safe, even from yourself (sometimes).",
+            "personalization": "Make it yours! Because who wants a boring organizer? 🎨",
+            "dataBackup": "Your digital safety net, because stuff happens. 🪂",
+            "modules": "All the tools you need, all in one place. 🧰",
+            "serverStatus": "Keep your server healthy, happy, and humming. 🩺",
+            "changeLog": "Track the development progress, one change at a time. 📈",
+            "about": "The story behind how this project came to be. 📖",
+            "journal": "Your personal journal, for your eyes only. 📔"
+        }
+    },
+    "header": {
+        "searchBarPlaceholder": "Quick navigate & search ... (Press / to focus)"
+    },
+    "personalization": {
+        "themeSelector": {
+            "title": "Theme",
+            "desc": "Choose a theme that suits your style.",
+            "theme": {
+                "system": "System",
+                "light": "Light",
+                "dark": "Dark"
+            }
+        },
+        "themeColorSelector": {
+            "title": "Theme Color",
+            "desc": "Choose the the best color for your UI.",
+            "colors": {
+                "red": "Red",
+                "pink": "Pink",
+                "purple": "Purple",
+                "deepPurple": "Deep Purple",
+                "indigo": "Indigo",
+                "blue": "Blue",
+                "lightBlue": "Light Blue",
+                "cyan": "Cyan",
+                "teal": "Teal",
+                "green": "Green",
+                "lightGreen": "Light Green",
+                "lime": "Lime",
+                "yellow": "Yellow",
+                "amber": "Amber",
+                "orange": "Orange",
+                "deepOrange": "Deep Orange",
+                "brown": "Brown",
+                "grey": "Grey"
+            }
+        },
+        "bgTempSelector": {
+            "title": "Background Temperature",
+            "desc": "Choose a background temperature that suits your mood.",
+            "cool": "Cool",
+            "warm": "Warm"
+        },
+        "languageSelector": {
+            "title": "Language",
+            "desc": "Select a language that you prefer."
+        }
+    },
+    "dashboard": {
+        "modules": {
+            "calendar": {
+                "title": "Calendar"
+            },
+            "storageStatus": {
+                "title": "Storage Status"
+            },
+            "codeTime": {
+                "title": "Code Time"
+            },
+            "todayEvent": {
+                "title": "Today's Event"
+            },
+            "walletBalance": {
+                "title": "Wallet Balance"
+            },
+            "todoList": {
+                "title": "Todo List"
+            }
+        }
+    }
+}
