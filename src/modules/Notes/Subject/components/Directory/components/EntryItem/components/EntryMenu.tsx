@@ -1,0 +1,42 @@
+import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import React from 'react'
+import { type INotesEntry } from '@typedec/Notes'
+
+function EntryMenu({
+  entry,
+  setModifyFolderModalOpenType,
+  setExistedData,
+  setDeleteFolderConfirmationModalOpen
+}: {
+  entry: INotesEntry
+  setModifyFolderModalOpenType: React.Dispatch<
+    React.SetStateAction<'create' | 'update' | null>
+  >
+  setExistedData: (data: any) => void
+  setDeleteFolderConfirmationModalOpen: (state: boolean) => void
+}): React.ReactElement {
+  return (
+    <HamburgerMenu className="relative">
+      <MenuItem
+        icon="tabler:edit"
+        onClick={() => {
+          setModifyFolderModalOpenType('update')
+          setExistedData(entry)
+        }}
+        text="Rename"
+      />
+      <MenuItem
+        icon="tabler:trash"
+        onClick={() => {
+          setDeleteFolderConfirmationModalOpen(true)
+          setExistedData(entry)
+        }}
+        text="Delete"
+        isRed
+      />
+    </HamburgerMenu>
+  )
+}
+
+export default EntryMenu
