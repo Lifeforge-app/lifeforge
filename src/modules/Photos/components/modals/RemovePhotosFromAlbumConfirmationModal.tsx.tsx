@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
-import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
-import { toast } from 'react-toastify'
-import Button from '../../../../components/ButtonsAndInputs/Button'
-import Modal from '../../../../components/Modals/Modal'
+import Button from '@components/ButtonsAndInputs/Button'
+import Modal from '@components/Modals/Modal'
 import { usePhotosContext } from '@providers/PhotosProvider'
+import APIRequest from '../../../../utils/fetchData'
 
 function RemovePhotosFromAlbumConfirmationModal({
   refreshPhotos,
@@ -23,45 +22,30 @@ function RemovePhotosFromAlbumConfirmationModal({
   } = usePhotosContext()
   const [loading, setLoading] = useState(false)
 
-  function deleteData(): void {
+  async function deleteData(): Promise<void> {
     if (selectedPhotos.length === 0) return
 
     setLoading(true)
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/photos/album/remove-photo/${albumId}`,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify({
-          photos: selectedPhotos
-        })
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (res.ok) {
-          toast.info('Well, feel free to add them back whenever you want.')
-          setRemovePhotosFromAlbumConfirmationModalOpen(false)
-          refreshAlbumList()
-          refreshPhotos()
-          setSelectedPhotos([])
-          return data
-        } else {
-          throw new Error(data.message)
-        }
-      })
-      .catch(err => {
-        toast.error(
-          "Oops! Couldn't remove these photos from the album. Please try again."
-        )
-        console.error(err)
-      })
-      .finally(() => {
+
+    await APIRequest({
+      endpoint: `photos/album/remove-photo/${albumId}`,
+      method: 'DELETE',
+      body: {
+        photos: selectedPhotos
+      },
+      successInfo: 'Well, feel free to add them back whenever you want.',
+      failureInfo:
+        "Oops! Couldn't remove these photos from the album. Please try again.",
+      callback: () => {
+        setRemovePhotosFromAlbumConfirmationModalOpen(false)
+        refreshAlbumList()
+        refreshPhotos()
+        setSelectedPhotos([])
+      },
+      finalCallback: () => {
         setLoading(false)
-      })
+      }
+    })
   }
 
   return (
@@ -87,7 +71,9 @@ function RemovePhotosFromAlbumConfirmationModal({
         </Button>
         <Button
           disabled={loading}
-          onClick={deleteData}
+          onClick={() => {
+            deleteData().catch(console.error)
+          }}
           isRed
           className="w-full"
           icon={loading ? 'svg-spinners:180-ring' : 'tabler:layout-grid-remove'}

@@ -3,18 +3,18 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useDebounce } from '@uidotdev/usehooks'
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { toast } from 'react-toastify'
-import Button from '../../../../../../components/ButtonsAndInputs/Button'
-import Input from '../../../../../../components/ButtonsAndInputs/Input'
-import Modal from '../../../../../../components/Modals/Modal'
+import Button from '@components/ButtonsAndInputs/Button'
+import Input from '@components/ButtonsAndInputs/Input'
+import Modal from '@components/Modals/Modal'
 import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
 import IdeaContentInput from './components/IdeaContentInput'
 import IdeaImagePreview from './components/IdeaImagePreview'
 import IdeaImageUpload from './components/IdeaImageUpload'
 import ModalHeader from './components/ModalHeader'
+import APIRequest from '../../../../../../utils/fetchData'
 
 function ModifyIdeaModal({
   openType,
@@ -93,7 +93,7 @@ function ModifyIdeaModal({
     }
   }, [openType, existedData])
 
-  function onSubmitButtonClick(): void {
+  async function onSubmitButtonClick(): Promise<void> {
     switch (innerTypeOfModifyIdea) {
       case 'text':
         if (ideaContent.trim().length === 0) {
@@ -124,55 +124,35 @@ function ModifyIdeaModal({
     formData.append('image', ideaImage!)
     formData.append('type', innerTypeOfModifyIdea)
 
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/idea-box/idea/${
+    await APIRequest({
+      endpoint: `idea-box/idea/${
         innerOpenType === 'create' ? 'create' : 'update'
       }/${innerOpenType === 'create' ? containerId : existedData?.id}`,
-      {
-        method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-        headers: {
-          ...(innerOpenType === 'update' && {
-            'Content-Type': 'application/json'
-          }),
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body:
-          innerOpenType === 'create'
-            ? formData
-            : JSON.stringify({
-                title: ideaTitle.trim(),
-                content: ideaContent.trim(),
-                link: ideaLink.trim(),
-                type: innerTypeOfModifyIdea
-              })
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (res.ok) {
-          toast.success(
-            `Yay! Idea ${
-              innerOpenType === 'create' ? 'created' : 'updated'
-            } successfully.`
-          )
-          updateIdeaList()
-          setOpenType(null)
-          return data
-        } else {
-          throw new Error(data.message)
-        }
-      })
-      .catch(err => {
-        toast.error(
-          `Oops! Couldn't ${
-            innerOpenType === 'create' ? 'create' : 'update'
-          } the idea. Please try again.`
-        )
-        console.error(err)
-      })
-      .finally(() => {
+      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
+      body:
+        innerOpenType === 'create'
+          ? formData
+          : JSON.stringify({
+              title: ideaTitle.trim(),
+              content: ideaContent.trim(),
+              link: ideaLink.trim(),
+              type: innerTypeOfModifyIdea
+            }),
+      finalCallback: () => {
         setLoading(false)
-      })
+      },
+      successInfo: `Yay! Idea ${
+        innerOpenType === 'create' ? 'created' : 'updated'
+      } successfully.`,
+      failureInfo: `Oops! Couldn't ${
+        innerOpenType === 'create' ? 'create' : 'update'
+      } the idea. Please try again.`,
+      callback: () => {
+        updateIdeaList()
+        setOpenType(null)
+      },
+      isJSON: innerOpenType === 'update'
+    })
   }
 
   return (
@@ -214,7 +194,9 @@ function ModifyIdeaModal({
       <Button
         className="mt-6"
         disabled={loading}
-        onClick={onSubmitButtonClick}
+        onClick={() => {
+          onSubmitButtonClick().catch(console.error)
+        }}
         icon={
           !loading
             ? {

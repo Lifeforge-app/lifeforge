@@ -1,9 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/indent */
 
+import Button from '@components/ButtonsAndInputs/Button'
+import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
+import DateInput from '@components/ButtonsAndInputs/DateInput'
+import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import Input from '@components/ButtonsAndInputs/Input'
 import { Icon } from '@iconify/react'
 import moment from 'moment'
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useTodoListContext } from '@providers/TodoListProvider'
@@ -11,12 +16,7 @@ import ListSelector from './components/ListSelector'
 import NotesInput from './components/NotesInput'
 import PrioritySelector from './components/PrioritySelector'
 import TagsSelector from './components/TagsSelector'
-import Button from '../../../../components/ButtonsAndInputs/Button'
-import CreateOrModifyButton from '../../../../components/ButtonsAndInputs/CreateOrModifyButton'
-import DateInput from '../../../../components/ButtonsAndInputs/DateInput'
-import HamburgerMenu from '../../../../components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '../../../../components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import Input from '../../../../components/ButtonsAndInputs/Input'
+import APIRequest from '../../../../utils/fetchData'
 
 function ModifyTaskWindow(): React.ReactElement {
   const {
@@ -43,7 +43,7 @@ function ModifyTaskWindow(): React.ReactElement {
   const [loading, setLoading] = useState(false)
   const summaryInputRef = useRef<HTMLInputElement>(null)
 
-  function onSubmitButtonClick(): void {
+  async function onSubmitButtonClick(): Promise<void> {
     if (openType === null) return
 
     if (summary.trim().length === 0) {
@@ -62,43 +62,34 @@ function ModifyTaskWindow(): React.ReactElement {
       tags
     }
 
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/todo-list/entry/${openType}${
-        openType === 'update' ? `/${selectedTask?.id}` : ''
-      }`,
-      {
-        method: openType === 'create' ? 'POST' : 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify(task)
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (!res.ok) {
-          throw data.message
-        }
-        toast.success(
-          {
-            create: 'Yay! Task created. Time to start working on it.',
-            update: 'Yay! Task updated.'
-          }[openType]
-        )
+    await APIRequest({
+      endpoint:
+        `todo-list/entry/${innerOpenType}` +
+        (innerOpenType === 'update' ? `/${selectedTask?.id}` : ''),
+      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
+      body: task,
+      successInfo: {
+        create: 'Yay! Task created. Time to start working on it.',
+        update: 'Yay! Task updated.'
+      }[innerOpenType!],
+      failureInfo: {
+        create: "Oops! Couldn't create the task. Please try again.",
+        update: "Oops! Couldn't update the task. Please try again."
+      }[innerOpenType!],
+      callback: () => {
         setOpenType(null)
         refreshEntries()
         refreshTagsList()
         refreshLists()
         refreshStatusCounter()
-      })
-      .catch(err => {
-        toast.error(`Oops! Couldn't ${openType} the task. Please try again.`)
-        console.error(err)
-      })
-      .finally(() => {
+      },
+      onFailure: () => {
+        setOpenType(null)
+      },
+      finalCallback: () => {
         setLoading(false)
-      })
+      }
+    })
   }
 
   function updateSummary(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -223,7 +214,9 @@ function ModifyTaskWindow(): React.ReactElement {
           </Button>
           <CreateOrModifyButton
             loading={loading}
-            onClick={onSubmitButtonClick}
+            onClick={() => {
+              onSubmitButtonClick().catch(console.error)
+            }}
             type={innerOpenType}
             className="w-full"
           />

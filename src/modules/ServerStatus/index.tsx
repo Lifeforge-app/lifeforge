@@ -6,9 +6,9 @@ import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useEffect } from 'react'
 import GaugeComponent from 'react-gauge-component'
-import APIComponentWithFallback from '../../components/Screens/APIComponentWithFallback'
-import ModuleHeader from '../../components/Module/ModuleHeader'
-import ModuleWrapper from '../../components/Module/ModuleWrapper'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import ModuleHeader from '@components/Module/ModuleHeader'
+import ModuleWrapper from '@components/Module/ModuleWrapper'
 import useFetch from '@hooks/useFetch'
 import {
   type ICPUTemp,

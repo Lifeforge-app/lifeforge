@@ -22,10 +22,9 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
-      "@components/*": ["./src/components/general/*"],
+      "@components/*": ["./src/components/*"],
       "@providers/*": ["./src/providers/*"],
       "@hooks/*": ["./src/hooks/*"],
-      "@sidebar/*": ["./src/components/Sidebar/*"],
       "@typedec/*": ["./src/types/*"]
     }
   },

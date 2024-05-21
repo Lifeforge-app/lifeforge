@@ -2,13 +2,13 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
 import React from 'react'
-import APIComponentWithFallback from '../../../components/Screens/APIComponentWithFallback'
-import GoBackButton from '../../../components/ButtonsAndInputs/GoBackButton'
+import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
+import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
+import SidebarItem from '@components/Sidebar/components/SidebarItem'
+import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import useFetch from '@hooks/useFetch'
-import SidebarDivider from '@sidebar/components/SidebarDivider'
-import SidebarItem from '@sidebar/components/SidebarItem'
-import SidebarTitle from '@sidebar/components/SidebarTitle'
 import { type IFlashcardTag } from '@typedec/Flashcard'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 
 function Sidebar({
   sidebarOpen,

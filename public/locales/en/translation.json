@@ -21,8 +21,8 @@
     },
     "modules": {
         "dashboard": "Dashboard",
-        "projectsM": "Projects (M)",
-        "projectsK": "Projects (K)",
+        "projects(M)": "Projects (M)",
+        "projects(K)": "Projects (K)",
         "ideaBox": "Idea Box",
         "todoList": "Todo List",
         "calendar": "Calendar",
@@ -68,8 +68,8 @@
         },
         "descriptions": {
             "dashboard": "Your mission control center for awesome. 🚀",
-            "projectsM": "Tame those giant projects, one step at a time. 🦄",
-            "projectsK": "Track a zillion little projects without losing your mind. 🧠",
+            "projects(M)": "Tame those giant projects, one step at a time. 🦄",
+            "projects(K)": "Track a zillion little projects without losing your mind. 🧠",
             "ideaBox": "Catch those brilliant ideas before they fly away! 💡",
             "todoList": "Never forget to-do again (except maybe laundry). 📝",
             "calendar": "Don't be late for your date with destiny (or the dentist). 📅",

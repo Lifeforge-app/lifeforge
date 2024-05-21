@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-import APIComponentWithFallback from '../../../components/Screens/APIComponentWithFallback'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IDiskUsage } from '@typedec/ServerStatus'
 

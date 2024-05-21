@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useTodoListContext } from '@providers/TodoListProvider'
-import APIComponentWithFallback from '../../../../../components/Screens/APIComponentWithFallback'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 
 function TaskStatusList({
   setSidebarOpen

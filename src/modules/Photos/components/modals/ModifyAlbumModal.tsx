@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '../../../../components/ButtonsAndInputs/CreateOrModifyButton'
-import Input from '../../../../components/ButtonsAndInputs/Input'
-import Modal from '../../../../components/Modals/Modal'
+import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
+import Input from '@components/ButtonsAndInputs/Input'
+import Modal from '@components/Modals/Modal'
 import { type IPhotosAlbum } from '@typedec/Photos'
 import { usePhotosContext } from '../../../../providers/PhotosProvider'
+import APIRequest from '../../../../utils/fetchData'
 
 function ModifyAlbumModal({
   targetAlbum,
@@ -29,7 +29,7 @@ function ModifyAlbumModal({
     setAlbumName(e.target.value)
   }
 
-  function onSubmitButtonClick(): void {
+  async function onSubmitButtonClick(): Promise<void> {
     if (albumName.trim().length === 0) {
       toast.error('Please fill in all the fields.')
       return
@@ -41,30 +41,21 @@ function ModifyAlbumModal({
       name: albumName.trim()
     }
 
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/photos/album/${openType}${
-        openType === 'rename' ? `/${targetAlbum?.id}` : ''
-      }`,
-      {
-        method: openType === 'create' ? 'POST' : 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify(album)
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (!res.ok) {
-          throw data.message
-        }
-        toast.success(
-          {
-            create: 'Yay! Album created. Time to fill it up.',
-            rename: 'Yay! Album renamed.'
-          }[openType as 'create' | 'rename']
-        )
+    await APIRequest({
+      endpoint:
+        `photos/album/${openType}` +
+        (openType === 'rename' ? `/${targetAlbum?.id}` : ''),
+      method: openType === 'create' ? 'POST' : 'PATCH',
+      body: album,
+      successInfo: {
+        create: 'Yay! Album created. Time to fill it up.',
+        rename: 'Yay! Album renamed.'
+      }[openType as 'create' | 'rename'],
+      failureInfo: {
+        create: "Oops! Couldn't create the album. Please try again.",
+        rename: "Oops! Couldn't rename the album. Please try again."
+      }[openType as 'create' | 'rename'],
+      callback: data => {
         setOpenType(false)
         setAlbumList(prev => {
           if (typeof prev === 'string') {
@@ -87,14 +78,14 @@ function ModifyAlbumModal({
         if (refreshAlbumData !== undefined) {
           refreshAlbumData()
         }
-      })
-      .catch(err => {
-        toast.error(`Oops! Couldn't ${openType} the album. Please try again.`)
-        console.error(err)
-      })
-      .finally(() => {
+      },
+      onFailure: () => {
+        setOpenType(false)
+      },
+      finalCallback: () => {
         setLoading(false)
-      })
+      }
+    })
   }
 
   useEffect(() => {
@@ -153,7 +144,7 @@ function ModifyAlbumModal({
         additionalClassName="w-[40rem]"
         onKeyDown={e => {
           if (e.key === 'Enter') {
-            onSubmitButtonClick()
+            onSubmitButtonClick().catch(console.error)
           }
         }}
         autoFocus
@@ -161,7 +152,9 @@ function ModifyAlbumModal({
       <CreateOrModifyButton
         type={openType as 'create' | 'rename'}
         loading={loading}
-        onClick={onSubmitButtonClick}
+        onClick={() => {
+          onSubmitButtonClick().catch(console.error)
+        }}
       />
     </Modal>
   )

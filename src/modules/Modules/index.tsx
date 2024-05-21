@@ -4,12 +4,13 @@
 import { cookieParse } from 'pocketbase'
 import React from 'react'
 import { toast } from 'react-toastify'
+import ModuleHeader from '@components/Module/ModuleHeader'
+import ModuleWrapper from '@components/Module/ModuleWrapper'
+import Loading from '@components/Screens/Loading'
 import { useAuthContext } from '@providers/AuthProvider'
 import { type ModuleEntry } from '@typedec/Module'
 import ModuleItem from './ModuleItem'
-import ModuleHeader from '../../components/Module/ModuleHeader'
-import ModuleWrapper from '../../components/Module/ModuleWrapper'
-import Loading from '../../components/Screens/Loading'
+import APIRequest from '../../utils/fetchData'
 import { titleToPath } from '../../utils/strings'
 
 const MODULES: ModuleEntry[] = [
@@ -61,7 +62,7 @@ const MODULES: ModuleEntry[] = [
 function Modules(): React.ReactElement {
   const { userData, setUserData } = useAuthContext()
 
-  function toggleModule(moduleName: string): void {
+  async function toggleModule(moduleName: string): void {
     if (userData.enabledModules.includes(titleToPath(moduleName))) {
       userData.enabledModules = userData.enabledModules.filter(
         (module: string) => module !== titleToPath(moduleName)
@@ -74,26 +75,15 @@ function Modules(): React.ReactElement {
       enabledModules: userData.enabledModules
     })
 
-    fetch(`${import.meta.env.VITE_API_HOST}/user/module`, {
+    await APIRequest({
+      endpoint: 'user/module',
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
-      },
-      body: JSON.stringify({
+      body: {
         id: userData.id,
         data: userData.enabledModules
-      })
+      },
+      failureInfo: 'Failed to update personalization settings.'
     })
-      .then(async response => {
-        const data = await response.json()
-        if (response.status !== 200) {
-          throw data.message
-        }
-      })
-      .catch(() => {
-        toast.error('Failed to update personalization settings.')
-      })
   }
 
   return (

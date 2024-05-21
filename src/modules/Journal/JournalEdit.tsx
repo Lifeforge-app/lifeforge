@@ -11,18 +11,17 @@ import {
   toolbarPlugin,
   markdownShortcutPlugin
 } from '@mdxeditor/editor'
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
 
 import '@mdxeditor/editor/style.css'
 import { useNavigate, useParams } from 'react-router'
-import { toast } from 'react-toastify'
-import APIComponentWithFallback from '../../components/Screens/APIComponentWithFallback'
-import Button from '../../components/ButtonsAndInputs/Button'
-import GoBackButton from '../../components/ButtonsAndInputs/GoBackButton'
-import ModuleWrapper from '../../components/Module/ModuleWrapper'
+import Button from '@components/ButtonsAndInputs/Button'
+import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
+import ModuleWrapper from '@components/Module/ModuleWrapper'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IJournalEntry } from '@typedec/Journal'
+import APIRequest from '../../utils/fetchData'
 
 function JournalEdit(): React.ReactElement {
   const { id } = useParams<{ id: string }>()
@@ -49,92 +48,59 @@ function JournalEdit(): React.ReactElement {
     }
   }, [entry])
 
-  function saveJournalEntry(): void {
+  async function saveJournalEntry(): Promise<void> {
     if (typeof entry !== 'string') {
       if (content === entry.content.trim()) {
         return
       }
 
       setSaveLoading(true)
-
-      fetch(
-        `${import.meta.env.VITE_API_HOST}/journal/entry/update-content/${
-          entry.id
-        }`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${cookieParse(document.cookie).token}`
-          },
-          body: JSON.stringify({ content })
-        }
-      )
-        .then(async res => {
-          const data = await res.json()
-          if (!res.ok) {
-            throw data.message
-          }
-
+      await APIRequest({
+        endpoint: `journal/entry/update-content/${entry.id}`,
+        method: 'PUT',
+        body: { content },
+        successInfo: 'Journal entry saved successfully.',
+        failureInfo: "Couldn't save journal entry. Please try again.",
+        callback: () => {
           setEntry({
             ...entry,
             content: content!
           })
-          toast.success('Journal entry saved successfully.')
-        })
-        .catch(err => {
-          toast.error("Couldn't save journal entry. Please try again.")
-          console.error(err)
-        })
-        .finally(() => {
           setSaveLoading(false)
-        })
+        },
+        finalCallback: setSaveLoading
+      })
     }
   }
 
-  function saveJournalTitle(): void {
+  async function saveJournalTitle(): Promise<void> {
     if (typeof entry !== 'string') {
       if (title === entry.title) {
         return
       }
 
-      fetch(
-        `${import.meta.env.VITE_API_HOST}/journal/entry/update-title/${
-          entry.id
-        }`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${cookieParse(document.cookie).token}`
-          },
-          body: JSON.stringify({ title })
-        }
-      )
-        .then(async res => {
-          const data = await res.json()
-          if (!res.ok) {
-            throw data.message
-          }
-
+      await APIRequest({
+        endpoint: `journal/entry/update-title/${entry.id}`,
+        method: 'PATCH',
+        body: { title },
+        successInfo: 'Journal entry title saved successfully.',
+        failureInfo: "Couldn't save journal entry title. Please try again.",
+        callback: () => {
           setEntry({
             ...entry,
             title: title!
           })
           setIsTitleUpdating(false)
-          toast.success('Journal entry title saved successfully.')
-        })
-        .catch(err => {
-          toast.error("Couldn't save journal entry title. Please try again.")
-          console.error(err)
-        })
+        },
+        finalCallback: setSaveLoading
+      })
     }
   }
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (typeof entry !== 'string' && content !== entry.content.trim()) {
-        saveJournalEntry()
+        saveJournalEntry().catch(console.error)
       }
     }, 10 * 60 * 1000)
 
@@ -177,7 +143,11 @@ function JournalEdit(): React.ReactElement {
                         }}
                         className="rounded-sm bg-transparent p-2 text-3xl font-semibold outline outline-2 outline-bg-500 focus:outline"
                       />
-                      <button onClick={saveJournalTitle}>
+                      <button
+                        onClick={() => {
+                          saveJournalTitle().catch(console.error)
+                        }}
+                      >
                         <Icon icon="uil:save" className="h-5 w-5 text-bg-500" />
                       </button>
                       <button
@@ -215,7 +185,9 @@ function JournalEdit(): React.ReactElement {
               {content !== entry.content.trim() && (
                 <Button
                   icon={saveLoading ? 'svg-spinners:180-ring' : 'uil:save'}
-                  onClick={saveJournalEntry}
+                  onClick={() => {
+                    saveJournalEntry().catch(console.error)
+                  }}
                   className="shrink-0"
                 >
                   Save

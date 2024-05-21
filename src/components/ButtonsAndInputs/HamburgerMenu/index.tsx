@@ -10,8 +10,6 @@ interface MenuProps {
   smallerPadding?: boolean
   customWidth?: string
   customIcon?: string
-  onButtonClick: () => void
-  onClose: () => void
 }
 
 function getPaddingClass(
@@ -43,14 +41,12 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
     largerPadding,
     smallerPadding,
     customWidth,
-    customIcon,
-    onButtonClick
+    customIcon
   } = props
 
   return (
     <Menu as="div" className={className}>
       <Menu.Button
-        onClick={onButtonClick}
         className={`rounded-md ${getPaddingClass(
           largerPadding,
           smallerPadding

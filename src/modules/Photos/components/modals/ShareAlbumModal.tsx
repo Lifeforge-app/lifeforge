@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/indent */
+import Button from '@components/ButtonsAndInputs/Button'
 import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
-import { toast } from 'react-toastify'
-import Button from '../../../../components/ButtonsAndInputs/Button'
 import { type IPhotosAlbum } from '@typedec/Photos'
+import APIRequest from '../../../../utils/fetchData'
 
 function ShareAlbumModal({
   albumId,
@@ -24,7 +23,7 @@ function ShareAlbumModal({
 }): React.ReactElement {
   const [isCopied, setIsCopied] = useState(false)
 
-  function changePublicity(): void {
+  async function changePublicity(): Promise<void> {
     setAlbumData(prev => {
       if (prev === 'loading' || prev === 'error') {
         return prev
@@ -32,26 +31,22 @@ function ShareAlbumModal({
       return { ...prev, is_public: !publicity }
     })
 
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/photos/album/set-publicity/${albumId}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify({
-          publicity: !publicity
+    await APIRequest({
+      endpoint: `photos/album/set-publicity/${albumId}`,
+      method: 'POST',
+      body: {
+        publicity: !publicity
+      },
+      successInfo: `Album is now ${!publicity ? 'public' : 'private'}.`,
+      onFailure: () => {
+        setAlbumData(prev => {
+          if (prev === 'loading' || prev === 'error') {
+            return prev
+          }
+          return { ...prev, is_public: publicity }
         })
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (!res.ok) {
-          throw data.message
-        }
-        toast.success(`Album is now ${!publicity ? 'public' : 'private'}.`)
-
+      },
+      callback: () => {
         setAlbumList(prev => {
           if (prev === 'loading' || prev === 'error') {
             return prev
@@ -63,17 +58,8 @@ function ShareAlbumModal({
             return album
           })
         })
-      })
-      .catch(err => {
-        console.error(err)
-        toast.error('Failed to change publicity.')
-        setAlbumData(prev => {
-          if (prev === 'loading' || prev === 'error') {
-            return prev
-          }
-          return { ...prev, is_public: publicity }
-        })
-      })
+      }
+    })
   }
 
   return (
@@ -86,7 +72,9 @@ function ShareAlbumModal({
         </div>
         <Switch
           checked={publicity}
-          onClick={changePublicity}
+          onClick={() => {
+            changePublicity().catch(console.error)
+          }}
           className={`${
             publicity ? 'bg-custom-500' : 'bg-bg-300 dark:bg-bg-700/50'
           } relative inline-flex h-6 w-11 items-center rounded-full`}

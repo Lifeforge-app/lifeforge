@@ -17,6 +17,7 @@
     "@passwordless-id/webauthn": "^1.5.0",
     "@react-pdf-viewer/core": "3.12.0",
     "@tailwindcss/typography": "^0.5.13",
+    "@types/react-helmet": "^6.1.11",
     "@types/use-resize-observer": "^6.1.0",
     "@uidotdev/usehooks": "^2.4.1",
     "@uiw/codemirror-theme-nord": "^4.21.21",

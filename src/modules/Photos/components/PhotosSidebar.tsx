@@ -2,11 +2,11 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
+import SidebarItem from '@components/Sidebar/components/SidebarItem'
+import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { usePhotosContext } from '@providers/PhotosProvider'
-import SidebarDivider from '@sidebar/components/SidebarDivider'
-import SidebarItem from '@sidebar/components/SidebarItem'
-import SidebarTitle from '@sidebar/components/SidebarTitle'
-import APIComponentWithFallback from '../../../components/Screens/APIComponentWithFallback'
 
 function PhotosSidebar(): React.ReactElement {
   const {

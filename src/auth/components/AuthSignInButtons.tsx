@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAuthContext } from '@providers/AuthProvider'
-import Button from '../../components/ButtonsAndInputs/Button'
+import Button from '@components/ButtonsAndInputs/Button'
 
 function AuthSignInButton({
   emailOrUsername,

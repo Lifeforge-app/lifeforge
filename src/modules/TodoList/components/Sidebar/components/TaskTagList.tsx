@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/indent */
 import React from 'react'
+import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { useTodoListContext } from '@providers/TodoListProvider'
-import SidebarTitle from '@sidebar/components/SidebarTitle'
 import TaskTagListItem from './TaskTagListItem'
-import APIComponentWithFallback from '../../../../../components/Screens/APIComponentWithFallback'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 
 function TaskTagList({
   setSidebarOpen

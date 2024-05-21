@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Icon } from '@iconify/react'
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '../../../components/ButtonsAndInputs/CreateOrModifyButton'
-import Input from '../../../components/ButtonsAndInputs/Input'
-import Modal from '../../../components/Modals/Modal'
+import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
+import Input from '@components/ButtonsAndInputs/Input'
+import Modal from '@components/Modals/Modal'
 import { useMusicContext } from '@providers/MusicProvider'
+import APIRequest from '../../../utils/fetchData'
 
 function ModifyMusicModal(): React.ReactElement {
   const {
@@ -28,7 +28,7 @@ function ModifyMusicModal(): React.ReactElement {
     setMusicAuthor(e.target.value)
   }
 
-  function onSubmitButtonClick(): void {
+  async function onSubmitButtonClick(): Promise<void> {
     if (musicName.trim().length === 0 || musicAuthor.trim().length === 0) {
       toast.error('Please fill in all the fields.')
       return
@@ -41,23 +41,16 @@ function ModifyMusicModal(): React.ReactElement {
       author: musicAuthor.trim()
     }
 
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/music/entry/update/${targetMusic?.id}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify(music)
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (!res.ok) {
-          throw data.message
-        }
-        toast.success(`Yay! Music ${musicName} has been updated.`)
+    await APIRequest({
+      endpoint: `music/entry/update/${targetMusic?.id}`,
+      method: 'PATCH',
+      body: music,
+      successInfo: `Yay! Music ${musicName} has been updated.`,
+      failureInfo: "Oops! Couldn't update the music. Please try again.",
+      finalCallback: () => {
+        setLoading(false)
+      },
+      callback: () => {
         setOpen(false)
         setMusics(prev => {
           if (typeof prev === 'string') {
@@ -75,14 +68,8 @@ function ModifyMusicModal(): React.ReactElement {
             return music
           })
         })
-      })
-      .catch(err => {
-        toast.error("Oops! Couldn't update the music. Please try again.")
-        console.error(err)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+      }
+    })
   }
 
   useEffect(() => {
@@ -123,7 +110,7 @@ function ModifyMusicModal(): React.ReactElement {
         additionalClassName="w-[40rem]"
         onKeyDown={e => {
           if (e.key === 'Enter') {
-            onSubmitButtonClick()
+            onSubmitButtonClick().catch(console.error)
           }
         }}
         autoFocus
@@ -138,14 +125,16 @@ function ModifyMusicModal(): React.ReactElement {
         additionalClassName="w-[40rem] mt-6"
         onKeyDown={e => {
           if (e.key === 'Enter') {
-            onSubmitButtonClick()
+            onSubmitButtonClick().catch(console.error)
           }
         }}
       />
       <CreateOrModifyButton
         type="rename"
         loading={loading}
-        onClick={onSubmitButtonClick}
+        onClick={() => {
+          onSubmitButtonClick().catch(console.error)
+        }}
       />
     </Modal>
   )

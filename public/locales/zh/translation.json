@@ -21,8 +21,8 @@
     },
     "modules": {
         "dashboard": "仪表板",
-        "projectsM": "项目管理 (M)",
-        "projectsK": "项目管理 (K)",
+        "projects(M)": "项目管理 (M)",
+        "projects(K)": "项目管理 (K)",
         "ideaBox": "创意盒子",
         "todoList": "待办事项列表",
         "calendar": "日历",
@@ -68,8 +68,8 @@
         },
         "descriptions": {
             "dashboard": "您的任务控制中心，妙不可言！",
-            "projectsM": "驯服那些庞大的项目，一步一步来。",
-            "projectsK": "跟踪无数个小项目，而不至于发疯。",
+            "projects(M)": "驯服那些庞大的项目，一步一步来。",
+            "projects(K)": "跟踪无数个小项目，而不至于发疯。",
             "ideaBox": "抓住那些奇妙的想法，别让它们溜走！",
             "todoList": "永远不要忘记待办事项 (除了洗衣房的衣服吧)。",
             "calendar": "不要迟到与命运 (或牙医) 的约会。",

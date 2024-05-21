@@ -96,10 +96,9 @@ module.exports = {
             "alias": {
                 "extensions": [".js", ".jsx", ".ts", ".tsx", ".d.ts"],
                 "map": [
-                    ['@components', './src/components/general/'],
+                    ['@components', './src/components/'],
                     ['@providers', './src/providers/'],
                     ['@hooks', './src/hooks/'],
-                    ['@sidebar', './src/components/Sidebar/'],
                     ["@typedec", "./src/types/"],
                 ],
             }

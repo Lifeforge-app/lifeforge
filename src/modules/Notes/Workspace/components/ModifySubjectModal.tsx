@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { useDebounce } from '@uidotdev/usehooks'
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '../../../../components/ButtonsAndInputs/CreateOrModifyButton'
-import IconSelector from '../../../../components/ButtonsAndInputs/IconSelector'
-import IconInput from '../../../../components/ButtonsAndInputs/IconSelector/IconInput'
-import Input from '../../../../components/ButtonsAndInputs/Input'
-import Modal from '../../../../components/Modals/Modal'
-import ModalHeader from '../../../../components/Modals/ModalHeader'
+import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
+import IconSelector from '@components/ButtonsAndInputs/IconSelector'
+import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
+import Input from '@components/ButtonsAndInputs/Input'
+import Modal from '@components/Modals/Modal'
+import ModalHeader from '@components/Modals/ModalHeader'
 import { type INotesSubject } from '@typedec/Notes'
+import APIRequest from '../../../../utils/fetchData'
 
 function ModifySubjectModal({
   openType,
@@ -43,7 +43,7 @@ function ModifySubjectModal({
     setSubjectDescription(e.target.value)
   }
 
-  function onSubmitButtonClick(): void {
+  async function onSubmitButtonClick(): Promise<void> {
     if (
       subjectName.trim().length === 0 ||
       subjectIcon.trim().length === 0 ||
@@ -62,46 +62,31 @@ function ModifySubjectModal({
       workspace
     }
 
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/notes/subject/${innerOpenType}` +
+    await APIRequest({
+      endpoint:
+        `notes/subject/${innerOpenType}` +
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
-      {
-        method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify(subject)
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (!res.ok) {
-          throw data.message
-        }
-        toast.success(
-          {
-            create: 'Yay! Subject created. Time to fill it up.',
-            update: 'Yay! Subject updated.'
-          }[innerOpenType!]
-        )
+      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
+      body: subject,
+      successInfo: {
+        create: 'Yay! Subject created. Time to fill it up.',
+        update: 'Yay! Subject updated.'
+      }[innerOpenType!],
+      failureInfo: {
+        create: "Oops! Couldn't create the subject. Please try again.",
+        update: "Oops! Couldn't update the subject. Please try again."
+      }[innerOpenType!],
+      callback: () => {
         setOpenType(null)
         updateSubjectList()
-      })
-      .catch(err => {
-        toast.error(
-          {
-            create: "Oops! Couldn't create the subject. Please try again.",
-            update: "Oops! Couldn't update the subject. Please try again."
-          }[innerOpenType!] +
-            ' Error: ' +
-            err
-        )
-        console.error(err)
-      })
-      .finally(() => {
+      },
+      onFailure: () => {
+        setOpenType(null)
+      },
+      finalCallback: () => {
         setLoading(false)
-      })
+      }
+    })
   }
 
   useEffect(() => {
@@ -162,7 +147,9 @@ function ModifySubjectModal({
         />
         <CreateOrModifyButton
           loading={loading}
-          onClick={onSubmitButtonClick}
+          onClick={() => {
+            onSubmitButtonClick().catch(console.error)
+          }}
           type={innerOpenType}
         />
       </Modal>
