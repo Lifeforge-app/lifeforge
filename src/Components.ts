@@ -1,4 +1,5 @@
 import { lazy } from 'react'
+import Achievements from './modules/Achievements'
 
 const PhotosProvider = lazy(
   async () => await import('./providers/PhotosProvider')
@@ -14,6 +15,9 @@ const PhotosAlbumGallery = lazy(
 )
 const PhotosFavouritesGallery = lazy(
   async () => await import('./modules/Photos/pages/FavouritesGallery')
+)
+const PhotosTrash = lazy(
+  async () => await import('./modules/Photos/pages/Trash')
 )
 const Dashboard = lazy(async () => await import('./modules/Dashboard'))
 const TodoList = lazy(async () => await import('./modules/TodoList'))
@@ -79,7 +83,8 @@ export const COMPONENTS = {
     'photos-main-gallery': PhotosMainGallery,
     'photos-album-list': PhotosAlbumList,
     'photos-album-gallery': PhotosAlbumGallery,
-    'photos-album-favourites': PhotosFavouritesGallery
+    'photos-album-favourites': PhotosFavouritesGallery,
+    'photos-trash': PhotosTrash
   },
   music: {
     music: Music
@@ -130,6 +135,9 @@ export const COMPONENTS = {
     journal: Journal,
     'journal-view': JournalView,
     'journal-edit': JournalEdit
+  },
+  achievements: {
+    achievements: Achievements
   },
   personalization: {
     personalization: Personalization
