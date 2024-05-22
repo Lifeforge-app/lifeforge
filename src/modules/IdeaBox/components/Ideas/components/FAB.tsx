@@ -1,16 +1,27 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { type IIdeaBoxEntry, type IIdeaBoxFolder } from '@typedec/IdeaBox'
 
 function FAB({
   setTypeOfModifyIdea,
-  setModifyIdeaModalOpenType
+  setModifyIdeaModalOpenType,
+  setModifyFolderModalOpenType,
+  setExistedData,
+  setExistedFolderData
 }: {
   setTypeOfModifyIdea: React.Dispatch<
     React.SetStateAction<'link' | 'image' | 'text'>
   >
   setModifyIdeaModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
+  >
+  setModifyFolderModalOpenType: React.Dispatch<
+    React.SetStateAction<'create' | 'update' | null>
+  >
+  setExistedData: React.Dispatch<React.SetStateAction<IIdeaBoxEntry | null>>
+  setExistedFolderData: React.Dispatch<
+    React.SetStateAction<IIdeaBoxFolder | null>
   >
 }): React.ReactElement {
   return (
@@ -41,6 +52,7 @@ function FAB({
               <Menu.Items className="mt-2 rounded-lg shadow-lg outline-none focus:outline-none">
                 <div className="py-1">
                   {[
+                    ['Folder', 'tabler:folder'],
                     ['Text', 'tabler:text-size'],
                     ['Link', 'tabler:link'],
                     ['Image', 'tabler:photo']
@@ -49,10 +61,16 @@ function FAB({
                       {({ active }) => (
                         <button
                           onClick={() => {
-                            setTypeOfModifyIdea(
-                              name.toLowerCase() as 'text' | 'image' | 'link'
-                            )
-                            setModifyIdeaModalOpenType('create')
+                            if (name === 'Folder') {
+                              setExistedFolderData(null)
+                              setModifyFolderModalOpenType('create')
+                            } else {
+                              setExistedData(null)
+                              setTypeOfModifyIdea(
+                                name.toLowerCase() as 'link' | 'image' | 'text'
+                              )
+                              setModifyIdeaModalOpenType('create')
+                            }
                           }}
                           className={`group flex w-full items-center justify-end gap-4 rounded-md py-3 pr-2 ${
                             active ? 'text-bg-200' : 'text-bg-100'

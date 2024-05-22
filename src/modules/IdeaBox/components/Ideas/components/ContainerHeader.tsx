@@ -5,19 +5,25 @@ import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
-import { type IIdeaBoxContainer } from '@typedec/IdeaBox'
+import { type IIdeaBoxFolder, type IIdeaBoxContainer } from '@typedec/IdeaBox'
 
 function ContainerHeader({
   id,
   viewArchived,
-  setViewArchived
+  setViewArchived,
+  folderId
 }: {
   id: string
   viewArchived: boolean
   setViewArchived: React.Dispatch<React.SetStateAction<boolean>>
+  folderId?: string
 }): React.ReactElement {
   const [containerDetails] = useFetch<IIdeaBoxContainer>(
     `idea-box/container/get/${id}`
+  )
+  const [folderDetails] = useFetch<IIdeaBoxFolder>(
+    `idea-box/folder/get/${folderId}`,
+    folderId !== undefined
   )
   const navigate = useNavigate()
 
@@ -29,7 +35,7 @@ function ContainerHeader({
             setViewArchived(false)
             return
           }
-          navigate('/idea-box')
+          navigate(`/idea-box/${folderId !== undefined ? id : ''}`)
         }}
       />
       <div className="flex items-center justify-between">
@@ -82,6 +88,46 @@ function ContainerHeader({
                 )
             }
           })()}
+          {folderId !== undefined && (
+            <Icon icon="tabler:chevron-right" className="h-5 w-5 text-bg-500" />
+          )}
+          {folderId !== undefined &&
+            (() => {
+              switch (folderDetails) {
+                case 'loading':
+                  return (
+                    <>
+                      <span className="small-loader-light"></span>
+                      Loading...
+                    </>
+                  )
+                case 'error':
+                  return (
+                    <>
+                      <Icon
+                        icon="tabler:alert-triangle"
+                        className="mt-0.5 h-7 w-7 text-red-500"
+                      />
+                      Failed to fetch data from server.
+                    </>
+                  )
+                default:
+                  return folderDetails !== undefined ? (
+                    <div
+                      className="flex items-center gap-2 rounded-lg p-3 text-base"
+                      style={{
+                        backgroundColor: folderDetails.color + '20',
+                        color: folderDetails.color
+                      }}
+                    >
+                      <Icon icon={folderDetails.icon} className="text-xl" />
+                      {folderDetails.name}
+                    </div>
+                  ) : (
+                    'Folder'
+                  )
+              }
+            })()}
         </h1>
         {!viewArchived && (
           <HamburgerMenu largerPadding className="relative">

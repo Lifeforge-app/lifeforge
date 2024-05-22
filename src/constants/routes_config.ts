@@ -36,7 +36,11 @@ export const ROUTES: IRoutes[] = [
       {
         name: 'Idea Box',
         icon: 'tabler:bulb',
-        routes: { 'idea-box': 'idea-box', 'idea-box-id': 'idea-box/:id' },
+        routes: {
+          'idea-box': 'idea-box',
+          'idea-box-id': 'idea-box/:id',
+          'idea-box-folder': 'idea-box/:id/:folderId'
+        },
         togglable: true
       },
       {

@@ -11,6 +11,19 @@ interface IIdeaBoxContainer {
   text_count: number
   updated: string
 }
+
+interface IIdeaBoxFolder {
+  collectionId: string
+  collectionName: string
+  color: string
+  created: string
+  icon: string
+  id: string
+  name: string
+  updated: string
+  containers: string
+}
+
 interface IIdeaBoxEntry {
   collectionId: string
   collectionName: string
@@ -26,4 +39,4 @@ interface IIdeaBoxEntry {
   archived: boolean
 }
 
-export type { IIdeaBoxContainer, IIdeaBoxEntry }
+export type { IIdeaBoxContainer, IIdeaBoxFolder, IIdeaBoxEntry }

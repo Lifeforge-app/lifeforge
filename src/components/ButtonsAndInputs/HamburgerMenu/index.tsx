@@ -5,6 +5,8 @@ import React from 'react'
 interface MenuProps {
   children: React.ReactNode
   className?: string
+  customHoverColor?: string
+  style?: React.CSSProperties
   lighter?: boolean
   largerPadding?: boolean
   smallerPadding?: boolean
@@ -37,6 +39,8 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
   const {
     children,
     className,
+    style = {},
+    customHoverColor,
     lighter,
     largerPadding,
     smallerPadding,
@@ -47,13 +51,24 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
   return (
     <Menu as="div" className={className}>
       <Menu.Button
+        style={style}
+        onMouseEnter={e => {
+          if (customHoverColor !== undefined) {
+            e.currentTarget.style.backgroundColor = customHoverColor
+          }
+        }}
+        onMouseLeave={e => {
+          if (customHoverColor !== undefined) {
+            e.currentTarget.style.backgroundColor = ''
+          }
+        }}
         onClick={e => {
           e.stopPropagation()
         }}
-        className={`rounded-md ${getPaddingClass(
+        className={`rounded-md transition-all ${getPaddingClass(
           largerPadding,
           smallerPadding
-        )} ${getColorClass(lighter)}`}
+        )} ${style?.color === '' && getColorClass(lighter)}`}
       >
         <Icon icon={customIcon ?? 'tabler:dots-vertical'} className="h-5 w-5" />
       </Menu.Button>

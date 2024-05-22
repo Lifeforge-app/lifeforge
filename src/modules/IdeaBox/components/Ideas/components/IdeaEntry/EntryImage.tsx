@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useDrag } from 'react-dnd'
 import Zoom from 'react-medium-image-zoom'
 import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
 import CustomZoomContent from '../CustomZoomContent'
@@ -24,8 +25,26 @@ function EntryImage({
   setDeleteIdeaModalOpen: (state: boolean) => void
   updateIdeaList: () => void
 }): React.ReactElement {
+  const [{ opacity, isDragging }, dragRef] = useDrag(
+    () => ({
+      type: 'IDEA',
+      item: {
+        id: entry.id
+      },
+      collect: monitor => ({
+        opacity: monitor.isDragging() ? 0.5 : 1,
+        isDragging: !!monitor.isDragging()
+      })
+    }),
+    []
+  )
+
   return (
-    <div className="group relative">
+    <div
+      ref={dragRef}
+      className={`group relative ${isDragging ? 'cursor-move' : ''}`}
+      style={{ opacity }}
+    >
       {entry.pinned && (
         <Icon
           icon="tabler:pin"

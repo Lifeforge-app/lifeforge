@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 
 interface ButtonProps {
-  children: React.ReactNode
+  children?: React.ReactNode
   CustomElement?: React.ElementType
   icon: string
   onClick: () => void
@@ -57,7 +57,7 @@ function Button(props: ButtonProps): React.ReactElement {
       className={finalClassName}
     >
       <Icon icon={icon} className="text-xl" />
-      {children}
+      {children ?? ''}
     </FinalElement>
   )
 }
