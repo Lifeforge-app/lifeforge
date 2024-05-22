@@ -47,6 +47,9 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
   return (
     <Menu as="div" className={className}>
       <Menu.Button
+        onClick={e => {
+          e.stopPropagation()
+        }}
         className={`rounded-md ${getPaddingClass(
           largerPadding,
           smallerPadding
