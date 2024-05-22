@@ -30,6 +30,9 @@ const IdeaBox = lazy(async () => await import('./modules/IdeaBox'))
 const Ideas = lazy(
   async () => await import('./modules/IdeaBox/components/Ideas')
 )
+const Folder = lazy(
+  async () => await import('./modules/IdeaBox/components/Folder')
+)
 const CodeTime = lazy(async () => await import('./modules/CodeTime'))
 const PomodoroTimer = lazy(async () => await import('./modules/PomodoroTimer'))
 const Flashcards = lazy(async () => await import('./modules/Flashcards'))
@@ -95,7 +98,8 @@ export const COMPONENTS = {
   },
   'idea-box': {
     'idea-box': IdeaBox,
-    'idea-box-id': Ideas
+    'idea-box-id': Ideas,
+    'idea-box-folder': Folder
   },
   'todo-list': {
     'todo-list': TodoList
