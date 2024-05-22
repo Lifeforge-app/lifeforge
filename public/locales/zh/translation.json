@@ -40,6 +40,7 @@
         "contacts": "联系人",
         "passwords": "密码",
         "journal": "日记",
+        "achievements": "成就",
         "personalization": "个性化",
         "dataBackup": "数据备份",
         "modules": "模块管理",
@@ -64,7 +65,8 @@
             "progress": "进度",
             "categories": "类别",
             "languages": "语言",
-            "albums": "相册"
+            "albums": "相册",
+            "lifestyle": "生活方式"
         },
         "descriptions": {
             "dashboard": "您的任务控制中心，妙不可言！",
@@ -92,7 +94,8 @@
             "serverStatus": "保持您的服务器健康、快乐并运行良好。",
             "changeLog": "跟踪开发的进度，每一次更改都很重要。",
             "about": "一个关于此项目是如何开始的故事。",
-            "journal": "记录您的生活旅程，每一步都是一个故事。"
+            "journal": "记录您的生活旅程，每一步都是一个故事。",
+            "achievements": "您的成就，您的荣耀，您的传奇。"
         }
     },
     "header": {
