@@ -37,6 +37,8 @@ function ModifyIdeaModal({
   const [ideaContent, setIdeaContent] = useState('')
   const [ideaLink, setIdeaLink] = useState('')
   const [ideaImage, setIdeaImage] = useState<File | null>(null)
+  const [imageLink, setImageLink] = useState<string>('')
+  const debouncedImageLink = useDebounce(imageLink, imageLink === '' ? 300 : 0)
   const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -79,7 +81,7 @@ function ModifyIdeaModal({
       setIdeaContent('')
       setIdeaLink('')
       setIdeaImage(null)
-      setPreview(null)
+      setImageLink('')
     } else if (openType === 'update') {
       if (existedData !== null) {
         setIdeaTitle(existedData.title)
@@ -91,6 +93,24 @@ function ModifyIdeaModal({
     }
   }, [openType, existedData])
 
+  useEffect(() => {
+    if (innerTypeOfModifyIdea === 'image' && debouncedImageLink !== '') {
+      fetch(debouncedImageLink, {
+        method: 'HEAD'
+      })
+        .then(response => {
+          if (response.ok) {
+            setPreview(debouncedImageLink)
+          } else {
+            toast.error('Invalid image link.')
+          }
+        })
+        .catch(() => {
+          toast.error('Invalid image link.')
+        })
+    }
+  })
+
   async function onSubmitButtonClick(): Promise<void> {
     switch (innerTypeOfModifyIdea) {
       case 'text':
@@ -100,7 +120,7 @@ function ModifyIdeaModal({
         }
         break
       case 'image':
-        if (ideaImage === null) {
+        if (ideaImage === null && debouncedImageLink.trim().length === 0) {
           toast.error('Idea image cannot be empty.')
           return
         }
@@ -120,6 +140,7 @@ function ModifyIdeaModal({
     formData.append('content', ideaContent.trim())
     formData.append('link', ideaLink.trim())
     formData.append('image', ideaImage!)
+    formData.append('imageLink', debouncedImageLink)
     formData.append('type', innerTypeOfModifyIdea)
 
     await APIRequest({
@@ -180,14 +201,31 @@ function ModifyIdeaModal({
           updateIdeaContent={updateIdeaContent}
           updateIdeaLink={updateIdeaLink}
         />
-      ) : preview ? (
-        <IdeaImagePreview preview={preview} setPreview={setPreview} />
       ) : (
-        <IdeaImageUpload
-          getRootProps={getRootProps}
-          getInputProps={getInputProps}
-          isDragActive={isDragActive}
-        />
+        <>
+          {preview ? (
+            <IdeaImagePreview preview={preview} setPreview={setPreview} />
+          ) : (
+            <IdeaImageUpload
+              getRootProps={getRootProps}
+              getInputProps={getInputProps}
+              isDragActive={isDragActive}
+            />
+          )}
+          <div className="mt-6 text-center font-medium uppercase tracking-widest text-bg-500">
+            or paste the link to the image
+          </div>
+          <Input
+            icon="tabler:link"
+            name="Image link"
+            placeholder="https://example.com/image.jpg"
+            value={imageLink}
+            updateValue={e => {
+              setImageLink(e.target.value)
+            }}
+            additionalClassName="mt-6"
+          />
+        </>
       )}
       <Button
         className="mt-6"
