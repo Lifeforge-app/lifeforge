@@ -5,7 +5,9 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import { useAuthContext } from '@providers/AuthProvider'
 import { type IPasswordEntry } from '@typedec/Password'
+import { encrypt } from '../../utils/encryption'
 
 function PasswordEntryITem({
   password,
@@ -32,16 +34,38 @@ function PasswordEntryITem({
     React.SetStateAction<IPasswordEntry[] | 'loading' | 'error'>
   >
 }): React.ReactElement {
+  const { userData } = useAuthContext()
   const [decryptedPassword, setDecryptedPassword] = useState<string | null>(
     null
   )
   const [loading, setLoading] = useState(false)
 
   async function getDecryptedPassword(): Promise<string> {
+    const challenge = await fetch(
+      `${import.meta.env.VITE_API_HOST}/passwords/password/challenge`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        }
+      }
+    ).then(async res => {
+      const data = await res.json()
+      if (res.ok && data.state === 'success') {
+        return data.data
+      } else {
+        throw new Error(data.message)
+      }
+    })
+
+    const encryptedMaster = encodeURIComponent(
+      encrypt(masterPassword, challenge)
+    )
+
     const decrypted = await fetch(
       `${import.meta.env.VITE_API_HOST}/passwords/password/decrypt/${
         password.id
-      }?master=${masterPassword}`,
+      }?master=${encryptedMaster}&user=${userData.id}`,
       {
         method: 'GET',
         headers: {

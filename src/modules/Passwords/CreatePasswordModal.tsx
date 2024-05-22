@@ -9,7 +9,10 @@ import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
+import { useAuthContext } from '@providers/AuthProvider'
 import { type IPasswordEntry } from '@typedec/Password'
+import { encrypt } from '../../utils/encryption'
+import APIRequest from '../../utils/fetchData'
 
 function CreatePasswordModal({
   openType,
@@ -24,6 +27,7 @@ function CreatePasswordModal({
   masterPassword: string
   existedData: IPasswordEntry | null
 }): React.ReactElement {
+  const { userData } = useAuthContext()
   const [name, setName] = useState('')
   const [icon, setIcon] = useState('')
   const [color, setColor] = useState('')
@@ -50,7 +54,7 @@ function CreatePasswordModal({
     setPassword(e.target.value)
   }
 
-  function onSubmit(): void {
+  async function onSubmit(): Promise<void> {
     if (
       name.trim() === '' ||
       icon.trim() === '' ||
@@ -65,44 +69,50 @@ function CreatePasswordModal({
 
     setLoading(true)
 
-    fetch(
-      `${import.meta.env.VITE_API_HOST}/passwords/password/${openType}${
+    const challenge = await fetch(
+      `${import.meta.env.VITE_API_HOST}/passwords/password/challenge`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        }
+      }
+    ).then(async res => {
+      const data = await res.json()
+      if (res.ok && data.state === 'success') {
+        return data.data
+      } else {
+        throw new Error('Failed to get challenge')
+      }
+    })
+
+    const encryptedMaster = encrypt(masterPassword, challenge)
+
+    await APIRequest({
+      endpoint: `passwords/password/${openType}${
         openType === 'update' ? `/${existedData?.id}` : ''
       }`,
-      {
-        method: openType === 'create' ? 'POST' : 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        },
-        body: JSON.stringify({
-          name,
-          icon,
-          color,
-          website,
-          username,
-          password,
-          masterPassword
-        })
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (res.ok && data.state === 'success') {
-          refreshPasswordList()
-          toast.success('Password created successfully')
-        } else {
-          throw new Error(data.message)
-        }
-      })
-      .catch(err => {
-        toast.error("Couldn't create the password. Please try again.")
-        console.error(err)
-      })
-      .finally(() => {
+      method: openType === 'create' ? 'POST' : 'PATCH',
+      body: {
+        userId: userData.id,
+        name,
+        icon,
+        color,
+        website,
+        username,
+        password: encrypt(password, challenge),
+        master: encryptedMaster
+      },
+      successInfo: 'Password created successfully',
+      failureInfo: "Couldn't create the password. Please try again.",
+      callback: () => {
+        refreshPasswordList()
+      },
+      finalCallback: () => {
         setLoading(false)
         onClose()
-      })
+      }
+    })
   }
 
   useEffect(() => {
@@ -119,7 +129,7 @@ function CreatePasswordModal({
       setColor(existedData.color)
       setWebsite(existedData.website)
       setUsername(existedData.username)
-      setPassword(existedData.decrypted)
+      setPassword(existedData.decrypted ?? '')
     }
   }, [openType])
 

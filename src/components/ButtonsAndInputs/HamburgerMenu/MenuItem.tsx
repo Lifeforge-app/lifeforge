@@ -34,7 +34,11 @@ function MenuItem({
       {function ({ active }) {
         return (
           <button
-            onClick={onClick}
+            onClick={e => {
+              e.preventDefault()
+              e.stopPropagation()
+              onClick(e)
+            }}
             className={`${getActiveClass(
               active,
               isRed

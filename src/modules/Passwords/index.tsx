@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { Icon } from '@iconify/react'
+import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
@@ -16,6 +17,7 @@ import { type IPasswordEntry } from '@typedec/Password'
 import CreatePassword from './CreatePassword'
 import CreatePasswordModal from './CreatePasswordModal'
 import PasswordEntryITem from './PasswordEntryItem'
+import { encrypt } from '../../utils/encryption'
 import APIRequest from '../../utils/fetchData'
 
 function Passwords(): React.ReactElement {
@@ -44,11 +46,29 @@ function Passwords(): React.ReactElement {
     }
 
     setLoading(true)
+
+    const challenge = await fetch(
+      `${import.meta.env.VITE_API_HOST}/passwords/master/challenge`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        }
+      }
+    ).then(async res => {
+      const data = await res.json()
+      if (res.ok && data.state === 'success') {
+        return data.data
+      } else {
+        throw new Error('Failed to get challenge')
+      }
+    })
+
     await APIRequest({
       endpoint: 'passwords/master/verify',
       method: 'POST',
       body: {
-        password: masterPassWordInputContent,
+        password: encrypt(masterPassWordInputContent, challenge),
         id: userData.id
       },
       callback: data => {

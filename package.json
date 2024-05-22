@@ -27,6 +27,8 @@
     "axios": "^1.6.7",
     "chart.js": "^4.4.0",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.2.0",
     "daisyui": "^4.4.14",
     "i18next": "^23.11.1",
     "i18next-http-backend": "^2.5.0",
