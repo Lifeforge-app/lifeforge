@@ -1,6 +1,7 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useParams } from 'react-router'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
 import APIRequest from '../../../../../utils/fetchData'
@@ -24,6 +25,7 @@ function EntryContextMenu({
   setDeleteIdeaModalOpen: (state: boolean) => void
   updateIdeaList: () => void
 }): React.ReactElement {
+  const { folderId } = useParams()
   async function pinIdea(ideaId: string): Promise<void> {
     await APIRequest({
       endpoint: `idea-box/idea/pin/${ideaId}`,
@@ -40,6 +42,17 @@ function EntryContextMenu({
       endpoint: `idea-box/idea/archive/${ideaId}`,
       method: 'PATCH',
       successInfo: 'Idea has been archived.',
+      failureInfo: 'Failed to fetch data from server.',
+      callback: updateIdeaList
+    })
+  }
+
+  async function removeFromFolder(): Promise<void> {
+    await APIRequest({
+      endpoint: `idea-box/folder/remove-idea/${folderId}`,
+      method: 'DELETE',
+      body: { ideaId: entry.id },
+      successInfo: 'Idea has been removed from folder.',
       failureInfo: 'Failed to fetch data from server.',
       callback: updateIdeaList
     })
@@ -93,6 +106,15 @@ function EntryContextMenu({
               }}
               icon="tabler:pencil"
               text="Edit"
+            />
+          )}
+          {folderId !== undefined && (
+            <MenuItem
+              onClick={() => {
+                removeFromFolder().catch(console.error)
+              }}
+              icon="tabler:folder-minus"
+              text="Remove from folder"
             />
           )}
           <MenuItem

@@ -73,12 +73,13 @@ function Passwords(): React.ReactElement {
       },
       callback: data => {
         if (data.data === true) {
+          toast.info('Vault unlocked')
           setMasterPassword(masterPassWordInputContent)
           setMasterPassWordInputContent('')
+        } else {
+          toast.error('Incorrect password')
         }
       },
-      successInfo: 'Vault unlocked',
-      failureInfo: 'Incorrect password',
       finalCallback: () => {
         setLoading(false)
       }
@@ -131,7 +132,9 @@ function Passwords(): React.ReactElement {
             darker
           />
           <Button
-            onClick={onSubmit}
+            onClick={() => {
+              onSubmit().catch(console.error)
+            }}
             disabled={loading}
             className="w-1/2"
             icon={loading ? 'svg-spinners:180-ring' : 'tabler:lock'}
