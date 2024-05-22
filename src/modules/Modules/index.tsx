@@ -46,14 +46,15 @@ const MODULES: ModuleEntry[] = [
     name: 'Books Library',
     icon: 'tabler:books'
   },
+  { name: 'Journal', icon: 'tabler:book' },
+  { name: 'Achievements', icon: 'tabler:award' },
   {
     name: 'Wallet',
     icon: 'tabler:currency-dollar'
   },
   { name: 'Wish List', icon: 'tabler:heart' },
   { name: 'Contacts', icon: 'tabler:users' },
-  { name: 'Passwords', icon: 'tabler:key' },
-  { name: 'Journal', icon: 'tabler:book' }
+  { name: 'Passwords', icon: 'tabler:key' }
 ]
 
 function Modules(): React.ReactElement {

@@ -8,7 +8,8 @@ import {
   PointElement,
   LineElement,
   Title,
-  Filler
+  Filler,
+  BarElement
 } from 'chart.js'
 import React from 'react'
 
@@ -30,6 +31,7 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Filler
 )

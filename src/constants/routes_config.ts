@@ -75,8 +75,9 @@ export const ROUTES: IRoutes[] = [
         routes: {
           'photos-main-gallery': '',
           'photos-album-list': 'album',
-          'photos-album-gallery/:id': 'album/:id',
-          'photos-album-favourites': 'favourites'
+          'photos-album-gallery': 'album/:id',
+          'photos-album-favourites': 'favourites',
+          'photos-trash': 'trash'
         },
         togglable: true
       },
@@ -129,6 +130,30 @@ export const ROUTES: IRoutes[] = [
     ]
   },
   {
+    title: 'Lifestyle',
+    items: [
+      {
+        name: 'Journal',
+        icon: 'tabler:book',
+        routes: {
+          journal: 'journal',
+          'journal-view': 'journal/view/:id',
+          'journal-edit': 'journal/edit/:id'
+        },
+        togglable: true
+      },
+      {
+        name: 'Achievements',
+        icon: 'tabler:award',
+        routes: {
+          achievements: 'achievements',
+          'achievements-id': 'achievements/:id'
+        },
+        togglable: true
+      }
+    ]
+  },
+  {
     title: 'Finance',
     items: [
       {
@@ -164,16 +189,6 @@ export const ROUTES: IRoutes[] = [
         name: 'Passwords',
         icon: 'tabler:key',
         routes: { passwords: 'passwords' },
-        togglable: true
-      },
-      {
-        name: 'Journal',
-        icon: 'tabler:book',
-        routes: {
-          journal: 'journal',
-          'journal-view': 'journal/view/:id',
-          'journal-edit': 'journal/edit/:id'
-        },
         togglable: true
       }
     ]

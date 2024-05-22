@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import moment from 'moment'
 import React, { useState } from 'react'
 import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'

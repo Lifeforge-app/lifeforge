@@ -46,6 +46,7 @@
         "changeLog": "Change Log",
         "about": "About This Project",
         "journal": "Journal",
+        "achievements": "Achievements",
         "title": {
             "productivity": "Productivity",
             "storage": "Storage",
@@ -64,7 +65,8 @@
             "progress": "Progress",
             "categories": "Categories",
             "languages": "Languages",
-            "albums": "Albums"
+            "albums": "Albums",
+            "lifestyle": "Lifestyle"
         },
         "descriptions": {
             "dashboard": "Your mission control center for awesome. 🚀",
@@ -92,7 +94,8 @@
             "serverStatus": "Keep your server healthy, happy, and humming. 🩺",
             "changeLog": "Track the development progress, one change at a time. 📈",
             "about": "The story behind how this project came to be. 📖",
-            "journal": "Your personal journal, for your eyes only. 📔"
+            "journal": "Your personal journal, for your eyes only. 📔",
+            "achievements": "Celebrate your wins, big and small. 🏆"
         }
     },
     "header": {

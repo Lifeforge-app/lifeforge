@@ -88,6 +88,7 @@ export default function CodeTime(): React.ReactElement {
         datasets: [
           {
             label: 'Code time',
+            pointStyle: false,
             data: data.map(({ duration }) => duration / 3600000),
             backgroundColor: (context: ScriptableContext<'line'>) => {
               const ctx = context.chart.ctx
@@ -114,7 +115,7 @@ export default function CodeTime(): React.ReactElement {
         <Icon icon="tabler:chart-line" className="text-2xl" />
         <span className="ml-2">{t('dashboard.modules.codeTime.title')}</span>
       </h1>
-      <div className="flex w-full flex-1 flex-center">
+      <div className="flex-center flex w-full flex-1">
         {/* @ts-expect-error - lazy to fix =) */}
         {chartData ? <Line data={chartData} options={options2} /> : <Loading />}
       </div>

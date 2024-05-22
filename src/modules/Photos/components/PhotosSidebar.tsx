@@ -106,7 +106,13 @@ function PhotosSidebar(): React.ReactElement {
         <SidebarDivider />
         <SidebarItem icon="tabler:archive" name="Archive" />
         <SidebarItem icon="tabler:lock" name="Locked Folder" />
-        <SidebarItem icon="tabler:trash" name="Trash" />
+        <SidebarItem
+          icon="tabler:trash"
+          name="Trash"
+          onClick={() => {
+            navigate('/photos/trash')
+          }}
+        />
       </ul>
     </aside>
   )
