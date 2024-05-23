@@ -174,5 +174,11 @@
                 "title": "Todo List"
             }
         }
+    },
+    "notFound": {
+        "title": "Oops! Nothing here.",
+        "description": "The page you are looking is not found. Please check the URL and try again.",
+        "backButton": "Go Back",
+        "reportButton": "Bug Report"
     }
 }

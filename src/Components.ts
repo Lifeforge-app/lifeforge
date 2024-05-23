@@ -1,6 +1,4 @@
 import { lazy } from 'react'
-import Achievements from './modules/Achievements'
-import DNSRecords from './modules/DNSRecords'
 
 const PhotosProvider = lazy(
   async () => await import('./providers/PhotosProvider')
@@ -73,6 +71,8 @@ const JournalEdit = lazy(
 const Music = lazy(async () => await import('./modules/Music'))
 const Repositories = lazy(async () => await import('./modules/Repositories'))
 const About = lazy(async () => await import('./modules/About'))
+const Achievements = lazy(async () => await import('./modules/Achievements'))
+const DNSRecords = lazy(async () => await import('./modules/DNSRecords'))
 
 export const COMPONENTS = {
   dashboard: {
