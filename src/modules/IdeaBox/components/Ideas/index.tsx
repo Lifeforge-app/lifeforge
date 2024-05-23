@@ -49,6 +49,7 @@ function Ideas(): React.ReactElement {
   const [existedFolderData, setExistedFolderData] =
     useState<IIdeaBoxFolder | null>(null)
   const [deleteIdeaModalOpen, setDeleteIdeaModalOpen] = useState(false)
+  const [deleteFolderModalOpen, setDeleteFolderModalOpen] = useState(false)
 
   useEffect(() => {
     setSearchParams({ archived: viewArchived.toString() })
@@ -96,6 +97,9 @@ function Ideas(): React.ReactElement {
                           setExistedFolderData={setExistedFolderData}
                           setModifyFolderModalOpenType={
                             setModifyFolderModalOpenType
+                          }
+                          setDeleteFolderConfirmationModalOpen={
+                            setDeleteFolderModalOpen
                           }
                         />
                       ))}
@@ -186,6 +190,16 @@ function Ideas(): React.ReactElement {
         itemName="idea"
         data={existedData}
         updateDataList={refreshData}
+      />
+      <DeleteConfirmationModal
+        isOpen={deleteFolderModalOpen}
+        onClose={() => {
+          setDeleteFolderModalOpen(false)
+        }}
+        apiEndpoint="idea-box/folder/delete"
+        itemName="folder"
+        data={existedFolderData}
+        updateDataList={refreshFolders}
       />
     </APIComponentWithFallback>
   )

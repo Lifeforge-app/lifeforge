@@ -54,7 +54,19 @@ const MODULES: ModuleEntry[] = [
   },
   { name: 'Wish List', icon: 'tabler:heart' },
   { name: 'Contacts', icon: 'tabler:users' },
-  { name: 'Passwords', icon: 'tabler:key' }
+  { name: 'Passwords', icon: 'tabler:key' },
+  {
+    name: 'Mail Inbox',
+    icon: 'tabler:inbox'
+  },
+  {
+    name: 'DNS Records',
+    icon: 'tabler:cloud'
+  },
+  {
+    name: 'Blog Posts',
+    icon: 'tabler:file-text'
+  }
 ]
 
 function Modules(): React.ReactElement {

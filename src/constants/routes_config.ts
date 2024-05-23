@@ -70,36 +70,6 @@ export const ROUTES: IRoutes[] = [
     ]
   },
   {
-    title: 'Storage',
-    items: [
-      {
-        name: 'Photos',
-        icon: 'tabler:camera',
-        provider: 'photos-provider',
-        routes: {
-          'photos-main-gallery': '',
-          'photos-album-list': 'album',
-          'photos-album-gallery': 'album/:id',
-          'photos-album-favourites': 'favourites',
-          'photos-trash': 'trash'
-        },
-        togglable: true
-      },
-      {
-        name: 'Music',
-        icon: 'tabler:music',
-        routes: { music: 'music' },
-        togglable: true
-      },
-      {
-        name: 'Repositories',
-        icon: 'tabler:git-branch',
-        routes: { repositories: 'repositories' },
-        togglable: true
-      }
-    ]
-  },
-  {
     title: 'Study',
     items: [
       {
@@ -157,6 +127,7 @@ export const ROUTES: IRoutes[] = [
       }
     ]
   },
+
   {
     title: 'Finance',
     items: [
@@ -175,6 +146,61 @@ export const ROUTES: IRoutes[] = [
       {
         name: 'Wish List',
         icon: 'tabler:heart',
+        routes: {},
+        togglable: true
+      }
+    ]
+  },
+  {
+    title: 'Storage',
+    items: [
+      {
+        name: 'Photos',
+        icon: 'tabler:camera',
+        provider: 'photos-provider',
+        routes: {
+          'photos-main-gallery': '',
+          'photos-album-list': 'album',
+          'photos-album-gallery': 'album/:id',
+          'photos-album-favourites': 'favourites',
+          'photos-trash': 'trash'
+        },
+        togglable: true
+      },
+      {
+        name: 'Music',
+        icon: 'tabler:music',
+        routes: { music: 'music' },
+        togglable: true
+      },
+      {
+        name: 'Repositories',
+        icon: 'tabler:git-branch',
+        routes: { repositories: 'repositories' },
+        togglable: true
+      }
+    ]
+  },
+  {
+    title: 'External Management',
+    items: [
+      {
+        name: 'Mail Inbox',
+        icon: 'tabler:mail',
+        routes: {},
+        togglable: true
+      },
+      {
+        name: 'DNS Records',
+        icon: 'tabler:cloud',
+        routes: {
+          'dns-records': 'dns-records'
+        },
+        togglable: true
+      },
+      {
+        name: 'Blog Posts',
+        icon: 'tabler:file-text',
         routes: {},
         togglable: true
       }

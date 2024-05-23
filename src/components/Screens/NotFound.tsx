@@ -1,17 +1,17 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import Button from '../ButtonsAndInputs/Button'
 
 function NotFound(): React.ReactElement {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   return (
     <div className="flex-center flex h-full w-full flex-col gap-6">
       <h1 className="text-[10rem] text-custom-500">;-;</h1>
-      <h1 className="text-4xl font-semibold">Page not found</h1>
-      <h2 className="-mt-2 text-xl text-bg-500">
-        The page you are looking for does not exist.
-      </h2>
+      <h1 className="text-4xl font-semibold">{t('notFound.title')}</h1>
+      <h2 className="-mt-2 text-xl text-bg-500">{t('notFound.description')}</h2>
       <div className="mt-6 flex items-center gap-4">
         <Button
           icon="tabler:arrow-left"
@@ -19,7 +19,7 @@ function NotFound(): React.ReactElement {
             navigate('/')
           }}
         >
-          Return home
+          {t('notFound.backButton')}
         </Button>
         <Button
           icon="tabler:bug"
@@ -33,7 +33,7 @@ function NotFound(): React.ReactElement {
           }}
           type="secondary"
         >
-          Report a bug
+          {t('notFound.reportButton')}
         </Button>
       </div>
     </div>

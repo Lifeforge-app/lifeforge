@@ -1,5 +1,6 @@
 import { lazy } from 'react'
 import Achievements from './modules/Achievements'
+import DNSRecords from './modules/DNSRecords'
 
 const PhotosProvider = lazy(
   async () => await import('./providers/PhotosProvider')
@@ -160,5 +161,8 @@ export const COMPONENTS = {
   },
   about: {
     about: About
+  },
+  'dns-records': {
+    'dns-records': DNSRecords
   }
 }

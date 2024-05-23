@@ -68,7 +68,7 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
         className={`rounded-md transition-all ${getPaddingClass(
           largerPadding,
           smallerPadding
-        )} ${style?.color === '' && getColorClass(lighter)}`}
+        )} ${style.color === undefined && getColorClass(lighter)}`}
       >
         <Icon icon={customIcon ?? 'tabler:dots-vertical'} className="h-5 w-5" />
       </Menu.Button>
