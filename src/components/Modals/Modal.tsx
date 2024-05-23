@@ -25,8 +25,8 @@ function Modal({
           minHeight: minHeight ?? '0'
         }}
         className={`absolute ${
-          isOpen ? 'top-1/2' : 'top-[200dvh]'
-        } left-1/2 flex max-h-[calc(100dvh-8rem)] w-full max-w-[calc(100vw-4rem)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-scroll rounded-xl bg-bg-100 p-6 transition-all duration-300 dark:bg-bg-900 sm:max-w-[calc(100vw-8rem)] lg:w-auto`}
+          isOpen ? 'right-1/2' : 'right-[-100dvw]'
+        } top-1/2 flex max-h-[calc(100dvh-8rem)] w-full max-w-[calc(100vw-4rem)] -translate-y-1/2 translate-x-1/2 flex-col overflow-scroll rounded-xl bg-bg-100 p-6 transition-all duration-500 dark:bg-bg-900 sm:max-w-[calc(100vw-8rem)] lg:w-auto`}
       >
         {children}
       </div>

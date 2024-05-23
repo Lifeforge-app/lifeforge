@@ -1,6 +1,7 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useParams } from 'react-router'
 import { type IIdeaBoxEntry, type IIdeaBoxFolder } from '@typedec/IdeaBox'
 
 function FAB({
@@ -24,6 +25,8 @@ function FAB({
     React.SetStateAction<IIdeaBoxFolder | null>
   >
 }): React.ReactElement {
+  const { folderId } = useParams()
+
   return (
     <>
       <Menu
@@ -52,7 +55,9 @@ function FAB({
               <Menu.Items className="mt-2 rounded-lg shadow-lg outline-none focus:outline-none">
                 <div className="py-1">
                   {[
-                    ['Folder', 'tabler:folder'],
+                    ...(folderId === undefined
+                      ? [['Folder', 'tabler:folder']]
+                      : []),
                     ['Text', 'tabler:text-size'],
                     ['Link', 'tabler:link'],
                     ['Image', 'tabler:photo']

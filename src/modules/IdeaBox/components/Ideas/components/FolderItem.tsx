@@ -11,6 +11,7 @@ function FolderItem({
   folder,
   setIdeaList,
   setModifyFolderModalOpenType,
+  setDeleteFolderConfirmationModalOpen,
   setExistedFolderData
 }: {
   folder: IIdeaBoxFolder
@@ -19,6 +20,9 @@ function FolderItem({
   >
   setModifyFolderModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
+  >
+  setDeleteFolderConfirmationModalOpen: React.Dispatch<
+    React.SetStateAction<boolean>
   >
   setExistedFolderData: React.Dispatch<
     React.SetStateAction<IIdeaBoxFolder | null>
@@ -90,7 +94,8 @@ function FolderItem({
         ></MenuItem>
         <MenuItem
           onClick={() => {
-            console.log('Delete folder')
+            setExistedFolderData(folder)
+            setDeleteFolderConfirmationModalOpen(true)
           }}
           icon="tabler:trash"
           text="Delete"
