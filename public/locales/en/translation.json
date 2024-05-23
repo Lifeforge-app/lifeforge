@@ -47,6 +47,9 @@
         "about": "About This Project",
         "journal": "Journal",
         "achievements": "Achievements",
+        "dNSRecords": "DNS Records",
+        "mailInbox": "Mail Inbox",
+        "blogPosts": "Blog Posts",
         "title": {
             "productivity": "Productivity",
             "storage": "Storage",
@@ -66,7 +69,8 @@
             "categories": "Categories",
             "languages": "Languages",
             "albums": "Albums",
-            "lifestyle": "Lifestyle"
+            "lifestyle": "Lifestyle",
+            "externalManagement": "External Management"
         },
         "descriptions": {
             "dashboard": "Your mission control center for awesome. 🚀",
@@ -95,7 +99,10 @@
             "changeLog": "Track the development progress, one change at a time. 📈",
             "about": "The story behind how this project came to be. 📖",
             "journal": "Your personal journal, for your eyes only. 📔",
-            "achievements": "Celebrate your wins, big and small. 🏆"
+            "achievements": "Celebrate your wins, big and small. 🏆",
+            "dNSRecords": "No need to login to CPanel, manage your DNS records here. 🌐",
+            "mailInbox": "Manage your email inbox, all in one place. 📧",
+            "blogPosts": "Writing and sharing your thoughts with the world. 📝"
         }
     },
     "header": {
