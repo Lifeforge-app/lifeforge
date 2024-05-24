@@ -40,7 +40,7 @@ function Music(): React.ReactElement {
           setSearchQuery={setSearchQuery}
           stuffToSearch="musics"
         />
-        <div className="divide-y-200/50 relative flex h-full w-full min-w-0 flex-col divide-y-2 overflow-y-auto dark:divide-bg-900">
+        <div className="relative flex h-full w-full min-w-0 flex-col divide-y-2 divide-bg-200/50 overflow-y-auto dark:divide-bg-900">
           <APIComponentWithFallback data={musics}>
             {typeof musics !== 'string' &&
             musics.filter(music =>
