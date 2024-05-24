@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
-import { titleToPath, toCamelCase } from '@utils/strings'
+import { titleToPath, toCamelCase } from '../../../utils/strings'
 
 interface SidebarItemProps {
   icon: string
@@ -62,7 +62,10 @@ function SidebarItem({
               : ''
           }`}
         >
-          <div className="flex min-w-0 items-center gap-6">
+          <a
+            href={titleToPath(name) === 'home' ? '/' : `./${titleToPath(name)}`}
+            className="flex min-w-0 items-center gap-6"
+          >
             <Icon
               icon={icon}
               className={`h-6 w-6 shrink-0 ${
@@ -76,7 +79,7 @@ function SidebarItem({
               {sidebarExpanded &&
                 (isMainSidebarItem ? t(`modules.${toCamelCase(name)}`) : name)}
             </span>
-          </div>
+          </a>
 
           {onClick ? (
             <button
