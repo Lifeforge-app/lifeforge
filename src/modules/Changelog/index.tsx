@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */
 
 import React, { useEffect, useState } from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IChangeLogVersion } from '@typedec/Changelog'
 import LogItem from './components/LogItem'
@@ -54,14 +54,14 @@ function Changelog(): React.ReactElement {
         stuffToSearch="features"
       />
       <APIComponentWithFallback data={data}>
-        <ul className="my-8 space-y-4">
+        <ul className="relative isolate my-8 space-y-4">
           {typeof data !== 'string' &&
             (filteredData.length > 0 ? (
               filteredData.map(entry => (
                 <LogItem key={entry.version} entry={entry} />
               ))
             ) : (
-              <div className="flex h-full w-full flex-center">
+              <div className="flex-center flex h-full w-full">
                 <EmptyStateScreen
                   title="Oops, no results found"
                   description="Your search query did not match any results."
@@ -69,6 +69,7 @@ function Changelog(): React.ReactElement {
                 />
               </div>
             ))}
+          <div className="absolute left-[calc(9rem+8px)] top-0 z-[-1] h-full -translate-x-1/2 border-r-2 border-bg-700" />
         </ul>
       </APIComponentWithFallback>
     </ModuleWrapper>

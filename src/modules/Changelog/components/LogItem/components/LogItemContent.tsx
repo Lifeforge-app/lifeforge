@@ -11,7 +11,7 @@ function LogItemContent({
       {entry.entries
         .sort((a, b) => a.feature.localeCompare(b.feature))
         .map(subEntry => (
-          <li key={subEntry.id} className="ml-5">
+          <li key={subEntry.id} className="ml-44">
             <div className="inline-flex flex-col items-start md:flex-row md:gap-2">
               <span className="whitespace-nowrap font-semibold">
                 {subEntry.feature}:
