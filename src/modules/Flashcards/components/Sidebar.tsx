@@ -3,12 +3,12 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import useFetch from '@hooks/useFetch'
 import { type IFlashcardTag } from '@typedec/Flashcard'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 
 function Sidebar({
   sidebarOpen,
@@ -24,7 +24,7 @@ function Sidebar({
       <aside
         className={`absolute ${
           sidebarOpen ? 'left-0' : 'left-full'
-        } top-0 z-[9999] h-full w-full overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 lg:static lg:h-[calc(100%-3rem)]`}
+        } top-0 z-[9999] h-full w-full overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 lg:static lg:h-[calc(100%-3rem)] lg:w-1/4`}
       >
         <div className="flex items-center justify-between px-8 py-4 lg:hidden">
           <GoBackButton

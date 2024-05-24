@@ -31,7 +31,7 @@ function getColorClass(lighter?: boolean): string {
   if (lighter === true) {
     return 'text-bg-100 hover:bg-bg-700/50'
   } else {
-    return 'text-bg-500 hover:bg-bg-200/50 hover:text-bg-100 dark:hover:bg-bg-700/30'
+    return 'text-bg-500 hover:bg-bg-200/50 hover:text-bg-800 dark:hover:text-bg-100 dark:hover:bg-bg-700/30'
   }
 }
 
@@ -84,7 +84,7 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
         <Menu.Items
           className={`mt-6 ${
             customWidth ?? 'w-48'
-          } overflow-hidden overscroll-contain rounded-md border border-bg-700 bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800`}
+          } overflow-hidden overscroll-contain rounded-md border border-bg-200 bg-bg-100 shadow-lg outline-none focus:outline-none dark:border-bg-700 dark:bg-bg-800`}
         >
           {children}
         </Menu.Items>
