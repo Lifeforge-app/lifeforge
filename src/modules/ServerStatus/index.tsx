@@ -86,14 +86,14 @@ function ServerStatus(): React.ReactElement {
               <div className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Icon icon="tabler:cpu" className="text-2xl text-bg-500" />
+                    <Icon icon="tabler:cpu" className="text-2xl" />
                     <h2 className="text-xl text-bg-500">CPU Usage</h2>
                   </div>
                   <p className="shrink-0 rounded-md border border-bg-400 px-4 py-2 text-lg text-bg-500">
                     {cpuUsage.usage.toFixed(2)}%
                   </p>
                 </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-bg-800">
+                <div className="h-2 w-full overflow-hidden rounded-full bg-bg-200 dark:bg-bg-800">
                   <div
                     className={`h-full rounded-full transition-all ${
                       cpuUsage.usage > 80
@@ -130,7 +130,7 @@ function ServerStatus(): React.ReactElement {
                     {memoryUsage.percent.toFixed(2)}%
                   </p>
                 </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-bg-800">
+                <div className="h-2 w-full overflow-hidden rounded-full bg-bg-200 dark:bg-bg-800">
                   <div
                     className={`h-full rounded-full transition-all ${
                       memoryUsage.percent > 80
@@ -164,7 +164,7 @@ function ServerStatus(): React.ReactElement {
                     {cpuTemp.main.toFixed(2)}°C
                   </p>
                 </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-bg-800">
+                <div className="h-2 w-full overflow-hidden rounded-full bg-bg-200 dark:bg-bg-800">
                   <div
                     className={`h-full rounded-full transition-all ${
                       cpuTemp.main > 80

@@ -456,9 +456,18 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-background-clip: text;
+  -webkit-text-fill-color: black;
+  transition: background-color 5000s ease-in-out 0s;
+  @apply caret-bg-800;
+}
+
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark input:-webkit-autofill:active {
+  -webkit-background-clip: text;
   -webkit-text-fill-color: #ffffff;
   transition: background-color 5000s ease-in-out 0s;
-  box-shadow: inset 0 0 20px 20px #23232329;
   caret-color: #ffffff;
 }
 
