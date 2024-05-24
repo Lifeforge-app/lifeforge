@@ -8,9 +8,7 @@ export default function Loading({
   return (
     <div className="flex-center flex h-full w-full flex-col gap-6">
       <span className="loader"></span>
-      <p className="text-lg font-medium text-bg-500">
-        {customMessage ?? 'Loading data'}
-      </p>
+      <p className="text-lg font-medium text-bg-500">{customMessage ?? ''}</p>
     </div>
   )
 }

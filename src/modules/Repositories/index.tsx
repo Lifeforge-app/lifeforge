@@ -37,7 +37,7 @@ function Repositories(): React.ReactElement {
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className="flex h-full flex-1 flex-col lg:ml-8">
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-semibold text-bg-800 dark:text-bg-100 md:text-4xl">
+            <h1 className="text-3xl font-semibold  md:text-4xl">
               All Repositories{' '}
               {/* <span className="text-base text-bg-500">(10)</span> */}
             </h1>

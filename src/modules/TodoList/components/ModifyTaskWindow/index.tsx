@@ -188,7 +188,6 @@ function ModifyTaskWindow(): React.ReactElement {
           updateValue={updateSummary}
           additionalClassName="w-full"
           reference={summaryInputRef}
-          autoFocus
         />
         <NotesInput notes={notes} updateNotes={updateNotes} />
         <DateInput

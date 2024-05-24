@@ -30,7 +30,7 @@ function DateInput({
         icon={icon}
         className={`ml-6 h-6 w-6 shrink-0 
             group-focus-within:!text-custom-500 ${
-              date !== '' ? 'text-bg-800 dark:text-bg-100' : 'text-bg-500'
+              date !== '' ? '' : 'text-bg-500'
             }`}
       />
       <div className="flex w-full items-center gap-2">

@@ -5,6 +5,50 @@ import Button from '@components/ButtonsAndInputs/Button'
 import { type IPhotosAlbum } from '@typedec/Photos'
 import APIRequest from '../../../../utils/fetchData'
 
+const Clipboard = (function (window, document, navigator) {
+  let textArea: HTMLTextAreaElement
+
+  function isOS(): RegExpMatchArray | null {
+    return navigator.userAgent.match(/ipad|iphone/i)
+  }
+
+  function createTextArea(text: string): void {
+    textArea = document.createElement('textArea') as HTMLTextAreaElement
+    textArea.value = text
+    document.body.appendChild(textArea)
+  }
+
+  function selectText(): void {
+    let range, selection
+
+    if (isOS()) {
+      range = document.createRange()
+      range.selectNodeContents(textArea)
+      selection = window.getSelection()
+      selection?.removeAllRanges()
+      selection?.addRange(range)
+      textArea.setSelectionRange(0, 999999)
+    } else {
+      textArea.select()
+    }
+  }
+
+  function copyToClipboard(): void {
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+  }
+
+  function copy(text: string): void {
+    createTextArea(text)
+    selectText()
+    copyToClipboard()
+  }
+
+  return {
+    copy
+  }
+})(window, document, navigator)
+
 function ShareAlbumModal({
   albumId,
   publicity,
@@ -102,21 +146,16 @@ function ShareAlbumModal({
           <Button
             icon={isCopied ? 'tabler:check' : 'tabler:copy'}
             onClick={() => {
-              navigator.clipboard
-                .writeText(
-                  `${
-                    import.meta.env.VITE_PUBLIC_PORTAL_URL
-                  }/photos/album/${albumId}`
-                )
-                .then(() => {
-                  setIsCopied(true)
-                  setTimeout(() => {
-                    setIsCopied(false)
-                  }, 2000)
-                })
-                .catch(() => {
-                  setIsCopied(false)
-                })
+              Clipboard.copy(
+                `${
+                  import.meta.env.VITE_PUBLIC_PORTAL_URL
+                }/photos/album/${albumId}`
+              )
+
+              setIsCopied(true)
+              setTimeout(() => {
+                setIsCopied(false)
+              }, 2000)
             }}
             className="mt-2 w-full"
           >

@@ -3,6 +3,7 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
+import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
@@ -29,6 +30,7 @@ function ModifyIdeaModal({
   updateIdeaList: () => void
   existedData: IIdeaBoxEntry | null
 }): React.ReactElement {
+  const { folderId } = useParams<{ folderId: string }>()
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
   const [innerTypeOfModifyIdea, setInnerTypeOfModifyIdea] = useState<
     'text' | 'image' | 'link'
@@ -142,6 +144,10 @@ function ModifyIdeaModal({
     formData.append('image', ideaImage!)
     formData.append('imageLink', debouncedImageLink)
     formData.append('type', innerTypeOfModifyIdea)
+
+    if (folderId !== undefined) {
+      formData.append('folder', folderId)
+    }
 
     await APIRequest({
       endpoint: `idea-box/idea/${

@@ -84,7 +84,7 @@ function Folder(): React.ReactElement {
                   }
                 ]}
                 gap="0.5rem"
-                className="mt-6 min-h-full flex-1 px-8 sm:px-12"
+                className="mt-6 min-h-full flex-1 px-8 pb-8 sm:px-12"
               >
                 {data.map(entry => {
                   const Component = {
@@ -119,6 +119,7 @@ function Folder(): React.ReactElement {
         <FAB
           setModifyIdeaModalOpenType={setModifyIdeaModalOpenType}
           setTypeOfModifyIdea={setTypeOfModifyIdea}
+          setExistedData={setExistedData}
         />
       </section>
       <ModifyIdeaModal

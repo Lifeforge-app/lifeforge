@@ -36,9 +36,7 @@ function ContainerItem({
           }}
         />
       </div>
-      <div className="text-center text-2xl font-medium text-bg-800 dark:text-bg-100">
-        {container.name}
-      </div>
+      <div className="text-center text-2xl font-medium ">{container.name}</div>
       <div className="mt-auto flex items-center gap-4">
         <div className="flex items-center gap-2">
           <Icon icon="tabler:article" className="h-5 w-5 text-bg-500" />

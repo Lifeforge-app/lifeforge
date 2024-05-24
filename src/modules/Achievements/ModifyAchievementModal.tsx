@@ -156,9 +156,7 @@ function ModifyAchievementModal({
             <Icon
               icon="tabler:list"
               className={`ml-6 h-6 w-6 shrink-0 ${
-                achievementDifficulty !== ''
-                  ? 'text-bg-800 dark:text-bg-100'
-                  : 'text-bg-500'
+                achievementDifficulty !== '' ? '' : 'text-bg-500'
               } group-focus-within:text-custom-500`}
             />
             <span

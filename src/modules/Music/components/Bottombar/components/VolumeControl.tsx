@@ -12,7 +12,7 @@ export default function VolumeControl(): React.ReactElement {
   }
 
   return (
-    <div className="flex w-1/3 items-center justify-end gap-2">
+    <div className="hidden w-1/3 items-center justify-end gap-2 xl:flex">
       <IconButton
         onClick={() => {
           toggleFavourite(currentMusic).catch(() => {})

@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { type IPhotosAlbum } from '@typedec/Photos'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import { type IPhotosAlbum } from '@typedec/Photos'
 import { usePhotosContext } from '../../../../../providers/PhotosProvider'
 
 function AlbumItem({
@@ -20,7 +20,10 @@ function AlbumItem({
   const { setModifyAlbumModalOpenType, albumTagList } = usePhotosContext()
 
   return (
-    <li key={album.id} className="relative flex h-min flex-col gap-1 p-4">
+    <li
+      key={album.id}
+      className="relative flex h-full w-full min-w-0 flex-col gap-1 p-4"
+    >
       <Link
         to={`/photos/album/${album.id}`}
         className="absolute left-0 top-0 h-full w-full rounded-md transition-all duration-100 hover:bg-bg-900/[0.03] dark:hover:bg-bg-100/5"
@@ -41,7 +44,7 @@ function AlbumItem({
           />
         )}
       </div>
-      <div className="pointer-events-none relative w-full min-w-0 pr-8">
+      <div className="pointer-events-none relative mt-auto w-full min-w-0 pr-8">
         {album.tags.length !== 0 && typeof albumTagList !== 'string' && (
           <div className="flex flex-wrap gap-1">
             {album.tags
@@ -60,9 +63,7 @@ function AlbumItem({
               ))}
           </div>
         )}
-        <h2 className="truncate text-lg font-semibold text-bg-800 dark:text-bg-100">
-          {album.name}
-        </h2>
+        <h2 className="truncate text-lg font-semibold ">{album.name}</h2>
         <p className="flex items-center gap-2 text-sm text-bg-500">
           {album.amount?.toLocaleString()} photos
           <Icon icon="tabler:circle-filled" className="h-1 w-1" />

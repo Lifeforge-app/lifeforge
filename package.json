@@ -51,6 +51,7 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-gauge-chart": "^0.5.1",
     "react-gauge-component": "^1.2.0",
     "react-helmet": "^6.1.0",
     "react-i18next": "^14.1.0",

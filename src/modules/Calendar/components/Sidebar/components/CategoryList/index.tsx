@@ -1,21 +1,23 @@
 import { Icon } from '@iconify/react'
-import React, { useState } from 'react'
+import React from 'react'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { type ICalendarCategory } from '@typedec/Calendar'
 import CategoryListItem from './components/CategoryListItem'
-import ModifyCategoryModal from '../../../../modals/ModifyCategoryModal'
 
 function CategoryList({
   categories,
-  refreshCategories
+  setModifyCategoryModalOpenType,
+  setExistedData
 }: {
   categories: ICalendarCategory[] | 'loading' | 'error'
   refreshCategories: () => void
+  modifyCategoryModalOpenType: 'create' | 'update' | null
+  setModifyCategoryModalOpenType: React.Dispatch<
+    React.SetStateAction<'create' | 'update' | null>
+  >
+  setExistedData: React.Dispatch<React.SetStateAction<ICalendarCategory | null>>
 }): React.ReactElement {
-  const [openType, setOpenType] = useState<'create' | 'update' | null>(null)
-  const [existedData, setExistedData] = useState<ICalendarCategory | null>(null)
-
   return (
     <>
       <section className="flex w-full min-w-0 flex-1 flex-col gap-4 overflow-y-auto rounded-lg bg-bg-50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
@@ -24,7 +26,7 @@ function CategoryList({
             name="Categories"
             actionButtonIcon="tabler:plus"
             actionButtonOnClick={() => {
-              setOpenType('create')
+              setModifyCategoryModalOpenType('create')
               setExistedData(null)
             }}
           />
@@ -37,7 +39,7 @@ function CategoryList({
                   <CategoryListItem
                     key={item.id}
                     item={item}
-                    setModifyModalOpenType={setOpenType}
+                    setModifyModalOpenType={setModifyCategoryModalOpenType}
                     setSelectedData={setExistedData}
                   />
                 ))}
@@ -55,12 +57,6 @@ function CategoryList({
             ))}
         </APIComponentWithFallback>
       </section>
-      <ModifyCategoryModal
-        openType={openType}
-        setOpenType={setOpenType}
-        existedData={existedData}
-        refreshCategories={refreshCategories}
-      />
     </>
   )
 }

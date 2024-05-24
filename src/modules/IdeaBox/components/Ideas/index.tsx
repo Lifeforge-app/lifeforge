@@ -63,7 +63,7 @@ function Ideas(): React.ReactElement {
 
   return (
     <APIComponentWithFallback data={valid}>
-      <section className="relative min-h-0 w-full min-w-0 flex-1 overflow-y-auto">
+      <section className="relative min-h-0 w-full min-w-0 flex-1 overflow-y-auto pb-8">
         <ContainerHeader
           id={id!}
           viewArchived={viewArchived}
@@ -82,13 +82,13 @@ function Ideas(): React.ReactElement {
               />
             ) : (
               <>
-                {folders.length > 0 && (
+                {folders.length > 0 && !viewArchived && (
                   <div className="mt-6 px-8 sm:px-12">
                     <h2 className="mb-2 flex items-center gap-2 text-lg font-medium text-bg-500">
                       <Icon icon="tabler:folder" className="h-6 w-6" />
                       Folders
                     </h2>
-                    <div className="mt-2 grid grid-cols-3 gap-2">
+                    <div className="mt-2 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
                       {folders.map(folder => (
                         <FolderItem
                           key={folder.id}

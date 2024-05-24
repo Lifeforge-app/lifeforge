@@ -213,7 +213,7 @@ export default function ProjectFiles({
                         }
                         className="pointer-events-auto z-50 h-7 w-7 shrink-0 text-bg-500"
                       />
-                      <p className="pointer-events-none z-50 flex items-center gap-4 truncate text-lg font-medium text-bg-800 dark:text-bg-100">
+                      <p className="pointer-events-none z-50 flex items-center gap-4 truncate text-lg font-medium ">
                         {`${file
                           .split('.')[0]
                           .split('_')

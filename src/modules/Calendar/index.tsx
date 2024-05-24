@@ -5,9 +5,11 @@ import useFetch from '@hooks/useFetch'
 import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
+import ModifyCategoryModal from './modals/ModifyCategoryModal'
 import ModifyEventModal from './modals/ModifyEventModal'
 
 function CalendarModule(): React.ReactElement {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [rawEvents, refreshRawEvents, setRawEvents] = useFetch<
     ICalendarEvent[]
   >('calendar/event/list')
@@ -19,6 +21,11 @@ function CalendarModule(): React.ReactElement {
     'create' | 'update' | null
   >(null)
   const [existedData, setExistedData] = useState<ICalendarEvent | null>(null)
+  const [modifyCategoryOpenType, setModifyCategoryOpenType] = useState<
+    'create' | 'update' | null
+  >(null)
+  const [existedCategoryData, setExistedCategoryData] =
+    useState<ICalendarCategory | null>(null)
 
   useEffect(() => {
     if (typeof rawEvents !== 'string') {
@@ -39,14 +46,19 @@ function CalendarModule(): React.ReactElement {
           title="Calendar"
           desc="Make sure you don't miss important event."
         />
-        <div className="mb-12 mt-6 flex min-h-0 w-full flex-1">
+        <div className="mt-6 flex min-h-0 w-full flex-1">
           <Sidebar
             events={events}
             categories={categories}
             refreshCategories={refreshCategories}
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+            modifyCategoryModalOpenType={modifyCategoryOpenType}
+            setModifyCategoryModalOpenType={setModifyCategoryOpenType}
+            setExistedData={setExistedCategoryData}
           />
-          <div className="ml-8 flex h-full w-full flex-col">
-            <div className="h-full w-full">
+          <div className="flex h-full w-full flex-col xl:ml-8">
+            <div className="mb-8 h-full w-full">
               <CalendarComponent
                 events={events}
                 setRawEvents={setRawEvents}
@@ -68,6 +80,12 @@ function CalendarModule(): React.ReactElement {
           refreshCategories()
         }}
         categories={categories}
+      />
+      <ModifyCategoryModal
+        openType={modifyCategoryOpenType}
+        setOpenType={setModifyCategoryOpenType}
+        existedData={existedCategoryData}
+        refreshCategories={refreshCategories}
       />
     </>
   )
