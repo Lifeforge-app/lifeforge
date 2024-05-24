@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import APIRequest from '@utils/fetchData'
 import React from 'react'
 import { useDrop } from 'react-dnd'
 import { Link, useParams } from 'react-router-dom'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { type IIdeaBoxEntry, type IIdeaBoxFolder } from '@typedec/IdeaBox'
-import APIRequest from '@utils/fetchData'
 
 function FolderItem({
   folder,
@@ -63,8 +63,8 @@ function FolderItem({
       to={`/idea-box/${id}/${folder.id}`}
       ref={drop}
       key={folder.id}
-      className={`flex items-center justify-between rounded-md p-4 ${
-        isOver ? 'text-bg-800' : ''
+      className={`flex items-center justify-between rounded-md p-4 shadow-custom ${
+        isOver ? 'text-bg-100 dark:text-bg-800' : ''
       } font-medium transition-all`}
       style={{
         backgroundColor:
