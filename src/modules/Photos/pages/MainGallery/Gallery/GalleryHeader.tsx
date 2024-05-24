@@ -6,11 +6,11 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import useFetch from '@hooks/useFetch'
-import { usePhotosContext } from '@providers/PhotosProvider'
 import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import useFetch from '@hooks/useFetch'
+import { usePhotosContext } from '@providers/PhotosProvider'
 
 function GalleryHeader(): React.ReactElement {
   const { refreshPhotos, hidePhotosInAlbum, setHidePhotosInAlbum, setReady } =
@@ -135,7 +135,7 @@ function GalleryHeader(): React.ReactElement {
   }, [])
 
   return (
-    <div className="my-8 mr-4 flex flex-col items-center justify-between gap-4 text-bg-500 sm:mr-16 sm:flex-row">
+    <div className="my-4 mr-4 flex flex-col items-center justify-between gap-4 text-bg-500 sm:my-8 sm:mr-16 sm:flex-row">
       <div className="flex w-full items-center justify-between">
         <p className="flex items-center gap-2">
           IP Address: {ip}
@@ -155,9 +155,27 @@ function GalleryHeader(): React.ReactElement {
         </p>
         <HamburgerMenu
           largerPadding
-          className="relative z-[9999] block md:hidden"
+          className="relative block md:hidden"
           customWidth="w-72"
         >
+          {showImportButton && (
+            <MenuItem
+              disabled={fileImportLoading}
+              icon={
+                fileImportLoading ? 'svg-spinners:180-ring' : 'tabler:upload'
+              }
+              onClick={() => {
+                importFiles().catch(() => {})
+              }}
+              text={
+                !fileImportLoading
+                  ? 'Import photos'
+                  : progress > 0
+                  ? `Importing ${Math.round(progress * 100)}%`
+                  : 'Importing'
+              }
+            />
+          )}
           <MenuItem
             icon="tabler:photo-off"
             onClick={() => {
@@ -175,7 +193,7 @@ function GalleryHeader(): React.ReactElement {
           />
         </HamburgerMenu>
       </div>
-      <div className="flex h-14 w-full items-center gap-4 sm:w-auto">
+      <div className="hidden h-14 items-center gap-4 sm:flex">
         {showImportButton && (
           <Button
             onClick={() => {

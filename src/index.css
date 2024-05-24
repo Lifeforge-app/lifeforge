@@ -12,6 +12,7 @@
   overscroll-behavior: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
+  @apply select-none;
 }
 
 *:focus {
@@ -551,7 +552,7 @@ button[class^='react-calendar__navigation'] {
 }
 
 input[type='range'].main {
-  @apply accent-custom-500;
+  @apply appearance-none accent-custom-500 bg-gradient-to-r from-custom-500 to-custom-500 bg-no-repeat;
 }
 
 input[type='range'].secondary {
@@ -580,4 +581,16 @@ input[type='range'].main::-moz-range-progress {
 input[type='range'].secondary::-webkit-progress-value,
 input[type='range'].secondary::-moz-range-progress {
   @apply appearance-none bg-bg-500 dark:bg-bg-100 rounded-full h-full;
+}
+
+.prose * {
+  @apply select-all;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
 }

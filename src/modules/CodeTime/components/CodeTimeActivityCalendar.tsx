@@ -40,9 +40,9 @@ function CodeTimeActivityCalendar(): React.ReactElement {
         <Icon icon="tabler:activity" className="text-3xl" />
         <span className="ml-2">Activities Calendar</span>
       </h1>
-      <div className="flex items-center justify-between">
+      <div className="flex w-full items-center  justify-between gap-6 overflow-x-auto">
         <div
-          className={`flex flex-1 items-center ${
+          className={`flex flex-1 items-center${
             Array.isArray(activities) ? 'justify-start' : 'justify-center'
           }`}
         >

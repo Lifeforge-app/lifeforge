@@ -36,8 +36,10 @@ function MiniCalendarContent({
         .map((_, index) =>
           (() => {
             const date = moment(
-              `${currentYear}-${currentMonth + 1}-01`
+              `${currentYear}-${currentMonth + 1}-01`,
+              'YYYY-M-DD'
             ).toDate()
+            console.log(currentYear, currentMonth)
 
             let firstDay = moment(date).startOf('month').day() - 1
             firstDay = firstDay === -1 ? 6 : firstDay

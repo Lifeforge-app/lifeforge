@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useEffect, useState } from 'react'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
@@ -12,7 +13,8 @@ import PhotosSidebar from '../../components/PhotosSidebar'
 
 function PhotosMainGallery(): React.ReactElement {
   const { sidebarExpanded } = useGlobalStateContext()
-  const { setPhotoDimensions, hidePhotosInAlbum, setReady } = usePhotosContext()
+  const { setPhotoDimensions, hidePhotosInAlbum, setReady, setSidebarOpen } =
+    usePhotosContext()
   const [showGallery, setShowGallery] = useState(true)
 
   useEffect(() => {
@@ -33,15 +35,27 @@ function PhotosMainGallery(): React.ReactElement {
   }, [hidePhotosInAlbum])
 
   return showGallery ? (
-    <section className="relative flex h-full min-h-0 w-full flex-1 flex-col pl-4 sm:pl-12">
+    <section className="flex h-full min-h-0 w-full flex-1 flex-col pl-4 sm:pl-12">
       <ModuleHeader
         title="Photos"
         desc="View and manage all your precious memories."
+        actionButton={
+          <button
+            onClick={() => {
+              setSidebarOpen(true)
+            }}
+            className="mr-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-100 lg:hidden"
+          >
+            <Icon icon="tabler:menu" className="text-2xl" />
+          </button>
+        }
       />
       <GalleryHeader />
-      <div className="relative flex h-full min-h-0 w-full gap-8">
+      <div className="flex h-full min-h-0 w-full gap-8">
         <PhotosSidebar />
-        <GalleryContainer />
+        <div className="relative flex h-full min-h-0 w-full">
+          <GalleryContainer />
+        </div>
       </div>
       <ModifyAlbumModal />
       <AddPhotosToAlbumModal />

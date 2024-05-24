@@ -18,9 +18,7 @@ export default function WalletBalance(): React.ReactElement {
           <div className="flex items-center gap-4">
             <Icon icon="tabler:cash" className="h-6 w-6" />
             <div className="flex flex-col">
-              <div className="font-semibold text-bg-800 dark:text-bg-100">
-                Cash
-              </div>
+              <div className="font-semibold ">Cash</div>
               <div className="text-sm text-bg-500">RM 520.00</div>
             </div>
           </div>
@@ -32,9 +30,7 @@ export default function WalletBalance(): React.ReactElement {
           <div className="flex items-center gap-4">
             <Icon icon="tabler:device-mobile" className="h-6 w-6" />
             <div className="flex flex-col">
-              <div className="font-semibold text-bg-800 dark:text-bg-100">
-                Touch N&apos; Go e-Wallet
-              </div>
+              <div className="font-semibold ">Touch N&apos; Go e-Wallet</div>
               <div className="text-sm text-bg-500">RM 128.00</div>
             </div>
           </div>
@@ -46,9 +42,7 @@ export default function WalletBalance(): React.ReactElement {
           <div className="flex items-center gap-4">
             <Icon icon="tabler:building-bank" className="h-6 w-6" />
             <div className="flex flex-col">
-              <div className="font-semibold text-bg-800 dark:text-bg-100">
-                Bank Account
-              </div>
+              <div className="font-semibold ">Bank Account</div>
               <div className="text-sm text-bg-500">RM 12,487.00</div>
             </div>
           </div>

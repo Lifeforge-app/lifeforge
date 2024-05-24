@@ -62,7 +62,7 @@ function DeleteConfirmationModal({
           </>
         )}
       </p>
-      <div className="mt-6 flex w-full justify-around gap-2">
+      <div className="mt-6 flex w-full flex-col-reverse justify-around gap-2 sm:flex-row">
         <Button onClick={onClose} icon="" type="secondary" className="w-full">
           Cancel
         </Button>

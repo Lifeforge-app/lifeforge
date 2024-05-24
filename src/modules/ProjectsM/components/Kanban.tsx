@@ -58,9 +58,7 @@ function Kanban(): React.ReactElement {
             <div className="flex items-center justify-between">
               <h3 className="flex items-center gap-4">
                 <Icon icon={icon} className="text-2xl" />
-                <span className="text-xl font-semibold text-bg-800 dark:text-bg-100">
-                  {name}
-                </span>
+                <span className="text-xl font-semibold ">{name}</span>
               </h3>
               <button className="rounded-lg p-2 hover:bg-bg-700/50">
                 <Icon icon="tabler:dots-vertical" className="text-xl" />
@@ -74,7 +72,7 @@ function Kanban(): React.ReactElement {
                     key={index}
                     className="flex items-center gap-4 rounded-lg bg-bg-100 p-4 shadow-[2px_2px_3px_rgba(0,0,0,0.05)] hover:bg-bg-700/50 dark:bg-bg-700/30"
                   >
-                    <span className="text-bg-800 dark:text-bg-100">
+                    <span className="">
                       {
                         [
                           'Lorem ipsum dolor sit amet',
@@ -86,7 +84,7 @@ function Kanban(): React.ReactElement {
                     </span>
                   </li>
                 ))}
-              <li className="flex flex-center">
+              <li className="flex-center flex">
                 <button className="mb-4 flex w-full items-center gap-2 rounded-lg border-bg-500 p-4 pl-3 font-medium text-bg-500 hover:bg-bg-700/30">
                   <Icon icon="tabler:plus" className="text-xl" />
                   <span>Add a card</span>

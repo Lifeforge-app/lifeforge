@@ -177,7 +177,7 @@ function CreateProjectModal({
           <Listbox.Button className="flex w-full items-center">
             <Icon
               icon="tabler:info-circle"
-              className={`ml-6 h-6 w-6 shrink-0 ${'text-bg-800 dark:text-bg-100'} group-focus-within:text-custom-500`}
+              className={`ml-6 h-6 w-6 shrink-0 ${''} group-focus-within:text-custom-500`}
             />
             <span
               className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:text-custom-500 ${'top-6 -translate-y-1/2 text-[14px]'}`}

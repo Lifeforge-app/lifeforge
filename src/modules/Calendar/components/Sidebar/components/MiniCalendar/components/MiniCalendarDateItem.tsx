@@ -42,7 +42,7 @@ function MiniCalendarDateItem({
       className={`relative isolate flex flex-col items-center gap-1 text-sm ${
         firstDay > index || index - firstDay + 1 > lastDate
           ? 'text-bg-300 dark:text-bg-600'
-          : 'text-bg-800 dark:text-bg-100'
+          : ''
       } ${
         moment().isSame(
           moment(`${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`),

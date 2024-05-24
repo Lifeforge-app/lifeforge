@@ -19,17 +19,27 @@ function CodeTimeTopEntries({
 
   return (
     <div className="space-y-6 pb-8">
-      <div className="flex items-center justify-between">
-        <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
-          <Icon icon="tabler:code" className="text-3xl" />
+      <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center lg:gap-8">
+        <h1 className="mb-2 flex shrink gap-2 text-2xl font-semibold">
+          <Icon
+            icon={
+              {
+                languages: 'tabler:code',
+                projects: 'tabler:clipboard'
+              }[type]
+            }
+            className="mt-0.5 shrink-0 text-3xl"
+          />
           <span className="ml-2">
             {type[0].toUpperCase()}
-            {type.slice(1)} You&apos;ve Spent Most Time Using
+            {type.slice(1)}
           </span>
         </h1>
-        <div className="flex items-center gap-2">
-          <p className="font-medium tracking-wider">in the last</p>
-          <div className="flex gap-2 rounded-lg p-2">
+        <div className="flex shrink-0 flex-col gap-2 sm:flex-row sm:items-center">
+          <p className="ml-2 shrink-0 font-medium tracking-wider sm:ml-0">
+            in the last
+          </p>
+          <div className="flex shrink-0 gap-2 rounded-lg p-2">
             {['24 hours', '7 days', '30 days'].map((last, index) => (
               <button
                 key={index}
@@ -57,8 +67,9 @@ function CodeTimeTopEntries({
               .map(([key, value], index) => (
                 <div
                   className={`h-6 border ${index === 0 && 'rounded-l-lg'} ${
-                    index === Object.entries(topEntries).length - 1 &&
-                    'rounded-r-lg'
+                    index ===
+                      Object.entries(topEntries).slice(0, 5).length - 1 &&
+                    'shrink-0 rounded-r-lg'
                   } ${
                     [
                       'bg-red-500/20 border-red-500',
@@ -89,11 +100,11 @@ function CodeTimeTopEntries({
               .map(([key, value], index) => (
                 <li
                   key={key}
-                  className="relative flex items-center justify-between gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
+                  className="relative flex items-center justify-between gap-8 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
                 >
-                  <div className="flex items-center gap-4 text-lg font-medium">
+                  <div className="flex items-center gap-4 break-all text-lg font-medium">
                     <div
-                      className={`h-4 w-4 rounded-md border ${
+                      className={`h-4 w-4 shrink-0 rounded-md border ${
                         [
                           'bg-red-500/20 border-red-500',
                           'bg-orange-500/20 border-orange-500',
@@ -105,7 +116,7 @@ function CodeTimeTopEntries({
                     ></div>
                     {key}
                   </div>
-                  <div className="text-3xl font-semibold">
+                  <div className="shrink-0 text-3xl font-semibold">
                     <HoursAndMinutesFromSeconds seconds={value} />
                   </div>
                 </li>

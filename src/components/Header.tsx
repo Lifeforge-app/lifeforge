@@ -16,7 +16,7 @@ export default function Header(): React.ReactElement {
         {!sidebarExpanded && (
           <button
             onClick={toggleSidebar}
-            className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-100"
+            className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-100"
           >
             <Icon icon="tabler:menu" className="text-2xl" />
           </button>
@@ -41,9 +41,7 @@ export default function Header(): React.ReactElement {
               />
             </div>
             <div className="hidden flex-col items-start md:flex">
-              <div className="font-semibold text-bg-800 dark:text-bg-100">
-                {userData?.name}
-              </div>
+              <div className="font-semibold ">{userData?.name}</div>
               <div className="text-sm text-bg-500">{userData?.email}</div>
             </div>
             <Icon

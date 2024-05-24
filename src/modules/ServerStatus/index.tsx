@@ -4,10 +4,9 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useEffect } from 'react'
-import GaugeComponent from 'react-gauge-component'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import {
   type ICPUTemp,
@@ -50,7 +49,7 @@ function ServerStatus(): React.ReactElement {
     false
   )
   const [systemInfo] = useFetch<ISystemInfo>('server/info')
-  const [cpuTemp] = useFetch<ICPUTemp>(
+  const [cpuTemp, refreshCPUTemp] = useFetch<ICPUTemp>(
     'server/cpu-temp',
     true,
     'GET',
@@ -59,18 +58,16 @@ function ServerStatus(): React.ReactElement {
   )
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const interval = setInterval(async () => {
       refreshMemoryUsage()
-    }, 1000)
-    const interval2 = setInterval(() => {
       refreshCPUUsage()
+      refreshCPUTemp()
     }, 1000)
 
     return () => {
       clearInterval(interval)
-      clearInterval(interval2)
     }
-  })
+  }, [refreshMemoryUsage, refreshCPUUsage, refreshCPUTemp])
 
   return (
     <ModuleWrapper>
@@ -92,8 +89,23 @@ function ServerStatus(): React.ReactElement {
                     <Icon icon="tabler:cpu" className="text-2xl text-bg-500" />
                     <h2 className="text-xl text-bg-500">CPU Usage</h2>
                   </div>
+                  <p className="shrink-0 rounded-md border border-bg-400 px-4 py-2 text-lg text-bg-500">
+                    {cpuUsage.usage.toFixed(2)}%
+                  </p>
                 </div>
-                <GaugeComponent value={cpuUsage.usage} />
+                <div className="h-2 w-full overflow-hidden rounded-full bg-bg-800">
+                  <div
+                    className={`h-full rounded-full transition-all ${
+                      cpuUsage.usage > 80
+                        ? 'bg-red-500'
+                        : cpuUsage.usage > 60
+                        ? 'bg-yellow-500'
+                        : 'bg-green-500'
+                    }`}
+                    style={{ width: `${cpuUsage.usage}%` }}
+                  ></div>
+                </div>
+
                 <p className="text-center text-lg text-bg-500">
                   {moment(cpuUsage.uptime * 1000).format(
                     'D [days], H [hrs], m [mins]'
@@ -114,8 +126,22 @@ function ServerStatus(): React.ReactElement {
                     />
                     <h2 className="text-xl text-bg-500">Memory Usage</h2>
                   </div>
+                  <p className="shrink-0 rounded-md border border-bg-400 px-4 py-2 text-lg text-bg-500">
+                    {memoryUsage.percent.toFixed(2)}%
+                  </p>
                 </div>
-                <GaugeComponent value={memoryUsage.percent} />
+                <div className="h-2 w-full overflow-hidden rounded-full bg-bg-800">
+                  <div
+                    className={`h-full rounded-full transition-all ${
+                      memoryUsage.percent > 80
+                        ? 'bg-red-500'
+                        : memoryUsage.percent > 60
+                        ? 'bg-yellow-500'
+                        : 'bg-green-500'
+                    }`}
+                    style={{ width: `${memoryUsage.percent}%` }}
+                  ></div>
+                </div>
                 <p className="text-center text-lg text-bg-500">
                   {formatBytes(memoryUsage.used)} /{' '}
                   {formatBytes(memoryUsage.total)} used
@@ -134,51 +160,22 @@ function ServerStatus(): React.ReactElement {
                     />
                     <h2 className="text-xl text-bg-500">CPU Temperature</h2>
                   </div>
+                  <p className="shrink-0 rounded-md border border-bg-400 px-4 py-2 text-lg text-bg-500">
+                    {cpuTemp.main.toFixed(2)}°C
+                  </p>
                 </div>
-                <GaugeComponent
-                  value={cpuTemp.main}
-                  labels={{
-                    valueLabel: { formatTextValue: value => value + '°C' },
-                    tickLabels: {
-                      type: 'outer',
-                      defaultTickValueConfig: {
-                        formatTextValue: (value: string) => value + '°C'
-                      }
-                    }
-                  }}
-                  arc={{
-                    width: 0.2,
-                    padding: 0.005,
-                    cornerRadius: 1,
-                    // gradient: true,
-                    subArcs: [
-                      {
-                        limit: 65,
-                        color: '#5BE12C',
-                        showTick: true,
-                        tooltip: {
-                          text: 'OK temperature!'
-                        }
-                      },
-                      {
-                        limit: 80,
-                        color: '#F5CD19',
-                        showTick: true,
-                        tooltip: {
-                          text: 'High temperature!'
-                        }
-                      },
-                      {
-                        limit: 100,
-                        color: '#EA4228',
-                        showTick: true,
-                        tooltip: {
-                          text: 'Too high temperature!'
-                        }
-                      }
-                    ]
-                  }}
-                />
+                <div className="h-2 w-full overflow-hidden rounded-full bg-bg-800">
+                  <div
+                    className={`h-full rounded-full transition-all ${
+                      cpuTemp.main > 80
+                        ? 'bg-red-500'
+                        : cpuTemp.main > 60
+                        ? 'bg-yellow-500'
+                        : 'bg-green-500'
+                    }`}
+                    style={{ width: `${cpuTemp.main}%` }}
+                  ></div>
+                </div>
                 <p className="text-center text-lg text-bg-500">
                   {cpuTemp.max}°C max
                 </p>
