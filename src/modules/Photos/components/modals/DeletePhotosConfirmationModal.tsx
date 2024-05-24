@@ -100,7 +100,7 @@ function DeletePhotosConfirmationModal({
       <p className="mt-2 text-bg-500">
         This will move the photos to the trash. You can restore them from there.
       </p>
-      <div className="mt-6 flex w-full justify-around gap-2">
+      <div className="mt-6 flex w-full flex-col-reverse justify-around gap-2 sm:flex-row">
         <Button
           onClick={() => {
             customSetIsOpen

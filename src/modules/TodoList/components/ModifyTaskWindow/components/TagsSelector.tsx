@@ -32,7 +32,7 @@ function TagsSelector({
             <Icon
               icon="tabler:tags"
               className={`ml-6 h-6 w-6 shrink-0 ${
-                tags.length > 0 ? 'text-bg-800 dark:text-bg-100' : 'text-bg-500'
+                tags.length > 0 ? '' : 'text-bg-500'
               } group-focus-within:text-custom-500`}
             />
             <span

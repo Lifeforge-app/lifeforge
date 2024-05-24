@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -55,11 +56,11 @@ function Journal(): React.ReactElement {
             stuffToSearch="daily journal entries"
           />
           <Button
-            onClick={async () => {
-              await createEntry().catch(console.error)
+            onClick={() => {
+              createEntry().catch(console.error)
             }}
             icon={loading ? 'svg-spinners:180-ring' : 'tabler:plus'}
-            className="mt-6 shrink-0"
+            className="mt-2 hidden shrink-0 sm:mt-6 md:flex"
           >
             New entry
           </Button>
@@ -109,7 +110,9 @@ function Journal(): React.ReactElement {
                 description="You haven't written any journal entries yet."
                 icon="tabler:book-off"
                 ctaContent="new entry"
-                setModifyModalOpenType={() => {}}
+                setModifyModalOpenType={() => {
+                  createEntry().catch(console.error)
+                }}
               />
             </div>
           )}
@@ -127,6 +130,19 @@ function Journal(): React.ReactElement {
         updateDataList={refreshEntries}
         nameKey="title"
       />
+      {entries.length > 0 && (
+        <button
+          onClick={() => {
+            createEntry().catch(console.error)
+          }}
+          className="absolute bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800 sm:hidden"
+        >
+          <Icon
+            icon="tabler:plus"
+            className="h-6 w-6 shrink-0 transition-all"
+          />
+        </button>
+      )}
     </ModuleWrapper>
   )
 }

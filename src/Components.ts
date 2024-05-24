@@ -38,9 +38,7 @@ const Flashcards = lazy(async () => await import('./modules/Flashcards'))
 const CardSet = lazy(
   async () => await import('./modules/Flashcards/components/CardSet')
 )
-const ReferenceBooks = lazy(
-  async () => await import('./modules/ReferenceBooks')
-)
+const ReferenceBooks = lazy(async () => await import('./modules/BooksLibrary'))
 const Changelog = lazy(async () => await import('./modules/Changelog'))
 const Notes = lazy(async () => await import('./modules/Notes'))
 const NotesCategory = lazy(

@@ -44,6 +44,7 @@ interface IPhotosData {
   albumTagList: IPhotoAlbumTag[] | 'loading' | 'error'
   eachDayDimensions: Record<string, { inTimeline: number; inGallery: number }>
   selectedPhotos: string[]
+  sidebarOpen: boolean
 
   // State setters
   setReady: React.Dispatch<React.SetStateAction<boolean>>
@@ -70,6 +71,7 @@ interface IPhotosData {
   setRemovePhotosFromAlbumConfirmationModalOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
+  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 
   // Actions
   updateEachDayDimensions: () => void
@@ -89,6 +91,7 @@ export const PhotosContext = createContext<IPhotosData | undefined>(undefined)
 export default function PhotosProvider(): React.ReactElement {
   const { userData } = useAuthContext()
 
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [useTimelineScrollbar] = useState(
     userData?.moduleConfigs.Photos.useTimelineScrollbar ?? false
   )
@@ -279,6 +282,7 @@ export default function PhotosProvider(): React.ReactElement {
         albumTagList,
         eachDayDimensions,
         selectedPhotos,
+        sidebarOpen,
 
         // State setters
         setReady,
@@ -290,6 +294,7 @@ export default function PhotosProvider(): React.ReactElement {
         setAddPhotosToAlbumModalOpen,
         setDeletePhotosConfirmationModalOpen,
         setRemovePhotosFromAlbumConfirmationModalOpen,
+        setSidebarOpen,
 
         // Actions
         updateEachDayDimensions,

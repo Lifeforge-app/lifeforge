@@ -89,7 +89,10 @@ function ContainerHeader({
             }
           })()}
           {folderId !== undefined && (
-            <Icon icon="tabler:chevron-right" className="h-5 w-5 text-bg-500" />
+            <Icon
+              icon="tabler:chevron-right"
+              className="h-5 w-5 shrink-0 text-bg-500"
+            />
           )}
           {folderId !== undefined &&
             (() => {
@@ -120,8 +123,13 @@ function ContainerHeader({
                         color: folderDetails.color
                       }}
                     >
-                      <Icon icon={folderDetails.icon} className="text-xl" />
-                      {folderDetails.name}
+                      <Icon
+                        icon={folderDetails.icon}
+                        className="shrink-0 text-xl"
+                      />
+                      <span className="hidden md:block">
+                        {folderDetails.name}
+                      </span>
                     </div>
                   ) : (
                     'Folder'

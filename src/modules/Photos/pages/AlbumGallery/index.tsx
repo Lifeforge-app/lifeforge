@@ -60,14 +60,14 @@ function PhotosAlbumGallery(): React.ReactElement {
         <>
           <div className="relative min-h-0 w-full flex-1 overflow-y-hidden">
             <ModuleWrapper>
-              <div className="flex flex-col gap-1">
+              <div className="flex w-full min-w-0 flex-col gap-1">
                 <GoBackButton
                   onClick={() => {
                     navigate('/photos/album')
                   }}
                 />
-                <div className="flex items-center justify-between">
-                  <h1 className="flex items-center gap-4 text-2xl font-semibold">
+                <div className="flex w-full min-w-0 items-center justify-between gap-8">
+                  <h1 className="flex w-full min-w-0 items-center gap-4 text-2xl font-semibold">
                     <div className="flex-center flex h-14 w-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                       {albumData.cover !== '' ? (
                         <img
@@ -84,14 +84,14 @@ function PhotosAlbumGallery(): React.ReactElement {
                         />
                       )}
                     </div>
-                    <span className="flex flex-col gap-1">
+                    <span className="flex w-full min-w-0 flex-col gap-1">
                       <div className="flex items-center gap-2">
-                        {albumData.name}
+                        <span className="truncate">{albumData.name}</span>
                         <Icon
                           icon={
                             albumData.is_public ? 'tabler:world' : 'tabler:lock'
                           }
-                          className="h-5 w-5 text-bg-500"
+                          className="h-5 w-5 shrink-0 text-bg-500"
                         />
                       </div>
                       {(() => {
@@ -148,7 +148,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                       largerPadding
                       className="relative"
                       customIcon="tabler:share"
-                      customWidth="w-96"
+                      customWidth="w-72"
                     >
                       <ShareAlbumModal
                         albumId={id as string}

@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
+import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -10,29 +11,10 @@ import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 
-function shuffle(array: any[]): any[] {
-  let currentIndex = array.length
-  let randomIndex
-
-  // While there remain elements to shuffle.
-  while (currentIndex > 0) {
-    // Pick a remaining element.
-    randomIndex = Math.floor(Math.random() * currentIndex)
-    currentIndex--
-
-    // And swap it with the current element.
-    ;[array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex]
-    ]
-  }
-
-  return array
-}
-
 function ProjectsM(): React.ReactElement {
   const [icons, setIcons] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useEffect(() => {
     fetch('http://api.iconify.design/collection?prefix=tabler')
@@ -49,8 +31,19 @@ function ProjectsM(): React.ReactElement {
         title="Projects (M)"
         desc="It's time to stop procrastinating."
       />
-      <div className="mb-12 mt-6 flex min-h-0 w-full flex-1">
-        <aside className="h-full w-1/4 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom dark:bg-bg-900">
+      <div className="mt-6 flex min-h-0 w-full flex-1">
+        <aside
+          className={`absolute ${
+            sidebarOpen ? 'left-0' : 'left-full'
+          } top-0 z-[9999] h-full w-full overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 lg:static lg:h-[calc(100%-2rem)] lg:w-1/4`}
+        >
+          <div className="flex items-center justify-between px-8 py-4 lg:hidden">
+            <GoBackButton
+              onClick={() => {
+                setSidebarOpen(false)
+              }}
+            />
+          </div>
           <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
             <SidebarItem icon="tabler:list" name="All Projects" />
             <SidebarItem icon="tabler:star-filled" name="Starred" />
@@ -150,12 +143,28 @@ function ProjectsM(): React.ReactElement {
             ))}
           </ul>
         </aside>
-        <div className="ml-8 flex h-full flex-1 flex-col">
-          <div className="mx-4 flex items-center justify-between">
-            <h1 className="text-4xl font-semibold text-bg-800 dark:text-bg-100">
+        <div className="relative z-10 flex h-full flex-1 flex-col lg:ml-8">
+          <div className="flex items-center justify-between">
+            <h1 className="text-3xl font-semibold lg:text-4xl">
               All Projects <span className="text-base text-bg-500">(10)</span>
             </h1>
-            <Button icon="tabler:plus">create</Button>
+            <div className="flex items-center gap-6">
+              <Button
+                onClick={() => {}}
+                className="hidden sm:flex"
+                icon="tabler:plus"
+              >
+                new task
+              </Button>
+              <button
+                onClick={() => {
+                  setSidebarOpen(true)
+                }}
+                className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-100 lg:hidden"
+              >
+                <Icon icon="tabler:menu" className="text-2xl" />
+              </button>
+            </div>
           </div>
           <SearchInput
             searchQuery={searchQuery}
@@ -163,7 +172,7 @@ function ProjectsM(): React.ReactElement {
             stuffToSearch="projects"
           />
           <div className="mt-6 flex flex-1 flex-col overflow-y-auto">
-            <ul className="flex flex-col">
+            <ul className="mb-8 flex flex-col">
               {Array(10)
                 .fill(0)
                 .map((_, i) => (
@@ -175,7 +184,7 @@ function ProjectsM(): React.ReactElement {
                       to="./lifeforge"
                       className="flex w-full items-center justify-between gap-4"
                     >
-                      <div className="flex w-2/5 items-center gap-4">
+                      <div className="flex items-center gap-4">
                         <div
                           className={`h-10 w-1 shrink-0 rounded-full ${
                             ['bg-green-500', 'bg-yellow-500', 'bg-red-500'][
@@ -184,7 +193,7 @@ function ProjectsM(): React.ReactElement {
                           }`}
                         />
                         <div
-                          className={`h-12 w-12 overflow-hidden rounded-lg p-2 ${
+                          className={`h-12 w-12 shrink-0 overflow-hidden rounded-lg p-2 ${
                             [
                               'bg-red-500/20 text-red-500',
                               'bg-yellow-500/20 text-yellow-500',
@@ -215,7 +224,7 @@ function ProjectsM(): React.ReactElement {
                           />
                         </div>
                         <div className="flex flex-col items-start">
-                          <div className="font-semibold text-bg-800 dark:text-bg-100">
+                          <div className="font-semibold ">
                             {faker.commerce.productName()}
                           </div>
                           <div className="text-sm text-bg-500">
@@ -226,49 +235,6 @@ function ProjectsM(): React.ReactElement {
                             }
                           </div>
                         </div>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        {(() => {
-                          let randomLanguage = [
-                            ['simple-icons:react', 'React', 'text-sky-500'],
-                            [
-                              'simple-icons:typescript',
-                              'TypeScript',
-                              'text-blue-500'
-                            ],
-                            [
-                              'simple-icons:javascript',
-                              'JavaScript',
-                              'text-yellow-500'
-                            ],
-                            ['simple-icons:html5', 'HTML', 'text-orange-500'],
-                            ['simple-icons:css3', 'CSS', 'text-blue-500'],
-                            [
-                              'simple-icons:tailwindcss',
-                              'Tailwind',
-                              'text-cyan-500'
-                            ],
-                            [
-                              'simple-icons:nodedotjs',
-                              'Node.js',
-                              'text-green-500'
-                            ],
-                            ['simple-icons:express', 'Express', 'text-gray-500']
-                          ]
-
-                          randomLanguage = shuffle(randomLanguage)
-
-                          return randomLanguage
-                            .slice(0, Math.floor(Math.random() * 5 + 2))
-                            .map(([name, bg, color], index) => (
-                              <div
-                                key={index}
-                                className={`flex items-center gap-2 rounded-full ${bg} text-sm font-medium ${color}`}
-                              >
-                                <Icon icon={name} className="h-5 w-5" />
-                              </div>
-                            ))
-                        })()}
                       </div>
                       <div className="flex items-center gap-4 ">
                         <Icon

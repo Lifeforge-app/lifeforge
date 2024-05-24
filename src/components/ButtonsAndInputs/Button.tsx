@@ -56,7 +56,7 @@ function Button(props: ButtonProps): React.ReactElement {
       disabled={disabled}
       className={finalClassName}
     >
-      <Icon icon={icon} className="text-xl" />
+      <Icon icon={icon} className="shrink-0 text-xl" />
       {children ?? ''}
     </FinalElement>
   )

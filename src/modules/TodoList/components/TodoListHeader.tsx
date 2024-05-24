@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
+import Button from '@components/ButtonsAndInputs/Button'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import { type ITodoListTag } from '@typedec/TodoList'
-import Button from '@components/ButtonsAndInputs/Button'
 
 function TodoListHeader({
   setSidebarOpen
@@ -19,7 +19,7 @@ function TodoListHeader({
   return (
     <div className="flex items-center justify-between">
       <div>
-        <h1 className="text-3xl font-semibold text-bg-800 dark:text-bg-100 md:text-4xl">
+        <h1 className="text-3xl font-semibold  md:text-4xl">
           {(() => {
             const status = searchParams.get('status')
             if (status === null || status === '') return 'All'

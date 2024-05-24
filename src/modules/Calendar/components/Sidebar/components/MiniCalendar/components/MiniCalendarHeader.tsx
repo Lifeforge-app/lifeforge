@@ -15,7 +15,7 @@ function MiniCalendarHeader({
 }): React.ReactElement {
   return (
     <div className="mb-6 flex items-center justify-between gap-2">
-      <div className="whitespace-nowrap text-lg font-semibold text-bg-800 dark:text-bg-100">
+      <div className="whitespace-nowrap text-lg font-semibold ">
         {moment().month(currentMonth).year(currentYear).format('MMMM YYYY')}
       </div>
       <div className="-mr-4 flex gap-1">

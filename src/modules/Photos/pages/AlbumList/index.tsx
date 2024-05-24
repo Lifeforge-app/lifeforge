@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
@@ -15,7 +16,8 @@ import UpdateAlbumTagsModal from '../../components/modals/UpdateAlbumTagsModal'
 import PhotosSidebar from '../../components/PhotosSidebar'
 
 function PhotosAlbumList(): React.ReactElement {
-  const { albumList, refreshAlbumList, refreshPhotos } = usePhotosContext()
+  const { albumList, refreshAlbumList, refreshPhotos, setSidebarOpen } =
+    usePhotosContext()
   const [selectedAlbum, setSelectedAlbum] = useState<IPhotosAlbum | null>(null)
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
   const [updateAlbumTagsModalOpen, setUpdateAlbumTagsModalOpen] =
@@ -62,10 +64,20 @@ function PhotosAlbumList(): React.ReactElement {
         <ModuleHeader
           title="Photos"
           desc="View and manage all your precious memories."
+          actionButton={
+            <button
+              onClick={() => {
+                setSidebarOpen(true)
+              }}
+              className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-100 lg:hidden"
+            >
+              <Icon icon="tabler:menu" className="text-2xl" />
+            </button>
+          }
         />
-        <div className="relative mt-6 flex h-full min-h-0 w-full gap-8">
+        <div className="mt-6 flex h-full min-h-0 w-full gap-8">
           <PhotosSidebar />
-          <div className="flex h-full flex-1 flex-col">
+          <div className="flex h-full w-full min-w-0 flex-1 flex-col">
             <AlbumListHeader
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
@@ -74,7 +86,7 @@ function PhotosAlbumList(): React.ReactElement {
               {typeof filteredAlbumList !== 'string' &&
                 (albumList.length > 0 ? (
                   filteredAlbumList.length > 0 ? (
-                    <ul className="mx-4 mt-6 grid flex-1 grid-cols-3 overflow-y-auto pb-6">
+                    <ul className="mt-6 grid w-full min-w-0 flex-1 gap-2 overflow-y-auto pb-6 sm:grid-cols-2 lg:grid-cols-3">
                       {filteredAlbumList.map(album => (
                         <AlbumItem
                           key={album.id}

@@ -23,6 +23,11 @@ function DurationSlider(): React.ReactElement {
           audio.currentTime = +e.target.value
           setCurrentDuration(+e.target.value)
         }}
+        style={{
+          backgroundSize: `${
+            (+currentDuration / +currentMusic.duration) * 100
+          }% 100%`
+        }}
         className="main h-1 w-full cursor-pointer overflow-hidden rounded-full bg-bg-200 dark:bg-bg-700"
         value={currentDuration}
         max={currentMusic.duration}

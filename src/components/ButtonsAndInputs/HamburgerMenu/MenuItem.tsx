@@ -21,19 +21,22 @@ function MenuItem({
   text,
   isRed = false,
   onClick,
-  isToggled
+  isToggled,
+  disabled
 }: {
   icon: string
   text: string
   isRed?: boolean
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
   isToggled?: boolean
+  disabled?: boolean
 }): React.ReactElement {
   return (
     <Menu.Item>
       {function ({ active }) {
         return (
           <button
+            disabled={disabled}
             onClick={e => {
               e.preventDefault()
               e.stopPropagation()

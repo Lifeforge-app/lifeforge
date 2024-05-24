@@ -93,7 +93,7 @@ function ModifyMusicModal(): React.ReactElement {
           onClick={() => {
             setOpen(false)
           }}
-          className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:text-bg-100 dark:hover:bg-bg-800"
+          className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover: dark:hover:bg-bg-800"
         >
           <Icon icon="tabler:x" className="h-6 w-6" />
         </button>

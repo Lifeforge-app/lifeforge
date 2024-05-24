@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
@@ -11,17 +12,33 @@ function PhotosSidebar(): React.ReactElement {
   const {
     photos,
     albumList,
-    setModifyAlbumModalOpenType: setCreateAlbumModalOpen
+    setModifyAlbumModalOpenType: setCreateAlbumModalOpen,
+    sidebarOpen,
+    setSidebarOpen
   } = usePhotosContext()
 
   const navigate = useNavigate()
 
   return (
-    <aside className="hidden h-[calc(100%-2rem)] w-80 shrink-0 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom dark:bg-bg-900 lg:block">
+    <aside
+      className={`absolute ${
+        sidebarOpen ? 'left-0' : 'left-full'
+      } top-0 z-[9999] h-full w-full shrink-0 overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 lg:static lg:h-[calc(100%-2rem)] lg:w-1/4`}
+    >
+      <div className="flex items-center justify-between px-8 py-4 lg:hidden">
+        <GoBackButton
+          onClick={() => {
+            setSidebarOpen(false)
+          }}
+        />
+      </div>
       <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
         <li className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all">
           <Link
             to="/photos"
+            onClick={() => {
+              setSidebarOpen(false)
+            }}
             className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800"
           >
             <Icon icon="tabler:photo" className="h-6 w-6 shrink-0" />
@@ -42,6 +59,7 @@ function PhotosSidebar(): React.ReactElement {
           name="Favourites"
           onClick={() => {
             navigate('/photos/favourites')
+            setSidebarOpen(false)
           }}
         />
         <SidebarDivider />
@@ -61,6 +79,9 @@ function PhotosSidebar(): React.ReactElement {
               >
                 <Link
                   to={`/photos/album/${album.id}`}
+                  onClick={() => {
+                    setSidebarOpen(false)
+                  }}
                   className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 hover:bg-bg-100 dark:hover:bg-bg-800"
                 >
                   <div className="flex-center flex h-10 w-10 shrink-0 rounded-md bg-bg-200/50 shadow-sm dark:bg-bg-700/50">
@@ -91,6 +112,9 @@ function PhotosSidebar(): React.ReactElement {
           <li className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all">
             <Link
               to="/photos/album"
+              onClick={() => {
+                setSidebarOpen(false)
+              }}
               className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800"
             >
               <div className="flex-center flex h-10 w-10 shrink-0">
@@ -111,6 +135,7 @@ function PhotosSidebar(): React.ReactElement {
           name="Trash"
           onClick={() => {
             navigate('/photos/trash')
+            setSidebarOpen(false)
           }}
         />
       </ul>

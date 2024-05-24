@@ -37,7 +37,7 @@ function ModuleHeader({
     <div className="flex items-center justify-between gap-8">
       <div className="flex items-center gap-4">
         <div className="flex flex-col gap-1">
-          <h1 className="flex items-center gap-3 text-3xl font-semibold text-bg-800 dark:text-bg-100 md:text-4xl">
+          <h1 className="flex items-center gap-3 text-3xl font-semibold  md:text-4xl">
             {t(`modules.${toCamelCase(title?.toString() ?? '')}`)}
           </h1>
           {desc !== undefined && (

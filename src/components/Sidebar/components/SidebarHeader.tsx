@@ -7,15 +7,15 @@ function SidebarHeader(): React.ReactElement {
 
   return (
     <div
-      className={`flex h-24 w-full items-center justify-between pl-6 transition-none ${
-        !sidebarExpanded ? 'my-6 overflow-hidden sm:my-5' : 'my-4'
+      className={`flex h-24 w-full shrink-0 items-center justify-between pl-6 transition-none ${
+        !sidebarExpanded ? 'overflow-hidden' : ''
       }`}
     >
-      <h1 className="ml-1 flex shrink-0 items-center gap-2 whitespace-nowrap text-xl font-semibold text-bg-800 dark:text-bg-100">
+      <h1 className="ml-1 flex shrink-0 items-center gap-2 whitespace-nowrap text-xl font-semibold ">
         <Icon icon="tabler:hammer" className="text-3xl text-custom-500" />
         {sidebarExpanded && (
           <div>
-            LifeForge<span className="text-3xl text-custom-500"> .</span>
+            LifeForge<span className="text-2xl text-custom-500"> .</span>
           </div>
         )}
       </h1>

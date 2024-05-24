@@ -1,14 +1,14 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
+import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import ModifyTaskWindow from './ModifyTaskWindow'
 import Sidebar from './Sidebar'
 import TaskList from './tasks/TaskList'
 import TodoListHeader from './TodoListHeader'
-import SearchInput from '@components/ButtonsAndInputs/SearchInput'
-import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import ModifyListModal from '../modals/ModifyListModal'
 import ModifyTagModal from '../modals/ModifyTagModal'
 
@@ -36,7 +36,7 @@ function TodoListContainer(): React.ReactElement {
 
   return (
     <>
-      <div className="isolate mt-6 flex min-h-0 w-full flex-1">
+      <div className="mt-6 flex min-h-0 w-full flex-1">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className="relative z-10 flex h-full flex-1 flex-col lg:ml-8">
           <TodoListHeader setSidebarOpen={setSidebarOpen} />

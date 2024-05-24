@@ -3,7 +3,7 @@ import { type ITodoListEntry } from '@typedec/TodoList'
 
 function TaskHeader({ entry }: { entry: ITodoListEntry }): React.ReactElement {
   return (
-    <div className="font-semibold text-bg-800 dark:text-bg-100">
+    <div className="font-semibold ">
       <span
         className={`mr-2 font-semibold tracking-widest ${
           {

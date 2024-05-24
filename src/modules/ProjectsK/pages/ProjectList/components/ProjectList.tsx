@@ -43,9 +43,7 @@ function ProjectList({
                   }`}
                 />
                 <div className="flex w-full flex-col">
-                  <h3 className="text-xl font-semibold text-bg-800 dark:text-bg-100">
-                    {project.name}
-                  </h3>
+                  <h3 className="text-xl font-semibold ">{project.name}</h3>
                   <p className="text-sm text-bg-500">{project.customer_name}</p>
                 </div>
               </div>

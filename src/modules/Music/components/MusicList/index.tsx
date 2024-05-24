@@ -12,21 +12,14 @@ function MusicList({
 
   return (
     <APIComponentWithFallback data={musics}>
-      {typeof musics !== 'string' && (
-        <table className="mb-36 mt-6 w-full min-w-0 table-auto">
-          <tbody className="divide-y divide-bg-200 dark:divide-bg-800">
-            {musics
-              .filter(music =>
-                music.name
-                  .toLowerCase()
-                  .includes(debouncedSearchQuery.toLowerCase())
-              )
-              .map(music => (
-                <MusicListItem key={music.id} music={music} />
-              ))}
-          </tbody>
-        </table>
-      )}
+      {typeof musics !== 'string' &&
+        musics
+          .filter(music =>
+            music.name
+              .toLowerCase()
+              .includes(debouncedSearchQuery.toLowerCase())
+          )
+          .map(music => <MusicListItem key={music.id} music={music} />)}
     </APIComponentWithFallback>
   )
 }

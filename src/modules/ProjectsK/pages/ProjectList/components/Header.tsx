@@ -15,7 +15,7 @@ function Header({
 
   return (
     <header className="mx-4 flex items-center justify-between">
-      <h1 className="text-4xl font-semibold text-bg-800 dark:text-bg-100">
+      <h1 className="text-4xl font-semibold ">
         {Object.entries(PROJECT_STATUS).find(
           ([id]) => id === searchParams.get('status')
         )?.[1].name ?? 'All'}{' '}

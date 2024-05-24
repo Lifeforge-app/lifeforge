@@ -26,7 +26,7 @@ export default function Flashcards(): React.ReactElement {
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className="flex h-full flex-1 flex-col lg:ml-8">
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-semibold text-bg-800 dark:text-bg-100 md:text-4xl">
+            <h1 className="text-3xl font-semibold  md:text-4xl">
               All Decks <span className="text-base text-bg-500">(10)</span>
             </h1>
             <div className="flex items-center gap-6">
@@ -67,9 +67,7 @@ export default function Flashcards(): React.ReactElement {
                           {deck.expand.tag.name}
                         </span>
                       )}
-                      <div className="text-xl font-medium text-bg-800 dark:text-bg-100">
-                        {deck.name}
-                      </div>
+                      <div className="text-xl font-medium ">{deck.name}</div>
                       <p className="text-sm font-medium text-bg-500">
                         {deck.card_amount} cards
                       </p>
@@ -110,7 +108,7 @@ export default function Flashcards(): React.ReactElement {
                     <p className="text-sm font-medium text-bg-500">
                       {faker.datatype.number(100)} cards
                     </p>
-                    <div className="text-xl font-medium text-bg-800 dark:text-bg-100">
+                    <div className="text-xl font-medium ">
                       {faker.commerce.productName()}
                     </div>
                   </div>

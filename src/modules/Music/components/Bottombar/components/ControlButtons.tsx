@@ -21,7 +21,7 @@ export default function ControlButtons(): React.ReactElement {
   }
 
   return (
-    <div className="flex w-1/3 items-center gap-2">
+    <div className="flex items-center gap-2 xl:w-1/3">
       <IconButton
         onClick={() => {
           setIsShuffle(!isShuffle)

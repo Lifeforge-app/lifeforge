@@ -17,11 +17,11 @@ function FAB({
   setModifyIdeaModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
-  setModifyFolderModalOpenType: React.Dispatch<
+  setModifyFolderModalOpenType?: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedData: React.Dispatch<React.SetStateAction<IIdeaBoxEntry | null>>
-  setExistedFolderData: React.Dispatch<
+  setExistedFolderData?: React.Dispatch<
     React.SetStateAction<IIdeaBoxFolder | null>
   >
 }): React.ReactElement {
@@ -66,7 +66,11 @@ function FAB({
                       {({ active }) => (
                         <button
                           onClick={() => {
-                            if (name === 'Folder') {
+                            if (
+                              name === 'Folder' &&
+                              setExistedFolderData !== undefined &&
+                              setModifyFolderModalOpenType !== undefined
+                            ) {
                               setExistedFolderData(null)
                               setModifyFolderModalOpenType('create')
                             } else {

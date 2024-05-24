@@ -28,7 +28,7 @@ export default function Timer(): React.ReactElement {
           }}
           role="progressbar"
         >
-          <div className="z-[9999] mt-12 flex flex-col items-center gap-4 text-bg-800 dark:text-bg-100">
+          <div className="z-[9999] mt-12 flex flex-col items-center gap-4 ">
             <span className="text-7xl font-medium tracking-widest">02:33</span>
             <span className="text-lg font-medium uppercase tracking-widest text-custom-500">
               short break
