@@ -13,7 +13,7 @@ import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IIdeaBoxFolder } from '@typedec/IdeaBox'
-import APIRequest from '../../../../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 function ModifyFolderModal({
   openType,

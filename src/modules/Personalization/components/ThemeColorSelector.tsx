@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react'
 import React, { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import { toCamelCase } from '../../../utils/strings'
+import { toCamelCase } from '@utils/strings'
 
 const COLORS = [
   'red',

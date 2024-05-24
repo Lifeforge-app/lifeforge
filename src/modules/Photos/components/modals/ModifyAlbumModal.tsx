@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import APIRequest from '@utils/fetchData'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
@@ -6,7 +7,6 @@ import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import { type IPhotosAlbum } from '@typedec/Photos'
 import { usePhotosContext } from '../../../../providers/PhotosProvider'
-import APIRequest from '../../../../utils/fetchData'
 
 function ModifyAlbumModal({
   targetAlbum,

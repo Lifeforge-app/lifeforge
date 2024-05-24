@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { Icon } from '@iconify/react'
+import APIRequest from '@utils/fetchData'
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
@@ -11,7 +12,6 @@ import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IProjectsKEntry } from '@typedec/ProjectK'
 import FILE_ICONS from '../../../../../constants/file_icons'
-import APIRequest from '../../../../../utils/fetchData'
 
 export default function ProjectFiles({
   projectData,

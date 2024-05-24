@@ -21,7 +21,7 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IJournalEntry } from '@typedec/Journal'
-import APIRequest from '../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 function JournalEdit(): React.ReactElement {
   const { id } = useParams<{ id: string }>()

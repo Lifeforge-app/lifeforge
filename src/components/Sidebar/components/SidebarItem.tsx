@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
-import { titleToPath, toCamelCase } from '../../../utils/strings'
+import { titleToPath, toCamelCase } from '@utils/strings'
 
 interface SidebarItemProps {
   icon: string

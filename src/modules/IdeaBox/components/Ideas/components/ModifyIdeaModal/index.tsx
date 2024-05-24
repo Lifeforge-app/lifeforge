@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useDebounce } from '@uidotdev/usehooks'
+import APIRequest from '@utils/fetchData'
 import React, { useEffect, useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useParams } from 'react-router'
@@ -13,7 +14,6 @@ import IdeaContentInput from './components/IdeaContentInput'
 import IdeaImagePreview from './components/IdeaImagePreview'
 import IdeaImageUpload from './components/IdeaImageUpload'
 import ModalHeader from './components/ModalHeader'
-import APIRequest from '../../../../../../utils/fetchData'
 
 function ModifyIdeaModal({
   openType,

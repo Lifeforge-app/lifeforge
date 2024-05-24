@@ -6,7 +6,7 @@ import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { useMusicContext } from '@providers/MusicProvider'
 import { type IMusicEntry } from '@typedec/Music'
-import forceDown from '../../../../../utils/forceDown'
+import forceDown from '@utils/forceDown'
 
 function MusicListItem({ music }: { music: IMusicEntry }): React.ReactElement {
   const {

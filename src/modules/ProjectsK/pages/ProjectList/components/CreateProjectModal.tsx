@@ -2,6 +2,7 @@
 
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import APIRequest from '@utils/fetchData'
 import React, { Fragment, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
@@ -12,7 +13,6 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import useFetch from '@hooks/useFetch'
 import { type IProjectsKProgressStep } from '@typedec/ProjectK'
 import { PROJECT_STATUS } from '..'
-import APIRequest from '../../../../../utils/fetchData'
 
 function CreateProjectModal({
   isOpen,

@@ -6,7 +6,7 @@ import {
   type IProjectsKEntry,
   type IProjectsKProgress
 } from '@typedec/ProjectK'
-import APIRequest from '../../../../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 export default function ProjectProgress({
   projectData
