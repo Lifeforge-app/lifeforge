@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Modal from '@components/Modals/Modal'
 import { type IFlashcardCard } from '@typedec/Flashcard'
-import APIRequest from '../../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 function EditCardModal({
   deck,

@@ -15,7 +15,7 @@ import ListSelector from './components/ListSelector'
 import NotesInput from './components/NotesInput'
 import PrioritySelector from './components/PrioritySelector'
 import TagsSelector from './components/TagsSelector'
-import APIRequest from '../../../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 function ModifyTaskWindow(): React.ReactElement {
   const {

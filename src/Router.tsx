@@ -3,11 +3,11 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Loading from '@components/Screens/Loading'
 import NotFound from '@components/Screens/NotFound'
 import { useAuthContext } from '@providers/AuthProvider'
+import { titleToPath, convertToDashCase } from '@utils/strings'
 import Auth from './auth'
 import { COMPONENTS } from './Components'
 import { ROUTES } from './constants/routes_config'
 import MainApplication from './MainApplication'
-import { titleToPath, convertToDashCase } from './utils/strings'
 
 function AppRouter(): React.ReactElement {
   const { auth, authLoading, userData } = useAuthContext()

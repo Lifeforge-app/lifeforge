@@ -2,7 +2,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { toCamelCase } from '../../utils/strings'
+import { toCamelCase } from '@utils/strings'
 
 interface ModuleHeaderPropsWithHamburgerMenu {
   title: string | React.ReactNode

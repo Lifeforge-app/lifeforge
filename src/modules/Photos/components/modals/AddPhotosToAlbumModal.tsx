@@ -4,7 +4,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import Modal from '@components/Modals/Modal'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
-import APIRequest from '../../../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 function AddPhotosToAlbumModal(): React.ReactElement {
   const {

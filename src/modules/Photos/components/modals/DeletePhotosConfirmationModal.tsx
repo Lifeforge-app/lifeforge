@@ -9,7 +9,7 @@ import {
   type IPhotoAlbumEntryItem,
   type IPhotosEntry
 } from '@typedec/Photos'
-import APIRequest from '../../../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 function DeletePhotosConfirmationModal({
   isInAlbumGallery = false,

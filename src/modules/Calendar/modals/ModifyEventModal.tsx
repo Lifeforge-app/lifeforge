@@ -11,7 +11,7 @@ import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
 import CategorySelector from './ModifyCategoryModal/components/CategorySelector'
-import APIRequest from '../../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 interface ModifyEventModalProps {
   openType: 'create' | 'update' | null

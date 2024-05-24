@@ -20,7 +20,7 @@ import {
   type IPhotosEntryDimensionsAll
 } from '@typedec/Photos'
 import { useAuthContext } from './AuthProvider'
-import IntervalManager from '../utils/intervalManager'
+import IntervalManager from '@utils/intervalManager'
 
 const intervalManager = IntervalManager.getInstance()
 

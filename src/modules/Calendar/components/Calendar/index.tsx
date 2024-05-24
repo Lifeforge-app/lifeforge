@@ -7,7 +7,7 @@ import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
 import CalendarHeader from './components/CalendarHeader'
 import EventItem from './components/EventItem'
-import APIRequest from '../../../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 const localizer = momentLocalizer(moment)
 const DnDCalendar = withDragAndDrop(Calendar)

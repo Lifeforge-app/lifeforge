@@ -10,7 +10,7 @@ import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IAchievementEntry } from '@typedec/Achievements'
-import APIRequest from '../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 const difficulties = [
   ['easy', 'bg-green-500'],
