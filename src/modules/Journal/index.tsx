@@ -13,7 +13,7 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IJournalEntry } from '@typedec/Journal'
-import APIRequest from '../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 function Journal(): React.ReactElement {
   const [searchQuery, setSearchQuery] = useState('')

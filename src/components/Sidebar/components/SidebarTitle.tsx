@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { toCamelCase } from '../../../utils/strings'
+import { toCamelCase } from '@utils/strings'
 
 interface PropsWithActionButton {
   actionButtonIcon: string

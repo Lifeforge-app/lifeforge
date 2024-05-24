@@ -5,7 +5,7 @@ import SidebarDivider from './SidebarDivider'
 import SidebarItem from './SidebarItem'
 import SidebarTitle from './SidebarTitle'
 import { ROUTES } from '../../../constants/routes_config'
-import { titleToPath } from '../../../utils/strings'
+import { titleToPath } from '@utils/strings'
 
 function SidebarItems(): React.ReactElement {
   const { userData } = useAuthContext()

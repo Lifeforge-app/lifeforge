@@ -6,7 +6,7 @@ import TaskCompletionCheckbox from './components/TaskCompletionCheckbox'
 import TaskDueDate from './components/TaskDueDate'
 import TaskHeader from './components/TaskHeader'
 import TaskTags from './components/TaskTags'
-import APIRequest from '../../../../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 function TaskItem({
   entry,

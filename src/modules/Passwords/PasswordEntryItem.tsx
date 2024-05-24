@@ -7,7 +7,7 @@ import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { useAuthContext } from '@providers/AuthProvider'
 import { type IPasswordEntry } from '@typedec/Password'
-import { encrypt } from '../../utils/encryption'
+import { encrypt } from '@utils/encryption'
 
 function PasswordEntryITem({
   password,

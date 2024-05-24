@@ -11,7 +11,7 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import useFetch from '@hooks/useFetch'
 import { useMusicContext } from '@providers/MusicProvider'
 import VideoInfo from './components/VideoInfo'
-import IntervalManager from '../../../../utils/intervalManager'
+import IntervalManager from '@utils/intervalManager'
 
 export interface YoutubeVideoInfo {
   title: string

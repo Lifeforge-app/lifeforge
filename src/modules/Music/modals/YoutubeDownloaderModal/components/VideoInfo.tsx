@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import moment from 'moment'
 import React from 'react'
 import { type YoutubeVideoInfo } from '..'
-import { shortenBigNumber } from '../../../../../utils/strings'
+import { shortenBigNumber } from '@utils/strings'
 
 function VideoInfo({
   videoInfo

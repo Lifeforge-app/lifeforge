@@ -12,7 +12,7 @@ import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type ICalendarCategory } from '@typedec/Calendar'
-import APIRequest from '../../../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 interface ModifyCategoryModalProps {
   openType: 'create' | 'update' | null

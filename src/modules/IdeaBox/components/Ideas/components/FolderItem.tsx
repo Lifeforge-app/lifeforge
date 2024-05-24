@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { type IIdeaBoxEntry, type IIdeaBoxFolder } from '@typedec/IdeaBox'
-import APIRequest from '../../../../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 function FolderItem({
   folder,

@@ -17,8 +17,8 @@ import { type IPasswordEntry } from '@typedec/Password'
 import CreatePassword from './CreatePassword'
 import CreatePasswordModal from './CreatePasswordModal'
 import PasswordEntryITem from './PasswordEntryItem'
-import { encrypt } from '../../utils/encryption'
-import APIRequest from '../../utils/fetchData'
+import { encrypt } from '@utils/encryption'
+import APIRequest from '@utils/fetchData'
 
 function Passwords(): React.ReactElement {
   const { userData } = useAuthContext()

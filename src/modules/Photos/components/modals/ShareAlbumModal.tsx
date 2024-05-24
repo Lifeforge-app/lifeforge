@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import { type IPhotosAlbum } from '@typedec/Photos'
-import APIRequest from '../../../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 const Clipboard = (function (window, document, navigator) {
   let textArea: HTMLTextAreaElement

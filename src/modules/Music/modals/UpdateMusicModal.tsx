@@ -5,7 +5,7 @@ import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyBut
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import { useMusicContext } from '@providers/MusicProvider'
-import APIRequest from '../../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 function ModifyMusicModal(): React.ReactElement {
   const {

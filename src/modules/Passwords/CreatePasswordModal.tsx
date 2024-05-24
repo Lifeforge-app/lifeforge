@@ -11,8 +11,8 @@ import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { useAuthContext } from '@providers/AuthProvider'
 import { type IPasswordEntry } from '@typedec/Password'
-import { encrypt } from '../../utils/encryption'
-import APIRequest from '../../utils/fetchData'
+import { encrypt } from '@utils/encryption'
+import APIRequest from '@utils/fetchData'
 
 function CreatePasswordModal({
   openType,

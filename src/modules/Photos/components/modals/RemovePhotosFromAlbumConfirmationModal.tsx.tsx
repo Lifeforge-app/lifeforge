@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import Modal from '@components/Modals/Modal'
 import { usePhotosContext } from '@providers/PhotosProvider'
-import APIRequest from '../../../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 function RemovePhotosFromAlbumConfirmationModal({
   refreshPhotos,

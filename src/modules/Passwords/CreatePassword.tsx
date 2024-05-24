@@ -5,7 +5,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import { useAuthContext } from '@providers/AuthProvider'
-import APIRequest from '../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 
 function CreatePassword(): React.ReactElement {
   const { setUserData, userData } = useAuthContext()

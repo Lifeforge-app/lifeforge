@@ -16,7 +16,7 @@ import DeletePhotosConfirmationModal from './modals/DeletePhotosConfirmationModa
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { usePhotosContext } from '../../../providers/PhotosProvider'
-import forceDown from '../../../utils/forceDown'
+import forceDown from '@utils/forceDown'
 
 function CustomZoomContent({
   img,

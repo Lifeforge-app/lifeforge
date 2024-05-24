@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { QUICK_ACTIONS } from '../../constants/quick_actions'
 import { ROUTES } from '../../constants/routes_config'
-import { titleToPath } from '../../utils/strings'
+import { titleToPath } from '@utils/strings'
 
 function QuickActions(): React.ReactElement {
   const { t } = useTranslation()

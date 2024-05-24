@@ -6,7 +6,7 @@ import { cookieParse } from 'pocketbase'
 import React from 'react'
 import { toast } from 'react-toastify'
 import { useMusicContext } from '@providers/MusicProvider'
-import IntervalManager from '../../../utils/intervalManager'
+import IntervalManager from '@utils/intervalManager'
 
 const intervalManager = IntervalManager.getInstance()
 

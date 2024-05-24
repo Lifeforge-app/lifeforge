@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Modal from './Modal'
-import APIRequest from '../../utils/fetchData'
+import APIRequest from '@utils/fetchData'
 import Button from '../ButtonsAndInputs/Button'
 
 function DeleteConfirmationModal({

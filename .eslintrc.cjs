@@ -100,6 +100,7 @@ module.exports = {
                     ['@providers', './src/providers/'],
                     ['@hooks', './src/hooks/'],
                     ["@typedec", "./src/types/"],
+                    ['@utils/'],
                 ],
             }
         },
