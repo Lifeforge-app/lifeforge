@@ -593,7 +593,7 @@ input[type='range'].secondary::-moz-range-progress {
 }
 
 .prose * {
-  @apply select-all;
+  @apply select-text;
 }
 
 .no-scrollbar::-webkit-scrollbar {
