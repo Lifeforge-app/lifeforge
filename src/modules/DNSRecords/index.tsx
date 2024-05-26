@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useState } from 'react'
@@ -156,7 +157,7 @@ function DNSRecords(): JSX.Element {
                   <tr key={index} className="even:bg-bg-900">
                     <td className="p-4">
                       {record.dname_b64 +
-                        (!record.dname_b64.endsWith('.')
+                        (!record.dname_b64!.endsWith('.')
                           ? '.' +
                             (records[1].text_b64?.split(' ').pop() ?? '') +
                             '.'

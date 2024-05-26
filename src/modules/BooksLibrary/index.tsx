@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker'
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
@@ -14,7 +13,7 @@ import useFetch from '@hooks/useFetch'
 
 function BooksLibrary(): React.ReactElement {
   const [searchQuery, setSearchQuery] = useState('')
-  const [books] = useFetch('books-library/list')
+  const [books] = useFetch<any>('books-library/list')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [view, setView] = useState<'list' | 'grid'>('list')
 
@@ -89,7 +88,11 @@ function BooksLibrary(): React.ReactElement {
             <h1 className="text-3xl font-semibold text-bg-100 sm:text-4xl">
               All Books <span className="text-base text-bg-500">(10)</span>
             </h1>
-            <Button icon="tabler:plus" className="hidden sm:flex">
+            <Button
+              onClick={() => {}}
+              icon="tabler:plus"
+              className="hidden sm:flex"
+            >
               upload
             </Button>
           </div>
@@ -130,7 +133,7 @@ function BooksLibrary(): React.ReactElement {
             {typeof books !== 'string' &&
               (view === 'grid' ? (
                 <ul className="mt-6 grid min-h-0 gap-6 overflow-y-auto sm:grid-cols-2 md:grid-cols-3">
-                  {books.map(item => (
+                  {books.map((item: any) => (
                     <li
                       key={item.id}
                       className="relative flex flex-col items-start rounded-lg"
@@ -154,7 +157,7 @@ function BooksLibrary(): React.ReactElement {
                 </ul>
               ) : (
                 <ul className="mt-6 flex flex-col gap-4 overflow-y-auto pb-8">
-                  {books.map(item => (
+                  {books.map((item: any) => (
                     <li
                       key={item.id}
                       className="relative flex items-center gap-4 rounded-lg bg-bg-50 p-4 dark:bg-bg-900"

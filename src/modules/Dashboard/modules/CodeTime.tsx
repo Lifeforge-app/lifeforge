@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Icon } from '@iconify/react'
-import { type ScriptableContext } from 'chart.js'
+import { type ChartOptions, type ScriptableContext } from 'chart.js'
 import React, { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
+import colors from 'tailwindcss/colors'
 import Loading from '@components/Screens/Loading'
 import useFetch from '@hooks/useFetch'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { toCamelCase } from '@utils/strings'
 
 function msToTime(ms: number): string {
   const seconds = (ms / 1000).toFixed(1)
@@ -19,7 +22,7 @@ function msToTime(ms: number): string {
   else return days + ' Days'
 }
 
-const options2 = {
+const options2: ChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
@@ -28,6 +31,12 @@ const options2 = {
     },
     tooltip: {
       callbacks: {
+        labelColor: function () {
+          return {
+            borderColor: 'transparent',
+            backgroundColor: 'black'
+          }
+        },
         label: function (context: any) {
           let label = context.dataset.label || ''
 
@@ -39,7 +48,8 @@ const options2 = {
           }
           return label
         }
-      }
+      },
+      intersect: false
     }
   },
   scales: {
@@ -47,6 +57,7 @@ const options2 = {
       beginAtZero: true,
       ticks: {
         type: 'time',
+        // @ts-expect-error - Cannot fix lah this one ;-;
         callback: function (label: number) {
           return Math.round(label) + 'h'
         }
@@ -66,6 +77,9 @@ const options2 = {
         color: 'rgba(163, 163, 163, 0.5)'
       }
     }
+  },
+  hover: {
+    intersect: false
   }
 }
 
@@ -77,6 +91,7 @@ interface ICodeTimeEachDay {
 export default function CodeTime(): React.ReactElement {
   const [data] = useFetch<ICodeTimeEachDay[]>('code-time/each-day')
   const [chartData, setChartData] = useState<any>(null)
+  const { themeColor } = usePersonalizationContext()
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -88,19 +103,53 @@ export default function CodeTime(): React.ReactElement {
         datasets: [
           {
             label: 'Code time',
-            pointStyle: false,
             data: data.map(({ duration }) => duration / 3600000),
             backgroundColor: (context: ScriptableContext<'line'>) => {
               const ctx = context.chart.ctx
               const gradient = ctx.createLinearGradient(0, 0, 0, 250)
-              gradient.addColorStop(0, 'rgba(20,184,166,0.2)')
-              gradient.addColorStop(1, 'rgba(20,184,166,0)')
+              gradient.addColorStop(
+                0,
+                colors[
+                  toCamelCase(
+                    themeColor.replace('theme-', '').replace(/-/g, ' ')
+                  ) as keyof typeof colors
+                ][500] + '80'
+              )
+              gradient.addColorStop(
+                1,
+                colors[
+                  toCamelCase(
+                    themeColor.replace('theme-', '').replace(/-/g, ' ')
+                  ) as keyof typeof colors
+                ][500] + '00'
+              )
               return gradient
             },
             fill: 'origin',
-            borderColor: 'rgba(20, 184, 166, 1)',
+            borderColor:
+              colors[
+                toCamelCase(
+                  themeColor.replace('theme-', '').replace(/-/g, ' ')
+                ) as keyof typeof colors
+              ][500],
             borderWidth: 1,
-            tension: 0.4
+            tension: 0.4,
+            pointBorderColor: 'rgba(0, 0, 0, 0)',
+            pointBackgroundColor: 'rgba(0, 0, 0, 0)',
+            pointHoverBackgroundColor:
+              colors[
+                toCamelCase(
+                  themeColor.replace('theme-', '').replace(/-/g, ' ')
+                ) as keyof typeof colors
+              ][500] + '80',
+            pointHoverBorderColor:
+              colors[
+                toCamelCase(
+                  themeColor.replace('theme-', '').replace(/-/g, ' ')
+                ) as keyof typeof colors
+              ][500],
+            pointHoverBorderWidth: 2,
+            pointHoverRadius: 6
           }
         ]
       }

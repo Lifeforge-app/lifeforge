@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import Button from '@components/ButtonsAndInputs/Button'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { Menu, Transition } from '@headlessui/react'
 import { cookieParse } from 'pocketbase'
 import React from 'react'
 import { toast } from 'react-toastify'
+import Button from '@components/ButtonsAndInputs/Button'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { useMusicContext } from '@providers/MusicProvider'
 import IntervalManager from '@utils/intervalManager'
 
@@ -79,7 +79,7 @@ function AddMusicButton(): React.ReactElement {
 
   return (
     <Menu as="div" className="relative z-50 hidden md:block">
-      <Button CustomElement={Menu.Button} icon="tabler:plus">
+      <Button onClick={() => {}} CustomElement={Menu.Button} icon="tabler:plus">
         add music
       </Button>
       <Transition

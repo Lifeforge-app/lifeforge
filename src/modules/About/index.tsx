@@ -140,7 +140,11 @@ function About(): React.ReactElement {
               </li>
               <li>... and more features!</li>
             </ul>
-            <Button icon="tabler:arrow-right" className="mt-8">
+            <Button
+              onClick={() => {}}
+              icon="tabler:arrow-right"
+              className="mt-8"
+            >
               Go to Dashboard
             </Button>
           </div>
@@ -187,7 +191,11 @@ function About(): React.ReactElement {
                 <span className="">Basic Settings</span>
               </li>
             </ul>
-            <Button icon="tabler:arrow-right" className="mt-8 w-full">
+            <Button
+              onClick={() => {}}
+              icon="tabler:arrow-right"
+              className="mt-8 w-full"
+            >
               Get Started
             </Button>
           </div>
@@ -195,11 +203,11 @@ function About(): React.ReactElement {
           <div className="w-full rounded-lg bg-custom-500 p-6 shadow-xl sm:w-1/2 sm:p-8">
             <div className="mb-6 flex flex-col items-start justify-between gap-4 lg:flex-row">
               <div>
-                <h3 className="jakarta text-2xl font-semibold text-bg-100 sm:text-4xl">
+                <h3 className="text-2xl font-semibold text-bg-100 sm:text-4xl">
                   Pro Plan
                 </h3>
               </div>
-              <span className="order-first inline-block rounded-full bg-black bg-opacity-20 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-bg-100 lg:order-none">
+              <span className="inline-block rounded-full bg-black/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-bg-100 lg:order-none">
                 Go Pro
               </span>
             </div>
@@ -228,6 +236,7 @@ function About(): React.ReactElement {
               </li>
             </ul>
             <Button
+              onClick={() => {}}
               icon="tabler:arrow-right"
               className="mt-8 w-full bg-bg-100/20 dark:!text-bg-100"
             >
@@ -245,7 +254,11 @@ function About(): React.ReactElement {
             </h1>
           </div>
           <div className="flex h-full shrink-0">
-            <Button icon="tabler:arrow-right" className="bg-bg-100 text-bg-800">
+            <Button
+              onClick={() => {}}
+              icon="tabler:arrow-right"
+              className="bg-bg-100 text-bg-800"
+            >
               Go to Dashboard
             </Button>
           </div>

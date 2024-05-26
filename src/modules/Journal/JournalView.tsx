@@ -47,7 +47,9 @@ function JournalView(): React.ReactElement {
               </div>
               <Button
                 CustomElement={Link}
-                to={`/journal/edit/${entry.id}`}
+                onClick={() => {
+                  navigate(`/journal/edit/${entry.id}`)
+                }}
                 icon="tabler:edit"
                 className="shrink-0"
               >

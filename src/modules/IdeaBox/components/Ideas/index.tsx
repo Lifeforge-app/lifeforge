@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react'
 // @ts-expect-error no types available
 import Column from 'react-columns'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import Button from '@components/ButtonsAndInputs/Button'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'

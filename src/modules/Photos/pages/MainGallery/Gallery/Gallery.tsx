@@ -55,7 +55,7 @@ function Gallery(): React.ReactElement {
           </div>
         )}
       </div>
-      <BottomBar photos={photos} />
+      <BottomBar photos={photos as any} />
     </>
   ) : (
     <></>

@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import Modal from '@components/Modals/Modal'
-import { type IPhotoAlbumEntryItem } from '@typedec/Photos'
 import APIRequest from '@utils/fetchData'
 
 function EmptyTrashConfirmationModal({

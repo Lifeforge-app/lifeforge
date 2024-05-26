@@ -284,7 +284,11 @@ function DirectoryHeader({
             <Icon icon="tabler:filter" className="text-2xl" />
           </button>
           <Menu as="div" className="relative z-50 hidden md:block">
-            <Button CustomElement={Menu.Button} icon="tabler:plus">
+            <Button
+              onClick={() => {}}
+              CustomElement={Menu.Button}
+              icon="tabler:plus"
+            >
               new
             </Button>
             <Transition
@@ -325,7 +329,11 @@ function DirectoryHeader({
         </div>
       </div>
       <Menu as="div" className="absolute bottom-8 right-8 z-50 md:hidden">
-        <Button CustomElement={Menu.Button} icon="tabler:plus">
+        <Button
+          onClick={() => {}}
+          CustomElement={Menu.Button}
+          icon="tabler:plus"
+        >
           new
         </Button>
         <Transition
