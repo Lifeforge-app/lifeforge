@@ -75,12 +75,9 @@ export default function StorageStatus(): React.ReactElement {
       </h1>
       <APIComponentWithFallback data={diskUsage}>
         {typeof diskUsage !== 'string' && (
-          <div className="-mt-4 flex max-h-96 flex-col divide-y divide-bg-700 overflow-y-auto">
+          <div className="-mt-4 flex max-h-96 flex-col divide-y divide-bg-200 overflow-y-auto dark:divide-bg-700">
             {diskUsage.map(disk => (
-              <div
-                key={disk.name}
-                className="flex flex-col gap-4 rounded-lg py-6"
-              >
+              <div key={disk.name} className="flex flex-col gap-4 py-6">
                 <div className="flex w-full min-w-0 items-center justify-between">
                   <div className="flex min-w-0 flex-1 items-center gap-2">
                     <Icon
