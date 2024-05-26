@@ -47,7 +47,7 @@ Lifeforge is a personal management system designed to help you manage your life 
 
 ## 🖥 Screenshots
 
-Note that these are just some screenshots of a few modules 
+The screenshots provided are just a glimpse of Lifeforge. There's a lot more to explore and discover within the project.
 
 <div align="center">
 <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/d30f7bb2-9323-4ac5-8489-2a46a0bb81e9">
