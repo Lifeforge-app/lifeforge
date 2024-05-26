@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAuthContext } from '@providers/AuthProvider'
 import Button from '@components/ButtonsAndInputs/Button'
+import { useAuthContext } from '@providers/AuthProvider'
 
 function AuthSignInButton({
   emailOrUsername,
@@ -29,7 +29,7 @@ function AuthSignInButton({
           auth
         }
         onClick={signIn}
-        icon={loading ? 'svg-spinners:180-ring' : undefined}
+        icon={loading ? 'svg-spinners:180-ring' : ''}
       >
         {t('auth.signInButton')}
       </Button>

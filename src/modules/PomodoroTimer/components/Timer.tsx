@@ -52,7 +52,9 @@ export default function Timer(): React.ReactElement {
       </div>
       {started && (
         <div className="flex items-center gap-6">
-          <Button icon="tabler:pause">pause session</Button>
+          <Button onClick={() => {}} icon="tabler:pause">
+            pause session
+          </Button>
           <Button
             onClick={() => {
               setStarted(false)

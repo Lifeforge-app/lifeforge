@@ -104,30 +104,36 @@ function TimelineScrollbar(): React.ReactElement {
           >
             {JSON.stringify(eachDayDimensions) !== '{}' && (
               <>
-                {Object.entries(photos.firstDayOfYear)
-                  .filter(e => e[0] !== 'NaN')
-                  .map(([year, date]) => (
-                    <span
-                      key={year}
-                      className="flex-center pointer-events-none absolute z-[5] hidden h-4 w-full -translate-y-4 bg-bg-100 text-sm text-bg-500 dark:bg-bg-950 sm:flex"
-                      style={{
-                        top: `${eachDayDimensions[date]?.inTimeline}px`
-                      }}
-                    >
-                      {year}
-                    </span>
-                  ))}
-                {Object.entries(photos.firstDayOfMonth)
-                  .filter(e => e[0] !== 'NaN')
-                  .map(([month, date]) => (
-                    <span
-                      key={month}
-                      className="pointer-events-none absolute right-1/2 hidden h-1 w-1 -translate-y-1 translate-x-1/2 rounded-full bg-bg-400 dark:bg-bg-500 sm:flex"
-                      style={{
-                        top: `${eachDayDimensions[date]?.inTimeline}px`
-                      }}
-                    ></span>
-                  ))}
+                {
+                  // @ts-expect-error - I know what I'm doing
+                  Object.entries(photos.firstDayOfYear)
+                    .filter(e => e[0] !== 'NaN')
+                    .map(([year, date]) => (
+                      <span
+                        key={year}
+                        className="flex-center pointer-events-none absolute z-[5] hidden h-4 w-full -translate-y-4 bg-bg-100 text-sm text-bg-500 dark:bg-bg-950 sm:flex"
+                        style={{
+                          top: `${eachDayDimensions[date as any]?.inTimeline}px`
+                        }}
+                      >
+                        {year}
+                      </span>
+                    ))
+                }
+                {
+                  // @ts-expect-error - I know what I'm doing
+                  Object.entries(photos.firstDayOfMonth)
+                    .filter(e => e[0] !== 'NaN')
+                    .map(([month, date]) => (
+                      <span
+                        key={month}
+                        className="pointer-events-none absolute right-1/2 hidden h-1 w-1 -translate-y-1 translate-x-1/2 rounded-full bg-bg-400 dark:bg-bg-500 sm:flex"
+                        style={{
+                          top: `${eachDayDimensions[date as any]?.inTimeline}px`
+                        }}
+                      ></span>
+                    ))
+                }
               </>
             )}
           </div>

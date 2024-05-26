@@ -12,6 +12,8 @@ interface MenuProps {
   smallerPadding?: boolean
   customWidth?: string
   customIcon?: string
+  onButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onClose?: () => void
 }
 
 function getPaddingClass(
@@ -45,7 +47,9 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
     largerPadding,
     smallerPadding,
     customWidth,
-    customIcon
+    customIcon,
+    onButtonClick,
+    onClose
   } = props
 
   return (
@@ -64,6 +68,9 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
         }}
         onClick={e => {
           e.stopPropagation()
+          if (onButtonClick !== undefined) {
+            onButtonClick(e)
+          }
         }}
         className={`rounded-md transition-all ${getPaddingClass(
           largerPadding,
@@ -80,6 +87,11 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
         className="absolute right-0 top-4 z-50"
+        afterLeave={() => {
+          if (onClose !== undefined) {
+            onClose()
+          }
+        }}
       >
         <Menu.Items
           className={`mt-6 ${

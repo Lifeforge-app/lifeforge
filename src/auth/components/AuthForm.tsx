@@ -1,8 +1,8 @@
-import Input from '@components/ButtonsAndInputs/Input'
 import * as webauthn from '@passwordless-id/webauthn'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import Input from '@components/ButtonsAndInputs/Input'
 import { useAuthContext } from '@providers/AuthProvider'
 import AuthSignInButton from './AuthSignInButtons'
 import { AUTH_ERROR_MESSAGES } from '../../constants/auth'
@@ -72,42 +72,42 @@ function AuthForm(): React.ReactElement {
       })
   }
 
-  async function registerWithPasskey(): Promise<void> {
-    const res = await webauthn.client.register(
-      'melvinchia623600@gmail.com',
-      '20e47b44-293a-417a-8559-d7f32affd8b4',
-      {
-        authenticatorType: 'both',
-        userVerification: 'required',
-        discoverable: 'preferred',
-        timeout: 60000,
-        attestation: true
-      }
-    )
+  // async function registerWithPasskey(): Promise<void> {
+  //   const res = await webauthn.client.register(
+  //     'melvinchia623600@gmail.com',
+  //     '20e47b44-293a-417a-8559-d7f32affd8b4',
+  //     {
+  //       authenticatorType: 'both',
+  //       userVerification: 'required',
+  //       discoverable: 'preferred',
+  //       timeout: 60000,
+  //       attestation: true
+  //     }
+  //   )
 
-    await fetch(`${import.meta.env.VITE_API_HOST}/user/passkey/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(res)
-    })
-      .then(async res => {
-        const data = await res.json()
-        if (res.ok && data.state === 'success') {
-          toast.success(t('auth.passkey.createSuccess'))
-        } else {
-          throw new Error(data.message)
-        }
-      })
-      .catch(err => {
-        toast.error(t('auth.errorMessages.passkeyRegister'))
-        console.error(err)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }
+  //   await fetch(`${import.meta.env.VITE_API_HOST}/user/passkey/register`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(res)
+  //   })
+  //     .then(async res => {
+  //       const data = await res.json()
+  //       if (res.ok && data.state === 'success') {
+  //         toast.success(t('auth.passkey.createSuccess'))
+  //       } else {
+  //         throw new Error(data.message)
+  //       }
+  //     })
+  //     .catch(err => {
+  //       toast.error(t('auth.errorMessages.passkeyRegister'))
+  //       console.error(err)
+  //     })
+  //     .finally(() => {
+  //       setLoading(false)
+  //     })
+  // }
 
   async function signInWithPasskey(): Promise<void> {
     setLoading(true)
