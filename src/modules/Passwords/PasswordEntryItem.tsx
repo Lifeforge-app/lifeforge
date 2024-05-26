@@ -134,7 +134,7 @@ function PasswordEntryITem({
               .map(p =>
                 p.id === password.id ? { ...p, pinned: !p.pinned } : p
               )
-              .sort((a, b) => (a.pinned ? -1 : 1))
+              .sort(a => (a.pinned ? -1 : 1))
           })
           toast.info(
             `Password ${password.pinned ? 'unpinned' : 'pinned'} successfully`

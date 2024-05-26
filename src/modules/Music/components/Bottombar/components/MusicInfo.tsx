@@ -26,7 +26,7 @@ export default function MusicInfo(): React.ReactElement {
           <p className="text-sm text-bg-500">{currentMusic.author}</p>
         </div>
       </div>
-      <HamburgerMenu className="relative md:hidden"></HamburgerMenu>
+      <HamburgerMenu className="relative md:hidden">sus</HamburgerMenu>
     </div>
   )
 }

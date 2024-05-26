@@ -8,7 +8,10 @@
 
     "paths": {
       "@components/*": ["./src/components/general/*"],
-      "@providers/*": ["./src/providers/*"]
+      "@providers/*": ["./src/providers/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@typedec/*": ["./src/types/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "include": ["vite.config.ts"]

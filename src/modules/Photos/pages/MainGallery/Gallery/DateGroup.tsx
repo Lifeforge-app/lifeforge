@@ -154,13 +154,15 @@ function DateGroup({
                         id: photo.key ?? '',
                         image: '',
                         has_raw: false,
-                        is_in_album: false
+                        is_in_album: false,
+                        is_favourite: false
                       }
                     : {
                         id: photo.key ?? '',
                         image: '',
                         has_raw: false,
-                        is_in_album: false
+                        is_in_album: false,
+                        is_favourite: false
                       }
                 }
                 margin={margin ?? ''}

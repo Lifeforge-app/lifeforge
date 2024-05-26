@@ -45,7 +45,7 @@ function LanguageSelector(): React.ReactElement {
         <div className="relative mt-1 w-full md:w-48">
           <Listbox.Button className="relative flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 py-4 pl-4 pr-10 text-left focus:outline-none dark:border-bg-700 dark:bg-bg-900 sm:text-sm">
             <Icon
-              icon={LANGUAGES.find(({ code }) => code === language)?.icon}
+              icon={LANGUAGES.find(({ code }) => code === language)?.icon ?? ''}
               className="h-5 w-5"
             />
             <span className="mt-[-1px] block truncate">

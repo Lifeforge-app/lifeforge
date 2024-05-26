@@ -2,64 +2,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { Doughnut } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IDiskUsage } from '@typedec/ServerStatus'
-
-const data = {
-  labels: ['Images', 'Videos', 'Musics', 'Documents'],
-  datasets: [
-    {
-      label: 'Storage occupation',
-      data: [19, 12, 3, 5],
-      backgroundColor: [
-        'rgba(244, 63, 94, 0.2)',
-        'rgba(245 ,158, 11, 0.2)',
-        'rgba(59, 130, 246, 0.2)',
-        'rgba(34, 197, 94, 0.2)'
-      ],
-      borderColor: [
-        'rgba(244, 63, 94, 1)',
-        'rgba(245, 158, 11, 1)',
-        'rgba(59, 130, 246, 1)',
-        'rgba(34, 197, 94, 1)'
-      ],
-      borderWidth: 1
-    }
-  ]
-}
-
-const options = {
-  plugins: {
-    tooltip: {
-      callbacks: {
-        label: function (context: any) {
-          let label = context.dataset.label || ''
-
-          if (label) {
-            label += ': '
-          }
-          if (context.parsed.y !== null) {
-            label += new Intl.NumberFormat('en-US', {
-              style: 'percent',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-            }).format(context.parsed / 100)
-          }
-          return label
-        }
-      }
-    },
-    legend: {
-      labels: {
-        color: 'rgb(18, 18, 18)'
-      },
-      position: 'bottom' as const
-    }
-  }
-}
 
 export default function StorageStatus(): React.ReactElement {
   const { t } = useTranslation()
@@ -94,7 +40,7 @@ export default function StorageStatus(): React.ReactElement {
                 </div>
                 <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-bg-200 dark:bg-bg-800">
                   <div
-                    className="h-full rounded-full bg-green-500"
+                    className="h-full rounded-full bg-custom-500"
                     style={{ width: disk.usedPercent }}
                   ></div>
                 </div>

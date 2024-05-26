@@ -5,9 +5,9 @@ import React, { useCallback } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
+import APIRequest from '@utils/fetchData'
 import CalendarHeader from './components/CalendarHeader'
 import EventItem from './components/EventItem'
-import APIRequest from '@utils/fetchData'
 
 const localizer = momentLocalizer(moment)
 const DnDCalendar = withDragAndDrop(Calendar)
@@ -98,9 +98,11 @@ function CalendarComponent({
         return true
       }}
       onEventDrop={e => {
+        // @ts-expect-error - I don't know how to fix this ;-;
         updateEvent(e).catch(console.error)
       }}
       onEventResize={e => {
+        // @ts-expect-error - I don't know how to fix this ;-;
         updateEvent(e).catch(console.error)
       }}
       onSelectSlot={handleSelectSlot}

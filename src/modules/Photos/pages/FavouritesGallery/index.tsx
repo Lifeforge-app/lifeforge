@@ -105,6 +105,8 @@ function PhotosFavouritesGallery(): React.ReactElement {
                   margin={3}
                   renderImage={({ photo, margin }) => (
                     <ImageObject
+                      refreshPhotos={() => {}}
+                      setPhotos={() => {}}
                       beingDisplayedInAlbum
                       photo={photo}
                       details={photos.find(image => image.id === photo.key)!}
