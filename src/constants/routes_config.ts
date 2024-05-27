@@ -187,7 +187,9 @@ export const ROUTES: IRoutes[] = [
       {
         name: 'Mail Inbox',
         icon: 'tabler:mail',
-        routes: {},
+        routes: {
+          'mail-inbox': 'mail-inbox'
+        },
         togglable: true
       },
       {
