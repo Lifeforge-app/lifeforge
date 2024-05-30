@@ -10,7 +10,6 @@ import React, { useEffect } from 'react'
 
 import '@mdxeditor/editor/style.css'
 import { useNavigate, useParams } from 'react-router'
-import { Link } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -46,7 +45,6 @@ function JournalView(): React.ReactElement {
                 <h2 className="mb-6 text-3xl font-semibold">{entry.title}</h2>
               </div>
               <Button
-                CustomElement={Link}
                 onClick={() => {
                   navigate(`/journal/edit/${entry.id}`)
                 }}
