@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
-import APIRequest from '@utils/fetchData'
-import { titleToPath } from '@utils/strings'
 import React from 'react'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import Loading from '@components/Screens/Loading'
 import { useAuthContext } from '@providers/AuthProvider'
 import { type ModuleEntry } from '@typedec/Module'
+import APIRequest from '@utils/fetchData'
+import { titleToPath } from '@utils/strings'
 import ModuleItem from './ModuleItem'
 
 const MODULES: ModuleEntry[] = [
