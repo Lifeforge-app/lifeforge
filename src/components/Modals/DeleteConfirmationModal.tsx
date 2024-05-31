@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
 import React, { useState } from 'react'
-import Modal from './Modal'
 import APIRequest from '@utils/fetchData'
+import Modal from './Modal'
 import Button from '../ButtonsAndInputs/Button'
 
 function DeleteConfirmationModal({
@@ -44,6 +44,9 @@ function DeleteConfirmationModal({
       callback: () => {
         onClose()
         updateDataList()
+      },
+      finalCallback: () => {
+        setLoading(false)
       }
     })
   }
