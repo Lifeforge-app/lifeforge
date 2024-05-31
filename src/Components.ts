@@ -75,6 +75,9 @@ const MailInbox = lazy(async () => await import('./modules/MailInbox'))
 const Wallet = lazy(async () => await import('./modules/Wallet'))
 const Assets = lazy(async () => await import('./modules/Wallet/pages/Assets'))
 const Ledgers = lazy(async () => await import('./modules/Wallet/pages/Ledgers'))
+const Transactions = lazy(
+  async () => await import('./modules/Wallet/pages/Transactions')
+)
 
 export const COMPONENTS = {
   dashboard: {
@@ -173,6 +176,7 @@ export const COMPONENTS = {
   wallet: {
     wallet: Wallet,
     assets: Assets,
-    ledgers: Ledgers
+    ledgers: Ledgers,
+    transactions: Transactions
   }
 }

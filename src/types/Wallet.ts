@@ -20,4 +20,26 @@ interface IWalletLedgerEntry {
   color: string
 }
 
-export type { IWalletAssetEntry, IWalletLedgerEntry }
+interface IWalletCategoryEntry extends IWalletLedgerEntry {}
+
+interface IWalletTransactionEntry {
+  collectionId: string
+  collectionName: string
+  created: string
+  id: string
+  updated: string
+  type: 'income' | 'expenses' | 'transfer'
+  particulars: string
+  amount: number
+  date: string
+  category: string
+  asset: string
+  ledger: string
+}
+
+export type {
+  IWalletAssetEntry,
+  IWalletLedgerEntry,
+  IWalletTransactionEntry,
+  IWalletCategoryEntry
+}

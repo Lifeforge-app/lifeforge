@@ -54,7 +54,7 @@ function Ledgers(): React.ReactElement {
               >
                 <div className="flex items-center gap-3">
                   <span
-                    className="w-min rounded-md p-3"
+                    className="w-min rounded-md p-2"
                     style={{
                       backgroundColor: ledger.color + '20'
                     }}
@@ -68,7 +68,7 @@ function Ledgers(): React.ReactElement {
                     />
                   </span>
                   <div>
-                    <h2 className="text-2xl font-medium">{ledger.name}</h2>
+                    <h2 className="text-xl font-medium">{ledger.name}</h2>
                     <p className="text-sm text-bg-500">0 transactions</p>
                   </div>
                 </div>

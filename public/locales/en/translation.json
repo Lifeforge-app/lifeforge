@@ -53,6 +53,7 @@
         "assets": "Assets",
         "budgets": "Budget",
         "ledgers": "Ledgers",
+        "transactions": "Transactions",
         "title": {
             "productivity": "Productivity",
             "storage": "Storage",
@@ -108,7 +109,8 @@
             "blogPosts": "Writing and sharing your thoughts with the world. 📝",
             "assets": "See how much money you have 💰",
             "budgets": "Make sure you're not spending too much money 💸",
-            "ledgers": "Split your expenses so you know who owes who 💸"
+            "ledgers": "Split your expenses so you know who owes who 💸",
+            "transactions": "Know where your money is going 💸"
         }
     },
     "header": {
