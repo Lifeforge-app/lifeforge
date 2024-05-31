@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { cookieParse } from 'pocketbase'
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { Helmet } from 'react-helmet'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { useAuthContext } from './AuthProvider'
@@ -218,7 +217,7 @@ export default function PersonalizationProvider({
   }
 
   return (
-    <PersonalizationContext.Provider
+    <PersonalizationContext
       value={{
         theme,
         themeColor,
@@ -230,18 +229,16 @@ export default function PersonalizationProvider({
         setLanguage: changeLanguage
       }}
     >
-      <Helmet>
-        <meta
-          name="theme-color"
-          content={
-            THEME_COLOR_HEX[
-              themeColor.replace('theme-', '') as keyof typeof THEME_COLOR_HEX
-            ]
-          }
-        />
-      </Helmet>
+      <meta
+        name="theme-color"
+        content={
+          THEME_COLOR_HEX[
+            themeColor.replace('theme-', '') as keyof typeof THEME_COLOR_HEX
+          ]
+        }
+      />
       {children}
-    </PersonalizationContext.Provider>
+    </PersonalizationContext>
   )
 }
 

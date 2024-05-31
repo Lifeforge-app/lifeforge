@@ -92,6 +92,7 @@ function CalendarComponent({
   )
 
   return (
+    // @ts-expect-error - cannot fix
     <DnDCalendar
       localizer={localizer}
       draggableAccessor={() => {

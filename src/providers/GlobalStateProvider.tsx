@@ -25,14 +25,14 @@ export default function GlobalStateProvider({
   }, [])
 
   return (
-    <GlobalStateContext.Provider
+    <GlobalStateContext
       value={{
         sidebarExpanded: navbarExpanded,
         toggleSidebar: toggleNavbarExpanded
       }}
     >
       {children}
-    </GlobalStateContext.Provider>
+    </GlobalStateContext>
   )
 }
 

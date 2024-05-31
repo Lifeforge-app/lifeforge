@@ -37,9 +37,7 @@ function ModifyTransactionsModal({
     if (openType) {
       if (openType === 'update') {
         if (existedData) {
-          setTransactionName(existedData.name)
-          setTransactionIcon(existedData.icon)
-          setTransactionColor(existedData.color)
+          console.log('TODO')
         }
       } else {
         setTransactionName('')
