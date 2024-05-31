@@ -50,6 +50,9 @@
         "dNSRecords": "DNS Records",
         "mailInbox": "Mail Inbox",
         "blogPosts": "Blog Posts",
+        "assets": "Assets",
+        "budgets": "Budget",
+        "ledgers": "Ledgers",
         "title": {
             "productivity": "Productivity",
             "storage": "Storage",
@@ -102,7 +105,10 @@
             "achievements": "Celebrate your wins, big and small. 🏆",
             "dNSRecords": "No need to login to CPanel, manage your DNS records here. 🌐",
             "mailInbox": "Manage your email inbox, all in one place. 📧",
-            "blogPosts": "Writing and sharing your thoughts with the world. 📝"
+            "blogPosts": "Writing and sharing your thoughts with the world. 📝",
+            "assets": "See how much money you have 💰",
+            "budgets": "Make sure you're not spending too much money 💸",
+            "ledgers": "Split your expenses so you know who owes who 💸"
         }
     },
     "header": {

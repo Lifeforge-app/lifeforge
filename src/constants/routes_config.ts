@@ -135,11 +135,21 @@ export const ROUTES: IRoutes[] = [
         name: 'Wallet',
         icon: 'tabler:currency-dollar',
         subsection: [
-          ['Dashboard', 'tabler:dashboard'],
-          ['Transactions', 'tabler:arrows-exchange'],
-          ['Budgets', 'tabler:coin'],
-          ['Saving Goals', 'tabler:bolt']
+          ['Dashboard', 'tabler:dashboard', ''],
+          ['Transactions', 'tabler:arrows-exchange', 'transactions'],
+          ['Assets', 'tabler:wallet', 'assets'],
+          ['Ledgers', 'tabler:book', 'ledgers']
         ],
+        routes: {
+          wallet: 'wallet',
+          assets: 'wallet/assets',
+          ledgers: 'wallet/ledgers'
+        },
+        togglable: true
+      },
+      {
+        name: 'Budgets',
+        icon: 'tabler:credit-card',
         routes: {},
         togglable: true
       },
