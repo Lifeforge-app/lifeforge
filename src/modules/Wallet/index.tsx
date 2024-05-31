@@ -102,6 +102,7 @@ const data2 = {
 
 const options2 = {
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       display: false
@@ -112,8 +113,7 @@ const options2 = {
 
 function Wallet(): React.ReactElement {
   const navigate = useNavigate()
-  const [assets, refreshAssets] =
-    useFetch<IWalletAssetEntry[]>('wallet/assets/list')
+  const [assets] = useFetch<IWalletAssetEntry[]>('wallet/assets/list')
 
   return (
     <ModuleWrapper>
@@ -217,19 +217,25 @@ function Wallet(): React.ReactElement {
             <Line data={data} options={options} className="w-full" />
           </div>
         </div>
-        <div className="col-span-1 row-span-4 flex flex-col rounded-lg bg-bg-900 p-6 shadow-custom">
-          <div className="flex items-center justify-between">
-            <h1 className="flex items-center gap-2 text-xl font-semibold">
-              <Icon icon="tabler:chart-donut-3" className="text-2xl" />
-              <span className="ml-2">Expenses Breakdown</span>
+        <div className="col-span-1 row-span-4 flex w-full min-w-0 flex-col rounded-lg bg-bg-900 p-6 shadow-custom">
+          <div className="flex w-full min-w-0 items-center justify-between gap-4">
+            <h1 className="flex w-full min-w-0 items-center gap-2 text-xl font-semibold">
+              <Icon icon="tabler:chart-donut-3" className="shrink-0 text-2xl" />
+              <span className="ml-2 w-full min-w-0 truncate">
+                Expenses Breakdown
+              </span>
             </h1>
             <button className="flex items-center gap-2 rounded-lg p-2 text-bg-500 transition-all">
-              <span>Show more</span>
+              <span className="whitespace-nowrap">Show more</span>
               <Icon icon="tabler:chevron-right" className="text-xl" />
             </button>
           </div>
-          <div className="relative mx-auto mt-6 flex w-4/5 flex-col gap-4">
-            <Doughnut data={data2} options={options2} className="w-full" />
+          <div className="relative mx-auto mt-6 flex aspect-square w-4/5 min-w-0 flex-col gap-4">
+            <Doughnut
+              data={data2}
+              options={options2}
+              className="aspect-square w-full min-w-0"
+            />
             <div className="absolute left-1/2 top-1/2 mt-2 flex h-full w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center">
               <div className="text-4xl font-medium">
                 <span className="mr-1 text-xl text-bg-500">RM</span>
