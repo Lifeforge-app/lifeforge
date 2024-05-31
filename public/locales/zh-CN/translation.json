@@ -53,6 +53,7 @@
         "assets": "资产账户",
         "budgets": "预算",
         "ledgers": "账簿",
+        "transactions": "收支明细",
         "title": {
             "productivity": "生产力",
             "storage": "存储",
@@ -108,7 +109,8 @@
             "blogPosts": "将您的想法、您的故事、您的声音传播给世界。",
             "assets": "查看您的资产，了解您的财务状况。",
             "budgets": "管理您的预算，让您的钱包保持健康。",
-            "ledgers": "分类您的账目，确保您知道您的钱花在谁身上。"
+            "ledgers": "分类您的账目，确保您知道您的钱花在谁身上。",
+            "transactions": "查看您的交易历史，确保您的钱花在正确的地方。"
         }
     },
     "header": {

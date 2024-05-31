@@ -142,6 +142,7 @@ export const ROUTES: IRoutes[] = [
         ],
         routes: {
           wallet: 'wallet',
+          transactions: 'wallet/transactions',
           assets: 'wallet/assets',
           ledgers: 'wallet/ledgers'
         },
