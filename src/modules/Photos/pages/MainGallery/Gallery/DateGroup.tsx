@@ -87,7 +87,6 @@ function DateGroup({
       ref={el => {
         ref(el)
 
-        // @ts-expect-error - I know what I'm doing
         thisRef.current = el
       }}
       id={date}

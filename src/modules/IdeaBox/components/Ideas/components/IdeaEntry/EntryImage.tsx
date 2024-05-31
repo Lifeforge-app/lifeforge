@@ -41,7 +41,9 @@ function EntryImage({
 
   return (
     <div
-      ref={dragRef}
+      ref={node => {
+        dragRef(node)
+      }}
       className={`group relative ${isDragging ? 'cursor-move' : ''}`}
       style={{ opacity }}
     >

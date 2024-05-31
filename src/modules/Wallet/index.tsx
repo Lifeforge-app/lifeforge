@@ -54,7 +54,7 @@ const data = {
   datasets: [
     {
       label: 'Income',
-      data: labels.map((_, i) => faker.number.int({ min: 100, max: 700 })),
+      data: labels.map(_ => faker.number.int({ min: 100, max: 700 })),
       borderColor: 'rgb(34 197 94)',
       backgroundColor: 'rgb(34 197 94)',
       tension: 0.6,
@@ -63,7 +63,7 @@ const data = {
     },
     {
       label: 'Expenses',
-      data: labels.map((_, i) => faker.number.int({ min: 100, max: 700 })),
+      data: labels.map(_ => faker.number.int({ min: 100, max: 700 })),
       borderColor: 'rgb(239 68 68)',
       backgroundColor: 'rgb(239 68 68)',
       tension: 0.6,
@@ -121,7 +121,7 @@ function Wallet(): React.ReactElement {
         title="Wallet"
         desc="..."
         actionButton={
-          <Button icon="tabler:plus" className="shrink-0">
+          <Button onClick={() => {}} icon="tabler:plus" className="shrink-0">
             New record
           </Button>
         }

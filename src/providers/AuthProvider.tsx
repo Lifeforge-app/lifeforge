@@ -189,7 +189,7 @@ export default function AuthProvider({
   }
 
   return (
-    <AuthContext.Provider
+    <AuthContext
       value={{
         auth,
         setAuth,
@@ -207,7 +207,7 @@ export default function AuthProvider({
       }}
     >
       {children}
-    </AuthContext.Provider>
+    </AuthContext>
   )
 }
 

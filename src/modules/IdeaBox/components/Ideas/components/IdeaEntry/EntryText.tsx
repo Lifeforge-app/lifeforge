@@ -39,7 +39,9 @@ function EntryText({
 
   return (
     <div
-      ref={dragRef}
+      ref={node => {
+        dragRef(node)
+      }}
       className={`group relative my-4 flex items-start justify-between gap-2 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900 ${
         isDragging ? 'cursor-move' : ''
       }`}
