@@ -6,17 +6,17 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Zoom from 'react-medium-image-zoom'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
+import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
 import {
   type IPhotosEntryDimensionsAll,
   type IPhotosEntry,
   type IPhotoAlbumEntryItem
 } from '@typedec/Photos'
-import DeletePhotosConfirmationModal from './modals/DeletePhotosConfirmationModal'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { usePhotosContext } from '../../../providers/PhotosProvider'
 import forceDown from '@utils/forceDown'
+import DeletePhotosConfirmationModal from './modals/DeletePhotosConfirmationModal'
+import { usePhotosContext } from '../../../providers/PhotosProvider'
 
 function CustomZoomContent({
   img,
@@ -260,6 +260,7 @@ function ImageObject({
                 src: photo.src.split('?')[0]
               }}
             >
+              {/* @ts-expect-error cannot fix */}
               <LazyLoadImage
                 alt=""
                 src={photo.src}

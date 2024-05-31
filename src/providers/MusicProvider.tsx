@@ -151,7 +151,7 @@ export function MusicProvider({
       )
     } catch (err) {
       setMusics(toggleFavouriteInMusics(musics))
-      toast.error(`Oops! Couldn't add music to favourites! ${err}`)
+      toast.error(`Oops! Couldn't add music to favourites! ${err as string}`)
     }
   }
 
@@ -242,7 +242,7 @@ export function MusicProvider({
   }, [audio, musics, currentMusic, isShuffle, isRepeat])
 
   return (
-    <MusicContext.Provider
+    <MusicContext
       value={{
         // Audio related
         audio,
@@ -294,7 +294,7 @@ export function MusicProvider({
       }}
     >
       {children}
-    </MusicContext.Provider>
+    </MusicContext>
   )
 }
 

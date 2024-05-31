@@ -99,7 +99,7 @@ export function TodoListProvider({
   const [selectedTag, setSelectedTag] = useState<ITodoListTag | null>(null)
 
   return (
-    <TodoListContext.Provider
+    <TodoListContext
       value={{
         // Data
         lists,
@@ -138,7 +138,7 @@ export function TodoListProvider({
       }}
     >
       {children}
-    </TodoListContext.Provider>
+    </TodoListContext>
   )
 }
 

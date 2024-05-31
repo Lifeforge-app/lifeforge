@@ -18,7 +18,7 @@ function Input({
   actionButtonIcon = '',
   onActionButtonClick = () => {}
 }: {
-  reference?: React.RefObject<HTMLInputElement>
+  reference?: React.RefObject<HTMLInputElement | null>
   name: string
   placeholder: string
   icon: string

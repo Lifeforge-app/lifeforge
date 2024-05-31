@@ -39,7 +39,7 @@ function DirectoryHeader({
     path: INotesPath[]
   }>(`notes/entry/path/${workspace}/${subject}/${path}`)
 
-  const toastId = React.useRef<any>()
+  const toastId = React.useRef<any>(undefined)
   const navigate = useNavigate()
 
   function uploadFiles(): void {

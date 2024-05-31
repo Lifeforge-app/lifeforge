@@ -80,10 +80,14 @@ interface IPhotosData {
   refreshPhotos: () => void
 
   // Refs
-  sideSliderRef: React.RefObject<HTMLDivElement> | { current: null }
-  timelineDateDisplayRef: React.RefObject<HTMLDivElement> | { current: null }
-  mobileDateDisplayRef: React.RefObject<HTMLDivElement> | { current: null }
-  galleryWrapperRef: React.RefObject<HTMLDivElement> | { current: null }
+  sideSliderRef: React.RefObject<HTMLDivElement | null> | { current: null }
+  timelineDateDisplayRef:
+    | React.RefObject<HTMLDivElement | null>
+    | { current: null }
+  mobileDateDisplayRef:
+    | React.RefObject<HTMLDivElement | null>
+    | { current: null }
+  galleryWrapperRef: React.RefObject<HTMLDivElement | null> | { current: null }
 }
 
 export const PhotosContext = createContext<IPhotosData | undefined>(undefined)
@@ -265,7 +269,7 @@ export default function PhotosProvider(): React.ReactElement {
   }, [hidePhotosInAlbum, isBounded])
 
   return (
-    <PhotosContext.Provider
+    <PhotosContext
       value={{
         // State variables
         useTimelineScrollbar,
@@ -310,7 +314,7 @@ export default function PhotosProvider(): React.ReactElement {
       }}
     >
       <Outlet />
-    </PhotosContext.Provider>
+    </PhotosContext>
   )
 }
 

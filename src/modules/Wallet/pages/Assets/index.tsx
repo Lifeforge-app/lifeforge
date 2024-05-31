@@ -61,7 +61,7 @@ function Assets(): React.ReactElement {
                   <span className="mr-2 text-3xl text-bg-500">RM</span>
                   {(+asset.balance).toFixed(2)}
                 </p>
-                <Button icon="tabler:eye" className="mt-2">
+                <Button onClick={() => {}} icon="tabler:eye" className="mt-2">
                   View Transactions
                 </Button>
                 <HamburgerMenu className="absolute right-4 top-4">

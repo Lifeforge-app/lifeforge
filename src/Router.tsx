@@ -1,4 +1,4 @@
-import React, { Suspense, useMemo, useCallback } from 'react'
+import React, { Suspense, useMemo, useCallback, useEffect } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Loading from '@components/Screens/Loading'
 import NotFound from '@components/Screens/NotFound'
@@ -57,6 +57,15 @@ function AppRouter(): React.ReactElement {
     },
     []
   )
+
+  useEffect(() => {
+    const target =
+      ROUTES.flatMap(e => e.items).filter(item =>
+        location.pathname.slice(1).startsWith(titleToPath(item.name))
+      )[0]?.name ?? ''
+
+    document.title = `Lifeforge. ${target !== '' ? '- ' + target : ''}`
+  }, [location])
 
   if (authLoading) return <Loading customMessage="Loading user data" />
 

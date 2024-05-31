@@ -134,7 +134,7 @@ export default function SpotifyProvider({
   }, [userData, auth])
 
   return (
-    <SpotifyContext.Provider
+    <SpotifyContext
       value={{
         player,
         isPaused,
@@ -143,7 +143,7 @@ export default function SpotifyProvider({
       }}
     >
       {children}
-    </SpotifyContext.Provider>
+    </SpotifyContext>
   )
 }
 
