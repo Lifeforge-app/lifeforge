@@ -2,9 +2,11 @@
 
 import { Icon } from '@iconify/react'
 import moment from 'moment'
-import React, { useEffect } from 'react'
+import { cookieParse } from 'pocketbase'
+import React, { useEffect, useState } from 'react'
 import Gallery from 'react-photo-gallery'
 import { useNavigate, useParams } from 'react-router'
+import { toast } from 'react-toastify'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton.tsx'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu/index.tsx'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem.tsx'
@@ -41,6 +43,7 @@ function PhotosAlbumGallery(): React.ReactElement {
   const [photos, refreshPhotos, setPhotos] = useFetch<IPhotoAlbumEntryItem[]>(
     `photos/entry/list/${id}`
   )
+  const [isDownloadLoading, setIsDownloadLoading] = useState(false)
 
   useEffect(() => {
     if (typeof valid === 'boolean' && !valid) {
@@ -53,6 +56,51 @@ function PhotosAlbumGallery(): React.ReactElement {
       setSelectedPhotos([])
     }
   }, [])
+
+  async function requestBulkDownload(): Promise<void> {
+    if (typeof photos === 'string') {
+      return
+    }
+
+    setIsDownloadLoading(true)
+
+    try {
+      await fetch(
+        `${
+          import.meta.env.VITE_API_HOST
+        }/photos/entry/bulk-download?isInAlbum=true`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${cookieParse(document.cookie).token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            photos: photos.map(photo => photo.id)
+          })
+        }
+      )
+        .then(async response => {
+          if (response.status !== 200) {
+            throw new Error('Failed to download images')
+          }
+          const data = await response.json()
+          if (data.state !== 'success') {
+            throw new Error(data.message)
+          }
+
+          toast.success('Images are now ready for download. Head to your NAS')
+        })
+        .catch(error => {
+          throw new Error(error as string)
+        })
+        .finally(() => {
+          setIsDownloadLoading(false)
+        })
+    } catch (error: any) {
+      toast.error(`Failed to download images. Error: ${error}`)
+    }
+  }
 
   return (
     <APIComponentWithFallback data={albumData}>
@@ -163,6 +211,18 @@ function PhotosAlbumGallery(): React.ReactElement {
                         text="Rename"
                         onClick={() => {
                           setModifyAlbumModalOpenType('rename')
+                        }}
+                      />
+                      <MenuItem
+                        icon={
+                          isDownloadLoading
+                            ? 'svg-spinners:180-ring'
+                            : 'tabler:download'
+                        }
+                        disabled={isDownloadLoading}
+                        text="Download"
+                        onClick={() => {
+                          requestBulkDownload().catch(console.error)
                         }}
                       />
                     </HamburgerMenu>
