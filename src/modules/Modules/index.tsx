@@ -52,6 +52,10 @@ const MODULES: ModuleEntry[] = [
     name: 'Wallet',
     icon: 'tabler:currency-dollar'
   },
+  {
+    name: 'Budgets',
+    icon: 'tabler:coin'
+  },
   { name: 'Wish List', icon: 'tabler:heart' },
   { name: 'Contacts', icon: 'tabler:users' },
   { name: 'Passwords', icon: 'tabler:key' },

@@ -136,7 +136,7 @@ function SidebarItem({
                   location.pathname.split('/').slice(1)[0] ===
                     titleToPath(name) &&
                   location.pathname.split('/').slice(1)[1] === subsectionLink
-                    ? 'bg-bg-200/50 dark:bg-bg-800'
+                    ? ''
                     : 'text-bg-500'
                 }`}
               >

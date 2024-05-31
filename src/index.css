@@ -603,3 +603,7 @@ input[type='range'].secondary::-moz-range-progress {
 .no-scrollbar {
   scrollbar-width: none;
 }
+
+.wallet-donut-inner {
+  @apply text-bg-500;
+}

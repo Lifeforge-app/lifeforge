@@ -50,6 +50,9 @@
         "dNSRecords": "DNS 记录",
         "mailInbox": "邮件收件箱",
         "blogPosts": "博客文章",
+        "assets": "资产账户",
+        "budgets": "预算",
+        "ledgers": "账簿",
         "title": {
             "productivity": "生产力",
             "storage": "存储",
@@ -102,7 +105,10 @@
             "achievements": "您的成就，您的荣耀，您的传奇。",
             "dNSRecords": "管理您的域名系统记录，让您的网站保持运行。",
             "mailInbox": "您的邮件收件箱，您的邮件，您的生活。",
-            "blogPosts": "将您的想法、您的故事、您的声音传播给世界。"
+            "blogPosts": "将您的想法、您的故事、您的声音传播给世界。",
+            "assets": "查看您的资产，了解您的财务状况。",
+            "budgets": "管理您的预算，让您的钱包保持健康。",
+            "ledgers": "分类您的账目，确保您知道您的钱花在谁身上。"
         }
     },
     "header": {
