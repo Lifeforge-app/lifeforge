@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -37,6 +38,7 @@ function Transactions(): React.ReactElement {
     useState(false)
   const [selectedData, setSelectedData] =
     useState<IWalletTransactionEntry | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
 
   return (
     <ModuleWrapper>
@@ -69,6 +71,11 @@ function Transactions(): React.ReactElement {
           </>
         }
       />
+      <SearchInput
+        stuffToSearch="transactions"
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
       <div className="mt-8 h-full w-full overflow-y-auto">
         <APIComponentWithFallback data={transactions}>
           {typeof transactions !== 'string' &&
@@ -80,6 +87,7 @@ function Transactions(): React.ReactElement {
                 <tr className="border-b-2 border-bg-800 text-bg-500">
                   <th className="py-2">Date</th>
                   <th className="py-2">Type</th>
+                  <th className="py-2">Asset</th>
                   <th className="py-2 text-left">Particular</th>
                   <th className="py-2">Category</th>
                   <th className="py-2">Amount</th>
@@ -89,10 +97,10 @@ function Transactions(): React.ReactElement {
               <tbody>
                 {transactions.map(transaction => (
                   <tr key={transaction.id} className="border-b border-bg-800">
-                    <td className="py-2 text-center">
+                    <td className="whitespace-nowrap p-2 text-center">
                       {moment(transaction.date).format('MMM DD, YYYY')}
                     </td>
-                    <td className="py-4 text-center">
+                    <td className="p-4 text-center">
                       <span
                         className={`rounded-full px-3 py-1 text-sm ${
                           {
@@ -107,11 +115,26 @@ function Transactions(): React.ReactElement {
                           transaction.type.slice(1)}
                       </span>
                     </td>
-                    <td className="py-2">{transaction.particulars}</td>
-                    <td className="py-2 text-center">
+                    <td className="p-2 text-center">
+                      <span className="inline-flex w-min items-center gap-1 whitespace-nowrap rounded-full bg-bg-800 px-3 py-1 text-sm text-bg-400">
+                        <Icon
+                          icon={
+                            assets.find(asset => asset.id === transaction.asset)
+                              ?.icon ?? ''
+                          }
+                          className="h-4 w-4 shrink-0"
+                        />
+                        {
+                          assets.find(asset => asset.id === transaction.asset)
+                            ?.name
+                        }
+                      </span>
+                    </td>
+                    <td className="p-2">{transaction.particulars}</td>
+                    <td className="p-2 text-center">
                       {transaction.category !== '' ? (
                         <span
-                          className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm"
+                          className="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm"
                           style={{
                             backgroundColor:
                               categories.find(
@@ -140,7 +163,7 @@ function Transactions(): React.ReactElement {
                         '-'
                       )}
                     </td>
-                    <td className="py-2 text-center">
+                    <td className="p-2 text-center">
                       <span
                         className={`${
                           {
@@ -154,7 +177,7 @@ function Transactions(): React.ReactElement {
                         {transaction.amount.toFixed(2)}
                       </span>
                     </td>
-                    <td className="py-2">
+                    <td className="p-2">
                       <HamburgerMenu className="relative">
                         {transaction.type !== 'transfer' && (
                           <MenuItem
@@ -218,7 +241,6 @@ function Transactions(): React.ReactElement {
           refreshTransactions()
           refreshCategories()
         }}
-        refreshTransactions={refreshTransactions}
       />
     </ModuleWrapper>
   )

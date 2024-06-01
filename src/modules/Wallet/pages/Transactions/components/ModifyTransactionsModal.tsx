@@ -185,7 +185,8 @@ function ModifyTransactionsModal({
             <div className="relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-none">
               <Icon
                 icon={
-                  TRANSACTION_TYPES.find(l => l.id === transactionType)?.icon
+                  TRANSACTION_TYPES.find(l => l.id === transactionType)?.icon ??
+                  ''
                 }
                 style={{
                   color: TRANSACTION_TYPES.find(l => l.id === transactionType)
@@ -233,7 +234,8 @@ function ModifyTransactionsModal({
                         <span className="flex items-center gap-2">
                           <Icon
                             icon={
-                              TRANSACTION_TYPES.find(l => l.id === id)?.icon
+                              TRANSACTION_TYPES.find(l => l.id === id)?.icon ??
+                              ''
                             }
                             style={{ color }}
                             className="h-5 w-5"
@@ -280,9 +282,6 @@ function ModifyTransactionsModal({
                       assets.find(l => l.id === transactionAsset)?.icon ??
                       'tabler:wallet-off'
                     }
-                    style={{
-                      color: assets.find(l => l.id === transactionAsset)?.color
-                    }}
                     className="h-5 w-5"
                   />
                   <span className="mt-[-1px] block truncate">
@@ -397,9 +396,6 @@ function ModifyTransactionsModal({
                         assets.find(l => l.id === fromAsset)?.icon ??
                         'tabler:wallet-off'
                       }
-                      style={{
-                        color: assets.find(l => l.id === fromAsset)?.color
-                      }}
                       className="h-5 w-5"
                     />
                     <span className="mt-[-1px] block truncate">
@@ -480,9 +476,6 @@ function ModifyTransactionsModal({
                         assets.find(l => l.id === toAsset)?.icon ??
                         'tabler:wallet-off'
                       }
-                      style={{
-                        color: assets.find(l => l.id === toAsset)?.color
-                      }}
                       className="h-5 w-5"
                     />
                     <span className="mt-[-1px] block truncate">
