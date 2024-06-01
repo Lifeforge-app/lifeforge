@@ -20,7 +20,9 @@ interface IWalletLedgerEntry {
   color: string
 }
 
-interface IWalletCategoryEntry extends IWalletLedgerEntry {}
+interface IWalletCategoryEntry extends IWalletLedgerEntry {
+  type: 'income' | 'expenses'
+}
 
 interface IWalletTransactionEntry {
   collectionId: string
@@ -29,6 +31,7 @@ interface IWalletTransactionEntry {
   id: string
   updated: string
   type: 'income' | 'expenses' | 'transfer'
+  side: 'debit' | 'credit'
   particulars: string
   amount: number
   date: string

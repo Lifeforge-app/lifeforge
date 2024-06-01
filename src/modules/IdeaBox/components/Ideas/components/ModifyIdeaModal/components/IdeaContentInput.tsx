@@ -21,17 +21,17 @@ function IdeaContentInput({
           e.currentTarget.querySelector('textarea input') as HTMLInputElement
         )?.focus()
       }}
-      className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 focus-within:border-custom-500 dark:bg-bg-800/50"
+      className="group relative flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 focus-within:!border-custom-500 dark:bg-bg-800/50"
     >
       <Icon
         icon={
           innerTypeOfModifyIdea === 'text' ? 'tabler:file-text' : 'tabler:link'
         }
-        className="ml-6 h-6 w-6 shrink-0 text-bg-500 group-focus-within:text-custom-500"
+        className="ml-6 h-6 w-6 shrink-0 text-bg-500 group-focus-within:!text-custom-500"
       />
       <div className="flex w-full items-center gap-2">
         <span
-          className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:text-custom-500 ${
+          className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:!text-custom-500 ${
             {
               text: ideaContent,
               link: ideaLink

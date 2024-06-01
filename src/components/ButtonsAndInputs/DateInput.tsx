@@ -43,7 +43,6 @@ function DateInput({
         </span>
         <DatePicker
           value={date}
-          minDate={new Date()}
           onChange={(date: Value) => {
             setDate(date?.toString() ?? '')
           }}
@@ -61,7 +60,7 @@ function DateInput({
             prev2Label: <Icon icon="tabler:chevrons-left" />,
             next2Label: <Icon icon="tabler:chevrons-right" />
           }}
-          className="mt-8 h-8 w-full rounded-lg border-none bg-transparent px-4 tracking-wider outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
+          className="mt-8 h-10 w-full rounded-lg border-none bg-transparent px-4 tracking-wider outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
         />
         {date !== '' && (
           <button

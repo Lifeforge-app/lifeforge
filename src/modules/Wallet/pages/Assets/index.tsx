@@ -53,9 +53,9 @@ function Assets(): React.ReactElement {
               >
                 <div className="flex items-center gap-3">
                   <span className="w-min rounded-md bg-bg-800 p-2">
-                    <Icon icon={asset.icon} className="h-6 w-6" />
+                    <Icon icon={asset.icon} className="h-5 w-5" />
                   </span>
-                  <h2 className="text-2xl font-medium">{asset.name}</h2>
+                  <h2 className="text-xl font-medium">{asset.name}</h2>
                 </div>
                 <p className="text-5xl font-medium">
                   <span className="mr-2 text-3xl text-bg-500">RM</span>
