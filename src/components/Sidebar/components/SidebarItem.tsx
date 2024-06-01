@@ -130,6 +130,11 @@ function SidebarItem({
           {subsection.map(
             ([subsectionName, subsectionIcon, subsectionLink]) => (
               <Link
+                onClick={() => {
+                  if (window.innerWidth < 1024) {
+                    toggleSidebar()
+                  }
+                }}
                 to={`./${titleToPath(name)}/${subsectionLink}`}
                 key={subsectionName}
                 className={`mx-4 flex items-center gap-4 rounded-lg py-4 pl-[3.8rem] font-medium transition-all hover:bg-bg-200/30 dark:hover:bg-bg-800  ${

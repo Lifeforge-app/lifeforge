@@ -33,6 +33,7 @@ function Assets(): React.ReactElement {
           typeof assets !== 'string' &&
           assets.length > 0 && (
             <Button
+              className="hidden sm:flex"
               onClick={() => {
                 setModifyModalOpenType('create')
               }}
@@ -61,7 +62,12 @@ function Assets(): React.ReactElement {
                   <span className="mr-2 text-3xl text-bg-500">RM</span>
                   {(+asset.balance).toFixed(2)}
                 </p>
-                <Button onClick={() => {}} icon="tabler:eye" className="mt-2">
+                <Button
+                  type="secondary"
+                  onClick={() => {}}
+                  icon="tabler:eye"
+                  className="mt-2"
+                >
                   View Transactions
                 </Button>
                 <HamburgerMenu className="absolute right-4 top-4">
@@ -96,6 +102,20 @@ function Assets(): React.ReactElement {
           />
         )}
       </APIComponentWithFallback>
+      {assets.length > 0 && (
+        <button
+          onClick={() => {
+            setSelectedData(null)
+            setModifyModalOpenType('create')
+          }}
+          className="absolute bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800 sm:hidden"
+        >
+          <Icon
+            icon="tabler:plus"
+            className="h-6 w-6 shrink-0 transition-all"
+          />
+        </button>
+      )}
       <ModifyAssetsModal
         existedData={selectedData}
         setExistedData={setSelectedData}
