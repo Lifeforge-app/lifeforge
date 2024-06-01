@@ -16,7 +16,6 @@ import React from 'react'
 import { Doughnut, Line } from 'react-chartjs-2'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
-import Button from '@components/ButtonsAndInputs/Button'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -118,35 +117,31 @@ function Wallet(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader
-        title="Wallet"
-        desc="..."
-        actionButton={
-          <Button onClick={() => {}} icon="tabler:plus" className="shrink-0">
-            New record
-          </Button>
-        }
-      />
-      <div className="mt-6 grid h-full w-full grid-cols-3 grid-rows-[repeat(6,minmax(200px,1fr))] gap-4 overflow-y-auto pb-8">
-        <div className="col-span-1 row-span-1 flex flex-col justify-between rounded-lg bg-bg-900 p-6 shadow-custom">
+      <ModuleHeader title="Wallet" desc="..." />
+      <div className="mt-6 flex h-full w-full grid-cols-3 grid-rows-[repeat(6,minmax(200px,1fr))] flex-col gap-4 overflow-y-auto pb-8 xl:grid">
+        <div className="col-span-1 row-span-1 flex flex-col justify-between gap-4 rounded-lg bg-bg-900 p-6 shadow-custom">
           <h1 className="flex items-center gap-2 text-xl font-semibold">
             <Icon icon="tabler:login-2" className="text-2xl" />
             <span className="ml-2">Income</span>
           </h1>
           <p className="flex w-full items-end justify-start gap-2 text-5xl font-medium">
-            <span className="-mb-0.5 text-3xl text-bg-500">RM</span>3,000.00
+            <span className="-mb-0.5 text-2xl text-bg-500 xl:text-3xl">RM</span>
+            3,000.00
           </p>
           <p>
             <span className="text-green-500">+RM1,000.00</span> from last month
           </p>
         </div>
-        <div className="col-span-1 row-span-1 flex flex-col justify-between rounded-lg bg-bg-900 p-6 shadow-custom">
+        <div className="col-span-1 row-span-1 flex flex-col justify-between gap-4 rounded-lg bg-bg-900 p-6 shadow-custom">
           <h1 className="flex items-center gap-2 text-xl font-semibold">
             <Icon icon="tabler:logout-2" className="text-2xl" />
             <span className="ml-2">Expenses</span>
           </h1>
           <p className="flex w-full items-end justify-start gap-2 text-5xl font-medium">
-            <span className="-mb-0.5 text-3xl  text-bg-500">RM</span>900.00
+            <span className="-mb-0.5 text-2xl text-bg-500  xl:text-3xl">
+              RM
+            </span>
+            900.00
           </p>
           <p>
             <span className="text-red-500">-RM1,000.00</span> from last month
@@ -172,7 +167,7 @@ function Wallet(): React.ReactElement {
                 {assets.map(asset => (
                   <li
                     key={asset.id}
-                    className="flex w-full min-w-0 flex-1 items-center justify-between gap-4 rounded-lg bg-bg-100 p-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800"
+                    className="flex w-full min-w-0 flex-1 flex-col items-center justify-between gap-4 rounded-lg bg-bg-100 p-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 [@media(min-width:400px)]:flex-row"
                   >
                     <div className="flex w-full min-w-0 items-center gap-4">
                       <Icon icon={asset.icon} className="h-6 w-6 shrink-0" />
@@ -200,13 +195,13 @@ function Wallet(): React.ReactElement {
             )}
           </APIComponentWithFallback>
         </div>
-        <div className="col-span-2 row-span-2 flex h-full min-h-0 w-full flex-col rounded-lg bg-bg-900 p-6 shadow-custom">
+        <div className="col-span-2 row-span-2 flex h-full w-full flex-col rounded-lg bg-bg-900 p-6 shadow-custom">
           <div className="flex w-full items-center justify-between">
             <h1 className="flex items-center gap-2 text-xl font-semibold">
               <Icon icon="tabler:chart-dots" className="text-2xl" />
               <span className="ml-2">Statistics</span>
             </h1>
-            <div className="flex items-center gap-8">
+            <div className="hidden items-center gap-8 sm:flex">
               <div className="flex items-center gap-2">
                 <span className="-mb-0.5 h-3 w-3 rounded-full bg-green-500"></span>
                 <span className="text-sm">Income</span>
@@ -219,6 +214,16 @@ function Wallet(): React.ReactElement {
           </div>
           <div className="flex-center mt-6 flex h-full min-h-0 w-full flex-1">
             <Line data={data} options={options} className="w-full" />
+          </div>
+          <div className="mt-4 flex items-center justify-center gap-8 sm:hidden">
+            <div className="flex items-center gap-2">
+              <span className="-mb-0.5 h-3 w-3 rounded-full bg-green-500"></span>
+              <span className="text-sm">Income</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="-mb-0.5 h-3 w-3 rounded-full bg-red-500"></span>
+              <span className="text-sm">Expenses</span>
+            </div>
           </div>
         </div>
         <div className="col-span-1 row-span-4 flex w-full min-w-0 flex-col rounded-lg bg-bg-900 p-6 shadow-custom">
@@ -385,19 +390,24 @@ function Wallet(): React.ReactElement {
           </ul>
         </div>
         <div className="col-span-2 row-span-3 flex h-full flex-col rounded-lg bg-bg-900 p-6 shadow-custom">
-          <div className="flex items-center justify-between">
-            <h1 className="flex items-center gap-2 text-xl font-semibold">
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <h1 className="flex w-full items-center gap-2 text-xl font-semibold sm:w-auto">
               <Icon icon="tabler:list" className="text-2xl" />
               <span className="ml-2">Recent Transactions</span>
             </h1>
-            <div className="flex items-center gap-2 rounded-md border-2 border-bg-800 p-4">
-              <Icon icon="tabler:books" className="h-5 w-5" />
-              <span>All ledgers</span>
-              <Icon icon="tabler:chevron-down" className="ml-4 h-4 w-4" />
+            <div className="flex w-full items-center justify-between gap-2 rounded-md border-2 border-bg-800 p-4 sm:w-auto">
+              <div className="flex items-center gap-2">
+                <Icon icon="tabler:books" className="h-5 w-5" />
+                <span>All ledgers</span>
+              </div>
+              <Icon
+                icon="tabler:chevron-down"
+                className="ml-4 h-4 w-4 text-bg-500"
+              />
             </div>
           </div>
           <div className="mt-6 h-full w-full overflow-y-auto">
-            <table className="w-full">
+            <table className="hidden w-full lg:table">
               <thead>
                 <tr className="border-b-2 border-bg-800 text-bg-500">
                   <th className="py-2">Date</th>
@@ -488,6 +498,84 @@ function Wallet(): React.ReactElement {
                 })}
               </tbody>
             </table>
+            <ul className="flex flex-col gap-4 lg:hidden">
+              {Array.from({ length: 30 }).map((_, i) => {
+                const randomType = faker.helpers.arrayElement([
+                  'income',
+                  'expenses',
+                  'expenses'
+                ])
+                const randomName = faker.company.name()
+                const randomCategory = faker.helpers.arrayElement([
+                  [
+                    'Food & Drinks',
+                    'bg-red-500/20 text-red-500',
+                    'material-symbols:fastfood-outline-rounded'
+                  ],
+                  ['Transport', 'bg-blue-500/20 text-blue-500', 'tabler:car'],
+                  [
+                    'Shops',
+                    'bg-yellow-500/20 text-yellow-500',
+                    'tabler:building-store'
+                  ],
+                  [
+                    'Transfer',
+                    'bg-fuchsia-500/20 text-fuchsia-500',
+                    'tabler:arrow-left-circle'
+                  ],
+                  [
+                    'Entertainment',
+                    'bg-green-500/20 text-green-500',
+                    'tabler:movie'
+                  ],
+                  [
+                    'Others',
+                    'bg-purple-500/20 text-purple-500',
+                    'tabler:circle-plus'
+                  ]
+                ])
+                const randomAmount = faker.finance.amount()
+                const randomDate = moment(faker.date.anytime()).format(
+                  'MMM DD, YYYY'
+                )
+
+                return (
+                  <li
+                    key={i}
+                    className="flex items-center justify-between gap-4  p-4"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className={`rounded-md ${randomCategory[1]} p-2`}>
+                        <Icon icon={randomCategory[2]} className={'h-6 w-6'} />
+                      </div>
+                      <div className="flex flex-col">
+                        <div className="font-semibold ">{randomName}</div>
+                        <div className="text-sm text-bg-500">
+                          {randomType === 'income' ? 'Income' : 'Expenses'}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col">
+                      <div className="text-right">
+                        <span
+                          className={`${
+                            randomType === 'income'
+                              ? 'text-green-500'
+                              : 'text-red-500'
+                          }`}
+                        >
+                          {randomType === 'income' ? '+' : '-'}
+                          {randomAmount}
+                        </span>
+                      </div>
+                      <div className="text-right text-sm text-bg-500">
+                        {randomDate}
+                      </div>
+                    </div>
+                  </li>
+                )
+              })}
+            </ul>
           </div>
         </div>
       </div>
