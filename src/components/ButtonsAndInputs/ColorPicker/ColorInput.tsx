@@ -17,12 +17,12 @@ function ColorInput({
   }, [setColorPickerOpen])
 
   return (
-    <div className="group relative mt-6 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 focus-within:!border-custom-500 dark:bg-bg-800/50">
+    <div className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 focus-within:!border-custom-500 dark:bg-bg-800/50">
       <Icon
         icon="tabler:palette"
         className={`ml-6 h-6 w-6 shrink-0 ${
           color !== '' ? '' : 'text-bg-500'
-        } group-focus-within:text-custom-500`}
+        } group-focus-within:!text-custom-500`}
       />
 
       <div className="flex w-full items-center gap-2">

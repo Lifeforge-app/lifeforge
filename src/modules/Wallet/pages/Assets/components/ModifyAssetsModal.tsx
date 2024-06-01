@@ -30,6 +30,7 @@ function ModifyAssetsModal({
     undefined
   )
   const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     if (openType) {
@@ -65,8 +66,11 @@ function ModifyAssetsModal({
       return
     }
 
+    setIsLoading(true)
     await APIRequest({
-      endpoint: `wallet/assets/${openType}`,
+      endpoint: `wallet/assets/${openType}${
+        openType === 'update' ? `/${existedData?.id}` : ''
+      }`,
       method: openType === 'create' ? 'POST' : 'PATCH',
       body: {
         name: assetName,
@@ -85,6 +89,9 @@ function ModifyAssetsModal({
         refreshAssets()
         setExistedData(null)
         setOpenType(null)
+      },
+      finalCallback: () => {
+        setIsLoading(false)
       }
     })
   }
@@ -94,8 +101,8 @@ function ModifyAssetsModal({
       {' '}
       <Modal isOpen={openType !== null} minWidth="30rem">
         <ModalHeader
-          icon="tabler:plus"
-          title="Add Asset"
+          icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
+          title={openType === 'create' ? 'Add Asset' : 'Edit Asset'}
           onClose={() => {
             setOpenType(null)
           }}
@@ -126,11 +133,11 @@ function ModifyAssetsModal({
           />
         )}
         <CreateOrModifyButton
-          loading={false}
+          loading={isLoading}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-          type="create"
+          type={openType}
         />
       </Modal>
       <IconSelector

@@ -32,6 +32,7 @@ function ModifyLedgersModal({
   const [ledgerColor, setLedgerColor] = useState<string>('#FFFFFF')
   const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
   const [colorPickerOpen, setColorPickerOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     if (openType) {
@@ -67,8 +68,11 @@ function ModifyLedgersModal({
       return
     }
 
+    setIsLoading(true)
     await APIRequest({
-      endpoint: `wallet/Ledgers/${openType}`,
+      endpoint: `wallet/ledgers/${openType}${
+        openType === 'update' ? `/${existedData?.id}` : ''
+      }`,
       method: openType === 'create' ? 'POST' : 'PATCH',
       body: {
         name: ledgerName,
@@ -87,6 +91,9 @@ function ModifyLedgersModal({
         refreshLedgers()
         setExistedData(null)
         setOpenType(null)
+      },
+      finalCallback: () => {
+        setIsLoading(false)
       }
     })
   }
@@ -96,8 +103,8 @@ function ModifyLedgersModal({
       {' '}
       <Modal isOpen={openType !== null} minWidth="30rem">
         <ModalHeader
-          icon="tabler:plus"
-          title="Add Ledger"
+          icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
+          title={openType === 'update' ? 'Edit Ledger' : 'Add Ledger'}
           onClose={() => {
             setOpenType(null)
           }}
@@ -123,11 +130,11 @@ function ModifyLedgersModal({
           updateColor={updateLedgerColor}
         />
         <CreateOrModifyButton
-          loading={false}
+          loading={isLoading}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-          type="create"
+          type={openType}
         />
       </Modal>
       <IconSelector

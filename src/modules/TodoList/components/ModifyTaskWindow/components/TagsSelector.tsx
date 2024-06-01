@@ -33,10 +33,10 @@ function TagsSelector({
               icon="tabler:tags"
               className={`ml-6 h-6 w-6 shrink-0 ${
                 tags.length > 0 ? '' : 'text-bg-500'
-              } group-focus-within:text-custom-500`}
+              } group-focus-within:!text-custom-500`}
             />
             <span
-              className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:text-custom-500 ${'top-6 -translate-y-1/2 text-[14px]'}`}
+              className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:!text-custom-500 ${'top-6 -translate-y-1/2 text-[14px]'}`}
             >
               Tags
             </span>

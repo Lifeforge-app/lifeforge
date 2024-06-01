@@ -26,3 +26,5 @@ dist-ssr
 database/
 yarn.lock
 .DS_Store
+# Million Lint
+.million

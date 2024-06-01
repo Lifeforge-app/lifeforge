@@ -21,17 +21,17 @@ function ListSelector({
         setList(color ?? '')
       }}
       as="div"
-      className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:border-custom-500 dark:bg-bg-800/50"
+      className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 dark:bg-bg-800/50"
     >
       <Listbox.Button className="flex w-full items-center">
         <Icon
           icon="tabler:list"
           className={`ml-6 h-6 w-6 shrink-0 ${
             list !== null ? '' : 'text-bg-500'
-          } group-focus-within:text-custom-500`}
+          } group-focus-within:!text-custom-500`}
         />
         <span
-          className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:text-custom-500 ${'top-6 -translate-y-1/2 text-[14px]'}`}
+          className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:!text-custom-500 ${'top-6 -translate-y-1/2 text-[14px]'}`}
         >
           List
         </span>

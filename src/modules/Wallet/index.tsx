@@ -15,6 +15,7 @@ import moment from 'moment'
 import React from 'react'
 import { Doughnut, Line } from 'react-chartjs-2'
 import { useNavigate } from 'react-router'
+import { Link } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -157,14 +158,17 @@ function Wallet(): React.ReactElement {
               <Icon icon="tabler:wallet" className="text-2xl" />
               <span className="ml-2">Balances</span>
             </h1>
-            <button className="flex items-center gap-2 rounded-lg p-2 text-bg-500 transition-all">
+            <Link
+              to="./assets"
+              className="flex items-center gap-2 rounded-lg p-2 text-bg-500 transition-all"
+            >
               <span>Show more</span>
               <Icon icon="tabler:chevron-right" className="text-xl" />
-            </button>
+            </Link>
           </div>
           <APIComponentWithFallback data={assets}>
             {typeof assets !== 'string' && assets.length > 0 ? (
-              <ul className="mt-6 flex h-full flex-col gap-4">
+              <ul className="mt-6 flex h-full flex-col gap-4 overflow-y-auto">
                 {assets.map(asset => (
                   <li
                     key={asset.id}

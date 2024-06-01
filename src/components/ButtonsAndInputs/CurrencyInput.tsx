@@ -47,6 +47,7 @@ function CurrencyInputComponent({
           name={name}
           placeholder={placeholder}
           decimalsLimit={2}
+          value={value}
           onValueChange={updateValue}
           className={
             'mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500'

@@ -50,7 +50,7 @@ function Ledgers(): React.ReactElement {
             {Ledgers.map(ledger => (
               <div
                 key={ledger.id}
-                className="relative flex flex-col gap-4 rounded-lg bg-bg-100 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900"
+                className="relative flex items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900"
               >
                 <div className="flex items-center gap-3">
                   <span
@@ -72,7 +72,7 @@ function Ledgers(): React.ReactElement {
                     <p className="text-sm text-bg-500">0 transactions</p>
                   </div>
                 </div>
-                <HamburgerMenu className="absolute right-4 top-4">
+                <HamburgerMenu>
                   <MenuItem
                     icon="tabler:pencil"
                     text="Edit"
