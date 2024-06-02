@@ -26,7 +26,8 @@ function generateClassName(
   } else if (type === 'primary') {
     colorClass = 'bg-custom-500 hover:bg-custom-600'
   } else {
-    colorClass = 'bg-bg-500 hover:bg-bg-500/80'
+    colorClass =
+      'bg-bg-300 text-bg-500 dark:text-bg-100 dark:bg-bg-500 hover:bg-bg-400/50 dark:hover:bg-bg-500/80'
   }
 
   return `${baseClass} ${colorClass} ${className}`
