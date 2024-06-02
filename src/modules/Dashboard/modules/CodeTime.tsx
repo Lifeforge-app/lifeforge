@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Icon } from '@iconify/react'
 import { type ChartOptions, type ScriptableContext } from 'chart.js'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import colors from 'tailwindcss/colors'
@@ -93,6 +93,13 @@ export default function CodeTime(): React.ReactElement {
   const [chartData, setChartData] = useState<any>(null)
   const { themeColor } = usePersonalizationContext()
   const { t } = useTranslation()
+  const finalTheme = useMemo(() => {
+    return colors[
+      toCamelCase(
+        themeColor.replace('theme-', '').replace(/-/g, ' ').replace('deep', '')
+      ) as keyof typeof colors
+    ][500]
+  }, [themeColor])
 
   useEffect(() => {
     if (typeof data !== 'string') {
@@ -107,47 +114,18 @@ export default function CodeTime(): React.ReactElement {
             backgroundColor: (context: ScriptableContext<'line'>) => {
               const ctx = context.chart.ctx
               const gradient = ctx.createLinearGradient(0, 0, 0, 250)
-              gradient.addColorStop(
-                0,
-                colors[
-                  toCamelCase(
-                    themeColor.replace('theme-', '').replace(/-/g, ' ')
-                  ) as keyof typeof colors
-                ][500] + '80'
-              )
-              gradient.addColorStop(
-                1,
-                colors[
-                  toCamelCase(
-                    themeColor.replace('theme-', '').replace(/-/g, ' ')
-                  ) as keyof typeof colors
-                ][500] + '00'
-              )
+              gradient.addColorStop(0, finalTheme + '80')
+              gradient.addColorStop(1, finalTheme + '00')
               return gradient
             },
             fill: 'origin',
-            borderColor:
-              colors[
-                toCamelCase(
-                  themeColor.replace('theme-', '').replace(/-/g, ' ')
-                ) as keyof typeof colors
-              ][500],
+            borderColor: finalTheme,
             borderWidth: 1,
             tension: 0.4,
             pointBorderColor: 'rgba(0, 0, 0, 0)',
             pointBackgroundColor: 'rgba(0, 0, 0, 0)',
-            pointHoverBackgroundColor:
-              colors[
-                toCamelCase(
-                  themeColor.replace('theme-', '').replace(/-/g, ' ')
-                ) as keyof typeof colors
-              ][500] + '80',
-            pointHoverBorderColor:
-              colors[
-                toCamelCase(
-                  themeColor.replace('theme-', '').replace(/-/g, ' ')
-                ) as keyof typeof colors
-              ][500],
+            pointHoverBackgroundColor: finalTheme + '80',
+            pointHoverBorderColor: finalTheme,
             pointHoverBorderWidth: 2,
             pointHoverRadius: 6
           }
