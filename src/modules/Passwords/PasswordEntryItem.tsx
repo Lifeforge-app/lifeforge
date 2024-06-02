@@ -3,11 +3,13 @@ import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
+import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { useAuthContext } from '@providers/AuthProvider'
 import { type IPasswordEntry } from '@typedec/Password'
-import { encrypt } from '@utils/encryption'
+import { Clipboard } from '@utils/clipboard'
+import { decrypt, encrypt } from '@utils/encryption'
 
 function PasswordEntryITem({
   password,
@@ -39,6 +41,7 @@ function PasswordEntryITem({
     null
   )
   const [loading, setLoading] = useState(false)
+  const [copyLoading, setCopyLoading] = useState(false)
 
   async function getDecryptedPassword(): Promise<string> {
     const challenge = await fetch(
@@ -76,7 +79,7 @@ function PasswordEntryITem({
       .then(async res => {
         const data = await res.json()
         if (res.ok && data.state === 'success') {
-          return data.data
+          return decrypt(data.data, challenge)
         } else {
           throw new Error(data.message)
         }
@@ -86,30 +89,21 @@ function PasswordEntryITem({
         console.error(err)
       })
 
-    return decrypted
+    return decrypted ?? ''
   }
 
   function copyPassword(): void {
+    setCopyLoading(true)
     if (decryptedPassword !== null) {
-      navigator.clipboard
-        .writeText(decryptedPassword)
-        .then(() => {
-          toast.success('Password copied!')
-        })
-        .catch(() => {
-          toast.error('Couldn’t copy the password. Please try again.')
-        })
+      Clipboard.copy(decryptedPassword)
+      toast.success('Password copied!')
+      setCopyLoading(false)
     } else {
       getDecryptedPassword()
         .then(password => {
-          navigator.clipboard
-            .writeText(password)
-            .then(() => {
-              toast.success('Password copied!')
-            })
-            .catch(() => {
-              toast.error('Couldn’t copy the password. Please try again.')
-            })
+          Clipboard.copy(password)
+          toast.success('Password copied!')
+          setCopyLoading(false)
         })
         .catch(() => {})
     }
@@ -150,106 +144,128 @@ function PasswordEntryITem({
   }
 
   return (
-    <div className="flex items-center gap-4 rounded-md bg-bg-50 p-4 shadow-custom dark:bg-bg-900">
-      <div
-        className="rounded-md p-4 shadow-md"
-        style={{ backgroundColor: password.color + '50' }}
-      >
+    <div className="relative flex flex-col items-center gap-4 rounded-md bg-bg-50 p-4 shadow-custom dark:bg-bg-900">
+      {password.pinned && (
         <Icon
-          icon={password.icon}
-          className="h-6 w-6"
-          style={{
-            color: password.color
-          }}
+          icon="tabler:pin-filled"
+          className="absolute left-0 top-0 h-6 w-6 -translate-x-1/2 -translate-y-1/2 -rotate-90 text-custom-500"
         />
+      )}
+      <div className="flex w-full items-center gap-4">
+        <div className="flex w-full min-w-0 items-center gap-4">
+          <div
+            className="rounded-md p-4 shadow-md"
+            style={{ backgroundColor: password.color + '50' }}
+          >
+            <Icon
+              icon={password.icon}
+              className="h-6 w-6"
+              style={{
+                color: password.color
+              }}
+            />
+          </div>
+          <div className="flex min-w-0 flex-1 flex-col">
+            <h3 className="text-xl font-semibold">{password.name}</h3>
+            <p className="truncate text-bg-500">{password.username}</p>
+          </div>
+        </div>
+        <div className="ml-8 flex shrink-0 items-center gap-2">
+          <p
+            className={`mr-4 select-text ${
+              decryptedPassword === null
+                ? 'hidden text-5xl md:flex'
+                : 'hidden text-lg lg:flex '
+            }`}
+          >
+            {decryptedPassword ?? '············'}
+          </p>
+          <button
+            onClick={() => {
+              decryptedPassword === null
+                ? (() => {
+                    setLoading(true)
+                    getDecryptedPassword()
+                      .then(setDecryptedPassword)
+                      .catch(() => {})
+                      .finally(() => {
+                        setLoading(false)
+                      })
+                  })()
+                : setDecryptedPassword(null)
+            }}
+            className="hidden rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-800/70 hover:text-bg-100 md:block"
+          >
+            <Icon
+              icon={
+                loading
+                  ? 'svg-spinners:180-ring'
+                  : decryptedPassword === null
+                  ? 'tabler:eye'
+                  : 'tabler:eye-off'
+              }
+              className="pointer-events-none h-6 w-6"
+            />
+          </button>
+          <button
+            onClick={copyPassword}
+            className="hidden rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-800/70 hover:text-bg-100 sm:block"
+          >
+            <Icon
+              icon={copyLoading ? 'svg-spinners:180-ring' : 'tabler:copy'}
+              className="h-6 w-6"
+            />
+          </button>
+          <HamburgerMenu className="relative">
+            <MenuItem
+              onClick={() => {
+                pinPassword().catch(() => {})
+              }}
+              icon={password.pinned ? 'tabler:pin-filled' : 'tabler:pin'}
+              text={password.pinned ? 'Unpin' : 'Pin'}
+            />
+            <MenuItem
+              onClick={() => {
+                getDecryptedPassword()
+                  .then(decrypted => {
+                    setCreatePasswordModalOpenType('update')
+                    password.decrypted = decrypted
+                    setExistedData(password)
+                  })
+                  .catch(() => {
+                    toast.error(
+                      'Couldn’t fetch the password. Please try again.'
+                    )
+                  })
+              }}
+              icon="tabler:edit"
+              text="Edit"
+            />
+            <MenuItem
+              onClick={() => {
+                setSelectedPassword(password)
+                setIsDeletePasswordConfirmationModalOpen(true)
+              }}
+              icon="tabler:trash"
+              text="Delete"
+              isRed
+            />
+          </HamburgerMenu>
+        </div>
       </div>
-      <div className="flex flex-1 flex-col">
-        <h3 className="text-xl font-semibold">{password.name}</h3>
-        <p className="text-bg-500">{password.username}</p>
-      </div>
-      <div className="ml-8 flex items-center gap-2 break-all">
-        <p
-          className={`mr-4 hidden select-text lg:flex ${
-            decryptedPassword === null ? 'text-5xl' : 'text-lg'
-          }`}
-        >
-          {decryptedPassword ?? '············'}
+      {decryptedPassword !== null && (
+        <p className="block w-full rounded-md bg-bg-800 p-4 text-center lg:hidden">
+          {decryptedPassword}
         </p>
-        <button
-          onClick={() => {
-            decryptedPassword === null
-              ? (() => {
-                  setLoading(true)
-                  getDecryptedPassword()
-                    .then(setDecryptedPassword)
-                    .catch(() => {})
-                    .finally(() => {
-                      setLoading(false)
-                    })
-                })()
-              : setDecryptedPassword(null)
-          }}
-          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-800/70 hover:text-bg-100"
-        >
-          <Icon
-            icon={
-              loading
-                ? 'svg-spinners:180-ring'
-                : decryptedPassword === null
-                ? 'tabler:eye'
-                : 'tabler:eye-off'
-            }
-            className="pointer-events-none h-6 w-6"
-          />
-        </button>
-        <button
-          onClick={copyPassword}
-          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-800/70 hover:text-bg-100"
-        >
-          <Icon icon="tabler:copy" className="h-6 w-6" />
-        </button>
-        <button
-          onClick={() => {
-            pinPassword().catch(() => {})
-          }}
-          className={`rounded-lg p-2 transition-all hover:bg-bg-800/70 ${
-            !password.pinned
-              ? 'text-bg-500 hover:text-bg-100'
-              : 'text-custom-500 hover:text-custom-400'
-          }`}
-        >
-          <Icon
-            icon={password.pinned ? 'tabler:pin-filled' : 'tabler:pin'}
-            className="h-6 w-6"
-          />
-        </button>
-        <HamburgerMenu className="relative">
-          <MenuItem
-            onClick={() => {
-              getDecryptedPassword()
-                .then(decrypted => {
-                  setCreatePasswordModalOpenType('update')
-                  password.decrypted = decrypted
-                  setExistedData(password)
-                })
-                .catch(() => {
-                  toast.error('Couldn’t fetch the password. Please try again.')
-                })
-            }}
-            icon="tabler:edit"
-            text="Edit"
-          />
-          <MenuItem
-            onClick={() => {
-              setSelectedPassword(password)
-              setIsDeletePasswordConfirmationModalOpen(true)
-            }}
-            icon="tabler:trash"
-            text="Delete"
-            isRed
-          />
-        </HamburgerMenu>
-      </div>
+      )}
+      <Button
+        onClick={copyPassword}
+        icon={copyLoading ? 'svg-spinners:180-ring' : 'tabler:copy'}
+        className="w-full sm:hidden"
+        type="secondary"
+      >
+        Copy
+      </Button>
     </div>
   )
 }

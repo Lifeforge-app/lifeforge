@@ -14,11 +14,11 @@ import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { useAuthContext } from '@providers/AuthProvider'
 import { type IPasswordEntry } from '@typedec/Password'
+import { encrypt } from '@utils/encryption'
+import APIRequest from '@utils/fetchData'
 import CreatePassword from './CreatePassword'
 import CreatePasswordModal from './CreatePasswordModal'
 import PasswordEntryITem from './PasswordEntryItem'
-import { encrypt } from '@utils/encryption'
-import APIRequest from '@utils/fetchData'
 
 function Passwords(): React.ReactElement {
   const { userData } = useAuthContext()
@@ -99,6 +99,7 @@ function Passwords(): React.ReactElement {
               setCreatePasswordModalOpenType('create')
             }}
             icon="tabler:plus"
+            className="hidden lg:flex "
           >
             new password
           </Button>
@@ -123,7 +124,7 @@ function Passwords(): React.ReactElement {
               setMasterPassWordInputContent(e.target.value)
             }}
             noAutoComplete
-            additionalClassName="w-1/2"
+            additionalClassName="w-full md:w-3/4 xl:w-1/2"
             onKeyDown={e => {
               if (e.key === 'Enter') {
                 onSubmit().catch(console.error)
@@ -136,7 +137,7 @@ function Passwords(): React.ReactElement {
               onSubmit().catch(console.error)
             }}
             disabled={loading}
-            className="w-1/2"
+            className="w-full md:w-3/4 xl:w-1/2"
             icon={loading ? 'svg-spinners:180-ring' : 'tabler:lock'}
           >
             Unlock
@@ -168,13 +169,28 @@ function Passwords(): React.ReactElement {
               description="No passwords are found in your vault yet."
               title="Hmm... Seems a bit empty here."
               icon="tabler:key-off"
-              ctaContent="add password"
+              ctaContent="new password"
               setModifyModalOpenType={() => {
+                setSelectedPassword(null)
                 setCreatePasswordModalOpenType('create')
               }}
             />
           )}
         </APIComponentWithFallback>
+      )}
+      {masterPassword !== '' && passwordList.length > 0 && (
+        <button
+          onClick={() => {
+            setSelectedPassword(null)
+            setCreatePasswordModalOpenType('create')
+          }}
+          className="absolute bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800 lg:hidden"
+        >
+          <Icon
+            icon="tabler:plus"
+            className="h-6 w-6 shrink-0 transition-all"
+          />
+        </button>
       )}
       <CreatePasswordModal
         openType={createPasswordModalOpenType}
