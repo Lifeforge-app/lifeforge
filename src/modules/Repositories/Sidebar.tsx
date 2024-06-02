@@ -18,7 +18,7 @@ function Sidebar({
       <aside
         className={`absolute ${
           sidebarOpen ? 'left-0' : 'left-full'
-        } top-0 z-[9999] h-full w-full overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 lg:static lg:h-[calc(100%-3rem)]`}
+        } top-0 z-[9999] h-full w-full overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 lg:static lg:h-[calc(100%-3rem)] lg:w-1/4`}
       >
         <div className="flex items-center justify-between px-8 py-4 lg:hidden">
           <GoBackButton

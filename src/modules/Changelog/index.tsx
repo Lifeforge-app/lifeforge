@@ -69,7 +69,7 @@ function Changelog(): React.ReactElement {
                 />
               </div>
             ))}
-          <div className="absolute left-[calc(9rem+8px)] top-0 z-[-1] hidden h-full -translate-x-1/2 border-r-2 border-bg-700 sm:block" />
+          <div className="absolute left-[calc(9rem+8px)] top-0 z-[-1] hidden h-full -translate-x-1/2 border-r-2 border-bg-200 dark:border-bg-700 sm:block" />
         </ul>
       </APIComponentWithFallback>
     </ModuleWrapper>
