@@ -53,7 +53,7 @@ function Assets(): React.ReactElement {
                 className="relative flex flex-col gap-4 rounded-lg bg-bg-100 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900"
               >
                 <div className="flex items-center gap-3">
-                  <span className="w-min rounded-md bg-bg-800 p-2">
+                  <span className="w-min rounded-md bg-bg-200 p-2 text-bg-500 dark:bg-bg-800">
                     <Icon icon={asset.icon} className="h-5 w-5" />
                   </span>
                   <h2 className="text-xl font-medium">{asset.name}</h2>

@@ -119,7 +119,7 @@ function Wallet(): React.ReactElement {
     <ModuleWrapper>
       <ModuleHeader title="Wallet" desc="..." />
       <div className="mt-6 flex h-full w-full grid-cols-3 grid-rows-[repeat(6,minmax(200px,1fr))] flex-col gap-4 overflow-y-auto pb-8 xl:grid">
-        <div className="col-span-1 row-span-1 flex flex-col justify-between gap-4 rounded-lg bg-bg-900 p-6 shadow-custom">
+        <div className="col-span-1 row-span-1 flex flex-col justify-between gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
           <h1 className="flex items-center gap-2 text-xl font-semibold">
             <Icon icon="tabler:login-2" className="text-2xl" />
             <span className="ml-2">Income</span>
@@ -132,7 +132,7 @@ function Wallet(): React.ReactElement {
             <span className="text-green-500">+RM1,000.00</span> from last month
           </p>
         </div>
-        <div className="col-span-1 row-span-1 flex flex-col justify-between gap-4 rounded-lg bg-bg-900 p-6 shadow-custom">
+        <div className="col-span-1 row-span-1 flex flex-col justify-between gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
           <h1 className="flex items-center gap-2 text-xl font-semibold">
             <Icon icon="tabler:logout-2" className="text-2xl" />
             <span className="ml-2">Expenses</span>
@@ -147,7 +147,7 @@ function Wallet(): React.ReactElement {
             <span className="text-red-500">-RM1,000.00</span> from last month
           </p>
         </div>
-        <div className="col-span-1 row-span-2 flex h-full flex-col rounded-lg bg-bg-900 p-6 shadow-custom">
+        <div className="col-span-1 row-span-2 flex h-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
           <div className="flex items-center justify-between">
             <h1 className="flex items-center gap-2 text-xl font-semibold">
               <Icon icon="tabler:wallet" className="text-2xl" />
@@ -195,7 +195,7 @@ function Wallet(): React.ReactElement {
             )}
           </APIComponentWithFallback>
         </div>
-        <div className="col-span-2 row-span-2 flex h-full w-full flex-col rounded-lg bg-bg-900 p-6 shadow-custom">
+        <div className="col-span-2 row-span-2 flex h-full w-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
           <div className="flex w-full items-center justify-between">
             <h1 className="flex items-center gap-2 text-xl font-semibold">
               <Icon icon="tabler:chart-dots" className="text-2xl" />
@@ -226,7 +226,7 @@ function Wallet(): React.ReactElement {
             </div>
           </div>
         </div>
-        <div className="col-span-1 row-span-4 flex w-full min-w-0 flex-col rounded-lg bg-bg-900 p-6 shadow-custom">
+        <div className="col-span-1 row-span-4 flex w-full min-w-0 flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
           <div className="flex w-full min-w-0 items-center justify-between gap-4">
             <h1 className="flex w-full min-w-0 items-center gap-2 text-xl font-semibold">
               <Icon icon="tabler:chart-donut-3" className="shrink-0 text-2xl" />
@@ -281,7 +281,7 @@ function Wallet(): React.ReactElement {
               <span className="text-sm">Others</span>
             </div>
           </div>
-          <ul className="mt-6 flex flex-col divide-y divide-bg-800 overflow-y-auto">
+          <ul className="mt-6 flex flex-col divide-y divide-bg-200 overflow-y-auto dark:divide-bg-800">
             <li className="flex items-center justify-between gap-4  p-4">
               <div className="flex items-center gap-4">
                 <div className="rounded-md bg-red-500/20 p-2">
@@ -389,13 +389,13 @@ function Wallet(): React.ReactElement {
             </li>
           </ul>
         </div>
-        <div className="col-span-2 row-span-3 flex h-full flex-col rounded-lg bg-bg-900 p-6 shadow-custom">
+        <div className="col-span-2 row-span-3 flex h-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <h1 className="flex w-full items-center gap-2 text-xl font-semibold sm:w-auto">
               <Icon icon="tabler:list" className="text-2xl" />
               <span className="ml-2">Recent Transactions</span>
             </h1>
-            <div className="flex w-full items-center justify-between gap-2 rounded-md border-2 border-bg-800 p-4 sm:w-auto">
+            <div className="flex w-full items-center justify-between gap-2 rounded-md border-2 border-bg-200 p-4 dark:border-bg-800 sm:w-auto">
               <div className="flex items-center gap-2">
                 <Icon icon="tabler:books" className="h-5 w-5" />
                 <span>All ledgers</span>
@@ -409,7 +409,7 @@ function Wallet(): React.ReactElement {
           <div className="mt-6 h-full w-full overflow-y-auto">
             <table className="hidden w-full lg:table">
               <thead>
-                <tr className="border-b-2 border-bg-800 text-bg-500">
+                <tr className="border-b-2 border-bg-200 text-bg-500 dark:border-bg-800">
                   <th className="py-2">Date</th>
                   <th className="py-2">Type</th>
                   <th className="py-2 text-left">Particular</th>
@@ -459,7 +459,10 @@ function Wallet(): React.ReactElement {
                   )
 
                   return (
-                    <tr key={i} className="border-b border-bg-800">
+                    <tr
+                      key={i}
+                      className="border-b border-bg-200 dark:border-bg-800"
+                    >
                       <td className="py-2 text-center">{randomDate}</td>
                       <td className="py-4 text-center">
                         <span

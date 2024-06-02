@@ -56,7 +56,7 @@ function ManageCategoriesModal({
                   <Icon icon="tabler:plus" className="h-5 w-5" />
                 </button>
               </div>
-              <ul className="my-4 flex flex-col divide-y divide-bg-800">
+              <ul className="mb-4 flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
                 {categories.filter(category => category.type === 'income')
                   .length > 0 ? (
                   categories
@@ -124,7 +124,7 @@ function ManageCategoriesModal({
                   <Icon icon="tabler:plus" className="h-5 w-5" />
                 </button>
               </div>
-              <ul className="mt-4 flex flex-col divide-y divide-bg-800">
+              <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
                 {categories
                   .filter(category => category.type === 'expenses')
                   .map(category => (
