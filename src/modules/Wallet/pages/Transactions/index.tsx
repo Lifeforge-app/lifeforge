@@ -85,19 +85,22 @@ function Transactions(): React.ReactElement {
           transactions.length > 0 ? (
             <table className="mb-8 w-full">
               <thead>
-                <tr className="border-b-2 border-bg-800 text-bg-500">
-                  <th className="py-2">Date</th>
-                  <th className="py-2">Type</th>
-                  <th className="py-2">Asset</th>
-                  <th className="py-2 text-left">Particular</th>
-                  <th className="py-2">Category</th>
-                  <th className="py-2">Amount</th>
-                  <th className="py-2"></th>
+                <tr className="border-b-2 border-bg-200 text-bg-500 dark:border-bg-800">
+                  <th className="py-2 font-medium">Date</th>
+                  <th className="py-2 font-medium">Type</th>
+                  <th className="py-2 font-medium">Asset</th>
+                  <th className="py-2 text-left font-medium">Particular</th>
+                  <th className="py-2 font-medium">Category</th>
+                  <th className="py-2 font-medium">Amount</th>
+                  <th className="py-2 font-medium"></th>
                 </tr>
               </thead>
               <tbody>
                 {transactions.map(transaction => (
-                  <tr key={transaction.id} className="border-b border-bg-800">
+                  <tr
+                    key={transaction.id}
+                    className="border-b border-bg-200 dark:border-bg-800"
+                  >
                     <td className="whitespace-nowrap p-2 text-center">
                       {moment(transaction.date).format('MMM DD, YYYY')}
                     </td>
@@ -117,7 +120,7 @@ function Transactions(): React.ReactElement {
                       </span>
                     </td>
                     <td className="p-2 text-center">
-                      <span className="inline-flex w-min items-center gap-1 whitespace-nowrap rounded-full bg-bg-800 px-3 py-1 text-sm text-bg-400">
+                      <span className="inline-flex w-min items-center gap-1 whitespace-nowrap rounded-full bg-bg-200 px-3 py-1 text-sm text-bg-500 dark:bg-bg-800 dark:text-bg-400">
                         <Icon
                           icon={
                             assets.find(asset => asset.id === transaction.asset)
