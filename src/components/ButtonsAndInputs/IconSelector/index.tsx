@@ -34,11 +34,11 @@ function IconSelector({
       }`}
     >
       <div
-        className={`absolute left-0 top-0 flex h-[100dvh] w-full flex-center transition-all duration-500 ${
+        className={`flex-center absolute left-0 top-0 flex h-[100dvh] w-full transition-all duration-500 ${
           isOpen ? 'translate-y-0' : 'translate-y-[110%]'
         }`}
       >
-        <div className="510:mx-16 relative mx-4 flex max-h-[calc(100vh-8rem)] w-full flex-col flex-center rounded-lg bg-bg-900 shadow-2xl lg:w-3/4">
+        <div className="510:mx-16 flex-center relative mx-4 flex max-h-[calc(100vh-8rem)] w-full flex-col rounded-lg bg-bg-900 shadow-2xl lg:w-3/4">
           <div className="mb-6 flex w-full items-center justify-between p-8 pb-0">
             {currentIconSet ? (
               <button

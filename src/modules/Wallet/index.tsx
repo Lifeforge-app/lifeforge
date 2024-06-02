@@ -23,6 +23,10 @@ import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IWalletAssetEntry } from '@typedec/Wallet'
 
+function numberToMoney(number: number): string {
+  return number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+}
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -114,6 +118,16 @@ const options2 = {
 function Wallet(): React.ReactElement {
   const navigate = useNavigate()
   const [assets] = useFetch<IWalletAssetEntry[]>('wallet/assets/list')
+  const [incomeExpenses] = useFetch<{
+    totalIncome: number
+    totalExpenses: number
+    monthlyIncome: number
+    monthlyExpenses: number
+  }>(
+    `wallet/transactions/income-expenses/${new Date().getFullYear()}/${
+      new Date().getMonth() + 1
+    }`
+  )
 
   return (
     <ModuleWrapper>
@@ -124,28 +138,44 @@ function Wallet(): React.ReactElement {
             <Icon icon="tabler:login-2" className="text-2xl" />
             <span className="ml-2">Income</span>
           </h1>
-          <p className="flex w-full items-end justify-start gap-2 text-5xl font-medium">
-            <span className="-mb-0.5 text-2xl text-bg-500 xl:text-3xl">RM</span>
-            3,000.00
-          </p>
-          <p>
-            <span className="text-green-500">+RM1,000.00</span> from last month
-          </p>
+          {typeof incomeExpenses !== 'string' && (
+            <>
+              <p className="flex w-full items-end justify-start gap-2 text-5xl font-medium">
+                <span className="-mb-0.5 text-2xl text-bg-500 xl:text-3xl">
+                  RM
+                </span>
+                {numberToMoney(+incomeExpenses.totalIncome)}
+              </p>
+              <p>
+                <span className="text-green-500">
+                  +RM{numberToMoney(+incomeExpenses.monthlyIncome)}
+                </span>{' '}
+                from this month
+              </p>
+            </>
+          )}
         </div>
         <div className="col-span-1 row-span-1 flex flex-col justify-between gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
           <h1 className="flex items-center gap-2 text-xl font-semibold">
             <Icon icon="tabler:logout-2" className="text-2xl" />
             <span className="ml-2">Expenses</span>
           </h1>
-          <p className="flex w-full items-end justify-start gap-2 text-5xl font-medium">
-            <span className="-mb-0.5 text-2xl text-bg-500  xl:text-3xl">
-              RM
-            </span>
-            900.00
-          </p>
-          <p>
-            <span className="text-red-500">-RM1,000.00</span> from last month
-          </p>
+          {typeof incomeExpenses !== 'string' && (
+            <>
+              <p className="flex w-full items-end justify-start gap-2 text-5xl font-medium">
+                <span className="-mb-0.5 text-2xl text-bg-500 xl:text-3xl">
+                  RM
+                </span>
+                {numberToMoney(+incomeExpenses.totalExpenses)}
+              </p>
+              <p>
+                <span className="text-red-500">
+                  -RM{numberToMoney(+incomeExpenses.monthlyExpenses)}
+                </span>{' '}
+                from this month
+              </p>
+            </>
+          )}
         </div>
         <div className="col-span-1 row-span-2 flex h-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
           <div className="flex items-center justify-between">

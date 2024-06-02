@@ -38,6 +38,7 @@ interface IWalletTransactionEntry {
   category: string
   asset: string
   ledger: string
+  receipt: string
 }
 
 export type {

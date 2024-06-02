@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import moment from 'moment'
 import React, { useState } from 'react'
+import Zoom from 'react-medium-image-zoom'
 import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
@@ -92,6 +93,7 @@ function Transactions(): React.ReactElement {
                   <th className="py-2 text-left font-medium">Particular</th>
                   <th className="py-2 font-medium">Category</th>
                   <th className="py-2 font-medium">Amount</th>
+                  <th className="py-2 font-medium">Receipt</th>
                   <th className="py-2 font-medium"></th>
                 </tr>
               </thead>
@@ -134,6 +136,7 @@ function Transactions(): React.ReactElement {
                         }
                       </span>
                     </td>
+                    {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
                     <td className="min-w-96 p-2">{transaction.particulars}</td>
                     <td className="p-2 text-center">
                       {transaction.category !== '' ? (
@@ -180,6 +183,23 @@ function Transactions(): React.ReactElement {
                         {transaction.side === 'debit' ? '+' : '-'}
                         {transaction.amount.toFixed(2)}
                       </span>
+                    </td>
+                    <td className="p-2 text-center">
+                      {transaction.receipt !== '' ? (
+                        <Zoom zoomMargin={100}>
+                          <img
+                            alt=""
+                            src={`${import.meta.env.VITE_API_HOST}/media/${
+                              transaction.collectionId
+                            }/${transaction.id}/${transaction.receipt}`}
+                            className={
+                              'mx-auto h-12 w-12 rounded-lg bg-bg-200 object-cover dark:bg-bg-800'
+                            }
+                          />
+                        </Zoom>
+                      ) : (
+                        '-'
+                      )}
                     </td>
                     <td className="p-2">
                       <HamburgerMenu className="relative">
