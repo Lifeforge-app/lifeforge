@@ -5,7 +5,10 @@ import LogItemHeader from './components/LogItemHeader'
 
 function LogItem({ entry }: { entry: IChangeLogVersion }): React.ReactElement {
   return (
-    <li key={entry.version} className="space-y-6 p-6">
+    <li
+      key={entry.version}
+      className="space-y-6 rounded-lg bg-bg-900 p-6 shadow-custom sm:!bg-transparent sm:shadow-none"
+    >
       <LogItemHeader entry={entry} />
       <LogItemContent entry={entry} />
     </li>
