@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import moment from 'moment'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Zoom from 'react-medium-image-zoom'
+import { useLocation, useNavigate } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
@@ -40,6 +41,16 @@ function Transactions(): React.ReactElement {
   const [selectedData, setSelectedData] =
     useState<IWalletTransactionEntry | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
+  const { hash } = useLocation()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (hash === '#new') {
+      setSelectedData(null)
+      setModifyModalOpenType('create')
+      navigate('/wallet/transactions')
+    }
+  }, [hash])
 
   return (
     <ModuleWrapper>

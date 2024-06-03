@@ -16,6 +16,7 @@ import React from 'react'
 import { Doughnut, Line } from 'react-chartjs-2'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
+import Button from '@components/ButtonsAndInputs/Button'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -131,7 +132,21 @@ function Wallet(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Wallet" desc="..." />
+      <ModuleHeader
+        title="Wallet"
+        desc="..."
+        actionButton={
+          <Button
+            className="hidden md:flex"
+            onClick={() => {
+              navigate('/wallet/transactions#new')
+            }}
+            icon="tabler:plus"
+          >
+            Add Transaction
+          </Button>
+        }
+      />
       <div className="mt-6 flex h-full w-full grid-cols-3 grid-rows-[repeat(6,minmax(200px,1fr))] flex-col gap-4 overflow-y-auto pb-8 xl:grid">
         <div className="col-span-1 row-span-1 flex flex-col justify-between gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
           <h1 className="flex items-center gap-2 text-xl font-semibold">
@@ -612,6 +627,14 @@ function Wallet(): React.ReactElement {
           </div>
         </div>
       </div>
+      <button
+        onClick={() => {
+          navigate('/wallet/transactions#new')
+        }}
+        className="absolute bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800 md:hidden"
+      >
+        <Icon icon="tabler:plus" className="h-6 w-6 shrink-0 transition-all" />
+      </button>
     </ModuleWrapper>
   )
 }
