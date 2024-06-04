@@ -89,8 +89,14 @@ function Transactions(): React.ReactElement {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
-      <div className="mt-8 h-full w-full overflow-y-auto">
-        <APIComponentWithFallback data={transactions}>
+      <div className="mt-8 size-full overflow-y-auto">
+        <APIComponentWithFallback
+          data={
+            [transactions, categories, assets].find(e =>
+              ['loading', 'error'].includes(e as string)
+            ) ?? transactions
+          }
+        >
           {typeof transactions !== 'string' &&
           typeof categories !== 'string' &&
           typeof assets !== 'string' &&
@@ -139,7 +145,7 @@ function Transactions(): React.ReactElement {
                             assets.find(asset => asset.id === transaction.asset)
                               ?.icon ?? ''
                           }
-                          className="h-4 w-4 shrink-0"
+                          className="size-4 shrink-0"
                         />
                         {
                           assets.find(asset => asset.id === transaction.asset)
@@ -169,7 +175,7 @@ function Transactions(): React.ReactElement {
                                 category => category.id === transaction.category
                               )?.icon ?? ''
                             }
-                            className="h-4 w-4"
+                            className="size-4"
                           />
                           {
                             categories.find(
@@ -204,7 +210,7 @@ function Transactions(): React.ReactElement {
                               transaction.collectionId
                             }/${transaction.id}/${transaction.receipt}`}
                             className={
-                              'mx-auto h-12 w-12 rounded-lg bg-bg-200 object-cover dark:bg-bg-800'
+                              'mx-auto size-12 rounded-lg bg-bg-200 object-cover dark:bg-bg-800'
                             }
                           />
                         </Zoom>
@@ -259,7 +265,7 @@ function Transactions(): React.ReactElement {
           >
             <Icon
               icon="tabler:plus"
-              className="h-6 w-6 shrink-0 transition-all"
+              className="size-6 shrink-0 transition-all"
             />
           </button>
         )}
