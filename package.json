@@ -56,6 +56,7 @@
     "react-i18next": "^14.1.0",
     "react-lazy-load-image-component": "^1.6.0",
     "react-medium-image-zoom": "^5.1.9",
+    "react-photo-album": "^2.4.0",
     "react-photo-gallery": "^8.0.0",
     "react-router": "^6.20.0",
     "react-router-dom": "^6.20.0",
