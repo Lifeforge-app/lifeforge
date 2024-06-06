@@ -115,7 +115,7 @@ function CustomZoomContent({
 
   return (
     <>
-      <div className="flex-center flex h-[100dvh] w-full">
+      <div className="flex-center flex h-dvh w-full">
         {img}
         <header className="absolute left-0 top-0 flex w-full items-center justify-between gap-2 p-8">
           {(() => {
@@ -129,7 +129,7 @@ function CustomZoomContent({
               case 'error':
                 return (
                   <div className="flex items-center gap-2 text-lg text-red-500">
-                    <Icon icon="tabler:alert-triangle" className="h-5 w-5" />
+                    <Icon icon="tabler:alert-triangle" className="size-5" />
                     Failed to load image name
                   </div>
                 )
@@ -167,7 +167,7 @@ function CustomZoomContent({
               }}
               className="rounded-md p-2 text-bg-100 hover:bg-bg-700/50"
             >
-              <Icon icon="tabler:trash" className="h-5 w-5" />
+              <Icon icon="tabler:trash" className="size-5" />
             </button>
             <HamburgerMenu lighter className="relative" customWidth="w-56">
               {beingDisplayedInAlbum && (
@@ -194,7 +194,6 @@ function CustomZoomContent({
 
 function ImageObject({
   photo,
-  margin,
   details,
   selected,
   toggleSelected,
@@ -202,11 +201,12 @@ function ImageObject({
   beingDisplayedInAlbum,
   refreshAlbumData,
   refreshPhotos,
-  setPhotos
+  setPhotos,
+  style,
+  ...props
 }: {
   photo: any
   details: IPhotosEntry
-  margin: string
   selected: boolean
   toggleSelected: (
     e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>
@@ -218,6 +218,8 @@ function ImageObject({
   setPhotos:
     | React.Dispatch<React.SetStateAction<IPhotosEntryDimensionsAll>>
     | React.Dispatch<React.SetStateAction<IPhotoAlbumEntryItem[]>>
+  style?: React.CSSProperties
+  [key: string]: any
 }): React.ReactElement {
   const { ready } = usePhotosContext()
 
@@ -228,19 +230,15 @@ function ImageObject({
           toggleSelected(e)
         }
       }}
-      style={{
-        margin,
-        height: photo.height,
-        width: photo.width
-      }}
-      className={`group/image relative h-full w-full min-w-[5rem] overflow-hidden ${
+      style={style}
+      className={`group/image relative size-full min-w-20 overflow-hidden ${
         selected ? 'bg-custom-500/20 p-4' : 'bg-bg-200 dark:bg-bg-800'
       } transition-all ${selectedPhotosLength > 0 && 'cursor-pointer'}`}
     >
       {(ready || beingDisplayedInAlbum) && (
         <>
           <div
-            className={`h-full w-full ${
+            className={`size-full ${
               selectedPhotosLength > 0 ? 'pointer-events-none' : ''
             }`}
           >
@@ -264,13 +262,14 @@ function ImageObject({
               <LazyLoadImage
                 alt=""
                 src={photo.src}
-                className={`relative h-full w-full object-cover ${
+                className={`relative size-full object-cover ${
                   selected && 'rounded-md'
                 }`}
                 delayTime={300}
                 delayMethod="debounce"
                 threshold={50}
                 useIntersectionObserver={false}
+                {...props}
               />
             </Zoom>
           </div>
@@ -279,7 +278,7 @@ function ImageObject({
           )}
           <button
             onClick={toggleSelected}
-            className={`group/select-button flex-center absolute left-2.5 top-2.5 h-6 w-6 rounded-full transition-all  ${
+            className={`group/select-button flex-center absolute left-2.5 top-2.5 size-6 rounded-full transition-all  ${
               selected
                 ? 'flex bg-custom-500 opacity-100'
                 : 'hidden bg-bg-200 opacity-50 hover:!bg-bg-100 hover:!opacity-100 group-hover/image:flex'
@@ -295,13 +294,13 @@ function ImageObject({
           </button>
           <div className="absolute right-2 top-2 flex items-center gap-2 text-bg-200 opacity-50">
             {details.has_raw && (
-              <Icon icon="tabler:letter-r" className="h-5 w-5" />
+              <Icon icon="tabler:letter-r" className="size-5" />
             )}
             {!beingDisplayedInAlbum && details.is_in_album && (
-              <Icon icon="tabler:library-photo" className="h-5 w-5" />
+              <Icon icon="tabler:library-photo" className="size-5" />
             )}
             {details.is_favourite && (
-              <Icon icon="tabler:star" className="h-5 w-5" />
+              <Icon icon="tabler:star" className="size-5" />
             )}
           </div>
         </>
