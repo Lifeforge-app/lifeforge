@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react'
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
+import PhotoAlbum from 'react-photo-album'
 import Gallery from 'react-photo-gallery'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -116,19 +117,19 @@ function PhotosAlbumGallery(): React.ReactElement {
                 />
                 <div className="flex w-full min-w-0 items-center justify-between gap-8">
                   <h1 className="flex w-full min-w-0 items-center gap-4 text-2xl font-semibold">
-                    <div className="flex-center flex h-14 w-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
+                    <div className="flex-center flex size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                       {albumData.cover !== '' ? (
                         <img
                           src={`${
                             import.meta.env.VITE_POCKETBASE_ENDPOINT
                           }/api/files/${albumData.cover}?thumb=0x300`}
                           alt=""
-                          className="h-full w-full rounded-md object-cover"
+                          className="size-full rounded-md object-cover"
                         />
                       ) : (
                         <Icon
                           icon="tabler:library-photo"
-                          className="h-8 w-8 text-bg-500 dark:text-bg-500"
+                          className="size-8 text-bg-500 dark:text-bg-500"
                         />
                       )}
                     </div>
@@ -139,7 +140,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                           icon={
                             albumData.is_public ? 'tabler:world' : 'tabler:lock'
                           }
-                          className="h-5 w-5 shrink-0 text-bg-500"
+                          className="size-5 shrink-0 text-bg-500"
                         />
                       </div>
                       {(() => {
@@ -149,7 +150,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                               <span className="text-sm text-bg-500">
                                 <Icon
                                   icon="svg-spinners:180-ring"
-                                  className="h-5 w-5"
+                                  className="size-5"
                                 />
                               </span>
                             )
@@ -182,7 +183,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                                     }`}
                                 <Icon
                                   icon="tabler:circle-filled"
-                                  className="h-1 w-1"
+                                  className="size-1"
                                 />
                                 {photos.length.toLocaleString()} photos
                               </span>
@@ -232,18 +233,21 @@ function PhotosAlbumGallery(): React.ReactElement {
               <div className="relative my-6 w-full flex-1 overflow-y-auto">
                 <APIComponentWithFallback data={photos}>
                   {typeof photos !== 'string' && (
-                    <Gallery
-                      targetRowHeight={200}
+                    <PhotoAlbum
+                      layout="rows"
+                      spacing={8}
                       photos={photos.map(image => ({
                         src: `${import.meta.env.VITE_API_HOST}/media/${
                           image.collectionId
                         }/${image.photoId}/${image.image}?thumb=0x300`,
-                        width: image.width / 20,
-                        height: image.height / 20,
+                        width: image.width,
+                        height: image.height,
                         key: image.id
                       }))}
-                      margin={3}
-                      renderImage={({ photo, margin }) => (
+                      renderPhoto={({
+                        photo,
+                        imageProps: { src, alt, style, ...restImageProps }
+                      }) => (
                         <ImageObject
                           beingDisplayedInAlbum
                           refreshAlbumData={refreshAlbumData}
@@ -251,7 +255,8 @@ function PhotosAlbumGallery(): React.ReactElement {
                           details={
                             photos.find(image => image.id === photo.key)!
                           }
-                          margin={margin ?? ''}
+                          style={style}
+                          {...restImageProps}
                           refreshPhotos={refreshPhotos}
                           selected={
                             selectedPhotos.find(
