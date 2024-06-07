@@ -2,7 +2,7 @@
 
 import { Icon } from '@iconify/react'
 import React, { useEffect } from 'react'
-import Gallery from 'react-photo-gallery'
+import PhotoAlbum from 'react-photo-album'
 import { useNavigate } from 'react-router'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton.tsx'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu/index.tsx'
@@ -40,8 +40,8 @@ function PhotosFavouritesGallery(): React.ReactElement {
             <div className="flex items-center justify-between">
               <h1 className="flex items-center gap-4 text-2xl font-semibold">
                 <>
-                  <div className="flex-center flex h-14 w-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
-                    <Icon icon="tabler:star-filled" className="h-7 w-7" />
+                  <div className="flex-center flex size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
+                    <Icon icon="tabler:star-filled" className="size-7" />
                   </div>
                   <span className="flex flex-col gap-1">
                     Favourites
@@ -52,7 +52,7 @@ function PhotosFavouritesGallery(): React.ReactElement {
                             <span className="text-sm text-bg-500">
                               <Icon
                                 icon="svg-spinners:180-ring"
-                                className="h-5 w-5"
+                                className="size-5"
                               />
                             </span>
                           )
@@ -90,8 +90,9 @@ function PhotosFavouritesGallery(): React.ReactElement {
           <div className="relative my-6 w-full flex-1">
             <APIComponentWithFallback data={photos}>
               {typeof photos !== 'string' && (
-                <Gallery
-                  targetRowHeight={200}
+                <PhotoAlbum
+                  layout="rows"
+                  spacing={8}
                   photos={photos.map(image => ({
                     src: `${
                       import.meta.env.VITE_POCKETBASE_ENDPOINT
@@ -102,15 +103,18 @@ function PhotosFavouritesGallery(): React.ReactElement {
                     height: image.height / 20,
                     key: image.id
                   }))}
-                  margin={3}
-                  renderImage={({ photo, margin }) => (
+                  renderPhoto={({
+                    photo,
+                    imageProps: { src, alt, style, ...restImageProps }
+                  }) => (
                     <ImageObject
                       refreshPhotos={() => {}}
                       setPhotos={() => {}}
                       beingDisplayedInAlbum
                       photo={photo}
                       details={photos.find(image => image.id === photo.key)!}
-                      margin={margin ?? ''}
+                      style={style}
+                      {...restImageProps}
                       selected={
                         selectedPhotos.find(image => image === photo.key) !==
                         undefined

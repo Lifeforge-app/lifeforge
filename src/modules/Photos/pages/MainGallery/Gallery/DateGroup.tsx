@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
-import Gallery from 'react-photo-gallery'
+import PhotoAlbum from 'react-photo-album'
 import { toast } from 'react-toastify'
 import useResizeObserver from 'use-resize-observer'
 import useOnScreen from '@hooks/useOnScreen'
@@ -98,7 +98,7 @@ function DateGroup({
           <h2 className="mb-2 flex items-end gap-2 text-xl font-semibold">
             <div
               className={`mb-0.5 overflow-hidden transition-all ${
-                !isSelectedAll && 'max-w-0 group-hover:max-w-[2rem]'
+                !isSelectedAll && 'max-w-0 group-hover:max-w-8'
               }`}
             >
               <button
@@ -111,7 +111,7 @@ function DateGroup({
               >
                 <Icon
                   icon="uil:check"
-                  className={`h-4 w-4  !stroke-[1px]  transition-all  ${
+                  className={`size-4 !stroke-[1px]  transition-all  ${
                     isSelectedAll
                       ? 'stroke-bg-100 text-bg-100 dark:stroke-bg-900 dark:text-bg-800'
                       : 'stroke-bg-500 text-bg-500 group-hover/checkbox:!stroke-custom-500 group-hover/checkbox:!text-custom-500'
@@ -124,8 +124,9 @@ function DateGroup({
               ({photosDimensions.length.toLocaleString()})
             </span>
           </h2>
-          <Gallery
-            targetRowHeight={200}
+          <PhotoAlbum
+            layout="rows"
+            spacing={8}
             photos={photosDimensions.map(image => ({
               src: `${import.meta.env.VITE_API_HOST}/media/${
                 typeof allPhotos !== 'string' ? allPhotos.collectionId : ''
@@ -136,8 +137,10 @@ function DateGroup({
               height: image.height / 20,
               key: image.id
             }))}
-            margin={3}
-            renderImage={({ photo, margin }) => (
+            renderPhoto={({
+              photo,
+              imageProps: { src, alt, style, ...restImageProps }
+            }) => (
               <ImageObject
                 beingDisplayedInAlbum={false}
                 photo={photo}
@@ -164,7 +167,8 @@ function DateGroup({
                         is_favourite: false
                       }
                 }
-                margin={margin ?? ''}
+                style={style}
+                {...restImageProps}
                 selected={
                   selectedPhotos.find(image => image === photo.key) !==
                   undefined
