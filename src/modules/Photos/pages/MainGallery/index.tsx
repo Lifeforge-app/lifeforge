@@ -35,7 +35,7 @@ function PhotosMainGallery(): React.ReactElement {
   }, [hidePhotosInAlbum])
 
   return showGallery ? (
-    <section className="flex h-full min-h-0 w-full flex-1 flex-col pl-4 sm:pl-12">
+    <section className="flex size-full min-h-0 flex-1 flex-col pl-4 sm:pl-12">
       <ModuleHeader
         title="Photos"
         desc="View and manage all your precious memories."
@@ -51,9 +51,9 @@ function PhotosMainGallery(): React.ReactElement {
         }
       />
       <GalleryHeader />
-      <div className="flex h-full min-h-0 w-full gap-8">
+      <div className="flex size-full min-h-0 gap-8">
         <PhotosSidebar />
-        <div className="relative flex h-full min-h-0 w-full">
+        <div className="relative flex size-full min-h-0">
           <GalleryContainer />
         </div>
       </div>
