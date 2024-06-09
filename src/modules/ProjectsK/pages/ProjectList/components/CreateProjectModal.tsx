@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { Listbox, Transition } from '@headlessui/react'
+import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import APIRequest from '@utils/fetchData'
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
+import ListboxTransition from '@components/ListBox/ListboxTransition'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IProjectsKProgressStep } from '@typedec/ProjectK'
+import APIRequest from '@utils/fetchData'
 import { PROJECT_STATUS } from '..'
 
 function CreateProjectModal({
@@ -186,9 +187,9 @@ function CreateProjectModal({
             </span>
             <div className="relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-none sm:text-sm">
               <span
-                className={`text-center font-semibold ${PROJECT_STATUS[projectStatus]?.color} h-2 w-2 rounded-md`}
+                className={`text-center font-semibold ${PROJECT_STATUS[projectStatus]?.color} size-2 rounded-md`}
               ></span>
-              <span className="mt-[-1px] block truncate">
+              <span className="-mt-px block truncate">
                 {PROJECT_STATUS[projectStatus]?.name}
               </span>
             </div>
@@ -196,15 +197,7 @@ function CreateProjectModal({
               <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
             </span>
           </Listbox.Button>
-          <Transition
-            as={Fragment}
-            enter="transition ease-in duration-100"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="transition ease-in duration-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
+          <ListboxTransition>
             <Listbox.Options className="absolute top-[4.5rem] z-50 mt-1 max-h-56 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800 sm:text-sm">
               {Object.entries(PROJECT_STATUS).map(([id, { name, color }]) => (
                 <Listbox.Option
@@ -223,7 +216,7 @@ function CreateProjectModal({
                       <div>
                         <span className="flex items-center gap-2">
                           <span
-                            className={`mr-2 h-2 w-2 rounded-md text-center font-semibold ${color}`}
+                            className={`mr-2 size-2 rounded-md text-center font-semibold ${color}`}
                           ></span>
                           {name}
                         </span>
@@ -239,7 +232,7 @@ function CreateProjectModal({
                 </Listbox.Option>
               ))}
             </Listbox.Options>
-          </Transition>
+          </ListboxTransition>
         </Listbox>
         <APIComponentWithFallback data={steps}>
           {typeof steps !== 'string' && (

@@ -1,9 +1,9 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { QUICK_ACTIONS } from '../../constants/quick_actions'
-import { ROUTES } from '../../constants/routes_config'
+import { QUICK_ACTIONS } from '@constants/quick_actions'
+import { ROUTES } from '@constants/routes_config'
 import { titleToPath } from '@utils/strings'
 
 function QuickActions(): React.ReactElement {

@@ -1,6 +1,7 @@
-import { Listbox, Transition } from '@headlessui/react'
+import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React, { Fragment } from 'react'
+import React from 'react'
+import ListboxTransition from '@components/ListBox/ListboxTransition'
 import { useTodoListContext } from '@providers/TodoListProvider'
 
 function TagsSelector({
@@ -41,7 +42,7 @@ function TagsSelector({
               Tags
             </span>
             <div className="relative mb-2 mt-9 flex w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-none sm:text-sm">
-              <span className="mt-[-1px] block">
+              <span className="-mt-px block">
                 {tags.length > 0
                   ? tags
                       .map(tag => `#${tagsList.find(t => t.id === tag)?.name}`)
@@ -53,15 +54,7 @@ function TagsSelector({
               <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
             </span>
           </Listbox.Button>
-          <Transition
-            as={Fragment}
-            enter="transition ease-in duration-100"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="transition ease-in duration-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
+          <ListboxTransition>
             <Listbox.Options className="absolute bottom-[120%] z-50 mt-1 max-h-56 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800 sm:text-sm">
               {tagsList.map(({ name, id }, i) => (
                 <Listbox.Option
@@ -94,7 +87,7 @@ function TagsSelector({
                 </Listbox.Option>
               ))}
             </Listbox.Options>
-          </Transition>
+          </ListboxTransition>
         </div>
       )}
     </Listbox>

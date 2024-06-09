@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
-import { Listbox, Transition } from '@headlessui/react'
+import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import React, { Fragment, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
+import ListboxTransition from '@components/ListBox/ListboxTransition'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IProjectsKEntry } from '@typedec/ProjectK'
@@ -98,7 +99,7 @@ function ProjectsKEntry(): React.ReactElement {
                       <>
                         <Icon
                           icon="tabler:alert-triangle"
-                          className="mt-0.5 h-7 w-7 text-red-500"
+                          className="mt-0.5 size-7 text-red-500"
                         />
                         Failed to fetch data from server.
                       </>
@@ -106,7 +107,7 @@ function ProjectsKEntry(): React.ReactElement {
                   default:
                     return (
                       <>
-                        <div className="flex-center flex h-12 w-12 overflow-hidden rounded-md bg-bg-800">
+                        <div className="flex-center flex size-12 overflow-hidden rounded-md bg-bg-800">
                           {projectData.thumbnail ? (
                             <img
                               src={`${
@@ -114,12 +115,12 @@ function ProjectsKEntry(): React.ReactElement {
                               }/api/files/${projectData.collectionId}/${
                                 projectData.id
                               }/${projectData.thumbnail}?thumb=50x50`}
-                              className="h-full w-full"
+                              className="size-full"
                             />
                           ) : (
                             <Icon
                               icon="tabler:brush"
-                              className="h-7 w-7 text-bg-500"
+                              className="size-7 text-bg-500"
                             />
                           )}
                         </div>
@@ -143,19 +144,11 @@ function ProjectsKEntry(): React.ReactElement {
                             {PROJECT_STATUS[projectData.status].name}
                             <Icon
                               icon="tabler:pencil"
-                              className="ml-2 h-3.5 w-3.5"
+                              className="ml-2 size-3.5"
                             />
                           </Listbox.Button>
-                          <Transition
-                            as={Fragment}
-                            enter="transition ease-in duration-100"
-                            enterFrom="opacity-0"
-                            enterTo="opacity-100"
-                            leave="transition ease-in duration-100"
-                            leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
-                          >
-                            <Listbox.Options className="absolute top-[2rem] z-50 mt-1 max-h-56 w-48 divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800 sm:text-sm">
+                          <ListboxTransition>
+                            <Listbox.Options className="absolute top-8 z-50 mt-1 max-h-56 w-48 divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800 sm:text-sm">
                               {Object.entries(PROJECT_STATUS).map(
                                 ([id, { name, color }]) => (
                                   <Listbox.Option
@@ -174,7 +167,7 @@ function ProjectsKEntry(): React.ReactElement {
                                         <div>
                                           <span className="flex items-center gap-2">
                                             <span
-                                              className={`mr-2 h-2 w-2 rounded-md text-center font-semibold ${color}`}
+                                              className={`mr-2 size-2 rounded-md text-center font-semibold ${color}`}
                                             ></span>
                                             {name}
                                           </span>
@@ -191,7 +184,7 @@ function ProjectsKEntry(): React.ReactElement {
                                 )
                               )}
                             </Listbox.Options>
-                          </Transition>
+                          </ListboxTransition>
                         </Listbox>
                       </>
                     )

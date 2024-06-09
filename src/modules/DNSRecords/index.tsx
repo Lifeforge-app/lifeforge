@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Listbox, Transition } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useState, type JSX } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'

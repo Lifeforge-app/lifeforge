@@ -57,7 +57,7 @@ function About(): React.ReactElement {
         <div className="relative z-10 mx-auto -mt-2 grid max-w-7xl grid-cols-1 gap-6 pt-14 sm:grid-cols-2 lg:grid-cols-3">
           <div className="rounded-md bg-bg-50 p-8 text-center shadow-lg dark:bg-bg-900">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-md text-custom-500">
-              <Icon icon="tabler:rocket" className="h-8 w-8" />
+              <Icon icon="tabler:rocket" className="size-8" />
             </div>
             <h3 className="mt-4 text-2xl font-medium">Productivity Boost</h3>
             <p className="my-4 mb-0 font-normal leading-relaxed tracking-wide text-bg-500">
@@ -68,7 +68,7 @@ function About(): React.ReactElement {
           </div>
           <div className="rounded-md bg-bg-50 p-8 text-center shadow-lg dark:bg-bg-900">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-md text-custom-500">
-              <Icon icon="tabler:bulb" className="h-8 w-8" />
+              <Icon icon="tabler:bulb" className="size-8" />
             </div>
             <h3 className="mt-4 text-2xl font-medium">Learning Experience</h3>
             <p className="my-4 mb-0 font-normal leading-relaxed tracking-wide text-bg-500">
@@ -80,7 +80,7 @@ function About(): React.ReactElement {
           </div>
           <div className="rounded-md bg-bg-50 p-8 text-center shadow-lg dark:bg-bg-900">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-md text-custom-500">
-              <Icon icon="tabler:pencil" className="h-8 w-8" />
+              <Icon icon="tabler:pencil" className="size-8" />
             </div>
             <h3 className="mt-4 text-2xl font-medium">Customization</h3>
             <p className="my-4 mb-0 font-normal leading-relaxed tracking-wide text-bg-500">

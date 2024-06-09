@@ -8,7 +8,7 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import useFetch from '@hooks/useFetch'
 import Sidebar from './Sidebar'
-import LANGUAGE_COLORS from '../../constants/language_colors'
+import LANGUAGE_COLORS from '@constants/language_colors'
 
 interface IRepositoriesRepo {
   archived: boolean

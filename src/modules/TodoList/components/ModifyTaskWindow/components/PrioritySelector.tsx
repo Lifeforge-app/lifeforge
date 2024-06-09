@@ -1,7 +1,8 @@
 // PriorityListbox.tsx
-import { Listbox, Transition } from '@headlessui/react'
+import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React, { Fragment } from 'react'
+import React from 'react'
+import ListboxTransition from '@components/ListBox/ListboxTransition'
 
 const PRIORITIES = [
   {
@@ -52,7 +53,7 @@ function PrioritySelector({
               PRIORITIES.findIndex(e => e.name.toLowerCase() === priority) + 1
             )}
           </span>
-          <span className="mt-[-1px] block truncate">
+          <span className="-mt-px block truncate">
             {priority[0].toUpperCase() + priority.slice(1)}
           </span>
         </div>
@@ -60,15 +61,7 @@ function PrioritySelector({
           <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
         </span>
       </Listbox.Button>
-      <Transition
-        as={Fragment}
-        enter="transition ease-in duration-100"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition ease-in duration-100"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      >
+      <ListboxTransition>
         <Listbox.Options className="absolute top-[4.5rem] z-50 mt-1 max-h-56 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800 sm:text-sm">
           {PRIORITIES.map(({ name, color }, i) => (
             <Listbox.Option
@@ -103,7 +96,7 @@ function PrioritySelector({
             </Listbox.Option>
           ))}
         </Listbox.Options>
-      </Transition>
+      </ListboxTransition>
     </Listbox>
   )
 }

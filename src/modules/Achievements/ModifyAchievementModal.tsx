@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { Listbox, Transition } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Listbox } from '@headlessui/react'
+import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
+import ListboxTransition from '@components/ListBox/ListboxTransition'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IAchievementEntry } from '@typedec/Achievements'
@@ -172,7 +173,7 @@ function ModifyAchievementModal({
                   }`}
                 />
               )}
-              <span className="mt-[-1px] block truncate">
+              <span className="-mt-px block truncate">
                 {(() => {
                   const diff = difficulties.find(
                     l => l[0] === achievementDifficulty
@@ -187,15 +188,7 @@ function ModifyAchievementModal({
               <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
             </span>
           </Listbox.Button>
-          <Transition
-            as={Fragment}
-            enter="transition ease-in duration-100"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="transition ease-in duration-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
+          <ListboxTransition>
             <Listbox.Options className="absolute bottom-[120%] z-50 mt-1 max-h-56 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800 sm:text-sm">
               {difficulties.map(([name, color], i) => (
                 <Listbox.Option
@@ -230,7 +223,7 @@ function ModifyAchievementModal({
                 </Listbox.Option>
               ))}
             </Listbox.Options>
-          </Transition>
+          </ListboxTransition>
         </Listbox>
 
         <CreateOrModifyButton

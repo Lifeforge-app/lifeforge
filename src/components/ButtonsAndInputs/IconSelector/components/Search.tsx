@@ -145,7 +145,7 @@ function Search({
     </div>
   ) : (
     <div className="flex w-full justify-center pb-8">
-      <Icon icon="svg-spinners:270-ring" className="h-8 w-8" />
+      <Icon icon="svg-spinners:270-ring" className="size-8" />
     </div>
   )
 }

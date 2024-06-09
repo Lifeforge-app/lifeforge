@@ -1,8 +1,9 @@
 /* eslint-disable tailwindcss/no-custom-classname */
-import { Listbox, Transition } from '@headlessui/react'
+import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React, { Fragment } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
+import ListboxTransition from '@components/ListBox/ListboxTransition'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { toCamelCase } from '@utils/strings'
 
@@ -50,7 +51,7 @@ function ThemeColorSelector(): React.ReactElement {
         <div className="relative mt-1 w-full md:w-48">
           <Listbox.Button className="relative flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 py-4 pl-4 pr-10 text-left focus:outline-none dark:border-bg-700 dark:bg-bg-900 sm:text-sm">
             <span className="inline-block size-4 shrink-0 rounded-full bg-custom-500" />
-            <span className="mt-[-1px] block truncate">
+            <span className="-mt-px block truncate">
               {t(
                 `personalization.themeColorSelector.colors.${toCamelCase(
                   themeColor
@@ -65,15 +66,7 @@ function ThemeColorSelector(): React.ReactElement {
               <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
             </span>
           </Listbox.Button>
-          <Transition
-            as={Fragment}
-            enter="transition ease-in duration-100"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="transition ease-in duration-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
+          <ListboxTransition>
             <Listbox.Options className="absolute mt-1 max-h-56 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-900 sm:text-sm">
               {COLORS.map((color, i) => (
                 <Listbox.Option
@@ -113,7 +106,7 @@ function ThemeColorSelector(): React.ReactElement {
                 </Listbox.Option>
               ))}
             </Listbox.Options>
-          </Transition>
+          </ListboxTransition>
         </div>
       </Listbox>
     </div>

@@ -2,7 +2,7 @@ import React from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import SpicinessHeader from './components/SpicinessHeader'
 import SpicinessSlider from './components/SpicinessSlider'
-import { SPICINESS_COLOR } from '../../../../../../../../constants/todo_subtasks_generation_spiciness'
+import { SPICINESS_COLOR } from '@constants/todo_subtasks_generation_spiciness'
 
 function SpicinessSelector({
   spiciness,

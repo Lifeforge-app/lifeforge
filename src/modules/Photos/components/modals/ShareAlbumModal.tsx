@@ -1,5 +1,5 @@
 import { Switch } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import { type IPhotosAlbum } from '@typedec/Photos'
