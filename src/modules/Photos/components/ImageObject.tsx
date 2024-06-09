@@ -202,8 +202,7 @@ function ImageObject({
   refreshAlbumData,
   refreshPhotos,
   setPhotos,
-  style,
-  ...props
+  style
 }: {
   photo: any
   details: IPhotosEntry
