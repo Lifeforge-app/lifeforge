@@ -50,12 +50,12 @@ function NotesCategory(): React.ReactElement {
             <>
               Notes -{' '}
               {titleData === 'loading' ? (
-                <Icon icon="svg-spinners:180-ring" className="h-8 w-8" />
+                <Icon icon="svg-spinners:180-ring" className="size-8" />
               ) : titleData === 'error' ? (
                 <span className="flex items-center gap-2 text-red-500">
                   <Icon
                     icon="tabler:alert-triangle"
-                    className="mt-1 h-8 w-8 stroke-red-500 stroke-[2px]"
+                    className="mt-1 size-8 stroke-red-500 stroke-[2px]"
                   />
                   Failed to fetch data
                 </span>

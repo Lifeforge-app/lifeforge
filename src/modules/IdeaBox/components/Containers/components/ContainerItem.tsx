@@ -30,7 +30,7 @@ function ContainerItem({
       >
         <Icon
           icon={container.icon}
-          className="h-8 w-8"
+          className="size-8"
           style={{
             color: container.color
           }}

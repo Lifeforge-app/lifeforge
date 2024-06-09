@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
+import FILE_ICONS from '@constants/file_icons'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { type INotesEntry } from '@typedec/Notes'
@@ -7,7 +8,6 @@ import EntryButton from './components/EntryButton'
 import EntryCreationDate from './components/EntryCreationDate'
 import EntryMenu from './components/EntryMenu'
 import EntryName from './components/EntryName'
-import FILE_ICONS from '../../../../../../../constants/file_icons'
 
 function EntryItem({
   entry,
@@ -37,7 +37,7 @@ function EntryItem({
             folder: 'tabler:folder'
           }[entry.type]
         }
-        className="pointer-events-auto z-50 h-7 w-7 shrink-0 text-bg-500"
+        className="pointer-events-auto z-50 size-7 shrink-0 text-bg-500"
       />
       <div className="flex w-full min-w-0 items-center justify-between gap-8">
         <EntryName name={entry.name} />

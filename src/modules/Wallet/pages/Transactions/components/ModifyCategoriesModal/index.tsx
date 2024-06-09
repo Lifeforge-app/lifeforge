@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
@@ -12,6 +12,7 @@ import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IWalletCategoryEntry } from '@typedec/Wallet'
 import APIRequest from '@utils/fetchData'
+import CategoryToggleButton from './components/CategoryToggleButton'
 
 function ModifyCategoriesModal({
   openType,
@@ -132,10 +133,12 @@ function ModifyCategoriesModal({
           {openType === 'update' && (
             <div
               className={`flex items-center gap-2 ${
-                categoryType === 'income'
-                  ? 'bg-green-500/20 text-green-500'
-                  : 'bg-red-500/20 text-red-500'
-              } rounded-md p-2`}
+                {
+                  income: 'bg-green-500/20 text-green-500',
+                  expenses: 'bg-red-500/20 text-red-500'
+                }[categoryType]
+              }
+              rounded-md p-2`}
             >
               <Icon
                 icon={
@@ -154,32 +157,21 @@ function ModifyCategoriesModal({
         {openType !== 'update' && (
           <>
             <div className="mb-4 flex items-center gap-2">
-              <button
-                className={`flex w-1/2 items-center justify-center gap-2 rounded-md p-4 font-medium transition-all ${
-                  categoryType === 'income'
-                    ? 'bg-green-500 text-bg-800'
-                    : 'bg-bg-800/50 text-bg-500'
-                }`}
-                onClick={() => {
-                  setCategoryType('income')
-                }}
-              >
-                <Icon icon="tabler:login-2" className="size-6" />
-                Income
-              </button>
-              <button
-                className={`flex w-1/2 items-center justify-center gap-2 rounded-md p-4 font-medium transition-all ${
-                  categoryType === 'expenses'
-                    ? 'bg-red-500 text-bg-800'
-                    : 'bg-bg-800/50 text-bg-500'
-                }`}
-                onClick={() => {
-                  setCategoryType('expenses')
-                }}
-              >
-                <Icon icon="tabler:logout" className="size-6" />
-                Expenses
-              </button>
+              {(
+                [
+                  ['Income', 'bg-green-500', 'tabler:login-2'],
+                  ['Expenses', 'bg-red-500', 'tabler:logout']
+                ] as Array<[string, string, string]>
+              ).map(([label, bgColor, icon]) => (
+                <CategoryToggleButton
+                  key={label}
+                  categoryType={categoryType}
+                  setCategoryType={setCategoryType}
+                  iconName={icon}
+                  label={label}
+                  activeBgColor={bgColor}
+                />
+              ))}
             </div>
           </>
         )}

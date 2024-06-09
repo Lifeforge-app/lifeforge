@@ -26,7 +26,8 @@
       "@providers/*": ["./src/providers/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@typedec/*": ["./src/types/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@utils/*": ["./src/utils/*"],
+      "@constants/*": ["./src/constants/*"]
     }
   },
   "include": ["src"],

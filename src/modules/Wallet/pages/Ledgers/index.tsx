@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
@@ -64,7 +64,7 @@ function Ledgers(): React.ReactElement {
                       style={{
                         color: ledger.color
                       }}
-                      className="h-8 w-8"
+                      className="size-8"
                     />
                   </span>
                   <div>

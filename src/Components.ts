@@ -72,7 +72,9 @@ const About = lazy(async () => await import('./modules/About'))
 const Achievements = lazy(async () => await import('./modules/Achievements'))
 const DNSRecords = lazy(async () => await import('./modules/DNSRecords'))
 const MailInbox = lazy(async () => await import('./modules/MailInbox'))
-const Wallet = lazy(async () => await import('./modules/Wallet'))
+const Wallet = lazy(
+  async () => await import('./modules/Wallet/pages/Dashboard')
+)
 const Assets = lazy(async () => await import('./modules/Wallet/pages/Assets'))
 const Ledgers = lazy(async () => await import('./modules/Wallet/pages/Ledgers'))
 const Transactions = lazy(

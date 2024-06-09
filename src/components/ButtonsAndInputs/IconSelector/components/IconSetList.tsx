@@ -138,7 +138,7 @@ export default function IconSetList({
                                   <Icon
                                     key={sampleIcon}
                                     icon={`${iconSet.prefix}:${sampleIcon}`}
-                                    className="h-8 w-8 shrink-0"
+                                    className="size-8 shrink-0"
                                   />
                                 ))}
                               </div>

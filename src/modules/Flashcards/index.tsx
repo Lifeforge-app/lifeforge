@@ -88,7 +88,7 @@ export default function Flashcards(): React.ReactElement {
                   </Link>
                 ))}
                 <div className="flex-center relative flex h-full flex-col gap-4 rounded-lg border-2 border-dashed border-bg-500 p-12">
-                  <Icon icon="tabler:plus" className="h-8 w-8 text-bg-500" />
+                  <Icon icon="tabler:plus" className="size-8 text-bg-500" />
                   <div className="text-xl font-semibold text-bg-500">
                     Create new set
                   </div>

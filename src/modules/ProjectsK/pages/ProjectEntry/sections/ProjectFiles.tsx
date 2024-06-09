@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
+import FILE_ICONS from '@constants/file_icons'
 import { Icon } from '@iconify/react'
-import APIRequest from '@utils/fetchData'
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
@@ -11,7 +11,7 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IProjectsKEntry } from '@typedec/ProjectK'
-import FILE_ICONS from '../../../../../constants/file_icons'
+import APIRequest from '@utils/fetchData'
 
 export default function ProjectFiles({
   projectData,
@@ -211,7 +211,7 @@ export default function ProjectFiles({
                             file.split('.').pop()! as keyof typeof FILE_ICONS
                           ] ?? 'tabler:file'
                         }
-                        className="pointer-events-auto z-50 h-7 w-7 shrink-0 text-bg-500"
+                        className="pointer-events-auto z-50 size-7 shrink-0 text-bg-500"
                       />
                       <p className="pointer-events-none z-50 flex items-center gap-4 truncate text-lg font-medium ">
                         {`${file
@@ -223,7 +223,7 @@ export default function ProjectFiles({
                           <span className="ml-2 flex items-center rounded-full bg-custom-500/20 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-custom-500 shadow-custom">
                             <Icon
                               icon="tabler:photo"
-                              className="mr-2 h-3.5 w-3.5"
+                              className="mr-2 size-3.5"
                             />
                             Thumbnail
                           </span>

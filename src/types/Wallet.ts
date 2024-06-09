@@ -41,9 +41,17 @@ interface IWalletTransactionEntry {
   receipt: string
 }
 
+interface IWalletIncomeExpenses {
+  totalIncome: number
+  totalExpenses: number
+  monthlyIncome: number
+  monthlyExpenses: number
+}
+
 export type {
   IWalletAssetEntry,
   IWalletLedgerEntry,
   IWalletTransactionEntry,
-  IWalletCategoryEntry
+  IWalletCategoryEntry,
+  IWalletIncomeExpenses
 }

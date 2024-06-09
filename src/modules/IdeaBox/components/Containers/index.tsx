@@ -39,7 +39,7 @@ function Container({
       >
         <Icon
           icon="tabler:cube-plus"
-          className="h-8 w-8 text-bg-500 dark:text-bg-100"
+          className="size-8 text-bg-500 dark:text-bg-100"
         />
         <div className="text-xl font-semibold text-bg-500 dark:text-bg-100">
           Create container
