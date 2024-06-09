@@ -7,7 +7,7 @@ function ListboxInputWrapper({
   children
 }: {
   value: string | null
-  onChange: (value: string | null) => void
+  onChange: (value: any) => void
   children: React.ReactNode
 }): React.ReactElement {
   return (

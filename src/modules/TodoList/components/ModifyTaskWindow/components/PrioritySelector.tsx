@@ -25,7 +25,7 @@ function PrioritySelector({
   setPriority
 }: {
   priority: string | null
-  setPriority: (priority: string | null) => void
+  setPriority: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
   return (
     <ListboxInputWrapper value={priority} onChange={setPriority}>
