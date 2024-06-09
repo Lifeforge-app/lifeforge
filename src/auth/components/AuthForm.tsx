@@ -1,9 +1,9 @@
-import { AUTH_ERROR_MESSAGES } from '@constants/auth'
 import * as webauthn from '@passwordless-id/webauthn'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import Input from '@components/ButtonsAndInputs/Input'
+import { AUTH_ERROR_MESSAGES } from '@constants/auth'
 import { useAuthContext } from '@providers/AuthProvider'
 import AuthSignInButton from './AuthSignInButtons'
 
@@ -170,39 +170,42 @@ function AuthForm(): React.ReactElement {
 
   return (
     <div className="mt-6 flex w-full max-w-md flex-col gap-8 sm:mt-12">
-      <Input
-        name={t('auth.emailOrUsername')}
-        placeholder="someone@somemail.com"
-        icon="tabler:user"
-        value={emailOrUsername}
-        updateValue={updateEmailOrUsername}
-        onKeyDown={e => {
-          if (e.key === 'Enter') {
-            signIn()
-          }
-        }}
-        darker
-      />
-      <Input
-        name={t('auth.password')}
-        placeholder="••••••••••••••••"
-        icon="tabler:key"
-        isPassword
-        value={password}
-        updateValue={updatePassword}
-        onKeyDown={e => {
-          if (e.key === 'Enter') {
-            signIn()
-          }
-        }}
-        darker
-      />
+      {[
+        {
+          name: t('auth.emailOrUsername'),
+          placeholder: 'someone@somemail.com',
+          icon: 'tabler:user',
+          value: emailOrUsername,
+          updateValue: updateEmailOrUsername
+        },
+        {
+          name: t('auth.password'),
+          placeholder: '••••••••••••••••',
+          icon: 'tabler:key',
+          value: password,
+          updateValue: updatePassword
+        }
+      ].map((input, index) => (
+        <Input
+          key={index}
+          {...input}
+          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === 'Enter') {
+              signIn()
+            }
+          }}
+          isPassword={input.name === 'Password'}
+          darker
+        />
+      ))}
       <AuthSignInButton
         emailOrUsername={emailOrUsername}
         password={password}
         loading={loading}
         signIn={signIn}
-        signInWithPasskey={signInWithPasskey}
+        signInWithPasskey={() => {
+          signInWithPasskey().catch(console.error)
+        }}
       />
     </div>
   )
