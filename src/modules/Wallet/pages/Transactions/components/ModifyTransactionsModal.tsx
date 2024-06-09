@@ -179,7 +179,7 @@ function ModifyTransactionsModal({
     const input = document.createElement('input')
     input.type = 'file'
     input.accept = 'image/*'
-    input.onchange = async e => {
+    input.onchange = async () => {
       if (input.files && input.files[0]) {
         const reader = new FileReader()
         reader.onloadend = () => {

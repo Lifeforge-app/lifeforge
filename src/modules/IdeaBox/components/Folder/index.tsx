@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import React, { useEffect, useState } from 'react'
