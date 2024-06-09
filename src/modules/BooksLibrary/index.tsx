@@ -52,7 +52,7 @@ function BooksLibrary(): React.ReactElement {
                 className="relative flex w-full min-w-0 items-center gap-6 px-4 font-medium text-bg-500 transition-all"
               >
                 <div className="flex w-full min-w-0 items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-800">
-                  <Icon icon={icon} className="h-5 w-5 shrink-0 " />
+                  <Icon icon={icon} className="size-5 shrink-0 " />
                   <div className="w-full min-w-0 truncate">{name}</div>
                   <span className="text-sm">
                     {Math.floor(Math.random() * 10)}
@@ -71,7 +71,7 @@ function BooksLibrary(): React.ReactElement {
                 className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
               >
                 <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-800">
-                  <Icon icon={icon} className="h-5 w-5 shrink-0" />
+                  <Icon icon={icon} className="size-5 shrink-0" />
                   <div className="flex w-full items-center justify-between">
                     {name}
                   </div>
@@ -123,7 +123,7 @@ function BooksLibrary(): React.ReactElement {
                         ? 'uil:list-ul'
                         : ''
                     }
-                    className="h-6 w-6"
+                    className="size-6"
                   />
                 </button>
               ))}

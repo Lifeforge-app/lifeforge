@@ -17,7 +17,7 @@ function NavigationButton({
     >
       <Icon
         icon={`uil:angle-${direction === 'PREV' ? 'left' : 'right'}`}
-        className="h-6 w-6"
+        className="size-6"
       />
     </button>
   )

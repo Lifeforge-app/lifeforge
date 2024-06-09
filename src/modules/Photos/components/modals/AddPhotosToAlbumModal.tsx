@@ -97,7 +97,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                   }}
                   className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover: dark:hover:bg-bg-800"
                 >
-                  <Icon icon="tabler:x" className="h-6 w-6" />
+                  <Icon icon="tabler:x" className="size-6" />
                 </button>
               )}
             </div>
@@ -131,7 +131,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                           ) : (
                             <Icon
                               icon="tabler:library-photo"
-                              className="h-5 w-5 text-bg-500 dark:text-bg-500"
+                              className="size-5 text-bg-500 dark:text-bg-500"
                             />
                           )}
                         </div>
@@ -141,7 +141,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                         {selectedAlbum === album.id ? (
                           <Icon
                             icon="tabler:check"
-                            className="h-6 w-6 text-bg-800 dark:!text-custom-500"
+                            className="size-6 text-bg-800 dark:!text-custom-500"
                           />
                         ) : (
                           <span className="text-sm text-bg-500">

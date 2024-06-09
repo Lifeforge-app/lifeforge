@@ -84,14 +84,14 @@ function ShareAlbumModal({
               publicity
                 ? 'translate-x-6 bg-bg-100'
                 : 'translate-x-1 bg-bg-100 dark:bg-bg-500'
-            } inline-block h-4 w-4 rounded-full transition`}
+            } inline-block size-4 rounded-full transition`}
           />
         </Switch>
       </div>
       {publicity && (
         <>
           <div className="mt-4 flex gap-2 rounded-md bg-bg-700/50 p-3 shadow-md">
-            <Icon icon="tabler:link" className="h-6 w-6" />
+            <Icon icon="tabler:link" className="size-6" />
             <input
               type="text"
               value={`${

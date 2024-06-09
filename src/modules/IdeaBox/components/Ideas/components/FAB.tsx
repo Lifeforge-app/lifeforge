@@ -38,7 +38,7 @@ function FAB({
             <Menu.Button className="relative z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800">
               <Icon
                 icon="tabler:plus"
-                className={`h-6 w-6 shrink-0 transition-all ${
+                className={`size-6 shrink-0 transition-all ${
                   open && 'rotate-45'
                 }`}
               />
@@ -93,7 +93,7 @@ function FAB({
                           >
                             <Icon
                               icon={icon}
-                              className={`h-5 w-5 text-bg-800 ${
+                              className={`size-5 text-bg-800 ${
                                 active && 'text-bg-300'
                               }`}
                             />

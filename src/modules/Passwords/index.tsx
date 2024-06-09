@@ -186,10 +186,7 @@ function Passwords(): React.ReactElement {
           }}
           className="absolute bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800 lg:hidden"
         >
-          <Icon
-            icon="tabler:plus"
-            className="h-6 w-6 shrink-0 transition-all"
-          />
+          <Icon icon="tabler:plus" className="size-6 shrink-0 transition-all" />
         </button>
       )}
       <CreatePasswordModal

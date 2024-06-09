@@ -26,7 +26,7 @@ function ListSelector({
       <Listbox.Button className="flex w-full items-center">
         <Icon
           icon="tabler:list"
-          className={`ml-6 h-6 w-6 shrink-0 ${
+          className={`ml-6 size-6 shrink-0 ${
             list !== null ? '' : 'text-bg-500'
           } group-focus-within:!text-custom-500`}
         />
@@ -37,7 +37,7 @@ function ListSelector({
         </span>
         <div className="relative mb-2 mt-9 flex w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-none sm:text-sm">
           <span
-            className="h-3 w-3 rounded-full border border-bg-300"
+            className="size-3 rounded-full border border-bg-300"
             style={{
               backgroundColor: lists.find(l => l.id === list)?.color
             }}
@@ -47,7 +47,7 @@ function ListSelector({
           </span>
         </div>
         <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
-          <Icon icon="tabler:chevron-down" className="h-5 w-5 text-bg-500" />
+          <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
         </span>
       </Listbox.Button>
       <Transition
@@ -73,7 +73,7 @@ function ListSelector({
               <>
                 <div>
                   <span className="flex items-center gap-2">
-                    <span className="h-3 w-3 rounded-full border border-bg-300" />
+                    <span className="size-3 rounded-full border border-bg-300" />
                     None
                   </span>
                 </div>
@@ -101,7 +101,7 @@ function ListSelector({
                   <div>
                     <span className="flex items-center gap-2">
                       <span
-                        className="h-3 w-3 rounded-full border border-bg-300"
+                        className="size-3 rounded-full border border-bg-300"
                         style={{
                           backgroundColor: color
                         }}

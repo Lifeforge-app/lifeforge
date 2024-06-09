@@ -59,7 +59,7 @@ function Sidebar({
                     }`}
                   >
                     <span className={`block h-8 w-1.5 rounded-full ${color}`} />
-                    <Icon icon={icon} className="h-6 w-6 shrink-0" />
+                    <Icon icon={icon} className="size-6 shrink-0" />
                     <div className="flex w-full items-center justify-between">
                       {name}
                     </div>
@@ -107,7 +107,7 @@ function Sidebar({
                       : ''
                   }`}
                 >
-                  <Icon icon={icon} className="h-6 w-6 shrink-0" />
+                  <Icon icon={icon} className="size-6 shrink-0" />
                   <div className="flex w-full items-center justify-between">
                     {name}
                   </div>

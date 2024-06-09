@@ -82,7 +82,7 @@ function AlbumListHeader({
                   </button>
                 ))}
               <button className="rounded-full bg-bg-900 px-3 py-1 text-sm uppercase tracking-wider text-bg-500 shadow-custom hover:bg-bg-300">
-                <Icon icon="tabler:plus" className="h-4 w-4" />
+                <Icon icon="tabler:plus" className="size-4" />
               </button>
             </div>
             <button
@@ -95,7 +95,7 @@ function AlbumListHeader({
                 icon={
                   tagsCollapsed ? 'tabler:chevron-down' : 'tabler:chevron-up'
                 }
-                className="h-4 w-4"
+                className="size-4"
               />
             </button>
           </div>

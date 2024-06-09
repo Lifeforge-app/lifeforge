@@ -49,7 +49,7 @@ function ThemeColorSelector(): React.ReactElement {
       >
         <div className="relative mt-1 w-full md:w-48">
           <Listbox.Button className="relative flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 py-4 pl-4 pr-10 text-left focus:outline-none dark:border-bg-700 dark:bg-bg-900 sm:text-sm">
-            <span className="inline-block h-4 w-4 shrink-0 rounded-full bg-custom-500" />
+            <span className="inline-block size-4 shrink-0 rounded-full bg-custom-500" />
             <span className="mt-[-1px] block truncate">
               {t(
                 `personalization.themeColorSelector.colors.${toCamelCase(
@@ -62,10 +62,7 @@ function ThemeColorSelector(): React.ReactElement {
               )}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <Icon
-                icon="tabler:chevron-down"
-                className="h-5 w-5 text-bg-500"
-              />
+              <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
             </span>
           </Listbox.Button>
           <Transition
@@ -93,7 +90,7 @@ function ThemeColorSelector(): React.ReactElement {
                       <div>
                         <span className="flex items-center gap-2">
                           <span
-                            className={`theme-${color} inline-block h-4 w-4 rounded-full bg-custom-500`}
+                            className={`theme-${color} inline-block size-4 rounded-full bg-custom-500`}
                           />
                           {t(
                             `personalization.themeColorSelector.colors.${toCamelCase(

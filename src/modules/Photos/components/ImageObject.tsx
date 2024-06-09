@@ -232,13 +232,13 @@ function ImageObject({
       }}
       style={style}
       className={`group/image relative size-full min-w-20 overflow-hidden ${
-        selected ? 'bg-custom-500/20 p-4' : 'bg-bg-200 dark:bg-bg-800'
+        selected ? 'bg-custom-500/20' : 'bg-bg-200 dark:bg-bg-800'
       } transition-all ${selectedPhotosLength > 0 && 'cursor-pointer'}`}
     >
       {(ready || beingDisplayedInAlbum) && (
         <>
           <div
-            className={`size-full ${
+            className={`size-full ${selected && 'p-4'} ${
               selectedPhotosLength > 0 ? 'pointer-events-none' : ''
             }`}
           >
@@ -269,7 +269,6 @@ function ImageObject({
                 delayMethod="debounce"
                 threshold={50}
                 useIntersectionObserver={false}
-                {...props}
               />
             </Zoom>
           </div>

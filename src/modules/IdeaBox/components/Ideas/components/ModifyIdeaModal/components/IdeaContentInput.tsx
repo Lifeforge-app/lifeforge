@@ -27,7 +27,7 @@ function IdeaContentInput({
         icon={
           innerTypeOfModifyIdea === 'text' ? 'tabler:file-text' : 'tabler:link'
         }
-        className="ml-6 h-6 w-6 shrink-0 text-bg-500 group-focus-within:!text-custom-500"
+        className="ml-6 size-6 shrink-0 text-bg-500 group-focus-within:!text-custom-500"
       />
       <div className="flex w-full items-center gap-2">
         <span

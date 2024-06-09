@@ -152,14 +152,14 @@ function JournalEdit(): React.ReactElement {
                           saveJournalTitle().catch(console.error)
                         }}
                       >
-                        <Icon icon="uil:save" className="h-5 w-5 text-bg-500" />
+                        <Icon icon="uil:save" className="size-5 text-bg-500" />
                       </button>
                       <button
                         onClick={() => {
                           setIsTitleUpdating(false)
                         }}
                       >
-                        <Icon icon="tabler:x" className="h-5 w-5 text-bg-500" />
+                        <Icon icon="tabler:x" className="size-5 text-bg-500" />
                       </button>
                     </>
                   ) : (
@@ -179,7 +179,7 @@ function JournalEdit(): React.ReactElement {
                       >
                         <Icon
                           icon="tabler:pencil"
-                          className="h-5 w-5 text-bg-500"
+                          className="size-5 text-bg-500"
                         />
                       </button>
                     </>

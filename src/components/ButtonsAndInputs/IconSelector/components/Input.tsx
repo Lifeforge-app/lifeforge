@@ -16,7 +16,7 @@ function Input({
 }): React.ReactElement {
   return (
     <div className="flex w-full items-center gap-3 rounded-md bg-bg-800 px-5 shadow-md">
-      <Icon icon={icon} className="h-5 w-5 text-bg-200" />
+      <Icon icon={icon} className="size-5 text-bg-200" />
       <input
         type="text"
         className="w-full bg-transparent py-4 text-bg-200 outline-none placeholder:text-bg-100"

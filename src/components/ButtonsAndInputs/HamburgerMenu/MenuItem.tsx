@@ -22,7 +22,8 @@ function MenuItem({
   isRed = false,
   onClick,
   isToggled,
-  disabled
+  disabled,
+  preventDefault = true
 }: {
   icon: string
   text: string
@@ -30,6 +31,7 @@ function MenuItem({
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
   isToggled?: boolean
   disabled?: boolean
+  preventDefault?: boolean
 }): React.ReactElement {
   return (
     <Menu.Item>
@@ -38,7 +40,9 @@ function MenuItem({
           <button
             disabled={disabled}
             onClick={e => {
-              e.preventDefault()
+              if (preventDefault) {
+                e.preventDefault()
+              }
               e.stopPropagation()
               onClick(e)
             }}
@@ -47,12 +51,12 @@ function MenuItem({
               isRed
             )} flex w-full items-center p-4 text-left`}
           >
-            <Icon icon={icon} className="h-5 w-5 shrink-0" />
+            <Icon icon={icon} className="size-5 shrink-0" />
             <span className="ml-4 w-full whitespace-nowrap">{text}</span>
             {isToggled === true && (
               <Icon
                 icon="tabler:check"
-                className={`${getToggleIconClass(isRed)} ml-4 h-5 w-5 shrink-0`}
+                className={`${getToggleIconClass(isRed)} ml-4 size-5 shrink-0`}
               />
             )}
           </button>

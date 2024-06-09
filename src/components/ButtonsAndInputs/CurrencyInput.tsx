@@ -29,7 +29,7 @@ function CurrencyInputComponent({
     >
       <Icon
         icon={icon}
-        className={`ml-6 h-6 w-6 shrink-0 ${
+        className={`ml-6 size-6 shrink-0 ${
           value ? '' : 'text-bg-500'
         } group-focus-within:!text-custom-500`}
       />

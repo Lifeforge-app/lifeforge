@@ -46,16 +46,13 @@ function LanguageSelector(): React.ReactElement {
           <Listbox.Button className="relative flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 py-4 pl-4 pr-10 text-left focus:outline-none dark:border-bg-700 dark:bg-bg-900 sm:text-sm">
             <Icon
               icon={LANGUAGES.find(({ code }) => code === language)?.icon ?? ''}
-              className="h-5 w-5"
+              className="size-5"
             />
             <span className="mt-[-1px] block truncate">
               {LANGUAGES.find(({ code }) => code === language)?.name}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <Icon
-                icon="tabler:chevron-down"
-                className="h-5 w-5 text-bg-500"
-              />
+              <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
             </span>
           </Listbox.Button>
           <Transition
@@ -82,7 +79,7 @@ function LanguageSelector(): React.ReactElement {
                     <>
                       <div>
                         <span className="flex items-center gap-2">
-                          <Icon icon={icon} className="h-5 w-5" />
+                          <Icon icon={icon} className="size-5" />
                           {name}
                         </span>
                       </div>

@@ -31,7 +31,7 @@ function TodoListHeader({
         <div className="mt-2 flex items-center gap-2">
           {Boolean(searchParams.get('list')) && (
             <span className="flex-center flex gap-1 rounded-full bg-custom-500/20 px-2 py-1 text-sm text-custom-500">
-              <Icon icon="tabler:list" className="h-4 w-4" />
+              <Icon icon="tabler:list" className="size-4" />
               {lists.find(list => list.id === searchParams.get('list'))?.name}
               <button
                 onClick={() => {
@@ -41,13 +41,13 @@ function TodoListHeader({
                   })
                 }}
               >
-                <Icon icon="tabler:x" className="h-4 w-4" />
+                <Icon icon="tabler:x" className="size-4" />
               </button>
             </span>
           )}
           {Boolean(searchParams.get('tag')) && (
             <span className="flex-center flex gap-1 rounded-full bg-custom-500/20 px-2 py-1 text-sm text-custom-500">
-              <Icon icon="tabler:hash" className="h-4 w-4" />
+              <Icon icon="tabler:hash" className="size-4" />
               {
                 (tags as ITodoListTag[]).find(
                   tag => tag.id === searchParams.get('tag')
@@ -61,7 +61,7 @@ function TodoListHeader({
                   })
                 }}
               >
-                <Icon icon="tabler:x" className="h-4 w-4" />
+                <Icon icon="tabler:x" className="size-4" />
               </button>
             </span>
           )}

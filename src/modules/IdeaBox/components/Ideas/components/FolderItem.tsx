@@ -75,7 +75,7 @@ function FolderItem({
       }}
     >
       <div className="flex">
-        <Icon icon={folder.icon} className="mr-2 h-5 w-5 shrink-0" />
+        <Icon icon={folder.icon} className="mr-2 size-5 shrink-0" />
         {folder.name}
       </div>
       <HamburgerMenu

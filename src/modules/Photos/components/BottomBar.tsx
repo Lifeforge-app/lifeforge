@@ -128,7 +128,7 @@ function BottomBar({
             setSelectedPhotos([])
           }}
         >
-          <Icon icon="tabler:x" className="h-5 w-5 text-bg-500" />
+          <Icon icon="tabler:x" className="size-5 text-bg-500" />
         </button>
         <p className="text-lg text-bg-500">
           {selectedPhotos.length.toLocaleString()} selected
@@ -136,7 +136,7 @@ function BottomBar({
       </div>
       <div className="flex items-center gap-4">
         <button className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30">
-          <Icon icon="tabler:share" className="h-5 w-5" />
+          <Icon icon="tabler:share" className="size-5" />
         </button>
         <button
           onClick={() => {
@@ -144,7 +144,7 @@ function BottomBar({
           }}
           className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30"
         >
-          <Icon icon="tabler:star" className="h-5 w-5" />
+          <Icon icon="tabler:star" className="size-5" />
         </button>
         <button
           onClick={() => {
@@ -172,7 +172,7 @@ function BottomBar({
         >
           <Icon
             icon={inAlbumGallery ? 'tabler:layout-grid-remove' : 'tabler:plus'}
-            className="h-5 w-5"
+            className="size-5"
           />
         </button>
         <button
@@ -186,7 +186,7 @@ function BottomBar({
             icon={
               isDownloadLoading ? 'svg-spinners:180-ring' : 'tabler:download'
             }
-            className="h-5 w-5"
+            className="size-5"
           />
         </button>
         <button
@@ -195,7 +195,7 @@ function BottomBar({
           }}
           className="rounded-md p-2 text-red-500 hover:bg-red-200/50 hover:text-red-600"
         >
-          <Icon icon="tabler:trash" className="h-5 w-5" />
+          <Icon icon="tabler:trash" className="size-5" />
         </button>
       </div>
     </div>
