@@ -7,7 +7,8 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
-import ListboxTransition from '@components/ListBox/ListboxTransition'
+import ListboxInputWrapper from '@components/Listbox/ListboxInputWrapper'
+import ListboxTransition from '@components/Listbox/ListboxTransition'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IAchievementEntry } from '@typedec/Achievements'
@@ -145,13 +146,11 @@ function ModifyAchievementModal({
           placeholder="My thoughts"
           additionalClassName="mt-4"
         />
-        <Listbox
+        <ListboxInputWrapper
           value={achievementDifficulty}
           onChange={color => {
             setAchievementDifficulty(color ?? '')
           }}
-          as="div"
-          className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 dark:bg-bg-800/50"
         >
           <Listbox.Button className="flex w-full items-center">
             <Icon
@@ -224,7 +223,7 @@ function ModifyAchievementModal({
               ))}
             </Listbox.Options>
           </ListboxTransition>
-        </Listbox>
+        </ListboxInputWrapper>
 
         <CreateOrModifyButton
           loading={loading}

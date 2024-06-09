@@ -40,31 +40,23 @@ function ManageCategoriesModal({
         <APIComponentWithFallback data={categories}>
           {typeof categories !== 'string' && categories.length > 0 ? (
             <>
-              <CategorySection
-                categories={categories}
-                type="income"
-                iconName="tabler:login-2"
-                setModifyCategoriesModalOpenType={
-                  setModifyCategoriesModalOpenType
-                }
-                setExistedData={setExistedData}
-                setDeleteCategoriesConfirmationOpen={
-                  setDeleteCategoriesConfirmationOpen
-                }
-              />
-
-              <CategorySection
-                categories={categories}
-                type="expenses"
-                iconName="tabler:logout"
-                setModifyCategoriesModalOpenType={
-                  setModifyCategoriesModalOpenType
-                }
-                setExistedData={setExistedData}
-                setDeleteCategoriesConfirmationOpen={
-                  setDeleteCategoriesConfirmationOpen
-                }
-              />
+              {['income', 'expenses'].map(type => (
+                <CategorySection
+                  key={type}
+                  categories={categories}
+                  type={type as 'income' | 'expenses'}
+                  iconName={
+                    type === 'income' ? 'tabler:login-2' : 'tabler:logout'
+                  }
+                  setModifyCategoriesModalOpenType={
+                    setModifyCategoriesModalOpenType
+                  }
+                  setExistedData={setExistedData}
+                  setDeleteCategoriesConfirmationOpen={
+                    setDeleteCategoriesConfirmationOpen
+                  }
+                />
+              ))}
             </>
           ) : (
             <EmptyStateScreen

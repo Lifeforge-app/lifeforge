@@ -3,7 +3,7 @@ import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import ListboxTransition from '@components/ListBox/ListboxTransition'
+import ListboxTransition from '@components/Listbox/ListboxTransition'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { toCamelCase } from '@utils/strings'
 
