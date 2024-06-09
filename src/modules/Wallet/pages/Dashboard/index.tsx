@@ -1,4 +1,3 @@
-import { Icon } from '@iconify/react'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,6 +12,7 @@ import {
 import React from 'react'
 import { useNavigate } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
+import FAB from '@components/ButtonsAndInputs/FAB'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import useFetch from '@hooks/useFetch'
@@ -73,17 +73,14 @@ function WalletDashboard(): React.ReactElement {
         <AssetsBalanceCard />
         <StatisticChardCard />
         <ExpensesBreakdownCard />
-
         <TransactionsCard />
       </div>
-      <button
+      <FAB
         onClick={() => {
           navigate('/wallet/transactions#new')
         }}
-        className="absolute bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800 md:hidden"
-      >
-        <Icon icon="tabler:plus" className="size-6 shrink-0 transition-all" />
-      </button>
+        hideWhen="md"
+      />
     </ModuleWrapper>
   )
 }

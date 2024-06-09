@@ -1,7 +1,8 @@
 import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
-import ListboxTransition from '@components/ListBox/ListboxTransition'
+import ListboxInputWrapper from '@components/Listbox/ListboxInputWrapper'
+import ListboxTransition from '@components/Listbox/ListboxTransition'
 import { type ICalendarCategory } from '@typedec/Calendar'
 
 function CategorySelector({
@@ -16,13 +17,11 @@ function CategorySelector({
   if (typeof categories === 'string') return <></>
 
   return (
-    <Listbox
+    <ListboxInputWrapper
       value={category}
       onChange={color => {
         setCategory(color ?? '')
       }}
-      as="div"
-      className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 dark:bg-bg-800/50"
     >
       <Listbox.Button className="flex w-full items-center">
         <Icon
@@ -116,7 +115,7 @@ function CategorySelector({
           ))}
         </Listbox.Options>
       </ListboxTransition>
-    </Listbox>
+    </ListboxInputWrapper>
   )
 }
 

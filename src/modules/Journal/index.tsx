@@ -1,8 +1,8 @@
-import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
+import FAB from '@components/ButtonsAndInputs/FAB'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
@@ -131,14 +131,11 @@ function Journal(): React.ReactElement {
         nameKey="title"
       />
       {entries.length > 0 && (
-        <button
+        <FAB
           onClick={() => {
             createEntry().catch(console.error)
           }}
-          className="absolute bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800 sm:hidden"
-        >
-          <Icon icon="tabler:plus" className="size-6 shrink-0 transition-all" />
-        </button>
+        />
       )}
     </ModuleWrapper>
   )

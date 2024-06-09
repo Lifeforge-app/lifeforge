@@ -2,7 +2,8 @@
 import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
-import ListboxTransition from '@components/ListBox/ListboxTransition'
+import ListboxInputWrapper from '@components/Listbox/ListboxInputWrapper'
+import ListboxTransition from '@components/Listbox/ListboxTransition'
 
 const PRIORITIES = [
   {
@@ -23,16 +24,11 @@ function PrioritySelector({
   priority,
   setPriority
 }: {
-  priority: string
-  setPriority: (priority: string) => void
+  priority: string | null
+  setPriority: (priority: string | null) => void
 }): React.ReactElement {
   return (
-    <Listbox
-      value={priority}
-      onChange={setPriority}
-      as="div"
-      className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 dark:bg-bg-800/50"
-    >
+    <ListboxInputWrapper value={priority} onChange={setPriority}>
       <Listbox.Button className="flex w-full items-center">
         <Icon
           icon="tabler:alert-triangle"
@@ -54,7 +50,7 @@ function PrioritySelector({
             )}
           </span>
           <span className="-mt-px block truncate">
-            {priority[0].toUpperCase() + priority.slice(1)}
+            {(priority?.[0].toUpperCase() ?? '') + (priority?.slice(1) ?? '')}
           </span>
         </div>
         <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
@@ -97,7 +93,7 @@ function PrioritySelector({
           ))}
         </Listbox.Options>
       </ListboxTransition>
-    </Listbox>
+    </ListboxInputWrapper>
   )
 }
 

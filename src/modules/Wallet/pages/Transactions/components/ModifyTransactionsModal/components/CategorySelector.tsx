@@ -1,7 +1,8 @@
 import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
-import ListboxTransition from '@components/ListBox/ListboxTransition'
+import ListboxInputWrapper from '@components/Listbox/ListboxInputWrapper'
+import ListboxTransition from '@components/Listbox/ListboxTransition'
 import useFetch from '@hooks/useFetch'
 import { type IWalletCategoryEntry } from '@typedec/Wallet'
 
@@ -30,12 +31,7 @@ function CategorySelector({
   }
 
   return (
-    <Listbox
-      value={category}
-      onChange={setCategory}
-      as="div"
-      className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 dark:bg-bg-800/50"
-    >
+    <ListboxInputWrapper value={category} onChange={setCategory}>
       <Listbox.Button className="flex w-full items-center">
         <Icon
           icon="tabler:apps"
@@ -146,7 +142,7 @@ function CategorySelector({
             ))}
         </Listbox.Options>
       </ListboxTransition>
-    </Listbox>
+    </ListboxInputWrapper>
   )
 }
 

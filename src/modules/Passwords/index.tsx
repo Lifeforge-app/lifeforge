@@ -5,6 +5,7 @@ import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
+import FAB from '@components/ButtonsAndInputs/FAB'
 import Input from '@components/ButtonsAndInputs/Input'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
@@ -108,8 +109,8 @@ function Passwords(): React.ReactElement {
       {userData?.hasMasterPassword === false ? (
         <CreatePassword />
       ) : masterPassword === '' ? (
-        <div className="flex-center flex h-full w-full flex-1 flex-col gap-4">
-          <Icon icon="tabler:lock-access" className="h-28 w-28" />
+        <div className="flex-center flex size-full flex-1 flex-col gap-4">
+          <Icon icon="tabler:lock-access" className="size-28" />
           <h2 className="text-4xl font-semibold">Your vault is locked</h2>
           <p className="mb-8 text-center text-lg text-bg-500">
             A master password is required to decrypt your passwords.
@@ -179,15 +180,13 @@ function Passwords(): React.ReactElement {
         </APIComponentWithFallback>
       )}
       {masterPassword !== '' && passwordList.length > 0 && (
-        <button
+        <FAB
           onClick={() => {
             setSelectedPassword(null)
             setCreatePasswordModalOpenType('create')
           }}
-          className="absolute bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800 lg:hidden"
-        >
-          <Icon icon="tabler:plus" className="size-6 shrink-0 transition-all" />
-        </button>
+          hideWhen="lg"
+        />
       )}
       <CreatePasswordModal
         openType={createPasswordModalOpenType}

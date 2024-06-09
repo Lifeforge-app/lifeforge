@@ -1,5 +1,5 @@
-import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
+import FAB from '@components/ButtonsAndInputs/FAB'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -76,15 +76,12 @@ function TodoListContainer(): React.ReactElement {
         nameKey="summary"
       />
       {entries.length > 0 && (
-        <button
+        <FAB
           onClick={() => {
             setSelectedTask(null)
             setModifyTaskWindowOpenType('create')
           }}
-          className="absolute bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800 sm:hidden"
-        >
-          <Icon icon="tabler:plus" className="size-6 shrink-0 transition-all" />
-        </button>
+        />
       )}
       <ModifyListModal />
       <DeleteConfirmationModal

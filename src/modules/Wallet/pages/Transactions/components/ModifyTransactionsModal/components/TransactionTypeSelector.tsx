@@ -1,7 +1,7 @@
 import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
-import ListboxTransition from '@components/ListBox/ListboxTransition'
+import ListboxTransition from '@components/Listbox/ListboxTransition'
 
 const TRANSACTION_TYPES = [
   { name: 'Income', color: '#10B981', id: 'income', icon: 'tabler:login-2' },
