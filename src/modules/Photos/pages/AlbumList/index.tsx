@@ -1,0 +1,145 @@
+import { Icon } from '@iconify/react'
+import { useDebounce } from '@uidotdev/usehooks'
+import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
+import ModuleHeader from '@components/Module/ModuleHeader'
+import ModuleWrapper from '@components/Module/ModuleWrapper'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import { type IPhotosAlbum } from '@typedec/Photos'
+import AlbumItem from './components/AlbumItem'
+import AlbumListHeader from './components/AlbumListHeader'
+import { usePhotosContext } from '../../../../providers/PhotosProvider'
+import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
+import UpdateAlbumTagsModal from '../../components/modals/UpdateAlbumTagsModal'
+import PhotosSidebar from '../../components/PhotosSidebar'
+
+function PhotosAlbumList(): React.ReactElement {
+  const { albumList, refreshAlbumList, refreshPhotos, setSidebarOpen } =
+    usePhotosContext()
+  const [selectedAlbum, setSelectedAlbum] = useState<IPhotosAlbum | null>(null)
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
+  const [updateAlbumTagsModalOpen, setUpdateAlbumTagsModalOpen] =
+    useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const debouncedSearchQuery = useDebounce(searchQuery, 300)
+  const [filteredAlbumList, setFilteredAlbumList] = useState<
+    IPhotosAlbum[] | 'loading' | 'error'
+  >(albumList)
+  const [searchParams] = useSearchParams()
+
+  useEffect(() => {
+    const tags =
+      searchParams
+        .get('tags')
+        ?.split(',')
+        .filter(e => e) ?? []
+
+    if (Array.isArray(albumList)) {
+      if (debouncedSearchQuery.length === 0) {
+        setFilteredAlbumList(
+          albumList.filter(
+            album =>
+              tags.length === 0 || tags.every(tag => album.tags.includes(tag))
+          )
+        )
+      } else {
+        setFilteredAlbumList(
+          albumList.filter(
+            album =>
+              album.name
+                .toLowerCase()
+                .includes(debouncedSearchQuery.toLowerCase()) &&
+              (tags.length === 0 || tags.every(tag => album.tags.includes(tag)))
+          )
+        )
+      }
+    }
+  }, [debouncedSearchQuery, albumList, searchParams])
+
+  return (
+    <>
+      <ModuleWrapper>
+        <ModuleHeader
+          title="Photos"
+          desc="View and manage all your precious memories."
+          actionButton={
+            <button
+              onClick={() => {
+                setSidebarOpen(true)
+              }}
+              className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-100 lg:hidden"
+            >
+              <Icon icon="tabler:menu" className="text-2xl" />
+            </button>
+          }
+        />
+        <div className="mt-6 flex size-full min-h-0 gap-8">
+          <PhotosSidebar />
+          <div className="flex size-full min-w-0 flex-1 flex-col">
+            <AlbumListHeader
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+            />
+            <APIComponentWithFallback data={albumList}>
+              {typeof filteredAlbumList !== 'string' &&
+                (albumList.length > 0 ? (
+                  filteredAlbumList.length > 0 ? (
+                    <ul className="mt-6 grid w-full min-w-0 flex-1 gap-2 overflow-y-auto pb-6 sm:grid-cols-2 lg:grid-cols-3">
+                      {filteredAlbumList.map(album => (
+                        <AlbumItem
+                          key={album.id}
+                          album={album}
+                          setDeleteModalOpen={setDeleteModalOpen}
+                          setUpdateAlbumTagsModalOpen={
+                            setUpdateAlbumTagsModalOpen
+                          }
+                          setSelectedAlbum={setSelectedAlbum}
+                        />
+                      ))}
+                    </ul>
+                  ) : (
+                    <EmptyStateScreen
+                      description="Oops, seems like nothing matches your search."
+                      title="No albums found"
+                      icon="tabler:photo-off"
+                    />
+                  )
+                ) : (
+                  <EmptyStateScreen
+                    description="Consider creating an album to organize your photos."
+                    title="Hmm... Seems a bit empty here."
+                    icon="tabler:photo-off"
+                  />
+                ))}
+            </APIComponentWithFallback>
+          </div>
+        </div>
+      </ModuleWrapper>
+      <ModifyAlbumModal targetAlbum={selectedAlbum ?? undefined} />
+      <DeleteConfirmationModal
+        apiEndpoint="photos/album/delete"
+        data={selectedAlbum}
+        onClose={() => {
+          setDeleteModalOpen(false)
+        }}
+        isOpen={isDeleteModalOpen}
+        itemName="album"
+        updateDataList={() => {
+          refreshAlbumList()
+          refreshPhotos()
+        }}
+        nameKey="name"
+        customText="Are you sure you want to delete this album? The photos inside this album will not be deleted."
+      />
+      <UpdateAlbumTagsModal
+        isOpen={updateAlbumTagsModalOpen}
+        setOpen={setUpdateAlbumTagsModalOpen}
+        selectedAlbum={selectedAlbum}
+      />
+    </>
+  )
+}
+
+export default PhotosAlbumList
