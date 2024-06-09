@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
+import FAB from '@components/ButtonsAndInputs/FAB'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
@@ -103,15 +104,13 @@ function Assets(): React.ReactElement {
         )}
       </APIComponentWithFallback>
       {assets.length > 0 && (
-        <button
+        <FAB
           onClick={() => {
             setSelectedData(null)
             setModifyModalOpenType('create')
           }}
-          className="absolute bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800 sm:hidden"
-        >
-          <Icon icon="tabler:plus" className="size-6 shrink-0 transition-all" />
-        </button>
+          icon="tabler:plus"
+        />
       )}
       <ModifyAssetsModal
         existedData={selectedData}
