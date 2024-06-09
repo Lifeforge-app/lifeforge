@@ -44,7 +44,7 @@ export default function Timer(): React.ReactElement {
                 }}
                 className="rounded-lg p-4 text-bg-800 hover:bg-bg-50 dark:bg-bg-900 dark:text-bg-100"
               >
-                <Icon icon="tabler:play" className="h-8 w-8 shrink-0" />
+                <Icon icon="tabler:play" className="size-8 shrink-0" />
               </button>
             )}
           </div>

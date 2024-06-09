@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
+import THEME_COLOR_HEX from '@constants/theme_color_hex'
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
@@ -7,7 +8,6 @@ import { Tooltip } from 'react-tooltip'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import THEME_COLOR_HEX from '../../../constants/theme_color_hex'
 
 function CodeTimeActivityCalendar(): React.ReactElement {
   const { theme, themeColor } = usePersonalizationContext()

@@ -101,6 +101,7 @@ module.exports = {
                     ['@hooks', './src/hooks/'],
                     ["@typedec", "./src/types/"],
                     ['@utils', './src/utils/'],
+                    ['@constants', './src/constants/'],
                 ],
             }
         },

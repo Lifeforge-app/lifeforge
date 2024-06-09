@@ -4,12 +4,12 @@ import { Worker, Viewer } from '@react-pdf-viewer/core'
 import React from 'react'
 import { useNavigate, useParams } from 'react-router'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import '@react-pdf-viewer/core/lib/styles/index.css'
 import useFetch from '@hooks/useFetch'
 import { type INotesEntry } from '@typedec/Notes'
-import FILE_ICONS from '../../../constants/file_icons'
+import FILE_ICONS from '@constants/file_icons'
 
 function NotesFile(): React.ReactElement {
   const { id } = useParams<{ id: string }>()
@@ -40,7 +40,7 @@ function NotesFile(): React.ReactElement {
                       }
                       className="text-2xl text-custom-500 sm:text-3xl"
                     />
-                    <div className="absolute left-0 top-0 h-full w-full rounded-lg bg-custom-500 opacity-20" />
+                    <div className="absolute left-0 top-0 size-full rounded-lg bg-custom-500 opacity-20" />
                   </div>
                   <h1 className="w-full truncate text-2xl font-semibold">
                     {entry.name}

@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'

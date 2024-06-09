@@ -1,9 +1,9 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 import {
   SPICINESS_COLOR,
   SPICINESS_NAME
-} from '../../../../../../../../../constants/todo_subtasks_generation_spiciness'
+} from '@constants/todo_subtasks_generation_spiciness'
 
 function SpicinessHeader({
   spiciness

@@ -23,7 +23,7 @@ function BgTempSelector(): React.ReactElement {
           {COLORS.map((color, index) => (
             <button
               key={index}
-              className={`h-8 w-8 rounded-full ${color} bg-bg-500 ${
+              className={`size-8 rounded-full ${color} bg-bg-500 ${
                 bgTemp === color
                   ? 'ring-2 ring-bg-100 ring-offset-2 ring-offset-bg-950'
                   : ''

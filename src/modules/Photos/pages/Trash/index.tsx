@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Gallery from 'react-photo-gallery'
 import Button from '@components/ButtonsAndInputs/Button'
@@ -32,7 +32,7 @@ function PhotosTrash(): React.ReactElement {
         <div className="flex h-full flex-1 flex-col">
           <div className="flex items-center justify-between">
             <h1 className="flex items-center gap-4 text-3xl font-semibold">
-              <Icon icon="tabler:trash" className="h-8 w-8 shrink-0" />
+              <Icon icon="tabler:trash" className="size-8 shrink-0" />
               Recycle Bin
             </h1>
             <Button
