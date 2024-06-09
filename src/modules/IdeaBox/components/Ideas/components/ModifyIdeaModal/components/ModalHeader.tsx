@@ -46,7 +46,7 @@ function ModalHeader({
                     link: 'tabler:link'
                   }[innerTypeOfModifyIdea]
                 }
-                className="mr-2 h-5 w-5"
+                className="mr-2 size-5"
               />
               {innerTypeOfModifyIdea === 'text'
                 ? 'Text'
@@ -55,7 +55,7 @@ function ModalHeader({
                 : 'Link'}
               <Icon
                 icon="tabler:chevron-down"
-                className="-mr-1 ml-2 h-4 w-4 stroke-[2px]"
+                className="-mr-1 ml-2 size-4 stroke-[2px]"
                 aria-hidden="true"
               />
             </Menu.Button>
@@ -92,14 +92,14 @@ function ModalHeader({
                       >
                         <Icon
                           icon={icon}
-                          className="mr-3 h-5 w-5"
+                          className="mr-3 size-5"
                           aria-hidden="true"
                         />
                         {name}
                         {innerTypeOfModifyIdea === type && (
                           <Icon
                             icon="tabler:check"
-                            className="ml-auto h-5 w-5"
+                            className="ml-auto size-5"
                             aria-hidden="true"
                           />
                         )}
@@ -123,7 +123,7 @@ function ModalHeader({
         }}
         className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 dark:text-bg-100 dark:hover:bg-bg-800"
       >
-        <Icon icon="tabler:x" className="h-6 w-6" />
+        <Icon icon="tabler:x" className="size-6" />
       </button>
     </div>
   )

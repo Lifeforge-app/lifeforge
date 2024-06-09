@@ -12,7 +12,7 @@ function SearchInput({
 }): React.ReactElement {
   return (
     <search className="mt-2 flex w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900 sm:mt-6">
-      <Icon icon="tabler:search" className="h-5 w-5 text-bg-500" />
+      <Icon icon="tabler:search" className="size-5 text-bg-500" />
       <input
         type="text"
         value={searchQuery}

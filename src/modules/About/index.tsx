@@ -108,7 +108,7 @@ function About(): React.ReactElement {
               <li className="flex gap-2">
                 <Icon
                   icon="tabler:dashboard"
-                  className="h-6 w-6 shrink-0 text-custom-500"
+                  className="size-6 shrink-0 text-custom-500"
                 />
                 <p>
                   <span className="font-semibold">Project Management</span> A
@@ -119,7 +119,7 @@ function About(): React.ReactElement {
               <li className="flex gap-2">
                 <Icon
                   icon="tabler:calendar"
-                  className="h-6 w-6 shrink-0 text-custom-500"
+                  className="size-6 shrink-0 text-custom-500"
                 />
                 <p>
                   <span className="font-semibold">Daily Management</span> A
@@ -130,7 +130,7 @@ function About(): React.ReactElement {
               <li className="flex gap-2">
                 <Icon
                   icon="tabler:notebook"
-                  className="h-6 w-6 shrink-0 text-custom-500"
+                  className="size-6 shrink-0 text-custom-500"
                 />
                 <p>
                   <span className="font-semibold">Study Management</span>{' '}
@@ -179,15 +179,15 @@ function About(): React.ReactElement {
             </div>
             <ul className="mb-6 space-y-2 text-bg-500">
               <li className="flex items-center gap-1.5">
-                <Icon icon="uil:check" className="h-5 w-5" />
+                <Icon icon="uil:check" className="size-5" />
                 <span className="">1GB Storage Space</span>
               </li>
               <li className="flex items-center gap-1.5">
-                <Icon icon="uil:check" className="h-5 w-5" />
+                <Icon icon="uil:check" className="size-5" />
                 <span className="">5 Projects</span>
               </li>
               <li className="flex items-center gap-1.5">
-                <Icon icon="uil:check" className="h-5 w-5" />
+                <Icon icon="uil:check" className="size-5" />
                 <span className="">Basic Settings</span>
               </li>
             </ul>
@@ -219,19 +219,19 @@ function About(): React.ReactElement {
             </div>
             <ul className="mb-6 space-y-2 text-custom-100">
               <li className="flex items-center gap-1.5">
-                <Icon icon="uil:check" className="h-5 w-5" />
+                <Icon icon="uil:check" className="size-5" />
                 <span className="">20GB Storage Space</span>
               </li>
               <li className="flex items-center gap-1.5">
-                <Icon icon="uil:check" className="h-5 w-5" />
+                <Icon icon="uil:check" className="size-5" />
                 <span className="">Unlimited Projects</span>
               </li>
               <li className="flex items-center gap-1.5">
-                <Icon icon="uil:check" className="h-5 w-5" />
+                <Icon icon="uil:check" className="size-5" />
                 <span className="">Advanced Settings</span>
               </li>
               <li className="flex items-center gap-1.5">
-                <Icon icon="uil:check" className="h-5 w-5" />
+                <Icon icon="uil:check" className="size-5" />
                 <span className="">Priority Support</span>
               </li>
             </ul>

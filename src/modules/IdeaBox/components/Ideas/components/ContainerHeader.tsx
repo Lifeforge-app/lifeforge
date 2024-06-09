@@ -91,7 +91,7 @@ function ContainerHeader({
           {folderId !== undefined && (
             <Icon
               icon="tabler:chevron-right"
-              className="h-5 w-5 shrink-0 text-bg-500"
+              className="size-5 shrink-0 text-bg-500"
             />
           )}
           {folderId !== undefined &&

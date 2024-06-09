@@ -87,7 +87,7 @@ export default function ProjectProgress({
                               index < progress.completed ? -1 : 1
                             ).catch(console.error)
                           }}
-                          className={`flex-center relative z-50 flex h-6 w-6 rounded-full border-2 transition-all hover:border-custom-500 ${
+                          className={`flex-center relative z-50 flex size-6 rounded-full border-2 transition-all hover:border-custom-500 ${
                             index < progress.completed
                               ? 'border-custom-500 bg-custom-500'
                               : 'border-bg-500 bg-bg-50 hover:border-bg-100 dark:bg-bg-900'
@@ -96,7 +96,7 @@ export default function ProjectProgress({
                           {index < progress.completed && (
                             <Icon
                               icon="uil:check"
-                              className="h-4 w-4 stroke-bg-900 stroke-1 text-bg-800"
+                              className="size-4 stroke-bg-900 stroke-1 text-bg-800"
                             />
                           )}
                         </button>

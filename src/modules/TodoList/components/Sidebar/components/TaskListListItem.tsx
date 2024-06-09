@@ -48,7 +48,7 @@ function TaskListListItem({
             backgroundColor: item.color
           }}
         />
-        <Icon icon={item.icon} className="h-6 w-6 shrink-0" />
+        <Icon icon={item.icon} className="size-6 shrink-0" />
         <div className="w-full truncate">{item.name}</div>
         <span className={!isMenuOpen ? 'text-sm group-hover:hidden' : 'hidden'}>
           {item.amount}
@@ -65,7 +65,7 @@ function TaskListListItem({
             }}
             className="hidden overscroll-contain group-hover:block"
           >
-            <Icon icon="tabler:x" className="h-5 w-5" />
+            <Icon icon="tabler:x" className="size-5" />
           </button>
         ) : (
           <HamburgerMenu

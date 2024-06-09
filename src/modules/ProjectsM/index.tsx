@@ -59,7 +59,7 @@ function ProjectsM(): React.ReactElement {
                 className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
               >
                 <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-800">
-                  <Icon icon={icon} className="h-6 w-6 shrink-0" />
+                  <Icon icon={icon} className="size-6 shrink-0" />
                   <div className="flex w-full items-center justify-between">
                     {name}
                   </div>
@@ -82,7 +82,7 @@ function ProjectsM(): React.ReactElement {
               >
                 <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
                   <span className={`block h-8 w-1.5 rounded-full ${color}`} />
-                  <Icon icon={icon} className="h-6 w-6 shrink-0" />
+                  <Icon icon={icon} className="size-6 shrink-0" />
                   <div className="flex w-full items-center justify-between">
                     {name}
                   </div>
@@ -103,7 +103,7 @@ function ProjectsM(): React.ReactElement {
                 className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
               >
                 <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
-                  <Icon icon={icon} className="h-6 w-6 shrink-0" />
+                  <Icon icon={icon} className="size-6 shrink-0" />
                   <div className="flex w-full items-center justify-between">
                     {name}
                   </div>
@@ -131,7 +131,7 @@ function ProjectsM(): React.ReactElement {
                 className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
               >
                 <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
-                  <Icon icon={icon} className="h-5 w-5 shrink-0" />
+                  <Icon icon={icon} className="size-5 shrink-0" />
                   <div className="flex w-full items-center justify-between">
                     {name}
                   </div>
@@ -239,7 +239,7 @@ function ProjectsM(): React.ReactElement {
                       <div className="flex items-center gap-4 ">
                         <Icon
                           icon="tabler:chevron-right"
-                          className="h-5 w-5 stroke-[2px] text-bg-500"
+                          className="size-5 stroke-[2px] text-bg-500"
                         />
                       </div>
                     </Link>

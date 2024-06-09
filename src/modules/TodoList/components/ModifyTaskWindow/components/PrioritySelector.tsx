@@ -35,7 +35,7 @@ function PrioritySelector({
       <Listbox.Button className="flex w-full items-center">
         <Icon
           icon="tabler:alert-triangle"
-          className={`ml-6 h-6 w-6 shrink-0 ${''} group-focus-within:!text-custom-500`}
+          className={`ml-6 size-6 shrink-0 ${''} group-focus-within:!text-custom-500`}
         />
         <span
           className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:!text-custom-500 ${'top-6 -translate-y-1/2 text-[14px]'}`}
@@ -57,7 +57,7 @@ function PrioritySelector({
           </span>
         </div>
         <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
-          <Icon icon="tabler:chevron-down" className="h-5 w-5 text-bg-500" />
+          <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
         </span>
       </Listbox.Button>
       <Transition

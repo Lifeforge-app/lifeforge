@@ -47,7 +47,8 @@ export const ROUTES: IRoutes[] = [
         name: 'Todo List',
         icon: 'tabler:list-check',
         routes: { 'todo-list': 'todo-list' },
-        togglable: true
+        togglable: true,
+        hasAI: true
       },
       {
         name: 'Calendar',

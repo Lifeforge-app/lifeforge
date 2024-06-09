@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React, { useState, type JSX } from 'react';
+import React, { useState, type JSX } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
@@ -73,10 +73,10 @@ function DNSRecords(): JSX.Element {
         >
           <Listbox.Button className="relative mt-6 flex w-40 items-center justify-between gap-4 whitespace-nowrap rounded-lg bg-bg-900 p-4 text-left">
             <div className="flex items-center gap-4">
-              <Icon icon="tabler:filter" className="h-5 w-5 text-bg-500" />
+              <Icon icon="tabler:filter" className="size-5 text-bg-500" />
               {selected}
             </div>
-            <Icon icon="tabler:chevron-down" className="h-5 w-5 text-bg-500" />
+            <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
           </Listbox.Button>
           <Transition
             leave="transition ease-in duration-100"
@@ -102,7 +102,7 @@ function DNSRecords(): JSX.Element {
                       {selected && (
                         <Icon
                           icon="tabler:check"
-                          className="h-5 w-5 text-white group-hover:text-white/50"
+                          className="size-5 text-white group-hover:text-white/50"
                         />
                       )}
                     </>
@@ -173,10 +173,10 @@ function DNSRecords(): JSX.Element {
                     <td className="p-4 text-center">
                       <div className="flex items-center gap-2">
                         <button className="rounded-md p-2 text-bg-500">
-                          <Icon icon="tabler:pencil" className="h-6 w-6" />
+                          <Icon icon="tabler:pencil" className="size-6" />
                         </button>
                         <button className="rounded-md p-2 text-red-500">
-                          <Icon icon="tabler:trash" className="h-6 w-6" />
+                          <Icon icon="tabler:trash" className="size-6" />
                         </button>
                       </div>
                     </td>

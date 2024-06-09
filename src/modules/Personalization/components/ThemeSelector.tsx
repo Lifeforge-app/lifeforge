@@ -51,7 +51,7 @@ function ThemeSelector(): React.ReactElement {
               {theme === id && (
                 <Icon
                   icon="tabler:circle-check-filled"
-                  className="absolute bottom-2 right-2.5 block h-6 w-6 text-xl text-custom-500"
+                  className="absolute bottom-2 right-2.5 block size-6 text-xl text-custom-500"
                 />
               )}
               <img src={Image} alt={id} className="w-full" />

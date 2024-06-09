@@ -44,3 +44,7 @@ export function shortenBigNumber(num: number): string {
   if (num >= 1e12) return (num / 1e12).toFixed(1) + 'T'
   return num.toString()
 }
+
+export function numberToMoney(number: number): string {
+  return number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+}

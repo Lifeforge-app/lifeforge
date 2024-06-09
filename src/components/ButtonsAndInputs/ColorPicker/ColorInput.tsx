@@ -20,7 +20,7 @@ function ColorInput({
     <div className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 focus-within:!border-custom-500 dark:bg-bg-800/50">
       <Icon
         icon="tabler:palette"
-        className={`ml-6 h-6 w-6 shrink-0 ${
+        className={`ml-6 size-6 shrink-0 ${
           color !== '' ? '' : 'text-bg-500'
         } group-focus-within:!text-custom-500`}
       />
@@ -37,7 +37,7 @@ function ColorInput({
         </span>
         <div className="mr-12 mt-6 flex w-full items-center gap-2 pl-4">
           <div
-            className="mt-0.5 h-3 w-3 shrink-0 rounded-full"
+            className="mt-0.5 size-3 shrink-0 rounded-full"
             style={{
               backgroundColor: color
             }}
@@ -55,7 +55,7 @@ function ColorInput({
           }}
           className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-500/30 hover:text-bg-200 focus:outline-none"
         >
-          <Icon icon="tabler:color-picker" className="h-6 w-6" />
+          <Icon icon="tabler:color-picker" className="size-6" />
         </button>
       </div>
     </div>

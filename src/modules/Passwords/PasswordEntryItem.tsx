@@ -148,7 +148,7 @@ function PasswordEntryITem({
       {password.pinned && (
         <Icon
           icon="tabler:pin-filled"
-          className="absolute left-0 top-0 h-6 w-6 -translate-x-1/2 -translate-y-1/2 -rotate-90 text-custom-500"
+          className="absolute left-0 top-0 size-6 -translate-x-1/2 -translate-y-1/2 -rotate-90 text-custom-500"
         />
       )}
       <div className="flex w-full items-center gap-4">
@@ -159,7 +159,7 @@ function PasswordEntryITem({
           >
             <Icon
               icon={password.icon}
-              className="h-6 w-6"
+              className="size-6"
               style={{
                 color: password.color
               }}
@@ -204,7 +204,7 @@ function PasswordEntryITem({
                   ? 'tabler:eye'
                   : 'tabler:eye-off'
               }
-              className="pointer-events-none h-6 w-6"
+              className="pointer-events-none size-6"
             />
           </button>
           <button
@@ -213,7 +213,7 @@ function PasswordEntryITem({
           >
             <Icon
               icon={copyLoading ? 'svg-spinners:180-ring' : 'tabler:copy'}
-              className="h-6 w-6"
+              className="size-6"
             />
           </button>
           <HamburgerMenu className="relative">

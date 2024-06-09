@@ -18,6 +18,7 @@ import {
   type IWalletCategoryEntry,
   type IWalletTransactionEntry
 } from '@typedec/Wallet'
+import { numberToMoney } from '@utils/strings'
 import ManageCategoriesModal from './components/ManageCategoriesModal'
 import ModifyTransactionsModal from './components/ModifyTransactionsModal'
 
@@ -198,7 +199,7 @@ function Transactions(): React.ReactElement {
                       `}
                       >
                         {transaction.side === 'debit' ? '+' : '-'}
-                        {transaction.amount.toFixed(2)}
+                        {numberToMoney(transaction.amount)}
                       </span>
                     </td>
                     <td className="p-2 text-center">

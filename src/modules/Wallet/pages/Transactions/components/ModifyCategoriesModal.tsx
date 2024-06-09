@@ -126,7 +126,7 @@ function ModifyCategoriesModal({
           }`}
         >
           <span className="flex items-center gap-2 font-medium text-bg-500">
-            <Icon icon="tabler:apps" className="h-6 w-6" />
+            <Icon icon="tabler:apps" className="size-6" />
             Category type
           </span>
           {openType === 'update' && (
@@ -143,7 +143,7 @@ function ModifyCategoriesModal({
                     ? 'tabler:logout'
                     : 'tabler:login-2'
                 }
-                className="h-5 w-5"
+                className="size-5"
               />
               <span>
                 {categoryType[0].toUpperCase() + categoryType.slice(1)}
@@ -164,7 +164,7 @@ function ModifyCategoriesModal({
                   setCategoryType('income')
                 }}
               >
-                <Icon icon="tabler:login-2" className="h-6 w-6" />
+                <Icon icon="tabler:login-2" className="size-6" />
                 Income
               </button>
               <button
@@ -177,7 +177,7 @@ function ModifyCategoriesModal({
                   setCategoryType('expenses')
                 }}
               >
-                <Icon icon="tabler:logout" className="h-6 w-6" />
+                <Icon icon="tabler:logout" className="size-6" />
                 Expenses
               </button>
             </div>

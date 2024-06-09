@@ -22,7 +22,7 @@ function IconInput({
       <div className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom transition-all focus-within:!border-custom-500 dark:bg-bg-800/50">
         <Icon
           icon="tabler:icons"
-          className={`ml-6 h-6 w-6 shrink-0 ${
+          className={`ml-6 size-6 shrink-0 ${
             icon ? '' : 'text-bg-500'
           } group-focus-within:!text-custom-500`}
         />
@@ -39,7 +39,7 @@ function IconInput({
           </span>
           <div className="mr-12 mt-6 flex w-full items-center gap-2 pl-4">
             <Icon
-              className={`h-4 w-4 shrink-0 rounded-full ${
+              className={`size-4 shrink-0 rounded-full ${
                 !icon &&
                 'pointer-events-none opacity-0 group-focus-within:opacity-100'
               }`}
@@ -58,7 +58,7 @@ function IconInput({
             }}
             className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-200 hover:text-bg-800 focus:outline-none dark:hover:bg-bg-500/30 dark:hover:text-bg-200"
           >
-            <Icon icon="tabler:chevron-down" className="h-6 w-6" />
+            <Icon icon="tabler:chevron-down" className="size-6" />
           </button>
         </div>
       </div>

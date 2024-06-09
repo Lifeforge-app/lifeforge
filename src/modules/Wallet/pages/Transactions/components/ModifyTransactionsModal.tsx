@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import moment from 'moment'
 import React, { Fragment, useEffect, useState } from 'react'
+import Zoom from 'react-medium-image-zoom'
 import { toast } from 'react-toastify'
+import Button from '@components/ButtonsAndInputs/Button'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import CurrencyInputComponent from '@components/ButtonsAndInputs/CurrencyInput'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
@@ -66,6 +69,10 @@ function ModifyTransactionsModal({
   const [toAsset, setToAsset] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null)
+  const [receipt, setReceipt] = useState<File | null>(null)
+  const [toRemoveReceipt, setToRemoveReceipt] = useState<boolean>(false)
+
   useEffect(() => {
     if (openType) {
       if (openType === 'update') {
@@ -77,6 +84,14 @@ function ModifyTransactionsModal({
           setCategory(existedData.category)
           setTransactionAsset(existedData.asset)
           setLedger(existedData.ledger)
+          setReceipt(null)
+          setImagePreviewUrl(
+            existedData.receipt
+              ? `${import.meta.env.VITE_API_HOST}/media/${
+                  existedData.collectionId
+                }/${existedData.id}/${existedData.receipt}`
+              : ''
+          )
         }
       } else {
         setParticular('')
@@ -88,6 +103,8 @@ function ModifyTransactionsModal({
         setLedger(null)
         setFromAsset(null)
         setToAsset(null)
+        setReceipt(null)
+        setImagePreviewUrl(null)
       }
     }
   }, [openType, existedData])
@@ -113,24 +130,32 @@ function ModifyTransactionsModal({
       }
     }
 
+    const data = new FormData()
+    data.append('particulars', particular)
+    data.append('date', moment(transactionDate).format('YYYY-MM-DD'))
+    data.append('amount', parseFloat(amount ?? '0').toString())
+    data.append('category', category ?? '')
+    data.append('asset', transactionAsset ?? '')
+    data.append('ledger', ledger ?? '')
+    data.append('type', transactionType)
+    data.append('side', transactionType === 'income' ? 'debit' : 'credit')
+    data.append('fromAsset', fromAsset ?? '')
+    data.append('toAsset', toAsset ?? '')
+
+    if (openType === 'update' && toRemoveReceipt) {
+      data.append('removeReceipt', 'true')
+    }
+
+    if (receipt) data.append('file', receipt)
+
     setLoading(true)
     await APIRequest({
-      endpoint: `wallet/Transactions/${openType}${
+      endpoint: `wallet/transactions/${openType}${
         openType === 'update' ? `/${existedData?.id}` : ''
       }`,
       method: openType === 'create' ? 'POST' : 'PATCH',
-      body: {
-        particulars: particular,
-        date: moment(transactionDate).format('YYYY-MM-DD'),
-        amount: parseFloat(amount ?? '0'),
-        category,
-        asset: transactionAsset,
-        ledger,
-        type: transactionType,
-        side: transactionType === 'income' ? 'debit' : 'credit',
-        fromAsset,
-        toAsset
-      },
+      body: data,
+      isJSON: false,
       successInfo: {
         create: 'Yay! Transaction created.',
         update: 'Yay! Transaction updated.'
@@ -150,9 +175,26 @@ function ModifyTransactionsModal({
     })
   }
 
+  function uploadReceipt(): void {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = 'image/*'
+    input.onchange = async e => {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          setImagePreviewUrl(reader.result as string)
+        }
+        reader.readAsDataURL(input.files[0])
+        setReceipt(input.files[0])
+      }
+    }
+
+    input.click()
+  }
+
   return (
     <>
-      {' '}
       <Modal isOpen={openType !== null} minWidth="40vw">
         <ModalHeader
           icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
@@ -173,7 +215,7 @@ function ModifyTransactionsModal({
           <Listbox.Button className="flex w-full items-center">
             <Icon
               icon="tabler:list"
-              className={`ml-6 h-6 w-6 shrink-0 ${
+              className={`ml-6 size-6 shrink-0 ${
                 transactionType !== null ? '' : 'text-bg-500'
               } group-focus-within:!text-custom-500`}
             />
@@ -192,18 +234,15 @@ function ModifyTransactionsModal({
                   color: TRANSACTION_TYPES.find(l => l.id === transactionType)
                     ?.color
                 }}
-                className="h-5 w-5"
+                className="size-5"
               />
-              <span className="mt-[-1px] block truncate">
+              <span className="-mt-px block truncate">
                 {TRANSACTION_TYPES.find(l => l.id === transactionType)?.name ??
                   'None'}
               </span>
             </div>
             <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
-              <Icon
-                icon="tabler:chevron-down"
-                className="h-5 w-5 text-bg-500"
-              />
+              <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
             </span>
           </Listbox.Button>
           <Transition
@@ -238,7 +277,7 @@ function ModifyTransactionsModal({
                               ''
                             }
                             style={{ color }}
-                            className="h-5 w-5"
+                            className="size-5"
                           />
                           {name}
                         </span>
@@ -267,7 +306,7 @@ function ModifyTransactionsModal({
               <Listbox.Button className="flex w-full items-center">
                 <Icon
                   icon="tabler:wallet"
-                  className={`ml-6 h-6 w-6 shrink-0 ${
+                  className={`ml-6 size-6 shrink-0 ${
                     transactionAsset !== null ? '' : 'text-bg-500'
                   } group-focus-within:!text-custom-500`}
                 />
@@ -282,9 +321,9 @@ function ModifyTransactionsModal({
                       assets.find(l => l.id === transactionAsset)?.icon ??
                       'tabler:wallet-off'
                     }
-                    className="h-5 w-5"
+                    className="size-5"
                   />
-                  <span className="mt-[-1px] block truncate">
+                  <span className="-mt-px block truncate">
                     {assets.find(l => l.id === transactionAsset)?.name ??
                       'None'}
                   </span>
@@ -292,7 +331,7 @@ function ModifyTransactionsModal({
                 <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
                   <Icon
                     icon="tabler:chevron-down"
-                    className="h-5 w-5 text-bg-500"
+                    className="size-5 text-bg-500"
                   />
                 </span>
               </Listbox.Button>
@@ -321,10 +360,7 @@ function ModifyTransactionsModal({
                       <>
                         <div>
                           <span className="flex items-center gap-2">
-                            <Icon
-                              icon="tabler:wallet-off"
-                              className="h-5 w-5"
-                            />
+                            <Icon icon="tabler:wallet-off" className="size-5" />
                             None
                           </span>
                         </div>
@@ -353,7 +389,7 @@ function ModifyTransactionsModal({
                         <>
                           <div>
                             <span className="flex items-center gap-2">
-                              <Icon icon={icon} className="h-5 w-5" />
+                              <Icon icon={icon} className="size-5" />
                               {name}
                             </span>
                           </div>
@@ -381,7 +417,7 @@ function ModifyTransactionsModal({
                 <Listbox.Button className="flex w-full items-center">
                   <Icon
                     icon="tabler:step-out"
-                    className={`ml-6 h-6 w-6 shrink-0 ${
+                    className={`ml-6 size-6 shrink-0 ${
                       fromAsset !== null ? '' : 'text-bg-500'
                     } group-focus-within:!text-custom-500`}
                   />
@@ -396,16 +432,16 @@ function ModifyTransactionsModal({
                         assets.find(l => l.id === fromAsset)?.icon ??
                         'tabler:wallet-off'
                       }
-                      className="h-5 w-5"
+                      className="size-5"
                     />
-                    <span className="mt-[-1px] block truncate">
+                    <span className="-mt-px block truncate">
                       {assets.find(l => l.id === fromAsset)?.name ?? 'None'}
                     </span>
                   </div>
                   <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
                     <Icon
                       icon="tabler:chevron-down"
-                      className="h-5 w-5 text-bg-500"
+                      className="size-5 text-bg-500"
                     />
                   </span>
                 </Listbox.Button>
@@ -435,7 +471,7 @@ function ModifyTransactionsModal({
                           <>
                             <div>
                               <span className="flex items-center gap-2">
-                                <Icon icon={icon} className="h-5 w-5" />
+                                <Icon icon={icon} className="size-5" />
                                 {name}
                               </span>
                             </div>
@@ -461,7 +497,7 @@ function ModifyTransactionsModal({
                 <Listbox.Button className="flex w-full items-center">
                   <Icon
                     icon="tabler:step-into"
-                    className={`ml-6 h-6 w-6 shrink-0 ${
+                    className={`ml-6 size-6 shrink-0 ${
                       toAsset !== null ? '' : 'text-bg-500'
                     } group-focus-within:!text-custom-500`}
                   />
@@ -476,16 +512,16 @@ function ModifyTransactionsModal({
                         assets.find(l => l.id === toAsset)?.icon ??
                         'tabler:wallet-off'
                       }
-                      className="h-5 w-5"
+                      className="size-5"
                     />
-                    <span className="mt-[-1px] block truncate">
+                    <span className="-mt-px block truncate">
                       {assets.find(l => l.id === toAsset)?.name ?? 'None'}
                     </span>
                   </div>
                   <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
                     <Icon
                       icon="tabler:chevron-down"
-                      className="h-5 w-5 text-bg-500"
+                      className="size-5 text-bg-500"
                     />
                   </span>
                 </Listbox.Button>
@@ -515,7 +551,7 @@ function ModifyTransactionsModal({
                           <>
                             <div>
                               <span className="flex items-center gap-2">
-                                <Icon icon={icon} className="h-5 w-5" />
+                                <Icon icon={icon} className="size-5" />
                                 {name}
                               </span>
                             </div>
@@ -569,7 +605,7 @@ function ModifyTransactionsModal({
             <Listbox.Button className="flex w-full items-center">
               <Icon
                 icon="tabler:apps"
-                className={`ml-6 h-6 w-6 shrink-0 ${
+                className={`ml-6 size-6 shrink-0 ${
                   category !== null ? '' : 'text-bg-500'
                 } group-focus-within:!text-custom-500`}
               />
@@ -587,16 +623,16 @@ function ModifyTransactionsModal({
                   style={{
                     color: categories.find(l => l.id === category)?.color
                   }}
-                  className="h-5 w-5"
+                  className="size-5"
                 />
-                <span className="mt-[-1px] block truncate">
+                <span className="-mt-px block truncate">
                   {categories.find(l => l.id === category)?.name ?? 'None'}
                 </span>
               </div>
               <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
                 <Icon
                   icon="tabler:chevron-down"
-                  className="h-5 w-5 text-bg-500"
+                  className="size-5 text-bg-500"
                 />
               </span>
             </Listbox.Button>
@@ -631,7 +667,7 @@ function ModifyTransactionsModal({
                           >
                             <Icon
                               icon="tabler:apps-off"
-                              className="h-5 w-5"
+                              className="size-5"
                               style={{ color: 'white' }}
                             />
                           </span>
@@ -671,7 +707,7 @@ function ModifyTransactionsModal({
                               >
                                 <Icon
                                   icon={icon}
-                                  className="h-5 w-5"
+                                  className="size-5"
                                   style={{ color }}
                                 />
                               </span>
@@ -702,8 +738,8 @@ function ModifyTransactionsModal({
             <Listbox.Button className="flex w-full items-center">
               <Icon
                 icon="tabler:book"
-                className={`ml-6 h-6 w-6 shrink-0 ${
-                  ledger !== null ? '' : 'text-bg-500'
+                className={`ml-6 size-6 shrink-0 ${
+                  ledger !== '' && ledger !== null ? '' : 'text-bg-500'
                 } group-focus-within:!text-custom-500`}
               />
               <span
@@ -719,16 +755,16 @@ function ModifyTransactionsModal({
                   style={{
                     color: ledgers.find(l => l.id === ledger)?.color
                   }}
-                  className="h-5 w-5"
+                  className="size-5"
                 />
-                <span className="mt-[-1px] block truncate">
+                <span className="-mt-px block truncate">
                   {ledgers.find(l => l.id === ledger)?.name ?? 'None'}
                 </span>
               </div>
               <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
                 <Icon
                   icon="tabler:chevron-down"
-                  className="h-5 w-5 text-bg-500"
+                  className="size-5 text-bg-500"
                 />
               </span>
             </Listbox.Button>
@@ -763,7 +799,7 @@ function ModifyTransactionsModal({
                           >
                             <Icon
                               icon="tabler:book"
-                              className="h-5 w-5"
+                              className="size-5"
                               style={{ color: 'white' }}
                             />
                           </span>
@@ -801,7 +837,7 @@ function ModifyTransactionsModal({
                             >
                               <Icon
                                 icon={icon}
-                                className="h-5 w-5"
+                                className="size-5"
                                 style={{ color }}
                               />
                             </span>
@@ -822,12 +858,50 @@ function ModifyTransactionsModal({
             </Transition>
           </Listbox>
         )}
+        <div className="mt-4 w-full rounded-md bg-bg-800/50 p-6">
+          <div className="flex items-center gap-4 text-bg-500">
+            <Icon icon="tabler:file-text" className="size-6" />
+            <span className="font-medium">Receipt</span>
+          </div>
+          {imagePreviewUrl && (
+            <Zoom zoomMargin={100}>
+              <img
+                src={imagePreviewUrl}
+                alt=""
+                className="mx-auto mt-6 max-h-64 rounded-md"
+              />
+            </Zoom>
+          )}
+          {imagePreviewUrl ? (
+            <Button
+              onClick={() => {
+                setImagePreviewUrl(null)
+                setReceipt(null)
+                if (openType === 'update') setToRemoveReceipt(true)
+              }}
+              className="mt-6 w-full"
+              isRed
+              icon="tabler:x"
+            >
+              Remove Receipt
+            </Button>
+          ) : (
+            <Button
+              onClick={uploadReceipt}
+              className="mt-6 w-full"
+              icon="tabler:upload"
+              type="secondary"
+            >
+              Upload Receipt
+            </Button>
+          )}
+        </div>
         <CreateOrModifyButton
           loading={loading}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-          type="create"
+          type={openType === 'update' ? 'update' : 'create'}
         />
       </Modal>
     </>

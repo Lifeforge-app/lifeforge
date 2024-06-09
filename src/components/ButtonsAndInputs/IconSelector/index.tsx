@@ -76,7 +76,7 @@ function IconSelector({
               }}
               className="rounded-md p-2 text-bg-100 transition-all hover:bg-bg-800"
             >
-              <Icon icon="tabler:x" className="h-6 w-6" />
+              <Icon icon="tabler:x" className="size-6" />
             </button>
           </div>
           {currentIconSet ? (

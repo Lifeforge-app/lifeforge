@@ -12,6 +12,14 @@ interface ITodoListEntry {
   updated: string
   done: boolean
   completed_at: string
+  subtasks: ITodoSubtask[]
+}
+
+interface ITodoSubtask {
+  id: string
+  title: string
+  done: boolean
+  hasChanged?: boolean
 }
 
 interface ITodoListList {
@@ -47,6 +55,7 @@ interface ITodoListStatusCounter {
 
 export type {
   ITodoListEntry,
+  ITodoSubtask,
   ITodoListList,
   ITodoListTag,
   ITodoListStatusCounter

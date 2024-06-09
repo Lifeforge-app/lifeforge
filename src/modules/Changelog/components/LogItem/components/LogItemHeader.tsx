@@ -17,7 +17,7 @@ function LogItemHeader({
         <span className="inline sm:hidden">)</span>
       </span>
       <div
-        className={`mx-4 hidden h-4 w-4 rounded-full border-2 bg-bg-100 dark:bg-bg-950 sm:block ${
+        className={`mx-4 hidden size-4 rounded-full border-2 bg-bg-100 dark:bg-bg-950 sm:block ${
           moment(entry.date_range[1]).isAfter(moment())
             ? 'border-custom-500'
             : 'border-bg-600'

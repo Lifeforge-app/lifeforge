@@ -166,7 +166,7 @@ function DirectoryHeader({
         if (toastId.current === undefined) {
           toastId.current = toast(
             <span className="flex items-center gap-2">
-              <Icon icon="tabler:upload" className="h-5 w-5" />
+              <Icon icon="tabler:upload" className="size-5" />
               <span>Uploading folders...</span>
             </span>,
             { progress }
@@ -261,7 +261,7 @@ function DirectoryHeader({
                             {index !== currentPath.path.length - 1 && (
                               <Icon
                                 icon="tabler:chevron-right"
-                                className="h-4 w-4 shrink-0 text-bg-500"
+                                className="size-4 shrink-0 text-bg-500"
                               />
                             )}
                           </>

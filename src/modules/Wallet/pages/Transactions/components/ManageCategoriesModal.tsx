@@ -44,7 +44,7 @@ function ManageCategoriesModal({
             <>
               <div className="flex items-center justify-between gap-4">
                 <h2 className="flex items-center gap-2 text-lg font-medium text-bg-500">
-                  <Icon icon="tabler:login-2" className="h-6 w-6" />
+                  <Icon icon="tabler:login-2" className="size-6" />
                   Income
                 </h2>
                 <button
@@ -53,7 +53,7 @@ function ManageCategoriesModal({
                   }}
                   className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100"
                 >
-                  <Icon icon="tabler:plus" className="h-5 w-5" />
+                  <Icon icon="tabler:plus" className="size-5" />
                 </button>
               </div>
               <ul className="mb-4 flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
@@ -75,7 +75,7 @@ function ManageCategoriesModal({
                           >
                             <Icon
                               icon={category.icon}
-                              className="h-6 w-6"
+                              className="size-6"
                               style={{
                                 color: category.color
                               }}
@@ -112,7 +112,7 @@ function ManageCategoriesModal({
               </ul>
               <div className="flex items-center justify-between gap-4">
                 <h2 className="flex items-center gap-2 text-lg font-medium text-bg-500">
-                  <Icon icon="tabler:logout" className="h-6 w-6" />
+                  <Icon icon="tabler:logout" className="size-6" />
                   Expenses
                 </h2>
                 <button
@@ -121,7 +121,7 @@ function ManageCategoriesModal({
                   }}
                   className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100"
                 >
-                  <Icon icon="tabler:plus" className="h-5 w-5" />
+                  <Icon icon="tabler:plus" className="size-5" />
                 </button>
               </div>
               <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
@@ -141,7 +141,7 @@ function ManageCategoriesModal({
                         >
                           <Icon
                             icon={category.icon}
-                            className="h-6 w-6"
+                            className="size-6"
                             style={{
                               color: category.color
                             }}

@@ -58,14 +58,14 @@ function ProjectList({
                     ? 'tabler:currency-dollar-off'
                     : 'tabler:currency-dollar'
                 }
-                className="h-5 w-5 text-bg-500"
+                className="size-5 text-bg-500"
               />
               <span className="text-sm text-bg-500">
                 {project.type === 'personal' ? 'Personal' : 'Commercial'}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Icon icon="tabler:credit-card" className="h-5 w-5 text-bg-500" />
+              <Icon icon="tabler:credit-card" className="size-5 text-bg-500" />
               <span className="text-sm text-bg-500">
                 {project.payment_status
                   ? project.payment_status.fully_paid
@@ -81,14 +81,14 @@ function ProjectList({
             <div className="flex items-center gap-2">
               <Icon
                 icon="tabler:calendar-event"
-                className="h-5 w-5 text-bg-500"
+                className="size-5 text-bg-500"
               />
               <span className="text-sm text-bg-500">
                 {moment(project.created).format('DD MMM YYYY')}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Icon icon="tabler:versions" className="h-5 w-5 text-bg-500" />
+              <Icon icon="tabler:versions" className="size-5 text-bg-500" />
               <span className="text-sm text-bg-500">
                 {project.files.length} files
               </span>

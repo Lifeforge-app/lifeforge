@@ -46,7 +46,7 @@ function QuickActions(): React.ReactElement {
 
   return (
     <search className="relative hidden w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900 lg:flex">
-      <Icon icon="tabler:search" className="h-5 w-5 text-bg-500" />
+      <Icon icon="tabler:search" className="size-5 text-bg-500" />
       <form className="w-full">
         <input
           ref={searchInputRef}
@@ -88,7 +88,7 @@ function QuickActions(): React.ReactElement {
                             )?.items.find(item => item.name === action.module)
                               ?.icon ?? 'tabler:circle'
                           }
-                          className="h-5 w-5 text-bg-400 group-hover:!text-custom-500 dark:text-bg-500"
+                          className="size-5 text-bg-400 group-hover:!text-custom-500 dark:text-bg-500"
                         />
                         {action.action}
                       </li>

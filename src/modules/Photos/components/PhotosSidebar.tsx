@@ -41,11 +41,11 @@ function PhotosSidebar(): React.ReactElement {
             }}
             className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800"
           >
-            <Icon icon="tabler:photo" className="h-6 w-6 shrink-0" />
+            <Icon icon="tabler:photo" className="size-6 shrink-0" />
             <div className="w-full">All Photos</div>
             <span className="text-sm text-bg-500">
               {photos === 'loading' ? (
-                <Icon icon="svg-spinners:180-ring" className="h-5 w-5" />
+                <Icon icon="svg-spinners:180-ring" className="size-5" />
               ) : photos === 'error' ? (
                 'Error'
               ) : (
@@ -96,7 +96,7 @@ function PhotosSidebar(): React.ReactElement {
                     ) : (
                       <Icon
                         icon="tabler:library-photo"
-                        className="h-5 w-5 text-bg-300"
+                        className="size-5 text-bg-300"
                       />
                     )}
                   </div>
@@ -120,7 +120,7 @@ function PhotosSidebar(): React.ReactElement {
               <div className="flex-center flex h-10 w-10 shrink-0">
                 <Icon
                   icon="tabler:arrow-right"
-                  className="h-6 w-6 text-bg-500"
+                  className="size-6 text-bg-500"
                 />
               </div>
               <div className="w-full text-bg-500">View all albums</div>

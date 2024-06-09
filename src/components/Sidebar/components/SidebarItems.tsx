@@ -33,6 +33,7 @@ function SidebarItems(): React.ReactElement {
               <SidebarItem
                 key={titleToPath(subItem.name)}
                 name={subItem.name}
+                hasAI={subItem.hasAI}
                 icon={subItem.icon ?? ''}
                 subsection={subItem.subsection}
                 isMainSidebarItem

@@ -119,7 +119,7 @@ function CreateProjectModal({
                 projectVisibility === value ? 'bg-bg-200 dark:bg-bg-800' : ''
               }`}
             >
-              <Icon icon={icon} className="h-6 w-6" />
+              <Icon icon={icon} className="size-6" />
               <p>{text}</p>
             </button>
           ))}
@@ -177,7 +177,7 @@ function CreateProjectModal({
           <Listbox.Button className="flex w-full items-center">
             <Icon
               icon="tabler:info-circle"
-              className={`ml-6 h-6 w-6 shrink-0 ${''} group-focus-within:!text-custom-500`}
+              className={`ml-6 size-6 shrink-0 ${''} group-focus-within:!text-custom-500`}
             />
             <span
               className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:!text-custom-500 ${'top-6 -translate-y-1/2 text-[14px]'}`}
@@ -193,10 +193,7 @@ function CreateProjectModal({
               </span>
             </div>
             <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
-              <Icon
-                icon="tabler:chevron-down"
-                className="h-5 w-5 text-bg-500"
-              />
+              <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
             </span>
           </Listbox.Button>
           <Transition
@@ -250,7 +247,7 @@ function CreateProjectModal({
               <div className="mt-6 flex items-center gap-2">
                 <Icon
                   icon="tabler:chart-bar"
-                  className="h-6 w-6 shrink-0 text-bg-800 group-focus-within:!text-custom-500 dark:text-bg-100"
+                  className="size-6 shrink-0 text-bg-800 group-focus-within:!text-custom-500 dark:text-bg-100"
                 />
                 <span className="pointer-events-none text-lg font-medium tracking-wide text-bg-100">
                   Progress steps
@@ -268,7 +265,7 @@ function CreateProjectModal({
                         }}
                         className="flex w-full items-center gap-2 rounded-md p-4 hover:bg-bg-800"
                       >
-                        <Icon icon={step.icon} className="h-5 w-5" />
+                        <Icon icon={step.icon} className="size-5" />
                         {step.name}
                       </button>
                     ))}
@@ -290,7 +287,7 @@ function CreateProjectModal({
                     >
                       <Icon
                         icon={steps.find(s => s.id === step)!.icon}
-                        className="h-5 w-5"
+                        className="size-5"
                       />
                       {steps.find(s => s.id === step)!.name}
                     </button>

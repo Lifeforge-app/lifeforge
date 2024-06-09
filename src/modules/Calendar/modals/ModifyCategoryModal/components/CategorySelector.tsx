@@ -26,7 +26,7 @@ function CategorySelector({
       <Listbox.Button className="flex w-full items-center">
         <Icon
           icon="tabler:list"
-          className={`ml-6 h-6 w-6 shrink-0 ${
+          className={`ml-6 size-6 shrink-0 ${
             category !== '' ? '' : 'text-bg-500'
           } group-focus-within:!text-custom-500`}
         />
@@ -49,7 +49,7 @@ function CategorySelector({
           </span>
         </div>
         <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
-          <Icon icon="tabler:chevron-down" className="h-5 w-5 text-bg-500" />
+          <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
         </span>
       </Listbox.Button>
       <Transition
@@ -106,7 +106,7 @@ function CategorySelector({
                         }}
                       />
                       <div className="flex items-center gap-2">
-                        <Icon icon={icon} className="h-4 w-4" />
+                        <Icon icon={icon} className="size-4" />
                         {name}
                       </div>
                     </span>

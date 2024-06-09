@@ -106,7 +106,7 @@ function ModuleItem({
                 enabled
                   ? 'translate-x-6 bg-bg-100'
                   : 'translate-x-1 bg-bg-100 dark:bg-bg-500'
-              } inline-block h-4 w-4 rounded-full transition`}
+              } inline-block size-4 rounded-full transition`}
             />
           </Switch>
           <button
@@ -204,7 +204,7 @@ function ModuleItem({
                               moduleConfig[module.name][key]
                                 ? 'translate-x-6 bg-bg-100'
                                 : 'translate-x-1 bg-bg-100 dark:bg-bg-500'
-                            } inline-block h-4 w-4 rounded-full transition`}
+                            } inline-block size-4 rounded-full transition`}
                           />
                         </Switch>
                       </div>

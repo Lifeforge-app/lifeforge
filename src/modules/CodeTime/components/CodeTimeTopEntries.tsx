@@ -104,7 +104,7 @@ function CodeTimeTopEntries({
                 >
                   <div className="flex items-center gap-4 break-all text-lg font-medium">
                     <div
-                      className={`h-4 w-4 shrink-0 rounded-md border ${
+                      className={`size-4 shrink-0 rounded-md border ${
                         [
                           'bg-red-500/20 border-red-500',
                           'bg-orange-500/20 border-orange-500',

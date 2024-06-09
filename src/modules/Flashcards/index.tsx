@@ -83,7 +83,7 @@ export default function Flashcards(): React.ReactElement {
                       </p>
                     </div>
                     <button className="absolute right-4 top-4 hidden rounded-md p-2 text-bg-500 hover:bg-bg-700/30 hover:text-bg-100 group-hover:flex">
-                      <Icon icon="tabler:dots-vertical" className="h-5 w-5" />
+                      <Icon icon="tabler:dots-vertical" className="size-5" />
                     </button>
                   </Link>
                 ))}
@@ -113,11 +113,11 @@ export default function Flashcards(): React.ReactElement {
                     </div>
                   </div>
                   <div className="mt-auto flex flex-1 flex-center gap-2 text-custom-500">
-                    <Icon icon="tabler:check" className="h-5 w-5" />
+                    <Icon icon="tabler:check" className="size-5" />
                     <p className="font-medium">Done</p>
                   </div>
                   <button className="absolute right-4 top-4 hidden rounded-md p-2 text-bg-500 hover:bg-bg-700/30 hover:text-bg-100 group-hover:flex">
-                    <Icon icon="tabler:dots-vertical" className="h-5 w-5" />
+                    <Icon icon="tabler:dots-vertical" className="size-5" />
                   </button>
                 </Link>
               ))} */}

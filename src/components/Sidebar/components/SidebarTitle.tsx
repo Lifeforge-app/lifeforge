@@ -34,7 +34,7 @@ function SidebarTitle({
           onClick={actionButtonOnClick}
           className="flex items-center rounded-md p-2 text-bg-600 hover:bg-bg-200/50 dark:hover:bg-bg-800 dark:hover:text-bg-100"
         >
-          <Icon icon={actionButtonIcon} className="h-5 w-5" />
+          <Icon icon={actionButtonIcon} className="size-5" />
         </button>
       )}
     </li>

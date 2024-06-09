@@ -77,7 +77,7 @@ function UpdateAlbumTagsModal({
             }}
             className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover: dark:hover:bg-bg-800"
           >
-            <Icon icon="tabler:x" className="h-6 w-6" />
+            <Icon icon="tabler:x" className="size-6" />
           </button>
         )}
       </div>
@@ -106,7 +106,7 @@ function UpdateAlbumTagsModal({
               </button>
             ))}
             <button className="rounded-full bg-bg-800 px-4 py-1 uppercase tracking-wider text-bg-500 shadow-custom">
-              <Icon icon="tabler:plus" className="h-4 w-4" />
+              <Icon icon="tabler:plus" className="size-4" />
             </button>
           </div>
         )}

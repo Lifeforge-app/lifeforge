@@ -10,12 +10,15 @@ import DateInput from '@components/ButtonsAndInputs/DateInput'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import Input from '@components/ButtonsAndInputs/Input'
+import useFetch from '@hooks/useFetch'
 import { useTodoListContext } from '@providers/TodoListProvider'
+import { type ITodoSubtask } from '@typedec/TodoList'
+import APIRequest from '@utils/fetchData'
 import ListSelector from './components/ListSelector'
 import NotesInput from './components/NotesInput'
 import PrioritySelector from './components/PrioritySelector'
+import SubtaskBox from './components/SubtaskBox'
 import TagsSelector from './components/TagsSelector'
-import APIRequest from '@utils/fetchData'
 
 function ModifyTaskWindow(): React.ReactElement {
   const {
@@ -31,6 +34,12 @@ function ModifyTaskWindow(): React.ReactElement {
   } = useTodoListContext()
 
   const [summary, setSummary] = useState('')
+  console.log(selectedTask?.subtasks)
+  const [subtasks, , setSubtasks] = useFetch<ITodoSubtask[]>(
+    `todo-list/subtask/list/${selectedTask?.id}`,
+    (selectedTask?.subtasks.length ?? 0) > 0 && openType === 'update'
+  )
+
   const [notes, setNotes] = useState('')
   const [dueDate, setDueDate] = useState('')
   const [priority, setPriority] = useState('low')
@@ -51,10 +60,12 @@ function ModifyTaskWindow(): React.ReactElement {
     }
 
     setLoading(true)
+    console.log(subtasks)
 
     const task = {
       summary: summary.trim(),
       notes: notes.trim(),
+      subtasks,
       due_date: moment(dueDate).format('yyyy-MM-DD 23:59:59Z'),
       priority,
       list,
@@ -77,6 +88,7 @@ function ModifyTaskWindow(): React.ReactElement {
       }[innerOpenType!],
       callback: () => {
         setOpenType(null)
+        setSelectedTask(null)
         refreshEntries()
         refreshTagsList()
         refreshLists()
@@ -128,12 +140,13 @@ function ModifyTaskWindow(): React.ReactElement {
       setPriority('low')
       setList(null)
       setTags([])
+      setSubtasks([])
     }
   }, [selectedTask, openType])
 
   return (
     <div
-      className={`fixed left-0 top-0 h-[100dvh] w-full bg-bg-900/20 backdrop-blur-sm transition-all ${
+      className={`fixed left-0 top-0 h-dvh w-full bg-bg-900/20 backdrop-blur-sm transition-all ${
         innerOpenType !== null
           ? 'z-[9999] opacity-100'
           : ' z-[-9999]  opacity-0 [transition:z-index_0.1s_linear_0.5s,opacity_0.1s_linear_0.1s]'
@@ -141,12 +154,12 @@ function ModifyTaskWindow(): React.ReactElement {
     >
       <button
         onClick={closeWindow}
-        className="absolute left-0 top-0 h-full w-full"
+        className="absolute left-0 top-0 size-full"
       />
       <div
         className={`absolute right-0 flex flex-col overflow-y-scroll transition-all duration-300 ${
           innerOpenType !== null ? 'translate-x-0' : 'translate-x-full'
-        } top-0 h-full w-full bg-bg-100 p-8 dark:bg-bg-900 sm:w-4/5 md:w-3/5 lg:w-2/5`}
+        } top-0 size-full bg-bg-100 p-8 dark:bg-bg-900 sm:w-4/5 md:w-3/5 lg:w-2/5`}
       >
         <div className="mb-8 flex items-center justify-between ">
           <h1 className="flex items-center gap-3 text-2xl font-semibold">
@@ -157,7 +170,7 @@ function ModifyTaskWindow(): React.ReactElement {
                   update: 'tabler:pencil'
                 }[innerOpenType ?? 'create']
               }
-              className="h-7 w-7"
+              className="size-7"
             />
             {
               {
@@ -189,17 +202,22 @@ function ModifyTaskWindow(): React.ReactElement {
           additionalClassName="w-full"
           reference={summaryInputRef}
         />
-        <NotesInput notes={notes} updateNotes={updateNotes} />
+        <SubtaskBox
+          summary={summary}
+          notes={notes}
+          subtasks={subtasks}
+          setSubtasks={setSubtasks}
+        />
         <DateInput
           date={dueDate}
           setDate={setDueDate}
           name="Due date"
           icon="tabler:calendar"
         />
-
         <PrioritySelector priority={priority} setPriority={setPriority} />
         <ListSelector list={list} setList={setList} />
         <TagsSelector tags={tags} setTags={setTags} />
+        <NotesInput notes={notes} updateNotes={updateNotes} />
         <div className="mt-12 flex flex-1 flex-col-reverse items-end gap-2 sm:flex-row">
           <Button
             disabled={loading}
