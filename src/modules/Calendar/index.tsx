@@ -57,8 +57,8 @@ function CalendarModule(): React.ReactElement {
             setModifyCategoryModalOpenType={setModifyCategoryOpenType}
             setExistedData={setExistedCategoryData}
           />
-          <div className="flex h-full w-full flex-col xl:ml-8">
-            <div className="mb-8 h-full w-full">
+          <div className="flex size-full flex-col xl:ml-8">
+            <div className="mb-8 size-full">
               <CalendarComponent
                 events={events}
                 setRawEvents={setRawEvents}

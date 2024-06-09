@@ -7,11 +7,12 @@ import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
 import Input from '@components/ButtonsAndInputs/Input'
+import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
-import CategorySelector from './ModifyCategoryModal/components/CategorySelector'
 import APIRequest from '@utils/fetchData'
+import CategorySelector from './ModifyCategoryModal/components/CategorySelector'
 
 interface ModifyEventModalProps {
   openType: 'create' | 'update' | null
@@ -34,6 +35,8 @@ function ModifyEventModal({
   const [eventEndTime, setEventEndTime] = useState('')
   const [eventCategory, setEventCategory] = useState('')
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
+  const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
+    useState(false)
 
   function updateEventTitle(e: React.ChangeEvent<HTMLInputElement>): void {
     setEventTitle(e.target.value)
@@ -114,6 +117,10 @@ function ModifyEventModal({
               update: 'Update '
             }[innerOpenType!]
           } event`}
+          hasDeleteButton={innerOpenType === 'update'}
+          onDelete={() => {
+            setIsDeleteConfirmationModalOpen(true)
+          }}
           onClose={() => {
             setOpenType(null)
           }}
@@ -151,6 +158,20 @@ function ModifyEventModal({
           type={innerOpenType}
         />
       </Modal>
+      <DeleteConfirmationModal
+        apiEndpoint="calendar/event/delete"
+        isOpen={isDeleteConfirmationModalOpen}
+        data={existedData}
+        itemName="event"
+        onClose={() => {
+          setIsDeleteConfirmationModalOpen(false)
+        }}
+        updateDataList={() => {
+          updateEventList()
+          setOpenType(null)
+        }}
+        nameKey="title"
+      />
     </>
   )
 }
