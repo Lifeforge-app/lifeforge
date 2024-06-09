@@ -75,9 +75,9 @@ function PhotosAlbumList(): React.ReactElement {
             </button>
           }
         />
-        <div className="mt-6 flex h-full min-h-0 w-full gap-8">
+        <div className="mt-6 flex size-full min-h-0 gap-8">
           <PhotosSidebar />
-          <div className="flex h-full w-full min-w-0 flex-1 flex-col">
+          <div className="flex size-full min-w-0 flex-1 flex-col">
             <AlbumListHeader
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}

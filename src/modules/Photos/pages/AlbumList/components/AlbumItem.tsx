@@ -22,11 +22,11 @@ function AlbumItem({
   return (
     <li
       key={album.id}
-      className="relative flex h-full w-full min-w-0 flex-col gap-1 p-4"
+      className="relative flex size-full min-w-0 flex-col gap-1 p-4"
     >
       <Link
         to={`/photos/album/${album.id}`}
-        className="absolute left-0 top-0 h-full w-full rounded-md transition-all duration-100 hover:bg-bg-900/[0.03] dark:hover:bg-bg-100/5"
+        className="absolute left-0 top-0 size-full rounded-md transition-all duration-100 hover:bg-bg-900/[0.03] dark:hover:bg-bg-100/5"
       />
       <div className="flex-center pointer-events-none relative mb-2 flex h-52 rounded-lg bg-bg-200 shadow-lg dark:bg-bg-800/50">
         {album.cover ? (
@@ -35,12 +35,12 @@ function AlbumItem({
               album.cover
             }?thumb=0x300`}
             alt=""
-            className="h-full w-full rounded-md object-cover"
+            className="size-full rounded-md object-cover"
           />
         ) : (
           <Icon
             icon="tabler:library-photo"
-            className="h-20 w-20 text-bg-300 dark:text-bg-700"
+            className="size-20 text-bg-300 dark:text-bg-700"
           />
         )}
       </div>
@@ -66,7 +66,7 @@ function AlbumItem({
         <h2 className="truncate text-lg font-semibold ">{album.name}</h2>
         <p className="flex items-center gap-2 text-sm text-bg-500">
           {album.amount?.toLocaleString()} photos
-          <Icon icon="tabler:circle-filled" className="h-1 w-1" />
+          <Icon icon="tabler:circle-filled" className="size-1" />
           {album.is_public ? 'Public' : 'Private'}
         </p>
       </div>

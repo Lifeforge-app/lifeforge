@@ -29,7 +29,7 @@ function MiniCalendarHeader({
           }}
           className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-100 dark:hover:bg-bg-700/50"
         >
-          <Icon icon="uil:angle-left" className="h-6 w-6" />
+          <Icon icon="uil:angle-left" className="size-6" />
         </button>
         <button
           onClick={() => {
@@ -41,7 +41,7 @@ function MiniCalendarHeader({
           }}
           className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-100 dark:hover:bg-bg-700/50"
         >
-          <Icon icon="uil:angle-right" className="h-6 w-6" />
+          <Icon icon="uil:angle-right" className="size-6" />
         </button>
       </div>
     </div>

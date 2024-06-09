@@ -54,7 +54,7 @@ function Assets(): React.ReactElement {
               >
                 <div className="flex items-center gap-3">
                   <span className="w-min rounded-md bg-bg-200 p-2 text-bg-500 dark:bg-bg-800">
-                    <Icon icon={asset.icon} className="h-5 w-5" />
+                    <Icon icon={asset.icon} className="size-5" />
                   </span>
                   <h2 className="text-xl font-medium">{asset.name}</h2>
                 </div>
@@ -110,10 +110,7 @@ function Assets(): React.ReactElement {
           }}
           className="absolute bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800 sm:hidden"
         >
-          <Icon
-            icon="tabler:plus"
-            className="h-6 w-6 shrink-0 transition-all"
-          />
+          <Icon icon="tabler:plus" className="size-6 shrink-0 transition-all" />
         </button>
       )}
       <ModifyAssetsModal

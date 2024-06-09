@@ -84,7 +84,7 @@ function Ideas(): React.ReactElement {
                 {folders.length > 0 && !viewArchived && (
                   <div className="mt-6 px-8 sm:px-12">
                     <h2 className="mb-2 flex items-center gap-2 text-lg font-medium text-bg-500">
-                      <Icon icon="tabler:folder" className="h-6 w-6" />
+                      <Icon icon="tabler:folder" className="size-6" />
                       Folders
                     </h2>
                     <div className="mt-2 grid gap-2 md:grid-cols-2 lg:grid-cols-3">

@@ -5,6 +5,7 @@ interface IRoutesItem {
   provider?: string
   subsection?: string[][]
   togglable: boolean
+  hasAI?: boolean
 }
 
 export interface IRoutes {

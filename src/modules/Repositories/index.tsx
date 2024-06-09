@@ -97,17 +97,17 @@ function Repositories(): React.ReactElement {
                     </div>
                     <div className="flex items-center gap-6 text-sm text-bg-500">
                       <div className="flex items-center gap-2">
-                        <Icon icon="tabler:clock" className="h-5 w-5" />
+                        <Icon icon="tabler:clock" className="size-5" />
                         {moment(repo.updated_at).format('MMM Do, YYYY')}
                       </div>
                       <div className="flex items-center gap-2">
-                        <Icon icon="tabler:git-branch" className="h-5 w-5" />
+                        <Icon icon="tabler:git-branch" className="size-5" />
                         {repo.default_branch}
                       </div>
                       <div className="flex items-center gap-2">
                         <Icon
                           icon="octicon:issue-opened-16"
-                          className="h-4 w-4"
+                          className="size-4"
                         />
                         {repo.open_issues_count}
                       </div>

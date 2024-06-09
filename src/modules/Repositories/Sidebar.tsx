@@ -41,7 +41,7 @@ function Sidebar({
               className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
             >
               <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
-                <Icon icon={icon} className="h-6 w-6 shrink-0" />
+                <Icon icon={icon} className="size-6 shrink-0" />
                 <div className="flex w-full items-center justify-between">
                   {name}
                 </div>

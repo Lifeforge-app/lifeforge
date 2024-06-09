@@ -13,7 +13,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "@iconify/collections": "^1.0.375",
-    "@iconify/react": "^4.1.1",
+    "@iconify/react": "^5.0.1",
     "@mdxeditor/editor": "^3.0.7",
     "@passwordless-id/webauthn": "^1.5.0",
     "@react-pdf-viewer/core": "3.12.0",
@@ -31,6 +31,7 @@
     "daisyui": "^4.4.14",
     "i18next": "^23.11.1",
     "i18next-http-backend": "^2.5.0",
+    "immutability-helper": "^3.1.1",
     "moment": "^2.30.1",
     "moment-duration-format": "^2.3.2",
     "path": "^0.12.7",

@@ -129,7 +129,7 @@ function ModifyAlbumModal({
           }}
           className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-800"
         >
-          <Icon icon="tabler:x" className="h-6 w-6" />
+          <Icon icon="tabler:x" className="size-6" />
         </button>
       </div>
       <Input

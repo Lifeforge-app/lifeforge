@@ -11,6 +11,7 @@ import { titleToPath, toCamelCase } from '../../../utils/strings'
 interface SidebarItemProps {
   icon: string
   name: string
+  hasAI?: boolean
   subsection?: string[][]
   onClick?: () => void
   isMainSidebarItem?: boolean
@@ -20,6 +21,7 @@ interface SidebarItemProps {
 function SidebarItem({
   icon,
   name,
+  hasAI,
   subsection,
   isMainSidebarItem,
   onClick,
@@ -64,20 +66,32 @@ function SidebarItem({
         >
           <a
             href={titleToPath(name) === 'home' ? '/' : `./${titleToPath(name)}`}
-            className="flex min-w-0 items-center gap-6"
+            className="flex w-full min-w-0 items-center gap-6"
           >
             <Icon
               icon={icon}
-              className={`h-6 w-6 shrink-0 ${
+              className={`size-6 shrink-0 ${
                 location.pathname.slice(1).startsWith(titleToPath(name)) ||
                 active === true
                   ? 'text-custom-500'
                   : ''
               }`}
             />
-            <span className="w-full truncate">
+            <span className="w-full">
               {sidebarExpanded &&
-                (isMainSidebarItem ? t(`modules.${toCamelCase(name)}`) : name)}
+                (isMainSidebarItem ? (
+                  <span className="flex w-full items-center justify-between gap-2 truncate">
+                    {t(`modules.${toCamelCase(name)}`)}
+                    {hasAI && (
+                      <Icon
+                        icon="mage:stars-c"
+                        className="size-4 text-custom-500"
+                      />
+                    )}
+                  </span>
+                ) : (
+                  name
+                ))}
             </span>
           </a>
 
@@ -89,7 +103,7 @@ function SidebarItem({
                   toggleSidebar()
                 }
               }}
-              className="absolute left-0 top-0 h-full w-full rounded-lg"
+              className="absolute left-0 top-0 size-full rounded-lg"
             />
           ) : (
             <Link
@@ -99,24 +113,22 @@ function SidebarItem({
                 }
               }}
               to={`./${titleToPath(name)}`}
-              className="absolute left-0 top-0 h-full w-full rounded-lg"
+              className="absolute left-0 top-0 size-full rounded-lg"
             />
           )}
-          {sidebarExpanded && (
+          {sidebarExpanded && subsection !== undefined && (
             <div className="relative flex items-center justify-between">
-              {subsection !== undefined && (
-                <button
-                  onClick={toggleSubsection}
-                  className="rounded-full p-1 hover:bg-bg-200 dark:hover:bg-bg-700/50"
-                >
-                  <Icon
-                    icon="tabler:chevron-right"
-                    className={`stroke-[2px] text-bg-500 transition-all ${
-                      subsectionExpanded ? 'rotate-90' : ''
-                    }`}
-                  />
-                </button>
-              )}
+              <button
+                onClick={toggleSubsection}
+                className="rounded-full p-1 hover:bg-bg-200 dark:hover:bg-bg-700/50"
+              >
+                <Icon
+                  icon="tabler:chevron-right"
+                  className={`stroke-[2px] text-bg-500 transition-all ${
+                    subsectionExpanded ? 'rotate-90' : ''
+                  }`}
+                />
+              </button>
             </div>
           )}
         </div>
@@ -145,7 +157,7 @@ function SidebarItem({
                     : 'text-bg-500'
                 }`}
               >
-                <Icon icon={subsectionIcon} className="h-6 w-6" />
+                <Icon icon={subsectionIcon} className="size-6" />
                 {subsectionName}
               </Link>
             )

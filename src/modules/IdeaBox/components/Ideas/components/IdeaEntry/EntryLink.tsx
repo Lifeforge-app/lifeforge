@@ -52,7 +52,7 @@ function EntryLink({
       {entry.pinned && (
         <Icon
           icon="tabler:pin"
-          className="absolute -left-2 -top-2 z-[50] h-5 w-5 -rotate-90 text-red-500 drop-shadow-md"
+          className="absolute -left-2 -top-2 z-[50] size-5 -rotate-90 text-red-500 drop-shadow-md"
         />
       )}
       <div className="flex items-start justify-between gap-2">

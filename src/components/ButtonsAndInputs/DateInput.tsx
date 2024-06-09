@@ -28,7 +28,7 @@ function DateInput({
     >
       <Icon
         icon={icon}
-        className={`ml-6 h-6 w-6 shrink-0 
+        className={`ml-6 size-6 shrink-0 
             group-focus-within:!text-custom-500 ${
               date !== '' ? '' : 'text-bg-500'
             }`}
@@ -69,7 +69,7 @@ function DateInput({
             }}
             className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-500/30 hover:text-bg-200 focus:outline-none"
           >
-            <Icon icon="tabler:x" className="h-6 w-6" />
+            <Icon icon="tabler:x" className="size-6" />
           </button>
         )}
       </div>

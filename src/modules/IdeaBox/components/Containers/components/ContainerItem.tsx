@@ -39,15 +39,15 @@ function ContainerItem({
       <div className="text-center text-2xl font-medium ">{container.name}</div>
       <div className="mt-auto flex items-center gap-4">
         <div className="flex items-center gap-2">
-          <Icon icon="tabler:article" className="h-5 w-5 text-bg-500" />
+          <Icon icon="tabler:article" className="size-5 text-bg-500" />
           <span className="text-bg-500">{container.text_count}</span>
         </div>
         <div className="flex items-center gap-2">
-          <Icon icon="tabler:link" className="h-5 w-5 text-bg-500" />
+          <Icon icon="tabler:link" className="size-5 text-bg-500" />
           <span className="text-bg-500">{container.link_count}</span>
         </div>
         <div className="flex items-center gap-2">
-          <Icon icon="tabler:photo" className="h-5 w-5 text-bg-500" />
+          <Icon icon="tabler:photo" className="size-5 text-bg-500" />
           <span className="text-bg-500">{container.image_count}</span>
         </div>
       </div>

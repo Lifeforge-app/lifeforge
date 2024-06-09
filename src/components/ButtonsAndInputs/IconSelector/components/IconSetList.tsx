@@ -68,7 +68,7 @@ export default function IconSetList({
           className="flex-center flex gap-1 rounded-md bg-bg-200 px-6 py-4 font-medium text-bg-800 shadow-md transition-all hover:bg-[#b3bdc9]"
         >
           Search
-          <Icon icon="uil:arrow-right" className="h-5 w-5 text-bg-800" />
+          <Icon icon="uil:arrow-right" className="size-5 text-bg-800" />
         </button>
       </div>
       <div className="flex w-full flex-col items-center gap-8 lg:flex-row">

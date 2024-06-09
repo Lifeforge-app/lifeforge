@@ -22,7 +22,7 @@ function IdeaImagePreview({
           }}
           className="absolute right-4 top-4 rounded-lg bg-bg-800 p-2 text-bg-500 transition-all hover:bg-bg-900"
         >
-          <Icon icon="tabler:x" className="h-5 w-5" />
+          <Icon icon="tabler:x" className="size-5" />
         </button>
       </div>
     </div>

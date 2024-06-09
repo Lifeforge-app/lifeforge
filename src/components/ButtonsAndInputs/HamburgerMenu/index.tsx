@@ -5,6 +5,7 @@ import React from 'react'
 interface MenuProps {
   children: React.ReactNode
   className?: string
+  customTailwindColor?: string
   customHoverColor?: string
   style?: React.CSSProperties
   lighter?: boolean
@@ -41,6 +42,7 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
   const {
     children,
     className,
+    customTailwindColor,
     style = {},
     customHoverColor,
     lighter,
@@ -75,9 +77,12 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
         className={`rounded-md transition-all ${getPaddingClass(
           largerPadding,
           smallerPadding
-        )} ${style.color === undefined && getColorClass(lighter)}`}
+        )} ${
+          (style.color === undefined && customTailwindColor) ??
+          getColorClass(lighter)
+        }`}
       >
-        <Icon icon={customIcon ?? 'tabler:dots-vertical'} className="h-5 w-5" />
+        <Icon icon={customIcon ?? 'tabler:dots-vertical'} className="size-5" />
       </Menu.Button>
       <Transition
         enter="transition duration-100 ease-out"
