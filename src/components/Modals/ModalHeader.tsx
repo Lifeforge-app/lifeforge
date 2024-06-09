@@ -4,24 +4,38 @@ import React from 'react'
 function ModalHeader({
   title,
   icon,
-  onClose
+  onClose,
+  hasDeleteButton = false,
+  onDelete
 }: {
   title: string
   icon: string
   onClose: () => void
+  hasDeleteButton?: boolean
+  onDelete?: () => void
 }): React.ReactElement {
   return (
     <div className="mb-8 flex items-center justify-between ">
       <h1 className="flex items-center gap-3 text-2xl font-semibold">
-        <Icon icon={icon} className="h-7 w-7" />
+        <Icon icon={icon} className="size-7" />
         {title}
       </h1>
-      <button
-        onClick={onClose}
-        className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100"
-      >
-        <Icon icon="tabler:x" className="size-6" />
-      </button>
+      <div className="flex items-center gap-2">
+        {hasDeleteButton && (
+          <button
+            onClick={onDelete}
+            className="rounded-md p-2 text-red-500 transition-all hover:bg-bg-200/50 hover:text-red-600 dark:hover:bg-bg-800"
+          >
+            <Icon icon="tabler:trash" className="size-6" />
+          </button>
+        )}
+        <button
+          onClick={onClose}
+          className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100"
+        >
+          <Icon icon="tabler:x" className="size-6" />
+        </button>
+      </div>
     </div>
   )
 }

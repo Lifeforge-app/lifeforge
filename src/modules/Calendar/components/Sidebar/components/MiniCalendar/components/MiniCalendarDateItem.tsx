@@ -23,16 +23,17 @@ function MiniCalendarDateItem({
 }: MiniCalendarDateItemProps): React.ReactElement {
   function getEventsOnTheDay(): ICalendarEvent[] {
     return !(firstDay > index || index - firstDay + 1 > lastDate)
-      ? events.filter(event =>
-          moment(
-            `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`
+      ? events.filter(event => {
+          return moment(
+            `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
+            'YYYY-M-DD'
           ).isBetween(
             moment(event.start),
             moment(event.end).subtract(1, 'second'),
             'day',
             '[]'
           )
-        )
+        })
       : []
   }
 
@@ -48,7 +49,7 @@ function MiniCalendarDateItem({
           moment(`${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`),
           'day'
         )
-          ? "font-semibold after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:h-10 after:w-10 after:-translate-x-1/2 after:-translate-y-6 after:rounded-md after:border after:border-custom-500 after:bg-custom-500/10 after:content-['']"
+          ? "font-semibold after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:size-10 after:-translate-x-1/2 after:-translate-y-6 after:rounded-md after:border after:border-custom-500 after:bg-custom-500/10 after:content-['']"
           : ''
       }`}
     >
@@ -58,7 +59,7 @@ function MiniCalendarDateItem({
 
         return (
           eventsOnTheDay.length > 0 && (
-            <div className="flex w-full items-center justify-center gap-[1px]">
+            <div className="flex w-full items-center justify-center gap-px">
               {eventsOnTheDay.slice(0, 3).map(event => (
                 <div
                   key={event.id}
@@ -70,7 +71,7 @@ function MiniCalendarDateItem({
                           )?.color
                         : ''
                   }}
-                  className={'h-1 w-1 rounded-full'}
+                  className={'size-1 rounded-full'}
                 />
               ))}
             </div>
