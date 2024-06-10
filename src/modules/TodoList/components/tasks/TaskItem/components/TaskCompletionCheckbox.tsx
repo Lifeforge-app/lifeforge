@@ -1,12 +1,12 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { type ITodoListEntry } from '@typedec/TodoList'
+import { type ITodoSubtask, type ITodoListEntry } from '@typedec/TodoList'
 
 function TaskCompletionCheckbox({
   entry,
   toggleTaskCompletion
 }: {
-  entry: ITodoListEntry
+  entry: ITodoListEntry | ITodoSubtask
   toggleTaskCompletion: (id: string) => void
 }): React.ReactElement {
   return (

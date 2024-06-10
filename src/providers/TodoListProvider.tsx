@@ -75,9 +75,12 @@ export function TodoListProvider({
   const [tagsList, refreshTagsList] =
     useFetch<ITodoListTag[]>('todo-list/tag/list')
   const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry[]>(
-    `todo-list/entry/list?status=${searchParams.get('status') ?? ''}&tag=${
-      searchParams.get('tag') ?? ''
-    }&list=${searchParams.get('list') ?? ''}`
+    `todo-list/entry/list?${
+      searchParams.get('status') !== null &&
+      `status=${searchParams.get('status')}`
+    }&tag=${searchParams.get('tag') ?? ''}&list=${
+      searchParams.get('list') ?? ''
+    }`
   )
   const [modifyTaskWindowOpenType, setModifyTaskWindowOpenType] = useState<
     'create' | 'update' | null
