@@ -10,10 +10,10 @@ import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
 import { useAuthContext } from '@providers/AuthProvider'
 import {
-  type ModuleConfigSelect,
-  type ModuleConfigSwitch,
-  type ModuleConfigInput,
-  type ModuleEntry
+  type IModuleConfigSelect,
+  type IModuleConfigSwitch,
+  type IModuleConfigInput,
+  type IModuleEntry
 } from '@typedec/Module'
 
 function ModuleItem({
@@ -21,7 +21,7 @@ function ModuleItem({
   enabled,
   toggleModule
 }: {
-  module: ModuleEntry
+  module: IModuleEntry
   enabled: boolean
   toggleModule: (moduleName: string) => void
 }): React.ReactElement {
@@ -137,7 +137,7 @@ function ModuleItem({
           Object.entries(module.config).map(
             ([key, property]: [
               string,
-              ModuleConfigInput | ModuleConfigSelect | ModuleConfigSwitch
+              IModuleConfigInput | IModuleConfigSelect | IModuleConfigSwitch
             ]) =>
               (() => {
                 const { type } = property

@@ -1,9 +1,6 @@
-interface IAchievementEntry {
-  collectionId: string
-  collectionName: string
-  created: string
-  id: string
-  updated: string
+import type BasePBCollection from './Pocketbase'
+
+interface IAchievementEntry extends BasePBCollection {
   title: string
   thoughts: string
   difficulty: 'easy' | 'medium' | 'hard' | 'impossible'

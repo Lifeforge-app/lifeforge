@@ -1,3 +1,5 @@
+import type BasePBCollection from './Pocketbase'
+
 interface IPhotosEntryDimensionsItem {
   is_in_album: boolean
   is_deleted: string
@@ -29,17 +31,12 @@ interface IPhotosEntry {
   is_favourite: boolean
 }
 
-interface IPhotosAlbum {
+interface IPhotosAlbum extends BasePBCollection {
   amount: number
   is_public: boolean
-  collectionId: string
-  collectionName: string
-  created: string
-  id: string
   name: string
   cover: string
   tags: string[]
-  updated: string
 }
 
 interface IPhotoAlbumEntryItem extends IPhotosEntryDimensionsItem {
@@ -51,13 +48,8 @@ interface IPhotoAlbumEntryItem extends IPhotosEntryDimensionsItem {
   is_favourite: boolean
 }
 
-interface IPhotoAlbumTag {
-  collectionId: string
-  collectionName: string
-  created: Date
-  id: string
+interface IPhotoAlbumTag extends BasePBCollection {
   name: string
-  updated: Date
   count: number
 }
 

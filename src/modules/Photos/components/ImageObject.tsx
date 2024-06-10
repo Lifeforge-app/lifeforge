@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Zoom from 'react-medium-image-zoom'
 import { useParams } from 'react-router'
@@ -237,9 +237,9 @@ function ImageObject({
       {(ready || beingDisplayedInAlbum) && (
         <>
           <div
-            className={`size-full ${selected && 'p-4'} ${
-              selectedPhotosLength > 0 ? 'pointer-events-none' : ''
-            }`}
+            className={`size-full transition-all duration-300 ${
+              selected && 'p-4'
+            } ${selectedPhotosLength > 0 ? 'pointer-events-none' : ''}`}
           >
             <Zoom
               zoomMargin={100}
@@ -307,4 +307,4 @@ function ImageObject({
   )
 }
 
-export default ImageObject
+export default memo(ImageObject)
