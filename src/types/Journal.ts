@@ -1,11 +1,8 @@
-interface IJournalEntry {
-  collectionId: string
-  collectionName: string
-  created: string
-  id: string
+import type BasePBCollection from './Pocketbase'
+
+interface IJournalEntry extends BasePBCollection {
   title: string
   content: string
-  updated: string
 }
 
 export type { IJournalEntry }

@@ -1,20 +1,12 @@
-interface IWalletAssetEntry {
-  collectionId: string
-  collectionName: string
-  created: string
-  id: string
-  updated: string
+import type BasePBCollection from './Pocketbase'
+
+interface IWalletAssetEntry extends BasePBCollection {
   name: string
   icon: string
   balance: string
 }
 
-interface IWalletLedgerEntry {
-  collectionId: string
-  collectionName: string
-  created: string
-  id: string
-  updated: string
+interface IWalletLedgerEntry extends BasePBCollection {
   name: string
   icon: string
   color: string
@@ -24,12 +16,7 @@ interface IWalletCategoryEntry extends IWalletLedgerEntry {
   type: 'income' | 'expenses'
 }
 
-interface IWalletTransactionEntry {
-  collectionId: string
-  collectionName: string
-  created: string
-  id: string
-  updated: string
+interface IWalletTransactionEntry extends BasePBCollection {
   type: 'income' | 'expenses' | 'transfer'
   side: 'debit' | 'credit'
   particulars: string

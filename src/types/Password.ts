@@ -1,13 +1,10 @@
-interface IPasswordEntry {
-  collectionId: string
-  collectionName: string
+import type BasePBCollection from './Pocketbase'
+
+interface IPasswordEntry extends BasePBCollection {
   color: string
-  created: string
   icon: string
-  id: string
   name: string
   password: string
-  updated: string
   username: string
   website: string
   decrypted?: string

@@ -1,40 +1,26 @@
-interface INotesWorkspace {
-  collectionId: string
-  collectionName: string
-  created: string
+import type BasePBCollection from './Pocketbase'
+
+interface INotesWorkspace extends BasePBCollection {
   icon: string
-  id: string
   name: string
-  updated: string
 }
 
-interface INotesSubject {
+interface INotesSubject extends BasePBCollection {
   workspace: string
-  collectionId: string
-  collectionName: string
-  created: string
   description: string
   icon: string
-  id: string
   title: string
-  updated: string
 }
 
-interface INotesEntry {
-  collectionId: string
-  collectionName: string
-  created: string
-  id: string
+interface INotesEntry extends BasePBCollection {
   name: string
   path: string
   subject: string
   type: 'file' | 'folder'
-  updated: string
   file: string
 }
 
-interface INotesPath {
-  id: string
+interface INotesPath extends BasePBCollection {
   name: string
 }
 

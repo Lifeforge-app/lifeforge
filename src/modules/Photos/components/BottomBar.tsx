@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { toast } from 'react-toastify'
 import {
   type IPhotosEntryDimensionsItem,
@@ -202,4 +202,4 @@ function BottomBar({
   )
 }
 
-export default BottomBar
+export default memo(BottomBar)

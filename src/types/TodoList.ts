@@ -1,15 +1,12 @@
-interface ITodoListEntry {
-  collectionId: string
-  collectionName: string
-  created: string
+import type BasePBCollection from './Pocketbase'
+
+interface ITodoListEntry extends BasePBCollection {
   due_date: string
-  id: string
   list: string
   notes: string
   priority: string
   summary: string
   tags: string[]
-  updated: string
   done: boolean
   completed_at: string
   subtasks: ITodoSubtask[]
@@ -22,27 +19,17 @@ interface ITodoSubtask {
   hasChanged?: boolean
 }
 
-interface ITodoListList {
-  collectionId: string
-  collectionName: string
+interface ITodoListList extends BasePBCollection {
   color: string
-  created: string
   icon: string
-  id: string
   name: string
-  updated: string
   amount: number
 }
 
-interface ITodoListTag {
+interface ITodoListTag extends BasePBCollection {
   amount: number
-  collectionId: string
-  collectionName: string
   color: string
-  created: string
-  id: string
   name: string
-  updated: string
 }
 
 interface ITodoListStatusCounter {

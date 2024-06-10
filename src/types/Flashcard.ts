@@ -1,26 +1,18 @@
-interface IFlashcardDeck {
+import type BasePBCollection from './Pocketbase'
+
+interface IFlashcardDeck extends BasePBCollection {
   card_amount: number
-  collectionId: string
-  collectionName: string
-  created: string
-  id: string
   name: string
   tag: string
-  updated: string
   expand: {
     tag: IFlashcardTag
   }
 }
 
-interface IFlashcardTag {
+interface IFlashcardTag extends BasePBCollection {
   amount: number
-  collectionId: string
-  collectionName: string
   color: string
-  created: string
-  id: string
   name: string
-  updated: string
 }
 
 interface IFlashcardCard {

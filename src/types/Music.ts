@@ -1,9 +1,6 @@
-interface IMusicEntry {
-  collectionId: string
-  collectionName: string
-  id: string
-  created: string
-  updated: string
+import type BasePBCollection from './Pocketbase'
+
+interface IMusicEntry extends BasePBCollection {
   name: string
   author: string
   duration: string
