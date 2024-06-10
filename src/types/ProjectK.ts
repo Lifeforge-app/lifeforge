@@ -1,26 +1,18 @@
-interface IProjectsKVersion {
-  collectionId: string
-  collectionName: string
-  created: string
+import type BasePBCollection from './Pocketbase'
+
+interface IProjectsKVersion extends BasePBCollection {
   files: string[]
-  id: string
   project_id: string
   thumbnail: string
-  updated: string
 }
 
-interface IProjectsKProgress {
-  collectionId: string
-  collectionName: string
+interface IProjectsKProgress extends BasePBCollection {
   completed: number
-  created: string
   expand: {
     steps: Record<string, IProjectsKProgressStep>
   }
-  id: string
   project: string
   steps: string[]
-  updated: string
 }
 
 interface IProjectsKProgressStep {
@@ -29,12 +21,8 @@ interface IProjectsKProgressStep {
   icon: string
 }
 
-interface IProjectsKEntry {
-  collectionId: string
-  collectionName: string
-  created: string
+interface IProjectsKEntry extends BasePBCollection {
   customer_name: string
-  id: string
   is_released: boolean
   name: string
   payment_status?: {
@@ -48,7 +36,6 @@ interface IProjectsKEntry {
   status: 'scheduled' | 'wip' | 'completed'
   thumbnail: string
   type: 'personal' | 'commercial'
-  updated: string
   files: string[]
   last_file_replacement_time: string
   thumb_original_filename: string

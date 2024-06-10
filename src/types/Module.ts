@@ -1,4 +1,4 @@
-interface ModuleConfigInput {
+interface IModuleConfigInput {
   type: 'input'
   icon: string
   name: string
@@ -6,7 +6,7 @@ interface ModuleConfigInput {
   isPassword?: boolean
 }
 
-interface ModuleConfigSelect {
+interface IModuleConfigSelect {
   type: 'select'
   icon: string
   name: string
@@ -17,7 +17,7 @@ interface ModuleConfigSelect {
   }>
 }
 
-interface ModuleConfigSwitch {
+interface IModuleConfigSwitch {
   type: 'switch'
   icon: string
   name: string
@@ -25,19 +25,19 @@ interface ModuleConfigSwitch {
   description?: string
 }
 
-interface ModuleEntry {
+interface IModuleEntry {
   name: string
   description?: string
   icon: string
   config?: Record<
     string,
-    ModuleConfigInput | ModuleConfigSelect | ModuleConfigSwitch
+    IModuleConfigInput | IModuleConfigSelect | IModuleConfigSwitch
   >
 }
 
 export type {
-  ModuleEntry,
-  ModuleConfigInput,
-  ModuleConfigSelect,
-  ModuleConfigSwitch
+  IModuleEntry,
+  IModuleConfigInput,
+  IModuleConfigSelect,
+  IModuleConfigSwitch
 }
