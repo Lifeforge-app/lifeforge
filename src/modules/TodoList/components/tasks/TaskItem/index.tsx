@@ -2,11 +2,12 @@
 import React from 'react'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import { type ITodoListEntry } from '@typedec/TodoList'
+import APIRequest from '@utils/fetchData'
+import SubtaskItem from './components/SubtaskItem'
 import TaskCompletionCheckbox from './components/TaskCompletionCheckbox'
 import TaskDueDate from './components/TaskDueDate'
 import TaskHeader from './components/TaskHeader'
 import TaskTags from './components/TaskTags'
-import APIRequest from '@utils/fetchData'
 
 function TaskItem({
   entry,
@@ -93,45 +94,54 @@ function TaskItem({
   }
 
   return (
-    <li
-      key={entry.id}
-      className={`relative isolate flex items-center justify-between gap-4 rounded-lg bg-bg-50 p-4 pl-5 pr-6 shadow-custom ${
-        lighter ? 'dark:bg-bg-800' : 'dark:bg-bg-900'
-      }`}
-    >
-      <div className="flex items-center gap-4">
-        {typeof lists !== 'string' && entry.list !== null && (
-          <span
-            className="h-10 w-1 shrink-0 rounded-full"
-            style={{
-              backgroundColor: lists.find(l => l.id === entry.list)?.color
-            }}
-          />
-        )}
-        <div>
-          <TaskHeader entry={entry} />
-          {(entry.due_date || entry.tags.length > 0) && (
-            <div className="mt-1 flex items-center gap-2">
-              <TaskDueDate entry={entry} />
-              <TaskTags entry={entry} />
-            </div>
+    <>
+      <li
+        key={entry.id}
+        className={`relative isolate flex items-center justify-between gap-4 rounded-lg bg-bg-50 p-4 pl-5 pr-6 shadow-custom ${
+          lighter ? 'dark:bg-bg-800' : 'dark:bg-bg-900'
+        }`}
+      >
+        <div className="flex items-center gap-4">
+          {typeof lists !== 'string' && entry.list !== null && (
+            <span
+              className="h-10 w-1 shrink-0 rounded-full"
+              style={{
+                backgroundColor: lists.find(l => l.id === entry.list)?.color
+              }}
+            />
           )}
+          <div>
+            <TaskHeader entry={entry} />
+            {(entry.due_date || entry.tags.length > 0) && (
+              <div className="mt-1 flex items-center gap-2">
+                <TaskDueDate entry={entry} />
+                <TaskTags entry={entry} />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-      <button
-        onClick={() => {
-          setModifyTaskWindowOpenType('update')
-          setSelectedTask(entry)
-        }}
-        className="absolute left-0 top-0 h-full w-full"
-      />
-      <TaskCompletionCheckbox
-        entry={entry}
-        toggleTaskCompletion={() => {
-          toggleTaskCompletion().catch(console.error)
-        }}
-      />
-    </li>
+        <button
+          onClick={() => {
+            setModifyTaskWindowOpenType('update')
+            setSelectedTask(entry)
+          }}
+          className="absolute left-0 top-0 size-full"
+        />
+        <TaskCompletionCheckbox
+          entry={entry}
+          toggleTaskCompletion={() => {
+            toggleTaskCompletion().catch(console.error)
+          }}
+        />
+      </li>
+      {entry.subtasks.length > 0 && (
+        <ul className="space-y-4 pl-4">
+          {entry.subtasks.map(subtask => (
+            <SubtaskItem entry={subtask} parentId={entry.id} key={subtask.id} />
+          ))}
+        </ul>
+      )}
+    </>
   )
 }
 
