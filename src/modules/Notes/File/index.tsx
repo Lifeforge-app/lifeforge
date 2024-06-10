@@ -7,9 +7,9 @@ import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import '@react-pdf-viewer/core/lib/styles/index.css'
+import FILE_ICONS from '@constants/file_icons'
 import useFetch from '@hooks/useFetch'
 import { type INotesEntry } from '@typedec/Notes'
-import FILE_ICONS from '@constants/file_icons'
 
 function NotesFile(): React.ReactElement {
   const { id } = useParams<{ id: string }>()
@@ -62,11 +62,9 @@ function NotesFile(): React.ReactElement {
                 {entry.file.split('.').pop() === 'pdf' && (
                   <Viewer
                     theme="dark"
-                    fileUrl={`${
-                      import.meta.env.VITE_POCKETBASE_ENDPOINT
-                    }/api/files/${entry.collectionId}/${entry.id}/${
-                      entry.file
-                    }`}
+                    fileUrl={`${import.meta.env.VITE_API_HOST}/media/${
+                      entry.collectionId
+                    }/${entry.id}/${entry.file}`}
                   />
                 )}
               </div>

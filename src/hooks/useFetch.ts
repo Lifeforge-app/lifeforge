@@ -30,7 +30,7 @@ function useFetch<T>(
         try {
           const data = await res.json()
           if (!res.ok || data.state !== 'success') {
-            throw new Error(data.message)
+            throw new Error(JSON.stringify(data.message))
           }
           setData(data.data)
         } catch (err) {
