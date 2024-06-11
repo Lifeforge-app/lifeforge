@@ -10,6 +10,7 @@ interface MenuProps {
   style?: React.CSSProperties
   lighter?: boolean
   largerPadding?: boolean
+  largerIcon?: boolean
   smallerPadding?: boolean
   customWidth?: string
   customIcon?: string
@@ -47,6 +48,7 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
     customHoverColor,
     lighter,
     largerPadding,
+    largerIcon,
     smallerPadding,
     customWidth,
     customIcon,
@@ -82,7 +84,10 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
           getColorClass(lighter)
         }`}
       >
-        <Icon icon={customIcon ?? 'tabler:dots-vertical'} className="size-5" />
+        <Icon
+          icon={customIcon ?? 'tabler:dots-vertical'}
+          className={largerIcon === true ? 'size-6' : 'size-5'}
+        />
       </Menu.Button>
       <Transition
         enter="transition duration-100 ease-out"
@@ -91,7 +96,9 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
         leave="transition duration-75 ease-out"
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
-        className="absolute right-0 top-4 z-50"
+        className={`absolute right-0 z-50 ${
+          largerPadding === true ? 'top-9' : 'top-4'
+        }`}
         afterLeave={() => {
           if (onClose !== undefined) {
             onClose()

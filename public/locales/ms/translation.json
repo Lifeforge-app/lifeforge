@@ -104,7 +104,10 @@
             "languages": "Bahasa",
             "albums": "Album",
             "lifestyle": "Gaya Hidup",
-            "externalManagement": "Pengurusan Luaran"
+            "externalManagement": "Pengurusan Luaran",
+            "type": "Jenis",
+            "assets": "Aset",
+            "ledgers": "Lejar"
         },
         "descriptions": {
             "dashboard": "Pusat kawalan misi anda untuk yang mengagumkan. 🚀",
@@ -215,9 +218,7 @@
     },
     "notFound": {
         "title": "Oops! Tiada apa di sini.",
-        "description": "Halaman yang anda cari tidak dijumpai. Sila periksa URL dan cuba lagi.",
-        "backButton": "Pergi Kembali",
-        "reportButton": "Laporan Ralat"
+        "description": "Halaman yang anda cari tidak dijumpai. Sila periksa URL dan cuba lagi."
     },
     "search": {
         "books": "Cari Buku...",
@@ -273,7 +274,9 @@
         "addTransaction": "Tambah Transaksi",
         "addLedger": "Tambah Lejar",
         "removeReceipt": "Buang Resit",
-        "uploadReceipt": "Muat Naik Resit"
+        "uploadReceipt": "Muat Naik Resit",
+        "goBackHome": "Pergi ke Laman Utama",
+        "reportBug": "Laporkan Bug"
     },
     "modals": {
         "header": {
@@ -372,6 +375,7 @@
         "date": "Tarikh",
         "type": "Jenis",
         "asset": "Aset",
+        "ledger": "Lejar",
         "particular": "Perincian",
         "category": "Kategori",
         "amount": "Jumlah",
