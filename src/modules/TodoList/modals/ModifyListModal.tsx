@@ -61,14 +61,8 @@ function ModifyListModal(): React.ReactElement {
         (innerOpenType === 'update' ? `/${selectedList?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: list,
-      successInfo: {
-        create: 'Yay! List created. Time to start adding tasks.',
-        update: 'Yay! List updated.'
-      }[innerOpenType!],
-      failureInfo: {
-        create: "Oops! Couldn't create the list. Please try again.",
-        update: "Oops! Couldn't update the list. Please try again."
-      }[innerOpenType!],
+      successInfo: innerOpenType,
+      failureInfo: innerOpenType,
       finalCallback: () => {
         setLoading(false)
       },

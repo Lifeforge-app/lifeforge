@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react'
-import APIRequest from '@utils/fetchData'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import { type IPhotosAlbum } from '@typedec/Photos'
+import APIRequest from '@utils/fetchData'
 import { usePhotosContext } from '../../../../providers/PhotosProvider'
 
 function ModifyAlbumModal({
@@ -46,14 +46,8 @@ function ModifyAlbumModal({
         (openType === 'rename' ? `/${targetAlbum?.id}` : ''),
       method: openType === 'create' ? 'POST' : 'PATCH',
       body: album,
-      successInfo: {
-        create: 'Yay! Album created. Time to fill it up.',
-        rename: 'Yay! Album renamed.'
-      }[openType as 'create' | 'rename'],
-      failureInfo: {
-        create: "Oops! Couldn't create the album. Please try again.",
-        rename: "Oops! Couldn't rename the album. Please try again."
-      }[openType as 'create' | 'rename'],
+      successInfo: openType,
+      failureInfo: openType,
       callback: data => {
         setOpenType(false)
         setAlbumList(prev => {
@@ -117,7 +111,7 @@ function ModifyAlbumModal({
                 rename: 'tabler:pencil'
               }[openType as 'create' | 'rename']
             }
-            className="h-7 w-7"
+            className="size-7"
           />
           {typeof openType === 'string' &&
             openType[0].toUpperCase() + openType.slice(1)}{' '}

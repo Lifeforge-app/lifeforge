@@ -62,8 +62,8 @@ function CreateProjectModal({
       endpoint: 'projects-k/entry/create',
       method: 'POST',
       body: project,
-      successInfo: 'Yay! Project created. Time to start working on it.',
-      failureInfo: "Oops! Couldn't create the project. Please try again.",
+      successInfo: 'create',
+      failureInfo: 'create',
       finalCallback: () => {
         setLoading(false)
       },

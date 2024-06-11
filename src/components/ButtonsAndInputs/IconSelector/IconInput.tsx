@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { toCamelCase } from '@utils/strings'
 
 function IconInput({
   name,
@@ -13,6 +15,8 @@ function IconInput({
   setIcon: React.Dispatch<React.SetStateAction<string>>
   setIconSelectorOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   function updateIcon(e: React.ChangeEvent<HTMLInputElement>): void {
     setIcon(e.target.value)
   }
@@ -26,7 +30,6 @@ function IconInput({
             icon ? '' : 'text-bg-500'
           } group-focus-within:!text-custom-500`}
         />
-
         <div className="flex w-full items-center gap-2">
           <span
             className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 transition-all group-focus-within:!text-custom-500 ${
@@ -35,7 +38,7 @@ function IconInput({
                 : 'top-6 -translate-y-1/2 text-[14px]'
             }`}
           >
-            {name}
+            {t(`input.${toCamelCase(name)}`)}
           </span>
           <div className="mr-12 mt-6 flex w-full items-center gap-2 pl-4">
             <Icon

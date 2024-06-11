@@ -79,14 +79,8 @@ function ModifyLedgersModal({
         icon: ledgerIcon,
         color: ledgerColor
       },
-      successInfo: {
-        create: 'Yay! Ledger created.',
-        update: 'Yay! Ledger updated.'
-      }[openType as 'create' | 'update'],
-      failureInfo: {
-        create: "Oops! Couldn't create the ledger. Please try again.",
-        update: "Oops! Couldn't update the ledger. Please try again."
-      }[openType as 'create' | 'update'],
+      successInfo: openType,
+      failureInfo: openType,
       callback: () => {
         refreshLedgers()
         setExistedData(null)

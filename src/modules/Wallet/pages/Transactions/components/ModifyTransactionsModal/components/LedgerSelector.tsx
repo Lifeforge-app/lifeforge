@@ -1,6 +1,7 @@
 import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import ListboxInputWrapper from '@components/Listbox/ListboxInputWrapper'
 import ListboxTransition from '@components/Listbox/ListboxTransition'
 import useFetch from '@hooks/useFetch'
@@ -15,6 +16,7 @@ function LedgerSelector({
   setLedger: React.Dispatch<React.SetStateAction<string | null>>
   openType: 'create' | 'update' | null
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [ledgers] = useFetch<IWalletCategoryEntry[]>(
     'wallet/ledgers/list',
     openType !== null
@@ -40,7 +42,7 @@ function LedgerSelector({
         <span
           className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:!text-custom-500 ${'top-6 -translate-y-1/2 text-[14px]'}`}
         >
-          Ledger
+          {t('input.ledger')}
         </span>
         <div className="relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-none">
           <Icon
@@ -83,7 +85,7 @@ function LedgerSelector({
                         style={{ color: 'white' }}
                       />
                     </span>
-                    None
+                    {t('input.none')}
                   </span>
                 </div>
                 {selected && (

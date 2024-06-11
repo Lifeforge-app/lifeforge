@@ -2,6 +2,8 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import CurrencyInput from 'react-currency-input-field'
+import { useTranslation } from 'react-i18next'
+import { toCamelCase } from '@utils/strings'
 
 function CurrencyInputComponent({
   name,
@@ -21,6 +23,8 @@ function CurrencyInputComponent({
   darker?: boolean
   additionalClassName?: string
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <div
       className={`group relative flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 ${
@@ -41,7 +45,7 @@ function CurrencyInputComponent({
               : 'top-6 -translate-y-1/2 text-[14px]'
           }`}
         >
-          {name}
+          {t(`input.${toCamelCase(name)}`)}
         </span>
         <CurrencyInput
           name={name}

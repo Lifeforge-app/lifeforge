@@ -1,7 +1,9 @@
 import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import ListboxTransition from '@components/Listbox/ListboxTransition'
+import { toCamelCase } from '@utils/strings'
 
 interface Asset {
   id: string | number
@@ -26,6 +28,8 @@ function AssetListbox({
   iconName,
   className = ''
 }: AssetListboxProps): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <Listbox
       value={selectedAsset}
@@ -78,7 +82,7 @@ function AssetListbox({
                   <div>
                     <span className="flex items-center gap-2">
                       <Icon icon={icon} className="size-5" />
-                      {name}
+                      {t(`input.${toCamelCase(name)}`)}
                     </span>
                   </div>
                   {selected && (

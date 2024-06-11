@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 export function titleToPath(title: string): string {
   return title
     .toLowerCase()
@@ -6,7 +7,11 @@ export function titleToPath(title: string): string {
 }
 
 export function toCamelCase(str: string): string {
+  if (!str) return ''
+
   return str
+    .toLowerCase()
+    .replace(/\s{2,}/g, ' ')
     .replace(/\s(.)/g, $1 => $1.toUpperCase())
     .replace(/\s/g, '')
     .replace(/^(.)/, $1 => $1.toLowerCase())

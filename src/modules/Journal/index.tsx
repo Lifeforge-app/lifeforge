@@ -34,8 +34,8 @@ function Journal(): React.ReactElement {
         title: moment().format('MMMM DD, YYYY'),
         content: 'Write your content here'
       },
-      successInfo: 'Yay! Entry created successfully',
-      failureInfo: "Oops! Couldn't create the entry. Please try again.",
+      successInfo: 'create',
+      failureInfo: 'create',
       callback: data => {
         navigate(`/journal/edit/${data.data.id}`)
       },

@@ -158,7 +158,7 @@ function SidebarItem({
                 }`}
               >
                 <Icon icon={subsectionIcon} className="size-6" />
-                {subsectionName}
+                {t(`modules.subsections.${toCamelCase(subsectionName)}`)}
               </Link>
             )
           )}

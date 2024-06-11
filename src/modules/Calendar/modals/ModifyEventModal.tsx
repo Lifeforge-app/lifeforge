@@ -67,14 +67,8 @@ function ModifyEventModal({
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: event,
-      successInfo: {
-        create: 'Yay! Event created.',
-        update: 'Yay! Event updated.'
-      }[innerOpenType!],
-      failureInfo: {
-        create: "Oops! Couldn't create the event. Please try again.",
-        update: "Oops! Couldn't update the event. Please try again."
-      }[innerOpenType!],
+      successInfo: innerOpenType,
+      failureInfo: innerOpenType,
       finalCallback: () => {
         setLoading(false)
       },

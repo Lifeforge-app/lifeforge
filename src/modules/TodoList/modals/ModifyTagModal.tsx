@@ -43,14 +43,8 @@ function ModifyTagModal(): React.ReactElement {
         (innerOpenType === 'update' ? `/${selectedTag?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: tag,
-      successInfo: {
-        create: 'Yay! Tag created. Time to start adding tasks.',
-        update: 'Yay! Tag updated.'
-      }[innerOpenType!],
-      failureInfo: {
-        create: "Oops! Couldn't create the tag. Please try again.",
-        update: "Oops! Couldn't update the tag. Please try again."
-      }[innerOpenType!],
+      successInfo: innerOpenType,
+      failureInfo: innerOpenType,
       finalCallback: () => {
         setLoading(false)
       },

@@ -35,8 +35,8 @@ function UpdateAlbumTagsModal({
       endpoint: `photos/album/tag/update-album/${selectedAlbum?.id}`,
       method: 'PATCH',
       body: { tags: selectedTags },
-      successInfo: 'Tags updated successfully.',
-      failureInfo: 'Failed to update tags. Please try again.',
+      successInfo: 'update',
+      failureInfo: 'update',
       callback: () => {
         setOpen(false)
         setAlbumList(prev => {
@@ -67,7 +67,7 @@ function UpdateAlbumTagsModal({
     <Modal isOpen={isOpen}>
       <div className="mb-8 flex items-center justify-between ">
         <h1 className="flex items-center gap-3 text-2xl font-semibold">
-          <Icon icon="tabler:tags" className="h-7 w-7" />
+          <Icon icon="tabler:tags" className="size-7" />
           Modify Tags for {selectedAlbum?.name ?? 'Album'}
         </h1>
         {!loading && (
@@ -75,7 +75,7 @@ function UpdateAlbumTagsModal({
             onClick={() => {
               setOpen(false)
             }}
-            className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover: dark:hover:bg-bg-800"
+            className="hover: rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-800"
           >
             <Icon icon="tabler:x" className="size-6" />
           </button>

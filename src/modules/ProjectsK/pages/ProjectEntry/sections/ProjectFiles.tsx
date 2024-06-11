@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import FILE_ICONS from '@constants/file_icons'
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
@@ -9,6 +8,7 @@ import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import FILE_ICONS from '@constants/file_icons'
 import useFetch from '@hooks/useFetch'
 import { type IProjectsKEntry } from '@typedec/ProjectK'
 import APIRequest from '@utils/fetchData'
@@ -34,8 +34,8 @@ export default function ProjectFiles({
         (projectData as IProjectsKEntry).id
       }`,
       method: 'PUT',
-      successInfo: 'Files have been replaced.',
-      failureInfo: 'Failed to update files.',
+      successInfo: 'replace',
+      failureInfo: 'replace',
       callback: refreshProjectData,
       finalCallback: () => {
         setFileReplaceLoading(false)
@@ -66,8 +66,8 @@ export default function ProjectFiles({
     await APIRequest({
       endpoint: 'projects-k/files/clear-medium/',
       method: 'DELETE',
-      successInfo: 'Upload medium have been cleared.',
-      failureInfo: 'Failed to clear files.',
+      successInfo: 'clearMedium',
+      failureInfo: 'clearMedium',
       callback: refreshProjectData,
       finalCallback: () => {
         setMediumClearLoading(false)
@@ -111,8 +111,8 @@ export default function ProjectFiles({
       }`,
       method: 'PUT',
       body: { file },
-      successInfo: 'Thumbnail has been set.',
-      failureInfo: 'Failed to set thumbnail.',
+      successInfo: 'thumbnail',
+      failureInfo: 'thumbnail',
       callback: refreshProjectData
     })
   }

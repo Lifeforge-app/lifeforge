@@ -78,14 +78,8 @@ function ModifyTaskWindow(): React.ReactElement {
         (innerOpenType === 'update' ? `/${selectedTask?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: task,
-      successInfo: {
-        create: 'Yay! Task created. Time to start working on it.',
-        update: 'Yay! Task updated.'
-      }[innerOpenType!],
-      failureInfo: {
-        create: "Oops! Couldn't create the task. Please try again.",
-        update: "Oops! Couldn't update the task. Please try again."
-      }[innerOpenType!],
+      successInfo: innerOpenType,
+      failureInfo: innerOpenType,
       callback: () => {
         setOpenType(null)
         setSelectedTask(null)

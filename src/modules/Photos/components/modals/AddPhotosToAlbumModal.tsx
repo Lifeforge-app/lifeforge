@@ -49,8 +49,8 @@ function AddPhotosToAlbumModal(): React.ReactElement {
             )
         )
       },
-      successInfo: 'Yay! Photos added to album.',
-      failureInfo: "Oops! Couldn't add the photos to album. Please try again.",
+      successInfo: 'add',
+      failureInfo: 'add',
       callback: () => {
         setSelectedPhotos([])
         setLoading(false)
@@ -75,7 +75,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
             {' '}
             <div className="mb-8 flex items-center justify-between ">
               <h1 className="flex items-center gap-3 text-2xl font-semibold">
-                <Icon icon="tabler:photo-plus" className="h-7 w-7" />
+                <Icon icon="tabler:photo-plus" className="size-7" />
                 Add{' '}
                 {selectedPhotos
                   .filter(
@@ -95,7 +95,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                   onClick={() => {
                     setOpen(false)
                   }}
-                  className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover: dark:hover:bg-bg-800"
+                  className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-800"
                 >
                   <Icon icon="tabler:x" className="size-6" />
                 </button>
@@ -119,14 +119,14 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                             : 'hover:bg-bg-200 dark:hover:bg-bg-800/50'
                         }`}
                       >
-                        <div className="flex-center flex h-10 w-10 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
-                          {album.cover ? (
+                        <div className="flex-center flex size-10 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
+                          {album.cover !== '' ? (
                             <img
                               src={`${
                                 import.meta.env.VITE_POCKETBASE_ENDPOINT
                               }/api/files/${album.cover}?thumb=0x300`}
                               alt=""
-                              className="h-full w-full rounded-md object-cover"
+                              className="size-full rounded-md object-cover"
                             />
                           ) : (
                             <Icon
@@ -153,7 +153,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                   ))}
               </APIComponentWithFallback>
               {loading && (
-                <div className="absolute left-0 top-0 h-full w-full"></div>
+                <div className="absolute left-0 top-0 size-full"></div>
               )}
             </ul>
             <Button
