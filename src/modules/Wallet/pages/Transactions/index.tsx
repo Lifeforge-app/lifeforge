@@ -55,7 +55,7 @@ function Transactions(): React.ReactElement {
     useState<IWalletTransactionEntry | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [view, setView] = useState<'list' | 'table'>('table')
+  const [view, setView] = useState<'list' | 'table'>('list')
   const { hash } = useLocation()
   const navigate = useNavigate()
 
@@ -134,7 +134,7 @@ function Transactions(): React.ReactElement {
               typeof assets !== 'string' &&
               typeof ledgers !== 'string' &&
               transactions.length > 0 ? (
-                view === 'list' ? (
+                view === 'table' ? (
                   <TableView
                     transactions={transactions}
                     categories={categories}
