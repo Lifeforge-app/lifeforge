@@ -60,7 +60,7 @@ function Transactions(): React.ReactElement {
   const [selectedData, setSelectedData] =
     useState<IWalletTransactionEntry | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [view, setView] = useState<'list' | 'table'>('table')
   const { hash } = useLocation()
   const navigate = useNavigate()
@@ -103,40 +103,44 @@ function Transactions(): React.ReactElement {
                 setManageCategoriesModalOpen(true)
               }}
             />
-            <SidebarDivider noMargin />
-            <span className="flex items-center gap-4 p-4 text-bg-500">
-              <Icon icon="tabler:eye" className="size-5" />
-              Columns Visibility
-            </span>
-            <div className="p-4 pt-0">
-              <ul className="flex flex-col divide-y divide-bg-700 overflow-hidden rounded-md bg-bg-700/50">
-                {[
-                  'Date',
-                  'Type',
-                  'Ledger',
-                  'Asset',
-                  'Particular',
-                  'Category',
-                  'Amount',
-                  'Receipt'
-                ].map(column => (
-                  <MenuItem
-                    key={column}
-                    text={t(`table.${toCamelCase(column)}`)}
-                    onClick={() => {
-                      if (visibleColumn.includes(column)) {
-                        setVisibleColumn(
-                          visibleColumn.filter(e => e !== column)
-                        )
-                      } else {
-                        setVisibleColumn([...visibleColumn, column])
-                      }
-                    }}
-                    isToggled={visibleColumn.includes(column)}
-                  />
-                ))}
-              </ul>
-            </div>
+            {view === 'table' && (
+              <>
+                <SidebarDivider noMargin />
+                <span className="flex items-center gap-4 p-4 text-bg-500">
+                  <Icon icon="tabler:eye" className="size-5" />
+                  Columns Visibility
+                </span>
+                <div className="p-4 pt-0">
+                  <ul className="flex flex-col divide-y divide-bg-700 overflow-hidden rounded-md bg-bg-700/50">
+                    {[
+                      'Date',
+                      'Type',
+                      'Ledger',
+                      'Asset',
+                      'Particular',
+                      'Category',
+                      'Amount',
+                      'Receipt'
+                    ].map(column => (
+                      <MenuItem
+                        key={column}
+                        text={t(`table.${toCamelCase(column)}`)}
+                        onClick={() => {
+                          if (visibleColumn.includes(column)) {
+                            setVisibleColumn(
+                              visibleColumn.filter(e => e !== column)
+                            )
+                          } else {
+                            setVisibleColumn([...visibleColumn, column])
+                          }
+                        }}
+                        isToggled={visibleColumn.includes(column)}
+                      />
+                    ))}
+                  </ul>
+                </div>
+              </>
+            )}
           </>
         }
       />
@@ -530,34 +534,71 @@ function Transactions(): React.ReactElement {
                     </tbody>
                   </table>
                 ) : (
-                  <ul className="flex min-h-0 flex-col gap-6 overflow-y-auto">
+                  <ul className="flex min-h-0 flex-col divide-y divide-bg-800/70 overflow-y-auto">
                     {transactions.map(transaction => (
                       <li
                         key={transaction.id}
-                        className="relative flex items-center gap-2 rounded-lg"
+                        className="relative flex items-center justify-between gap-8 px-2 py-4"
                       >
-                        <div
-                          className="h-12 w-1 rounded-full"
-                          style={{
-                            backgroundColor:
-                              categories.find(
-                                category => category.id === transaction.category
-                              )?.color ?? 'transparent'
-                          }}
-                        />
-                        <div>
-                          <div className="text-lg font-medium text-bg-100">
-                            {transaction.particulars}
+                        <div className="flex w-full min-w-0 items-center gap-2">
+                          <div
+                            className="h-12 w-1 shrink-0 rounded-full"
+                            style={{
+                              backgroundColor:
+                                categories.find(
+                                  category =>
+                                    category.id === transaction.category
+                                )?.color ?? 'transparent'
+                            }}
+                          />
+                          <div className="w-full min-w-0">
+                            <div className="w-full min-w-0 truncate text-lg font-medium text-bg-100">
+                              {transaction.particulars}
+                            </div>
+                            <div className="flex items-center gap-2 text-sm font-medium text-bg-500">
+                              {moment(transaction.date).format('MMM DD, YYYY')}
+                              <Icon
+                                icon="tabler:circle-filled"
+                                className="size-1"
+                              />
+                              {transaction.type[0].toUpperCase() +
+                                transaction.type.slice(1)}
+                            </div>
                           </div>
-                          <div className="flex items-center gap-2 text-sm font-medium text-bg-500">
-                            {moment(transaction.date).format('MMM DD, YYYY')}
-                            <Icon
-                              icon="tabler:circle-filled"
-                              className="size-1"
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`${
+                              {
+                                debit: 'text-green-500',
+                                credit: 'text-red-500'
+                              }[transaction.side]
+                            }`}
+                          >
+                            {transaction.side === 'debit' ? '+' : '-'}
+                            {numberToMoney(transaction.amount)}
+                          </span>
+                          <HamburgerMenu className="relative">
+                            {transaction.type !== 'transfer' && (
+                              <MenuItem
+                                icon="tabler:pencil"
+                                text="Edit"
+                                onClick={() => {
+                                  setSelectedData(transaction)
+                                  setModifyModalOpenType('update')
+                                }}
+                              />
+                            )}
+                            <MenuItem
+                              icon="tabler:trash"
+                              text="Delete"
+                              isRed
+                              onClick={() => {
+                                setSelectedData(transaction)
+                                setDeleteTransactionsConfirmationOpen(true)
+                              }}
                             />
-                            {transaction.type[0].toUpperCase() +
-                              transaction.type.slice(1)}
-                          </div>
+                          </HamburgerMenu>
                         </div>
                       </li>
                     ))}
