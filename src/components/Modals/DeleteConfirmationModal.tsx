@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import APIRequest from '@utils/fetchData'
 import Modal from './Modal'
 import Button from '../ButtonsAndInputs/Button'
@@ -26,6 +27,7 @@ function DeleteConfirmationModal({
   nameKey?: string
   customCallback?: () => void
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
 
   async function deleteData(): Promise<void> {
@@ -39,8 +41,8 @@ function DeleteConfirmationModal({
     await APIRequest({
       endpoint: `${apiEndpoint}/${data.id}`,
       method: 'DELETE',
-      successInfo: `Uhh, hopefully you truly didn't need that ${itemName}.`,
-      failureInfo: `Oops! Couldn't delete the ${itemName}. Please try again.`,
+      successInfo: 'delete',
+      failureInfo: 'delete',
       callback: () => {
         onClose()
         updateDataList()
@@ -54,16 +56,12 @@ function DeleteConfirmationModal({
   return (
     <Modal isOpen={isOpen}>
       <h1 className="text-2xl font-semibold">
-        Are you sure you want to delete{' '}
-        {nameKey ? data?.[nameKey] : `the ${itemName}`}?
+        {t('modals.deleteConfirmation.title', {
+          itemName: nameKey ? data?.[nameKey] : `the ${itemName}`
+        })}
       </h1>
       <p className="mt-2 text-bg-500">
-        {customText ?? (
-          <>
-            This will delete the {itemName} and everything related to it. This
-            action is irreversible!
-          </>
-        )}
+        {customText ?? t('modals.deleteConfirmation.desc', { itemName })}
       </p>
       <div className="mt-6 flex w-full flex-col-reverse justify-around gap-2 sm:flex-row">
         <Button onClick={onClose} icon="" type="secondary" className="w-full">

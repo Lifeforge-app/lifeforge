@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import Zoom from 'react-medium-image-zoom'
 import Button from '@components/ButtonsAndInputs/Button'
 
@@ -18,6 +19,7 @@ function ReceiptUploader({
   setToRemoveReceipt: React.Dispatch<React.SetStateAction<boolean>>
   openType: 'create' | 'update' | null
 }): React.ReactElement {
+  const { t } = useTranslation()
   function uploadReceipt(): void {
     const input = document.createElement('input')
     input.type = 'file'
@@ -40,7 +42,7 @@ function ReceiptUploader({
     <div className="mt-4 w-full rounded-md bg-bg-800/50 p-6">
       <div className="flex items-center gap-4 text-bg-500">
         <Icon icon="tabler:file-text" className="size-6" />
-        <span className="font-medium">Receipt</span>
+        <span className="font-medium">{t('input.receipt')}</span>
       </div>
       {imagePreviewUrl !== null && (
         <Zoom zoomMargin={100}>

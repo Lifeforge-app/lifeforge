@@ -38,8 +38,8 @@ function SubtaskBoxHeader({
         notes,
         level: spiciness
       },
-      successInfo: 'Yay! Subtask generated.',
-      failureInfo: 'Oops! Failed to generate subtask. Please try again.',
+      successInfo: 'generate',
+      failureInfo: 'generate',
       callback: data => {
         setAIGenerateLoading(false)
         setSubtasks(

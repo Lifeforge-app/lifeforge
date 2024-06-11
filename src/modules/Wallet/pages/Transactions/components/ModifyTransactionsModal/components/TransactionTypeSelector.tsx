@@ -1,6 +1,7 @@
 import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import ListboxTransition from '@components/Listbox/ListboxTransition'
 
 const TRANSACTION_TYPES = [
@@ -25,6 +26,7 @@ function TransactionTypeSelector({
   >
   openType: 'create' | 'update' | null
 }): React.ReactElement {
+  const { t } = useTranslation()
   return (
     <Listbox
       disabled={openType === 'update'}
@@ -45,7 +47,8 @@ function TransactionTypeSelector({
         <span
           className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:!text-custom-500 ${'top-6 -translate-y-1/2 text-[14px]'}`}
         >
-          Transaction type {openType === 'update' && '(Unchangable)'}
+          {t('input.transactionType')}{' '}
+          {openType === 'update' && t('input.disabled')}
         </span>
         <div className="relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-none">
           <Icon
@@ -63,9 +66,11 @@ function TransactionTypeSelector({
               'None'}
           </span>
         </div>
-        <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
-          <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
-        </span>
+        {openType !== 'update' && (
+          <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
+            <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
+          </span>
+        )}
       </Listbox.Button>
       <ListboxTransition>
         <Listbox.Options className="absolute top-[120%] z-50 mt-1 max-h-56 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800">

@@ -1,5 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { toCamelCase } from '@utils/strings'
 
 interface ButtonProps {
   children?: React.ReactNode
@@ -34,6 +36,8 @@ function generateClassName(
 }
 
 function Button(props: ButtonProps): React.ReactElement {
+  const { t } = useTranslation()
+
   const {
     children,
     CustomElement,
@@ -58,7 +62,9 @@ function Button(props: ButtonProps): React.ReactElement {
       className={finalClassName}
     >
       <Icon icon={icon} className="shrink-0 text-xl" />
-      {children ?? ''}
+      {typeof children === 'string'
+        ? t(`button.${toCamelCase(children)}`)
+        : children ?? ''}
     </FinalElement>
   )
 }

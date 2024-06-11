@@ -68,14 +68,8 @@ function ModifySubjectModal({
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: subject,
-      successInfo: {
-        create: 'Yay! Subject created. Time to fill it up.',
-        update: 'Yay! Subject updated.'
-      }[innerOpenType!],
-      failureInfo: {
-        create: "Oops! Couldn't create the subject. Please try again.",
-        update: "Oops! Couldn't update the subject. Please try again."
-      }[innerOpenType!],
+      successInfo: innerOpenType,
+      failureInfo: innerOpenType,
       callback: () => {
         setOpenType(null)
         updateSubjectList()

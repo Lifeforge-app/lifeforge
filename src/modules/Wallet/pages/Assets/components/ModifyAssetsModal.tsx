@@ -77,14 +77,8 @@ function ModifyAssetsModal({
         icon: assetIcon,
         balance: assetBalance
       },
-      successInfo: {
-        create: 'Yay! Asset created.',
-        update: 'Yay! Asset updated.'
-      }[openType as 'create' | 'update'],
-      failureInfo: {
-        create: "Oops! Couldn't create the asset. Please try again.",
-        update: "Oops! Couldn't update the asset. Please try again."
-      }[openType as 'create' | 'update'],
+      successInfo: openType,
+      failureInfo: openType,
       callback: () => {
         refreshAssets()
         setExistedData(null)

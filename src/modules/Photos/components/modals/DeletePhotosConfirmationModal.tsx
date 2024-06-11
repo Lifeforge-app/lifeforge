@@ -49,8 +49,8 @@ function DeletePhotosConfirmationModal({
           ? [customPhotoToBeDeleted.id]
           : selectedPhotos
       },
-      successInfo: "Uhh, hopefully you truly didn't need those photos.",
-      failureInfo: "Oops! Couldn't delete the photos. Please try again.",
+      successInfo: 'delete',
+      failureInfo: 'delete',
       callback: () => {
         setDeletePhotosConfirmationModalOpen(false)
         setSelectedPhotos([])

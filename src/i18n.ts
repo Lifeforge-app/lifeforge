@@ -11,7 +11,8 @@ i18n
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false
-    }
+    },
+    debug: process.env.NODE_ENV === 'development'
   })
   .catch(() => {
     console.error('Failed to initialize i18n')

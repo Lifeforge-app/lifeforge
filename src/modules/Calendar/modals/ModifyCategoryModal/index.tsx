@@ -67,14 +67,8 @@ function ModifyCategoryModal({
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: category,
-      successInfo: {
-        create: 'Yay! Category created. Time to start adding tasks.',
-        update: 'Yay! Category updated.'
-      }[innerOpenType!],
-      failureInfo: {
-        create: "Oops! Couldn't create the category. Please try again.",
-        update: "Oops! Couldn't update the category. Please try again."
-      }[innerOpenType!],
+      successInfo: innerOpenType,
+      failureInfo: innerOpenType,
       finalCallback: () => {
         setLoading(false)
       },

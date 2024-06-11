@@ -37,7 +37,8 @@ function ShareAlbumModal({
       body: {
         publicity: !publicity
       },
-      successInfo: `Album is now ${!publicity ? 'public' : 'private'}.`,
+      successInfo: publicity ? 'private' : 'public',
+      failureInfo: publicity ? 'private' : 'public',
       onFailure: () => {
         setAlbumData(prev => {
           if (prev === 'loading' || prev === 'error') {

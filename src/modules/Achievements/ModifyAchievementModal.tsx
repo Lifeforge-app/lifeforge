@@ -76,14 +76,8 @@ function ModifyAchievementModal({
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: achievement,
-      successInfo: {
-        create: 'Yay! Achievement created. Time to fill it up.',
-        update: 'Yay! Achievement updated.'
-      }[innerOpenType!],
-      failureInfo: {
-        create: "Oops! Couldn't create the achievement. Please try again.",
-        update: "Oops! Couldn't update the achievement. Please try again."
-      }[innerOpenType!],
+      successInfo: innerOpenType,
+      failureInfo: innerOpenType,
       callback: () => {
         setOpenType(null)
         updateAchievementList()

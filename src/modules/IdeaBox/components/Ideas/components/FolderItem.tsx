@@ -47,8 +47,8 @@ function FolderItem({
       body: {
         ideaId: id
       },
-      successInfo: 'Yay! Idea added to folder!',
-      failureInfo: 'Oops! Failed to add idea to folder!',
+      successInfo: 'add',
+      failureInfo: 'add',
       callback: () => {
         setIdeaList(prev => {
           if (prev === 'loading' || prev === 'error') return prev

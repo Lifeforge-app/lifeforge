@@ -1,6 +1,7 @@
 import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import ListboxTransition from '@components/Listbox/ListboxTransition'
 import useFetch from '@hooks/useFetch'
 import { type IWalletAssetEntry } from '@typedec/Wallet'
@@ -12,6 +13,7 @@ function AssetsSelector({
   transactionAsset: string | null
   setTransactionAsset: React.Dispatch<React.SetStateAction<string | null>>
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [assets] = useFetch<IWalletAssetEntry[]>('wallet/assets/list')
 
   if (assets === 'loading') {
@@ -39,7 +41,7 @@ function AssetsSelector({
         <span
           className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:!text-custom-500 ${'top-6 -translate-y-1/2 text-[14px]'}`}
         >
-          Asset
+          {t('input.asset')}
         </span>
         <div className="relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-none">
           <Icon
@@ -73,7 +75,7 @@ function AssetsSelector({
                 <div>
                   <span className="flex items-center gap-2">
                     <Icon icon="tabler:wallet-off" className="size-5" />
-                    None
+                    {t('input.none')}
                   </span>
                 </div>
                 {selected && (

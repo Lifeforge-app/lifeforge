@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 import { cookieParse } from 'pocketbase'
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 function useFetch<T>(
@@ -14,6 +15,7 @@ function useFetch<T>(
   refresh: () => void,
   setData: React.Dispatch<React.SetStateAction<T | 'loading' | 'error'>>
 ] {
+  const { t } = useTranslation()
   const [data, setData] = useState<T | 'loading' | 'error'>('loading')
 
   function fetchData(): void {
@@ -40,7 +42,7 @@ function useFetch<T>(
       .catch(err => {
         setData('error')
         if (showError) {
-          toast.error(`Failed to fetch data from server. ${err.message}`)
+          toast.error(t('common.fetchError'))
         }
         console.error(err)
       })

@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+import { t } from 'i18next'
 import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
+import { toCamelCase } from './strings'
 
 export default async function APIRequest({
   endpoint,
@@ -17,8 +20,8 @@ export default async function APIRequest({
   body?: any
   callback?: (data: any) => void
   finalCallback?: () => void
-  successInfo?: string
-  failureInfo?: string
+  successInfo?: string | null | false
+  failureInfo?: string | null | false
   onFailure?: () => void
   isJSON?: boolean
 }): Promise<any> {
@@ -32,20 +35,32 @@ export default async function APIRequest({
   })
     .then(async res => {
       const data = await res.json()
-      if (res.ok) {
-        if (successInfo !== undefined) toast.success(successInfo)
-        if (callback !== undefined) callback(data)
-        return data
-      } else {
-        throw new Error(data.message)
+
+      if (!res.ok) throw new Error(data.message)
+      if (successInfo) {
+        toast.success(
+          t('common.success', {
+            action: t(`common.action.${toCamelCase(successInfo ?? '')}`)
+          })
+        )
       }
+
+      callback?.(data)
+      return data
     })
     .catch(err => {
-      if (failureInfo !== undefined) toast.error(failureInfo)
-      if (onFailure !== undefined) onFailure()
+      if (failureInfo) {
+        toast.error(
+          t('common.failure', {
+            action: t(`common.action.${toCamelCase(failureInfo ?? '')}`)
+          })
+        )
+      }
+
+      onFailure?.()
       console.error(err)
     })
     .finally(() => {
-      if (finalCallback !== undefined) finalCallback()
+      finalCallback?.()
     })
 }

@@ -31,8 +31,8 @@ function EntryContextMenu({
       endpoint: `idea-box/idea/pin/${ideaId}`,
       method: 'PATCH',
       body: { ideaId },
-      successInfo: "Idea's position has been updated.",
-      failureInfo: 'Failed to fetch data from server.',
+      successInfo: entry.pinned ? 'unpin' : 'pin',
+      failureInfo: entry.pinned ? 'unpin' : 'pin',
       callback: updateIdeaList
     })
   }
@@ -41,8 +41,8 @@ function EntryContextMenu({
     await APIRequest({
       endpoint: `idea-box/idea/archive/${ideaId}`,
       method: 'PATCH',
-      successInfo: 'Idea has been archived.',
-      failureInfo: 'Failed to fetch data from server.',
+      successInfo: entry.archived ? 'unarchive' : 'archive',
+      failureInfo: entry.archived ? 'unarchive' : 'archive',
       callback: updateIdeaList
     })
   }
@@ -52,8 +52,8 @@ function EntryContextMenu({
       endpoint: `idea-box/folder/remove-idea/${folderId}`,
       method: 'DELETE',
       body: { ideaId: entry.id },
-      successInfo: 'Idea has been removed from folder.',
-      failureInfo: 'Failed to fetch data from server.',
+      successInfo: 'remove',
+      failureInfo: 'remove',
       callback: updateIdeaList
     })
   }
