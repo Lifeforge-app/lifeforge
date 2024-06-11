@@ -235,7 +235,7 @@ function ImageObject({
       } transition-all ${selectedPhotosLength > 0 && 'cursor-pointer'}`}
     >
       {(ready || beingDisplayedInAlbum) &&
-        photo.src.endsWith('/undefined?thumb=0x300') === true && (
+        photo.src.endsWith('/undefined?thumb=0x300') === false && (
           <>
             <div
               className={`size-full transition-all duration-300 ${

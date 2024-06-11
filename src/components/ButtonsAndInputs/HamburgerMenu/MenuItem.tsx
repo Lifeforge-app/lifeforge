@@ -13,7 +13,7 @@ function getActiveClass(active?: boolean, isRed?: boolean): string {
 }
 
 function getToggleIconClass(isRed?: boolean): string {
-  return isRed === true ? 'text-red-600' : 'text-custom-500'
+  return isRed === true ? 'text-red-600' : 'text-bg-100'
 }
 
 function MenuItem({
@@ -25,7 +25,7 @@ function MenuItem({
   disabled,
   preventDefault = true
 }: {
-  icon: string
+  icon?: string
   text: string
   isRed?: boolean
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
@@ -49,10 +49,12 @@ function MenuItem({
             className={`${getActiveClass(
               active,
               isRed
-            )} flex w-full items-center p-4 text-left`}
+            )} flex w-full items-center gap-4 p-4 text-left`}
           >
-            <Icon icon={icon} className="size-5 shrink-0" />
-            <span className="ml-4 w-full whitespace-nowrap">{text}</span>
+            {icon !== undefined && (
+              <Icon icon={icon} className="size-5 shrink-0" />
+            )}
+            <span className="w-full whitespace-nowrap">{text}</span>
             {isToggled === true && (
               <Icon
                 icon="tabler:check"
