@@ -20,6 +20,11 @@ const LANGUAGES: Array<{
     name: '简体中文',
     code: 'zh-CN',
     icon: 'circle-flags:zh'
+  },
+  {
+    name: 'Bahasa Malaysia',
+    code: 'ms',
+    icon: 'circle-flags:my'
   }
 ]
 
@@ -43,7 +48,7 @@ function LanguageSelector(): React.ReactElement {
           setLanguage(language)
         }}
       >
-        <div className="relative mt-1 w-full md:w-48">
+        <div className="relative mt-1 w-full md:w-64">
           <Listbox.Button className="relative flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 py-4 pl-4 pr-10 text-left focus:outline-none dark:border-bg-700 dark:bg-bg-900 sm:text-sm">
             <Icon
               icon={LANGUAGES.find(({ code }) => code === language)?.icon ?? ''}
