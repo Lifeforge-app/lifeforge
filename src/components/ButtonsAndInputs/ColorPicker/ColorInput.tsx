@@ -1,5 +1,7 @@
 import { Icon } from '@iconify/react'
 import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toCamelCase } from '@utils/strings'
 
 function ColorInput({
   name,
@@ -12,6 +14,8 @@ function ColorInput({
   updateColor: (e: React.ChangeEvent<HTMLInputElement>) => void
   setColorPickerOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   const handleColorPickerOpen = useCallback(() => {
     setColorPickerOpen(true)
   }, [setColorPickerOpen])
@@ -33,7 +37,7 @@ function ColorInput({
               : 'top-6 -translate-y-1/2 text-[14px]'
           }`}
         >
-          {name}
+          {t(`input.${toCamelCase(name)}`)}
         </span>
         <div className="mr-12 mt-6 flex w-full items-center gap-2 pl-4">
           <div

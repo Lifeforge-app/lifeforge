@@ -59,8 +59,8 @@ function JournalEdit(): React.ReactElement {
         endpoint: `journal/entry/update-content/${entry.id}`,
         method: 'PUT',
         body: { content },
-        successInfo: 'Journal entry saved successfully.',
-        failureInfo: "Couldn't save journal entry. Please try again.",
+        successInfo: 'save',
+        failureInfo: 'save',
         callback: () => {
           setEntry({
             ...entry,
@@ -85,8 +85,8 @@ function JournalEdit(): React.ReactElement {
         endpoint: `journal/entry/update-title/${entry.id}`,
         method: 'PATCH',
         body: { title },
-        successInfo: 'Journal entry title saved successfully.',
-        failureInfo: "Couldn't save journal entry title. Please try again.",
+        successInfo: 'save',
+        failureInfo: 'save',
         callback: () => {
           setEntry({
             ...entry,

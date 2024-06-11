@@ -1,7 +1,9 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import DatePicker from 'react-date-picker'
+import { useTranslation } from 'react-i18next'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { toCamelCase } from '@utils/strings'
 
 type ValuePiece = Date | null
 
@@ -18,6 +20,7 @@ function DateInput({
   name: string
   icon: string
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { language } = usePersonalizationContext()
 
   return (
@@ -39,7 +42,7 @@ function DateInput({
                  text-bg-500 transition-all group-focus-within:!text-custom-500
               `}
         >
-          {name}
+          {t(`input.${toCamelCase(name)}`)}
         </span>
         <DatePicker
           value={date}

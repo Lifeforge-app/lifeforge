@@ -103,8 +103,8 @@ function CreatePasswordModal({
         password: encrypt(password, challenge),
         master: encryptedMaster
       },
-      successInfo: 'Password created successfully',
-      failureInfo: "Couldn't create the password. Please try again.",
+      successInfo: 'create',
+      failureInfo: 'create',
       callback: () => {
         refreshPasswordList()
       },

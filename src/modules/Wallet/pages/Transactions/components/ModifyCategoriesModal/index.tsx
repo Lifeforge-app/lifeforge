@@ -89,16 +89,8 @@ function ModifyCategoriesModal({
         icon: categoryIcon,
         color: categoryColor
       },
-      successInfo: {
-        income: 'Yay! Category created.',
-        expenses: 'Yay! Category created.',
-        update: 'Yay! Category updated.'
-      }[openType as 'income' | 'expenses' | 'update'],
-      failureInfo: {
-        income: "Oops! Couldn't create the category. Please try again.",
-        expenses: "Oops! Couldn't create the category. Please try again.",
-        update: "Oops! Couldn't update the category. Please try again."
-      }[openType as 'income' | 'expenses' | 'update'],
+      successInfo: openType === 'update' ? 'update' : 'create',
+      failureInfo: openType === 'update' ? 'update' : 'create',
       callback: () => {
         refreshCategories()
         setExistedData(null)

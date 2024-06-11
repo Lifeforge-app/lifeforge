@@ -33,9 +33,8 @@ function RemovePhotosFromAlbumConfirmationModal({
       body: {
         photos: selectedPhotos
       },
-      successInfo: 'Well, feel free to add them back whenever you want.',
-      failureInfo:
-        "Oops! Couldn't remove these photos from the album. Please try again.",
+      successInfo: 'remove',
+      failureInfo: 'remove',
       callback: () => {
         setRemovePhotosFromAlbumConfirmationModalOpen(false)
         refreshAlbumList()

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useDebounce } from '@uidotdev/usehooks'
-import APIRequest from '@utils/fetchData'
 import React, { useEffect, useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useParams } from 'react-router'
@@ -10,6 +9,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
+import APIRequest from '@utils/fetchData'
 import IdeaContentInput from './components/IdeaContentInput'
 import IdeaImagePreview from './components/IdeaImagePreview'
 import IdeaImageUpload from './components/IdeaImageUpload'
@@ -166,12 +166,8 @@ function ModifyIdeaModal({
       finalCallback: () => {
         setLoading(false)
       },
-      successInfo: `Yay! Idea ${
-        innerOpenType === 'create' ? 'created' : 'updated'
-      } successfully.`,
-      failureInfo: `Oops! Couldn't ${
-        innerOpenType === 'create' ? 'create' : 'update'
-      } the idea. Please try again.`,
+      successInfo: innerOpenType,
+      failureInfo: innerOpenType,
       callback: () => {
         updateIdeaList()
         setOpenType(null)

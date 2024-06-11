@@ -44,8 +44,8 @@ function ModifyMusicModal(): React.ReactElement {
       endpoint: `music/entry/update/${targetMusic?.id}`,
       method: 'PATCH',
       body: music,
-      successInfo: `Yay! Music ${musicName} has been updated.`,
-      failureInfo: "Oops! Couldn't update the music. Please try again.",
+      successInfo: 'update',
+      failureInfo: 'update',
       finalCallback: () => {
         setLoading(false)
       },
@@ -86,14 +86,14 @@ function ModifyMusicModal(): React.ReactElement {
     <Modal isOpen={isOpen}>
       <div className="mb-8 flex items-center justify-between ">
         <h1 className="flex items-center gap-3 text-2xl font-semibold">
-          <Icon icon="tabler:pencil" className="h-7 w-7" />
+          <Icon icon="tabler:pencil" className="size-7" />
           Update music
         </h1>
         <button
           onClick={() => {
             setOpen(false)
           }}
-          className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover: dark:hover:bg-bg-800"
+          className="hover: rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-800"
         >
           <Icon icon="tabler:x" className="size-6" />
         </button>

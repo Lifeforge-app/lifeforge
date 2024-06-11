@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { toCamelCase } from '@utils/strings'
 
 function Input({
   reference,
@@ -33,6 +35,8 @@ function Input({
   actionButtonIcon?: string
   onActionButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <div
       className={`group relative flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 ${
@@ -53,7 +57,7 @@ function Input({
               : 'top-6 -translate-y-1/2 text-[14px]'
           }`}
         >
-          {name}
+          {t(`input.${toCamelCase(name)}`)}
         </span>
         <input
           ref={reference}

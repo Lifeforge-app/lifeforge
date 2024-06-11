@@ -136,14 +136,8 @@ function ModifyTransactionsModal({
       method: openType === 'create' ? 'POST' : 'PATCH',
       body: data,
       isJSON: false,
-      successInfo: {
-        create: 'Yay! Transaction created.',
-        update: 'Yay! Transaction updated.'
-      }[openType as 'create' | 'update'],
-      failureInfo: {
-        create: "Oops! Couldn't create the transaction. Please try again.",
-        update: "Oops! Couldn't update the transaction. Please try again."
-      }[openType as 'create' | 'update'],
+      successInfo: openType,
+      failureInfo: openType,
       callback: () => {
         refreshTransactions()
         setExistedData(null)

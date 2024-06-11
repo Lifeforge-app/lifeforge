@@ -22,8 +22,8 @@ function EmptyTrashConfirmationModal({
     await APIRequest({
       endpoint: 'photos/trash/empty',
       method: 'DELETE',
-      successInfo: "Uhh, hopefully you truly didn't need those photos anymore.",
-      failureInfo: "Oops! Couldn't delete the photos. Please try again.",
+      successInfo: 'delete',
+      failureInfo: 'delete',
       callback: () => {
         refreshPhotos()
       },

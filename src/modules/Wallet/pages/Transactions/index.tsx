@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import Zoom from 'react-medium-image-zoom'
 import { useLocation, useNavigate } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
@@ -19,7 +20,7 @@ import {
   type IWalletCategoryEntry,
   type IWalletTransactionEntry
 } from '@typedec/Wallet'
-import { numberToMoney } from '@utils/strings'
+import { numberToMoney, toCamelCase } from '@utils/strings'
 import ManageCategoriesModal from './components/ManageCategoriesModal'
 import ModifyTransactionsModal from './components/ModifyTransactionsModal'
 
@@ -45,6 +46,7 @@ function Transactions(): React.ReactElement {
   const [searchQuery, setSearchQuery] = useState('')
   const { hash } = useLocation()
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (hash === '#new') {
@@ -106,14 +108,25 @@ function Transactions(): React.ReactElement {
             <table className="mb-8 w-full">
               <thead>
                 <tr className="border-b-2 border-bg-200 text-bg-500 dark:border-bg-800">
-                  <th className="py-2 font-medium">Date</th>
-                  <th className="py-2 font-medium">Type</th>
-                  <th className="py-2 font-medium">Asset</th>
-                  <th className="py-2 text-left font-medium">Particular</th>
-                  <th className="py-2 font-medium">Category</th>
-                  <th className="py-2 font-medium">Amount</th>
-                  <th className="py-2 font-medium">Receipt</th>
-                  <th className="py-2 font-medium"></th>
+                  {[
+                    'Date',
+                    'Type',
+                    'Asset',
+                    'Particular',
+                    'Category',
+                    'Amount',
+                    'Receipt',
+                    ''
+                  ].map(column => (
+                    <th
+                      key={column}
+                      className={`py-2 font-medium ${
+                        column === 'Particular' && 'text-left'
+                      }`}
+                    >
+                      {column !== '' && t(`table.${toCamelCase(column)}`)}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -278,13 +291,12 @@ function Transactions(): React.ReactElement {
         apiEndpoint="wallet/Transactions/delete"
         isOpen={deleteTransactionsConfirmationOpen}
         data={selectedData}
-        itemName="transaction account"
+        itemName="transaction"
         onClose={() => {
           setDeleteTransactionsConfirmationOpen(false)
           setSelectedData(null)
         }}
         updateDataList={refreshTransactions}
-        nameKey="name"
       />
       <ManageCategoriesModal
         isOpen={isManageCategoriesModalOpen}

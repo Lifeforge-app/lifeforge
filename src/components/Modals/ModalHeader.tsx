@@ -1,5 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { toCamelCase } from '@utils/strings'
 
 function ModalHeader({
   title,
@@ -14,11 +16,13 @@ function ModalHeader({
   hasDeleteButton?: boolean
   onDelete?: () => void
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <div className="mb-8 flex items-center justify-between ">
       <h1 className="flex items-center gap-3 text-2xl font-semibold">
         <Icon icon={icon} className="size-7" />
-        {title}
+        {t(`modals.header.${toCamelCase(title)}`)}
       </h1>
       <div className="flex items-center gap-2">
         {hasDeleteButton && (

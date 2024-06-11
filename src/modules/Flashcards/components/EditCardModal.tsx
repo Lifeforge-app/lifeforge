@@ -60,7 +60,7 @@ function EditCardModal({
         cards: updatedCards,
         toBeDeletedId
       },
-      successInfo: 'Yay! Cards updated.',
+      successInfo: 'create',
       failureInfo: "Oops! Couldn't update the cards. Please try again.",
       callback: () => {
         onClose()
@@ -116,12 +116,12 @@ function EditCardModal({
     <Modal isOpen={isOpen}>
       <div className="mb-8 flex items-center justify-between ">
         <h1 className="flex items-center gap-3 text-2xl font-semibold">
-          <Icon icon="tabler:pencil" className="h-7 w-7" />
+          <Icon icon="tabler:pencil" className="size-7" />
           Edit Cards
         </h1>
         <button
           onClick={onClose}
-          className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover: dark:hover:bg-bg-800"
+          className="hover: rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-800"
         >
           <Icon icon="tabler:x" className="size-6" />
         </button>

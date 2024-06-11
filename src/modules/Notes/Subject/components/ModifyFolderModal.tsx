@@ -62,14 +62,8 @@ function ModifyFolderModal({
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: entry,
-      successInfo: {
-        create: 'Yay! Folder created. Time to fill it up.',
-        update: 'Yay! Folder renamed.'
-      }[innerOpenType!],
-      failureInfo: {
-        create: "Oops! Couldn't create the folder. Please try again.",
-        update: "Oops! Couldn't rename the folder. Please try again."
-      }[innerOpenType!],
+      successInfo: innerOpenType,
+      failureInfo: innerOpenType,
       finalCallback: () => {
         setLoading(false)
       },
