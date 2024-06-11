@@ -104,7 +104,10 @@
             "languages": "语言",
             "albums": "相册",
             "lifestyle": "生活方式",
-            "externalManagement": "外部管理"
+            "externalManagement": "外部管理",
+            "type": "类型",
+            "assets": "资产",
+            "ledger": "账簿"
         },
         "descriptions": {
             "dashboard": "您的任务控制中心，妙不可言！",
@@ -215,9 +218,7 @@
     },
     "notFound": {
         "title": "您迷路了吗？",
-        "description": "您正在寻找的页面不存在或已被移动。",
-        "backButton": "返回首页",
-        "reportButton": "报告问题"
+        "description": "您正在寻找的页面不存在或已被移动。"
     },
     "search": {
         "books": "搜索书籍...",
@@ -273,7 +274,9 @@
         "addTransaction": "添加交易",
         "addLedger": "添加账簿",
         "removeReceipt": "移除收据",
-        "uploadReceipt": "上传收据"
+        "uploadReceipt": "上传收据",
+        "goBackHome": "返回主页",
+        "reportBug": "报告错误"
     },
     "modals": {
         "header": {
@@ -372,6 +375,7 @@
         "date": "日期",
         "type": "类型",
         "asset": "资产",
+        "ledger": "账簿",
         "particular": "详情",
         "category": "类别",
         "amount": "金额",

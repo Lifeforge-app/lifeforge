@@ -52,7 +52,7 @@ function ModuleHeader({
       <div className="flex items-center gap-2">
         {actionButton}
         {hasHamburgerMenu && (
-          <Menu as="div" className="relative overscroll-contain">
+          <Menu as="div" className="relative z-50 overscroll-contain">
             <Menu.Button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-100">
               <Icon icon="tabler:dots-vertical" className="size-5" />
             </Menu.Button>
@@ -65,7 +65,7 @@ function ModuleHeader({
               leaveTo="transform scale-95 opacity-0"
               className="absolute right-0 top-3"
             >
-              <Menu.Items className="mt-12 min-w-[12rem] overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800">
+              <Menu.Items className="mt-12 min-w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800">
                 {hamburgerMenuItems}
               </Menu.Items>
             </Transition>

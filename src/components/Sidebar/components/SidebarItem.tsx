@@ -133,35 +133,46 @@ function SidebarItem({
           )}
         </div>
       </li>
-      {sidebarExpanded && subsection !== undefined && (
+      {subsection !== undefined && (
         <li
-          className={`flex h-auto shrink-0 flex-col gap-2 overflow-hidden transition-all ${
+          className={`flex h-auto shrink-0 flex-col gap-2 overflow-hidden px-4 transition-all ${
             subsectionExpanded ? 'max-h-[1000px] py-2' : 'max-h-0 py-0'
           }`}
         >
-          {subsection.map(
-            ([subsectionName, subsectionIcon, subsectionLink]) => (
-              <Link
-                onClick={() => {
-                  if (window.innerWidth < 1024) {
-                    toggleSidebar()
-                  }
-                }}
-                to={`./${titleToPath(name)}/${subsectionLink}`}
-                key={subsectionName}
-                className={`mx-4 flex items-center gap-4 rounded-lg py-4 pl-[3.8rem] font-medium transition-all hover:bg-bg-200/30 dark:hover:bg-bg-800  ${
-                  location.pathname.split('/').slice(1)[0] ===
-                    titleToPath(name) &&
-                  location.pathname.split('/').slice(1)[1] === subsectionLink
-                    ? ''
-                    : 'text-bg-500'
-                }`}
-              >
-                <Icon icon={subsectionIcon} className="size-6" />
-                {t(`modules.subsections.${toCamelCase(subsectionName)}`)}
-              </Link>
-            )
-          )}
+          <ul
+            className={`flex w-full flex-col items-center gap-2 rounded-md ${
+              !sidebarExpanded && 'bg-bg-800'
+            }`}
+          >
+            {subsection.map(
+              ([subsectionName, subsectionIcon, subsectionLink]) => (
+                <Link
+                  onClick={() => {
+                    if (window.innerWidth < 1024) {
+                      toggleSidebar()
+                    }
+                  }}
+                  to={`./${titleToPath(name)}/${subsectionLink}`}
+                  key={subsectionName}
+                  className={`mx-4 flex w-full items-center ${
+                    !sidebarExpanded && 'justify-center'
+                  } gap-4 rounded-lg py-4 ${
+                    sidebarExpanded ? 'pl-[3.8rem]' : 'px-2'
+                  } font-medium transition-all hover:bg-bg-200/30 dark:hover:bg-bg-800  ${
+                    location.pathname.split('/').slice(1)[0] ===
+                      titleToPath(name) &&
+                    location.pathname.split('/').slice(1)[1] === subsectionLink
+                      ? 'bg-bg-800/50'
+                      : 'text-bg-500'
+                  }`}
+                >
+                  <Icon icon={subsectionIcon} className="size-6" />
+                  {sidebarExpanded &&
+                    t(`modules.subsections.${toCamelCase(subsectionName)}`)}
+                </Link>
+              )
+            )}
+          </ul>
         </li>
       )}
     </>

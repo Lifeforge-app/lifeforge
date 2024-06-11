@@ -22,6 +22,11 @@ const LANGUAGES: Array<{
     icon: 'circle-flags:zh'
   },
   {
+    name: '繁體中文',
+    code: 'zh-TW',
+    icon: 'circle-flags:tw'
+  },
+  {
     name: 'Bahasa Malaysia',
     code: 'ms',
     icon: 'circle-flags:my'

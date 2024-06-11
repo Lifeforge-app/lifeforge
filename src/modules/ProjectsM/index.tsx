@@ -35,7 +35,7 @@ function ProjectsM(): React.ReactElement {
         <aside
           className={`absolute ${
             sidebarOpen ? 'left-0' : 'left-full'
-          } top-0 z-[9999] h-full w-full overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 lg:static lg:h-[calc(100%-2rem)] lg:w-1/4`}
+          } top-0 z-[9999] size-full overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 lg:static lg:h-[calc(100%-2rem)] lg:w-1/4`}
         >
           <div className="flex items-center justify-between px-8 py-4 lg:hidden">
             <GoBackButton
@@ -193,7 +193,7 @@ function ProjectsM(): React.ReactElement {
                           }`}
                         />
                         <div
-                          className={`h-12 w-12 shrink-0 overflow-hidden rounded-lg p-2 ${
+                          className={`size-12 shrink-0 overflow-hidden rounded-lg p-2 ${
                             [
                               'bg-red-500/20 text-red-500',
                               'bg-yellow-500/20 text-yellow-500',
@@ -220,7 +220,7 @@ function ProjectsM(): React.ReactElement {
                                 Math.floor(Math.random() * icons.length)
                               ] as string
                             }`}
-                            className="h-full w-full"
+                            className="size-full"
                           />
                         </div>
                         <div className="flex flex-col items-start">

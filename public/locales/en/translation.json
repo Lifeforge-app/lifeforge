@@ -104,7 +104,10 @@
             "languages": "Languages",
             "albums": "Albums",
             "lifestyle": "Lifestyle",
-            "externalManagement": "External Management"
+            "externalManagement": "External Management",
+            "type": "Type",
+            "assets": "Assets",
+            "ledgers": "Ledgers"
         },
         "descriptions": {
             "dashboard": "Your mission control center for awesome. 🚀",
@@ -215,9 +218,7 @@
     },
     "notFound": {
         "title": "Oops! Nothing here.",
-        "description": "The page you are looking is not found. Please check the URL and try again.",
-        "backButton": "Go Back",
-        "reportButton": "Bug Report"
+        "description": "The page you are looking is not found. Please check the URL and try again."
     },
     "search": {
         "books": "Search Books...",
@@ -273,7 +274,9 @@
         "addTransaction": "Add Transaction",
         "addLedger": "Add Ledger",
         "removeReceipt": "Remove Receipt",
-        "uploadReceipt": "Upload Receipt"
+        "uploadReceipt": "Upload Receipt",
+        "goBackHome": "Go Back",
+        "reportBug": "Report Bug"
     },
     "modals": {
         "header": {
@@ -372,6 +375,7 @@
         "date": "Date",
         "type": "Type",
         "asset": "Asset",
+        "ledger": "Ledger",
         "particular": "Particular",
         "category": "Category",
         "amount": "Amount",

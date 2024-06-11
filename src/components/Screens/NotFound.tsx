@@ -8,7 +8,7 @@ function NotFound(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="flex-center flex h-full w-full flex-col gap-6">
+    <div className="flex-center flex size-full flex-col gap-6">
       <h1 className="text-[10rem] text-custom-500">;-;</h1>
       <h1 className="text-4xl font-semibold">{t('notFound.title')}</h1>
       <h2 className="-mt-2 text-xl text-bg-500">{t('notFound.description')}</h2>
@@ -19,7 +19,7 @@ function NotFound(): React.ReactElement {
             navigate('/')
           }}
         >
-          {t('notFound.backButton')}
+          go back home
         </Button>
         <Button
           icon="tabler:bug"
@@ -33,7 +33,7 @@ function NotFound(): React.ReactElement {
           }}
           type="secondary"
         >
-          {t('notFound.reportButton')}
+          report bug
         </Button>
       </div>
     </div>
