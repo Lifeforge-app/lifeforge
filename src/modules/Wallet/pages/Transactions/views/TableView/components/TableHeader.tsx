@@ -15,8 +15,8 @@ function TableHeader({
         {[
           'Date',
           'Type',
-          'Asset',
           'Ledger',
+          'Asset',
           'Particulars',
           'Category',
           'Amount',
@@ -27,7 +27,7 @@ function TableHeader({
             (visibleColumn.includes(column) || column === '') && (
               <th
                 key={column}
-                className={`py-2 font-medium ${
+                className={`p-2 font-medium ${
                   column === 'Particulars' && 'text-left'
                 }`}
               >

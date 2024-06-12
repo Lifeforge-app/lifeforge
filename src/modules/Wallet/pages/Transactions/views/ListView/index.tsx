@@ -3,44 +3,46 @@ import moment from 'moment'
 import React, { useState } from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import {
-  type IWalletLedgerEntry,
-  type IWalletAssetEntry,
-  type IWalletCategoryEntry,
-  type IWalletTransactionEntry
-} from '@interfaces/wallet_interfaces'
+import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 import ReceiptModal from './components/ReceiptModal'
 
 function ListView({
-  transactions,
-  categories,
-  assets,
-  ledgers,
   setSelectedData,
   setModifyModalOpenType,
   setDeleteTransactionsConfirmationOpen
 }: {
-  transactions: IWalletTransactionEntry[]
-  categories: IWalletCategoryEntry[]
-  assets: IWalletAssetEntry[]
-  ledgers: IWalletLedgerEntry[]
   setSelectedData: React.Dispatch<
     React.SetStateAction<IWalletTransactionEntry | null>
   >
   setModifyModalOpenType: React.Dispatch<'create' | 'update' | null>
   setDeleteTransactionsConfirmationOpen: React.Dispatch<boolean>
 }): React.ReactElement {
+  const {
+    ledgers,
+    assets,
+    categories,
+    filteredTransactions: transactions
+  } = useWalletContext()
   const [receiptModalOpen, setReceiptModalOpen] = useState(false)
   const [receiptToView, setReceiptToView] = useState('')
 
+  if (
+    typeof assets === 'string' ||
+    typeof ledgers === 'string' ||
+    typeof categories === 'string'
+  ) {
+    return <></>
+  }
+
   return (
     <>
-      <ul className="flex min-h-0 flex-col divide-y divide-bg-800/70 overflow-y-auto">
+      <ul className="flex min-h-full flex-col divide-y divide-bg-800/70 overflow-y-auto pb-8">
         {transactions.map(transaction => (
           <li
             key={transaction.id}
-            className="relative flex items-center justify-between gap-12 px-2 py-4"
+            className="relative flex items-center justify-between gap-12 py-4 pl-2"
           >
             <div className="flex w-full min-w-0 items-center gap-2 [@media(min-width:400px)]:gap-4">
               <div

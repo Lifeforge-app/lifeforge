@@ -11,7 +11,7 @@ export default function Header(): React.ReactElement {
   const { sidebarExpanded, toggleSidebar } = useGlobalStateContext()
   const { userData, getAvatarURL, logout } = useAuthContext()
   return (
-    <header className="relative z-[9990] flex w-full items-center justify-between gap-8 p-4 sm:p-12">
+    <header className="relative z-[9990] flex w-full items-center justify-between gap-8 p-4 pl-0 sm:p-12">
       <div className="flex w-full items-center gap-4">
         {!sidebarExpanded && (
           <button
@@ -29,15 +29,15 @@ export default function Header(): React.ReactElement {
         </button>
         <button className="relative rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800">
           <Icon icon="tabler:bell" className="text-2xl" />
-          <div className="absolute bottom-4 right-4 h-2 w-2 rounded-full bg-red-500" />
+          <div className="absolute bottom-4 right-4 size-2 rounded-full bg-red-500" />
         </button>
         <Menu as="div" className="relative ml-4 text-left">
           <Menu.Button className="flex items-center gap-3">
-            <div className="h-9 w-9 overflow-hidden rounded-full bg-bg-100 dark:bg-bg-800">
+            <div className="size-9 overflow-hidden rounded-full bg-bg-100 dark:bg-bg-800">
               <img
                 src={getAvatarURL()}
                 alt="avatar"
-                className="h-full w-full object-cover"
+                className="size-full object-cover"
               />
             </div>
             <div className="hidden flex-col items-start md:flex">

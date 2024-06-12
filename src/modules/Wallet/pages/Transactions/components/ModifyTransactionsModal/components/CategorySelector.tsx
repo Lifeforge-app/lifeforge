@@ -4,25 +4,19 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import ListboxInputWrapper from '@components/Listbox/ListboxInputWrapper'
 import ListboxTransition from '@components/Listbox/ListboxTransition'
-import useFetch from '@hooks/useFetch'
-import { type IWalletCategoryEntry } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 
 function CategorySelector({
   category,
   setCategory,
-  transactionType,
-  openType
+  transactionType
 }: {
   category: string | null
   setCategory: React.Dispatch<React.SetStateAction<string | null>>
   transactionType: string
-  openType: 'create' | 'update' | null
 }): React.ReactElement {
   const { t } = useTranslation()
-  const [categories] = useFetch<IWalletCategoryEntry[]>(
-    'wallet/category/list',
-    openType !== null
-  )
+  const { categories } = useWalletContext()
 
   if (categories === 'loading') {
     return <div>Loading...</div>

@@ -7,7 +7,7 @@ import AppRouter from './Router'
 function App(): React.ReactElement {
   return (
     <Providers>
-      <div className="relative flex h-[100dvh] w-full overflow-hidden bg-bg-200/50 text-bg-800 dark:bg-bg-950 dark:text-bg-100">
+      <div className="relative flex h-dvh w-full overflow-hidden bg-bg-200/50 text-bg-800 dark:bg-bg-950 dark:text-bg-100">
         <AppRouter />
       </div>
       <ToastContainer

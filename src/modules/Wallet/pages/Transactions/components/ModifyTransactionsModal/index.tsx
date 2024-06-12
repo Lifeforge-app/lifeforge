@@ -210,13 +210,8 @@ function ModifyTransactionsModal({
               transactionType={transactionType}
               category={category}
               setCategory={setCategory}
-              openType={openType}
             />
-            <LedgerSelector
-              ledger={ledger}
-              setLedger={setLedger}
-              openType={openType}
-            />
+            <LedgerSelector ledger={ledger} setLedger={setLedger} />
           </>
         )}
         <ReceiptUploader

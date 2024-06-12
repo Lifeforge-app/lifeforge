@@ -1,10 +1,6 @@
 import React from 'react'
-import {
-  type IWalletTransactionEntry,
-  type IWalletLedgerEntry,
-  type IWalletAssetEntry,
-  type IWalletCategoryEntry
-} from '@interfaces/wallet_interfaces'
+import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 import ActionColumn from './columns/ActionColumn'
 import AmountColumn from './columns/AmountColumn'
 import AssetColumn from './columns/AssetColumn'
@@ -16,19 +12,11 @@ import ReceiptColumn from './columns/ReceiptColumn'
 import TypeColumn from './columns/TypeColumn'
 
 function TableBody({
-  transactions,
-  ledgers,
-  assets,
-  categories,
   visibleColumn,
   setSelectedData,
   setModifyModalOpenType,
   setDeleteTransactionsConfirmationOpen
 }: {
-  transactions: IWalletTransactionEntry[]
-  ledgers: IWalletLedgerEntry[]
-  assets: IWalletAssetEntry[]
-  categories: IWalletCategoryEntry[]
   visibleColumn: string[]
   setSelectedData: React.Dispatch<
     React.SetStateAction<IWalletTransactionEntry | null>
@@ -40,6 +28,13 @@ function TableBody({
     React.SetStateAction<boolean>
   >
 }): React.ReactElement {
+  const {
+    assets,
+    ledgers,
+    categories,
+    filteredTransactions: transactions
+  } = useWalletContext()
+
   return (
     <tbody>
       {transactions.map(transaction => (

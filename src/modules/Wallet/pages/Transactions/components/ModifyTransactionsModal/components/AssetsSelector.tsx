@@ -3,8 +3,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import ListboxTransition from '@components/Listbox/ListboxTransition'
-import useFetch from '@hooks/useFetch'
-import { type IWalletAssetEntry } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 
 function AssetsSelector({
   transactionAsset,
@@ -14,7 +13,7 @@ function AssetsSelector({
   setTransactionAsset: React.Dispatch<React.SetStateAction<string | null>>
 }): React.ReactElement {
   const { t } = useTranslation()
-  const [assets] = useFetch<IWalletAssetEntry[]>('wallet/assets/list')
+  const { assets } = useWalletContext()
 
   if (assets === 'loading') {
     return <div>Loading...</div>

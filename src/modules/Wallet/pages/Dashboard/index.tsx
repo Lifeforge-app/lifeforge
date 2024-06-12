@@ -7,7 +7,8 @@ import {
   Title,
   Tooltip,
   Legend,
-  ArcElement
+  ArcElement,
+  LogarithmicScale
 } from 'chart.js'
 import React from 'react'
 import { useNavigate } from 'react-router'
@@ -15,8 +16,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import FAB from '@components/ButtonsAndInputs/FAB'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import useFetch from '@hooks/useFetch'
-import { type IWalletIncomeExpenses } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 import AssetsBalanceCard from './components/AssetsBalanceCard'
 import ExpensesBreakdownCard from './components/ExpensesBreakdownCard'
 import IncomeExpenseCard from './components/IncomeExpensesCard'
@@ -31,16 +31,13 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  ArcElement
+  ArcElement,
+  LogarithmicScale
 )
 
 function WalletDashboard(): React.ReactElement {
   const navigate = useNavigate()
-  const [incomeExpenses] = useFetch<IWalletIncomeExpenses>(
-    `wallet/transactions/income-expenses/${new Date().getFullYear()}/${
-      new Date().getMonth() + 1
-    }`
-  )
+  const { incomeExpenses } = useWalletContext()
 
   return (
     <ModuleWrapper>

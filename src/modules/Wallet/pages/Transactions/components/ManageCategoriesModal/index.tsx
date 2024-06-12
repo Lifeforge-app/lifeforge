@@ -4,8 +4,8 @@ import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import useFetch from '@hooks/useFetch'
 import { type IWalletCategoryEntry } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 import CategorySection from './components/CategorySection'
 import ModifyCategoriesModal from '../ModifyCategoriesModal'
 
@@ -16,9 +16,7 @@ function ManageCategoriesModal({
   isOpen: boolean | 'new'
   onClose: () => void
 }): React.ReactElement {
-  const [categories, refreshCategories] = useFetch<IWalletCategoryEntry[]>(
-    'wallet/category/list'
-  )
+  const { categories, refreshCategories } = useWalletContext()
   const [modifyCategoriesModalOpenType, setModifyCategoriesModalOpenType] =
     useState<'income' | 'expenses' | 'update' | null>(null)
   const [existedData, setExistedData] = useState<IWalletCategoryEntry | null>(
@@ -82,7 +80,6 @@ function ManageCategoriesModal({
       <ModifyCategoriesModal
         existedData={existedData}
         setExistedData={setExistedData}
-        refreshCategories={refreshCategories}
         openType={modifyCategoriesModalOpenType}
         setOpenType={setModifyCategoriesModalOpenType}
       />

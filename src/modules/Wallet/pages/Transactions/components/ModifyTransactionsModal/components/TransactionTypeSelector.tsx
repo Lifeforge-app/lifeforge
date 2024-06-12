@@ -27,6 +27,7 @@ function TransactionTypeSelector({
   openType: 'create' | 'update' | null
 }): React.ReactElement {
   const { t } = useTranslation()
+
   return (
     <Listbox
       disabled={openType === 'update'}
