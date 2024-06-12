@@ -26,7 +26,7 @@ function ModifyAssetsModal({
 }): React.ReactElement {
   const [assetName, setAssetName] = useState('')
   const [assetIcon, setAssetIcon] = useState('')
-  const [assetBalance, setAssetBalance] = useState<string | undefined>(
+  const [assetBalance, setAssetBalance] = useState<number | undefined>(
     undefined
   )
   const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
@@ -53,7 +53,7 @@ function ModifyAssetsModal({
   }
 
   function updateAssetBalance(value: string | undefined): void {
-    setAssetBalance(value)
+    setAssetBalance(value ? +value : undefined)
   }
 
   async function onSubmitButtonClick(): Promise<void> {
@@ -120,7 +120,7 @@ function ModifyAssetsModal({
             name="Balance"
             placeholder="0.00"
             icon="tabler:currency-dollar"
-            value={assetBalance}
+            value={`${assetBalance}`}
             updateValue={updateAssetBalance}
             darker
             additionalClassName="mt-6"
