@@ -226,8 +226,8 @@ function Transactions(): React.ReactElement {
                       }
                       className="size-4"
                     />
-                    {searchParams.get('type')?.[0].toUpperCase() ??
-                      '' + searchParams.get('type')?.slice(1).toLowerCase()}
+                    {(searchParams.get('type')?.[0].toUpperCase() ?? '') +
+                      searchParams.get('type')?.slice(1).toLowerCase()}
                     <button
                       onClick={() => {
                         setSearchParams(searchParams => {

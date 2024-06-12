@@ -37,7 +37,7 @@ function ListView({
           key={transaction.id}
           className="relative flex items-center justify-between gap-8 px-2 py-4"
         >
-          <div className="flex w-full min-w-0 items-center gap-4">
+          <div className="flex w-full min-w-0 items-center gap-2 [@media(min-width:400px)]:gap-4">
             <div
               className="h-12 w-1 shrink-0 rounded-full"
               style={{
@@ -77,8 +77,10 @@ function ListView({
                       }[transaction.type as 'income' | 'expenses' | 'transfer']
                     }`}
                   />
-                  {transaction.type[0].toUpperCase() +
-                    transaction.type.slice(1)}
+                  <span className="hidden md:block">
+                    {transaction.type[0].toUpperCase() +
+                      transaction.type.slice(1)}
+                  </span>
                 </div>
                 {transaction.ledger !== '' && (
                   <>
@@ -98,8 +100,11 @@ function ListView({
                         }}
                         className="size-4"
                       />
-                      {ledgers.find(ledger => ledger.id === transaction.ledger)
-                        ?.name ?? 'Unknown'}
+                      <span className="hidden md:block">
+                        {ledgers.find(
+                          ledger => ledger.id === transaction.ledger
+                        )?.name ?? 'Unknown'}
+                      </span>
                     </div>
                   </>
                 )}
