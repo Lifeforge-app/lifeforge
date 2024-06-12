@@ -10,6 +10,7 @@ import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 import APIRequest from '@utils/fetchData'
 import AssetsFromToSelector from './components/AssetsFromToSelector'
 import AssetsSelector from './components/AssetsSelector'
@@ -22,8 +23,7 @@ function ModifyTransactionsModal({
   openType,
   setOpenType,
   existedData,
-  setExistedData,
-  refreshTransactions
+  setExistedData
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
@@ -31,8 +31,8 @@ function ModifyTransactionsModal({
   setExistedData: React.Dispatch<
     React.SetStateAction<IWalletTransactionEntry | null>
   >
-  refreshTransactions: () => void
 }): React.ReactElement {
+  const { refreshAssets, refreshTransactions } = useWalletContext()
   const [particular, setParticular] = useState('')
   const [transactionType, setTransactionType] = useState<
     'income' | 'expenses' | 'transfer'
@@ -140,6 +140,7 @@ function ModifyTransactionsModal({
       failureInfo: openType,
       callback: () => {
         refreshTransactions()
+        refreshAssets()
         setExistedData(null)
         setOpenType(null)
       },

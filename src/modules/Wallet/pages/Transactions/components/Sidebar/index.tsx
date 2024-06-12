@@ -3,12 +3,6 @@ import { useNavigate } from 'react-router'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
-import {
-  type IWalletCategoryEntry,
-  type IWalletTransactionEntry,
-  type IWalletAssetEntry,
-  type IWalletLedgerEntry
-} from '@interfaces/wallet_interfaces'
 import AssetsSection from './components/AssetsSection'
 import CategoriesSection from './components/CategoriesSection'
 import LedgerSection from './components/LedgerSection'
@@ -17,18 +11,10 @@ import TypeSection from './components/TypeSection'
 function Sidebar({
   sidebarOpen,
   setSidebarOpen,
-  categories,
-  transactions,
-  assets,
-  ledgers,
   setManageCategoriesModalOpen
 }: {
   sidebarOpen: boolean
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
-  categories: IWalletCategoryEntry[] | 'loading' | 'error'
-  transactions: IWalletTransactionEntry[] | 'loading' | 'error'
-  assets: IWalletAssetEntry[] | 'loading' | 'error'
-  ledgers: IWalletLedgerEntry[] | 'loading' | 'error'
   setManageCategoriesModalOpen: React.Dispatch<
     React.SetStateAction<boolean | 'new'>
   >
@@ -57,29 +43,16 @@ function Sidebar({
           }}
         />
         <SidebarDivider />
-        <TypeSection
-          setSidebarOpen={setSidebarOpen}
-          transactions={transactions}
-        />
+        <TypeSection setSidebarOpen={setSidebarOpen} />
         <SidebarDivider />
         <CategoriesSection
-          categories={categories}
-          transactions={transactions}
           setManageCategoriesModalOpen={setManageCategoriesModalOpen}
           setSidebarOpen={setSidebarOpen}
         />
         <SidebarDivider />
-        <AssetsSection
-          assets={assets}
-          transactions={transactions}
-          setSidebarOpen={setSidebarOpen}
-        />
+        <AssetsSection setSidebarOpen={setSidebarOpen} />
         <SidebarDivider />
-        <LedgerSection
-          ledgers={ledgers}
-          transactions={transactions}
-          setSidebarOpen={setSidebarOpen}
-        />
+        <LedgerSection setSidebarOpen={setSidebarOpen} />
       </ul>
     </aside>
   )

@@ -5,20 +5,14 @@ import { useNavigate } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
-import {
-  type IWalletTransactionEntry,
-  type IWalletAssetEntry
-} from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 
 function AssetsSection({
-  assets,
-  transactions,
   setSidebarOpen
 }: {
-  assets: IWalletAssetEntry[] | 'loading' | 'error'
-  transactions: IWalletTransactionEntry[] | 'loading' | 'error'
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
+  const { assets, transactions } = useWalletContext()
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
 

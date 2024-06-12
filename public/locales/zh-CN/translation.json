@@ -309,7 +309,8 @@
             "editCategory": "编辑类别",
             "addCategory": "添加类别",
             "addTransaction": "添加交易",
-            "editTransaction": "编辑交易"
+            "editTransaction": "编辑交易",
+            "viewReceipt": "查看收据"
         },
         "deleteConfirmation": {
             "title": "您确定要删除 {{itemName}}?",

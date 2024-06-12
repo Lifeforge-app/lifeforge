@@ -9,14 +9,12 @@ import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import useFetch from '@hooks/useFetch'
 import { type IWalletLedgerEntry } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 import ModifyLedgersModal from './components/ModifyLedgersModal'
 
 function Ledgers(): React.ReactElement {
-  const [Ledgers, refreshLedgers] = useFetch<IWalletLedgerEntry[]>(
-    'wallet/ledgers/list'
-  )
+  const { ledgers, refreshLedgers, transactions } = useWalletContext()
   const [modifyLedgersModalOpenType, setModifyModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
@@ -42,8 +40,8 @@ function Ledgers(): React.ReactElement {
         title="Ledgers"
         desc="Manage your Ledgers here."
         actionButton={
-          typeof Ledgers !== 'string' &&
-          Ledgers.length > 0 && (
+          typeof ledgers !== 'string' &&
+          ledgers.length > 0 && (
             <Button
               onClick={() => {
                 setModifyModalOpenType('create')
@@ -55,13 +53,17 @@ function Ledgers(): React.ReactElement {
           )
         }
       />
-      <APIComponentWithFallback data={Ledgers}>
-        {typeof Ledgers !== 'string' && Ledgers.length > 0 ? (
+      <APIComponentWithFallback data={ledgers}>
+        {typeof ledgers !== 'string' && ledgers.length > 0 ? (
           <div className="mt-8 flex flex-col gap-4">
-            {Ledgers.map(ledger => (
-              <div
+            {ledgers.map(ledger => (
+              <button
                 key={ledger.id}
-                className="relative flex items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900"
+                type="button"
+                onClick={() => {
+                  navigate(`/wallet/transactions?ledger=${ledger.id}`)
+                }}
+                className="relative flex items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/70"
               >
                 <div className="flex items-center gap-3">
                   <span
@@ -80,7 +82,13 @@ function Ledgers(): React.ReactElement {
                   </span>
                   <div>
                     <h2 className="text-xl font-medium">{ledger.name}</h2>
-                    <p className="text-sm text-bg-500">0 transactions</p>
+                    <p className="text-left text-sm text-bg-500">
+                      {typeof transactions !== 'string' &&
+                        transactions.filter(
+                          transaction => transaction.ledger === ledger.id
+                        ).length}{' '}
+                      transactions
+                    </p>
                   </div>
                 </div>
                 <HamburgerMenu>
@@ -102,7 +110,7 @@ function Ledgers(): React.ReactElement {
                     }}
                   />
                 </HamburgerMenu>
-              </div>
+              </button>
             ))}
           </div>
         ) : (

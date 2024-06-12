@@ -11,13 +11,8 @@ import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import useFetch from '@hooks/useFetch'
-import {
-  type IWalletLedgerEntry,
-  type IWalletAssetEntry,
-  type IWalletCategoryEntry,
-  type IWalletTransactionEntry
-} from '@interfaces/wallet_interfaces'
+import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 import ManageCategoriesModal from './components/ManageCategoriesModal'
 import ModifyTransactionsModal from './components/ModifyTransactionsModal'
 import SearchBar from './components/SearchBar'
@@ -27,14 +22,16 @@ import TableView from './views/TableView'
 import ColumnVisibilityToggle from './views/TableView/components/ColumnVisibilityToggle'
 
 function Transactions(): React.ReactElement {
-  const [transactions, refreshTransactions] = useFetch<
-    IWalletTransactionEntry[]
-  >('wallet/transactions/list')
-  const [assets] = useFetch<IWalletAssetEntry[]>('wallet/assets/list')
-  const [ledgers] = useFetch<IWalletLedgerEntry[]>('wallet/ledgers/list')
-  const [categories, refreshCategories] = useFetch<IWalletCategoryEntry[]>(
-    'wallet/category/list'
-  )
+  const {
+    transactions,
+    refreshTransactions,
+    ledgers,
+    assets,
+    refreshAssets,
+    categories,
+    refreshCategories
+  } = useWalletContext()
+
   const [modifyTransactionsModalOpenType, setModifyModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
@@ -181,18 +178,16 @@ function Transactions(): React.ReactElement {
         <Sidebar
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
-          assets={assets}
-          categories={categories}
-          transactions={transactions}
-          ledgers={ledgers}
           setManageCategoriesModalOpen={setManageCategoriesModalOpen}
         />
-        <div className="relative z-10 flex h-full min-w-0 flex-1 flex-col lg:ml-8">
+        <div className="flex h-full min-w-0 flex-1 flex-col lg:ml-8">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-semibold lg:text-4xl">
-                All Transactions{' '}
-                <span className="text-base text-bg-500">(10)</span>
+                {searchParams.size === 0 && searchQuery === ''
+                  ? 'All'
+                  : 'Filtered'}{' '}
+                Transactions <span className="text-base text-bg-500">(10)</span>
               </h1>
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 {Boolean(searchParams.get('type')) && (
@@ -456,7 +451,6 @@ function Transactions(): React.ReactElement {
         setExistedData={setSelectedData}
         openType={modifyTransactionsModalOpenType}
         setOpenType={setModifyModalOpenType}
-        refreshTransactions={refreshTransactions}
       />
       <DeleteConfirmationModal
         apiEndpoint="wallet/Transactions/delete"
@@ -467,7 +461,10 @@ function Transactions(): React.ReactElement {
           setDeleteTransactionsConfirmationOpen(false)
           setSelectedData(null)
         }}
-        updateDataList={refreshTransactions}
+        updateDataList={() => {
+          refreshTransactions()
+          refreshAssets()
+        }}
       />
       <ManageCategoriesModal
         isOpen={isManageCategoriesModalOpen}

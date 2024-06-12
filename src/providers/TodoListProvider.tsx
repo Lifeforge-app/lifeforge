@@ -6,7 +6,7 @@ import {
   type ITodoListTag,
   type ITodoListEntry,
   type ITodoListStatusCounter
-} from '@interfaces/todo_list_interfaces'
+} from '../interfaces/todo_list_interfaces'
 
 interface ITodoListData {
   // Data

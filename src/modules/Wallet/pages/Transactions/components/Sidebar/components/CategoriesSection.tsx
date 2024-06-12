@@ -4,24 +4,18 @@ import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
-import {
-  type IWalletCategoryEntry,
-  type IWalletTransactionEntry
-} from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 
 function CategoriesSection({
-  categories,
-  transactions,
   setManageCategoriesModalOpen,
   setSidebarOpen
 }: {
-  categories: IWalletCategoryEntry[] | 'loading' | 'error'
-  transactions: IWalletTransactionEntry[] | 'loading' | 'error'
   setManageCategoriesModalOpen: React.Dispatch<
     React.SetStateAction<boolean | 'new'>
   >
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
+  const { categories, transactions } = useWalletContext()
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (

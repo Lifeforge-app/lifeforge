@@ -80,6 +80,9 @@ const Ledgers = lazy(async () => await import('./modules/Wallet/pages/Ledgers'))
 const Transactions = lazy(
   async () => await import('./modules/Wallet/pages/Transactions')
 )
+const WalletProvider = lazy(
+  async () => await import('./providers/WalletProvider')
+)
 
 export const COMPONENTS = {
   dashboard: {
@@ -176,6 +179,7 @@ export const COMPONENTS = {
     'dns-records': DNSRecords
   },
   wallet: {
+    'wallet-provider': WalletProvider,
     wallet: Wallet,
     assets: Assets,
     ledgers: Ledgers,

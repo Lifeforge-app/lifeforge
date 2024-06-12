@@ -82,7 +82,7 @@ export const ROUTES: IRoutes[] = [
       {
         name: 'Flashcards',
         icon: 'tabler:cards',
-        routes: { flashcards: 'flashcards', 'flashcards-id': 'flashcardsid' },
+        routes: { flashcards: 'flashcards', 'flashcards-id': 'flashcards/:id' },
         togglable: true
       },
       {
@@ -135,6 +135,7 @@ export const ROUTES: IRoutes[] = [
       {
         name: 'Wallet',
         icon: 'tabler:currency-dollar',
+        provider: 'wallet-provider',
         subsection: [
           ['Dashboard', 'tabler:dashboard', ''],
           ['Transactions', 'tabler:arrows-exchange', 'transactions'],
@@ -142,10 +143,10 @@ export const ROUTES: IRoutes[] = [
           ['Ledgers', 'tabler:book', 'ledgers']
         ],
         routes: {
-          wallet: 'wallet',
-          transactions: 'wallet/transactions',
-          assets: 'wallet/assets',
-          ledgers: 'wallet/ledgers'
+          wallet: '',
+          transactions: 'transactions',
+          assets: 'assets',
+          ledgers: 'ledgers'
         },
         togglable: true
       },
