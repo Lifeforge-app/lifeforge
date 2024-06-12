@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
@@ -10,7 +9,6 @@ import { numberToMoney } from '@utils/strings'
 
 export default function WalletBalance(): React.ReactElement {
   const { t } = useTranslation()
-  const navigate = useNavigate()
   const [assets] = useFetch<IWalletAssetEntry[]>('wallet/assets/list')
 
   return (
