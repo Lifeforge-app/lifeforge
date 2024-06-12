@@ -19,8 +19,8 @@ import {
   type IPhotosAlbum,
   type IPhotosEntryDimensionsAll
 } from '@interfaces/photos_interfaces'
-import { useAuthContext } from './AuthProvider'
 import IntervalManager from '@utils/intervalManager'
+import { useAuthContext } from './AuthProvider'
 
 const intervalManager = IntervalManager.getInstance()
 
@@ -206,15 +206,12 @@ export default function PhotosProvider(): React.ReactElement {
       }
     )
       .then(async response => {
-        if (response.status === 200) {
-          const data = await response.json()
-          if (data.state === 'success') {
-            return data.data
-          } else {
-            return null
-          }
-        }
-        return null
+        if (response.status !== 200) return null
+
+        const data = await response.json()
+        if (data.state !== 'success') return null
+
+        return data.data
       })
       .catch(() => null)
 
@@ -239,17 +236,17 @@ export default function PhotosProvider(): React.ReactElement {
           if (data.state === 'accepted') {
             intervalManager.setInterval(async () => {
               const data = await fetchPhotoDimensionsData()
-              if (data !== null) {
-                data.items = data.items.map(([day, photos]) => [
-                  day,
-                  photos.sort((a, b) =>
-                    moment(b.shot_time).diff(moment(a.shot_time))
-                  )
-                ])
-                setPhotoDimensions(data)
-                isPhotoLoading.current = false
-                intervalManager.clearAllIntervals()
-              }
+              if (data === null) return
+
+              data.items = data.items.map(([day, photos]) => [
+                day,
+                photos.sort((a, b) =>
+                  moment(b.shot_time).diff(moment(a.shot_time))
+                )
+              ])
+              setPhotoDimensions(data)
+              isPhotoLoading.current = false
+              intervalManager.clearAllIntervals()
             }, 3000)
           }
         } else {

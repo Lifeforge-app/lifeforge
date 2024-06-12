@@ -3,7 +3,7 @@ import type BasePBCollection from '@interfaces/pocketbase_interfaces'
 interface IWalletAssetEntry extends BasePBCollection {
   name: string
   icon: string
-  balance: string
+  balance: number
 }
 
 interface IWalletLedgerEntry extends BasePBCollection {

@@ -10,13 +10,13 @@ import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import useFetch from '@hooks/useFetch'
 import { type IWalletAssetEntry } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
+import { numberToMoney } from '@utils/strings'
 import ModifyAssetsModal from './components/ModifyAssetsModal'
 
 function Assets(): React.ReactElement {
-  const [assets, refreshAssets] =
-    useFetch<IWalletAssetEntry[]>('wallet/assets/list')
+  const { assets, refreshAssets } = useWalletContext()
   const [modifyAssetsModalOpenType, setModifyModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
@@ -72,11 +72,13 @@ function Assets(): React.ReactElement {
                 </div>
                 <p className="text-5xl font-medium">
                   <span className="mr-2 text-3xl text-bg-500">RM</span>
-                  {(+asset.balance).toFixed(2)}
+                  {numberToMoney(asset.balance)}
                 </p>
                 <Button
                   type="secondary"
-                  onClick={() => {}}
+                  onClick={() => {
+                    navigate(`/wallet/transactions?asset=${asset.id}`)
+                  }}
                   icon="tabler:eye"
                   className="mt-2"
                 >
