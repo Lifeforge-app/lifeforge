@@ -2,8 +2,8 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
+import { type ITodoListTag } from '@interfaces/todo_list_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
-import { type ITodoListTag } from '@typedec/TodoList'
 
 function TodoListHeader({
   setSidebarOpen
@@ -28,7 +28,7 @@ function TodoListHeader({
           Tasks{' '}
           <span className="text-base text-bg-500">({entries.length})</span>
         </h1>
-        <div className="mt-2 flex items-center gap-2">
+        <div className="mt-2 flex flex-wrap items-center gap-2">
           {Boolean(searchParams.get('list')) && (
             <span className="flex-center flex gap-1 rounded-full bg-custom-500/20 px-2 py-1 text-sm text-custom-500">
               <Icon icon="tabler:list" className="size-4" />

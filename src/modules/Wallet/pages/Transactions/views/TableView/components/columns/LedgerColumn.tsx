@@ -1,0 +1,35 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
+import React from 'react'
+import { type IWalletLedgerEntry } from '@interfaces/wallet_interfaces'
+
+function LedgerColumn({
+  ledger,
+  ledgers
+}: {
+  ledger: string
+  ledgers: IWalletLedgerEntry[]
+}): React.ReactElement {
+  return (
+    <td className="p-2 text-center">
+      {ledger !== '' ? (
+        <span
+          className="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm"
+          style={{
+            backgroundColor: ledgers.find(l => l.id === ledger)?.color + '20',
+            color: ledgers.find(l => l.id === ledger)?.color
+          }}
+        >
+          <Icon
+            icon={ledgers.find(l => l.id === ledger)?.icon ?? ''}
+            className="size-4"
+          />
+          {ledgers.find(l => l.id === ledger)?.name}
+        </span>
+      ) : (
+        '-'
+      )}
+    </td>
+  )
+}
+
+export default LedgerColumn

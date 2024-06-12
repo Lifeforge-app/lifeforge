@@ -1,7 +1,10 @@
 import moment from 'moment'
 import React from 'react'
-import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
 import MiniCalendarDateItem from './MiniCalendarDateItem'
+import {
+  type ICalendarCategory,
+  type ICalendarEvent
+} from '@interfaces/calendar_interfaces'
 
 function MiniCalendarContent({
   currentMonth,

@@ -6,7 +6,10 @@ import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import useFetch from '@hooks/useFetch'
-import { type IFlashcardDeck, type IFlashcardCard } from '@typedec/Flashcard'
+import {
+  type IFlashcardDeck,
+  type IFlashcardCard
+} from '@interfaces/flashcard_interfaces'
 import EditCardModal from './EditCardModal'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 

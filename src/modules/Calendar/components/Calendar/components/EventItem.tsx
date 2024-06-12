@@ -1,5 +1,8 @@
 import React from 'react'
-import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
+import {
+  type ICalendarCategory,
+  type ICalendarEvent
+} from '@interfaces/calendar_interfaces'
 
 export default function EventItem({
   event,

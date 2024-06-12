@@ -10,7 +10,7 @@ import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import { type IWalletCategoryEntry } from '@typedec/Wallet'
+import { type IWalletCategoryEntry } from '@interfaces/wallet_interfaces'
 import APIRequest from '@utils/fetchData'
 import CategoryToggleButton from './components/CategoryToggleButton'
 

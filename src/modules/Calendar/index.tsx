@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import useFetch from '@hooks/useFetch'
-import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
+import {
+  type ICalendarCategory,
+  type ICalendarEvent
+} from '@interfaces/calendar_interfaces'
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
 import ModifyCategoryModal from './modals/ModifyCategoryModal'

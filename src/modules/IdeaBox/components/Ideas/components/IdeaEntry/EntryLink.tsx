@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useDrag } from 'react-dnd'
-import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
+import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import EntryContextMenu from '../EntryContextMenu'
 
 function EntryLink({

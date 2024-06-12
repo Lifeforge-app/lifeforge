@@ -4,7 +4,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import ListboxTransition from '@components/Listbox/ListboxTransition'
 import useFetch from '@hooks/useFetch'
-import { type IWalletAssetEntry } from '@typedec/Wallet'
+import { type IWalletAssetEntry } from '@interfaces/wallet_interfaces'
 
 function AssetsSelector({
   transactionAsset,

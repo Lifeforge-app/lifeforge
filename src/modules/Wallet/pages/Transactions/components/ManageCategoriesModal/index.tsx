@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
-import { type IWalletCategoryEntry } from '@typedec/Wallet'
+import { type IWalletCategoryEntry } from '@interfaces/wallet_interfaces'
 import CategorySection from './components/CategorySection'
 import ModifyCategoriesModal from '../ModifyCategoriesModal'
 
@@ -13,7 +13,7 @@ function ManageCategoriesModal({
   isOpen,
   onClose
 }: {
-  isOpen: boolean
+  isOpen: boolean | 'new'
   onClose: () => void
 }): React.ReactElement {
   const [categories, refreshCategories] = useFetch<IWalletCategoryEntry[]>(
@@ -29,9 +29,17 @@ function ManageCategoriesModal({
     setDeleteCategoriesConfirmationOpen
   ] = useState(false)
 
+  useEffect(() => {
+    if (isOpen === 'new') {
+      setTimeout(() => {
+        setModifyCategoriesModalOpenType('income')
+      }, 200)
+    }
+  }, [isOpen])
+
   return (
     <>
-      <Modal isOpen={isOpen} minWidth="40rem">
+      <Modal isOpen={isOpen !== false} minWidth="40rem">
         <ModalHeader
           title="Manage Categories"
           icon="tabler:apps"

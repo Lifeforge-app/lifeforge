@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useTodoListContext } from '@providers/TodoListProvider'
-import { type ITodoListTag } from '@typedec/TodoList'
+import { type ITodoListTag } from '@interfaces/todo_list_interfaces'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 

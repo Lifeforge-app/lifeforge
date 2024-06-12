@@ -5,7 +5,10 @@ import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
-import { type IIdeaBoxFolder, type IIdeaBoxContainer } from '@typedec/IdeaBox'
+import {
+  type IIdeaBoxFolder,
+  type IIdeaBoxContainer
+} from '@interfaces/ideabox_interfaces'
 
 function ContainerHeader({
   id,

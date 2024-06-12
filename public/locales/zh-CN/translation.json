@@ -369,14 +369,16 @@
         "asset": "资产",
         "ledger": "账簿",
         "category": "类别",
-        "receipt": "收据"
+        "receipt": "收据",
+        "balance": "余额",
+        "description": "描述"
     },
     "table": {
         "date": "日期",
         "type": "类型",
         "asset": "资产",
         "ledger": "账簿",
-        "particular": "详情",
+        "particulars": "详情",
         "category": "类别",
         "amount": "金额",
         "receipt": "收据"

@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
-import { type ICalendarCategory } from '@typedec/Calendar'
+import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
 import CategoryListItem from './components/CategoryListItem'
 
 function CategoryList({

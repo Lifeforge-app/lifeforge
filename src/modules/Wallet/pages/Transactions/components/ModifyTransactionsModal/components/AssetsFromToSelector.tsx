@@ -1,6 +1,6 @@
 import React from 'react'
 import useFetch from '@hooks/useFetch'
-import { type IWalletAssetEntry } from '@typedec/Wallet'
+import { type IWalletAssetEntry } from '@interfaces/wallet_interfaces'
 import AssetListbox from './AssetsListbox'
 
 function AssetsFromToSelector({

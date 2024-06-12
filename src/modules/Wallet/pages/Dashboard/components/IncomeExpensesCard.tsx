@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { type IWalletIncomeExpenses } from '@typedec/Wallet'
+import { type IWalletIncomeExpenses } from '@interfaces/wallet_interfaces'
 import { numberToMoney } from '@utils/strings'
 
 function IncomeExpenseCard({

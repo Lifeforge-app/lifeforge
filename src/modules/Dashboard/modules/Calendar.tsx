@@ -4,7 +4,10 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
-import { type ICalendarEvent, type ICalendarCategory } from '@typedec/Calendar'
+import {
+  type ICalendarEvent,
+  type ICalendarCategory
+} from '@interfaces/calendar_interfaces'
 import MiniCalendarContent from '../../Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
 import MiniCalendarHeader from '../../Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'
 
@@ -25,7 +28,7 @@ export default function Calendar(): React.ReactElement {
       </h1>
       <APIComponentWithFallback data={events}>
         {typeof events !== 'string' && typeof categories !== 'string' && (
-          <div className="h-full w-full">
+          <div className="size-full">
             <div className="px-2">
               <MiniCalendarHeader
                 currentMonth={currentMonth}

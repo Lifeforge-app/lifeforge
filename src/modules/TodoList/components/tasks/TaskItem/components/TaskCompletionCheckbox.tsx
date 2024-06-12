@@ -1,6 +1,9 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { type ITodoSubtask, type ITodoListEntry } from '@typedec/TodoList'
+import {
+  type ITodoSubtask,
+  type ITodoListEntry
+} from '@interfaces/todo_list_interfaces'
 
 function TaskCompletionCheckbox({
   entry,

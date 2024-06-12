@@ -9,7 +9,7 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import '@react-pdf-viewer/core/lib/styles/index.css'
 import FILE_ICONS from '@constants/file_icons'
 import useFetch from '@hooks/useFetch'
-import { type INotesEntry } from '@typedec/Notes'
+import { type INotesEntry } from '@interfaces/notes_interfaces'
 
 function NotesFile(): React.ReactElement {
   const { id } = useParams<{ id: string }>()

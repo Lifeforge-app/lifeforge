@@ -8,7 +8,7 @@ import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import useFetch from '@hooks/useFetch'
-import { type IFlashcardTag } from '@typedec/Flashcard'
+import { type IFlashcardTag } from '@interfaces/flashcard_interfaces'
 
 function Sidebar({
   sidebarOpen,

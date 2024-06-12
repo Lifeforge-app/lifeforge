@@ -1,5 +1,5 @@
 import React from 'react'
-import { type ITodoListEntry } from '@typedec/TodoList'
+import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
 
 function TaskHeader({ entry }: { entry: ITodoListEntry }): React.ReactElement {
   return (

@@ -2,7 +2,10 @@ import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useParams } from 'react-router'
-import { type IIdeaBoxEntry, type IIdeaBoxFolder } from '@typedec/IdeaBox'
+import {
+  type IIdeaBoxEntry,
+  type IIdeaBoxFolder
+} from '@interfaces/ideabox_interfaces'
 
 function FAB({
   setTypeOfModifyIdea,

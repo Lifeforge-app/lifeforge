@@ -14,7 +14,7 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { useAuthContext } from '@providers/AuthProvider'
-import { type IPasswordEntry } from '@typedec/Password'
+import { type IPasswordEntry } from '@interfaces/password_interfaces'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 import CreatePassword from './CreatePassword'

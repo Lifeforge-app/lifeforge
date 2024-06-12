@@ -1,5 +1,5 @@
 import React from 'react'
-import { type IChangeLogVersion } from '@typedec/Changelog'
+import { type IChangeLogVersion } from '@interfaces/changelog_interfaces'
 import LogItemContent from './components/LogItemContent'
 import LogItemHeader from './components/LogItemHeader'
 
