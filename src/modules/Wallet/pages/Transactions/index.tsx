@@ -244,7 +244,7 @@ function Transactions(): React.ReactElement {
                           categories.find(
                             category =>
                               category.id === searchParams.get('category')
-                          )?.color + '20' ?? 'transparent',
+                          )?.color + '20',
                         color:
                           categories.find(
                             category =>
@@ -314,7 +314,7 @@ function Transactions(): React.ReactElement {
                         backgroundColor:
                           ledgers.find(
                             ledger => ledger.id === searchParams.get('ledger')
-                          )?.color + '20' ?? 'transparent',
+                          )?.color + '20',
                         color:
                           ledgers.find(
                             ledger => ledger.id === searchParams.get('ledger')
