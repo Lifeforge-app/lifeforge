@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { type ICalendarCategory } from '@typedec/Calendar'
+import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
 
 function CategoryListItem({
   item,

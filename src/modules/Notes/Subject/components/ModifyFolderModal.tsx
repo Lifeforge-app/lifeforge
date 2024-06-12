@@ -8,7 +8,7 @@ import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyBut
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import { type INotesEntry } from '@typedec/Notes'
+import { type INotesEntry } from '@interfaces/notes_interfaces'
 import APIRequest from '@utils/fetchData'
 
 function ModifyFolderModal({

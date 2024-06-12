@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { type IWalletCategoryEntry } from '@typedec/Wallet'
+import { type IWalletCategoryEntry } from '@interfaces/wallet_interfaces'
 
 interface CategorySectionProps {
   categories: IWalletCategoryEntry[]

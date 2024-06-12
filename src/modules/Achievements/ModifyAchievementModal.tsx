@@ -11,7 +11,7 @@ import ListboxInputWrapper from '@components/Listbox/ListboxInputWrapper'
 import ListboxTransition from '@components/Listbox/ListboxTransition'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import { type IAchievementEntry } from '@typedec/Achievements'
+import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
 import APIRequest from '@utils/fetchData'
 
 const difficulties = [

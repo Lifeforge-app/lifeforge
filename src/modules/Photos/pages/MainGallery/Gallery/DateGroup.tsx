@@ -11,7 +11,7 @@ import {
   type IPhotosEntryDimensionsAll,
   type IPhotosEntry,
   type IPhotosEntryDimensionsItem
-} from '@typedec/Photos'
+} from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '../../../../../providers/PhotosProvider'
 import ImageObject from '../../../components/ImageObject'
 

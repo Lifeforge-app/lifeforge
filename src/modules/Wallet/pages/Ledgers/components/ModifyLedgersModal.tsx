@@ -9,7 +9,7 @@ import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import { type IWalletLedgerEntry } from '@typedec/Wallet'
+import { type IWalletLedgerEntry } from '@interfaces/wallet_interfaces'
 import APIRequest from '@utils/fetchData'
 
 function ModifyLedgersModal({

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { type INotesEntry } from '@typedec/Notes'
+import { type INotesEntry } from '@interfaces/notes_interfaces'
 
 function EntryButton({ entry }: { entry: INotesEntry }): React.ReactElement {
   const { workspace, subject } = useParams<{

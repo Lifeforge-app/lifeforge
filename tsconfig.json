@@ -25,7 +25,7 @@
       "@components/*": ["./src/components/*"],
       "@providers/*": ["./src/providers/*"],
       "@hooks/*": ["./src/hooks/*"],
-      "@typedec/*": ["./src/types/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
       "@utils/*": ["./src/utils/*"],
       "@constants/*": ["./src/constants/*"]
     }

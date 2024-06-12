@@ -1,7 +1,7 @@
 import update from 'immutability-helper'
 import React, { useCallback, useState } from 'react'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import { type ITodoSubtask } from '@typedec/TodoList'
+import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
 import SubtaskBoxHeader from './components/SubtaskBoxHeader'
 import SubtaskItem from './components/SubtaskItem'
 

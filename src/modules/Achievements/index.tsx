@@ -8,7 +8,7 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
-import { type IAchievementEntry } from '@typedec/Achievements'
+import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
 import ModifyAchievementModal from './ModifyAchievementModal'
 
 function Achievements(): React.ReactElement {

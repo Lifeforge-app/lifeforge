@@ -3,7 +3,7 @@ import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { type INotesSubject } from '@typedec/Notes'
+import { type INotesSubject } from '@interfaces/notes_interfaces'
 
 function SubjectItem({
   subject,

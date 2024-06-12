@@ -1,4 +1,4 @@
-import { type IRoutes } from '@typedec/Routes'
+import { type IRoutes } from '@interfaces/routes_interfaces'
 
 export const ROUTES: IRoutes[] = [
   {

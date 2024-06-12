@@ -1,4 +1,4 @@
-import type BasePBCollection from './Pocketbase'
+import type BasePBCollection from '@interfaces/pocketbase_interfaces'
 
 interface IFlashcardDeck extends BasePBCollection {
   card_amount: number

@@ -6,7 +6,7 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
-import { type IProjectsKEntry } from '@typedec/ProjectK'
+import { type IProjectsKEntry } from '@interfaces/project_k_interfaces'
 import { PROJECT_STATUS } from '..'
 
 function Sidebar({

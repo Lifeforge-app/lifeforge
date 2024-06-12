@@ -7,7 +7,7 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
-import { type IIdeaBoxContainer } from '@typedec/IdeaBox'
+import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
 import Containers from './components/Containers'
 import ModifyContainerModal from './components/Containers/components/ModifyContainerModal'
 

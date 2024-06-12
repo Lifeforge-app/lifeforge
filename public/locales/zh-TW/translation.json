@@ -51,7 +51,7 @@
         "todoList": "待辦事項清單",
         "calendar": "日曆",
         "spotify": "Spotify",
-        "codeTime": "程式碼時間記錄",
+        "codeTime": "碼農時間記錄",
         "photos": "照片庫",
         "music": "音樂庫",
         "repositories": "程式庫",
@@ -203,7 +203,7 @@
                 "title": "儲存空間狀態"
             },
             "codeTime": {
-                "title": "程式碼時間記錄"
+                "title": "碼農時間記錄"
             },
             "todayEvent": {
                 "title": "今日事件"
@@ -369,14 +369,16 @@
         "asset": "資產",
         "ledger": "帳簿",
         "category": "類別",
-        "receipt": "收據"
+        "receipt": "收據",
+        "balance": "餘額",
+        "description": "描述"
     },
     "table": {
         "date": "日期",
         "type": "類型",
         "asset": "資產",
         "ledger": "帳簿",
-        "particular": "詳情",
+        "particulars": "詳情",
         "category": "類別",
         "amount": "金額",
         "receipt": "收據"

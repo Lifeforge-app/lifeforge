@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
 import FAB from '@components/ButtonsAndInputs/FAB'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
@@ -10,7 +11,7 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
-import { type IWalletAssetEntry } from '@typedec/Wallet'
+import { type IWalletAssetEntry } from '@interfaces/wallet_interfaces'
 import ModifyAssetsModal from './components/ModifyAssetsModal'
 
 function Assets(): React.ReactElement {
@@ -24,6 +25,16 @@ function Assets(): React.ReactElement {
   const [selectedData, setSelectedData] = useState<IWalletAssetEntry | null>(
     null
   )
+  const { hash } = useLocation()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (hash === '#new') {
+      setSelectedData(null)
+      setModifyModalOpenType('create')
+      navigate('/wallet/assets')
+    }
+  }, [hash])
 
   return (
     <ModuleWrapper>

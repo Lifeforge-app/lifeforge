@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
-import { type IWalletAssetEntry } from '@typedec/Wallet'
+import { type IWalletAssetEntry } from '@interfaces/wallet_interfaces'
 
 function AssetsBalanceCard(): React.ReactElement {
   const navigate = useNavigate()

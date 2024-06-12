@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import { useDrag } from 'react-dnd'
 import Zoom from 'react-medium-image-zoom'
-import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
+import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import CustomZoomContent from '../CustomZoomContent'
 import EntryContextMenu from '../EntryContextMenu'
 

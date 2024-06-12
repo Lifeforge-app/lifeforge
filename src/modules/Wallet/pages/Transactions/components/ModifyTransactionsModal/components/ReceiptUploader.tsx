@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import Zoom from 'react-medium-image-zoom'

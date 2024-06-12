@@ -12,7 +12,7 @@ import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import { type IIdeaBoxFolder } from '@typedec/IdeaBox'
+import { type IIdeaBoxFolder } from '@interfaces/ideabox_interfaces'
 import APIRequest from '@utils/fetchData'
 
 function ModifyFolderModal({

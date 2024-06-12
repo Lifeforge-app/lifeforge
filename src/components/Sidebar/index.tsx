@@ -3,7 +3,7 @@ import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import SidebarHeader from './components/SidebarHeader'
 import SidebarItems from './components/SidebarItems'
 
-export default function Sidebar(): React.ReactElement {
+function Sidebar(): React.ReactElement {
   const { sidebarExpanded } = useGlobalStateContext()
 
   return (
@@ -19,3 +19,5 @@ export default function Sidebar(): React.ReactElement {
     </aside>
   )
 }
+
+export default Sidebar

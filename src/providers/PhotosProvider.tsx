@@ -18,7 +18,7 @@ import {
   type IPhotoAlbumTag,
   type IPhotosAlbum,
   type IPhotosEntryDimensionsAll
-} from '@typedec/Photos'
+} from '@interfaces/photos_interfaces'
 import { useAuthContext } from './AuthProvider'
 import IntervalManager from '@utils/intervalManager'
 

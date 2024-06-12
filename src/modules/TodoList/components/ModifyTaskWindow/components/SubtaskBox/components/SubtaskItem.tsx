@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { type ITodoSubtask } from '@typedec/TodoList'
+import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
 
 function SubtaskItem({
   subtask,

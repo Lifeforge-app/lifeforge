@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { type IIdeaBoxContainer } from '@typedec/IdeaBox'
+import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
 import ContainerItem from './components/ContainerItem'
 
 function Container({

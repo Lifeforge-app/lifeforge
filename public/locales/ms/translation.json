@@ -369,14 +369,16 @@
         "asset": "Aset",
         "ledger": "Lejar",
         "category": "Kategori",
-        "receipt": "Resit"
+        "receipt": "Resit",
+        "balance": "Baki",
+        "description": "Penerangan"
     },
     "table": {
         "date": "Tarikh",
         "type": "Jenis",
         "asset": "Aset",
         "ledger": "Lejar",
-        "particular": "Perincian",
+        "particulars": "Perincian",
         "category": "Kategori",
         "amount": "Jumlah",
         "receipt": "Resit"

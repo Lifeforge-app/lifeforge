@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React from 'react'
 import { useTodoListContext } from '@providers/TodoListProvider'
-import { type ITodoListEntry } from '@typedec/TodoList'
+import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
 import APIRequest from '@utils/fetchData'
 import SubtaskItem from './components/SubtaskItem'
 import TaskCompletionCheckbox from './components/TaskCompletionCheckbox'

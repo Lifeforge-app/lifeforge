@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import { useParams } from 'react-router'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { type IIdeaBoxEntry } from '@typedec/IdeaBox'
+import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import APIRequest from '@utils/fetchData'
 
 function EntryContextMenu({

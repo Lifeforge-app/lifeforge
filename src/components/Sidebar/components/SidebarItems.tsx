@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react'
+import { ROUTES } from '@constants/routes_config'
 import { useAuthContext } from '@providers/AuthProvider'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { titleToPath } from '@utils/strings'
 import SidebarDivider from './SidebarDivider'
 import SidebarItem from './SidebarItem'
 import SidebarTitle from './SidebarTitle'
-import { ROUTES } from '@constants/routes_config'
 
 function SidebarItems(): React.ReactElement {
   const { userData } = useAuthContext()

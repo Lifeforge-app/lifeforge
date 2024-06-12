@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import ListboxInputWrapper from '@components/Listbox/ListboxInputWrapper'
 import ListboxTransition from '@components/Listbox/ListboxTransition'
-import { type ICalendarCategory } from '@typedec/Calendar'
+import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
 
 function CategorySelector({
   categories,

@@ -13,7 +13,7 @@ import {
   type IPhotosEntryDimensionsAll,
   type IPhotosEntry,
   type IPhotoAlbumEntryItem
-} from '@typedec/Photos'
+} from '@interfaces/photos_interfaces'
 import forceDown from '@utils/forceDown'
 import DeletePhotosConfirmationModal from './modals/DeletePhotosConfirmationModal'
 import { usePhotosContext } from '../../../providers/PhotosProvider'

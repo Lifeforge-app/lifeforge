@@ -12,7 +12,7 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
-import { type IJournalEntry } from '@typedec/Journal'
+import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import APIRequest from '@utils/fetchData'
 
 function Journal(): React.ReactElement {

@@ -6,7 +6,7 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { TodoListProvider } from '@providers/TodoListProvider'
-import { type ITodoListEntry } from '@typedec/TodoList'
+import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
 import TaskItem from '../../TodoList/components/tasks/TaskItem'
 
 export default function TodoList(): React.ReactElement {

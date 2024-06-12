@@ -4,7 +4,10 @@ import { useDrop } from 'react-dnd'
 import { Link, useParams } from 'react-router-dom'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { type IIdeaBoxEntry, type IIdeaBoxFolder } from '@typedec/IdeaBox'
+import {
+  type IIdeaBoxEntry,
+  type IIdeaBoxFolder
+} from '@interfaces/ideabox_interfaces'
 import APIRequest from '@utils/fetchData'
 
 function FolderItem({

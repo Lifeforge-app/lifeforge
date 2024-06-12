@@ -8,7 +8,7 @@ import React, {
 } from 'react'
 import { toast } from 'react-toastify'
 import useFetch from '@hooks/useFetch'
-import { type IMusicEntry } from '@typedec/Music'
+import { type IMusicEntry } from '@interfaces/music_interfaces'
 import { useAuthContext } from './AuthProvider'
 
 interface IMusicContext {

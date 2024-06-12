@@ -11,7 +11,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
-import { type INotesPath, type INotesEntry } from '@typedec/Notes'
+import { type INotesPath, type INotesEntry } from '@interfaces/notes_interfaces'
 
 function DirectoryHeader({
   updateNotesEntries,

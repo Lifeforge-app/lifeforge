@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
@@ -9,7 +10,7 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
-import { type IWalletLedgerEntry } from '@typedec/Wallet'
+import { type IWalletLedgerEntry } from '@interfaces/wallet_interfaces'
 import ModifyLedgersModal from './components/ModifyLedgersModal'
 
 function Ledgers(): React.ReactElement {
@@ -24,6 +25,16 @@ function Ledgers(): React.ReactElement {
   const [selectedData, setSelectedData] = useState<IWalletLedgerEntry | null>(
     null
   )
+  const { hash } = useLocation()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (hash === '#new') {
+      setSelectedData(null)
+      setModifyModalOpenType('create')
+      navigate('/wallet/ledgers')
+    }
+  }, [hash])
 
   return (
     <ModuleWrapper>

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
-import { type IPhotosAlbum } from '@typedec/Photos'
+import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
 import APIRequest from '@utils/fetchData'
 import { usePhotosContext } from '../../../../providers/PhotosProvider'
 

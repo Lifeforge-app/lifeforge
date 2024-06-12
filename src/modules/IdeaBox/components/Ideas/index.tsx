@@ -9,7 +9,10 @@ import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
-import { type IIdeaBoxFolder, type IIdeaBoxEntry } from '@typedec/IdeaBox'
+import {
+  type IIdeaBoxFolder,
+  type IIdeaBoxEntry
+} from '@interfaces/ideabox_interfaces'
 import ContainerHeader from './components/ContainerHeader'
 import FAB from './components/FAB'
 import FolderItem from './components/FolderItem'

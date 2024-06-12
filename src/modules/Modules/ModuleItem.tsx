@@ -14,7 +14,7 @@ import {
   type IModuleConfigSwitch,
   type IModuleConfigInput,
   type IModuleEntry
-} from '@typedec/Module'
+} from '@interfaces/module_interfaces'
 
 function ModuleItem({
   module,

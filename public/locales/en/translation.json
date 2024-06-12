@@ -369,14 +369,16 @@
         "asset": "Asset",
         "ledger": "Ledger",
         "category": "Category",
-        "receipt": "Receipt"
+        "receipt": "Receipt",
+        "balance": "Balance",
+        "description": "Description"
     },
     "table": {
         "date": "Date",
         "type": "Type",
         "asset": "Asset",
         "ledger": "Ledger",
-        "particular": "Particular",
+        "particulars": "Particulars",
         "category": "Category",
         "amount": "Amount",
         "receipt": "Receipt"

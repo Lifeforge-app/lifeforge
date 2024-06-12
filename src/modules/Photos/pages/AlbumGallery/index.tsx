@@ -16,7 +16,7 @@ import useFetch from '@hooks/useFetch'
 import {
   type IPhotoAlbumEntryItem,
   type IPhotosAlbum
-} from '@typedec/Photos.ts'
+} from '@interfaces/photos_interfaces.ts'
 import { usePhotosContext } from '../../../../providers/PhotosProvider'
 import BottomBar from '../../components/BottomBar'
 import ImageObject from '../../components/ImageObject'
