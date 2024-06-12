@@ -1,6 +1,5 @@
 import React from 'react'
-import useFetch from '@hooks/useFetch'
-import { type IWalletAssetEntry } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 import AssetListbox from './AssetsListbox'
 
 function AssetsFromToSelector({
@@ -14,7 +13,7 @@ function AssetsFromToSelector({
   toAsset: string | null
   setToAsset: React.Dispatch<React.SetStateAction<string | null>>
 }): React.ReactElement {
-  const [assets] = useFetch<IWalletAssetEntry[]>('wallet/assets/list')
+  const { assets } = useWalletContext()
 
   if (assets === 'loading') {
     return <div>Loading...</div>

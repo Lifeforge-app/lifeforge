@@ -1,9 +1,9 @@
-import { faker } from '@faker-js/faker'
 import { Icon } from '@iconify/react'
-import React from 'react'
+import moment from 'moment'
+import React, { useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
-
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import { useWalletContext } from '@providers/WalletProvider'
 
 const options = {
   maintainAspectRatio: false,
@@ -13,36 +13,53 @@ const options = {
       display: false
     }
   },
+  scales: {
+    y: {
+      display: true,
+      type: 'logarithmic',
+      min: 0.1
+    }
+  },
   hover: {
     intersect: false
   }
 }
 
-const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Income',
-      data: labels.map(_ => faker.number.int({ min: 100, max: 700 })),
-      borderColor: 'rgb(34 197 94)',
-      backgroundColor: 'rgb(34 197 94)',
-      tension: 0.6,
-      pointBorderColor: 'rgba(0, 0, 0, 0)',
-      pointBackgroundColor: 'rgba(0, 0, 0, 0)'
-    },
-    {
-      label: 'Expenses',
-      data: labels.map(_ => faker.number.int({ min: 100, max: 700 })),
-      borderColor: 'rgb(239 68 68)',
-      backgroundColor: 'rgb(239 68 68)',
-      tension: 0.6,
-      pointBorderColor: 'rgba(0, 0, 0, 0)',
-      pointBackgroundColor: 'rgba(0, 0, 0, 0)'
-    }
-  ]
-}
-
 function StatisticChardCard(): React.ReactElement {
+  const { transactions } = useWalletContext()
+  const dates = useMemo(() => {
+    if (typeof transactions === 'string') {
+      return []
+    }
+
+    return [
+      ...new Set(
+        transactions.map(transaction =>
+          moment(transaction.date).format('MMM DD')
+        )
+      )
+    ].reverse()
+  }, [transactions])
+
+  const groupedByDate = useMemo(() => {
+    if (typeof transactions === 'string') {
+      return [[], []]
+    }
+
+    return ['income', 'expenses'].map(type => {
+      return dates
+        .map(date =>
+          transactions
+            .filter(transaction => transaction.type === type)
+            .filter(
+              transaction => moment(transaction.date).format('MMM DD') === date
+            )
+            .reduce((acc, curr) => acc + curr.amount, 0)
+        )
+        .map(amount => (amount === 0 ? 0.1 : amount))
+    })
+  }, [transactions])
+
   return (
     <div className="col-span-2 row-span-2 flex size-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       <div className="flex w-full items-center justify-between">
@@ -62,7 +79,37 @@ function StatisticChardCard(): React.ReactElement {
         </div>
       </div>
       <div className="flex-center mt-6 flex size-full min-h-0 flex-1">
-        <Line data={data} options={options} className="w-full" />
+        <APIComponentWithFallback data={transactions}>
+          {typeof transactions !== 'string' && (
+            <Line
+              data={{
+                labels: dates,
+                datasets: [
+                  {
+                    label: 'Income',
+                    data: groupedByDate[0],
+                    borderWidth: 1,
+                    borderColor: 'rgb(34 197 94)',
+                    backgroundColor: 'rgb(34 197 94)',
+                    pointRadius: 4,
+                    pointBackgroundColor: 'rgba(34,197,94,0.5)'
+                  },
+                  {
+                    label: 'Expenses'[1],
+                    data: groupedByDate[1],
+                    borderWidth: 1,
+                    pointRadius: 4,
+                    borderColor: 'rgb(239 68 68)',
+                    backgroundColor: 'rgb(239 68 68)',
+                    pointBackgroundColor: 'rgba(239,68,68,0.5)'
+                  }
+                ]
+              }}
+              options={options as any}
+              className="w-full"
+            />
+          )}
+        </APIComponentWithFallback>
       </div>
       <div className="mt-4 flex items-center justify-center gap-8 sm:hidden">
         <div className="flex items-center gap-2">
