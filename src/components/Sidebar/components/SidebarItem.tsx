@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-
 import { Icon } from '@iconify/react'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
@@ -21,31 +19,23 @@ interface SidebarItemProps {
 function SidebarItem({
   icon,
   name,
-  hasAI,
+  hasAI = false,
   subsection,
-  isMainSidebarItem,
+  isMainSidebarItem = false,
   onClick,
-  active
+  active = false
 }: SidebarItemProps): React.ReactElement {
   // @ts-expect-error - Lazy to fix yay =)
-  const { sidebarExpanded, toggleSidebar } =
-    isMainSidebarItem === true
-      ? useGlobalStateContext()
-      : { sidebarExpanded: true }
+  const { sidebarExpanded, toggleSidebar } = isMainSidebarItem
+    ? useGlobalStateContext()
+    : { sidebarExpanded: true }
   const [subsectionExpanded, setSubsectionExpanded] = useState(false)
   const { t } = useTranslation()
 
   function toggleSubsection(): void {
     setSubsectionExpanded(!subsectionExpanded)
   }
-
   const location = useLocation()
-
-  useEffect(() => {
-    setSubsectionExpanded(
-      location.pathname.slice(1).startsWith(titleToPath(name))
-    )
-  }, [location.pathname])
 
   return (
     <>
@@ -58,8 +48,7 @@ function SidebarItem({
       >
         <div
           className={`relative flex w-full items-center justify-between gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 hover:bg-bg-200/30 dark:hover:bg-bg-800 ${
-            location.pathname.slice(1).startsWith(titleToPath(name)) ||
-            active === true
+            location.pathname.slice(1).startsWith(titleToPath(name)) || active
               ? 'bg-bg-200/50 dark:bg-bg-800'
               : ''
           }`}
@@ -68,15 +57,17 @@ function SidebarItem({
             href={titleToPath(name) === 'home' ? '/' : `./${titleToPath(name)}`}
             className="flex w-full min-w-0 items-center gap-6"
           >
-            <Icon
-              icon={icon}
-              className={`size-6 shrink-0 ${
-                location.pathname.slice(1).startsWith(titleToPath(name)) ||
-                active === true
-                  ? 'text-custom-500'
-                  : ''
-              }`}
-            />
+            <div className="flex size-7 items-center justify-center">
+              <Icon
+                icon={icon}
+                className={`size-6 shrink-0 ${
+                  location.pathname.slice(1).startsWith(titleToPath(name)) ||
+                  active
+                    ? 'text-custom-500'
+                    : ''
+                }`}
+              />
+            </div>
             <span className="w-full">
               {sidebarExpanded &&
                 (isMainSidebarItem ? (
@@ -95,7 +86,7 @@ function SidebarItem({
             </span>
           </a>
 
-          {onClick ? (
+          {onClick !== undefined ? (
             <button
               onClick={() => {
                 onClick()
@@ -136,7 +127,10 @@ function SidebarItem({
       {subsection !== undefined && (
         <li
           className={`flex h-auto shrink-0 flex-col gap-2 overflow-hidden px-4 transition-all ${
-            subsectionExpanded ? 'max-h-[1000px] py-2' : 'max-h-0 py-0'
+            subsectionExpanded ||
+            location.pathname.slice(1).startsWith(titleToPath(name))
+              ? 'max-h-[1000px] py-2'
+              : 'max-h-0 py-0'
           }`}
         >
           <ul
@@ -166,7 +160,9 @@ function SidebarItem({
                       : 'text-bg-500'
                   }`}
                 >
-                  <Icon icon={subsectionIcon} className="size-6" />
+                  <div className="flex size-7 items-center justify-center">
+                    <Icon icon={subsectionIcon} className="size-6" />
+                  </div>
                   {sidebarExpanded &&
                     t(`modules.subsections.${toCamelCase(subsectionName)}`)}
                 </Link>

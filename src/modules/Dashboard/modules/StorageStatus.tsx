@@ -5,7 +5,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
-import { type IDiskUsage } from '@typedec/ServerStatus'
+import { type IDiskUsage } from '@interfaces/server_status_interfaces'
 
 export default function StorageStatus(): React.ReactElement {
   const { t } = useTranslation()

@@ -8,7 +8,7 @@ import {
   type IPhotosEntryDimensionsAll,
   type IPhotoAlbumEntryItem,
   type IPhotosEntry
-} from '@typedec/Photos'
+} from '@interfaces/photos_interfaces'
 import APIRequest from '@utils/fetchData'
 
 function DeletePhotosConfirmationModal({

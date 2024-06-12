@@ -6,7 +6,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import Modal from '@components/Modals/Modal'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
-import { type IPhotosAlbum } from '@typedec/Photos'
+import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
 import APIRequest from '@utils/fetchData'
 
 function UpdateAlbumTagsModal({

@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { type ITodoSubtask } from '@typedec/TodoList'
+import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
 import APIRequest from '@utils/fetchData'
 import SpicinessSelector from './SpicinessSelector'
 

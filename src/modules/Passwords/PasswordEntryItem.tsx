@@ -7,7 +7,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { useAuthContext } from '@providers/AuthProvider'
-import { type IPasswordEntry } from '@typedec/Password'
+import { type IPasswordEntry } from '@interfaces/password_interfaces'
 import { Clipboard } from '@utils/clipboard'
 import { decrypt, encrypt } from '@utils/encryption'
 

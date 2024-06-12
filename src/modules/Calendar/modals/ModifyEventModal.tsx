@@ -10,7 +10,10 @@ import Input from '@components/ButtonsAndInputs/Input'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
+import {
+  type ICalendarCategory,
+  type ICalendarEvent
+} from '@interfaces/calendar_interfaces'
 import APIRequest from '@utils/fetchData'
 import CategorySelector from './ModifyCategoryModal/components/CategorySelector'
 

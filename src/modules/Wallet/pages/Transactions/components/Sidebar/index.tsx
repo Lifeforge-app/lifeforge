@@ -1,16 +1,18 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
+import { useNavigate } from 'react-router'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
-import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import {
   type IWalletCategoryEntry,
   type IWalletTransactionEntry,
   type IWalletAssetEntry,
   type IWalletLedgerEntry
-} from '@typedec/Wallet'
+} from '@interfaces/wallet_interfaces'
+import AssetsSection from './components/AssetsSection'
+import CategoriesSection from './components/CategoriesSection'
+import LedgerSection from './components/LedgerSection'
+import TypeSection from './components/TypeSection'
 
 function Sidebar({
   sidebarOpen,
@@ -18,20 +20,25 @@ function Sidebar({
   categories,
   transactions,
   assets,
-  ledgers
+  ledgers,
+  setManageCategoriesModalOpen
 }: {
   sidebarOpen: boolean
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
-  categories: IWalletCategoryEntry[] | string
-  transactions: IWalletTransactionEntry[] | string
-  assets: IWalletAssetEntry[] | string
-  ledgers: IWalletLedgerEntry[] | string
+  categories: IWalletCategoryEntry[] | 'loading' | 'error'
+  transactions: IWalletTransactionEntry[] | 'loading' | 'error'
+  assets: IWalletAssetEntry[] | 'loading' | 'error'
+  ledgers: IWalletLedgerEntry[] | 'loading' | 'error'
+  setManageCategoriesModalOpen: React.Dispatch<
+    React.SetStateAction<boolean | 'new'>
+  >
 }): React.ReactElement {
+  const navigate = useNavigate()
   return (
     <aside
       className={`absolute ${
         sidebarOpen ? 'left-0' : 'left-full'
-      } top-0 z-[9999] size-full min-w-0 overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 lg:static lg:h-[calc(100%-2rem)] lg:w-1/4`}
+      } top-0 z-[9999] size-full overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 lg:static lg:h-[calc(100%-2rem)] lg:w-1/4`}
     >
       <div className="flex items-center justify-between px-8 py-4 lg:hidden">
         <GoBackButton
@@ -40,112 +47,39 @@ function Sidebar({
           }}
         />
       </div>
-      <ul className="flex min-w-0 flex-col overflow-y-hidden hover:overflow-y-scroll">
-        <SidebarItem icon="tabler:list" name="All Transactions" />
+      <ul className="flex flex-col overflow-y-hidden hover:overflow-y-scroll">
+        <SidebarItem
+          icon="tabler:list"
+          name="All Transactions"
+          active={location.search === ''}
+          onClick={() => {
+            navigate('/wallet/transactions')
+          }}
+        />
         <SidebarDivider />
-        <SidebarTitle name="Type" />
-        {[
-          ['tabler:login-2', 'Income'],
-          ['tabler:logout', 'Expenses'],
-          ['tabler:transfer', 'Transfer']
-        ].map(([icon, name], index) => (
-          <li
-            key={index}
-            className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
-          >
-            <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-800">
-              <Icon icon={icon} className="size-6 shrink-0" />
-              <div className="flex w-full items-center justify-between">
-                {name}
-              </div>
-              <span className="text-sm">{Math.floor(Math.random() * 10)}</span>
-            </div>
-          </li>
-        ))}
+        <TypeSection
+          setSidebarOpen={setSidebarOpen}
+          transactions={transactions}
+        />
         <SidebarDivider />
-        <SidebarTitle name="categories" />
-        <APIComponentWithFallback data={categories}>
-          {typeof categories !== 'string' &&
-            categories.map(({ icon, name, color, id }, index) => (
-              <li
-                key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
-              >
-                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
-                  <span
-                    className="block h-8 w-1 shrink-0 rounded-full"
-                    style={{
-                      backgroundColor: color
-                    }}
-                  />
-                  <Icon icon={icon} className="size-6 shrink-0" />
-                  <div className="flex w-full items-center justify-between">
-                    {name}
-                  </div>
-                  <span className="text-sm">
-                    {typeof transactions !== 'string' &&
-                      transactions.filter(
-                        transaction => transaction.category === id
-                      ).length}
-                  </span>
-                </div>
-              </li>
-            ))}
-        </APIComponentWithFallback>
+        <CategoriesSection
+          categories={categories}
+          transactions={transactions}
+          setManageCategoriesModalOpen={setManageCategoriesModalOpen}
+          setSidebarOpen={setSidebarOpen}
+        />
         <SidebarDivider />
-        <SidebarTitle name="Assets" />
-        <APIComponentWithFallback data={assets}>
-          {typeof assets !== 'string' &&
-            assets.map(({ icon, name, id }, index) => (
-              <li
-                key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
-              >
-                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
-                  <Icon icon={icon} className="size-6 shrink-0" />
-                  <div className="flex w-full items-center justify-between">
-                    {name}
-                  </div>
-                  <span className="text-sm">
-                    {typeof transactions !== 'string' &&
-                      transactions.filter(
-                        transaction => transaction.asset === id
-                      ).length}
-                  </span>
-                </div>
-              </li>
-            ))}
-        </APIComponentWithFallback>
+        <AssetsSection
+          assets={assets}
+          transactions={transactions}
+          setSidebarOpen={setSidebarOpen}
+        />
         <SidebarDivider />
-        <SidebarTitle name="Ledgers" />
-        <APIComponentWithFallback data={ledgers}>
-          {typeof ledgers !== 'string' &&
-            ledgers.map(({ icon, name, color, id }, index) => (
-              <li
-                key={index}
-                className="relative flex min-w-0 items-center gap-6 px-4 font-medium text-bg-500 transition-all"
-              >
-                <div className="flex w-full min-w-0 items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
-                  <span
-                    className="block h-8 w-1 shrink-0 rounded-full"
-                    style={{
-                      backgroundColor: color
-                    }}
-                  />
-                  <Icon icon={icon} className="size-6 shrink-0" />
-                  <div className="w-full min-w-0 items-center justify-between truncate">
-                    {name}
-                  </div>
-                  <span className="text-sm">
-                    {typeof transactions !== 'string' &&
-                      transactions.filter(
-                        transaction => transaction.ledger === id
-                      ).length}
-                  </span>
-                </div>
-              </li>
-            ))}
-        </APIComponentWithFallback>
+        <LedgerSection
+          ledgers={ledgers}
+          transactions={transactions}
+          setSidebarOpen={setSidebarOpen}
+        />
       </ul>
     </aside>
   )

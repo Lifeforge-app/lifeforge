@@ -7,7 +7,7 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
-import { type IChangeLogVersion } from '@typedec/Changelog'
+import { type IChangeLogVersion } from '@interfaces/changelog_interfaces'
 import LogItem from './components/LogItem'
 
 function Changelog(): React.ReactElement {

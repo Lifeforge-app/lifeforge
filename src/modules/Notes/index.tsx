@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import useFetch from '@hooks/useFetch'
-import { type INotesWorkspace } from '@typedec/Notes'
+import { type INotesWorkspace } from '@interfaces/notes_interfaces'
 import Error from '@components/Screens/Error'
 import Loading from '@components/Screens/Loading'
 

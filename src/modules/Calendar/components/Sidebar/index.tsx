@@ -1,6 +1,9 @@
 import React from 'react'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
-import { type ICalendarCategory, type ICalendarEvent } from '@typedec/Calendar'
+import {
+  type ICalendarCategory,
+  type ICalendarEvent
+} from '@interfaces/calendar_interfaces'
 import CategoryList from './components/CategoryList'
 import MiniCalendar from './components/MiniCalendar'
 

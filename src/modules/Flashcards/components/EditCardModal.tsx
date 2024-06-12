@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Modal from '@components/Modals/Modal'
-import { type IFlashcardCard } from '@typedec/Flashcard'
+import { type IFlashcardCard } from '@interfaces/flashcard_interfaces'
 import APIRequest from '@utils/fetchData'
 
 function EditCardModal({

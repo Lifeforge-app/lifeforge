@@ -6,7 +6,7 @@ import {
   type IPhotosEntryDimensionsItem,
   type IPhotosEntryDimensionsAll,
   type IPhotoAlbumEntryItem
-} from '@typedec/Photos'
+} from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '../../../providers/PhotosProvider'
 
 function BottomBar({

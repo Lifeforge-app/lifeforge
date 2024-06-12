@@ -5,7 +5,10 @@ import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import useFetch from '@hooks/useFetch'
-import { type INotesSubject, type INotesWorkspace } from '@typedec/Notes'
+import {
+  type INotesSubject,
+  type INotesWorkspace
+} from '@interfaces/notes_interfaces'
 import CreateSubjectButton from './components/CreateSubjectButton'
 import ModifySubjectModal from './components/ModifySubjectModal'
 import SubjectItem from './components/SubjectItem'
