@@ -276,7 +276,9 @@
         "removeReceipt": "Remove Receipt",
         "uploadReceipt": "Upload Receipt",
         "goBackHome": "Go Back",
-        "reportBug": "Report Bug"
+        "reportBug": "Report Bug",
+        "signIn": "Sign In",
+        "signInWithPasskey": "Sign In with Passkey"
     },
     "modals": {
         "header": {
@@ -372,7 +374,8 @@
         "category": "Category",
         "receipt": "Receipt",
         "balance": "Balance",
-        "description": "Description"
+        "description": "Description",
+        "emailOrUsername": "Email or Username"
     },
     "table": {
         "date": "Date",

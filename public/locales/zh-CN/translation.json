@@ -276,7 +276,9 @@
         "removeReceipt": "移除收据",
         "uploadReceipt": "上传收据",
         "goBackHome": "返回主页",
-        "reportBug": "报告错误"
+        "reportBug": "报告错误",
+        "signIn": "登录",
+        "signInWithPasskey": "使用通行密钥登录"
     },
     "modals": {
         "header": {
@@ -372,7 +374,8 @@
         "category": "类别",
         "receipt": "收据",
         "balance": "余额",
-        "description": "描述"
+        "description": "描述",
+        "emailOrUsername": "邮箱或用户名"
     },
     "table": {
         "date": "日期",
