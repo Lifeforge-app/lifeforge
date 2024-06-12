@@ -4,23 +4,17 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import ListboxInputWrapper from '@components/Listbox/ListboxInputWrapper'
 import ListboxTransition from '@components/Listbox/ListboxTransition'
-import useFetch from '@hooks/useFetch'
-import { type IWalletCategoryEntry } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 
 function LedgerSelector({
   ledger,
-  setLedger,
-  openType
+  setLedger
 }: {
   ledger: string | null
   setLedger: React.Dispatch<React.SetStateAction<string | null>>
-  openType: 'create' | 'update' | null
 }): React.ReactElement {
   const { t } = useTranslation()
-  const [ledgers] = useFetch<IWalletCategoryEntry[]>(
-    'wallet/ledgers/list',
-    openType !== null
-  )
+  const { ledgers } = useWalletContext()
 
   if (ledgers === 'loading') {
     return <div>Loading...</div>

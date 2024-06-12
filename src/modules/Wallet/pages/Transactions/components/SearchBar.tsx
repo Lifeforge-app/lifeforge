@@ -1,18 +1,17 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import { useWalletContext } from '@providers/WalletProvider'
 
 function SearchBar({
-  searchQuery,
-  setSearchQuery,
   setView,
   view
 }: {
-  searchQuery: string
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>
   setView: React.Dispatch<React.SetStateAction<'table' | 'list'>>
   view: 'table' | 'list'
 }): React.ReactElement {
+  const { searchQuery, setSearchQuery } = useWalletContext()
+
   return (
     <div className="flex items-center gap-2">
       <SearchInput
@@ -21,7 +20,7 @@ function SearchBar({
         stuffToSearch="transactions"
       />
       <div className="mt-2 flex items-center gap-2 rounded-md bg-bg-900 p-2 sm:mt-6">
-        {['table', 'list'].map(viewType => (
+        {['list', 'table'].map(viewType => (
           <button
             key={viewType}
             onClick={() => {

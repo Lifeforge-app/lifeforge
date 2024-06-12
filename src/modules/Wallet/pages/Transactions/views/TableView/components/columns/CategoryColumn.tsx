@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { type IWalletCategoryEntry } from '@interfaces/wallet_interfaces'
 
 function CategoryColumn({
@@ -12,7 +13,8 @@ function CategoryColumn({
   return (
     <td className="p-2 text-center">
       {category !== '' ? (
-        <span
+        <Link
+          to={`/wallet/transactions?category=${category}`}
           className="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm"
           style={{
             backgroundColor:
@@ -25,7 +27,7 @@ function CategoryColumn({
             className="size-4"
           />
           {categories.find(c => c.id === category)?.name}
-        </span>
+        </Link>
       ) : (
         '-'
       )}

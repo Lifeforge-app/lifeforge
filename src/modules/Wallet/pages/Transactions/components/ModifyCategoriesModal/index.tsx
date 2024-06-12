@@ -11,6 +11,7 @@ import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IWalletCategoryEntry } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 import APIRequest from '@utils/fetchData'
 import CategoryToggleButton from './components/CategoryToggleButton'
 
@@ -18,8 +19,7 @@ function ModifyCategoriesModal({
   openType,
   setOpenType,
   existedData,
-  setExistedData,
-  refreshCategories
+  setExistedData
 }: {
   openType: 'income' | 'expenses' | 'update' | null
   setOpenType: React.Dispatch<
@@ -29,8 +29,8 @@ function ModifyCategoriesModal({
   setExistedData: React.Dispatch<
     React.SetStateAction<IWalletCategoryEntry | null>
   >
-  refreshCategories: () => void
 }): React.ReactElement {
+  const { refreshCategories } = useWalletContext()
   const [categoryType, setCategoryType] = useState<'income' | 'expenses'>(
     'income'
   )

@@ -3,12 +3,11 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import useFetch from '@hooks/useFetch'
-import { type IWalletAssetEntry } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 
 function AssetsBalanceCard(): React.ReactElement {
   const navigate = useNavigate()
-  const [assets] = useFetch<IWalletAssetEntry[]>('wallet/assets/list')
+  const { assets } = useWalletContext()
 
   return (
     <div className="col-span-1 row-span-2 flex h-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
@@ -19,9 +18,8 @@ function AssetsBalanceCard(): React.ReactElement {
         </h1>
         <Link
           to="./assets"
-          className="flex items-center gap-2 rounded-lg p-2 text-bg-500 transition-all"
+          className="flex items-center gap-2 rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-100"
         >
-          <span>Show more</span>
           <Icon icon="tabler:chevron-right" className="text-xl" />
         </Link>
       </div>
@@ -29,9 +27,10 @@ function AssetsBalanceCard(): React.ReactElement {
         {typeof assets !== 'string' && assets.length > 0 ? (
           <ul className="mt-6 flex h-full flex-col gap-4 overflow-y-auto">
             {assets.map(asset => (
-              <li
+              <Link
                 key={asset.id}
-                className="flex w-full min-w-0 flex-1 flex-col items-center justify-between gap-4 rounded-lg bg-bg-100 p-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 [@media(min-width:400px)]:flex-row"
+                to={`/wallet/transactions?asset=${asset.id}`}
+                className="flex w-full min-w-0 flex-1 flex-col items-center justify-between gap-4 rounded-lg bg-bg-100 p-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 dark:hover:bg-bg-700/50 [@media(min-width:400px)]:flex-row"
               >
                 <div className="flex w-full min-w-0 items-center gap-4">
                   <Icon icon={asset.icon} className="size-6 shrink-0" />
@@ -43,7 +42,7 @@ function AssetsBalanceCard(): React.ReactElement {
                   <span className="text-xl text-bg-500">RM</span>{' '}
                   {(+asset.balance).toFixed(2)}
                 </div>
-              </li>
+              </Link>
             ))}
           </ul>
         ) : (
