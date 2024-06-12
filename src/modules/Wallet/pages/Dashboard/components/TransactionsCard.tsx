@@ -40,7 +40,7 @@ function TransactionsCard(): React.ReactElement {
           typeof categories !== 'string' &&
           transactions.length > 0 ? (
             <>
-              <table className="hidden w-full lg:table">
+              <table className="hidden w-full !text-base lg:table">
                 <thead>
                   <tr className="border-b-2 border-bg-200 text-center text-bg-500 dark:border-bg-800">
                     <th className="py-2">Date</th>
@@ -58,7 +58,7 @@ function TransactionsCard(): React.ReactElement {
                         className="border-b border-bg-200 dark:border-bg-800"
                       >
                         <td className="whitespace-nowrap py-2 text-center">
-                          {moment(transaction.date).format('MMM DD, YYYY')}
+                          {moment(transaction.date).format('MMM DD')}
                         </td>
                         <td className="py-4 text-center">
                           <Link
