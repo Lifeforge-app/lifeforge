@@ -309,7 +309,8 @@
             "editCategory": "Edit Category",
             "addCategory": "Add Category",
             "addTransaction": "Add Transaction",
-            "editTransaction": "Edit Transaction"
+            "editTransaction": "Edit Transaction",
+            "viewReceipt": "View Receipt"
         },
         "deleteConfirmation": {
             "title": "Are you sure you want to delete {{itemName}}?",

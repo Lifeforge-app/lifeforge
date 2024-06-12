@@ -2,15 +2,14 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
-import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 
 function TypeSection({
-  setSidebarOpen,
-  transactions
+  setSidebarOpen
 }: {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
-  transactions: IWalletTransactionEntry[] | 'loading' | 'error'
 }): React.ReactElement {
+  const { transactions } = useWalletContext()
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (
