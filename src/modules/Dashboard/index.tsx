@@ -51,7 +51,7 @@ function Dashboard(): React.ReactElement {
             </>
           }
         />
-        <div className="mt-6 flex w-full grid-cols-4 grid-rows-3 flex-col gap-6 lg:grid">
+        <div className="mt-6 flex w-full grid-cols-4 grid-rows-[repeat(3,minmax(0,26rem))] flex-col gap-6 lg:grid">
           <StorageStatus />
           <CodeTime />
           <TodaysEvent />

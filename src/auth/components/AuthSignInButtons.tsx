@@ -31,7 +31,7 @@ function AuthSignInButton({
         onClick={signIn}
         icon={loading ? 'svg-spinners:180-ring' : ''}
       >
-        {t('auth.signInButton')}
+        sign in
       </Button>
       <div className="flex items-center gap-3">
         <div className="h-[2px] w-full bg-bg-600"></div>
@@ -46,7 +46,7 @@ function AuthSignInButton({
           type="secondary"
           className="w-full"
         >
-          {t('auth.signInWithPasskey')}
+          sign in with passkey
         </Button>
       </div>
     </div>

@@ -276,7 +276,9 @@
         "removeReceipt": "Buang Resit",
         "uploadReceipt": "Muat Naik Resit",
         "goBackHome": "Pergi ke Laman Utama",
-        "reportBug": "Laporkan Bug"
+        "reportBug": "Laporkan Bug",
+        "signIn": "Log Masuk",
+        "signInWithPasskey": "Log Masuk dengan Kunci Laluan"
     },
     "modals": {
         "header": {
@@ -372,7 +374,8 @@
         "category": "Kategori",
         "receipt": "Resit",
         "balance": "Baki",
-        "description": "Penerangan"
+        "description": "Penerangan",
+        "emailOrUsername": "Emel atau Nama Pengguna"
     },
     "table": {
         "date": "Tarikh",

@@ -1,9 +1,17 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
+import { Link } from 'react-router-dom'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import useFetch from '@hooks/useFetch'
+import { type IWalletAssetEntry } from '@interfaces/wallet_interfaces'
+import { numberToMoney } from '@utils/strings'
 
 export default function WalletBalance(): React.ReactElement {
   const { t } = useTranslation()
+  const navigate = useNavigate()
+  const [assets] = useFetch<IWalletAssetEntry[]>('wallet/assets/list')
 
   return (
     <section className="col-span-2 row-span-1 flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-custom dark:bg-bg-900">
@@ -13,44 +21,33 @@ export default function WalletBalance(): React.ReactElement {
           {t('dashboard.modules.walletBalance.title')}
         </span>
       </h1>
-      <ul className="flex flex-col gap-4">
-        <li className="flex items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 pl-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 dark:hover:bg-bg-700/50">
-          <div className="flex items-center gap-4">
-            <Icon icon="tabler:cash" className="size-6" />
-            <div className="flex flex-col">
-              <div className="font-semibold ">Cash</div>
-              <div className="text-sm text-bg-500">RM 520.00</div>
-            </div>
-          </div>
-          <button className="rounded-lg p-4 text-bg-500 transition-all">
-            <Icon icon="tabler:chevron-right" className="text-2xl" />
-          </button>
-        </li>
-        <li className="flex items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 pl-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800">
-          <div className="flex items-center gap-4">
-            <Icon icon="tabler:device-mobile" className="size-6" />
-            <div className="flex flex-col">
-              <div className="font-semibold ">Touch N&apos; Go e-Wallet</div>
-              <div className="text-sm text-bg-500">RM 128.00</div>
-            </div>
-          </div>
-          <button className="rounded-lg p-4 text-bg-500 transition-all">
-            <Icon icon="tabler:chevron-right" className="text-2xl" />
-          </button>
-        </li>
-        <li className="flex items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 pl-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800">
-          <div className="flex items-center gap-4">
-            <Icon icon="tabler:building-bank" className="size-6" />
-            <div className="flex flex-col">
-              <div className="font-semibold ">Bank Account</div>
-              <div className="text-sm text-bg-500">RM 12,487.00</div>
-            </div>
-          </div>
-          <button className="rounded-lg p-4 text-bg-500 transition-all">
-            <Icon icon="tabler:chevron-right" className="text-2xl" />
-          </button>
-        </li>
-      </ul>
+      <APIComponentWithFallback data={assets}>
+        <ul className="grid h-full grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 overflow-y-auto">
+          {typeof assets !== 'string' &&
+            assets.map(asset => (
+              <Link
+                to={'/wallet/assets'}
+                key={asset.id}
+                className="flex h-full items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 pl-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 dark:hover:bg-bg-700/50"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="rounded-md bg-bg-700 p-2">
+                    <Icon icon="tabler:cash" className="size-6" />
+                  </div>
+                  <div className="flex flex-col">
+                    <div className="font-semibold ">{asset.name}</div>
+                    <div className="text-sm text-bg-500">
+                      RM {numberToMoney(asset.balance)}
+                    </div>
+                  </div>
+                </div>
+                <button className="rounded-lg p-4 text-bg-500 transition-all">
+                  <Icon icon="tabler:chevron-right" className="text-2xl" />
+                </button>
+              </Link>
+            ))}
+        </ul>
+      </APIComponentWithFallback>
     </section>
   )
 }

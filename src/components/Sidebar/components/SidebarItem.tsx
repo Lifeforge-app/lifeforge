@@ -155,7 +155,10 @@ function SidebarItem({
                   } font-medium transition-all hover:bg-bg-200/30 dark:hover:bg-bg-800  ${
                     location.pathname.split('/').slice(1)[0] ===
                       titleToPath(name) &&
-                    location.pathname.split('/').slice(1)[1] === subsectionLink
+                    (location.pathname.split('/').slice(1)[1] ===
+                      subsectionLink ||
+                      (location.pathname.split('/').slice(1)[1] === '' &&
+                        name === 'Dashboard'))
                       ? 'bg-bg-800/50'
                       : 'text-bg-500'
                   }`}

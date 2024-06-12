@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { useTodoListContext } from '@providers/TodoListProvider'
-import { type ITodoListList } from '@interfaces/todo_list_interfaces'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import { type ITodoListList } from '@interfaces/todo_list_interfaces'
+import { useTodoListContext } from '@providers/TodoListProvider'
 
 function TaskListListItem({
   item,
@@ -43,7 +43,7 @@ function TaskListListItem({
         className="group flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-200/50 dark:hover:bg-bg-800"
       >
         <span
-          className="block h-8 w-1.5 shrink-0 rounded-full"
+          className="block h-8 w-1 shrink-0 rounded-full"
           style={{
             backgroundColor: item.color
           }}
