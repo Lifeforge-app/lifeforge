@@ -1,10 +1,10 @@
 import moment from 'moment'
 import React from 'react'
-import MiniCalendarDateItem from './MiniCalendarDateItem'
 import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
+import MiniCalendarDateItem from './MiniCalendarDateItem'
 
 function MiniCalendarContent({
   currentMonth,
@@ -42,7 +42,6 @@ function MiniCalendarContent({
               `${currentYear}-${currentMonth + 1}-01`,
               'YYYY-M-DD'
             ).toDate()
-            console.log(currentYear, currentMonth)
 
             let firstDay = moment(date).startOf('month').day() - 1
             firstDay = firstDay === -1 ? 6 : firstDay

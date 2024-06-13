@@ -1,6 +1,6 @@
 import React from 'react'
-import { useTodoListContext } from '@providers/TodoListProvider'
 import type { ITodoSubtask } from '@interfaces/todo_list_interfaces'
+import { useTodoListContext } from '@providers/TodoListProvider'
 import APIRequest from '@utils/fetchData'
 import TaskCompletionCheckbox from './TaskCompletionCheckbox'
 
@@ -47,7 +47,7 @@ function SubtaskItem({
   }
 
   return (
-    <div className="flex items-center justify-between rounded-md bg-bg-900 p-6">
+    <div className="flex items-center justify-between rounded-md bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       {entry.title}
       <TaskCompletionCheckbox
         toggleTaskCompletion={() => {

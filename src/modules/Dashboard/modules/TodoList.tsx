@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
-import { TodoListProvider } from '@providers/TodoListProvider'
 import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
+import { TodoListProvider } from '@providers/TodoListProvider'
 import TaskItem from '../../TodoList/components/tasks/TaskItem'
 
 export default function TodoList(): React.ReactElement {
@@ -17,7 +17,7 @@ export default function TodoList(): React.ReactElement {
   const navigate = useNavigate()
 
   return (
-    <section className="col-span-2 row-span-2 flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-custom dark:bg-bg-900">
+    <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-custom dark:bg-bg-900">
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:clipboard-list" className="text-2xl" />
         <span className="ml-2">{t('dashboard.modules.todoList.title')}</span>
@@ -44,9 +44,9 @@ export default function TodoList(): React.ReactElement {
                     title="No tasks for today"
                     description="Head to the Todo List module to create a new task."
                     icon="tabler:mood-smile"
-                    ctaContent="Create a new task"
+                    ctaContent="new task"
                     setModifyModalOpenType={() => {
-                      navigate('/todo-list')
+                      navigate('/todo-list#new')
                     }}
                   />
                 )}
@@ -55,6 +55,6 @@ export default function TodoList(): React.ReactElement {
           </div>
         </APIComponentWithFallback>
       </TodoListProvider>
-    </section>
+    </div>
   )
 }

@@ -312,7 +312,8 @@
             "addCategory": "Tambah Kategori",
             "addTransaction": "Tambah Transaksi",
             "editTransaction": "Edit Transaksi",
-            "viewReceipt": "Lihat Resit"
+            "viewReceipt": "Lihat Resit",
+            "manageWidgets": "Urus Widget"
         },
         "deleteConfirmation": {
             "title": "Adakah anda pasti ingin memadam {{itemName}}?",

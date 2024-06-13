@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { cookieParse } from 'pocketbase'
 import React, { createContext, useContext, useEffect, useState } from 'react'
@@ -11,10 +12,28 @@ interface IPersonalizationData {
   themeColor: string
   bgTemp: string
   language: string
+  dashboardLayout: Record<
+    string,
+    Array<{ x: number; y: number; w: number; h: number; i: string }>
+  >
   setTheme: (theme: 'light' | 'dark' | 'system') => void
   setThemeColor: (color: string) => void
   setBgTemp: (color: string) => void
   setLanguage: (language: string) => void
+  setDashboardLayout: (
+    layout: Record<
+      string,
+      Array<{ x: number; y: number; w: number; h: number; i: string }>
+    >
+  ) => void
+  setDashboardLayoutWithoutPost: React.Dispatch<
+    React.SetStateAction<
+      Record<
+        string,
+        Array<{ x: number; y: number; w: number; h: number; i: string }>
+      >
+    >
+  >
 }
 
 const PersonalizationContext = createContext<IPersonalizationData | undefined>(
@@ -33,6 +52,12 @@ export default function PersonalizationProvider({
   const [themeColor, setThemeColor] = useState('theme-teal')
   const [bgTemp, setBgTemp] = useState('bg-neutral')
   const [language, setLanguage] = useState('en')
+  const [dashboardLayout, setDashboardLayout] = useState<
+    Record<
+      string,
+      Array<{ x: number; y: number; w: number; h: number; i: string }>
+    >
+  >({})
 
   useEffect(() => {
     if (userData?.theme !== undefined) {
@@ -49,6 +74,10 @@ export default function PersonalizationProvider({
 
     if (userData?.language !== undefined) {
       setLanguage(userData.language)
+    }
+
+    if (userData?.dashboardLayout !== undefined) {
+      setDashboardLayout(userData.dashboardLayout)
     }
   }, [userData])
 
@@ -216,6 +245,37 @@ export default function PersonalizationProvider({
       })
   }
 
+  function changeDashboardLayout(
+    layout: Record<
+      string,
+      Array<{ x: number; y: number; w: number; h: number; i: string }>
+    >
+  ): void {
+    setDashboardLayout(layout)
+    fetch(`${import.meta.env.VITE_API_HOST}/user/personalization`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+      },
+      body: JSON.stringify({
+        id: userData.id,
+        data: {
+          dashboardLayout: layout
+        }
+      })
+    })
+      .then(async response => {
+        const data = await response.json()
+        if (response.status !== 200) {
+          throw data.message
+        }
+      })
+      .catch(() => {
+        toast.error('Failed to update personalization settings.')
+      })
+  }
+
   return (
     <PersonalizationContext
       value={{
@@ -223,10 +283,13 @@ export default function PersonalizationProvider({
         themeColor,
         bgTemp,
         language,
+        dashboardLayout,
         setTheme: changeTheme,
         setThemeColor: changeThemeColor,
         setBgTemp: changeBgTemp,
-        setLanguage: changeLanguage
+        setLanguage: changeLanguage,
+        setDashboardLayoutWithoutPost: setDashboardLayout,
+        setDashboardLayout: changeDashboardLayout
       }}
     >
       <meta
