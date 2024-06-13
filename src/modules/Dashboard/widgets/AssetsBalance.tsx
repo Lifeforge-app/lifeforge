@@ -16,7 +16,7 @@ export default function AssetsBalance(): React.ReactElement {
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:wallet" className="text-2xl" />
         <span className="ml-2">
-          {t('dashboard.modules.walletBalance.title')}
+          {t('dashboard.widgets.assetsBalance.title')}
         </span>
       </h1>
       <APIComponentWithFallback data={assets}>

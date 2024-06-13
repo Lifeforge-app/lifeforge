@@ -195,24 +195,78 @@
         }
     },
     "dashboard": {
-        "modules": {
-            "calendar": {
-                "title": "日历"
+        "widgets": {
+            "miniCalendar": {
+                "title": "迷你日历",
+                "description": "查看紧急事件的紧凑日历。"
             },
-            "storageStatus": {
-                "title": "存储空间状态"
-            },
-            "codeTime": {
-                "title": "编程时间记录"
-            },
-            "todayEvent": {
-                "title": "今日事件"
-            },
-            "walletBalance": {
-                "title": "钱包余额"
+            "todaysEvent": {
+                "title": "今日事件",
+                "description": "今天事件的提醒。"
             },
             "todoList": {
-                "title": "待办事项列表"
+                "title": "待办事项列表",
+                "description": "组织和跟踪您的任务。"
+            },
+            "pomodoroTimer": {
+                "title": "番茄钟",
+                "description": "使用番茄工作法集中注意力。"
+            },
+            "codeTime": {
+                "title": "编程时间记录",
+                "description": "跟踪和可视化编码活动。"
+            },
+            "ideaBox": {
+                "title": "创意盒子",
+                "description": "捕捉和组织随机想法。"
+            },
+            "journal": {
+                "title": "日记",
+                "description": "记录您的思想和经历。"
+            },
+            "flashCards": {
+                "title": "记忆闪卡",
+                "description": "可自定义的闪卡卡组。"
+            },
+            "bookshelf": {
+                "title": "书架",
+                "description": "管理和访问您的书籍。"
+            },
+            "achievements": {
+                "title": "成就",
+                "description": "跟踪和庆祝里程碑。"
+            },
+            "spotify": {
+                "title": "Spotify",
+                "description": "控制 Spotify 播放列表。"
+            },
+            "musicPlayer": {
+                "title": "音乐播放器",
+                "description": "播放您的个人音乐。"
+            },
+            "expensesBreakdown": {
+                "title": "费用分解",
+                "description": "可视化您的费用。"
+            },
+            "incomeExpenses": {
+                "title": "收入和支出",
+                "description": "监控收入和支出。"
+            },
+            "recentTransactions": {
+                "title": "最近交易",
+                "description": "查看最近的财务交易。"
+            },
+            "assetsBalance": {
+                "title": "资产余额",
+                "description": "跟踪资产余额。"
+            },
+            "serverStatus": {
+                "title": "服务器状态",
+                "description": "监控服务器性能。"
+            },
+            "storageStatus": {
+                "title": "存储状态",
+                "description": "检查存储使用情况。"
             }
         }
     },

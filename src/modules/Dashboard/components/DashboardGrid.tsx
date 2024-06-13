@@ -4,24 +4,24 @@ import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import Achievements from '../modules/Achievements'
-import AssetsBalance from '../modules/AssetsBalance'
-import Bookshelf from '../modules/Bookshelf'
-import CodeTime from '../modules/CodeTime'
-import ExpensesBreakdown from '../modules/ExpensesBreakdown'
-import FlashCards from '../modules/FlashCards'
-import IdeaBox from '../modules/IdexBox'
-import IncomeAndExpenses from '../modules/IncomeAndExpenses'
-import Journal from '../modules/Journal'
-import MiniCalendar from '../modules/MiniCalendar'
-import MusicPlayer from '../modules/MusicPlayer'
-import PomodoroTimer from '../modules/PomodoroTimer'
-import RecentTransactions from '../modules/RecentTransactions'
-import ServerStatus from '../modules/ServerStatus'
-import Spotify from '../modules/Spotify'
-import StorageStatus from '../modules/StorageStatus'
-import TodaysEvent from '../modules/TodaysEvent'
-import TodoList from '../modules/TodoList'
+import Achievements from '../widgets/Achievements'
+import AssetsBalance from '../widgets/AssetsBalance'
+import Bookshelf from '../widgets/Bookshelf'
+import CodeTime from '../widgets/CodeTime'
+import ExpensesBreakdown from '../widgets/ExpensesBreakdown'
+import FlashCards from '../widgets/FlashCards'
+import IdeaBox from '../widgets/IdexBox'
+import IncomeAndExpenses from '../widgets/IncomeAndExpenses'
+import Journal from '../widgets/Journal'
+import MiniCalendar from '../widgets/MiniCalendar'
+import MusicPlayer from '../widgets/MusicPlayer'
+import PomodoroTimer from '../widgets/PomodoroTimer'
+import RecentTransactions from '../widgets/RecentTransactions'
+import ServerStatus from '../widgets/ServerStatus'
+import Spotify from '../widgets/Spotify'
+import StorageStatus from '../widgets/StorageStatus'
+import TodaysEvent from '../widgets/TodaysEvent'
+import TodoList from '../widgets/TodoList'
 
 const COMPONENTS = {
   ideaBox: IdeaBox,
@@ -56,21 +56,19 @@ function DashboardGrid({
   const { dashboardLayout: enabledWidgets, setDashboardLayout } =
     usePersonalizationContext()
 
+  function handleResize(): void {
+    if (wrapperRef.current !== null) {
+      setWidth(wrapperRef.current.offsetWidth)
+    }
+  }
+
   useEffect(() => {
     setTimeout(() => {
-      if (wrapperRef.current !== null) {
-        setWidth(wrapperRef.current.offsetWidth)
-      }
+      handleResize()
     }, 200)
   }, [wrapperRef.current, sidebarExpanded])
 
   useEffect(() => {
-    function handleResize(): void {
-      if (wrapperRef.current !== null) {
-        setWidth(wrapperRef.current.offsetWidth)
-      }
-    }
-
     window.addEventListener('resize', handleResize)
     return () => {
       window.removeEventListener('resize', handleResize)
@@ -88,7 +86,7 @@ function DashboardGrid({
   return (
     // @ts-expect-error cannot fix
     <ResponsiveGridLayout
-      className={`mt-6 translate-x-[-10px] ${canLayoutChange ? 'mb-64' : ''}`}
+      className={`mt-6 ${canLayoutChange ? 'mb-64' : ''}`}
       layouts={enabledWidgets}
       cols={
         {
@@ -101,7 +99,7 @@ function DashboardGrid({
       }
       onLayoutChange={onLayoutChange}
       rowHeight={100}
-      width={width + 10}
+      width={width}
       isDraggable={canLayoutChange}
       isResizable={canLayoutChange}
       isDroppable={canLayoutChange}
@@ -109,13 +107,13 @@ function DashboardGrid({
       {[
         ...new Set(
           Object.values(enabledWidgets)
-            .map(e => e.map(e => e.i))
+            .map(widgetArray => widgetArray.map(widget => widget.i))
             .flat()
         )
-      ].map(i => (
-        <div key={i} className={canLayoutChange ? 'cursor-move' : ''}>
+      ].map(widgetId => (
+        <div key={widgetId} className={canLayoutChange ? 'cursor-move' : ''}>
           {(() => {
-            const Component = COMPONENTS[i as keyof typeof COMPONENTS]
+            const Component = COMPONENTS[widgetId as keyof typeof COMPONENTS]
             return <Component />
           })()}
           {canLayoutChange && (
