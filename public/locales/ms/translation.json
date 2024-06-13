@@ -196,6 +196,10 @@
     },
     "dashboard": {
         "widgets": {
+            "quickActions": {
+                "title": "Tindakan Cepat",
+                "description": "Akses cepat ke tindakan yang paling kerap digunakan."
+            },
             "miniCalendar": {
                 "title": "Kalendar Mini",
                 "description": "Lihat acara yang akan datang dalam kalendar yang ringkas."
