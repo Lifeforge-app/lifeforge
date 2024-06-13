@@ -592,3 +592,7 @@ input[type='range'].secondary::-moz-range-progress {
 .wallet-donut-inner {
   @apply text-bg-500;
 }
+
+.react-grid-item.react-grid-placeholder {
+  @apply !bg-custom-500;
+}

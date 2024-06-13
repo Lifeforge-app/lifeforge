@@ -11,17 +11,14 @@ import {
   Filler,
   BarElement
 } from 'chart.js'
-import React from 'react'
+import React, { useRef, useState } from 'react'
 
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import { useAuthContext } from '@providers/AuthProvider'
-import Calendar from './modules/Calendar'
-import CodeTime from './modules/CodeTime'
-import StorageStatus from './modules/StorageStatus'
-import TodaysEvent from './modules/TodaysEvent'
-import TodoList from './modules/TodoList'
-import WalletBalance from './modules/WalletBalance'
+import DashboardGrid from './components/DashboardGrid'
+import ManageWidgetsModal from './components/ManageWidgetsModal'
 
 ChartJS.register(
   ArcElement,
@@ -38,10 +35,16 @@ ChartJS.register(
 
 function Dashboard(): React.ReactElement {
   const { userData } = useAuthContext()
+  const wrapperRef = useRef<HTMLDivElement>(null)
+
+  const [canLayoutChange, setCanLayoutChange] = useState(false)
+  const [manageWidgetsModalOpen, setManageWidgetsModalOpen] = useState(false)
+
+  const [isReady, setReady] = useState(true)
 
   return (
     <ModuleWrapper>
-      <div className="mb-8 flex w-full flex-col">
+      <div ref={wrapperRef} className="mb-8 flex w-full flex-col">
         <ModuleHeader
           title="Dashboard"
           desc={
@@ -50,16 +53,42 @@ function Dashboard(): React.ReactElement {
               <span className="text-custom-500">{userData?.name}</span>!
             </>
           }
+          hasHamburgerMenu
+          hamburgerMenuItems={
+            <>
+              <MenuItem
+                preventDefault={false}
+                icon={canLayoutChange ? 'tabler:lock-open' : 'tabler:lock'}
+                text={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
+                onClick={() => {
+                  setCanLayoutChange(!canLayoutChange)
+                }}
+              />
+              <MenuItem
+                icon="tabler:apps"
+                text="Manage Widgets"
+                preventDefault={false}
+                onClick={() => {
+                  setManageWidgetsModalOpen(true)
+                }}
+              />
+            </>
+          }
         />
-        <div className="mt-6 flex w-full grid-cols-4 grid-rows-[repeat(3,minmax(0,26rem))] flex-col gap-6 lg:grid">
-          <StorageStatus />
-          <CodeTime />
-          <TodaysEvent />
-          <WalletBalance />
-          <TodoList />
-          <Calendar />
-        </div>
+        {isReady && (
+          <DashboardGrid
+            wrapperRef={wrapperRef}
+            canLayoutChange={canLayoutChange}
+          />
+        )}
       </div>
+      <ManageWidgetsModal
+        isOpen={manageWidgetsModalOpen}
+        onClose={() => {
+          setManageWidgetsModalOpen(false)
+        }}
+        setReady={setReady}
+      />
     </ModuleWrapper>
   )
 }

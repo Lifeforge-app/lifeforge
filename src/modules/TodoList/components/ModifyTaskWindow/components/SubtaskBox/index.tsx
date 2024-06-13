@@ -34,7 +34,7 @@ function SubtaskBox({
   }, [])
 
   return (
-    <div className="mt-4 rounded-md bg-bg-800/50 p-[1.4rem]">
+    <div className="mt-4 rounded-md bg-bg-200/50 p-[1.4rem] shadow-custom dark:bg-bg-800/50">
       <SubtaskBoxHeader
         spiciness={spiciness}
         setSpiciness={setSpiciness}

@@ -7,12 +7,12 @@ import useFetch from '@hooks/useFetch'
 import { type IWalletAssetEntry } from '@interfaces/wallet_interfaces'
 import { numberToMoney } from '@utils/strings'
 
-export default function WalletBalance(): React.ReactElement {
+export default function AssetsBalance(): React.ReactElement {
   const { t } = useTranslation()
   const [assets] = useFetch<IWalletAssetEntry[]>('wallet/assets/list')
 
   return (
-    <section className="col-span-2 row-span-1 flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-custom dark:bg-bg-900">
+    <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-custom dark:bg-bg-900">
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:wallet" className="text-2xl" />
         <span className="ml-2">
@@ -46,6 +46,6 @@ export default function WalletBalance(): React.ReactElement {
             ))}
         </ul>
       </APIComponentWithFallback>
-    </section>
+    </div>
   )
 }
