@@ -196,6 +196,10 @@
     },
     "dashboard": {
         "widgets": {
+            "quickActions": {
+                "title": "Quick Actions",
+                "description": "Quickly access your most used features."
+            },
             "miniCalendar": {
                 "title": "Mini Calendar",
                 "description": "View upcoming events in a compact calendar."

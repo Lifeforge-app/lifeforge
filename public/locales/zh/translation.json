@@ -196,6 +196,10 @@
     },
     "dashboard": {
         "widgets": {
+            "quickActions": {
+                "title": "快捷操作",
+                "description": "快速访问您最常用的功能。"
+            },
             "miniCalendar": {
                 "title": "迷你日历",
                 "description": "查看紧急事件的紧凑日历。"

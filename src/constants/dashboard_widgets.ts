@@ -1,4 +1,7 @@
 const DASHBOARD_WIDGETS = {
+  quickActions: {
+    icon: 'tabler:layout-grid'
+  },
   miniCalendar: {
     icon: 'tabler:calendar'
   },
