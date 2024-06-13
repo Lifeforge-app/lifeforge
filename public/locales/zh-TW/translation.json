@@ -312,7 +312,8 @@
             "addCategory": "添加類別",
             "addTransaction": "添加交易",
             "editTransaction": "編輯交易",
-            "viewReceipt": "查看收據"
+            "viewReceipt": "查看收據",
+            "manageWidgets": "管理小部件"
         },
         "deleteConfirmation": {
             "title": "您確定要刪除 {{itemName}}?",
