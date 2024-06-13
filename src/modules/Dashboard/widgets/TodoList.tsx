@@ -20,7 +20,7 @@ export default function TodoList(): React.ReactElement {
     <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-custom dark:bg-bg-900">
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:clipboard-list" className="text-2xl" />
-        <span className="ml-2">{t('dashboard.modules.todoList.title')}</span>
+        <span className="ml-2">{t('dashboard.widgets.todoList.title')}</span>
       </h1>
       <TodoListProvider>
         <APIComponentWithFallback data={entries}>

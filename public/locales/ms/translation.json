@@ -195,24 +195,78 @@
         }
     },
     "dashboard": {
-        "modules": {
-            "calendar": {
-                "title": "Kalendar"
+        "widgets": {
+            "miniCalendar": {
+                "title": "Kalendar Mini",
+                "description": "Lihat acara yang akan datang dalam kalendar yang ringkas."
             },
-            "storageStatus": {
-                "title": "Status Storan"
-            },
-            "codeTime": {
-                "title": "Masa Kod"
-            },
-            "todayEvent": {
-                "title": "Acara Hari Ini"
-            },
-            "walletBalance": {
-                "title": "Baki Dompet"
+            "todaysEvent": {
+                "title": "Acara Hari Ini",
+                "description": "Peringatan untuk acara hari ini."
             },
             "todoList": {
-                "title": "Senarai Tugas"
+                "title": "Senarai Tugas",
+                "description": "Mengatur dan mengawasi tugas anda."
+            },
+            "pomodoroTimer": {
+                "title": "Pemasa Pomodoro",
+                "description": "Fokus dengan sesi kerja Pomodoro."
+            },
+            "codeTime": {
+                "title": "Masa Kod",
+                "description": "Jejak dan visualisasikan aktiviti pengkodan."
+            },
+            "ideaBox": {
+                "title": "Kotak Idea",
+                "description": "Menangkap dan mengatur idea-idea rawak."
+            },
+            "journal": {
+                "title": "Jurnal",
+                "description": "Catatkan pemikiran dan pengalaman anda."
+            },
+            "flashCards": {
+                "title": "Kad Imbasan",
+                "description": "Dek kad imbasan yang boleh disesuaikan."
+            },
+            "bookshelf": {
+                "title": "Rak Buku",
+                "description": "Urus dan akses buku anda."
+            },
+            "achievements": {
+                "title": "Pencapaian",
+                "description": "Jejak dan sambut pencapaian penting."
+            },
+            "spotify": {
+                "title": "Spotify",
+                "description": "Kawal senarai main Spotify."
+            },
+            "musicPlayer": {
+                "title": "Pemain Muzik",
+                "description": "Mainkan muzik peribadi anda."
+            },
+            "expensesBreakdown": {
+                "title": "Pembahagian Perbelanjaan",
+                "description": "Visualisasikan perbelanjaan anda."
+            },
+            "incomeExpenses": {
+                "title": "Pendapatan & Perbelanjaan",
+                "description": "Pantau pendapatan dan perbelanjaan."
+            },
+            "recentTransactions": {
+                "title": "Transaksi Terkini",
+                "description": "Lihat transaksi kewangan terkini."
+            },
+            "assetsBalance": {
+                "title": "Baki Aset",
+                "description": "Jejak baki aset."
+            },
+            "serverStatus": {
+                "title": "Status Pelayan",
+                "description": "Pantau prestasi pelayan."
+            },
+            "storageStatus": {
+                "title": "Status Penyimpanan",
+                "description": "Periksa penggunaan penyimpanan."
             }
         }
     },

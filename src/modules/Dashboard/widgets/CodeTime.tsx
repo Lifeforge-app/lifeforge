@@ -140,7 +140,7 @@ export default function CodeTime(): React.ReactElement {
     <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:chart-line" className="text-2xl" />
-        <span className="ml-2">{t('dashboard.modules.codeTime.title')}</span>
+        <span className="ml-2">{t('dashboard.widgets.codeTime.title')}</span>
       </h1>
       <div className="flex-center flex size-full min-h-0 flex-1">
         {/* @ts-expect-error - lazy to fix =) */}

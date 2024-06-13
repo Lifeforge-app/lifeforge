@@ -16,7 +16,7 @@ export default function StorageStatus(): React.ReactElement {
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:server" className="text-2xl" />
         <span className="ml-2">
-          {t('dashboard.modules.storageStatus.title')}
+          {t('dashboard.widgets.storageStatus.title')}
         </span>
       </h1>
       <APIComponentWithFallback data={diskUsage}>

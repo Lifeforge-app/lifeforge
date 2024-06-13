@@ -195,24 +195,78 @@
         }
     },
     "dashboard": {
-        "modules": {
-            "calendar": {
-                "title": "日曆"
+        "widgets": {
+            "miniCalendar": {
+                "title": "迷你日曆",
+                "description": "查看緊急事件的緊湊日曆。"
             },
-            "storageStatus": {
-                "title": "儲存空間狀態"
-            },
-            "codeTime": {
-                "title": "碼農時間記錄"
-            },
-            "todayEvent": {
-                "title": "今日事件"
-            },
-            "walletBalance": {
-                "title": "錢包餘額"
+            "todaysEvent": {
+                "title": "今日事件",
+                "description": "今天事件的提醒。"
             },
             "todoList": {
-                "title": "待辦事項清單"
+                "title": "待辦事項清單",
+                "description": "組織和追蹤您的任務。"
+            },
+            "pomodoroTimer": {
+                "title": "番茄鐘",
+                "description": "使用番茄工作法集中注意力。"
+            },
+            "codeTime": {
+                "title": "程式時間記錄",
+                "description": "追蹤和視覺化編碼活動。"
+            },
+            "ideaBox": {
+                "title": "創意盒子",
+                "description": "捕捉和組織隨機想法。"
+            },
+            "journal": {
+                "title": "日記",
+                "description": "記錄您的思想和經歷。"
+            },
+            "flashCards": {
+                "title": "記憶卡片",
+                "description": "可自定義的卡片組。"
+            },
+            "bookshelf": {
+                "title": "書架",
+                "description": "管理和訪問您的書籍。"
+            },
+            "achievements": {
+                "title": "成就",
+                "description": "追蹤和慶祝里程碑。"
+            },
+            "spotify": {
+                "title": "Spotify",
+                "description": "控制 Spotify 播放列表。"
+            },
+            "musicPlayer": {
+                "title": "音樂播放器",
+                "description": "播放您的個人音樂。"
+            },
+            "expensesBreakdown": {
+                "title": "費用分解",
+                "description": "視覺化您的費用。"
+            },
+            "incomeExpenses": {
+                "title": "收入和支出",
+                "description": "監控收入和支出。"
+            },
+            "recentTransactions": {
+                "title": "最近交易",
+                "description": "查看最近的財務交易。"
+            },
+            "assetsBalance": {
+                "title": "資產餘額",
+                "description": "追蹤資產餘額。"
+            },
+            "serverStatus": {
+                "title": "伺服器狀態",
+                "description": "監控伺服器性能。"
+            },
+            "storageStatus": {
+                "title": "儲存狀態",
+                "description": "檢查儲存使用情況。"
             }
         }
     },
