@@ -195,24 +195,78 @@
         }
     },
     "dashboard": {
-        "modules": {
-            "calendar": {
-                "title": "Calendar"
+        "widgets": {
+            "miniCalendar": {
+                "title": "Mini Calendar",
+                "description": "View upcoming events in a compact calendar."
             },
-            "storageStatus": {
-                "title": "Storage Status"
-            },
-            "codeTime": {
-                "title": "Code Time"
-            },
-            "todayEvent": {
-                "title": "Today's Event"
-            },
-            "walletBalance": {
-                "title": "Wallet Balance"
+            "todaysEvent": {
+                "title": "Today's Event",
+                "description": "Reminders for today's events."
             },
             "todoList": {
-                "title": "Todo List"
+                "title": "To-do List",
+                "description": "Organize and track your tasks."
+            },
+            "pomodoroTimer": {
+                "title": "Pomodoro Timer",
+                "description": "Focus with Pomodoro work sessions."
+            },
+            "codeTime": {
+                "title": "Code Time",
+                "description": "Track and visualize coding activity."
+            },
+            "ideaBox": {
+                "title": "Idea Box",
+                "description": "Capture and organize random ideas."
+            },
+            "journal": {
+                "title": "Journal",
+                "description": "Record your thoughts and experiences."
+            },
+            "flashCards": {
+                "title": "Flash Cards",
+                "description": "Customizable flash card decks."
+            },
+            "bookshelf": {
+                "title": "Bookshelf",
+                "description": "Manage and access your books."
+            },
+            "achievements": {
+                "title": "Achievements",
+                "description": "Track and celebrate milestones."
+            },
+            "spotify": {
+                "title": "Spotify",
+                "description": "Control Spotify playlists."
+            },
+            "musicPlayer": {
+                "title": "Music Player",
+                "description": "Play your personal music."
+            },
+            "expensesBreakdown": {
+                "title": "Expenses Breakdown",
+                "description": "Visualize your expenses."
+            },
+            "incomeExpenses": {
+                "title": "Income & Expenses",
+                "description": "Monitor income and expenses."
+            },
+            "recentTransactions": {
+                "title": "Recent Transactions",
+                "description": "View recent financial transactions."
+            },
+            "assetsBalance": {
+                "title": "Assets Balance",
+                "description": "Track asset balances."
+            },
+            "serverStatus": {
+                "title": "Server Status",
+                "description": "Monitor server performance."
+            },
+            "storageStatus": {
+                "title": "Storage Status",
+                "description": "Check storage usage."
             }
         }
     },
