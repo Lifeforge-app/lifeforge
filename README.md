@@ -1,6 +1,6 @@
 <center><h1 align="center">🛠️ Lifeforge</h1></center>
 
-<p align="center">A comprehensive personal management system to streamline and organize all aspects of your life.</p>
+<p align="center">A self-hosted solution to streamline and organize all aspects of your life.</p>
 
 ## The Problem
 
