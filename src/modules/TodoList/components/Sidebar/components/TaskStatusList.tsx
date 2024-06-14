@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import { useTodoListContext } from '@providers/TodoListProvider'
+import { toCamelCase } from '@utils/strings'
 
 function TaskStatusList({
   setSidebarOpen
@@ -12,6 +14,7 @@ function TaskStatusList({
 }): React.ReactElement {
   const { statusCounter } = useTodoListContext()
   const [searchParams, setSearchParams] = useSearchParams()
+  const { t } = useTranslation()
 
   return (
     <APIComponentWithFallback data={statusCounter}>
@@ -53,7 +56,7 @@ function TaskStatusList({
             >
               <Icon icon={icon} className="size-6 shrink-0" />
               <div className="flex w-full items-center justify-between">
-                {name}
+                {t(`sidebar.todoList.${toCamelCase(name)}`)}
               </div>
               <span className="text-sm">
                 {

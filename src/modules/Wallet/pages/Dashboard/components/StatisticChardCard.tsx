@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
+import { useTranslation } from 'react-i18next'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import { useWalletContext } from '@providers/WalletProvider'
 
@@ -59,13 +60,14 @@ function StatisticChardCard(): React.ReactElement {
         .map(amount => (amount === 0 ? 0.1 : amount))
     })
   }, [transactions])
+  const { t } = useTranslation()
 
   return (
     <div className="col-span-2 row-span-2 flex size-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       <div className="flex w-full items-center justify-between">
         <h1 className="flex items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:chart-dots" className="text-2xl" />
-          <span className="ml-2">Statistics</span>
+          <span className="ml-2">{t('dashboard.widgets.statistics')}</span>
         </h1>
         <div className="hidden items-center gap-8 sm:flex">
           <div className="flex items-center gap-2">
