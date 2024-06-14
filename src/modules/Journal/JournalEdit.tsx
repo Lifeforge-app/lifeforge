@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
-import {
-  MDXEditor,
-  headingsPlugin,
-  listsPlugin,
-  quotePlugin,
-  thematicBreakPlugin,
-  UndoRedo,
-  BoldItalicUnderlineToggles,
-  toolbarPlugin,
-  markdownShortcutPlugin
-} from '@mdxeditor/editor'
+// import {
+//   MDXEditor,
+//   headingsPlugin,
+//   listsPlugin,
+//   quotePlugin,
+//   thematicBreakPlugin,
+//   UndoRedo,
+//   BoldItalicUnderlineToggles,
+//   toolbarPlugin,
+//   markdownShortcutPlugin
+// } from '@mdxeditor/editor'
 import React, { useEffect, useRef, useState } from 'react'
 
-import '@mdxeditor/editor/style.css'
+// import '@mdxeditor/editor/style.css'
 import { useNavigate, useParams } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
@@ -199,27 +199,28 @@ function JournalEdit(): React.ReactElement {
               )}
             </div>
             {content !== null && (
-              <MDXEditor
-                markdown={content}
-                onChange={setContent}
-                contentEditableClassName="prose max-w-full"
-                plugins={[
-                  headingsPlugin(),
-                  listsPlugin(),
-                  quotePlugin(),
-                  thematicBreakPlugin(),
-                  markdownShortcutPlugin(),
-                  toolbarPlugin({
-                    toolbarContents: () => (
-                      <>
-                        {' '}
-                        <UndoRedo />
-                        <BoldItalicUnderlineToggles />
-                      </>
-                    )
-                  })
-                ]}
-              />
+              // <MDXEditor
+              //   markdown={content}
+              //   onChange={setContent}
+              //   contentEditableClassName="prose max-w-full"
+              //   plugins={[
+              //     headingsPlugin(),
+              //     listsPlugin(),
+              //     quotePlugin(),
+              //     thematicBreakPlugin(),
+              //     markdownShortcutPlugin(),
+              //     toolbarPlugin({
+              //       toolbarContents: () => (
+              //         <>
+              //           {' '}
+              //           <UndoRedo />
+              //           <BoldItalicUnderlineToggles />
+              //         </>
+              //       )
+              //     })
+              //   ]}
+              // />
+              <></>
             )}
           </>
         )}

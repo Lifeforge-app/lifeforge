@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
-import Gallery from 'react-photo-gallery'
+import PhotoAlbum from 'react-photo-album'
 import Button from '@components/ButtonsAndInputs/Button'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
-import { usePhotosContext } from '@providers/PhotosProvider'
 import { type IPhotoAlbumEntryItem } from '@interfaces/photos_interfaces'
+import { usePhotosContext } from '@providers/PhotosProvider'
 import ImageObject from '../../components/ImageObject'
 import EmptyTrashConfirmationModal from '../../components/modals/EmptyTrashConfirmationModal'
 import PhotosSidebar from '../../components/PhotosSidebar'
@@ -27,7 +28,7 @@ function PhotosTrash(): React.ReactElement {
         title="Photos"
         desc="View and manage all your precious memories."
       />
-      <div className="relative mt-6 flex h-full min-h-0 w-full gap-8">
+      <div className="relative mt-6 flex size-full min-h-0 gap-8">
         <PhotosSidebar />
         <div className="flex h-full flex-1 flex-col">
           <div className="flex items-center justify-between">
@@ -49,8 +50,9 @@ function PhotosTrash(): React.ReactElement {
           <div className="relative my-6 w-full flex-1 overflow-y-auto">
             <APIComponentWithFallback data={photos}>
               {typeof photos !== 'string' && (
-                <Gallery
-                  targetRowHeight={200}
+                <PhotoAlbum
+                  layout="rows"
+                  spacing={8}
                   photos={photos.map(image => ({
                     src: `${import.meta.env.VITE_API_HOST}/media/${
                       image.collectionId
@@ -59,13 +61,16 @@ function PhotosTrash(): React.ReactElement {
                     height: image.height / 20,
                     key: image.id
                   }))}
-                  margin={3}
-                  renderImage={({ photo, margin }) => (
+                  renderPhoto={({
+                    photo,
+                    imageProps: { src, alt, style, ...restImageProps }
+                  }) => (
                     <ImageObject
                       beingDisplayedInAlbum
                       photo={photo}
+                      style={style}
                       details={photos.find(image => image.id === photo.key)!}
-                      margin={margin ?? ''}
+                      {...restImageProps}
                       refreshPhotos={refreshPhotos}
                       selected={
                         selectedPhotos.find(image => image === photo.key) !==
