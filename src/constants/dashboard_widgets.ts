@@ -1,4 +1,11 @@
-const DASHBOARD_WIDGETS = {
+const DASHBOARD_WIDGETS: Record<
+  string,
+  {
+    icon: string
+    minW?: number
+    minH?: number
+  }
+> = {
   quickActions: {
     icon: 'tabler:layout-grid'
   },
@@ -36,7 +43,9 @@ const DASHBOARD_WIDGETS = {
     icon: 'tabler:brand-spotify'
   },
   musicPlayer: {
-    icon: 'tabler:music'
+    icon: 'tabler:music',
+    minW: 2,
+    minH: 4
   },
   expensesBreakdown: {
     icon: 'tabler:chart-bar'

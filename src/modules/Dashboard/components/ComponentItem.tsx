@@ -7,10 +7,14 @@ import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 function ComponentListItem({
   id,
   icon,
+  minW,
+  minH,
   setReady
 }: {
   id: string
   icon: string
+  minW?: number
+  minH?: number
   setReady: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   const { t } = useTranslation()
@@ -36,6 +40,8 @@ function ComponentListItem({
             y: 0,
             w: 4,
             h: 4,
+            minW: minW ?? 1,
+            minH: minH ?? 1,
             i: id
           }
         ]
@@ -51,6 +57,8 @@ function ComponentListItem({
         y: Infinity,
         w: 4,
         h: 4,
+        minW: minW ?? 1,
+        minH: minH ?? 1,
         i: id
       })
     }
