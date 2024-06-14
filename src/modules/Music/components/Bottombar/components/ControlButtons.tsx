@@ -3,7 +3,13 @@ import { toast } from 'react-toastify'
 import { useMusicContext } from '@providers/MusicProvider'
 import IconButton from './IconButton'
 
-export default function ControlButtons(): React.ReactElement {
+export default function ControlButtons({
+  isWidget = false,
+  isFull = false
+}: {
+  isWidget?: boolean
+  isFull?: boolean
+}): React.ReactElement {
   const {
     currentMusic,
     isPlaying,
@@ -21,19 +27,21 @@ export default function ControlButtons(): React.ReactElement {
   }
 
   return (
-    <div className="flex items-center gap-2 xl:w-1/3">
-      <IconButton
-        onClick={() => {
-          setIsShuffle(!isShuffle)
-          if (isShuffle) setIsRepeat(false)
-        }}
-        className={
-          isShuffle
-            ? 'text-custom-500 hover:text-custom-600'
-            : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-100'
-        }
-        icon="uil:shuffle"
-      />
+    <div className={`flex items-center gap-2 ${!isWidget && 'xl:w-1/3'}`}>
+      {(isFull || !isWidget) && (
+        <IconButton
+          onClick={() => {
+            setIsShuffle(!isShuffle)
+            if (isShuffle) setIsRepeat(false)
+          }}
+          className={
+            isShuffle
+              ? 'text-custom-500 hover:text-custom-600'
+              : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-100'
+          }
+          icon="uil:shuffle"
+        />
+      )}
       <IconButton
         onClick={lastMusic}
         className="text-bg-500 hover:text-bg-800 dark:hover:text-bg-100"
@@ -55,18 +63,20 @@ export default function ControlButtons(): React.ReactElement {
         className="text-bg-500 hover:text-bg-800 dark:hover:text-bg-100"
         icon="tabler:skip-forward"
       />
-      <IconButton
-        onClick={() => {
-          setIsRepeat(!isRepeat)
-          if (isRepeat) setIsShuffle(false)
-        }}
-        className={
-          isRepeat
-            ? 'text-custom-500 hover:text-custom-600'
-            : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-100'
-        }
-        icon="uil:repeat"
-      />
+      {(isFull || !isWidget) && (
+        <IconButton
+          onClick={() => {
+            setIsRepeat(!isRepeat)
+            if (isRepeat) setIsShuffle(false)
+          }}
+          className={
+            isRepeat
+              ? 'text-custom-500 hover:text-custom-600'
+              : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-100'
+          }
+          icon="uil:repeat"
+        />
+      )}
     </div>
   )
 }

@@ -1,10 +1,10 @@
 /* eslint-disable import/no-named-as-default-member */
 import i18n from 'i18next'
-import Backend from 'i18next-http-backend'
+import I18NextHttpBackend from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 
 i18n
-  .use(Backend)
+  .use(I18NextHttpBackend)
   .use(initReactI18next)
   .init({
     lng: navigator.language ?? 'en',
@@ -12,7 +12,10 @@ i18n
     interpolation: {
       escapeValue: false
     },
-    debug: process.env.NODE_ENV === 'development'
+    debug: process.env.NODE_ENV === 'development',
+    backend: {
+      loadPath: `${import.meta.env.VITE_API_HOST}/locales/{{lng}}`
+    }
   })
   .catch(() => {
     console.error('Failed to initialize i18n')

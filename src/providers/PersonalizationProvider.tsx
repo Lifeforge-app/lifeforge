@@ -7,32 +7,32 @@ import { toast } from 'react-toastify'
 import { useAuthContext } from './AuthProvider'
 import THEME_COLOR_HEX from '../constants/theme_color_hex'
 
+type DashboardLayoutType = Record<
+  string,
+  Array<{
+    x: number
+    y: number
+    w: number
+    h: number
+    i: string
+    minW: number
+    minH: number
+  }>
+>
+
 interface IPersonalizationData {
   theme: 'light' | 'dark' | 'system'
   themeColor: string
   bgTemp: string
   language: string
-  dashboardLayout: Record<
-    string,
-    Array<{ x: number; y: number; w: number; h: number; i: string }>
-  >
+  dashboardLayout: DashboardLayoutType
   setTheme: (theme: 'light' | 'dark' | 'system') => void
   setThemeColor: (color: string) => void
   setBgTemp: (color: string) => void
   setLanguage: (language: string) => void
-  setDashboardLayout: (
-    layout: Record<
-      string,
-      Array<{ x: number; y: number; w: number; h: number; i: string }>
-    >
-  ) => void
+  setDashboardLayout: (layout: DashboardLayoutType) => void
   setDashboardLayoutWithoutPost: React.Dispatch<
-    React.SetStateAction<
-      Record<
-        string,
-        Array<{ x: number; y: number; w: number; h: number; i: string }>
-      >
-    >
+    React.SetStateAction<DashboardLayoutType>
   >
 }
 
@@ -52,12 +52,9 @@ export default function PersonalizationProvider({
   const [themeColor, setThemeColor] = useState('theme-teal')
   const [bgTemp, setBgTemp] = useState('bg-neutral')
   const [language, setLanguage] = useState('en')
-  const [dashboardLayout, setDashboardLayout] = useState<
-    Record<
-      string,
-      Array<{ x: number; y: number; w: number; h: number; i: string }>
-    >
-  >({})
+  const [dashboardLayout, setDashboardLayout] = useState<DashboardLayoutType>(
+    {}
+  )
 
   useEffect(() => {
     if (userData?.theme !== undefined) {
@@ -245,12 +242,7 @@ export default function PersonalizationProvider({
       })
   }
 
-  function changeDashboardLayout(
-    layout: Record<
-      string,
-      Array<{ x: number; y: number; w: number; h: number; i: string }>
-    >
-  ): void {
+  function changeDashboardLayout(layout: DashboardLayoutType): void {
     setDashboardLayout(layout)
     fetch(`${import.meta.env.VITE_API_HOST}/user/personalization`, {
       method: 'PATCH',
