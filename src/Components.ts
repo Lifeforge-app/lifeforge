@@ -83,6 +83,9 @@ const Transactions = lazy(
 const WalletProvider = lazy(
   async () => await import('./providers/WalletProvider')
 )
+const LocalizationManager = lazy(
+  async () => await import('./modules/LocalizationManager')
+)
 
 export const COMPONENTS = {
   dashboard: {
@@ -184,5 +187,8 @@ export const COMPONENTS = {
     assets: Assets,
     ledgers: Ledgers,
     transactions: Transactions
+  },
+  'localization-manager': {
+    'localization-manager': LocalizationManager
   }
 }

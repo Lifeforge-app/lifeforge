@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
@@ -8,13 +9,14 @@ import { useWalletContext } from '@providers/WalletProvider'
 function AssetsBalanceCard(): React.ReactElement {
   const navigate = useNavigate()
   const { assets } = useWalletContext()
+  const { t } = useTranslation()
 
   return (
     <div className="col-span-1 row-span-2 flex h-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       <div className="flex items-center justify-between">
         <h1 className="flex items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:wallet" className="text-2xl" />
-          <span className="ml-2">Balances</span>
+          <span className="ml-2">{t('dashboard.widgets.balances')}</span>
         </h1>
         <Link
           to="./assets"

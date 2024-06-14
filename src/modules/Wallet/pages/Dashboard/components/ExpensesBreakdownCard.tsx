@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import React, { useMemo } from 'react'
 import { Doughnut } from 'react-chartjs-2'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -34,6 +35,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
       )
   }, [categories, transactions])
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   return (
     <div className="col-span-1 row-span-4 flex w-full min-w-0 flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
@@ -41,7 +43,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
         <h1 className="flex w-full min-w-0 items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:chart-donut-3" className="shrink-0 text-2xl" />
           <span className="ml-2 w-full min-w-0 truncate">
-            Expenses Breakdown
+            {t('dashboard.widgets.expensesBreakdown')}
           </span>
         </h1>
         <button
