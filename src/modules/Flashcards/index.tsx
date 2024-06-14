@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker'
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -75,11 +74,11 @@ export default function Flashcards(): React.ReactElement {
                     <div className="mt-auto space-y-2">
                       <progress
                         className="progress h-2 w-full rounded-lg bg-bg-200 dark:bg-bg-700"
-                        value={faker.datatype.number(100)}
+                        value={Math.floor(Math.random() * 100)}
                         max="100"
                       ></progress>
                       <p className="text-sm font-medium text-bg-500">
-                        {faker.datatype.number(100)}% complete
+                        {Math.floor(Math.random() * 100)}% complete
                       </p>
                     </div>
                     <button className="absolute right-4 top-4 hidden rounded-md p-2 text-bg-500 hover:bg-bg-700/30 hover:text-bg-100 group-hover:flex">
