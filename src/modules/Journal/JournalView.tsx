@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import {
-  MDXEditor,
-  headingsPlugin,
-  listsPlugin,
-  quotePlugin,
-  thematicBreakPlugin
-} from '@mdxeditor/editor'
+// import {
+//   MDXEditor,
+//   headingsPlugin,
+//   listsPlugin,
+//   quotePlugin,
+//   thematicBreakPlugin
+// } from '@mdxeditor/editor'
 import React, { useEffect } from 'react'
 
-import '@mdxeditor/editor/style.css'
+// import '@mdxeditor/editor/style.css'
 import { useNavigate, useParams } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
@@ -54,7 +54,7 @@ function JournalView(): React.ReactElement {
                 Edit
               </Button>
             </div>
-            <MDXEditor
+            {/* <MDXEditor
               markdown={entry.content}
               contentEditableClassName="prose max-w-full"
               readOnly
@@ -64,7 +64,7 @@ function JournalView(): React.ReactElement {
                 quotePlugin(),
                 thematicBreakPlugin()
               ]}
-            />
+            /> */}
           </>
         )}
       </APIComponentWithFallback>
