@@ -1,11 +1,14 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 function GoBackButton({
   onClick
 }: {
   onClick: () => void
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <button
       onClick={onClick}
@@ -13,7 +16,7 @@ function GoBackButton({
     >
       <Icon icon="tabler:chevron-left" className="text-lg sm:text-xl" />
       <span className="whitespace-nowrap text-base font-medium sm:text-lg">
-        Go back
+        {t('button.goBack')}
       </span>
     </button>
   )

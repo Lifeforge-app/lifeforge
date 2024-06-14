@@ -81,7 +81,11 @@ function SidebarItem({
                     )}
                   </span>
                 ) : (
-                  name
+                  t(
+                    `sidebar.${
+                      location.pathname.split('/').slice(1)[0]
+                    }.${toCamelCase(name)}`
+                  )
                 ))}
             </span>
           </a>

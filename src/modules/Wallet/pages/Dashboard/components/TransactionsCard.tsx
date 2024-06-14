@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -11,13 +12,16 @@ import { numberToMoney } from '@utils/strings'
 function TransactionsCard(): React.ReactElement {
   const { transactions, categories } = useWalletContext()
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   return (
     <div className="col-span-2 row-span-3 flex h-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       <div className="flex items-center justify-between gap-4">
         <h1 className="flex w-full items-center gap-2 text-xl font-semibold sm:w-auto">
           <Icon icon="tabler:list" className="text-2xl" />
-          <span className="ml-2">Recent Transactions</span>
+          <span className="ml-2">
+            {t('dashboard.widgets.recentTransactions')}
+          </span>
         </h1>
         <button
           onClick={() => {

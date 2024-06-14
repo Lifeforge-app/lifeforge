@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { type IWalletIncomeExpenses } from '@interfaces/wallet_interfaces'
 import { numberToMoney } from '@utils/strings'
 
@@ -13,12 +14,15 @@ function IncomeExpenseCard({
   data: IWalletIncomeExpenses | 'loading' | 'error'
 }): React.ReactElement {
   const isIncome = title.toLowerCase() === 'income'
+  const { t } = useTranslation()
 
   return (
     <div className="col-span-1 row-span-1 flex flex-col justify-between gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       <h1 className="flex items-center gap-2 text-xl font-semibold">
         <Icon icon={icon} className="text-2xl" />
-        <span className="ml-2">{title}</span>
+        <span className="ml-2">
+          {t(`dashboard.widgets.${isIncome ? 'income' : 'expenses'}`)}
+        </span>
       </h1>
       {typeof data !== 'string' && (
         <>

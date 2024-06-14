@@ -268,6 +268,17 @@ export const ROUTES: IRoutes[] = [
     ]
   },
   {
+    title: 'sso',
+    items: [
+      {
+        name: 'Localization Manager',
+        icon: 'mingcute:translate-line',
+        routes: { 'localization-manager': 'localization-manager' },
+        togglable: false
+      }
+    ]
+  },
+  {
     title: '',
     items: [
       {
