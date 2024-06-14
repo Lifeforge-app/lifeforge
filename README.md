@@ -85,7 +85,7 @@ Setting up Lifeforge can be a bit challenging and may require some technical exp
 
 ## 📈 Status
 
-Lifeforge is currently under active development, with new features being added regularly. If you encounter any bugs or issues, please report them [here](https://github.com/yourusername/lifeforge/issues), and they will be addressed promptly.
+Lifeforge is currently under active development, with new features being added regularly. If you encounter any bugs or issues, please report them [here](https://github.com/melvinchia3636lifeforge/issues), and they will be addressed promptly.
 
 ## 💡 Inspirations
 
