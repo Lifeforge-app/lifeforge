@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker'
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -224,9 +223,7 @@ function ProjectsM(): React.ReactElement {
                           />
                         </div>
                         <div className="flex flex-col items-start">
-                          <div className="font-semibold ">
-                            {faker.commerce.productName()}
-                          </div>
+                          <div className="font-semibold ">Lorem Ipsum</div>
                           <div className="text-sm text-bg-500">
                             {
                               ['Website', 'Mobile App', 'Desktop App'][
