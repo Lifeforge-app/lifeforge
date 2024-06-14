@@ -33,7 +33,7 @@ export default function MusicPlayer(): React.ReactElement {
               />
             </div>
             <div className="mb-4 flex flex-col items-center gap-1">
-              <h2 className="line-clamp-2 text-center font-semibold">
+              <h2 className="line-clamp-2 text-center text-lg font-semibold">
                 {currentMusic?.name}
               </h2>
               <p className="line-clamp-2 text-center text-bg-500">
