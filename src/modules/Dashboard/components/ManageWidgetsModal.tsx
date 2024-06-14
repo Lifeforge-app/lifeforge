@@ -22,14 +22,18 @@ function ManageWidgetsModal({
         icon="tabler:apps"
       />
       <ul className="flex flex-col gap-2 overflow-y-auto">
-        {Object.entries(DASHBOARD_WIDGETS).map(([key, { icon }]) => (
-          <ComponentListItem
-            key={key}
-            id={key}
-            icon={icon}
-            setReady={setReady}
-          />
-        ))}
+        {Object.entries(DASHBOARD_WIDGETS).map(
+          ([key, { icon, minW, minH }]) => (
+            <ComponentListItem
+              key={key}
+              id={key}
+              icon={icon}
+              minW={minW}
+              minH={minH}
+              setReady={setReady}
+            />
+          )
+        )}
       </ul>
     </Modal>
   )

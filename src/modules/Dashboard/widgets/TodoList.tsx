@@ -17,7 +17,7 @@ export default function TodoList(): React.ReactElement {
   const navigate = useNavigate()
 
   return (
-    <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-custom dark:bg-bg-900">
+    <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:clipboard-list" className="text-2xl" />
         <span className="ml-2">{t('dashboard.widgets.todoList.title')}</span>
@@ -26,7 +26,7 @@ export default function TodoList(): React.ReactElement {
         <APIComponentWithFallback data={entries}>
           <div className="flex flex-1 flex-col overflow-y-scroll ">
             {typeof entries !== 'string' && (
-              <ul className="mt-4 flex flex-1 flex-col gap-4 pb-24 sm:pb-8">
+              <ul className="flex flex-1 flex-col gap-4 pb-24 sm:pb-8">
                 {entries.length > 0 ? (
                   entries.map(entry => (
                     <TaskItem

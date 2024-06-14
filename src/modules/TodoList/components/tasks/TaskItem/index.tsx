@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React from 'react'
-import { useTodoListContext } from '@providers/TodoListProvider'
 import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
+import { useTodoListContext } from '@providers/TodoListProvider'
 import APIRequest from '@utils/fetchData'
 import SubtaskItem from './components/SubtaskItem'
 import TaskCompletionCheckbox from './components/TaskCompletionCheckbox'
@@ -102,7 +102,7 @@ function TaskItem({
         }`}
       >
         <div className="flex items-center gap-4">
-          {typeof lists !== 'string' && entry.list !== null && (
+          {typeof lists !== 'string' && entry.list !== '' && (
             <span
               className="h-10 w-1 shrink-0 rounded-full"
               style={{

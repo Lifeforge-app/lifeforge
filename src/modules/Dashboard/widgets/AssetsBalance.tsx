@@ -12,7 +12,7 @@ export default function AssetsBalance(): React.ReactElement {
   const [assets] = useFetch<IWalletAssetEntry[]>('wallet/assets/list')
 
   return (
-    <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-8 shadow-custom dark:bg-bg-900">
+    <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:wallet" className="text-2xl" />
         <span className="ml-2">
@@ -20,20 +20,22 @@ export default function AssetsBalance(): React.ReactElement {
         </span>
       </h1>
       <APIComponentWithFallback data={assets}>
-        <ul className="grid h-full grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 overflow-y-auto">
+        <ul className="grid h-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4 overflow-y-auto">
           {typeof assets !== 'string' &&
             assets.map(asset => (
               <Link
                 to={'/wallet/assets'}
                 key={asset.id}
-                className="flex h-full items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 pl-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 dark:hover:bg-bg-700/50"
+                className="flex h-full items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 pl-6 pr-0 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 dark:hover:bg-bg-700/50"
               >
-                <div className="flex items-center gap-4">
+                <div className="flex w-full min-w-0 items-center gap-4">
                   <div className="rounded-md bg-bg-700 p-2">
-                    <Icon icon="tabler:cash" className="size-6" />
+                    <Icon icon={asset.icon} className="size-6" />
                   </div>
-                  <div className="flex flex-col">
-                    <div className="font-semibold ">{asset.name}</div>
+                  <div className="flex w-full min-w-0 flex-col">
+                    <div className="w-full min-w-0 truncate font-semibold">
+                      {asset.name}
+                    </div>
                     <div className="text-sm text-bg-500">
                       RM {numberToMoney(asset.balance)}
                     </div>
