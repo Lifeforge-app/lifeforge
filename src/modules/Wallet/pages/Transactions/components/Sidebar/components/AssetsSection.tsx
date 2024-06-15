@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -12,6 +13,7 @@ function AssetsSection({
 }: {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { assets, transactions } = useWalletContext()
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -68,7 +70,7 @@ function AssetsSection({
                 >
                   <Icon icon={icon} className="size-6 shrink-0" />
                   <div className="w-full items-center justify-between truncate">
-                    {name}
+                    {name === 'All' ? t('sidebar.wallet.allAssets') : name}
                   </div>
                   <span className="text-sm">
                     {typeof transactions !== 'string' &&

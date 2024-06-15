@@ -39,8 +39,8 @@ export default async function APIRequest({
       if (!res.ok) throw new Error(data.message)
       if (successInfo) {
         toast.success(
-          t('common.success', {
-            action: t(`common.action.${toCamelCase(successInfo ?? '')}`)
+          t('fetch.success', {
+            action: t(`fetch.action.${toCamelCase(successInfo ?? '')}`)
           })
         )
       }
@@ -51,8 +51,8 @@ export default async function APIRequest({
     .catch(err => {
       if (failureInfo) {
         toast.error(
-          t('common.failure', {
-            action: t(`common.action.${toCamelCase(failureInfo ?? '')}`)
+          t('fetch.failure', {
+            action: t(`fetch.action.${toCamelCase(failureInfo ?? '')}`)
           })
         )
       }

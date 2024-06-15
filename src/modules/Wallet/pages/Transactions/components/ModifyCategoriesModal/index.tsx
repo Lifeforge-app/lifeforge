@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
 import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
@@ -30,6 +31,7 @@ function ModifyCategoriesModal({
     React.SetStateAction<IWalletCategoryEntry | null>
   >
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { refreshCategories } = useWalletContext()
   const [categoryType, setCategoryType] = useState<'income' | 'expenses'>(
     'income'
@@ -120,7 +122,7 @@ function ModifyCategoriesModal({
         >
           <span className="flex items-center gap-2 font-medium text-bg-500">
             <Icon icon="tabler:apps" className="size-6" />
-            Category type
+            {t('input.categoryType')}
           </span>
           {openType === 'update' && (
             <div
@@ -140,9 +142,7 @@ function ModifyCategoriesModal({
                 }
                 className="size-5"
               />
-              <span>
-                {categoryType[0].toUpperCase() + categoryType.slice(1)}
-              </span>
+              <span>{t(`dashboard.widgets.${categoryType}`)}</span>
             </div>
           )}
         </div>

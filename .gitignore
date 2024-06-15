@@ -28,3 +28,4 @@ yarn.lock
 .DS_Store
 # Million Lint
 .million
+.vercel

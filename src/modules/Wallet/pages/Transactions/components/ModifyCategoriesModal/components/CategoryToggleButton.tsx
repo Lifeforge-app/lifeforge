@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 function CategoryToggleButton({
   categoryType,
@@ -14,6 +15,8 @@ function CategoryToggleButton({
   label: string
   activeBgColor: string
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <button
       className={`flex w-1/2 items-center justify-center gap-2 rounded-md p-4 font-medium transition-all ${
@@ -26,7 +29,7 @@ function CategoryToggleButton({
       }}
     >
       <Icon icon={iconName} className="size-6" />
-      {label}
+      {t(`dashboard.widgets.${label.toLowerCase()}`)}
     </button>
   )
 }

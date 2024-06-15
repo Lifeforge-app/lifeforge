@@ -2,6 +2,7 @@
 
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import Button from '../ButtonsAndInputs/Button'
 
 function EmptyStateScreen({
@@ -21,11 +22,13 @@ function EmptyStateScreen({
   ctaContent?: string
   customCTAButton?: React.ReactElement
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
-    <div className="flex-center flex h-full w-full flex-col gap-6 ">
-      <Icon icon={icon} className="h-32 w-32" />
-      <h2 className="text-center text-3xl font-semibold">{title}</h2>
-      <p className="-mt-2 text-center text-lg text-bg-500">{description}</p>
+    <div className="flex-center flex size-full flex-col gap-6 ">
+      <Icon icon={icon} className="size-32" />
+      <h2 className="text-center text-3xl font-semibold">{t(title)}</h2>
+      <p className="-mt-2 text-center text-lg text-bg-500">{t(description)}</p>
       {customCTAButton ??
         (ctaContent && setModifyModalOpenType && (
           <Button

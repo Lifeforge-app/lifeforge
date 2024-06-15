@@ -63,7 +63,7 @@ function ContainerHeader({
                   <>
                     <Icon
                       icon="tabler:alert-triangle"
-                      className="mt-0.5 h-7 w-7 text-red-500"
+                      className="mt-0.5 size-7 text-red-500"
                     />
                     Failed to fetch data from server.
                   </>
@@ -112,7 +112,7 @@ function ContainerHeader({
                     <>
                       <Icon
                         icon="tabler:alert-triangle"
-                        className="mt-0.5 h-7 w-7 text-red-500"
+                        className="mt-0.5 size-7 text-red-500"
                       />
                       Failed to fetch data from server.
                     </>
@@ -144,7 +144,7 @@ function ContainerHeader({
           <HamburgerMenu largerPadding className="relative">
             <MenuItem
               icon="tabler:archive"
-              text="Archived"
+              text="View Archived"
               onClick={() => {
                 setViewArchived(true)
               }}

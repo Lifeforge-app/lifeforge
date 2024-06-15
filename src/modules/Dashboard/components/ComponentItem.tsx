@@ -20,6 +20,7 @@ function ComponentListItem({
   const { t } = useTranslation()
   const {
     dashboardLayout: enabledWidgets,
+    setDashboardLayout,
     setDashboardLayoutWithoutPost: setEnabledWidgets
   } = usePersonalizationContext()
 
@@ -78,6 +79,9 @@ function ComponentListItem({
       ])
     )
     setEnabledWidgets(newEnabledWidgets)
+    if (Object.values(newEnabledWidgets).every(e => e.length === 0)) {
+      setDashboardLayout({})
+    }
 
     setTimeout(() => {
       setReady(true)

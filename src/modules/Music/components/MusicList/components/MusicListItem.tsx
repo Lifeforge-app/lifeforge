@@ -4,8 +4,8 @@ import React from 'react'
 import { toast } from 'react-toastify'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { useMusicContext } from '@providers/MusicProvider'
 import { type IMusicEntry } from '@interfaces/music_interfaces'
+import { useMusicContext } from '@providers/MusicProvider'
 import forceDown from '@utils/forceDown'
 
 function MusicListItem({ music }: { music: IMusicEntry }): React.ReactElement {
@@ -48,7 +48,7 @@ function MusicListItem({ music }: { music: IMusicEntry }): React.ReactElement {
           />
         </button>
         <div className="w-full min-w-0">
-          <p className="w-full min-w-0 truncate">{music.name}</p>
+          <p className="w-full min-w-0 truncate pr-8">{music.name}</p>
           <p className="block w-full min-w-0 truncate text-sm text-bg-500 md:hidden">
             {music.author} <span className="text-bg-500">•</span>{' '}
             {moment
@@ -58,7 +58,7 @@ function MusicListItem({ music }: { music: IMusicEntry }): React.ReactElement {
         </div>
       </div>
       <div className="hidden w-3/12 min-w-0 text-bg-500 lg:block">
-        <p className="w-96 min-w-0 truncate">{music.author}</p>
+        <p className="w-full min-w-0 truncate pr-8">{music.author}</p>
       </div>
       <div className="hidden w-3/12 min-w-0 text-bg-500 sm:block lg:w-2/12">
         {moment

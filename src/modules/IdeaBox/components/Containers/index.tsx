@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
 import ContainerItem from './components/ContainerItem'
 
@@ -18,6 +19,8 @@ function Container({
     React.SetStateAction<boolean>
   >
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <div className="mt-6 grid w-full grid-cols-[repeat(auto-fill,minmax(18rem,1fr))] gap-6 px-3 pb-12">
       {filteredList.map(container => (
@@ -35,14 +38,14 @@ function Container({
         onClick={() => {
           setCreateContainerModalOpen('create')
         }}
-        className="relative flex h-full flex-col flex-center gap-6 rounded-lg border-2 border-dashed border-bg-400 p-8 hover:bg-bg-200 dark:border-bg-700 dark:hover:bg-bg-800/20"
+        className="flex-center relative flex h-full flex-col gap-6 rounded-lg border-2 border-dashed border-bg-400 p-8 hover:bg-bg-200 dark:border-bg-700 dark:hover:bg-bg-800/20"
       >
         <Icon
           icon="tabler:cube-plus"
           className="size-8 text-bg-500 dark:text-bg-100"
         />
         <div className="text-xl font-semibold text-bg-500 dark:text-bg-100">
-          Create container
+          {t('button.createContainer')}
         </div>
       </button>
     </div>

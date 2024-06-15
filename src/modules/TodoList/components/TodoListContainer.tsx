@@ -65,7 +65,7 @@ function TodoListContainer(): React.ReactElement {
                 title="No tasks found"
                 description="You can create a new task by clicking the button below."
                 icon="tabler:article-off"
-                ctaContent="Create a new task"
+                ctaContent="new task"
                 setModifyModalOpenType={setModifyTaskWindowOpenType}
               />
             )}

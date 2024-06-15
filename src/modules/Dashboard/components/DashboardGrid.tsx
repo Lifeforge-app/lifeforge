@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useEffect, useState } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import Achievements from '../widgets/Achievements'
@@ -83,7 +84,15 @@ function DashboardGrid({
     return <div>Loading...</div>
   }
 
-  return (
+  return Object.values(enabledWidgets).every(e => e.length === 0) ? (
+    <div className="flex h-full flex-1 items-center justify-center">
+      <EmptyStateScreen
+        title="emptyState.dashboard.title"
+        description="emptyState.dashboard.description"
+        icon="tabler:apps-off"
+      />
+    </div>
+  ) : (
     // @ts-expect-error cannot fix
     <ResponsiveGridLayout
       className={`mt-6 ${canLayoutChange ? 'mb-64' : ''}`}
