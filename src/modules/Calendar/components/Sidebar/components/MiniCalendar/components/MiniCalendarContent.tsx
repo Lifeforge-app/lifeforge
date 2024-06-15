@@ -4,6 +4,7 @@ import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import MiniCalendarDateItem from './MiniCalendarDateItem'
 
 function MiniCalendarContent({
@@ -17,9 +18,16 @@ function MiniCalendarContent({
   events: ICalendarEvent[]
   categories: ICalendarCategory[] | 'loading' | 'error'
 }): React.ReactElement {
+  const { language } = usePersonalizationContext()
+
   return (
     <div className="grid grid-cols-7 gap-4">
-      {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
+      {{
+        en: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        'zh-CN': ['一', '二', '三', '四', '五', '六', '日'],
+        'zh-TW': ['一', '二', '三', '四', '五', '六', '日'],
+        ms: ['Is', 'Se', 'Ra', 'Kh', 'Ju', 'Sa', 'Ah']
+      }[language ?? 'en']?.map(day => (
         <div key={day} className="flex-center flex text-sm text-bg-500">
           {day}
         </div>

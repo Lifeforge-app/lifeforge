@@ -6,11 +6,23 @@ const DASHBOARD_WIDGETS: Record<
     minH?: number
   }
 > = {
+  date: {
+    icon: 'tabler:calendar-clock',
+    minW: 2
+  },
+  clock: {
+    icon: 'tabler:clock'
+  },
+  quotes: {
+    icon: 'tabler:quote'
+  },
   quickActions: {
     icon: 'tabler:layout-grid'
   },
   miniCalendar: {
-    icon: 'tabler:calendar'
+    icon: 'tabler:calendar',
+    minH: 4,
+    minW: 2
   },
   todaysEvent: {
     icon: 'tabler:calendar-event'

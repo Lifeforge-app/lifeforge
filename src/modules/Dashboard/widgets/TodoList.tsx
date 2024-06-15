@@ -43,7 +43,7 @@ export default function TodoList(): React.ReactElement {
                   <EmptyStateScreen
                     title="No tasks for today"
                     description="Head to the Todo List module to create a new task."
-                    icon="tabler:mood-smile"
+                    icon="tabler:calendar-smile"
                     ctaContent="new task"
                     setModifyModalOpenType={() => {
                       navigate('/todo-list#new')
