@@ -20,7 +20,7 @@ function TransactionsCard(): React.ReactElement {
         <h1 className="flex w-full items-center gap-2 text-xl font-semibold sm:w-auto">
           <Icon icon="tabler:list" className="text-2xl" />
           <span className="ml-2">
-            {t('dashboard.widgets.recentTransactions')}
+            {t('dashboard.widgets.recentTransactions.title')}
           </span>
         </h1>
         <button
@@ -46,12 +46,21 @@ function TransactionsCard(): React.ReactElement {
             <>
               <table className="hidden w-full !text-base lg:table">
                 <thead>
-                  <tr className="border-b-2 border-bg-200 text-center text-bg-500 dark:border-bg-800">
-                    <th className="py-2">Date</th>
-                    <th className="py-2">Type</th>
-                    <th className="py-2 text-left">Particular</th>
-                    <th className="py-2">Category</th>
-                    <th className="py-2">Amount</th>
+                  <tr className="border-b-2 border-bg-200 text-center text-base text-bg-500 dark:border-bg-800">
+                    {['date', 'type', 'particulars', 'category', 'amount'].map(
+                      header => (
+                        <th
+                          key={header}
+                          className={`py-2 font-medium ${
+                            header === 'particulars'
+                              ? 'text-left'
+                              : 'text-center'
+                          }`}
+                        >
+                          {t(`table.${header}`)}
+                        </th>
+                      )
+                    )}
                   </tr>
                 </thead>
                 <tbody>

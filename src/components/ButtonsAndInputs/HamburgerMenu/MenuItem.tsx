@@ -1,6 +1,8 @@
 import { Menu } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { toCamelCase } from '@utils/strings'
 
 function getActiveClass(active?: boolean, isRed?: boolean): string {
   if (active === true) {
@@ -33,6 +35,8 @@ function MenuItem({
   disabled?: boolean
   preventDefault?: boolean
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <Menu.Item>
       {function ({ active }) {
@@ -54,7 +58,9 @@ function MenuItem({
             {icon !== undefined && (
               <Icon icon={icon} className="size-5 shrink-0" />
             )}
-            <span className="w-full whitespace-nowrap">{text}</span>
+            <span className="w-full whitespace-nowrap">
+              {t(`button.${toCamelCase(text)}`)}
+            </span>
             {isToggled === true && (
               <Icon
                 icon="tabler:check"

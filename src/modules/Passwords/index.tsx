@@ -3,6 +3,7 @@
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import FAB from '@components/ButtonsAndInputs/FAB'
@@ -13,8 +14,8 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
-import { useAuthContext } from '@providers/AuthProvider'
 import { type IPasswordEntry } from '@interfaces/password_interfaces'
+import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 import CreatePassword from './CreatePassword'
@@ -22,6 +23,7 @@ import CreatePasswordModal from './CreatePasswordModal'
 import PasswordEntryITem from './PasswordEntryItem'
 
 function Passwords(): React.ReactElement {
+  const { t } = useTranslation()
   const { userData } = useAuthContext()
   const [masterPassWordInputContent, setMasterPassWordInputContent] =
     useState<string>('')
@@ -61,7 +63,7 @@ function Passwords(): React.ReactElement {
       if (res.ok && data.state === 'success') {
         return data.data
       } else {
-        throw new Error('Failed to get challenge')
+        throw new Error(t('vault.failedToUnlock'))
       }
     })
 
@@ -74,15 +76,18 @@ function Passwords(): React.ReactElement {
       },
       callback: data => {
         if (data.data === true) {
-          toast.info('Vault unlocked')
+          toast.info(t('vault.unlocked'))
           setMasterPassword(masterPassWordInputContent)
           setMasterPassWordInputContent('')
         } else {
-          toast.error('Incorrect password')
+          toast.error(t('vault.failedToUnlock'))
         }
       },
       finalCallback: () => {
         setLoading(false)
+      },
+      onFailure: () => {
+        toast.error(t('vault.failedToUnlock'))
       }
     })
   }
@@ -111,9 +116,9 @@ function Passwords(): React.ReactElement {
       ) : masterPassword === '' ? (
         <div className="flex-center flex size-full flex-1 flex-col gap-4">
           <Icon icon="tabler:lock-access" className="size-28" />
-          <h2 className="text-4xl font-semibold">Your vault is locked</h2>
+          <h2 className="text-4xl font-semibold">{t('vault.lockedMessage')}</h2>
           <p className="mb-8 text-center text-lg text-bg-500">
-            A master password is required to decrypt your passwords.
+            {t('vault.passwordRequired')}
           </p>
           <Input
             isPassword

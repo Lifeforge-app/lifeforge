@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
 import APIRequest from '@utils/fetchData'
@@ -22,6 +23,7 @@ function SubtaskBoxHeader({
   summary: string
   notes: string
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [AIGenerateLoading, setAIGenerateLoading] = useState(false)
   async function AIGenerateSubtask(): Promise<void> {
     if (summary === '') {
@@ -59,7 +61,7 @@ function SubtaskBoxHeader({
     <div className="flex w-full items-center justify-between gap-6">
       <div className="flex items-center gap-5 text-bg-500">
         <Icon icon="icon-park-outline:right-branch" className="size-6" />
-        <h2 className="font-medium">Subtasks</h2>
+        <h2 className="font-medium">{t('input.subtasks')}</h2>
       </div>
       <div className="flex items-center gap-2">
         <button

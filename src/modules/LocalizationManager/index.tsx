@@ -30,7 +30,7 @@ function LocalizationManager(): React.ReactElement {
     <ModuleWrapper>
       <div className="flex size-full items-center justify-center">
         <p className="text-2xl font-medium text-bg-500">
-          {t('common.redirecting')}
+          {t('fetch.redirecting')}
         </p>
       </div>
     </ModuleWrapper>

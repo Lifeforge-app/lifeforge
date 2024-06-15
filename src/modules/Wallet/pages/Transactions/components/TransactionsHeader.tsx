@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
 import { useWalletContext } from '@providers/WalletProvider'
@@ -22,6 +23,7 @@ function TransactionsHeader({
     filteredTransactions
   } = useWalletContext()
   const [searchParams, setSearchParams] = useSearchParams()
+  const { t } = useTranslation()
 
   useEffect(() => {
     const params = searchParams.get('type')
@@ -80,8 +82,11 @@ function TransactionsHeader({
     <div className="flex items-center justify-between">
       <div>
         <h1 className="text-3xl font-semibold lg:text-4xl">
-          {searchParams.size === 0 && searchQuery === '' ? 'All' : 'Filtered'}{' '}
-          Transactions{' '}
+          {t(
+            `wallet.header.${
+              searchParams.size === 0 && searchQuery === '' ? 'all' : 'filtered'
+            }Transactions`
+          )}{' '}
           <span className="text-base text-bg-500">
             ({filteredTransactions.length})
           </span>
