@@ -8,7 +8,9 @@ import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import Achievements from '../widgets/Achievements'
 import AssetsBalance from '../widgets/AssetsBalance'
 import Bookshelf from '../widgets/Bookshelf'
+import Clock from '../widgets/Clock'
 import CodeTime from '../widgets/CodeTime'
+import Date from '../widgets/Date'
 import ExpensesBreakdown from '../widgets/ExpensesBreakdown'
 import FlashCards from '../widgets/FlashCards'
 import IdeaBox from '../widgets/IdexBox'
@@ -17,6 +19,8 @@ import Journal from '../widgets/Journal'
 import MiniCalendar from '../widgets/MiniCalendar'
 import MusicPlayer from '../widgets/MusicPlayer'
 import PomodoroTimer from '../widgets/PomodoroTimer'
+import QuickActions from '../widgets/QuickActions'
+import Quotes from '../widgets/Quotes'
 import RecentTransactions from '../widgets/RecentTransactions'
 import ServerStatus from '../widgets/ServerStatus'
 import Spotify from '../widgets/Spotify'
@@ -25,6 +29,9 @@ import TodaysEvent from '../widgets/TodaysEvent'
 import TodoList from '../widgets/TodoList'
 
 const COMPONENTS = {
+  date: Date,
+  clock: Clock,
+  quotes: Quotes,
   ideaBox: IdeaBox,
   todaysEvent: TodaysEvent,
   expensesBreakdown: ExpensesBreakdown,
@@ -42,7 +49,8 @@ const COMPONENTS = {
   bookshelf: Bookshelf,
   journal: Journal,
   achievements: Achievements,
-  musicPlayer: MusicPlayer
+  musicPlayer: MusicPlayer,
+  quickActions: QuickActions
 }
 
 function DashboardGrid({

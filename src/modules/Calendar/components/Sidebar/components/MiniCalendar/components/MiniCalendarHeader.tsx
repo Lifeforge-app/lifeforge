@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
-import moment from 'moment'
+import moment from 'moment/min/moment-with-locales'
 import React from 'react'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 function MiniCalendarHeader({
   currentMonth,
@@ -13,10 +14,16 @@ function MiniCalendarHeader({
   currentYear: number
   setCurrentYear: React.Dispatch<React.SetStateAction<number>>
 }): React.ReactElement {
+  const { language } = usePersonalizationContext()
+
   return (
     <div className="mb-6 flex items-center justify-between gap-2">
       <div className="whitespace-nowrap text-lg font-semibold ">
-        {moment().month(currentMonth).year(currentYear).format('MMMM YYYY')}
+        {moment()
+          .year(currentYear)
+          .month(currentMonth)
+          .locale(language)
+          .format(language.startsWith('zh') ? 'YYYY[年] MMMM' : 'MMMM YYYY')}
       </div>
       <div className="-mr-4 flex gap-1">
         <button
