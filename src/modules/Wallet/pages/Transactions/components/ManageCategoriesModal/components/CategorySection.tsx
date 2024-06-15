@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { type IWalletCategoryEntry } from '@interfaces/wallet_interfaces'
@@ -23,6 +24,7 @@ function CategorySection({
   setExistedData,
   setDeleteCategoriesConfirmationOpen
 }: CategorySectionProps): React.ReactElement {
+  const { t } = useTranslation()
   const filteredCategories = categories.filter(
     category => category.type === type
   )
@@ -32,7 +34,7 @@ function CategorySection({
       <div className="flex items-center justify-between gap-4">
         <h2 className="flex items-center gap-2 text-lg font-medium text-bg-500">
           <Icon icon={iconName} className="size-6" />
-          {type === 'income' ? 'Income' : 'Expenses'}
+          {t('dashboard.widgets.' + type)}
         </h2>
         <button
           onClick={() => {

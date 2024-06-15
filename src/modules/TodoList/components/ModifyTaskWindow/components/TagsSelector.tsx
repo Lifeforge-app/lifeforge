@@ -1,6 +1,7 @@
 import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import ListboxTransition from '@components/Listbox/ListboxTransition'
 import { useTodoListContext } from '@providers/TodoListProvider'
 
@@ -11,6 +12,7 @@ function TagsSelector({
   tags: string[]
   setTags: (tags: string[]) => void
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { tags: tagsList } = useTodoListContext()
 
   if (typeof tagsList === 'string') return <></>
@@ -39,7 +41,7 @@ function TagsSelector({
             <span
               className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:!text-custom-500 ${'top-6 -translate-y-1/2 text-[14px]'}`}
             >
-              Tags
+              {t('input.tags')}
             </span>
             <div className="relative mb-2 mt-9 flex w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-none sm:text-sm">
               <span className="-mt-px block">

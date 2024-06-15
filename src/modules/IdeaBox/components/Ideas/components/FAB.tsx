@@ -1,6 +1,7 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import {
   type IIdeaBoxEntry,
@@ -28,6 +29,7 @@ function FAB({
     React.SetStateAction<IIdeaBoxFolder | null>
   >
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { folderId } = useParams()
 
   return (
@@ -84,11 +86,11 @@ function FAB({
                               setModifyIdeaModalOpenType('create')
                             }
                           }}
-                          className={`group flex w-full items-center justify-end gap-4 rounded-md py-3 pr-2 ${
+                          className={`group flex w-full items-center justify-end gap-4 whitespace-nowrap rounded-md py-3 pr-2 ${
                             active ? 'text-bg-200' : 'text-bg-100'
                           }`}
                         >
-                          {name}
+                          {t(`ideaBox.entryType.${name.toLowerCase()}`)}
                           <button
                             className={`rounded-full ${
                               active ? 'bg-bg-300' : 'bg-bg-200'
@@ -109,12 +111,12 @@ function FAB({
               </Menu.Items>
             </Transition>
             <div
-              className={`fixed left-0 top-0 h-full w-full transition-transform ${
+              className={`fixed left-0 top-0 size-full transition-transform ${
                 open ? 'translate-x-0 duration-0' : 'translate-x-full delay-100'
               }`}
             >
               <div
-                className={`h-full w-full bg-bg-900/50 backdrop-blur-sm transition-opacity ${
+                className={`size-full bg-bg-900/50 backdrop-blur-sm transition-opacity ${
                   open ? 'opacity-100' : 'opacity-0'
                 }`}
               />

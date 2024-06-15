@@ -1,14 +1,17 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { useWalletContext } from '@providers/WalletProvider'
+import { toCamelCase } from '@utils/strings'
 
 function TypeSection({
   setSidebarOpen
 }: {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { transactions } = useWalletContext()
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -62,7 +65,11 @@ function TypeSection({
               }`}
             />
             <div className="w-full items-center justify-between truncate">
-              {name}
+              {t(
+                `sidebar.wallet.${
+                  name === 'All' ? 'allType' : toCamelCase(name)
+                }`
+              )}
             </div>
             <span className="text-sm">
               {typeof transactions !== 'string' &&

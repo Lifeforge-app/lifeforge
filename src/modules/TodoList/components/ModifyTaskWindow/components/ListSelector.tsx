@@ -1,6 +1,7 @@
 import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import ListboxInputWrapper from '@components/Listbox/ListboxInputWrapper'
 import ListboxTransition from '@components/Listbox/ListboxTransition'
 import { useTodoListContext } from '@providers/TodoListProvider'
@@ -12,6 +13,7 @@ function ListSelector({
   list: string | null
   setList: (list: string) => void
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { lists } = useTodoListContext()
 
   if (typeof lists === 'string') return <></>
@@ -33,7 +35,7 @@ function ListSelector({
         <span
           className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:!text-custom-500 ${'top-6 -translate-y-1/2 text-[14px]'}`}
         >
-          List
+          {t('input.lists')}
         </span>
         <div className="relative mb-2 mt-9 flex w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-none sm:text-sm">
           <span

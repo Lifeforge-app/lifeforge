@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 function NotesInput({
   notes,
@@ -8,6 +9,8 @@ function NotesInput({
   notes: string
   updateNotes: (e: React.FormEvent<HTMLTextAreaElement>) => void
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <div
       onFocus={e => {
@@ -30,7 +33,7 @@ function NotesInput({
           }
           `}
         >
-          Notes
+          {t('input.notes')}
         </span>
         <textarea
           value={notes}
@@ -40,7 +43,7 @@ function NotesInput({
             updateNotes(e)
           }}
           placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-          className="mt-4 min-h-[2rem] w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
+          className="mt-4 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
         />
       </div>
     </div>

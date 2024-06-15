@@ -70,14 +70,16 @@ function StatisticChardCard(): React.ReactElement {
           <span className="ml-2">{t('dashboard.widgets.statistics')}</span>
         </h1>
         <div className="hidden items-center gap-8 sm:flex">
-          <div className="flex items-center gap-2">
-            <span className="-mb-0.5 size-3 rounded-full bg-green-500"></span>
-            <span className="text-sm">Income</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="-mb-0.5 size-3 rounded-full bg-red-500"></span>
-            <span className="text-sm">Expenses</span>
-          </div>
+          {['income', 'expenses'].map(type => (
+            <div key={type} className="flex items-center gap-2">
+              <span
+                className={`-mb-0.5 size-3 rounded-full ${
+                  type === 'income' ? 'bg-green-500' : 'bg-red-500'
+                }`}
+              ></span>
+              <span className="text-sm">{t(`dashboard.widgets.${type}`)}</span>
+            </div>
+          ))}
         </div>
       </div>
       <div className="flex-center mt-6 flex size-full min-h-0 flex-1">

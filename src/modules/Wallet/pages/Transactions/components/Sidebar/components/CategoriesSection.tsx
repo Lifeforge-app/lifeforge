@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
@@ -15,6 +16,7 @@ function CategoriesSection({
   >
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { categories, transactions } = useWalletContext()
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -102,7 +104,7 @@ function CategoriesSection({
                     />
                   </div>
                   <div className="w-full items-center justify-between truncate">
-                    {name}
+                    {name === 'All' ? t('sidebar.wallet.allCategories') : name}
                   </div>
                   <span className="text-sm">
                     {typeof transactions !== 'string' &&

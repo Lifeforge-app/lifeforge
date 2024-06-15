@@ -87,7 +87,7 @@ function EntryContextMenu({
                 pinIdea(entry.id).catch(console.error)
               }}
               icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
-              text={`${entry.pinned ? 'Unpin from' : 'Pin to'} top`}
+              text={entry.pinned ? 'Unpin' : 'Pin'}
             />
           )}
           <MenuItem
@@ -95,7 +95,7 @@ function EntryContextMenu({
               archiveIdea(entry.id).catch(console.error)
             }}
             icon={entry.archived ? 'tabler:archive-off' : 'tabler:archive'}
-            text={`${entry.archived ? 'Unarchive' : 'Archive'} idea`}
+            text={entry.archived ? 'Unarchive' : 'Archive'}
           />
           {entry.type !== 'image' && (
             <MenuItem

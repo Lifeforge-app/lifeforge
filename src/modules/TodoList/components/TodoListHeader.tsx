@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
 import { type ITodoListTag } from '@interfaces/todo_list_interfaces'
@@ -10,6 +11,7 @@ function TodoListHeader({
 }: {
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { entries, lists, tags, setSelectedTask, setModifyTaskWindowOpenType } =
     useTodoListContext()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -20,12 +22,13 @@ function TodoListHeader({
     <div className="flex items-center justify-between">
       <div>
         <h1 className="text-3xl font-semibold  md:text-4xl">
-          {(() => {
-            const status = searchParams.get('status')
-            if (status === null || status === '') return 'All'
-            return status.charAt(0).toUpperCase() + status.slice(1)
-          })()}{' '}
-          Tasks{' '}
+          {t(
+            `todoList.header.${(() => {
+              const status = searchParams.get('status')
+              if (status === null || status === '') return 'All'
+              return status === 'today' ? 'todays' : status
+            })().toLowerCase()}Tasks`
+          )}{' '}
           <span className="text-base text-bg-500">({entries.length})</span>
         </h1>
         <div className="mt-2 flex flex-wrap items-center gap-2">

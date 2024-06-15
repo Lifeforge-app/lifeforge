@@ -43,7 +43,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
         <h1 className="flex w-full min-w-0 items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:chart-donut-3" className="shrink-0 text-2xl" />
           <span className="ml-2 w-full min-w-0 truncate">
-            {t('dashboard.widgets.expensesBreakdown')}
+            {t('dashboard.widgets.expensesBreakdown.title')}
           </span>
         </h1>
         <button

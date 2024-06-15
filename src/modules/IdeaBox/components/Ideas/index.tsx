@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 // @ts-expect-error no types available
 import Column from 'react-columns'
+import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -23,6 +24,7 @@ import ModifyIdeaModal from './components/ModifyIdeaModal'
 import ModifyFolderModal from '../Folder/components/ModifyModalFolder'
 
 function Ideas(): React.ReactElement {
+  const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
@@ -75,20 +77,28 @@ function Ideas(): React.ReactElement {
           {typeof data !== 'string' &&
             typeof folders !== 'string' &&
             (data.length === 0 && folders.length === 0 ? (
-              <EmptyStateScreen
-                setModifyModalOpenType={setModifyIdeaModalOpenType}
-                title="No ideas yet"
-                description="Hmm... Seems a bit empty here. Consider adding some innovative ideas."
-                icon="tabler:bulb-off"
-                ctaContent="new idea"
-              />
+              !viewArchived ? (
+                <EmptyStateScreen
+                  setModifyModalOpenType={setModifyIdeaModalOpenType}
+                  title="No ideas yet"
+                  description="Hmm... Seems a bit empty here. Consider adding some innovative ideas."
+                  icon="tabler:bulb-off"
+                  ctaContent="new idea"
+                />
+              ) : (
+                <EmptyStateScreen
+                  title="No archived ideas"
+                  description="You don't have any archived ideas yet."
+                  icon="tabler:archive-off"
+                />
+              )
             ) : (
               <>
                 {folders.length > 0 && !viewArchived && (
                   <div className="mt-6 px-8 sm:px-12">
                     <h2 className="mb-2 flex items-center gap-2 text-lg font-medium text-bg-500">
                       <Icon icon="tabler:folder" className="size-6" />
-                      Folders
+                      {t('ideaBox.entryType.folder')}
                     </h2>
                     <div className="mt-2 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
                       {folders.map(folder => (
