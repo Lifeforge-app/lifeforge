@@ -19,7 +19,7 @@ function App(): React.ReactElement {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
+        theme="dark"
       />
     </Providers>
   )
