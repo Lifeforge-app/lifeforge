@@ -26,9 +26,7 @@ function ModifyAssetsModal({
 }): React.ReactElement {
   const [assetName, setAssetName] = useState('')
   const [assetIcon, setAssetIcon] = useState('')
-  const [assetBalance, setAssetBalance] = useState<number | undefined>(
-    undefined
-  )
+  const [assetStartingBalance, setAssetStartingBalance] = useState<string>('')
   const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -38,12 +36,12 @@ function ModifyAssetsModal({
         if (existedData) {
           setAssetName(existedData.name)
           setAssetIcon(existedData.icon)
-          setAssetBalance(existedData.balance)
+          setAssetStartingBalance(`${existedData.balance}`)
         }
       } else {
         setAssetName('')
         setAssetIcon('')
-        setAssetBalance(undefined)
+        setAssetStartingBalance('')
       }
     }
   }, [openType, existedData])
@@ -53,13 +51,13 @@ function ModifyAssetsModal({
   }
 
   function updateAssetBalance(value: string | undefined): void {
-    setAssetBalance(value ? +value : undefined)
+    setAssetStartingBalance(value ?? '')
   }
 
   async function onSubmitButtonClick(): Promise<void> {
     if (
       assetName.trim().length === 0 ||
-      !assetBalance ||
+      !assetStartingBalance ||
       assetIcon.trim().length === 0
     ) {
       toast.error('Please fill in all the fields.')
@@ -75,7 +73,7 @@ function ModifyAssetsModal({
       body: {
         name: assetName,
         icon: assetIcon,
-        balance: assetBalance
+        balance: assetStartingBalance
       },
       successInfo: openType,
       failureInfo: openType,
@@ -117,10 +115,10 @@ function ModifyAssetsModal({
         />
         {openType === 'create' && (
           <CurrencyInputComponent
-            name="Balance"
+            name="Initial Balance"
             placeholder="0.00"
             icon="tabler:currency-dollar"
-            value={`${assetBalance}`}
+            value={`${assetStartingBalance}`}
             updateValue={updateAssetBalance}
             darker
             additionalClassName="mt-6"

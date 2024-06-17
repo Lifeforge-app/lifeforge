@@ -191,6 +191,14 @@ export const ROUTES: IRoutes[] = [
         icon: 'tabler:git-branch',
         routes: { repositories: 'repositories' },
         togglable: true
+      },
+      {
+        name: 'Guitar Tabs',
+        icon: 'mingcute:guitar-line',
+        routes: {
+          'guitar-tabs': 'guitar-tabs'
+        },
+        togglable: true
       }
     ]
   },
