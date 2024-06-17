@@ -82,7 +82,7 @@ function AssetListbox({
                   <div>
                     <span className="flex items-center gap-2">
                       <Icon icon={icon} className="size-5" />
-                      {t(`input.${toCamelCase(name)}`)}
+                      {name}
                     </span>
                   </div>
                   {selected && (
