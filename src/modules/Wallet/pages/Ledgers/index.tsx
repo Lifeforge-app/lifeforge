@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
+import FAB from '@components/ButtonsAndInputs/FAB'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -41,6 +42,7 @@ function Ledgers(): React.ReactElement {
           typeof ledgers !== 'string' &&
           ledgers.length > 0 && (
             <Button
+              className="hidden md:flex"
               onClick={() => {
                 setModifyModalOpenType('create')
               }}
@@ -94,6 +96,13 @@ function Ledgers(): React.ReactElement {
         }}
         updateDataList={refreshLedgers}
         nameKey="name"
+      />
+      <FAB
+        hideWhen="md"
+        onClick={() => {
+          setSelectedData(null)
+          setModifyModalOpenType('create')
+        }}
       />
     </ModuleWrapper>
   )
