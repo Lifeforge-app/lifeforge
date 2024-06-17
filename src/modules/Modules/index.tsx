@@ -4,8 +4,8 @@ import React from 'react'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import Loading from '@components/Screens/Loading'
-import { useAuthContext } from '@providers/AuthProvider'
 import { type IModuleEntry } from '@interfaces/module_interfaces'
+import { useAuthContext } from '@providers/AuthProvider'
 import APIRequest from '@utils/fetchData'
 import { titleToPath } from '@utils/strings'
 import ModuleItem from './ModuleItem'
@@ -35,6 +35,7 @@ const MODULES: IModuleEntry[] = [
   { name: 'Code Time', icon: 'tabler:code' },
   { name: 'Photos', icon: 'tabler:camera' },
   { name: 'Music', icon: 'tabler:music' },
+  { name: 'Guitar Tabs', icon: 'mingcute:guitar-line' },
   { name: 'Repositories', icon: 'tabler:git-branch' },
   { name: 'Pomodoro Timer', icon: 'tabler:clock-bolt' },
   { name: 'Flashcards', icon: 'tabler:cards' },

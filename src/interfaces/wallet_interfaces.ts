@@ -4,6 +4,7 @@ interface IWalletAssetEntry extends BasePBCollection {
   name: string
   icon: string
   balance: number
+  starting_balance: number
 }
 
 interface IWalletLedgerEntry extends BasePBCollection {

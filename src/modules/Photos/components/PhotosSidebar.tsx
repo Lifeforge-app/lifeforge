@@ -23,7 +23,7 @@ function PhotosSidebar(): React.ReactElement {
     <aside
       className={`absolute ${
         sidebarOpen ? 'left-0' : 'left-full'
-      } top-0 z-[9999] h-full w-full shrink-0 overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 lg:static lg:h-[calc(100%-2rem)] lg:w-1/4`}
+      } top-0 z-[9999] size-full shrink-0 overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 lg:static lg:h-[calc(100%-2rem)] lg:w-1/4`}
     >
       <div className="flex items-center justify-between px-8 py-4 lg:hidden">
         <GoBackButton
@@ -84,14 +84,14 @@ function PhotosSidebar(): React.ReactElement {
                   }}
                   className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 hover:bg-bg-100 dark:hover:bg-bg-800"
                 >
-                  <div className="flex-center flex h-10 w-10 shrink-0 rounded-md bg-bg-200/50 shadow-sm dark:bg-bg-700/50">
+                  <div className="flex-center flex size-10 shrink-0 rounded-md bg-bg-200/50 shadow-sm dark:bg-bg-700/50">
                     {album.cover !== '' ? (
                       <img
-                        src={`${
-                          import.meta.env.VITE_POCKETBASE_ENDPOINT
-                        }/api/files/${album.cover}?thumb=0x300`}
+                        src={`${import.meta.env.VITE_API_HOST}/media/${
+                          album.cover
+                        }?thumb=0x300`}
                         alt=""
-                        className="h-full w-full rounded-md object-cover"
+                        className="size-full rounded-md object-cover"
                       />
                     ) : (
                       <Icon
@@ -117,7 +117,7 @@ function PhotosSidebar(): React.ReactElement {
               }}
               className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800"
             >
-              <div className="flex-center flex h-10 w-10 shrink-0">
+              <div className="flex-center flex size-10 shrink-0">
                 <Icon
                   icon="tabler:arrow-right"
                   className="size-6 text-bg-500"
