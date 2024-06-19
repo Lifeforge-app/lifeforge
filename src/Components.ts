@@ -1,4 +1,5 @@
 import { lazy } from 'react'
+import Account from './modules/Account'
 
 const PhotosProvider = lazy(
   async () => await import('./providers/PhotosProvider')
@@ -194,5 +195,8 @@ export const COMPONENTS = {
   },
   'guitar-tabs': {
     'guitar-tabs': GuitarTabs
+  },
+  'account-settings': {
+    account: Account
   }
 }

@@ -39,7 +39,7 @@ function DeleteConfirmationModal({
 
     setLoading(true)
     await APIRequest({
-      endpoint: `${apiEndpoint}/${data.id}`,
+      endpoint: `${apiEndpoint}/${data.id ?? ''}`,
       method: 'DELETE',
       successInfo: 'delete',
       failureInfo: 'delete',

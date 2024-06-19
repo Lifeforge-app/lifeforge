@@ -183,7 +183,7 @@ export default function AuthProvider({
     if (userData) {
       return `${import.meta.env.VITE_API_HOST}/media/${userData.collectionId}/${
         userData.id
-      }/${userData.avatar}`
+      }/${userData.avatar}?thumb=256x0`
     }
     return ''
   }

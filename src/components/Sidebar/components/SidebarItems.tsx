@@ -14,11 +14,13 @@ function SidebarItems(): React.ReactElement {
   return (
     <ul className="flex flex-col gap-1 overflow-y-scroll overscroll-none pb-6">
       {ROUTES.map((item, index) => {
-        const enabledModules = item.items.filter(
-          subItem =>
-            !subItem.togglable ||
-            userData?.enabledModules.includes(titleToPath(subItem.name))
-        )
+        const enabledModules = item.items
+          .filter(
+            subItem =>
+              !subItem.togglable ||
+              userData?.enabledModules.includes(titleToPath(subItem.name))
+          )
+          .filter(subItem => subItem.hidden !== true)
 
         return (
           <Fragment
