@@ -34,13 +34,13 @@ function Music(): React.ReactElement {
         desc="..."
         actionButton={<AddMusicButton />}
       />
-      <div className="relative mt-4 flex h-full min-h-0 w-full min-w-0 flex-col sm:mt-0">
+      <div className="relative mt-4 flex size-full min-h-0 min-w-0 flex-col sm:mt-0">
         <SearchInput
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           stuffToSearch="musics"
         />
-        <div className="relative flex h-full w-full min-w-0 flex-col divide-y-2 divide-bg-200/50 overflow-y-auto dark:divide-bg-900">
+        <div className="relative flex size-full min-w-0 flex-col divide-y-2 divide-bg-200/50 overflow-y-auto dark:divide-bg-900">
           <APIComponentWithFallback data={musics}>
             {typeof musics !== 'string' &&
             musics.filter(music =>
@@ -75,7 +75,7 @@ function Music(): React.ReactElement {
       </div>
       <YoutubeDownloaderModal />
       <DeleteConfirmationModal
-        apiEndpoint="music/entry/delete"
+        apiEndpoint="music/entry"
         data={existedData}
         isOpen={isDeleteMusicConfirmationModalOpen}
         itemName="music"

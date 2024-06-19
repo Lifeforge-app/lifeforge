@@ -30,7 +30,7 @@ function CreatePassword(): React.ReactElement {
     setLoading(true)
 
     await APIRequest({
-      endpoint: 'passwords/master/create',
+      endpoint: 'passwords/master',
       method: 'POST',
       body: { password: newPassword, id: userData.id },
       successInfo:

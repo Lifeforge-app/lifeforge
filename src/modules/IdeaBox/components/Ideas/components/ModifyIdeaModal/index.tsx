@@ -151,8 +151,8 @@ function ModifyIdeaModal({
 
     await APIRequest({
       endpoint: `idea-box/idea/${
-        innerOpenType === 'create' ? 'create' : 'update'
-      }/${innerOpenType === 'create' ? containerId : existedData?.id}`,
+        innerOpenType === 'create' ? containerId : existedData?.id
+      }`,
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body:
         innerOpenType === 'create'

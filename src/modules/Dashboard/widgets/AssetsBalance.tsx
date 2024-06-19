@@ -9,7 +9,7 @@ import { numberToMoney } from '@utils/strings'
 
 export default function AssetsBalance(): React.ReactElement {
   const { t } = useTranslation()
-  const [assets] = useFetch<IWalletAssetEntry[]>('wallet/assets/list')
+  const [assets] = useFetch<IWalletAssetEntry[]>('wallet/assets')
 
   return (
     <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">

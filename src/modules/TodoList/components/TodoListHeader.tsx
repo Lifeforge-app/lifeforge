@@ -25,7 +25,11 @@ function TodoListHeader({
           {t(
             `todoList.header.${(() => {
               const status = searchParams.get('status')
-              if (status === null || status === '') return 'All'
+              const hasFilter =
+                searchParams.has('list') || searchParams.has('tag')
+              if (status === null || status === '') {
+                return hasFilter ? 'filtered' : 'all'
+              }
               return status === 'today' ? 'todays' : status
             })().toLowerCase()}Tasks`
           )}{' '}

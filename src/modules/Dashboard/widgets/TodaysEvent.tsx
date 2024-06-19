@@ -10,8 +10,8 @@ import {
 } from '@interfaces/calendar_interfaces'
 
 export default function TodaysEvent(): React.ReactElement {
-  const [rawEvents] = useFetch<ICalendarEvent[]>('calendar/event/list')
-  const [categories] = useFetch<ICalendarCategory[]>('calendar/category/list')
+  const [rawEvents] = useFetch<ICalendarEvent[]>('calendar/event')
+  const [categories] = useFetch<ICalendarCategory[]>('calendar/category')
   const { t } = useTranslation()
 
   return (
