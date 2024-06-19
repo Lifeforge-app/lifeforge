@@ -86,7 +86,7 @@ function Ledgers(): React.ReactElement {
         refreshLedgers={refreshLedgers}
       />
       <DeleteConfirmationModal
-        apiEndpoint="wallet/Ledgers/delete"
+        apiEndpoint="wallet/ledgers"
         isOpen={deleteLedgersConfirmationOpen}
         data={selectedData}
         itemName="ledger account"

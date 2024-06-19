@@ -13,12 +13,10 @@ import ModifyEventModal from './modals/ModifyEventModal'
 
 function CalendarModule(): React.ReactElement {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [rawEvents, refreshRawEvents, setRawEvents] = useFetch<
-    ICalendarEvent[]
-  >('calendar/event/list')
-  const [categories, refreshCategories] = useFetch<ICalendarCategory[]>(
-    'calendar/category/list'
-  )
+  const [rawEvents, refreshRawEvents, setRawEvents] =
+    useFetch<ICalendarEvent[]>('calendar/event')
+  const [categories, refreshCategories] =
+    useFetch<ICalendarCategory[]>('calendar/category')
   const [events, setEvents] = useState<ICalendarEvent[]>([])
   const [modifyEventModalOpenType, setModifyEventModalOpenType] = useState<
     'create' | 'update' | null

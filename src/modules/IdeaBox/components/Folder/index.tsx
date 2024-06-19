@@ -26,7 +26,7 @@ function Folder(): React.ReactElement {
   )
 
   const [data, refreshData] = useFetch<IIdeaBoxEntry[]>(
-    `idea-box/idea/list/${id}/${folderId}?archived=${viewArchived}`
+    `idea-box/idea/${id}/${folderId}?archived=${viewArchived}`
   )
   const [valid] = useFetch<boolean>(`idea-box/container/valid/${id}`)
 
@@ -136,7 +136,7 @@ function Folder(): React.ReactElement {
         onClose={() => {
           setDeleteIdeaModalOpen(false)
         }}
-        apiEndpoint="idea-box/idea/delete"
+        apiEndpoint="idea-box/idea"
         itemName="idea"
         data={existedData}
         updateDataList={refreshData}

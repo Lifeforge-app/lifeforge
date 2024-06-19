@@ -88,7 +88,7 @@ function ManageCategoriesModal({
         onClose={() => {
           setDeleteCategoriesConfirmationOpen(false)
         }}
-        apiEndpoint="wallet/category/delete"
+        apiEndpoint="wallet/category"
         data={existedData}
         updateDataList={refreshCategories}
         nameKey="name"

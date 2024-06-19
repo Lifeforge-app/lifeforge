@@ -61,7 +61,7 @@ function ModifyContainerModal({
 
     await APIRequest({
       endpoint:
-        `idea-box/container/${innerOpenType}` +
+        'idea-box/container' +
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: container,

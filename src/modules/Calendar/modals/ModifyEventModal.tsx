@@ -66,7 +66,7 @@ function ModifyEventModal({
 
     await APIRequest({
       endpoint:
-        `calendar/event/${innerOpenType}` +
+        'calendar/event' +
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: event,
@@ -156,7 +156,7 @@ function ModifyEventModal({
         />
       </Modal>
       <DeleteConfirmationModal
-        apiEndpoint="calendar/event/delete"
+        apiEndpoint="calendar/event"
         isOpen={isDeleteConfirmationModalOpen}
         data={existedData}
         itemName="event"

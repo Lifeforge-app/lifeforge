@@ -14,7 +14,7 @@ import ModifyAchievementModal from './ModifyAchievementModal'
 function Achievements(): React.ReactElement {
   const [selectedDifficulty, setSelectedDifficulty] = React.useState('easy')
   const [entries, refreshEntries] = useFetch<IAchievementEntry[]>(
-    'achievements/entry/list/' + selectedDifficulty
+    'achievements/entry/' + selectedDifficulty
   )
   const [modifyAchievementModalOpenType, setModifyAchievementModalOpenType] =
     useState<'create' | 'update' | null>(null)
@@ -131,7 +131,7 @@ function Achievements(): React.ReactElement {
         currentDifficulty={selectedDifficulty}
       />
       <DeleteConfirmationModal
-        apiEndpoint="achievements/entry/delete"
+        apiEndpoint="achievements/entry"
         data={existedData}
         isOpen={deleteAchievementConfirmationModalOpen}
         itemName="achievement"
