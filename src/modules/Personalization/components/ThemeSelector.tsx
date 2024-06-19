@@ -8,7 +8,7 @@ function ThemeSelector(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="w-full">
+    <div className="w-full px-4">
       <h3 className="block text-xl font-medium leading-normal">
         {t('personalization.themeSelector.title')}
       </h3>

@@ -300,6 +300,13 @@ export const ROUTES: IRoutes[] = [
         icon: 'tabler:info-circle',
         routes: { about: 'about' },
         togglable: false
+      },
+      {
+        name: 'Account Settings',
+        icon: 'tabler:user-cog',
+        routes: { account: 'account' },
+        togglable: false,
+        hidden: true
       }
     ]
   }

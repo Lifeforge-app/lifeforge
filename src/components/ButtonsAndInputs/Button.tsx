@@ -10,26 +10,36 @@ interface ButtonProps {
   onClick: () => void
   disabled?: boolean
   className?: string
-  type?: 'primary' | 'secondary'
+  type?: 'primary' | 'secondary' | 'no-bg'
   isRed?: boolean
 }
 
 function generateClassName(
+  hasChildren: boolean,
   isRed: boolean,
   type: string,
   className: string
 ): string {
-  const baseClass =
-    'flex items-center justify-center gap-2 rounded-lg p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-custom transition-all disabled:cursor-not-allowed disabled:bg-bg-500 disabled:hover:bg-bg-500 dark:text-bg-800'
+  const baseClass = `flex items-center justify-center gap-2 rounded-lg p-4 ${
+    hasChildren && 'pr-5'
+  } font-semibold uppercase tracking-wider shadow-custom transition-all disabled:cursor-not-allowed`
   let colorClass = ''
 
   if (isRed) {
-    colorClass = 'bg-red-500 hover:bg-red-600'
+    if (type !== 'no-bg') {
+      colorClass = 'bg-red-500 hover:bg-red-600 text-bg-100 dark:text-bg-800'
+    } else {
+      colorClass = 'text-red-500 hover:text-red-600 hover:bg-red-500/10'
+    }
   } else if (type === 'primary') {
-    colorClass = 'bg-custom-500 hover:bg-custom-600'
+    colorClass =
+      'bg-custom-500 hover:bg-custom-600 text-bg-100 dark:text-bg-800 disabled:bg-bg-500 disabled:hover:bg-bg-500'
+  } else if (type === 'no-bg') {
+    colorClass =
+      'hover:bg-bg-200 dark:hover:bg-bg-800 text-bg-500 hover:text-bg-800 dark:hover:text-bg-100 disabled:bg-bg-100/20 disabled:dark:bg-bg-950 disabled:hover:bg-bg-950 disabled:dark:hover:bg-bg-950 disabled:hover:text-bg-500 disabled:dark:hover:text-bg-500'
   } else {
     colorClass =
-      'bg-bg-300 text-bg-500 dark:text-bg-100 dark:bg-bg-500 hover:bg-bg-400/50 dark:hover:bg-bg-500/80'
+      'bg-bg-300 text-bg-500 dark:text-bg-100 dark:bg-bg-500 hover:bg-bg-400/50 dark:hover:bg-bg-500/80 text-bg-100 dark:text-bg-800 disabled:bg-bg-500 disabled:hover:bg-bg-500'
   }
 
   return `${baseClass} ${colorClass} ${className}`
@@ -51,7 +61,12 @@ function Button(props: ButtonProps): React.ReactElement {
   } = props
 
   const FinalElement = CustomElement ?? 'button'
-  const finalClassName = generateClassName(isRed, type, className)
+  const finalClassName = generateClassName(
+    Boolean(children),
+    isRed,
+    type,
+    className
+  )
 
   return (
     <FinalElement
