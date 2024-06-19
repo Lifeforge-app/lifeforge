@@ -73,7 +73,7 @@ function ModifyAssetsModal({
       body: {
         name: assetName,
         icon: assetIcon,
-        balance: assetStartingBalance
+        starting_balance: assetStartingBalance
       },
       successInfo: openType,
       failureInfo: openType,
@@ -91,7 +91,7 @@ function ModifyAssetsModal({
   return (
     <>
       {' '}
-      <Modal isOpen={openType !== null} minWidth="30rem">
+      <Modal isOpen={openType !== null} className="sm:min-w-[30rem]">
         <ModalHeader
           icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
           title={openType === 'create' ? 'Add Asset' : 'Edit Asset'}

@@ -70,7 +70,7 @@ function ModifyTransactionsModal({
               ? `${import.meta.env.VITE_API_HOST}/media/${
                   existedData.collectionId
                 }/${existedData.id}/${existedData.receipt}`
-              : ''
+              : null
           )
         }
       } else {
