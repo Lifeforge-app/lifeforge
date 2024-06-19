@@ -44,7 +44,7 @@ function FAB({
               <Icon
                 icon="tabler:plus"
                 className={`size-6 shrink-0 transition-all ${
-                  open && 'rotate-45'
+                  open ? 'rotate-45' : ''
                 }`}
               />
             </Menu.Button>
@@ -99,7 +99,7 @@ function FAB({
                             <Icon
                               icon={icon}
                               className={`size-5 text-bg-800 ${
-                                active && 'text-bg-300'
+                                active ? 'text-bg-300' : ''
                               }`}
                             />
                           </button>

@@ -21,7 +21,9 @@ function ReceiptModal({
         }}
       />
       <div className="flex w-full justify-center sm:w-96">
-        <img key={receiptSrc} src={receiptSrc} alt="receipt" />
+        {receiptSrc !== '' && (
+          <img key={receiptSrc} src={receiptSrc} alt="receipt" />
+        )}
       </div>
     </Modal>
   )

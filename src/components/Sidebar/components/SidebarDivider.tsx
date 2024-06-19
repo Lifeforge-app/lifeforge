@@ -8,7 +8,7 @@ function SidebarDivider({
   return (
     <li
       className={`${
-        !noMargin && 'my-4'
+        !noMargin ? 'my-4' : ''
       } h-px shrink-0 bg-bg-200 dark:bg-bg-700`}
     />
   )

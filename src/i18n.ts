@@ -12,7 +12,6 @@ i18n
     interpolation: {
       escapeValue: false
     },
-    debug: process.env.NODE_ENV === 'development',
     backend: {
       loadPath: `${import.meta.env.VITE_API_HOST}/locales/{{lng}}`
     }

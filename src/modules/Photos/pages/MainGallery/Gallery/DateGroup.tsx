@@ -98,7 +98,7 @@ function DateGroup({
           <h2 className="mb-2 flex items-end gap-2 text-xl font-semibold">
             <div
               className={`mb-0.5 overflow-hidden transition-all ${
-                !isSelectedAll && 'max-w-0 group-hover:max-w-8'
+                !isSelectedAll ? 'max-w-0 group-hover:max-w-8' : ''
               }`}
             >
               <button

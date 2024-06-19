@@ -28,7 +28,7 @@ function TableHeader({
               <th
                 key={column}
                 className={`p-2 font-medium ${
-                  column === 'Particulars' && 'text-left'
+                  column === 'Particulars' ? 'text-left' : ''
                 }`}
               >
                 {column !== '' && t(`table.${toCamelCase(column)}`)}

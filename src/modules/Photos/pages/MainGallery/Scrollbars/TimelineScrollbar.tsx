@@ -127,7 +127,7 @@ function TimelineScrollbar(): React.ReactElement {
                     .map(([month, date]) => (
                       <span
                         key={month}
-                        className="pointer-events-none absolute right-1/2 hidden h-1 w-1 -translate-y-1 translate-x-1/2 rounded-full bg-bg-400 dark:bg-bg-500 sm:flex"
+                        className="pointer-events-none absolute right-1/2 hidden size-1 -translate-y-1 translate-x-1/2 rounded-full bg-bg-400 dark:bg-bg-500 sm:flex"
                         style={{
                           top: `${eachDayDimensions[date as any]?.inTimeline}px`
                         }}
@@ -140,13 +140,13 @@ function TimelineScrollbar(): React.ReactElement {
           <div
             ref={movingTimelineDateDisplayRef}
             className={
-              'pointer-events-none absolute right-14 z-[10] hidden rounded-t-md border-b-2 border-custom-500 bg-bg-200 p-2 text-sm shadow-md dark:bg-bg-800 sm:right-3 sm:peer-hover:block'
+              'pointer-events-none absolute right-14 z-10 hidden rounded-t-md border-b-2 border-custom-500 bg-bg-200 p-2 text-sm shadow-md dark:bg-bg-800 sm:right-3 sm:peer-hover:block'
             }
           ></div>
           <div
             ref={timelineDateDisplayRef}
-            className={`pointer-events-none absolute right-14 z-[10] hidden rounded-t-md border-b-2 border-custom-500 bg-bg-200 p-2 text-sm shadow-md dark:bg-bg-800 sm:right-3 sm:block ${
-              isDraggingRef.current && '!hidden'
+            className={`pointer-events-none absolute right-14 z-10 hidden rounded-t-md border-b-2 border-custom-500 bg-bg-200 p-2 text-sm shadow-md dark:bg-bg-800 sm:right-3 sm:block ${
+              isDraggingRef.current ? '!hidden' : ''
             }`}
             style={{
               top: '-36px'

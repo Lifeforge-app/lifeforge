@@ -21,7 +21,7 @@ function TableView({
   >
 }): React.ReactElement {
   return (
-    <table className="mb-8 w-full">
+    <table className="mb-8 w-max">
       <TableHeader visibleColumn={visibleColumn} />
       <TableBody
         visibleColumn={visibleColumn}

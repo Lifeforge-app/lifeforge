@@ -36,7 +36,7 @@ export default function ProjectProgress({
   return (
     <APIComponentWithFallback data={projectData}>
       {typeof projectData !== 'string' && (
-        <div className="mb-12 mt-6 flex h-full min-h-0 w-full pr-8 sm:pr-12">
+        <div className="mb-12 mt-6 flex size-full min-h-0 pr-8 sm:pr-12">
           <APIComponentWithFallback data={progress}>
             {typeof progress !== 'string' && (
               <div className="flex w-full flex-col px-6">
@@ -63,7 +63,7 @@ export default function ProjectProgress({
                           ? 'bg-bg-900'
                           : 'bg-bg-900/50'
                       } ${
-                        index === progress.completed && 'hover:bg-bg-800/50'
+                        index === progress.completed ? 'hover:bg-bg-800/50' : ''
                       }`}
                     >
                       <div

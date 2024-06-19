@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { toCamelCase } from '@utils/strings'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
-import { useAuthContext } from '@providers/AuthProvider'
 import {
   type IModuleConfigSelect,
   type IModuleConfigSwitch,
   type IModuleConfigInput,
   type IModuleEntry
 } from '@interfaces/module_interfaces'
+import { useAuthContext } from '@providers/AuthProvider'
+import { toCamelCase } from '@utils/strings'
 
 function ModuleItem({
   module,
@@ -219,7 +219,7 @@ function ModuleItem({
             className="mt-6"
             icon={!saveLoading ? 'uil:save' : 'svg-spinners:180-ring'}
           >
-            {!saveLoading && 'Save'}
+            {!saveLoading ? 'Save' : ''}
           </Button>
         )}
       </form>

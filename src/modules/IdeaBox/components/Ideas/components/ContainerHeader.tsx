@@ -85,7 +85,7 @@ function ContainerHeader({
                         }}
                       />
                     </div>
-                    {viewArchived && 'Archived ideas in '}
+                    {viewArchived ? 'Archived ideas in ' : ''}
                     {containerDetails.name}
                   </>
                 )

@@ -75,7 +75,7 @@ function TaskListListItem({
               setIsMenuOpen(true)
             }}
             className={`relative overscroll-contain ${
-              !isMenuOpen && 'hidden group-hover:block'
+              !isMenuOpen ? 'hidden group-hover:block' : ''
             }`}
             onClose={() => {
               setIsMenuOpen(false)

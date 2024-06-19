@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { useTodoListContext } from '@providers/TodoListProvider'
-import { type ITodoListTag } from '@interfaces/todo_list_interfaces'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import { type ITodoListTag } from '@interfaces/todo_list_interfaces'
+import { useTodoListContext } from '@providers/TodoListProvider'
 
 function TaskTagListItem({
   item,
@@ -67,7 +67,7 @@ function TaskTagListItem({
               setIsMenuOpen(true)
             }}
             className={`relative overscroll-contain ${
-              !isMenuOpen && 'hidden group-hover:block'
+              !isMenuOpen ? 'hidden group-hover:block' : ''
             }`}
             onClose={() => {
               setIsMenuOpen(false)

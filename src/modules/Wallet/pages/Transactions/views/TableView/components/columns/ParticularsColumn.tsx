@@ -5,7 +5,7 @@ function ParticularsColumn({
 }: {
   particulars: string
 }): React.ReactElement {
-  return <td className="min-w-96 p-2">{particulars}</td>
+  return <td className="max-w-96 p-2">{particulars}</td>
 }
 
 export default ParticularsColumn

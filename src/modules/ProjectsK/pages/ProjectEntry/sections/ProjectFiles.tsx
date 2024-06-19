@@ -193,7 +193,7 @@ export default function ProjectFiles({
                       : 'tabler:download'
                   }
                 >
-                  {!fileDownloadLoading && 'download'}
+                  {!fileDownloadLoading ? 'download' : ''}
                 </Button>
               </div>
             </div>

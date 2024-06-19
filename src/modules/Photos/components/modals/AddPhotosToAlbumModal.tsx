@@ -164,7 +164,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
               className="mt-6"
               icon={loading ? 'svg-spinners:180-ring' : 'tabler:photo-plus'}
             >
-              {!loading && 'Add to album'}
+              {!loading ? 'Add to album' : ''}
             </Button>
           </>
         )}
