@@ -64,8 +64,8 @@ function CreatePassword(): React.ReactElement {
 
   return (
     <>
-      <div className="flex-center flex h-full w-full flex-1 flex-col gap-4">
-        <Icon icon="tabler:lock-plus" className="h-28 w-28" />
+      <div className="flex-center flex size-full flex-1 flex-col gap-4">
+        <Icon icon="tabler:lock-plus" className="size-28" />
         <h2 className="text-4xl font-semibold">Create your master password</h2>
         <p className="mb-8 w-1/2 text-center text-lg text-bg-500">
           A master password is required to encrypt and decrypt your passwords.
@@ -157,7 +157,7 @@ function CreatePassword(): React.ReactElement {
             icon={loading ? 'svg-spinners:180-ring' : 'tabler:check'}
             className="w-full"
           >
-            {!loading && 'Confirm'}
+            {!loading ? 'Confirm' : ''}
           </Button>
         </div>
       </Modal>

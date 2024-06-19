@@ -27,7 +27,7 @@ export default function ControlButtons({
   }
 
   return (
-    <div className={`flex items-center gap-2 ${!isWidget && 'xl:w-1/3'}`}>
+    <div className={`flex items-center gap-2 ${!isWidget ? 'xl:w-1/3' : ''}`}>
       {(isFull || !isWidget) && (
         <IconButton
           onClick={() => {

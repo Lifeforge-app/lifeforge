@@ -28,7 +28,7 @@ function TagsSelector({
       {({ open }) => (
         <div
           className={`group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom ${
-            open && '!border-custom-500 '
+            open ? '!border-custom-500 ' : ''
           } dark:bg-bg-800/50`}
         >
           <Listbox.Button className="flex w-full items-center">

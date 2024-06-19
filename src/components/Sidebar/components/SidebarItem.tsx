@@ -139,7 +139,7 @@ function SidebarItem({
         >
           <ul
             className={`flex w-full flex-col items-center gap-2 rounded-md ${
-              !sidebarExpanded && 'bg-bg-800'
+              !sidebarExpanded ? 'bg-bg-800' : ''
             }`}
           >
             {subsection.map(
@@ -153,7 +153,7 @@ function SidebarItem({
                   to={`./${titleToPath(name)}/${subsectionLink}`}
                   key={subsectionName}
                   className={`mx-4 flex w-full items-center ${
-                    !sidebarExpanded && 'justify-center'
+                    !sidebarExpanded ? 'justify-center' : ''
                   } gap-4 rounded-lg py-4 ${
                     sidebarExpanded ? 'pl-[3.8rem]' : 'px-2'
                   } font-medium transition-all hover:bg-bg-200/30 dark:hover:bg-bg-800  ${

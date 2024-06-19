@@ -232,14 +232,14 @@ function ImageObject({
       style={style}
       className={`group/image relative size-full min-w-20 overflow-hidden ${
         selected ? 'bg-custom-500/20' : 'bg-bg-200 dark:bg-bg-800'
-      } transition-all ${selectedPhotosLength > 0 && 'cursor-pointer'}`}
+      } transition-all ${selectedPhotosLength > 0 ? 'cursor-pointer' : ''}`}
     >
       {(ready || beingDisplayedInAlbum) &&
         photo.src.endsWith('/undefined?thumb=0x300') === false && (
           <>
             <div
               className={`size-full transition-all duration-300 ${
-                selected && 'p-4'
+                selected ? 'p-4' : ''
               } ${selectedPhotosLength > 0 ? 'pointer-events-none' : ''}`}
             >
               <Zoom
@@ -263,7 +263,7 @@ function ImageObject({
                   alt=""
                   src={photo.src}
                   className={`relative size-full object-cover ${
-                    selected && 'rounded-md'
+                    selected ? 'rounded-md' : ''
                   }`}
                   delayTime={300}
                   delayMethod="debounce"
