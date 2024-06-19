@@ -9,8 +9,8 @@ import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import { useAuthContext } from '@providers/AuthProvider'
 import { type IPasswordEntry } from '@interfaces/password_interfaces'
+import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 
@@ -89,7 +89,7 @@ function CreatePasswordModal({
     const encryptedMaster = encrypt(masterPassword, challenge)
 
     await APIRequest({
-      endpoint: `passwords/password/${openType}${
+      endpoint: `passwords/password${
         openType === 'update' ? `/${existedData?.id}` : ''
       }`,
       method: openType === 'create' ? 'POST' : 'PATCH',
@@ -212,7 +212,9 @@ function CreatePasswordModal({
             noAutoComplete
           />
           <CreateOrModifyButton
-            onClick={onSubmit}
+            onClick={() => {
+              onSubmit().catch(console.error)
+            }}
             loading={loading}
             className="mt-6"
             type={openType}

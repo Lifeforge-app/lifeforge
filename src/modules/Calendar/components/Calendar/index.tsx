@@ -4,13 +4,13 @@ import moment from 'moment'
 import React, { useCallback } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
-import APIRequest from '@utils/fetchData'
-import CalendarHeader from './components/CalendarHeader'
-import EventItem from './components/EventItem'
 import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
+import APIRequest from '@utils/fetchData'
+import CalendarHeader from './components/CalendarHeader'
+import EventItem from './components/EventItem'
 
 const localizer = momentLocalizer(moment)
 const DnDCalendar = withDragAndDrop(Calendar)
@@ -63,7 +63,7 @@ function CalendarComponent({
     })
 
     await APIRequest({
-      endpoint: `calendar/event/update/${event.id}`,
+      endpoint: `calendar/event/${event.id}`,
       method: 'PATCH',
       body: {
         title: event.title,

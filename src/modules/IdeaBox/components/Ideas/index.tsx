@@ -33,7 +33,7 @@ function Ideas(): React.ReactElement {
   )
 
   const [data, refreshData, setData] = useFetch<IIdeaBoxEntry[]>(
-    `idea-box/idea/list/${id}?archived=${viewArchived}`
+    `idea-box/idea/${id}?archived=${viewArchived}`
   )
   const [folders, refreshFolders] = useFetch<IIdeaBoxFolder[]>(
     `idea-box/folder/list/${id}`
@@ -198,7 +198,7 @@ function Ideas(): React.ReactElement {
         onClose={() => {
           setDeleteIdeaModalOpen(false)
         }}
-        apiEndpoint="idea-box/idea/delete"
+        apiEndpoint="idea-box/delete"
         itemName="idea"
         data={existedData}
         updateDataList={refreshData}
@@ -208,7 +208,7 @@ function Ideas(): React.ReactElement {
         onClose={() => {
           setDeleteFolderModalOpen(false)
         }}
-        apiEndpoint="idea-box/folder/delete"
+        apiEndpoint="idea-box/folder"
         itemName="folder"
         data={existedFolderData}
         updateDataList={refreshFolders}

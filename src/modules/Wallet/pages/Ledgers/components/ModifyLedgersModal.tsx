@@ -70,7 +70,7 @@ function ModifyLedgersModal({
 
     setIsLoading(true)
     await APIRequest({
-      endpoint: `wallet/ledgers/${openType}${
+      endpoint: `wallet/ledgers${
         openType === 'update' ? `/${existedData?.id}` : ''
       }`,
       method: openType === 'create' ? 'POST' : 'PATCH',

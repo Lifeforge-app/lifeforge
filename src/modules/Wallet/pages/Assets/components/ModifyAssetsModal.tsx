@@ -66,7 +66,7 @@ function ModifyAssetsModal({
 
     setIsLoading(true)
     await APIRequest({
-      endpoint: `wallet/assets/${openType}${
+      endpoint: `wallet/assets${
         openType === 'update' ? `/${existedData?.id}` : ''
       }`,
       method: openType === 'create' ? 'POST' : 'PATCH',

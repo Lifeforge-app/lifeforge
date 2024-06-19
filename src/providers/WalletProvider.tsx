@@ -34,15 +34,12 @@ export default function WalletProvider(): React.ReactElement {
   const [searchParams] = useSearchParams()
   const [transactions, refreshTransactions] = useFetch<
     IWalletTransactionEntry[]
-  >('wallet/transactions/list')
-  const [assets, refreshAssets] =
-    useFetch<IWalletAssetEntry[]>('wallet/assets/list')
-  const [ledgers, refreshLedgers] = useFetch<IWalletLedgerEntry[]>(
-    'wallet/ledgers/list'
-  )
-  const [categories, refreshCategories] = useFetch<IWalletCategoryEntry[]>(
-    'wallet/category/list'
-  )
+  >('wallet/transactions')
+  const [assets, refreshAssets] = useFetch<IWalletAssetEntry[]>('wallet/assets')
+  const [ledgers, refreshLedgers] =
+    useFetch<IWalletLedgerEntry[]>('wallet/ledgers')
+  const [categories, refreshCategories] =
+    useFetch<IWalletCategoryEntry[]>('wallet/category')
   const [incomeExpenses] = useFetch<IWalletIncomeExpenses>(
     `wallet/transactions/income-expenses/${new Date().getFullYear()}/${
       new Date().getMonth() + 1

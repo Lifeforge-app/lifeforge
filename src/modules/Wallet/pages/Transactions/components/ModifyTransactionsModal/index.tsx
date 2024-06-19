@@ -131,7 +131,7 @@ function ModifyTransactionsModal({
 
     setLoading(true)
     await APIRequest({
-      endpoint: `wallet/transactions/${openType}${
+      endpoint: `wallet/transactions${
         openType === 'update' ? `/${existedData?.id}` : ''
       }`,
       method: openType === 'create' ? 'POST' : 'PATCH',

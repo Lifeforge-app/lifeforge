@@ -64,7 +64,7 @@ function ModifySubjectModal({
 
     await APIRequest({
       endpoint:
-        `notes/subject/${innerOpenType}` +
+        'notes/subject' +
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: subject,

@@ -63,7 +63,7 @@ function ModifyCategoryModal({
 
     await APIRequest({
       endpoint:
-        `calendar/category/${innerOpenType}` +
+        'calendar/category' +
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: category,

@@ -77,7 +77,7 @@ export function MusicProvider({
   const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(false)
   const [musics, refreshMusics, setMusics] = useFetch<IMusicEntry[]>(
-    'music/entry/list',
+    'music/entry',
     auth
   )
   const [isYoutubeDownloaderOpen, setIsYoutubeDownloaderOpen] = useState(false)

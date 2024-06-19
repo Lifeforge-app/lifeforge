@@ -71,11 +71,10 @@ export function TodoListProvider({
   const [searchParams] = useSearchParams()
   const [statusCounter, refreshStatusCounter] =
     useFetch<ITodoListStatusCounter>('todo-list/entry/status-counter')
-  const [lists, refreshLists] = useFetch<ITodoListList[]>('todo-list/list/list')
-  const [tagsList, refreshTagsList] =
-    useFetch<ITodoListTag[]>('todo-list/tag/list')
+  const [lists, refreshLists] = useFetch<ITodoListList[]>('todo-list/list')
+  const [tagsList, refreshTagsList] = useFetch<ITodoListTag[]>('todo-list/tag')
   const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry[]>(
-    `todo-list/entry/list?${
+    `todo-list/entry?${
       searchParams.get('status') !== null &&
       `status=${searchParams.get('status')}`
     }&tag=${searchParams.get('tag') ?? ''}&list=${

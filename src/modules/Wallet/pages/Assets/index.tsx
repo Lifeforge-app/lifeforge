@@ -95,7 +95,7 @@ function Assets(): React.ReactElement {
         refreshAssets={refreshAssets}
       />
       <DeleteConfirmationModal
-        apiEndpoint="wallet/assets/delete"
+        apiEndpoint="wallet/assets"
         isOpen={deleteAssetsConfirmationOpen}
         data={selectedData}
         itemName="asset account"

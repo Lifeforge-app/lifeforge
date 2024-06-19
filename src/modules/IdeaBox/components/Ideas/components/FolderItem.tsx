@@ -46,7 +46,7 @@ function FolderItem({
   async function putIntoFolder(id: string): Promise<void> {
     await APIRequest({
       method: 'POST',
-      endpoint: `idea-box/folder/add-idea/${folder.id}`,
+      endpoint: `idea-box/folder/idea/${folder.id}`,
       body: {
         ideaId: id
       },

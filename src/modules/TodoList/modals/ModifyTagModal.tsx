@@ -39,7 +39,7 @@ function ModifyTagModal(): React.ReactElement {
 
     await APIRequest({
       endpoint:
-        `todo-list/tag/${innerOpenType}` +
+        'todo-list/tag' +
         (innerOpenType === 'update' ? `/${selectedTag?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: tag,
@@ -98,7 +98,9 @@ function ModifyTagModal(): React.ReactElement {
 
         <CreateOrModifyButton
           loading={loading}
-          onClick={onSubmitButtonClick}
+          onClick={() => {
+            onSubmitButtonClick().catch(console.error)
+          }}
           type={innerOpenType}
         />
       </Modal>

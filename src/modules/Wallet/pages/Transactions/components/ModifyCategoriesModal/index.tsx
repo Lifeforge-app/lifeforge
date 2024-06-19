@@ -81,9 +81,9 @@ function ModifyCategoriesModal({
 
     setIsLoading(true)
     await APIRequest({
-      endpoint: `wallet/category/${
-        openType === 'update' ? 'update' : 'create'
-      }${openType === 'update' ? `/${existedData?.id}` : ''}`,
+      endpoint: `wallet/category${
+        openType === 'update' ? `/${existedData?.id}` : ''
+      }`,
       method: openType !== 'update' ? 'POST' : 'PATCH',
       body: {
         type: categoryType,

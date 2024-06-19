@@ -67,7 +67,7 @@ function TaskItem({
 
     await APIRequest({
       endpoint: `todo-list/entry/toggle/${entry.id}`,
-      method: 'PATCH',
+      method: 'POST',
       failureInfo: "Couldn't update the task. Please try again.",
       onFailure: () => {
         if (!isOuter) {

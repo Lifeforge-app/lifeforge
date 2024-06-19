@@ -74,7 +74,7 @@ function TodoListContainer(): React.ReactElement {
       </div>
       <ModifyTaskWindow />
       <DeleteConfirmationModal
-        apiEndpoint="todo-list/entry/delete"
+        apiEndpoint="todo-list/entry"
         isOpen={deleteTaskConfirmationModalOpen}
         onClose={() => {
           setDeleteTaskConfirmationModalOpen(false)
@@ -97,7 +97,7 @@ function TodoListContainer(): React.ReactElement {
       )}
       <ModifyListModal />
       <DeleteConfirmationModal
-        apiEndpoint="todo-list/list/delete"
+        apiEndpoint="todo-list/list"
         data={selectedList}
         isOpen={deleteListConfirmationModalOpen}
         itemName="list"
@@ -109,7 +109,7 @@ function TodoListContainer(): React.ReactElement {
       />
       <ModifyTagModal />
       <DeleteConfirmationModal
-        apiEndpoint="todo-list/tag/delete"
+        apiEndpoint="todo-list/tag"
         data={selectedTag}
         isOpen={deleteTagConfirmationModalOpen}
         itemName="tag"

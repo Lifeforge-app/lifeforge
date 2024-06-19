@@ -33,7 +33,7 @@ function Passwords(): React.ReactElement {
     useState<'create' | 'update' | null>(null)
   const [passwordList, refreshPasswordList, setPasswordList] = useFetch<
     IPasswordEntry[]
-  >('passwords/password/list', masterPassword !== '')
+  >('passwords/password', masterPassword !== '')
   const [selectedPassword, setSelectedPassword] =
     useState<IPasswordEntry | null>(null)
   const [
@@ -203,7 +203,7 @@ function Passwords(): React.ReactElement {
         existedData={existedData}
       />
       <DeleteConfirmationModal
-        apiEndpoint="passwords/password/delete"
+        apiEndpoint="passwords/password"
         data={selectedPassword}
         isOpen={isDeletePasswordConfirmationModalOpen}
         itemName="password"

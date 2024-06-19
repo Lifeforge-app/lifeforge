@@ -4,6 +4,8 @@ import { useNavigate, useParams } from 'react-router'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import {
   type INotesSubject,
@@ -12,8 +14,6 @@ import {
 import CreateSubjectButton from './components/CreateSubjectButton'
 import ModifySubjectModal from './components/ModifySubjectModal'
 import SubjectItem from './components/SubjectItem'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 
 function NotesCategory(): React.ReactElement {
   const { workspace } = useParams<{ workspace: string }>()
@@ -22,7 +22,7 @@ function NotesCategory(): React.ReactElement {
     `notes/workspace/get/${workspace}`
   )
   const [subjectsData, refreshSubjectData] = useFetch<INotesSubject[]>(
-    `notes/subject/list/${workspace}`
+    `notes/subject/${workspace}`
   )
   const [modifySubjectModalOpenType, setModifySubjectModalOpenType] = useState<
     'create' | 'update' | null
@@ -42,7 +42,7 @@ function NotesCategory(): React.ReactElement {
 
   return (
     <APIComponentWithFallback data={valid}>
-      <section className="flex h-full min-h-0 w-full flex-1 flex-col overflow-y-scroll px-8 md:px-12">
+      <section className="flex size-full min-h-0 flex-1 flex-col overflow-y-scroll px-8 md:px-12">
         <GoBackButton
           onClick={() => {
             navigate('/notes')
@@ -106,7 +106,7 @@ function NotesCategory(): React.ReactElement {
           onClose={() => {
             setDeleteSubjectConfirmationModalOpen(false)
           }}
-          apiEndpoint="notes/subject/delete"
+          apiEndpoint="notes/subject"
           itemName="subject"
           data={existedData}
           updateDataList={refreshSubjectData}

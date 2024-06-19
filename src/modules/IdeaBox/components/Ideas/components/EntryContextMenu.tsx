@@ -29,7 +29,7 @@ function EntryContextMenu({
   async function pinIdea(ideaId: string): Promise<void> {
     await APIRequest({
       endpoint: `idea-box/idea/pin/${ideaId}`,
-      method: 'PATCH',
+      method: 'POST',
       body: { ideaId },
       successInfo: entry.pinned ? 'unpin' : 'pin',
       failureInfo: entry.pinned ? 'unpin' : 'pin',
@@ -40,7 +40,7 @@ function EntryContextMenu({
   async function archiveIdea(ideaId: string): Promise<void> {
     await APIRequest({
       endpoint: `idea-box/idea/archive/${ideaId}`,
-      method: 'PATCH',
+      method: 'POST',
       successInfo: entry.archived ? 'unarchive' : 'archive',
       failureInfo: entry.archived ? 'unarchive' : 'archive',
       callback: updateIdeaList
@@ -49,7 +49,7 @@ function EntryContextMenu({
 
   async function removeFromFolder(): Promise<void> {
     await APIRequest({
-      endpoint: `idea-box/folder/remove-idea/${folderId}`,
+      endpoint: `idea-box/folder/idea/${folderId}`,
       method: 'DELETE',
       body: { ideaId: entry.id },
       successInfo: 'remove',

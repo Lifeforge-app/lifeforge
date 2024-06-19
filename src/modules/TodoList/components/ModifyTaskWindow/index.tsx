@@ -11,8 +11,8 @@ import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import Input from '@components/ButtonsAndInputs/Input'
 import useFetch from '@hooks/useFetch'
-import { useTodoListContext } from '@providers/TodoListProvider'
 import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
+import { useTodoListContext } from '@providers/TodoListProvider'
 import APIRequest from '@utils/fetchData'
 import ListSelector from './components/ListSelector'
 import NotesInput from './components/NotesInput'
@@ -74,7 +74,7 @@ function ModifyTaskWindow(): React.ReactElement {
 
     await APIRequest({
       endpoint:
-        `todo-list/entry/${innerOpenType}` +
+        'todo-list/entry' +
         (innerOpenType === 'update' ? `/${selectedTask?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: task,
