@@ -1,6 +1,7 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React, { Fragment } from 'react'
+import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { useAuthContext } from '@providers/AuthProvider'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
@@ -10,6 +11,8 @@ import QuickActions from './QuickActions'
 export default function Header(): React.ReactElement {
   const { sidebarExpanded, toggleSidebar } = useGlobalStateContext()
   const { userData, getAvatarURL, logout } = useAuthContext()
+  const navigate = useNavigate()
+
   return (
     <header className="relative z-[9990] flex w-full items-center justify-between gap-8 p-4 pl-0 sm:p-12">
       <div className="flex w-full items-center gap-4">
@@ -33,12 +36,16 @@ export default function Header(): React.ReactElement {
         </button>
         <Menu as="div" className="relative ml-4 text-left">
           <Menu.Button className="flex items-center gap-3">
-            <div className="size-9 overflow-hidden rounded-full bg-bg-100 dark:bg-bg-800">
-              <img
-                src={getAvatarURL()}
-                alt="avatar"
-                className="size-full object-cover"
-              />
+            <div className="flex size-9 items-center justify-center overflow-hidden rounded-full bg-bg-100 dark:bg-bg-800">
+              {userData.avatar !== '' ? (
+                <img
+                  src={getAvatarURL()}
+                  alt=""
+                  className="size-full object-cover"
+                />
+              ) : (
+                <Icon icon="tabler:user" className="text-xl text-bg-500" />
+              )}
             </div>
             <div className="hidden flex-col items-start md:flex">
               <div className="font-semibold ">{userData?.name}</div>
@@ -61,11 +68,15 @@ export default function Header(): React.ReactElement {
             <Menu.Items className="absolute right-0 mt-4 w-56 overflow-hidden rounded-lg bg-bg-100 shadow-lg focus:outline-none dark:bg-bg-800">
               <div className="py-1">
                 <MenuItem
-                  onClick={() => {}}
+                  preventDefault={false}
+                  onClick={() => {
+                    navigate('/account')
+                  }}
                   icon="tabler:user-cog"
                   text="Account settings"
                 />
                 <MenuItem
+                  isRed
                   onClick={() => {
                     logout()
                     toast.warning('Logged out successfully!')

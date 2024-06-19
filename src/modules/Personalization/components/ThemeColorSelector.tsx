@@ -33,7 +33,7 @@ function ThemeColorSelector(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="flex w-full flex-col items-center justify-between gap-6 md:flex-row">
+    <div className="flex w-full px-4 flex-col items-center justify-between gap-6 md:flex-row">
       <div className="w-full md:w-auto">
         <h3 className="block text-xl font-medium leading-normal">
           {t('personalization.themeColorSelector.title')}

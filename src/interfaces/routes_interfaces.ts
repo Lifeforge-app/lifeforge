@@ -6,6 +6,7 @@ interface IRoutesItem {
   subsection?: string[][]
   togglable: boolean
   hasAI?: boolean
+  hidden?: boolean
 }
 
 export interface IRoutes {
