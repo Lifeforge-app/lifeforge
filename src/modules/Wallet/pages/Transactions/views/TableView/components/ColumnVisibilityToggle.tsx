@@ -27,7 +27,7 @@ function ColumnVisibilityToggle({
             'Type',
             'Ledger',
             'Asset',
-            'Particular',
+            'Particulars',
             'Category',
             'Amount',
             'Receipt'
@@ -43,6 +43,7 @@ function ColumnVisibilityToggle({
                 }
               }}
               isToggled={visibleColumn.includes(column)}
+              needTranslate={false}
             />
           ))}
         </ul>

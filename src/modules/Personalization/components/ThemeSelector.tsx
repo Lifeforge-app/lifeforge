@@ -58,7 +58,7 @@ function ThemeSelector(): React.ReactElement {
             </div>
             <p
               className={`mt-4 ${
-                theme === id && 'font-medium text-custom-500'
+                theme === id ? 'font-medium text-custom-500' : ''
               }`}
             >
               {name}

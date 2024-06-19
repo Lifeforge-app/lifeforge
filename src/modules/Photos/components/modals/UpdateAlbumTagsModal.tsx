@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import Modal from '@components/Modals/Modal'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import { usePhotosContext } from '@providers/PhotosProvider'
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
+import { usePhotosContext } from '@providers/PhotosProvider'
 import APIRequest from '@utils/fetchData'
 
 function UpdateAlbumTagsModal({
@@ -119,7 +119,7 @@ function UpdateAlbumTagsModal({
         className="mt-12"
         icon={loading ? 'svg-spinners:180-ring' : 'tabler:tags'}
       >
-        {!loading && 'Update Tags'}
+        {!loading ? 'Update Tags' : ''}
       </Button>
     </Modal>
   )

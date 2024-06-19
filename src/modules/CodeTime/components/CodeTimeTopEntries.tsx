@@ -66,7 +66,7 @@ function CodeTimeTopEntries({
               .slice(0, 5)
               .map(([key, value], index) => (
                 <div
-                  className={`h-6 border ${index === 0 && 'rounded-l-lg'} ${
+                  className={`h-6 border ${index === 0 ? 'rounded-l-lg' : ''} ${
                     index ===
                       Object.entries(topEntries).slice(0, 5).length - 1 &&
                     'shrink-0 rounded-r-lg'
