@@ -22,7 +22,7 @@ function generateClassName(
 ): string {
   const baseClass = `flex items-center justify-center gap-2 rounded-lg p-4 ${
     hasChildren && 'pr-5'
-  } font-semibold uppercase tracking-wider shadow-custom transition-all disabled:cursor-not-allowed`
+  } font-medium tracking-wide shadow-custom transition-all disabled:cursor-not-allowed`
   let colorClass = ''
 
   if (isRed) {
