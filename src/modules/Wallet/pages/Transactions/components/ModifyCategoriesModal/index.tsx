@@ -106,8 +106,7 @@ function ModifyCategoriesModal({
 
   return (
     <>
-      {' '}
-      <Modal isOpen={openType !== null} minWidth="30rem">
+      <Modal isOpen={openType !== null} className="sm:min-w-[30rem]">
         <ModalHeader
           icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
           title={openType === 'update' ? 'Edit Category' : 'Add Category'}

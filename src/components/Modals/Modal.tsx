@@ -4,12 +4,14 @@ function Modal({
   isOpen,
   children,
   minWidth,
-  minHeight
+  minHeight,
+  className
 }: {
   isOpen: boolean
   children: React.ReactNode
   minWidth?: string
   minHeight?: string
+  className?: string
 }): React.ReactElement {
   return (
     <div
@@ -26,7 +28,7 @@ function Modal({
         }}
         className={`absolute ${
           isOpen ? 'right-1/2' : 'right-[-100dvw]'
-        } top-1/2 flex max-h-[calc(100dvh-8rem)] w-full max-w-[calc(100vw-4rem)] -translate-y-1/2 translate-x-1/2 flex-col overflow-scroll rounded-xl bg-bg-100 p-6 transition-all duration-500 dark:bg-bg-900 sm:max-w-[calc(100vw-8rem)] lg:w-auto`}
+        } ${className} top-1/2 flex max-h-[calc(100dvh-8rem)] w-full max-w-[calc(100vw-4rem)] -translate-y-1/2 translate-x-1/2 flex-col overflow-scroll rounded-xl bg-bg-100 p-6 transition-all duration-500 dark:bg-bg-900 sm:max-w-[calc(100vw-8rem)] lg:w-auto`}
       >
         {children}
       </div>
