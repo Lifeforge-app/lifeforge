@@ -1,7 +1,7 @@
 {
-  "name": "personal-management-system",
+  "name": "lifeforge",
   "private": true,
-  "version": "0.0.0",
+  "version": "24w25",
   "type": "module",
   "license": "MIT",
   "scripts": {
