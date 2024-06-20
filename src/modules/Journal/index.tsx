@@ -59,7 +59,8 @@ function Journal(): React.ReactElement {
             onClick={() => {
               createEntry().catch(console.error)
             }}
-            icon={loading ? 'svg-spinners:180-ring' : 'tabler:plus'}
+            loading={loading}
+            icon="tabler:plus"
             className="mt-2 hidden shrink-0 sm:mt-6 md:flex"
           >
             New entry

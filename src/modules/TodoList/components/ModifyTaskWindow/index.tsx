@@ -214,7 +214,7 @@ function ModifyTaskWindow(): React.ReactElement {
         <NotesInput notes={notes} updateNotes={updateNotes} />
         <div className="mt-12 flex flex-1 flex-col-reverse items-end gap-2 sm:flex-row">
           <Button
-            disabled={loading}
+            loading={loading}
             onClick={closeWindow}
             icon={''}
             className="w-full"

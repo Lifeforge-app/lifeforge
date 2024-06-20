@@ -69,13 +69,13 @@ function RemovePhotosFromAlbumConfirmationModal({
           Cancel
         </Button>
         <Button
-          disabled={loading}
+          loading={loading}
           onClick={() => {
             deleteData().catch(console.error)
           }}
           isRed
           className="w-full"
-          icon={loading ? 'svg-spinners:180-ring' : 'tabler:layout-grid-remove'}
+          icon="tabler:layout-grid-remove"
         >
           remove
         </Button>

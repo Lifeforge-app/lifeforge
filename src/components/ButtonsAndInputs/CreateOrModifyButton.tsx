@@ -16,7 +16,7 @@ function CreateOrModifyButton({
 }): React.ReactElement {
   return (
     <Button
-      disabled={loading}
+      loading={loading}
       className={`mt-6 ${className}`}
       onClick={onClick}
       icon={

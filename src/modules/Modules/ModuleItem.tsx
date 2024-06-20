@@ -214,7 +214,7 @@ function ModuleItem({
           )}
         {originalModuleConfig !== JSON.stringify(userData.moduleConfigs) && (
           <Button
-            disabled={saveLoading}
+            loading={saveLoading}
             onClick={saveConfig}
             className="mt-6"
             icon={!saveLoading ? 'uil:save' : 'svg-spinners:180-ring'}

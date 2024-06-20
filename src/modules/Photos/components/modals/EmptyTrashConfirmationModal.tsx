@@ -58,11 +58,11 @@ function EmptyTrashConfirmationModal({
           Cancel
         </Button>
         <Button
-          disabled={loading}
+          loading={loading}
           onClick={() => {
             deleteData().catch(console.error)
           }}
-          icon={loading ? 'svg-spinners:180-ring' : 'tabler:trash'}
+          icon="tabler:trash"
           className="w-full"
           isRed
         >

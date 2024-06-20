@@ -37,10 +37,10 @@ function PasswordColumn(): React.ReactElement {
         onClick={() => {
           onPasswordChange().catch(console.error)
         }}
-        disabled={loading}
+        loading={loading}
         type="secondary"
         className="w-full whitespace-nowrap md:w-auto"
-        icon={loading ? 'svg-spinners:180-ring' : 'tabler:key'}
+        icon="tabler:key"
       >
         change password
       </Button>

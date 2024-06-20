@@ -72,9 +72,9 @@ function AvatarColumn(): React.ReactElement {
               onClick={() => {
                 changeAvatar()
               }}
-              disabled={loading}
+              loading={loading}
               type="no-bg"
-              icon={loading ? 'svg-spinners:180-ring' : 'tabler:upload'}
+              icon="tabler:upload"
             >
               upload
             </Button>

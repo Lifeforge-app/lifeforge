@@ -75,7 +75,7 @@ function UpdateAlbumTagsModal({
             onClick={() => {
               setOpen(false)
             }}
-            className="hover: rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-800"
+            className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-800"
           >
             <Icon icon="tabler:x" className="size-6" />
           </button>
@@ -115,9 +115,9 @@ function UpdateAlbumTagsModal({
         onClick={() => {
           onSubmitButtonClick().catch(console.error)
         }}
-        disabled={loading}
+        loading={loading}
         className="mt-12"
-        icon={loading ? 'svg-spinners:180-ring' : 'tabler:tags'}
+        icon="tabler:tags"
       >
         {!loading ? 'Update Tags' : ''}
       </Button>

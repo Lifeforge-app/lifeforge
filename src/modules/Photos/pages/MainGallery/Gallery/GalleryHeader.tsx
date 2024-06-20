@@ -199,8 +199,8 @@ function GalleryHeader(): React.ReactElement {
             onClick={() => {
               importFiles().catch(() => {})
             }}
-            disabled={fileImportLoading}
-            icon={fileImportLoading ? 'svg-spinners:180-ring' : 'tabler:upload'}
+            loading={fileImportLoading}
+            icon="tabler:upload"
             className="shrink-0"
           >
             {!fileImportLoading ? (

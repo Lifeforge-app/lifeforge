@@ -82,8 +82,8 @@ function ModifyModal({
         onClick={() => {
           onSubmit().catch(console.error)
         }}
-        disabled={loading}
-        icon={loading ? 'svg-spinners:180-ring' : 'tabler:pencil'}
+        loading={loading}
+        icon="tabler:pencil"
         className="mt-6"
       >
         Update

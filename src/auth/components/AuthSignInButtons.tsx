@@ -4,8 +4,6 @@ import Button from '@components/ButtonsAndInputs/Button'
 import { useAuthContext } from '@providers/AuthProvider'
 
 function AuthSignInButton({
-  emailOrUsername,
-  password,
   loading,
   signIn,
   signInWithPasskey
@@ -22,14 +20,10 @@ function AuthSignInButton({
   return (
     <div className="mt-6 flex flex-col gap-6">
       <Button
-        disabled={
-          emailOrUsername.length === 0 ||
-          password.length === 0 ||
-          loading ||
-          auth
-        }
+        loading={loading || auth}
+        iconAtEnd
         onClick={signIn}
-        icon={loading ? 'svg-spinners:180-ring' : ''}
+        icon="tabler:arrow-right"
       >
         sign in
       </Button>
@@ -41,8 +35,8 @@ function AuthSignInButton({
       <div className="flex w-full gap-4">
         <Button
           onClick={signInWithPasskey}
-          disabled={loading || auth}
-          icon={loading ? 'svg-spinners:180-ring' : 'tabler:key'}
+          loading={loading || auth}
+          icon="tabler:key"
           type="secondary"
           className="w-full"
         >
