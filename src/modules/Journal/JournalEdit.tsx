@@ -188,7 +188,8 @@ function JournalEdit(): React.ReactElement {
               </div>
               {content !== entry.content.trim() && (
                 <Button
-                  icon={saveLoading ? 'svg-spinners:180-ring' : 'uil:save'}
+                  loading={saveLoading}
+                  icon="uil:save"
                   onClick={() => {
                     saveJournalEntry().catch(console.error)
                   }}

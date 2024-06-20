@@ -10,8 +10,8 @@ import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { useMusicContext } from '@providers/MusicProvider'
-import VideoInfo from './components/VideoInfo'
 import IntervalManager from '@utils/intervalManager'
+import VideoInfo from './components/VideoInfo'
 
 export interface YoutubeVideoInfo {
   title: string
@@ -145,7 +145,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
       </div>
       {typeof videoInfo !== 'string' && (
         <Button
-          disabled={loading}
+          loading={loading}
           onClick={downloadVideo}
           icon={loading ? 'svg-spinners:180-ring' : 'tabler:download'}
           className="mt-6"

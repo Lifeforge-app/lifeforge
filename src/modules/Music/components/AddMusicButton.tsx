@@ -52,13 +52,13 @@ function AddMusicButton(): React.ReactElement {
               const success = await checkImportProgress()
               switch (success) {
                 case 'completed':
-                  toast.success('Music downloaded successfully!')
+                  toast.success('Music imported successfully!')
                   intervalManager.clearAllIntervals()
                   setLoading(false)
                   refreshMusics()
                   break
                 case 'failed':
-                  toast.error('Failed to download music!')
+                  toast.error('Failed to import music!')
                   intervalManager.clearAllIntervals()
                   setLoading(false)
                   break
@@ -68,11 +68,11 @@ function AddMusicButton(): React.ReactElement {
         } else {
           const data = await res.json()
           setLoading(false)
-          throw new Error(`Failed to download music. Error: ${data.message}`)
+          throw new Error(`Failed to import music. Error: ${data.message}`)
         }
       })
       .catch(err => {
-        toast.error(`Oops! Couldn't download music! Error: ${err}`)
+        toast.error(`Oops! Couldn't import music! Error: ${err}`)
         setLoading(false)
       })
   }

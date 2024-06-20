@@ -10,7 +10,7 @@
       "@components/*": ["./src/components/general/*"],
       "@providers/*": ["./src/providers/*"],
       "@hooks/*": ["./src/hooks/*"],
-      "@interfaces/*": ["src/interfaces/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
       "@utils/*": ["./src/utils/*"]
     }
   },

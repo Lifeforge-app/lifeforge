@@ -6,8 +6,8 @@ import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { useAuthContext } from '@providers/AuthProvider'
 import { type IPasswordEntry } from '@interfaces/password_interfaces'
+import { useAuthContext } from '@providers/AuthProvider'
 import { Clipboard } from '@utils/clipboard'
 import { decrypt, encrypt } from '@utils/encryption'
 
@@ -260,7 +260,8 @@ function PasswordEntryITem({
       )}
       <Button
         onClick={copyPassword}
-        icon={copyLoading ? 'svg-spinners:180-ring' : 'tabler:copy'}
+        loading={copyLoading}
+        icon="tabler:copy"
         className="w-full sm:hidden"
         type="secondary"
       >

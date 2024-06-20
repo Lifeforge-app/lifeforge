@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import { Icon } from '@iconify/react/dist/iconify.js'
 import { cookieParse } from 'pocketbase'
 import React, { useMemo, useRef, useState } from 'react'
 import { type Id, toast } from 'react-toastify'
@@ -9,23 +10,22 @@ import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
-import type BasePBCollection from '@interfaces/pocketbase_interfaces'
+import type IGuitarTabsEntry from '@interfaces/guitar_tabs_interfaces'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import IntervalManager from '@utils/intervalManager'
 import { toCamelCase } from '@utils/strings'
+import EntryItem from './components/EntryItem'
 
 const intervalManager = IntervalManager.getInstance()
 
-interface IGuitarTabsEntry extends BasePBCollection {
-  name: string
-  file: string
-  thumbnail: string
-  pageCount: number
-}
-
 function GuitarTabs(): React.ReactElement {
-  const [entries, refreshEntries] =
-    useFetch<IGuitarTabsEntry[]>('/guitar-tabs/list')
+  const [page, setPage] = useState<number>(1)
+  const [entries, refreshEntries] = useFetch<{
+    totalItems: number
+    totalPages: number
+    page: number
+    items: IGuitarTabsEntry[]
+  }>(`/guitar-tabs/list?page=${page}`)
   const [searchQuery, setSearchQuery] = useState<string>('')
   const toastId = useRef<Id>(null)
   const { themeColor } = usePersonalizationContext()
@@ -151,6 +151,88 @@ function GuitarTabs(): React.ReactElement {
     input.click()
   }
 
+  const renderPageNumbers = ({
+    currentPage,
+    totalPages,
+    handlePageChange
+  }: {
+    currentPage: number
+    totalPages: number
+    handlePageChange: (page: number) => void
+  }): React.ReactElement[] => {
+    const pageNumbers: JSX.Element[] = []
+    const pagesToShow = 5
+
+    const startPage = Math.max(1, currentPage - Math.floor(pagesToShow / 2))
+    const endPage = Math.min(totalPages, startPage + pagesToShow - 1)
+
+    if (startPage > 1) {
+      if (startPage > 2) {
+        pageNumbers.push(
+          <>
+            <button
+              key={1}
+              onClick={() => {
+                handlePageChange(1)
+              }}
+              className={`rounded-md px-3 py-2  ${
+                currentPage === 1
+                  ? 'font-semibold text-custom-500'
+                  : 'text-bg-500 hover:bg-bg-800'
+              }`}
+            >
+              {1}
+            </button>
+            <Icon icon="uil:ellipsis-h" className="text-bg-500" />
+          </>
+        )
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          onClick={() => {
+            handlePageChange(i)
+          }}
+          className={`rounded-md px-5 py-3  ${
+            currentPage === i
+              ? 'font-semibold text-custom-500'
+              : 'text-bg-500 hover:bg-bg-800'
+          }`}
+        >
+          {i}
+        </button>
+      )
+    }
+
+    if (endPage < totalPages) {
+      pageNumbers.push(
+        <>
+          {endPage < totalPages && (
+            <Icon icon="uil:ellipsis-h" className="text-bg-500" />
+          )}
+          <button
+            key={totalPages}
+            onClick={() => {
+              handlePageChange(totalPages)
+            }}
+            className={`rounded-md px-5 py-3  ${
+              currentPage === totalPages
+                ? 'font-semibold text-custom-500'
+                : 'text-bg-500 hover:bg-bg-800'
+            }`}
+          >
+            {totalPages}
+          </button>
+        </>
+      )
+    }
+
+    return pageNumbers
+  }
+
   return (
     <ModuleWrapper>
       <ModuleHeader
@@ -174,28 +256,55 @@ function GuitarTabs(): React.ReactElement {
       />
       <APIComponentWithFallback data={entries}>
         {typeof entries !== 'string' && (
-          <div className="my-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {entries.map(entry => (
-              <div
-                key={entry.id}
-                className="rounded-lg bg-bg-50 p-4 shadow-custom hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/70"
-              >
-                <img
-                  src={`${import.meta.env.VITE_API_HOST}/media/${
-                    entry.collectionId
-                  }/${entry.id}/${entry.thumbnail}?thumb=500x0`}
-                  alt={entry.name}
-                  className="h-96 w-full rounded-md bg-bg-800 object-contain object-top"
-                />
-                <div className="mt-4">
-                  <h3 className="text-lg font-medium">
-                    {entry.name.replace(/\.pdf$/, '')}
-                  </h3>
-                  <p className="text-sm text-bg-500">{entry.pageCount} pages</p>
+          <>
+            <div className="my-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {entries.items.map(entry => (
+                <EntryItem key={entry.id} entry={entry} />
+              ))}
+            </div>{' '}
+            {
+              <div className="mb-12 mt-4 flex items-center justify-between gap-2">
+                {entries.page > 1 ? (
+                  <Button
+                    onClick={() => {
+                      if (entries.page > 1) {
+                        setPage(entries.page - 1)
+                      }
+                    }}
+                    icon="uil:angle-left"
+                    type="no-bg"
+                  >
+                    Previous
+                  </Button>
+                ) : (
+                  <span className="w-32"></span>
+                )}
+                <div className="flex items-center gap-2">
+                  {renderPageNumbers({
+                    currentPage: entries.page,
+                    totalPages: entries.totalPages,
+                    handlePageChange: setPage
+                  })}
                 </div>
+                {entries.page < entries.totalPages ? (
+                  <Button
+                    onClick={() => {
+                      if (entries.page < entries.totalPages) {
+                        setPage(entries.page + 1)
+                      }
+                    }}
+                    icon="uil:angle-right"
+                    type="no-bg"
+                    iconAtEnd
+                  >
+                    Next
+                  </Button>
+                ) : (
+                  <span className="w-32"></span>
+                )}
               </div>
-            ))}
-          </div>
+            }
+          </>
         )}
       </APIComponentWithFallback>
     </ModuleWrapper>
