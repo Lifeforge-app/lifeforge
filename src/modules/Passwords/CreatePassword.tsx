@@ -121,8 +121,9 @@ function CreatePassword(): React.ReactElement {
           darker
         />
         <Button
+          loading={loading}
           onClick={confirmAction}
-          icon={loading ? 'svg-spinners:180-ring' : 'tabler:check'}
+          icon="tabler:check"
           className="w-1/2"
         >
           Submit
@@ -150,11 +151,11 @@ function CreatePassword(): React.ReactElement {
             Cancel
           </Button>
           <Button
-            disabled={loading}
+            loading={loading}
             onClick={() => {
               onSubmit().catch(console.error)
             }}
-            icon={loading ? 'svg-spinners:180-ring' : 'tabler:check'}
+            icon="tabler:check"
             className="w-full"
           >
             {!loading ? 'Confirm' : ''}

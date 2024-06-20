@@ -142,9 +142,9 @@ function Passwords(): React.ReactElement {
             onClick={() => {
               onSubmit().catch(console.error)
             }}
-            disabled={loading}
+            loading={loading}
             className="w-full md:w-3/4 xl:w-1/2"
-            icon={loading ? 'svg-spinners:180-ring' : 'tabler:lock'}
+            icon="tabler:lock"
           >
             Unlock
           </Button>

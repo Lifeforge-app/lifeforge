@@ -3,12 +3,12 @@
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import Modal from '@components/Modals/Modal'
-import { usePhotosContext } from '@providers/PhotosProvider'
 import {
   type IPhotosEntryDimensionsAll,
   type IPhotoAlbumEntryItem,
   type IPhotosEntry
 } from '@interfaces/photos_interfaces'
+import { usePhotosContext } from '@providers/PhotosProvider'
 import APIRequest from '@utils/fetchData'
 
 function DeletePhotosConfirmationModal({
@@ -121,11 +121,11 @@ function DeletePhotosConfirmationModal({
           Cancel
         </Button>
         <Button
-          disabled={loading}
+          loading={loading}
           onClick={() => {
             deleteData().catch(console.error)
           }}
-          icon={loading ? 'svg-spinners:180-ring' : 'tabler:trash'}
+          icon="tabler:trash"
           className="w-full"
           isRed
         >

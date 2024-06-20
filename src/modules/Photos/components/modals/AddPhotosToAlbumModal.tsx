@@ -160,9 +160,9 @@ function AddPhotosToAlbumModal(): React.ReactElement {
               onClick={() => {
                 onSubmitButtonClick().catch(console.error)
               }}
-              disabled={selectedAlbum === '' || loading}
+              loading={selectedAlbum === '' || loading}
               className="mt-6"
-              icon={loading ? 'svg-spinners:180-ring' : 'tabler:photo-plus'}
+              icon="tabler:photo-plus"
             >
               {!loading ? 'Add to album' : ''}
             </Button>

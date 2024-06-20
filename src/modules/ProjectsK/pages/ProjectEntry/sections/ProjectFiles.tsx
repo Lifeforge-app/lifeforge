@@ -186,7 +186,7 @@ export default function ProjectFiles({
                   onClick={() => {
                     downloadFiles().catch(() => {})
                   }}
-                  disabled={fileReplaceLoading}
+                  loading={fileReplaceLoading}
                   icon={
                     fileDownloadLoading
                       ? 'svg-spinners:180-ring'

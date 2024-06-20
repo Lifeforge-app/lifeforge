@@ -231,7 +231,7 @@ function ModifyIdeaModal({
       )}
       <Button
         className="mt-6"
-        disabled={loading}
+        loading={loading}
         onClick={() => {
           onSubmitButtonClick().catch(console.error)
         }}
