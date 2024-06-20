@@ -119,9 +119,9 @@ function PhotosAlbumGallery(): React.ReactElement {
                     <div className="flex-center flex size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                       {albumData.cover !== '' ? (
                         <img
-                          src={`${
-                            import.meta.env.VITE_POCKETBASE_ENDPOINT
-                          }/api/files/${albumData.cover}?thumb=0x300`}
+                          src={`${import.meta.env.VITE_API_HOST}/media/${
+                            albumData.cover
+                          }?thumb=0x300`}
                           alt=""
                           className="size-full rounded-md object-cover"
                         />

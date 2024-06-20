@@ -94,11 +94,9 @@ function PhotosFavouritesGallery(): React.ReactElement {
                   layout="rows"
                   spacing={8}
                   photos={photos.map(image => ({
-                    src: `${
-                      import.meta.env.VITE_POCKETBASE_ENDPOINT
-                    }/api/files/${image.collectionId}/${image.photoId}/${
-                      image.image
-                    }?thumb=0x300`,
+                    src: `${import.meta.env.VITE_API_HOST}/media/${
+                      image.collectionId
+                    }/${image.photoId}/${image.image}?thumb=0x300`,
                     width: image.width / 20,
                     height: image.height / 20,
                     key: image.id

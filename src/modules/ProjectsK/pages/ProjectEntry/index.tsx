@@ -110,11 +110,11 @@ function ProjectsKEntry(): React.ReactElement {
                         <div className="flex-center flex size-12 overflow-hidden rounded-md bg-bg-800">
                           {projectData.thumbnail ? (
                             <img
-                              src={`${
-                                import.meta.env.VITE_POCKETBASE_ENDPOINT
-                              }/api/files/${projectData.collectionId}/${
-                                projectData.id
-                              }/${projectData.thumbnail}?thumb=50x50`}
+                              src={`${import.meta.env.VITE_API_HOST}/media/${
+                                projectData.collectionId
+                              }/${projectData.id}/${
+                                projectData.thumbnail
+                              }?thumb=50x50`}
                               className="size-full"
                             />
                           ) : (

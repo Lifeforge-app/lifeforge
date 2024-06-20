@@ -122,9 +122,9 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                         <div className="flex-center flex size-10 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                           {album.cover !== '' ? (
                             <img
-                              src={`${
-                                import.meta.env.VITE_POCKETBASE_ENDPOINT
-                              }/api/files/${album.cover}?thumb=0x300`}
+                              src={`${import.meta.env.VITE_API_HOST}/media/${
+                                album.cover
+                              }?thumb=0x300`}
                               alt=""
                               className="size-full rounded-md object-cover"
                             />
