@@ -78,13 +78,14 @@ function ModifyIdeaModal({
   }, [typeOfModifyIdea])
 
   useEffect(() => {
-    if (openType === 'create') {
+    if (innerOpenType === 'create') {
       setIdeaTitle('')
       setIdeaContent('')
       setIdeaLink('')
       setIdeaImage(null)
       setImageLink('')
-    } else if (openType === 'update') {
+      setPreview(null)
+    } else if (innerOpenType === 'update') {
       if (existedData !== null) {
         setIdeaTitle(existedData.title)
         setIdeaContent(existedData.content)
@@ -93,7 +94,7 @@ function ModifyIdeaModal({
         setPreview(null)
       }
     }
-  }, [openType, existedData])
+  }, [existedData, innerOpenType])
 
   useEffect(() => {
     if (innerTypeOfModifyIdea === 'image' && debouncedImageLink !== '') {
@@ -111,7 +112,7 @@ function ModifyIdeaModal({
           toast.error('Invalid image link.')
         })
     }
-  })
+  }, [debouncedImageLink])
 
   async function onSubmitButtonClick(): Promise<void> {
     switch (innerTypeOfModifyIdea) {
@@ -206,7 +207,11 @@ function ModifyIdeaModal({
       ) : (
         <>
           {preview ? (
-            <IdeaImagePreview preview={preview} setPreview={setPreview} />
+            <IdeaImagePreview
+              preview={preview}
+              setPreview={setPreview}
+              setImageLink={setImageLink}
+            />
           ) : (
             <IdeaImageUpload
               getRootProps={getRootProps}
