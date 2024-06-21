@@ -1,4 +1,5 @@
-import { lazy } from 'react'
+import React, { lazy } from 'react'
+import { Navigate } from 'react-router'
 import Account from './modules/Account'
 
 const PhotosProvider = lazy(
@@ -198,5 +199,12 @@ export const COMPONENTS = {
   },
   'account-settings': {
     account: Account
+  },
+  documentation: {
+    documentation: () => {
+      window.location.href =
+        'https://docs.lifeforge.thecodeblog.net/getting-started/introduction'
+      return (<Navigate to="/" />) as React.ReactElement
+    }
   }
 }
