@@ -6,6 +6,7 @@ import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import Scrollbar from '@components/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import {
   type INotesSubject,
@@ -42,83 +43,87 @@ function NotesCategory(): React.ReactElement {
 
   return (
     <APIComponentWithFallback data={valid}>
-      <section className="flex size-full min-h-0 flex-1 flex-col overflow-y-scroll px-8 md:px-12">
-        <GoBackButton
-          onClick={() => {
-            navigate('/notes')
-          }}
-        />
-        <ModuleHeader
-          title={
-            <>
-              Notes -{' '}
-              {titleData === 'loading' ? (
-                <Icon icon="svg-spinners:180-ring" className="size-8" />
-              ) : titleData === 'error' ? (
-                <span className="flex items-center gap-2 text-red-500">
-                  <Icon
-                    icon="tabler:alert-triangle"
-                    className="mt-1 size-8 stroke-red-500 stroke-[2px]"
-                  />
-                  Failed to fetch data
-                </span>
-              ) : (
-                titleData.name
-              )}
-            </>
-          }
-          desc="A place to store all your involuntarily generated thoughts."
-        />
-        <APIComponentWithFallback data={subjectsData}>
-          {typeof subjectsData !== 'string' &&
-            (subjectsData.length > 0 ? (
-              <div className="flex-center grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-4 py-8">
-                {subjectsData.map(subject => (
-                  <SubjectItem
-                    key={subject.id}
-                    subject={subject}
+      <Scrollbar>
+        <section className="flex size-full min-h-0 flex-1 flex-col px-8 md:px-12">
+          <GoBackButton
+            onClick={() => {
+              navigate('/notes')
+            }}
+          />
+          <ModuleHeader
+            title={
+              <>
+                Notes -{' '}
+                {titleData === 'loading' ? (
+                  <Icon icon="svg-spinners:180-ring" className="size-8" />
+                ) : titleData === 'error' ? (
+                  <span className="flex items-center gap-2 text-red-500">
+                    <Icon
+                      icon="tabler:alert-triangle"
+                      className="mt-1 size-8 stroke-red-500 stroke-[2px]"
+                    />
+                    Failed to fetch data
+                  </span>
+                ) : (
+                  titleData.name
+                )}
+              </>
+            }
+            desc="A place to store all your involuntarily generated thoughts."
+          />
+          <APIComponentWithFallback data={subjectsData}>
+            {typeof subjectsData !== 'string' &&
+              (subjectsData.length > 0 ? (
+                <div className="flex-center grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-4 py-8">
+                  {subjectsData.map(subject => (
+                    <SubjectItem
+                      key={subject.id}
+                      subject={subject}
+                      setModifySubjectModalOpenType={
+                        setModifySubjectModalOpenType
+                      }
+                      setDeleteSubjectConfirmationModalOpen={
+                        setDeleteSubjectConfirmationModalOpen
+                      }
+                      setExistedData={setExistedData}
+                    />
+                  ))}
+                  <CreateSubjectButton
                     setModifySubjectModalOpenType={
                       setModifySubjectModalOpenType
                     }
-                    setDeleteSubjectConfirmationModalOpen={
-                      setDeleteSubjectConfirmationModalOpen
-                    }
                     setExistedData={setExistedData}
                   />
-                ))}
-                <CreateSubjectButton
-                  setModifySubjectModalOpenType={setModifySubjectModalOpenType}
-                  setExistedData={setExistedData}
+                </div>
+              ) : (
+                <EmptyStateScreen
+                  title="A bit empty here. "
+                  description="Create a new subject to start storing your notes."
+                  icon="tabler:folder-off"
+                  ctaContent="Create subject"
+                  setModifyModalOpenType={setModifySubjectModalOpenType}
                 />
-              </div>
-            ) : (
-              <EmptyStateScreen
-                title="A bit empty here. "
-                description="Create a new subject to start storing your notes."
-                icon="tabler:folder-off"
-                ctaContent="Create subject"
-                setModifyModalOpenType={setModifySubjectModalOpenType}
-              />
-            ))}
-        </APIComponentWithFallback>
-        <DeleteConfirmationModal
-          isOpen={deleteSubjectConfirmationModalOpen}
-          onClose={() => {
-            setDeleteSubjectConfirmationModalOpen(false)
-          }}
-          apiEndpoint="notes/subject"
-          itemName="subject"
-          data={existedData}
-          updateDataList={refreshSubjectData}
-          nameKey="title"
-        />
-        <ModifySubjectModal
-          openType={modifySubjectModalOpenType}
-          setOpenType={setModifySubjectModalOpenType}
-          existedData={existedData}
-          updateSubjectList={refreshSubjectData}
-        />
-      </section>
+              ))}
+          </APIComponentWithFallback>
+          <DeleteConfirmationModal
+            isOpen={deleteSubjectConfirmationModalOpen}
+            onClose={() => {
+              setDeleteSubjectConfirmationModalOpen(false)
+            }}
+            apiEndpoint="notes/subject"
+            itemName="subject"
+            data={existedData}
+            updateDataList={refreshSubjectData}
+            nameKey="title"
+          />
+          <ModifySubjectModal
+            openType={modifySubjectModalOpenType}
+            setOpenType={setModifySubjectModalOpenType}
+            existedData={existedData}
+            updateSubjectList={refreshSubjectData}
+          />
+        </section>
+      </Scrollbar>
     </APIComponentWithFallback>
   )
 }

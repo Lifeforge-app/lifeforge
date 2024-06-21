@@ -18,7 +18,7 @@ interface ButtonProps {
 const generateBaseClass = (hasChildren: boolean, iconAtEnd: boolean): string =>
   `flex items-center justify-center gap-2 rounded-lg p-4 ${
     hasChildren && iconAtEnd ? 'pl-5' : 'pr-5'
-  } font-medium tracking-wide shadow-custom transition-all disabled:cursor-not-allowed`
+  } font-medium tracking-wide transition-all disabled:cursor-not-allowed`
 
 const generateColorClass = (isRed: boolean, type: string): string => {
   if (isRed) {
@@ -29,12 +29,12 @@ const generateColorClass = (isRed: boolean, type: string): string => {
 
   switch (type) {
     case 'primary':
-      return 'bg-custom-500 hover:bg-custom-600 text-bg-100 dark:text-bg-800 disabled:bg-bg-500 disabled:hover:bg-bg-500'
+      return 'bg-custom-500 shadow-custom hover:bg-custom-600 text-bg-100 dark:text-bg-800 disabled:bg-bg-500 disabled:hover:bg-bg-500'
     case 'no-bg':
       return 'hover:bg-bg-200 dark:hover:bg-bg-800 text-bg-500 hover:text-bg-800 dark:hover:text-bg-100 disabled:bg-bg-100/20 disabled:dark:bg-bg-950 disabled:hover:bg-bg-950 disabled:dark:hover:bg-bg-950 disabled:hover:text-bg-500 disabled:dark:hover:text-bg-500'
     case 'secondary':
     default:
-      return 'bg-bg-300 text-bg-500 dark:text-bg-100 dark:bg-bg-500 hover:bg-bg-400/50 dark:hover:bg-bg-500/80 text-bg-100 dark:text-bg-800 disabled:bg-bg-500 disabled:hover:bg-bg-500'
+      return 'bg-bg-300 shadow-custom text-bg-500 dark:text-bg-100 dark:bg-bg-500 hover:bg-bg-400/50 dark:hover:bg-bg-500/80 text-bg-100 dark:text-bg-800 disabled:bg-bg-500 disabled:hover:bg-bg-500'
   }
 }
 

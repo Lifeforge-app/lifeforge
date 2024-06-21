@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
+import Scrollbar from '@components/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import {
   type ICalendarCategory,
@@ -59,16 +60,18 @@ function CalendarModule(): React.ReactElement {
             setExistedData={setExistedCategoryData}
           />
           <div className="flex size-full flex-col xl:ml-8">
-            <div className="mb-8 size-full">
-              <CalendarComponent
-                events={events}
-                setRawEvents={setRawEvents}
-                categories={categories}
-                setModifyEventModalOpenType={setModifyEventModalOpenType}
-                setExistedData={setExistedData}
-                refreshRawEvents={refreshRawEvents}
-              />
-            </div>
+            <Scrollbar>
+              <div className="mb-8 size-full pr-4">
+                <CalendarComponent
+                  events={events}
+                  setRawEvents={setRawEvents}
+                  categories={categories}
+                  setModifyEventModalOpenType={setModifyEventModalOpenType}
+                  setExistedData={setExistedData}
+                  refreshRawEvents={refreshRawEvents}
+                />
+              </div>
+            </Scrollbar>
           </div>
         </div>
       </ModuleWrapper>

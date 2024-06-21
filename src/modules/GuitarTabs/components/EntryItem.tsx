@@ -12,7 +12,7 @@ function EntryItem({ entry }: { entry: IGuitarTabsEntry }): React.ReactElement {
           entry.id
         }/${entry.thumbnail}?thumb=500x0`}
         alt={entry.name}
-        className="h-96 w-full rounded-md bg-bg-800 object-contain object-top"
+        className="h-96 w-full rounded-md bg-bg-100 object-contain object-top dark:bg-bg-800"
       />
       <div className="mt-4">
         <h3 className="truncate text-lg font-medium">
