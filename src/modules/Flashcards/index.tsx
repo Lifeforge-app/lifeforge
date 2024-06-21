@@ -6,6 +6,7 @@ import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import Scrollbar from '@components/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import { type IFlashcardDeck } from '@interfaces/flashcard_interfaces'
 import Sidebar from './components/Sidebar'
@@ -47,52 +48,54 @@ export default function Flashcards(): React.ReactElement {
           />
           <APIComponentWithFallback data={decks}>
             {typeof decks !== 'string' && (
-              <div className="mt-6 grid w-full grid-cols-3 gap-6 overflow-y-scroll px-4 pb-12">
-                {decks.map(deck => (
-                  <Link
-                    to={`/flashcards/${deck.id}`}
-                    key={deck.id}
-                    className="group relative flex flex-col justify-start gap-6 rounded-lg bg-bg-50 p-8 shadow-custom hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800"
-                  >
-                    <div className="space-y-2">
-                      {deck.tag !== '' && (
-                        <span
-                          className="relative isolate mb-1 w-min whitespace-nowrap rounded-full px-3 py-0.5 text-sm"
-                          style={{
-                            backgroundColor: `${deck.expand.tag.color}20`,
-                            color: deck.expand.tag.color
-                          }}
-                        >
-                          {deck.expand.tag.name}
-                        </span>
-                      )}
-                      <div className="text-xl font-medium ">{deck.name}</div>
-                      <p className="text-sm font-medium text-bg-500">
-                        {deck.card_amount} cards
-                      </p>
+              <Scrollbar>
+                <div className="mt-6 grid w-full grid-cols-3 gap-6 px-4 pb-12">
+                  {decks.map(deck => (
+                    <Link
+                      to={`/flashcards/${deck.id}`}
+                      key={deck.id}
+                      className="group relative flex flex-col justify-start gap-6 rounded-lg bg-bg-50 p-8 shadow-custom hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800"
+                    >
+                      <div className="space-y-2">
+                        {deck.tag !== '' && (
+                          <span
+                            className="relative isolate mb-1 w-min whitespace-nowrap rounded-full px-3 py-0.5 text-sm"
+                            style={{
+                              backgroundColor: `${deck.expand.tag.color}20`,
+                              color: deck.expand.tag.color
+                            }}
+                          >
+                            {deck.expand.tag.name}
+                          </span>
+                        )}
+                        <div className="text-xl font-medium ">{deck.name}</div>
+                        <p className="text-sm font-medium text-bg-500">
+                          {deck.card_amount} cards
+                        </p>
+                      </div>
+                      <div className="mt-auto space-y-2">
+                        <progress
+                          className="progress h-2 w-full rounded-lg bg-bg-200 dark:bg-bg-700"
+                          value={Math.floor(Math.random() * 100)}
+                          max="100"
+                        ></progress>
+                        <p className="text-sm font-medium text-bg-500">
+                          {Math.floor(Math.random() * 100)}% complete
+                        </p>
+                      </div>
+                      <button className="absolute right-4 top-4 hidden rounded-md p-2 text-bg-500 hover:bg-bg-700/30 hover:text-bg-100 group-hover:flex">
+                        <Icon icon="tabler:dots-vertical" className="size-5" />
+                      </button>
+                    </Link>
+                  ))}
+                  <div className="flex-center relative flex h-full flex-col gap-4 rounded-lg border-2 border-dashed border-bg-500 p-12">
+                    <Icon icon="tabler:plus" className="size-8 text-bg-500" />
+                    <div className="text-xl font-semibold text-bg-500">
+                      Create new set
                     </div>
-                    <div className="mt-auto space-y-2">
-                      <progress
-                        className="progress h-2 w-full rounded-lg bg-bg-200 dark:bg-bg-700"
-                        value={Math.floor(Math.random() * 100)}
-                        max="100"
-                      ></progress>
-                      <p className="text-sm font-medium text-bg-500">
-                        {Math.floor(Math.random() * 100)}% complete
-                      </p>
-                    </div>
-                    <button className="absolute right-4 top-4 hidden rounded-md p-2 text-bg-500 hover:bg-bg-700/30 hover:text-bg-100 group-hover:flex">
-                      <Icon icon="tabler:dots-vertical" className="size-5" />
-                    </button>
-                  </Link>
-                ))}
-                <div className="flex-center relative flex h-full flex-col gap-4 rounded-lg border-2 border-dashed border-bg-500 p-12">
-                  <Icon icon="tabler:plus" className="size-8 text-bg-500" />
-                  <div className="text-xl font-semibold text-bg-500">
-                    Create new set
                   </div>
                 </div>
-              </div>
+              </Scrollbar>
             )}
           </APIComponentWithFallback>
           {/* {Array(4)

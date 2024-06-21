@@ -19,7 +19,7 @@ function SearchBar({
         setSearchQuery={setSearchQuery}
         stuffToSearch="transactions"
       />
-      <div className="mt-2 flex items-center gap-2 rounded-md bg-bg-900 p-2 sm:mt-6">
+      <div className="mt-2 flex items-center gap-2 rounded-md bg-bg-50 p-2 shadow-custom dark:bg-bg-900 sm:mt-6">
         {['list', 'table'].map(viewType => (
           <button
             key={viewType}
@@ -27,7 +27,9 @@ function SearchBar({
               setView(viewType as 'table' | 'list')
             }}
             className={`flex items-center gap-2 rounded-md p-2 transition-all ${
-              viewType === view ? 'bg-bg-800' : 'text-bg-500 hover:text-bg-100'
+              viewType === view
+                ? 'bg-bg-200/50 dark:bg-bg-800'
+                : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-100'
             }`}
           >
             <Icon

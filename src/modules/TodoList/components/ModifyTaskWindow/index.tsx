@@ -10,6 +10,7 @@ import DateInput from '@components/ButtonsAndInputs/DateInput'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import Input from '@components/ButtonsAndInputs/Input'
+import Scrollbar from '@components/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
@@ -151,86 +152,88 @@ function ModifyTaskWindow(): React.ReactElement {
         className="absolute left-0 top-0 size-full"
       />
       <div
-        className={`absolute right-0 flex flex-col overflow-y-scroll transition-all duration-300 ${
+        className={`absolute right-0 flex flex-col transition-all duration-300 ${
           innerOpenType !== null ? 'translate-x-0' : 'translate-x-full'
         } top-0 size-full bg-bg-100 p-8 dark:bg-bg-900 sm:w-4/5 md:w-3/5 lg:w-2/5`}
       >
-        <div className="mb-8 flex items-center justify-between ">
-          <h1 className="flex items-center gap-3 text-2xl font-semibold">
-            <Icon
-              icon={
-                {
-                  create: 'tabler:plus',
-                  update: 'tabler:pencil'
-                }[innerOpenType ?? 'create']
-              }
-              className="size-7"
-            />
-            {
+        <Scrollbar>
+          <div className="mb-8 flex items-center justify-between ">
+            <h1 className="flex items-center gap-3 text-2xl font-semibold">
+              <Icon
+                icon={
+                  {
+                    create: 'tabler:plus',
+                    update: 'tabler:pencil'
+                  }[innerOpenType ?? 'create']
+                }
+                className="size-7"
+              />
               {
-                create: 'Create ',
-                update: 'Modify '
-              }[innerOpenType ?? 'create']
-            }{' '}
-            task
-          </h1>
-          <HamburgerMenu largerPadding className="relative">
-            <MenuItem
-              isRed
-              icon="tabler:trash"
-              onClick={() => {
-                setDeleteTaskConfirmationModalOpen(true)
-                setOpenType(null)
-              }}
-              text="Delete"
-            />
-          </HamburgerMenu>
-        </div>
-        <Input
-          name="Summary"
-          value={summary}
-          placeholder="An urgent task"
-          icon="tabler:abc"
-          darker
-          updateValue={updateSummary}
-          additionalClassName="w-full"
-          reference={summaryInputRef}
-        />
-        <SubtaskBox
-          summary={summary}
-          notes={notes}
-          subtasks={subtasks}
-          setSubtasks={setSubtasks}
-        />
-        <DateInput
-          date={dueDate}
-          setDate={setDueDate}
-          name="Due date"
-          icon="tabler:calendar"
-        />
-        <PrioritySelector priority={priority} setPriority={setPriority} />
-        <ListSelector list={list} setList={setList} />
-        <TagsSelector tags={tags} setTags={setTags} />
-        <NotesInput notes={notes} updateNotes={updateNotes} />
-        <div className="mt-12 flex flex-1 flex-col-reverse items-end gap-2 sm:flex-row">
-          <Button
-            loading={loading}
-            onClick={closeWindow}
-            icon={''}
-            className="w-full"
-            type="secondary"
-          >
-            cancel
-          </Button>
-          <CreateOrModifyButton
-            loading={loading}
-            onClick={() => {
-              onSubmitButtonClick().catch(console.error)
-            }}
-            type={innerOpenType}
-            className="w-full"
+                {
+                  create: 'Create ',
+                  update: 'Modify '
+                }[innerOpenType ?? 'create']
+              }{' '}
+              task
+            </h1>
+            <HamburgerMenu largerPadding className="relative">
+              <MenuItem
+                isRed
+                icon="tabler:trash"
+                onClick={() => {
+                  setDeleteTaskConfirmationModalOpen(true)
+                  setOpenType(null)
+                }}
+                text="Delete"
+              />
+            </HamburgerMenu>
+          </div>
+          <Input
+            name="Summary"
+            value={summary}
+            placeholder="An urgent task"
+            icon="tabler:abc"
+            darker
+            updateValue={updateSummary}
+            additionalClassName="w-full"
+            reference={summaryInputRef}
           />
-        </div>
+          <SubtaskBox
+            summary={summary}
+            notes={notes}
+            subtasks={subtasks}
+            setSubtasks={setSubtasks}
+          />
+          <DateInput
+            date={dueDate}
+            setDate={setDueDate}
+            name="Due date"
+            icon="tabler:calendar"
+          />
+          <PrioritySelector priority={priority} setPriority={setPriority} />
+          <ListSelector list={list} setList={setList} />
+          <TagsSelector tags={tags} setTags={setTags} />
+          <NotesInput notes={notes} updateNotes={updateNotes} />
+          <div className="mt-12 flex flex-1 flex-col-reverse items-end gap-2 sm:flex-row">
+            <Button
+              loading={loading}
+              onClick={closeWindow}
+              icon={''}
+              className="w-full"
+              type="secondary"
+            >
+              cancel
+            </Button>
+            <CreateOrModifyButton
+              loading={loading}
+              onClick={() => {
+                onSubmitButtonClick().catch(console.error)
+              }}
+              type={innerOpenType}
+              className="w-full"
+            />
+          </div>
+        </Scrollbar>
       </div>
     </div>
   )

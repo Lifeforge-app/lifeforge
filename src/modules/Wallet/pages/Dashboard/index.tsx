@@ -56,7 +56,7 @@ function WalletDashboard(): React.ReactElement {
           </Button>
         }
       />
-      <div className="mt-6 flex size-full grid-cols-3 grid-rows-[repeat(6,minmax(200px,1fr))] flex-col gap-4 overflow-y-auto pb-8 xl:grid">
+      <div className="mt-6 flex size-full grid-cols-3 grid-rows-[repeat(6,minmax(200px,1fr))] flex-col gap-4 pb-8 xl:grid">
         <IncomeExpenseCard
           title="Income"
           icon="tabler:login-2"

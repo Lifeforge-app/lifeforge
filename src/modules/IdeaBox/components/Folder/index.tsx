@@ -8,6 +8,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import Scrollbar from '@components/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import ContainerHeader from '../Ideas/components/ContainerHeader'
@@ -51,77 +52,79 @@ function Folder(): React.ReactElement {
 
   return (
     <APIComponentWithFallback data={valid}>
-      <section className="relative min-h-0 w-full min-w-0 flex-1 overflow-y-auto">
-        <ContainerHeader
-          id={id!}
-          viewArchived={viewArchived}
-          setViewArchived={setViewArchived}
-          folderId={folderId}
-        />
-        <APIComponentWithFallback data={data}>
-          {typeof data !== 'string' &&
-            (data.length > 0 ? (
-              <Column
-                queries={[
-                  {
-                    columns: 1,
-                    query: 'min-width: 0px'
-                  },
-                  {
-                    columns: 2,
-                    query: 'min-width: 768px'
-                  },
-                  {
-                    columns: 3,
-                    query: 'min-width: 1024px'
-                  },
-                  {
-                    columns: 4,
-                    query: 'min-width: 1280px'
-                  },
-                  {
-                    columns: 5,
-                    query: 'min-width: 1536px'
-                  }
-                ]}
-                gap="0.5rem"
-                className="mt-6 min-h-full flex-1 px-8 pb-8 sm:px-12"
-              >
-                {data.map(entry => {
-                  const Component = {
-                    image: EntryImage,
-                    text: EntryText,
-                    link: EntryLink
-                  }[entry.type]
+      <section className="relative flex size-full min-w-0 flex-1 flex-col">
+        <Scrollbar>
+          <ContainerHeader
+            id={id!}
+            viewArchived={viewArchived}
+            setViewArchived={setViewArchived}
+            folderId={folderId}
+          />
+          <APIComponentWithFallback data={data}>
+            {typeof data !== 'string' &&
+              (data.length > 0 ? (
+                <Column
+                  queries={[
+                    {
+                      columns: 1,
+                      query: 'min-width: 0px'
+                    },
+                    {
+                      columns: 2,
+                      query: 'min-width: 768px'
+                    },
+                    {
+                      columns: 3,
+                      query: 'min-width: 1024px'
+                    },
+                    {
+                      columns: 4,
+                      query: 'min-width: 1280px'
+                    },
+                    {
+                      columns: 5,
+                      query: 'min-width: 1536px'
+                    }
+                  ]}
+                  gap="0.5rem"
+                  className="mt-6 flex-1 shrink-0 !overflow-x-visible px-8 pb-8 sm:px-12"
+                >
+                  {data.map(entry => {
+                    const Component = {
+                      image: EntryImage,
+                      text: EntryText,
+                      link: EntryLink
+                    }[entry.type]
 
-                  return (
-                    <Component
-                      key={entry.id}
-                      entry={entry}
-                      setTypeOfModifyIdea={setTypeOfModifyIdea}
-                      setModifyIdeaModalOpenType={setModifyIdeaModalOpenType}
-                      setExistedData={setExistedData}
-                      setDeleteIdeaModalOpen={setDeleteIdeaModalOpen}
-                      updateIdeaList={refreshData}
-                    />
-                  )
-                })}
-              </Column>
-            ) : (
-              <EmptyStateScreen
-                setModifyModalOpenType={setModifyIdeaModalOpenType}
-                title="No ideas yet"
-                description="Hmm... Seems a bit empty here. Consider adding some innovative ideas."
-                icon="tabler:bulb-off"
-                ctaContent="new idea"
-              />
-            ))}
-        </APIComponentWithFallback>
-        <FAB
-          setModifyIdeaModalOpenType={setModifyIdeaModalOpenType}
-          setTypeOfModifyIdea={setTypeOfModifyIdea}
-          setExistedData={setExistedData}
-        />
+                    return (
+                      <Component
+                        key={entry.id}
+                        entry={entry}
+                        setTypeOfModifyIdea={setTypeOfModifyIdea}
+                        setModifyIdeaModalOpenType={setModifyIdeaModalOpenType}
+                        setExistedData={setExistedData}
+                        setDeleteIdeaModalOpen={setDeleteIdeaModalOpen}
+                        updateIdeaList={refreshData}
+                      />
+                    )
+                  })}
+                </Column>
+              ) : (
+                <EmptyStateScreen
+                  setModifyModalOpenType={setModifyIdeaModalOpenType}
+                  title="No ideas yet"
+                  description="Hmm... Seems a bit empty here. Consider adding some innovative ideas."
+                  icon="tabler:bulb-off"
+                  ctaContent="new idea"
+                />
+              ))}
+          </APIComponentWithFallback>
+          <FAB
+            setModifyIdeaModalOpenType={setModifyIdeaModalOpenType}
+            setTypeOfModifyIdea={setTypeOfModifyIdea}
+            setExistedData={setExistedData}
+          />
+        </Scrollbar>
       </section>
       <ModifyIdeaModal
         openType={modifyIdeaModalOpenType}

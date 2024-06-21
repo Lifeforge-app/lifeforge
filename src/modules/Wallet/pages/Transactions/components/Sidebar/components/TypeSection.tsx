@@ -51,13 +51,13 @@ function TypeSection({
               })
               setSidebarOpen(false)
             }}
-            className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-800"
+            className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-200/50 dark:hover:bg-bg-800"
           >
             <Icon
               icon={icon}
               className={`size-6 shrink-0 ${
                 {
-                  All: 'text-bg-100',
+                  All: 'text-bg-500 dark:text-bg-100',
                   Income: 'text-green-500',
                   Expenses: 'text-red-500',
                   Transfer: 'text-blue-500'

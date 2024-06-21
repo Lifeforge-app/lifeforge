@@ -3,6 +3,7 @@ import moment from 'moment'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import {
   type ICalendarEvent,
@@ -28,7 +29,15 @@ export default function TodaysEvent(): React.ReactElement {
         }
       >
         {typeof rawEvents !== 'string' &&
-          typeof categories !== 'string' &&
+        typeof categories !== 'string' &&
+        rawEvents.filter(event =>
+          moment().isBetween(
+            moment(event.start),
+            moment(event.end).subtract(1, 'second'),
+            'day',
+            '[]'
+          )
+        ).length > 0 ? (
           rawEvents
             .filter(event =>
               moment().isBetween(
@@ -64,7 +73,14 @@ export default function TodaysEvent(): React.ReactElement {
                   </div>
                 </li>
               </ul>
-            ))}
+            ))
+        ) : (
+          <EmptyStateScreen
+            title="No events today"
+            description="You have no events scheduled for today."
+            icon="tabler:calendar-off"
+          />
+        )}
       </APIComponentWithFallback>
     </div>
   )
