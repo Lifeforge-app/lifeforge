@@ -27,7 +27,7 @@
     "i18next-resources-to-backend": "^1.2.1",
     "immutability-helper": "^3.1.1",
     "moment": "^2.30.1",
-    "pdfjs-dist": "3.4.120",
+    "pdfjs-dist": "4.2.67",
     "pocketbase": "^0.19.0",
     "postcss": "^8.4.31",
     "react": "^19.0.0-rc-9d4fba0788-20240530",
