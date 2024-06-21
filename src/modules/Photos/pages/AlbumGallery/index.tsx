@@ -12,6 +12,7 @@ import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu/index.tsx'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem.tsx'
 import ModuleWrapper from '@components/Module/ModuleWrapper.tsx'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback.tsx'
+import Scrollbar from '@components/Scrollbar.tsx'
 import useFetch from '@hooks/useFetch'
 import {
   type IPhotoAlbumEntryItem,
@@ -229,99 +230,108 @@ function PhotosAlbumGallery(): React.ReactElement {
                   </div>
                 </div>
               </div>
-              <div className="relative my-6 w-full flex-1 overflow-y-auto">
-                <APIComponentWithFallback data={photos}>
-                  {typeof photos !== 'string' && (
-                    <PhotoAlbum
-                      layout="rows"
-                      spacing={8}
-                      photos={photos.map(image => ({
-                        src: `${import.meta.env.VITE_API_HOST}/media/${
-                          image.collectionId
-                        }/${image.photoId}/${image.image}?thumb=0x300`,
-                        width: image.width,
-                        height: image.height,
-                        key: image.id
-                      }))}
-                      renderPhoto={({
-                        photo,
-                        imageProps: { src, alt, style, ...restImageProps }
-                      }) => (
-                        <ImageObject
-                          beingDisplayedInAlbum
-                          refreshAlbumData={refreshAlbumData}
-                          photo={photo}
-                          details={
-                            photos.find(image => image.id === photo.key)!
-                          }
-                          style={style}
-                          {...restImageProps}
-                          refreshPhotos={refreshPhotos}
-                          selected={
-                            selectedPhotos.find(
-                              image => image === photo.key
-                            ) !== undefined
-                          }
-                          toggleSelected={(
-                            e: React.MouseEvent<
-                              HTMLDivElement | HTMLButtonElement
-                            >
-                          ) => {
-                            if (photo.key !== undefined) {
-                              if (
-                                selectedPhotos.find(
-                                  image => image === photo.key
-                                ) !== undefined
-                              ) {
-                                setSelectedPhotos(
-                                  selectedPhotos.filter(
-                                    image => image !== photo.key
-                                  )
-                                )
-                              } else {
-                                if (e.shiftKey && typeof photos !== 'string') {
-                                  const lastSelectedIndex = photos.findIndex(
-                                    image =>
-                                      image.id ===
-                                      selectedPhotos[selectedPhotos.length - 1]
-                                  )
-                                  const currentIndex = photos.findIndex(
-                                    image => image.id === photo.key
-                                  )
-                                  const range = photos.slice(
-                                    Math.min(lastSelectedIndex, currentIndex),
-                                    Math.max(lastSelectedIndex, currentIndex) +
-                                      1
-                                  )
+              <Scrollbar className="mt-6">
+                <div className="relative w-full flex-1 pb-6">
+                  <APIComponentWithFallback data={photos}>
+                    {typeof photos !== 'string' && (
+                      <PhotoAlbum
+                        layout="rows"
+                        spacing={8}
+                        photos={photos.map(image => ({
+                          src: `${import.meta.env.VITE_API_HOST}/media/${
+                            image.collectionId
+                          }/${image.photoId}/${image.image}?thumb=0x300`,
+                          width: image.width,
+                          height: image.height,
+                          key: image.id
+                        }))}
+                        renderPhoto={({
+                          photo,
+                          imageProps: { src, alt, style, ...restImageProps }
+                        }) => (
+                          <ImageObject
+                            beingDisplayedInAlbum
+                            refreshAlbumData={refreshAlbumData}
+                            photo={photo}
+                            details={
+                              photos.find(image => image.id === photo.key)!
+                            }
+                            style={style}
+                            {...restImageProps}
+                            refreshPhotos={refreshPhotos}
+                            selected={
+                              selectedPhotos.find(
+                                image => image === photo.key
+                              ) !== undefined
+                            }
+                            toggleSelected={(
+                              e: React.MouseEvent<
+                                HTMLDivElement | HTMLButtonElement
+                              >
+                            ) => {
+                              if (photo.key !== undefined) {
+                                if (
+                                  selectedPhotos.find(
+                                    image => image === photo.key
+                                  ) !== undefined
+                                ) {
                                   setSelectedPhotos(
-                                    Array.from(
-                                      new Set([
-                                        ...selectedPhotos,
-                                        ...range.map(image => image.id)
-                                      ])
+                                    selectedPhotos.filter(
+                                      image => image !== photo.key
                                     )
                                   )
                                 } else {
-                                  setSelectedPhotos([
-                                    ...selectedPhotos,
-                                    photo.key
-                                  ])
+                                  if (
+                                    e.shiftKey &&
+                                    typeof photos !== 'string'
+                                  ) {
+                                    const lastSelectedIndex = photos.findIndex(
+                                      image =>
+                                        image.id ===
+                                        selectedPhotos[
+                                          selectedPhotos.length - 1
+                                        ]
+                                    )
+                                    const currentIndex = photos.findIndex(
+                                      image => image.id === photo.key
+                                    )
+                                    const range = photos.slice(
+                                      Math.min(lastSelectedIndex, currentIndex),
+                                      Math.max(
+                                        lastSelectedIndex,
+                                        currentIndex
+                                      ) + 1
+                                    )
+                                    setSelectedPhotos(
+                                      Array.from(
+                                        new Set([
+                                          ...selectedPhotos,
+                                          ...range.map(image => image.id)
+                                        ])
+                                      )
+                                    )
+                                  } else {
+                                    setSelectedPhotos([
+                                      ...selectedPhotos,
+                                      photo.key
+                                    ])
+                                  }
                                 }
                               }
+                            }}
+                            selectedPhotosLength={selectedPhotos.length}
+                            setPhotos={
+                              setPhotos as React.Dispatch<
+                                React.SetStateAction<IPhotoAlbumEntryItem[]>
+                              >
                             }
-                          }}
-                          selectedPhotosLength={selectedPhotos.length}
-                          setPhotos={
-                            setPhotos as React.Dispatch<
-                              React.SetStateAction<IPhotoAlbumEntryItem[]>
-                            >
-                          }
-                        />
-                      )}
-                    />
-                  )}
-                </APIComponentWithFallback>
-              </div>
+                          />
+                        )}
+                      />
+                    )}
+                  </APIComponentWithFallback>
+                </div>
+              </Scrollbar>
             </ModuleWrapper>
             <BottomBar
               photos={photos as IPhotoAlbumEntryItem[]}

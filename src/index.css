@@ -538,10 +538,6 @@ button[class^='react-calendar__navigation'] {
   @apply !p-2;
 }
 
-.rbc-month-view {
-  @apply overflow-y-auto;
-}
-
 .rbc-month-row {
   @apply min-h-[7rem];
 }

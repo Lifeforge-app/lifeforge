@@ -163,7 +163,7 @@ function SidebarItem({
                       subsectionLink ||
                       (location.pathname.split('/').slice(1)[1] === '' &&
                         name === 'Dashboard'))
-                      ? 'bg-bg-800/50'
+                      ? 'bg-bg-200/50 dark:bg-bg-800/50'
                       : 'text-bg-500'
                   }`}
                 >

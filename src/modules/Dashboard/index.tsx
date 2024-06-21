@@ -44,7 +44,7 @@ function Dashboard(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <div ref={wrapperRef} className="mb-8 flex w-full flex-1 flex-col">
+      <div ref={wrapperRef} className="flex w-full flex-1 flex-col pb-12">
         <ModuleHeader
           title="Dashboard"
           desc={

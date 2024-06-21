@@ -7,6 +7,7 @@ import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import Scrollbar from '@components/Scrollbar'
 import useFetch from '@hooks/useFetch'
 
 export interface IDNSRecordEntry {
@@ -71,7 +72,7 @@ function DNSRecords(): JSX.Element {
           as="div"
           className="relative"
         >
-          <Listbox.Button className="relative mt-6 flex w-40 items-center justify-between gap-4 whitespace-nowrap rounded-lg bg-bg-900 p-4 text-left">
+          <Listbox.Button className="relative mt-6 flex w-40 items-center justify-between gap-4 whitespace-nowrap rounded-lg bg-bg-50 p-4 text-left shadow-custom dark:bg-bg-900">
             <div className="flex items-center gap-4">
               <Icon icon="tabler:filter" className="size-5 text-bg-500" />
               {selected}
@@ -83,32 +84,34 @@ function DNSRecords(): JSX.Element {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute top-[5.2rem] z-50 mt-1 max-h-56 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800 sm:text-sm">
-              {FILTER_TYPE.map(type => (
-                <Listbox.Option
-                  key={type}
-                  value={type}
-                  className={({ active }) =>
-                    `relative cursor-pointer select-none transition-all p-4 flex items-center justify-between ${
-                      active
-                        ? 'bg-bg-200/50 dark:bg-bg-700/50'
-                        : '!bg-transparent'
-                    }`
-                  }
-                >
-                  {({ selected }) => (
-                    <>
-                      {type}
-                      {selected && (
-                        <Icon
-                          icon="tabler:check"
-                          className="size-5 text-white group-hover:text-white/50"
-                        />
-                      )}
-                    </>
-                  )}
-                </Listbox.Option>
-              ))}
+            <Listbox.Options className="absolute top-[5.2rem] z-50 mt-1 h-56 w-full divide-y divide-bg-200 bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800 sm:text-sm">
+              <Scrollbar>
+                {FILTER_TYPE.map(type => (
+                  <Listbox.Option
+                    key={type}
+                    value={type}
+                    className={({ active }) =>
+                      `relative cursor-pointer select-none transition-all p-4 flex items-center justify-between ${
+                        active
+                          ? 'bg-bg-200/50 dark:bg-bg-700/50'
+                          : '!bg-transparent'
+                      }`
+                    }
+                  >
+                    {({ selected }) => (
+                      <>
+                        {type}
+                        {selected && (
+                          <Icon
+                            icon="tabler:check"
+                            className="size-5 text-white group-hover:text-white/50"
+                          />
+                        )}
+                      </>
+                    )}
+                  </Listbox.Option>
+                ))}
+              </Scrollbar>
             </Listbox.Options>
           </Transition>
         </Listbox>
@@ -117,7 +120,7 @@ function DNSRecords(): JSX.Element {
         {typeof records !== 'string' && (
           <table className="mb-8 mt-6">
             <thead>
-              <tr className="border-b-2 border-bg-900">
+              <tr className="border-b-2 border-bg-300 dark:border-bg-900">
                 <th scope="col" className="p-4">
                   Name
                 </th>
@@ -154,7 +157,10 @@ function DNSRecords(): JSX.Element {
                 )
                 .sort((a, b) => a.line_index - b.line_index)
                 .map((record, index) => (
-                  <tr key={index} className="even:bg-bg-900">
+                  <tr
+                    key={index}
+                    className="even:bg-bg-200/50 dark:even:bg-bg-900"
+                  >
                     <td className="p-4">
                       {record.dname_b64 +
                         (!record.dname_b64!.endsWith('.')

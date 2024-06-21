@@ -1,17 +1,17 @@
+import { Icon } from '@iconify/react'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { Icon } from '@iconify/react'
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import {
   type IFlashcardDeck,
   type IFlashcardCard
 } from '@interfaces/flashcard_interfaces'
 import EditCardModal from './EditCardModal'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 
 function CardSet(): React.ReactElement {
   const { id } = useParams<{ id: string }>()
@@ -104,7 +104,7 @@ function CardSet(): React.ReactElement {
                     <>
                       <Icon
                         icon="tabler:alert-triangle"
-                        className="mt-0.5 h-7 w-7 text-red-500"
+                        className="mt-0.5 size-7 text-red-500"
                       />
                       Failed to fetch data from server.
                     </>
@@ -148,7 +148,7 @@ function CardSet(): React.ReactElement {
                 >
                   <Icon icon="tabler:chevron-left" className="text-3xl" />
                 </button>
-                <div className="stack h-full w-full">
+                <div className="stack size-full">
                   <div className="card h-full bg-custom-500 text-bg-800 shadow-md">
                     <div className="card-body flex h-full flex-col">
                       <div className="card-title flex items-center justify-between">
@@ -161,7 +161,7 @@ function CardSet(): React.ReactElement {
                         >
                           <Icon
                             icon={`tabler:bulb${isShowingAnswer ? '-off' : ''}`}
-                            className="h-7 w-7"
+                            className="size-7"
                           />
                         </button>
                       </div>

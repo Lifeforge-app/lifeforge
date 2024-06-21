@@ -21,7 +21,7 @@ function GalleryContainer(): React.ReactElement {
   return (
     <>
       <div
-        className="w-full flex-1 overflow-y-scroll pr-4 sm:pr-16"
+        className="no-scrollbar w-full flex-1 overflow-y-scroll pr-4 sm:pr-16"
         onScroll={e => {
           if (
             sideSliderRef.current !== null &&

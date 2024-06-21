@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import Scrollbar from '@components/Scrollbar'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function AssetsBalanceCard(): React.ReactElement {
@@ -27,25 +28,27 @@ function AssetsBalanceCard(): React.ReactElement {
       </div>
       <APIComponentWithFallback data={assets}>
         {typeof assets !== 'string' && assets.length > 0 ? (
-          <ul className="mt-6 flex h-full flex-col gap-4 overflow-y-auto">
-            {assets.map(asset => (
-              <Link
-                key={asset.id}
-                to={`/wallet/transactions?asset=${asset.id}`}
-                className="flex w-full min-w-0 flex-1 flex-col items-center justify-between gap-4 rounded-lg bg-bg-100 p-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 dark:hover:bg-bg-700/50 [@media(min-width:400px)]:flex-row"
-              >
-                <div className="flex w-full min-w-0 items-center gap-4">
-                  <Icon icon={asset.icon} className="size-6 shrink-0" />
-                  <div className="w-full min-w-0 truncate font-semibold">
-                    {asset.name}
+          <ul className="mt-6 flex h-full flex-col gap-4">
+            <Scrollbar>
+              {assets.map(asset => (
+                <Link
+                  key={asset.id}
+                  to={`/wallet/transactions?asset=${asset.id}`}
+                  className="flex w-full min-w-0 flex-1 flex-col items-center justify-between gap-4 rounded-lg bg-bg-100 p-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 dark:hover:bg-bg-700/50 [@media(min-width:400px)]:flex-row"
+                >
+                  <div className="flex w-full min-w-0 items-center gap-4">
+                    <Icon icon={asset.icon} className="size-6 shrink-0" />
+                    <div className="w-full min-w-0 truncate font-semibold">
+                      {asset.name}
+                    </div>
                   </div>
-                </div>
-                <div className="whitespace-nowrap text-right text-3xl font-medium">
-                  <span className="text-xl text-bg-500">RM</span>{' '}
-                  {(+asset.balance).toFixed(2)}
-                </div>
-              </Link>
-            ))}
+                  <div className="whitespace-nowrap text-right text-3xl font-medium">
+                    <span className="text-xl text-bg-500">RM</span>{' '}
+                    {(+asset.balance).toFixed(2)}
+                  </div>
+                </Link>
+              ))}
+            </Scrollbar>
           </ul>
         ) : (
           <EmptyStateScreen

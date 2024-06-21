@@ -1,14 +1,14 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useState } from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import Button from '@components/ButtonsAndInputs/Button'
+import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import LANGUAGE_COLORS from '@constants/language_colors'
 import useFetch from '@hooks/useFetch'
 import Sidebar from './Sidebar'
-import LANGUAGE_COLORS from '@constants/language_colors'
 
 interface IRepositoriesRepo {
   archived: boolean
@@ -35,7 +35,7 @@ function Repositories(): React.ReactElement {
       <ModuleHeader title="Repositories" desc="" />
       <div className="mt-6 flex min-h-0 w-full flex-1">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <div className="flex h-full flex-1 flex-col lg:ml-8">
+        <div className="flex h-full flex-1 flex-col lg:m-8">
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-semibold  md:text-4xl">
               All Repositories{' '}

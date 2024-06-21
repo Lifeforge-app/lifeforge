@@ -261,9 +261,9 @@ function GuitarTabs(): React.ReactElement {
               {entries.items.map(entry => (
                 <EntryItem key={entry.id} entry={entry} />
               ))}
-            </div>{' '}
+            </div>
             {
-              <div className="mb-12 mt-4 flex items-center justify-between gap-2">
+              <div className="mt-4 flex items-center justify-between gap-2 pb-12">
                 {entries.page > 1 ? (
                   <Button
                     onClick={() => {

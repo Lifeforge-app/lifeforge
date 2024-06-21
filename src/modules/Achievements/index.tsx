@@ -57,7 +57,7 @@ function Achievements(): React.ReactElement {
             className={`w-full cursor-pointer border-b-2 p-2 uppercase tracking-widest transition-all ${
               selectedDifficulty === achievement[0]
                 ? `${achievement[1]} ${achievement[2]} font-medium`
-                : 'border-bg-500 text-bg-500 hover:border-bg-200 hover:text-bg-200'
+                : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
             }`}
           >
             {achievement[0]}
@@ -70,7 +70,7 @@ function Achievements(): React.ReactElement {
             {entries.map((entry, index) => (
               <div
                 key={index}
-                className="flex items-start justify-between gap-4 rounded-lg bg-bg-900 p-4 shadow-lg"
+                className="flex items-start justify-between gap-4 rounded-lg bg-bg-50 p-4 shadow-custom shadow-lg dark:bg-bg-900"
               >
                 <div className="flex h-full gap-4">
                   <div

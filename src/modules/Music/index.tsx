@@ -7,6 +7,7 @@ import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import Scrollbar from '@components/Scrollbar'
 import { useMusicContext } from '@providers/MusicProvider'
 import AddMusicButton from './components/AddMusicButton'
 import BottomBar from './components/Bottombar'
@@ -40,36 +41,38 @@ function Music(): React.ReactElement {
           setSearchQuery={setSearchQuery}
           stuffToSearch="musics"
         />
-        <div className="relative flex size-full min-w-0 flex-col divide-y-2 divide-bg-200/50 overflow-y-auto dark:divide-bg-900">
-          <APIComponentWithFallback data={musics}>
-            {typeof musics !== 'string' &&
-            musics.filter(music =>
-              music.name
-                .toLowerCase()
-                .includes(debouncedSearchQuery.toLowerCase())
-            ).length > 0 ? (
-              <MusicList debouncedSearchQuery={debouncedSearchQuery} />
-            ) : (
-              <EmptyStateScreen
-                title={
-                  musics.length > 0
-                    ? 'Oops! Nothing found here.'
-                    : '"Oops! Nothing to see here."'
-                }
-                icon={
-                  musics.length > 0 ? 'tabler:search-off' : 'tabler:music-off'
-                }
-                description={
-                  musics.length > 0
-                    ? "The search query that you entered doesn't seem to yield any result."
-                    : 'Add the music by either downloading it or putting it into your NAS folder'
-                }
-                customCTAButton={
-                  musics.length > 0 ? <AddMusicButton /> : undefined
-                }
-              />
-            )}
-          </APIComponentWithFallback>
+        <div className="relative flex size-full min-w-0 flex-col divide-y-2 divide-bg-200/50 dark:divide-bg-900">
+          <Scrollbar>
+            <APIComponentWithFallback data={musics}>
+              {typeof musics !== 'string' &&
+              musics.filter(music =>
+                music.name
+                  .toLowerCase()
+                  .includes(debouncedSearchQuery.toLowerCase())
+              ).length > 0 ? (
+                <MusicList debouncedSearchQuery={debouncedSearchQuery} />
+              ) : (
+                <EmptyStateScreen
+                  title={
+                    musics.length > 0
+                      ? 'Oops! Nothing found here.'
+                      : '"Oops! Nothing to see here."'
+                  }
+                  icon={
+                    musics.length > 0 ? 'tabler:search-off' : 'tabler:music-off'
+                  }
+                  description={
+                    musics.length > 0
+                      ? "The search query that you entered doesn't seem to yield any result."
+                      : 'Add the music by either downloading it or putting it into your NAS folder'
+                  }
+                  customCTAButton={
+                    musics.length > 0 ? <AddMusicButton /> : undefined
+                  }
+                />
+              )}
+            </APIComponentWithFallback>
+          </Scrollbar>
         </div>
         {currentMusic !== null && <BottomBar />}
       </div>
