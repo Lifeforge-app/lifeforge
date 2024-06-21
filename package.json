@@ -50,7 +50,7 @@
     "react-medium-image-zoom": "^5.1.9",
     "react-photo-album": "^2.4.0",
     "react-router": "^6.20.0",
-    "react-router-dom": "^6.20.0",
+    "react-router-dom": "^6.23.1",
     "react-toastify": "^10.0.5",
     "react-tooltip": "^5.24.0",
     "tailwindcss": "^3.3.5",

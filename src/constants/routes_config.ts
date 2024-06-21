@@ -296,9 +296,9 @@ export const ROUTES: IRoutes[] = [
         togglable: false
       },
       {
-        name: 'about',
+        name: 'Documentation',
         icon: 'tabler:info-circle',
-        routes: { about: 'about' },
+        routes: { documentation: 'documentation' },
         togglable: false
       },
       {

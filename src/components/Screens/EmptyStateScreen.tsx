@@ -26,7 +26,7 @@ function EmptyStateScreen({
 
   return (
     <div className="flex-center flex size-full flex-col gap-6 ">
-      <Icon icon={icon} className="size-32" />
+      <Icon icon={icon} className="size-32 text-bg-500" />
       <h2 className="text-center text-3xl font-semibold">{t(title)}</h2>
       <p className="-mt-2 text-center text-lg text-bg-500">{t(description)}</p>
       {customCTAButton ??
