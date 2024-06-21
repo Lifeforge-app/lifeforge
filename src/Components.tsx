@@ -70,7 +70,6 @@ const JournalEdit = lazy(
 )
 const Music = lazy(async () => await import('./modules/Music'))
 const Repositories = lazy(async () => await import('./modules/Repositories'))
-const About = lazy(async () => await import('./modules/About'))
 const Achievements = lazy(async () => await import('./modules/Achievements'))
 const DNSRecords = lazy(async () => await import('./modules/DNSRecords'))
 const MailInbox = lazy(async () => await import('./modules/MailInbox'))
@@ -174,9 +173,6 @@ export const COMPONENTS = {
   },
   'change-log': {
     'change-log': Changelog
-  },
-  about: {
-    about: About
   },
   'mail-inbox': {
     'mail-inbox': MailInbox
