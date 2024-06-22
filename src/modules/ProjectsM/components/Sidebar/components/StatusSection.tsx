@@ -8,12 +8,14 @@ function StatusSection({
   statuses,
   setExistedData,
   setModifyStatusModalOpenType,
-  setSidebarOpen
+  setSidebarOpen,
+  setDeleteStatusConfirmationOpen
 }: {
   statuses: IProjectsMStatus[] | 'loading' | 'error'
   setExistedData: React.Dispatch<React.SetStateAction<IProjectsMStatus | null>>
   setModifyStatusModalOpenType: React.Dispatch<'create' | 'update' | null>
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setDeleteStatusConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   return (
     <>
@@ -34,6 +36,7 @@ function StatusSection({
               setExistedData={setExistedData}
               setModifyModalOpenType={setModifyStatusModalOpenType}
               setSidebarOpen={setSidebarOpen}
+              setDeleteConfirmationModalOpen={setDeleteStatusConfirmationOpen}
             />
           ))
         ) : (
