@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
@@ -16,6 +16,7 @@ import {
   type IProjectsMTechnology,
   type IProjectsMEntry
 } from '@interfaces/projects_m_interfaces'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import EntryItem from './components/EntryItem'
 import Sidebar from './components/Sidebar'
 import ModifyCategoriesModal from './modals/ModifyCategoryModal'
@@ -25,6 +26,7 @@ import ModifyTechnologyModal from './modals/ModifyTechnologyModal'
 import ModifyVisibilityModal from './modals/ModifyVisibilityModal'
 
 function ProjectsM(): React.ReactElement {
+  const { setSubSidebarExpanded } = useGlobalStateContext()
   const [entries, refreshEntries] =
     useFetch<IProjectsMEntry[]>('projects-m/entry')
   const [categories, refreshCategories] = useFetch<IProjectsMCategory[]>(
@@ -81,6 +83,10 @@ function ProjectsM(): React.ReactElement {
     deleteTechnologyConfirmationOpen,
     setDeleteTechnologyConfirmationOpen
   ] = useState(false)
+
+  useEffect(() => {
+    setSubSidebarExpanded(sidebarOpen)
+  }, [sidebarOpen])
 
   return (
     <ModuleWrapper>
