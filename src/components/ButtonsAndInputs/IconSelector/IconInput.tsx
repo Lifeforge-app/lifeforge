@@ -42,7 +42,7 @@ function IconInput({
           </span>
           <div className="mr-12 mt-6 flex w-full items-center gap-2 pl-4">
             <Icon
-              className={`size-4 shrink-0 rounded-full ${
+              className={`size-4 shrink-0 ${
                 !icon &&
                 'pointer-events-none opacity-0 group-focus-within:opacity-100'
               }`}

@@ -1,31 +1,41 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import Scrollbar from '@components/Scrollbar'
 import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
-import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import {
   type IProjectsMStatus,
-  type IProjectsMCategory
+  type IProjectsMCategory,
+  type IProjectsMTechnology,
+  type IProjectsMVisibility
 } from '@interfaces/projects_m_interfaces'
 import CategorySection from './components/CategorySection'
 import StatusSection from './components/StatusSection'
+import TechnologySection from './components/TechnologySection'
+import VisibilitySection from './components/VisibilitySection'
 
 function Sidebar({
   sidebarOpen,
   setSidebarOpen,
   categories,
   statuses,
+  visibilities,
+  technologies,
   setModifyCategoriesModalOpenType,
   setExistedCategoryData,
   setModifyStatusModalOpenType,
-  setExistedStatusData
+  setExistedStatusData,
+  setModifyVisibilityModalOpenType,
+  setExistedVisibilityData,
+  setModifyTechnologyModalOpenType,
+  setExistedTechnologyData
 }: {
   sidebarOpen: boolean
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
   categories: IProjectsMCategory[] | 'loading' | 'error'
   statuses: IProjectsMStatus[] | 'loading' | 'error'
+  visibilities: IProjectsMVisibility[] | 'loading' | 'error'
+  technologies: IProjectsMTechnology[] | 'loading' | 'error'
   setModifyCategoriesModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
@@ -37,6 +47,18 @@ function Sidebar({
   >
   setExistedStatusData: React.Dispatch<
     React.SetStateAction<IProjectsMStatus | null>
+  >
+  setModifyVisibilityModalOpenType: React.Dispatch<
+    React.SetStateAction<'create' | 'update' | null>
+  >
+  setExistedVisibilityData: React.Dispatch<
+    React.SetStateAction<IProjectsMVisibility | null>
+  >
+  setModifyTechnologyModalOpenType: React.Dispatch<
+    React.SetStateAction<'create' | 'update' | null>
+  >
+  setExistedTechnologyData: React.Dispatch<
+    React.SetStateAction<IProjectsMTechnology | null>
   >
 }): React.ReactElement {
   return (
@@ -71,54 +93,19 @@ function Sidebar({
             setSidebarOpen={setSidebarOpen}
           />
           <SidebarDivider />
-          <SidebarTitle name="visibility" />
-          {[
-            ['tabler:brand-open-source', 'Open Source'],
-            ['tabler:briefcase', 'Private & Commercial']
-          ].map(([icon, name], index) => (
-            <li
-              key={index}
-              className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
-            >
-              <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
-                <Icon icon={icon} className="size-6 shrink-0" />
-                <div className="flex w-full items-center justify-between">
-                  {name}
-                </div>
-                <span className="text-sm">
-                  {Math.floor(Math.random() * 10)}
-                </span>
-              </div>
-            </li>
-          ))}
+          <VisibilitySection
+            visibilities={visibilities}
+            setExistedData={setExistedVisibilityData}
+            setModifyVisibilityModalOpenType={setModifyVisibilityModalOpenType}
+            setSidebarOpen={setSidebarOpen}
+          />
           <SidebarDivider />
-          <SidebarTitle name="Technologies" />
-          {[
-            ['simple-icons:react', 'React'],
-            ['simple-icons:angular', 'Angular'],
-            ['simple-icons:electron', 'Electron'],
-            ['simple-icons:python', 'Python'],
-            ['simple-icons:swift', 'Swift'],
-            ['simple-icons:android', 'Android'],
-            ['simple-icons:apple', 'iOS'],
-            ['simple-icons:windows', 'Windows'],
-            ['simple-icons:linux', 'Linux']
-          ].map(([icon, name], index) => (
-            <li
-              key={index}
-              className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
-            >
-              <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
-                <Icon icon={icon} className="size-5 shrink-0" />
-                <div className="flex w-full items-center justify-between">
-                  {name}
-                </div>
-                <span className="text-sm">
-                  {Math.floor(Math.random() * 10)}
-                </span>
-              </div>
-            </li>
-          ))}
+          <TechnologySection
+            technologies={technologies}
+            setExistedData={setExistedTechnologyData}
+            setModifyTechnologyModalOpenType={setModifyTechnologyModalOpenType}
+            setSidebarOpen={setSidebarOpen}
+          />
         </ul>
       </Scrollbar>
     </aside>
