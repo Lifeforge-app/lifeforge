@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
-import { type IProjectsKEntry } from '@interfaces/project_k_interfaces'
+import { type IProjectsKEntry } from '@interfaces/projects_k_interfaces'
 import { PROJECT_STATUS } from '..'
 
 function Header({

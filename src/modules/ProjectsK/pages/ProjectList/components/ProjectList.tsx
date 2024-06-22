@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { type IProjectsKEntry } from '@interfaces/project_k_interfaces'
+import { type IProjectsKEntry } from '@interfaces/projects_k_interfaces'
 import { PROJECT_STATUS } from '..'
 
 function ProjectList({
