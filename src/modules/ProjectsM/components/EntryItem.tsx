@@ -31,7 +31,7 @@ function EntryItem({
   return (
     <li className="m-4 mt-0 flex items-center gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       <Link
-        to="./lifeforge"
+        to={`/projects-m/${entry.id}`}
         className="flex w-full items-center justify-between gap-4"
       >
         <div className="flex items-center gap-4">
