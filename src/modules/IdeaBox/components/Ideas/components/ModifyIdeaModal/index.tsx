@@ -158,12 +158,12 @@ function ModifyIdeaModal({
       body:
         innerOpenType === 'create'
           ? formData
-          : JSON.stringify({
+          : {
               title: ideaTitle.trim(),
               content: ideaContent.trim(),
               link: ideaLink.trim(),
               type: innerTypeOfModifyIdea
-            }),
+            },
       finalCallback: () => {
         setLoading(false)
       },
