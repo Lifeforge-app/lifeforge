@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import ModuleHeader from '@components/Module/ModuleHeader'
+import { type IPhotosEntryDimensionsAll } from '@interfaces/photos_interfaces'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { usePhotosContext } from '@providers/PhotosProvider'
-import { type IPhotosEntryDimensionsAll } from '@interfaces/photos_interfaces'
 import GalleryContainer from './Gallery/GalleryContainer'
 import GalleryHeader from './Gallery/GalleryHeader'
 import AddPhotosToAlbumModal from '../../components/modals/AddPhotosToAlbumModal'
@@ -13,8 +13,13 @@ import PhotosSidebar from '../../components/PhotosSidebar'
 
 function PhotosMainGallery(): React.ReactElement {
   const { sidebarExpanded } = useGlobalStateContext()
-  const { setPhotoDimensions, hidePhotosInAlbum, setReady, setSidebarOpen } =
-    usePhotosContext()
+  const {
+    setPhotoDimensions,
+    hidePhotosInAlbum,
+    setReady,
+    sidebarOpen,
+    setSidebarOpen
+  } = usePhotosContext()
   const [showGallery, setShowGallery] = useState(true)
 
   useEffect(() => {
@@ -35,7 +40,13 @@ function PhotosMainGallery(): React.ReactElement {
   }, [hidePhotosInAlbum])
 
   return showGallery ? (
-    <section className="flex size-full min-h-0 flex-1 flex-col pl-4 sm:pl-12">
+    <section
+      className={`absolute flex transition-all ${
+        sidebarOpen
+          ? 'top-0 h-full'
+          : 'top-24 h-[calc(100%-6rem)] sm:top-32 sm:h-[calc(100%-8rem)]'
+      } min-h-0 w-full flex-1 flex-col pl-4 sm:pl-12`}
+    >
       <ModuleHeader
         title="Photos"
         desc="View and manage all your precious memories."

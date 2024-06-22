@@ -8,6 +8,7 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { useWalletContext } from '@providers/WalletProvider'
 import ManageCategoriesModal from './components/ManageCategoriesModal'
 import ModifyTransactionsModal from './components/ModifyTransactionsModal'
@@ -47,6 +48,7 @@ function Transactions(): React.ReactElement {
     deleteTransactionsConfirmationOpen,
     setDeleteTransactionsConfirmationOpen
   ] = useState(false)
+  const { setSubSidebarExpanded } = useGlobalStateContext()
   const [isManageCategoriesModalOpen, setManageCategoriesModalOpen] = useState<
     boolean | 'new'
   >(false)
@@ -65,6 +67,10 @@ function Transactions(): React.ReactElement {
       navigate('/wallet/transactions')
     }
   }, [hash])
+
+  useEffect(() => {
+    setSubSidebarExpanded(sidebarOpen)
+  }, [sidebarOpen])
 
   return (
     <ModuleWrapper>

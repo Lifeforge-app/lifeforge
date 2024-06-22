@@ -103,7 +103,7 @@ function DashboardGrid({
   ) : (
     // @ts-expect-error cannot fix
     <ResponsiveGridLayout
-      className={`mt-6 ${canLayoutChange ? 'mb-64' : ''}`}
+      className={`pt-6 ${canLayoutChange ? 'pb-64' : ''}`}
       layouts={enabledWidgets}
       cols={
         {

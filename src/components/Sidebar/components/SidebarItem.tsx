@@ -50,7 +50,7 @@ function SidebarItem({
           className={`relative flex w-full items-center justify-between gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 ${
             location.pathname.slice(1).startsWith(titleToPath(name)) || active
               ? 'bg-bg-200/50 dark:bg-bg-800'
-              : 'hover:bg-bg-200/30 dark:hover:bg-bg-800/30'
+              : 'hover:bg-bg-200/30 dark:hover:bg-bg-800/50'
           }`}
         >
           <a
