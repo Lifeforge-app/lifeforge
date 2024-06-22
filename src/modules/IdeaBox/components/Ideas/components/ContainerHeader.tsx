@@ -31,7 +31,7 @@ function ContainerHeader({
   const navigate = useNavigate()
 
   return (
-    <header className="flex flex-col gap-1 px-8 sm:px-12">
+    <header className="flex flex-col gap-1">
       <GoBackButton
         onClick={() => {
           if (viewArchived) {

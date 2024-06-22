@@ -7,9 +7,9 @@ import Column from 'react-columns'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
+import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import Scrollbar from '@components/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import {
   type IIdeaBoxFolder,
@@ -67,113 +67,111 @@ function Ideas(): React.ReactElement {
   }, [valid])
 
   return (
-    <APIComponentWithFallback data={valid}>
-      <section className="relative min-h-0 w-full min-w-0 flex-1">
-        <Scrollbar>
-          <ContainerHeader
-            id={id!}
-            viewArchived={viewArchived}
-            setViewArchived={setViewArchived}
-          />
-          <APIComponentWithFallback data={data}>
-            {typeof data !== 'string' &&
-              typeof folders !== 'string' &&
-              (data.length === 0 && folders.length === 0 ? (
-                !viewArchived ? (
-                  <EmptyStateScreen
-                    setModifyModalOpenType={setModifyIdeaModalOpenType}
-                    title="No ideas yet"
-                    description="Hmm... Seems a bit empty here. Consider adding some innovative ideas."
-                    icon="tabler:bulb-off"
-                    ctaContent="new idea"
-                  />
-                ) : (
-                  <EmptyStateScreen
-                    title="No archived ideas"
-                    description="You don't have any archived ideas yet."
-                    icon="tabler:archive-off"
-                  />
-                )
+    <ModuleWrapper>
+      <APIComponentWithFallback data={valid}>
+        <ContainerHeader
+          id={id!}
+          viewArchived={viewArchived}
+          setViewArchived={setViewArchived}
+        />
+        <APIComponentWithFallback data={data}>
+          {typeof data !== 'string' &&
+            typeof folders !== 'string' &&
+            (data.length === 0 && folders.length === 0 ? (
+              !viewArchived ? (
+                <EmptyStateScreen
+                  setModifyModalOpenType={setModifyIdeaModalOpenType}
+                  title="No ideas yet"
+                  description="Hmm... Seems a bit empty here. Consider adding some innovative ideas."
+                  icon="tabler:bulb-off"
+                  ctaContent="new idea"
+                />
               ) : (
-                <>
-                  {folders.length > 0 && !viewArchived && (
-                    <div className="mt-6 px-8 sm:px-12">
-                      <h2 className="mb-2 flex items-center gap-2 text-lg font-medium text-bg-500">
-                        <Icon icon="tabler:folder" className="size-6" />
-                        {t('ideaBox.entryType.folder')}
-                      </h2>
-                      <div className="mt-2 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
-                        {folders.map(folder => (
-                          <FolderItem
-                            key={folder.id}
-                            folder={folder}
-                            setIdeaList={setData}
-                            setExistedFolderData={setExistedFolderData}
-                            setModifyFolderModalOpenType={
-                              setModifyFolderModalOpenType
-                            }
-                            setDeleteFolderConfirmationModalOpen={
-                              setDeleteFolderModalOpen
-                            }
-                          />
-                        ))}
-                      </div>
+                <EmptyStateScreen
+                  title="No archived ideas"
+                  description="You don't have any archived ideas yet."
+                  icon="tabler:archive-off"
+                />
+              )
+            ) : (
+              <>
+                {folders.length > 0 && !viewArchived && (
+                  <div className="mt-6">
+                    <h2 className="mb-2 flex items-center gap-2 text-lg font-medium text-bg-500">
+                      <Icon icon="tabler:folder" className="size-6" />
+                      {t('ideaBox.entryType.folder')}
+                    </h2>
+                    <div className="mt-2 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+                      {folders.map(folder => (
+                        <FolderItem
+                          key={folder.id}
+                          folder={folder}
+                          setIdeaList={setData}
+                          setExistedFolderData={setExistedFolderData}
+                          setModifyFolderModalOpenType={
+                            setModifyFolderModalOpenType
+                          }
+                          setDeleteFolderConfirmationModalOpen={
+                            setDeleteFolderModalOpen
+                          }
+                        />
+                      ))}
                     </div>
-                  )}
-                  {data.length > 0 && (
-                    <Column
-                      queries={[
-                        {
-                          columns: 1,
-                          query: 'min-width: 0px'
-                        },
-                        {
-                          columns: 2,
-                          query: 'min-width: 768px'
-                        },
-                        {
-                          columns: 3,
-                          query: 'min-width: 1024px'
-                        },
-                        {
-                          columns: 4,
-                          query: 'min-width: 1280px'
-                        },
-                        {
-                          columns: 5,
-                          query: 'min-width: 1536px'
-                        }
-                      ]}
-                      gap="0.5rem"
-                      className="mt-6 shrink-0 !overflow-x-visible px-8 sm:px-12"
-                    >
-                      {data.map(entry => {
-                        const Component = {
-                          image: EntryImage,
-                          text: EntryText,
-                          link: EntryLink
-                        }[entry.type]
+                  </div>
+                )}
+                {data.length > 0 && (
+                  <Column
+                    queries={[
+                      {
+                        columns: 1,
+                        query: 'min-width: 0px'
+                      },
+                      {
+                        columns: 2,
+                        query: 'min-width: 768px'
+                      },
+                      {
+                        columns: 3,
+                        query: 'min-width: 1024px'
+                      },
+                      {
+                        columns: 4,
+                        query: 'min-width: 1280px'
+                      },
+                      {
+                        columns: 5,
+                        query: 'min-width: 1536px'
+                      }
+                    ]}
+                    gap="0.5rem"
+                    className="mt-6 shrink-0 !overflow-x-visible"
+                  >
+                    {data.map(entry => {
+                      const Component = {
+                        image: EntryImage,
+                        text: EntryText,
+                        link: EntryLink
+                      }[entry.type]
 
-                        return (
-                          <Component
-                            key={entry.id}
-                            entry={entry}
-                            setTypeOfModifyIdea={setTypeOfModifyIdea}
-                            setModifyIdeaModalOpenType={
-                              setModifyIdeaModalOpenType
-                            }
-                            setExistedData={setExistedData}
-                            setDeleteIdeaModalOpen={setDeleteIdeaModalOpen}
-                            updateIdeaList={refreshData}
-                          />
-                        )
-                      })}
-                    </Column>
-                  )}
-                </>
-              ))}
-          </APIComponentWithFallback>
-        </Scrollbar>
+                      return (
+                        <Component
+                          key={entry.id}
+                          entry={entry}
+                          setTypeOfModifyIdea={setTypeOfModifyIdea}
+                          setModifyIdeaModalOpenType={
+                            setModifyIdeaModalOpenType
+                          }
+                          setExistedData={setExistedData}
+                          setDeleteIdeaModalOpen={setDeleteIdeaModalOpen}
+                          updateIdeaList={refreshData}
+                        />
+                      )
+                    })}
+                  </Column>
+                )}
+              </>
+            ))}
+        </APIComponentWithFallback>
         <FAB
           setModifyIdeaModalOpenType={setModifyIdeaModalOpenType}
           setTypeOfModifyIdea={setTypeOfModifyIdea}
@@ -181,42 +179,42 @@ function Ideas(): React.ReactElement {
           setModifyFolderModalOpenType={setModifyFolderModalOpenType}
           setExistedFolderData={setExistedFolderData}
         />
-      </section>
-      <ModifyIdeaModal
-        openType={modifyIdeaModalOpenType}
-        typeOfModifyIdea={typeOfModifyIdea}
-        setOpenType={setModifyIdeaModalOpenType}
-        containerId={id as string}
-        updateIdeaList={refreshData}
-        existedData={existedData}
-      />
-      <ModifyFolderModal
-        openType={modifyFolderModalOpenType}
-        setOpenType={setModifyFolderModalOpenType}
-        updateFolderList={refreshFolders}
-        existedData={existedFolderData}
-      />
-      <DeleteConfirmationModal
-        isOpen={deleteIdeaModalOpen}
-        onClose={() => {
-          setDeleteIdeaModalOpen(false)
-        }}
-        apiEndpoint="idea-box/delete"
-        itemName="idea"
-        data={existedData}
-        updateDataList={refreshData}
-      />
-      <DeleteConfirmationModal
-        isOpen={deleteFolderModalOpen}
-        onClose={() => {
-          setDeleteFolderModalOpen(false)
-        }}
-        apiEndpoint="idea-box/folder"
-        itemName="folder"
-        data={existedFolderData}
-        updateDataList={refreshFolders}
-      />
-    </APIComponentWithFallback>
+        <ModifyIdeaModal
+          openType={modifyIdeaModalOpenType}
+          typeOfModifyIdea={typeOfModifyIdea}
+          setOpenType={setModifyIdeaModalOpenType}
+          containerId={id as string}
+          updateIdeaList={refreshData}
+          existedData={existedData}
+        />
+        <ModifyFolderModal
+          openType={modifyFolderModalOpenType}
+          setOpenType={setModifyFolderModalOpenType}
+          updateFolderList={refreshFolders}
+          existedData={existedFolderData}
+        />
+        <DeleteConfirmationModal
+          isOpen={deleteIdeaModalOpen}
+          onClose={() => {
+            setDeleteIdeaModalOpen(false)
+          }}
+          apiEndpoint="idea-box/delete"
+          itemName="idea"
+          data={existedData}
+          updateDataList={refreshData}
+        />
+        <DeleteConfirmationModal
+          isOpen={deleteFolderModalOpen}
+          onClose={() => {
+            setDeleteFolderModalOpen(false)
+          }}
+          apiEndpoint="idea-box/folder"
+          itemName="folder"
+          data={existedFolderData}
+          updateDataList={refreshFolders}
+        />
+      </APIComponentWithFallback>
+    </ModuleWrapper>
   )
 }
 
