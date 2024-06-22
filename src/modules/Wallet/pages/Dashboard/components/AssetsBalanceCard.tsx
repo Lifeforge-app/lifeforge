@@ -13,7 +13,7 @@ function AssetsBalanceCard(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="col-span-1 row-span-2 flex h-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+    <div className="col-span-1 row-span-2 flex h-full min-h-96 flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       <div className="flex items-center justify-between">
         <h1 className="flex items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:wallet" className="text-2xl" />
@@ -28,8 +28,8 @@ function AssetsBalanceCard(): React.ReactElement {
       </div>
       <APIComponentWithFallback data={assets}>
         {typeof assets !== 'string' && assets.length > 0 ? (
-          <ul className="mt-6 flex h-full flex-col gap-4">
-            <Scrollbar>
+          <Scrollbar>
+            <ul className="mt-6 flex h-full flex-col gap-4">
               {assets.map(asset => (
                 <Link
                   key={asset.id}
@@ -48,8 +48,8 @@ function AssetsBalanceCard(): React.ReactElement {
                   </div>
                 </Link>
               ))}
-            </Scrollbar>
-          </ul>
+            </ul>
+          </Scrollbar>
         ) : (
           <EmptyStateScreen
             title="Oops! No assets found."
