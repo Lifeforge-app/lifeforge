@@ -593,3 +593,7 @@ input[type='range'].secondary::-moz-range-progress {
 .react-grid-item.react-grid-placeholder {
   @apply !bg-custom-500;
 }
+
+.no-overflow-x > div {
+  overflow-x: hidden !important;
+}
