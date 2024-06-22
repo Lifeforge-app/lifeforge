@@ -1,4 +1,3 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'

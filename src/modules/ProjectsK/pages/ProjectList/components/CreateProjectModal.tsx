@@ -11,7 +11,7 @@ import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
-import { type IProjectsKProgressStep } from '@interfaces/project_k_interfaces'
+import { type IProjectsKProgressStep } from '@interfaces/projects_k_interfaces'
 import APIRequest from '@utils/fetchData'
 import { PROJECT_STATUS } from '..'
 

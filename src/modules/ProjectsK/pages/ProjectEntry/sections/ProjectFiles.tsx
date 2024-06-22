@@ -10,7 +10,7 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import FILE_ICONS from '@constants/file_icons'
 import useFetch from '@hooks/useFetch'
-import { type IProjectsKEntry } from '@interfaces/project_k_interfaces'
+import { type IProjectsKEntry } from '@interfaces/projects_k_interfaces'
 import APIRequest from '@utils/fetchData'
 
 export default function ProjectFiles({

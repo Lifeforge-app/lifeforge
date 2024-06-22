@@ -5,7 +5,7 @@ import useFetch from '@hooks/useFetch'
 import {
   type IProjectsKEntry,
   type IProjectsKProgress
-} from '@interfaces/project_k_interfaces'
+} from '@interfaces/projects_k_interfaces'
 import APIRequest from '@utils/fetchData'
 
 export default function ProjectProgress({
