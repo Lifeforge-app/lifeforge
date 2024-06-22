@@ -11,7 +11,7 @@ function Kanban(): React.ReactElement {
       <div className="flex flex-col gap-1 pr-12">
         <GoBackButton
           onClick={() => {
-            navigate('/projects')
+            navigate('/projects-m')
           }}
         />
         <div className="flex items-center justify-between">

@@ -8,7 +8,8 @@ function CategorySection({
   categories,
   setExistedData,
   setModifyCategoriesModalOpenType,
-  setSidebarOpen
+  setSidebarOpen,
+  setDeleteCategoriesConfirmationOpen
 }: {
   categories: IProjectsMCategory[] | 'loading' | 'error'
   setExistedData: React.Dispatch<
@@ -18,6 +19,9 @@ function CategorySection({
     React.SetStateAction<'create' | 'update' | null>
   >
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setDeleteCategoriesConfirmationOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >
 }): React.ReactElement {
   return (
     <>
@@ -39,6 +43,9 @@ function CategorySection({
                 setExistedData={setExistedData}
                 setModifyModalOpenType={setModifyCategoriesModalOpenType}
                 setSidebarOpen={setSidebarOpen}
+                setDeleteConfirmationModalOpen={
+                  setDeleteCategoriesConfirmationOpen
+                }
               />
             ))
           ) : (

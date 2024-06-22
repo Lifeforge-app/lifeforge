@@ -23,12 +23,16 @@ function Sidebar({
   technologies,
   setModifyCategoriesModalOpenType,
   setExistedCategoryData,
+  setDeleteCategoriesConfirmationOpen,
   setModifyStatusModalOpenType,
   setExistedStatusData,
+  setDeleteStatusConfirmationOpen,
   setModifyVisibilityModalOpenType,
   setExistedVisibilityData,
+  setDeleteVisibilityConfirmationOpen,
   setModifyTechnologyModalOpenType,
-  setExistedTechnologyData
+  setExistedTechnologyData,
+  setDeleteTechnologyConfirmationOpen
 }: {
   sidebarOpen: boolean
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -42,23 +46,33 @@ function Sidebar({
   setExistedCategoryData: React.Dispatch<
     React.SetStateAction<IProjectsMCategory | null>
   >
+  setDeleteCategoriesConfirmationOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >
   setModifyStatusModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedStatusData: React.Dispatch<
     React.SetStateAction<IProjectsMStatus | null>
   >
+  setDeleteStatusConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>
   setModifyVisibilityModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedVisibilityData: React.Dispatch<
     React.SetStateAction<IProjectsMVisibility | null>
   >
+  setDeleteVisibilityConfirmationOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >
   setModifyTechnologyModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedTechnologyData: React.Dispatch<
     React.SetStateAction<IProjectsMTechnology | null>
+  >
+  setDeleteTechnologyConfirmationOpen: React.Dispatch<
+    React.SetStateAction<boolean>
   >
 }): React.ReactElement {
   return (
@@ -84,6 +98,9 @@ function Sidebar({
             setExistedData={setExistedCategoryData}
             setModifyCategoriesModalOpenType={setModifyCategoriesModalOpenType}
             setSidebarOpen={setSidebarOpen}
+            setDeleteCategoriesConfirmationOpen={
+              setDeleteCategoriesConfirmationOpen
+            }
           />
           <SidebarDivider />
           <StatusSection
@@ -91,6 +108,7 @@ function Sidebar({
             setExistedData={setExistedStatusData}
             setModifyStatusModalOpenType={setModifyStatusModalOpenType}
             setSidebarOpen={setSidebarOpen}
+            setDeleteStatusConfirmationOpen={setDeleteStatusConfirmationOpen}
           />
           <SidebarDivider />
           <VisibilitySection
@@ -98,6 +116,9 @@ function Sidebar({
             setExistedData={setExistedVisibilityData}
             setModifyVisibilityModalOpenType={setModifyVisibilityModalOpenType}
             setSidebarOpen={setSidebarOpen}
+            setDeleteVisibilityConfirmationOpen={
+              setDeleteVisibilityConfirmationOpen
+            }
           />
           <SidebarDivider />
           <TechnologySection
@@ -105,6 +126,9 @@ function Sidebar({
             setExistedData={setExistedTechnologyData}
             setModifyTechnologyModalOpenType={setModifyTechnologyModalOpenType}
             setSidebarOpen={setSidebarOpen}
+            setDeleteTechnologyConfirmationOpen={
+              setDeleteTechnologyConfirmationOpen
+            }
           />
         </ul>
       </Scrollbar>

@@ -9,12 +9,14 @@ function TechnologyItem({
   item,
   setSidebarOpen,
   setExistedData,
-  setModifyModalOpenType
+  setModifyModalOpenType,
+  setDeleteConfirmationModalOpen
 }: {
   item: IProjectsMTechnology
   setSidebarOpen: (value: boolean) => void
   setExistedData: (value: IProjectsMTechnology) => void
   setModifyModalOpenType: (value: 'create' | 'update' | null) => void
+  setDeleteConfirmationModalOpen: (value: boolean) => void
 }): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -87,7 +89,7 @@ function TechnologyItem({
               onClick={e => {
                 e.stopPropagation()
                 setExistedData(item)
-                // setDeleteConfirmationModalOpen(true)
+                setDeleteConfirmationModalOpen(true)
               }}
               text="Delete"
             />

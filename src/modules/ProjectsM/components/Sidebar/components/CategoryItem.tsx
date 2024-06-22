@@ -9,12 +9,14 @@ function CategoryItem({
   item,
   setSidebarOpen,
   setExistedData,
-  setModifyModalOpenType
+  setModifyModalOpenType,
+  setDeleteConfirmationModalOpen
 }: {
   item: IProjectsMCategory
   setSidebarOpen: (value: boolean) => void
   setExistedData: (value: IProjectsMCategory) => void
   setModifyModalOpenType: (value: 'create' | 'update' | null) => void
+  setDeleteConfirmationModalOpen: (value: boolean) => void
 }): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -87,7 +89,7 @@ function CategoryItem({
               onClick={e => {
                 e.stopPropagation()
                 setExistedData(item)
-                // setDeleteConfirmationModalOpen(true)
+                setDeleteConfirmationModalOpen(true)
               }}
               text="Delete"
             />
