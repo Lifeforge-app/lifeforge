@@ -16,6 +16,7 @@ import SearchBar from './components/SearchBar'
 import Sidebar from './components/Sidebar'
 import TransactionsHeader from './components/TransactionsHeader'
 import ListView from './views/ListView'
+import ReceiptModal from './views/ListView/components/ReceiptModal'
 import TableView from './views/TableView'
 import ColumnVisibilityToggle from './views/TableView/components/ColumnVisibilityToggle'
 
@@ -56,6 +57,8 @@ function Transactions(): React.ReactElement {
     useState<IWalletTransactionEntry | null>(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [view, setView] = useState<'list' | 'table'>('list')
+  const [receiptModalOpen, setReceiptModalOpen] = useState(false)
+  const [receiptToView, setReceiptToView] = useState('')
 
   const { hash } = useLocation()
   const navigate = useNavigate()
@@ -138,6 +141,8 @@ function Transactions(): React.ReactElement {
                       }
                       setModifyModalOpenType={setModifyModalOpenType}
                       setSelectedData={setSelectedData}
+                      setReceiptModalOpen={setReceiptModalOpen}
+                      setReceiptToView={setReceiptToView}
                     />
                   )
                 ) : (
@@ -196,6 +201,11 @@ function Transactions(): React.ReactElement {
           refreshTransactions()
           refreshCategories()
         }}
+      />
+      <ReceiptModal
+        isOpen={receiptModalOpen}
+        setOpen={setReceiptModalOpen}
+        receiptSrc={receiptToView}
       />
     </ModuleWrapper>
   )

@@ -12,13 +12,17 @@ import ReceiptModal from './components/ReceiptModal'
 function ListView({
   setSelectedData,
   setModifyModalOpenType,
-  setDeleteTransactionsConfirmationOpen
+  setDeleteTransactionsConfirmationOpen,
+  setReceiptModalOpen,
+  setReceiptToView
 }: {
   setSelectedData: React.Dispatch<
     React.SetStateAction<IWalletTransactionEntry | null>
   >
   setModifyModalOpenType: React.Dispatch<'create' | 'update' | null>
   setDeleteTransactionsConfirmationOpen: React.Dispatch<boolean>
+  setReceiptModalOpen: React.Dispatch<boolean>
+  setReceiptToView: React.Dispatch<string>
 }): React.ReactElement {
   const {
     ledgers,
@@ -26,8 +30,6 @@ function ListView({
     categories,
     filteredTransactions: transactions
   } = useWalletContext()
-  const [receiptModalOpen, setReceiptModalOpen] = useState(false)
-  const [receiptToView, setReceiptToView] = useState('')
 
   if (
     typeof assets === 'string' ||
@@ -186,11 +188,6 @@ function ListView({
               </div>
             </li>
           ))}
-          <ReceiptModal
-            isOpen={receiptModalOpen}
-            setOpen={setReceiptModalOpen}
-            receiptSrc={receiptToView}
-          />
         </ul>
       </Scrollbar>
     </>

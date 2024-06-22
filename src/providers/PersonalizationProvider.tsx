@@ -49,7 +49,7 @@ export default function PersonalizationProvider({
   const { i18n } = useTranslation()
 
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system')
-  const [themeColor, setThemeColor] = useState('theme-teal')
+  const [themeColor, setThemeColor] = useState('theme-lime')
   const [bgTemp, setBgTemp] = useState('bg-neutral')
   const [language, setLanguage] = useState('en')
   const [dashboardLayout, setDashboardLayout] = useState<DashboardLayoutType>(
