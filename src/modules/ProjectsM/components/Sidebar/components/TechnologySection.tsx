@@ -2,13 +2,14 @@ import React from 'react'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { type IProjectsMCategory } from '@interfaces/projects_m_interfaces'
-import TechnologyItem from './TechnolofyItem'
+import TechnologyItem from './TechnologyItem'
 
 function TechnologySection({
   technologies,
   setExistedData,
   setModifyTechnologyModalOpenType,
-  setSidebarOpen
+  setSidebarOpen,
+  setDeleteTechnologyConfirmationOpen
 }: {
   technologies: IProjectsMCategory[] | 'loading' | 'error'
   setExistedData: React.Dispatch<
@@ -18,6 +19,9 @@ function TechnologySection({
     React.SetStateAction<'create' | 'update' | null>
   >
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setDeleteTechnologyConfirmationOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >
 }): React.ReactElement {
   return (
     <>
@@ -39,6 +43,9 @@ function TechnologySection({
                 setExistedData={setExistedData}
                 setModifyModalOpenType={setModifyTechnologyModalOpenType}
                 setSidebarOpen={setSidebarOpen}
+                setDeleteConfirmationModalOpen={
+                  setDeleteTechnologyConfirmationOpen
+                }
               />
             ))
           ) : (

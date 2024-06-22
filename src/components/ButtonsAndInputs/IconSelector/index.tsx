@@ -29,7 +29,7 @@ function IconSelector({
   const [currentIconSet, setCurrentIconSet] = useState(null)
 
   return (
-    <Modal isOpen={isOpen}>
+    <Modal isOpen={isOpen} className="md:!min-w-[60vw]">
       <div className="mb-6 flex w-full items-center justify-between p-8 pb-0">
         {currentIconSet ? (
           <button

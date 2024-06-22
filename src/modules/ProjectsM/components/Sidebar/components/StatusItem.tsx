@@ -9,12 +9,14 @@ function StatusItem({
   item,
   setSidebarOpen,
   setExistedData,
-  setModifyModalOpenType
+  setModifyModalOpenType,
+  setDeleteConfirmationModalOpen
 }: {
   item: IProjectsMStatus
   setSidebarOpen: (value: boolean) => void
   setExistedData: (value: IProjectsMStatus) => void
   setModifyModalOpenType: (value: 'create' | 'update' | null) => void
+  setDeleteConfirmationModalOpen: (value: boolean) => void
 }): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -93,7 +95,7 @@ function StatusItem({
               onClick={e => {
                 e.stopPropagation()
                 setExistedData(item)
-                // setDeleteConfirmationModalOpen(true)
+                setDeleteConfirmationModalOpen(true)
               }}
               text="Delete"
             />

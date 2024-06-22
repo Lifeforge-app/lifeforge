@@ -8,7 +8,8 @@ function VisibilitySection({
   visibilities,
   setExistedData,
   setModifyVisibilityModalOpenType,
-  setSidebarOpen
+  setSidebarOpen,
+  setDeleteVisibilityConfirmationOpen
 }: {
   visibilities: IProjectsMVisibility[] | 'loading' | 'error'
   setExistedData: React.Dispatch<
@@ -18,6 +19,9 @@ function VisibilitySection({
     React.SetStateAction<'create' | 'update' | null>
   >
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setDeleteVisibilityConfirmationOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >
 }): React.ReactElement {
   return (
     <>
@@ -39,6 +43,9 @@ function VisibilitySection({
                 setExistedData={setExistedData}
                 setModifyModalOpenType={setModifyVisibilityModalOpenType}
                 setSidebarOpen={setSidebarOpen}
+                setDeleteConfirmationModalOpen={
+                  setDeleteVisibilityConfirmationOpen
+                }
               />
             ))
           ) : (

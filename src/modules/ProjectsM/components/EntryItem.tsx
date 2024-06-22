@@ -18,7 +18,8 @@ function EntryItem({
   visibilities,
   technologies,
   setExistedData,
-  setModifyModalOpenType
+  setModifyModalOpenType,
+  setDeleteEntryConfirmationOpen
 }: {
   entry: IProjectsMEntry
   categories: IProjectsMCategory[] | 'loading' | 'error'
@@ -27,6 +28,7 @@ function EntryItem({
   technologies: IProjectsMTechnology[] | 'loading' | 'error'
   setExistedData: React.Dispatch<React.SetStateAction<IProjectsMEntry | null>>
   setModifyModalOpenType: React.Dispatch<'create' | 'update' | null>
+  setDeleteEntryConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   return (
     <li className="m-4 mt-0 flex items-center gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
@@ -99,7 +101,10 @@ function EntryItem({
             <MenuItem
               text="Delete"
               icon="tabler:trash"
-              onClick={() => {}}
+              onClick={() => {
+                setExistedData(entry)
+                setDeleteEntryConfirmationOpen(true)
+              }}
               isRed
             />
           </HamburgerMenu>

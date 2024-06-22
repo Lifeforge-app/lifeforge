@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -45,23 +46,41 @@ function ProjectsM(): React.ReactElement {
   >(null)
   const [existedEntryData, setExistedEntryData] =
     useState<IProjectsMEntry | null>(null)
+  const [deleteEntryConfirmationOpen, setDeleteEntryConfirmationOpen] =
+    useState(false)
+
   const [modifyCategoriesModalOpenType, setModifyCategoriesModalOpenType] =
     useState<'create' | 'update' | null>(null)
   const [existedCategoryData, setExistedCategoryData] =
     useState<IProjectsMCategory | null>(null)
+  const [deleteCategoryConfirmationOpen, setDeleteCategoryConfirmationOpen] =
+    useState(false)
+
   const [modifyStatusModalOpenType, setModifyStatusModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
   const [existedStatusData, setExistedStatusData] =
     useState<IProjectsMStatus | null>(null)
+  const [deleteStatusConfirmationOpen, setDeleteStatusConfirmationOpen] =
+    useState(false)
+
   const [modifyVisibilityModalOpenType, setModifyVisibilityModalOpenType] =
     useState<'create' | 'update' | null>(null)
   const [existedVisibilityData, setExistedVisibilityData] =
     useState<IProjectsMCategory | null>(null)
+  const [
+    deleteVisibilityConfirmationOpen,
+    setDeleteVisibilityConfirmationOpen
+  ] = useState(false)
+
   const [modifyTechnologyModalOpenType, setModifyTechnologyModalOpenType] =
     useState<'create' | 'update' | null>(null)
   const [existedTechnologyData, setExistedTechnologyData] =
     useState<IProjectsMTechnology | null>(null)
+  const [
+    deleteTechnologyConfirmationOpen,
+    setDeleteTechnologyConfirmationOpen
+  ] = useState(false)
 
   return (
     <ModuleWrapper>
@@ -79,12 +98,22 @@ function ProjectsM(): React.ReactElement {
           technologies={technologies}
           setModifyCategoriesModalOpenType={setModifyCategoriesModalOpenType}
           setExistedCategoryData={setExistedCategoryData}
+          setDeleteCategoriesConfirmationOpen={
+            setDeleteCategoryConfirmationOpen
+          }
           setModifyStatusModalOpenType={setModifyStatusModalOpenType}
           setExistedStatusData={setExistedStatusData}
+          setDeleteStatusConfirmationOpen={setDeleteStatusConfirmationOpen}
           setModifyVisibilityModalOpenType={setModifyVisibilityModalOpenType}
           setExistedVisibilityData={setExistedVisibilityData}
+          setDeleteVisibilityConfirmationOpen={
+            setDeleteVisibilityConfirmationOpen
+          }
           setModifyTechnologyModalOpenType={setModifyTechnologyModalOpenType}
           setExistedTechnologyData={setExistedTechnologyData}
+          setDeleteTechnologyConfirmationOpen={
+            setDeleteTechnologyConfirmationOpen
+          }
         />
         <div className="relative z-10 flex h-full flex-1 flex-col lg:ml-8">
           <div className="flex items-center justify-between">
@@ -133,6 +162,9 @@ function ProjectsM(): React.ReactElement {
                           technologies={technologies}
                           setExistedData={setExistedEntryData}
                           setModifyModalOpenType={setModifyEntryModalOpenType}
+                          setDeleteEntryConfirmationOpen={
+                            setDeleteEntryConfirmationOpen
+                          }
                         />
                       ))}
                     </ul>
@@ -187,6 +219,66 @@ function ProjectsM(): React.ReactElement {
         existedData={existedTechnologyData}
         setExistedData={setExistedTechnologyData}
         refreshTechnologies={refreshTechnologies}
+      />
+      <DeleteConfirmationModal
+        apiEndpoint="projects-m/entry"
+        isOpen={deleteEntryConfirmationOpen}
+        data={existedEntryData}
+        itemName="project"
+        nameKey="name"
+        onClose={() => {
+          setDeleteEntryConfirmationOpen(false)
+          setExistedEntryData(null)
+        }}
+        updateDataList={refreshEntries}
+      />
+      <DeleteConfirmationModal
+        apiEndpoint="projects-m/category"
+        isOpen={deleteCategoryConfirmationOpen}
+        data={existedCategoryData}
+        itemName="category"
+        nameKey="name"
+        onClose={() => {
+          setDeleteCategoryConfirmationOpen(false)
+          setExistedCategoryData(null)
+        }}
+        updateDataList={refreshCategories}
+      />
+      <DeleteConfirmationModal
+        apiEndpoint="projects-m/status"
+        isOpen={deleteStatusConfirmationOpen}
+        data={existedStatusData}
+        itemName="status"
+        nameKey="name"
+        onClose={() => {
+          setDeleteStatusConfirmationOpen(false)
+          setExistedStatusData(null)
+        }}
+        updateDataList={refreshStatuses}
+      />
+      <DeleteConfirmationModal
+        apiEndpoint="projects-m/visibility"
+        isOpen={deleteVisibilityConfirmationOpen}
+        data={existedVisibilityData}
+        itemName="visibility"
+        nameKey="name"
+        onClose={() => {
+          setDeleteVisibilityConfirmationOpen(false)
+          setExistedVisibilityData(null)
+        }}
+        updateDataList={refreshVisibilities}
+      />
+      <DeleteConfirmationModal
+        apiEndpoint="projects-m/technology"
+        isOpen={deleteTechnologyConfirmationOpen}
+        data={existedTechnologyData}
+        itemName="technology"
+        nameKey="name"
+        onClose={() => {
+          setDeleteTechnologyConfirmationOpen(false)
+          setExistedTechnologyData(null)
+        }}
+        updateDataList={refreshTechnologies}
       />
     </ModuleWrapper>
   )

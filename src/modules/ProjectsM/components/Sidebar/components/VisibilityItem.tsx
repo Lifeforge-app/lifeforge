@@ -9,12 +9,14 @@ function VisibilityItem({
   item,
   setSidebarOpen,
   setExistedData,
-  setModifyModalOpenType
+  setModifyModalOpenType,
+  setDeleteConfirmationModalOpen
 }: {
   item: IProjectsMVisibility
   setSidebarOpen: (value: boolean) => void
   setExistedData: (value: IProjectsMVisibility) => void
   setModifyModalOpenType: (value: 'create' | 'update' | null) => void
+  setDeleteConfirmationModalOpen: (value: boolean) => void
 }): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -87,7 +89,7 @@ function VisibilityItem({
               onClick={e => {
                 e.stopPropagation()
                 setExistedData(item)
-                // setDeleteConfirmationModalOpen(true)
+                setDeleteConfirmationModalOpen(true)
               }}
               text="Delete"
             />
