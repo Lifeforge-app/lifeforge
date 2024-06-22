@@ -22,7 +22,7 @@ export default function StorageStatus(): React.ReactElement {
       </h1>
       <Scrollbar>
         <APIComponentWithFallback data={diskUsage}>
-          {typeof diskUsage !== 'string' && (
+          {diskUsage => (
             <div className="-mt-4 flex max-h-96 flex-col divide-y divide-bg-200 dark:divide-bg-700">
               {diskUsage.map(disk => (
                 <div key={disk.name} className="flex flex-col gap-4 py-6">

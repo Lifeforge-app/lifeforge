@@ -117,7 +117,7 @@ function DNSRecords(): JSX.Element {
         </Listbox>
       </div>
       <APIComponentWithFallback data={records}>
-        {typeof records !== 'string' && (
+        {records => (
           <table className="mb-8 mt-6">
             <thead>
               <tr className="border-b-2 border-bg-300 dark:border-bg-900">

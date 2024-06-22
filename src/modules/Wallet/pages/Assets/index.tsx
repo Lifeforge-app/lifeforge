@@ -54,29 +54,31 @@ function Assets(): React.ReactElement {
         }
       />
       <APIComponentWithFallback data={assets}>
-        {typeof assets !== 'string' && assets.length > 0 ? (
-          <div className="my-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {assets.map(asset => (
-              <AssetItem
-                key={asset.id}
-                asset={asset}
-                setSelectedData={setSelectedData}
-                setModifyModalOpenType={setModifyModalOpenType}
-                setDeleteAssetsConfirmationOpen={
-                  setDeleteAssetsConfirmationOpen
-                }
-              />
-            ))}
-          </div>
-        ) : (
-          <EmptyStateScreen
-            title="Oops! No assets found."
-            description="You don't have any assets yet. Add some to get started."
-            ctaContent="Add Asset"
-            setModifyModalOpenType={setModifyModalOpenType}
-            icon="tabler:wallet-off"
-          />
-        )}
+        {assets =>
+          assets.length > 0 ? (
+            <div className="my-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {assets.map(asset => (
+                <AssetItem
+                  key={asset.id}
+                  asset={asset}
+                  setSelectedData={setSelectedData}
+                  setModifyModalOpenType={setModifyModalOpenType}
+                  setDeleteAssetsConfirmationOpen={
+                    setDeleteAssetsConfirmationOpen
+                  }
+                />
+              ))}
+            </div>
+          ) : (
+            <EmptyStateScreen
+              title="Oops! No assets found."
+              description="You don't have any assets yet. Add some to get started."
+              ctaContent="Add Asset"
+              setModifyModalOpenType={setModifyModalOpenType}
+              icon="tabler:wallet-off"
+            />
+          )
+        }
       </APIComponentWithFallback>
       {assets.length > 0 && (
         <FAB

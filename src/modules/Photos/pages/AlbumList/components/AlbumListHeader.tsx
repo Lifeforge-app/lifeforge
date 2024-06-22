@@ -43,7 +43,7 @@ function AlbumListHeader({
         stuffToSearch="albums"
       />
       <APIComponentWithFallback data={albumTagList}>
-        {typeof albumTagList !== 'string' && (
+        {albumTagList => (
           <div className="mt-4 flex items-start">
             <div
               className={`no-scrollbar flex w-full min-w-0 gap-2 transition-all ${

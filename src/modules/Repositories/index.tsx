@@ -61,7 +61,7 @@ function Repositories(): React.ReactElement {
             stuffToSearch="tasks"
           />
           <APIComponentWithFallback data={repos}>
-            {typeof repos !== 'string' && (
+            {repos => (
               <ul className="mt-4 flex flex-1 flex-col gap-4 overflow-y-auto pb-24 sm:pb-8">
                 {repos.map((repo, index) => (
                   <li

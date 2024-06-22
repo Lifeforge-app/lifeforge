@@ -34,23 +34,26 @@ function TechnologySection({
         }}
       />
       <APIComponentWithFallback data={technologies}>
-        {typeof technologies !== 'string' &&
-          (technologies.length > 0 ? (
-            technologies.map(item => (
-              <TechnologyItem
-                key={item.id}
-                item={item}
-                setExistedData={setExistedData}
-                setModifyModalOpenType={setModifyTechnologyModalOpenType}
-                setSidebarOpen={setSidebarOpen}
-                setDeleteConfirmationModalOpen={
-                  setDeleteTechnologyConfirmationOpen
-                }
-              />
-            ))
+        {technologies =>
+          technologies.length > 0 ? (
+            <>
+              {technologies.map(item => (
+                <TechnologyItem
+                  key={item.id}
+                  item={item}
+                  setExistedData={setExistedData}
+                  setModifyModalOpenType={setModifyTechnologyModalOpenType}
+                  setSidebarOpen={setSidebarOpen}
+                  setDeleteConfirmationModalOpen={
+                    setDeleteTechnologyConfirmationOpen
+                  }
+                />
+              ))}
+            </>
           ) : (
             <p className="text-center text-bg-500">No technology found.</p>
-          ))}
+          )
+        }
       </APIComponentWithFallback>
     </>
   )

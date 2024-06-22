@@ -134,24 +134,24 @@ function YoutubeDownloaderModal(): React.ReactElement {
         updateValue={updateVideoURL}
         placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
       />
-      <div className="mt-6 flex w-full gap-6">
-        {URL_REGEX.test(videoURL) && (
-          <APIComponentWithFallback data={videoInfo}>
-            {typeof videoInfo !== 'string' && (
-              <VideoInfo videoInfo={videoInfo} />
-            )}
-          </APIComponentWithFallback>
-        )}
-      </div>
-      {typeof videoInfo !== 'string' && (
-        <Button
-          loading={loading}
-          onClick={downloadVideo}
-          icon={loading ? 'svg-spinners:180-ring' : 'tabler:download'}
-          className="mt-6"
-        >
-          {loading ? 'Downloading...' : 'Download'}
-        </Button>
+      {URL_REGEX.test(videoURL) && (
+        <APIComponentWithFallback data={videoInfo}>
+          {videoInfo => (
+            <>
+              <div className="mt-6 flex w-full gap-6">
+                <VideoInfo videoInfo={videoInfo} />
+              </div>
+              <Button
+                loading={loading}
+                onClick={downloadVideo}
+                icon={loading ? 'svg-spinners:180-ring' : 'tabler:download'}
+                className="mt-6"
+              >
+                {loading ? 'Downloading...' : 'Download'}
+              </Button>
+            </>
+          )}
+        </APIComponentWithFallback>
       )}
     </Modal>
   )

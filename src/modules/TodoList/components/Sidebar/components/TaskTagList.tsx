@@ -26,7 +26,7 @@ function TaskTagList({
         }}
       />
       <APIComponentWithFallback data={tags}>
-        {typeof tags !== 'string' && (
+        {tags => (
           <>
             {tags.map(item => (
               <TaskTagListItem

@@ -32,8 +32,8 @@ function CategoryList({
           />
         </div>
         <APIComponentWithFallback data={categories}>
-          {typeof categories !== 'string' &&
-            (categories.length > 0 ? (
+          {categories =>
+            categories.length > 0 ? (
               <ul className="-mt-2 flex h-full min-w-0 flex-col pb-4">
                 {categories.map(item => (
                   <CategoryListItem
@@ -54,7 +54,8 @@ function CategoryList({
                   You can create categories by clicking the plus button above.
                 </p>
               </div>
-            ))}
+            )
+          }
         </APIComponentWithFallback>
       </section>
     </>

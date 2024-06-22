@@ -10,6 +10,7 @@ import React, { useEffect } from 'react'
 
 // import '@mdxeditor/editor/style.css'
 import { useNavigate, useParams } from 'react-router'
+import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -21,10 +22,14 @@ function JournalView(): React.ReactElement {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const [valid] = useFetch<boolean>(`journal/entry/valid/${id}`)
-  const [entry] = useFetch<IJournalEntry>(`journal/entry/get/${id}`)
+  const [entry] = useFetch<IJournalEntry>(
+    `journal/entry/get/${id}`,
+    valid === true
+  )
 
   useEffect(() => {
     if (valid === false) {
+      toast.error('Invalid ID')
       navigate('/journal')
     }
   }, [valid])
@@ -32,7 +37,7 @@ function JournalView(): React.ReactElement {
   return (
     <ModuleWrapper>
       <APIComponentWithFallback data={entry}>
-        {typeof entry !== 'string' && (
+        {entry => (
           <>
             <div className="flex items-center justify-between p-3 pb-0">
               <div>

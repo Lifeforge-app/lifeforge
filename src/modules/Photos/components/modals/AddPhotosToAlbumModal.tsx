@@ -70,7 +70,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
   return (
     <Modal isOpen={isOpen}>
       <APIComponentWithFallback data={photos}>
-        {typeof photos !== 'string' && (
+        {photos => (
           <>
             {' '}
             <div className="mb-8 flex items-center justify-between ">
@@ -103,54 +103,57 @@ function AddPhotosToAlbumModal(): React.ReactElement {
             </div>
             <ul className="relative w-96">
               <APIComponentWithFallback data={albumList}>
-                {typeof albumList !== 'string' &&
-                  albumList.map(album => (
-                    <li
-                      key={album.id}
-                      className="relative flex items-center gap-6 font-medium text-bg-500 transition-all"
-                    >
-                      <button
-                        onClick={() => {
-                          selectAlbum(album.id)
-                        }}
-                        className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all ${
-                          selectedAlbum === album.id
-                            ? 'bg-bg-300 dark:bg-bg-800'
-                            : 'hover:bg-bg-200 dark:hover:bg-bg-800/50'
-                        }`}
+                {albumList => (
+                  <>
+                    {albumList.map(album => (
+                      <li
+                        key={album.id}
+                        className="relative flex items-center gap-6 font-medium text-bg-500 transition-all"
                       >
-                        <div className="flex-center flex size-10 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
-                          {album.cover !== '' ? (
-                            <img
-                              src={`${import.meta.env.VITE_API_HOST}/media/${
-                                album.cover
-                              }?thumb=0x300`}
-                              alt=""
-                              className="size-full rounded-md object-cover"
+                        <button
+                          onClick={() => {
+                            selectAlbum(album.id)
+                          }}
+                          className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all ${
+                            selectedAlbum === album.id
+                              ? 'bg-bg-300 dark:bg-bg-800'
+                              : 'hover:bg-bg-200 dark:hover:bg-bg-800/50'
+                          }`}
+                        >
+                          <div className="flex-center flex size-10 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
+                            {album.cover !== '' ? (
+                              <img
+                                src={`${import.meta.env.VITE_API_HOST}/media/${
+                                  album.cover
+                                }?thumb=0x300`}
+                                alt=""
+                                className="size-full rounded-md object-cover"
+                              />
+                            ) : (
+                              <Icon
+                                icon="tabler:library-photo"
+                                className="size-5 text-bg-500 dark:text-bg-500"
+                              />
+                            )}
+                          </div>
+                          <div className="w-full truncate text-left text-bg-500">
+                            {album.name}
+                          </div>
+                          {selectedAlbum === album.id ? (
+                            <Icon
+                              icon="tabler:check"
+                              className="size-6 text-bg-800 dark:!text-custom-500"
                             />
                           ) : (
-                            <Icon
-                              icon="tabler:library-photo"
-                              className="size-5 text-bg-500 dark:text-bg-500"
-                            />
+                            <span className="text-sm text-bg-500">
+                              {album.amount?.toLocaleString()}
+                            </span>
                           )}
-                        </div>
-                        <div className="w-full truncate text-left text-bg-500">
-                          {album.name}
-                        </div>
-                        {selectedAlbum === album.id ? (
-                          <Icon
-                            icon="tabler:check"
-                            className="size-6 text-bg-800 dark:!text-custom-500"
-                          />
-                        ) : (
-                          <span className="text-sm text-bg-500">
-                            {album.amount?.toLocaleString()}
-                          </span>
-                        )}
-                      </button>
-                    </li>
-                  ))}
+                        </button>
+                      </li>
+                    ))}
+                  </>
+                )}
               </APIComponentWithFallback>
               {loading && (
                 <div className="absolute left-0 top-0 size-full"></div>

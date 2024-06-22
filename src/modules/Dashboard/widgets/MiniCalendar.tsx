@@ -29,7 +29,7 @@ export default function MiniCalendar(): React.ReactElement {
         </span>
       </h1>
       <APIComponentWithFallback data={events}>
-        {typeof events !== 'string' && typeof categories !== 'string' && (
+        {events => (
           <div className="size-full">
             <div className="px-2">
               <MiniCalendarHeader

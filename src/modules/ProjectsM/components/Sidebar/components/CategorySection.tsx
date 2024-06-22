@@ -34,23 +34,26 @@ function CategorySection({
         }}
       />
       <APIComponentWithFallback data={categories}>
-        {typeof categories !== 'string' &&
-          (categories.length > 0 ? (
-            categories.map(item => (
-              <CategoryItem
-                key={item.id}
-                item={item}
-                setExistedData={setExistedData}
-                setModifyModalOpenType={setModifyCategoriesModalOpenType}
-                setSidebarOpen={setSidebarOpen}
-                setDeleteConfirmationModalOpen={
-                  setDeleteCategoriesConfirmationOpen
-                }
-              />
-            ))
+        {categories =>
+          categories.length > 0 ? (
+            <>
+              {categories.map(item => (
+                <CategoryItem
+                  key={item.id}
+                  item={item}
+                  setExistedData={setExistedData}
+                  setModifyModalOpenType={setModifyCategoriesModalOpenType}
+                  setSidebarOpen={setSidebarOpen}
+                  setDeleteConfirmationModalOpen={
+                    setDeleteCategoriesConfirmationOpen
+                  }
+                />
+              ))}
+            </>
           ) : (
             <p className="text-center text-bg-500">No category found.</p>
-          ))}
+          )
+        }
       </APIComponentWithFallback>
     </>
   )

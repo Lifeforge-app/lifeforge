@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
@@ -16,21 +17,23 @@ import EditCardModal from './EditCardModal'
 function CardSet(): React.ReactElement {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const [valid] = useFetch<boolean>(`flashcards/deck/valid/${id}`)
   const [containerDetails, refreshContainerDetails] = useFetch<IFlashcardDeck>(
-    `flashcards/deck/get/${id}`
+    `flashcards/deck/get/${id}`,
+    valid === true
   )
   const [cards, refreshCards] = useFetch<IFlashcardCard[]>(
-    `flashcards/card/list/${id}`
+    `flashcards/card/list/${id}`,
+    valid === true
   )
   const [currentIndex, setCurrentIndex] = useState(0)
   const [editCardModalOpen, setEditCardModalOpen] = useState(false)
   const [isShowingAnswer, setIsShowingAnswer] = useState(false)
   const [notSelected, setNotSelected] = useState<number[]>([])
 
-  const [valid] = useFetch<boolean>(`flashcards/deck/valid/${id}`)
-
   useEffect(() => {
     if (typeof valid === 'boolean' && !valid) {
+      toast.error('Invalid ID')
       navigate('/flashcards')
     }
   }, [valid])
@@ -139,7 +142,7 @@ function CardSet(): React.ReactElement {
       </div>
       <div className="flex-center flex w-full flex-1 flex-col">
         <APIComponentWithFallback data={cards}>
-          {typeof cards !== 'string' && (
+          {cards => (
             <>
               <div className="flex-center flex h-1/2 w-3/5 gap-4">
                 <button

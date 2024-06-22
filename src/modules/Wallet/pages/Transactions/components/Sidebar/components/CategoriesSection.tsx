@@ -30,92 +30,97 @@ function CategoriesSection({
         }}
       />
       <APIComponentWithFallback data={categories}>
-        {typeof categories !== 'string' &&
-          [
-            {
-              icon: 'tabler:tag',
-              name: 'All',
-              color: 'white',
-              id: null,
-              type: 'all'
-            }
-          ]
-            .concat(
-              categories.sort(
-                (a, b) =>
-                  ['income', 'expenses'].indexOf(a.type) -
-                  ['income', 'expenses'].indexOf(b.type)
-              ) as any
-            )
-            .map(({ icon, name, color, id, type }, index) => (
-              <li
-                key={index}
-                className={`relative flex items-center gap-6 px-4 font-medium transition-all ${
-                  searchParams.get('category') === id ||
-                  (name === 'All' && searchParams.get('category') === null)
-                    ? "text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-100"
-                    : 'text-bg-500 dark:text-bg-500'
-                }`}
-              >
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (name === 'All') {
-                      setSearchParams(searchParams => {
-                        searchParams.delete('category')
-                        searchParams.delete('type')
-                        return searchParams
+        {categories => (
+          <>
+            {[
+              {
+                icon: 'tabler:tag',
+                name: 'All',
+                color: 'white',
+                id: null,
+                type: 'all'
+              }
+            ]
+              .concat(
+                categories.sort(
+                  (a, b) =>
+                    ['income', 'expenses'].indexOf(a.type) -
+                    ['income', 'expenses'].indexOf(b.type)
+                ) as any
+              )
+              .map(({ icon, name, color, id, type }, index) => (
+                <li
+                  key={index}
+                  className={`relative flex items-center gap-6 px-4 font-medium transition-all ${
+                    searchParams.get('category') === id ||
+                    (name === 'All' && searchParams.get('category') === null)
+                      ? "text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-100"
+                      : 'text-bg-500 dark:text-bg-500'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (name === 'All') {
+                        setSearchParams(searchParams => {
+                          searchParams.delete('category')
+                          searchParams.delete('type')
+                          return searchParams
+                        })
+                        setSidebarOpen(false)
+                        return
+                      }
+                      setSearchParams({
+                        ...Object.fromEntries(searchParams.entries()),
+                        category: id!,
+                        type
                       })
                       setSidebarOpen(false)
-                      return
-                    }
-                    setSearchParams({
-                      ...Object.fromEntries(searchParams.entries()),
-                      category: id!,
-                      type
-                    })
-                    setSidebarOpen(false)
-                  }}
-                  className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-200/50 dark:hover:bg-bg-800"
-                >
-                  <span
-                    className="block h-8 w-1 shrink-0 rounded-full"
-                    style={{
-                      backgroundColor: color
                     }}
-                  />
-                  <div className="relative">
-                    <Icon icon={icon} className="size-6 shrink-0" />
-                    <Icon
-                      icon={
-                        {
-                          income: 'tabler:login-2',
-                          expenses: 'tabler:logout',
-                          all: 'tabler:arrow-bar-both'
-                        }[type] ?? ''
-                      }
-                      className={`absolute -bottom-2 -right-2 size-4 shrink-0 ${
-                        {
-                          income: 'text-green-500',
-                          expenses: 'text-red-500',
-                          all: 'text-yellow-500'
-                        }[type]
-                      }`}
+                    className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-200/50 dark:hover:bg-bg-800"
+                  >
+                    <span
+                      className="block h-8 w-1 shrink-0 rounded-full"
+                      style={{
+                        backgroundColor: color
+                      }}
                     />
-                  </div>
-                  <div className="w-full items-center justify-between truncate">
-                    {name === 'All' ? t('sidebar.wallet.allCategories') : name}
-                  </div>
-                  <span className="text-sm">
-                    {typeof transactions !== 'string' &&
-                      transactions.filter(
-                        transaction =>
-                          transaction.category === id || name === 'All'
-                      ).length}
-                  </span>
-                </button>
-              </li>
-            ))}
+                    <div className="relative">
+                      <Icon icon={icon} className="size-6 shrink-0" />
+                      <Icon
+                        icon={
+                          {
+                            income: 'tabler:login-2',
+                            expenses: 'tabler:logout',
+                            all: 'tabler:arrow-bar-both'
+                          }[type] ?? ''
+                        }
+                        className={`absolute -bottom-2 -right-2 size-4 shrink-0 ${
+                          {
+                            income: 'text-green-500',
+                            expenses: 'text-red-500',
+                            all: 'text-yellow-500'
+                          }[type]
+                        }`}
+                      />
+                    </div>
+                    <div className="w-full items-center justify-between truncate">
+                      {name === 'All'
+                        ? t('sidebar.wallet.allCategories')
+                        : name}
+                    </div>
+                    <span className="text-sm">
+                      {typeof transactions !== 'string' &&
+                        transactions.filter(
+                          transaction =>
+                            transaction.category === id || name === 'All'
+                        ).length}
+                    </span>
+                  </button>
+                </li>
+              ))}
+          </>
+        )}
       </APIComponentWithFallback>
     </>
   )

@@ -26,8 +26,8 @@ export default function TodoList(): React.ReactElement {
       <TodoListProvider>
         <Scrollbar>
           <APIComponentWithFallback data={entries}>
-            <div className="flex flex-1 flex-col ">
-              {typeof entries !== 'string' && (
+            {entries => (
+              <div className="flex flex-1 flex-col ">
                 <ul className="flex flex-1 flex-col gap-4 pb-24 sm:pb-8">
                   {entries.length > 0 ? (
                     entries.map(entry => (
@@ -53,8 +53,8 @@ export default function TodoList(): React.ReactElement {
                     />
                   )}
                 </ul>
-              )}
-            </div>
+              </div>
+            )}
           </APIComponentWithFallback>
         </Scrollbar>
       </TodoListProvider>

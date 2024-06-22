@@ -12,14 +12,19 @@ function MusicList({
 
   return (
     <APIComponentWithFallback data={musics}>
-      {typeof musics !== 'string' &&
-        musics
-          .filter(music =>
-            music.name
-              .toLowerCase()
-              .includes(debouncedSearchQuery.toLowerCase())
-          )
-          .map(music => <MusicListItem key={music.id} music={music} />)}
+      {musics => (
+        <>
+          {musics
+            .filter(music =>
+              music.name
+                .toLowerCase()
+                .includes(debouncedSearchQuery.toLowerCase())
+            )
+            .map(music => (
+              <MusicListItem key={music.id} music={music} />
+            ))}
+        </>
+      )}
     </APIComponentWithFallback>
   )
 }

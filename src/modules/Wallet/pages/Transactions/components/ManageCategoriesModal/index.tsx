@@ -44,37 +44,39 @@ function ManageCategoriesModal({
           onClose={onClose}
         />
         <APIComponentWithFallback data={categories}>
-          {typeof categories !== 'string' && categories.length > 0 ? (
-            <>
-              {['income', 'expenses'].map(type => (
-                <CategorySection
-                  key={type}
-                  categories={categories}
-                  type={type as 'income' | 'expenses'}
-                  iconName={
-                    type === 'income' ? 'tabler:login-2' : 'tabler:logout'
-                  }
-                  setModifyCategoriesModalOpenType={
-                    setModifyCategoriesModalOpenType
-                  }
-                  setExistedData={setExistedData}
-                  setDeleteCategoriesConfirmationOpen={
-                    setDeleteCategoriesConfirmationOpen
-                  }
-                />
-              ))}
-            </>
-          ) : (
-            <EmptyStateScreen
-              icon="tabler:apps-off"
-              title="Oops, no categories found"
-              description="Create a new category to get started"
-              ctaContent="Create Category"
-              setModifyModalOpenType={() => {
-                setModifyCategoriesModalOpenType('income')
-              }}
-            />
-          )}
+          {categories =>
+            categories.length > 0 ? (
+              <>
+                {['income', 'expenses'].map(type => (
+                  <CategorySection
+                    key={type}
+                    categories={categories}
+                    type={type as 'income' | 'expenses'}
+                    iconName={
+                      type === 'income' ? 'tabler:login-2' : 'tabler:logout'
+                    }
+                    setModifyCategoriesModalOpenType={
+                      setModifyCategoriesModalOpenType
+                    }
+                    setExistedData={setExistedData}
+                    setDeleteCategoriesConfirmationOpen={
+                      setDeleteCategoriesConfirmationOpen
+                    }
+                  />
+                ))}
+              </>
+            ) : (
+              <EmptyStateScreen
+                icon="tabler:apps-off"
+                title="Oops, no categories found"
+                description="Create a new category to get started"
+                ctaContent="Create Category"
+                setModifyModalOpenType={() => {
+                  setModifyCategoriesModalOpenType('income')
+                }}
+              />
+            )
+          }
         </APIComponentWithFallback>
       </Modal>
       <ModifyCategoriesModal

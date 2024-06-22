@@ -20,9 +20,9 @@ export default function AssetsBalance(): React.ReactElement {
         </span>
       </h1>
       <APIComponentWithFallback data={assets}>
-        <ul className="grid h-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4 overflow-y-auto">
-          {typeof assets !== 'string' &&
-            assets.map(asset => (
+        {assets => (
+          <ul className="grid h-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4 overflow-y-auto">
+            {assets.map(asset => (
               <Link
                 to={'/wallet/assets'}
                 key={asset.id}
@@ -46,7 +46,8 @@ export default function AssetsBalance(): React.ReactElement {
                 </button>
               </Link>
             ))}
-        </ul>
+          </ul>
+        )}
       </APIComponentWithFallback>
     </div>
   )

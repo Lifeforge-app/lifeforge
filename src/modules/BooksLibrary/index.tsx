@@ -133,8 +133,8 @@ function BooksLibrary(): React.ReactElement {
             </div>
           </div>
           <APIComponentWithFallback data={books}>
-            {typeof books !== 'string' &&
-              (view === 'grid' ? (
+            {books =>
+              view === 'grid' ? (
                 <Scrollbar className="mt-6">
                   <ul className="grid min-h-0 gap-6 px-4 sm:grid-cols-2 md:grid-cols-3">
                     {books.map((item: any) => (
@@ -188,7 +188,8 @@ function BooksLibrary(): React.ReactElement {
                     ))}
                   </ul>
                 </Scrollbar>
-              ))}
+              )
+            }
           </APIComponentWithFallback>
         </div>
       </div>

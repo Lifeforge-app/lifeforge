@@ -82,9 +82,9 @@ function PhotosAlbumList(): React.ReactElement {
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
             />
-            <APIComponentWithFallback data={albumList}>
-              {typeof filteredAlbumList !== 'string' &&
-                (albumList.length > 0 ? (
+            <APIComponentWithFallback data={filteredAlbumList}>
+              {filteredAlbumList =>
+                albumList.length > 0 ? (
                   filteredAlbumList.length > 0 ? (
                     <ul className="mt-6 grid w-full min-w-0 flex-1 gap-2 overflow-y-auto pb-6 sm:grid-cols-2 lg:grid-cols-3">
                       {filteredAlbumList.map(album => (
@@ -112,7 +112,8 @@ function PhotosAlbumList(): React.ReactElement {
                     title="Hmm... Seems a bit empty here."
                     icon="tabler:photo-off"
                   />
-                ))}
+                )
+              }
             </APIComponentWithFallback>
           </div>
         </div>

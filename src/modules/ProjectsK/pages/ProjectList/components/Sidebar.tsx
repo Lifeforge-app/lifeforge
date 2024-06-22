@@ -30,9 +30,64 @@ function Sidebar({
         <SidebarDivider />
         <SidebarTitle name="status" />
         <APIComponentWithFallback data={projectList}>
-          {typeof projectList !== 'string' &&
-            Object.entries(PROJECT_STATUS).map(
-              ([id, { icon, name, color }], index) => (
+          {projectList => (
+            <>
+              {Object.entries(PROJECT_STATUS).map(
+                ([id, { icon, name, color }], index) => (
+                  <li
+                    key={index}
+                    className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
+                  >
+                    <button
+                      onClick={() => {
+                        if (
+                          searchParams.has('status') &&
+                          searchParams.get('status') === id
+                        ) {
+                          searchParams.delete('status')
+                          setSearchParams(searchParams)
+                          return
+                        }
+                        setSearchParams({
+                          ...Object.fromEntries(searchParams.entries()),
+                          status: id
+                        })
+                      }}
+                      className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800 ${
+                        searchParams.get('status') === id
+                          ? 'bg-bg-200/50 text-bg-800 dark:bg-bg-800 dark:text-bg-100'
+                          : ''
+                      }`}
+                    >
+                      <span
+                        className={`block h-8 w-1.5 rounded-full ${color}`}
+                      />
+                      <Icon icon={icon} className="size-6 shrink-0" />
+                      <div className="flex w-full items-center justify-between">
+                        {name}
+                      </div>
+                      <span className="text-sm">
+                        {
+                          projectList.filter(project => project.status === id)
+                            .length
+                        }
+                      </span>
+                    </button>
+                  </li>
+                )
+              )}
+            </>
+          )}
+        </APIComponentWithFallback>
+        <SidebarDivider />
+        <SidebarTitle name="project type" />
+        <APIComponentWithFallback data={projectList}>
+          {projectList => (
+            <>
+              {[
+                ['tabler:currency-dollar-off', 'Personal'],
+                ['tabler:currency-dollar', 'Commercial']
+              ].map(([icon, name], index) => (
                 <li
                   key={index}
                   className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
@@ -40,87 +95,40 @@ function Sidebar({
                   <button
                     onClick={() => {
                       if (
-                        searchParams.has('status') &&
-                        searchParams.get('status') === id
+                        searchParams.has('type') &&
+                        searchParams.get('type') === name.toLowerCase()
                       ) {
-                        searchParams.delete('status')
+                        searchParams.delete('type')
                         setSearchParams(searchParams)
                         return
                       }
                       setSearchParams({
                         ...Object.fromEntries(searchParams.entries()),
-                        status: id
+                        type: name.toLowerCase()
                       })
                     }}
                     className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800 ${
-                      searchParams.get('status') === id
+                      searchParams.get('type') === name.toLowerCase()
                         ? 'bg-bg-200/50 text-bg-800 dark:bg-bg-800 dark:text-bg-100'
                         : ''
                     }`}
                   >
-                    <span className={`block h-8 w-1.5 rounded-full ${color}`} />
                     <Icon icon={icon} className="size-6 shrink-0" />
                     <div className="flex w-full items-center justify-between">
                       {name}
                     </div>
                     <span className="text-sm">
                       {
-                        projectList.filter(project => project.status === id)
-                          .length
+                        projectList.filter(
+                          project => project.type === name.toLowerCase()
+                        ).length
                       }
                     </span>
                   </button>
                 </li>
-              )
-            )}
-        </APIComponentWithFallback>
-        <SidebarDivider />
-        <SidebarTitle name="project type" />
-        <APIComponentWithFallback data={projectList}>
-          {typeof projectList !== 'string' &&
-            [
-              ['tabler:currency-dollar-off', 'Personal'],
-              ['tabler:currency-dollar', 'Commercial']
-            ].map(([icon, name], index) => (
-              <li
-                key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
-              >
-                <button
-                  onClick={() => {
-                    if (
-                      searchParams.has('type') &&
-                      searchParams.get('type') === name.toLowerCase()
-                    ) {
-                      searchParams.delete('type')
-                      setSearchParams(searchParams)
-                      return
-                    }
-                    setSearchParams({
-                      ...Object.fromEntries(searchParams.entries()),
-                      type: name.toLowerCase()
-                    })
-                  }}
-                  className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800 ${
-                    searchParams.get('type') === name.toLowerCase()
-                      ? 'bg-bg-200/50 text-bg-800 dark:bg-bg-800 dark:text-bg-100'
-                      : ''
-                  }`}
-                >
-                  <Icon icon={icon} className="size-6 shrink-0" />
-                  <div className="flex w-full items-center justify-between">
-                    {name}
-                  </div>
-                  <span className="text-sm">
-                    {
-                      projectList.filter(
-                        project => project.type === name.toLowerCase()
-                      ).length
-                    }
-                  </span>
-                </button>
-              </li>
-            ))}
+              ))}
+            </>
+          )}
         </APIComponentWithFallback>
       </ul>
     </aside>

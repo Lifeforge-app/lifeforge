@@ -47,7 +47,7 @@ export default function Flashcards(): React.ReactElement {
             stuffToSearch="tasks"
           />
           <APIComponentWithFallback data={decks}>
-            {typeof decks !== 'string' && (
+            {decks => (
               <Scrollbar>
                 <div className="mt-6 grid w-full grid-cols-3 gap-6 px-4 pb-12">
                   {decks.map(deck => (

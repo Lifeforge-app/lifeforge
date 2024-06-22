@@ -84,7 +84,7 @@ function StatisticChardCard(): React.ReactElement {
       </div>
       <div className="flex-center mt-6 flex size-full min-h-0 flex-1">
         <APIComponentWithFallback data={transactions}>
-          {typeof transactions !== 'string' && (
+          {() => (
             <Line
               data={{
                 labels: dates,

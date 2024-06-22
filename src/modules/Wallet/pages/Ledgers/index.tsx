@@ -54,29 +54,31 @@ function Ledgers(): React.ReactElement {
         }
       />
       <APIComponentWithFallback data={ledgers}>
-        {typeof ledgers !== 'string' && ledgers.length > 0 ? (
-          <div className="mt-8 flex flex-col gap-4">
-            {ledgers.map(ledger => (
-              <LedgerItem
-                key={ledger.id}
-                ledger={ledger}
-                setModifyModalOpenType={setModifyModalOpenType}
-                setDeleteLedgersConfirmationOpen={
-                  setDeleteLedgersConfirmationOpen
-                }
-                setSelectedData={setSelectedData}
-              />
-            ))}
-          </div>
-        ) : (
-          <EmptyStateScreen
-            title="Oops! No Ledger found."
-            description="You don't have any Ledgers yet. Add some to get started."
-            ctaContent="Add Ledger"
-            setModifyModalOpenType={setModifyModalOpenType}
-            icon="tabler:wallet-off"
-          />
-        )}
+        {ledgers =>
+          ledgers.length > 0 ? (
+            <div className="mt-8 flex flex-col gap-4">
+              {ledgers.map(ledger => (
+                <LedgerItem
+                  key={ledger.id}
+                  ledger={ledger}
+                  setModifyModalOpenType={setModifyModalOpenType}
+                  setDeleteLedgersConfirmationOpen={
+                    setDeleteLedgersConfirmationOpen
+                  }
+                  setSelectedData={setSelectedData}
+                />
+              ))}
+            </div>
+          ) : (
+            <EmptyStateScreen
+              title="Oops! No Ledger found."
+              description="You don't have any Ledgers yet. Add some to get started."
+              ctaContent="Add Ledger"
+              setModifyModalOpenType={setModifyModalOpenType}
+              icon="tabler:wallet-off"
+            />
+          )
+        }
       </APIComponentWithFallback>
       <ModifyLedgersModal
         existedData={selectedData}

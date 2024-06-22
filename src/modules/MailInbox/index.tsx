@@ -11,7 +11,7 @@ function MailInbox(): React.ReactElement {
     <ModuleWrapper>
       <ModuleHeader title="Mail Inbox" desc="..." />
       <APIComponentWithFallback data={mails}>
-        {typeof mails !== 'string' && (
+        {mails => (
           <ul className="divide-y-2 divide-bg-900">
             {mails.map((mail: any) => (
               <li key={mail.id} className="flex flex-col gap-1 p-4">

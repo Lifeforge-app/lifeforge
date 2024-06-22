@@ -39,15 +39,18 @@ function PhotosAlbumGallery(): React.ReactElement {
   const navigate = useNavigate()
   const [valid] = useFetch<boolean>(`photos/album/valid/${id}`)
   const [albumData, refreshAlbumData, setAlbumData] = useFetch<IPhotosAlbum>(
-    `photos/album/get/${id}`
+    `photos/album/get/${id}`,
+    valid === true
   )
   const [photos, refreshPhotos, setPhotos] = useFetch<IPhotoAlbumEntryItem[]>(
-    `photos/entry/list/${id}`
+    `photos/entry/list/${id}`,
+    valid === true
   )
   const [isDownloadLoading, setIsDownloadLoading] = useState(false)
 
   useEffect(() => {
     if (typeof valid === 'boolean' && !valid) {
+      toast.error('Invalid ID')
       navigate('/photos/album')
     }
   }, [valid])
@@ -105,7 +108,7 @@ function PhotosAlbumGallery(): React.ReactElement {
 
   return (
     <APIComponentWithFallback data={albumData}>
-      {typeof albumData !== 'string' && (
+      {albumData => (
         <>
           <div className="relative min-h-0 w-full flex-1 overflow-y-hidden">
             <ModuleWrapper>
@@ -233,7 +236,7 @@ function PhotosAlbumGallery(): React.ReactElement {
               <Scrollbar className="mt-6">
                 <div className="relative w-full flex-1 pb-6">
                   <APIComponentWithFallback data={photos}>
-                    {typeof photos !== 'string' && (
+                    {photos => (
                       <PhotoAlbum
                         layout="rows"
                         spacing={8}

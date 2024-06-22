@@ -151,37 +151,39 @@ function Passwords(): React.ReactElement {
         </div>
       ) : (
         <APIComponentWithFallback data={passwordList}>
-          {typeof passwordList !== 'string' && passwordList.length > 0 ? (
-            <div className="mb-12 mt-8 flex w-full flex-col gap-4">
-              {passwordList.map(password => (
-                <PasswordEntryITem
-                  key={password.id}
-                  password={password}
-                  masterPassword={masterPassword}
-                  setSelectedPassword={setSelectedPassword}
-                  setIsDeletePasswordConfirmationModalOpen={
-                    setIsDeletePasswordConfirmationModalOpen
-                  }
-                  setCreatePasswordModalOpenType={
-                    setCreatePasswordModalOpenType
-                  }
-                  setExistedData={setExistedData}
-                  setPasswordList={setPasswordList}
-                />
-              ))}
-            </div>
-          ) : (
-            <EmptyStateScreen
-              description="No passwords are found in your vault yet."
-              title="Hmm... Seems a bit empty here."
-              icon="tabler:key-off"
-              ctaContent="new password"
-              setModifyModalOpenType={() => {
-                setSelectedPassword(null)
-                setCreatePasswordModalOpenType('create')
-              }}
-            />
-          )}
+          {passwordList =>
+            passwordList.length > 0 ? (
+              <div className="mb-12 mt-8 flex w-full flex-col gap-4">
+                {passwordList.map(password => (
+                  <PasswordEntryITem
+                    key={password.id}
+                    password={password}
+                    masterPassword={masterPassword}
+                    setSelectedPassword={setSelectedPassword}
+                    setIsDeletePasswordConfirmationModalOpen={
+                      setIsDeletePasswordConfirmationModalOpen
+                    }
+                    setCreatePasswordModalOpenType={
+                      setCreatePasswordModalOpenType
+                    }
+                    setExistedData={setExistedData}
+                    setPasswordList={setPasswordList}
+                  />
+                ))}
+              </div>
+            ) : (
+              <EmptyStateScreen
+                description="No passwords are found in your vault yet."
+                title="Hmm... Seems a bit empty here."
+                icon="tabler:key-off"
+                ctaContent="new password"
+                setModifyModalOpenType={() => {
+                  setSelectedPassword(null)
+                  setCreatePasswordModalOpenType('create')
+                }}
+              />
+            )
+          }
         </APIComponentWithFallback>
       )}
       {masterPassword !== '' && passwordList.length > 0 && (
