@@ -60,7 +60,7 @@ export default function Timer(): React.ReactElement {
               setStarted(false)
             }}
             icon="tabler:square"
-            type="secondary"
+            variant="secondary"
           >
             end session
           </Button>

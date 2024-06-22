@@ -31,7 +31,7 @@ function NotFound(): React.ReactElement {
             a.rel = 'noopener noreferrer'
             a.click()
           }}
-          type="secondary"
+          variant="secondary"
         >
           report bug
         </Button>

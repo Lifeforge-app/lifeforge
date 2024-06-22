@@ -32,7 +32,7 @@ function SidebarTitle({
       {actionButtonIcon !== undefined && (
         <button
           onClick={actionButtonOnClick}
-          className="flex items-center rounded-md p-2 text-bg-600 hover:bg-bg-200/50 dark:hover:bg-bg-800 dark:hover:text-bg-100"
+          className="flex items-center rounded-md p-2 text-bg-600 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-800 dark:hover:text-bg-100"
         >
           <Icon icon={actionButtonIcon} className="size-5" />
         </button>

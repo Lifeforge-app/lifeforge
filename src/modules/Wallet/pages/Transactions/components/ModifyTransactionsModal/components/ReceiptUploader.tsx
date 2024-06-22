@@ -71,7 +71,7 @@ function ReceiptUploader({
           onClick={uploadReceipt}
           className="mt-6 w-full"
           icon="tabler:upload"
-          type="secondary"
+          variant="secondary"
         >
           Upload Receipt
         </Button>
