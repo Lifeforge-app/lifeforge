@@ -2,19 +2,19 @@ import React from 'react'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { type IProjectsMCategory } from '@interfaces/projects_m_interfaces'
-import CategoryItem from './CategoryItem'
+import TechnologyItem from './TechnolofyItem'
 
-function CategorySection({
-  categories,
+function TechnologySection({
+  technologies,
   setExistedData,
-  setModifyCategoriesModalOpenType,
+  setModifyTechnologyModalOpenType,
   setSidebarOpen
 }: {
-  categories: IProjectsMCategory[] | 'loading' | 'error'
+  technologies: IProjectsMCategory[] | 'loading' | 'error'
   setExistedData: React.Dispatch<
     React.SetStateAction<IProjectsMCategory | null>
   >
-  setModifyCategoriesModalOpenType: React.Dispatch<
+  setModifyTechnologyModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -22,31 +22,31 @@ function CategorySection({
   return (
     <>
       <SidebarTitle
-        name="category"
+        name="technologies"
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           setExistedData(null)
-          setModifyCategoriesModalOpenType('create')
+          setModifyTechnologyModalOpenType('create')
         }}
       />
-      <APIComponentWithFallback data={categories}>
-        {typeof categories !== 'string' &&
-          (categories.length > 0 ? (
-            categories.map(item => (
-              <CategoryItem
+      <APIComponentWithFallback data={technologies}>
+        {typeof technologies !== 'string' &&
+          (technologies.length > 0 ? (
+            technologies.map(item => (
+              <TechnologyItem
                 key={item.id}
                 item={item}
                 setExistedData={setExistedData}
-                setModifyModalOpenType={setModifyCategoriesModalOpenType}
+                setModifyModalOpenType={setModifyTechnologyModalOpenType}
                 setSidebarOpen={setSidebarOpen}
               />
             ))
           ) : (
-            <p className="text-center text-bg-500">No category found.</p>
+            <p className="text-center text-bg-500">No technology found.</p>
           ))}
       </APIComponentWithFallback>
     </>
   )
 }
 
-export default CategorySection
+export default TechnologySection

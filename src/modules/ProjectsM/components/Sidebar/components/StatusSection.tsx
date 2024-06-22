@@ -26,7 +26,7 @@ function StatusSection({
         }}
       />
       <APIComponentWithFallback data={statuses}>
-        {typeof statuses !== 'string' &&
+        {typeof statuses !== 'string' && statuses.length > 0 ? (
           statuses.map(item => (
             <StatusItem
               key={item.id}
@@ -35,7 +35,10 @@ function StatusSection({
               setModifyModalOpenType={setModifyStatusModalOpenType}
               setSidebarOpen={setSidebarOpen}
             />
-          ))}
+          ))
+        ) : (
+          <p className="text-center text-bg-500">No status found.</p>
+        )}
       </APIComponentWithFallback>
     </>
   )

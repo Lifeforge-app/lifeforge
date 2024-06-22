@@ -11,4 +11,19 @@ interface IProjectsMStatus extends BasePBCollection {
   color: string
 }
 
-export type { IProjectsMCategory, IProjectsMStatus }
+interface IProjectsMVisibility extends BasePBCollection {
+  name: string
+  icon: string
+}
+
+interface IProjectsMTechnology extends BasePBCollection {
+  name: string
+  icon: string
+}
+
+export type {
+  IProjectsMCategory,
+  IProjectsMStatus,
+  IProjectsMVisibility,
+  IProjectsMTechnology
+}
