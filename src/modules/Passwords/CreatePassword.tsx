@@ -144,7 +144,7 @@ function CreatePassword(): React.ReactElement {
             onClick={() => {
               setConfirmationModalOpen(false)
             }}
-            type="secondary"
+            variant="secondary"
             icon=""
             className="w-full"
           >

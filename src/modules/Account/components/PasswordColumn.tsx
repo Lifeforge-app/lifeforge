@@ -38,7 +38,7 @@ function PasswordColumn(): React.ReactElement {
           onPasswordChange().catch(console.error)
         }}
         loading={loading}
-        type="secondary"
+        variant="secondary"
         className="w-full whitespace-nowrap md:w-auto"
         icon="tabler:key"
       >

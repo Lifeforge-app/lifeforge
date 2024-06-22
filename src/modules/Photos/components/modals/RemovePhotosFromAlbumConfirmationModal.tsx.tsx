@@ -62,7 +62,7 @@ function RemovePhotosFromAlbumConfirmationModal({
           onClick={() => {
             setRemovePhotosFromAlbumConfirmationModalOpen(false)
           }}
-          type="secondary"
+          variant="secondary"
           icon=""
           className="w-full"
         >

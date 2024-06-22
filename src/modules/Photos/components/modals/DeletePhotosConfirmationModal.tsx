@@ -114,7 +114,7 @@ function DeletePhotosConfirmationModal({
               ? customSetIsOpen(false)
               : setDeletePhotosConfirmationModalOpen(false)
           }}
-          type="secondary"
+          variant="secondary"
           icon=""
           className="w-full"
         >

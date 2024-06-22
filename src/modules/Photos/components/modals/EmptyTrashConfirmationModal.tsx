@@ -51,7 +51,7 @@ function EmptyTrashConfirmationModal({
           onClick={() => {
             setOpen(false)
           }}
-          type="secondary"
+          variant="secondary"
           icon=""
           className="w-full"
         >

@@ -32,7 +32,7 @@ function OrdinaryColumn({
             onClick={() => {
               setModifyModalOpen(true)
             }}
-            type="no-bg"
+            variant="no-bg"
             icon="tabler:pencil"
           />
         </div>

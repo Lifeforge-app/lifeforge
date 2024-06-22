@@ -64,7 +64,12 @@ function DeleteConfirmationModal({
         {customText ?? t('modals.deleteConfirmation.desc', { itemName })}
       </p>
       <div className="mt-6 flex w-full flex-col-reverse justify-around gap-2 sm:flex-row">
-        <Button onClick={onClose} icon="" type="secondary" className="w-full">
+        <Button
+          onClick={onClose}
+          icon=""
+          variant="secondary"
+          className="w-full"
+        >
           Cancel
         </Button>
         <Button

@@ -11,7 +11,7 @@ interface ButtonProps {
   onClick: () => void
   loading?: boolean
   className?: string
-  type?: 'primary' | 'secondary' | 'no-bg'
+  variant?: 'primary' | 'secondary' | 'no-bg'
   isRed?: boolean
 }
 
@@ -20,14 +20,14 @@ const generateBaseClass = (hasChildren: boolean, iconAtEnd: boolean): string =>
     hasChildren && iconAtEnd ? 'pl-5' : 'pr-5'
   } font-medium tracking-wide transition-all disabled:cursor-not-allowed`
 
-const generateColorClass = (isRed: boolean, type: string): string => {
+const generateColorClass = (isRed: boolean, variant: string): string => {
   if (isRed) {
-    return type !== 'no-bg'
+    return variant !== 'no-bg'
       ? 'bg-red-500 hover:bg-red-600 text-bg-100 dark:text-bg-800'
       : 'text-red-500 hover:text-red-600 hover:bg-red-500/10'
   }
 
-  switch (type) {
+  switch (variant) {
     case 'primary':
       return 'bg-custom-500 shadow-custom hover:bg-custom-600 text-bg-100 dark:text-bg-800 disabled:bg-bg-500 disabled:hover:bg-bg-500'
     case 'no-bg':
@@ -42,23 +42,23 @@ const generateClassName = (
   hasChildren: boolean,
   iconAtEnd: boolean,
   isRed: boolean,
-  type: string,
+  variant: string,
   className: string
 ): string =>
   `${generateBaseClass(hasChildren, iconAtEnd)} ${generateColorClass(
     isRed,
-    type
+    variant
   )} ${className}`
 
 const Button: React.FC<ButtonProps> = ({
   children,
   CustomElement,
   icon,
-  iconAtEnd,
+  iconAtEnd = false,
   onClick,
   loading = false,
   className = '',
-  type = 'primary',
+  variant = 'primary',
   isRed = false,
   ...otherProps
 }) => {
@@ -66,9 +66,9 @@ const Button: React.FC<ButtonProps> = ({
   const FinalElement = CustomElement ?? 'button'
   const finalClassName = generateClassName(
     Boolean(children),
-    iconAtEnd === true,
+    iconAtEnd,
     isRed,
-    type,
+    variant,
     className
   )
 
@@ -80,7 +80,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={loading}
       className={finalClassName}
     >
-      {iconAtEnd !== true && (
+      {!iconAtEnd && (
         <Icon
           icon={loading ? 'svg-spinners:180-ring' : icon}
           className="shrink-0 text-xl"
@@ -89,7 +89,7 @@ const Button: React.FC<ButtonProps> = ({
       {typeof children === 'string'
         ? t(`button.${toCamelCase(children)}`)
         : children}
-      {iconAtEnd === true && (
+      {iconAtEnd && (
         <Icon
           icon={loading ? 'svg-spinners:180-ring' : icon}
           className="shrink-0 text-xl"

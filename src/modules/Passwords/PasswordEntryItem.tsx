@@ -263,7 +263,7 @@ function PasswordEntryITem({
         loading={copyLoading}
         icon="tabler:copy"
         className="w-full sm:hidden"
-        type="secondary"
+        variant="secondary"
       >
         Copy
       </Button>

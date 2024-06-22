@@ -35,7 +35,7 @@ function AssetItem({
         {numberToMoney(asset.balance)}
       </p>
       <Button
-        type="secondary"
+        variant="secondary"
         onClick={() => {
           navigate(`/wallet/transactions?asset=${asset.id}`)
         }}

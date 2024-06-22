@@ -37,7 +37,7 @@ function AuthSignInButton({
           onClick={signInWithPasskey}
           loading={loading || auth}
           icon="tabler:key"
-          type="secondary"
+          variant="secondary"
           className="w-full"
         >
           sign in with passkey

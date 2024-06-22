@@ -73,7 +73,7 @@ function AvatarColumn(): React.ReactElement {
                 changeAvatar()
               }}
               loading={loading}
-              type="no-bg"
+              variant="no-bg"
               icon="tabler:upload"
             >
               upload
@@ -82,7 +82,7 @@ function AvatarColumn(): React.ReactElement {
               onClick={() => {
                 setDeleteAvatarConfirmationModal(true)
               }}
-              type="no-bg"
+              variant="no-bg"
               icon="tabler:trash"
               isRed
             >

@@ -220,7 +220,7 @@ function ModifyTaskWindow(): React.ReactElement {
               onClick={closeWindow}
               icon={''}
               className="w-full"
-              type="secondary"
+              variant="secondary"
             >
               cancel
             </Button>

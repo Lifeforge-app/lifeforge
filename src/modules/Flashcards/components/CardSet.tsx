@@ -183,7 +183,7 @@ function CardSet(): React.ReactElement {
                 </button>
               </div>
               <Button
-                type="secondary"
+                variant="secondary"
                 onClick={pickRandomCard}
                 icon="tabler:dice"
                 className="mt-12 w-1/2"

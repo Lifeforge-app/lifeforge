@@ -272,7 +272,7 @@ function GuitarTabs(): React.ReactElement {
                       }
                     }}
                     icon="uil:angle-left"
-                    type="no-bg"
+                    variant="no-bg"
                   >
                     Previous
                   </Button>
@@ -294,7 +294,7 @@ function GuitarTabs(): React.ReactElement {
                       }
                     }}
                     icon="uil:angle-right"
-                    type="no-bg"
+                    variant="no-bg"
                     iconAtEnd
                   >
                     Next

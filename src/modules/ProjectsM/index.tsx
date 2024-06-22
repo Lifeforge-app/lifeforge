@@ -2,19 +2,37 @@ import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
-import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import Scrollbar from '@components/Scrollbar'
-import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
-import SidebarItem from '@components/Sidebar/components/SidebarItem'
-import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
+import useFetch from '@hooks/useFetch'
+import {
+  type IProjectsMStatus,
+  type IProjectsMCategory
+} from '@interfaces/projects_m_interfaces'
+import ModifyCategoriesModal from './components/ModifyCategoryModal'
+import ModifyStatusModal from './components/ModifyStatusModal'
+import Sidebar from './components/Sidebar'
 
 function ProjectsM(): React.ReactElement {
+  const [categories, refreshCategories] = useFetch<IProjectsMCategory[]>(
+    'projects-m/category'
+  )
+  const [statuses, refreshStatuses] =
+    useFetch<IProjectsMStatus[]>('projects-m/status')
   const [icons, setIcons] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [modifyCategoriesModalOpenType, setModifyCategoriesModalOpenType] =
+    useState<'create' | 'update' | null>(null)
+  const [existedCategoryData, setExistedCategoryData] =
+    useState<IProjectsMCategory | null>(null)
+  const [modifyStatusModalOpenType, setModifyStatusModalOpenType] = useState<
+    'create' | 'update' | null
+  >(null)
+  const [existedStatusData, setExistedStatusData] =
+    useState<IProjectsMStatus | null>(null)
 
   useEffect(() => {
     fetch('http://api.iconify.design/collection?prefix=tabler')
@@ -32,119 +50,16 @@ function ProjectsM(): React.ReactElement {
         desc="It's time to stop procrastinating."
       />
       <div className="mt-6 flex size-full min-h-0 flex-1">
-        <aside
-          className={`absolute ${
-            sidebarOpen ? 'left-0' : 'left-full'
-          } top-0 z-[9999] size-full rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 lg:static lg:h-[calc(100%-2rem)] lg:w-1/4`}
-        >
-          <Scrollbar>
-            <div className="flex items-center justify-between px-8 py-4 lg:hidden">
-              <GoBackButton
-                onClick={() => {
-                  setSidebarOpen(false)
-                }}
-              />
-            </div>
-            <ul className="flex flex-col">
-              <SidebarItem icon="tabler:list" name="All Projects" />
-              <SidebarItem icon="tabler:star-filled" name="Starred" />
-              <SidebarDivider />
-              <SidebarTitle name="category" />
-              {[
-                ['tabler:world', 'Website'],
-                ['tabler:device-mobile', 'Mobile App'],
-                ['tabler:devices-pc', 'Desktop App']
-              ].map(([icon, name], index) => (
-                <li
-                  key={index}
-                  className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
-                >
-                  <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-800">
-                    <Icon icon={icon} className="size-6 shrink-0" />
-                    <div className="flex w-full items-center justify-between">
-                      {name}
-                    </div>
-                    <span className="text-sm">
-                      {Math.floor(Math.random() * 10)}
-                    </span>
-                  </div>
-                </li>
-              ))}
-              <SidebarDivider />
-              <SidebarTitle name="status" />
-              {[
-                ['tabler:zzz', 'Pending', 'bg-red-500'],
-                ['tabler:circle-check', 'In Progress', 'bg-yellow-500'],
-                ['tabler:circle-check', 'Completed', 'bg-green-500']
-              ].map(([icon, name, color], index) => (
-                <li
-                  key={index}
-                  className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
-                >
-                  <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
-                    <span className={`block h-8 w-1.5 rounded-full ${color}`} />
-                    <Icon icon={icon} className="size-6 shrink-0" />
-                    <div className="flex w-full items-center justify-between">
-                      {name}
-                    </div>
-                    <span className="text-sm">
-                      {Math.floor(Math.random() * 10)}
-                    </span>
-                  </div>
-                </li>
-              ))}
-              <SidebarDivider />
-              <SidebarTitle name="visibility" />
-              {[
-                ['tabler:brand-open-source', 'Open Source'],
-                ['tabler:briefcase', 'Private & Commercial']
-              ].map(([icon, name], index) => (
-                <li
-                  key={index}
-                  className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
-                >
-                  <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
-                    <Icon icon={icon} className="size-6 shrink-0" />
-                    <div className="flex w-full items-center justify-between">
-                      {name}
-                    </div>
-                    <span className="text-sm">
-                      {Math.floor(Math.random() * 10)}
-                    </span>
-                  </div>
-                </li>
-              ))}
-              <SidebarDivider />
-              <SidebarTitle name="Technologies" />
-              {[
-                ['simple-icons:react', 'React'],
-                ['simple-icons:angular', 'Angular'],
-                ['simple-icons:electron', 'Electron'],
-                ['simple-icons:python', 'Python'],
-                ['simple-icons:swift', 'Swift'],
-                ['simple-icons:android', 'Android'],
-                ['simple-icons:apple', 'iOS'],
-                ['simple-icons:windows', 'Windows'],
-                ['simple-icons:linux', 'Linux']
-              ].map(([icon, name], index) => (
-                <li
-                  key={index}
-                  className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
-                >
-                  <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
-                    <Icon icon={icon} className="size-5 shrink-0" />
-                    <div className="flex w-full items-center justify-between">
-                      {name}
-                    </div>
-                    <span className="text-sm">
-                      {Math.floor(Math.random() * 10)}
-                    </span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </Scrollbar>
-        </aside>
+        <Sidebar
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          categories={categories}
+          statuses={statuses}
+          setModifyCategoriesModalOpenType={setModifyCategoriesModalOpenType}
+          setExistedCategoryData={setExistedCategoryData}
+          setModifyStatusModalOpenType={setModifyStatusModalOpenType}
+          setExistedStatusData={setExistedStatusData}
+        />
         <div className="relative z-10 flex h-full flex-1 flex-col lg:ml-8">
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-semibold lg:text-4xl">
@@ -251,6 +166,20 @@ function ProjectsM(): React.ReactElement {
           </div>
         </div>
       </div>
+      <ModifyCategoriesModal
+        openType={modifyCategoriesModalOpenType}
+        setOpenType={setModifyCategoriesModalOpenType}
+        existedData={existedCategoryData}
+        setExistedData={setExistedCategoryData}
+        refreshCategories={refreshCategories}
+      />
+      <ModifyStatusModal
+        openType={modifyStatusModalOpenType}
+        setOpenType={setModifyStatusModalOpenType}
+        existedData={existedStatusData}
+        setExistedData={setExistedStatusData}
+        refreshStatuses={refreshStatuses}
+      />
     </ModuleWrapper>
   )
 }
