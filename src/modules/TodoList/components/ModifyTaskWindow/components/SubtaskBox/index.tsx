@@ -44,21 +44,25 @@ function SubtaskBox({
         notes={notes}
       />
       <APIComponentWithFallback data={subtasks}>
-        {typeof subtasks !== 'string' && subtasks.length > 0 && (
-          <div className="mt-4 grid gap-2">
-            {subtasks.map((subtask, index) => (
-              <SubtaskItem
-                key={subtask.id ?? index}
-                subtask={subtask}
-                subtasks={subtasks}
-                setSubtasks={setSubtasks}
-                moveTask={moveTask}
-                newTask={newTask}
-                setNewTask={setNewTask}
-              />
-            ))}
-          </div>
-        )}
+        {subtasks =>
+          subtasks.length > 0 ? (
+            <div className="mt-4 grid gap-2">
+              {subtasks.map((subtask, index) => (
+                <SubtaskItem
+                  key={subtask.id ?? index}
+                  subtask={subtask}
+                  subtasks={subtasks}
+                  setSubtasks={setSubtasks}
+                  moveTask={moveTask}
+                  newTask={newTask}
+                  setNewTask={setNewTask}
+                />
+              ))}
+            </div>
+          ) : (
+            <></>
+          )
+        }
       </APIComponentWithFallback>
     </div>
   )

@@ -89,7 +89,7 @@ function PhotosFavouritesGallery(): React.ReactElement {
           </div>
           <div className="relative my-6 w-full flex-1">
             <APIComponentWithFallback data={photos}>
-              {typeof photos !== 'string' && (
+              {photos => (
                 <PhotoAlbum
                   layout="rows"
                   spacing={8}

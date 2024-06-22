@@ -24,10 +24,7 @@ function Transactions(): React.ReactElement {
   const {
     transactions,
     refreshTransactions,
-    ledgers,
-    assets,
     refreshAssets,
-    categories,
     refreshCategories,
     filteredTransactions
   } = useWalletContext()
@@ -112,55 +109,47 @@ function Transactions(): React.ReactElement {
           />
           <SearchBar setView={setView} view={view} />
           <div className="mt-8 size-full overflow-y-auto">
-            <APIComponentWithFallback
-              data={
-                [transactions, categories, assets, ledgers].find(e =>
-                  ['loading', 'error'].includes(e as string)
-                ) ?? transactions
-              }
-            >
-              {typeof transactions !== 'string' &&
-              typeof categories !== 'string' &&
-              typeof assets !== 'string' &&
-              typeof ledgers !== 'string' &&
-              transactions.length > 0 ? (
-                filteredTransactions.length > 0 ? (
-                  view === 'table' ? (
-                    <TableView
-                      visibleColumn={visibleColumn}
-                      setDeleteTransactionsConfirmationOpen={
-                        setDeleteTransactionsConfirmationOpen
-                      }
-                      setModifyModalOpenType={setModifyModalOpenType}
-                      setSelectedData={setSelectedData}
-                    />
+            <APIComponentWithFallback data={transactions}>
+              {transactions =>
+                transactions.length > 0 ? (
+                  filteredTransactions.length > 0 ? (
+                    view === 'table' ? (
+                      <TableView
+                        visibleColumn={visibleColumn}
+                        setDeleteTransactionsConfirmationOpen={
+                          setDeleteTransactionsConfirmationOpen
+                        }
+                        setModifyModalOpenType={setModifyModalOpenType}
+                        setSelectedData={setSelectedData}
+                      />
+                    ) : (
+                      <ListView
+                        setDeleteTransactionsConfirmationOpen={
+                          setDeleteTransactionsConfirmationOpen
+                        }
+                        setModifyModalOpenType={setModifyModalOpenType}
+                        setSelectedData={setSelectedData}
+                        setReceiptModalOpen={setReceiptModalOpen}
+                        setReceiptToView={setReceiptToView}
+                      />
+                    )
                   ) : (
-                    <ListView
-                      setDeleteTransactionsConfirmationOpen={
-                        setDeleteTransactionsConfirmationOpen
-                      }
-                      setModifyModalOpenType={setModifyModalOpenType}
-                      setSelectedData={setSelectedData}
-                      setReceiptModalOpen={setReceiptModalOpen}
-                      setReceiptToView={setReceiptToView}
+                    <EmptyStateScreen
+                      title="Oops! No Transaction found."
+                      description="No transactions found with the selected filters."
+                      icon="tabler:filter-off"
                     />
                   )
                 ) : (
                   <EmptyStateScreen
                     title="Oops! No Transaction found."
-                    description="No transactions found with the selected filters."
-                    icon="tabler:filter-off"
+                    description="You don't have any transactions yet. Add some to get started."
+                    ctaContent="Add Transaction"
+                    setModifyModalOpenType={setModifyModalOpenType}
+                    icon="tabler:wallet-off"
                   />
                 )
-              ) : (
-                <EmptyStateScreen
-                  title="Oops! No Transaction found."
-                  description="You don't have any transactions yet. Add some to get started."
-                  ctaContent="Add Transaction"
-                  setModifyModalOpenType={setModifyModalOpenType}
-                  icon="tabler:wallet-off"
-                />
-              )}
+              }
             </APIComponentWithFallback>
             {transactions.length > 0 && (
               <FAB

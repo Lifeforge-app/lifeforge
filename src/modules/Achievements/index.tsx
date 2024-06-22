@@ -65,63 +65,67 @@ function Achievements(): React.ReactElement {
         ))}
       </div>
       <APIComponentWithFallback data={entries}>
-        {typeof entries !== 'string' && entries.length > 0 ? (
-          <div className="mt-8 flex flex-col gap-4">
-            {entries.map((entry, index) => (
-              <div
-                key={index}
-                className="flex items-start justify-between gap-4 rounded-lg bg-bg-50 p-4 shadow-custom shadow-lg dark:bg-bg-900"
-              >
-                <div className="flex h-full gap-4">
-                  <div
-                    className={`h-full w-1 shrink-0 rounded-full ${
-                      {
-                        easy: 'bg-green-500',
-                        medium: 'bg-yellow-500',
-                        hard: 'bg-red-500',
-                        impossible: 'bg-purple-500'
-                      }[entry.difficulty]
-                    }`}
-                  />
-                  <div>
-                    <h2 className="text-lg font-semibold">{entry.title}</h2>
-                    <p className="mt-1 text-sm text-bg-500">{entry.thoughts}</p>
+        {entries =>
+          entries.length > 0 ? (
+            <div className="mt-8 flex flex-col gap-4">
+              {entries.map((entry, index) => (
+                <div
+                  key={index}
+                  className="flex items-start justify-between gap-4 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900"
+                >
+                  <div className="flex h-full gap-4">
+                    <div
+                      className={`h-full w-1 shrink-0 rounded-full ${
+                        {
+                          easy: 'bg-green-500',
+                          medium: 'bg-yellow-500',
+                          hard: 'bg-red-500',
+                          impossible: 'bg-purple-500'
+                        }[entry.difficulty]
+                      }`}
+                    />
+                    <div>
+                      <h2 className="text-lg font-semibold">{entry.title}</h2>
+                      <p className="mt-1 text-sm text-bg-500">
+                        {entry.thoughts}
+                      </p>
+                    </div>
                   </div>
+                  <HamburgerMenu className="relative">
+                    <MenuItem
+                      icon="tabler:pencil"
+                      onClick={() => {
+                        setExistedData(entry)
+                        setModifyAchievementModalOpenType('update')
+                      }}
+                      text="Edit"
+                    />
+                    <MenuItem
+                      icon="tabler:trash"
+                      onClick={() => {
+                        setExistedData(entry)
+                        setDeleteAchievementConfirmationModalOpen(true)
+                      }}
+                      text="Delete"
+                      isRed
+                    />
+                  </HamburgerMenu>
                 </div>
-                <HamburgerMenu className="relative">
-                  <MenuItem
-                    icon="tabler:pencil"
-                    onClick={() => {
-                      setExistedData(entry)
-                      setModifyAchievementModalOpenType('update')
-                    }}
-                    text="Edit"
-                  />
-                  <MenuItem
-                    icon="tabler:trash"
-                    onClick={() => {
-                      setExistedData(entry)
-                      setDeleteAchievementConfirmationModalOpen(true)
-                    }}
-                    text="Delete"
-                    isRed
-                  />
-                </HamburgerMenu>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <EmptyStateScreen
-            title="Oops! Nothing here."
-            description="There are no achievements available for this difficulty."
-            icon="tabler:award-off"
-            ctaContent="Add achievement"
-            setModifyModalOpenType={() => {
-              setExistedData(null)
-              setModifyAchievementModalOpenType('create')
-            }}
-          />
-        )}
+              ))}
+            </div>
+          ) : (
+            <EmptyStateScreen
+              title="Oops! Nothing here."
+              description="There are no achievements available for this difficulty."
+              icon="tabler:award-off"
+              ctaContent="Add achievement"
+              setModifyModalOpenType={() => {
+                setExistedData(null)
+                setModifyAchievementModalOpenType('create')
+              }}
+            />
+          )
+        }
       </APIComponentWithFallback>
       <ModifyAchievementModal
         openType={modifyAchievementModalOpenType}

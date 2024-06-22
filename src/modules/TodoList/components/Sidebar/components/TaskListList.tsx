@@ -26,7 +26,7 @@ function TaskListList({
         }}
       />
       <APIComponentWithFallback data={lists}>
-        {typeof lists !== 'string' && (
+        {lists => (
           <>
             {lists.map(item => (
               <TaskListListItem

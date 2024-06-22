@@ -25,7 +25,7 @@ const TodoList = lazy(async () => await import('./modules/TodoList'))
 const Calendar = lazy(async () => await import('./modules/Calendar'))
 const ProjectsM = lazy(async () => await import('./modules/ProjectsM'))
 const Kanban = lazy(
-  async () => await import('./modules/ProjectsM/components/Kanban')
+  async () => await import('./modules/ProjectsM/pages/Kanban')
 )
 const IdeaBox = lazy(async () => await import('./modules/IdeaBox'))
 const Ideas = lazy(

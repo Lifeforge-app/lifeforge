@@ -54,23 +54,24 @@ function Changelog(): React.ReactElement {
         stuffToSearch="features"
       />
       <APIComponentWithFallback data={data}>
-        <ul className="relative isolate my-8 space-y-4">
-          {typeof data !== 'string' &&
-            (filteredData.length > 0 ? (
+        {() => (
+          <ul className="relative isolate my-8 space-y-4">
+            {filteredData.length > 0 ? (
               filteredData.map(entry => (
                 <LogItem key={entry.version} entry={entry} />
               ))
             ) : (
-              <div className="flex-center flex h-full w-full">
+              <div className="flex-center flex size-full">
                 <EmptyStateScreen
                   title="Oops, no results found"
                   description="Your search query did not match any results."
                   icon="tabler:search-off"
                 />
               </div>
-            ))}
-          <div className="absolute left-[calc(9rem+8px)] top-0 z-[-1] hidden h-full -translate-x-1/2 border-r-2 border-bg-200 dark:border-bg-700 sm:block" />
-        </ul>
+            )}
+            <div className="absolute left-[calc(9rem+8px)] top-0 z-[-1] hidden h-full -translate-x-1/2 border-r-2 border-bg-200 dark:border-bg-700 sm:block" />
+          </ul>
+        )}
       </APIComponentWithFallback>
     </ModuleWrapper>
   )

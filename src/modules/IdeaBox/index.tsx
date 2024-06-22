@@ -54,8 +54,8 @@ function IdeaBox(): React.ReactElement {
           stuffToSearch="idea containers"
         />
         <APIComponentWithFallback data={data}>
-          {typeof data !== 'string' &&
-            (data.length > 0 ? (
+          {data =>
+            data.length > 0 ? (
               <Containers
                 filteredList={filteredList}
                 setCreateContainerModalOpen={setModifyContainerModalOpenType}
@@ -72,7 +72,8 @@ function IdeaBox(): React.ReactElement {
                 icon="tabler:cube-off"
                 ctaContent="Create container"
               />
-            ))}
+            )
+          }
         </APIComponentWithFallback>
       </div>
       <ModifyContainerModal

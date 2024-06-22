@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable operator-linebreak */
 
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
@@ -82,7 +83,7 @@ function ServerStatus(): React.ReactElement {
         </h1>
         <div className="grid gap-6 lg:grid-cols-3">
           <APIComponentWithFallback data={cpuUsage}>
-            {typeof cpuUsage !== 'string' && (
+            {cpuUsage => (
               <div className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -116,7 +117,7 @@ function ServerStatus(): React.ReactElement {
             )}
           </APIComponentWithFallback>
           <APIComponentWithFallback data={memoryUsage}>
-            {typeof memoryUsage !== 'string' && (
+            {memoryUsage => (
               <div className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -150,7 +151,7 @@ function ServerStatus(): React.ReactElement {
             )}
           </APIComponentWithFallback>
           <APIComponentWithFallback data={cpuTemp}>
-            {typeof cpuTemp !== 'string' && (
+            {cpuTemp => (
               <div className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -190,7 +191,7 @@ function ServerStatus(): React.ReactElement {
           <span className="ml-2">Disks Usage</span>
         </h1>
         <APIComponentWithFallback data={diskUsage}>
-          {typeof diskUsage !== 'string' && (
+          {diskUsage => (
             <div className="grid gap-6 lg:grid-cols-2">
               {diskUsage.map(disk => (
                 <div
@@ -237,75 +238,78 @@ function ServerStatus(): React.ReactElement {
           <span className="ml-2">System Information</span>
         </h1>
         <APIComponentWithFallback data={systemInfo}>
-          {typeof systemInfo !== 'string' &&
-            Object.entries(systemInfo).map(([key, value]) => (
-              <div
-                key={key}
-                className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
-              >
-                <h2 className="text-xl text-bg-500">
-                  {key === 'mem' ? 'Memory' : camelCaseToTitleCase(key)}
-                </h2>
-                {!Array.isArray(value) ? (
-                  <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-700">
-                    {Object.entries(value).map(([k, v]) => (
-                      <li key={k} className="flex justify-between p-4">
-                        <span className="text-lg text-bg-500">
-                          {camelCaseToTitleCase(k)}
-                        </span>
-                        <span className="w-1/2 break-all text-lg text-bg-500">
-                          {typeof v === 'object' ? (
-                            <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-700">
-                              {/* @ts-expect-error - uhh lazy to fix for now =) */}
-                              {Object.entries(v).map(([k, v]) => (
-                                <li
-                                  key={k}
-                                  className="flex justify-between p-4"
-                                >
-                                  <span className="text-lg text-bg-500">
-                                    {camelCaseToTitleCase(k)}
-                                  </span>
-                                  <span className="text-lg text-bg-500">
-                                    {/* @ts-expect-error - uhh lazy to fix for now =) */}
-                                    {formatBytes(v) || 'N/A'}
-                                  </span>
-                                </li>
-                              ))}
-                            </ul>
-                          ) : key === 'mem' ? (
-                            // @ts-expect-error - uhh lazy to fix for now =)
-                            formatBytes(v)
-                          ) : (
-                            String(v) || 'N/A'
-                          )}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  value.map((v, i) => (
-                    <ul
-                      key={i}
-                      className="flex flex-col divide-y divide-bg-200 dark:divide-bg-700"
-                    >
-                      {Object.entries(v).map(([k, v]) => (
+          {systemInfo => (
+            <>
+              {Object.entries(systemInfo).map(([key, value]) => (
+                <div
+                  key={key}
+                  className="flex flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
+                >
+                  <h2 className="text-xl text-bg-500">
+                    {key === 'mem' ? 'Memory' : camelCaseToTitleCase(key)}
+                  </h2>
+                  {!Array.isArray(value) ? (
+                    <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-700">
+                      {Object.entries(value).map(([k, v]) => (
                         <li key={k} className="flex justify-between p-4">
                           <span className="text-lg text-bg-500">
                             {camelCaseToTitleCase(k)}
                           </span>
                           <span className="w-1/2 break-all text-lg text-bg-500">
-                            {k.includes('byte')
-                              ? // @ts-expect-error - uhh lazy to fix for now =)
-                                formatBytes(v)
-                              : String(v) || 'N/A'}
+                            {typeof v === 'object' ? (
+                              <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-700">
+                                {/* @ts-expect-error - uhh lazy to fix for now =) */}
+                                {Object.entries(v).map(([k, v]) => (
+                                  <li
+                                    key={k}
+                                    className="flex justify-between p-4"
+                                  >
+                                    <span className="text-lg text-bg-500">
+                                      {camelCaseToTitleCase(k)}
+                                    </span>
+                                    <span className="text-lg text-bg-500">
+                                      {/* @ts-expect-error - uhh lazy to fix for now =) */}
+                                      {formatBytes(v) || 'N/A'}
+                                    </span>
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : key === 'mem' ? (
+                              // @ts-expect-error - uhh lazy to fix for now =)
+                              formatBytes(v)
+                            ) : (
+                              String(v) || 'N/A'
+                            )}
                           </span>
                         </li>
                       ))}
                     </ul>
-                  ))
-                )}
-              </div>
-            ))}
+                  ) : (
+                    value.map((v, i) => (
+                      <ul
+                        key={i}
+                        className="flex flex-col divide-y divide-bg-200 dark:divide-bg-700"
+                      >
+                        {Object.entries(v).map(([k, v]) => (
+                          <li key={k} className="flex justify-between p-4">
+                            <span className="text-lg text-bg-500">
+                              {camelCaseToTitleCase(k)}
+                            </span>
+                            <span className="w-1/2 break-all text-lg text-bg-500">
+                              {k.includes('byte')
+                                ? // @ts-expect-error - uhh lazy to fix for now =)
+                                  formatBytes(v)
+                                : String(v) || 'N/A'}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    ))
+                  )}
+                </div>
+              ))}
+            </>
+          )}
         </APIComponentWithFallback>
       </div>
     </ModuleWrapper>

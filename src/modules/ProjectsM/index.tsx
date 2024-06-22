@@ -154,8 +154,8 @@ function ProjectsM(): React.ReactElement {
           />
           <div className="mt-6 flex flex-1 flex-col">
             <APIComponentWithFallback data={entries}>
-              {typeof entries !== 'string' &&
-                (entries.length > 0 ? (
+              {entries =>
+                entries.length > 0 ? (
                   <Scrollbar>
                     <ul className="mb-8 flex flex-col">
                       {entries.map(entry => (
@@ -182,7 +182,8 @@ function ProjectsM(): React.ReactElement {
                     icon="tabler:clipboard-off"
                     ctaContent="New Project"
                   />
-                ))}
+                )
+              }
             </APIComponentWithFallback>
           </div>
         </div>

@@ -34,23 +34,26 @@ function VisibilitySection({
         }}
       />
       <APIComponentWithFallback data={visibilities}>
-        {typeof visibilities !== 'string' &&
-          (visibilities.length > 0 ? (
-            visibilities.map(item => (
-              <VisibilityItem
-                key={item.id}
-                item={item}
-                setExistedData={setExistedData}
-                setModifyModalOpenType={setModifyVisibilityModalOpenType}
-                setSidebarOpen={setSidebarOpen}
-                setDeleteConfirmationModalOpen={
-                  setDeleteVisibilityConfirmationOpen
-                }
-              />
-            ))
+        {visibilities =>
+          visibilities.length > 0 ? (
+            <>
+              {visibilities.map(item => (
+                <VisibilityItem
+                  key={item.id}
+                  item={item}
+                  setExistedData={setExistedData}
+                  setModifyModalOpenType={setModifyVisibilityModalOpenType}
+                  setSidebarOpen={setSidebarOpen}
+                  setDeleteConfirmationModalOpen={
+                    setDeleteVisibilityConfirmationOpen
+                  }
+                />
+              ))}
+            </>
           ) : (
             <p className="text-center text-bg-500">No visibility found.</p>
-          ))}
+          )
+        }
       </APIComponentWithFallback>
     </>
   )

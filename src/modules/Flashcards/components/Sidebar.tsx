@@ -63,28 +63,31 @@ function Sidebar({
             <SidebarDivider />
             <SidebarTitle name="Tags" />
             <APIComponentWithFallback data={tagsList}>
-              {typeof tagsList !== 'string' &&
-                tagsList.map((tag, index) => (
-                  <li
-                    key={index}
-                    className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
-                  >
-                    <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
-                      <div className="flex w-full items-center gap-6">
-                        <span
-                          className="block size-2 shrink-0 rounded-full"
-                          style={{
-                            backgroundColor: tag.color
-                          }}
-                        />
-                        {tag.name}
+              {tagsList => (
+                <>
+                  {tagsList.map((tag, index) => (
+                    <li
+                      key={index}
+                      className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
+                    >
+                      <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
+                        <div className="flex w-full items-center gap-6">
+                          <span
+                            className="block size-2 shrink-0 rounded-full"
+                            style={{
+                              backgroundColor: tag.color
+                            }}
+                          />
+                          {tag.name}
+                        </div>
+                        <span className="ml-auto text-sm">
+                          {Math.floor(Math.random() * 10)}
+                        </span>
                       </div>
-                      <span className="ml-auto text-sm">
-                        {Math.floor(Math.random() * 10)}
-                      </span>
-                    </div>
-                  </li>
-                ))}
+                    </li>
+                  ))}
+                </>
+              )}
             </APIComponentWithFallback>
           </ul>
         </Scrollbar>

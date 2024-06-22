@@ -59,52 +59,21 @@ function CodeTimeTopEntries({
         </div>
       </div>
       <APIComponentWithFallback data={topEntries}>
-        <div className="flex w-full">
-          {typeof topEntries !== 'string' &&
-            Object.keys(topEntries).length > 0 &&
-            Object.entries(topEntries)
-              .slice(0, 5)
-              .map(([key, value], index) => (
-                <div
-                  className={`h-6 border ${index === 0 ? 'rounded-l-lg' : ''} ${
-                    index ===
-                      Object.entries(topEntries).slice(0, 5).length - 1 &&
-                    'shrink-0 rounded-r-lg'
-                  } ${
-                    [
-                      'bg-red-500/20 border-red-500',
-                      'bg-orange-500/20 border-orange-500',
-                      'bg-yellow-500/20 border-yellow-500',
-                      'bg-blue-500/20 border-blue-500',
-                      'bg-emerald-500/20 border-emerald-500'
-                    ][index]
-                  }`}
-                  key={key}
-                  style={{
-                    width: `${Math.round(
-                      (value /
-                        Object.entries(topEntries)
-                          .slice(0, 5)
-                          .reduce((a, b) => a + b[1], 0)) *
-                        100
-                    )}%`
-                  }}
-                ></div>
-              ))}
-        </div>
-        <ul className="flex flex-col gap-4">
-          {topEntries !== null &&
-            Object.keys(topEntries).length > 0 &&
-            Object.entries(topEntries)
-              .slice(0, 5)
-              .map(([key, value], index) => (
-                <li
-                  key={key}
-                  className="relative flex items-center justify-between gap-8 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
-                >
-                  <div className="flex items-center gap-4 break-all text-lg font-medium">
+        {topEntries => (
+          <>
+            <div className="flex w-full">
+              {Object.keys(topEntries).length > 0 &&
+                Object.entries(topEntries)
+                  .slice(0, 5)
+                  .map(([key, value], index) => (
                     <div
-                      className={`size-4 shrink-0 rounded-md border ${
+                      className={`h-6 border ${
+                        index === 0 ? 'rounded-l-lg' : ''
+                      } ${
+                        index ===
+                          Object.entries(topEntries).slice(0, 5).length - 1 &&
+                        'shrink-0 rounded-r-lg'
+                      } ${
                         [
                           'bg-red-500/20 border-red-500',
                           'bg-orange-500/20 border-orange-500',
@@ -112,16 +81,52 @@ function CodeTimeTopEntries({
                           'bg-blue-500/20 border-blue-500',
                           'bg-emerald-500/20 border-emerald-500'
                         ][index]
-                      } rounded-full`}
+                      }`}
+                      key={key}
+                      style={{
+                        width: `${Math.round(
+                          (value /
+                            Object.entries(topEntries)
+                              .slice(0, 5)
+                              .reduce((a, b) => a + b[1], 0)) *
+                            100
+                        )}%`
+                      }}
                     ></div>
-                    {key}
-                  </div>
-                  <div className="shrink-0 text-3xl font-semibold">
-                    <HoursAndMinutesFromSeconds seconds={value} />
-                  </div>
-                </li>
-              ))}
-        </ul>
+                  ))}
+            </div>
+            <ul className="flex flex-col gap-4">
+              {topEntries !== null &&
+                Object.keys(topEntries).length > 0 &&
+                Object.entries(topEntries)
+                  .slice(0, 5)
+                  .map(([key, value], index) => (
+                    <li
+                      key={key}
+                      className="relative flex items-center justify-between gap-8 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
+                    >
+                      <div className="flex items-center gap-4 break-all text-lg font-medium">
+                        <div
+                          className={`size-4 shrink-0 rounded-md border ${
+                            [
+                              'bg-red-500/20 border-red-500',
+                              'bg-orange-500/20 border-orange-500',
+                              'bg-yellow-500/20 border-yellow-500',
+                              'bg-blue-500/20 border-blue-500',
+                              'bg-emerald-500/20 border-emerald-500'
+                            ][index]
+                          } rounded-full`}
+                        ></div>
+                        {key}
+                      </div>
+                      <div className="shrink-0 text-3xl font-semibold">
+                        <HoursAndMinutesFromSeconds seconds={value} />
+                      </div>
+                    </li>
+                  ))}
+            </ul>
+          </>
+        )}
       </APIComponentWithFallback>
     </div>
   )

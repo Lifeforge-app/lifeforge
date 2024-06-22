@@ -28,20 +28,26 @@ function StatusSection({
         }}
       />
       <APIComponentWithFallback data={statuses}>
-        {typeof statuses !== 'string' && statuses.length > 0 ? (
-          statuses.map(item => (
-            <StatusItem
-              key={item.id}
-              item={item}
-              setExistedData={setExistedData}
-              setModifyModalOpenType={setModifyStatusModalOpenType}
-              setSidebarOpen={setSidebarOpen}
-              setDeleteConfirmationModalOpen={setDeleteStatusConfirmationOpen}
-            />
-          ))
-        ) : (
-          <p className="text-center text-bg-500">No status found.</p>
-        )}
+        {statuses =>
+          statuses.length > 0 ? (
+            <>
+              {statuses.map(item => (
+                <StatusItem
+                  key={item.id}
+                  item={item}
+                  setExistedData={setExistedData}
+                  setModifyModalOpenType={setModifyStatusModalOpenType}
+                  setSidebarOpen={setSidebarOpen}
+                  setDeleteConfirmationModalOpen={
+                    setDeleteStatusConfirmationOpen
+                  }
+                />
+              ))}
+            </>
+          ) : (
+            <p className="text-center text-bg-500">No status found.</p>
+          )
+        }
       </APIComponentWithFallback>
     </>
   )
