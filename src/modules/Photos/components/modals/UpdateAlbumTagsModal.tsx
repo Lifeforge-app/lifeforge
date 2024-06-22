@@ -82,7 +82,7 @@ function UpdateAlbumTagsModal({
         )}
       </div>
       <APIComponentWithFallback data={albumTagList}>
-        {typeof albumTagList !== 'string' && (
+        {albumTagList => (
           <div className="flex max-w-[50vw] flex-wrap gap-2">
             {albumTagList.map(tag => (
               <button

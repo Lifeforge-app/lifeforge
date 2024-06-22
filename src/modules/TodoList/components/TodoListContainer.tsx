@@ -64,17 +64,19 @@ function TodoListContainer(): React.ReactElement {
             stuffToSearch="tasks"
           />
           <APIComponentWithFallback data={entries}>
-            {typeof entries !== 'string' && entries.length > 0 ? (
-              <TaskList />
-            ) : (
-              <EmptyStateScreen
-                title="No tasks found"
-                description="You can create a new task by clicking the button below."
-                icon="tabler:article-off"
-                ctaContent="new task"
-                setModifyModalOpenType={setModifyTaskWindowOpenType}
-              />
-            )}
+            {entries =>
+              entries.length > 0 ? (
+                <TaskList />
+              ) : (
+                <EmptyStateScreen
+                  title="No tasks found"
+                  description="You can create a new task by clicking the button below."
+                  icon="tabler:article-off"
+                  ctaContent="new task"
+                  setModifyModalOpenType={setModifyTaskWindowOpenType}
+                />
+              )
+            }
           </APIComponentWithFallback>
         </div>
       </div>

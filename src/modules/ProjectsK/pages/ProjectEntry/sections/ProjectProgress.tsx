@@ -35,10 +35,10 @@ export default function ProjectProgress({
 
   return (
     <APIComponentWithFallback data={projectData}>
-      {typeof projectData !== 'string' && (
+      {() => (
         <div className="mb-12 mt-6 flex size-full min-h-0 pr-8 sm:pr-12">
           <APIComponentWithFallback data={progress}>
-            {typeof progress !== 'string' && (
+            {progress => (
               <div className="flex w-full flex-col px-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">

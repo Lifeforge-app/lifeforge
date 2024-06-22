@@ -17,7 +17,7 @@ function CodeTimeStatistics(): React.ReactElement {
       </h1>
 
       <APIComponentWithFallback data={stats}>
-        {typeof stats !== 'string' && (
+        {stats => (
           <div className="grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] items-center justify-between gap-4">
             {Object.entries(stats).map(([key, value], index) => (
               <div

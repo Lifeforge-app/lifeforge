@@ -67,56 +67,58 @@ function Journal(): React.ReactElement {
           </Button>
         </div>
         <APIComponentWithFallback data={entries}>
-          {typeof entries !== 'string' && entries.length > 0 ? (
-            <div className="mt-6 grid grid-cols-1 gap-6 pb-8">
-              {entries.map(entry => (
-                <Link
-                  to={`/journal/view/${entry.id}`}
-                  key={entry.id}
-                  className="rounded-lg bg-bg-100 p-6 shadow-custom hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/70"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="text-xl font-semibold text-custom-500">
-                      {entry.title}
+          {entries =>
+            entries.length > 0 ? (
+              <div className="mt-6 grid grid-cols-1 gap-6 pb-8">
+                {entries.map(entry => (
+                  <Link
+                    to={`/journal/view/${entry.id}`}
+                    key={entry.id}
+                    className="rounded-lg bg-bg-100 p-6 shadow-custom hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/70"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="text-xl font-semibold text-custom-500">
+                        {entry.title}
+                      </div>
+                      <HamburgerMenu className="relative">
+                        <MenuItem
+                          icon="tabler:edit"
+                          onClick={() => {
+                            navigate(`/journal/edit/${entry.id}`)
+                          }}
+                          text="Edit entry"
+                        />
+                        <MenuItem
+                          icon="tabler:trash"
+                          onClick={() => {
+                            setExistedData(entry)
+                            setIsDeleteEntryConfirmModalOpen(true)
+                          }}
+                          text="Delete entry"
+                          isRed
+                        />
+                      </HamburgerMenu>
                     </div>
-                    <HamburgerMenu className="relative">
-                      <MenuItem
-                        icon="tabler:edit"
-                        onClick={() => {
-                          navigate(`/journal/edit/${entry.id}`)
-                        }}
-                        text="Edit entry"
-                      />
-                      <MenuItem
-                        icon="tabler:trash"
-                        onClick={() => {
-                          setExistedData(entry)
-                          setIsDeleteEntryConfirmModalOpen(true)
-                        }}
-                        text="Delete entry"
-                        isRed
-                      />
-                    </HamburgerMenu>
-                  </div>
-                  <div className="mt-2 line-clamp-2 text-bg-500">
-                    {entry.content}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="mt-6">
-              <EmptyStateScreen
-                title="No entries found"
-                description="You haven't written any journal entries yet."
-                icon="tabler:book-off"
-                ctaContent="new entry"
-                setModifyModalOpenType={() => {
-                  createEntry().catch(console.error)
-                }}
-              />
-            </div>
-          )}
+                    <div className="mt-2 line-clamp-2 text-bg-500">
+                      {entry.content}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="mt-6">
+                <EmptyStateScreen
+                  title="No entries found"
+                  description="You haven't written any journal entries yet."
+                  icon="tabler:book-off"
+                  ctaContent="new entry"
+                  setModifyModalOpenType={() => {
+                    createEntry().catch(console.error)
+                  }}
+                />
+              </div>
+            )
+          }
         </APIComponentWithFallback>
       </div>
       <DeleteConfirmationModal

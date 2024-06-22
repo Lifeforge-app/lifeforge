@@ -1,12 +1,13 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
+import { toast } from 'react-toastify'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
+import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import Scrollbar from '@components/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import {
   type INotesSubject,
@@ -20,10 +21,12 @@ function NotesCategory(): React.ReactElement {
   const { workspace } = useParams<{ workspace: string }>()
   const [valid] = useFetch<boolean>(`notes/workspace/valid/${workspace}`)
   const [titleData] = useFetch<INotesWorkspace>(
-    `notes/workspace/get/${workspace}`
+    `notes/workspace/get/${workspace}`,
+    valid === true
   )
   const [subjectsData, refreshSubjectData] = useFetch<INotesSubject[]>(
-    `notes/subject/${workspace}`
+    `notes/subject/${workspace}`,
+    valid === true
   )
   const [modifySubjectModalOpenType, setModifySubjectModalOpenType] = useState<
     'create' | 'update' | null
@@ -37,14 +40,15 @@ function NotesCategory(): React.ReactElement {
 
   useEffect(() => {
     if (typeof valid === 'boolean' && !valid) {
+      toast.error('Invalid workspace')
       navigate('/notes')
     }
   }, [valid])
 
   return (
     <APIComponentWithFallback data={valid}>
-      <Scrollbar>
-        <section className="flex size-full min-h-0 flex-1 flex-col px-8 md:px-12">
+      {() => (
+        <ModuleWrapper>
           <GoBackButton
             onClick={() => {
               navigate('/notes')
@@ -72,8 +76,8 @@ function NotesCategory(): React.ReactElement {
             desc="A place to store all your involuntarily generated thoughts."
           />
           <APIComponentWithFallback data={subjectsData}>
-            {typeof subjectsData !== 'string' &&
-              (subjectsData.length > 0 ? (
+            {subjectsData =>
+              subjectsData.length > 0 ? (
                 <div className="flex-center grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-4 py-8">
                   {subjectsData.map(subject => (
                     <SubjectItem
@@ -103,7 +107,8 @@ function NotesCategory(): React.ReactElement {
                   ctaContent="Create subject"
                   setModifyModalOpenType={setModifySubjectModalOpenType}
                 />
-              ))}
+              )
+            }
           </APIComponentWithFallback>
           <DeleteConfirmationModal
             isOpen={deleteSubjectConfirmationModalOpen}
@@ -122,8 +127,8 @@ function NotesCategory(): React.ReactElement {
             existedData={existedData}
             updateSubjectList={refreshSubjectData}
           />
-        </section>
-      </Scrollbar>
+        </ModuleWrapper>
+      )}
     </APIComponentWithFallback>
   )
 }

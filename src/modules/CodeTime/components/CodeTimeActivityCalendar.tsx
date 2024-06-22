@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
-import THEME_COLOR_HEX from '@constants/theme_color_hex'
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 import { Tooltip } from 'react-tooltip'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import THEME_COLOR_HEX from '@constants/theme_color_hex'
 import useFetch from '@hooks/useFetch'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
@@ -47,69 +47,73 @@ function CodeTimeActivityCalendar(): React.ReactElement {
           }`}
         >
           <APIComponentWithFallback data={data}>
-            {Array.isArray(activities) && (
-              <ActivityCalendar
-                data={activities}
-                blockSize={14}
-                blockMargin={6}
-                labels={{
-                  totalCount: `${
-                    Math.floor(
-                      activities.reduce((a, b) => a + b.count, 0) / 60
-                    ) > 0
-                      ? `${Math.floor(
-                          activities.reduce((a, b) => a + b.count, 0) / 60
-                        )} hours`
-                      : ''
-                  } ${
-                    Math.floor(
-                      activities.reduce((a, b) => a + b.count, 0) % 60
-                    ) > 0
-                      ? `${Math.floor(
-                          activities.reduce((a, b) => a + b.count, 0) % 60
-                        )} minutes`
-                      : ''
-                  } ${
-                    activities.reduce((a, b) => a + b.count, 0) === 0
-                      ? 'no time'
-                      : ''
-                  } spent on {{year}}`
-                }}
-                renderBlock={(block, activity) =>
-                  React.cloneElement(block, {
-                    'data-tooltip-id': 'react-tooltip',
-                    'data-tooltip-html': `${
-                      Math.floor(activity.count / 60) > 0
-                        ? `${Math.floor(activity.count / 60)} hours`
+            {() =>
+              Array.isArray(activities) ? (
+                <ActivityCalendar
+                  data={activities}
+                  blockSize={14}
+                  blockMargin={6}
+                  labels={{
+                    totalCount: `${
+                      Math.floor(
+                        activities.reduce((a, b) => a + b.count, 0) / 60
+                      ) > 0
+                        ? `${Math.floor(
+                            activities.reduce((a, b) => a + b.count, 0) / 60
+                          )} hours`
                         : ''
                     } ${
-                      Math.floor(activity.count % 60) > 0
-                        ? `${Math.floor(activity.count % 60)} minutes`
+                      Math.floor(
+                        activities.reduce((a, b) => a + b.count, 0) % 60
+                      ) > 0
+                        ? `${Math.floor(
+                            activities.reduce((a, b) => a + b.count, 0) % 60
+                          )} minutes`
                         : ''
-                    } ${activity.count === 0 ? 'no time' : ''} spent on ${
-                      activity.date
-                    }`.trim()
-                  })
-                }
-                theme={{
-                  dark: [
-                    (theme === 'system' &&
-                      window.matchMedia &&
-                      window.matchMedia('(prefers-color-scheme: dark)')
-                        .matches) ||
-                    theme === 'dark'
-                      ? 'rgb(38, 38, 38)'
-                      : 'rgb(229, 229, 229)',
-                    THEME_COLOR_HEX[
-                      themeColor.replace(
-                        'theme-',
-                        ''
-                      ) as keyof typeof THEME_COLOR_HEX
+                    } ${
+                      activities.reduce((a, b) => a + b.count, 0) === 0
+                        ? 'no time'
+                        : ''
+                    } spent on {{year}}`
+                  }}
+                  renderBlock={(block, activity) =>
+                    React.cloneElement(block, {
+                      'data-tooltip-id': 'react-tooltip',
+                      'data-tooltip-html': `${
+                        Math.floor(activity.count / 60) > 0
+                          ? `${Math.floor(activity.count / 60)} hours`
+                          : ''
+                      } ${
+                        Math.floor(activity.count % 60) > 0
+                          ? `${Math.floor(activity.count % 60)} minutes`
+                          : ''
+                      } ${activity.count === 0 ? 'no time' : ''} spent on ${
+                        activity.date
+                      }`.trim()
+                    })
+                  }
+                  theme={{
+                    dark: [
+                      (theme === 'system' &&
+                        window.matchMedia &&
+                        window.matchMedia('(prefers-color-scheme: dark)')
+                          .matches) ||
+                      theme === 'dark'
+                        ? 'rgb(38, 38, 38)'
+                        : 'rgb(229, 229, 229)',
+                      THEME_COLOR_HEX[
+                        themeColor.replace(
+                          'theme-',
+                          ''
+                        ) as keyof typeof THEME_COLOR_HEX
+                      ]
                     ]
-                  ]
-                }}
-              />
-            )}
+                  }}
+                />
+              ) : (
+                <div className="text-bg-500">No activities found</div>
+              )
+            }
           </APIComponentWithFallback>
         </div>
         <Tooltip id="react-tooltip" className="z-[9999]" />

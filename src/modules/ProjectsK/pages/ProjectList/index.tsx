@@ -93,7 +93,7 @@ function ProjectsKList(): React.ReactElement {
               stuffToSearch="projects"
             />
             <APIComponentWithFallback data={filteredProjectList}>
-              {typeof filteredProjectList !== 'string' && (
+              {filteredProjectList => (
                 <div className="mt-6 flex flex-1 flex-col gap-6 overflow-y-auto">
                   {filteredProjectList.length ? (
                     <ProjectList filteredProjectList={filteredProjectList} />

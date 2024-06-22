@@ -2,7 +2,6 @@
 
 import moment from 'moment'
 import React from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import Gallery from './Gallery'
 import MobileSlidingScrollbar from '../Scrollbars/MobileSlidingScrollbar'
@@ -10,7 +9,6 @@ import TimelineScrollbar from '../Scrollbars/TimelineScrollbar'
 
 function GalleryContainer(): React.ReactElement {
   const {
-    photos,
     sideSliderRef,
     timelineDateDisplayRef,
     galleryWrapperRef,
@@ -64,9 +62,7 @@ function GalleryContainer(): React.ReactElement {
         }}
         ref={galleryWrapperRef}
       >
-        <APIComponentWithFallback data={photos}>
-          <Gallery />
-        </APIComponentWithFallback>
+        <Gallery />
       </div>
       <TimelineScrollbar />
       <MobileSlidingScrollbar />

@@ -235,7 +235,7 @@ function CreateProjectModal({
           </ListboxTransition>
         </Listbox>
         <APIComponentWithFallback data={steps}>
-          {typeof steps !== 'string' && (
+          {steps => (
             <>
               <div className="mt-6 flex items-center gap-2">
                 <Icon

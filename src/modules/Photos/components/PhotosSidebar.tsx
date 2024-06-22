@@ -73,61 +73,64 @@ function PhotosSidebar(): React.ReactElement {
             }}
           />
           <APIComponentWithFallback data={albumList}>
-            {typeof albumList !== 'string' &&
-              albumList.slice(0, 5).map(album => (
-                <li
-                  key={album.id}
-                  className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
-                >
+            {albumList => (
+              <>
+                {albumList.slice(0, 5).map(album => (
+                  <li
+                    key={album.id}
+                    className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
+                  >
+                    <Link
+                      to={`/photos/album/${album.id}`}
+                      onClick={() => {
+                        setSidebarOpen(false)
+                      }}
+                      className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 hover:bg-bg-100 dark:hover:bg-bg-800"
+                    >
+                      <div className="flex-center flex size-10 shrink-0 rounded-md bg-bg-200/50 shadow-sm dark:bg-bg-700/50">
+                        {album.cover !== '' ? (
+                          <img
+                            src={`${import.meta.env.VITE_API_HOST}/media/${
+                              album.cover
+                            }?thumb=0x300`}
+                            alt=""
+                            className="size-full rounded-md object-cover"
+                          />
+                        ) : (
+                          <Icon
+                            icon="tabler:library-photo"
+                            className="size-5 text-bg-300"
+                          />
+                        )}
+                      </div>
+                      <div className="w-full truncate text-bg-500">
+                        {album.name}
+                      </div>
+                      <span className="text-sm text-bg-500">
+                        {album.amount?.toLocaleString()}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+                <li className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all">
                   <Link
-                    to={`/photos/album/${album.id}`}
+                    to="/photos/album"
                     onClick={() => {
                       setSidebarOpen(false)
                     }}
-                    className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 hover:bg-bg-100 dark:hover:bg-bg-800"
+                    className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800"
                   >
-                    <div className="flex-center flex size-10 shrink-0 rounded-md bg-bg-200/50 shadow-sm dark:bg-bg-700/50">
-                      {album.cover !== '' ? (
-                        <img
-                          src={`${import.meta.env.VITE_API_HOST}/media/${
-                            album.cover
-                          }?thumb=0x300`}
-                          alt=""
-                          className="size-full rounded-md object-cover"
-                        />
-                      ) : (
-                        <Icon
-                          icon="tabler:library-photo"
-                          className="size-5 text-bg-300"
-                        />
-                      )}
+                    <div className="flex-center flex size-10 shrink-0">
+                      <Icon
+                        icon="tabler:arrow-right"
+                        className="size-6 text-bg-500"
+                      />
                     </div>
-                    <div className="w-full truncate text-bg-500">
-                      {album.name}
-                    </div>
-                    <span className="text-sm text-bg-500">
-                      {album.amount?.toLocaleString()}
-                    </span>
+                    <div className="w-full text-bg-500">View all albums</div>
                   </Link>
                 </li>
-              ))}
-            <li className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all">
-              <Link
-                to="/photos/album"
-                onClick={() => {
-                  setSidebarOpen(false)
-                }}
-                className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800"
-              >
-                <div className="flex-center flex size-10 shrink-0">
-                  <Icon
-                    icon="tabler:arrow-right"
-                    className="size-6 text-bg-500"
-                  />
-                </div>
-                <div className="w-full text-bg-500">View all albums</div>
-              </Link>
-            </li>
+              </>
+            )}
           </APIComponentWithFallback>
           <SidebarDivider />
           <SidebarItem icon="tabler:archive" name="Archive" />

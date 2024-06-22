@@ -28,59 +28,65 @@ export default function TodaysEvent(): React.ReactElement {
             : rawEvents
         }
       >
-        {typeof rawEvents !== 'string' &&
-        typeof categories !== 'string' &&
-        rawEvents.filter(event =>
-          moment().isBetween(
-            moment(event.start),
-            moment(event.end).subtract(1, 'second'),
-            'day',
-            '[]'
-          )
-        ).length > 0 ? (
-          rawEvents
-            .filter(event =>
-              moment().isBetween(
-                moment(event.start),
-                moment(event.end).subtract(1, 'second'),
-                'day',
-                '[]'
-              )
+        {rawEvents =>
+          rawEvents.filter(event =>
+            moment().isBetween(
+              moment(event.start),
+              moment(event.end).subtract(1, 'second'),
+              'day',
+              '[]'
             )
-            .map(event => (
-              <ul
-                key={event.id}
-                className="flex h-full flex-col gap-4 overflow-y-auto"
-              >
-                <li className="flex max-h-24 flex-1 items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] dark:bg-bg-800">
-                  <div
-                    className="h-full w-1.5 rounded-full"
-                    style={{
-                      backgroundColor: categories.find(
-                        category => category.id === event.category
-                      )?.color
-                    }}
-                  />
-                  <div className="flex w-full flex-col gap-1">
-                    <div className="font-semibold ">{event.title}</div>
-                    <div className="text-sm text-bg-500">
-                      {
-                        categories.find(
-                          category => category.id === event.category
-                        )?.name
-                      }
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            ))
-        ) : (
-          <EmptyStateScreen
-            title="No events today"
-            description="You have no events scheduled for today."
-            icon="tabler:calendar-off"
-          />
-        )}
+          ).length > 0 ? (
+            <APIComponentWithFallback data={categories}>
+              {categories => (
+                <>
+                  {rawEvents
+                    .filter(event =>
+                      moment().isBetween(
+                        moment(event.start),
+                        moment(event.end).subtract(1, 'second'),
+                        'day',
+                        '[]'
+                      )
+                    )
+                    .map(event => (
+                      <ul
+                        key={event.id}
+                        className="flex h-full flex-col gap-4 overflow-y-auto"
+                      >
+                        <li className="flex max-h-24 flex-1 items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] dark:bg-bg-800">
+                          <div
+                            className="h-full w-1.5 rounded-full"
+                            style={{
+                              backgroundColor: categories.find(
+                                category => category.id === event.category
+                              )?.color
+                            }}
+                          />
+                          <div className="flex w-full flex-col gap-1">
+                            <div className="font-semibold ">{event.title}</div>
+                            <div className="text-sm text-bg-500">
+                              {
+                                categories.find(
+                                  category => category.id === event.category
+                                )?.name
+                              }
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    ))}
+                </>
+              )}
+            </APIComponentWithFallback>
+          ) : (
+            <EmptyStateScreen
+              title="No events today"
+              description="You have no events scheduled for today."
+              icon="tabler:calendar-off"
+            />
+          )
+        }
       </APIComponentWithFallback>
     </div>
   )
