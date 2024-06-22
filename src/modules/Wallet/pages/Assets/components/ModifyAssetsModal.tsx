@@ -90,7 +90,6 @@ function ModifyAssetsModal({
 
   return (
     <>
-      {' '}
       <Modal isOpen={openType !== null} className="sm:min-w-[30rem]">
         <ModalHeader
           icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}

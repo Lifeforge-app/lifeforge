@@ -1,25 +1,31 @@
 import { Icon } from '@iconify/react'
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import Scrollbar from '@components/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import {
   type IProjectsMStatus,
   type IProjectsMCategory,
   type IProjectsMVisibility,
-  type IProjectsMTechnology
+  type IProjectsMTechnology,
+  type IProjectsMEntry
 } from '@interfaces/projects_m_interfaces'
-import ModifyCategoriesModal from './components/ModifyCategoryModal'
-import ModifyStatusModal from './components/ModifyStatusModal'
-import ModifyTechnologyModal from './components/ModifyTechnologyModal'
-import ModifyVisibilityModal from './components/ModifyVisibilityModal'
+import EntryItem from './components/EntryItem'
 import Sidebar from './components/Sidebar'
+import ModifyCategoriesModal from './modals/ModifyCategoryModal'
+import ModifyEntryModal from './modals/ModifyEntryModal'
+import ModifyStatusModal from './modals/ModifyStatusModal'
+import ModifyTechnologyModal from './modals/ModifyTechnologyModal'
+import ModifyVisibilityModal from './modals/ModifyVisibilityModal'
 
 function ProjectsM(): React.ReactElement {
+  const [entries, refreshEntries] =
+    useFetch<IProjectsMEntry[]>('projects-m/entry')
   const [categories, refreshCategories] = useFetch<IProjectsMCategory[]>(
     'projects-m/category'
   )
@@ -31,9 +37,14 @@ function ProjectsM(): React.ReactElement {
   const [technologies, refreshTechnologies] = useFetch<IProjectsMTechnology[]>(
     'projects-m/technology'
   )
-  const [icons, setIcons] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  const [modifyEntryModalOpenType, setModifyEntryModalOpenType] = useState<
+    'create' | 'update' | null
+  >(null)
+  const [existedEntryData, setExistedEntryData] =
+    useState<IProjectsMEntry | null>(null)
   const [modifyCategoriesModalOpenType, setModifyCategoriesModalOpenType] =
     useState<'create' | 'update' | null>(null)
   const [existedCategoryData, setExistedCategoryData] =
@@ -51,15 +62,6 @@ function ProjectsM(): React.ReactElement {
     useState<'create' | 'update' | null>(null)
   const [existedTechnologyData, setExistedTechnologyData] =
     useState<IProjectsMTechnology | null>(null)
-
-  useEffect(() => {
-    fetch('http://api.iconify.design/collection?prefix=tabler')
-      .then(async response => await response.json())
-      .then(data => {
-        setIcons(data.uncategorized)
-      })
-      .catch(() => {})
-  }, [])
 
   return (
     <ModuleWrapper>
@@ -91,11 +93,14 @@ function ProjectsM(): React.ReactElement {
             </h1>
             <div className="flex items-center gap-6">
               <Button
-                onClick={() => {}}
+                onClick={() => {
+                  setModifyEntryModalOpenType('create')
+                  setExistedEntryData(null)
+                }}
                 className="hidden sm:flex"
                 icon="tabler:plus"
               >
-                new task
+                new project
               </Button>
               <button
                 onClick={() => {
@@ -113,83 +118,48 @@ function ProjectsM(): React.ReactElement {
             stuffToSearch="projects"
           />
           <div className="mt-6 flex flex-1 flex-col">
-            <Scrollbar>
-              <ul className="mb-8 flex flex-col">
-                {Array(10)
-                  .fill(0)
-                  .map((_, i) => (
-                    <li
-                      key={i}
-                      className="m-4 mt-0 flex items-center gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
-                    >
-                      <Link
-                        to="./lifeforge"
-                        className="flex w-full items-center justify-between gap-4"
-                      >
-                        <div className="flex items-center gap-4">
-                          <div
-                            className={`h-10 w-1 shrink-0 rounded-full ${
-                              ['bg-green-500', 'bg-yellow-500', 'bg-red-500'][
-                                Math.floor(Math.random() * 3)
-                              ]
-                            }`}
-                          />
-                          <div
-                            className={`size-12 shrink-0 overflow-hidden rounded-lg p-2 ${
-                              [
-                                'bg-red-500/20 text-red-500',
-                                'bg-yellow-500/20 text-yellow-500',
-                                'bg-green-500/20 text-green-500',
-                                'bg-blue-500/20 text-blue-500',
-                                'bg-indigo-500/20 text-indigo-500',
-                                'bg-purple-500/20 text-purple-500',
-                                'bg-pink-500/20 text-pink-500',
-                                'bg-rose-500/20 text-rose-500',
-                                'bg-fuchsia-500/20 text-fuchsia-500',
-                                'bg-orange-500/20 text-orange-500',
-                                'bg-cyan-500/20 text-cyan-500',
-                                'bg-sky-500/20 text-sky-500',
-                                'bg-lime-500/20 text-lime-500',
-                                'bg-amber-500/20 text-amber-500',
-                                'bg-emerald-500/20 text-emerald-500',
-                                'bg-custom-500/20 text-custom-500'
-                              ][Math.floor(Math.random() * 16)]
-                            }`}
-                          >
-                            <Icon
-                              icon={`tabler:${
-                                icons[
-                                  Math.floor(Math.random() * icons.length)
-                                ] as string
-                              }`}
-                              className="size-full"
-                            />
-                          </div>
-                          <div className="flex flex-col items-start">
-                            <div className="font-semibold ">Lorem Ipsum</div>
-                            <div className="text-sm text-bg-500">
-                              {
-                                ['Website', 'Mobile App', 'Desktop App'][
-                                  Math.floor(Math.random() * 3)
-                                ]
-                              }
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-4 ">
-                          <Icon
-                            icon="tabler:chevron-right"
-                            className="size-5 stroke-[2px] text-bg-500"
-                          />
-                        </div>
-                      </Link>
-                    </li>
-                  ))}
-              </ul>
-            </Scrollbar>
+            <APIComponentWithFallback data={entries}>
+              {typeof entries !== 'string' &&
+                (entries.length > 0 ? (
+                  <Scrollbar>
+                    <ul className="mb-8 flex flex-col">
+                      {entries.map(entry => (
+                        <EntryItem
+                          key={entry.id}
+                          entry={entry}
+                          categories={categories}
+                          statuses={statuses}
+                          visibilities={visibilities}
+                          technologies={technologies}
+                          setExistedData={setExistedEntryData}
+                          setModifyModalOpenType={setModifyEntryModalOpenType}
+                        />
+                      ))}
+                    </ul>
+                  </Scrollbar>
+                ) : (
+                  <EmptyStateScreen
+                    title="No Projects Found"
+                    description='Create a new project by clicking the "New Project" button above.'
+                    icon="tabler:clipboard-off"
+                    ctaContent="New Project"
+                  />
+                ))}
+            </APIComponentWithFallback>
           </div>
         </div>
       </div>
+      <ModifyEntryModal
+        openType={modifyEntryModalOpenType}
+        setOpenType={setModifyEntryModalOpenType}
+        existedData={existedEntryData}
+        setExistedData={setExistedEntryData}
+        refreshEntries={refreshEntries}
+        categories={categories}
+        statuses={statuses}
+        visibilities={visibilities}
+        technologies={technologies}
+      />
       <ModifyCategoriesModal
         openType={modifyCategoriesModalOpenType}
         setOpenType={setModifyCategoriesModalOpenType}
