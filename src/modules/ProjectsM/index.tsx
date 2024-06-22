@@ -9,10 +9,14 @@ import Scrollbar from '@components/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import {
   type IProjectsMStatus,
-  type IProjectsMCategory
+  type IProjectsMCategory,
+  type IProjectsMVisibility,
+  type IProjectsMTechnology
 } from '@interfaces/projects_m_interfaces'
 import ModifyCategoriesModal from './components/ModifyCategoryModal'
 import ModifyStatusModal from './components/ModifyStatusModal'
+import ModifyTechnologyModal from './components/ModifyTechnologyModal'
+import ModifyVisibilityModal from './components/ModifyVisibilityModal'
 import Sidebar from './components/Sidebar'
 
 function ProjectsM(): React.ReactElement {
@@ -21,6 +25,12 @@ function ProjectsM(): React.ReactElement {
   )
   const [statuses, refreshStatuses] =
     useFetch<IProjectsMStatus[]>('projects-m/status')
+  const [visibilities, refreshVisibilities] = useFetch<IProjectsMVisibility[]>(
+    'projects-m/visibility'
+  )
+  const [technologies, refreshTechnologies] = useFetch<IProjectsMTechnology[]>(
+    'projects-m/technology'
+  )
   const [icons, setIcons] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -33,6 +43,14 @@ function ProjectsM(): React.ReactElement {
   >(null)
   const [existedStatusData, setExistedStatusData] =
     useState<IProjectsMStatus | null>(null)
+  const [modifyVisibilityModalOpenType, setModifyVisibilityModalOpenType] =
+    useState<'create' | 'update' | null>(null)
+  const [existedVisibilityData, setExistedVisibilityData] =
+    useState<IProjectsMCategory | null>(null)
+  const [modifyTechnologyModalOpenType, setModifyTechnologyModalOpenType] =
+    useState<'create' | 'update' | null>(null)
+  const [existedTechnologyData, setExistedTechnologyData] =
+    useState<IProjectsMTechnology | null>(null)
 
   useEffect(() => {
     fetch('http://api.iconify.design/collection?prefix=tabler')
@@ -55,10 +73,16 @@ function ProjectsM(): React.ReactElement {
           setSidebarOpen={setSidebarOpen}
           categories={categories}
           statuses={statuses}
+          visibilities={visibilities}
+          technologies={technologies}
           setModifyCategoriesModalOpenType={setModifyCategoriesModalOpenType}
           setExistedCategoryData={setExistedCategoryData}
           setModifyStatusModalOpenType={setModifyStatusModalOpenType}
           setExistedStatusData={setExistedStatusData}
+          setModifyVisibilityModalOpenType={setModifyVisibilityModalOpenType}
+          setExistedVisibilityData={setExistedVisibilityData}
+          setModifyTechnologyModalOpenType={setModifyTechnologyModalOpenType}
+          setExistedTechnologyData={setExistedTechnologyData}
         />
         <div className="relative z-10 flex h-full flex-1 flex-col lg:ml-8">
           <div className="flex items-center justify-between">
@@ -179,6 +203,20 @@ function ProjectsM(): React.ReactElement {
         existedData={existedStatusData}
         setExistedData={setExistedStatusData}
         refreshStatuses={refreshStatuses}
+      />
+      <ModifyVisibilityModal
+        openType={modifyVisibilityModalOpenType}
+        setOpenType={setModifyVisibilityModalOpenType}
+        existedData={existedVisibilityData}
+        setExistedData={setExistedVisibilityData}
+        refreshVisibilities={refreshVisibilities}
+      />
+      <ModifyTechnologyModal
+        openType={modifyTechnologyModalOpenType}
+        setOpenType={setModifyTechnologyModalOpenType}
+        existedData={existedTechnologyData}
+        setExistedData={setExistedTechnologyData}
+        refreshTechnologies={refreshTechnologies}
       />
     </ModuleWrapper>
   )

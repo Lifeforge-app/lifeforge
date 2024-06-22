@@ -42,7 +42,7 @@ function CategorySection({
               />
             ))
           ) : (
-            <p className="text-center text-bg-500">No categories found.</p>
+            <p className="text-center text-bg-500">No category found.</p>
           ))}
       </APIComponentWithFallback>
     </>
