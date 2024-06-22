@@ -1,13 +1,12 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
-import React, { useState } from 'react'
+import React from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import Scrollbar from '@components/Scrollbar'
 import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
-import ReceiptModal from './components/ReceiptModal'
 
 function ListView({
   setSelectedData,
