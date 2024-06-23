@@ -1,22 +1,13 @@
 import React from 'react'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
-import { type IProjectsMStatus } from '@interfaces/projects_m_interfaces'
+import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import StatusItem from './StatusItem'
 
-function StatusSection({
-  statuses,
-  setExistedData,
-  setModifyStatusModalOpenType,
-  setSidebarOpen,
-  setDeleteStatusConfirmationOpen
-}: {
-  statuses: IProjectsMStatus[] | 'loading' | 'error'
-  setExistedData: React.Dispatch<React.SetStateAction<IProjectsMStatus | null>>
-  setModifyStatusModalOpenType: React.Dispatch<'create' | 'update' | null>
-  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setDeleteStatusConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>
-}): React.ReactElement {
+function StatusSection(): React.ReactElement {
+  const { data, setExistedData, setModifyDataModalOpenType } =
+    useProjectsMContext().statuses
+
   return (
     <>
       <SidebarTitle
@@ -24,24 +15,15 @@ function StatusSection({
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           setExistedData(null)
-          setModifyStatusModalOpenType('create')
+          setModifyDataModalOpenType('create')
         }}
       />
-      <APIComponentWithFallback data={statuses}>
-        {statuses =>
-          statuses.length > 0 ? (
+      <APIComponentWithFallback data={data}>
+        {data =>
+          data.length > 0 ? (
             <>
-              {statuses.map(item => (
-                <StatusItem
-                  key={item.id}
-                  item={item}
-                  setExistedData={setExistedData}
-                  setModifyModalOpenType={setModifyStatusModalOpenType}
-                  setSidebarOpen={setSidebarOpen}
-                  setDeleteConfirmationModalOpen={
-                    setDeleteStatusConfirmationOpen
-                  }
-                />
+              {data.map(item => (
+                <StatusItem key={item.id} item={item} />
               ))}
             </>
           ) : (

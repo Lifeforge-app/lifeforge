@@ -9,40 +9,28 @@ import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import {
-  type IProjectsMCategory,
-  type IProjectsMTechnology,
-  type IProjectsMVisibility,
-  type IProjectsMEntry,
-  type IProjectsMStatus
-} from '@interfaces/projects_m_interfaces'
+import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import APIRequest from '@utils/fetchData'
 import CategorySelector from './components/CategorySelector'
 import StatusSelector from './components/StatusSelector'
 import TechnologySelector from './components/TechnologySelector'
 import VisibilitySelector from './components/VisibilitySelector'
 
-function ModifyEntryModal({
-  openType,
-  setOpenType,
-  existedData,
-  setExistedData,
-  refreshEntries,
-  categories,
-  statuses,
-  visibilities,
-  technologies
-}: {
-  openType: 'create' | 'update' | null
-  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  existedData: IProjectsMEntry | null
-  setExistedData: React.Dispatch<React.SetStateAction<IProjectsMEntry | null>>
-  refreshEntries: () => void
-  categories: IProjectsMCategory[] | 'loading' | 'error'
-  statuses: IProjectsMStatus[] | 'loading' | 'error'
-  visibilities: IProjectsMVisibility[] | 'loading' | 'error'
-  technologies: IProjectsMTechnology[] | 'loading' | 'error'
-}): React.ReactElement {
+function ModifyEntryModal(): React.ReactElement {
+  const {
+    entries: {
+      refreshData: refreshEntries,
+      modifyDataModalOpenType: openType,
+      setModifyDataModalOpenType: setOpenType,
+      setExistedData,
+      existedData
+    },
+    categories: { data: categories },
+    statuses: { data: statuses },
+    visibilities: { data: visibilities },
+    technologies: { data: technologies }
+  } = useProjectsMContext()
+
   const [entryName, setEntryName] = useState('')
   const [entryIcon, setEntryIcon] = useState('')
   const [entryColor, setEntryColor] = useState<string>('#FFFFFF')

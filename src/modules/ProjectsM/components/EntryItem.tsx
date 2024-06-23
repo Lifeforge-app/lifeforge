@@ -3,33 +3,21 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import {
-  type IProjectsMCategory,
-  type IProjectsMStatus,
-  type IProjectsMTechnology,
-  type IProjectsMVisibility,
-  type IProjectsMEntry
-} from '@interfaces/projects_m_interfaces'
+import { type IProjectsMEntry } from '@interfaces/projects_m_interfaces'
+import { useProjectsMContext } from '@providers/ProjectsMProvider'
 
-function EntryItem({
-  entry,
-  categories,
-  statuses,
-  visibilities,
-  technologies,
-  setExistedData,
-  setModifyModalOpenType,
-  setDeleteEntryConfirmationOpen
-}: {
-  entry: IProjectsMEntry
-  categories: IProjectsMCategory[] | 'loading' | 'error'
-  statuses: IProjectsMStatus[] | 'loading' | 'error'
-  visibilities: IProjectsMVisibility[] | 'loading' | 'error'
-  technologies: IProjectsMTechnology[] | 'loading' | 'error'
-  setExistedData: React.Dispatch<React.SetStateAction<IProjectsMEntry | null>>
-  setModifyModalOpenType: React.Dispatch<'create' | 'update' | null>
-  setDeleteEntryConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>
-}): React.ReactElement {
+function EntryItem({ entry }: { entry: IProjectsMEntry }): React.ReactElement {
+  const {
+    entries: {
+      setExistedData,
+      setModifyDataModalOpenType,
+      setDeleteDataConfirmationOpen
+    },
+    categories: { data: categories },
+    statuses: { data: statuses },
+    visibilities: { data: visibilities },
+    technologies: { data: technologies }
+  } = useProjectsMContext()
   return (
     <li className="m-4 mt-0 flex items-center gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       <Link
@@ -95,7 +83,7 @@ function EntryItem({
               icon="tabler:edit"
               onClick={() => {
                 setExistedData(entry)
-                setModifyModalOpenType('update')
+                setModifyDataModalOpenType('update')
               }}
             />
             <MenuItem
@@ -103,7 +91,7 @@ function EntryItem({
               icon="tabler:trash"
               onClick={() => {
                 setExistedData(entry)
-                setDeleteEntryConfirmationOpen(true)
+                setDeleteDataConfirmationOpen(true)
               }}
               isRed
             />

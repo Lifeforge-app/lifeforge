@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
@@ -8,85 +8,23 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import Scrollbar from '@components/Scrollbar'
-import useFetch from '@hooks/useFetch'
-import {
-  type IProjectsMStatus,
-  type IProjectsMCategory,
-  type IProjectsMVisibility,
-  type IProjectsMTechnology,
-  type IProjectsMEntry
-} from '@interfaces/projects_m_interfaces'
-import { useGlobalStateContext } from '@providers/GlobalStateProvider'
+import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import EntryItem from './components/EntryItem'
 import Sidebar from './components/Sidebar'
-import ModifyCategoriesModal from './modals/ModifyCategoryModal'
 import ModifyEntryModal from './modals/ModifyEntryModal'
+import ModifyModal from './modals/ModifyModal'
 import ModifyStatusModal from './modals/ModifyStatusModal'
-import ModifyTechnologyModal from './modals/ModifyTechnologyModal'
-import ModifyVisibilityModal from './modals/ModifyVisibilityModal'
 
 function ProjectsM(): React.ReactElement {
-  const { setSubSidebarExpanded } = useGlobalStateContext()
-  const [entries, refreshEntries] =
-    useFetch<IProjectsMEntry[]>('projects-m/entry')
-  const [categories, refreshCategories] = useFetch<IProjectsMCategory[]>(
-    'projects-m/category'
-  )
-  const [statuses, refreshStatuses] =
-    useFetch<IProjectsMStatus[]>('projects-m/status')
-  const [visibilities, refreshVisibilities] = useFetch<IProjectsMVisibility[]>(
-    'projects-m/visibility'
-  )
-  const [technologies, refreshTechnologies] = useFetch<IProjectsMTechnology[]>(
-    'projects-m/technology'
-  )
-  const [searchQuery, setSearchQuery] = useState('')
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-
-  const [modifyEntryModalOpenType, setModifyEntryModalOpenType] = useState<
-    'create' | 'update' | null
-  >(null)
-  const [existedEntryData, setExistedEntryData] =
-    useState<IProjectsMEntry | null>(null)
-  const [deleteEntryConfirmationOpen, setDeleteEntryConfirmationOpen] =
-    useState(false)
-
-  const [modifyCategoriesModalOpenType, setModifyCategoriesModalOpenType] =
-    useState<'create' | 'update' | null>(null)
-  const [existedCategoryData, setExistedCategoryData] =
-    useState<IProjectsMCategory | null>(null)
-  const [deleteCategoryConfirmationOpen, setDeleteCategoryConfirmationOpen] =
-    useState(false)
-
-  const [modifyStatusModalOpenType, setModifyStatusModalOpenType] = useState<
-    'create' | 'update' | null
-  >(null)
-  const [existedStatusData, setExistedStatusData] =
-    useState<IProjectsMStatus | null>(null)
-  const [deleteStatusConfirmationOpen, setDeleteStatusConfirmationOpen] =
-    useState(false)
-
-  const [modifyVisibilityModalOpenType, setModifyVisibilityModalOpenType] =
-    useState<'create' | 'update' | null>(null)
-  const [existedVisibilityData, setExistedVisibilityData] =
-    useState<IProjectsMCategory | null>(null)
-  const [
-    deleteVisibilityConfirmationOpen,
-    setDeleteVisibilityConfirmationOpen
-  ] = useState(false)
-
-  const [modifyTechnologyModalOpenType, setModifyTechnologyModalOpenType] =
-    useState<'create' | 'update' | null>(null)
-  const [existedTechnologyData, setExistedTechnologyData] =
-    useState<IProjectsMTechnology | null>(null)
-  const [
-    deleteTechnologyConfirmationOpen,
-    setDeleteTechnologyConfirmationOpen
-  ] = useState(false)
-
-  useEffect(() => {
-    setSubSidebarExpanded(sidebarOpen)
-  }, [sidebarOpen])
+  const {
+    miscellaneous: {
+      modalConfigs,
+      searchQuery,
+      setSearchQuery,
+      setSidebarOpen
+    },
+    entries: { data: entries, setModifyDataModalOpenType, setExistedData }
+  } = useProjectsMContext()
 
   return (
     <ModuleWrapper>
@@ -95,32 +33,7 @@ function ProjectsM(): React.ReactElement {
         desc="It's time to stop procrastinating."
       />
       <div className="mt-6 flex size-full min-h-0 flex-1">
-        <Sidebar
-          sidebarOpen={sidebarOpen}
-          setSidebarOpen={setSidebarOpen}
-          categories={categories}
-          statuses={statuses}
-          visibilities={visibilities}
-          technologies={technologies}
-          setModifyCategoriesModalOpenType={setModifyCategoriesModalOpenType}
-          setExistedCategoryData={setExistedCategoryData}
-          setDeleteCategoriesConfirmationOpen={
-            setDeleteCategoryConfirmationOpen
-          }
-          setModifyStatusModalOpenType={setModifyStatusModalOpenType}
-          setExistedStatusData={setExistedStatusData}
-          setDeleteStatusConfirmationOpen={setDeleteStatusConfirmationOpen}
-          setModifyVisibilityModalOpenType={setModifyVisibilityModalOpenType}
-          setExistedVisibilityData={setExistedVisibilityData}
-          setDeleteVisibilityConfirmationOpen={
-            setDeleteVisibilityConfirmationOpen
-          }
-          setModifyTechnologyModalOpenType={setModifyTechnologyModalOpenType}
-          setExistedTechnologyData={setExistedTechnologyData}
-          setDeleteTechnologyConfirmationOpen={
-            setDeleteTechnologyConfirmationOpen
-          }
-        />
+        <Sidebar />
         <div className="relative z-10 flex h-full flex-1 flex-col lg:ml-8">
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-semibold lg:text-4xl">
@@ -129,8 +42,8 @@ function ProjectsM(): React.ReactElement {
             <div className="flex items-center gap-6">
               <Button
                 onClick={() => {
-                  setModifyEntryModalOpenType('create')
-                  setExistedEntryData(null)
+                  setModifyDataModalOpenType('create')
+                  setExistedData(null)
                 }}
                 className="hidden sm:flex"
                 icon="tabler:plus"
@@ -159,19 +72,7 @@ function ProjectsM(): React.ReactElement {
                   <Scrollbar>
                     <ul className="mb-8 flex flex-col">
                       {entries.map(entry => (
-                        <EntryItem
-                          key={entry.id}
-                          entry={entry}
-                          categories={categories}
-                          statuses={statuses}
-                          visibilities={visibilities}
-                          technologies={technologies}
-                          setExistedData={setExistedEntryData}
-                          setModifyModalOpenType={setModifyEntryModalOpenType}
-                          setDeleteEntryConfirmationOpen={
-                            setDeleteEntryConfirmationOpen
-                          }
-                        />
+                        <EntryItem key={entry.id} entry={entry} />
                       ))}
                     </ul>
                   </Scrollbar>
@@ -188,105 +89,26 @@ function ProjectsM(): React.ReactElement {
           </div>
         </div>
       </div>
-      <ModifyEntryModal
-        openType={modifyEntryModalOpenType}
-        setOpenType={setModifyEntryModalOpenType}
-        existedData={existedEntryData}
-        setExistedData={setExistedEntryData}
-        refreshEntries={refreshEntries}
-        categories={categories}
-        statuses={statuses}
-        visibilities={visibilities}
-        technologies={technologies}
-      />
-      <ModifyCategoriesModal
-        openType={modifyCategoriesModalOpenType}
-        setOpenType={setModifyCategoriesModalOpenType}
-        existedData={existedCategoryData}
-        setExistedData={setExistedCategoryData}
-        refreshCategories={refreshCategories}
-      />
-      <ModifyStatusModal
-        openType={modifyStatusModalOpenType}
-        setOpenType={setModifyStatusModalOpenType}
-        existedData={existedStatusData}
-        setExistedData={setExistedStatusData}
-        refreshStatuses={refreshStatuses}
-      />
-      <ModifyVisibilityModal
-        openType={modifyVisibilityModalOpenType}
-        setOpenType={setModifyVisibilityModalOpenType}
-        existedData={existedVisibilityData}
-        setExistedData={setExistedVisibilityData}
-        refreshVisibilities={refreshVisibilities}
-      />
-      <ModifyTechnologyModal
-        openType={modifyTechnologyModalOpenType}
-        setOpenType={setModifyTechnologyModalOpenType}
-        existedData={existedTechnologyData}
-        setExistedData={setExistedTechnologyData}
-        refreshTechnologies={refreshTechnologies}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="projects-m/entry"
-        isOpen={deleteEntryConfirmationOpen}
-        data={existedEntryData}
-        itemName="project"
-        nameKey="name"
-        onClose={() => {
-          setDeleteEntryConfirmationOpen(false)
-          setExistedEntryData(null)
-        }}
-        updateDataList={refreshEntries}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="projects-m/category"
-        isOpen={deleteCategoryConfirmationOpen}
-        data={existedCategoryData}
-        itemName="category"
-        nameKey="name"
-        onClose={() => {
-          setDeleteCategoryConfirmationOpen(false)
-          setExistedCategoryData(null)
-        }}
-        updateDataList={refreshCategories}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="projects-m/status"
-        isOpen={deleteStatusConfirmationOpen}
-        data={existedStatusData}
-        itemName="status"
-        nameKey="name"
-        onClose={() => {
-          setDeleteStatusConfirmationOpen(false)
-          setExistedStatusData(null)
-        }}
-        updateDataList={refreshStatuses}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="projects-m/visibility"
-        isOpen={deleteVisibilityConfirmationOpen}
-        data={existedVisibilityData}
-        itemName="visibility"
-        nameKey="name"
-        onClose={() => {
-          setDeleteVisibilityConfirmationOpen(false)
-          setExistedVisibilityData(null)
-        }}
-        updateDataList={refreshVisibilities}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="projects-m/technology"
-        isOpen={deleteTechnologyConfirmationOpen}
-        data={existedTechnologyData}
-        itemName="technology"
-        nameKey="name"
-        onClose={() => {
-          setDeleteTechnologyConfirmationOpen(false)
-          setExistedTechnologyData(null)
-        }}
-        updateDataList={refreshTechnologies}
-      />
+      <ModifyEntryModal />
+      <ModifyStatusModal />
+      <ModifyModal stuff="category" />
+      <ModifyModal stuff="visibility" />
+      <ModifyModal stuff="technology" />
+      {modalConfigs.map((config, index) => (
+        <DeleteConfirmationModal
+          key={index}
+          apiEndpoint={config.apiEndpoint}
+          isOpen={config.isOpen}
+          data={config.data}
+          itemName={config.itemName}
+          nameKey={config.nameKey}
+          onClose={() => {
+            config.setOpen(false)
+            config.setData(null)
+          }}
+          updateDataList={config.updateDataList}
+        />
+      ))}
     </ModuleWrapper>
   )
 }

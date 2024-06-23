@@ -24,6 +24,9 @@ const Dashboard = lazy(async () => await import('./modules/Dashboard'))
 const TodoList = lazy(async () => await import('./modules/TodoList'))
 const Calendar = lazy(async () => await import('./modules/Calendar'))
 const ProjectsM = lazy(async () => await import('./modules/ProjectsM'))
+const ProjectsMProvider = lazy(
+  async () => await import('./providers/ProjectsMProvider')
+)
 const Kanban = lazy(
   async () => await import('./modules/ProjectsM/pages/Kanban')
 )
@@ -94,6 +97,7 @@ export const COMPONENTS = {
     dashboard: Dashboard
   },
   'projects-m': {
+    'projects-m-provider': ProjectsMProvider,
     'projects-m': ProjectsM,
     'projects-m-id': Kanban
   },
