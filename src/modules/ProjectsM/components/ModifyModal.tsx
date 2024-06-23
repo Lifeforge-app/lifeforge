@@ -9,22 +9,31 @@ import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
+import { type IProjectsMStatus } from '@interfaces/projects_m_interfaces'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import APIRequest from '@utils/fetchData'
 
-function ModifyStatusModal(): React.ReactElement {
+function ModifyModal({
+  stuff
+}: {
+  stuff: 'category' | 'technology' | 'visibility' | 'status'
+}): React.ReactElement {
   const {
-    statuses: {
-      refreshData: refreshStatuses,
-      modifyDataModalOpenType: openType,
-      setModifyDataModalOpenType: setOpenType,
-      existedData,
-      setExistedData
-    }
-  } = useProjectsMContext()
-  const [statusName, setStatusName] = useState('')
-  const [statusIcon, setStatusIcon] = useState('')
-  const [statusColor, setStatusColor] = useState<string>('#FFFFFF')
+    modifyDataModalOpenType: openType,
+    setModifyDataModalOpenType: setOpenType,
+    existedData,
+    setExistedData,
+    refreshData
+  } = useProjectsMContext()[
+    stuff.replace('y', 'ies').replace('us', 'uses') as
+      | 'categories'
+      | 'technologies'
+      | 'visibilities'
+      | 'statuses'
+  ]
+  const [name, setName] = useState('')
+  const [icon, setIcon] = useState('')
+  const [color, setColor] = useState<string>('#FFFFFF')
   const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
   const [colorPickerOpen, setColorPickerOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -33,31 +42,33 @@ function ModifyStatusModal(): React.ReactElement {
     if (openType) {
       if (openType === 'update') {
         if (existedData) {
-          setStatusName(existedData.name)
-          setStatusIcon(existedData.icon)
-          setStatusColor(existedData.color)
+          setName(existedData.name)
+          setIcon(existedData.icon)
+          if (stuff === 'status') {
+            setColor((existedData as IProjectsMStatus).color)
+          }
         }
       } else {
-        setStatusName('')
-        setStatusIcon('')
-        setStatusColor('#FFFFFF')
+        setName('')
+        setIcon('')
+        setColor('#FFFFFF')
       }
     }
   }, [openType, existedData])
 
-  function updateStatusName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setStatusName(e.target.value)
+  function updateVisibilityName(e: React.ChangeEvent<HTMLInputElement>): void {
+    setName(e.target.value)
   }
 
-  function updateStatusColor(e: React.ChangeEvent<HTMLInputElement>): void {
-    setStatusColor(e.target.value)
+  function updateColor(e: React.ChangeEvent<HTMLInputElement>): void {
+    setColor(e.target.value)
   }
 
   async function onSubmitButtonClick(): Promise<void> {
     if (
-      statusName.trim().length === 0 ||
-      !statusColor ||
-      statusIcon.trim().length === 0
+      name.trim().length === 0 ||
+      icon.trim().length === 0 ||
+      (stuff === 'status' && !color)
     ) {
       toast.error('Please fill in all the fields.')
       return
@@ -65,19 +76,19 @@ function ModifyStatusModal(): React.ReactElement {
 
     setIsLoading(true)
     await APIRequest({
-      endpoint: `projects-m/status${
+      endpoint: `projects-m/${stuff}${
         openType === 'update' ? `/${existedData?.id}` : ''
       }`,
       method: openType === 'create' ? 'POST' : 'PATCH',
       body: {
-        name: statusName,
-        icon: statusIcon,
-        color: statusColor
+        name,
+        icon,
+        ...(stuff === 'status' && { color })
       },
       successInfo: openType,
       failureInfo: openType,
       callback: () => {
-        refreshStatuses()
+        refreshData()
         setExistedData(null)
         setOpenType(null)
       },
@@ -92,31 +103,33 @@ function ModifyStatusModal(): React.ReactElement {
       <Modal isOpen={openType !== null} className="sm:min-w-[30rem]">
         <ModalHeader
           icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
-          title={openType === 'update' ? 'Edit Status' : 'Add Status'}
+          title={openType === 'update' ? `Edit ${stuff}` : `Add ${stuff}`}
           onClose={() => {
             setOpenType(null)
           }}
         />
         <Input
           icon="tabler:book"
-          placeholder="My Statuses"
-          value={statusName}
+          placeholder={`Project ${stuff}`}
+          value={name}
           darker
-          name="Status name"
-          updateValue={updateStatusName}
+          name={`${stuff} name`}
+          updateValue={updateVisibilityName}
         />
         <IconInput
-          icon={statusIcon}
-          setIcon={setStatusIcon}
-          name="Status icon"
+          icon={icon}
+          setIcon={setIcon}
+          name={`${stuff} icon`}
           setIconSelectorOpen={setIconSelectorOpen}
         />
-        <ColorInput
-          color={statusColor}
-          name="Status color"
-          setColorPickerOpen={setColorPickerOpen}
-          updateColor={updateStatusColor}
-        />
+        {stuff === 'status' && (
+          <ColorInput
+            color={color}
+            name="Status color"
+            setColorPickerOpen={setColorPickerOpen}
+            updateColor={updateColor}
+          />
+        )}
         <CreateOrModifyButton
           loading={isLoading}
           onClick={() => {
@@ -128,16 +141,18 @@ function ModifyStatusModal(): React.ReactElement {
       <IconSelector
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}
-        setSelectedIcon={setStatusIcon}
+        setSelectedIcon={setIcon}
       />
-      <ColorPickerModal
-        color={statusColor}
-        isOpen={colorPickerOpen}
-        setColor={setStatusColor}
-        setOpen={setColorPickerOpen}
-      />
+      {stuff === 'status' && (
+        <ColorPickerModal
+          isOpen={colorPickerOpen}
+          setOpen={setColorPickerOpen}
+          setColor={setColor}
+          color={color}
+        />
+      )}
     </>
   )
 }
 
-export default ModifyStatusModal
+export default ModifyModal

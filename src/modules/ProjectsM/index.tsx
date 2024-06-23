@@ -10,10 +10,9 @@ import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import Scrollbar from '@components/Scrollbar'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import EntryItem from './components/EntryItem'
+import ModifyEntryModal from './components/ModifyEntryModal'
+import ModifyModal from './components/ModifyModal'
 import Sidebar from './components/Sidebar'
-import ModifyEntryModal from './modals/ModifyEntryModal'
-import ModifyModal from './modals/ModifyModal'
-import ModifyStatusModal from './modals/ModifyStatusModal'
 
 function ProjectsM(): React.ReactElement {
   const {
@@ -90,10 +89,12 @@ function ProjectsM(): React.ReactElement {
         </div>
       </div>
       <ModifyEntryModal />
-      <ModifyStatusModal />
-      <ModifyModal stuff="category" />
-      <ModifyModal stuff="visibility" />
-      <ModifyModal stuff="technology" />
+      {(['status', 'category', 'visibility', 'technology'] as const).map(
+        (stuff, index) => (
+          <ModifyModal key={index} stuff={stuff} />
+        )
+      )}
+
       {modalConfigs.map((config, index) => (
         <DeleteConfirmationModal
           key={index}
