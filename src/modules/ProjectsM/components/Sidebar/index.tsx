@@ -5,7 +5,6 @@ import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import SidebarSection from './components/SidebarSection'
-import StatusSection from './components/StatusSection'
 
 function Sidebar(): React.ReactElement {
   const { sidebarOpen, setSidebarOpen } = useProjectsMContext().miscellaneous
@@ -26,14 +25,14 @@ function Sidebar(): React.ReactElement {
         <ul className="flex flex-col">
           <SidebarItem icon="tabler:list" name="All Projects" />
           <SidebarItem icon="tabler:star-filled" name="Starred" />
-          <SidebarDivider />
-          <SidebarSection stuff="categories" />
-          <SidebarDivider />
-          <StatusSection />
-          <SidebarDivider />
-          <SidebarSection stuff="visibilities" />
-          <SidebarDivider />
-          <SidebarSection stuff="technologies" />
+          {(
+            ['categories', 'statuses', 'visibilities', 'technologies'] as const
+          ).map(stuff => (
+            <>
+              <SidebarDivider />
+              <SidebarSection stuff={stuff} />
+            </>
+          ))}
         </ul>
       </Scrollbar>
     </aside>

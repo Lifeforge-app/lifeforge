@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import React, { useContext, useEffect, useState } from 'react'
 import { Outlet } from 'react-router'
 import useFetch from '@hooks/useFetch'
@@ -10,75 +11,47 @@ import {
 } from '@interfaces/projects_m_interfaces'
 import { useGlobalStateContext } from './GlobalStateProvider'
 
+type ModifyModalOpenType = 'create' | 'update' | null
+
+function useProjectsMCommonState<T>(endpoint: string): IProjectsMCommon<T> {
+  const [data, refreshData] = useFetch<T[]>(endpoint)
+  const [modifyDataModalOpenType, setModifyDataModalOpenType] =
+    useState<ModifyModalOpenType>(null)
+  const [existedData, setExistedData] = useState<T | null>(null)
+  const [deleteDataConfirmationModalOpen, setDeleteDataConfirmationOpen] =
+    useState(false)
+
+  return {
+    data,
+    refreshData,
+    modifyDataModalOpenType,
+    setModifyDataModalOpenType,
+    existedData,
+    setExistedData,
+    deleteDataConfirmationModalOpen,
+    setDeleteDataConfirmationOpen
+  }
+}
+
+interface IProjectsMCommon<T> {
+  data: T[] | 'loading' | 'error'
+  refreshData: () => void
+  modifyDataModalOpenType: 'create' | 'update' | null
+  setModifyDataModalOpenType: React.Dispatch<
+    React.SetStateAction<'create' | 'update' | null>
+  >
+  existedData: T | null
+  setExistedData: React.Dispatch<React.SetStateAction<T | null>>
+  deleteDataConfirmationModalOpen: boolean
+  setDeleteDataConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
 interface IProjectsMData {
-  entries: {
-    data: IProjectsMEntry[] | 'loading' | 'error'
-    refreshData: () => void
-    modifyDataModalOpenType: 'create' | 'update' | null
-    setModifyDataModalOpenType: React.Dispatch<
-      React.SetStateAction<'create' | 'update' | null>
-    >
-    existedData: IProjectsMEntry | null
-    setExistedData: React.Dispatch<React.SetStateAction<IProjectsMEntry | null>>
-    deleteDataConfirmationModalOPen: boolean
-    setDeleteDataConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>
-  }
-  categories: {
-    data: IProjectsMCategory[] | 'loading' | 'error'
-    refreshData: () => void
-    modifyDataModalOpenType: 'create' | 'update' | null
-    setModifyDataModalOpenType: React.Dispatch<
-      React.SetStateAction<'create' | 'update' | null>
-    >
-    existedData: IProjectsMCategory | null
-    setExistedData: React.Dispatch<
-      React.SetStateAction<IProjectsMCategory | null>
-    >
-    deleteDataConfirmationModalOPen: boolean
-    setDeleteDataConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>
-  }
-  statuses: {
-    data: IProjectsMStatus[] | 'loading' | 'error'
-    refreshData: () => void
-    modifyDataModalOpenType: 'create' | 'update' | null
-    setModifyDataModalOpenType: React.Dispatch<
-      React.SetStateAction<'create' | 'update' | null>
-    >
-    existedData: IProjectsMStatus | null
-    setExistedData: React.Dispatch<
-      React.SetStateAction<IProjectsMStatus | null>
-    >
-    deleteDataConfirmationModalOPen: boolean
-    setDeleteDataConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>
-  }
-  visibilities: {
-    data: IProjectsMVisibility[] | 'loading' | 'error'
-    refreshData: () => void
-    modifyDataModalOpenType: 'create' | 'update' | null
-    setModifyDataModalOpenType: React.Dispatch<
-      React.SetStateAction<'create' | 'update' | null>
-    >
-    existedData: IProjectsMCategory | null
-    setExistedData: React.Dispatch<
-      React.SetStateAction<IProjectsMCategory | null>
-    >
-    deleteDataConfirmationModalOPen: boolean
-    setDeleteDataConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>
-  }
-  technologies: {
-    data: IProjectsMTechnology[] | 'loading' | 'error'
-    refreshData: () => void
-    modifyDataModalOpenType: 'create' | 'update' | null
-    setModifyDataModalOpenType: React.Dispatch<
-      React.SetStateAction<'create' | 'update' | null>
-    >
-    existedData: IProjectsMTechnology | null
-    setExistedData: React.Dispatch<
-      React.SetStateAction<IProjectsMTechnology | null>
-    >
-    deleteDataConfirmationModalOPen: boolean
-    setDeleteDataConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>
-  }
+  entries: IProjectsMCommon<IProjectsMEntry>
+  categories: IProjectsMCommon<IProjectsMCategory>
+  statuses: IProjectsMCommon<IProjectsMStatus>
+  visibilities: IProjectsMCommon<IProjectsMVisibility>
+  technologies: IProjectsMCommon<IProjectsMTechnology>
   miscellaneous: {
     searchQuery: string
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
@@ -103,173 +76,52 @@ export const ProjectsMContext = React.createContext<IProjectsMData | undefined>(
 
 export default function ProjectsMProvider(): React.ReactElement {
   const { setSubSidebarExpanded } = useGlobalStateContext()
-  const [entries, refreshEntries] =
-    useFetch<IProjectsMEntry[]>('projects-m/entry')
-  const [categories, refreshCategories] = useFetch<IProjectsMCategory[]>(
-    'projects-m/category'
-  )
-  const [statuses, refreshStatuses] =
-    useFetch<IProjectsMStatus[]>('projects-m/status')
-  const [visibilities, refreshVisibilities] = useFetch<IProjectsMVisibility[]>(
-    'projects-m/visibility'
-  )
-  const [technologies, refreshTechnologies] = useFetch<IProjectsMTechnology[]>(
-    'projects-m/technology'
-  )
   const [searchQuery, setSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  const [modifyEntryModalOpenType, setModifyEntryModalOpenType] = useState<
-    'create' | 'update' | null
-  >(null)
-  const [existedEntryData, setExistedEntryData] =
-    useState<IProjectsMEntry | null>(null)
-  const [deleteEntryConfirmationOpen, setDeleteEntryConfirmationOpen] =
-    useState(false)
-
-  const [modifyCategoriesModalOpenType, setModifyCategoriesModalOpenType] =
-    useState<'create' | 'update' | null>(null)
-  const [existedCategoryData, setExistedCategoryData] =
-    useState<IProjectsMCategory | null>(null)
-  const [deleteCategoryConfirmationOpen, setDeleteCategoryConfirmationOpen] =
-    useState(false)
-
-  const [modifyStatusModalOpenType, setModifyStatusModalOpenType] = useState<
-    'create' | 'update' | null
-  >(null)
-  const [existedStatusData, setExistedStatusData] =
-    useState<IProjectsMStatus | null>(null)
-  const [deleteStatusConfirmationOpen, setDeleteStatusConfirmationOpen] =
-    useState(false)
-
-  const [modifyVisibilityModalOpenType, setModifyVisibilityModalOpenType] =
-    useState<'create' | 'update' | null>(null)
-  const [existedVisibilityData, setExistedVisibilityData] =
-    useState<IProjectsMCategory | null>(null)
-  const [
-    deleteVisibilityConfirmationOpen,
-    setDeleteVisibilityConfirmationOpen
-  ] = useState(false)
-
-  const [modifyTechnologyModalOpenType, setModifyTechnologyModalOpenType] =
-    useState<'create' | 'update' | null>(null)
-  const [existedTechnologyData, setExistedTechnologyData] =
-    useState<IProjectsMTechnology | null>(null)
-  const [
-    deleteTechnologyConfirmationOpen,
-    setDeleteTechnologyConfirmationOpen
-  ] = useState(false)
+  const entriesState =
+    useProjectsMCommonState<IProjectsMEntry>('projects-m/entry')
+  const categoriesState = useProjectsMCommonState<IProjectsMCategory>(
+    'projects-m/category'
+  )
+  const statusesState =
+    useProjectsMCommonState<IProjectsMStatus>('projects-m/status')
+  const visibilitiesState = useProjectsMCommonState<IProjectsMVisibility>(
+    'projects-m/visibility'
+  )
+  const technologiesState = useProjectsMCommonState<IProjectsMTechnology>(
+    'projects-m/technology'
+  )
 
   useEffect(() => {
     setSubSidebarExpanded(sidebarOpen)
   }, [sidebarOpen])
 
-  const modalConfigs = [
-    {
-      apiEndpoint: 'projects-m/entry',
-      isOpen: deleteEntryConfirmationOpen,
-      data: existedEntryData,
-      itemName: 'project',
-      nameKey: 'name',
-      setOpen: setDeleteEntryConfirmationOpen,
-      setData: setExistedEntryData,
-      updateDataList: refreshEntries
-    },
-    {
-      apiEndpoint: 'projects-m/category',
-      isOpen: deleteCategoryConfirmationOpen,
-      data: existedCategoryData,
-      itemName: 'category',
-      nameKey: 'name',
-      setOpen: setDeleteCategoryConfirmationOpen,
-      setData: setExistedCategoryData,
-      updateDataList: refreshCategories
-    },
-    {
-      apiEndpoint: 'projects-m/status',
-      isOpen: deleteStatusConfirmationOpen,
-      data: existedStatusData,
-      itemName: 'status',
-      nameKey: 'name',
-      setOpen: setDeleteStatusConfirmationOpen,
-      setData: setExistedStatusData,
-      updateDataList: refreshStatuses
-    },
-    {
-      apiEndpoint: 'projects-m/visibility',
-      isOpen: deleteVisibilityConfirmationOpen,
-      data: existedVisibilityData,
-      itemName: 'visibility',
-      nameKey: 'name',
-      setOpen: setDeleteVisibilityConfirmationOpen,
-      setData: setExistedVisibilityData,
-      updateDataList: refreshVisibilities
-    },
-    {
-      apiEndpoint: 'projects-m/technology',
-      isOpen: deleteTechnologyConfirmationOpen,
-      data: existedTechnologyData,
-      itemName: 'technology',
-      nameKey: 'name',
-      setOpen: setDeleteTechnologyConfirmationOpen,
-      setData: setExistedTechnologyData,
-      updateDataList: refreshTechnologies
-    }
-  ]
+  const modalConfigs = Object.entries({
+    entry: entriesState,
+    category: categoriesState,
+    status: statusesState,
+    visibility: visibilitiesState,
+    technology: technologiesState
+  } as Record<string, IProjectsMCommon<any>>).map(([key, state]) => ({
+    apiEndpoint: `projects-m/${key}`,
+    isOpen: state.deleteDataConfirmationModalOpen,
+    data: state.existedData,
+    itemName: key,
+    nameKey: 'name',
+    setOpen: state.setDeleteDataConfirmationOpen,
+    setData: state.setExistedData,
+    updateDataList: state.refreshData
+  }))
 
   return (
     <ProjectsMContext
       value={{
-        entries: {
-          data: entries,
-          refreshData: refreshEntries,
-          modifyDataModalOpenType: modifyEntryModalOpenType,
-          setModifyDataModalOpenType: setModifyEntryModalOpenType,
-          existedData: existedEntryData,
-          setExistedData: setExistedEntryData,
-          deleteDataConfirmationModalOPen: deleteEntryConfirmationOpen,
-          setDeleteDataConfirmationOpen: setDeleteEntryConfirmationOpen
-        },
-        categories: {
-          data: categories,
-          refreshData: refreshCategories,
-          modifyDataModalOpenType: modifyCategoriesModalOpenType,
-          setModifyDataModalOpenType: setModifyCategoriesModalOpenType,
-          existedData: existedCategoryData,
-          setExistedData: setExistedCategoryData,
-          deleteDataConfirmationModalOPen: deleteCategoryConfirmationOpen,
-          setDeleteDataConfirmationOpen: setDeleteCategoryConfirmationOpen
-        },
-        statuses: {
-          data: statuses,
-          refreshData: refreshStatuses,
-          modifyDataModalOpenType: modifyStatusModalOpenType,
-          setModifyDataModalOpenType: setModifyStatusModalOpenType,
-          existedData: existedStatusData,
-          setExistedData: setExistedStatusData,
-          deleteDataConfirmationModalOPen: deleteStatusConfirmationOpen,
-          setDeleteDataConfirmationOpen: setDeleteStatusConfirmationOpen
-        },
-        visibilities: {
-          data: visibilities,
-          refreshData: refreshVisibilities,
-          modifyDataModalOpenType: modifyVisibilityModalOpenType,
-          setModifyDataModalOpenType: setModifyVisibilityModalOpenType,
-          existedData: existedVisibilityData,
-          setExistedData: setExistedVisibilityData,
-          deleteDataConfirmationModalOPen: deleteVisibilityConfirmationOpen,
-          setDeleteDataConfirmationOpen: setDeleteVisibilityConfirmationOpen
-        },
-        technologies: {
-          data: technologies,
-          refreshData: refreshTechnologies,
-          modifyDataModalOpenType: modifyTechnologyModalOpenType,
-          setModifyDataModalOpenType: setModifyTechnologyModalOpenType,
-          existedData: existedTechnologyData,
-          setExistedData: setExistedTechnologyData,
-          deleteDataConfirmationModalOPen: deleteTechnologyConfirmationOpen,
-          setDeleteDataConfirmationOpen: setDeleteTechnologyConfirmationOpen
-        },
+        entries: entriesState,
+        categories: categoriesState,
+        statuses: statusesState,
+        visibilities: visibilitiesState,
+        technologies: technologiesState,
         miscellaneous: {
           searchQuery,
           setSearchQuery,

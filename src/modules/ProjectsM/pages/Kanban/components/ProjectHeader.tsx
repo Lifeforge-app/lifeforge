@@ -3,18 +3,17 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import useFetch from '@hooks/useFetch'
-import {
-  type IProjectsMEntry,
-  type IProjectsMStatus
-} from '@interfaces/projects_m_interfaces'
+import { type IProjectsMEntry } from '@interfaces/projects_m_interfaces'
+import { useProjectsMContext } from '@providers/ProjectsMProvider'
 
 function ProjectHeader({
   projectData
 }: {
   projectData: IProjectsMEntry
 }): React.ReactElement {
-  const [statuses] = useFetch<IProjectsMStatus[]>('projects-m/status')
+  const {
+    statuses: { data: statuses }
+  } = useProjectsMContext()
   const navigate = useNavigate()
 
   return (
