@@ -7,7 +7,7 @@ import SidebarItem from './SidebarItem'
 function SidebarSection({
   stuff
 }: {
-  stuff: 'categories' | 'technologies' | 'visibilities'
+  stuff: 'categories' | 'technologies' | 'visibilities' | 'statuses'
 }): React.ReactElement {
   const { data, setExistedData, setModifyDataModalOpenType } =
     useProjectsMContext()[stuff]
@@ -15,7 +15,7 @@ function SidebarSection({
   return (
     <>
       <SidebarTitle
-        name="category"
+        name={stuff.replace('ies', 'y').replace('uses', 'us')}
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           setExistedData(null)
@@ -31,7 +31,7 @@ function SidebarSection({
               ))}
             </>
           ) : (
-            <p className="text-center text-bg-500">No category found.</p>
+            <p className="text-center text-bg-500">No {stuff} found.</p>
           )
         }
       </APIComponentWithFallback>
