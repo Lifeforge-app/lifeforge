@@ -3,28 +3,33 @@ import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { type IProjectsMTechnology } from '@interfaces/projects_m_interfaces'
+import { type IProjectsMCategory } from '@interfaces/projects_m_interfaces'
+import { useProjectsMContext } from '@providers/ProjectsMProvider'
 
-function TechnologyItem({
+function SidebarItem({
   item,
-  setSidebarOpen,
-  setExistedData,
-  setModifyModalOpenType,
-  setDeleteConfirmationModalOpen
+  stuff
 }: {
-  item: IProjectsMTechnology
-  setSidebarOpen: (value: boolean) => void
-  setExistedData: (value: IProjectsMTechnology) => void
-  setModifyModalOpenType: (value: 'create' | 'update' | null) => void
-  setDeleteConfirmationModalOpen: (value: boolean) => void
+  item: IProjectsMCategory
+  stuff: 'categories' | 'visibilities' | 'technologies'
 }): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const {
+    miscellaneous: { setSidebarOpen },
+    ...projectMContext
+  } = useProjectsMContext()
+
+  const {
+    setExistedData,
+    setModifyDataModalOpenType,
+    setDeleteDataConfirmationOpen
+  } = projectMContext[stuff]
 
   return (
     <li
       className={`relative flex h-16 items-center gap-6 px-4 font-medium transition-all ${
-        searchParams.get('technology') === item.id
+        searchParams.get('category') === item.id
           ? "text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-100"
           : 'text-bg-500 dark:text-bg-500'
       }`}
@@ -35,7 +40,7 @@ function TechnologyItem({
         onClick={() => {
           setSearchParams({
             ...Object.fromEntries(searchParams.entries()),
-            technology: item.id
+            category: item.id
           })
           setSidebarOpen(false)
         }}
@@ -46,12 +51,12 @@ function TechnologyItem({
         <span className={!isMenuOpen ? 'text-sm group-hover:hidden' : 'hidden'}>
           {Math.floor(Math.random() * 100)}
         </span>
-        {searchParams.get('technology') === item.id ? (
+        {searchParams.get('category') === item.id ? (
           <button
             onClick={e => {
               e.stopPropagation()
               setSearchParams(searchParams => {
-                searchParams.delete('technology')
+                searchParams.delete('category')
                 return searchParams
               })
               setSidebarOpen(false)
@@ -79,7 +84,7 @@ function TechnologyItem({
               onClick={e => {
                 e.stopPropagation()
                 setExistedData(item)
-                setModifyModalOpenType('update')
+                setModifyDataModalOpenType('update')
               }}
               text="Edit"
             />
@@ -89,7 +94,7 @@ function TechnologyItem({
               onClick={e => {
                 e.stopPropagation()
                 setExistedData(item)
-                setDeleteConfirmationModalOpen(true)
+                setDeleteDataConfirmationOpen(true)
               }}
               text="Delete"
             />
@@ -100,4 +105,4 @@ function TechnologyItem({
   )
 }
 
-export default TechnologyItem
+export default SidebarItem

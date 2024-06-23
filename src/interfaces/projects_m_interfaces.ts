@@ -31,10 +31,22 @@ interface IProjectsMTechnology extends BasePBCollection {
   icon: string
 }
 
+interface IProjectsMKanbanEntry extends BasePBCollection {
+  title: string
+}
+
+interface IProjectsMKanbanColumn extends BasePBCollection {
+  name: string
+  icon: string
+  color: string
+  entries?: IProjectsMKanbanEntry[]
+}
+
 export type {
   IProjectsMEntry,
   IProjectsMCategory,
   IProjectsMStatus,
   IProjectsMVisibility,
-  IProjectsMTechnology
+  IProjectsMTechnology,
+  IProjectsMKanbanColumn
 }

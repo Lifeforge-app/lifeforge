@@ -4,22 +4,19 @@ import { useSearchParams } from 'react-router-dom'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { type IProjectsMStatus } from '@interfaces/projects_m_interfaces'
+import { useProjectsMContext } from '@providers/ProjectsMProvider'
 
-function StatusItem({
-  item,
-  setSidebarOpen,
-  setExistedData,
-  setModifyModalOpenType,
-  setDeleteConfirmationModalOpen
-}: {
-  item: IProjectsMStatus
-  setSidebarOpen: (value: boolean) => void
-  setExistedData: (value: IProjectsMStatus) => void
-  setModifyModalOpenType: (value: 'create' | 'update' | null) => void
-  setDeleteConfirmationModalOpen: (value: boolean) => void
-}): React.ReactElement {
+function StatusItem({ item }: { item: IProjectsMStatus }): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const {
+    miscellaneous: { setSidebarOpen },
+    statuses: {
+      setExistedData,
+      setModifyDataModalOpenType,
+      setDeleteDataConfirmationOpen
+    }
+  } = useProjectsMContext()
 
   return (
     <li
@@ -85,7 +82,7 @@ function StatusItem({
               onClick={e => {
                 e.stopPropagation()
                 setExistedData(item)
-                setModifyModalOpenType('update')
+                setModifyDataModalOpenType('update')
               }}
               text="Edit"
             />
@@ -95,7 +92,7 @@ function StatusItem({
               onClick={e => {
                 e.stopPropagation()
                 setExistedData(item)
-                setDeleteConfirmationModalOpen(true)
+                setDeleteDataConfirmationOpen(true)
               }}
               text="Delete"
             />

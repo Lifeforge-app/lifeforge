@@ -9,22 +9,19 @@ import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import { type IProjectsMStatus } from '@interfaces/projects_m_interfaces'
+import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import APIRequest from '@utils/fetchData'
 
-function ModifyStatusModal({
-  openType,
-  setOpenType,
-  existedData,
-  setExistedData,
-  refreshStatuses
-}: {
-  openType: 'create' | 'update' | null
-  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  existedData: IProjectsMStatus | null
-  setExistedData: React.Dispatch<React.SetStateAction<IProjectsMStatus | null>>
-  refreshStatuses: () => void
-}): React.ReactElement {
+function ModifyStatusModal(): React.ReactElement {
+  const {
+    statuses: {
+      refreshData: refreshStatuses,
+      modifyDataModalOpenType: openType,
+      setModifyDataModalOpenType: setOpenType,
+      existedData,
+      setExistedData
+    }
+  } = useProjectsMContext()
   const [statusName, setStatusName] = useState('')
   const [statusIcon, setStatusIcon] = useState('')
   const [statusColor, setStatusColor] = useState<string>('#FFFFFF')

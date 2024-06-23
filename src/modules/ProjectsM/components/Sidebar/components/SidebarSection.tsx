@@ -2,16 +2,20 @@ import React from 'react'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
-import StatusItem from './StatusItem'
+import SidebarItem from './SidebarItem'
 
-function StatusSection(): React.ReactElement {
+function SidebarSection({
+  stuff
+}: {
+  stuff: 'categories' | 'technologies' | 'visibilities'
+}): React.ReactElement {
   const { data, setExistedData, setModifyDataModalOpenType } =
-    useProjectsMContext().statuses
+    useProjectsMContext()[stuff]
 
   return (
     <>
       <SidebarTitle
-        name="status"
+        name="category"
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           setExistedData(null)
@@ -23,11 +27,11 @@ function StatusSection(): React.ReactElement {
           data.length > 0 ? (
             <>
               {data.map(item => (
-                <StatusItem key={item.id} item={item} />
+                <SidebarItem key={item.id} item={item} stuff={stuff} />
               ))}
             </>
           ) : (
-            <p className="text-center text-bg-500">No status found.</p>
+            <p className="text-center text-bg-500">No category found.</p>
           )
         }
       </APIComponentWithFallback>
@@ -35,4 +39,4 @@ function StatusSection(): React.ReactElement {
   )
 }
 
-export default StatusSection
+export default SidebarSection
