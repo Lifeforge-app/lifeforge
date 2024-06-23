@@ -7,26 +7,21 @@ import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import { type IProjectsMVisibility } from '@interfaces/projects_m_interfaces'
+import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import APIRequest from '@utils/fetchData'
 
-function ModifyVisibilityModal({
-  openType,
-  setOpenType,
-  existedData,
-  setExistedData,
-  refreshVisibilities
-}: {
-  openType: 'create' | 'update' | null
-  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  existedData: IProjectsMVisibility | null
-  setExistedData: React.Dispatch<
-    React.SetStateAction<IProjectsMVisibility | null>
-  >
-  refreshVisibilities: () => void
-}): React.ReactElement {
-  const [visibilityName, setVisibilityName] = useState('')
-  const [visibilityIcon, setVisibilityIcon] = useState('')
+function ModifyModal({ stuff }: { stuff: string }): React.ReactElement {
+  const {
+    modifyDataModalOpenType: openType,
+    setModifyDataModalOpenType: setOpenType,
+    existedData,
+    setExistedData,
+    refreshData
+  } = useProjectsMContext()[
+    stuff.replace('y', 'ies') as 'categories' | 'technologies' | 'visibilities'
+  ]
+  const [name, setName] = useState('')
+  const [icon, setIcon] = useState('')
   const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -34,43 +29,40 @@ function ModifyVisibilityModal({
     if (openType) {
       if (openType === 'update') {
         if (existedData) {
-          setVisibilityName(existedData.name)
-          setVisibilityIcon(existedData.icon)
+          setName(existedData.name)
+          setIcon(existedData.icon)
         }
       } else {
-        setVisibilityName('')
-        setVisibilityIcon('')
+        setName('')
+        setIcon('')
       }
     }
   }, [openType, existedData])
 
   function updateVisibilityName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setVisibilityName(e.target.value)
+    setName(e.target.value)
   }
 
   async function onSubmitButtonClick(): Promise<void> {
-    if (
-      visibilityName.trim().length === 0 ||
-      visibilityIcon.trim().length === 0
-    ) {
+    if (name.trim().length === 0 || icon.trim().length === 0) {
       toast.error('Please fill in all the fields.')
       return
     }
 
     setIsLoading(true)
     await APIRequest({
-      endpoint: `projects-m/visibility${
+      endpoint: `projects-m/${stuff}${
         openType === 'update' ? `/${existedData?.id}` : ''
       }`,
       method: openType === 'create' ? 'POST' : 'PATCH',
       body: {
-        name: visibilityName,
-        icon: visibilityIcon
+        name,
+        icon
       },
       successInfo: openType,
       failureInfo: openType,
       callback: () => {
-        refreshVisibilities()
+        refreshData()
         setExistedData(null)
         setOpenType(null)
       },
@@ -85,23 +77,23 @@ function ModifyVisibilityModal({
       <Modal isOpen={openType !== null} className="sm:min-w-[30rem]">
         <ModalHeader
           icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
-          title={openType === 'update' ? 'Edit Visibility' : 'Add Visibility'}
+          title={openType === 'update' ? `Edit ${stuff}` : `Add ${stuff}`}
           onClose={() => {
             setOpenType(null)
           }}
         />
         <Input
           icon="tabler:book"
-          placeholder="My Visibilities"
-          value={visibilityName}
+          placeholder={`Project ${stuff}`}
+          value={name}
           darker
-          name="Visibility name"
+          name={`${stuff} name`}
           updateValue={updateVisibilityName}
         />
         <IconInput
-          icon={visibilityIcon}
-          setIcon={setVisibilityIcon}
-          name="Visibility icon"
+          icon={icon}
+          setIcon={setIcon}
+          name={`${stuff} icon`}
           setIconSelectorOpen={setIconSelectorOpen}
         />
         <CreateOrModifyButton
@@ -115,10 +107,10 @@ function ModifyVisibilityModal({
       <IconSelector
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}
-        setSelectedIcon={setVisibilityIcon}
+        setSelectedIcon={setIcon}
       />
     </>
   )
 }
 
-export default ModifyVisibilityModal
+export default ModifyModal

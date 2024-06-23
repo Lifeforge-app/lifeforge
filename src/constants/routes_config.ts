@@ -18,9 +18,10 @@ export const ROUTES: IRoutes[] = [
       {
         name: 'Projects (M)',
         icon: 'tabler:clipboard',
+        provider: 'projects-m-provider',
         routes: {
-          'projects-m': 'projects-m',
-          'projects-m-id': 'projects-m/:id'
+          'projects-m': '',
+          'projects-m-id': ':id'
         },
         togglable: true
       },
