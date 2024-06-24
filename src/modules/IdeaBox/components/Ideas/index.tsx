@@ -220,7 +220,7 @@ function Ideas(): React.ReactElement {
               onClose={() => {
                 setDeleteIdeaModalOpen(false)
               }}
-              apiEndpoint="idea-box/delete"
+              apiEndpoint="idea-box/idea"
               itemName="idea"
               data={existedData}
               updateDataList={refreshData}
