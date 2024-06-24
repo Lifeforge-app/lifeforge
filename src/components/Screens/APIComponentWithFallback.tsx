@@ -5,14 +5,16 @@ import Loading from './Loading'
 
 function APIComponentWithFallback<T>({
   data,
-  children
+  children,
+  showLoading = true
 }: {
   data: 'loading' | 'error' | T
   children: (data: T) => React.ReactElement
+  showLoading?: boolean
 }): React.ReactElement {
   switch (data) {
     case 'loading':
-      return <Loading />
+      return showLoading ? <Loading /> : <></>
     case 'error':
       return <Error message="Failed to fetch data from server." />
     default:
