@@ -1,6 +1,7 @@
 import React, { lazy } from 'react'
 import { Navigate } from 'react-router'
 import Account from './modules/Account'
+import ChangiFlightStatus from './modules/ChangiFlightStatus'
 
 const PhotosProvider = lazy(
   async () => await import('./providers/PhotosProvider')
@@ -91,6 +92,12 @@ const LocalizationManager = lazy(
   async () => await import('./modules/LocalizationManager')
 )
 const GuitarTabs = lazy(async () => await import('./modules/GuitarTabs'))
+const Airports = lazy(async () => await import('./modules/Airports'))
+const Countries = lazy(async () => await import('./modules/Airports/Countries'))
+const Regions = lazy(async () => await import('./modules/Airports/Regions'))
+const AirportsList = lazy(
+  async () => await import('./modules/Airports/AirportsList')
+)
 
 export const COMPONENTS = {
   dashboard: {
@@ -206,5 +213,14 @@ export const COMPONENTS = {
         'https://docs.lifeforge.thecodeblog.net/getting-started/introduction'
       return (<Navigate to="/" />) as React.ReactElement
     }
+  },
+  'changi-flight-status': {
+    'changi-flight-status': ChangiFlightStatus
+  },
+  airports: {
+    airports: Airports,
+    'airports-countries': Countries,
+    'airports-regions': Regions,
+    'airports-airports': AirportsList
   }
 }

@@ -11,5 +11,6 @@ interface IRoutesItem {
 
 export interface IRoutes {
   title: string
+  prefix?: string
   items: IRoutesItem[]
 }

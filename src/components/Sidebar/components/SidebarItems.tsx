@@ -40,6 +40,7 @@ function SidebarItems(): React.ReactElement {
                   hasAI={subItem.hasAI}
                   icon={subItem.icon ?? ''}
                   subsection={subItem.subsection}
+                  prefix={item.prefix}
                   isMainSidebarItem
                 />
               ))}

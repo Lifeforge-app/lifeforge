@@ -14,6 +14,7 @@ interface SidebarItemProps {
   onClick?: () => void
   isMainSidebarItem?: boolean
   active?: boolean
+  prefix?: string
 }
 
 function SidebarItem({
@@ -23,7 +24,8 @@ function SidebarItem({
   subsection,
   isMainSidebarItem = false,
   onClick,
-  active = false
+  active = false,
+  prefix = ''
 }: SidebarItemProps): React.ReactElement {
   // @ts-expect-error - Lazy to fix yay =)
   const { sidebarExpanded, toggleSidebar } = isMainSidebarItem
@@ -41,28 +43,36 @@ function SidebarItem({
     <>
       <li
         className={`relative flex items-center gap-6 px-4 font-medium transition-all ${
-          location.pathname.slice(1).startsWith(titleToPath(name)) || active
+          location.pathname
+            .slice(1)
+            .startsWith(
+              (prefix !== '' ? `${prefix}/` : '') + titleToPath(name)
+            ) || active
             ? "text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-100"
             : 'text-bg-500 dark:text-bg-500'
         }`}
       >
         <div
           className={`relative flex w-full items-center justify-between gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 ${
-            location.pathname.slice(1).startsWith(titleToPath(name)) || active
+            location.pathname
+              .slice(1)
+              .startsWith(
+                (prefix !== '' ? `${prefix}/` : '') + titleToPath(name)
+              ) || active
               ? 'bg-bg-200/50 dark:bg-bg-800'
               : 'hover:bg-bg-200/30 dark:hover:bg-bg-800/50'
           }`}
         >
-          <a
-            href={titleToPath(name) === 'home' ? '/' : `./${titleToPath(name)}`}
-            className="flex w-full min-w-0 items-center gap-6"
-          >
+          <div className="flex w-full min-w-0 items-center gap-6">
             <div className="flex size-7 items-center justify-center">
               <Icon
                 icon={icon}
                 className={`size-6 shrink-0 ${
-                  location.pathname.slice(1).startsWith(titleToPath(name)) ||
-                  active
+                  location.pathname
+                    .slice(1)
+                    .startsWith(
+                      (prefix !== '' ? `${prefix}/` : '') + titleToPath(name)
+                    ) || active
                     ? 'text-custom-500'
                     : ''
                 }`}
@@ -88,7 +98,7 @@ function SidebarItem({
                   )
                 ))}
             </span>
-          </a>
+          </div>
 
           {onClick !== undefined ? (
             <button
@@ -107,7 +117,7 @@ function SidebarItem({
                   toggleSidebar()
                 }
               }}
-              to={`./${titleToPath(name)}`}
+              to={`./${prefix !== '' ? `${prefix}/` : ''}${titleToPath(name)}`}
               className="absolute left-0 top-0 size-full rounded-lg"
             />
           )}

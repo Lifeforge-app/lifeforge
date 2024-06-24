@@ -248,6 +248,38 @@ export const ROUTES: IRoutes[] = [
     ]
   },
   {
+    title: 'Aviation',
+    prefix: 'aviation',
+    items: [
+      {
+        name: 'Airports',
+        icon: 'ic:round-connecting-airports',
+        routes: {
+          airports: 'aviation/airports',
+          'airports-countries': 'aviation/airports/:continentID',
+          'airports-regions': 'aviation/airports/:continentID/:countryID',
+          'airports-airports':
+            'aviation/airports/:continentID/:countryID/:regionID'
+        },
+        togglable: true
+      },
+      {
+        name: 'Changi Flight Status',
+        icon: 'tabler:plane',
+        routes: {
+          'changi-flight-status': 'aviation/changi-flight-status'
+        },
+        togglable: true
+      },
+      {
+        name: 'Changi Airline Information',
+        icon: 'tabler:line',
+        routes: {},
+        togglable: true
+      }
+    ]
+  },
+  {
     title: 'Settings',
     items: [
       {
