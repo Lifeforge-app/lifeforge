@@ -45,7 +45,7 @@ function Ideas(): React.ReactElement {
   )
 
   const [modifyIdeaModalOpenType, setModifyIdeaModalOpenType] = useState<
-    null | 'create' | 'update'
+    null | 'create' | 'update' | 'paste'
   >(null)
   const [modifyFolderModalOpenType, setModifyFolderModalOpenType] = useState<
     null | 'create' | 'update'
@@ -54,6 +54,10 @@ function Ideas(): React.ReactElement {
     'text' | 'image' | 'link'
   >('text')
   const [existedData, setExistedData] = useState<IIdeaBoxEntry | null>(null)
+  const [pastedData, setPastedData] = useState<{
+    preview: string
+    file: File
+  } | null>(null)
   const [existedFolderData, setExistedFolderData] =
     useState<IIdeaBoxFolder | null>(null)
   const [deleteIdeaModalOpen, setDeleteIdeaModalOpen] = useState(false)
@@ -69,6 +73,56 @@ function Ideas(): React.ReactElement {
       navigate('/idea-box')
     }
   }, [valid])
+
+  function onPasteImage(event: ClipboardEvent): void {
+    if (modifyIdeaModalOpenType !== null) return
+
+    const items = event.clipboardData?.items
+
+    let pastedImage: DataTransferItem | undefined
+
+    for (let i = 0; i < items!.length; i++) {
+      if (items![i].type.includes('image')) {
+        pastedImage = items![i]
+        break
+      }
+    }
+
+    if (pastedImage === undefined) {
+      return
+    }
+
+    if (!pastedImage.type.includes('image')) {
+      toast.error('Invalid image in clipboard.')
+      return
+    }
+
+    const file = pastedImage.getAsFile()
+    const reader = new FileReader()
+
+    if (file !== null) {
+      reader.readAsDataURL(file)
+    }
+
+    reader.onload = function () {
+      if (file !== null) {
+        setModifyIdeaModalOpenType('paste')
+        setTypeOfModifyIdea('image')
+        setPastedData({
+          preview: reader.result as string,
+          file
+        })
+      }
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('paste', onPasteImage)
+
+    return () => {
+      document.removeEventListener('paste', onPasteImage)
+    }
+  }, [modifyIdeaModalOpenType])
 
   return (
     <ModuleWrapper>
@@ -90,7 +144,7 @@ function Ideas(): React.ReactElement {
                           !viewArchived ? (
                             <EmptyStateScreen
                               setModifyModalOpenType={
-                                setModifyIdeaModalOpenType
+                                setModifyIdeaModalOpenType as any
                               }
                               title="No ideas yet"
                               description="Hmm... Seems a bit empty here. Consider adding some innovative ideas."
@@ -208,6 +262,7 @@ function Ideas(): React.ReactElement {
               containerId={id as string}
               updateIdeaList={refreshData}
               existedData={existedData}
+              pastedData={pastedData}
             />
             <ModifyFolderModal
               openType={modifyFolderModalOpenType}
