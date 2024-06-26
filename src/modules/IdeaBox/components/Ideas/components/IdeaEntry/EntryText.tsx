@@ -17,7 +17,7 @@ function EntryText({
     React.SetStateAction<'link' | 'image' | 'text'>
   >
   setModifyIdeaModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
+    React.SetStateAction<'create' | 'update' | 'paste' | null>
   >
   setExistedData: (data: any) => void
   setDeleteIdeaModalOpen: (state: boolean) => void

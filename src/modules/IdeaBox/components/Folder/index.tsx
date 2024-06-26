@@ -34,12 +34,16 @@ function Folder(): React.ReactElement {
   )
 
   const [modifyIdeaModalOpenType, setModifyIdeaModalOpenType] = useState<
-    null | 'create' | 'update'
+    null | 'create' | 'update' | 'paste'
   >(null)
   const [typeOfModifyIdea, setTypeOfModifyIdea] = useState<
     'text' | 'image' | 'link'
   >('text')
   const [existedData, setExistedData] = useState<IIdeaBoxEntry | null>(null)
+  const [pastedData, setPastedData] = useState<{
+    preview: string
+    file: File
+  } | null>(null)
   const [deleteIdeaModalOpen, setDeleteIdeaModalOpen] = useState(false)
 
   useEffect(() => {
@@ -52,6 +56,56 @@ function Folder(): React.ReactElement {
       navigate('/idea-box')
     }
   }, [valid])
+
+  function onPasteImage(event: ClipboardEvent): void {
+    if (modifyIdeaModalOpenType !== null) return
+
+    const items = event.clipboardData?.items
+
+    let pastedImage: DataTransferItem | undefined
+
+    for (let i = 0; i < items!.length; i++) {
+      if (items![i].type.includes('image')) {
+        pastedImage = items![i]
+        break
+      }
+    }
+
+    if (pastedImage === undefined) {
+      return
+    }
+
+    if (!pastedImage.type.includes('image')) {
+      toast.error('Invalid image in clipboard.')
+      return
+    }
+
+    const file = pastedImage.getAsFile()
+    const reader = new FileReader()
+
+    if (file !== null) {
+      reader.readAsDataURL(file)
+    }
+
+    reader.onload = function () {
+      if (file !== null) {
+        setModifyIdeaModalOpenType('paste')
+        setTypeOfModifyIdea('image')
+        setPastedData({
+          preview: reader.result as string,
+          file
+        })
+      }
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('paste', onPasteImage)
+
+    return () => {
+      document.removeEventListener('paste', onPasteImage)
+    }
+  }, [modifyIdeaModalOpenType])
 
   return (
     <ModuleWrapper>
@@ -117,7 +171,7 @@ function Folder(): React.ReactElement {
                   </Column>
                 ) : (
                   <EmptyStateScreen
-                    setModifyModalOpenType={setModifyIdeaModalOpenType}
+                    setModifyModalOpenType={setModifyIdeaModalOpenType as any}
                     title="No ideas yet"
                     description="Hmm... Seems a bit empty here. Consider adding some innovative ideas."
                     icon="tabler:bulb-off"
@@ -138,6 +192,7 @@ function Folder(): React.ReactElement {
               containerId={id as string}
               updateIdeaList={refreshData}
               existedData={existedData}
+              pastedData={pastedData}
             />
             <DeleteConfirmationModal
               isOpen={deleteIdeaModalOpen}
