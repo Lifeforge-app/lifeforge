@@ -9,7 +9,7 @@ function BgTempSelector(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="mb-12 flex w-full flex-col items-center justify-between gap-6 px-4 md:flex-row">
+    <div className="mb-12 flex w-full flex-col flex-between gap-6 px-4 md:flex-row">
       <div>
         <h3 className="block w-full text-xl font-medium leading-normal md:w-auto">
           {t('personalization.bgTempSelector.title')}
@@ -34,7 +34,7 @@ function BgTempSelector(): React.ReactElement {
             ></button>
           ))}
         </div>
-        <div className="flex w-full items-center justify-between gap-2">
+        <div className="flex w-full flex-between gap-2">
           <span className="shrink-0 text-sm font-medium text-bg-500">
             {t('personalization.bgTempSelector.cool')}
           </span>

@@ -117,7 +117,7 @@ function Modules(): React.ReactElement {
         desc="A place to toggle which modules you want to use."
       />
       {userData ? (
-        <ul className="mb-12 mt-6 flex flex-col gap-4">
+        <ul className="mb-12 mt-6 space-y-4">
           {ROUTES.flatMap(route => route.items)
             .filter(route => route.togglable)
             .map((route, index) => (

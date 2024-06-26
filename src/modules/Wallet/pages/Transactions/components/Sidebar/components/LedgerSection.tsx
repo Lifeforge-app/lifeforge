@@ -75,7 +75,7 @@ function LedgerSection({
                       }}
                     />
                     <Icon icon={icon} className="size-6 shrink-0" />
-                    <div className="w-full items-center justify-between truncate">
+                    <div className="w-full flex-between truncate">
                       {name === 'All' ? t('sidebar.wallet.allLedgers') : name}
                     </div>
                     <span className="text-sm">

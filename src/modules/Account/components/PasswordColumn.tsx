@@ -26,7 +26,7 @@ function PasswordColumn(): React.ReactElement {
   }
 
   return (
-    <div className="relative z-20 mb-8 flex w-full flex-col items-center justify-between gap-6 px-4 md:flex-row">
+    <div className="relative z-20 mb-8 flex w-full flex-col flex-between gap-6 px-4 md:flex-row">
       <div className="w-full md:w-auto">
         <h3 className="block text-xl font-medium leading-normal">
           {t('accountSettings.title.password')}

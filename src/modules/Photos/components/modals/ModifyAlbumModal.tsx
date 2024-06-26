@@ -102,7 +102,7 @@ function ModifyAlbumModal({
 
   return (
     <Modal isOpen={openType !== false}>
-      <div className="mb-8 flex items-center justify-between ">
+      <div className="mb-8 flex flex-between ">
         <h1 className="flex items-center gap-3 text-2xl font-semibold">
           <Icon
             icon={

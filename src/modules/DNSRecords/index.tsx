@@ -72,7 +72,7 @@ function DNSRecords(): JSX.Element {
           as="div"
           className="relative"
         >
-          <Listbox.Button className="relative mt-6 flex w-40 items-center justify-between gap-4 whitespace-nowrap rounded-lg bg-bg-50 p-4 text-left shadow-custom dark:bg-bg-900">
+          <Listbox.Button className="relative mt-6 flex w-40 flex-between gap-4 whitespace-nowrap rounded-lg bg-bg-50 p-4 text-left shadow-custom dark:bg-bg-900">
             <div className="flex items-center gap-4">
               <Icon icon="tabler:filter" className="size-5 text-bg-500" />
               {selected}
@@ -91,7 +91,7 @@ function DNSRecords(): JSX.Element {
                     key={type}
                     value={type}
                     className={({ active }) =>
-                      `relative cursor-pointer select-none transition-all p-4 flex items-center justify-between ${
+                      `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
                         active
                           ? 'bg-bg-200/50 dark:bg-bg-700/50'
                           : '!bg-transparent'

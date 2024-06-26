@@ -12,7 +12,7 @@ function SpicinessHeader({
 }): React.ReactElement {
   return (
     <>
-      <div className="flex w-full items-center justify-between gap-2">
+      <div className="flex w-full flex-between gap-2">
         <div className="flex items-center gap-2">
           <Icon icon="icon-park-outline:chili" className="size-5" />
           <span className="font-medium">Spiciness</span>

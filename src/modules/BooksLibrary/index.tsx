@@ -31,7 +31,7 @@ function BooksLibrary(): React.ReactElement {
           } top-0 z-[9999] size-full shrink-0 rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 xl:static xl:h-[calc(100%-2rem)] xl:w-1/4`}
         >
           <Scrollbar>
-            <div className="flex items-center justify-between px-8 py-4 xl:hidden">
+            <div className="flex flex-between px-8 py-4 xl:hidden">
               <GoBackButton
                 onClick={() => {
                   setSidebarOpen(false)
@@ -74,9 +74,7 @@ function BooksLibrary(): React.ReactElement {
                 >
                   <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-800">
                     <Icon icon={icon} className="size-5 shrink-0" />
-                    <div className="flex w-full items-center justify-between">
-                      {name}
-                    </div>
+                    <div className="flex w-full flex-between">{name}</div>
                     <span className="text-sm">
                       {Math.floor(Math.random() * 10)}
                     </span>
@@ -87,7 +85,7 @@ function BooksLibrary(): React.ReactElement {
           </Scrollbar>
         </aside>
         <div className="flex h-full min-h-0 flex-1 flex-col pb-8 xl:ml-8">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-between">
             <h1 className="text-3xl font-semibold sm:text-4xl">
               All Books <span className="text-base text-bg-500">(10)</span>
             </h1>
@@ -162,7 +160,7 @@ function BooksLibrary(): React.ReactElement {
                 </Scrollbar>
               ) : (
                 <Scrollbar className="mt-6">
-                  <ul className="flex flex-col gap-4 px-4">
+                  <ul className="space-y-4 px-4">
                     {books.map((item: any) => (
                       <li
                         key={item.id}

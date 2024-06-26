@@ -117,7 +117,7 @@ function CustomZoomContent({
     <>
       <div className="flex-center flex h-dvh w-full">
         {img}
-        <header className="absolute left-0 top-0 flex w-full items-center justify-between gap-2 p-8">
+        <header className="absolute left-0 top-0 flex w-full flex-between gap-2 p-8">
           {(() => {
             switch (name) {
               case 'loading':

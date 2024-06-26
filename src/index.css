@@ -481,6 +481,10 @@ button[class^='react-calendar__navigation'] {
   @apply items-center justify-center;
 }
 
+.flex-between {
+  @apply items-center justify-between;
+}
+
 .rbc-off-range-bg {
   @apply bg-bg-200 dark:bg-bg-900;
 }

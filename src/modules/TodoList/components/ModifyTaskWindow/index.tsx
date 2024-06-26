@@ -157,7 +157,7 @@ function ModifyTaskWindow(): React.ReactElement {
         } top-0 size-full bg-bg-100 p-8 dark:bg-bg-900 sm:w-4/5 md:w-3/5 lg:w-2/5`}
       >
         <Scrollbar>
-          <div className="mb-8 flex items-center justify-between ">
+          <div className="mb-8 flex flex-between ">
             <h1 className="flex items-center gap-3 text-2xl font-semibold">
               <Icon
                 icon={

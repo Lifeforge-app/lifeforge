@@ -31,7 +31,7 @@ function PhotosTrash(): React.ReactElement {
       <div className="relative mt-6 flex size-full min-h-0 gap-8">
         <PhotosSidebar />
         <div className="flex h-full flex-1 flex-col">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-between">
             <h1 className="flex items-center gap-4 text-3xl font-semibold">
               <Icon icon="tabler:trash" className="size-8 shrink-0" />
               Recycle Bin

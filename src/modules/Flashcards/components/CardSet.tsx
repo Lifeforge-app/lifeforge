@@ -79,13 +79,13 @@ function CardSet(): React.ReactElement {
 
   return (
     <section className="relative flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-y-auto px-12">
-      <div className="flex flex-col gap-1">
+      <div className="space-y-1">
         <GoBackButton
           onClick={() => {
             navigate('/flashcards')
           }}
         />
-        <div className="flex items-center justify-between">
+        <div className="flex flex-between">
           <h1
             className={`flex items-center gap-4 ${
               typeof containerDetails !== 'string'
@@ -154,7 +154,7 @@ function CardSet(): React.ReactElement {
                 <div className="stack size-full">
                   <div className="card h-full bg-custom-500 text-bg-800 shadow-md">
                     <div className="card-body flex h-full flex-col">
-                      <div className="card-title flex items-center justify-between">
+                      <div className="card-title flex flex-between">
                         <h2 className="text-custom-800">#{currentIndex + 1}</h2>
                         <button
                           onClick={() => {

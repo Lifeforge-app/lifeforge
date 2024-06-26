@@ -18,12 +18,13 @@ function AuthSignInButton({
   const { t } = useTranslation()
 
   return (
-    <div className="mt-6 flex flex-col gap-6">
+    <div className="mt-6 space-y-6">
       <Button
         loading={loading || auth}
         iconAtEnd
         onClick={signIn}
         icon="tabler:arrow-right"
+        className="w-full"
       >
         sign in
       </Button>

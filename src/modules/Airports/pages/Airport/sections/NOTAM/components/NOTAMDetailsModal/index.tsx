@@ -51,7 +51,7 @@ function NOTAMDetailsModal({
                   id={selectedNOTAMData.id}
                   isOpen={isOpen}
                 />
-                {NOTAMData.qualification.coordinates !== undefined && (
+                {NOTAMData.qualification?.coordinates !== undefined && (
                   <RegionMap data={NOTAMData} />
                 )}
               </div>

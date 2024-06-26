@@ -71,7 +71,7 @@ function QuickActions(): React.ReactElement {
           {Object.entries(filteredActions).map(
             ([key, value]) =>
               value.length > 0 && (
-                <div key={key} className="flex flex-col gap-2">
+                <div key={key} className="space-y-2">
                   <div className="p-4 py-2 text-sm font-medium uppercase tracking-widest text-bg-500">
                     {t(`modules.title.${titleToPath(key)}`)}
                   </div>

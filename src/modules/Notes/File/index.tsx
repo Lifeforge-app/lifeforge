@@ -26,7 +26,7 @@ function NotesFile(): React.ReactElement {
     //       />
     //       {typeof entry !== 'string' && (
     //         <>
-    //           <div className="relative z-[100] mb-8 flex w-full items-center justify-between gap-4 sm:gap-12">
+    //           <div className="relative z-[100] mb-8 flex w-full flex-between gap-4 sm:gap-12">
     //             <div className="flex items-center gap-4">
     //               <div className="relative rounded-lg p-3">
     //                 <Icon

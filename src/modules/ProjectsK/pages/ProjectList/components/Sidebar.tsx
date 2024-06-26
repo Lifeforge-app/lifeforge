@@ -18,7 +18,7 @@ function Sidebar({
 
   return (
     <aside className="h-full w-1/4 overflow-hidden overflow-y-scroll rounded-lg bg-bg-50 py-4 shadow-custom dark:bg-bg-900">
-      <ul className="flex flex-col gap-1">
+      <ul className="space-y-1">
         <SidebarItem
           active={!searchParams.get('status') && !searchParams.get('type')}
           icon="tabler:list"
@@ -63,9 +63,7 @@ function Sidebar({
                         className={`block h-8 w-1.5 rounded-full ${color}`}
                       />
                       <Icon icon={icon} className="size-6 shrink-0" />
-                      <div className="flex w-full items-center justify-between">
-                        {name}
-                      </div>
+                      <div className="flex w-full flex-between">{name}</div>
                       <span className="text-sm">
                         {
                           projectList.filter(project => project.status === id)
@@ -114,9 +112,7 @@ function Sidebar({
                     }`}
                   >
                     <Icon icon={icon} className="size-6 shrink-0" />
-                    <div className="flex w-full items-center justify-between">
-                      {name}
-                    </div>
+                    <div className="flex w-full flex-between">{name}</div>
                     <span className="text-sm">
                       {
                         projectList.filter(

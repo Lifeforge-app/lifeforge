@@ -11,7 +11,7 @@ export default function MusicInfo(): React.ReactElement {
   }
 
   return (
-    <div className="flex w-full min-w-0 items-center justify-between md:w-1/3">
+    <div className="flex w-full min-w-0 flex-between md:w-1/3">
       <div className="flex w-full min-w-0 items-center">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-custom-500/20">
           <Icon

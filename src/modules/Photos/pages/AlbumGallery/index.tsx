@@ -118,7 +118,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                     navigate('/photos/album')
                   }}
                 />
-                <div className="flex w-full min-w-0 items-center justify-between gap-8">
+                <div className="flex w-full min-w-0 flex-between gap-8">
                   <h1 className="flex w-full min-w-0 items-center gap-4 text-2xl font-semibold">
                     <div className="flex-center flex size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                       {albumData.cover !== '' ? (

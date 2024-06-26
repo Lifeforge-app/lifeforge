@@ -128,7 +128,7 @@ function AirportsList(): React.ReactElement {
                     <Link
                       to={`/aviation/airports/${continentID}/${countryID}/${regionID}/${id}`}
                       key={name}
-                      className="flex w-full items-center justify-between rounded-lg bg-bg-200 p-4 px-6 transition-all hover:bg-bg-200/30 dark:bg-bg-900 dark:hover:bg-bg-800"
+                      className="flex-between flex w-full rounded-lg bg-bg-200 p-4 px-6 transition-all hover:bg-bg-200/30 dark:bg-bg-900 dark:hover:bg-bg-800"
                     >
                       <div className="flex items-center gap-4">
                         <Icon
