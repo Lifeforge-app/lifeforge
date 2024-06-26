@@ -24,7 +24,7 @@ function CategoryListItem({
   return (
     <li
       className={`relative flex min-w-0 items-center gap-6 px-4 font-medium transition-all ${
-        searchParams.get('list') === item.id
+        searchParams.get('category') === item.id
           ? "text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-100"
           : 'text-bg-500 dark:text-bg-500'
       }`}
@@ -35,7 +35,7 @@ function CategoryListItem({
         onClick={() => {
           setSearchParams({
             ...Object.fromEntries(searchParams.entries()),
-            list: item.id
+            category: item.id
           })
         }}
         className="group flex w-full min-w-0 items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-200/50 dark:hover:bg-bg-800"
@@ -51,12 +51,12 @@ function CategoryListItem({
         <span className={!isMenuOpen ? 'text-sm group-hover:hidden' : 'hidden'}>
           {item.amount}
         </span>
-        {searchParams.get('list') === item.id ? (
+        {searchParams.get('category') === item.id ? (
           <button
             onClick={e => {
               e.stopPropagation()
               setSearchParams(searchParams => {
-                searchParams.delete('list')
+                searchParams.delete('category')
                 return searchParams
               })
             }}

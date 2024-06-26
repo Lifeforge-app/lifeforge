@@ -10,29 +10,33 @@ function ModalHeader({
   innerTypeOfModifyIdea,
   setInnerTypeOfModifyIdea
 }: {
-  innerOpenType: 'create' | 'update' | null
-  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
+  innerOpenType: 'create' | 'update' | 'paste' | null
+  setOpenType: React.Dispatch<
+    React.SetStateAction<'create' | 'update' | 'paste' | null>
+  >
   innerTypeOfModifyIdea: 'text' | 'image' | 'link'
   setInnerTypeOfModifyIdea: React.Dispatch<
     React.SetStateAction<'text' | 'image' | 'link'>
   >
 }): React.ReactElement {
   return (
-    <div className="mb-8 flex w-[50vw] flex-between">
+    <div className="flex-between mb-8 flex w-[50vw]">
       <h1 className="flex items-center gap-3 text-2xl font-semibold">
         <Icon
           icon={
             {
               create: 'tabler:plus',
-              update: 'tabler:pencil'
+              update: 'tabler:pencil',
+              paste: 'tabler:plus'
             }[innerOpenType!]
           }
-          className="h-7 w-7"
+          className="size-7"
         />
         {
           {
             create: 'New ',
-            update: 'Update '
+            update: 'Update ',
+            paste: 'New '
           }[innerOpenType!]
         }{' '}
         {innerOpenType === 'create' ? (

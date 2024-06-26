@@ -19,7 +19,7 @@ function FAB({
     React.SetStateAction<'link' | 'image' | 'text'>
   >
   setModifyIdeaModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
+    React.SetStateAction<'create' | 'update' | 'paste' | null>
   >
   setModifyFolderModalOpenType?: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>

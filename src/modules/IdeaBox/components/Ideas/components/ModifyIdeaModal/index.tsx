@@ -21,14 +21,21 @@ function ModifyIdeaModal({
   typeOfModifyIdea,
   containerId,
   updateIdeaList,
-  existedData
+  existedData,
+  pastedData
 }: {
-  openType: 'create' | 'update' | null
-  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
+  openType: 'create' | 'update' | 'paste' | null
+  setOpenType: React.Dispatch<
+    React.SetStateAction<'create' | 'update' | 'paste' | null>
+  >
   typeOfModifyIdea: 'text' | 'image' | 'link'
   containerId: string
   updateIdeaList: () => void
   existedData: IIdeaBoxEntry | null
+  pastedData: {
+    preview: string
+    file: File
+  } | null
 }): React.ReactElement {
   const { folderId } = useParams<{ folderId: string }>()
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
@@ -93,6 +100,12 @@ function ModifyIdeaModal({
         setIdeaImage(null)
         setPreview(null)
       }
+    } else if (innerOpenType === 'paste' && pastedData !== null) {
+      setIdeaTitle(pastedData.file.name)
+      setIdeaContent('')
+      setIdeaLink('')
+      setIdeaImage(pastedData.file)
+      setPreview(pastedData.preview)
     }
   }, [existedData, innerOpenType])
 
@@ -152,18 +165,18 @@ function ModifyIdeaModal({
 
     await APIRequest({
       endpoint: `idea-box/idea/${
-        innerOpenType === 'create' ? containerId : existedData?.id
+        innerOpenType === 'update' ? existedData?.id : containerId
       }`,
-      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
+      method: innerOpenType === 'update' ? 'PATCH' : 'POST',
       body:
-        innerOpenType === 'create'
-          ? formData
-          : {
+        innerOpenType === 'update'
+          ? {
               title: ideaTitle.trim(),
               content: ideaContent.trim(),
               link: ideaLink.trim(),
               type: innerTypeOfModifyIdea
-            },
+            }
+          : formData,
       finalCallback: () => {
         setLoading(false)
       },
@@ -224,7 +237,13 @@ function ModifyIdeaModal({
   return (
     <Modal isOpen={openType !== null}>
       <ModalHeader
-        innerOpenType={innerOpenType}
+        innerOpenType={
+          innerOpenType !== null
+            ? innerOpenType === 'update'
+              ? 'update'
+              : 'create'
+            : null
+        }
         setOpenType={setOpenType}
         innerTypeOfModifyIdea={innerTypeOfModifyIdea}
         setInnerTypeOfModifyIdea={setInnerTypeOfModifyIdea}
@@ -288,7 +307,8 @@ function ModifyIdeaModal({
           !loading
             ? {
                 create: 'tabler:plus',
-                update: 'tabler:pencil'
+                update: 'tabler:pencil',
+                paste: 'tabler:plus'
               }[innerOpenType!]
             : 'svg-spinners:180-ring'
         }
@@ -296,7 +316,8 @@ function ModifyIdeaModal({
         {!loading &&
           {
             create: 'CREATE',
-            update: 'UPDATE'
+            update: 'UPDATE',
+            paste: 'CREATE'
           }[innerOpenType!]}
       </Button>
     </Modal>
