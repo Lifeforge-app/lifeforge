@@ -75,7 +75,7 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
     <APIComponentWithFallback data={flightsData}>
       {(data: FlightData[]) => (
         <>
-          <div className="sticky top-[3.64rem] z-10 mt-8 flex items-center bg-bg-950">
+          <div className="sticky top-[3.64rem] z-10 mt-8 flex items-center rounded-md bg-bg-50 dark:bg-bg-950">
             {[
               ['Arrivals', 'tabler:plane-arrival'],
               ['Departures', 'tabler:plane-departure']
@@ -124,7 +124,7 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
                 ].map(title => (
                   <th
                     key={title}
-                    className="border-b-2 border-bg-200 bg-bg-950 px-4 py-2 pt-4 text-bg-500 dark:border-bg-700"
+                    className="rounded-md border-b-2 border-bg-200 bg-bg-50 px-4 py-2 pt-4 text-bg-500 dark:border-bg-700 dark:bg-bg-950"
                   >
                     {title}
                   </th>

@@ -69,11 +69,11 @@ function MasterSearchBar(): React.ReactElement {
         }}
       />
       {debouncedMasterSearchQuery.length >= 3 && (
-        <div className="absolute z-50 mt-4 flex h-96 w-full flex-col rounded-md border-2 border-bg-800 bg-bg-900">
+        <div className="absolute z-50 mt-4 flex h-96 w-full flex-col rounded-md border-bg-800 bg-bg-50 shadow-custom dark:border-2 dark:bg-bg-900">
           <APIComponentWithFallback data={searchResults}>
             {searchResults => (
               <Scrollbar className="flex-1">
-                <div className="flex-1 divide-y divide-bg-800">
+                <div className="flex-1 divide-y divide-bg-200 dark:divide-bg-800">
                   {searchResults.length > 0 ? (
                     searchResults.map(airport => (
                       <Link

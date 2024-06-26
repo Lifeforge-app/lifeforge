@@ -46,7 +46,7 @@ function Continents(): React.ReactElement {
                 <Link
                   key={id}
                   to={`/aviation/airports/${id}`}
-                  className="flex-between flex w-full rounded-lg bg-bg-200 p-4 px-6 transition-all hover:bg-bg-200/30 dark:bg-bg-900 dark:hover:bg-bg-800"
+                  className="flex-between flex w-full rounded-lg bg-bg-50 p-4 px-6 shadow-custom transition-all hover:bg-bg-200/30 dark:bg-bg-900 dark:hover:bg-bg-800"
                 >
                   <div>
                     <p className="text-left text-xl font-medium">
