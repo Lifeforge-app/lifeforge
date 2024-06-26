@@ -92,11 +92,20 @@ const LocalizationManager = lazy(
   async () => await import('./modules/LocalizationManager')
 )
 const GuitarTabs = lazy(async () => await import('./modules/GuitarTabs'))
-const Airports = lazy(async () => await import('./modules/Airports'))
-const Countries = lazy(async () => await import('./modules/Airports/Countries'))
-const Regions = lazy(async () => await import('./modules/Airports/Regions'))
+const Airports = lazy(
+  async () => await import('./modules/Airports/pages/lists/Continents')
+)
+const Countries = lazy(
+  async () => await import('./modules/Airports/pages/lists/Countries')
+)
+const Regions = lazy(
+  async () => await import('./modules/Airports/pages/lists/Regions')
+)
 const AirportsList = lazy(
-  async () => await import('./modules/Airports/AirportsList')
+  async () => await import('./modules/Airports/pages/lists/AirportsList')
+)
+const Airport = lazy(
+  async () => await import('./modules/Airports/pages/Airport')
 )
 
 export const COMPONENTS = {
@@ -221,6 +230,7 @@ export const COMPONENTS = {
     airports: Airports,
     'airports-countries': Countries,
     'airports-regions': Regions,
-    'airports-airports': AirportsList
+    'airports-airports': AirportsList,
+    'airports-airport': Airport
   }
 }
