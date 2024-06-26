@@ -6,11 +6,13 @@ import { toCamelCase } from '@utils/strings'
 function SearchInput({
   searchQuery,
   setSearchQuery,
-  stuffToSearch
+  stuffToSearch,
+  onKeyUp
 }: {
   searchQuery: string
   setSearchQuery: (query: string) => void
   stuffToSearch: string
+  onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }): React.ReactElement {
   const { t } = useTranslation()
 
@@ -19,6 +21,7 @@ function SearchInput({
       <Icon icon="tabler:search" className="size-5 text-bg-500" />
       <input
         type="text"
+        onKeyUp={onKeyUp}
         value={searchQuery}
         onChange={e => {
           setSearchQuery(e.target.value)
