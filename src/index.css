@@ -16,6 +16,10 @@
   @apply select-none;
 }
 
+code {
+  font-family: 'Jetbrains Mono', monospace;
+}
+
 *:focus {
   outline: none;
 }
@@ -596,4 +600,8 @@ input[type='range'].secondary::-moz-range-progress {
 
 .no-overflow-x > div {
   overflow-x: hidden !important;
+}
+
+.gm-style iframe + div {
+  border: none !important;
 }

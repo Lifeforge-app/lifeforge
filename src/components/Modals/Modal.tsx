@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 
 function Modal({
   isOpen,
@@ -13,6 +14,12 @@ function Modal({
   minHeight?: string
   className?: string
 }): React.ReactElement {
+  const { setSubSidebarExpanded } = useGlobalStateContext()
+
+  useEffect(() => {
+    setSubSidebarExpanded(isOpen)
+  }, [isOpen, setSubSidebarExpanded])
+
   return (
     <div
       className={`fixed left-0 top-0 h-dvh w-full bg-bg-950/60 backdrop-blur-md transition-opacity ease-linear ${

@@ -259,9 +259,12 @@ export const ROUTES: IRoutes[] = [
           'airports-countries': 'aviation/airports/:continentID',
           'airports-regions': 'aviation/airports/:continentID/:countryID',
           'airports-airports':
-            'aviation/airports/:continentID/:countryID/:regionID'
+            'aviation/airports/:continentID/:countryID/:regionID',
+          'airports-airport':
+            'aviation/airports/:continentID/:countryID/:regionID/:airportID'
         },
-        togglable: true
+        togglable: true,
+        hasAI: true
       },
       {
         name: 'Changi Flight Status',
