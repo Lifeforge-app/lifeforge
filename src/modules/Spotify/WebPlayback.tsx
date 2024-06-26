@@ -37,7 +37,7 @@ function WebPlayback(): React.ReactElement {
 
   return isActive ? (
     <>
-      <div className="flex h-full w-full flex-col items-center justify-between py-12">
+      <div className="flex h-full w-full flex-col flex-between py-12">
         <div className="flex-center flex flex-1 flex-col ">
           {currentTrack.album.images[0].url && (
             <img
@@ -79,7 +79,7 @@ function WebPlayback(): React.ReactElement {
                 (currentTrack.duration_ms % 60000) / 1000
               )}`.padStart(2, '0')}`}</p>
             </div>
-            <div className="flex w-full items-center justify-between sm:hidden">
+            <div className="flex w-full flex-between sm:hidden">
               <p className="text-sm text-bg-500">
                 {`${Math.floor(Number(position) / 60000)}:${`${Math.floor(
                   (Number(position) % 60000) / 1000

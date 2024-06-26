@@ -16,7 +16,7 @@ function IdeaImageUpload({
       {...getRootProps()}
     >
       <input {...getInputProps()} />
-      <Icon icon="tabler:drag-drop" className="h-20 w-20 text-bg-500" />
+      <Icon icon="tabler:drag-drop" className="size-20 text-bg-500" />
       <div className="mt-4 text-center text-2xl font-medium text-bg-500">
         {isDragActive ? "Drop it like it's hot" : 'Drag and drop to upload'}
       </div>

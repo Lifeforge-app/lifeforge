@@ -23,7 +23,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 }) => (
   <div className="mb-4 flex w-full flex-col items-end justify-between gap-4 lg:flex-row">
     <div className="flex w-full items-center gap-4">
-      <div className="flex w-full items-center justify-between gap-2 lg:w-auto lg:justify-start">
+      <div className="flex w-full flex-between gap-2 lg:w-auto lg:justify-start">
         <NavigationButton direction="PREV" onNavigate={onNavigate} />
         <div className="block text-center text-2xl font-bold lg:hidden">
           {label}

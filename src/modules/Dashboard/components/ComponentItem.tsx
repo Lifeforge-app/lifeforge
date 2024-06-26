@@ -100,7 +100,7 @@ function ComponentListItem({
   }
 
   return (
-    <li className="flex items-center justify-between gap-8 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-800/50">
+    <li className="flex flex-between gap-8 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-800/50">
       <div className="flex items-center gap-4">
         <div
           className={`flex size-10 shrink-0 items-center justify-center rounded-lg transition-all ${

@@ -110,7 +110,7 @@ function SubtaskItem({
         opacity
       }}
       data-handler-id={handlerId}
-      className="flex cursor-move items-center justify-between gap-2 rounded-md bg-bg-100 p-3 shadow-custom dark:bg-bg-800"
+      className="flex cursor-move flex-between gap-2 rounded-md bg-bg-100 p-3 shadow-custom dark:bg-bg-800"
     >
       <div className="flex items-center gap-2">
         <Icon icon="tabler:menu" className="size-5 shrink-0 text-bg-500" />

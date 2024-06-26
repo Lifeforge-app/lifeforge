@@ -18,7 +18,7 @@ function SpicinessSelector({
       className="relative"
       customWidth="w-64"
     >
-      <div className="flex flex-col gap-2 p-4">
+      <div className="space-y-2 p-4">
         <SpicinessHeader spiciness={spiciness} />
         <SpicinessSlider spiciness={spiciness} setSpiciness={setSpiciness} />
       </div>

@@ -70,7 +70,7 @@ function AssetsSection({
                     className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-200/50 dark:hover:bg-bg-800"
                   >
                     <Icon icon={icon} className="size-6 shrink-0" />
-                    <div className="w-full items-center justify-between truncate">
+                    <div className="w-full flex-between truncate">
                       {name === 'All' ? t('sidebar.wallet.allAssets') : name}
                     </div>
                     <span className="text-sm">

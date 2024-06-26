@@ -25,7 +25,7 @@ function EntryItem({
   return (
     <li
       key={entry.id}
-      className="relative mt-0 flex min-w-0 items-center justify-between gap-4 p-6"
+      className="relative mt-0 flex min-w-0 flex-between gap-4 p-6"
     >
       <Icon
         icon={
@@ -39,7 +39,7 @@ function EntryItem({
         }
         className="pointer-events-auto z-50 size-7 shrink-0 text-bg-500"
       />
-      <div className="flex w-full min-w-0 items-center justify-between gap-8">
+      <div className="flex w-full min-w-0 flex-between gap-8">
         <EntryName name={entry.name} />
         <EntryCreationDate date={entry.created} id={entry.id} />
         <EntryButton entry={entry} />

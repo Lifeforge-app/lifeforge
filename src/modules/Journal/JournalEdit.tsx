@@ -123,7 +123,7 @@ function JournalEdit(): React.ReactElement {
       <APIComponentWithFallback data={entry}>
         {entry => (
           <>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-between">
               <div>
                 <GoBackButton
                   onClick={() => {

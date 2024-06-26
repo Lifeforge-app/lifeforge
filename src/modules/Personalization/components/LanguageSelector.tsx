@@ -38,7 +38,7 @@ function LanguageSelector(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="relative z-20 mt-4 flex w-full flex-col items-center justify-between gap-6 px-4 md:flex-row">
+    <div className="relative z-20 mt-4 flex w-full flex-col flex-between gap-6 px-4 md:flex-row">
       <div className="mt-6 w-full md:w-auto">
         <h3 className="block text-xl font-medium leading-normal">
           {t('personalization.languageSelector.title')}
@@ -72,7 +72,7 @@ function LanguageSelector(): React.ReactElement {
                 <Listbox.Option
                   key={code}
                   className={({ active }) =>
-                    `relative cursor-pointer select-none transition-all p-4 flex items-center justify-between ${
+                    `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
                       active ? 'bg-bg-200/50 dark:bg-bg-800' : '!bg-transparent'
                     }`
                   }

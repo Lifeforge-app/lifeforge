@@ -40,7 +40,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
 
   return (
     <div className="col-span-1 row-span-4 flex w-full min-w-0 flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
-      <div className="flex w-full min-w-0 items-center justify-between gap-4">
+      <div className="flex w-full min-w-0 flex-between gap-4">
         <h1 className="flex w-full min-w-0 items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:chart-donut-3" className="shrink-0 text-2xl" />
           <span className="ml-2 w-full min-w-0 truncate">
@@ -121,7 +121,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                         <Link
                           key={category.id}
                           to={`/wallet/transactions?type=expenses&category=${category.id}`}
-                          className="flex items-center justify-between gap-4 p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50"
+                          className="flex flex-between gap-4 p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50"
                         >
                           <div className="flex items-center gap-4">
                             <div

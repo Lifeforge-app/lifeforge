@@ -68,7 +68,7 @@ function FolderItem({
         drop(stuff)
       }}
       key={folder.id}
-      className={`flex items-center justify-between rounded-md p-4 shadow-custom ${
+      className={`flex flex-between rounded-md p-4 shadow-custom ${
         isOver ? 'text-bg-100 dark:text-bg-800' : ''
       } font-medium transition-all`}
       style={{

@@ -31,19 +31,19 @@ function PhotosFavouritesGallery(): React.ReactElement {
     <>
       <div className="relative min-h-0 w-full flex-1 overflow-y-hidden">
         <ModuleWrapper>
-          <div className="flex flex-col gap-1">
+          <div className="space-y-1">
             <GoBackButton
               onClick={() => {
                 navigate('/photos')
               }}
             />
-            <div className="flex items-center justify-between">
+            <div className="flex-between flex">
               <h1 className="flex items-center gap-4 text-2xl font-semibold">
                 <>
                   <div className="flex-center flex size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                     <Icon icon="tabler:star-filled" className="size-7" />
                   </div>
-                  <span className="flex flex-col gap-1">
+                  <span className="space-y-1">
                     Favourites
                     {(() => {
                       switch (photos) {

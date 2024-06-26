@@ -263,7 +263,7 @@ function GuitarTabs(): React.ReactElement {
               ))}
             </div>
             {
-              <div className="mt-4 flex items-center justify-between gap-2 pb-12">
+              <div className="mt-4 flex flex-between gap-2 pb-12">
                 {entries.page > 1 ? (
                   <Button
                     onClick={() => {

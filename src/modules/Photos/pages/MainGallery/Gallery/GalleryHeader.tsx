@@ -135,8 +135,8 @@ function GalleryHeader(): React.ReactElement {
   }, [])
 
   return (
-    <div className="my-4 mr-4 flex flex-col items-center justify-between gap-4 text-bg-500 sm:my-8 sm:mr-16 sm:flex-row">
-      <div className="flex w-full items-center justify-between">
+    <div className="my-4 mr-4 flex flex-col flex-between gap-4 text-bg-500 sm:my-8 sm:mr-16 sm:flex-row">
+      <div className="flex w-full flex-between">
         <p className="flex items-center gap-2">
           IP Address: {ip}
           <button

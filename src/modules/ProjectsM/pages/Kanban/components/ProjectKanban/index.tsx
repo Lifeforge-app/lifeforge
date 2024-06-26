@@ -51,7 +51,7 @@ function ProjectKanban(): React.ReactElement {
                     borderColor: column.color
                   }}
                 >
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-between">
                     <h3 className="flex items-center gap-4">
                       <Icon icon={column.icon} className="text-2xl" />
                       <span className="text-xl font-semibold ">

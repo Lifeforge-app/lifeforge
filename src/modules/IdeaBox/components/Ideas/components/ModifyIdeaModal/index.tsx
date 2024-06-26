@@ -177,6 +177,50 @@ function ModifyIdeaModal({
     })
   }
 
+  function onPasteImage(event: ClipboardEvent): void {
+    const items = event.clipboardData?.items
+
+    let pastedImage: DataTransferItem | undefined
+
+    for (let i = 0; i < items!.length; i++) {
+      if (items![i].type.includes('image')) {
+        pastedImage = items![i]
+        break
+      }
+    }
+
+    if (pastedImage === undefined) {
+      return
+    }
+
+    if (!pastedImage.type.includes('image')) {
+      toast.error('Invalid image in clipboard.')
+      return
+    }
+
+    const file = pastedImage.getAsFile()
+    const reader = new FileReader()
+
+    reader.onload = function () {
+      setPreview(reader.result)
+    }
+
+    if (file) {
+      reader.readAsDataURL(file)
+      setIdeaImage(file)
+    }
+  }
+
+  useEffect(() => {
+    if (innerTypeOfModifyIdea === 'image') {
+      document.addEventListener('paste', onPasteImage)
+    }
+
+    return () => {
+      document.removeEventListener('paste', onPasteImage)
+    }
+  }, [innerTypeOfModifyIdea])
+
   return (
     <Modal isOpen={openType !== null}>
       <ModalHeader

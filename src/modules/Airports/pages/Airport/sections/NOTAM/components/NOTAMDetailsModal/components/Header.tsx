@@ -9,7 +9,7 @@ function Header({
   selectedNOTAMData: any
 }): React.ReactElement {
   return (
-    <div className="flex w-full items-center justify-between">
+    <div className="flex-between flex w-full">
       <h1 className="flex items-center gap-2 text-2xl font-semibold">
         <Icon icon="tabler:file-text" className="size-7" />
         {data.header?.id ?? selectedNOTAMData.title[1]}

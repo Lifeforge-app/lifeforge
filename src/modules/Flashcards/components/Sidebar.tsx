@@ -28,7 +28,7 @@ function Sidebar({
         } top-0 z-[9999] size-full rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 lg:static lg:h-[calc(100%-3rem)] lg:w-1/4`}
       >
         <Scrollbar>
-          <div className="flex items-center justify-between px-8 py-4 lg:hidden">
+          <div className="flex flex-between px-8 py-4 lg:hidden">
             <GoBackButton
               onClick={() => {
                 setSidebarOpen(false)
@@ -50,9 +50,7 @@ function Sidebar({
               >
                 <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
                   <Icon icon={icon} className="size-6 shrink-0" />
-                  <div className="flex w-full items-center justify-between">
-                    {name}
-                  </div>
+                  <div className="flex w-full flex-between">{name}</div>
                   <span className="text-sm">
                     {Math.floor(Math.random() * 10)}
                   </span>

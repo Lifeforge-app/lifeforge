@@ -18,7 +18,7 @@ function NOTAMListItem({
       }}
       className="w-full space-y-4 rounded-lg bg-bg-900 p-4 text-left transition-all hover:bg-bg-800/70"
     >
-      <div className="flex items-center justify-between">
+      <div className="flex-between flex">
         <h3 className="flex items-center gap-1 text-xl font-semibold">
           {data.title[0]}
           <Icon icon="tabler:chevron-right" className="size-5 text-bg-500" />

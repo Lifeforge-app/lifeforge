@@ -115,7 +115,7 @@ function ModifyCategoriesModal({
           }}
         />
         <div
-          className={`flex items-center justify-between gap-4 ${
+          className={`flex flex-between gap-4 ${
             openType === 'update' ? 'mb-4' : 'mb-2'
           }`}
         >

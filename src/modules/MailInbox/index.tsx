@@ -14,7 +14,7 @@ function MailInbox(): React.ReactElement {
         {mails => (
           <ul className="divide-y-2 divide-bg-900">
             {mails.map((mail: any) => (
-              <li key={mail.id} className="flex flex-col gap-1 p-4">
+              <li key={mail.id} className="space-y-1 p-4">
                 <span className="text-sm text-bg-500">
                   {mail.from.split(' ')[0].replace(/(^")|("$)/g, '') ??
                     'No sender'}

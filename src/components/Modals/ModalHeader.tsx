@@ -19,7 +19,7 @@ function ModalHeader({
   const { t } = useTranslation()
 
   return (
-    <div className="mb-8 flex items-center justify-between ">
+    <div className="flex-between mb-8 flex ">
       <h1 className="flex items-center gap-3 text-2xl font-semibold">
         <Icon icon={icon} className="size-7" />
         {t(`modals.header.${toCamelCase(title)}`)}

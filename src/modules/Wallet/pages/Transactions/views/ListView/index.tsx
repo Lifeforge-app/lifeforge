@@ -45,7 +45,7 @@ function ListView({
           {transactions.map(transaction => (
             <li
               key={transaction.id}
-              className="relative flex items-center justify-between gap-12 p-4 pl-2"
+              className="relative flex flex-between gap-12 p-4 pl-2"
             >
               <div className="flex w-full min-w-0 items-center gap-2 [@media(min-width:400px)]:gap-4">
                 <div

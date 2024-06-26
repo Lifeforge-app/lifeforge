@@ -95,7 +95,7 @@ function CodeTimeTopEntries({
                     ></div>
                   ))}
             </div>
-            <ul className="flex flex-col gap-4">
+            <ul className="space-y-4">
               {topEntries !== null &&
                 Object.keys(topEntries).length > 0 &&
                 Object.entries(topEntries)
@@ -103,7 +103,7 @@ function CodeTimeTopEntries({
                   .map(([key, value], index) => (
                     <li
                       key={key}
-                      className="relative flex items-center justify-between gap-8 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
+                      className="relative flex flex-between gap-8 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
                     >
                       <div className="flex items-center gap-4 break-all text-lg font-medium">
                         <div

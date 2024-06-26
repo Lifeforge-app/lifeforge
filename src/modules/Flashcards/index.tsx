@@ -25,7 +25,7 @@ export default function Flashcards(): React.ReactElement {
       <div className="mt-6 flex min-h-0 w-full flex-1">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className="flex h-full flex-1 flex-col lg:ml-8">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-between">
             <h1 className="text-3xl font-semibold  md:text-4xl">
               All Decks <span className="text-base text-bg-500">(10)</span>
             </h1>

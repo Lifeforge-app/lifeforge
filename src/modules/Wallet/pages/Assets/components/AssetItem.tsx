@@ -23,7 +23,7 @@ function AssetItem({
   const navigate = useNavigate()
 
   return (
-    <div className="relative flex flex-col gap-4 rounded-lg bg-bg-100 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+    <div className="relative space-y-4 rounded-lg bg-bg-100 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
       <div className="flex items-center gap-3">
         <span className="w-min rounded-md bg-bg-200 p-2 text-bg-500 dark:bg-bg-800">
           <Icon icon={asset.icon} className="size-5" />
@@ -40,7 +40,7 @@ function AssetItem({
           navigate(`/wallet/transactions?asset=${asset.id}`)
         }}
         icon="tabler:eye"
-        className="mt-2"
+        className="mt-2 w-full"
       >
         View Transactions
       </Button>

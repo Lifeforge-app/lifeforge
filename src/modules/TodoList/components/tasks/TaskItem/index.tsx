@@ -97,7 +97,7 @@ function TaskItem({
     <>
       <li
         key={entry.id}
-        className={`relative isolate flex items-center justify-between gap-4 rounded-lg bg-bg-50 p-4 pl-5 pr-6 shadow-custom ${
+        className={`relative isolate flex flex-between gap-4 rounded-lg bg-bg-50 p-4 pl-5 pr-6 shadow-custom ${
           lighter ? 'dark:bg-bg-800' : 'dark:bg-bg-900'
         }`}
       >

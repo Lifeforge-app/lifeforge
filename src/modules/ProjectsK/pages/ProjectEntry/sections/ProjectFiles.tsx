@@ -121,7 +121,7 @@ export default function ProjectFiles({
     <APIComponentWithFallback data={projectData}>
       {projectData => (
         <div className="mr-8 flex flex-1 flex-col gap-4 sm:mr-12">
-          <div className="mt-6 flex items-center justify-between text-bg-500">
+          <div className="mt-6 flex flex-between text-bg-500">
             <div>
               <p className="flex items-center gap-2">
                 IP Address: {ip}
@@ -201,7 +201,7 @@ export default function ProjectFiles({
               {projectData.files.map(file => (
                 <li
                   key={file}
-                  className="relative mt-0 flex min-w-0 items-center justify-between gap-4 p-6"
+                  className="relative mt-0 flex min-w-0 flex-between gap-4 p-6"
                 >
                   <div className="flex items-center gap-4">
                     <Icon

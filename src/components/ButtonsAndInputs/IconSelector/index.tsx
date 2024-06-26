@@ -30,7 +30,7 @@ function IconSelector({
 
   return (
     <Modal isOpen={isOpen} className="md:!min-w-[60vw]">
-      <div className="mb-6 flex w-full items-center justify-between p-8 pb-0">
+      <div className="mb-6 flex w-full flex-between p-8 pb-0">
         {currentIconSet ? (
           <button
             onClick={() => {

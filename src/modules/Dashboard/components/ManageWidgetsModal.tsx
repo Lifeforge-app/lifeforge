@@ -21,7 +21,7 @@ function ManageWidgetsModal({
         onClose={onClose}
         icon="tabler:apps"
       />
-      <ul className="flex flex-col gap-2 overflow-y-auto">
+      <ul className="space-y-2 overflow-y-auto">
         {Object.entries(DASHBOARD_WIDGETS).map(
           ([key, { icon, minW, minH }]) => (
             <ComponentListItem

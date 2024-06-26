@@ -33,7 +33,7 @@ function ThemeColorSelector(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="flex w-full px-4 flex-col items-center justify-between gap-6 md:flex-row">
+    <div className="flex w-full px-4 flex-col flex-between gap-6 md:flex-row">
       <div className="w-full md:w-auto">
         <h3 className="block text-xl font-medium leading-normal">
           {t('personalization.themeColorSelector.title')}
@@ -72,7 +72,7 @@ function ThemeColorSelector(): React.ReactElement {
                 <Listbox.Option
                   key={i}
                   className={({ active }) =>
-                    `relative cursor-pointer select-none transition-all p-4 flex items-center justify-between ${
+                    `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
                       active ? 'bg-bg-200/50 dark:bg-bg-800' : '!bg-transparent'
                     }`
                   }

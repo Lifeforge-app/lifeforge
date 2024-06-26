@@ -19,7 +19,7 @@ function TodoListHeader({
   if (typeof entries === 'string' || typeof lists === 'string') return <></>
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex flex-between">
       <div>
         <h1 className="text-3xl font-semibold  md:text-4xl">
           {t(

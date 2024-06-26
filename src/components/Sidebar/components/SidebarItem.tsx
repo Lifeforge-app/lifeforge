@@ -53,7 +53,7 @@ function SidebarItem({
         }`}
       >
         <div
-          className={`relative flex w-full items-center justify-between gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 ${
+          className={`relative flex w-full flex-between gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 ${
             location.pathname
               .slice(1)
               .startsWith(
@@ -81,7 +81,7 @@ function SidebarItem({
             <span className="w-full">
               {sidebarExpanded &&
                 (isMainSidebarItem ? (
-                  <span className="flex w-full items-center justify-between gap-2 truncate">
+                  <span className="flex w-full flex-between gap-2 truncate">
                     {t(`modules.${toCamelCase(name)}`)}
                     {hasAI && (
                       <Icon
@@ -122,7 +122,7 @@ function SidebarItem({
             />
           )}
           {sidebarExpanded && subsection !== undefined && (
-            <div className="relative flex items-center justify-between">
+            <div className="relative flex flex-between">
               <button
                 onClick={toggleSubsection}
                 className="rounded-full p-1 hover:bg-bg-200 dark:hover:bg-bg-700/50"

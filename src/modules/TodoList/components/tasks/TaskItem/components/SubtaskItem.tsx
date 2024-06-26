@@ -47,7 +47,7 @@ function SubtaskItem({
   }
 
   return (
-    <div className="flex items-center justify-between rounded-md bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+    <div className="flex flex-between rounded-md bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       {entry.title}
       <TaskCompletionCheckbox
         toggleTaskCompletion={() => {

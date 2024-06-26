@@ -153,7 +153,7 @@ export default function IconSetList({
                                   {iconSet.author.name}
                                 </span>
                               </p>
-                              <div className="sssm:py-0 mt-4 flex w-full items-center justify-between border-t border-bg-500 pt-4 text-sm">
+                              <div className="sssm:py-0 mt-4 flex w-full flex-between border-t border-bg-500 pt-4 text-sm">
                                 <p>{iconSet.total} icons</p>
                                 {iconSet.height && (
                                   <div className="flex items-center">

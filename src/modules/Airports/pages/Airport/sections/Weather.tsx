@@ -172,7 +172,7 @@ function Weather(): React.ReactElement {
               </div>
             </div>
             <div className="col-span-3 flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
-              <div className="flex items-center justify-between">
+              <div className="flex-between flex">
                 <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                   <Icon icon="tabler:code" className="text-2xl" />
                   <span className="ml-2">Raw METAR Data</span>
@@ -351,7 +351,7 @@ function Weather(): React.ReactElement {
                   data.clouds.map(cloud => (
                     <div
                       key={cloud.code}
-                      className="flex items-center justify-between rounded-md bg-bg-800 p-4 pl-6"
+                      className="flex-between flex rounded-md bg-bg-800 p-4 pl-6"
                     >
                       <p className="text-2xl font-medium">
                         {metarCodes[cloud.code as keyof typeof metarCodes]}
