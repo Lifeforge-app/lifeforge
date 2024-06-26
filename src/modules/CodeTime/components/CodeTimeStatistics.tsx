@@ -18,11 +18,11 @@ function CodeTimeStatistics(): React.ReactElement {
 
       <APIComponentWithFallback data={stats}>
         {stats => (
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] items-center justify-between gap-4">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] flex-between gap-4">
             {Object.entries(stats).map(([key, value], index) => (
               <div
                 key={key}
-                className="flex w-full items-center justify-between gap-2 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900 sm:flex-col sm:items-start"
+                className="flex w-full flex-between gap-2 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900 sm:flex-col sm:items-start"
               >
                 <div className="flex flex-row items-center gap-2 sm:flex-col sm:items-start">
                   <div className="flex rounded-lg bg-bg-200/70 p-4 shadow-custom dark:bg-bg-800">

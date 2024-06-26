@@ -17,13 +17,13 @@ function ProjectHeader({
   const navigate = useNavigate()
 
   return (
-    <div className="flex flex-col gap-1 pr-12">
+    <div className="space-y-1 pr-12">
       <GoBackButton
         onClick={() => {
           navigate('/projects-m')
         }}
       />
-      <div className="flex items-center justify-between">
+      <div className="flex flex-between">
         <h1 className="flex items-center gap-4 text-3xl font-semibold dark:text-bg-100">
           <div
             className="rounded-lg p-3"

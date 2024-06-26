@@ -32,7 +32,7 @@ function LedgerItem({
       onClick={() => {
         navigate(`/wallet/transactions?ledger=${ledger.id}`)
       }}
-      className="relative flex items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/70"
+      className="flex-between relative flex w-full gap-4 rounded-lg bg-bg-100 p-4 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] transition-all hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/70"
     >
       <div className="flex items-center gap-3">
         <span

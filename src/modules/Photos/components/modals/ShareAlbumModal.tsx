@@ -65,7 +65,7 @@ function ShareAlbumModal({
 
   return (
     <div className="p-4">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-between gap-4">
         <div>
           <label htmlFor="isPublic" className="text-bg-500">
             Open to public

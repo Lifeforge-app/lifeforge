@@ -39,7 +39,7 @@ function JournalView(): React.ReactElement {
       <APIComponentWithFallback data={entry}>
         {entry => (
           <>
-            <div className="flex items-center justify-between p-3 pb-0">
+            <div className="flex flex-between p-3 pb-0">
               <div>
                 <GoBackButton
                   onClick={() => {

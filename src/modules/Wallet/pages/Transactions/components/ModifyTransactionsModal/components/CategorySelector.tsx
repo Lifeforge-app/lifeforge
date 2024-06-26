@@ -63,7 +63,7 @@ function CategorySelector({
           <Listbox.Option
             key={'none'}
             className={({ active }) =>
-              `relative cursor-pointer select-none transition-all p-4 flex items-center justify-between ${
+              `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
                 active ? 'bg-bg-200/50 dark:bg-bg-700/50' : '!bg-transparent'
               }`
             }
@@ -101,7 +101,7 @@ function CategorySelector({
               <Listbox.Option
                 key={i}
                 className={({ active }) =>
-                  `relative cursor-pointer select-none transition-all p-4 flex items-center justify-between ${
+                  `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
                     active
                       ? 'bg-bg-200/50 dark:bg-bg-700/50'
                       : '!bg-transparent'

@@ -114,7 +114,7 @@ function EditCardModal({
 
   return (
     <Modal isOpen={isOpen}>
-      <div className="mb-8 flex items-center justify-between ">
+      <div className="mb-8 flex flex-between ">
         <h1 className="flex items-center gap-3 text-2xl font-semibold">
           <Icon icon="tabler:pencil" className="size-7" />
           Edit Cards

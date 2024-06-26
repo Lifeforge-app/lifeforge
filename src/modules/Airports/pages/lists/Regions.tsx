@@ -9,8 +9,8 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import Scrollbar from '@components/Scrollbar'
 import useFetch from '@hooks/useFetch'
-import MasterSearchBar from '../../components/MasterSearchBar'
 import ContinentSelector from '../../components/ContinentSelector'
+import MasterSearchBar from '../../components/MasterSearchBar'
 
 const CONTINENTS = {
   AF: 'Africa',
@@ -97,7 +97,7 @@ function Regions(): React.ReactElement {
                     <Link
                       to={`/aviation/airports/${continentID}/${countryID}/${id}`}
                       key={name}
-                      className="flex w-full items-center justify-between rounded-lg bg-bg-200 p-4 px-6 transition-all hover:bg-bg-200/30 dark:bg-bg-900 dark:hover:bg-bg-800"
+                      className="flex-between flex w-full rounded-lg bg-bg-200 p-4 px-6 transition-all hover:bg-bg-200/30 dark:bg-bg-900 dark:hover:bg-bg-800"
                     >
                       <div>
                         <p className="text-left text-xl font-medium">{name}</p>

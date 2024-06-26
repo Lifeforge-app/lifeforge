@@ -202,7 +202,7 @@ function DirectoryHeader({
           )
         }}
       />
-      <div className="relative z-[100] flex w-full items-center justify-between gap-4 sm:gap-12">
+      <div className="relative z-[100] flex w-full flex-between gap-4 sm:gap-12">
         <div
           className={`flex min-w-0 flex-1 items-center gap-4 ${
             typeof currentPath !== 'string'

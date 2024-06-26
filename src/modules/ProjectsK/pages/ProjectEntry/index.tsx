@@ -73,13 +73,13 @@ function ProjectsKEntry(): React.ReactElement {
     <APIComponentWithFallback data={valid}>
       {() => (
         <section className="flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-y-auto pl-12">
-          <div className="flex flex-col gap-1 pr-12">
+          <div className="space-y-1 pr-12">
             <GoBackButton
               onClick={() => {
                 navigate('/projects-k')
               }}
             />
-            <div className="flex items-center justify-between">
+            <div className="flex flex-between">
               <h1
                 className={`flex items-center gap-4 ${
                   typeof projectData !== 'string'
@@ -157,7 +157,7 @@ function ProjectsKEntry(): React.ReactElement {
                                     <Listbox.Option
                                       key={id}
                                       className={({ active }) =>
-                                        `relative cursor-pointer select-none transition-all p-4 flex items-center justify-between ${
+                                        `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
                                           active
                                             ? 'bg-bg-200/50 dark:bg-bg-700/50'
                                             : '!bg-transparent'

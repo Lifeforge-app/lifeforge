@@ -76,7 +76,7 @@ function Journal(): React.ReactElement {
                     key={entry.id}
                     className="rounded-lg bg-bg-100 p-6 shadow-custom hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/70"
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-between">
                       <div className="text-xl font-semibold text-custom-500">
                         {entry.title}
                       </div>

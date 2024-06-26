@@ -40,7 +40,7 @@ export default function ProjectProgress({
           <APIComponentWithFallback data={progress}>
             {progress => (
               <div className="flex w-full flex-col px-6">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-between">
                   <div className="flex items-center">
                     <Icon icon="tabler:chart-bar" className="text-3xl" />
                     <h2 className="ml-4 text-xl font-semibold">
@@ -58,7 +58,7 @@ export default function ProjectProgress({
                   {progress.steps.map((id: string, index: number) => (
                     <li
                       key={id}
-                      className={`relative flex items-center justify-between gap-2 rounded-md p-6 ${
+                      className={`relative flex flex-between gap-2 rounded-md p-6 ${
                         index < progress.completed
                           ? 'bg-bg-900'
                           : 'bg-bg-900/50'

@@ -14,7 +14,7 @@ function Header({
   const [searchParams] = useSearchParams()
 
   return (
-    <header className="mx-4 flex items-center justify-between">
+    <header className="mx-4 flex flex-between">
       <h1 className="text-4xl font-semibold ">
         {Object.entries(PROJECT_STATUS).find(
           ([id]) => id === searchParams.get('status')

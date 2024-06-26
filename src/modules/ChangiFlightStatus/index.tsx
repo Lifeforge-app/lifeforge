@@ -231,7 +231,7 @@ function ChangiFlightStatus(): React.ReactElement {
             setSearchParams({ type: value })
           }}
         >
-          <Listbox.Button className="flex w-48 items-center justify-between gap-2 rounded-lg bg-bg-200/50 p-4 dark:bg-bg-800/50">
+          <Listbox.Button className="flex-between flex w-48 gap-2 rounded-lg bg-bg-200/50 p-4 dark:bg-bg-800/50">
             <div className="flex items-center gap-2">
               <Icon
                 icon={
@@ -255,7 +255,7 @@ function ChangiFlightStatus(): React.ReactElement {
                 <Listbox.Option
                   key={value}
                   className={({ active }) =>
-                    `relative cursor-pointer select-none transition-all p-4 flex items-center justify-between ${
+                    `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
                       active
                         ? 'bg-bg-500/30 dark:bg-bg-700/50'
                         : '!bg-transparent'
@@ -300,7 +300,11 @@ function ChangiFlightStatus(): React.ReactElement {
                     'Flight Number',
                     'Aircraft Type',
                     'Airline',
-                    'Destination Airport',
+                    `${
+                      (searchParams.get('type') ?? 'dep') === 'dep'
+                        ? 'Destination'
+                        : 'Origin'
+                    } Airport`,
                     'Terminal',
                     'Gate',
                     (searchParams.get('type') ?? 'dep') === 'dep'

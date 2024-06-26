@@ -64,7 +64,7 @@ function StatisticChardCard(): React.ReactElement {
 
   return (
     <div className="col-span-2 row-span-2 flex size-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
-      <div className="flex w-full items-center justify-between">
+      <div className="flex w-full flex-between">
         <h1 className="flex items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:chart-dots" className="text-2xl" />
           <span className="ml-2">{t('dashboard.widgets.statistics')}</span>

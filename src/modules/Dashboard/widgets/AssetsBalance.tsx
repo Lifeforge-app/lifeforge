@@ -26,7 +26,7 @@ export default function AssetsBalance(): React.ReactElement {
               <Link
                 to={'/wallet/assets'}
                 key={asset.id}
-                className="flex h-full items-center justify-between gap-4 rounded-lg bg-bg-100 p-4 pl-6 pr-0 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 dark:hover:bg-bg-700/50"
+                className="flex h-full flex-between gap-4 rounded-lg bg-bg-100 p-4 pl-6 pr-0 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 dark:hover:bg-bg-700/50"
               >
                 <div className="flex w-full min-w-0 items-center gap-4">
                   <div className="rounded-md bg-bg-700 p-2">

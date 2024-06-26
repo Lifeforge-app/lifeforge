@@ -79,7 +79,7 @@ function ModuleItem({
 
   return (
     <li className="flex flex-col items-center rounded-lg bg-bg-50 p-4 dark:bg-bg-900">
-      <div className="flex w-full items-center justify-between gap-4">
+      <div className="flex w-full flex-between gap-4">
         <div className="flex items-center gap-4">
           <div className="rounded-lg bg-custom-500/20 p-3 dark:bg-bg-800">
             <Icon
@@ -158,7 +158,7 @@ function ModuleItem({
                     )
                   case 'select':
                     return (
-                      <div key={key} className="flex flex-col gap-2">
+                      <div key={key} className="space-y-2">
                         <label htmlFor={key} className="text-sm text-bg-500">
                           {property.name}
                         </label>
@@ -176,10 +176,7 @@ function ModuleItem({
                     )
                   case 'switch':
                     return (
-                      <div
-                        key={key}
-                        className="flex items-center justify-between gap-4"
-                      >
+                      <div key={key} className="flex flex-between gap-4">
                         <div>
                           <label htmlFor={key} className="text-lg font-medium">
                             {property.name}

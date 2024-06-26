@@ -118,7 +118,7 @@ function BottomBar({
 
   return (
     <div
-      className={`absolute bottom-0 left-1/2 z-20 flex w-[calc(100%-6rem)] -translate-x-1/2 items-center justify-between rounded-t-md bg-bg-50 p-4 shadow-[0px_0px_20px_0px_rgba(0,0,0,0.05)] transition-all dark:bg-bg-900 ${
+      className={`absolute bottom-0 left-1/2 z-20 flex w-[calc(100%-6rem)] -translate-x-1/2 flex-between rounded-t-md bg-bg-50 p-4 shadow-[0px_0px_20px_0px_rgba(0,0,0,0.05)] transition-all dark:bg-bg-900 ${
         selectedPhotos.length === 0 ? 'translate-y-full' : 'translate-y-0'
       }`}
     >

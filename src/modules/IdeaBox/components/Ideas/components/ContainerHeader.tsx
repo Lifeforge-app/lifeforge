@@ -31,7 +31,7 @@ function ContainerHeader({
   const navigate = useNavigate()
 
   return (
-    <header className="flex flex-col gap-1">
+    <header className="space-y-1">
       <GoBackButton
         onClick={() => {
           if (viewArchived) {
@@ -41,7 +41,7 @@ function ContainerHeader({
           navigate(`/idea-box/${folderId !== undefined ? id : ''}`)
         }}
       />
-      <div className="flex items-center justify-between">
+      <div className="flex flex-between">
         <h1
           className={`flex items-center gap-4 ${
             typeof containerDetails !== 'string'

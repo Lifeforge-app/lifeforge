@@ -51,7 +51,7 @@ function ColorPickerModal({
 
   return (
     <Modal isOpen={isOpen}>
-      <div className="mb-8 flex items-center justify-between ">
+      <div className="mb-8 flex flex-between ">
         <h1 className="flex items-center gap-3 text-2xl font-semibold">
           <Icon icon="tabler:palette" className="h-7 w-7" />
           Color picker
