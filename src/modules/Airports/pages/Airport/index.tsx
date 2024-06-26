@@ -215,7 +215,7 @@ function Airport(): React.ReactElement {
                     )}
                   </div>
                 </div>
-                <div className="sticky top-0 z-10 mt-8 flex items-center bg-bg-950">
+                <div className="sticky top-0 z-10 mt-8 flex items-center rounded-md bg-bg-50 dark:bg-bg-950">
                   {[
                     ...(airportData.data.has_airline_service
                       ? [['Flights', 'tabler:plane']]

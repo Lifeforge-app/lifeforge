@@ -181,7 +181,7 @@ function Weather(): React.ReactElement {
                   Last fetched {moment(data.observed).fromNow()}
                 </span>
               </div>
-              <code className="rounded-md bg-bg-800 p-4 text-bg-500">
+              <code className="rounded-md bg-bg-200/50 p-4 text-bg-500 shadow-custom dark:bg-bg-800">
                 {data.raw_text}
               </code>
             </div>
@@ -351,7 +351,7 @@ function Weather(): React.ReactElement {
                   data.clouds.map(cloud => (
                     <div
                       key={cloud.code}
-                      className="flex-between flex rounded-md bg-bg-800 p-4 pl-6"
+                      className="flex-between flex rounded-md bg-bg-200/50 p-4 pl-6 dark:bg-bg-800"
                     >
                       <p className="text-2xl font-medium">
                         {metarCodes[cloud.code as keyof typeof metarCodes]}

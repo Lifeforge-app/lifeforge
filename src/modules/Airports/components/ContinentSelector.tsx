@@ -31,7 +31,7 @@ function ContinentSelector(): React.ReactElement {
         }
       }}
     >
-      <Listbox.Button className="flex-between flex w-48 gap-2 rounded-lg bg-bg-200/50 p-4 dark:bg-bg-800/50">
+      <Listbox.Button className="flex-between flex w-48 gap-2 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-800/50">
         <div className="flex items-center gap-2">
           <span className="whitespace-nowrap font-medium">
             {continentID === 'all'
@@ -46,7 +46,7 @@ function ContinentSelector(): React.ReactElement {
           <Listbox.Option
             className={({ active }) =>
               `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
-                active ? 'bg-bg-500/30 dark:bg-bg-700/50' : '!bg-transparent'
+                active ? 'bg-bg-200/50 dark:bg-bg-700/50' : '!bg-transparent'
               }`
             }
             value="all"
@@ -70,7 +70,7 @@ function ContinentSelector(): React.ReactElement {
               key={continent}
               className={({ active }) =>
                 `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
-                  active ? 'bg-bg-500/30 dark:bg-bg-700/50' : '!bg-transparent'
+                  active ? 'bg-bg-200/50 dark:bg-bg-700/50' : '!bg-transparent'
                 }`
               }
               value={continent}
