@@ -67,7 +67,7 @@ const NotesFile = lazy(async () => await import('./modules/Notes/File'))
 const Passwords = lazy(async () => await import('./modules/Passwords'))
 const Journal = lazy(async () => await import('./modules/Journal'))
 const JournalView = lazy(
-  async () => await import('./modules/Journal/JournalView')
+  async () => await import('./modules/Journal/JournalViewModal')
 )
 const JournalEdit = lazy(
   async () => await import('./modules/Journal/JournalEdit')

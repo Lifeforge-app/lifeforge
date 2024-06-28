@@ -1,144 +1,156 @@
-import moment from 'moment'
+import { Icon } from '@iconify/react/dist/iconify.js'
+import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
-import FAB from '@components/ButtonsAndInputs/FAB'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import SearchInput from '@components/ButtonsAndInputs/SearchInput'
-import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
+import Input from '@components/ButtonsAndInputs/Input'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import useFetch from '@hooks/useFetch'
-import { type IJournalEntry } from '@interfaces/journal_interfaces'
+import { useAuthContext } from '@providers/AuthProvider'
+import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
+import CreatePassword from './CreatePassword'
+import JournalList from './JournalList'
+import JournalViewModal from './JournalViewModal'
 
 function Journal(): React.ReactElement {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [entries, refreshEntries] =
-    useFetch<IJournalEntry[]>('journal/entry/list')
-  const [loading, setLoading] = useState(false)
-  const [existedData, setExistedData] = useState<IJournalEntry | null>(null)
-  const [isDeleteEntryConfirmModalOpen, setIsDeleteEntryConfirmModalOpen] =
-    useState(false)
-  const navigate = useNavigate()
+  const { t } = useTranslation()
+  const { userData } = useAuthContext()
+  const [masterPassWordInputContent, setMasterPassWordInputContent] =
+    useState<string>('')
+  const [masterPassword, setMasterPassword] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
+  const [journalViewModalOpen, setJournalViewModalOpen] =
+    useState<boolean>(false)
+  const [currentViewingJournal, setCurrentViewingJournal] = useState<
+    string | null
+  >(null)
 
-  async function createEntry(): Promise<void> {
+  async function onSubmit(): Promise<void> {
+    if (masterPassWordInputContent.trim() === '') {
+      toast.error('Please fill in the field')
+      return
+    }
+
     setLoading(true)
+
+    const challenge = await fetch(
+      `${import.meta.env.VITE_API_HOST}/journal/auth/challenge`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        }
+      }
+    ).then(async res => {
+      const data = await res.json()
+      if (res.ok && data.state === 'success') {
+        return data.data
+      } else {
+        toast.error(t('journal.failedToUnlock'))
+        setLoading(false)
+
+        throw new Error(t('journal.failedToUnlock'))
+      }
+    })
+
     await APIRequest({
-      endpoint: 'journal/entry/create',
+      endpoint: 'journal/auth/verify',
       method: 'POST',
       body: {
-        title: moment().format('MMMM DD, YYYY'),
-        content: 'Write your content here'
+        password: encrypt(masterPassWordInputContent, challenge),
+        id: userData.id
       },
-      successInfo: 'create',
-      failureInfo: 'create',
       callback: data => {
-        navigate(`/journal/edit/${data.data.id}`)
+        if (data.data === true) {
+          toast.info(t('vault.unlocked'))
+          setMasterPassword(masterPassWordInputContent)
+          setMasterPassWordInputContent('')
+        } else {
+          toast.error(t('journal.failedToUnlock'))
+        }
       },
       finalCallback: () => {
         setLoading(false)
+      },
+      onFailure: () => {
+        toast.error(t('journal.failedToUnlock'))
       }
     })
   }
 
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Journal" desc="..." />
-      <div className="mt-6 flex min-h-0 w-full flex-1 flex-col">
-        <div className="flex items-center gap-2">
-          <SearchInput
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            stuffToSearch="daily journal entries"
+      <div className="flex-between flex">
+        <ModuleHeader title="Journal" desc="..." />
+        {masterPassword !== '' && (
+          <Button
+            onClick={() => {}}
+            icon="tabler:plus"
+            className="hidden lg:flex "
+          >
+            new entry
+          </Button>
+        )}
+      </div>
+      {userData?.hasJournalMasterPassword === false ? (
+        <CreatePassword />
+      ) : masterPassword === '' ? (
+        <div className="flex-center flex size-full flex-1 flex-col gap-4">
+          <Icon icon="tabler:lock-access" className="size-28" />
+          <h2 className="text-4xl font-semibold">
+            {t('journal.lockedMessage')}
+          </h2>
+          <p className="mb-8 text-center text-lg text-bg-500">
+            {t('journal.passwordRequired')}
+          </p>
+          <Input
+            isPassword
+            icon="tabler:lock"
+            name="Master Password"
+            placeholder="Enter your master password"
+            value={masterPassWordInputContent}
+            updateValue={e => {
+              setMasterPassWordInputContent(e.target.value)
+            }}
+            noAutoComplete
+            additionalClassName="w-full md:w-3/4 xl:w-1/2"
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                onSubmit().catch(console.error)
+              }
+            }}
+            darker
           />
           <Button
             onClick={() => {
-              createEntry().catch(console.error)
+              onSubmit().catch(console.error)
             }}
             loading={loading}
-            icon="tabler:plus"
-            className="mt-2 hidden shrink-0 sm:mt-6 md:flex"
+            className="w-full md:w-3/4 xl:w-1/2"
+            icon="tabler:lock"
           >
-            New entry
+            Unlock
           </Button>
         </div>
-        <APIComponentWithFallback data={entries}>
-          {entries =>
-            entries.length > 0 ? (
-              <div className="mt-6 grid grid-cols-1 gap-6 pb-8">
-                {entries.map(entry => (
-                  <Link
-                    to={`/journal/view/${entry.id}`}
-                    key={entry.id}
-                    className="rounded-lg bg-bg-100 p-6 shadow-custom hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/70"
-                  >
-                    <div className="flex flex-between">
-                      <div className="text-xl font-semibold text-custom-500">
-                        {entry.title}
-                      </div>
-                      <HamburgerMenu className="relative">
-                        <MenuItem
-                          icon="tabler:edit"
-                          onClick={() => {
-                            navigate(`/journal/edit/${entry.id}`)
-                          }}
-                          text="Edit entry"
-                        />
-                        <MenuItem
-                          icon="tabler:trash"
-                          onClick={() => {
-                            setExistedData(entry)
-                            setIsDeleteEntryConfirmModalOpen(true)
-                          }}
-                          text="Delete entry"
-                          isRed
-                        />
-                      </HamburgerMenu>
-                    </div>
-                    <div className="mt-2 line-clamp-2 text-bg-500">
-                      {entry.content}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            ) : (
-              <div className="mt-6">
-                <EmptyStateScreen
-                  title="No entries found"
-                  description="You haven't written any journal entries yet."
-                  icon="tabler:book-off"
-                  ctaContent="new entry"
-                  setModifyModalOpenType={() => {
-                    createEntry().catch(console.error)
-                  }}
-                />
-              </div>
-            )
-          }
-        </APIComponentWithFallback>
-      </div>
-      <DeleteConfirmationModal
-        apiEndpoint="journal/entry/delete"
-        data={existedData}
-        isOpen={isDeleteEntryConfirmModalOpen}
-        itemName="entry"
-        onClose={() => {
-          setIsDeleteEntryConfirmModalOpen(false)
-          setExistedData(null)
-        }}
-        updateDataList={refreshEntries}
-        nameKey="title"
-      />
-      {entries.length > 0 && (
-        <FAB
-          onClick={() => {
-            createEntry().catch(console.error)
-          }}
-        />
+      ) : (
+        <>
+          <JournalList
+            setJournalViewModalOpen={setJournalViewModalOpen}
+            setCurrentViewingJournal={setCurrentViewingJournal}
+            masterPassword={masterPassword}
+          />
+          <JournalViewModal
+            id={currentViewingJournal}
+            isOpen={journalViewModalOpen}
+            onClose={() => {
+              setJournalViewModalOpen(false)
+              setCurrentViewingJournal(null)
+            }}
+            masterPassword={masterPassword}
+          />
+        </>
       )}
     </ModuleWrapper>
   )

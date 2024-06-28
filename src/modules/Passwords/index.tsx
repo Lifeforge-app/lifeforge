@@ -94,7 +94,7 @@ function Passwords(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <div className="flex flex-between">
+      <div className="flex-between flex">
         <ModuleHeader
           title="Passwords"
           desc="A vault to store your passwords securely."
