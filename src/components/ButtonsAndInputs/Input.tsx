@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
 
@@ -15,7 +15,7 @@ function Input({
   darker = false,
   additionalClassName = '',
   onKeyDown = () => {},
-  noAutoComplete = false,
+  noAutoComplete = true,
   autoFocus = false,
   actionButtonIcon = '',
   onActionButtonClick = () => {}
@@ -59,13 +59,16 @@ function Input({
         >
           {t(`input.${toCamelCase(name)}`)}
         </span>
+        {isPassword && (
+          <input type="password" hidden value="" onChange={() => {}} />
+        )}
         <input
           ref={reference}
-          type={isPassword ? 'password' : 'text'}
           value={value}
           onChange={updateValue}
           placeholder={placeholder}
           onKeyDown={onKeyDown}
+          type={isPassword ? 'password' : 'text'}
           autoComplete={noAutoComplete ? 'false' : 'true'}
           className={`mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500 ${
             isPassword && value ? 'text-2xl focus:text-base' : ''
@@ -84,6 +87,7 @@ function Input({
         />
         {actionButtonIcon && (
           <button
+            tabIndex={-1}
             onClick={onActionButtonClick}
             className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-500/30 hover:text-bg-200 focus:outline-none"
           >

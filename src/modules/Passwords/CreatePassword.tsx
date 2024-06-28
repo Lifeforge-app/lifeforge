@@ -13,6 +13,7 @@ function CreatePassword(): React.ReactElement {
   const [confirmPassword, setConfirmPassword] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef2 = useRef<HTMLInputElement>(null)
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false)
 
   async function onSubmit(): Promise<void> {
@@ -33,16 +34,14 @@ function CreatePassword(): React.ReactElement {
       endpoint: 'passwords/master',
       method: 'POST',
       body: { password: newPassword, id: userData.id },
-      successInfo:
-        'Alright! Your master password has been created. You can now start storing your passwords.',
-      failureInfo:
-        "Oops! Couldn't create your master password. Please try again.",
+      successInfo: 'created',
+      failureInfo: 'created',
       finalCallback: () => {
         setLoading(false)
         setConfirmationModalOpen(false)
       },
-      callback: data => {
-        setUserData({ ...userData, masterPasswordHash: data.hash })
+      callback: () => {
+        setUserData({ ...userData, hasMasterPasswordHash: true })
       }
     })
   }
@@ -95,14 +94,14 @@ function CreatePassword(): React.ReactElement {
               password += all[Math.floor(Math.random() * all.length)]
             }
             setNewPassword(password)
+            setConfirmPassword(password)
 
-            if (inputRef.current !== null) {
-              inputRef.current.focus()
-            }
+            toast.success('Random password generated successfully')
           }}
           darker
         />
         <Input
+          reference={inputRef2}
           isPassword
           icon="tabler:lock-check"
           name="Confirm Password"
