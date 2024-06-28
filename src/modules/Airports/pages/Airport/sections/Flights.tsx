@@ -113,7 +113,7 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
           </Button>
           <table className="mb-4 w-full border-separate border-spacing-0">
             <thead className="sticky top-[7.2rem]">
-              <tr>
+              <tr className="rounded-md">
                 {[
                   'Time',
                   'Date',
@@ -124,7 +124,7 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
                 ].map(title => (
                   <th
                     key={title}
-                    className="rounded-md border-b-2 border-bg-200 bg-bg-50 px-4 py-2 pt-4 text-bg-500 dark:border-bg-700 dark:bg-bg-950"
+                    className="border-b-2 border-bg-200 bg-bg-50 px-4 py-2 pt-4 text-bg-500 dark:border-bg-700 dark:bg-bg-950"
                   >
                     {title}
                   </th>

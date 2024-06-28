@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router'
+import { toast } from 'react-toastify'
+import Button from '@components/ButtonsAndInputs/Button'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IAirportNOTAMEntry } from '@interfaces/airports_interfaces'
+import APIRequest from '@utils/fetchData'
 import NOTAMListItem from './components/NOTAMListItem'
 
 function NOTAM({
@@ -19,6 +22,36 @@ function NOTAM({
   const [NOTAMData] = useFetch<IAirportNOTAMEntry[] | 'none'>(
     `airports/airport/${airportID}/NOTAM`
   )
+  const [loading, setLoading] = useState(false)
+  const [currentPage, setCurrentPage] = useState(-1)
+  const [hasNextPage, setHasNextPage] = useState(true)
+
+  async function fetchNextPage(): Promise<void> {
+    if (hasNextPage) {
+      setLoading(true)
+      const nextPage = currentPage === -1 ? 1 : currentPage + 1
+      await APIRequest({
+        endpoint: `airports/airport/${airportID}/NOTAM?page=${nextPage}`,
+        method: 'GET',
+        callback(data) {
+          if (data.data.length === 0) {
+            setHasNextPage(false)
+          } else {
+            if (typeof NOTAMData !== 'string') {
+              NOTAMData.push(...data.data)
+              setCurrentPage(nextPage)
+            }
+          }
+        },
+        finalCallback() {
+          setLoading(false)
+        },
+        onFailure() {
+          toast.error('Failed to fetch NOTAM data')
+        }
+      })
+    }
+  }
 
   return (
     <APIComponentWithFallback data={NOTAMData}>
@@ -33,6 +66,20 @@ function NOTAM({
                 setViewDetailsModalOpen={setViewDetailsModalOpen}
               />
             ))}
+            {hasNextPage && (
+              <Button
+                loading={loading}
+                onClick={() => {
+                  fetchNextPage().catch(console.error)
+                }}
+                className="w-full"
+                variant="secondary"
+                iconAtEnd
+                icon="tabler:arrow-down"
+              >
+                {!loading ? 'Load more' : ''}
+              </Button>
+            )}
           </div>
         ) : (
           <div className="my-8 w-full">

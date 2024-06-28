@@ -19,7 +19,9 @@ function ModuleWrapper({
           : 'no-overflow-x top-24 !h-[calc(100%-6rem)] sm:top-32 sm:!h-[calc(100%-8rem)]'
       } flex min-h-0 flex-col transition-all ${className}`}
     >
-      <div className="flex flex-1 flex-col px-4 sm:px-12">{children}</div>
+      <div className="flex w-full flex-1 flex-col px-4 sm:px-12">
+        {children}
+      </div>
     </Scrollbar>
   )
 }

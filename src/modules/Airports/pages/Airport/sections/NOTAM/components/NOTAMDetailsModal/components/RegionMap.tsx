@@ -34,7 +34,9 @@ function RegionMap({
         />
         {data.content.area?.filter(e => e[0] !== 0 && e[1] !== 0)?.length >
         3 ? (
-          <Polygon positions={data.content.area} />
+          <Polygon
+            positions={data.content.area?.filter(e => e[0] !== 0 && e[1] !== 0)}
+          />
         ) : (
           <>
             <Circle
