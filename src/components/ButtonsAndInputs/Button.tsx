@@ -87,7 +87,9 @@ const Button: React.FC<ButtonProps> = ({
         />
       )}
       {typeof children === 'string'
-        ? t(`button.${toCamelCase(children)}`)
+        ? children !== ''
+          ? t(`button.${toCamelCase(children)}`)
+          : ''
         : children}
       {iconAtEnd && (
         <Icon
