@@ -31,7 +31,7 @@ function CreatePassword(): React.ReactElement {
     setLoading(true)
 
     await APIRequest({
-      endpoint: 'passwords/master',
+      endpoint: 'journal/auth',
       method: 'POST',
       body: { password: newPassword, id: userData.id },
       successInfo: 'created',
@@ -41,7 +41,7 @@ function CreatePassword(): React.ReactElement {
         setConfirmationModalOpen(false)
       },
       callback: () => {
-        setUserData({ ...userData, hasMasterPasswordHash: true })
+        setUserData({ ...userData, hasJournalMasterPassword: true })
       }
     })
   }
@@ -67,9 +67,11 @@ function CreatePassword(): React.ReactElement {
         <Icon icon="tabler:lock-plus" className="size-28" />
         <h2 className="text-4xl font-semibold">Create your master password</h2>
         <p className="mb-8 w-1/2 text-center text-lg text-bg-500">
-          A master password is required to encrypt and decrypt your passwords.
+          A master password is required to encrypt and decrypt your journal
+          entries.
         </p>
         <Input
+          key="newPassword"
           reference={inputRef}
           isPassword
           icon="tabler:lock"
@@ -101,6 +103,7 @@ function CreatePassword(): React.ReactElement {
           darker
         />
         <Input
+          key="confirmPassword"
           reference={inputRef2}
           isPassword
           icon="tabler:lock-check"
