@@ -1,10 +1,7 @@
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
@@ -25,7 +22,6 @@ function JournalList({
   const [entries, setEntries] = useState<IJournalEntry[] | 'loading' | 'error'>(
     'loading'
   )
-  const navigate = useNavigate()
   const { t } = useTranslation()
 
   useEffect(() => {
