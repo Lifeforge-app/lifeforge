@@ -176,6 +176,7 @@ export const ROUTES: IRoutes[] = [
           'photos-album-list': 'album',
           'photos-album-gallery': 'album/:id',
           'photos-album-favourites': 'favourites',
+          'photos-locked-folder-gallery': 'locked-folder',
           'photos-trash': 'trash'
         },
         togglable: true

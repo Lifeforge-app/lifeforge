@@ -20,7 +20,7 @@ function AlbumListHeader({
 
   return (
     <header className="w-full min-w-0">
-      <div className="flex flex-between">
+      <div className="flex-between flex">
         <h1 className="text-3xl font-semibold md:text-4xl ">
           Albums{' '}
           <span className="text-base text-bg-500">

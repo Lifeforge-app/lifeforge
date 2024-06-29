@@ -18,6 +18,9 @@ const PhotosAlbumGallery = lazy(
 const PhotosFavouritesGallery = lazy(
   async () => await import('./modules/Photos/pages/FavouritesGallery')
 )
+const PhotosLockedFolderGallery = lazy(
+  async () => await import('./modules/Photos/pages/LockedFolderGallery')
+)
 const PhotosTrash = lazy(
   async () => await import('./modules/Photos/pages/Trash')
 )
@@ -123,6 +126,7 @@ export const COMPONENTS = {
     'photos-album-list': PhotosAlbumList,
     'photos-album-gallery': PhotosAlbumGallery,
     'photos-album-favourites': PhotosFavouritesGallery,
+    'photos-locked-folder-gallery': PhotosLockedFolderGallery,
     'photos-trash': PhotosTrash
   },
   music: {

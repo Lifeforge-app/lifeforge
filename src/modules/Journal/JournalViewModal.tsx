@@ -12,6 +12,7 @@ import React, { useEffect, useMemo } from 'react'
 import Markdown from 'react-markdown'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
+import Button from '@components/ButtonsAndInputs/Button'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -77,14 +78,30 @@ function JournalViewModal({
         {entry => (
           <>
             <div className="flex-between mb-6 flex">
-              <h2 className="text-3xl font-semibold">{entry.title}</h2>
+              <h2 className="text-4xl font-semibold">{entry.title}</h2>
               <span className="block rounded-full bg-bg-700/50 px-3 py-1 text-base font-medium">
                 {entry.mood.emoji} {entry.mood.text}
               </span>
             </div>
-            <Markdown className="prose prose-xl !max-w-full">
+            <p className="mb-6 text-lg">
+              <span className="text-5xl font-semibold uppercase">
+                {entry.summary[0]}
+              </span>
+              {entry.summary.slice(1)}
+            </p>
+            <hr className="mb-6 border-bg-500" />
+            <Markdown className="prose prose-lg !max-w-full">
               {entry.content}
             </Markdown>
+            <Button
+              icon="tabler:chevron-down"
+              className="mt-6"
+              iconAtEnd
+              variant="no-bg"
+            >
+              View Raw
+            </Button>
+            <p className="mt-6 text-lg text-bg-500">{entry.raw}</p>
           </>
         )}
       </APIComponentWithFallback>
