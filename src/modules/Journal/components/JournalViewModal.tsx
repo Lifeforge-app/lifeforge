@@ -7,7 +7,7 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import useFetch from '@hooks/useFetch'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { encrypt } from '@utils/encryption'
-import JournalView from './components/JournalView'
+import JournalView from './JournalView'
 
 function JournalViewModal({
   id,
