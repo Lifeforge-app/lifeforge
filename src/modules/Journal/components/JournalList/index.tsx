@@ -1,16 +1,14 @@
-import moment from 'moment'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
+import JournalListItem from './components/JournalListItem'
 
 function JournalList({
   setCurrentViewingJournal,
@@ -96,54 +94,18 @@ function JournalList({
             entries.length > 0 ? (
               <div className="mt-6 grid grid-cols-1 gap-6 pb-8">
                 {entries.map(entry => (
-                  <button
+                  <JournalListItem
                     key={entry.id}
-                    onClick={() => {
-                      setCurrentViewingJournal(entry.id)
-                      setJournalViewModalOpen(true)
-                    }}
-                    className="w-full rounded-lg bg-bg-100 p-6 text-left shadow-custom hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/70"
-                  >
-                    <div className="flex-between flex">
-                      <div className="flex flex-col gap-2">
-                        <span className="text-sm font-medium text-bg-500">
-                          {moment(entry.date).format('MMMM Do, YYYY')}
-                        </span>
-                        <h2 className="text-2xl font-semibold">
-                          {entry.title === '' ? 'Untitled' : entry.title}
-                        </h2>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="block rounded-full bg-bg-700/50 px-3 py-1 text-base font-medium">
-                          {entry.mood.emoji} {entry.mood.text}
-                        </span>
-                        <HamburgerMenu className="relative">
-                          <MenuItem
-                            onClick={() => {
-                              updateEntry(entry.id).catch(console.error)
-                            }}
-                            icon={
-                              editLoading
-                                ? 'svg-spinners:180-ring'
-                                : 'tabler:pencil'
-                            }
-                            text="Edit"
-                            disabled={editLoading}
-                          />
-                          <MenuItem
-                            onClick={() => {
-                              setDeleteJournalConfirmationModalOpen(true)
-                              setExistedData(entry)
-                            }}
-                            isRed
-                            text="Delete"
-                            icon="tabler:trash"
-                          />
-                        </HamburgerMenu>
-                      </div>
-                    </div>
-                    <div className="mt-4 text-bg-500">{entry.content}</div>
-                  </button>
+                    entry={entry}
+                    editLoading={editLoading}
+                    updateEntry={updateEntry}
+                    setCurrentViewingJournal={setCurrentViewingJournal}
+                    setJournalViewModalOpen={setJournalViewModalOpen}
+                    setDeleteJournalConfirmationModalOpen={
+                      setDeleteJournalConfirmationModalOpen
+                    }
+                    setExistedData={setExistedData}
+                  />
                 ))}
               </div>
             ) : (

@@ -12,10 +12,11 @@ import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
+import JournalList from './components/JournalList'
+import JournalViewModal from './components/JournalViewModal'
+import ModifyJournalEntryModal from './components/ModifyEntryModal'
 import CreatePassword from './CreatePassword'
-import JournalList from './JournalList'
-import JournalViewModal from './JournalViewModal'
-import ModifyJournalEntryModal from './ModifyEntryModal'
+import { fetchChallenge } from './utils/fetchChallenge'
 
 function Journal(): React.ReactElement {
   const { t } = useTranslation()
@@ -85,25 +86,7 @@ function Journal(): React.ReactElement {
 
     setLoading(true)
 
-    const challenge = await fetch(
-      `${import.meta.env.VITE_API_HOST}/journal/auth/challenge`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        }
-      }
-    ).then(async res => {
-      const data = await res.json()
-      if (res.ok && data.state === 'success') {
-        return data.data
-      } else {
-        toast.error(t('journal.failedToUnlock'))
-        setLoading(false)
-
-        throw new Error(t('journal.failedToUnlock'))
-      }
-    })
+    const challenge = await fetchChallenge(setLoading)
 
     await APIRequest({
       endpoint: 'journal/auth/verify',

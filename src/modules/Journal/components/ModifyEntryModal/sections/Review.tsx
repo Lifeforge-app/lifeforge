@@ -1,11 +1,9 @@
-import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
-import JournalView from '../../components/JournalView'
+import { fetchChallenge } from '../../../utils/fetchChallenge'
+import JournalView from '../../JournalView'
 
 function Review({
   id,
@@ -41,30 +39,11 @@ function Review({
   openType: 'create' | 'update' | null
 }): React.ReactElement {
   const [loading, setLoading] = useState(false)
-  const { t } = useTranslation()
 
   async function onSubmit(): Promise<void> {
     setLoading(true)
 
-    const challenge = await fetch(
-      `${import.meta.env.VITE_API_HOST}/journal/auth/challenge`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        }
-      }
-    ).then(async res => {
-      const data = await res.json()
-      if (res.ok && data.state === 'success') {
-        return data.data
-      } else {
-        toast.error(t('journal.failedToUnlock'))
-        setLoading(false)
-
-        throw new Error(t('journal.failedToUnlock'))
-      }
-    })
+    const challenge = await fetchChallenge(setLoading)
 
     const encryptedTitle = encrypt(title, masterPassword)
     const encryptedRaw = encrypt(rawText, masterPassword)
