@@ -6,7 +6,8 @@
 //   quotePlugin,
 //   thematicBreakPlugin
 // } from '@mdxeditor/editor'
-import React, { useEffect, useMemo } from 'react'
+import moment from 'moment'
+import React, { useEffect, useMemo, useState } from 'react'
 
 // import '@mdxeditor/editor/style.css'
 import Markdown from 'react-markdown'
@@ -51,6 +52,7 @@ function JournalViewModal({
   }, [challenge, valid])
 
   const [entry, , setEntry] = useFetch<IJournalEntry>(url, url !== '')
+  const [viewRaw, setViewRaw] = useState(false)
 
   useEffect(() => {
     if (valid === false && id !== null) {
@@ -78,7 +80,9 @@ function JournalViewModal({
         {entry => (
           <>
             <div className="flex-between mb-6 flex">
-              <h2 className="text-4xl font-semibold">{entry.title}</h2>
+              <h2 className="text-4xl font-semibold">
+                {moment(entry.date).format('MMMM Do, YYYY')}
+              </h2>
               <span className="block rounded-full bg-bg-700/50 px-3 py-1 text-base font-medium">
                 {entry.mood.emoji} {entry.mood.text}
               </span>
@@ -90,18 +94,19 @@ function JournalViewModal({
               {entry.summary.slice(1)}
             </p>
             <hr className="mb-6 border-bg-500" />
-            <Markdown className="prose prose-lg !max-w-full">
-              {entry.content}
-            </Markdown>
+            <Markdown className="prose !max-w-full">{entry.content}</Markdown>
             <Button
-              icon="tabler:chevron-down"
+              icon={viewRaw ? 'tabler:chevron-up' : 'tabler:chevron-down'}
               className="mt-6"
               iconAtEnd
               variant="no-bg"
+              onClick={() => {
+                setViewRaw(!viewRaw)
+              }}
             >
-              View Raw
+              {viewRaw ? 'Hide' : 'Show'} Raw
             </Button>
-            <p className="mt-6 text-lg text-bg-500">{entry.raw}</p>
+            {viewRaw && <p className="mt-6 text-lg text-bg-500">{entry.raw}</p>}
           </>
         )}
       </APIComponentWithFallback>

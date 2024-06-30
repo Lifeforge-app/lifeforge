@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -81,11 +82,13 @@ function JournalList({
                     onClick={() => {
                       setCurrentViewingJournal(entry.id)
                       setJournalViewModalOpen(true)
-                    }}
+                    }}24w2
                     className="w-full rounded-lg bg-bg-100 p-6 text-left shadow-custom hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/70"
                   >
                     <div className="flex-between flex">
-                      <div className="text-xl font-semibold">{entry.title}</div>
+                      <div className="text-xl font-semibold">
+                        {moment(entry.date).format('MMMM Do, YYYY')}
+                      </div>
                       <span className="block rounded-full bg-bg-700/50 px-3 py-1 text-base font-medium">
                         {entry.mood.emoji} {entry.mood.text}
                       </span>
@@ -101,7 +104,7 @@ function JournalList({
                   description="You haven't written any journal entries yet."
                   icon="tabler:book-off"
                   ctaContent="new entry"
-                  setModifyModalOpenType={() => {}}
+                  onCTAClick={() => {}}
                 />
               </div>
             )

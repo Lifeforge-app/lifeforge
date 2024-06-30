@@ -119,7 +119,7 @@ function Achievements(): React.ReactElement {
               description="There are no achievements available for this difficulty."
               icon="tabler:award-off"
               ctaContent="Add achievement"
-              setModifyModalOpenType={() => {
+              onCTAClick={() => {
                 setExistedData(null)
                 setModifyAchievementModalOpenType('create')
               }}

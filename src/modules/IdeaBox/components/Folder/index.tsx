@@ -171,7 +171,7 @@ function Folder(): React.ReactElement {
                   </Column>
                 ) : (
                   <EmptyStateScreen
-                    setModifyModalOpenType={setModifyIdeaModalOpenType as any}
+                    onCTAClick={setModifyIdeaModalOpenType as any}
                     title="No ideas yet"
                     description="Hmm... Seems a bit empty here. Consider adding some innovative ideas."
                     icon="tabler:bulb-off"

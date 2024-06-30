@@ -105,7 +105,7 @@ function NotesCategory(): React.ReactElement {
                   description="Create a new subject to start storing your notes."
                   icon="tabler:folder-off"
                   ctaContent="Create subject"
-                  setModifyModalOpenType={setModifySubjectModalOpenType}
+                  onCTAClick={setModifySubjectModalOpenType}
                 />
               )
             }

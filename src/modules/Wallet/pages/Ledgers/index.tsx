@@ -74,7 +74,7 @@ function Ledgers(): React.ReactElement {
               title="Oops! No Ledger found."
               description="You don't have any Ledgers yet. Add some to get started."
               ctaContent="Add Ledger"
-              setModifyModalOpenType={setModifyModalOpenType}
+              onCTAClick={setModifyModalOpenType}
               icon="tabler:wallet-off"
             />
           )
