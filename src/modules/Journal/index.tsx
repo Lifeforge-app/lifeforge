@@ -7,12 +7,14 @@ import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
+import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 import CreatePassword from './CreatePassword'
 import JournalList from './JournalList'
 import JournalViewModal from './JournalViewModal'
+import ModifyJournalEntryModal from './ModifyEntryModal'
 
 function Journal(): React.ReactElement {
   const { t } = useTranslation()
@@ -26,6 +28,10 @@ function Journal(): React.ReactElement {
   const [currentViewingJournal, setCurrentViewingJournal] = useState<
     string | null
   >(null)
+  const [modifyEntryModalOpenType, setModifyEntryModalOpenType] = useState<
+    'create' | 'update' | null
+  >(null)
+  const [existedData, setExistedData] = useState<IJournalEntry | null>(null)
 
   async function onSubmit(): Promise<void> {
     if (masterPassWordInputContent.trim() === '') {
@@ -86,7 +92,10 @@ function Journal(): React.ReactElement {
         <ModuleHeader title="Journal" desc="..." />
         {masterPassword !== '' && (
           <Button
-            onClick={() => {}}
+            onClick={() => {
+              setExistedData(null)
+              setModifyEntryModalOpenType('create')
+            }}
             icon="tabler:plus"
             className="hidden lg:flex "
           >
@@ -148,6 +157,15 @@ function Journal(): React.ReactElement {
               setJournalViewModalOpen(false)
               setCurrentViewingJournal(null)
             }}
+            masterPassword={masterPassword}
+          />
+          <ModifyJournalEntryModal
+            openType={modifyEntryModalOpenType}
+            onClose={() => {
+              setModifyEntryModalOpenType(null)
+              setExistedData(null)
+            }}
+            existedData={existedData}
             masterPassword={masterPassword}
           />
         </>

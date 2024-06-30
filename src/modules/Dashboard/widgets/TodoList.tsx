@@ -47,7 +47,7 @@ export default function TodoList(): React.ReactElement {
                       description="Head to the Todo List module to create a new task."
                       icon="tabler:calendar-smile"
                       ctaContent="new task"
-                      setModifyModalOpenType={() => {
+                      onCTAClick={() => {
                         navigate('/todo-list#new')
                       }}
                     />

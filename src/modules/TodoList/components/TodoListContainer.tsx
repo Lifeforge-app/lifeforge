@@ -73,7 +73,7 @@ function TodoListContainer(): React.ReactElement {
                   description="You can create a new task by clicking the button below."
                   icon="tabler:article-off"
                   ctaContent="new task"
-                  setModifyModalOpenType={setModifyTaskWindowOpenType}
+                  onCTAClick={setModifyTaskWindowOpenType}
                 />
               )
             }

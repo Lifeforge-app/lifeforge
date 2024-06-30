@@ -13,22 +13,29 @@ interface DateInputProps {
   setDate: React.Dispatch<React.SetStateAction<string>>
   name: string
   icon: string
+  hasMargin?: boolean
 }
 
-const DateInput: React.FC<DateInputProps> = ({ date, setDate, name, icon }) => {
+const DateInput: React.FC<DateInputProps> = ({
+  date,
+  setDate,
+  name,
+  icon,
+  hasMargin = true
+}) => {
   const { t } = useTranslation()
   const { language } = usePersonalizationContext()
 
   return (
     <div
-      className={
-        'group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 dark:bg-bg-800/50'
-      }
+      className={`group relative ${
+        hasMargin && 'mt-4'
+      } z-10 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 dark:bg-bg-800/50`}
     >
       <Icon
         icon={icon}
         className={`ml-6 size-6 shrink-0 ${
-          date ? 'text-custom-500' : 'text-bg-500'
+          date !== '' ? 'text-custom-500' : 'text-bg-500'
         }`}
       />
       <div className="flex w-full items-center gap-2">

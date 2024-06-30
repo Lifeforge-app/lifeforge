@@ -10,6 +10,7 @@ interface ButtonProps {
   iconAtEnd?: boolean
   onClick: () => void
   loading?: boolean
+  disabled?: boolean
   className?: string
   variant?: 'primary' | 'secondary' | 'no-bg'
   isRed?: boolean
@@ -34,7 +35,7 @@ const generateColorClass = (isRed: boolean, variant: string): string => {
       return 'hover:bg-bg-200 dark:hover:bg-bg-800 text-bg-500 hover:text-bg-800 dark:hover:text-bg-100 disabled:bg-bg-100/20 disabled:dark:bg-bg-950 disabled:hover:bg-bg-950 disabled:dark:hover:bg-bg-950 disabled:hover:text-bg-500 disabled:dark:hover:text-bg-500'
     case 'secondary':
     default:
-      return 'bg-bg-300 shadow-custom text-bg-500 dark:text-bg-100 dark:bg-bg-500 hover:bg-bg-400/50 dark:hover:bg-bg-500/80 text-bg-100 dark:text-bg-800 disabled:bg-bg-500 disabled:hover:bg-bg-500'
+      return 'bg-bg-300 shadow-custom text-bg-500 dark:text-bg-100 dark:bg-bg-600 hover:bg-bg-400/50 dark:hover:bg-bg-500/80 text-bg-100 dark:text-bg-800 disabled:bg-bg-500 disabled:hover:bg-bg-500'
   }
 }
 
@@ -57,6 +58,7 @@ const Button: React.FC<ButtonProps> = ({
   iconAtEnd = false,
   onClick,
   loading = false,
+  disabled = false,
   className = '',
   variant = 'primary',
   isRed = false,
@@ -77,7 +79,7 @@ const Button: React.FC<ButtonProps> = ({
       {...otherProps}
       type="button"
       onClick={onClick}
-      disabled={loading}
+      disabled={loading || disabled}
       className={finalClassName}
     >
       {!iconAtEnd && (

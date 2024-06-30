@@ -609,3 +609,25 @@ input[type='range'].secondary::-moz-range-progress {
 .gm-style iframe + div {
   border: none !important;
 }
+
+.steps .step-primary + .step-primary:before,
+.steps .step-primary:after {
+  --tw-bg-opacity: 1;
+  @apply bg-custom-500;
+  --tw-text-opacity: 1;
+  @apply text-custom-500;
+}
+.steps .step-primary + .step-primary:before,
+.steps .step-primary:after {
+  --tw-bg-opacity: 1;
+  @apply bg-custom-500;
+  --tw-text-opacity: 1;
+  @apply text-custom-500;
+}
+.steps .step-primary + .step-primary:before,
+.steps .step-primary:after {
+  --tw-bg-opacity: 1;
+  @apply bg-custom-500;
+  --tw-text-opacity: 1;
+  @apply text-custom-500;
+}

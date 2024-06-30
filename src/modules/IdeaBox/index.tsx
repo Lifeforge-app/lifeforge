@@ -66,7 +66,7 @@ function IdeaBox(): React.ReactElement {
               />
             ) : (
               <EmptyStateScreen
-                setModifyModalOpenType={setModifyContainerModalOpenType}
+                onCTAClick={setModifyContainerModalOpenType}
                 title="No idea containers"
                 description="Hmm... Seems a bit empty here. Consider creating one."
                 icon="tabler:cube-off"
