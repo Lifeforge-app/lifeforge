@@ -82,7 +82,7 @@ function JournalList({
                     onClick={() => {
                       setCurrentViewingJournal(entry.id)
                       setJournalViewModalOpen(true)
-                    }}24w2
+                    }}
                     className="w-full rounded-lg bg-bg-100 p-6 text-left shadow-custom hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/70"
                   >
                     <div className="flex-between flex">
