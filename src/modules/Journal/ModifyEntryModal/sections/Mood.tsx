@@ -64,7 +64,7 @@ function Mood({
     })
 
     await APIRequest({
-      endpoint: '/journal/entry/mood',
+      endpoint: '/journal/entry/ai/mood',
       method: 'POST',
       body: {
         text: encrypt(cleanedUpText, masterPassword),

@@ -2,10 +2,12 @@ import React, { useEffect, useRef } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 
 function RawText({
+  openType,
   rawText,
   setRawText,
   setStep
 }: {
+  openType: 'create' | 'update' | null
   rawText: string
   setRawText: React.Dispatch<React.SetStateAction<string>>
   setStep: React.Dispatch<React.SetStateAction<number>>
@@ -21,7 +23,16 @@ function RawText({
 
   useEffect(() => {
     updateTextAreaHeight()
-  }, [])
+  }, [rawText])
+
+  useEffect(() => {
+    if (openType === null) return
+
+    setTimeout(() => {
+      updateTextAreaHeight()
+    }, 500)
+  }, [openType])
+
   return (
     <>
       <div className="mt-4 size-full rounded-lg bg-bg-800/50 p-6 transition-all focus-within:ring-1 focus-within:ring-bg-500">
@@ -32,7 +43,6 @@ function RawText({
           value={rawText}
           onChange={e => {
             setRawText(e.target.value)
-            updateTextAreaHeight()
           }}
         />
       </div>
