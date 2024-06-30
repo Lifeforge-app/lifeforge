@@ -56,7 +56,7 @@ function AssetsBalanceCard(): React.ReactElement {
               title="Oops! No assets found."
               description="You don't have any assets yet. Add some to get started."
               ctaContent="Add Asset"
-              setModifyModalOpenType={() => {
+              onCTAClick={() => {
                 navigate('/wallet/assets')
               }}
               icon="tabler:wallet-off"

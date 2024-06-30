@@ -71,7 +71,7 @@ function ManageCategoriesModal({
                 title="Oops, no categories found"
                 description="Create a new category to get started"
                 ctaContent="Create Category"
-                setModifyModalOpenType={() => {
+                onCTAClick={() => {
                   setModifyCategoriesModalOpenType('income')
                 }}
               />

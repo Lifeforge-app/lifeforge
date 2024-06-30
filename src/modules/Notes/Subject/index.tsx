@@ -75,7 +75,7 @@ function NotesSubject(): React.ReactElement {
                     icon="tabler:file-off"
                     title="Hmm... it seems a bit empty here."
                     description="Time to upload some notes!"
-                    setModifyModalOpenType={() => {}}
+                    onCTAClick={() => {}}
                   />
                 )
               }

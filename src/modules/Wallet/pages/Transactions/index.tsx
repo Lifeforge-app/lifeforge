@@ -145,7 +145,7 @@ function Transactions(): React.ReactElement {
                     title="Oops! No Transaction found."
                     description="You don't have any transactions yet. Add some to get started."
                     ctaContent="Add Transaction"
-                    setModifyModalOpenType={setModifyModalOpenType}
+                    onCTAClick={setModifyModalOpenType}
                     icon="tabler:wallet-off"
                   />
                 )

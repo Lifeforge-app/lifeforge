@@ -1,14 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}"
-  ],
-  darkMode: "class",
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
       boxShadow: {
-        "custom": "4px 4px 10px 0px rgba(0,0,0,0.05)"
+        custom: '4px 4px 10px 0px rgba(0,0,0,0.05)'
       },
       colors: {
         custom: {
@@ -21,7 +18,7 @@ export default {
           600: 'rgb(var(--color-custom-600) / <alpha-value>)',
           700: 'rgb(var(--color-custom-700) / <alpha-value>)',
           800: 'rgb(var(--color-custom-800) / <alpha-value>)',
-          900: 'rgb(var(--color-custom-900) / <alpha-value>)',
+          900: 'rgb(var(--color-custom-900) / <alpha-value>)'
         },
         bg: {
           50: 'rgb(var(--color-bg-50) / <alpha-value>) !important',
@@ -34,17 +31,13 @@ export default {
           700: 'rgb(var(--color-bg-700) / <alpha-value>) !important',
           800: 'rgb(var(--color-bg-800) / <alpha-value>) !important',
           900: 'rgb(var(--color-bg-900) / <alpha-value>) !important',
-          950: 'rgb(var(--color-bg-950) / <alpha-value>) !important',
-        },
+          950: 'rgb(var(--color-bg-950) / <alpha-value>) !important'
+        }
       }
-    },
+    }
   },
-  plugins: [
-    require("daisyui"),
-    require('@tailwindcss/typography'),
-  ],
+  plugins: [require('daisyui'), require('@tailwindcss/typography')],
   daisyui: {
     themes: []
   }
 }
-

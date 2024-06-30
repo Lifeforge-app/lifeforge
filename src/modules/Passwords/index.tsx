@@ -177,7 +177,7 @@ function Passwords(): React.ReactElement {
                 title="Hmm... Seems a bit empty here."
                 icon="tabler:key-off"
                 ctaContent="new password"
-                setModifyModalOpenType={() => {
+                onCTAClick={() => {
                   setSelectedPassword(null)
                   setCreatePasswordModalOpenType('create')
                 }}

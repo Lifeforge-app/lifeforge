@@ -6,16 +6,14 @@ import { useTranslation } from 'react-i18next'
 import Button from '../ButtonsAndInputs/Button'
 
 function EmptyStateScreen({
-  setModifyModalOpenType,
+  onCTAClick,
   title,
   description,
   icon,
   ctaContent,
   customCTAButton
 }: {
-  setModifyModalOpenType?: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
+  onCTAClick?: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   title: string
   description: string
   icon: string
@@ -30,10 +28,10 @@ function EmptyStateScreen({
       <h2 className="text-center text-3xl font-semibold">{t(title)}</h2>
       <p className="-mt-2 text-center text-lg text-bg-500">{t(description)}</p>
       {customCTAButton ??
-        (ctaContent && setModifyModalOpenType && (
+        (ctaContent && onCTAClick && (
           <Button
             onClick={() => {
-              setModifyModalOpenType('create')
+              onCTAClick('create')
             }}
             icon="tabler:plus"
             className="mt-6"
