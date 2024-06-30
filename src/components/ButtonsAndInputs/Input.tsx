@@ -18,7 +18,8 @@ function Input({
   noAutoComplete = true,
   autoFocus = false,
   actionButtonIcon = '',
-  onActionButtonClick = () => {}
+  onActionButtonClick = () => {},
+  actionButtonLoading = false
 }: {
   reference?: React.RefObject<HTMLInputElement | null>
   name: string
@@ -34,6 +35,7 @@ function Input({
   autoFocus?: boolean
   actionButtonIcon?: string
   onActionButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  actionButtonLoading?: boolean
 }): React.ReactElement {
   const { t } = useTranslation()
 
@@ -88,6 +90,7 @@ function Input({
         {actionButtonIcon && (
           <button
             tabIndex={-1}
+            disabled={actionButtonLoading}
             onClick={onActionButtonClick}
             className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-500/30 hover:text-bg-200 focus:outline-none"
           >

@@ -1,8 +1,14 @@
+import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
+import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
+import { encrypt } from '@utils/encryption'
+import APIRequest from '@utils/fetchData'
 import Cleanup from './sections/Cleanup'
 import Mood from './sections/Mood'
 import Photos from './sections/Photos'
@@ -21,8 +27,10 @@ function ModifyJournalEntryModal({
   existedData: IJournalEntry | null
   masterPassword: string
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [step, setStep] = useState<number>(1)
   const [date, setDate] = useState<string>(new Date().toISOString())
+  const [title, setTitle] = useState<string>('')
   const [rawText, setRawText] = useState<string>('')
   const [cleanedUpText, setCleanedUpText] = useState<string>('')
   const [summarizedText, setSummarizedText] = useState<string>('')
@@ -30,7 +38,6 @@ function ModifyJournalEntryModal({
     Array<{
       file: File
       preview: string
-      caption: string
     }>
   >([])
   const [mood, setMood] = useState<{
@@ -40,15 +47,79 @@ function ModifyJournalEntryModal({
     text: '',
     emoji: ''
   })
+  const [titleGenerationLoading, setTitleGenerationLoading] =
+    useState<boolean>(false)
+
+  async function generateTitle(): Promise<void> {
+    setTitle('')
+
+    if (cleanedUpText === '') {
+      toast.error('Please complete step 2 first')
+      return
+    }
+
+    setTitleGenerationLoading(true)
+
+    const challenge = await fetch(
+      `${import.meta.env.VITE_API_HOST}/journal/auth/challenge`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        }
+      }
+    ).then(async res => {
+      const data = await res.json()
+      if (res.ok && data.state === 'success') {
+        return data.data
+      } else {
+        toast.error(t('journal.failedToUnlock'))
+        setTitleGenerationLoading(false)
+
+        throw new Error(t('journal.failedToUnlock'))
+      }
+    })
+
+    await APIRequest({
+      endpoint: '/journal/entry/ai/title',
+      method: 'POST',
+      body: {
+        text: encrypt(cleanedUpText, masterPassword),
+        master: encrypt(masterPassword, challenge)
+      },
+      successInfo: 'generate',
+      failureInfo: 'generate',
+      callback: data => {
+        setTitle(data.data)
+      },
+      finalCallback: () => {
+        setTitleGenerationLoading(false)
+      }
+    })
+  }
 
   useEffect(() => {
     setStep(1)
     if (existedData !== null && openType === 'update') {
-      setRawText(existedData.raw)
-      setCleanedUpText(existedData.content)
+      setTimeout(() => {
+        setTitle(existedData.title)
+        setRawText(existedData.raw)
+        setCleanedUpText(existedData.content)
+        setSummarizedText(existedData.summary)
+        setDate(existedData.date)
+        setMood(existedData.mood)
+      }, 500)
     } else {
+      setTitle('')
       setRawText('')
       setCleanedUpText('')
+      setSummarizedText('')
+      setDate(new Date().toISOString())
+      setPhotos([])
+      setMood({
+        text: '',
+        emoji: ''
+      })
     }
   }, [existedData, openType])
 
@@ -69,6 +140,23 @@ function ModifyJournalEntryModal({
         icon="tabler:calendar"
         name="Date"
         hasMargin={false}
+      />
+      <Input
+        name="Journal Title"
+        value={title}
+        updateValue={e => {
+          setTitle(e.target.value)
+        }}
+        darker
+        icon="tabler:file-text"
+        additionalClassName="mt-4"
+        placeholder="A Beautiful Day"
+        actionButtonIcon={
+          titleGenerationLoading ? 'svg-spinners:180-ring' : 'mage:stars-c'
+        }
+        onActionButtonClick={() => {
+          generateTitle().catch(console.error)
+        }}
       />
       <ul className="steps mt-8 shrink-0">
         {['Raw Text', 'Cleanup', 'Summarize', 'Photos', 'Mood', 'Review'].map(
@@ -109,6 +197,7 @@ function ModifyJournalEntryModal({
           case 1:
             return (
               <RawText
+                openType={openType}
                 setStep={setStep}
                 rawText={rawText}
                 setRawText={setRawText}
@@ -136,7 +225,12 @@ function ModifyJournalEntryModal({
             )
           case 4:
             return (
-              <Photos setStep={setStep} photos={photos} setPhotos={setPhotos} />
+              <Photos
+                setStep={setStep}
+                photos={photos}
+                setPhotos={setPhotos}
+                openType={openType}
+              />
             )
           case 5:
             return (
@@ -151,12 +245,18 @@ function ModifyJournalEntryModal({
           case 6:
             return (
               <Review
+                id={existedData?.id ?? ''}
+                date={date}
+                title={title}
                 setStep={setStep}
                 cleanedUpText={cleanedUpText}
                 summarizedText={summarizedText}
                 photos={photos}
                 mood={mood}
                 rawText={rawText}
+                masterPassword={masterPassword}
+                onClose={onClose}
+                openType={openType}
               />
             )
         }

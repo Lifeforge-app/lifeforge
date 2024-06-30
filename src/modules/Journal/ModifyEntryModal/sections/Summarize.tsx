@@ -61,7 +61,7 @@ function Summarize({
     })
 
     await APIRequest({
-      endpoint: '/journal/entry/summarize',
+      endpoint: '/journal/entry/ai/summarize',
       method: 'POST',
       body: {
         text: encrypt(cleanedUpText, masterPassword),

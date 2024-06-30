@@ -61,7 +61,7 @@ function Cleanup({
     })
 
     await APIRequest({
-      endpoint: '/journal/entry/cleanup',
+      endpoint: '/journal/entry/ai/cleanup',
       method: 'POST',
       body: {
         text: encrypt(rawText, masterPassword),

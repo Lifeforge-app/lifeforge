@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
+import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
@@ -23,8 +24,15 @@ function Journal(): React.ReactElement {
     useState<string>('')
   const [masterPassword, setMasterPassword] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
+  const [entries, setEntries] = useState<IJournalEntry[] | 'loading' | 'error'>(
+    'loading'
+  )
   const [journalViewModalOpen, setJournalViewModalOpen] =
     useState<boolean>(false)
+  const [
+    deleteJournalConfirmationModalOpen,
+    setDeleteJournalConfirmationModalOpen
+  ] = useState<boolean>(false)
   const [currentViewingJournal, setCurrentViewingJournal] = useState<
     string | null
   >(null)
@@ -32,6 +40,42 @@ function Journal(): React.ReactElement {
     'create' | 'update' | null
   >(null)
   const [existedData, setExistedData] = useState<IJournalEntry | null>(null)
+
+  async function fetchData(): Promise<void> {
+    setEntries('loading')
+
+    const challenge = await fetch(
+      `${import.meta.env.VITE_API_HOST}/journal/auth/challenge`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        }
+      }
+    ).then(async res => {
+      const data = await res.json()
+      if (res.ok && data.state === 'success') {
+        return data.data
+      } else {
+        setEntries('error')
+        throw new Error(t('fetch.fetchError'))
+      }
+    })
+
+    await APIRequest({
+      endpoint: `journal/entry/list?master=${encodeURIComponent(
+        encrypt(masterPassword, challenge)
+      )}`,
+      method: 'GET',
+      callback(data) {
+        setEntries(data.data)
+      },
+      onFailure: () => {
+        toast.error(t('fetch.fetchError'))
+        setEntries('error')
+      }
+    })
+  }
 
   async function onSubmit(): Promise<void> {
     if (masterPassWordInputContent.trim() === '') {
@@ -149,6 +193,13 @@ function Journal(): React.ReactElement {
             setJournalViewModalOpen={setJournalViewModalOpen}
             setCurrentViewingJournal={setCurrentViewingJournal}
             masterPassword={masterPassword}
+            setModifyEntryModalOpenType={setModifyEntryModalOpenType}
+            setDeleteJournalConfirmationModalOpen={
+              setDeleteJournalConfirmationModalOpen
+            }
+            setExistedData={setExistedData}
+            fetchData={fetchData}
+            entries={entries}
           />
           <JournalViewModal
             id={currentViewingJournal}
@@ -164,9 +215,23 @@ function Journal(): React.ReactElement {
             onClose={() => {
               setModifyEntryModalOpenType(null)
               setExistedData(null)
+              fetchData().catch(console.error)
             }}
             existedData={existedData}
             masterPassword={masterPassword}
+          />
+          <DeleteConfirmationModal
+            apiEndpoint="journal/entry/delete"
+            data={existedData}
+            isOpen={deleteJournalConfirmationModalOpen}
+            onClose={() => {
+              setDeleteJournalConfirmationModalOpen(false)
+            }}
+            itemName="journal entry"
+            updateDataList={() => {
+              setExistedData(null)
+              fetchData().catch(console.error)
+            }}
           />
         </>
       )}
