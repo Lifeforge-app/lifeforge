@@ -35,7 +35,7 @@ const DateInput: React.FC<DateInputProps> = ({
       <Icon
         icon={icon}
         className={`ml-6 size-6 shrink-0 ${
-          date !== '' ? 'text-custom-500' : 'text-bg-500'
+          date !== '' ? 'text-bg-100' : 'text-bg-500'
         }`}
       />
       <div className="flex w-full items-center gap-2">

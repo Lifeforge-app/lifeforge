@@ -69,12 +69,6 @@ const ProjectsKEntry = lazy(
 const NotesFile = lazy(async () => await import('./modules/Notes/File'))
 const Passwords = lazy(async () => await import('./modules/Passwords'))
 const Journal = lazy(async () => await import('./modules/Journal'))
-const JournalView = lazy(
-  async () => await import('./modules/Journal/JournalViewModal')
-)
-const JournalEdit = lazy(
-  async () => await import('./modules/Journal/JournalEdit')
-)
 const Music = lazy(async () => await import('./modules/Music'))
 const Repositories = lazy(async () => await import('./modules/Repositories'))
 const Achievements = lazy(async () => await import('./modules/Achievements'))
@@ -176,9 +170,7 @@ export const COMPONENTS = {
     passwords: Passwords
   },
   journal: {
-    journal: Journal,
-    'journal-view': JournalView,
-    'journal-edit': JournalEdit
+    journal: Journal
   },
   achievements: {
     achievements: Achievements

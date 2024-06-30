@@ -1,15 +1,29 @@
+import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
-import Markdown from 'react-markdown'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
+import { encrypt } from '@utils/encryption'
+import APIRequest from '@utils/fetchData'
+import JournalView from '../../components/JournalView'
 
 function Review({
+  id,
+  date,
+  title,
   setStep,
   rawText,
   cleanedUpText,
   summarizedText,
   photos,
-  mood
+  mood,
+  masterPassword,
+  onClose,
+  openType
 }: {
+  id: string
+  date: string
+  title: string
   setStep: React.Dispatch<React.SetStateAction<number>>
   rawText: string
   cleanedUpText: string
@@ -17,42 +31,120 @@ function Review({
   photos: Array<{
     file: File
     preview: string
-    caption: string
   }>
   mood: {
     text: string
     emoji: string
   }
+  masterPassword: string
+  onClose: () => void
+  openType: 'create' | 'update' | null
 }): React.ReactElement {
-  const [viewRaw, setViewRaw] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const { t } = useTranslation()
+
+  async function onSubmit(): Promise<void> {
+    setLoading(true)
+
+    const challenge = await fetch(
+      `${import.meta.env.VITE_API_HOST}/journal/auth/challenge`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        }
+      }
+    ).then(async res => {
+      const data = await res.json()
+      if (res.ok && data.state === 'success') {
+        return data.data
+      } else {
+        toast.error(t('journal.failedToUnlock'))
+        setLoading(false)
+
+        throw new Error(t('journal.failedToUnlock'))
+      }
+    })
+
+    const encryptedTitle = encrypt(title, masterPassword)
+    const encryptedRaw = encrypt(rawText, masterPassword)
+    const encryptedCleanedUp = encrypt(cleanedUpText, masterPassword)
+    const encryptedSummarized = encrypt(summarizedText, masterPassword)
+    const encryptedMood = encrypt(JSON.stringify(mood), masterPassword)
+
+    const encryptedMaster = encrypt(masterPassword, challenge)
+
+    const encryptedEverything = encrypt(
+      JSON.stringify({
+        date,
+        title: encryptedTitle,
+        raw: encryptedRaw,
+        cleanedUp: encryptedCleanedUp,
+        summarized: encryptedSummarized,
+        mood: encryptedMood,
+        master: encryptedMaster
+      }),
+      challenge
+    )
+
+    const formData = new FormData()
+    formData.append('data', encryptedEverything)
+    photos.forEach(photo => {
+      formData.append('files', photo.file)
+    })
+
+    await APIRequest({
+      endpoint: `/journal/entry/${openType}${
+        openType === 'update' ? `/${id}` : ''
+      }`,
+      method: openType === 'update' ? 'PUT' : 'POST',
+      isJSON: openType === 'update',
+      body: openType === 'update' ? { data: encryptedEverything } : formData,
+      successInfo: openType,
+      failureInfo: openType,
+      callback: () => {
+        onClose()
+        setStep(1)
+      },
+      finalCallback: () => {
+        setLoading(false)
+      }
+    })
+  }
+
   return (
     <>
-      <div className="flex-between my-6 flex">
-        <h2 className="text-4xl font-semibold">Diary Review</h2>
-        <span className="block rounded-full bg-bg-700/50 px-3 py-1 text-base font-medium">
-          {mood.emoji} {mood.text}
-        </span>
+      <JournalView
+        date={date}
+        title={title}
+        mood={mood}
+        cleanedUpText={cleanedUpText}
+        summarizedText={summarizedText}
+        rawText={rawText}
+        photos={photos}
+      />
+      <div className="flex-between mt-6 flex">
+        <Button
+          onClick={() => {
+            setStep(5)
+          }}
+          icon="tabler:arrow-left"
+          variant="no-bg"
+        >
+          Previous
+        </Button>
+        <Button
+          onClick={() => {
+            onSubmit().catch(console.error)
+          }}
+          icon="tabler:arrow-right"
+          iconAtEnd
+          loading={loading}
+          disabled={summarizedText.trim() === ''}
+        >
+          {openType === 'update' ? 'Update' : 'Create'}
+        </Button>
       </div>
-      <p className="mb-6 text-lg">
-        <span className="text-5xl font-semibold uppercase">
-          {summarizedText[0]}
-        </span>
-        {summarizedText.slice(1)}
-      </p>
-      <hr className="mb-6 border-bg-500" />
-      <Markdown className="prose !max-w-full">{cleanedUpText}</Markdown>
-      <Button
-        icon={viewRaw ? 'tabler:chevron-up' : 'tabler:chevron-down'}
-        className="mt-6"
-        iconAtEnd
-        variant="no-bg"
-        onClick={() => {
-          setViewRaw(!viewRaw)
-        }}
-      >
-        {viewRaw ? 'Hide' : 'Show'} Raw
-      </Button>
-      {viewRaw && <p className="mt-6 text-lg text-bg-500">{rawText}</p>}
     </>
   )
 }
