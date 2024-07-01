@@ -41,11 +41,11 @@ function ListView({
   return (
     <>
       <Scrollbar>
-        <ul className="flex min-h-full flex-col divide-y divide-bg-200 pb-8 dark:divide-bg-800/70">
+        <ul className="mb-8 flex flex-col divide-y divide-bg-200 dark:divide-bg-800/70">
           {transactions.map(transaction => (
             <li
               key={transaction.id}
-              className="relative flex flex-between gap-12 p-4 pl-2"
+              className="flex-between relative flex gap-12 p-4 pl-2"
             >
               <div className="flex w-full min-w-0 items-center gap-2 [@media(min-width:400px)]:gap-4">
                 <div

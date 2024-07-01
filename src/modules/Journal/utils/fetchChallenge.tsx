@@ -3,7 +3,7 @@ import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
 
 export async function fetchChallenge(
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setLoading?: React.Dispatch<React.SetStateAction<boolean>>
 ): Promise<string> {
   return await fetch(
     `${import.meta.env.VITE_API_HOST}/journal/auth/challenge`,
@@ -19,7 +19,9 @@ export async function fetchChallenge(
       return data.data
     } else {
       toast.error(t('journal.failedToUnlock'))
-      setLoading(false)
+      if (setLoading !== undefined) {
+        setLoading(false)
+      }
 
       throw new Error(t('journal.failedToUnlock'))
     }

@@ -7,7 +7,13 @@ import Modal from '@components/Modals/Modal'
 import { useAuthContext } from '@providers/AuthProvider'
 import APIRequest from '@utils/fetchData'
 
-function CreatePassword(): React.ReactElement {
+function CreatePasswordScreen({
+  endpoint,
+  keyInUserData
+}: {
+  endpoint: string
+  keyInUserData: string
+}): React.ReactElement {
   const { setUserData, userData } = useAuthContext()
   const [newPassword, setNewPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
@@ -31,7 +37,7 @@ function CreatePassword(): React.ReactElement {
     setLoading(true)
 
     await APIRequest({
-      endpoint: 'journal/auth',
+      endpoint,
       method: 'POST',
       body: { password: newPassword, id: userData.id },
       successInfo: 'created',
@@ -41,7 +47,7 @@ function CreatePassword(): React.ReactElement {
         setConfirmationModalOpen(false)
       },
       callback: () => {
-        setUserData({ ...userData, hasJournalMasterPassword: true })
+        setUserData({ ...userData, [keyInUserData]: true })
       }
     })
   }
@@ -67,8 +73,7 @@ function CreatePassword(): React.ReactElement {
         <Icon icon="tabler:lock-plus" className="size-28" />
         <h2 className="text-4xl font-semibold">Create your master password</h2>
         <p className="mb-8 w-1/2 text-center text-lg text-bg-500">
-          A master password is required to encrypt and decrypt your journal
-          entries.
+          A master password is required to encrypt and decrypt your data.
         </p>
         <Input
           key="newPassword"
@@ -139,7 +144,7 @@ function CreatePassword(): React.ReactElement {
           This master password is unchangable for now! If you accidentally
           forget the password, you lose everything. This password is hashed and
           stored in your user profile, and it is not decryptable. It will be
-          used to encrypt and decrypt the passwords you store in your vault.
+          used to encrypt and decrypt the data you store in your vault.
         </p>
         <div className="mt-6 flex w-full justify-around gap-2">
           <Button
@@ -168,4 +173,4 @@ function CreatePassword(): React.ReactElement {
   )
 }
 
-export default CreatePassword
+export default CreatePasswordScreen
