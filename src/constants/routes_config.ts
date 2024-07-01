@@ -111,6 +111,7 @@ export const ROUTES: IRoutes[] = [
       {
         name: 'Journal',
         icon: 'tabler:book',
+        hasAI: true,
         routes: {
           journal: 'journal'
         },

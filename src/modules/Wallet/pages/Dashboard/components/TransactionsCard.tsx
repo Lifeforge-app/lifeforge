@@ -17,7 +17,7 @@ function TransactionsCard(): React.ReactElement {
 
   return (
     <div className="col-span-2 row-span-3 flex h-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
-      <div className="flex flex-between gap-4">
+      <div className="flex-between flex gap-4">
         <h1 className="flex w-full items-center gap-2 text-xl font-semibold sm:w-auto">
           <Icon icon="tabler:list" className="text-2xl" />
           <span className="ml-2">
@@ -37,7 +37,7 @@ function TransactionsCard(): React.ReactElement {
         {transactions => (
           <APIComponentWithFallback data={categories}>
             {categories => (
-              <div className="mt-6 size-full">
+              <div className="mt-6 size-full min-h-96">
                 <Scrollbar>
                   {transactions.length > 0 ? (
                     <>
@@ -151,7 +151,7 @@ function TransactionsCard(): React.ReactElement {
                         {transactions.slice(0, 20).map(transaction => (
                           <li
                             key={transaction.id}
-                            className="flex flex-between gap-8 p-4"
+                            className="flex-between flex gap-8 p-4"
                           >
                             <div className="flex w-full min-w-0 items-center gap-4">
                               <div
