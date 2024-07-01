@@ -9,7 +9,7 @@ import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import CreatePassword from '@components/Screens/CreatePassword'
+import CreatePasswordScreen from '@components/Screens/CreatePasswordScreen'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IPasswordEntry } from '@interfaces/password_interfaces'
@@ -74,7 +74,7 @@ function Passwords(): React.ReactElement {
         )}
       </div>
       {userData?.hasMasterPassword === false ? (
-        <CreatePassword
+        <CreatePasswordScreen
           endpoint="passwords/master"
           keyInUserData="hasMasterPassword"
         />
