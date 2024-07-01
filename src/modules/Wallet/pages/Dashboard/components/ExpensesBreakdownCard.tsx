@@ -40,7 +40,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
 
   return (
     <div className="col-span-1 row-span-4 flex w-full min-w-0 flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
-      <div className="flex w-full min-w-0 flex-between gap-4">
+      <div className="flex-between flex w-full min-w-0 gap-4">
         <h1 className="flex w-full min-w-0 items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:chart-donut-3" className="shrink-0 text-2xl" />
           <span className="ml-2 w-full min-w-0 truncate">
@@ -113,15 +113,15 @@ function ExpensesBreakdownCard(): React.ReactElement {
                       </div>
                     ))}
                 </div>
-                <Scrollbar>
-                  <ul className="mt-6 flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
+                <Scrollbar autoHeight autoHeightMax={384} className="mt-6">
+                  <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
                     {categories
                       .filter(category => category.type === 'expenses')
                       .map(category => (
                         <Link
                           key={category.id}
                           to={`/wallet/transactions?type=expenses&category=${category.id}`}
-                          className="flex flex-between gap-4 p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50"
+                          className="flex-between flex gap-4 p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50"
                         >
                           <div className="flex items-center gap-4">
                             <div
