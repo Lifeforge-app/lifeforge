@@ -1,34 +1,27 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import FAB from '@components/ButtonsAndInputs/FAB'
-import Input from '@components/ButtonsAndInputs/Input'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import CreatePassword from '@components/Screens/CreatePassword'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IPasswordEntry } from '@interfaces/password_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
-import { encrypt } from '@utils/encryption'
-import APIRequest from '@utils/fetchData'
-import CreatePassword from './CreatePassword'
-import CreatePasswordModal from './CreatePasswordModal'
-import PasswordEntryITem from './PasswordEntryItem'
+import CreatePasswordModal from './components/CreatePasswordModal'
+import PasswordEntryITem from './components/PasswordEntryItem'
+import LockedScreen from '../../components/Screens/LockedScreen'
 
 function Passwords(): React.ReactElement {
   const { t } = useTranslation()
   const { userData } = useAuthContext()
-  const [masterPassWordInputContent, setMasterPassWordInputContent] =
-    useState<string>('')
   const [masterPassword, setMasterPassword] = useState<string>('')
-  const [loading, setLoading] = useState<boolean>(false)
   const [createPasswordModalOpenType, setCreatePasswordModalOpenType] =
     useState<'create' | 'update' | null>(null)
   const [passwordList, refreshPasswordList, setPasswordList] = useFetch<
@@ -42,15 +35,8 @@ function Passwords(): React.ReactElement {
   ] = useState<boolean>(false)
   const [existedData, setExistedData] = useState<IPasswordEntry | null>(null)
 
-  async function onSubmit(): Promise<void> {
-    if (masterPassWordInputContent.trim() === '') {
-      toast.error('Please fill in the field')
-      return
-    }
-
-    setLoading(true)
-
-    const challenge = await fetch(
+  async function fetchChallenge(): Promise<string> {
+    return await fetch(
       `${import.meta.env.VITE_API_HOST}/passwords/master/challenge`,
       {
         method: 'GET',
@@ -64,30 +50,6 @@ function Passwords(): React.ReactElement {
         return data.data
       } else {
         throw new Error(t('vault.failedToUnlock'))
-      }
-    })
-
-    await APIRequest({
-      endpoint: 'passwords/master/verify',
-      method: 'POST',
-      body: {
-        password: encrypt(masterPassWordInputContent, challenge),
-        id: userData.id
-      },
-      callback: data => {
-        if (data.data === true) {
-          toast.info(t('vault.unlocked'))
-          setMasterPassword(masterPassWordInputContent)
-          setMasterPassWordInputContent('')
-        } else {
-          toast.error(t('vault.failedToUnlock'))
-        }
-      },
-      finalCallback: () => {
-        setLoading(false)
-      },
-      onFailure: () => {
-        toast.error(t('vault.failedToUnlock'))
       }
     })
   }
@@ -112,43 +74,17 @@ function Passwords(): React.ReactElement {
         )}
       </div>
       {userData?.hasMasterPassword === false ? (
-        <CreatePassword />
+        <CreatePassword
+          endpoint="passwords/master"
+          keyInUserData="hasMasterPassword"
+        />
       ) : masterPassword === '' ? (
-        <div className="flex-center flex size-full flex-1 flex-col gap-4">
-          <Icon icon="tabler:lock-access" className="size-28" />
-          <h2 className="text-4xl font-semibold">{t('vault.lockedMessage')}</h2>
-          <p className="mb-8 text-center text-lg text-bg-500">
-            {t('vault.passwordRequired')}
-          </p>
-          <Input
-            isPassword
-            icon="tabler:lock"
-            name="Master Password"
-            placeholder="Enter your master password"
-            value={masterPassWordInputContent}
-            updateValue={e => {
-              setMasterPassWordInputContent(e.target.value)
-            }}
-            noAutoComplete
-            additionalClassName="w-full md:w-3/4 xl:w-1/2"
-            onKeyDown={e => {
-              if (e.key === 'Enter') {
-                onSubmit().catch(console.error)
-              }
-            }}
-            darker
-          />
-          <Button
-            onClick={() => {
-              onSubmit().catch(console.error)
-            }}
-            loading={loading}
-            className="w-full md:w-3/4 xl:w-1/2"
-            icon="tabler:lock"
-          >
-            Unlock
-          </Button>
-        </div>
+        <LockedScreen
+          module="vault"
+          endpoint="passwords/master/verify"
+          setMasterPassword={setMasterPassword}
+          fetchChallenge={fetchChallenge}
+        />
       ) : (
         <APIComponentWithFallback data={passwordList}>
           {passwordList =>

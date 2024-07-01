@@ -1,10 +1,7 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
-import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
-import Input from '@components/ButtonsAndInputs/Input'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -15,16 +12,14 @@ import APIRequest from '@utils/fetchData'
 import JournalList from './components/JournalList'
 import JournalViewModal from './components/JournalViewModal'
 import ModifyJournalEntryModal from './components/ModifyEntryModal'
-import CreatePassword from './CreatePassword'
 import { fetchChallenge } from './utils/fetchChallenge'
+import CreatePasswordScreen from '../../components/Screens/CreatePasswordScreen'
+import LockedScreen from '../../components/Screens/LockedScreen'
 
 function Journal(): React.ReactElement {
   const { t } = useTranslation()
   const { userData } = useAuthContext()
-  const [masterPassWordInputContent, setMasterPassWordInputContent] =
-    useState<string>('')
   const [masterPassword, setMasterPassword] = useState<string>('')
-  const [loading, setLoading] = useState<boolean>(false)
   const [entries, setEntries] = useState<IJournalEntry[] | 'loading' | 'error'>(
     'loading'
   )
@@ -45,23 +40,7 @@ function Journal(): React.ReactElement {
   async function fetchData(): Promise<void> {
     setEntries('loading')
 
-    const challenge = await fetch(
-      `${import.meta.env.VITE_API_HOST}/journal/auth/challenge`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        }
-      }
-    ).then(async res => {
-      const data = await res.json()
-      if (res.ok && data.state === 'success') {
-        return data.data
-      } else {
-        setEntries('error')
-        throw new Error(t('fetch.fetchError'))
-      }
-    })
+    const challenge = await fetchChallenge()
 
     await APIRequest({
       endpoint: `journal/entry/list?master=${encodeURIComponent(
@@ -74,41 +53,6 @@ function Journal(): React.ReactElement {
       onFailure: () => {
         toast.error(t('fetch.fetchError'))
         setEntries('error')
-      }
-    })
-  }
-
-  async function onSubmit(): Promise<void> {
-    if (masterPassWordInputContent.trim() === '') {
-      toast.error('Please fill in the field')
-      return
-    }
-
-    setLoading(true)
-
-    const challenge = await fetchChallenge(setLoading)
-
-    await APIRequest({
-      endpoint: 'journal/auth/verify',
-      method: 'POST',
-      body: {
-        password: encrypt(masterPassWordInputContent, challenge),
-        id: userData.id
-      },
-      callback: data => {
-        if (data.data === true) {
-          toast.info(t('vault.unlocked'))
-          setMasterPassword(masterPassWordInputContent)
-          setMasterPassWordInputContent('')
-        } else {
-          toast.error(t('journal.failedToUnlock'))
-        }
-      },
-      finalCallback: () => {
-        setLoading(false)
-      },
-      onFailure: () => {
-        toast.error(t('journal.failedToUnlock'))
       }
     })
   }
@@ -131,45 +75,17 @@ function Journal(): React.ReactElement {
         )}
       </div>
       {userData?.hasJournalMasterPassword === false ? (
-        <CreatePassword />
+        <CreatePasswordScreen
+          endpoint="journal/auth"
+          keyInUserData="hasJournalMasterPassword"
+        />
       ) : masterPassword === '' ? (
-        <div className="flex-center flex size-full flex-1 flex-col gap-4">
-          <Icon icon="tabler:lock-access" className="size-28" />
-          <h2 className="text-4xl font-semibold">
-            {t('journal.lockedMessage')}
-          </h2>
-          <p className="mb-8 text-center text-lg text-bg-500">
-            {t('journal.passwordRequired')}
-          </p>
-          <Input
-            isPassword
-            icon="tabler:lock"
-            name="Master Password"
-            placeholder="Enter your master password"
-            value={masterPassWordInputContent}
-            updateValue={e => {
-              setMasterPassWordInputContent(e.target.value)
-            }}
-            noAutoComplete
-            additionalClassName="w-full md:w-3/4 xl:w-1/2"
-            onKeyDown={e => {
-              if (e.key === 'Enter') {
-                onSubmit().catch(console.error)
-              }
-            }}
-            darker
-          />
-          <Button
-            onClick={() => {
-              onSubmit().catch(console.error)
-            }}
-            loading={loading}
-            className="w-full md:w-3/4 xl:w-1/2"
-            icon="tabler:lock"
-          >
-            Unlock
-          </Button>
-        </div>
+        <LockedScreen
+          module="journal"
+          endpoint="journal/auth/verify"
+          setMasterPassword={setMasterPassword}
+          fetchChallenge={fetchChallenge}
+        />
       ) : (
         <>
           <JournalList

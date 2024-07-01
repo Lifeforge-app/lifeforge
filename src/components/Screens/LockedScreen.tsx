@@ -1,0 +1,116 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
+import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+import Button from '@components/ButtonsAndInputs/Button'
+import Input from '@components/ButtonsAndInputs/Input'
+import { useAuthContext } from '@providers/AuthProvider'
+import { encrypt } from '@utils/encryption'
+import APIRequest from '@utils/fetchData'
+
+function LockedScreen({
+  module,
+  endpoint,
+  setMasterPassword,
+  fetchChallenge
+}: {
+  module: string
+  endpoint: string
+  setMasterPassword: React.Dispatch<React.SetStateAction<string>>
+  fetchChallenge: (
+    setLoading?: React.Dispatch<React.SetStateAction<boolean>>
+  ) => Promise<string>
+}): React.ReactElement {
+  const { userData } = useAuthContext()
+  const [masterPassWordInputContent, setMasterPassWordInputContent] =
+    useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
+  const { t } = useTranslation()
+
+  async function onSubmit(): Promise<void> {
+    if (masterPassWordInputContent.trim() === '') {
+      toast.error('Please fill in the field')
+      return
+    }
+
+    setLoading(true)
+
+    const challenge = await fetchChallenge(setLoading)
+
+    await APIRequest({
+      endpoint,
+      method: 'POST',
+      body: {
+        password: encrypt(masterPassWordInputContent, challenge),
+        id: userData.id
+      },
+      callback: data => {
+        if (data.data === true) {
+          toast.info(
+            t('fetch.success', {
+              action: t('fetch.unlock')
+            })
+          )
+          setMasterPassword(masterPassWordInputContent)
+          setMasterPassWordInputContent('')
+        } else {
+          toast.error(
+            t('fetch.failure', {
+              action: t('fetch.unlock')
+            })
+          )
+        }
+      },
+      finalCallback: () => {
+        setLoading(false)
+      },
+      onFailure: () => {
+        toast.error(
+          t('fetch.failure', {
+            action: t('fetch.unlock')
+          })
+        )
+      }
+    })
+  }
+
+  return (
+    <div className="flex-center flex size-full flex-1 flex-col gap-4">
+      <Icon icon="tabler:lock-access" className="size-28" />
+      <h2 className="text-4xl font-semibold">{t(`${module}.lockedMessage`)}</h2>
+      <p className="mb-8 text-center text-lg text-bg-500">
+        {t(`${module}.passwordRequired`)}
+      </p>
+      <Input
+        isPassword
+        icon="tabler:lock"
+        name="Master Password"
+        placeholder="Enter your master password"
+        value={masterPassWordInputContent}
+        updateValue={e => {
+          setMasterPassWordInputContent(e.target.value)
+        }}
+        noAutoComplete
+        additionalClassName="w-full md:w-3/4 xl:w-1/2"
+        onKeyDown={e => {
+          if (e.key === 'Enter') {
+            onSubmit().catch(console.error)
+          }
+        }}
+        darker
+      />
+      <Button
+        onClick={() => {
+          onSubmit().catch(console.error)
+        }}
+        loading={loading}
+        className="w-full md:w-3/4 xl:w-1/2"
+        icon="tabler:lock"
+      >
+        Unlock
+      </Button>
+    </div>
+  )
+}
+
+export default LockedScreen
