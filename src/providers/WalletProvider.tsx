@@ -1,4 +1,5 @@
 import { useDebounce } from '@uidotdev/usehooks'
+import moment from 'moment'
 import React, { useContext, useEffect, useState } from 'react'
 import { Outlet } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
@@ -41,9 +42,7 @@ export default function WalletProvider(): React.ReactElement {
   const [categories, refreshCategories] =
     useFetch<IWalletCategoryEntry[]>('wallet/category')
   const [incomeExpenses] = useFetch<IWalletIncomeExpenses>(
-    `wallet/transactions/income-expenses/${new Date().getFullYear()}/${
-      new Date().getMonth() + 1
-    }`
+    `wallet/transactions/income-expenses/${new Date().getFullYear()}/${new Date().getMonth()}`
   )
   const [filteredTransactions, setFilteredTransactions] = useState<
     IWalletTransactionEntry[]
@@ -70,6 +69,32 @@ export default function WalletProvider(): React.ReactElement {
             transaction.particulars
               .toLowerCase()
               .includes(debouncedSearchQuery.toLowerCase())
+          )
+        })
+        .filter(transaction => {
+          const startDate =
+            searchParams.get('start_date') !== null &&
+            moment(searchParams.get('start_date')).isValid()
+              ? moment(searchParams.get('start_date'))
+              : moment('1900-01-01')
+          const endDate =
+            searchParams.get('end_date') !== null &&
+            moment(searchParams.get('end_date')).isValid()
+              ? moment(searchParams.get('end_date'))
+              : moment()
+          if (transaction.amount === 400) {
+            console.log(
+              moment(transaction.date).format('YYYY-MM-DD'),
+              startDate.format('YYYY-MM-DD'),
+              endDate.format('YYYY-MM-DD'),
+              moment(transaction.date).isSameOrAfter(startDate) &&
+                moment(transaction.date).isSameOrBefore(endDate)
+            )
+          }
+          const transactionDate = moment(transaction.date).format('YYYY-MM-DD')
+          return (
+            moment(transactionDate).isSameOrAfter(startDate) &&
+            moment(transactionDate).isSameOrBefore(endDate)
           )
         })
     )

@@ -6,6 +6,7 @@ import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import AssetsSection from './components/AssetsSection'
 import CategoriesSection from './components/CategoriesSection'
+import DateRangeSelector from './components/DateRangeSelector'
 import LedgerSection from './components/LedgerSection'
 import TypeSection from './components/TypeSection'
 
@@ -45,6 +46,8 @@ function Sidebar({
               setSidebarOpen(false)
             }}
           />
+          <SidebarDivider />
+          <DateRangeSelector />
           <SidebarDivider />
           <TypeSection setSidebarOpen={setSidebarOpen} />
           <SidebarDivider />
