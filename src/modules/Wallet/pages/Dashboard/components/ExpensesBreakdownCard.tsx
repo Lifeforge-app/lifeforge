@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -22,6 +22,10 @@ const options2 = {
 
 function ExpensesBreakdownCard(): React.ReactElement {
   const { categories, transactions, incomeExpenses } = useWalletContext()
+  // TODO
+  const [year] = useState(new Date().getFullYear())
+  const [month] = useState(new Date().getMonth())
+
   const spentOnEachCategory = useMemo(() => {
     if (typeof categories === 'string' || typeof transactions === 'string') {
       return []
@@ -31,7 +35,14 @@ function ExpensesBreakdownCard(): React.ReactElement {
       .filter(category => category.type === 'expenses')
       .map(category =>
         transactions
-          .filter(transaction => transaction.category === category.id)
+          .filter(transaction => {
+            const date = new Date(transaction.date)
+            return (
+              date.getFullYear() === year &&
+              date.getMonth() + 1 === month &&
+              transaction.category === category.id
+            )
+          })
           .reduce((acc, curr) => acc + curr.amount, 0)
       )
   }, [categories, transactions])
