@@ -10,10 +10,11 @@ type Value = ValuePiece | [ValuePiece, ValuePiece]
 
 interface DateInputProps {
   date: string
-  setDate: React.Dispatch<React.SetStateAction<string>>
+  setDate: (date: string) => void
   name: string
   icon: string
   hasMargin?: boolean
+  className?: string
 }
 
 const DateInput: React.FC<DateInputProps> = ({
@@ -21,7 +22,8 @@ const DateInput: React.FC<DateInputProps> = ({
   setDate,
   name,
   icon,
-  hasMargin = true
+  hasMargin = true,
+  className = ''
 }) => {
   const { t } = useTranslation()
   const { language } = usePersonalizationContext()
@@ -30,7 +32,7 @@ const DateInput: React.FC<DateInputProps> = ({
     <div
       className={`group relative ${
         hasMargin && 'mt-4'
-      } z-10 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 dark:bg-bg-800/50`}
+      } flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 dark:bg-bg-800/50 ${className}`}
     >
       <Icon
         icon={icon}

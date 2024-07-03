@@ -14,6 +14,8 @@ import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 import 'leaflet/dist/leaflet.css'
+import 'react-date-range/dist/styles.css'
+import 'react-date-range/dist/theme/default.css'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
