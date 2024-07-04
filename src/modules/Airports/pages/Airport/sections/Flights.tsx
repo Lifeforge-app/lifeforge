@@ -19,7 +19,7 @@ interface FlightData {
 }
 
 function Flights({ IATA }: { IATA: string }): React.ReactElement {
-  const [nextPageNum, setNageNum] = useState([-1, 1])
+  const [nextPageNum, setPageNum] = useState([-1, 1])
   const location = useLocation()
   const [flightsData, , setFlightsData] = useFetch<FlightData[]>(
     `airports/airport/${IATA}/flights/${location.hash
@@ -40,7 +40,7 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
       method: 'GET',
       callback(data) {
         setFlightsData([...data.data, ...flightsData])
-        setNageNum([nextPageNum[0] - 1, nextPageNum[1]])
+        setPageNum([nextPageNum[0] - 1, nextPageNum[1]])
       },
       finalCallback() {
         setPreviousPageLoading(false)
@@ -57,7 +57,7 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
       method: 'GET',
       callback(data) {
         setFlightsData([...flightsData, ...data.data])
-        setNageNum([nextPageNum[0], nextPageNum[1] + 1])
+        setPageNum([nextPageNum[0], nextPageNum[1] + 1])
       },
       finalCallback() {
         setNextPageLoading(false)
