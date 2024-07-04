@@ -231,7 +231,7 @@ function ChangiFlightStatus(): React.ReactElement {
             setSearchParams({ type: value })
           }}
         >
-          <Listbox.Button className="flex-between flex w-48 gap-2 bg-bg-50 p-4 shadow-custom dark:bg-bg-800/50">
+          <Listbox.Button className="flex-between flex w-48 gap-2 rounded-md bg-bg-50 p-4 shadow-custom dark:bg-bg-800/50">
             <div className="flex items-center gap-2">
               <Icon
                 icon={

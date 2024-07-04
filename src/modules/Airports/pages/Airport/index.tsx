@@ -16,7 +16,9 @@ import { toTitleCase } from '@utils/strings'
 import Flights from './sections/Flights'
 import NOTAM from './sections/NOTAM'
 import NOTAMDetailsModal from './sections/NOTAM/components/NOTAMDetailsModal'
+import Runways from './sections/Runways'
 import Weather from './sections/Weather'
+import Radio from './sections/Radio'
 
 const CONTINENTS = {
   AF: 'Africa',
@@ -267,9 +269,9 @@ function Airport(): React.ReactElement {
                         />
                       )
                     case 'radio':
-                      return <div>Radio</div>
+                      return <Radio />
                     case 'runways':
-                      return <div>Runways</div>
+                      return <Runways />
                     default:
                       return (
                         <EmptyStateScreen
