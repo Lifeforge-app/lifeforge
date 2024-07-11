@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+/* eslit-disable @typescript-eslint/strict-boolean-expressions */
+// today I don't feel like coding
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
