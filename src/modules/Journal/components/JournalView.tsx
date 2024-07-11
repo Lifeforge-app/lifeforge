@@ -69,7 +69,11 @@ function JournalView({
           <div className="mt-4 grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-4">
             {photos.map(photo => (
               <img
-                src={typeof photo === 'string' ? photo : photo.preview}
+                src={
+                  typeof photo === 'string'
+                    ? photo + '&thumb=300x300'
+                    : photo.preview
+                }
                 alt=""
                 key={typeof photo === 'string' ? photo : photo.preview}
                 className="size-full rounded-lg object-contain"
