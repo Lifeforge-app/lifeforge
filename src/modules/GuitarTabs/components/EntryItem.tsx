@@ -3,9 +3,14 @@ import type IGuitarTabsEntry from '@interfaces/guitar_tabs_interfaces'
 
 function EntryItem({ entry }: { entry: IGuitarTabsEntry }): React.ReactElement {
   return (
-    <div
+    <a
       key={entry.id}
-      className="rounded-lg bg-bg-50 p-4 shadow-custom hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/70"
+      href={`${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
+        entry.id
+      }/${entry.file}`}
+      target="_blank"
+      className="block rounded-lg bg-bg-50 p-4 shadow-custom hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/70"
+      rel="noreferrer"
     >
       <img
         src={`${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
@@ -20,7 +25,7 @@ function EntryItem({ entry }: { entry: IGuitarTabsEntry }): React.ReactElement {
         </h3>
         <p className="text-sm text-bg-500">{entry.pageCount} pages</p>
       </div>
-    </div>
+    </a>
   )
 }
 
