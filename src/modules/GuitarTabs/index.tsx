@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { type Id, toast } from 'react-toastify'
 import colors from 'tailwindcss/colors'
 import Button from '@components/ButtonsAndInputs/Button'
@@ -9,6 +10,7 @@ import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import type IGuitarTabsEntry from '@interfaces/guitar_tabs_interfaces'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
@@ -20,13 +22,18 @@ const intervalManager = IntervalManager.getInstance()
 
 function GuitarTabs(): React.ReactElement {
   const [page, setPage] = useState<number>(1)
+  const [searchQuery, setSearchQuery] = useState<string>('')
+  const debouncedSearchQuery = useDebounce(searchQuery, 500)
   const [entries, refreshEntries] = useFetch<{
     totalItems: number
     totalPages: number
     page: number
     items: IGuitarTabsEntry[]
-  }>(`/guitar-tabs/list?page=${page}`)
-  const [searchQuery, setSearchQuery] = useState<string>('')
+  }>(
+    `/guitar-tabs/list?page=${page}&query=${encodeURIComponent(
+      debouncedSearchQuery.trim()
+    )}`
+  )
   const toastId = useRef<Id>(null)
   const { themeColor } = usePersonalizationContext()
   const finalTheme = useMemo(() => {
@@ -233,6 +240,10 @@ function GuitarTabs(): React.ReactElement {
     return pageNumbers
   }
 
+  useEffect(() => {
+    setPage(1)
+  }, [debouncedSearchQuery])
+
   return (
     <ModuleWrapper>
       <ModuleHeader
@@ -257,13 +268,27 @@ function GuitarTabs(): React.ReactElement {
       <APIComponentWithFallback data={entries}>
         {entries => (
           <>
-            <div className="my-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {entries.items.map(entry => (
-                <EntryItem key={entry.id} entry={entry} />
-              ))}
-            </div>
+            {entries.totalItems > 0 ? (
+              <div className="my-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                {entries.items.map(entry => (
+                  <EntryItem key={entry.id} entry={entry} />
+                ))}
+              </div>
+            ) : debouncedSearchQuery.trim() === '' ? (
+              <EmptyStateScreen
+                title="Oops! No guitar tabs found!"
+                description="Try uploading some guitar tabs to get started!"
+                icon="tabler:music-off"
+              />
+            ) : (
+              <EmptyStateScreen
+                title="No results found!"
+                description="Try searching for something else!"
+                icon="tabler:search-off"
+              />
+            )}
             {
-              <div className="mt-4 flex flex-between gap-2 pb-12">
+              <div className="flex-between mt-4 flex gap-2 pb-12">
                 {entries.page > 1 ? (
                   <Button
                     onClick={() => {
