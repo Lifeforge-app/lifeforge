@@ -16,6 +16,7 @@ import 'react-resizable/css/styles.css'
 import 'leaflet/dist/leaflet.css'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
+import 'react-virtualized/styles.css'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

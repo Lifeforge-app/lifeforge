@@ -1,10 +1,9 @@
 import React from 'react'
+import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
+import List from 'react-virtualized/dist/commonjs/List'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import { useMusicContext } from '@providers/MusicProvider'
 import MusicListItem from './components/MusicListItem'
-import 'react-virtualized/styles.css'
-import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
-import List from 'react-virtualized/dist/commonjs/List'
 
 function MusicList({
   debouncedSearchQuery
@@ -16,8 +15,10 @@ function MusicList({
   return (
     <APIComponentWithFallback data={musics}>
       {musics => (
+        // @ts-expect-error cannot fix
         <AutoSizer>
           {({ height, width }) => (
+            // @ts-expect-error cannot fix
             <List
               width={width}
               height={height}
