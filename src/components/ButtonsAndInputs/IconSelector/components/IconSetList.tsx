@@ -13,19 +13,14 @@ import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Input from './Input'
 
-const ICON_SETS = {
-  General: [],
-  'Animated Icons': [],
-  'Brands / Social': [],
-  Emoji: [],
-  'Maps / Flags': [],
-  Thematic: [],
-  'Archive / Unmaintained': [],
-  Other: []
-}
+const ICON_SETS = {}
 
 Object.entries(collections).forEach(([key, value]) => {
   value.prefix = key
+  if (!ICON_SETS[value.category || 'Other']) {
+    ICON_SETS[value.category || 'Other'] = []
+  }
+
   ICON_SETS[value.category || 'Other'] = [
     ...ICON_SETS[value.category || 'Other'],
     value
@@ -133,7 +128,7 @@ export default function IconSetList({
                             className="sssm:flex-row flex w-full grow flex-col overflow-hidden rounded-md bg-bg-800 shadow-lg"
                           >
                             <div className="sssm:w-36 text-bg-00 flex w-full shrink-0 flex-col font-medium">
-                              <div className="sssm:gap-3 flex-center flex h-full w-full gap-5 px-4 py-6 ">
+                              <div className="sssm:gap-3 flex-center flex size-full gap-5 px-4 py-6 ">
                                 {iconSet.samples.map(sampleIcon => (
                                   <Icon
                                     key={sampleIcon}
@@ -153,7 +148,7 @@ export default function IconSetList({
                                   {iconSet.author.name}
                                 </span>
                               </p>
-                              <div className="sssm:py-0 mt-4 flex w-full flex-between border-t border-bg-500 pt-4 text-sm">
+                              <div className="sssm:py-0 flex-between mt-4 flex w-full border-t border-bg-500 pt-4 text-sm">
                                 <p>{iconSet.total} icons</p>
                                 {iconSet.height && (
                                   <div className="flex items-center">
