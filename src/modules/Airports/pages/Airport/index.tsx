@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -19,16 +19,7 @@ import NOTAMDetailsModal from './sections/NOTAM/components/NOTAMDetailsModal'
 import Radio from './sections/Radio'
 import Runways from './sections/Runways'
 import Weather from './sections/Weather'
-
-const CONTINENTS = {
-  AF: 'Africa',
-  AN: 'Antarctica',
-  AS: 'Asia',
-  EU: 'Europe',
-  NA: 'North America',
-  OC: 'Oceania',
-  SA: 'South America'
-}
+import Breadcrumbs from '../lists/Breadcrumb'
 
 function Airport(): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -67,56 +58,7 @@ function Airport(): React.ReactElement {
                   )
                 }}
               />
-              <div className="mb-4 mt-2 flex items-center gap-2">
-                <Link to="/aviation/airports" className="text-bg-500">
-                  All Continents
-                </Link>
-                <Icon
-                  icon="tabler:chevron-right"
-                  className="size-5 text-bg-500"
-                />
-                <Link
-                  to={`/aviation/airports/${continentID}`}
-                  className="text-bg-500"
-                >
-                  {CONTINENTS[continentID as keyof typeof CONTINENTS]}
-                </Link>
-                <Icon
-                  icon="tabler:chevron-right"
-                  className="size-5 text-bg-500"
-                />
-                <Link
-                  to={`/aviation/airports/${continentID}/${countryID}`}
-                  className="text-bg-500"
-                >
-                  {airportData.breadcrumbs[0]}
-                </Link>
-                <Icon
-                  icon="tabler:chevron-right"
-                  className="size-5 text-bg-500"
-                />
-                <Link
-                  to={`/aviation/airports/${continentID}/${countryID}/${regionID}`}
-                  className="text-bg-500"
-                >
-                  {airportData.breadcrumbs[1]}
-                </Link>
-                <Icon
-                  icon="tabler:chevron-right"
-                  className="size-5 text-bg-500"
-                />
-                <p className="text-bg-500">{airportData.breadcrumbs[2]}</p>
-                <Icon
-                  icon="tabler:chevron-right"
-                  className="size-5 text-bg-500"
-                />
-                <Link
-                  to={`/aviation/airports/${continentID}/${countryID}/${regionID}/${airportID}`}
-                  className="font-medium text-custom-500"
-                >
-                  {airportData.breadcrumbs[3]}
-                </Link>
-              </div>
+              <Breadcrumbs breadcrumbs={airportData.breadcrumbs} />
               <div className="mb-8 flex items-center gap-2">
                 <div className="overflow-hidden rounded-md">
                   <Icon
@@ -271,7 +213,11 @@ function Airport(): React.ReactElement {
                     case 'radio':
                       return <Radio />
                     case 'runways':
-                      return <Runways />
+                      return (
+                        <Runways
+                          code={`${airportData.data.icao}-${airportData.data.iata}`}
+                        />
+                      )
                     default:
                       return (
                         <EmptyStateScreen

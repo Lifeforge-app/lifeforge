@@ -7,6 +7,7 @@ import { toCamelCase } from '@utils/strings'
 interface ModuleHeaderPropsWithHamburgerMenu {
   title: string | React.ReactNode
   desc?: string | React.ReactNode
+  totalItems?: number
   hasHamburgerMenu?: false
   hamburgerMenuItems?: never
   actionButton?: React.ReactNode
@@ -15,6 +16,7 @@ interface ModuleHeaderPropsWithHamburgerMenu {
 interface ModuleHeaderPropsWithHamburgerMenuItems {
   title: string | React.ReactNode
   desc?: string | React.ReactNode
+  totalItems?: number
   hasHamburgerMenu: true
   hamburgerMenuItems: React.ReactNode
   actionButton?: React.ReactNode
@@ -27,6 +29,7 @@ type ModuleHeaderProps =
 function ModuleHeader({
   title,
   desc,
+  totalItems,
   hasHamburgerMenu = false,
   hamburgerMenuItems,
   actionButton
@@ -34,11 +37,14 @@ function ModuleHeader({
   const { t } = useTranslation()
 
   return (
-    <div className="flex flex-between gap-8">
+    <div className="flex-between flex gap-8">
       <div className="flex items-center gap-4">
         <div className="space-y-1">
-          <h1 className="flex items-center gap-3 text-3xl font-semibold  md:text-4xl">
+          <h1 className="flex items-end gap-3 text-3xl font-semibold  md:text-4xl">
             {t(`modules.${toCamelCase(title?.toString() ?? '')}`)}
+            <span className="text-base font-medium text-bg-500">
+              {totalItems !== undefined ? `(${totalItems})` : ''}
+            </span>
           </h1>
           {desc !== undefined && (
             <div className="text-bg-500">

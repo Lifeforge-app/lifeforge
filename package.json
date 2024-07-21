@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
-    "@iconify/collections": "^1.0.431",
+    "@iconify/collections": "^1.0.441",
     "@iconify/react": "^5.0.1",
     "@passwordless-id/webauthn": "^1.5.0",
     "@types/react-date-range": "^1.4.9",

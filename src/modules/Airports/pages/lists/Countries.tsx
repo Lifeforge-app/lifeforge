@@ -9,6 +9,7 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import Scrollbar from '@components/Scrollbar'
 import useFetch from '@hooks/useFetch'
+import Breadcrumbs from './Breadcrumb'
 import ContinentSelector from '../../components/ContinentSelector'
 import MasterSearchBar from '../../components/MasterSearchBar'
 
@@ -51,18 +52,9 @@ function Countries(): React.ReactElement {
     <ModuleWrapper>
       <ModuleHeader title="Airports" desc="..." />
       <MasterSearchBar />
-      <div className="mt-8 flex items-center gap-2">
-        <Link to="/aviation/airports" className="text-bg-500">
-          All Continents
-        </Link>
-        <Icon icon="tabler:chevron-right" className="size-5 text-bg-500" />
-        <Link
-          to={`/aviation/airports/${continentID}`}
-          className="font-medium text-custom-500"
-        >
-          {CONTINENTS[continentID as keyof typeof CONTINENTS]}
-        </Link>
-      </div>
+      <Breadcrumbs
+        breadcrumbs={[CONTINENTS[continentID as keyof typeof CONTINENTS]]}
+      />
       <div className="flex items-center gap-2">
         <ContinentSelector />
         <SearchInput

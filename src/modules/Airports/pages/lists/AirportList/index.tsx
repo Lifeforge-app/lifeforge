@@ -1,9 +1,7 @@
-/* eslit-disable @typescript-eslint/strict-boolean-expressions */
-// today I don't feel like coding
-import { Icon } from '@iconify/react/dist/iconify.js'
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -11,18 +9,10 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import Scrollbar from '@components/Scrollbar'
 import useFetch from '@hooks/useFetch'
-import ContinentSelector from '../../components/ContinentSelector'
-import MasterSearchBar from '../../components/MasterSearchBar'
-
-const CONTINENTS = {
-  AF: 'Africa',
-  AN: 'Antarctica',
-  AS: 'Asia',
-  EU: 'Europe',
-  NA: 'North America',
-  OC: 'Oceania',
-  SA: 'South America'
-}
+import EntryItem from './components/EntryItem'
+import ContinentSelector from '../../../components/ContinentSelector'
+import MasterSearchBar from '../../../components/MasterSearchBar'
+import Breadcrumbs from '../Breadcrumb'
 
 const AIRPORT_TYPES = {
   large_airport: ['text-yellow-500', 'uil:plane'],
@@ -35,7 +25,7 @@ const AIRPORT_TYPES = {
 }
 
 function AirportsList(): React.ReactElement {
-  const { countryID, continentID, regionID } = useParams()
+  const { regionID } = useParams()
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 500)
   const [airportsData] = useFetch<{
@@ -76,32 +66,7 @@ function AirportsList(): React.ReactElement {
       <MasterSearchBar />
       <APIComponentWithFallback data={airportsData} showLoading={false}>
         {continentsData => (
-          <div className="mt-8 flex items-center gap-2">
-            <Link to="/aviation/airports" className="text-bg-500">
-              All Continents
-            </Link>
-            <Icon icon="tabler:chevron-right" className="size-5 text-bg-500" />
-            <Link
-              to={`/aviation/airports/${continentID}`}
-              className="text-bg-500"
-            >
-              {CONTINENTS[continentID as keyof typeof CONTINENTS]}
-            </Link>
-            <Icon icon="tabler:chevron-right" className="size-5 text-bg-500" />
-            <Link
-              to={`/aviation/airports/${continentID}/${countryID}`}
-              className="text-bg-500"
-            >
-              {continentsData.breadcrumbs[0]}
-            </Link>
-            <Icon icon="tabler:chevron-right" className="size-5 text-bg-500" />
-            <Link
-              to={`/aviation/airports/${continentID}/${countryID}/${regionID}`}
-              className="font-medium text-custom-500"
-            >
-              {continentsData.breadcrumbs[1]}
-            </Link>
-          </div>
+          <Breadcrumbs breadcrumbs={continentsData.breadcrumbs} />
         )}
       </APIComponentWithFallback>
       <div className="flex items-center gap-2">
@@ -120,42 +85,24 @@ function AirportsList(): React.ReactElement {
                 data
                   .sort((a, b) => {
                     const order = Object.keys(AIRPORT_TYPES)
+                    const firstComparison =
+                      order.indexOf(a.type) - order.indexOf(b.type)
+
                     return (
-                      order.indexOf(a.type) - order.indexOf(b.type) ||
-                      a.name.localeCompare(b.name)
+                      firstComparison ||
+                      a.name.localeCompare(b.name, undefined, {
+                        sensitivity: 'base'
+                      })
                     )
                   })
                   .map(({ name, location, type, id }) => (
-                    <Link
-                      to={`/aviation/airports/${continentID}/${countryID}/${regionID}/${id}`}
-                      key={name}
-                      className="flex-between flex w-full rounded-lg bg-bg-50 p-4 px-6 shadow-custom transition-all hover:bg-bg-200/30 dark:bg-bg-900 dark:hover:bg-bg-800"
-                    >
-                      <div className="flex items-center gap-4">
-                        <Icon
-                          icon={
-                            AIRPORT_TYPES[
-                              type as keyof typeof AIRPORT_TYPES
-                            ]?.[1]
-                          }
-                          className={`size-7 ${
-                            AIRPORT_TYPES[
-                              type as keyof typeof AIRPORT_TYPES
-                            ]?.[0]
-                          }`}
-                        />
-                        <div>
-                          <p className="text-left text-xl font-medium">
-                            {name}
-                          </p>
-                          <p className="text-left text-bg-500">{location}</p>
-                        </div>
-                      </div>
-                      <Icon
-                        icon="tabler:chevron-right"
-                        className="size-5 text-bg-500"
-                      />
-                    </Link>
+                    <EntryItem
+                      key={id}
+                      name={name}
+                      location={location}
+                      type={type}
+                      id={id}
+                    />
                   ))
               ) : (
                 <EmptyStateScreen
