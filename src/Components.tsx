@@ -99,7 +99,7 @@ const Regions = lazy(
   async () => await import('./modules/Airports/pages/lists/Regions')
 )
 const AirportsList = lazy(
-  async () => await import('./modules/Airports/pages/lists/AirportsList')
+  async () => await import('./modules/Airports/pages/lists/AirportList')
 )
 const Airport = lazy(
   async () => await import('./modules/Airports/pages/Airport')
