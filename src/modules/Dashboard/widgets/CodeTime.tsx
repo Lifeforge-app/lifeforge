@@ -2,14 +2,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Icon } from '@iconify/react'
 import { type ChartOptions, type ScriptableContext } from 'chart.js'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-import colors from 'tailwindcss/colors'
 import Loading from '@components/Screens/Loading'
 import useFetch from '@hooks/useFetch'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import { toCamelCase } from '@utils/strings'
+import useThemeColorHex from '@hooks/useThemeColorHex'
 
 function msToTime(ms: number): string {
   const seconds = (ms / 1000).toFixed(1)
@@ -91,15 +89,8 @@ interface ICodeTimeEachDay {
 export default function CodeTime(): React.ReactElement {
   const [data] = useFetch<ICodeTimeEachDay[]>('code-time/each-day')
   const [chartData, setChartData] = useState<any>(null)
-  const { themeColor } = usePersonalizationContext()
   const { t } = useTranslation()
-  const finalTheme = useMemo(() => {
-    return colors[
-      toCamelCase(
-        themeColor.replace('theme-', '').replace(/-/g, ' ').replace('deep', '')
-      ) as keyof typeof colors
-    ][500]
-  }, [themeColor])
+  const finalTheme = useThemeColorHex()
 
   useEffect(() => {
     if (typeof data !== 'string') {

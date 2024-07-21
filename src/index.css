@@ -631,3 +631,16 @@ input[type='range'].secondary::-moz-range-progress {
   --tw-text-opacity: 1;
   @apply text-custom-500;
 }
+
+.runway-tables table {
+  @apply w-full;
+}
+
+.runway-tables table th,
+td {
+  @apply py-4 px-6 border-b border-bg-200 dark:border-bg-700/50;
+}
+
+.runway-tables table td {
+  @apply text-bg-500 dark:text-bg-400;
+}
