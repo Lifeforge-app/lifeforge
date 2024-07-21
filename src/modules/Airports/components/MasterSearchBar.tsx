@@ -110,11 +110,13 @@ function MasterSearchBar(): React.ReactElement {
                       </Link>
                     ))
                   ) : (
-                    <EmptyStateScreen
-                      title="No results found"
-                      description="Try searching for something else"
-                      icon="tabler:search-off"
-                    />
+                    <div className="py-6">
+                      <EmptyStateScreen
+                        title="No results found"
+                        description="Try searching for something else"
+                        icon="tabler:search-off"
+                      />
+                    </div>
                   )}
                 </div>
               </Scrollbar>
