@@ -1,4 +1,4 @@
-import { Menu, Transition } from '@headlessui/react'
+import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useParams } from 'react-router'
@@ -60,74 +60,68 @@ function EntryContextMenu({
 
   return (
     <Menu as="div" className="absolute right-2 top-2">
-      <Menu.Button>
+      <MenuButton>
         {({ open }) => (
           <div
             className={`shrink-0 rounded-lg bg-bg-50 p-2 text-bg-500 opacity-0 hover:bg-bg-100 hover:text-bg-800 group-hover:opacity-100 dark:bg-bg-800 dark:text-bg-100 dark:hover:bg-bg-700 dark:hover:text-bg-100 ${
               entry.type === 'image' ? '!shadow-custom' : ''
-            } ${open ? '!opacity-100' : ''}`}
+            } ${open === true ? '!opacity-100' : ''}`}
           >
             <Icon icon="tabler:dots-vertical" className="text-xl" />
           </div>
         )}
-      </Menu.Button>
-      <Transition
-        enter="transition duration-100 ease-out"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition duration-75 ease-out"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-        className="absolute right-0 top-3 z-[999]"
+      </MenuButton>
+      <MenuItems
+        transition
+        anchor="bottom end"
+        className="mt-2 w-48 overflow-hidden rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
       >
-        <Menu.Items className="mt-6 w-48 overflow-hidden rounded-md bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800">
-          {!entry.archived && (
-            <MenuItem
-              onClick={() => {
-                pinIdea(entry.id).catch(console.error)
-              }}
-              icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
-              text={entry.pinned ? 'Unpin' : 'Pin'}
-            />
-          )}
+        {!entry.archived && (
           <MenuItem
             onClick={() => {
-              archiveIdea(entry.id).catch(console.error)
+              pinIdea(entry.id).catch(console.error)
             }}
-            icon={entry.archived ? 'tabler:archive-off' : 'tabler:archive'}
-            text={entry.archived ? 'Unarchive' : 'Archive'}
+            icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
+            text={entry.pinned ? 'Unpin' : 'Pin'}
           />
-          {entry.type !== 'image' && (
-            <MenuItem
-              onClick={() => {
-                setTypeOfModifyIdea(entry.type)
-                setExistedData(entry)
-                setModifyIdeaModalOpenType('update')
-              }}
-              icon="tabler:pencil"
-              text="Edit"
-            />
-          )}
-          {folderId !== undefined && (
-            <MenuItem
-              onClick={() => {
-                removeFromFolder().catch(console.error)
-              }}
-              icon="tabler:folder-minus"
-              text="Remove from folder"
-            />
-          )}
+        )}
+        <MenuItem
+          onClick={() => {
+            archiveIdea(entry.id).catch(console.error)
+          }}
+          icon={entry.archived ? 'tabler:archive-off' : 'tabler:archive'}
+          text={entry.archived ? 'Unarchive' : 'Archive'}
+        />
+        {entry.type !== 'image' && (
           <MenuItem
             onClick={() => {
+              setTypeOfModifyIdea(entry.type)
               setExistedData(entry)
-              setDeleteIdeaModalOpen(true)
+              setModifyIdeaModalOpenType('update')
             }}
-            icon="tabler:trash"
-            text="Delete"
-            isRed
+            icon="tabler:pencil"
+            text="Edit"
           />
-        </Menu.Items>
-      </Transition>
+        )}
+        {folderId !== undefined && (
+          <MenuItem
+            onClick={() => {
+              removeFromFolder().catch(console.error)
+            }}
+            icon="tabler:folder-minus"
+            text="Remove from folder"
+          />
+        )}
+        <MenuItem
+          onClick={() => {
+            setExistedData(entry)
+            setDeleteIdeaModalOpen(true)
+          }}
+          icon="tabler:trash"
+          text="Delete"
+          isRed
+        />
+      </MenuItems>
     </Menu>
   )
 }
