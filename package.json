@@ -62,6 +62,7 @@
     "react-tooltip": "^5.24.0",
     "react-virtualized": "^9.22.5",
     "tailwindcss": "^3.3.5",
+    "ts-migrate": "^0.1.35",
     "use-resize-observer": "^9.1.0"
   },
   "devDependencies": {
@@ -94,7 +95,7 @@
     "eslint-plugin-react-refresh": "^0.4.4",
     "eslint-plugin-tailwindcss": "^3.14.3",
     "sass": "^1.77.1",
-    "typescript": "*",
+    "typescript": "^5.5.4",
     "vite": "^5.0.0",
     "vite-plugin-mkcert": "^1.17.5"
   },

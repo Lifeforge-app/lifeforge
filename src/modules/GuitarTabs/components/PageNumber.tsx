@@ -21,7 +21,7 @@ function Pagination({
     totalPages: number
     handlePageChange: (page: number) => void
   }): React.ReactElement[] => {
-    const pageNumbers: JSX.Element[] = []
+    const pageNumbers: React.ReactElement[] = []
     const pagesToShow = 5
 
     const startPage = Math.max(1, currentPage - Math.floor(pagesToShow / 2))

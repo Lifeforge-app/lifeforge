@@ -14,7 +14,7 @@ import CalendarHeader from './components/CalendarHeader'
 import EventItem from './components/EventItem'
 
 const localizer = momentLocalizer(moment)
-const DnDCalendar = withDragAndDrop(Calendar)
+const DnDCalendar: any = withDragAndDrop(Calendar)
 
 interface CalendarComponentProps {
   events: ICalendarEvent[]
@@ -97,18 +97,15 @@ function CalendarComponent({
   )
 
   return (
-    // @ts-expect-error - cannot fix
     <DnDCalendar
       localizer={localizer}
       draggableAccessor={() => {
         return true
       }}
-      onEventDrop={e => {
-        // @ts-expect-error - I don't know how to fix this ;-;
+      onEventDrop={(e: any) => {
         updateEvent(e).catch(console.error)
       }}
-      onEventResize={e => {
-        // @ts-expect-error - I don't know how to fix this ;-;
+      onEventResize={(e: any) => {
         updateEvent(e).catch(console.error)
       }}
       onSelectSlot={handleSelectSlot}
@@ -120,7 +117,7 @@ function CalendarComponent({
         return true
       })}
       components={{
-        toolbar: props => {
+        toolbar: (props: any) => {
           return (
             <CalendarHeader
               {...props}
@@ -128,7 +125,11 @@ function CalendarComponent({
             />
           )
         },
-        event: ({ event }) => {
+        event: ({
+          event
+        }: {
+          event: ICalendarEvent | Record<string, unknown>
+        }) => {
           return (
             <EventItem
               event={event as ICalendarEvent}
