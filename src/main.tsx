@@ -12,12 +12,12 @@ import 'react-medium-image-zoom/dist/styles.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import 'react-grid-layout/css/styles.css'
-import 'react-resizable/css/styles.css'
+import './styles/react-resizable.css'
 import 'leaflet/dist/leaflet.css'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 import 'react-virtualized/styles.css'
-import './index.css'
+import './styles/index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
