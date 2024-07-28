@@ -1,6 +1,12 @@
-import { Menu, Transition } from '@headlessui/react'
+import {
+  Menu,
+  MenuButton,
+  MenuItems,
+  Transition,
+  TransitionChild
+} from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React from 'react'
+import React, { useState } from 'react'
 
 interface MenuProps {
   children: React.ReactNode
@@ -56,9 +62,11 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
     onClose
   } = props
 
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
     <Menu as="div" className={className}>
-      <Menu.Button
+      <MenuButton
         style={style}
         onMouseEnter={e => {
           if (customHoverColor !== undefined) {
@@ -72,6 +80,7 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
         }}
         onClick={e => {
           e.stopPropagation()
+          setIsOpen(!isOpen)
           if (onButtonClick !== undefined) {
             onButtonClick(e)
           }
@@ -88,30 +97,32 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
           icon={customIcon ?? 'tabler:dots-vertical'}
           className={largerIcon === true ? 'size-6' : 'size-5'}
         />
-      </Menu.Button>
+      </MenuButton>
       <Transition
-        enter="transition duration-100 ease-out"
-        enterFrom="transform scale-95 opacity-0"
-        enterTo="transform scale-100 opacity-100"
-        leave="transition duration-75 ease-out"
-        leaveFrom="transform scale-100 opacity-100"
-        leaveTo="transform scale-95 opacity-0"
-        className={`absolute right-0 z-50 ${
-          largerPadding === true ? 'top-9' : 'top-4'
-        }`}
+        enter="transition-opacity duration-200"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-150"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
         afterLeave={() => {
           if (onClose !== undefined) {
             onClose()
           }
         }}
       >
-        <Menu.Items
-          className={`mt-6 ${
-            customWidth ?? 'w-48'
-          } overflow-hidden overscroll-contain rounded-md border border-bg-200 bg-bg-100 shadow-lg outline-none focus:outline-none dark:border-bg-700 dark:bg-bg-800`}
-        >
-          {children}
-        </Menu.Items>
+        <TransitionChild>
+          <MenuItems
+            transition
+            unmount={false}
+            anchor="bottom end"
+            className={`mt-2 ${
+              customWidth ?? 'w-48'
+            } z-[9999] overflow-hidden overscroll-contain rounded-md border border-bg-200 bg-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:border-bg-700 dark:bg-bg-800`}
+          >
+            {children}
+          </MenuItems>
+        </TransitionChild>
       </Transition>
     </Menu>
   )

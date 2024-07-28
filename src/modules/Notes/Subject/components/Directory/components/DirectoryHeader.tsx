@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 
-import { Menu, Transition } from '@headlessui/react'
+import { Menu, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React from 'react'
@@ -202,7 +202,7 @@ function DirectoryHeader({
           )
         }}
       />
-      <div className="relative z-[100] flex w-full flex-between gap-4 sm:gap-12">
+      <div className="flex-between relative z-[100] flex w-full gap-4 sm:gap-12">
         <div
           className={`flex min-w-0 flex-1 items-center gap-4 ${
             typeof currentPath !== 'string'
@@ -224,7 +224,7 @@ function DirectoryHeader({
                   <>
                     <Icon
                       icon="tabler:alert-triangle"
-                      className="mt-0.5 h-7 w-7 text-red-500"
+                      className="mt-0.5 size-7 text-red-500"
                     />
                     Failed to fetch data from server.
                   </>
@@ -237,7 +237,7 @@ function DirectoryHeader({
                         icon={currentPath.icon}
                         className="text-2xl text-custom-500 sm:text-3xl"
                       />
-                      <div className="absolute left-0 top-0 h-full w-full rounded-lg bg-custom-500 opacity-20" />
+                      <div className="absolute left-0 top-0 size-full rounded-lg bg-custom-500 opacity-20" />
                     </div>
                     <div className="flex w-full min-w-0 flex-col gap-1">
                       <div className="hidden items-center gap-1 text-sm text-bg-500 md:flex">
@@ -291,37 +291,31 @@ function DirectoryHeader({
             >
               new
             </Button>
-            <Transition
-              enter="transition duration-100 ease-out"
-              enterFrom="transform scale-95 opacity-0"
-              enterTo="transform scale-100 opacity-100"
-              leave="transition duration-75 ease-out"
-              leaveFrom="transform scale-100 opacity-100"
-              leaveTo="transform scale-95 opacity-0"
-              className="absolute right-0 top-8"
+            <MenuItems
+              transition
+              anchor="bottom end"
+              className="mt-2 w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
             >
-              <Menu.Items className="mt-8 w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800">
-                <MenuItem
-                  onClick={() => {
-                    setModifyFolderModalOpenType('create')
-                    setExistedData(null)
-                  }}
-                  icon="tabler:folder-plus"
-                  text="New Folder"
-                />
-                <div className="w-full border-b border-bg-300 dark:border-bg-700" />
-                <MenuItem
-                  onClick={uploadFiles}
-                  icon="ci:file-upload"
-                  text="File upload"
-                />
-                <MenuItem
-                  onClick={uploadFolders}
-                  icon="ci:folder-upload"
-                  text="Folder upload"
-                />
-              </Menu.Items>
-            </Transition>
+              <MenuItem
+                onClick={() => {
+                  setModifyFolderModalOpenType('create')
+                  setExistedData(null)
+                }}
+                icon="tabler:folder-plus"
+                text="New Folder"
+              />
+              <div className="w-full border-b border-bg-300 dark:border-bg-700" />
+              <MenuItem
+                onClick={uploadFiles}
+                icon="ci:file-upload"
+                text="File upload"
+              />
+              <MenuItem
+                onClick={uploadFolders}
+                icon="ci:folder-upload"
+                text="Folder upload"
+              />
+            </MenuItems>
           </Menu>
           <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
             <Icon icon="tabler:dots-vertical" className="text-xl sm:text-2xl" />
@@ -336,37 +330,31 @@ function DirectoryHeader({
         >
           new
         </Button>
-        <Transition
-          enter="transition duration-100 ease-out"
-          enterFrom="transform scale-95 opacity-0"
-          enterTo="transform scale-100 opacity-100"
-          leave="transition duration-75 ease-out"
-          leaveFrom="transform scale-100 opacity-100"
-          leaveTo="transform scale-95 opacity-0"
-          className="absolute right-0 top-8"
+        <MenuItems
+          transition
+          anchor="bottom end"
+          className="mt-6 w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
         >
-          <Menu.Items className="mt-6 w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none focus:outline-none dark:bg-bg-800">
-            <MenuItem
-              onClick={() => {
-                setModifyFolderModalOpenType('create')
-                setExistedData(null)
-              }}
-              icon="tabler:folder-plus"
-              text="New Folder"
-            />
-            <div className="w-full border-b border-bg-300 dark:border-bg-700" />
-            <MenuItem
-              onClick={uploadFiles}
-              icon="ci:file-upload"
-              text="File upload"
-            />
-            <MenuItem
-              onClick={uploadFolders}
-              icon="ci:folder-upload"
-              text="Folder upload"
-            />
-          </Menu.Items>
-        </Transition>
+          <MenuItem
+            onClick={() => {
+              setModifyFolderModalOpenType('create')
+              setExistedData(null)
+            }}
+            icon="tabler:folder-plus"
+            text="New Folder"
+          />
+          <div className="w-full border-b border-bg-300 dark:border-bg-700" />
+          <MenuItem
+            onClick={uploadFiles}
+            icon="ci:file-upload"
+            text="File upload"
+          />
+          <MenuItem
+            onClick={uploadFolders}
+            icon="ci:folder-upload"
+            text="Folder upload"
+          />
+        </MenuItems>
       </Menu>
     </>
   )

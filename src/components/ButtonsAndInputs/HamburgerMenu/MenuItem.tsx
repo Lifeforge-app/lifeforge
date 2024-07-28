@@ -1,4 +1,4 @@
-import { Menu } from '@headlessui/react'
+import { MenuItem as HeadlessMenuItem } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -40,7 +40,7 @@ function MenuItem({
   const { t } = useTranslation()
 
   return (
-    <Menu.Item>
+    <HeadlessMenuItem>
       {function ({ active }) {
         return (
           <button
@@ -72,7 +72,7 @@ function MenuItem({
           </button>
         )
       }}
-    </Menu.Item>
+    </HeadlessMenuItem>
   )
 }
 

@@ -42,7 +42,9 @@ export default function WalletProvider(): React.ReactElement {
   const [categories, refreshCategories] =
     useFetch<IWalletCategoryEntry[]>('wallet/category')
   const [incomeExpenses] = useFetch<IWalletIncomeExpenses>(
-    `wallet/transactions/income-expenses/${new Date().getFullYear()}/${new Date().getMonth()}`
+    `wallet/transactions/income-expenses/${new Date().getFullYear()}/${
+      new Date().getMonth() + 1
+    }`
   )
   const [filteredTransactions, setFilteredTransactions] = useState<
     IWalletTransactionEntry[]
