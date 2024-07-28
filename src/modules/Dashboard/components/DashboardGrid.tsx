@@ -28,6 +28,8 @@ import StorageStatus from '../widgets/StorageStatus'
 import TodaysEvent from '../widgets/TodaysEvent'
 import TodoList from '../widgets/TodoList'
 
+const RGL: any = ResponsiveGridLayout as any
+
 const COMPONENTS = {
   date: Date,
   clock: Clock,
@@ -101,8 +103,7 @@ function DashboardGrid({
       />
     </div>
   ) : (
-    // @ts-expect-error cannot fix
-    <ResponsiveGridLayout
+    <RGL
       className={`pt-6 ${canLayoutChange ? 'pb-64' : ''}`}
       layouts={enabledWidgets}
       cols={
@@ -141,7 +142,7 @@ function DashboardGrid({
           )}
         </div>
       ))}
-    </ResponsiveGridLayout>
+    </RGL>
   )
 }
 

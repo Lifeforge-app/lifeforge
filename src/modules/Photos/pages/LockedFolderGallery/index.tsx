@@ -19,6 +19,8 @@ import { type IPhotoAlbumEntryItem } from '@interfaces/photos_interfaces.ts'
 import { usePhotosContext } from '../../../../providers/PhotosProvider.tsx'
 import BottomBar from '../../components/BottomBar.tsx'
 
+const LLI = LazyLoadImage as any
+
 function LockedFolderGallery(): React.ReactElement {
   const { setSelectedPhotos, setModifyAlbumModalOpenType } = usePhotosContext()
   const navigate = useNavigate()
@@ -206,8 +208,7 @@ function LockedFolderGallery(): React.ReactElement {
                     key: image.id
                   }))}
                   renderPhoto={({ imageProps: { src, alt, style } }) => (
-                    /* @ts-expect-error cannot fix ;-; */
-                    <LazyLoadImage
+                    <LLI
                       src={src}
                       alt={alt}
                       style={style}

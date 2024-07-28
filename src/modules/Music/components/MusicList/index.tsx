@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 import React from 'react'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import { useMusicContext } from '@providers/MusicProvider'
 import MusicListItem from './components/MusicListItem'
+
+const AS = AutoSizer as any
+const L = List as any
 
 function MusicList({
   debouncedSearchQuery
@@ -15,11 +19,9 @@ function MusicList({
   return (
     <APIComponentWithFallback data={musics}>
       {musics => (
-        // @ts-expect-error cannot fix
-        <AutoSizer>
-          {({ height, width }) => (
-            // @ts-expect-error cannot fix
-            <List
+        <AS>
+          {({ height, width }: { height: number; width: number }) => (
+            <L
               width={width}
               height={height}
               rowCount={
@@ -30,7 +32,15 @@ function MusicList({
                 ).length
               }
               rowHeight={60}
-              rowRenderer={({ index, key, style }) => {
+              rowRenderer={({
+                index,
+                key,
+                style
+              }: {
+                index: number
+                key: string
+                style: React.CSSProperties
+              }) => {
                 const music = musics.filter(music =>
                   music.name
                     .toLowerCase()
@@ -45,7 +55,7 @@ function MusicList({
               }}
             />
           )}
-        </AutoSizer>
+        </AS>
       )}
     </APIComponentWithFallback>
   )

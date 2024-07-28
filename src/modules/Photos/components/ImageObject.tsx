@@ -18,6 +18,8 @@ import forceDown from '@utils/forceDown'
 import DeletePhotosConfirmationModal from './modals/DeletePhotosConfirmationModal'
 import { usePhotosContext } from '../../../providers/PhotosProvider'
 
+const LLI = LazyLoadImage as any
+
 function CustomZoomContent({
   img,
   data,
@@ -117,7 +119,7 @@ function CustomZoomContent({
     <>
       <div className="flex-center flex h-dvh w-full">
         {img}
-        <header className="absolute left-0 top-0 flex w-full flex-between gap-2 p-8">
+        <header className="flex-between absolute left-0 top-0 flex w-full gap-2 p-8">
           {(() => {
             switch (name) {
               case 'loading':
@@ -258,8 +260,7 @@ function ImageObject({
                   src: photo.src.split('?')[0]
                 }}
               >
-                {/* @ts-expect-error cannot fix */}
-                <LazyLoadImage
+                <LLI
                   alt=""
                   src={photo.src}
                   className={`relative size-full object-cover ${
