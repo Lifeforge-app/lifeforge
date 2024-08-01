@@ -41,7 +41,7 @@ function ModifyMusicModal(): React.ReactElement {
     }
 
     await APIRequest({
-      endpoint: `music/entry/${targetMusic?.id}`,
+      endpoint: `music/entries/${targetMusic?.id}`,
       method: 'PATCH',
       body: music,
       successInfo: 'update',

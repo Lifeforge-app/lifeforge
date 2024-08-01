@@ -64,7 +64,7 @@ function JournalList({
     })
 
     await APIRequest({
-      endpoint: `journal/entry/get/${id}?master=${encodeURIComponent(
+      endpoint: `journal/entries/get/${id}?master=${encodeURIComponent(
         encrypt(masterPassword, challenge)
       )}`,
       method: 'GET',
@@ -83,7 +83,7 @@ function JournalList({
 
   return (
     <>
-      <div className="mt-6 flex min-h-0 w-full flex-1 flex-col">
+      <div className="mb-8 mt-6 flex min-h-0 w-full flex-1 flex-col">
         <SearchInput
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}

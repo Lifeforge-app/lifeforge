@@ -81,7 +81,7 @@ function Music(): React.ReactElement {
       </div>
       <YoutubeDownloaderModal />
       <DeleteConfirmationModal
-        apiEndpoint="music/entry"
+        apiEndpoint="music/entries"
         data={existedData}
         isOpen={isDeleteMusicConfirmationModalOpen}
         itemName="music"

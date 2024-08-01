@@ -37,7 +37,7 @@ function DirectoryHeader({
   const [currentPath] = useFetch<{
     icon: string
     path: INotesPath[]
-  }>(`notes/entry/path/${workspace}/${subject}/${path}`)
+  }>(`notes/entries/path/${workspace}/${subject}/${path}`)
 
   const toastId = React.useRef<any>(undefined)
   const navigate = useNavigate()
@@ -69,7 +69,7 @@ function DirectoryHeader({
       fetch(
         `${
           import.meta.env.VITE_API_HOST
-        }/notes/entry/upload/${workspace}/${subject}/${path}`,
+        }/notes/entries/upload/${workspace}/${subject}/${path}`,
         {
           method: 'POST',
           headers: {
@@ -138,7 +138,7 @@ function DirectoryHeader({
         await fetch(
           `${
             import.meta.env.VITE_API_HOST
-          }/notes/entry/upload/${workspace}/${subject}/${path}`,
+          }/notes/entries/upload/${workspace}/${subject}/${path}`,
           {
             method: 'POST',
             headers: {

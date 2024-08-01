@@ -58,12 +58,15 @@ function DateGroup({
 
   useEffect(() => {
     if (photos === undefined && ready && isOnScreen) {
-      fetch(`${import.meta.env.VITE_API_HOST}/photos/entry/list?date=${date}`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+      fetch(
+        `${import.meta.env.VITE_API_HOST}/photos/entries/list?date=${date}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${cookieParse(document.cookie).token}`
+          }
         }
-      })
+      )
         .then(async res => {
           try {
             const data = await res.json()

@@ -58,7 +58,7 @@ function ModifyFolderModal({
 
     await APIRequest({
       endpoint:
-        `notes/entry/${innerOpenType}/folder` +
+        `notes/entries/${innerOpenType}/folder` +
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: entry,

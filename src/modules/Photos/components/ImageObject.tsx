@@ -43,7 +43,7 @@ function CustomZoomContent({
   const { refreshAlbumList } = usePhotosContext()
   const { id: albumId } = useParams<{ id: string }>()
   const [name] = useFetch<string>(
-    `photos/entry/name/${data.id}?isInAlbum=${beingDisplayedInAlbum}`,
+    `photos/entries/name/${data.id}?isInAlbum=${beingDisplayedInAlbum}`,
     modalState === 'LOADED'
   )
   const [deleteConfirmationModalOpen, setDeletePhotosConfirmationModalOpen] =
@@ -52,7 +52,7 @@ function CustomZoomContent({
   async function requestDownload(isRaw: boolean): Promise<void> {
     try {
       const { url, fileName } = await fetch(
-        `${import.meta.env.VITE_API_HOST}/photos/entry/download/${
+        `${import.meta.env.VITE_API_HOST}/photos/entries/download/${
           data.id
         }?raw=${isRaw}&isInAlbum=${beingDisplayedInAlbum}`,
         {

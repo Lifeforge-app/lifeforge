@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router'
+import { useLocation } from 'react-router'
 import FAB from '@components/ButtonsAndInputs/FAB'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
@@ -58,19 +58,20 @@ function Transactions(): React.ReactElement {
   const [receiptToView, setReceiptToView] = useState('')
 
   const { hash } = useLocation()
-  const navigate = useNavigate()
 
   useEffect(() => {
     if (hash === '#new') {
       setSelectedData(null)
       setModifyModalOpenType('create')
-      navigate('/wallet/transactions')
+      return
     }
-  }, [hash])
 
-  useEffect(() => {
-    setSubSidebarExpanded(sidebarOpen)
-  }, [sidebarOpen])
+    if (sidebarOpen) {
+      setSubSidebarExpanded(true)
+    } else {
+      setSubSidebarExpanded(false)
+    }
+  }, [hash, sidebarOpen])
 
   return (
     <ModuleWrapper>

@@ -47,7 +47,7 @@ export const PROJECT_STATUS = {
 function ProjectsKList(): React.ReactElement {
   const [searchParams] = useSearchParams()
   const [projectList, refreshProjectList] = useFetch<IProjectsKEntry[]>(
-    'projects-k/entry/list'
+    'projects-k/entries/list'
   )
   const [createProjectModalOpen, setCreateProjectModalOpen] = useState(false)
   const [filteredProjectList, setFilteredProjectList] = useState<

@@ -75,7 +75,7 @@ function ModifyTaskWindow(): React.ReactElement {
 
     await APIRequest({
       endpoint:
-        'todo-list/entry' +
+        'todo-list/entries' +
         (innerOpenType === 'update' ? `/${selectedTask?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: task,
