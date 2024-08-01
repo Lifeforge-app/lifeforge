@@ -11,9 +11,9 @@ import ProjectKanban from './components/ProjectKanban'
 function Kanban(): React.ReactElement {
   const navigate = useNavigate()
   const { id } = useParams()
-  const [valid] = useFetch<boolean>(`projects-m/entry/valid/${id}`)
+  const [valid] = useFetch<boolean>(`projects-m/entries/valid/${id}`)
   const [projectData] = useFetch<IProjectsMEntry>(
-    `projects-m/entry/${id}`,
+    `projects-m/entries/${id}`,
     valid === true
   )
 

@@ -53,7 +53,7 @@ function SidebarItem({
         }`}
       >
         <div
-          className={`relative flex w-full flex-between gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 ${
+          className={`flex-between relative flex w-full gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 ${
             location.pathname
               .slice(1)
               .startsWith(
@@ -81,7 +81,7 @@ function SidebarItem({
             <span className="w-full">
               {sidebarExpanded &&
                 (isMainSidebarItem ? (
-                  <span className="flex w-full flex-between gap-2 truncate">
+                  <span className="flex-between flex w-full gap-2 truncate">
                     {t(`modules.${toCamelCase(name)}`)}
                     {hasAI && (
                       <Icon
@@ -122,7 +122,7 @@ function SidebarItem({
             />
           )}
           {sidebarExpanded && subsection !== undefined && (
-            <div className="relative flex flex-between">
+            <div className="flex-between relative flex">
               <button
                 onClick={toggleSubsection}
                 className="rounded-full p-1 hover:bg-bg-200 dark:hover:bg-bg-700/50"
@@ -171,8 +171,10 @@ function SidebarItem({
                       titleToPath(name) &&
                     (location.pathname.split('/').slice(1)[1] ===
                       subsectionLink ||
-                      (location.pathname.split('/').slice(1)[1] === '' &&
-                        name === 'Dashboard'))
+                      (location.pathname
+                        .replace(titleToPath(name), '')
+                        .replace(/\//g, '') === '' &&
+                        subsectionName === 'Dashboard'))
                       ? 'bg-bg-200/50 dark:bg-bg-800/50'
                       : 'text-bg-500'
                   }`}

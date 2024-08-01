@@ -54,8 +54,10 @@ function MiniCalendarDateItem({
             'YYYY-M-DD'
           ),
           'day'
-        )
-          ? "font-semibold after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:size-10 after:-translate-x-1/2 after:-translate-y-6 after:rounded-md after:border after:border-custom-500 after:bg-custom-500/10 after:content-['']"
+        ) &&
+        firstDay <= index &&
+        index - firstDay + 1 <= lastDate
+          ? "font-semibold after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:size-10 after:-translate-x-1/2 after:-translate-y-5 after:rounded-md after:border after:border-custom-500 after:bg-custom-500/10 after:content-['']"
           : ''
       }`}
     >

@@ -11,7 +11,7 @@ import React from 'react'
 
 function NotesFile(): React.ReactElement {
   // const { id } = useParams<{ id: string }>()
-  // const [entry] = useFetch<INotesEntry>(`notes/entry/get/${id}`)
+  // const [entry] = useFetch<INotesEntry>(`notes/entries/get/${id}`)
   // const navigate = useNavigate()
 
   return (

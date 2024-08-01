@@ -72,7 +72,7 @@ function ModifyAchievementModal({
 
     await APIRequest({
       endpoint:
-        'achievements/entry' +
+        'achievements/entries' +
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: achievement,

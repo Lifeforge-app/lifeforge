@@ -43,7 +43,7 @@ function PhotosAlbumGallery(): React.ReactElement {
     valid === true
   )
   const [photos, refreshPhotos, setPhotos] = useFetch<IPhotoAlbumEntryItem[]>(
-    `photos/entry/list/${id}`,
+    `photos/entries/list/${id}`,
     valid === true
   )
   const [isDownloadLoading, setIsDownloadLoading] = useState(false)
@@ -72,7 +72,7 @@ function PhotosAlbumGallery(): React.ReactElement {
       await fetch(
         `${
           import.meta.env.VITE_API_HOST
-        }/photos/entry/bulk-download?isInAlbum=true`,
+        }/photos/entries/bulk-download?isInAlbum=true`,
         {
           method: 'POST',
           headers: {

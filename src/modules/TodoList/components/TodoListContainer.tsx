@@ -44,7 +44,6 @@ function TodoListContainer(): React.ReactElement {
     if (hash === '#new') {
       setSelectedTask(null)
       setModifyTaskWindowOpenType('create')
-      navigate('/todo-list')
     }
   }, [hash])
 
@@ -82,7 +81,7 @@ function TodoListContainer(): React.ReactElement {
       </div>
       <ModifyTaskWindow />
       <DeleteConfirmationModal
-        apiEndpoint="todo-list/entry"
+        apiEndpoint="todo-list/entries"
         isOpen={deleteTaskConfirmationModalOpen}
         onClose={() => {
           setDeleteTaskConfirmationModalOpen(false)

@@ -81,7 +81,7 @@ function ModifyJournalEntryModal({
     })
 
     await APIRequest({
-      endpoint: '/journal/entry/ai/title',
+      endpoint: '/journal/entries/ai/title',
       method: 'POST',
       body: {
         text: encrypt(cleanedUpText, masterPassword),

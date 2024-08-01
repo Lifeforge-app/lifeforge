@@ -18,7 +18,7 @@ function AddMusicButton(): React.ReactElement {
     'completed' | 'failed' | 'in_progress'
   > {
     const res = await fetch(
-      `${import.meta.env.VITE_API_HOST}/music/entry/import-status`,
+      `${import.meta.env.VITE_API_HOST}/music/entries/import-status`,
       {
         method: 'GET',
         headers: {
@@ -37,7 +37,7 @@ function AddMusicButton(): React.ReactElement {
   function importMusic(): void {
     setLoading(true)
 
-    fetch(`${import.meta.env.VITE_API_HOST}/music/entry/import`, {
+    fetch(`${import.meta.env.VITE_API_HOST}/music/entries/import`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

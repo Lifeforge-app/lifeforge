@@ -70,11 +70,11 @@ export function TodoListProvider({
 }): React.ReactElement {
   const [searchParams] = useSearchParams()
   const [statusCounter, refreshStatusCounter] =
-    useFetch<ITodoListStatusCounter>('todo-list/entry/status-counter')
+    useFetch<ITodoListStatusCounter>('todo-list/entries/status-counter')
   const [lists, refreshLists] = useFetch<ITodoListList[]>('todo-list/list')
   const [tagsList, refreshTagsList] = useFetch<ITodoListTag[]>('todo-list/tag')
   const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry[]>(
-    `todo-list/entry?${
+    `todo-list/entries?${
       searchParams.get('status') !== null &&
       `status=${searchParams.get('status')}`
     }&tag=${searchParams.get('tag') ?? ''}&list=${

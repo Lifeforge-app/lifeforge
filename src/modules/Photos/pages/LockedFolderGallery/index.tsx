@@ -41,12 +41,15 @@ function LockedFolderGallery(): React.ReactElement {
     setFileImportLoading(true)
     setProgress(0)
 
-    fetch(`${import.meta.env.VITE_API_HOST}/photos/entry/import?locked=true`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+    fetch(
+      `${import.meta.env.VITE_API_HOST}/photos/entries/import?locked=true`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        }
       }
-    })
+    )
       .then(async response => {
         try {
           const data = await response.json()
@@ -57,7 +60,7 @@ function LockedFolderGallery(): React.ReactElement {
 
           const progressFetchInterval = setInterval(async () => {
             const progressData = await fetch(
-              `${import.meta.env.VITE_API_HOST}/photos/entry/import/progress`,
+              `${import.meta.env.VITE_API_HOST}/photos/entries/import/progress`,
               {
                 headers: {
                   Authorization: `Bearer ${cookieParse(document.cookie).token}`
@@ -88,7 +91,7 @@ function LockedFolderGallery(): React.ReactElement {
 
     const progressFetchInterval = setInterval(async () => {
       const progressData = await fetch(
-        `${import.meta.env.VITE_API_HOST}/photos/entry/import/progress`,
+        `${import.meta.env.VITE_API_HOST}/photos/entries/import/progress`,
         {
           headers: {
             Authorization: `Bearer ${cookieParse(document.cookie).token}`

@@ -145,7 +145,7 @@ function Folder(): React.ReactElement {
                       }
                     ]}
                     gap="0.5rem"
-                    className="mt-6 flex-1 shrink-0 !overflow-x-visible pb-8"
+                    className="mt-6 flex-1 shrink-0 !overflow-x-visible pb-12"
                   >
                     {data.map(entry => {
                       const Component = {

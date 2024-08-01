@@ -168,6 +168,7 @@ function ListView({
                     <MenuItem
                       icon="tabler:pencil"
                       text="Edit"
+                      preventDefault={false}
                       onClick={() => {
                         setSelectedData(transaction)
                         setModifyModalOpenType('update')
@@ -178,6 +179,7 @@ function ListView({
                     icon="tabler:trash"
                     text="Delete"
                     isRed
+                    preventDefault={false}
                     onClick={() => {
                       setSelectedData(transaction)
                       setDeleteTransactionsConfirmationOpen(true)

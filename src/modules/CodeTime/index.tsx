@@ -13,7 +13,7 @@ export default function CodeTime(): React.ReactElement {
         title="Code Time"
         desc="See how much time you spend grinding code."
       />
-      <div className="mt-8 min-h-0 w-full space-y-12">
+      <div className="my-8 min-h-0 w-full space-y-12">
         <CodeTimeStatistics />
         <CodeTimeActivityCalendar />
         {['projects', 'languages'].map(type => (

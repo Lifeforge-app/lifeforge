@@ -89,7 +89,7 @@ function ModifyEntryModal(): React.ReactElement {
 
     setIsLoading(true)
     await APIRequest({
-      endpoint: `projects-m/entry${
+      endpoint: `projects-m/entries${
         openType === 'update' ? `/${existedData?.id}` : ''
       }`,
       method: openType === 'create' ? 'POST' : 'PATCH',

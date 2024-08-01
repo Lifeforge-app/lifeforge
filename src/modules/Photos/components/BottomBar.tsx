@@ -40,7 +40,7 @@ function BottomBar({
       await fetch(
         `${
           import.meta.env.VITE_API_HOST
-        }/photos/entry/bulk-download?isInAlbum=${inAlbumGallery}`,
+        }/photos/entries/bulk-download?isInAlbum=${inAlbumGallery}`,
         {
           method: 'POST',
           headers: {

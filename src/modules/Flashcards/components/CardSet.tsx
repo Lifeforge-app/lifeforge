@@ -6,6 +6,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import {
@@ -78,14 +79,14 @@ function CardSet(): React.ReactElement {
   }, [currentIndex])
 
   return (
-    <section className="relative flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-y-auto px-12">
+    <ModuleWrapper>
       <div className="space-y-1">
         <GoBackButton
           onClick={() => {
             navigate('/flashcards')
           }}
         />
-        <div className="flex flex-between">
+        <div className="flex-between flex">
           <h1
             className={`flex items-center gap-4 ${
               typeof containerDetails !== 'string'
@@ -154,7 +155,7 @@ function CardSet(): React.ReactElement {
                 <div className="stack size-full">
                   <div className="card h-full bg-custom-500 text-bg-800 shadow-md">
                     <div className="card-body flex h-full flex-col">
-                      <div className="card-title flex flex-between">
+                      <div className="flex-between card-title flex">
                         <h2 className="text-custom-800">#{currentIndex + 1}</h2>
                         <button
                           onClick={() => {
@@ -207,7 +208,7 @@ function CardSet(): React.ReactElement {
           )}
         </APIComponentWithFallback>
       </div>
-    </section>
+    </ModuleWrapper>
   )
 }
 

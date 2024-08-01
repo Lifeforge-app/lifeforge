@@ -4,7 +4,7 @@ import Scrollbar from '@components/Scrollbar'
 function ListView({ books }: { books: any[] }): React.ReactElement {
   return (
     <Scrollbar className="mt-6">
-      <ul className="space-y-4 px-4">
+      <ul className="space-y-4 px-4 pb-8">
         {books.map((item: any) => (
           <li
             key={item.id}

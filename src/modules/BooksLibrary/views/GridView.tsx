@@ -4,7 +4,7 @@ import Scrollbar from '@components/Scrollbar'
 function GridView({ books }: { books: any[] }): React.ReactElement {
   return (
     <Scrollbar className="mt-6">
-      <ul className="grid min-h-0 gap-6 px-4 sm:grid-cols-2 md:grid-cols-3">
+      <ul className="grid gap-6 px-4 pb-8 sm:grid-cols-2 md:grid-cols-3">
         {books.map((item: any) => (
           <li
             key={item.id}

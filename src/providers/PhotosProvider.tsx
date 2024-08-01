@@ -200,7 +200,7 @@ export default function PhotosProvider(): React.ReactElement {
 
   async function fetchPhotoDimensionsData(): Promise<IPhotosEntryDimensionsAll | null> {
     const data = await fetch(
-      `${import.meta.env.VITE_API_HOST}/photos/entry/dimensions/async-res`,
+      `${import.meta.env.VITE_API_HOST}/photos/entries/dimensions/async-res`,
       {
         headers: {
           Authorization: `Bearer ${cookieParse(document.cookie).token}`
@@ -223,7 +223,7 @@ export default function PhotosProvider(): React.ReactElement {
   function refreshPhotoDimensions(): void {
     setPhotoDimensions('loading')
     fetch(
-      `${import.meta.env.VITE_API_HOST}/photos/entry/dimensions/async-get${
+      `${import.meta.env.VITE_API_HOST}/photos/entries/dimensions/async-get${
         hidePhotosInAlbum ? '?hideInAlbum=true' : ''
       }`,
       {

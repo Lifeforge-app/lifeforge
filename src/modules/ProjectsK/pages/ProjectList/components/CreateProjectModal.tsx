@@ -59,7 +59,7 @@ function CreateProjectModal({
     }
 
     await APIRequest({
-      endpoint: 'projects-k/entry/create',
+      endpoint: 'projects-k/entries/create',
       method: 'POST',
       body: project,
       successInfo: 'create',

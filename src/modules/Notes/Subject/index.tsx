@@ -26,10 +26,10 @@ function NotesSubject(): React.ReactElement {
   const navigate = useNavigate()
 
   const [valid] = useFetch<boolean>(
-    `notes/entry/valid/${workspace}/${subject}/${path}`
+    `notes/entries/valid/${workspace}/${subject}/${path}`
   )
   const [notesEntries, refreshNotesEntries] = useFetch<INotesEntry[]>(
-    `notes/entry/list/${subject}/${path}`,
+    `notes/entries/list/${subject}/${path}`,
     valid === true
   )
   const [modifyFolderModalOpenType, setModifyFolderModalOpenType] = useState<
@@ -52,7 +52,7 @@ function NotesSubject(): React.ReactElement {
     <APIComponentWithFallback data={valid}>
       {() => (
         <>
-          <ModuleWrapper className="flex size-full min-h-0 flex-1 flex-col px-8 md:px-12">
+          <ModuleWrapper className="mb-28 flex size-full min-h-0 flex-1 flex-col px-8 md:px-12">
             <DirectoryHeader
               updateNotesEntries={refreshNotesEntries}
               setModifyFolderModalOpenType={setModifyFolderModalOpenType}
@@ -92,7 +92,7 @@ function NotesSubject(): React.ReactElement {
                 setExistedData(null)
                 setDeleteFolderConfirmationModalOpen(false)
               }}
-              apiEndpoint="notes/entry/delete"
+              apiEndpoint="notes/entries/delete"
               itemName="folder"
               data={existedData}
               updateDataList={refreshNotesEntries}

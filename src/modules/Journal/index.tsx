@@ -43,7 +43,7 @@ function Journal(): React.ReactElement {
     const challenge = await fetchChallenge()
 
     await APIRequest({
-      endpoint: `journal/entry/list?master=${encodeURIComponent(
+      endpoint: `journal/entries/list?master=${encodeURIComponent(
         encrypt(masterPassword, challenge)
       )}`,
       method: 'GET',
@@ -120,7 +120,7 @@ function Journal(): React.ReactElement {
             masterPassword={masterPassword}
           />
           <DeleteConfirmationModal
-            apiEndpoint="journal/entry/delete"
+            apiEndpoint="journal/entries/delete"
             data={existedData}
             isOpen={deleteJournalConfirmationModalOpen}
             onClose={() => {

@@ -43,7 +43,7 @@ function Mood({
     const challenge = await fetchChallenge(setLoading)
 
     await APIRequest({
-      endpoint: '/journal/entry/ai/mood',
+      endpoint: '/journal/entries/ai/mood',
       method: 'POST',
       body: {
         text: encrypt(cleanedUpText, masterPassword),

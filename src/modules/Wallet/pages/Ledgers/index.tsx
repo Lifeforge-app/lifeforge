@@ -29,7 +29,6 @@ function Ledgers(): React.ReactElement {
     if (hash === '#new') {
       setSelectedData(null)
       setModifyModalOpenType('create')
-      navigate('/wallet/ledgers')
     }
   }, [hash])
 

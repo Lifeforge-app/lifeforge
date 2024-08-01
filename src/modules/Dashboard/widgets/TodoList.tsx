@@ -13,7 +13,7 @@ import TaskItem from '../../TodoList/components/tasks/TaskItem'
 export default function TodoList(): React.ReactElement {
   const { t } = useTranslation()
   const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry[]>(
-    'todo-list/entry?status=today'
+    'todo-list/entries?status=today'
   )
   const navigate = useNavigate()
 

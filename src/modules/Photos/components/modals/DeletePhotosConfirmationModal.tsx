@@ -42,7 +42,7 @@ function DeletePhotosConfirmationModal({
     setLoading(true)
 
     await APIRequest({
-      endpoint: `photos/entry/delete?isInAlbum=${isInAlbumGallery}`,
+      endpoint: `photos/entries/delete?isInAlbum=${isInAlbumGallery}`,
       method: 'DELETE',
       body: {
         photos: customPhotoToBeDeleted

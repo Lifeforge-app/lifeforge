@@ -22,7 +22,7 @@ function JournalViewModal({
 }): React.ReactElement {
   const navigate = useNavigate()
   const [valid, , setValid] = useFetch<boolean>(
-    `journal/entry/valid/${id}`,
+    `journal/entries/valid/${id}`,
     id !== null
   )
   const [challenge, , setChallenge] = useFetch<string>(
@@ -31,7 +31,7 @@ function JournalViewModal({
   )
   const url = useMemo(() => {
     if (valid === true && challenge !== 'loading') {
-      return `journal/entry/get/${id}?master=${encodeURIComponent(
+      return `journal/entries/get/${id}?master=${encodeURIComponent(
         encrypt(masterPassword, challenge)
       )}`
     } else {

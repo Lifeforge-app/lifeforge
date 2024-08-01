@@ -19,9 +19,9 @@ function ProjectsKEntry(): React.ReactElement {
   const navigate = useNavigate()
   const location = useLocation()
   const { id } = useParams()
-  const [valid] = useFetch<boolean>(`projects-k/entry/valid/${id}`)
+  const [valid] = useFetch<boolean>(`projects-k/entries/valid/${id}`)
   const [projectData, refreshProjectData] = useFetch<IProjectsKEntry>(
-    `projects-k/entry/get/${id}`,
+    `projects-k/entries/get/${id}`,
     valid === true
   )
 
@@ -34,7 +34,7 @@ function ProjectsKEntry(): React.ReactElement {
 
   async function updateProjectStatus(status: string): Promise<void> {
     fetch(
-      `${import.meta.env.VITE_API_HOST}/projects-k/entry/update-status/${id}`,
+      `${import.meta.env.VITE_API_HOST}/projects-k/entries/update-status/${id}`,
       {
         method: 'PATCH',
         headers: {

@@ -48,7 +48,7 @@ function CalendarModule(): React.ReactElement {
           title="Calendar"
           desc="Make sure you don't miss important event."
         />
-        <div className="mt-6 flex min-h-0 w-full flex-1">
+        <div className="mb-8 mt-6 flex min-h-0 w-full flex-1">
           <Sidebar
             events={events}
             categories={categories}
