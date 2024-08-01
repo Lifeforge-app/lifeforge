@@ -7,6 +7,7 @@ import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import Scrollbar from '@components/Scrollbar'
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
 import AlbumItem from './components/AlbumItem'
 import AlbumListHeader from './components/AlbumListHeader'
@@ -77,45 +78,47 @@ function PhotosAlbumList(): React.ReactElement {
         />
         <div className="mt-6 flex size-full min-h-0 gap-8">
           <PhotosSidebar />
-          <div className="flex size-full min-w-0 flex-1 flex-col">
-            <AlbumListHeader
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-            />
-            <APIComponentWithFallback data={filteredAlbumList}>
-              {filteredAlbumList =>
-                albumList.length > 0 ? (
-                  filteredAlbumList.length > 0 ? (
-                    <ul className="mt-6 grid w-full min-w-0 flex-1 gap-2 overflow-y-auto pb-6 sm:grid-cols-2 lg:grid-cols-3">
-                      {filteredAlbumList.map(album => (
-                        <AlbumItem
-                          key={album.id}
-                          album={album}
-                          setDeleteModalOpen={setDeleteModalOpen}
-                          setUpdateAlbumTagsModalOpen={
-                            setUpdateAlbumTagsModalOpen
-                          }
-                          setSelectedAlbum={setSelectedAlbum}
-                        />
-                      ))}
-                    </ul>
+          <Scrollbar>
+            <div className="flex size-full min-w-0 flex-1 flex-col pb-8">
+              <AlbumListHeader
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+              />
+              <APIComponentWithFallback data={filteredAlbumList}>
+                {filteredAlbumList =>
+                  albumList.length > 0 ? (
+                    filteredAlbumList.length > 0 ? (
+                      <ul className="mt-6 grid w-full min-w-0 flex-1 gap-2 overflow-y-auto pb-6 sm:grid-cols-2 lg:grid-cols-3">
+                        {filteredAlbumList.map(album => (
+                          <AlbumItem
+                            key={album.id}
+                            album={album}
+                            setDeleteModalOpen={setDeleteModalOpen}
+                            setUpdateAlbumTagsModalOpen={
+                              setUpdateAlbumTagsModalOpen
+                            }
+                            setSelectedAlbum={setSelectedAlbum}
+                          />
+                        ))}
+                      </ul>
+                    ) : (
+                      <EmptyStateScreen
+                        description="Oops, seems like nothing matches your search."
+                        title="No albums found"
+                        icon="tabler:photo-off"
+                      />
+                    )
                   ) : (
                     <EmptyStateScreen
-                      description="Oops, seems like nothing matches your search."
-                      title="No albums found"
+                      description="Consider creating an album to organize your photos."
+                      title="Hmm... Seems a bit empty here."
                       icon="tabler:photo-off"
                     />
                   )
-                ) : (
-                  <EmptyStateScreen
-                    description="Consider creating an album to organize your photos."
-                    title="Hmm... Seems a bit empty here."
-                    icon="tabler:photo-off"
-                  />
-                )
-              }
-            </APIComponentWithFallback>
-          </div>
+                }
+              </APIComponentWithFallback>
+            </div>
+          </Scrollbar>
         </div>
       </ModuleWrapper>
       <ModifyAlbumModal targetAlbum={selectedAlbum ?? undefined} />

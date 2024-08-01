@@ -29,7 +29,6 @@ function Assets(): React.ReactElement {
     if (hash === '#new') {
       setSelectedData(null)
       setModifyModalOpenType('create')
-      navigate('/wallet/assets')
     }
   }, [hash])
 

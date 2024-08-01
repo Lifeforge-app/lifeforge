@@ -77,7 +77,7 @@ export function MusicProvider({
   const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(false)
   const [musics, refreshMusics, setMusics] = useFetch<IMusicEntry[]>(
-    'music/entry',
+    'music/entries',
     auth
   )
   const [isYoutubeDownloaderOpen, setIsYoutubeDownloaderOpen] = useState(false)
@@ -122,7 +122,7 @@ export function MusicProvider({
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_HOST}/music/entry/favourite/${
+        `${import.meta.env.VITE_API_HOST}/music/entries/favourite/${
           targetMusic.id
         }`,
         {

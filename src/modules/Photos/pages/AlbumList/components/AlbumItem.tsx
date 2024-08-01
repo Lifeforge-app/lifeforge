@@ -22,7 +22,7 @@ function AlbumItem({
   return (
     <li
       key={album.id}
-      className="relative flex size-full min-w-0 flex-col gap-1 p-4"
+      className="relative flex h-min w-full min-w-0 flex-col gap-1 p-4"
     >
       <Link
         to={`/photos/album/${album.id}`}

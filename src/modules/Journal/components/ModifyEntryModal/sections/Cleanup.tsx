@@ -40,7 +40,7 @@ function Cleanup({
     const challenge = await fetchChallenge(setLoading)
 
     await APIRequest({
-      endpoint: '/journal/entry/ai/cleanup',
+      endpoint: '/journal/entries/ai/cleanup',
       method: 'POST',
       body: {
         text: encrypt(rawText, masterPassword),

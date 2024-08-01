@@ -80,7 +80,7 @@ export default function ProjectsMProvider(): React.ReactElement {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const entriesState =
-    useProjectsMCommonState<IProjectsMEntry>('projects-m/entry')
+    useProjectsMCommonState<IProjectsMEntry>('projects-m/entries')
   const categoriesState = useProjectsMCommonState<IProjectsMCategory>(
     'projects-m/category'
   )
