@@ -13,7 +13,7 @@ import APIRequest from '@utils/fetchData'
 function ModifyTagModal(): React.ReactElement {
   const {
     modifyTagModalOpenType: openType,
-    setModifyListModalOpenType: setOpenType,
+    setModifyTagModalOpenType: setOpenType,
     refreshTagsList,
     selectedTag
   } = useTodoListContext()
@@ -89,6 +89,7 @@ function ModifyTagModal(): React.ReactElement {
           updateValue={updateTagName}
           placeholder="Tag name"
           icon="tabler:tag"
+          darker
           onKeyDown={e => {
             if (e.key === 'Enter') {
               onSubmitButtonClick().catch(console.error)
