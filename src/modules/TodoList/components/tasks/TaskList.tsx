@@ -7,7 +7,7 @@ function TaskList(): React.ReactElement {
   const { entries } = useTodoListContext()
 
   return (
-    <div className="mt-6 flex flex-1 flex-col px-4">
+    <div className="mb-8 mt-6 flex flex-1 flex-col px-4">
       <Scrollbar>
         {typeof entries !== 'string' && entries.length > 0 && (
           <ul className="mt-4 flex flex-1 flex-col gap-4 pb-24 sm:pb-8">
