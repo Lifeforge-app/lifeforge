@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router'
+import { useLocation } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
 import FAB from '@components/ButtonsAndInputs/FAB'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
@@ -23,7 +23,6 @@ function Ledgers(): React.ReactElement {
     null
   )
   const { hash } = useLocation()
-  const navigate = useNavigate()
 
   useEffect(() => {
     if (hash === '#new') {

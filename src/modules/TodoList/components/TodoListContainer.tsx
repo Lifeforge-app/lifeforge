@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router'
+import { useLocation } from 'react-router'
 import FAB from '@components/ButtonsAndInputs/FAB'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
@@ -38,7 +38,6 @@ function TodoListContainer(): React.ReactElement {
   const [searchQuery, setSearchQuery] = useState('')
 
   const { hash } = useLocation()
-  const navigate = useNavigate()
 
   useEffect(() => {
     if (hash === '#new') {
