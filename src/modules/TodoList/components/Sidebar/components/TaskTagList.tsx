@@ -1,8 +1,8 @@
 import React from 'react'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import TaskTagListItem from './TaskTagListItem'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 
 function TaskTagList({
   setSidebarOpen
@@ -11,7 +11,7 @@ function TaskTagList({
 }): React.ReactElement {
   const {
     tags,
-    setModifyListModalOpenType: setModifyModalOpenType,
+    setModifyTagModalOpenType: setModifyModalOpenType,
     setSelectedList: setSelectedData
   } = useTodoListContext()
 

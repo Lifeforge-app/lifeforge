@@ -143,8 +143,8 @@ function ModifyTaskWindow(): React.ReactElement {
     <div
       className={`fixed left-0 top-0 h-dvh w-full bg-bg-900/20 backdrop-blur-sm transition-all ${
         innerOpenType !== null
-          ? 'z-[9999] opacity-100'
-          : ' z-[-9999]  opacity-0 [transition:z-index_0.1s_linear_0.5s,opacity_0.1s_linear_0.1s]'
+          ? 'z-[9990] opacity-100'
+          : ' z-[-9999] opacity-0 [transition:z-index_0.1s_linear_0.5s,opacity_0.1s_linear_0.1s]'
       }`}
     >
       <button
@@ -157,7 +157,7 @@ function ModifyTaskWindow(): React.ReactElement {
         } top-0 size-full bg-bg-100 p-8 dark:bg-bg-900 sm:w-4/5 md:w-3/5 lg:w-2/5`}
       >
         <Scrollbar>
-          <div className="mb-8 flex flex-between ">
+          <div className="flex-between mb-8 flex ">
             <h1 className="flex items-center gap-3 text-2xl font-semibold">
               <Icon
                 icon={
