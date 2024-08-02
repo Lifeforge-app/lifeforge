@@ -13,6 +13,7 @@ import {
 } from 'chart.js'
 import React, { useRef, useState } from 'react'
 
+import FAB from '@components/ButtonsAndInputs/FAB'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -87,6 +88,7 @@ function Dashboard(): React.ReactElement {
         }}
         setReady={setReady}
       />
+      <FAB alwaysShow text="Ask AI" icon="mage:stars-c" onClick={() => {}} />
     </ModuleWrapper>
   )
 }

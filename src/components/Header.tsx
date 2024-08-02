@@ -1,4 +1,4 @@
-import { Menu, Transition } from '@headlessui/react'
+import { Menu, MenuButton, MenuItems, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React, { Fragment } from 'react'
 import { useNavigate } from 'react-router'
@@ -40,7 +40,7 @@ export default function Header(): React.ReactElement {
           <div className="absolute bottom-4 right-4 size-2 rounded-full bg-red-500" />
         </button>
         <Menu as="div" className="relative ml-4 text-left">
-          <Menu.Button className="flex items-center gap-3">
+          <MenuButton className="flex items-center gap-3">
             <div className="flex size-9 items-center justify-center overflow-hidden rounded-full bg-bg-100 dark:bg-bg-800">
               {userData.avatar !== '' ? (
                 <img
@@ -60,7 +60,7 @@ export default function Header(): React.ReactElement {
               icon="tabler:chevron-down"
               className="stroke-[2px] text-bg-500"
             />
-          </Menu.Button>
+          </MenuButton>
           <Transition
             as={Fragment}
             enter="transition ease-out duration-100"
@@ -70,7 +70,7 @@ export default function Header(): React.ReactElement {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute right-0 mt-4 w-56 overflow-hidden rounded-lg bg-bg-100 shadow-lg focus:outline-none dark:bg-bg-800">
+            <MenuItems className="absolute right-0 mt-4 w-56 overflow-hidden rounded-lg bg-bg-100 shadow-lg focus:outline-none dark:bg-bg-800">
               <div className="py-1">
                 <MenuItem
                   onClick={() => {
@@ -89,7 +89,7 @@ export default function Header(): React.ReactElement {
                   text="Sign out"
                 />
               </div>
-            </Menu.Items>
+            </MenuItems>
           </Transition>
         </Menu>
       </div>
