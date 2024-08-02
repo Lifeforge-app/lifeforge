@@ -57,7 +57,6 @@ function Dashboard(): React.ReactElement {
           hamburgerMenuItems={
             <>
               <MenuItem
-                preventDefault={false}
                 icon={canLayoutChange ? 'tabler:lock-open' : 'tabler:lock'}
                 text={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
                 onClick={() => {
@@ -67,7 +66,6 @@ function Dashboard(): React.ReactElement {
               <MenuItem
                 icon="tabler:apps"
                 text="Manage Widgets"
-                preventDefault={false}
                 onClick={() => {
                   setManageWidgetsModalOpen(true)
                 }}

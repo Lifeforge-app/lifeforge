@@ -148,7 +148,6 @@ function SubtaskItem({
         <MenuItem
           icon="tabler:edit"
           text="Edit"
-          preventDefault={false}
           onClick={() => {
             setIsEditing(true)
             setTimeout(() => {
