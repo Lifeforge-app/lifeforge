@@ -25,7 +25,7 @@ function MenuItem({
   onClick,
   isToggled,
   disabled,
-  preventDefault = true,
+  preventDefault = false,
   needTranslate = true
 }: {
   icon?: string

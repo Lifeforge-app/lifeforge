@@ -73,7 +73,6 @@ export default function Header(): React.ReactElement {
             <Menu.Items className="absolute right-0 mt-4 w-56 overflow-hidden rounded-lg bg-bg-100 shadow-lg focus:outline-none dark:bg-bg-800">
               <div className="py-1">
                 <MenuItem
-                  preventDefault={false}
                   onClick={() => {
                     navigate('/account')
                   }}

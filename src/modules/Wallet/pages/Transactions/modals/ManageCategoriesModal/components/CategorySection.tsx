@@ -31,7 +31,7 @@ function CategorySection({
 
   return (
     <>
-      <div className="flex flex-between gap-4">
+      <div className="flex-between flex gap-4">
         <h2 className="flex items-center gap-2 text-lg font-medium text-bg-500">
           <Icon icon={iconName} className="size-6" />
           {t('dashboard.widgets.' + type)}
@@ -48,7 +48,7 @@ function CategorySection({
       <ul className="mb-4 flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
         {filteredCategories.length > 0 ? (
           filteredCategories.map(category => (
-            <li key={category.id} className="flex flex-between gap-4 px-2 py-4">
+            <li key={category.id} className="flex-between flex gap-4 px-2 py-4">
               <div className="flex items-center gap-4">
                 <div
                   style={{

@@ -1,4 +1,5 @@
 import React from 'react'
+import Scrollbar from '@components/Scrollbar'
 import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
 import TableBody from './components/TableBody'
 import TableHeader from './components/TableHeader'
@@ -21,17 +22,19 @@ function TableView({
   >
 }): React.ReactElement {
   return (
-    <table className="mb-8 w-max">
-      <TableHeader visibleColumn={visibleColumn} />
-      <TableBody
-        visibleColumn={visibleColumn}
-        setModifyModalOpenType={setModifyModalOpenType}
-        setSelectedData={setSelectedData}
-        setDeleteTransactionsConfirmationOpen={
-          setDeleteTransactionsConfirmationOpen
-        }
-      />
-    </table>
+    <Scrollbar>
+      <table className="mb-16 w-max">
+        <TableHeader visibleColumn={visibleColumn} />
+        <TableBody
+          visibleColumn={visibleColumn}
+          setModifyModalOpenType={setModifyModalOpenType}
+          setSelectedData={setSelectedData}
+          setDeleteTransactionsConfirmationOpen={
+            setDeleteTransactionsConfirmationOpen
+          }
+        />
+      </table>
+    </Scrollbar>
   )
 }
 

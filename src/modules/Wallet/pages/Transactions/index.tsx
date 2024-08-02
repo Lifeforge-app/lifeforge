@@ -10,11 +10,11 @@ import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { useWalletContext } from '@providers/WalletProvider'
-import ManageCategoriesModal from './components/ManageCategoriesModal'
-import ModifyTransactionsModal from './components/ModifyTransactionsModal'
 import SearchBar from './components/SearchBar'
 import Sidebar from './components/Sidebar'
 import TransactionsHeader from './components/TransactionsHeader'
+import ManageCategoriesModal from './modals/ManageCategoriesModal'
+import ModifyTransactionsModal from './modals/ModifyTransactionsModal'
 import ListView from './views/ListView'
 import ReceiptModal from './views/ListView/components/ReceiptModal'
 import TableView from './views/TableView'
@@ -109,7 +109,7 @@ function Transactions(): React.ReactElement {
             setSidebarOpen={setSidebarOpen}
           />
           <SearchBar setView={setView} view={view} />
-          <div className="mt-8 size-full overflow-y-auto">
+          <div className="mt-8 size-full">
             <APIComponentWithFallback data={transactions}>
               {transactions =>
                 transactions.length > 0 ? (

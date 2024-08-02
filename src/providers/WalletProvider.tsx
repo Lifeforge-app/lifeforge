@@ -23,6 +23,7 @@ interface IWalletData {
   refreshAssets: () => void
   refreshLedgers: () => void
   refreshCategories: () => void
+  refreshIncomeExpenses: () => void
   searchQuery: string
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
 }
@@ -41,11 +42,12 @@ export default function WalletProvider(): React.ReactElement {
     useFetch<IWalletLedgerEntry[]>('wallet/ledgers')
   const [categories, refreshCategories] =
     useFetch<IWalletCategoryEntry[]>('wallet/category')
-  const [incomeExpenses] = useFetch<IWalletIncomeExpenses>(
-    `wallet/transactions/income-expenses/${new Date().getFullYear()}/${
-      new Date().getMonth() + 1
-    }`
-  )
+  const [incomeExpenses, refreshIncomeExpenses] =
+    useFetch<IWalletIncomeExpenses>(
+      `wallet/transactions/income-expenses/${new Date().getFullYear()}/${
+        new Date().getMonth() + 1
+      }`
+    )
   const [filteredTransactions, setFilteredTransactions] = useState<
     IWalletTransactionEntry[]
   >([])
@@ -115,6 +117,7 @@ export default function WalletProvider(): React.ReactElement {
         refreshAssets,
         refreshLedgers,
         refreshCategories,
+        refreshIncomeExpenses,
         searchQuery,
         setSearchQuery
       }}
