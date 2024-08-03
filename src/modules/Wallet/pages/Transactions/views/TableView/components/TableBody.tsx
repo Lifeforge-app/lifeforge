@@ -1,5 +1,5 @@
 import React from 'react'
-import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 import ActionColumn from './columns/ActionColumn'
 import AmountColumn from './columns/AmountColumn'
@@ -19,7 +19,7 @@ function TableBody({
 }: {
   visibleColumn: string[]
   setSelectedData: React.Dispatch<
-    React.SetStateAction<IWalletTransactionEntry | null>
+    React.SetStateAction<IWalletTransaction | null>
   >
   setModifyModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>

@@ -3,16 +3,16 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { type IWalletCategoryEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletCategory } from '@interfaces/wallet_interfaces'
 
 interface CategorySectionProps {
-  categories: IWalletCategoryEntry[]
+  categories: IWalletCategory[]
   type: 'income' | 'expenses'
   iconName: string
   setModifyCategoriesModalOpenType: React.Dispatch<
     React.SetStateAction<'income' | 'expenses' | 'update' | null>
   >
-  setExistedData: (category: IWalletCategoryEntry) => void
+  setExistedData: (category: IWalletCategory) => void
   setDeleteCategoriesConfirmationOpen: (isOpen: boolean) => void
 }
 

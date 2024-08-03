@@ -1,14 +1,14 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { type IWalletAssetEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletAsset } from '@interfaces/wallet_interfaces'
 
 function AssetColumn({
   asset,
   assets
 }: {
   asset: string
-  assets: IWalletAssetEntry[]
+  assets: IWalletAsset[]
 }): React.ReactElement {
   return (
     <td className="p-2 text-center">

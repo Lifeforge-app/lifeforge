@@ -9,7 +9,7 @@ import DateInput from '@components/ButtonsAndInputs/DateInput'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 import APIRequest from '@utils/fetchData'
 import AssetsFromToSelector from './components/AssetsFromToSelector'
@@ -27,9 +27,9 @@ function ModifyTransactionsModal({
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  existedData: IWalletTransactionEntry | null
+  existedData: IWalletTransaction | null
   setExistedData: React.Dispatch<
-    React.SetStateAction<IWalletTransactionEntry | null>
+    React.SetStateAction<IWalletTransaction | null>
   >
 }): React.ReactElement {
   const { refreshAssets, refreshTransactions } = useWalletContext()

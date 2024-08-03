@@ -7,7 +7,7 @@ import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { useWalletContext } from '@providers/WalletProvider'
 import SearchBar from './components/SearchBar'
@@ -50,8 +50,9 @@ function Transactions(): React.ReactElement {
   const [isManageCategoriesModalOpen, setManageCategoriesModalOpen] = useState<
     boolean | 'new'
   >(false)
-  const [selectedData, setSelectedData] =
-    useState<IWalletTransactionEntry | null>(null)
+  const [selectedData, setSelectedData] = useState<IWalletTransaction | null>(
+    null
+  )
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [view, setView] = useState<'list' | 'table'>('list')
   const [receiptModalOpen, setReceiptModalOpen] = useState(false)

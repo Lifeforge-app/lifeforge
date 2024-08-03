@@ -3,7 +3,7 @@ import moment from 'moment'
 import React from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 
@@ -15,12 +15,12 @@ function TransactionListItem({
   setReceiptToView,
   setSelectedData
 }: {
-  transaction: IWalletTransactionEntry
+  transaction: IWalletTransaction
   setModifyModalOpenType: React.Dispatch<'create' | 'update' | null>
   setDeleteTransactionsConfirmationOpen: React.Dispatch<boolean>
   setReceiptModalOpen: React.Dispatch<boolean>
   setReceiptToView: React.Dispatch<string>
-  setSelectedData: React.Dispatch<IWalletTransactionEntry | null>
+  setSelectedData: React.Dispatch<IWalletTransaction | null>
 }): React.ReactElement {
   const { categories, ledgers, assets } = useWalletContext()
 

@@ -10,7 +10,6 @@ import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IPasswordEntry } from '@interfaces/password_interfaces'
-import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 
@@ -27,7 +26,6 @@ function CreatePasswordModal({
   masterPassword: string
   existedData: IPasswordEntry | null
 }): React.ReactElement {
-  const { userData } = useAuthContext()
   const [name, setName] = useState('')
   const [icon, setIcon] = useState('')
   const [color, setColor] = useState('')
@@ -94,7 +92,6 @@ function CreatePasswordModal({
       }`,
       method: openType === 'create' ? 'POST' : 'PATCH',
       body: {
-        userId: userData.id,
         name,
         icon,
         color,

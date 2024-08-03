@@ -2,7 +2,7 @@ import React from 'react'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
 import Scrollbar from '@components/Scrollbar'
-import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 import TransactionListItem from './components/TransactionListItem'
 
@@ -17,7 +17,7 @@ function ListView({
   setReceiptToView
 }: {
   setSelectedData: React.Dispatch<
-    React.SetStateAction<IWalletTransactionEntry | null>
+    React.SetStateAction<IWalletTransaction | null>
   >
   setModifyModalOpenType: React.Dispatch<'create' | 'update' | null>
   setDeleteTransactionsConfirmationOpen: React.Dispatch<boolean>

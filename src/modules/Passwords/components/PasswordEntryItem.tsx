@@ -7,7 +7,6 @@ import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { type IPasswordEntry } from '@interfaces/password_interfaces'
-import { useAuthContext } from '@providers/AuthProvider'
 import { Clipboard } from '@utils/clipboard'
 import { decrypt, encrypt } from '@utils/encryption'
 
@@ -36,7 +35,6 @@ function PasswordEntryITem({
     React.SetStateAction<IPasswordEntry[] | 'loading' | 'error'>
   >
 }): React.ReactElement {
-  const { userData } = useAuthContext()
   const [decryptedPassword, setDecryptedPassword] = useState<string | null>(
     null
   )
@@ -61,17 +59,17 @@ function PasswordEntryITem({
       }
     })
 
-    const encryptedMaster = encodeURIComponent(
-      encrypt(masterPassword, challenge)
-    )
+    const encryptedMaster = encrypt(masterPassword, challenge)
 
     const decrypted = await fetch(
       `${import.meta.env.VITE_API_HOST}/passwords/password/decrypt/${
         password.id
-      }?master=${encryptedMaster}&user=${userData.id}`,
+      }`,
       {
-        method: 'GET',
+        method: 'POST',
+        body: JSON.stringify({ master: encryptedMaster }),
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${cookieParse(document.cookie).token}`
         }
       }

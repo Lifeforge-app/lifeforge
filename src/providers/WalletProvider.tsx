@@ -5,19 +5,19 @@ import { Outlet } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import useFetch from '@hooks/useFetch'
 import {
-  type IWalletTransactionEntry,
-  type IWalletLedgerEntry,
-  type IWalletAssetEntry,
-  type IWalletCategoryEntry,
+  type IWalletTransaction,
+  type IWalletLedger,
+  type IWalletAsset,
+  type IWalletCategory,
   type IWalletIncomeExpenses
 } from '@interfaces/wallet_interfaces'
 
 interface IWalletData {
-  transactions: IWalletTransactionEntry[] | 'loading' | 'error'
-  filteredTransactions: IWalletTransactionEntry[]
-  ledgers: IWalletLedgerEntry[] | 'loading' | 'error'
-  assets: IWalletAssetEntry[] | 'loading' | 'error'
-  categories: IWalletCategoryEntry[] | 'loading' | 'error'
+  transactions: IWalletTransaction[] | 'loading' | 'error'
+  filteredTransactions: IWalletTransaction[]
+  ledgers: IWalletLedger[] | 'loading' | 'error'
+  assets: IWalletAsset[] | 'loading' | 'error'
+  categories: IWalletCategory[] | 'loading' | 'error'
   incomeExpenses: IWalletIncomeExpenses | 'loading' | 'error'
   refreshTransactions: () => void
   refreshAssets: () => void
@@ -34,14 +34,13 @@ export const WalletContext = React.createContext<IWalletData | undefined>(
 
 export default function WalletProvider(): React.ReactElement {
   const [searchParams] = useSearchParams()
-  const [transactions, refreshTransactions] = useFetch<
-    IWalletTransactionEntry[]
-  >('wallet/transactions')
-  const [assets, refreshAssets] = useFetch<IWalletAssetEntry[]>('wallet/assets')
-  const [ledgers, refreshLedgers] =
-    useFetch<IWalletLedgerEntry[]>('wallet/ledgers')
+  const [transactions, refreshTransactions] = useFetch<IWalletTransaction[]>(
+    'wallet/transactions'
+  )
+  const [assets, refreshAssets] = useFetch<IWalletAsset[]>('wallet/assets')
+  const [ledgers, refreshLedgers] = useFetch<IWalletLedger[]>('wallet/ledgers')
   const [categories, refreshCategories] =
-    useFetch<IWalletCategoryEntry[]>('wallet/category')
+    useFetch<IWalletCategory[]>('wallet/category')
   const [incomeExpenses, refreshIncomeExpenses] =
     useFetch<IWalletIncomeExpenses>(
       `wallet/transactions/income-expenses/${new Date().getFullYear()}/${
@@ -49,7 +48,7 @@ export default function WalletProvider(): React.ReactElement {
       }`
     )
   const [filteredTransactions, setFilteredTransactions] = useState<
-    IWalletTransactionEntry[]
+    IWalletTransaction[]
   >([])
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 500)

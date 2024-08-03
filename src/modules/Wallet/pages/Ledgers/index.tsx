@@ -7,7 +7,7 @@ import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import { type IWalletLedgerEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletLedger } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 import LedgerItem from './components/LedgerItem'
 import ModifyLedgersModal from './components/ModifyLedgersModal'
@@ -19,9 +19,7 @@ function Ledgers(): React.ReactElement {
   >(null)
   const [deleteLedgersConfirmationOpen, setDeleteLedgersConfirmationOpen] =
     useState(false)
-  const [selectedData, setSelectedData] = useState<IWalletLedgerEntry | null>(
-    null
-  )
+  const [selectedData, setSelectedData] = useState<IWalletLedger | null>(null)
   const { hash } = useLocation()
 
   useEffect(() => {

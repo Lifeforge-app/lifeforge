@@ -9,7 +9,7 @@ import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import { type IWalletLedgerEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletLedger } from '@interfaces/wallet_interfaces'
 import APIRequest from '@utils/fetchData'
 
 function ModifyLedgersModal({
@@ -21,10 +21,8 @@ function ModifyLedgersModal({
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  existedData: IWalletLedgerEntry | null
-  setExistedData: React.Dispatch<
-    React.SetStateAction<IWalletLedgerEntry | null>
-  >
+  existedData: IWalletLedger | null
+  setExistedData: React.Dispatch<React.SetStateAction<IWalletLedger | null>>
   refreshLedgers: () => void
 }): React.ReactElement {
   const [ledgerName, setLedgerName] = useState('')
