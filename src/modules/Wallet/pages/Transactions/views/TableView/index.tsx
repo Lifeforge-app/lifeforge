@@ -1,6 +1,6 @@
 import React from 'react'
 import Scrollbar from '@components/Scrollbar'
-import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 import TableBody from './components/TableBody'
 import TableHeader from './components/TableHeader'
 
@@ -15,7 +15,7 @@ function TableView({
     React.SetStateAction<'create' | 'update' | null>
   >
   setSelectedData: React.Dispatch<
-    React.SetStateAction<IWalletTransactionEntry | null>
+    React.SetStateAction<IWalletTransaction | null>
   >
   setDeleteTransactionsConfirmationOpen: React.Dispatch<
     React.SetStateAction<boolean>

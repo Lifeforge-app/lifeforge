@@ -7,7 +7,7 @@ import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import { type IWalletAssetEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletAsset } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 import AssetItem from './components/AssetItem'
 import ModifyAssetsModal from './components/ModifyAssetsModal'
@@ -19,9 +19,7 @@ function Assets(): React.ReactElement {
   >(null)
   const [deleteAssetsConfirmationOpen, setDeleteAssetsConfirmationOpen] =
     useState(false)
-  const [selectedData, setSelectedData] = useState<IWalletAssetEntry | null>(
-    null
-  )
+  const [selectedData, setSelectedData] = useState<IWalletAsset | null>(null)
   const { hash } = useLocation()
 
   useEffect(() => {

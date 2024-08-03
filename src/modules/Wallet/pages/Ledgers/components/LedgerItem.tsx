@@ -3,7 +3,7 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { type IWalletLedgerEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletLedger } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function LedgerItem({
@@ -12,10 +12,8 @@ function LedgerItem({
   setModifyModalOpenType,
   setDeleteLedgersConfirmationOpen
 }: {
-  ledger: IWalletLedgerEntry
-  setSelectedData: React.Dispatch<
-    React.SetStateAction<IWalletLedgerEntry | null>
-  >
+  ledger: IWalletLedger
+  setSelectedData: React.Dispatch<React.SetStateAction<IWalletLedger | null>>
   setModifyModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >

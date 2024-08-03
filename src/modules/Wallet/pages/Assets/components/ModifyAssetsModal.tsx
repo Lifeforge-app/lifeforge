@@ -8,7 +8,7 @@ import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import { type IWalletAssetEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletAsset } from '@interfaces/wallet_interfaces'
 import APIRequest from '@utils/fetchData'
 
 function ModifyAssetsModal({
@@ -20,8 +20,8 @@ function ModifyAssetsModal({
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  existedData: IWalletAssetEntry | null
-  setExistedData: React.Dispatch<React.SetStateAction<IWalletAssetEntry | null>>
+  existedData: IWalletAsset | null
+  setExistedData: React.Dispatch<React.SetStateAction<IWalletAsset | null>>
   refreshAssets: () => void
 }): React.ReactElement {
   const [assetName, setAssetName] = useState('')

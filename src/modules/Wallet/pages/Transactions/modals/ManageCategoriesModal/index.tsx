@@ -4,7 +4,7 @@ import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import { type IWalletCategoryEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletCategory } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 import CategorySection from './components/CategorySection'
 import ModifyCategoriesModal from '../ModifyCategoriesModal'
@@ -19,9 +19,7 @@ function ManageCategoriesModal({
   const { categories, refreshCategories } = useWalletContext()
   const [modifyCategoriesModalOpenType, setModifyCategoriesModalOpenType] =
     useState<'income' | 'expenses' | 'update' | null>(null)
-  const [existedData, setExistedData] = useState<IWalletCategoryEntry | null>(
-    null
-  )
+  const [existedData, setExistedData] = useState<IWalletCategory | null>(null)
   const [
     deleteCategoriesConfirmationOpen,
     setDeleteCategoriesConfirmationOpen

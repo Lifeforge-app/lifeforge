@@ -1,23 +1,23 @@
 import type BasePBCollection from '@interfaces/pocketbase_interfaces'
 
-interface IWalletAssetEntry extends BasePBCollection {
+interface IWalletAsset extends BasePBCollection {
   name: string
   icon: string
   balance: number
   starting_balance: number
 }
 
-interface IWalletLedgerEntry extends BasePBCollection {
+interface IWalletLedger extends BasePBCollection {
   name: string
   icon: string
   color: string
 }
 
-interface IWalletCategoryEntry extends IWalletLedgerEntry {
+interface IWalletCategory extends IWalletLedger {
   type: 'income' | 'expenses'
 }
 
-interface IWalletTransactionEntry extends BasePBCollection {
+interface IWalletTransaction extends BasePBCollection {
   type: 'income' | 'expenses' | 'transfer'
   side: 'debit' | 'credit'
   particulars: string
@@ -37,9 +37,9 @@ interface IWalletIncomeExpenses {
 }
 
 export type {
-  IWalletAssetEntry,
-  IWalletLedgerEntry,
-  IWalletTransactionEntry,
-  IWalletCategoryEntry,
+  IWalletAsset,
+  IWalletLedger,
+  IWalletTransaction,
+  IWalletCategory,
   IWalletIncomeExpenses
 }
