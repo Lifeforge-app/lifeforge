@@ -1,7 +1,7 @@
 import React from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { type IWalletTransactionEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 
 function ActionColumn({
   transaction,
@@ -9,9 +9,9 @@ function ActionColumn({
   setModifyModalOpenType,
   setDeleteTransactionsConfirmationOpen
 }: {
-  transaction: IWalletTransactionEntry
+  transaction: IWalletTransaction
   setSelectedData: React.Dispatch<
-    React.SetStateAction<IWalletTransactionEntry | null>
+    React.SetStateAction<IWalletTransaction | null>
   >
   setModifyModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>

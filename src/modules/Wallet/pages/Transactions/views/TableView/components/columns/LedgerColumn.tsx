@@ -1,14 +1,14 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { type IWalletLedgerEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletLedger } from '@interfaces/wallet_interfaces'
 
 function LedgerColumn({
   ledger,
   ledgers
 }: {
   ledger: string
-  ledgers: IWalletLedgerEntry[]
+  ledgers: IWalletLedger[]
 }): React.ReactElement {
   return (
     <td className="p-2 text-center">

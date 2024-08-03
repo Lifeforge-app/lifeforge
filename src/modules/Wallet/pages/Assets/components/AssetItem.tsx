@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { type IWalletAssetEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletAsset } from '@interfaces/wallet_interfaces'
 import { numberToMoney } from '@utils/strings'
 
 function AssetItem({
@@ -13,10 +13,8 @@ function AssetItem({
   setModifyModalOpenType,
   setDeleteAssetsConfirmationOpen
 }: {
-  asset: IWalletAssetEntry
-  setSelectedData: React.Dispatch<
-    React.SetStateAction<IWalletAssetEntry | null>
-  >
+  asset: IWalletAsset
+  setSelectedData: React.Dispatch<React.SetStateAction<IWalletAsset | null>>
   setModifyModalOpenType: React.Dispatch<'create' | 'update' | null>
   setDeleteAssetsConfirmationOpen: React.Dispatch<boolean>
 }): React.ReactElement {

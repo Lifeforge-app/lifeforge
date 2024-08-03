@@ -1,12 +1,11 @@
-import type BasePBCollection from '@interfaces/pocketbase_interfaces'
-
-interface IChangeLogVersion extends BasePBCollection {
+interface IChangeLogVersion {
   version: string
   date_range: [string, string]
   entries: IChangeLogEntry[]
 }
 
-interface IChangeLogEntry extends BasePBCollection {
+interface IChangeLogEntry {
+  id: string
   feature: string
   description: string
 }

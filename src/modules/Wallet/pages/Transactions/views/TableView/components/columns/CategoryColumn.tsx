@@ -1,14 +1,14 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { type IWalletCategoryEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletCategory } from '@interfaces/wallet_interfaces'
 
 function CategoryColumn({
   category,
   categories
 }: {
   category: string
-  categories: IWalletCategoryEntry[]
+  categories: IWalletCategory[]
 }): React.ReactElement {
   return (
     <td className="p-2 text-center">

@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
-import { type IWalletAssetEntry } from '@interfaces/wallet_interfaces'
+import { type IWalletAsset } from '@interfaces/wallet_interfaces'
 import { numberToMoney } from '@utils/strings'
 
 export default function AssetsBalance(): React.ReactElement {
   const { t } = useTranslation()
-  const [assets] = useFetch<IWalletAssetEntry[]>('wallet/assets')
+  const [assets] = useFetch<IWalletAsset[]>('wallet/assets')
 
   return (
     <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
