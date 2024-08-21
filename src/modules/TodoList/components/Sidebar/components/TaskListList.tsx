@@ -1,8 +1,8 @@
 import React from 'react'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import TaskListListItem from './TaskListListItem'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 
 function TaskListList({
   setSidebarOpen

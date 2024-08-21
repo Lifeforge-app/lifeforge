@@ -11,7 +11,8 @@ function EmptyStateScreen({
   description,
   icon,
   ctaContent,
-  customCTAButton
+  customCTAButton,
+  forSidebar = false
 }: {
   onCTAClick?: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   title: string
@@ -19,14 +20,30 @@ function EmptyStateScreen({
   icon: string
   ctaContent?: string
   customCTAButton?: React.ReactElement
+  forSidebar?: boolean
 }): React.ReactElement {
   const { t } = useTranslation()
 
   return (
     <div className="flex-center flex size-full flex-col gap-6 ">
-      <Icon icon={icon} className="size-32 text-bg-500" />
-      <h2 className="text-center text-3xl font-semibold">{t(title)}</h2>
-      <p className="-mt-2 text-center text-lg text-bg-500">{t(description)}</p>
+      <Icon
+        icon={icon}
+        className={forSidebar ? 'size-16 text-bg-600' : 'size-32 text-bg-500'}
+      />
+      <h2
+        className={`text-center ${
+          forSidebar ? 'text-2xl' : 'text-3xl'
+        } font-semibold`}
+      >
+        {t(title)}
+      </h2>
+      <p
+        className={`-mt-2 text-center ${
+          forSidebar ? 'text-base' : 'text-lg'
+        } text-bg-500`}
+      >
+        {t(description)}
+      </p>
       {customCTAButton ??
         (ctaContent && onCTAClick && (
           <Button

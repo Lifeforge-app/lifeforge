@@ -109,7 +109,7 @@ function JournalList({
                 ))}
               </div>
             ) : (
-              <div className="mt-6">
+              <div className="mt-6 flex-1">
                 <EmptyStateScreen
                   title="No entries found"
                   description="You haven't written any journal entries yet."
