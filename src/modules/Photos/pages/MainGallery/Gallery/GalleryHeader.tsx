@@ -9,7 +9,6 @@ import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import useFetch from '@hooks/useFetch'
 import { usePhotosContext } from '@providers/PhotosProvider'
 
 function GalleryHeader(): React.ReactElement {
@@ -21,8 +20,6 @@ function GalleryHeader(): React.ReactElement {
   const [fileImportLoading, setFileImportLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const [isFirstLoad, setIsFirstLoad] = useState(true)
-
-  const [ip] = useFetch<string>('projects-k/ip')
 
   async function importFiles(): Promise<void> {
     setFileImportLoading(true)
@@ -137,22 +134,7 @@ function GalleryHeader(): React.ReactElement {
   return (
     <div className="flex-between my-4 mr-4 flex flex-col gap-4 text-bg-500 sm:my-8 sm:mr-16 sm:flex-row">
       <div className="flex-between flex w-full">
-        <p className="flex items-center gap-2">
-          IP Address: {ip}
-          <button
-            onClick={() => {
-              copyToClipboard(ip).catch(e => {
-                throw e
-              })
-            }}
-            className="text-bg-500"
-          >
-            <Icon
-              icon={copiedToClipboard ? 'tabler:check' : 'tabler:copy'}
-              className="text-base"
-            />
-          </button>
-        </p>
+        <p className="flex items-center gap-2">Nice</p>
         <HamburgerMenu
           largerPadding
           className="relative block md:hidden"
