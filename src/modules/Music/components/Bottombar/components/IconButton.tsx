@@ -7,8 +7,8 @@ export default function IconButton({
   icon,
   children
 }: {
-  onClick: () => void
-  className: string
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+  className?: string
   icon: string
   children?: React.ReactNode
 }): React.ReactElement {

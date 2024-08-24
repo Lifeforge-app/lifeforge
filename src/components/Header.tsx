@@ -17,7 +17,7 @@ export default function Header(): React.ReactElement {
   return (
     <header
       className={`${
-        subSidebarExpanded ? '!-top-24 lg:top-0' : 'top-0 z-[9990]'
+        subSidebarExpanded ? '!-top-24 lg:top-0' : 'top-0 z-[9989]'
       } absolute flex h-24 w-full min-w-0 items-end justify-between gap-8 px-4 pl-0 transition-all sm:px-12`}
     >
       <div className="flex w-full items-center gap-4">

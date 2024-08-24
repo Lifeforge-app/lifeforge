@@ -3,6 +3,8 @@ import React from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import type IGuitarTabsEntry from '@interfaces/guitar_tabs_interfaces'
+import AudioPlayer from './AudioPlayer'
+import DownloadMenu from '../../../components/DownloadMenu'
 
 function EntryItem({
   entry,
@@ -22,10 +24,10 @@ function EntryItem({
         key={entry.id}
         href={`${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
           entry.id
-        }/${entry.file}`}
+        }/${entry.pdf}`}
         target="_blank"
-        className="flex items-center justify-between gap-4 p-4"
         rel="noreferrer"
+        className="flex items-center justify-between gap-4 p-4"
       >
         <div className="flex w-full min-w-0 items-center gap-4">
           <div className="flex-center flex w-12 rounded-lg bg-bg-200 dark:bg-bg-800">
@@ -47,6 +49,14 @@ function EntryItem({
             </div>
           </div>
         </div>
+        {entry.audio !== '' && (
+          <AudioPlayer
+            url={`${import.meta.env.VITE_API_HOST}/media/${
+              entry.collectionId
+            }/${entry.id}/${entry.audio}`}
+          />
+        )}
+        <DownloadMenu entry={entry} />
         <HamburgerMenu className="relative shrink-0">
           <MenuItem
             onClick={() => {
