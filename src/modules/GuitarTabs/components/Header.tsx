@@ -27,20 +27,20 @@ function Header({
   totalItems: number
 }): React.ReactElement {
   const toastId = useRef<Id>(null)
-  const themeColorHex = useThemeColorHex()
+  const { theme } = useThemeColorHex()
 
   async function uploadFiles(): Promise<void> {
     const input = document.createElement('input')
     input.type = 'file'
     input.multiple = true
-    input.accept = '.pdf'
+    input.accept = '.pdf,.mp3,.mscz'
     input.onchange = async e => {
       const files = (e.target as HTMLInputElement).files
 
       const formData = new FormData()
       if (files !== null) {
-        if (files.length > 25) {
-          toast.error('You can only upload 25 files at a time!')
+        if (files.length > 100) {
+          toast.error('You can only upload 100 files at a time!')
           return
         }
 
@@ -67,10 +67,10 @@ function Header({
                       if (toastId.current !== null) {
                         toast.done(toastId.current)
                         toastId.current = null
-                        toast.success('Guitar tabs uploaded successfully!')
-                        intervalManager.clearAllIntervals()
-                        refreshEntries()
                       }
+                      toast.success('Guitar tabs uploaded successfully!')
+                      intervalManager.clearAllIntervals()
+                      refreshEntries()
                       break
                     case 'in_progress':
                       updateProgressBar((total - left) / total)
@@ -124,6 +124,7 @@ function Header({
   }
 
   function updateProgressBar(progress: number): void {
+    console.log(progress)
     if (toastId.current === null) {
       toastId.current = toast('Upload in Progress', {
         progress,
@@ -135,7 +136,7 @@ function Header({
           toast.update(toastId.current, {
             progress,
             progressStyle: {
-              background: themeColorHex
+              background: theme
             }
           })
         }
@@ -159,6 +160,7 @@ function Header({
             Upload
           </Button>
         }
+        tips="If you want to append audio and Musescore files to your guitar tabs, make sure to name them the same as the PDF file and upload them together."
       />
       <div className="flex items-center gap-2">
         <SearchInput

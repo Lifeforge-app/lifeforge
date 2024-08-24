@@ -33,10 +33,10 @@ function Sidebar({
     <aside
       className={`absolute ${
         sidebarOpen ? 'left-0' : 'left-full'
-      } top-0 z-[9999] size-full shrink-0 rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 xl:static xl:h-[calc(100%-2rem)] xl:w-3/12`}
+      } top-0 z-[9990] size-full shrink-0 rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 xl:static xl:h-[calc(100%-2rem)] xl:w-3/12`}
     >
       <Scrollbar>
-        <div className="flex flex-between px-8 py-4 xl:hidden">
+        <div className="flex-between flex px-8 py-4 xl:hidden">
           <GoBackButton
             onClick={() => {
               setSidebarOpen(false)
