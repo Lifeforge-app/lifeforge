@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
 /* eslint-disable react/jsx-no-undef */
-import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -15,7 +14,6 @@ function GalleryHeader(): React.ReactElement {
   const { refreshPhotos, hidePhotosInAlbum, setHidePhotosInAlbum, setReady } =
     usePhotosContext()
 
-  const [copiedToClipboard, setCopiedToClipboard] = useState(false)
   const [showImportButton, setShowImportButton] = useState(false)
   const [fileImportLoading, setFileImportLoading] = useState(false)
   const [progress, setProgress] = useState(0)
@@ -66,35 +64,6 @@ function GalleryHeader(): React.ReactElement {
         setFileImportLoading(false)
         toast.error('Failed to upload files. Error: ' + error)
       })
-  }
-
-  async function copyToClipboard(text: string): Promise<void> {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text)
-    } else {
-      // Use the 'out of viewport hidden text area' trick
-      const textArea = document.createElement('textarea')
-      textArea.value = text
-      // Move textarea out of the viewport so it's not visible
-      textArea.style.position = 'absolute'
-      textArea.style.left = '-999999px'
-
-      document.body.prepend(textArea)
-      textArea.select()
-
-      try {
-        document.execCommand('copy')
-      } catch (error) {
-        console.error(error)
-      } finally {
-        textArea.remove()
-      }
-    }
-
-    setCopiedToClipboard(true)
-    setTimeout(() => {
-      setCopiedToClipboard(false)
-    }, 3000)
   }
 
   useEffect(() => {
