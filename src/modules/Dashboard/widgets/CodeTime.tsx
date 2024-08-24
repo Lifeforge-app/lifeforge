@@ -90,7 +90,7 @@ export default function CodeTime(): React.ReactElement {
   const [data] = useFetch<ICodeTimeEachDay[]>('code-time/each-day')
   const [chartData, setChartData] = useState<any>(null)
   const { t } = useTranslation()
-  const finalTheme = useThemeColorHex()
+  const { theme } = useThemeColorHex()
 
   useEffect(() => {
     if (typeof data !== 'string') {
@@ -105,18 +105,18 @@ export default function CodeTime(): React.ReactElement {
             backgroundColor: (context: ScriptableContext<'line'>) => {
               const ctx = context.chart.ctx
               const gradient = ctx.createLinearGradient(0, 0, 0, 250)
-              gradient.addColorStop(0, finalTheme + '80')
-              gradient.addColorStop(1, finalTheme + '00')
+              gradient.addColorStop(0, theme + '80')
+              gradient.addColorStop(1, theme + '00')
               return gradient
             },
             fill: 'origin',
-            borderColor: finalTheme,
+            borderColor: theme,
             borderWidth: 1,
             tension: 0.4,
             pointBorderColor: 'rgba(0, 0, 0, 0)',
             pointBackgroundColor: 'rgba(0, 0, 0, 0)',
-            pointHoverBackgroundColor: finalTheme + '80',
-            pointHoverBorderColor: finalTheme,
+            pointHoverBackgroundColor: theme + '80',
+            pointHoverBorderColor: theme,
             pointHoverBorderWidth: 2,
             pointHoverRadius: 6
           }

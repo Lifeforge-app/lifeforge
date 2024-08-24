@@ -23,7 +23,7 @@ type DashboardLayoutType = Record<
 interface IPersonalizationData {
   theme: 'light' | 'dark' | 'system'
   themeColor: string
-  bgTemp: string
+  bgTemp: 'bg-slate' | 'bg-gray' | 'bg-neutral' | 'bg-zinc' | 'bg-stone'
   language: string
   dashboardLayout: DashboardLayoutType
   setTheme: (theme: 'light' | 'dark' | 'system') => void
@@ -50,7 +50,9 @@ export default function PersonalizationProvider({
 
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system')
   const [themeColor, setThemeColor] = useState('theme-lime')
-  const [bgTemp, setBgTemp] = useState('bg-neutral')
+  const [bgTemp, setBgTemp] = useState<
+    'bg-slate' | 'bg-gray' | 'bg-neutral' | 'bg-zinc' | 'bg-stone'
+  >('bg-neutral')
   const [language, setLanguage] = useState('en')
   const [dashboardLayout, setDashboardLayout] = useState<DashboardLayoutType>(
     {}
@@ -66,7 +68,7 @@ export default function PersonalizationProvider({
     }
 
     if (userData?.bgTemp !== undefined) {
-      setBgTemp(`bg-${userData.bgTemp}`)
+      setBgTemp(`bg-${userData.bgTemp}` as any)
     }
 
     if (userData?.language !== undefined) {
@@ -191,7 +193,7 @@ export default function PersonalizationProvider({
   }
 
   function changeBgTemp(color: string): void {
-    setBgTemp(color)
+    setBgTemp(color as any)
     fetch(`${import.meta.env.VITE_API_HOST}/user/personalization`, {
       method: 'PATCH',
       headers: {

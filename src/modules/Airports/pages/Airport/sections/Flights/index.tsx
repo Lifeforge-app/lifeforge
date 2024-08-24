@@ -120,7 +120,7 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
             loading={nextPageLoading}
             variant="no-bg"
             icon="tabler:arrow-down"
-            className="mb-6"
+            className="mb-12"
           >
             Next Flights
           </Button>

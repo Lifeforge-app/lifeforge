@@ -2,6 +2,8 @@ import React from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import type IGuitarTabsEntry from '@interfaces/guitar_tabs_interfaces'
+import DownloadMenu from '../../../components/DownloadMenu'
+import AudioPlayer from '../../ListView/components/AudioPlayer'
 
 function EntryItem({
   entry,
@@ -17,12 +19,31 @@ function EntryItem({
       key={entry.id}
       href={`${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
         entry.id
-      }/${entry.file}`}
+      }/${entry.pdf}`}
       target="_blank"
       className="block rounded-lg bg-bg-50 p-4 shadow-custom hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/70"
       rel="noreferrer"
     >
       <div className="relative">
+        <HamburgerMenu
+          className="absolute right-2 top-2 shrink-0"
+          customTailwindColor="bg-zinc-500/50 hover:bg-zinc-500/70"
+        >
+          <MenuItem
+            onClick={() => {
+              setExistingEntry(entry)
+              setModifyEntryModalOpen(true)
+            }}
+            text="Edit"
+            icon="tabler:pencil"
+          />
+          <MenuItem
+            text="Delete"
+            icon="tabler:trash"
+            isRed
+            onClick={() => {}}
+          />
+        </HamburgerMenu>
         <img
           src={`${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
             entry.id
@@ -41,22 +62,16 @@ function EntryItem({
             {entry.author !== '' ? entry.author : 'Unknown'}
           </p>
         </div>
-        <HamburgerMenu className="relative shrink-0">
-          <MenuItem
-            onClick={() => {
-              setExistingEntry(entry)
-              setModifyEntryModalOpen(true)
-            }}
-            text="Edit"
-            icon="tabler:pencil"
-          />
-          <MenuItem
-            text="Delete"
-            icon="tabler:trash"
-            isRed
-            onClick={() => {}}
-          />
-        </HamburgerMenu>
+        <div className="flex items-center gap-2">
+          <DownloadMenu entry={entry} />
+          {entry.audio !== '' && (
+            <AudioPlayer
+              url={`${import.meta.env.VITE_API_HOST}/media/${
+                entry.collectionId
+              }/${entry.id}/${entry.audio}`}
+            />
+          )}
+        </div>
       </div>
     </a>
   )
