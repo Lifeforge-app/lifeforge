@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
@@ -117,6 +117,12 @@ function YoutubeDownloaderModal(): React.ReactElement {
       })
   }
 
+  useEffect(() => {
+    if (isOpen) {
+      setVideoURLInput('')
+    }
+  }, [])
+
   return (
     <Modal isOpen={isOpen} minWidth="40vw">
       <ModalHeader
@@ -133,6 +139,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
         value={videoURLinput}
         updateValue={updateVideoURL}
         placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        additionalClassName="mb-8"
       />
       {URL_REGEX.test(videoURL) && (
         <APIComponentWithFallback data={videoInfo}>

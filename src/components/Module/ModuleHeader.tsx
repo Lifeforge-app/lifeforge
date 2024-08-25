@@ -46,7 +46,9 @@ function ModuleHeader({
           <h1 className="flex items-end gap-3 text-3xl font-semibold  md:text-4xl">
             {t(`modules.${toCamelCase(title?.toString() ?? '')}`)}
             <span className="text-base font-medium text-bg-500">
-              {totalItems !== undefined ? `(${totalItems})` : ''}
+              {totalItems !== undefined
+                ? `(${totalItems.toLocaleString()})`
+                : ''}
             </span>
           </h1>
           {desc !== undefined && (

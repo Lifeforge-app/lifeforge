@@ -45,7 +45,9 @@ function TimelineScrollbar(): React.ReactElement {
                 }
 
                 if (movingTimelineDateDisplayRef.current !== null) {
-                  movingTimelineDateDisplayRef.current.style.top = `${mousePosition}px`
+                  movingTimelineDateDisplayRef.current.style.top = `${
+                    mousePosition - 36
+                  }px`
 
                   movingTimelineDateDisplayRef.current.innerHTML =
                     moment(targetDate).format('MMM D, YYYY')

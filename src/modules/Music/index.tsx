@@ -34,6 +34,7 @@ function Music(): React.ReactElement {
         title="Music"
         desc="..."
         actionButton={<AddMusicButton />}
+        totalItems={musics.length}
       />
       <div className="relative mt-4 flex size-full min-h-0 min-w-0 flex-col sm:mt-0">
         <SearchInput
