@@ -106,7 +106,7 @@ function Modules(): React.ReactElement {
         id: userData.id,
         data: userData.enabledModules
       },
-      failureInfo: 'Failed to update personalization settings.'
+      failureInfo: 'update'
     })
   }
 

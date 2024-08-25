@@ -1,9 +1,9 @@
-import { Icon } from '@iconify/react'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
+import ModalHeader from '@components/Modals/ModalHeader'
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
 import APIRequest from '@utils/fetchData'
 import { usePhotosContext } from '../../../../providers/PhotosProvider'
@@ -101,31 +101,14 @@ function ModifyAlbumModal({
   }, [openType, targetAlbum])
 
   return (
-    <Modal isOpen={openType !== false}>
-      <div className="mb-8 flex flex-between ">
-        <h1 className="flex items-center gap-3 text-2xl font-semibold">
-          <Icon
-            icon={
-              {
-                create: 'tabler:plus',
-                rename: 'tabler:pencil'
-              }[openType as 'create' | 'rename']
-            }
-            className="size-7"
-          />
-          {typeof openType === 'string' &&
-            openType[0].toUpperCase() + openType.slice(1)}{' '}
-          album
-        </h1>
-        <button
-          onClick={() => {
-            setOpenType(false)
-          }}
-          className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-800"
-        >
-          <Icon icon="tabler:x" className="size-6" />
-        </button>
-      </div>
+    <Modal isOpen={openType !== false} minWidth="40rem">
+      <ModalHeader
+        title={`${openType === 'create' ? 'Create' : 'Rename'} album`}
+        onClose={() => {
+          setOpenType(false)
+        }}
+        icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
+      />
       <Input
         icon="tabler:photo"
         reference={ref}

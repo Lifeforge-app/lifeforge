@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { Icon } from '@iconify/react'
+import { t } from 'i18next'
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
@@ -93,7 +94,7 @@ function PhotosAlbumGallery(): React.ReactElement {
             throw new Error(data.message)
           }
 
-          toast.success('Images are now ready for download. Head to your NAS')
+          toast.success(t('fetch.action.NASFilesReady'))
         })
         .catch(error => {
           throw new Error(error as string)
@@ -118,7 +119,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                     navigate('/photos/album')
                   }}
                 />
-                <div className="flex w-full min-w-0 flex-between gap-8">
+                <div className="flex-between flex w-full min-w-0 gap-8">
                   <h1 className="flex w-full min-w-0 items-center gap-4 text-2xl font-semibold">
                     <div className="flex-center flex size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                       {albumData.cover !== '' ? (

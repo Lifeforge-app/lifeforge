@@ -49,7 +49,6 @@ function useFetch<T>(
   }
 
   useEffect(() => {
-    console.log(endpoint, criteriaMet)
     if (criteriaMet) {
       fetchData()
     }

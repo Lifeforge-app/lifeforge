@@ -7,14 +7,16 @@ function ModalHeader({
   title,
   icon,
   onClose,
-  hasDeleteButton = false,
-  onDelete
+  actionButtonIcon,
+  actionButtonIsRed = false,
+  onActionButtonClick
 }: {
   title: string
   icon: string
   onClose: () => void
-  hasDeleteButton?: boolean
-  onDelete?: () => void
+  actionButtonIcon?: string
+  actionButtonIsRed?: boolean
+  onActionButtonClick?: () => void
 }): React.ReactElement {
   const { t } = useTranslation()
 
@@ -25,12 +27,16 @@ function ModalHeader({
         {t(`modals.header.${toCamelCase(title)}`)}
       </h1>
       <div className="flex items-center gap-2">
-        {hasDeleteButton && (
+        {actionButtonIcon !== undefined && (
           <button
-            onClick={onDelete}
-            className="rounded-md p-2 text-red-500 transition-all hover:bg-bg-200/50 hover:text-red-600 dark:hover:bg-bg-800"
+            onClick={onActionButtonClick}
+            className={`rounded-md p-2 transition-all hover:bg-bg-200/50 ${
+              actionButtonIsRed
+                ? 'text-red-500 hover:text-red-600'
+                : 'text-bg-500 hover:text-bg-200'
+            } dark:hover:bg-bg-800`}
           >
-            <Icon icon="tabler:trash" className="size-6" />
+            <Icon icon={actionButtonIcon} className="size-6" />
           </button>
         )}
         <button

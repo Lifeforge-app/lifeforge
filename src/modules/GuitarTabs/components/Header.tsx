@@ -4,9 +4,11 @@ import { cookieParse } from 'pocketbase'
 import React, { useRef } from 'react'
 import { type Id, toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import useThemeColorHex from '@hooks/useThemeColorHex'
+import APIRequest from '@utils/fetchData'
 import IntervalManager from '@utils/intervalManager'
 
 const intervalManager = IntervalManager.getInstance()
@@ -124,7 +126,6 @@ function Header({
   }
 
   function updateProgressBar(progress: number): void {
-    console.log(progress)
     if (toastId.current === null) {
       toastId.current = toast('Upload in Progress', {
         progress,
@@ -144,6 +145,15 @@ function Header({
     }
   }
 
+  async function downloadAll(): Promise<void> {
+    await APIRequest({
+      endpoint: '/guitar-tabs/download-all',
+      method: 'GET',
+      successInfo: 'NASFilesReady',
+      failureInfo: 'download'
+    })
+  }
+
   return (
     <>
       <ModuleHeader
@@ -159,6 +169,16 @@ function Header({
           >
             Upload
           </Button>
+        }
+        hasHamburgerMenu
+        hamburgerMenuItems={
+          <>
+            <MenuItem
+              text="Download All"
+              icon="tabler:download"
+              onClick={downloadAll}
+            />
+          </>
         }
         tips="If you want to append audio and Musescore files to your guitar tabs, make sure to name them the same as the PDF file and upload them together."
       />

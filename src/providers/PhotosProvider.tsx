@@ -60,6 +60,9 @@ interface IPhotosData {
   setAlbumList: React.Dispatch<
     React.SetStateAction<IPhotosAlbum[] | 'loading' | 'error'>
   >
+  setAlbumTagList: React.Dispatch<
+    React.SetStateAction<IPhotoAlbumTag[] | 'loading' | 'error'>
+  >
   setHidePhotosInAlbum: React.Dispatch<React.SetStateAction<boolean>>
   setSelectedPhotos: React.Dispatch<React.SetStateAction<string[]>>
   setModifyAlbumModalOpenType: React.Dispatch<
@@ -138,9 +141,9 @@ export default function PhotosProvider(): React.ReactElement {
     isBounded
   )
 
-  const [albumTagList, refreshAlbumTagList] = useFetch<IPhotoAlbumTag[]>(
-    'photos/album/tag/list'
-  )
+  const [albumTagList, refreshAlbumTagList, setAlbumTagList] = useFetch<
+    IPhotoAlbumTag[]
+  >('photos/album/tag/list')
 
   const [eachDayDimensions, setEachDayDimensions] = useState<
     Record<
@@ -295,6 +298,7 @@ export default function PhotosProvider(): React.ReactElement {
         setReady,
         setPhotoDimensions,
         setAlbumList,
+        setAlbumTagList,
         setSelectedPhotos,
         setHidePhotosInAlbum,
         setModifyAlbumModalOpenType,

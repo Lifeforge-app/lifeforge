@@ -114,8 +114,11 @@ function ModifyEventModal({
               update: 'Update '
             }[innerOpenType!]
           } event`}
-          hasDeleteButton={innerOpenType === 'update'}
-          onDelete={() => {
+          actionButtonIcon={
+            innerOpenType === 'update' ? 'tabler:trash' : undefined
+          }
+          actionButtonIsRed
+          onActionButtonClick={() => {
             setIsDeleteConfirmationModalOpen(true)
           }}
           onClose={() => {

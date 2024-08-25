@@ -68,7 +68,7 @@ function TaskItem({
     await APIRequest({
       endpoint: `todo-list/entries/toggle/${entry.id}`,
       method: 'POST',
-      failureInfo: "Couldn't update the task. Please try again.",
+      failureInfo: 'update',
       onFailure: () => {
         if (!isOuter) {
           refreshInnerEntries()
@@ -97,7 +97,7 @@ function TaskItem({
     <>
       <li
         key={entry.id}
-        className={`relative isolate flex flex-between gap-4 rounded-lg bg-bg-50 p-4 pl-5 pr-6 shadow-custom ${
+        className={`flex-between relative isolate flex gap-4 rounded-lg bg-bg-50 p-4 pl-5 pr-6 shadow-custom ${
           lighter ? 'dark:bg-bg-800' : 'dark:bg-bg-900'
         }`}
       >

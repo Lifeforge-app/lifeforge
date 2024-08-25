@@ -64,8 +64,8 @@ function ShareAlbumModal({
   }
 
   return (
-    <div className="p-4">
-      <div className="flex flex-between gap-4">
+    <div className="bg-bg-900 p-4">
+      <div className="flex-between flex gap-4">
         <div>
           <label htmlFor="isPublic" className="text-bg-500">
             Open to public
@@ -85,13 +85,13 @@ function ShareAlbumModal({
               publicity
                 ? 'translate-x-6 bg-bg-100'
                 : 'translate-x-1 bg-bg-100 dark:bg-bg-500'
-            } inline-block size-4 rounded-full transition`}
+            } inline-block size-4 translate-y-[-0.5px] rounded-full transition`}
           />
         </Switch>
       </div>
       {publicity && (
         <>
-          <div className="mt-4 flex gap-2 rounded-md bg-bg-700/50 p-3 shadow-md">
+          <div className="mt-4 flex gap-2 rounded-md bg-bg-700/50 p-3 text-bg-800 shadow-md dark:text-bg-100">
             <Icon icon="tabler:link" className="size-6" />
             <input
               type="text"

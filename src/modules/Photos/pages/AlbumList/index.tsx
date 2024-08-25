@@ -8,11 +8,16 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import Scrollbar from '@components/Scrollbar'
-import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
+import {
+  type IPhotoAlbumTag,
+  type IPhotosAlbum
+} from '@interfaces/photos_interfaces'
 import AlbumItem from './components/AlbumItem'
 import AlbumListHeader from './components/AlbumListHeader'
 import { usePhotosContext } from '../../../../providers/PhotosProvider'
+import ManageTagsModal from '../../components/modals/ManageTagsModal'
 import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
+import ModifyAlbumTagsModal from '../../components/modals/ModifyAlbumTagsModal'
 import UpdateAlbumTagsModal from '../../components/modals/UpdateAlbumTagsModal'
 import PhotosSidebar from '../../components/PhotosSidebar'
 
@@ -21,6 +26,9 @@ function PhotosAlbumList(): React.ReactElement {
     usePhotosContext()
   const [selectedAlbum, setSelectedAlbum] = useState<IPhotosAlbum | null>(null)
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
+  const [manageTagsModalOpen, setManageTagsModalOpen] = useState(false)
+  const [modifyAlbumTagModalOpenType, setModifyAlbumTagModalOpenType] =
+    useState<'create' | 'rename' | false>(false)
   const [updateAlbumTagsModalOpen, setUpdateAlbumTagsModalOpen] =
     useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -29,6 +37,9 @@ function PhotosAlbumList(): React.ReactElement {
     IPhotosAlbum[] | 'loading' | 'error'
   >(albumList)
   const [searchParams] = useSearchParams()
+  const [existedTagData, setExistedTagData] = useState<IPhotoAlbumTag | null>(
+    null
+  )
 
   useEffect(() => {
     const tags =
@@ -83,6 +94,8 @@ function PhotosAlbumList(): React.ReactElement {
               <AlbumListHeader
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
+                setManageTagsModalOpen={setManageTagsModalOpen}
+                setModifyAlbumTagModalOpenType={setModifyAlbumTagModalOpenType}
               />
               <APIComponentWithFallback data={filteredAlbumList}>
                 {filteredAlbumList =>
@@ -136,6 +149,18 @@ function PhotosAlbumList(): React.ReactElement {
         }}
         nameKey="name"
         customText="Are you sure you want to delete this album? The photos inside this album will not be deleted."
+      />
+      <ManageTagsModal
+        isOpen={manageTagsModalOpen}
+        setOpen={setManageTagsModalOpen}
+        existedData={existedTagData}
+        setExistedData={setExistedTagData}
+        setModifyAlbumModalOpenType={setModifyAlbumTagModalOpenType}
+      />
+      <ModifyAlbumTagsModal
+        openType={modifyAlbumTagModalOpenType}
+        setOpenType={setModifyAlbumTagModalOpenType}
+        targetTag={existedTagData ?? undefined}
       />
       <UpdateAlbumTagsModal
         isOpen={updateAlbumTagsModalOpen}
