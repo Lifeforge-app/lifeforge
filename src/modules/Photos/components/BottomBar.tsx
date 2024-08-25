@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
+import { t } from 'i18next'
 import { cookieParse } from 'pocketbase'
-import React, { memo, useState } from 'react'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import {
   type IPhotosEntryDimensionsItem,
@@ -61,7 +62,7 @@ function BottomBar({
             throw new Error(data.message)
           }
 
-          toast.success('Images are now ready for download. Head to your NAS')
+          toast.success(t('fetch.action.NASFilesReady'))
         })
         .catch(error => {
           throw new Error(error as string)
@@ -118,7 +119,7 @@ function BottomBar({
 
   return (
     <div
-      className={`absolute bottom-0 left-1/2 z-20 flex w-[calc(100%-6rem)] -translate-x-1/2 flex-between rounded-t-md bg-bg-50 p-4 shadow-[0px_0px_20px_0px_rgba(0,0,0,0.05)] transition-all dark:bg-bg-900 ${
+      className={`flex-between absolute bottom-0 left-1/2 z-20 flex w-[calc(100%-6rem)] -translate-x-1/2 rounded-t-md bg-bg-50 p-4 shadow-[0px_0px_20px_0px_rgba(0,0,0,0.05)] transition-all dark:bg-bg-900 ${
         selectedPhotos.length === 0 ? 'translate-y-full' : 'translate-y-0'
       }`}
     >
@@ -202,4 +203,4 @@ function BottomBar({
   )
 }
 
-export default memo(BottomBar)
+export default BottomBar

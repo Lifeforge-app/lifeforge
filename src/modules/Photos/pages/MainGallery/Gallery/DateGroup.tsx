@@ -136,8 +136,8 @@ function DateGroup({
               }/${image.id}/${
                 photos?.find(photo => photo.id === image.id)?.image
               }?thumb=0x300`,
-              width: image.width / 20,
-              height: image.height / 20,
+              width: image.width,
+              height: image.height,
               key: image.id
             }))}
             renderPhoto={({

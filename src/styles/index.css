@@ -437,6 +437,10 @@ progress::-moz-progress-bar {
   opacity: 1 !important;
 }
 
+.Toastify__toast-container {
+  width: min(100%, 400px);
+}
+
 input:autofill {
   background: transparent; /* or any other */
 }

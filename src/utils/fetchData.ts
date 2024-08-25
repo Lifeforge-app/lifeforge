@@ -39,9 +39,11 @@ export default async function APIRequest({
       if (!res.ok) throw new Error(data.message)
       if (successInfo) {
         toast.success(
-          t('fetch.success', {
-            action: t(`fetch.action.${toCamelCase(successInfo ?? '')}`)
-          })
+          successInfo === 'NASFilesReady'
+            ? t('fetch.action.NASFilesReady')
+            : t('fetch.success', {
+                action: t(`fetch.action.${toCamelCase(successInfo ?? '')}`)
+              })
         )
       }
 

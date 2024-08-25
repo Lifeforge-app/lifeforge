@@ -73,7 +73,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
         {photos => (
           <>
             {' '}
-            <div className="mb-8 flex flex-between ">
+            <div className="flex-between mb-8 flex ">
               <h1 className="flex items-center gap-3 text-2xl font-semibold">
                 <Icon icon="tabler:photo-plus" className="size-7" />
                 Add{' '}
@@ -163,7 +163,8 @@ function AddPhotosToAlbumModal(): React.ReactElement {
               onClick={() => {
                 onSubmitButtonClick().catch(console.error)
               }}
-              loading={selectedAlbum === '' || loading}
+              disabled={selectedAlbum === '' || loading}
+              loading={loading}
               className="mt-6"
               icon="tabler:photo-plus"
             >
