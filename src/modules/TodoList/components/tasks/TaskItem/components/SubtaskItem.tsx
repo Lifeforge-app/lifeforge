@@ -37,7 +37,7 @@ function SubtaskItem({
     await APIRequest({
       endpoint: `todo-list/subtask/toggle/${entry.id}`,
       method: 'PATCH',
-      failureInfo: "Couldn't update the task. Please try again.",
+      failureInfo: 'update',
       onFailure: () => {
         if (refreshEntries !== undefined) {
           refreshEntries()
@@ -47,7 +47,7 @@ function SubtaskItem({
   }
 
   return (
-    <div className="flex flex-between rounded-md bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+    <div className="flex-between flex rounded-md bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       {entry.title}
       <TaskCompletionCheckbox
         toggleTaskCompletion={() => {

@@ -28,7 +28,7 @@ export default function ProjectProgress({
         state === -1
           ? 'Step reverted.'
           : 'Yay! You are one step closer to completing the project.',
-      failureInfo: "Oops! Couldn't update the progress. Please try again.",
+      failureInfo: 'update',
       finalCallback: refreshProgress
     })
   }
@@ -40,7 +40,7 @@ export default function ProjectProgress({
           <APIComponentWithFallback data={progress}>
             {progress => (
               <div className="flex w-full flex-col px-6">
-                <div className="flex flex-between">
+                <div className="flex-between flex">
                   <div className="flex items-center">
                     <Icon icon="tabler:chart-bar" className="text-3xl" />
                     <h2 className="ml-4 text-xl font-semibold">
@@ -58,7 +58,7 @@ export default function ProjectProgress({
                   {progress.steps.map((id: string, index: number) => (
                     <li
                       key={id}
-                      className={`relative flex flex-between gap-2 rounded-md p-6 ${
+                      className={`flex-between relative flex gap-2 rounded-md p-6 ${
                         index < progress.completed
                           ? 'bg-bg-900'
                           : 'bg-bg-900/50'

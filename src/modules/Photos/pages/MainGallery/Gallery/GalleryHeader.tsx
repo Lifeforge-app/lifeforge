@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
 /* eslint-disable react/jsx-no-undef */
+import { t } from 'i18next'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -11,8 +12,13 @@ import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { usePhotosContext } from '@providers/PhotosProvider'
 
 function GalleryHeader(): React.ReactElement {
-  const { refreshPhotos, hidePhotosInAlbum, setHidePhotosInAlbum, setReady } =
-    usePhotosContext()
+  const {
+    refreshPhotos,
+    hidePhotosInAlbum,
+    setHidePhotosInAlbum,
+    setReady,
+    photos
+  } = usePhotosContext()
 
   const [showImportButton, setShowImportButton] = useState(false)
   const [fileImportLoading, setFileImportLoading] = useState(false)
@@ -101,9 +107,14 @@ function GalleryHeader(): React.ReactElement {
   }, [])
 
   return (
-    <div className="flex-between my-4 mr-4 flex flex-col gap-4 text-bg-500 sm:my-8 sm:mr-16 sm:flex-row">
+    <div className="flex-between mr-4 flex flex-col gap-4 sm:mr-16 sm:flex-row">
+      <h1 className="shrink-0 text-3xl font-semibold  md:text-4xl">
+        {t('sidebar.photos.allPhotos')}{' '}
+        <span className="text-base text-bg-500">
+          ({typeof photos !== 'string' && photos.totalItems.toLocaleString()})
+        </span>
+      </h1>
       <div className="flex-between flex w-full">
-        <p className="flex items-center gap-2">Nice</p>
         <HamburgerMenu
           largerPadding
           className="relative block md:hidden"
@@ -155,7 +166,7 @@ function GalleryHeader(): React.ReactElement {
             className="shrink-0"
           >
             {!fileImportLoading ? (
-              <>import</>
+              'import'
             ) : (
               <>
                 {progress > 0
@@ -167,7 +178,7 @@ function GalleryHeader(): React.ReactElement {
         )}
         <HamburgerMenu
           largerPadding
-          className="relative z-[9999] hidden md:block"
+          className="relative z-[9989] hidden md:block"
           customWidth="w-72"
         >
           <MenuItem

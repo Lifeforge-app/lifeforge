@@ -28,7 +28,7 @@ function PhotosMainGallery(): React.ReactElement {
 
     const timeout = setTimeout(() => {
       setShowGallery(true)
-    }, 1000)
+    }, 100)
 
     return () => {
       clearTimeout(timeout)
@@ -61,11 +61,13 @@ function PhotosMainGallery(): React.ReactElement {
           </button>
         }
       />
-      <GalleryHeader />
-      <div className="flex size-full min-h-0 gap-8">
+      <div className="relative mt-8 flex size-full min-h-0 gap-8">
         <PhotosSidebar />
-        <div className="relative flex size-full min-h-0">
-          <GalleryContainer />
+        <div className="relative flex size-full min-h-0 flex-col gap-8">
+          <GalleryHeader />
+          <div className="relative flex size-full min-h-0">
+            <GalleryContainer />
+          </div>
         </div>
       </div>
       <ModifyAlbumModal />

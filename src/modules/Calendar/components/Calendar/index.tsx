@@ -73,7 +73,7 @@ function CalendarComponent({
         end: moment(end).toISOString(),
         category: event.category
       },
-      failureInfo: "Oops! Couldn't update the event. Please try again.",
+      failureInfo: 'update',
       onFailure: refreshRawEvents
     })
   }

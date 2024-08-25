@@ -7,6 +7,7 @@ import Button from '../ButtonsAndInputs/Button'
 
 function EmptyStateScreen({
   onCTAClick,
+  name,
   title,
   description,
   icon,
@@ -15,8 +16,9 @@ function EmptyStateScreen({
   forSidebar = false
 }: {
   onCTAClick?: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  title: string
-  description: string
+  name?: string
+  title?: string
+  description?: string
   icon: string
   ctaContent?: string
   customCTAButton?: React.ReactElement
@@ -35,14 +37,14 @@ function EmptyStateScreen({
           forSidebar ? 'text-2xl' : 'text-3xl'
         } font-semibold`}
       >
-        {t(title)}
+        {name ? t(`emptyState.${name}.title`) : title}
       </h2>
       <p
         className={`-mt-2 text-center ${
           forSidebar ? 'text-base' : 'text-lg'
         } text-bg-500`}
       >
-        {t(description)}
+        {name ? t(`emptyState.${name}.description`) : description}
       </p>
       {customCTAButton ??
         (ctaContent && onCTAClick && (

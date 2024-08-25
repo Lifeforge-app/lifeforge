@@ -15,6 +15,7 @@ interface SidebarItemProps {
   isMainSidebarItem?: boolean
   active?: boolean
   prefix?: string
+  number?: number
 }
 
 function SidebarItem({
@@ -25,7 +26,8 @@ function SidebarItem({
   isMainSidebarItem = false,
   onClick,
   active = false,
-  prefix = ''
+  prefix = '',
+  number
 }: SidebarItemProps): React.ReactElement {
   // @ts-expect-error - Lazy to fix yay =)
   const { sidebarExpanded, toggleSidebar } = isMainSidebarItem
@@ -78,7 +80,7 @@ function SidebarItem({
                 }`}
               />
             </div>
-            <span className="w-full">
+            <span className="flex-between flex w-full gap-4">
               {sidebarExpanded &&
                 (isMainSidebarItem ? (
                   <span className="flex-between flex w-full gap-2 truncate">
@@ -97,6 +99,9 @@ function SidebarItem({
                     }.${toCamelCase(name)}`
                   )
                 ))}
+              {number !== undefined && (
+                <span className="text-sm text-bg-500">{number}</span>
+              )}
             </span>
           </div>
 

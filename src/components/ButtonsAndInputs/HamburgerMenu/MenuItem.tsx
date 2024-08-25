@@ -55,7 +55,7 @@ function MenuItem({
             className={`${getActiveClass(
               active,
               isRed
-            )} flex w-full items-center gap-4 p-4 text-left`}
+            )} flex w-full items-center gap-4 p-4 text-left transition-all`}
           >
             {icon !== undefined && (
               <Icon icon={icon} className="size-5 shrink-0" />

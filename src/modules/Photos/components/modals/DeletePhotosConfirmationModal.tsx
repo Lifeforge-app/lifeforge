@@ -30,7 +30,8 @@ function DeletePhotosConfirmationModal({
     selectedPhotos,
     setSelectedPhotos,
     isDeletePhotosConfirmationModalOpen,
-    setDeletePhotosConfirmationModalOpen
+    setDeletePhotosConfirmationModalOpen,
+    refreshPhotos
   } = usePhotosContext()
   const [loading, setLoading] = useState(false)
 
@@ -70,20 +71,7 @@ function DeletePhotosConfirmationModal({
             )
           }
         } else {
-          // @ts-expect-error Lazy to fix for now ;-;
-          setPhotos(prevPhotos => ({
-            ...prevPhotos,
-            // @ts-expect-error Lazy to fix for now ;-;
-            items: prevPhotos.items.map(([date, photos]) => [
-              date,
-              // @ts-expect-error Lazy to fix for now ;-;
-              photos.filter(photo =>
-                customPhotoToBeDeleted
-                  ? photo.id !== customPhotoToBeDeleted.id
-                  : !selectedPhotos.includes(photo.id)
-              )
-            ])
-          }))
+          refreshPhotos()
         }
       },
       onFailure: () => {

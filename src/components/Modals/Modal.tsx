@@ -37,7 +37,7 @@ function Modal({
           isOpen ? 'right-1/2' : 'right-[-100dvw]'
         } ${className} top-1/2 flex max-h-[calc(100dvh-8rem)] w-full max-w-[calc(100vw-4rem)] -translate-y-1/2 translate-x-1/2 flex-col overflow-auto rounded-xl bg-bg-100 p-6 transition-all duration-500 dark:bg-bg-900 sm:max-w-[calc(100vw-8rem)] lg:w-auto`}
       >
-        {children}
+        {isOpen && children}
       </div>
     </div>
   )

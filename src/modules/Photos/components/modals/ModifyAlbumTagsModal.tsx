@@ -4,72 +4,71 @@ import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyBut
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
+import { type IPhotoAlbumTag } from '@interfaces/photos_interfaces'
+import { usePhotosContext } from '@providers/PhotosProvider'
 import APIRequest from '@utils/fetchData'
-import { usePhotosContext } from '../../../../providers/PhotosProvider'
 
-function ModifyAlbumModal({
-  targetAlbum,
-  refreshAlbumData
+function ModifyAlbumTagsModal({
+  openType,
+  setOpenType,
+  targetTag,
+  refreshTagData
 }: {
-  targetAlbum?: IPhotosAlbum
-  refreshAlbumData?: () => void
+  openType: 'create' | 'rename' | false
+  setOpenType: (value: 'create' | 'rename' | false) => void
+  targetTag?: IPhotoAlbumTag
+  refreshTagData?: () => void
 }): React.ReactElement {
-  const {
-    modifyAlbumModalOpenType: openType,
-    setModifyAlbumModalOpenType: setOpenType,
-    setAlbumList
-  } = usePhotosContext()
-  const [albumName, setAlbumName] = useState('')
+  const { setAlbumTagList } = usePhotosContext()
+  const [tagName, setTagName] = useState('')
   const [loading, setLoading] = useState(false)
   const ref = useRef<HTMLInputElement>(null)
 
-  const updateAlbumName = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setAlbumName(e.target.value)
+  const updateTagName = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setTagName(e.target.value)
   }
 
   async function onSubmitButtonClick(): Promise<void> {
-    if (albumName.trim().length === 0) {
+    if (tagName.trim().length === 0) {
       toast.error('Please fill in all the fields.')
       return
     }
 
     setLoading(true)
 
-    const album = {
-      name: albumName.trim()
+    const tag = {
+      name: tagName.trim()
     }
 
     await APIRequest({
       endpoint:
-        `photos/album/${openType}` +
-        (openType === 'rename' ? `/${targetAlbum?.id}` : ''),
+        'photos/album/tag' + (openType === 'rename' ? `/${targetTag?.id}` : ''),
       method: openType === 'create' ? 'POST' : 'PATCH',
-      body: album,
+      body: tag,
       successInfo: openType,
       failureInfo: openType,
       callback: data => {
         setOpenType(false)
-        setAlbumList(prev => {
+        setAlbumTagList(prev => {
           if (typeof prev === 'string') {
             return prev
           }
 
           return openType === 'create'
             ? [data.data, ...prev]
-            : prev.map(album => {
-                if (album.id === targetAlbum?.id) {
+            : prev.map(tag => {
+                if (tag.id === targetTag?.id) {
                   return {
-                    ...album,
-                    name: albumName
+                    ...tag,
+                    name: tagName
                   }
                 }
 
-                return album
+                return tag
               })
         })
-        if (refreshAlbumData !== undefined) {
-          refreshAlbumData()
+        if (refreshTagData !== undefined) {
+          refreshTagData()
         }
       },
       onFailure: () => {
@@ -88,22 +87,22 @@ function ModifyAlbumModal({
 
     switch (openType) {
       case 'rename':
-        if (targetAlbum !== undefined) {
-          setAlbumName(targetAlbum.name)
+        if (targetTag !== undefined) {
+          setTagName(targetTag.name)
         }
         break
       case 'create':
-        setAlbumName('')
+        setTagName('')
         break
       default:
         break
     }
-  }, [openType, targetAlbum])
+  }, [openType, targetTag])
 
   return (
     <Modal isOpen={openType !== false} minWidth="40rem">
       <ModalHeader
-        title={`${openType === 'create' ? 'Create' : 'Rename'} album`}
+        title={`${openType === 'create' ? 'Create' : 'Rename'} tag`}
         onClose={() => {
           setOpenType(false)
         }}
@@ -112,11 +111,11 @@ function ModifyAlbumModal({
       <Input
         icon="tabler:photo"
         reference={ref}
-        name="Album name"
-        value={albumName}
-        updateValue={updateAlbumName}
+        name="Tag name"
+        value={tagName}
+        updateValue={updateTagName}
         darker
-        placeholder="My lovely album"
+        placeholder="My lovely tag"
         onKeyDown={e => {
           if (e.key === 'Enter') {
             onSubmitButtonClick().catch(console.error)
@@ -135,4 +134,4 @@ function ModifyAlbumModal({
   )
 }
 
-export default ModifyAlbumModal
+export default ModifyAlbumTagsModal
