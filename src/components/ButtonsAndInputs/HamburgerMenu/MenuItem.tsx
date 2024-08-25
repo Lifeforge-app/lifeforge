@@ -60,7 +60,7 @@ function MenuItem({
             {icon !== undefined && (
               <Icon icon={icon} className="size-5 shrink-0" />
             )}
-            <span className="w-full whitespace-nowrap">
+            <span className="w-full truncate whitespace-nowrap">
               {needTranslate ? t(`button.${toCamelCase(text)}`) : text}
             </span>
             {isToggled === true && (

@@ -5,6 +5,7 @@ import { toCamelCase } from '@utils/strings'
 
 function ModalHeader({
   title,
+  needTranslate = true,
   icon,
   onClose,
   actionButtonIcon,
@@ -12,6 +13,7 @@ function ModalHeader({
   onActionButtonClick
 }: {
   title: string
+  needTranslate?: boolean
   icon: string
   onClose: () => void
   actionButtonIcon?: string
@@ -24,7 +26,7 @@ function ModalHeader({
     <div className="flex-between mb-8 flex ">
       <h1 className="flex items-center gap-3 text-2xl font-semibold">
         <Icon icon={icon} className="size-7" />
-        {t(`modals.header.${toCamelCase(title)}`)}
+        {needTranslate ? t(`modals.header.${toCamelCase(title)}`) : title}
       </h1>
       <div className="flex items-center gap-2">
         {actionButtonIcon !== undefined && (

@@ -1,7 +1,9 @@
 import { Icon } from '@iconify/react'
+import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import Modal from '@components/Modals/Modal'
+import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import APIRequest from '@utils/fetchData'
@@ -12,6 +14,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
     albumList,
     selectedPhotos,
     setSelectedPhotos,
+    setModifyAlbumModalOpenType,
     isAddPhotosToAlbumModalOpen: isOpen,
     setAddPhotosToAlbumModalOpen: setOpen,
     refreshAlbumList: updateAlbumList,
@@ -68,40 +71,25 @@ function AddPhotosToAlbumModal(): React.ReactElement {
   }, [isOpen])
 
   return (
-    <Modal isOpen={isOpen}>
+    <Modal isOpen={isOpen} minWidth="40rem">
       <APIComponentWithFallback data={photos}>
         {photos => (
           <>
-            {' '}
-            <div className="flex-between mb-8 flex ">
-              <h1 className="flex items-center gap-3 text-2xl font-semibold">
-                <Icon icon="tabler:photo-plus" className="size-7" />
-                Add{' '}
-                {selectedPhotos
-                  .filter(
-                    photo =>
-                      !(
-                        photos.items
-                          .map(p => p[1])
-                          .flat()
-                          .find(p => p.id === photo)?.is_in_album ?? false
-                      )
-                  )
-                  .length.toLocaleString()}{' '}
-                photos to album
-              </h1>
-              {!loading && (
-                <button
-                  onClick={() => {
-                    setOpen(false)
-                  }}
-                  className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-800"
-                >
-                  <Icon icon="tabler:x" className="size-6" />
-                </button>
-              )}
-            </div>
-            <ul className="relative w-96">
+            <ModalHeader
+              icon="tabler:photo-plus"
+              needTranslate={false}
+              title={t('modals.header.addPhotosToAlbum', {
+                amount: selectedPhotos.length
+              })}
+              onClose={() => {
+                setOpen(false)
+              }}
+              actionButtonIcon="tabler:plus"
+              onActionButtonClick={() => {
+                setModifyAlbumModalOpenType('create')
+              }}
+            />
+            <ul className="relative w-full">
               <APIComponentWithFallback data={albumList}>
                 {albumList => (
                   <>

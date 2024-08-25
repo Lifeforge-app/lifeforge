@@ -70,8 +70,8 @@ function PhotosMainGallery(): React.ReactElement {
           </div>
         </div>
       </div>
-      <ModifyAlbumModal />
       <AddPhotosToAlbumModal />
+      <ModifyAlbumModal />
       <DeletePhotosConfirmationModal
         setPhotos={
           setPhotoDimensions as React.Dispatch<

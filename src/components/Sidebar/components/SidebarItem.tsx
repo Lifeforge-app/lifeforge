@@ -84,7 +84,9 @@ function SidebarItem({
               {sidebarExpanded &&
                 (isMainSidebarItem ? (
                   <span className="flex-between flex w-full gap-2 truncate">
-                    {t(`modules.${toCamelCase(name)}`)}
+                    <span className="min-w-0 max-w-48 truncate">
+                      {t(`modules.${toCamelCase(name)}`)}
+                    </span>
                     {hasAI && (
                       <Icon
                         icon="mage:stars-c"
@@ -100,7 +102,9 @@ function SidebarItem({
                   )
                 ))}
               {number !== undefined && (
-                <span className="text-sm text-bg-500">{number}</span>
+                <span className="text-sm text-bg-500">
+                  {number.toLocaleString()}
+                </span>
               )}
             </span>
           </div>
