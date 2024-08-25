@@ -73,7 +73,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
   return (
     <Modal isOpen={isOpen} minWidth="40rem">
       <APIComponentWithFallback data={photos}>
-        {photos => (
+        {() => (
           <>
             <ModalHeader
               icon="tabler:photo-plus"
