@@ -1,7 +1,5 @@
 import React, { lazy } from 'react'
 import { Navigate } from 'react-router'
-import Account from './modules/Account'
-import ChangiFlightStatus from './modules/ChangiFlightStatus'
 
 const PhotosProvider = lazy(
   async () => await import('./providers/PhotosProvider')
@@ -103,6 +101,16 @@ const AirportsList = lazy(
 )
 const Airport = lazy(
   async () => await import('./modules/Airports/pages/Airport')
+)
+const Account = lazy(async () => await import('./modules/Account'))
+const ChangiFlightStatus = lazy(
+  async () => await import('./modules/ChangiFlightStatus')
+)
+const CFOPAlgorithms = lazy(
+  async () => await import('./modules/CFOPAlgorithms')
+)
+const CFOPF2L = lazy(
+  async () => await import('./modules/CFOPAlgorithms/pages/F2L')
 )
 
 export const COMPONENTS = {
@@ -228,5 +236,9 @@ export const COMPONENTS = {
     'airports-regions': Regions,
     'airports-airports': AirportsList,
     'airports-airport': Airport
+  },
+  'cfop-algorithms': {
+    'cfop-algorithms': CFOPAlgorithms,
+    'cfop-algorithms-f2l': CFOPF2L
   }
 }

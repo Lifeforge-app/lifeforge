@@ -63,6 +63,7 @@
     "react-tooltip": "^5.24.0",
     "react-virtualized": "^9.22.5",
     "tailwindcss": "^3.3.5",
+    "three": "^0.167.1",
     "ts-migrate": "^0.1.35",
     "use-resize-observer": "^9.1.0",
     "wavesurfer.js": "^7.8.4"
@@ -82,6 +83,7 @@
     "@types/react-helmet": "^6.1.11",
     "@types/react-lazy-load-image-component": "^1.6.4",
     "@types/react-virtualized": "^9.21.30",
+    "@types/three": "^0.167.2",
     "@types/use-resize-observer": "^6.1.0",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.10.0",
