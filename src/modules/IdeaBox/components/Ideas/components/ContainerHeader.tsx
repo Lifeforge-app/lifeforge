@@ -41,7 +41,7 @@ function ContainerHeader({
           navigate(`/idea-box/${folderId !== undefined ? id : ''}`)
         }}
       />
-      <div className="flex flex-between">
+      <div className="flex-between flex">
         <h1
           className={`flex items-center gap-4 ${
             typeof containerDetails !== 'string'
