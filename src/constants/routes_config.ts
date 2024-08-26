@@ -128,7 +128,6 @@ export const ROUTES: IRoutes[] = [
       }
     ]
   },
-
   {
     title: 'Finance',
     items: [
@@ -198,6 +197,22 @@ export const ROUTES: IRoutes[] = [
         icon: 'mingcute:guitar-line',
         routes: {
           'guitar-tabs': 'guitar-tabs'
+        },
+        togglable: true
+      }
+    ]
+  },
+  {
+    title: 'References',
+    items: [
+      {
+        name: 'CFOP Algorithms',
+        icon: 'tabler:cube',
+        routes: {
+          'cfop-algorithms': 'cfop-algorithms',
+          'cfop-algorithms-f2l': 'cfop-algorithms/f2l',
+          'cfop-algorithms-oll': 'cfop-algorithms/oll',
+          'cfop-algorithms-pll': 'cfop-algorithms/pll'
         },
         togglable: true
       }
