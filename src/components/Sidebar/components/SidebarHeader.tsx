@@ -7,7 +7,7 @@ function SidebarHeader(): React.ReactElement {
 
   return (
     <div
-      className={`flex h-24 w-full shrink-0 flex-between pl-6 transition-none ${
+      className={`flex-between flex h-24 w-full shrink-0 pl-6 transition-none ${
         !sidebarExpanded ? 'overflow-hidden' : ''
       }`}
     >

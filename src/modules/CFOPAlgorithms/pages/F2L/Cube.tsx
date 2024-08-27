@@ -1,83 +1,111 @@
 import React, { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 
-function Cube(): React.ReactElement {
+const RED = 0xef4444
+const ORANGE = 0xf97316
+const YELLOW = 0xfacc15
+const GREEN = 0x22c55e
+const BLUE = 0x0ea5e9
+const WHITE = 0xffffff
+const GRAY = 0x404040
+
+const COLORS = {
+  r: RED,
+  o: ORANGE,
+  y: YELLOW,
+  g: GREEN,
+  b: BLUE,
+  w: WHITE,
+  '-': GRAY
+}
+
+function Cube({ pattern }: { pattern: string }): React.ReactElement {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (ref.current === null) return
 
+    const patternArray = pattern.split(' ')
+
+    const side: Array<Array<Array<'r' | 'o' | 'y' | 'g' | 'b' | 'w' | '-'>>> =
+      []
+
+    for (let i = 0; i < 3; i++) {
+      side.push([])
+      for (let j = 0; j < 3; j++) {
+        side[i].push([])
+        for (let k = 0; k < 3; k++) {
+          side[i][j].push(
+            patternArray[i][j * 3 + k] as
+              | 'r'
+              | 'o'
+              | 'y'
+              | 'g'
+              | 'b'
+              | 'w'
+              | '-'
+          )
+        }
+      }
+    }
+
     const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000)
+    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 1000)
 
     const renderer = new THREE.WebGLRenderer()
     renderer.setClearColor(0xffffff, 0)
-    renderer.setSize(128, 128)
+    renderer.setSize(72, 72)
     renderer.setPixelRatio(window.devicePixelRatio) // This line increases the resolution
     ref.current.appendChild(renderer.domElement)
 
-    const cubeSize = 0.7
+    const cubeSize = 0.6
     const edgeThickness = 0.04
     const borderColor = 0x000000
 
     const rubiksCube = new THREE.Group()
 
-    const red = 0xff0000
-    const orange = 0xffa500
-    const yellow = 0xffff00
-    const green = 0x00ff00
-    const blue = 0x0000ff
-    const white = 0xffffff
-    const gray = 0x404040
-
-    function createMaterials(x, y, z) {
+    function createMaterials(
+      x: number,
+      y: number,
+      z: number
+    ): THREE.Material[] {
       const materials = [
-        new THREE.MeshBasicMaterial({ color: gray }), // right
-        new THREE.MeshBasicMaterial({ color: gray }), // left
-        new THREE.MeshBasicMaterial({ color: gray }), // top
-        new THREE.MeshBasicMaterial({ color: gray }), // bottom
-        new THREE.MeshBasicMaterial({ color: gray }), // back
-        new THREE.MeshBasicMaterial({ color: gray }) // front
+        new THREE.MeshBasicMaterial({ color: GRAY }),
+        new THREE.MeshBasicMaterial({ color: GRAY }),
+        new THREE.MeshBasicMaterial({ color: GRAY }),
+        new THREE.MeshBasicMaterial({ color: GRAY }),
+        new THREE.MeshBasicMaterial({ color: GRAY }),
+        new THREE.MeshBasicMaterial({ color: GRAY })
       ]
-      // Example: color the top face of the cube at (1, 2, 0) with yellow
-      if (x === 0 && y === 2 && z === 2) {
-        materials[2] = new THREE.MeshBasicMaterial({ color: white })
+
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          if (x === 2 - i && y === 2 && z === j) {
+            materials[2] = new THREE.MeshBasicMaterial({
+              color: COLORS[side[2][i][j]]
+            })
+          }
+        }
       }
-      if (x === 0 && y === 2 && z === 1) {
-        materials[2] = new THREE.MeshBasicMaterial({ color: red })
+
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          if (x === j && y === 2 - i && z === 2) {
+            materials[4] = new THREE.MeshBasicMaterial({
+              color: COLORS[side[1][i][j]]
+            })
+          }
+        }
       }
-      if (x === 1 && y === 0 && z === 2) {
-        materials[4] = new THREE.MeshBasicMaterial({ color: green })
-      }
-      if (x === 2 && y === 1 && z === 2) {
-        materials[4] = new THREE.MeshBasicMaterial({ color: green })
-      }
-      if (x === 1 && y === 1 && z === 2) {
-        materials[4] = new THREE.MeshBasicMaterial({ color: green })
-      }
-      if (x === 2 && y === 0 && z === 2) {
-        materials[4] = new THREE.MeshBasicMaterial({ color: green })
-      }
-      if (x === 0 && y === 2 && z === 2) {
-        materials[4] = new THREE.MeshBasicMaterial({ color: red })
-      }
-      if (x === 0 && y === 0 && z === 0) {
-        materials[1] = new THREE.MeshBasicMaterial({ color: red })
-      }
-      if (x === 0 && y === 0 && z === 1) {
-        materials[1] = new THREE.MeshBasicMaterial({ color: red })
-      }
-      if (x === 0 && y === 1 && z === 0) {
-        materials[1] = new THREE.MeshBasicMaterial({ color: red })
-      }
-      if (x === 0 && y === 1 && z === 1) {
-        materials[1] = new THREE.MeshBasicMaterial({ color: red })
-      }
-      if (x === 0 && y === 2 && z === 1) {
-        materials[1] = new THREE.MeshBasicMaterial({ color: green })
-      }
-      if (x === 0 && y === 2 && z === 2) {
-        materials[1] = new THREE.MeshBasicMaterial({ color: green })
+
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          if (x === 0 && y === 2 - i && z === j) {
+            materials[1] = new THREE.MeshBasicMaterial({
+              color: COLORS[side[0][i][j]]
+            })
+          }
+        }
       }
 
       return materials
@@ -90,7 +118,6 @@ function Cube(): React.ReactElement {
           const materials = createMaterials(x, y, z)
           const cube = new THREE.Mesh(geometry, materials)
 
-          // Create a slightly larger box for the border
           const borderGeometry = new THREE.BoxGeometry(
             cubeSize + edgeThickness * 2,
             cubeSize + edgeThickness * 2,
@@ -102,12 +129,10 @@ function Cube(): React.ReactElement {
           })
           const border = new THREE.Mesh(borderGeometry, borderMaterial)
 
-          // Create edges for the cube
           const edgeMaterial = new THREE.MeshBasicMaterial({
             color: borderColor
           })
 
-          // Position the cube and border in the 3x3x3 grid
           cube.position.set(
             (x - 1) * (cubeSize + edgeThickness * 2),
             (y - 1) * (cubeSize + edgeThickness * 2),
@@ -116,9 +141,9 @@ function Cube(): React.ReactElement {
           border.position.copy(cube.position)
 
           rubiksCube.add(cube)
-          rubiksCube.add(border) // Add the border to the scene
+          rubiksCube.add(border)
 
-          if (x == 0 && z == 2) {
+          if (x === 0 && z === 2) {
             const edgeGeometry = new THREE.BoxGeometry(
               edgeThickness,
               cubeSize + edgeThickness,
@@ -131,7 +156,7 @@ function Cube(): React.ReactElement {
             rubiksCube.add(edge) // Add the edges to the scene
           }
 
-          if (y == 2 && z == 2) {
+          if (y === 2 && z === 2) {
             const edgeGeometry = new THREE.BoxGeometry(
               cubeSize + edgeThickness,
               edgeThickness,
@@ -141,9 +166,9 @@ function Cube(): React.ReactElement {
             const edge = new THREE.Mesh(edgeGeometry, edgeMaterial)
             edge.position.set(0, cubeSize / 2, cubeSize / 2)
             edge.position.add(cube.position)
-            rubiksCube.add(edge) // Add the edges to the scene
+            rubiksCube.add(edge)
           }
-          if (y == 2 && x == 0) {
+          if (y === 2 && x === 0) {
             const edgeGeometry = new THREE.BoxGeometry(
               edgeThickness,
               edgeThickness,
@@ -153,13 +178,13 @@ function Cube(): React.ReactElement {
             const edge = new THREE.Mesh(edgeGeometry, edgeMaterial)
             edge.position.set(-cubeSize / 2, cubeSize / 2, 0)
             edge.position.add(cube.position)
-            rubiksCube.add(edge) // Add the edges to the scene
+            rubiksCube.add(edge)
           }
         }
       }
     }
 
-    rubiksCube.rotation.x = Math.PI / 6
+    rubiksCube.rotation.x = Math.PI / 5
     rubiksCube.rotation.y = Math.PI / 4
 
     scene.add(rubiksCube)
