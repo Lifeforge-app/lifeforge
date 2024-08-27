@@ -115,6 +115,9 @@ const CFOPF2L = lazy(
 const CFOPOLL = lazy(
   async () => await import('./modules/CFOPAlgorithms/pages/OLL')
 )
+const CFOPPLL = lazy(
+  async () => await import('./modules/CFOPAlgorithms/pages/PLL')
+)
 
 export const COMPONENTS = {
   dashboard: {
@@ -243,6 +246,7 @@ export const COMPONENTS = {
   'cfop-algorithms': {
     'cfop-algorithms': CFOPAlgorithms,
     'cfop-algorithms-f2l': CFOPF2L,
-    'cfop-algorithms-oll': CFOPOLL
+    'cfop-algorithms-oll': CFOPOLL,
+    'cfop-algorithms-pll': CFOPPLL
   }
 }
