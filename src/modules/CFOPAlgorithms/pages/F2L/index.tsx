@@ -106,7 +106,10 @@ function CFOPF2L(): React.ReactElement {
             </div>
             <div className="space-y-2 text-lg font-medium">
               {alg.map((a, j) => (
-                <p key={a} className={warn?.includes(j) ? 'text-red-400' : ''}>
+                <p
+                  key={a}
+                  className={warn?.includes(j) === true ? 'text-red-400' : ''}
+                >
                   {a}
                 </p>
               ))}
