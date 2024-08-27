@@ -1,3 +1,5 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
+import moment from 'moment'
 import React from 'react'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import SidebarHeader from './components/SidebarHeader'
@@ -14,6 +16,19 @@ function Sidebar(): React.ReactElement {
           : 'w-0 sm:w-[5.4rem]'
       } absolute left-0 top-0 z-[9990] flex h-full shrink-0 flex-col rounded-r-2xl bg-bg-50 shadow-custom duration-300 dark:bg-bg-900 lg:relative lg:dark:bg-bg-900`}
     >
+      {sidebarExpanded && moment().isSame('2021-08-31', 'day') && (
+        <div className="flex-between flex w-full gap-2 whitespace-nowrap rounded-tr-2xl bg-custom-500 p-4 text-lg font-medium text-bg-900">
+          <div className="flex items-center gap-2">
+            <Icon icon="mingcute:celebrate-line" className="text-2xl" />
+            Happy Birthday, Malaysia!
+          </div>
+          <Icon
+            icon="emojione-monotone:flag-for-malaysia"
+            className="text-2xl"
+          />
+        </div>
+      )}
+
       <SidebarHeader />
       <SidebarItems />
     </aside>
