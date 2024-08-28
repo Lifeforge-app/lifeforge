@@ -219,8 +219,10 @@ function TransactionsCard(): React.ReactElement {
                   ) : (
                     <EmptyStateScreen
                       icon="tabler:currency-dollar-off"
-                      title="No transactions found"
-                      description="You have not made any transactions yet."
+                      title={t('emptyState.wallet.transactions.title')}
+                      description={t(
+                        'emptyState.wallet.transactions.description'
+                      )}
                     />
                   )}
                 </Scrollbar>
