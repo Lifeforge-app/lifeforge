@@ -4,6 +4,7 @@ import React, { useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { useWalletContext } from '@providers/WalletProvider'
 
 const options = {
@@ -64,7 +65,7 @@ function StatisticChardCard(): React.ReactElement {
 
   return (
     <div className="col-span-2 row-span-2 flex size-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
-      <div className="flex w-full flex-between">
+      <div className="flex-between flex w-full">
         <h1 className="flex items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:chart-dots" className="text-2xl" />
           <span className="ml-2">{t('dashboard.widgets.statistics')}</span>
@@ -84,35 +85,43 @@ function StatisticChardCard(): React.ReactElement {
       </div>
       <div className="flex-center mt-6 flex size-full min-h-0 flex-1">
         <APIComponentWithFallback data={transactions}>
-          {() => (
-            <Line
-              data={{
-                labels: dates,
-                datasets: [
-                  {
-                    label: 'Income',
-                    data: groupedByDate[0],
-                    borderWidth: 1,
-                    borderColor: 'rgb(34 197 94)',
-                    backgroundColor: 'rgb(34 197 94)',
-                    pointRadius: 4,
-                    pointBackgroundColor: 'rgba(34,197,94,0.5)'
-                  },
-                  {
-                    label: 'Expenses'[1],
-                    data: groupedByDate[1],
-                    borderWidth: 1,
-                    pointRadius: 4,
-                    borderColor: 'rgb(239 68 68)',
-                    backgroundColor: 'rgb(239 68 68)',
-                    pointBackgroundColor: 'rgba(239,68,68,0.5)'
-                  }
-                ]
-              }}
-              options={options as any}
-              className="w-full"
-            />
-          )}
+          {transactions =>
+            transactions.length === 0 ? (
+              <EmptyStateScreen
+                title={t('emptyState.wallet.transactions.title')}
+                description={t('emptyState.wallet.transactions.description')}
+                icon="tabler:currency-dollar-off"
+              />
+            ) : (
+              <Line
+                data={{
+                  labels: dates,
+                  datasets: [
+                    {
+                      label: 'Income',
+                      data: groupedByDate[0],
+                      borderWidth: 1,
+                      borderColor: 'rgb(34 197 94)',
+                      backgroundColor: 'rgb(34 197 94)',
+                      pointRadius: 4,
+                      pointBackgroundColor: 'rgba(34,197,94,0.5)'
+                    },
+                    {
+                      label: 'Expenses'[1],
+                      data: groupedByDate[1],
+                      borderWidth: 1,
+                      pointRadius: 4,
+                      borderColor: 'rgb(239 68 68)',
+                      backgroundColor: 'rgb(239 68 68)',
+                      pointBackgroundColor: 'rgba(239,68,68,0.5)'
+                    }
+                  ]
+                }}
+                options={options as any}
+                className="w-full"
+              />
+            )
+          }
         </APIComponentWithFallback>
       </div>
       <div className="mt-4 flex items-center justify-center gap-8 sm:hidden">
