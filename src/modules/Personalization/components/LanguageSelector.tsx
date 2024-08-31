@@ -38,7 +38,7 @@ function LanguageSelector(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="relative z-20 mt-4 flex w-full flex-col flex-between gap-6 px-4 md:flex-row">
+    <div className="flex-between relative z-20 mt-4 flex w-full flex-col gap-6 px-4 md:flex-row">
       <div className="mt-6 w-full md:w-auto">
         <h3 className="block text-xl font-medium leading-normal">
           {t('personalization.languageSelector.title')}
