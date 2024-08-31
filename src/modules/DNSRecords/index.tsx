@@ -11,38 +11,19 @@ import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import Scrollbar from '@components/Scrollbar'
 import useFetch from '@hooks/useFetch'
+import {
+  DNSRecordType,
+  type IDNSRecordEntry
+} from '@interfaces/dns_records_interfaces'
 import APIRequest from '@utils/fetchData'
 import IconButton from '../Music/components/Bottombar/components/IconButton'
-
-interface IDNSRecordEntry {
-  line_index: number
-  text_b64?: string
-  type: Type
-  dname_b64?: string
-  ttl?: number
-  record_type?: RecordType
-  data_b64?: string[]
-}
-
-enum RecordType {
-  A = 'A',
-  Aaaa = 'AAAA',
-  Cname = 'CNAME',
-  NS = 'NS',
-  SOA = 'SOA',
-  Txt = 'TXT'
-}
-
-enum Type {
-  Comment = 'comment',
-  Control = 'control',
-  Record = 'record'
-}
 
 const FILTER_TYPE = ['All', 'A', 'AAAA', 'CNAME', 'TXT']
 
@@ -60,6 +41,8 @@ function DNSRecords(): JSX.Element {
     IDNSRecordEntry[] | 'loading' | 'error'
   >('loading')
   const [bulkDeleteLoading, setBulkDeleteLoading] = useState(false)
+  const [deleteConfirmationModalOpen, setDeleteConfirmationModalOpen] =
+    useState<boolean | number>(false)
 
   async function removeRecord(index: number | number[]): Promise<void> {
     if (serial === '') {
@@ -120,7 +103,7 @@ function DNSRecords(): JSX.Element {
   useEffect(() => {
     if (typeof rawRecords === 'string') return
 
-    const SOA = rawRecords.find(e => e.record_type === RecordType.SOA)
+    const SOA = rawRecords.find(e => e.record_type === DNSRecordType.SOA)
     if (SOA !== undefined) {
       setSerial(SOA.data_b64![2])
     }
@@ -254,7 +237,7 @@ function DNSRecords(): JSX.Element {
             disabled={selectedEntries.length === 0 || bulkDeleteLoading}
             loading={bulkDeleteLoading}
             onClick={() => {
-              removeRecord(selectedEntries).catch(console.error)
+              setDeleteConfirmationModalOpen(true)
             }}
             icon="tabler:trash"
             isRed
@@ -266,76 +249,18 @@ function DNSRecords(): JSX.Element {
       </div>
       <Scrollbar className="mt-6">
         <APIComponentWithFallback data={filteredRecords}>
-          {records => (
-            <table className="mb-16">
-              <thead>
-                <tr className="border-b-2 border-bg-200 dark:border-bg-800">
-                  <th className="pl-4 pr-0">
-                    <div
-                      className={`${
-                        isSelecting ? 'w-6' : 'w-0'
-                      } flex items-center justify-center overflow-hidden transition-all`}
-                    >
-                      <button
-                        onClick={() => {
-                          toggleSelected('all')
-                        }}
-                        className={`size-5 rounded-full border-[1.5px] ${
-                          records.every(record =>
-                            selectedEntries.includes(record.line_index)
-                          )
-                            ? 'border-custom-500'
-                            : 'border-bg-300 dark:border-bg-700'
-                        }`}
-                      >
-                        {records.every(record =>
-                          selectedEntries.includes(record.line_index)
-                        ) && (
-                          <Icon
-                            icon="uil:check"
-                            className="mr-[2px] mt-px size-4 text-custom-500"
-                          />
-                        )}
-                      </button>
-                    </div>
-                  </th>
-                  {['Name', 'TTL', 'Type', 'Data'].map(header => (
-                    <th key={header} scope="col" className="relative p-4 pr-16">
-                      {header}
-                      <IconButton
-                        icon="tabler:transfer-vertical"
-                        onClick={() => {
-                          setSortBy(header)
-                        }}
-                        className={`absolute right-4 top-1/2 -translate-y-1/2 !p-2 hover:bg-bg-800/70 ${
-                          sortBy === header
-                            ? 'text-bg-800 dark:text-bg-100'
-                            : 'text-bg-500'
-                        }`}
-                      />
-                    </th>
-                  ))}
-
-                  <th scope="col" className="p-4">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {records.map(record => (
-                  <tr
-                    key={record.line_index}
-                    onClick={() => {
-                      if (!isSelecting) return
-                      toggleSelected(record.line_index)
-                    }}
-                    className={`${
-                      isSelecting
-                        ? 'cursor-pointer hover:bg-bg-200 dark:hover:bg-bg-900/50'
-                        : ''
-                    }`}
-                  >
-                    <td className="pl-4 pr-0">
+          {records =>
+            records.length === 0 ? (
+              <EmptyStateScreen
+                icon="tabler:search-off"
+                title="No DNS records found"
+                description="There is no DNS record related to your search query."
+              />
+            ) : (
+              <table className="mb-16">
+                <thead>
+                  <tr className="border-b-2 border-bg-200 dark:border-bg-800">
+                    <th className="pl-4 pr-0">
                       <div
                         className={`${
                           isSelecting ? 'w-6' : 'w-0'
@@ -343,15 +268,19 @@ function DNSRecords(): JSX.Element {
                       >
                         <button
                           onClick={() => {
-                            toggleSelected(record.line_index)
+                            toggleSelected('all')
                           }}
                           className={`size-5 rounded-full border-[1.5px] ${
-                            selectedEntries.includes(record.line_index)
+                            records.every(record =>
+                              selectedEntries.includes(record.line_index)
+                            )
                               ? 'border-custom-500'
                               : 'border-bg-300 dark:border-bg-700'
                           }`}
                         >
-                          {selectedEntries.includes(record.line_index) && (
+                          {records.every(record =>
+                            selectedEntries.includes(record.line_index)
+                          ) && (
                             <Icon
                               icon="uil:check"
                               className="mr-[2px] mt-px size-4 text-custom-500"
@@ -359,69 +288,152 @@ function DNSRecords(): JSX.Element {
                           )}
                         </button>
                       </div>
-                    </td>
-                    <td className="py-4 pl-4 pr-16">
-                      {(() => {
-                        const link =
-                          record.dname_b64 +
-                          (!record.dname_b64!.endsWith('.')
-                            ? '.' +
-                              ((rawRecords[1] as IDNSRecordEntry).text_b64
-                                ?.split(' ')
-                                .pop() ?? '')
-                            : '')
-
-                        return (
-                          <a
-                            href={`http://${link}`}
-                            target="_blank"
-                            rel="noreferrer"
-                            className={isSelecting ? 'pointer-events-none' : ''}
-                          >
-                            {link}.
-                          </a>
-                        )
-                      })()}
-                    </td>
-                    <td className="p-4 pr-16 text-center text-bg-500">
-                      {record.ttl}
-                    </td>
-                    <td className="p-4 pr-16 text-center text-bg-500">
-                      {record.record_type}
-                    </td>
-                    <td className="break-all p-4 pr-16 text-bg-500">
-                      {record.data_b64}
-                    </td>
-                    <td className="p-4 text-center">
-                      <div className="flex w-full items-center justify-center gap-2">
-                        <button className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/20 hover:text-bg-800 dark:hover:bg-bg-800/70 dark:hover:text-bg-100">
-                          <Icon icon="tabler:pencil" className="size-6" />
-                        </button>
-                        <button
+                    </th>
+                    {['Name', 'TTL', 'Type', 'Data'].map(header => (
+                      <th
+                        key={header}
+                        scope="col"
+                        className="relative p-4 pr-16"
+                      >
+                        {header}
+                        <IconButton
+                          icon="tabler:transfer-vertical"
                           onClick={() => {
-                            removeRecord(record.line_index).catch(console.error)
+                            setSortBy(header)
                           }}
-                          className="rounded-md p-2 text-red-500 transition-all hover:bg-red-500/20 hover:text-red-600 disabled:text-bg-500 disabled:hover:bg-transparent disabled:hover:text-bg-500"
-                          disabled={deleteLoading !== -1}
-                        >
-                          <Icon
-                            icon={
-                              deleteLoading === record.line_index
-                                ? 'svg-spinners:180-ring'
-                                : 'tabler:trash'
-                            }
-                            className="size-6"
-                          />
-                        </button>
-                      </div>
-                    </td>
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 !p-2 hover:bg-bg-800/70 ${
+                            sortBy === header
+                              ? 'text-bg-800 dark:text-bg-100'
+                              : 'text-bg-500'
+                          }`}
+                        />
+                      </th>
+                    ))}
+
+                    <th scope="col" className="p-4">
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+                </thead>
+                <tbody>
+                  {records.map(record => (
+                    <tr
+                      key={record.line_index}
+                      onClick={() => {
+                        if (!isSelecting) return
+                        toggleSelected(record.line_index)
+                      }}
+                      className={`${
+                        isSelecting
+                          ? 'cursor-pointer hover:bg-bg-200 dark:hover:bg-bg-900/50'
+                          : ''
+                      }`}
+                    >
+                      <td className="pl-4 pr-0">
+                        <div
+                          className={`${
+                            isSelecting ? 'w-6' : 'w-0'
+                          } flex items-center justify-center overflow-hidden transition-all`}
+                        >
+                          <button
+                            onClick={() => {
+                              toggleSelected(record.line_index)
+                            }}
+                            className={`size-5 rounded-full border-[1.5px] ${
+                              selectedEntries.includes(record.line_index)
+                                ? 'border-custom-500'
+                                : 'border-bg-300 dark:border-bg-700'
+                            }`}
+                          >
+                            {selectedEntries.includes(record.line_index) && (
+                              <Icon
+                                icon="uil:check"
+                                className="mr-[2px] mt-px size-4 text-custom-500"
+                              />
+                            )}
+                          </button>
+                        </div>
+                      </td>
+                      <td className="py-4 pl-4 pr-16">
+                        {(() => {
+                          const link =
+                            record.dname_b64 +
+                            (!record.dname_b64!.endsWith('.')
+                              ? '.' +
+                                ((rawRecords[1] as IDNSRecordEntry).text_b64
+                                  ?.split(' ')
+                                  .pop() ?? '')
+                              : '')
+
+                          return (
+                            <a
+                              href={`http://${link}`}
+                              target="_blank"
+                              rel="noreferrer"
+                              className={
+                                isSelecting ? 'pointer-events-none' : ''
+                              }
+                            >
+                              {link}.
+                            </a>
+                          )
+                        })()}
+                      </td>
+                      <td className="p-4 pr-16 text-center text-bg-500">
+                        {record.ttl}
+                      </td>
+                      <td className="p-4 pr-16 text-center text-bg-500">
+                        {record.record_type}
+                      </td>
+                      <td className="break-all p-4 pr-16 text-bg-500">
+                        {record.data_b64}
+                      </td>
+                      <td className="p-4 text-center">
+                        <div className="flex w-full items-center justify-center gap-2">
+                          <button className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/20 hover:text-bg-800 dark:hover:bg-bg-800/70 dark:hover:text-bg-100">
+                            <Icon icon="tabler:pencil" className="size-6" />
+                          </button>
+                          <button
+                            onClick={() => {
+                              setDeleteConfirmationModalOpen(record.line_index)
+                            }}
+                            className="rounded-md p-2 text-red-500 transition-all hover:bg-red-500/20 hover:text-red-600 disabled:text-bg-500 disabled:hover:bg-transparent disabled:hover:text-bg-500"
+                            disabled={deleteLoading !== -1}
+                          >
+                            <Icon
+                              icon={
+                                deleteLoading === record.line_index
+                                  ? 'svg-spinners:180-ring'
+                                  : 'tabler:trash'
+                              }
+                              className="size-6"
+                            />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )
+          }
         </APIComponentWithFallback>
       </Scrollbar>
+      <DeleteConfirmationModal
+        isOpen={deleteConfirmationModalOpen !== false}
+        onClose={() => {
+          setDeleteConfirmationModalOpen(false)
+        }}
+        customCallback={async () => {
+          await removeRecord(
+            typeof deleteConfirmationModalOpen === 'number'
+              ? deleteConfirmationModalOpen
+              : selectedEntries
+          ).catch(console.error)
+        }}
+        itemName="DNS record"
+        customText="Are you sure you want to delete the selected record(s)?"
+      />
     </ModuleWrapper>
   )
 }

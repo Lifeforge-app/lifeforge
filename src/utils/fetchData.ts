@@ -25,7 +25,7 @@ export default async function APIRequest({
   onFailure?: () => void
   isJSON?: boolean
 }): Promise<any> {
-  fetch(`${import.meta.env.VITE_API_HOST}/${endpoint}`, {
+  await fetch(`${import.meta.env.VITE_API_HOST}/${endpoint}`, {
     method,
     headers: {
       Authorization: `Bearer ${cookieParse(document.cookie).token}`,
