@@ -299,7 +299,7 @@ function DNSRecords(): JSX.Element {
                       </button>
                     </div>
                   </th>
-                  {['Name', 'TTL', 'Type', 'Data'].map((header, index) => (
+                  {['Name', 'TTL', 'Type', 'Data'].map(header => (
                     <th key={header} scope="col" className="relative p-4 pr-16">
                       {header}
                       <IconButton
