@@ -135,7 +135,9 @@ export default function PersonalizationProvider({
   }, [bgTemp])
 
   useEffect(() => {
-    i18n.changeLanguage(language).catch(() => {
+    if (!userData) return
+
+    i18n.changeLanguage?.(language).catch(() => {
       toast.error('Failed to change language.')
     })
   }, [language])

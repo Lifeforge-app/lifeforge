@@ -6,22 +6,22 @@ import AppRouter from './Router'
 
 function App(): React.ReactElement {
   return (
-    <Providers>
-      <div className="relative flex h-dvh w-full overflow-hidden bg-bg-200/50 text-bg-800 dark:bg-bg-950 dark:text-bg-100">
+    <div className="relative flex h-dvh w-full overflow-hidden bg-bg-200/50 text-bg-800 dark:bg-bg-950 dark:text-bg-100">
+      <Providers>
         <AppRouter />
-      </div>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={3000}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
-    </Providers>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+      </Providers>
+    </div>
   )
 }
 
