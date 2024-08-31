@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
+import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Button from '@components/ButtonsAndInputs/Button'
 import FAB from '@components/ButtonsAndInputs/FAB'
+import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -24,9 +26,23 @@ function Passwords(): React.ReactElement {
   const [masterPassword, setMasterPassword] = useState<string>('')
   const [createPasswordModalOpenType, setCreatePasswordModalOpenType] =
     useState<'create' | 'update' | null>(null)
+  const [query, setQuery] = useState<string>('')
+  const debouncedQuery = useDebounce(query, 500)
   const [passwordList, refreshPasswordList, setPasswordList] = useFetch<
     IPasswordEntry[]
   >('passwords/password', masterPassword !== '')
+  const filteredPasswordList = useMemo(() => {
+    if (debouncedQuery === '' || typeof passwordList === 'string') {
+      return passwordList
+    }
+
+    return passwordList.filter(
+      password =>
+        password.name.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
+        password.website.toLowerCase().includes(debouncedQuery.toLowerCase())
+    )
+  }, [debouncedQuery, passwordList])
+
   const [selectedPassword, setSelectedPassword] =
     useState<IPasswordEntry | null>(null)
   const [
@@ -73,6 +89,13 @@ function Passwords(): React.ReactElement {
           </Button>
         )}
       </div>
+      {masterPassword !== '' && (
+        <SearchInput
+          searchQuery={query}
+          setSearchQuery={setQuery}
+          stuffToSearch="passwords"
+        />
+      )}
       {userData?.hasMasterPassword === false ? (
         <CreatePasswordScreen
           endpoint="passwords/master"
@@ -87,37 +110,41 @@ function Passwords(): React.ReactElement {
         />
       ) : (
         <APIComponentWithFallback data={passwordList}>
-          {passwordList =>
-            passwordList.length > 0 ? (
-              <div className="mb-12 mt-8 flex w-full flex-col gap-4">
-                {passwordList.map(password => (
-                  <PasswordEntryITem
-                    key={password.id}
-                    password={password}
-                    masterPassword={masterPassword}
-                    setSelectedPassword={setSelectedPassword}
-                    setIsDeletePasswordConfirmationModalOpen={
-                      setIsDeletePasswordConfirmationModalOpen
-                    }
-                    setCreatePasswordModalOpenType={
-                      setCreatePasswordModalOpenType
-                    }
-                    setExistedData={setExistedData}
-                    setPasswordList={setPasswordList}
-                  />
-                ))}
-              </div>
+          {() =>
+            typeof filteredPasswordList !== 'string' ? (
+              filteredPasswordList.length > 0 ? (
+                <div className="mb-12 mt-8 flex w-full flex-col gap-4">
+                  {filteredPasswordList.map(password => (
+                    <PasswordEntryITem
+                      key={password.id}
+                      password={password}
+                      masterPassword={masterPassword}
+                      setSelectedPassword={setSelectedPassword}
+                      setIsDeletePasswordConfirmationModalOpen={
+                        setIsDeletePasswordConfirmationModalOpen
+                      }
+                      setCreatePasswordModalOpenType={
+                        setCreatePasswordModalOpenType
+                      }
+                      setExistedData={setExistedData}
+                      setPasswordList={setPasswordList}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <EmptyStateScreen
+                  description="No passwords are found in your vault yet."
+                  title="Hmm... Seems a bit empty here."
+                  icon="tabler:key-off"
+                  ctaContent="new password"
+                  onCTAClick={() => {
+                    setSelectedPassword(null)
+                    setCreatePasswordModalOpenType('create')
+                  }}
+                />
+              )
             ) : (
-              <EmptyStateScreen
-                description="No passwords are found in your vault yet."
-                title="Hmm... Seems a bit empty here."
-                icon="tabler:key-off"
-                ctaContent="new password"
-                onCTAClick={() => {
-                  setSelectedPassword(null)
-                  setCreatePasswordModalOpenType('create')
-                }}
-              />
+              <></>
             )
           }
         </APIComponentWithFallback>
