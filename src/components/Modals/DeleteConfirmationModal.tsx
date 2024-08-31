@@ -17,27 +17,31 @@ function DeleteConfirmationModal({
   nameKey,
   customCallback
 }: {
-  itemName: string
+  itemName?: string
   isOpen: boolean
   onClose: () => void
-  data: any
-  updateDataList: () => void
-  apiEndpoint: string
+  data?: any
+  updateDataList?: () => void
+  apiEndpoint?: string
   customText?: string
   nameKey?: string
-  customCallback?: () => void
+  customCallback?: () => Promise<void>
 }): React.ReactElement {
   const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
 
   async function deleteData(): Promise<void> {
     if (data === null) return
+    setLoading(true)
+
     if (customCallback) {
-      customCallback()
+      await customCallback().then(() => {
+        setLoading(false)
+        onClose()
+      })
       return
     }
 
-    setLoading(true)
     await APIRequest({
       endpoint: `${apiEndpoint}/${data.id ?? ''}`,
       method: 'DELETE',
@@ -45,7 +49,7 @@ function DeleteConfirmationModal({
       failureInfo: 'delete',
       callback: () => {
         onClose()
-        updateDataList()
+        if (updateDataList) updateDataList()
       },
       finalCallback: () => {
         setLoading(false)
