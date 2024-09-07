@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
 import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
@@ -16,7 +16,7 @@ import APIRequest from '@utils/fetchData'
 function ModifyModal({
   stuff
 }: {
-  stuff: 'category' | 'technology' | 'visibility' | 'status'
+  stuff: 'categories' | 'technologies' | 'visibilities' | 'statuses'
 }): React.ReactElement {
   const {
     modifyDataModalOpenType: openType,
@@ -24,19 +24,17 @@ function ModifyModal({
     existedData,
     setExistedData,
     refreshData
-  } = useProjectsMContext()[
-    stuff.replace('y', 'ies').replace('us', 'uses') as
-      | 'categories'
-      | 'technologies'
-      | 'visibilities'
-      | 'statuses'
-  ]
+  } = useProjectsMContext()[stuff]
   const [name, setName] = useState('')
   const [icon, setIcon] = useState('')
   const [color, setColor] = useState<string>('#FFFFFF')
   const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
   const [colorPickerOpen, setColorPickerOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const singleStuff = useMemo(
+    () => stuff.replace(/ies$/, 'y').replace(/s$/, ''),
+    [stuff]
+  )
 
   useEffect(() => {
     if (openType) {
@@ -44,7 +42,7 @@ function ModifyModal({
         if (existedData) {
           setName(existedData.name)
           setIcon(existedData.icon)
-          if (stuff === 'status') {
+          if (stuff === 'statuses') {
             setColor((existedData as IProjectsMStatus).color)
           }
         }
@@ -68,7 +66,7 @@ function ModifyModal({
     if (
       name.trim().length === 0 ||
       icon.trim().length === 0 ||
-      (stuff === 'status' && !color)
+      (stuff === 'statuses' && !color)
     ) {
       toast.error('Please fill in all the fields.')
       return
@@ -83,7 +81,7 @@ function ModifyModal({
       body: {
         name,
         icon,
-        ...(stuff === 'status' && { color })
+        ...(stuff === 'statuses' && { color })
       },
       successInfo: openType,
       failureInfo: openType,
@@ -103,26 +101,28 @@ function ModifyModal({
       <Modal isOpen={openType !== null} className="sm:min-w-[30rem]">
         <ModalHeader
           icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
-          title={openType === 'update' ? `Edit ${stuff}` : `Add ${stuff}`}
+          title={
+            openType === 'update' ? `Edit ${singleStuff}` : `Add ${singleStuff}`
+          }
           onClose={() => {
             setOpenType(null)
           }}
         />
         <Input
           icon="tabler:book"
-          placeholder={`Project ${stuff}`}
+          placeholder={`Project ${singleStuff}`}
           value={name}
           darker
-          name={`${stuff} name`}
+          name={`${singleStuff} name`}
           updateValue={updateVisibilityName}
         />
         <IconInput
           icon={icon}
           setIcon={setIcon}
-          name={`${stuff} icon`}
+          name={`${singleStuff} icon`}
           setIconSelectorOpen={setIconSelectorOpen}
         />
-        {stuff === 'status' && (
+        {stuff === 'statuses' && (
           <ColorInput
             color={color}
             name="Status color"
@@ -143,7 +143,7 @@ function ModifyModal({
         setOpen={setIconSelectorOpen}
         setSelectedIcon={setIcon}
       />
-      {stuff === 'status' && (
+      {stuff === 'statuses' && (
         <ColorPickerModal
           isOpen={colorPickerOpen}
           setOpen={setColorPickerOpen}

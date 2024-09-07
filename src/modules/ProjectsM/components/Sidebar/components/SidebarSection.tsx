@@ -15,7 +15,7 @@ function SidebarSection({
   return (
     <>
       <SidebarTitle
-        name={stuff.replace('ies', 'y').replace('uses', 'us')}
+        name={stuff}
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           setExistedData(null)

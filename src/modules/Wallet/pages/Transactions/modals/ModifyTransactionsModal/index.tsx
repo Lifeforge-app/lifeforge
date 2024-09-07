@@ -160,11 +160,11 @@ function ModifyTransactionsModal({
           onClose={() => {
             setOpenType(null)
           }}
+          className="!mb-4"
         />
         <TransactionTypeSelector
           transactionType={transactionType}
           setTransactionType={setTransactionType}
-          openType={openType}
         />
         {transactionType === 'income' || transactionType === 'expenses' ? (
           <AssetsSelector
@@ -186,6 +186,7 @@ function ModifyTransactionsModal({
             value={particular}
             darker
             name="Particulars"
+            additionalClassName="mt-4"
             updateValue={updateTransactionName}
           />
         )}

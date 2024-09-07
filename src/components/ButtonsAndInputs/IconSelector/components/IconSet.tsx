@@ -98,7 +98,7 @@ function IconSet({
                     currentTag === tag
                       ? '!bg-bg-200 !text-bg-800 shadow-md'
                       : ''
-                  } flex h-8 grow flex-center whitespace-nowrap rounded-full bg-bg-800 px-6 text-sm text-bg-100 shadow-md transition-all md:grow-0`}
+                  } flex-center flex h-8 grow whitespace-nowrap rounded-full bg-bg-800 px-6 text-sm text-bg-100 shadow-md transition-all md:grow-0`}
                 >
                   {tag}
                 </button>

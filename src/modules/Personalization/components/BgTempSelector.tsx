@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
@@ -9,7 +10,7 @@ function BgTempSelector(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="mb-12 flex w-full flex-col flex-between gap-6 px-4 md:flex-row">
+    <div className="flex-between mb-12 flex w-full flex-col gap-6 px-4 md:flex-row">
       <div>
         <h3 className="block w-full text-xl font-medium leading-normal md:w-auto">
           {t('personalization.bgTempSelector.title')}
@@ -23,18 +24,22 @@ function BgTempSelector(): React.ReactElement {
           {COLORS.map((color, index) => (
             <button
               key={index}
-              className={`size-8 rounded-full ${color} bg-bg-500 ${
+              className={`flex size-8 items-center justify-center rounded-full ${color} bg-bg-500 ring-offset-2 ring-offset-bg-950 transition-all ${
                 bgTemp === color
-                  ? 'ring-2 ring-bg-100 ring-offset-2 ring-offset-bg-950'
-                  : ''
+                  ? 'ring-2 ring-bg-500'
+                  : 'hover:ring-2 hover:ring-bg-500'
               }`}
               onClick={() => {
                 setBgTemp(color)
               }}
-            ></button>
+            >
+              {bgTemp === color && (
+                <Icon icon="tabler:check" className="size-5 text-bg-900" />
+              )}
+            </button>
           ))}
         </div>
-        <div className="flex w-full flex-between gap-2">
+        <div className="flex-between flex w-full gap-2">
           <span className="shrink-0 text-sm font-medium text-bg-500">
             {t('personalization.bgTempSelector.cool')}
           </span>

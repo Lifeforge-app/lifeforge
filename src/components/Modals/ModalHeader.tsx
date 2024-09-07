@@ -10,7 +10,8 @@ function ModalHeader({
   onClose,
   actionButtonIcon,
   actionButtonIsRed = false,
-  onActionButtonClick
+  onActionButtonClick,
+  className = ''
 }: {
   title: string
   needTranslate?: boolean
@@ -19,11 +20,12 @@ function ModalHeader({
   actionButtonIcon?: string
   actionButtonIsRed?: boolean
   onActionButtonClick?: () => void
+  className?: string
 }): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="flex-between mb-8 flex ">
+    <div className={`flex-between mb-8 flex ${className}`}>
       <h1 className="flex items-center gap-3 text-2xl font-semibold">
         <Icon icon={icon} className="size-7" />
         {needTranslate ? t(`modals.header.${toCamelCase(title)}`) : title}
