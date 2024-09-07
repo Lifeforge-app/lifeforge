@@ -77,6 +77,7 @@ function Transactions(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
+        icon="tabler:arrows-exchange"
         title="Transactions"
         desc="Manage your Transactions here."
         hasHamburgerMenu

@@ -42,6 +42,7 @@ function WalletDashboard(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
+        icon="tabler:wallet"
         title="Wallet"
         desc="..."
         actionButton={

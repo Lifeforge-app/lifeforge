@@ -10,6 +10,7 @@ function Personalization(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
+        icon="tabler:palette"
         title="Personalization"
         desc="Customise your experience with the app."
       />

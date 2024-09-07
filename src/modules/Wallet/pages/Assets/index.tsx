@@ -32,6 +32,7 @@ function Assets(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
+        icon="tabler:wallet"
         title="Assets"
         desc="Manage your assets here."
         actionButton={

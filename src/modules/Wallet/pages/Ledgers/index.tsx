@@ -32,6 +32,7 @@ function Ledgers(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
+        icon="tabler:book"
         title="Ledgers"
         desc="Manage your Ledgers here."
         actionButton={

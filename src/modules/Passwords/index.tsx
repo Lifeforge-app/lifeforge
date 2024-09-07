@@ -74,6 +74,7 @@ function Passwords(): React.ReactElement {
     <ModuleWrapper>
       <div className="flex-between flex">
         <ModuleHeader
+          icon="tabler:key"
           title="Passwords"
           desc="A vault to store your passwords securely."
         />

@@ -1,56 +1,51 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
-import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
-import { useMusicContext } from '@providers/MusicProvider'
 import IntervalManager from '@utils/intervalManager'
-import VideoInfo from './components/VideoInfo'
-
-export interface YoutubeVideoInfo {
-  title: string
-  uploadDate: string
-  uploader: string
-  duration: string
-  viewCount: number
-  likeCount: number
-  thumbnail: string
-}
+import { type YoutubeVideoInfo } from '../../Music/modals/YoutubeDownloaderModal'
+import VideoInfo from '../../Music/modals/YoutubeDownloaderModal/components/VideoInfo'
 
 const intervalManager = IntervalManager.getInstance()
 
 const URL_REGEX =
   /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/(watch\?v=|embed\/|v\/|.+\?v=)?(?<id>[A-Za-z0-9_-]{11})(\S*)?$/
 
-function YoutubeDownloaderModal(): React.ReactElement {
-  const {
-    isYoutubeDownloaderOpen: isOpen,
-    setIsYoutubeDownloaderOpen,
-    refreshMusics
-  } = useMusicContext()
-  const [loading, setLoading] = useState(false)
-  const [videoURLinput, setVideoURLInput] = useState('')
-  const videoURL = useDebounce(videoURLinput, 500)
+function VideoSection({
+  onClose,
+  refreshVideos
+}: {
+  onClose: () => void
+  refreshVideos: () => void
+}): React.ReactElement {
+  const [videoUrl, setVideoUrl] = useState<string>('')
+  const debouncedVideoUrl = useDebounce(videoUrl, 500)
   const [videoInfo] = useFetch<YoutubeVideoInfo>(
-    `/music/youtube/get-info/${videoURL.match(URL_REGEX)?.groups?.id}`,
-    URL_REGEX.test(videoURL)
+    `/youtube-video-storage/video/get-info/${
+      debouncedVideoUrl.match(URL_REGEX)?.groups?.id
+    }`,
+    URL_REGEX.test(debouncedVideoUrl)
   )
+  const [loading, setLoading] = useState(false)
+  const [progress, setProgress] = useState(0)
 
-  function updateVideoURL(e: React.ChangeEvent<HTMLInputElement>): void {
-    setVideoURLInput(e.target.value)
+  function updateValue(e: React.ChangeEvent<HTMLInputElement>): void {
+    setVideoUrl(e.target.value)
   }
 
-  async function checkDownloadStatus(): Promise<
-    'completed' | 'failed' | 'in_progress'
-  > {
+  async function checkDownloadStatus(): Promise<{
+    status: 'completed' | 'failed' | 'in_progress'
+    progress: number
+  }> {
     const res = await fetch(
-      `${import.meta.env.VITE_API_HOST}/music/youtube/download-status`,
+      `${
+        import.meta.env.VITE_API_HOST
+      }/youtube-video-storage/video/download-status`,
       {
         method: 'GET',
         headers: {
@@ -61,16 +56,23 @@ function YoutubeDownloaderModal(): React.ReactElement {
     )
     if (res.status === 200) {
       const data = await res.json()
-      return data.data.status
+      return data.data
     }
-    return 'failed'
+    return {
+      status: 'failed',
+      progress: 0
+    }
   }
 
   function downloadVideo(): void {
     setLoading(true)
+    setProgress(0)
+
     fetch(
-      `${import.meta.env.VITE_API_HOST}/music/youtube/async-download/${
-        videoURL.match(URL_REGEX)?.groups?.id
+      `${
+        import.meta.env.VITE_API_HOST
+      }/youtube-video-storage/video/async-download/${
+        debouncedVideoUrl.match(URL_REGEX)?.groups?.id
       }`,
       {
         method: 'POST',
@@ -88,79 +90,82 @@ function YoutubeDownloaderModal(): React.ReactElement {
           const data = await res.json()
           if (data.state === 'accepted') {
             intervalManager.setInterval(async () => {
-              const success = await checkDownloadStatus()
-              switch (success) {
+              const { status, progress } = await checkDownloadStatus()
+              switch (status) {
                 case 'completed':
-                  toast.success('Music downloaded successfully!')
+                  toast.success('Video downloaded successfully!')
                   intervalManager.clearAllIntervals()
                   setLoading(false)
-                  setIsYoutubeDownloaderOpen(false)
-                  refreshMusics()
+                  setProgress(0)
+                  refreshVideos()
+                  onClose()
                   break
                 case 'failed':
-                  toast.error('Failed to download music!')
+                  toast.error('Failed to download video!')
                   intervalManager.clearAllIntervals()
                   setLoading(false)
+                  setProgress(0)
+                  break
+                default:
+                  setProgress(progress)
                   break
               }
-            }, 3000)
+            }, 1000)
           }
         } else {
           const data = await res.json()
           setLoading(false)
-          throw new Error(`Failed to download music. Error: ${data.message}`)
+          setProgress(0)
+          throw new Error(data.message)
         }
       })
       .catch(err => {
-        toast.error(`Oops! Couldn't download music! Error: ${err}`)
+        toast.error(`Oops! Couldn't download video! ${err}`)
         setLoading(false)
+        setProgress(0)
       })
   }
 
-  useEffect(() => {
-    if (isOpen) {
-      setVideoURLInput('')
-    }
-  }, [])
-
   return (
-    <Modal isOpen={isOpen} minWidth="40vw">
-      <ModalHeader
-        title="Download from YouTube"
-        icon="tabler:brand-youtube"
-        onClose={() => {
-          setIsYoutubeDownloaderOpen(false)
-          refreshMusics()
-        }}
-      />
+    <>
       <Input
-        name="Video URL"
         icon="tabler:link"
-        value={videoURLinput}
-        updateValue={updateVideoURL}
-        placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-        additionalClassName="mb-8"
+        name="Video URL"
+        placeholder="https://www.youtube.com/watch?v=..."
+        value={videoUrl}
+        updateValue={updateValue}
+        darker
+        additionalClassName="my-4"
       />
-      {URL_REGEX.test(videoURL) && (
+      {URL_REGEX.test(debouncedVideoUrl) && (
         <APIComponentWithFallback data={videoInfo}>
           {videoInfo => (
             <>
               <div className="mt-6 flex w-full gap-6">
                 <VideoInfo videoInfo={videoInfo} />
               </div>
+              {loading && (
+                <div className="mt-6 h-4 w-full rounded-md bg-bg-200 dark:bg-bg-800">
+                  <div
+                    className="h-full rounded-md bg-custom-500 transition-all duration-300"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              )}
               <Button
                 loading={loading}
                 onClick={downloadVideo}
                 icon={loading ? 'svg-spinners:180-ring' : 'tabler:download'}
-                className="mt-6"
+                className="mt-4"
               >
-                {loading ? 'Downloading...' : 'Download'}
+                {loading ? 'Downloading' : 'Download'}
               </Button>
             </>
           )}
         </APIComponentWithFallback>
       )}
-    </Modal>
+    </>
   )
 }
-export default YoutubeDownloaderModal
+
+export default VideoSection

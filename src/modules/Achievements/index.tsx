@@ -29,6 +29,7 @@ function Achievements(): React.ReactElement {
       <ModuleHeader
         title="Achievements"
         desc="..."
+        icon="tabler:award"
         actionButton={
           <Button
             icon="tabler:plus"

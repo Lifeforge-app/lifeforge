@@ -48,6 +48,7 @@ function PhotosMainGallery(): React.ReactElement {
       } min-h-0 w-full flex-1 flex-col pl-4 sm:pl-12`}
     >
       <ModuleHeader
+        icon="tabler:camera"
         title="Photos"
         desc="View and manage all your precious memories."
         actionButton={

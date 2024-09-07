@@ -158,6 +158,7 @@ function Header({
     <>
       <ModuleHeader
         title="Guitar Tabs"
+        icon="mingcute:guitar-line"
         desc="..."
         totalItems={totalItems}
         actionButton={

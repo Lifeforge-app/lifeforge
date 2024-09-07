@@ -116,6 +116,7 @@ function Modules(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
+        icon="tabler:plug"
         title="Modules"
         desc="A place to toggle which modules you want to use."
       />

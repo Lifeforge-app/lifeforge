@@ -73,6 +73,7 @@ function ServerStatus(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
+        icon="tabler:server"
         title="Server Status"
         desc="Monitor the server status to ensure everything is running smoothly."
       />
@@ -85,7 +86,7 @@ function ServerStatus(): React.ReactElement {
           <APIComponentWithFallback data={cpuUsage}>
             {cpuUsage => (
               <div className="space-y-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
-                <div className="flex flex-between">
+                <div className="flex-between flex">
                   <div className="flex items-center gap-2">
                     <Icon icon="tabler:cpu" className="text-2xl" />
                     <h2 className="text-xl text-bg-500">CPU Usage</h2>
@@ -119,7 +120,7 @@ function ServerStatus(): React.ReactElement {
           <APIComponentWithFallback data={memoryUsage}>
             {memoryUsage => (
               <div className="space-y-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
-                <div className="flex flex-between">
+                <div className="flex-between flex">
                   <div className="flex items-center gap-2">
                     <Icon
                       icon="gg:smartphone-ram"
@@ -153,7 +154,7 @@ function ServerStatus(): React.ReactElement {
           <APIComponentWithFallback data={cpuTemp}>
             {cpuTemp => (
               <div className="space-y-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
-                <div className="flex flex-between">
+                <div className="flex-between flex">
                   <div className="flex items-center gap-2">
                     <Icon
                       icon="tabler:thermometer"
@@ -198,7 +199,7 @@ function ServerStatus(): React.ReactElement {
                   key={disk.name}
                   className="space-y-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
                 >
-                  <div className="flex w-full min-w-0 flex-between">
+                  <div className="flex-between flex w-full min-w-0">
                     <div className="flex min-w-0 flex-1 items-center gap-2">
                       <Icon
                         icon="streamline:hard-disk"
@@ -212,11 +213,11 @@ function ServerStatus(): React.ReactElement {
                       {disk.size}B
                     </p>
                   </div>
-                  <div className="flex flex-between">
+                  <div className="flex-between flex">
                     <p className="text-lg text-bg-500">Used</p>
                     <p className="text-lg text-bg-500">{disk.used}B</p>
                   </div>
-                  <div className="flex flex-between">
+                  <div className="flex-between flex">
                     <p className="text-lg text-bg-500">Available</p>
                     <p className="text-lg text-bg-500">{disk.avail}B</p>
                   </div>

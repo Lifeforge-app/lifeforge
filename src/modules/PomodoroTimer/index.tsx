@@ -9,6 +9,7 @@ export default function PomodoroTimer(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
+        icon="tabler:clock-bolt"
         title="Pomodoro Timer"
         desc="Increase your productivity by using the Pomodoro technique."
       />
@@ -21,7 +22,7 @@ export default function PomodoroTimer(): React.ReactElement {
               <span className="ml-2">Things to do</span>
             </h1>
             <ul className="mt-6 space-y-4">
-              <li className="flex flex-between gap-4 rounded-lg border-l-4 border-indigo-500 bg-bg-100 p-4 px-6 shadow-custom dark:bg-bg-900">
+              <li className="flex-between flex gap-4 rounded-lg border-l-4 border-indigo-500 bg-bg-100 p-4 px-6 shadow-custom dark:bg-bg-900">
                 <div className="space-y-1">
                   <div className="font-semibold">Buy groceries</div>
                   <div className="text-sm text-rose-500">
@@ -30,7 +31,7 @@ export default function PomodoroTimer(): React.ReactElement {
                 </div>
                 <button className="size-6 rounded-full border-2 border-bg-500 transition-all hover:border-orange-500" />
               </li>
-              <li className="flex flex-between gap-4 rounded-lg border-l-4 border-orange-500 bg-bg-100 p-4 px-6 shadow-custom dark:bg-bg-900">
+              <li className="flex-between flex gap-4 rounded-lg border-l-4 border-orange-500 bg-bg-100 p-4 px-6 shadow-custom dark:bg-bg-900">
                 <div className="space-y-1">
                   <div className="font-semibold">Do homework</div>
                   <div className="text-sm text-bg-500">
@@ -39,7 +40,7 @@ export default function PomodoroTimer(): React.ReactElement {
                 </div>
                 <button className="size-6 rounded-full border-2 border-bg-500 transition-all hover:border-orange-500" />
               </li>
-              <li className="flex flex-between gap-4 rounded-lg border-l-4 border-orange-500 bg-bg-100 p-4 px-6 shadow-custom dark:bg-bg-900">
+              <li className="flex-between flex gap-4 rounded-lg border-l-4 border-orange-500 bg-bg-100 p-4 px-6 shadow-custom dark:bg-bg-900">
                 <div className="space-y-1">
                   <div className="font-semibold">
                     Start doing revision for SPM Sejarah

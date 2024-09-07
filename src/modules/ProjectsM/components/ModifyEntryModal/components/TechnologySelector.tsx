@@ -56,11 +56,7 @@ function TechnologySelector({
       {technologies.map(({ name, id, icon }, i) => (
         <Listbox.Option
           key={i}
-          className={({ active }) =>
-            `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
-              active ? 'bg-bg-200/50 dark:bg-bg-700/50' : '!bg-transparent'
-            }`
-          }
+          className="flex-between relative flex cursor-pointer select-none p-4 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-700/50"
           value={id}
         >
           {({ selected }) => (

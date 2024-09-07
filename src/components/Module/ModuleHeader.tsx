@@ -12,6 +12,7 @@ interface ModuleHeaderPropsWithHamburgerMenu {
   hasHamburgerMenu?: false
   hamburgerMenuItems?: never
   actionButton?: React.ReactNode
+  icon?: string
 }
 
 interface ModuleHeaderPropsWithHamburgerMenuItems {
@@ -22,6 +23,7 @@ interface ModuleHeaderPropsWithHamburgerMenuItems {
   hasHamburgerMenu: true
   hamburgerMenuItems: React.ReactNode
   actionButton?: React.ReactNode
+  icon?: string
 }
 
 type ModuleHeaderProps =
@@ -35,13 +37,19 @@ function ModuleHeader({
   hasHamburgerMenu = false,
   hamburgerMenuItems,
   actionButton,
-  tips = ''
+  tips = '',
+  icon
 }: ModuleHeaderProps): React.ReactElement {
   const { t } = useTranslation()
 
   return (
     <div className="flex-between flex gap-8">
       <div className="flex items-center gap-4">
+        {icon !== undefined && (
+          <div className="flex size-16 items-center justify-center rounded-lg bg-custom-500/20">
+            <Icon icon={icon} className="size-8 text-custom-500" />
+          </div>
+        )}
         <div className="space-y-1">
           <h1 className="flex items-end gap-3 text-3xl font-semibold  md:text-4xl">
             {t(`modules.${toCamelCase(title?.toString() ?? '')}`)}

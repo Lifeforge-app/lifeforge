@@ -10,6 +10,7 @@ export default function CodeTime(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
+        icon="tabler:code"
         title="Code Time"
         desc="See how much time you spend grinding code."
       />
