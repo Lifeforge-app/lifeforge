@@ -82,15 +82,16 @@ export default function ProjectsMProvider(): React.ReactElement {
   const entriesState =
     useProjectsMCommonState<IProjectsMEntry>('projects-m/entries')
   const categoriesState = useProjectsMCommonState<IProjectsMCategory>(
-    'projects-m/category'
+    'projects-m/categories'
   )
-  const statusesState =
-    useProjectsMCommonState<IProjectsMStatus>('projects-m/status')
+  const statusesState = useProjectsMCommonState<IProjectsMStatus>(
+    'projects-m/statuses'
+  )
   const visibilitiesState = useProjectsMCommonState<IProjectsMVisibility>(
-    'projects-m/visibility'
+    'projects-m/visibilities'
   )
   const technologiesState = useProjectsMCommonState<IProjectsMTechnology>(
-    'projects-m/technology'
+    'projects-m/technologies'
   )
 
   useEffect(() => {

@@ -8,7 +8,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "create-module": "tsx ./tools/createModule/index.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.2",
@@ -34,6 +35,7 @@
     "moment": "^2.30.1",
     "pocketbase": "^0.19.0",
     "postcss": "^8.4.31",
+    "prompts": "^2.4.2",
     "react": "^19.0.0-rc-9d4fba0788-20240530",
     "react-activity-calendar": "^2.2.0",
     "react-big-calendar": "^1.12.2",
@@ -73,6 +75,7 @@
     "@types/crypto-js": "^4.2.2",
     "@types/leaflet": "^1.9.12",
     "@types/node": "^20.12.7",
+    "@types/prompts": "^2.4.9",
     "@types/react": "npm:types-react@rc",
     "@types/react-big-calendar": "^1.8.9",
     "@types/react-color": "^3.0.10",
@@ -88,6 +91,8 @@
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.10.0",
     "@vitejs/plugin-react": "^4.2.0",
+    "chalk": "^5.3.0",
+    "dotenv": "^16.4.5",
     "eslint": "^8.0.1",
     "eslint-config-standard-with-typescript": "^40.0.0",
     "eslint-import-resolver-alias": "^1.1.2",
@@ -98,7 +103,10 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
     "eslint-plugin-tailwindcss": "^3.14.3",
+    "ora": "^8.1.0",
     "sass": "^1.77.1",
+    "table": "^6.8.2",
+    "tsx": "^4.19.0",
     "typescript": "^5.5.4",
     "vite": "^5.0.0",
     "vite-plugin-mkcert": "^1.17.5"

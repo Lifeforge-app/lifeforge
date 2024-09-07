@@ -21,7 +21,7 @@ function LocalizationManager(): React.ReactElement {
       a.target = '_blank'
       a.click()
 
-      navigate('/dashboard')
+      navigate(-1)
       toast.success(t('fetch.redirected'))
     }
   }, [])

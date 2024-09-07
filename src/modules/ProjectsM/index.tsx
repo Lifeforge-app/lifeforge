@@ -89,11 +89,11 @@ function ProjectsM(): React.ReactElement {
         </div>
       </div>
       <ModifyEntryModal />
-      {(['status', 'category', 'visibility', 'technology'] as const).map(
-        (stuff, index) => (
-          <ModifyModal key={index} stuff={stuff} />
-        )
-      )}
+      {(
+        ['statuses', 'categories', 'visibilities', 'technologies'] as const
+      ).map((stuff, index) => (
+        <ModifyModal key={index} stuff={stuff} />
+      ))}
 
       {modalConfigs.map((config, index) => (
         <DeleteConfirmationModal
