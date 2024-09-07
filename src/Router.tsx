@@ -2,12 +2,15 @@ import React, { Suspense, useMemo, useCallback, useEffect } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Loading from '@components/Screens/Loading'
 import NotFound from '@components/Screens/NotFound'
+import { type IRoutes } from '@interfaces/routes_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
 import { titleToPath, convertToDashCase } from '@utils/strings'
 import Auth from './auth'
 import { COMPONENTS } from './Components'
-import { ROUTES } from './constants/routes_config'
+import _ROUTES from './constants/routes_config.json'
 import MainApplication from './MainApplication'
+
+const ROUTES = _ROUTES as IRoutes[]
 
 function AppRouter(): React.ReactElement {
   const { auth, authLoading, userData } = useAuthContext()

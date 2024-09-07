@@ -2,7 +2,7 @@ import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import { useNavigate, useParams } from 'react-router'
-import ListboxTransition from '@components/Listbox/ListboxTransition'
+import ListboxTransition from '@components/ButtonsAndInputs/ListboxInput/components/ListboxTransition'
 
 const CONTINENTS = {
   AF: 'Africa',

@@ -189,6 +189,7 @@ function AuthForm(): React.ReactElement {
         <Input
           key={index}
           {...input}
+          needTranslate={false}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
             if (e.key === 'Enter') {
               signIn()

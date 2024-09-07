@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { Listbox } from '@headlessui/react'
+import { ListboxOption } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
+import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
-import ListboxInputWrapper from '@components/Listbox/ListboxInputWrapper'
-import ListboxTransition from '@components/Listbox/ListboxTransition'
+import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
@@ -140,25 +140,13 @@ function ModifyAchievementModal({
           placeholder="My thoughts"
           additionalClassName="mt-4"
         />
-        <ListboxInputWrapper
+        <ListboxInput
+          name={t('input.achievementDifficulty')}
+          icon="tabler:list"
           value={achievementDifficulty}
-          onChange={color => {
-            setAchievementDifficulty(color ?? '')
-          }}
-        >
-          <Listbox.Button className="flex w-full items-center">
-            <Icon
-              icon="tabler:list"
-              className={`ml-6 size-6 shrink-0 ${
-                achievementDifficulty !== '' ? '' : 'text-bg-500'
-              } group-focus-within:!text-custom-500`}
-            />
-            <span
-              className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:!text-custom-500 ${'top-5 -translate-y-1/2 text-[14px]'}`}
-            >
-              Difficulty
-            </span>
-            <div className="relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-none sm:text-sm">
+          setValue={setAchievementDifficulty}
+          buttonContent={
+            <>
               {achievementDifficulty !== '' && (
                 <span
                   className={`h-4 w-1 rounded-full ${
@@ -176,49 +164,39 @@ function ModifyAchievementModal({
                     : 'None'
                 })()}
               </span>
-            </div>
-            <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
-              <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
-            </span>
-          </Listbox.Button>
-          <ListboxTransition>
-            <Listbox.Options className="absolute bottom-[120%] z-50 mt-1 max-h-56 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800 sm:text-sm">
-              {difficulties.map(([name, color], i) => (
-                <Listbox.Option
-                  key={i}
-                  className={({ active }) =>
-                    `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
-                      active
-                        ? 'bg-bg-200/50 dark:bg-bg-700/50'
-                        : '!bg-transparent'
-                    }`
-                  }
-                  value={name}
-                >
-                  {({ selected }) => (
-                    <>
-                      <div>
-                        <span className="flex items-center gap-4">
-                          <span className={`h-4 w-1 rounded-full ${color}`} />
-                          <div className="flex items-center gap-2">
-                            {name[0].toUpperCase() + name.slice(1)}
-                          </div>
-                        </span>
+            </>
+          }
+        >
+          {difficulties.map(([name, color], i) => (
+            <ListboxOption
+              key={i}
+              className="flex-between relative flex cursor-pointer select-none bg-bg-200/50 p-4 transition-all dark:bg-bg-700/50"
+              value={name}
+            >
+              {({ selected }) => (
+                <>
+                  <div>
+                    <span className="flex items-center gap-4">
+                      <span
+                        className={`h-4 w-1 rounded-full
+                      ${color}`}
+                      />
+                      <div className="flex items-center gap-2">
+                        {name[0].toUpperCase() + name.slice(1)}
                       </div>
-                      {selected && (
-                        <Icon
-                          icon="tabler:check"
-                          className="block text-lg text-custom-500"
-                        />
-                      )}
-                    </>
+                    </span>
+                  </div>
+                  {selected && (
+                    <Icon
+                      icon="tabler:check"
+                      className="block text-lg text-custom-500"
+                    />
                   )}
-                </Listbox.Option>
-              ))}
-            </Listbox.Options>
-          </ListboxTransition>
-        </ListboxInputWrapper>
-
+                </>
+              )}
+            </ListboxOption>
+          ))}
+        </ListboxInput>
         <CreateOrModifyButton
           loading={loading}
           onClick={() => {

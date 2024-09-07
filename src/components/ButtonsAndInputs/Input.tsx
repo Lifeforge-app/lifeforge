@@ -19,7 +19,8 @@ function Input({
   autoFocus = false,
   actionButtonIcon = '',
   onActionButtonClick = () => {},
-  actionButtonLoading = false
+  actionButtonLoading = false,
+  needTranslate = true
 }: {
   reference?: React.RefObject<HTMLInputElement | null>
   name: string
@@ -36,6 +37,7 @@ function Input({
   actionButtonIcon?: string
   onActionButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   actionButtonLoading?: boolean
+  needTranslate?: boolean
 }): React.ReactElement {
   const { t } = useTranslation()
 
@@ -59,7 +61,7 @@ function Input({
               : 'top-6 -translate-y-1/2 text-[14px]'
           }`}
         >
-          {t(`input.${toCamelCase(name)}`)}
+          {needTranslate ? t(`input.${toCamelCase(name)}`) : name}
         </span>
         {isPassword && (
           <input type="password" hidden value="" onChange={() => {}} />

@@ -42,10 +42,10 @@ function ThemeSelector(): React.ReactElement {
             className="flex-1"
           >
             <div
-              className={`ring-2 ring-offset-8 ring-offset-neutral-50 dark:ring-offset-neutral-900 ${
+              className={`ring-2 ring-offset-8 ring-offset-bg-50 transition-all dark:ring-offset-bg-900 ${
                 theme === id
                   ? 'ring-custom-500'
-                  : 'ring-neutral-200 dark:ring-neutral-700'
+                  : 'ring-bg-200 hover:ring-bg-500 dark:ring-bg-700 dark:hover:ring-bg-500'
               } relative overflow-hidden rounded-lg lg:rounded-2xl`}
             >
               {theme === id && (

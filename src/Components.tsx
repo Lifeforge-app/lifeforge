@@ -118,6 +118,10 @@ const CFOPOLL = lazy(
 const CFOPPLL = lazy(
   async () => await import('./modules/CFOPAlgorithms/pages/PLL')
 )
+const YoutubeVideoStorage = lazy(
+  async () => await import('./modules/YoutubeVideoStorage')
+)
+
 
 export const COMPONENTS = {
   dashboard: {
@@ -248,5 +252,8 @@ export const COMPONENTS = {
     'cfop-algorithms-f2l': CFOPF2L,
     'cfop-algorithms-oll': CFOPOLL,
     'cfop-algorithms-pll': CFOPPLL
+  },
+  'youtube-video-storage': {
+    'youtube-video-storage': YoutubeVideoStorage
   }
-}
+};

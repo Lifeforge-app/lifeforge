@@ -114,7 +114,6 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
         <TransitionChild>
           <MenuItems
             transition
-            unmount={false}
             anchor="bottom end"
             className={`mt-2 ${
               customWidth ?? 'w-48'

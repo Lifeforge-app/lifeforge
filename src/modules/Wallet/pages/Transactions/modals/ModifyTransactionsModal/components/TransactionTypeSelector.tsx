@@ -1,8 +1,8 @@
-import { Listbox } from '@headlessui/react'
+import { ListboxOption } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import ListboxTransition from '@components/Listbox/ListboxTransition'
+import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
 
 const TRANSACTION_TYPES = [
   { name: 'Income', color: '#10B981', id: 'income', icon: 'tabler:login-2' },
@@ -17,41 +17,23 @@ const TRANSACTION_TYPES = [
 
 function TransactionTypeSelector({
   transactionType,
-  setTransactionType,
-  openType
+  setTransactionType
 }: {
   transactionType: string
   setTransactionType: React.Dispatch<
     React.SetStateAction<'income' | 'expenses' | 'transfer'>
   >
-  openType: 'create' | 'update' | null
 }): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <Listbox
-      disabled={openType === 'update'}
+    <ListboxInput
+      name={t('input.transactionType')}
+      icon="tabler:list"
       value={transactionType}
-      onChange={tt => {
-        setTransactionType(tt as 'income' | 'expenses' | 'transfer')
-      }}
-      as="div"
-      className="group relative mb-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 dark:bg-bg-800/50"
-    >
-      <Listbox.Button className="flex w-full items-center">
-        <Icon
-          icon="tabler:list"
-          className={`ml-6 size-6 shrink-0 ${
-            transactionType !== null ? '' : 'text-bg-500'
-          } group-focus-within:!text-custom-500`}
-        />
-        <span
-          className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:!text-custom-500 ${'top-6 -translate-y-1/2 text-[14px]'}`}
-        >
-          {t('input.transactionType')}{' '}
-          {openType === 'update' && t('input.disabled')}
-        </span>
-        <div className="relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-none">
+      setValue={setTransactionType}
+      buttonContent={
+        <>
           <Icon
             icon={
               TRANSACTION_TYPES.find(l => l.id === transactionType)?.icon ?? ''
@@ -66,52 +48,42 @@ function TransactionTypeSelector({
             {TRANSACTION_TYPES.find(l => l.id === transactionType)?.name ??
               'None'}
           </span>
-        </div>
-        {openType !== 'update' && (
-          <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
-            <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
-          </span>
-        )}
-      </Listbox.Button>
-      <ListboxTransition>
-        <Listbox.Options className="absolute top-[120%] z-50 mt-1 max-h-56 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800">
-          {TRANSACTION_TYPES.map(({ name, color, id }, i) => (
-            <Listbox.Option
-              key={i}
-              className={({ active }) =>
-                `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
-                  active ? 'bg-bg-200/50 dark:bg-bg-700/50' : '!bg-transparent'
-                }`
-              }
-              value={id}
-            >
-              {({ selected }) => (
-                <>
-                  <div>
-                    <span className="flex items-center gap-2">
-                      <Icon
-                        icon={
-                          TRANSACTION_TYPES.find(l => l.id === id)?.icon ?? ''
-                        }
-                        style={{ color }}
-                        className="size-5"
-                      />
-                      {name}
-                    </span>
-                  </div>
-                  {selected && (
-                    <Icon
-                      icon="tabler:check"
-                      className="block text-lg text-custom-500"
-                    />
-                  )}
-                </>
+        </>
+      }
+    >
+      {TRANSACTION_TYPES.map(({ name, color, id }, i) => (
+        <ListboxOption
+          key={i}
+          className={({ active }) =>
+            `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
+              active ? 'bg-bg-200/50 dark:bg-bg-700/50' : '!bg-transparent'
+            }`
+          }
+          value={id}
+        >
+          {({ selected }) => (
+            <>
+              <div>
+                <span className="flex items-center gap-2">
+                  <Icon
+                    icon={TRANSACTION_TYPES.find(l => l.id === id)?.icon ?? ''}
+                    style={{ color }}
+                    className="size-5"
+                  />
+                  {name}
+                </span>
+              </div>
+              {selected && (
+                <Icon
+                  icon="tabler:check"
+                  className="block text-lg text-custom-500"
+                />
               )}
-            </Listbox.Option>
-          ))}
-        </Listbox.Options>
-      </ListboxTransition>
-    </Listbox>
+            </>
+          )}
+        </ListboxOption>
+      ))}
+    </ListboxInput>
   )
 }
 

@@ -1,3 +1,4 @@
+import { t } from 'i18next'
 import React from 'react'
 import { useWalletContext } from '@providers/WalletProvider'
 import AssetListbox from './AssetsListbox'
@@ -29,14 +30,14 @@ function AssetsFromToSelector({
         assets={assets}
         selectedAsset={fromAsset}
         onAssetChange={setFromAsset}
-        label="From Asset"
+        label={t('input.fromAsset')}
         iconName="tabler:step-out"
       />
       <AssetListbox
         assets={assets}
         selectedAsset={toAsset}
         onAssetChange={setToAsset}
-        label="To Asset"
+        label={t('input.toAsset')}
         iconName="tabler:step-into"
       />
     </>
