@@ -2,8 +2,8 @@ import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ListboxTransition from '@components/ButtonsAndInputs/ListboxInput/components/ListboxTransition'
+import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -221,7 +221,11 @@ function ChangiFlightStatus(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Changi Flight Status" desc="..." />
+      <ModuleHeader
+        icon="tabler:plane"
+        title="Changi Flight Status"
+        desc="..."
+      />
       <div className="flex items-center gap-2">
         <Listbox
           as="div"

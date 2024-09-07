@@ -395,7 +395,7 @@
     "items": [
       {
         "name": "Change Log",
-        "icon": "tabler:file-text",
+        "icon": "tabler:history",
         "routes": {
           "change-log": "change-log"
         },

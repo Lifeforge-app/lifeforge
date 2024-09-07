@@ -39,7 +39,9 @@ function TagsSelector({
           key={i}
           className={({ active }) =>
             `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
-              active ? 'bg-bg-200/50 dark:bg-bg-700/50' : '!bg-transparent'
+              active
+                ? 'hover:bg-bg-200/50 dark:hover:bg-bg-700/50'
+                : '!bg-transparent'
             }`
           }
           value={id}

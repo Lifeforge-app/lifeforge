@@ -44,6 +44,7 @@ function IdeaBox(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
+        icon="tabler:bulb"
         title="Idea Box"
         desc="Sometimes you will randomly stumble upon a great idea."
       />

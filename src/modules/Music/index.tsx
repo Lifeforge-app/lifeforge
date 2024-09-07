@@ -35,6 +35,7 @@ function Music(): React.ReactElement {
         desc="..."
         actionButton={<AddMusicButton />}
         totalItems={musics.length}
+        icon="tabler:music"
       />
       <div className="relative mt-4 flex size-full min-h-0 min-w-0 flex-col sm:mt-0">
         <SearchInput

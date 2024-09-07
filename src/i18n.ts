@@ -8,7 +8,7 @@ function initLocale(): void {
     .use(I18NextHttpBackend)
     .use(initReactI18next)
     .init({
-      lng: navigator.language ?? 'en',
+      lng: 'en',
       fallbackLng: 'en',
       interpolation: {
         escapeValue: false

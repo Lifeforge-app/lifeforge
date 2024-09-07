@@ -26,7 +26,7 @@ export interface YoutubeVideoInfo {
 const intervalManager = IntervalManager.getInstance()
 
 const URL_REGEX =
-  /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/(watch\?v=|embed\/|v\/|.+\?v=)?([A-Za-z0-9_-]{11})(\S*)?$/
+  /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/(watch\?v=|embed\/|v\/|.+\?v=)?(?<id>[A-Za-z0-9_-]{11})(\S*)?$/
 
 function YoutubeDownloaderModal(): React.ReactElement {
   const {
@@ -38,7 +38,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
   const [videoURLinput, setVideoURLInput] = useState('')
   const videoURL = useDebounce(videoURLinput, 500)
   const [videoInfo] = useFetch<YoutubeVideoInfo>(
-    `/music/youtube/get-info/${videoURL.split('v=')[1]}`,
+    `/music/youtube/get-info/${videoURL.match(URL_REGEX)?.groups?.id}`,
     URL_REGEX.test(videoURL)
   )
 
@@ -70,7 +70,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
     setLoading(true)
     fetch(
       `${import.meta.env.VITE_API_HOST}/music/youtube/async-download/${
-        videoURL.split('v=')[1]
+        videoURL.match(URL_REGEX)?.groups?.id
       }`,
       {
         method: 'POST',

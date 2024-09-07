@@ -72,6 +72,7 @@ export default function PersonalizationProvider({
     }
 
     if (userData?.language !== undefined) {
+      console.log(userData.language)
       setLanguage(userData.language)
     }
 
@@ -137,7 +138,7 @@ export default function PersonalizationProvider({
   useEffect(() => {
     if (!userData) return
 
-    i18n.changeLanguage?.(language).catch(() => {
+    i18n.changeLanguage(language).catch(() => {
       toast.error('Failed to change language.')
     })
   }, [language])
