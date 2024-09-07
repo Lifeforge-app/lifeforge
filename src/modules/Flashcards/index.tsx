@@ -19,13 +19,14 @@ export default function Flashcards(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
+        icon="tabler:cards"
         title="Flashcards"
         desc="Memorizing could be a pain, but not with flashcards."
       />
       <div className="mt-6 flex min-h-0 w-full flex-1">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className="flex h-full flex-1 flex-col lg:ml-8">
-          <div className="flex flex-between">
+          <div className="flex-between flex">
             <h1 className="text-3xl font-semibold  md:text-4xl">
               All Decks <span className="text-base text-bg-500">(10)</span>
             </h1>

@@ -28,6 +28,7 @@ function ProjectsM(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
+        icon="tabler:clipboard"
         title="Projects (M)"
         desc="It's time to stop procrastinating."
       />

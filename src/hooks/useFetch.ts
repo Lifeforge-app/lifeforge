@@ -42,7 +42,7 @@ function useFetch<T>(
       .catch(err => {
         setData('error')
         if (showError) {
-          toast.error(t('fetch.fetchError'))
+          toast.error(t('fetch.fetchError') + ' ' + err)
         }
         console.error(err)
       })

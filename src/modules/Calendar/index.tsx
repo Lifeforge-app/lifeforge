@@ -46,6 +46,7 @@ function CalendarModule(): React.ReactElement {
       <ModuleWrapper>
         <ModuleHeader
           title="Calendar"
+          icon="tabler:calendar"
           desc="Make sure you don't miss important event."
         />
         <div className="mb-8 mt-6 flex min-h-0 w-full flex-1">

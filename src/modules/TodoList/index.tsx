@@ -26,6 +26,7 @@ function TodoList(): React.ReactElement {
     <>
       <ModuleWrapper>
         <ModuleHeader
+          icon="tabler:list-check"
           title="Todo List"
           desc="Human brain is not designed to remember everything."
         />

@@ -46,6 +46,7 @@ function Changelog(): React.ReactElement {
     <ModuleWrapper>
       <ModuleHeader
         title="Change Log"
+        icon="tabler:history"
         desc="All the changes made to this application will be listed here."
       />
       <SearchInput

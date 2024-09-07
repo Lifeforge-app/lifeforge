@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
-import { type YoutubeVideoInfo } from '..'
 import { shortenBigNumber } from '@utils/strings'
+import { type YoutubeVideoInfo } from '..'
 
 function VideoInfo({
   videoInfo
@@ -12,7 +12,7 @@ function VideoInfo({
   return (
     <>
       <div className="relative w-1/3 shrink-0 overflow-hidden rounded-md border border-bg-800">
-        <img src={videoInfo.thumbnail} className="h-full w-full object-cover" />
+        <img src={videoInfo.thumbnail} className="size-full object-cover" />
         <p className="absolute bottom-2 right-2 rounded-md bg-bg-900/70 px-1.5 py-0.5 text-bg-100">
           {moment
             .utc(
