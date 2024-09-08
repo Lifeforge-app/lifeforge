@@ -46,6 +46,9 @@ function PlaylistSection({
           </APIComponentWithFallback>
         )}
       </div>
+      {/* temp stuff */}
+      <button onClick={onClose}>Close</button>
+      <button onClick={refreshVideos}>Refresh</button>
     </>
   )
 }
