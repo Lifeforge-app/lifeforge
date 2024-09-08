@@ -5,7 +5,8 @@ import React, { useState } from 'react'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import VideoSection from '../../sections/VideoSection'
+import VideoSection from './sections/VideoSection'
+import PlaylistSection from './sections/PlaylistSection'
 
 const RESOURCE_TYPES = [
   {
@@ -104,7 +105,12 @@ function AddVideosModal({
               <VideoSection onClose={onClose} refreshVideos={refreshVideos} />
             )
           case 'playlist':
-            return <div>Playlist</div>
+            return (
+              <PlaylistSection
+                onClose={onClose}
+                refreshVideos={refreshVideos}
+              />
+            )
           case 'channel':
             return <div>Channel</div>
           case 'search':

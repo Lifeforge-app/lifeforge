@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import fs from 'fs'
 import saveTranslation from './saveTranslations'
 
