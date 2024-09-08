@@ -8,8 +8,8 @@ import Input from '@components/ButtonsAndInputs/Input'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import IntervalManager from '@utils/intervalManager'
-import { type YoutubeVideoInfo } from '../../Music/modals/YoutubeDownloaderModal'
-import VideoInfo from '../../Music/modals/YoutubeDownloaderModal/components/VideoInfo'
+import { type YoutubeVideoInfo } from '../../../../Music/modals/YoutubeDownloaderModal'
+import VideoInfo from '../../../../Music/modals/YoutubeDownloaderModal/components/VideoInfo'
 
 const intervalManager = IntervalManager.getInstance()
 

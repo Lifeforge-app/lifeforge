@@ -8,4 +8,22 @@ interface IYoutubeVideosStorageEntry extends BasePBCollection {
   duration: number
 }
 
-export type { IYoutubeVideosStorageEntry }
+interface IYoutubePlaylistVideoEntry {
+  id: string
+  title: string
+  duration: number
+  uploader: string
+  thumbnail: string
+  viewCount: number
+}
+
+interface IYoutubePlaylistEntry {
+  title: string
+  total_videos: number
+  thumbnail: string
+  views: number
+  channel: string
+  entries: IYoutubePlaylistVideoEntry[]
+}
+
+export type { IYoutubeVideosStorageEntry, IYoutubePlaylistEntry }
