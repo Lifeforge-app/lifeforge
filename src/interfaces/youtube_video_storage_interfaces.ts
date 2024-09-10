@@ -29,4 +29,8 @@ interface IYoutubePlaylistEntry {
   entries: IYoutubePlaylistVideoEntry[]
 }
 
-export type { IYoutubeVideosStorageEntry, IYoutubePlaylistEntry }
+export type {
+  IYoutubeVideosStorageEntry,
+  IYoutubePlaylistEntry,
+  IYoutubePlaylistVideoEntry
+}

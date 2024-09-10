@@ -14,13 +14,14 @@ function Input({
   isPassword = false,
   darker = false,
   additionalClassName = '',
-  onKeyDown = () => {},
+  onKeyDown = () => { },
   noAutoComplete = true,
   autoFocus = false,
   actionButtonIcon = '',
-  onActionButtonClick = () => {},
+  onActionButtonClick = () => { },
   actionButtonLoading = false,
-  needTranslate = true
+  needTranslate = true,
+  disabled = false
 }: {
   reference?: React.RefObject<HTMLInputElement | null>
   name: string
@@ -38,45 +39,44 @@ function Input({
   onActionButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   actionButtonLoading?: boolean
   needTranslate?: boolean
+  disabled?: boolean
 }): React.ReactElement {
   const { t } = useTranslation()
 
   return (
     <div
-      className={`group relative flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 ${
-        darker ? 'dark:bg-bg-800/50' : 'dark:bg-bg-800'
-      } ${additionalClassName}`}
+      className={`group relative flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 ${darker ? 'dark:bg-bg-800/50' : 'dark:bg-bg-800'
+        } ${additionalClassName} ${disabled ? '!pointer-events-none opacity-50' : ''
+        }`}
     >
       <Icon
         icon={icon}
-        className={`ml-6 size-6 shrink-0 ${
-          value ? '' : 'text-bg-500'
-        } group-focus-within:!text-custom-500`}
+        className={`ml-6 size-6 shrink-0 ${value ? '' : 'text-bg-500'
+          } group-focus-within:!text-custom-500`}
       />
       <div className="flex w-full items-center gap-2">
         <span
-          className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 transition-all group-focus-within:!text-custom-500 ${
-            value.length === 0
+          className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 transition-all group-focus-within:!text-custom-500 ${value.length === 0
               ? 'top-1/2 -translate-y-1/2 group-focus-within:top-6 group-focus-within:text-[14px]'
               : 'top-6 -translate-y-1/2 text-[14px]'
-          }`}
+            }`}
         >
           {needTranslate ? t(`input.${toCamelCase(name)}`) : name}
         </span>
         {isPassword && (
-          <input type="password" hidden value="" onChange={() => {}} />
+          <input type="password" hidden value="" onChange={() => { }} />
         )}
         <input
           ref={reference}
+          disabled={disabled}
           value={value}
           onChange={updateValue}
           placeholder={placeholder}
           onKeyDown={onKeyDown}
           type={isPassword ? 'password' : 'text'}
           autoComplete={noAutoComplete ? 'false' : 'true'}
-          className={`mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500 ${
-            isPassword && value ? 'text-2xl focus:text-base' : ''
-          }`}
+          className={`mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500 ${isPassword && value ? 'text-2xl focus:text-base' : ''
+            }`}
           autoFocus={autoFocus}
           onFocus={e => {
             if (isPassword) {
