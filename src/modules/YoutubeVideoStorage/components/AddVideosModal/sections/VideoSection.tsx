@@ -26,8 +26,7 @@ function VideoSection({
   const [videoUrl, setVideoUrl] = useState<string>('')
   const debouncedVideoUrl = useDebounce(videoUrl, 500)
   const [videoInfo] = useFetch<YoutubeVideoInfo>(
-    `/youtube-video-storage/video/get-info/${
-      debouncedVideoUrl.match(URL_REGEX)?.groups?.id
+    `/youtube-video-storage/video/get-info/${debouncedVideoUrl.match(URL_REGEX)?.groups?.id
     }`,
     URL_REGEX.test(debouncedVideoUrl)
   )
@@ -38,25 +37,28 @@ function VideoSection({
     setVideoUrl(e.target.value)
   }
 
-  async function checkDownloadStatus(): Promise<{
+  async function checkDownloadStatus(id: string): Promise<{
     status: 'completed' | 'failed' | 'in_progress'
     progress: number
   }> {
     const res = await fetch(
-      `${
-        import.meta.env.VITE_API_HOST
+      `${import.meta.env.VITE_API_HOST
       }/youtube-video-storage/video/download-status`,
       {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        }
+          Authorization: `Bearer ${cookieParse(document.cookie).token} `
+        },
+        body: JSON.stringify({ id: [id] })
       }
     )
     if (res.status === 200) {
       const data = await res.json()
-      return data.data
+      return Object.values(data.data)[0] as {
+        status: 'completed' | 'failed' | 'in_progress'
+        progress: number
+      }
     }
     return {
       status: 'failed',
@@ -68,17 +70,22 @@ function VideoSection({
     setLoading(true)
     setProgress(0)
 
+    const ID = debouncedVideoUrl.match(URL_REGEX)?.groups?.id
+
+    if (ID === undefined) {
+      toast.error('Invalid video URL!')
+      setLoading(false)
+      return
+    }
+
     fetch(
-      `${
-        import.meta.env.VITE_API_HOST
-      }/youtube-video-storage/video/async-download/${
-        debouncedVideoUrl.match(URL_REGEX)?.groups?.id
-      }`,
+      `${import.meta.env.VITE_API_HOST
+      } /youtube-video-storage/video / async - download / ${ID} `,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+          Authorization: `Bearer ${cookieParse(document.cookie).token} `
         },
         body: JSON.stringify({
           metadata: videoInfo
@@ -90,7 +97,7 @@ function VideoSection({
           const data = await res.json()
           if (data.state === 'accepted') {
             intervalManager.setInterval(async () => {
-              const { status, progress } = await checkDownloadStatus()
+              const { status, progress } = await checkDownloadStatus(ID)
               switch (status) {
                 case 'completed':
                   toast.success('Video downloaded successfully!')

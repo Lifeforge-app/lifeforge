@@ -129,6 +129,7 @@ function YoutubeVideoStorage(): React.ReactElement {
         onClose={() => {
           setIsAddVideosModalOpen(false)
         }}
+        videos={videos}
         refreshVideos={refreshVideos}
       />
       <DeleteConfirmationModal
