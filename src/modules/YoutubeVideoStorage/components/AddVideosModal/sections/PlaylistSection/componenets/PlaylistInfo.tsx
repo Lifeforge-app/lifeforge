@@ -1,13 +1,33 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import moment from 'moment'
 import React from 'react'
-import { type IYoutubePlaylistEntry } from '@interfaces/youtube_video_storage_interfaces'
+import {
+  type IYoutubePlaylistVideoEntry,
+  type IYoutubePlaylistEntry,
+  type IYoutubeVideosStorageEntry
+} from '@interfaces/youtube_video_storage_interfaces'
 import { shortenBigNumber } from '@utils/strings'
+import PlaylistVideoEntry from './PlaylistVideoEntry'
 
 function PlaylistInfo({
-  playlistInfo
+  playlistInfo,
+  downloadVideo,
+  downloadingVideos,
+  downloadedVideos,
+  videos,
+  processes
 }: {
   playlistInfo: IYoutubePlaylistEntry
+  downloadVideo: (metadata: IYoutubePlaylistVideoEntry) => void
+  downloadingVideos: React.MutableRefObject<string[]>
+  downloadedVideos: Set<string>
+  videos: IYoutubeVideosStorageEntry[] | 'loading' | 'error'
+  processes: Record<
+    string,
+    {
+      status: 'completed' | 'failed' | 'in_progress'
+      progress: number
+    }
+  >
 }): React.ReactElement {
   return (
     <div className="flex flex-col space-y-2">
@@ -34,30 +54,21 @@ function PlaylistInfo({
       </div>
       <div className="mt-4 grid grid-cols-1 gap-4">
         {playlistInfo.entries.map(video => (
-          <div key={video.id} className="flex space-x-2">
-            <div className="relative h-28 shrink-0 overflow-hidden rounded-md border border-bg-800">
-              <img
-                src={video.thumbnail}
-                className="aspect-video size-full object-cover"
-              />
-              <p className="absolute bottom-2 right-2 rounded-md bg-bg-900/70 px-1.5 py-0.5 text-sm text-bg-100">
-                {moment
-                  .utc(
-                    moment.duration(video.duration, 'seconds').asMilliseconds()
-                  )
-                  .format(video.duration >= 3600 ? 'H:mm:ss' : 'm:ss')}
-              </p>
-            </div>
-            <div className="flex flex-col">
-              <h1 className="line-clamp-2 text-lg font-semibold">
-                {video.title}
-              </h1>
-              <p className="font-medium text-custom-500">{video.uploader}</p>
-              <p className="mt-2 text-bg-500">
-                {shortenBigNumber(video.viewCount ?? 0)} views
-              </p>
-            </div>
-          </div>
+          <PlaylistVideoEntry
+            key={video.id}
+            video={video}
+            downloadVideo={downloadVideo}
+            status={
+              (typeof videos !== 'string' &&
+                videos.find(v => v.youtube_id === video.id) !== undefined) ||
+                downloadedVideos.has(video.id)
+                ? 'completed'
+                : downloadingVideos.current.includes(video.id)
+                  ? 'in_progress'
+                  : processes[video.id]?.status ?? null
+            }
+            progress={processes[video.id]?.progress ?? 0}
+          />
         ))}
       </div>
     </div>

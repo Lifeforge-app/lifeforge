@@ -5,8 +5,9 @@ import React, { useState } from 'react'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import VideoSection from './sections/VideoSection'
+import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
 import PlaylistSection from './sections/PlaylistSection'
+import VideoSection from './sections/VideoSection'
 
 const RESOURCE_TYPES = [
   {
@@ -34,10 +35,12 @@ const RESOURCE_TYPES = [
 function AddVideosModal({
   isOpen,
   onClose,
+  videos,
   refreshVideos
 }: {
   isOpen: boolean
   onClose: () => void
+  videos: IYoutubeVideosStorageEntry[] | 'loading' | 'error'
   refreshVideos: () => void
 }): React.ReactElement {
   const [selectedResourceType, setSelectedResourceType] = useState<
@@ -108,6 +111,7 @@ function AddVideosModal({
             return (
               <PlaylistSection
                 onClose={onClose}
+                videos={videos}
                 refreshVideos={refreshVideos}
               />
             )
