@@ -109,11 +109,7 @@ function AddVideosModal({
             )
           case 'playlist':
             return (
-              <PlaylistSection
-                onClose={onClose}
-                videos={videos}
-                refreshVideos={refreshVideos}
-              />
+              <PlaylistSection videos={videos} refreshVideos={refreshVideos} />
             )
           case 'channel':
             return <div>Channel</div>
