@@ -20,11 +20,9 @@ const URL_REGEX =
   /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/(playlist\?list=|watch\?v=|embed\/|v\/|.+\?v=)?(?<list>[A-Za-z0-9_-]{34})(\S*)?$/
 
 function PlaylistSection({
-  onClose,
   videos,
   refreshVideos
 }: {
-  onClose: () => void
   videos: IYoutubeVideosStorageEntry[] | 'loading' | 'error'
   refreshVideos: () => void
 }): React.ReactElement {
@@ -167,9 +165,6 @@ function PlaylistSection({
           </APIComponentWithFallback>
         )}
       </div>
-      {/* temp stuff */}
-      <button onClick={onClose}>Close</button>
-      <button onClick={refreshVideos}>Refresh</button>
     </>
   )
 }
