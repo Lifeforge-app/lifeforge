@@ -6,6 +6,9 @@ interface IYoutubeVideosStorageEntry extends BasePBCollection {
   upload_date: string
   uploader: string
   duration: number
+  width: number
+  height: number
+  filesize: number
 }
 
 interface IYoutubePlaylistVideoEntry {
