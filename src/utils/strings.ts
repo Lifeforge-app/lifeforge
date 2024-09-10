@@ -207,3 +207,10 @@ export function toTitleCase(str: string): string {
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
 }
+
+export function cleanFileSize(byte: number): string {
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
+  if (byte === 0) return '0 Byte'
+  const i = Math.floor(Math.log(byte) / Math.log(1024))
+  return Math.round(byte / Math.pow(1024, i)) + ' ' + sizes[i]
+}
