@@ -13,6 +13,7 @@ interface ModuleHeaderPropsWithHamburgerMenu {
   hamburgerMenuItems?: never
   actionButton?: React.ReactNode
   icon?: string
+  customElement?: React.ReactNode
 }
 
 interface ModuleHeaderPropsWithHamburgerMenuItems {
@@ -24,6 +25,7 @@ interface ModuleHeaderPropsWithHamburgerMenuItems {
   hamburgerMenuItems: React.ReactNode
   actionButton?: React.ReactNode
   icon?: string
+  customElement?: React.ReactNode
 }
 
 type ModuleHeaderProps =
@@ -38,7 +40,8 @@ function ModuleHeader({
   hamburgerMenuItems,
   actionButton,
   tips = '',
-  icon
+  icon,
+  customElement
 }: ModuleHeaderProps): React.ReactElement {
   const { t } = useTranslation()
 
@@ -106,6 +109,7 @@ function ModuleHeader({
             </MenuItems>
           </Menu>
         )}
+        {customElement}
       </div>
     </div>
   )

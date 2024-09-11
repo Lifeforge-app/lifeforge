@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import moment from 'moment'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
@@ -11,19 +11,93 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import Scrollbar from '@components/Scrollbar'
 import { VIDEO_RESOLUTIONS } from '@constants/video_res'
 import useFetch from '@hooks/useFetch'
-import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
+import {
+  type IYoutubeVideoInfo,
+  type IYoutubeVideosStorageEntry
+} from '@interfaces/youtube_video_storage_interfaces'
+import APIRequest from '@utils/fetchData'
+import IntervalManager from '@utils/intervalManager'
 import { cleanFileSize } from '@utils/strings'
 import AddVideosModal from './components/AddVideosModal'
+import DownloadProcessModal from './components/downloadProcessModal'
+import IconButton from '../Music/components/Bottombar/components/IconButton'
+
+const intervalManager = IntervalManager.getInstance()
 
 function YoutubeVideoStorage(): React.ReactElement {
   const [isAddVideosModalOpen, setIsAddVideosModalOpen] = useState(false)
-  const [videos, refreshVideos] = useFetch<IYoutubeVideosStorageEntry[]>(
-    '/youtube-video-storage/video'
-  )
+  const [videos, refreshVideos, setVideos] = useFetch<
+    IYoutubeVideosStorageEntry[]
+  >('/youtube-video-storage/video')
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
     useState(false)
   const [videoToDelete, setVideoToDelete] =
     useState<IYoutubeVideosStorageEntry>()
+  const [isDownloadProcessModalOpen, setIsDownloadProcessModalOpen] =
+    useState(false)
+  const [processes, setProcesses] = useState<
+    Record<
+      string,
+      {
+        status: 'completed' | 'failed' | 'in_progress'
+        progress: number
+        metadata: IYoutubeVideoInfo
+      }
+    >
+  >({})
+  const [needsProgressCheck, setNeedsProgressCheck] = useState(true)
+  const [isFirstTime, setIsFirstTime] = useState(true)
+
+  function checkProgress(): void {
+    if (!needsProgressCheck && !isFirstTime) return
+    setIsFirstTime(false)
+
+    APIRequest({
+      endpoint: 'youtube-video-storage/video/download-status',
+      method: 'POST',
+      failureInfo: 'Failed to get download status',
+      body: { id: 'all' },
+      callback(data) {
+        if (data.state === 'success') {
+          const processes = data.data as Record<
+            string,
+            {
+              status: 'completed' | 'failed' | 'in_progress'
+              progress: number
+              metadata: IYoutubeVideoInfo
+            }
+          >
+
+          if (
+            (Object.keys(processes).length !== 0 &&
+              !Object.values(processes).some(
+                p => p.status === 'in_progress'
+              )) ||
+            Object.keys(processes).length === 0
+          ) {
+            if (!isFirstTime) {
+              refreshVideos()
+            }
+            setNeedsProgressCheck(false)
+          }
+          setProcesses(processes)
+        }
+      }
+    }).catch(console.error)
+  }
+
+  useEffect(() => {
+    const interval = intervalManager.setInterval(checkProgress, 1000)
+
+    return () => {
+      intervalManager.clearInterval(interval)
+    }
+  }, [
+    needsProgressCheck,
+    isFirstTime,
+    isAddVideosModalOpen,
+    isDownloadProcessModalOpen
+  ])
 
   return (
     <ModuleWrapper>
@@ -36,11 +110,34 @@ function YoutubeVideoStorage(): React.ReactElement {
           <Button
             icon="tabler:plus"
             onClick={() => {
+              refreshVideos()
               setIsAddVideosModalOpen(true)
             }}
           >
             Add Video
           </Button>
+        }
+        customElement={
+          Object.entries(processes).some(
+            ([, { status }]) => status === 'in_progress'
+          ) && (
+            <Button
+              icon="tabler:download"
+              variant="no-bg"
+              className="p-5"
+              onClick={() => {
+                setIsDownloadProcessModalOpen(true)
+              }}
+            >
+              (
+              {
+                Object.entries(processes).filter(
+                  ([, { status }]) => status === 'in_progress'
+                ).length
+              }
+              )
+            </Button>
+          )
         }
       />
       <Scrollbar className="mt-8">
@@ -50,8 +147,9 @@ function YoutubeVideoStorage(): React.ReactElement {
               {videos.map(video => (
                 <a
                   key={video.id}
-                  href={`${import.meta.env.VITE_API_HOST
-                    }/youtube-video-storage/video/stream/${video.youtube_id}`}
+                  href={`${
+                    import.meta.env.VITE_API_HOST
+                  }/youtube-video-storage/video/stream/${video.youtube_id}`}
                   target="_blank"
                   rel="noreferrer"
                   className="relative flex w-full items-center justify-between gap-8 rounded-md bg-bg-50 p-4 shadow-custom hover:bg-bg-200 dark:bg-bg-900 dark:hover:bg-bg-800/70"
@@ -59,9 +157,11 @@ function YoutubeVideoStorage(): React.ReactElement {
                   <div className="flex items-center gap-4">
                     <div className="relative shrink-0 overflow-hidden rounded-md border border-bg-800">
                       <img
-                        src={`${import.meta.env.VITE_API_HOST
-                          }/youtube-video-storage/video/thumbnail/${video.youtube_id
-                          }`}
+                        src={`${
+                          import.meta.env.VITE_API_HOST
+                        }/youtube-video-storage/video/thumbnail/${
+                          video.youtube_id
+                        }`}
                         alt={video.title}
                         className="aspect-video w-56 rounded-md object-cover"
                       />
@@ -126,22 +226,39 @@ function YoutubeVideoStorage(): React.ReactElement {
       </Scrollbar>
       <AddVideosModal
         isOpen={isAddVideosModalOpen}
-        onClose={() => {
+        onClose={(isVideoDownloading: boolean) => {
           setIsAddVideosModalOpen(false)
+          if (isVideoDownloading) {
+            setNeedsProgressCheck(true)
+          }
         }}
         videos={videos}
-        refreshVideos={refreshVideos}
       />
       <DeleteConfirmationModal
         isOpen={isConfirmDeleteModalOpen}
         onClose={() => {
           setIsConfirmDeleteModalOpen(false)
         }}
+        customCallback={async () => {
+          setVideos(prevVideos => {
+            if (typeof prevVideos === 'string') return prevVideos
+            if (videoToDelete === undefined) return prevVideos
+
+            return prevVideos.filter(v => v.id !== videoToDelete.id)
+          })
+          setVideoToDelete(undefined)
+        }}
         apiEndpoint="/youtube-video-storage/video"
         itemName="video"
         nameKey="title"
-        updateDataList={refreshVideos}
         data={videoToDelete}
+      />
+      <DownloadProcessModal
+        isOpen={isDownloadProcessModalOpen}
+        onClose={() => {
+          setIsDownloadProcessModalOpen(false)
+        }}
+        processes={processes}
       />
     </ModuleWrapper>
   )

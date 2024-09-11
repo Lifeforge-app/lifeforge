@@ -18,7 +18,7 @@ function PlaylistInfo({
 }: {
   playlistInfo: IYoutubePlaylistEntry
   downloadVideo: (metadata: IYoutubePlaylistVideoEntry) => void
-  downloadingVideos: React.MutableRefObject<string[]>
+  downloadingVideos: React.RefObject<Set<string>>
   downloadedVideos: Set<string>
   videos: IYoutubeVideosStorageEntry[] | 'loading' | 'error'
   processes: Record<
@@ -61,11 +61,11 @@ function PlaylistInfo({
             status={
               (typeof videos !== 'string' &&
                 videos.find(v => v.youtube_id === video.id) !== undefined) ||
-                downloadedVideos.has(video.id)
+              downloadedVideos.has(video.id)
                 ? 'completed'
-                : downloadingVideos.current.includes(video.id)
-                  ? 'in_progress'
-                  : processes[video.id]?.status ?? null
+                : downloadingVideos.current.has(video.id)
+                ? 'in_progress'
+                : processes[video.id]?.status ?? null
             }
             progress={processes[video.id]?.progress ?? 0}
           />
