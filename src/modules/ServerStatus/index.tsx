@@ -39,6 +39,7 @@ function ServerStatus(): React.ReactElement {
     'server/memory',
     true,
     'GET',
+    undefined,
     false,
     false
   )
@@ -46,6 +47,7 @@ function ServerStatus(): React.ReactElement {
     'server/cpu',
     true,
     'GET',
+    undefined,
     false,
     false
   )
@@ -54,6 +56,7 @@ function ServerStatus(): React.ReactElement {
     'server/cpu-temp',
     true,
     'GET',
+    undefined,
     false,
     false
   )
