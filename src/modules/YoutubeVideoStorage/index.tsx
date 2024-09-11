@@ -20,7 +20,6 @@ import IntervalManager from '@utils/intervalManager'
 import { cleanFileSize } from '@utils/strings'
 import AddVideosModal from './components/AddVideosModal'
 import DownloadProcessModal from './components/downloadProcessModal'
-import IconButton from '../Music/components/Bottombar/components/IconButton'
 
 const intervalManager = IntervalManager.getInstance()
 
