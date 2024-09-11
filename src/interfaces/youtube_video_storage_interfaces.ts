@@ -1,5 +1,15 @@
 import type BasePBCollection from './pocketbase_interfaces'
 
+export interface IYoutubeVideoInfo {
+  title: string
+  uploadDate: string
+  uploader: string
+  duration: string
+  viewCount: number
+  likeCount: number
+  thumbnail: string
+}
+
 interface IYoutubeVideosStorageEntry extends BasePBCollection {
   youtube_id: string
   title: string
@@ -30,6 +40,7 @@ interface IYoutubePlaylistEntry {
 }
 
 export type {
+  IYoutubeVideoInfo,
   IYoutubeVideosStorageEntry,
   IYoutubePlaylistEntry,
   IYoutubePlaylistVideoEntry

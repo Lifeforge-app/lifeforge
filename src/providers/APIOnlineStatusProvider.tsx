@@ -11,7 +11,7 @@ async function checkAPIStatus(): Promise<boolean> {
     controller.abort()
   }, 5000)
 
-  return await fetch(import.meta.env.VITE_API_HOST, {
+  return await fetch(`${import.meta.env.VITE_API_HOST}/status`, {
     signal: controller.signal
   })
     .then(res => res.ok)

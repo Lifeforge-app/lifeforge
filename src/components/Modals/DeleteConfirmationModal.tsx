@@ -34,14 +34,6 @@ function DeleteConfirmationModal({
     if (data === null) return
     setLoading(true)
 
-    if (customCallback) {
-      await customCallback().then(() => {
-        setLoading(false)
-        onClose()
-      })
-      return
-    }
-
     await APIRequest({
       endpoint: `${apiEndpoint}/${data.id ?? ''}`,
       method: 'DELETE',
@@ -50,6 +42,15 @@ function DeleteConfirmationModal({
       callback: () => {
         onClose()
         if (updateDataList) updateDataList()
+
+        if (customCallback) {
+          customCallback()
+            .then(() => {
+              setLoading(false)
+              onClose()
+            })
+            .catch(console.error)
+        }
       },
       finalCallback: () => {
         setLoading(false)
