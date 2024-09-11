@@ -12,7 +12,7 @@ import {
   type IYoutubeVideosStorageEntry
 } from '@interfaces/youtube_video_storage_interfaces'
 import IntervalManager from '@utils/intervalManager'
-import PlaylistInfo from './componenets/PlaylistInfo'
+import PlaylistDetails from './components/PlaylistDetails'
 
 const intervalManager = IntervalManager.getInstance()
 
@@ -172,7 +172,7 @@ function PlaylistSection({
         {URL_REGEX.test(playlistUrl) && (
           <APIComponentWithFallback data={playlistInfo}>
             {playlistInfo => (
-              <PlaylistInfo
+              <PlaylistDetails
                 playlistInfo={playlistInfo}
                 downloadingVideos={downloadingVideos}
                 downloadVideo={downloadVideo}
