@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
+import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
 import IntervalManager from '@utils/intervalManager'
-import { type YoutubeVideoInfo } from '../../../../Music/modals/YoutubeDownloaderModal'
 import VideoInfo from '../../../../Music/modals/YoutubeDownloaderModal/components/VideoInfo'
 
 const intervalManager = IntervalManager.getInstance()
@@ -17,16 +17,17 @@ const URL_REGEX =
   /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/(watch\?v=|embed\/|v\/|.+\?v=)?(?<id>[A-Za-z0-9_-]{11})(\S*)?$/
 
 function VideoSection({
-  onClose,
-  refreshVideos
+  isOpen,
+  setIsVideoDownloading
 }: {
-  onClose: () => void
-  refreshVideos: () => void
+  isOpen: boolean
+  setIsVideoDownloading: (value: boolean) => void
 }): React.ReactElement {
   const [videoUrl, setVideoUrl] = useState<string>('')
   const debouncedVideoUrl = useDebounce(videoUrl, 500)
-  const [videoInfo] = useFetch<YoutubeVideoInfo>(
-    `/youtube-video-storage/video/get-info/${debouncedVideoUrl.match(URL_REGEX)?.groups?.id
+  const [videoInfo] = useFetch<IYoutubeVideoInfo>(
+    `/youtube-video-storage/video/get-info/${
+      debouncedVideoUrl.match(URL_REGEX)?.groups?.id
     }`,
     URL_REGEX.test(debouncedVideoUrl)
   )
@@ -42,7 +43,8 @@ function VideoSection({
     progress: number
   }> {
     const res = await fetch(
-      `${import.meta.env.VITE_API_HOST
+      `${
+        import.meta.env.VITE_API_HOST
       }/youtube-video-storage/video/download-status`,
       {
         method: 'POST',
@@ -79,8 +81,9 @@ function VideoSection({
     }
 
     fetch(
-      `${import.meta.env.VITE_API_HOST
-      } /youtube-video-storage/video / async - download / ${ID} `,
+      `${
+        import.meta.env.VITE_API_HOST
+      }/youtube-video-storage/video/async-download/${ID}`,
       {
         method: 'POST',
         headers: {
@@ -96,6 +99,7 @@ function VideoSection({
         if (res.status === 202) {
           const data = await res.json()
           if (data.state === 'accepted') {
+            setIsVideoDownloading(true)
             intervalManager.setInterval(async () => {
               const { status, progress } = await checkDownloadStatus(ID)
               switch (status) {
@@ -104,14 +108,14 @@ function VideoSection({
                   intervalManager.clearAllIntervals()
                   setLoading(false)
                   setProgress(0)
-                  refreshVideos()
-                  onClose()
+                  setIsVideoDownloading(false)
                   break
                 case 'failed':
                   toast.error('Failed to download video!')
                   intervalManager.clearAllIntervals()
                   setLoading(false)
                   setProgress(0)
+                  setIsVideoDownloading(false)
                   break
                 default:
                   setProgress(progress)
@@ -128,10 +132,21 @@ function VideoSection({
       })
       .catch(err => {
         toast.error(`Oops! Couldn't download video! ${err}`)
+        setIsVideoDownloading(false)
         setLoading(false)
         setProgress(0)
       })
   }
+
+  useEffect(() => {
+    if (isOpen) {
+      setVideoUrl('')
+    }
+
+    return () => {
+      intervalManager.clearAllIntervals()
+    }
+  }, [])
 
   return (
     <>

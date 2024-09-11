@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import Input from '@components/ButtonsAndInputs/Input'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -21,15 +21,18 @@ const URL_REGEX =
 
 function PlaylistSection({
   videos,
-  refreshVideos
+  isOpen,
+  setIsVideoDownloading
 }: {
   videos: IYoutubeVideosStorageEntry[] | 'loading' | 'error'
-  refreshVideos: () => void
+  isOpen: boolean
+  setIsVideoDownloading: (value: boolean) => void
 }): React.ReactElement {
   const [playlistUrl, setPlaylistUrl] = useState<string>('')
   const debouncedPlaylistUrl = useDebounce(playlistUrl, 500)
   const [playlistInfo] = useFetch<IYoutubePlaylistEntry>(
-    `/youtube-video-storage/playlist/get-info/${debouncedPlaylistUrl.match(URL_REGEX)?.groups?.list
+    `/youtube-video-storage/playlist/get-info/${
+      debouncedPlaylistUrl.match(URL_REGEX)?.groups?.list
     }`,
     URL_REGEX.test(debouncedPlaylistUrl)
   )
@@ -42,7 +45,7 @@ function PlaylistSection({
       }
     >
   >({})
-  const downloadingVideos = useRef([] as string[])
+  const downloadingVideos = useRef(new Set<string>())
   const [downloadedVideos, setDownloadedVideos] = useState<Set<string>>(
     new Set()
   )
@@ -57,7 +60,8 @@ function PlaylistSection({
     >
   > {
     const res = await fetch(
-      `${import.meta.env.VITE_API_HOST
+      `${
+        import.meta.env.VITE_API_HOST
       }/youtube-video-storage/video/download-status`,
       {
         method: 'POST',
@@ -80,15 +84,16 @@ function PlaylistSection({
   }
 
   function downloadVideo(metadata: IYoutubePlaylistVideoEntry): void {
-    if (downloadingVideos.current.includes(metadata.id)) {
+    if (downloadingVideos.current.has(metadata.id)) {
       toast.error('Video is already being downloaded')
       return
     }
 
-    downloadingVideos.current.push(metadata.id)
+    downloadingVideos.current.add(metadata.id)
 
     fetch(
-      `${import.meta.env.VITE_API_HOST
+      `${
+        import.meta.env.VITE_API_HOST
       }/youtube-video-storage/video/async-download/${metadata.id}`,
       {
         method: 'POST',
@@ -105,6 +110,7 @@ function PlaylistSection({
         if (res.status === 202) {
           const data = await res.json()
           if (data.state === 'accepted') {
+            setIsVideoDownloading(true)
             if (!intervalManager.hasIntervals()) {
               intervalManager.setInterval(async () => {
                 const status = await checkDownloadStatus()
@@ -112,6 +118,7 @@ function PlaylistSection({
 
                 Object.entries(status).forEach(([id, p]) => {
                   if (p.status === 'completed') {
+                    downloadingVideos.current.delete(id)
                     setDownloadedVideos(prev => prev.add(id))
                   }
                 })
@@ -119,9 +126,8 @@ function PlaylistSection({
                 if (
                   Object.values(status).every(p => p.status === 'completed')
                 ) {
+                  setIsVideoDownloading(false)
                   intervalManager.clearAllIntervals()
-                  refreshVideos()
-                  downloadingVideos.current = []
                 }
               }, 1000)
             }
@@ -133,9 +139,22 @@ function PlaylistSection({
       })
       .catch(err => {
         toast.error(`Oops! Couldn't download video! ${err}`)
-        downloadingVideos.current = []
+        downloadingVideos.current.delete(metadata.id)
       })
   }
+
+  useEffect(() => {
+    if (isOpen) {
+      setPlaylistUrl('')
+      setDownloadedVideos(new Set())
+      setProcesses({})
+      downloadingVideos.current = new Set()
+    }
+
+    return () => {
+      intervalManager.clearAllIntervals()
+    }
+  }, [])
 
   return (
     <>
@@ -147,7 +166,7 @@ function PlaylistSection({
         placeholder="https://www.youtube.com/playlist?list=PL..."
         darker
         additionalClassName="mt-4"
-        disabled={downloadingVideos.current.length > 0}
+        disabled={downloadingVideos.current.size > 0}
       />
       <div className="mt-6">
         {URL_REGEX.test(playlistUrl) && (

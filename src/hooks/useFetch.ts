@@ -8,13 +8,14 @@ function useFetch<T>(
   endpoint: string,
   criteriaMet: boolean = true,
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET',
+  body: Record<string, unknown> = {},
   changeStateWhenLoading: boolean = true,
   showError: boolean = true
 ): [
-  data: T | 'loading' | 'error',
-  refresh: () => void,
-  setData: React.Dispatch<React.SetStateAction<T | 'loading' | 'error'>>
-] {
+    data: T | 'loading' | 'error',
+    refresh: () => void,
+    setData: React.Dispatch<React.SetStateAction<T | 'loading' | 'error'>>
+  ] {
   const { t } = useTranslation()
   const [data, setData] = useState<T | 'loading' | 'error'>('loading')
 
@@ -24,7 +25,9 @@ function useFetch<T>(
     }
     fetch(`${import.meta.env.VITE_API_HOST}/${endpoint}`, {
       method,
+      body: method === 'POST' ? JSON.stringify(body) : undefined,
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${cookieParse(document.cookie).token}`
       }
     })

@@ -22,6 +22,7 @@ function PlaylistVideoEntry({
         <div className="relative h-28 shrink-0 overflow-hidden rounded-md border border-bg-800">
           <img
             src={video.thumbnail}
+            referrerPolicy="no-referrer"
             className="aspect-video size-full object-cover"
           />
           <p className="absolute bottom-2 right-2 rounded-md bg-bg-900/70 px-1.5 py-0.5 text-sm text-bg-100">
@@ -52,8 +53,9 @@ function PlaylistVideoEntry({
         </div>
       ) : status !== null ? (
         <p
-          className={`flex items-center gap-2 ${status === 'completed' ? 'text-green-500' : 'text-red-500'
-            }`}
+          className={`flex items-center gap-2 ${
+            status === 'completed' ? 'text-green-500' : 'text-red-500'
+          }`}
         >
           <Icon
             icon={
