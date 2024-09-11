@@ -95,6 +95,7 @@ function ModuleHeader({
             </Menu>
           </div>
         )}
+        {customElement}
         {hasHamburgerMenu && (
           <Menu as="div" className="relative z-50 overscroll-contain">
             <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-100">
@@ -109,7 +110,6 @@ function ModuleHeader({
             </MenuItems>
           </Menu>
         )}
-        {customElement}
       </div>
     </div>
   )
