@@ -69,7 +69,7 @@ function PlaylistSection({
           'Content-Type': 'application/json',
           Authorization: `Bearer ${cookieParse(document.cookie).token} `
         },
-        body: JSON.stringify({ id: downloadingVideos.current })
+        body: JSON.stringify({ id: [...downloadingVideos.current] })
       }
     )
     if (res.status === 200) {
