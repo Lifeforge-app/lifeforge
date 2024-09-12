@@ -47,7 +47,7 @@ function FontFamilySelector(): React.ReactElement {
 
   useEffect(() => {
     fetch(
-      'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyACIfnP46cNm8nP9HaMafF0hwI9X0hyyg4'
+      'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyACIfnP46cNm8nP9HaMafF0hwI9X0hyyg4&sort=popularity'
     )
       .then(async res => await res.json())
       .then(data => {
@@ -57,12 +57,19 @@ function FontFamilySelector(): React.ReactElement {
 
         data.items.forEach((font: IFontFamily) => {
           Object.entries(font.files).forEach(([variant, url]) => {
+            if (
+              !['regular', '500'].includes(variant) ||
+              variant.includes('italic')
+            ) {
+              return
+            }
+
             const fontFace = `@font-face {
                 font-family: '${font.family}';
                 src: url('${url}');
                 ${
                   !['regular', 'italic'].includes(variant)
-                    ? `font-weight: ${variant.replace('italic', '')};`
+                    ? `font-weight: ${variant}`
                     : ''
                 }
                 font-style: ${variant.includes('italic') ? 'italic' : 'normal'};
