@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { useAuthContext } from './AuthProvider'
 import THEME_COLOR_HEX from '../constants/theme_color_hex'
+import { type IFontFamily } from '../modules/Personalization/components/FontFamilySelector'
 
 type DashboardLayoutType = Record<
   string,
@@ -21,11 +22,13 @@ type DashboardLayoutType = Record<
 >
 
 interface IPersonalizationData {
+  fontFamily: string
   theme: 'light' | 'dark' | 'system'
   themeColor: string
   bgTemp: 'bg-slate' | 'bg-gray' | 'bg-neutral' | 'bg-zinc' | 'bg-stone'
   language: string
   dashboardLayout: DashboardLayoutType
+  setFontFamily: (font: string) => void
   setTheme: (theme: 'light' | 'dark' | 'system') => void
   setThemeColor: (color: string) => void
   setBgTemp: (color: string) => void
@@ -48,6 +51,7 @@ export default function PersonalizationProvider({
   const { userData } = useAuthContext()
   const { i18n } = useTranslation()
 
+  const [fontFamily, setFontFamily] = useState<string>('Wix Madefor Text')
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system')
   const [themeColor, setThemeColor] = useState('theme-lime')
   const [bgTemp, setBgTemp] = useState<
@@ -59,27 +63,82 @@ export default function PersonalizationProvider({
   )
 
   useEffect(() => {
-    if (userData?.theme !== undefined) {
+    if (!userData) return
+
+    if (userData?.theme !== '') {
       setTheme(userData.theme)
     }
 
-    if (userData?.color !== undefined) {
+    if (userData?.color !== '') {
       setThemeColor(`theme-${userData.color}`)
     }
 
-    if (userData?.bgTemp !== undefined) {
+    if (userData?.bgTemp !== '') {
       setBgTemp(`bg-${userData.bgTemp}` as any)
     }
 
-    if (userData?.language !== undefined) {
+    if (userData?.language !== '') {
       console.log(userData.language)
       setLanguage(userData.language)
     }
 
-    if (userData?.dashboardLayout !== undefined) {
+    if (userData?.dashboardLayout !== '') {
       setDashboardLayout(userData.dashboardLayout)
     }
+    // test
+
+    if (userData?.fontFamily !== undefined) {
+      setFontFamily(userData.fontFamily)
+    }
   }, [userData])
+
+  useEffect(() => {
+    fetch(
+      `https://www.googleapis.com/webfonts/v1/webfonts?family=${fontFamily.replace(
+        / /g,
+        '+'
+      )}&key=${import.meta.env.VITE_GOOGLE_API_KEY}`
+    )
+      .then(async res => {
+        const data = (await res.json()) as {
+          items: IFontFamily[]
+        }
+        if (data.items) {
+          const sheet = window.document.styleSheets[0]
+
+          data.items.forEach(font => {
+            Object.entries(font.files).forEach(([variant, url]) => {
+              const fontFace = `@font-face {
+                font-family: '${font.family}';
+                src: url('${url}');
+                ${
+                  !['regular', 'italic'].includes(variant)
+                    ? `font-weight: ${variant.replace('italic', '')};`
+                    : ''
+                }
+                font-style: ${variant.includes('italic') ? 'italic' : 'normal'};
+                font-display: swap;
+            }`
+
+              try {
+                sheet.insertRule(fontFace, sheet.cssRules.length)
+              } catch (err) {
+                console.error(fontFace)
+                console.error(err)
+              }
+
+              const appContainer = document.getElementById('app')
+              if (appContainer) {
+                appContainer.style.fontFamily = `${font.family}, sans-serif`
+              }
+            })
+          })
+        }
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }, [fontFamily])
 
   useEffect(() => {
     if (
@@ -142,6 +201,32 @@ export default function PersonalizationProvider({
       toast.error('Failed to change language.')
     })
   }, [language])
+
+  function changeFontFamily(font: string): void {
+    setFontFamily(font)
+    fetch(`${import.meta.env.VITE_API_HOST}/user/personalization`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+      },
+      body: JSON.stringify({
+        id: userData.id,
+        data: {
+          fontFamily: font
+        }
+      })
+    })
+      .then(async response => {
+        const data = await response.json()
+        if (response.status !== 200) {
+          throw data.message
+        }
+      })
+      .catch(() => {
+        toast.error('Failed to update personalization settings.')
+      })
+  }
 
   function changeTheme(color: 'light' | 'dark' | 'system'): void {
     setTheme(color)
@@ -276,11 +361,13 @@ export default function PersonalizationProvider({
   return (
     <PersonalizationContext
       value={{
+        fontFamily,
         theme,
         themeColor,
         bgTemp,
         language,
         dashboardLayout,
+        setFontFamily: changeFontFamily,
         setTheme: changeTheme,
         setThemeColor: changeThemeColor,
         setBgTemp: changeBgTemp,

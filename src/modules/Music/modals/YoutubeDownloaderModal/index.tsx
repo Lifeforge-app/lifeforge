@@ -9,19 +9,10 @@ import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
+import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
 import { useMusicContext } from '@providers/MusicProvider'
 import IntervalManager from '@utils/intervalManager'
 import VideoInfo from './components/VideoInfo'
-
-export interface YoutubeVideoInfo {
-  title: string
-  uploadDate: string
-  uploader: string
-  duration: string
-  viewCount: number
-  likeCount: number
-  thumbnail: string
-}
 
 const intervalManager = IntervalManager.getInstance()
 
@@ -37,7 +28,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
   const [loading, setLoading] = useState(false)
   const [videoURLinput, setVideoURLInput] = useState('')
   const videoURL = useDebounce(videoURLinput, 500)
-  const [videoInfo] = useFetch<YoutubeVideoInfo>(
+  const [videoInfo] = useFetch<IYoutubeVideoInfo>(
     `/music/youtube/get-info/${videoURL.match(URL_REGEX)?.groups?.id}`,
     URL_REGEX.test(videoURL)
   )
@@ -69,8 +60,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
   function downloadVideo(): void {
     setLoading(true)
     fetch(
-      `${import.meta.env.VITE_API_HOST}/music/youtube/async-download/${
-        videoURL.match(URL_REGEX)?.groups?.id
+      `${import.meta.env.VITE_API_HOST}/music/youtube/async-download/${videoURL.match(URL_REGEX)?.groups?.id
       }`,
       {
         method: 'POST',
