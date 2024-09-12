@@ -185,7 +185,7 @@ function CreateProjectModal({
             >
               Project status
             </span>
-            <div className="relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-none sm:text-sm">
+            <div className="relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-none">
               <span
                 className={`text-center font-semibold ${PROJECT_STATUS[projectStatus]?.color} size-2 rounded-md`}
               ></span>
@@ -198,7 +198,7 @@ function CreateProjectModal({
             </span>
           </Listbox.Button>
           <ListboxTransition>
-            <Listbox.Options className="absolute top-[4.5rem] z-50 mt-1 max-h-56 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800 sm:text-sm">
+            <Listbox.Options className="absolute top-[4.5rem] z-50 mt-1 max-h-56 w-full divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800">
               {Object.entries(PROJECT_STATUS).map(([id, { name, color }]) => (
                 <Listbox.Option
                   key={id}

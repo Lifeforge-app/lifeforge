@@ -20,7 +20,7 @@ import { useWalletContext } from '@providers/WalletProvider'
 import AssetsBalanceCard from './components/AssetsBalanceCard'
 import ExpensesBreakdownCard from './components/ExpensesBreakdownCard'
 import IncomeExpenseCard from './components/IncomeExpensesCard'
-import StatisticChardCard from './components/StatisticChardCard'
+import StatisticChardCard from './components/StatisticChartCard'
 import TransactionsCard from './components/TransactionsCard'
 
 ChartJS.register(

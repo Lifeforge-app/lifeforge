@@ -17,7 +17,7 @@ function SearchInput({
   const { t } = useTranslation()
 
   return (
-    <search className="mt-2 flex w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900 sm:mt-6">
+    <search className="mt-2 flex w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/70 sm:mt-6">
       <Icon icon="tabler:search" className="size-5 text-bg-500" />
       <input
         type="text"

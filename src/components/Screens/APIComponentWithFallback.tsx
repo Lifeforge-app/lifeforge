@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React from 'react'
-import Error from './Error'
-import Loading from './Loading'
+import ErrorScreen from './ErrorScreen'
+import LoadingScreen from './LoadingScreen'
 
 function APIComponentWithFallback<T>({
   data,
@@ -14,9 +14,9 @@ function APIComponentWithFallback<T>({
 }): React.ReactElement {
   switch (data) {
     case 'loading':
-      return showLoading ? <Loading /> : <></>
+      return showLoading ? <LoadingScreen /> : <></>
     case 'error':
-      return <Error message="Failed to fetch data from server." />
+      return <ErrorScreen message="Failed to fetch data from server." />
     default:
       if (data) {
         return <>{children(data)}</>
