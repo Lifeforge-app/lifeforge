@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */
 
 import React, { useEffect, useState } from 'react'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -11,7 +12,7 @@ import { type IChangeLogVersion } from '@interfaces/changelog_interfaces'
 import LogItem from './components/LogItem'
 
 function Changelog(): React.ReactElement {
-  const [data] = useFetch<IChangeLogVersion[]>('change-log/list')
+  const [data, refreshData] = useFetch<IChangeLogVersion[]>('change-log/list')
   const [searchQuery, setSearchQuery] = useState('')
   const [filteredData, setFilteredData] = useState<IChangeLogVersion[]>([])
 
@@ -48,6 +49,14 @@ function Changelog(): React.ReactElement {
         title="Change Log"
         icon="tabler:history"
         desc="All the changes made to this application will be listed here."
+        hasHamburgerMenu
+        hamburgerMenuItems={
+          <MenuItem
+            icon="tabler:refresh"
+            text="Refresh"
+            onClick={refreshData}
+          />
+        }
       />
       <SearchInput
         searchQuery={searchQuery}

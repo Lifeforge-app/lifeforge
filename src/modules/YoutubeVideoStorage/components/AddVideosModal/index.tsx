@@ -1,7 +1,7 @@
 import { ListboxOption } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { t } from 'i18next'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
@@ -35,24 +35,32 @@ const RESOURCE_TYPES = [
 function AddVideosModal({
   isOpen,
   onClose,
-  videos,
-  refreshVideos
+  videos
 }: {
   isOpen: boolean
-  onClose: () => void
+  onClose: (isVideoDownloading: boolean) => void
   videos: IYoutubeVideosStorageEntry[] | 'loading' | 'error'
-  refreshVideos: () => void
 }): React.ReactElement {
   const [selectedResourceType, setSelectedResourceType] = useState<
     'video' | 'playlist' | 'channel' | 'search'
   >('video')
+  const [isVideoDownloading, setIsVideoDownloading] = useState(false)
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsVideoDownloading(false)
+      setSelectedResourceType('video')
+    }
+  }, [isOpen])
 
   return (
     <Modal isOpen={isOpen} minWidth="50vw">
       <ModalHeader
         title="Add Videos"
         icon="tabler:plus"
-        onClose={onClose}
+        onClose={() => {
+          onClose(isVideoDownloading)
+        }}
         className="!mb-4"
       />
       <ListboxInput
@@ -105,14 +113,17 @@ function AddVideosModal({
         switch (selectedResourceType) {
           case 'video':
             return (
-              <VideoSection onClose={onClose} refreshVideos={refreshVideos} />
+              <VideoSection
+                isOpen={isOpen}
+                setIsVideoDownloading={setIsVideoDownloading}
+              />
             )
           case 'playlist':
             return (
               <PlaylistSection
-                onClose={onClose}
                 videos={videos}
-                refreshVideos={refreshVideos}
+                isOpen={isOpen}
+                setIsVideoDownloading={setIsVideoDownloading}
               />
             )
           case 'channel':
