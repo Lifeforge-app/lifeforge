@@ -1,3 +1,4 @@
+import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
@@ -68,8 +69,8 @@ function Ledgers(): React.ReactElement {
             </div>
           ) : (
             <EmptyStateScreen
-              title="Oops! No Ledger found."
-              description="You don't have any Ledgers yet. Add some to get started."
+              title={t('emptyState.wallet.ledger.title')}
+              description={t('emptyState.wallet.ledger.description')}
               ctaContent="Add Ledger"
               onCTAClick={setModifyModalOpenType}
               icon="tabler:wallet-off"

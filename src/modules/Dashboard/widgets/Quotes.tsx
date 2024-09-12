@@ -22,14 +22,14 @@ export default function Quotes(): React.ReactElement {
   }, [])
 
   return (
-    <div className="relative flex size-full flex-col items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 text-bg-900 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)]">
+    <div className="relative flex size-full flex-col items-center justify-center gap-2 rounded-lg bg-custom-500 p-4 text-bg-800 shadow-custom">
       <Icon
         icon="tabler:quote"
-        className="absolute right-2 top-2 text-8xl text-bg-900/10"
+        className="absolute right-2 top-2 text-8xl text-bg-800/10"
       />
       <Icon
         icon="tabler:quote"
-        className="absolute bottom-2 left-2 rotate-180 text-8xl text-bg-900/10"
+        className="absolute bottom-2 left-2 rotate-180 text-8xl text-bg-800/10"
       />
       <div className="text-center text-xl font-medium">{quote}</div>
       <div className="h-[3px] w-4 rounded-full bg-bg-900" />

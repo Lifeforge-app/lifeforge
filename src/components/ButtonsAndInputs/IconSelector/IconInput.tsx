@@ -59,7 +59,7 @@ function IconInput({
             onClick={() => {
               setIconSelectorOpen(true)
             }}
-            className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-200 hover:text-bg-800 focus:outline-none dark:hover:bg-bg-500/30 dark:hover:text-bg-200"
+            className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-200 hover:text-bg-800 focus:outline-none dark:hover:bg-bg-200 dark:hover:text-bg-200"
           >
             <Icon icon="tabler:chevron-down" className="size-6" />
           </button>

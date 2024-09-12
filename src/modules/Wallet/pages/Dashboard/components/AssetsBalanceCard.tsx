@@ -53,13 +53,12 @@ function AssetsBalanceCard(): React.ReactElement {
             </Scrollbar>
           ) : (
             <EmptyStateScreen
-              title="Oops! No assets found."
-              description="You don't have any assets yet. Add some to get started."
+              title={t('emptyState.wallet.assets.title')}
+              description={t('emptyState.wallet.assets.description')}
               ctaContent="Add Asset"
               onCTAClick={() => {
                 navigate('/wallet/assets')
               }}
-              icon="tabler:wallet-off"
             />
           )
         }

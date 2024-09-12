@@ -19,7 +19,7 @@ function EmptyStateScreen({
   name?: string
   title?: string
   description?: string
-  icon: string
+  icon?: string
   ctaContent?: string
   customCTAButton?: React.ReactElement
   forSidebar?: boolean
@@ -28,10 +28,12 @@ function EmptyStateScreen({
 
   return (
     <div className="flex-center flex size-full flex-col gap-6 ">
-      <Icon
-        icon={icon}
-        className={forSidebar ? 'size-16 text-bg-600' : 'size-32 text-bg-500'}
-      />
+      {icon !== undefined && (
+        <Icon
+          icon={icon}
+          className={forSidebar ? 'size-16 text-bg-600' : 'size-32 text-bg-500'}
+        />
+      )}
       <h2
         className={`text-center ${
           forSidebar ? 'text-2xl' : 'text-3xl'

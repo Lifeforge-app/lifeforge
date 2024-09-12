@@ -149,7 +149,7 @@ function Weather(): React.ReactElement {
       {data =>
         data !== 'none' ? (
           <div className="mb-8 mt-6 grid w-full grid-cols-4 gap-4">
-            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:plane" className="text-2xl" />
                 <span className="ml-2">Flight Category</span>
@@ -171,7 +171,7 @@ function Weather(): React.ReactElement {
                 </div>
               </div>
             </div>
-            <div className="col-span-3 flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+            <div className="col-span-3 flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
               <div className="flex-between flex">
                 <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                   <Icon icon="tabler:code" className="text-2xl" />
@@ -185,7 +185,7 @@ function Weather(): React.ReactElement {
                 {data.raw_text}
               </code>
             </div>
-            <div className="col-span-2 flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+            <div className="col-span-2 flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:cloud-exclamation" className="text-2xl" />
                 <span className="ml-2">Weather</span>
@@ -220,7 +220,7 @@ function Weather(): React.ReactElement {
                 )}
               </div>
             </div>
-            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:thermometer" className="text-2xl" />
                 <span className="ml-2">Temperature</span>
@@ -232,7 +232,7 @@ function Weather(): React.ReactElement {
                 </p>
               </div>
             </div>
-            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:droplet" className="text-2xl" />
                 <span className="ml-2">Dewpoint</span>
@@ -244,7 +244,7 @@ function Weather(): React.ReactElement {
                 </p>
               </div>
             </div>
-            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:wind" className="text-2xl" />
                 <span className="ml-2">Wind</span>
@@ -272,12 +272,12 @@ function Weather(): React.ReactElement {
                   </p>
                 </div>
               ) : (
-                <div className="flex flex-1 flex-col items-center justify-center gap-2 rounded-md bg-gray-500/20 p-4 text-gray-500">
+                <div className="flex flex-1 flex-col items-center justify-center gap-2 rounded-md bg-bg-500/20 p-4 text-bg-500">
                   <p className="text-center text-3xl font-medium">Calm</p>
                 </div>
               )}
             </div>
-            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:eye" className="text-2xl" />
                 <span className="ml-2">Visibility</span>
@@ -297,7 +297,7 @@ function Weather(): React.ReactElement {
                 </p>
               </div>
             </div>
-            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:arrow-bar-to-up" className="text-2xl" />
                 <span className="ml-2">Celling</span>
@@ -321,12 +321,12 @@ function Weather(): React.ReactElement {
                   </p>
                 </div>
               ) : (
-                <div className="flex flex-1 flex-col items-center justify-center gap-2 rounded-md bg-gray-500/20 p-4 text-gray-500">
+                <div className="flex flex-1 flex-col items-center justify-center gap-2 rounded-md bg-bg-500/20 p-4 text-bg-500">
                   <p className="text-center text-3xl font-medium">No ceiling</p>
                 </div>
               )}
             </div>
-            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="uil:monitor" className="text-2xl" />
                 <span className="ml-2">Barometer</span>
@@ -341,7 +341,7 @@ function Weather(): React.ReactElement {
                 </p>
               </div>
             </div>
-            <div className="col-span-4 flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+            <div className="col-span-4 flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:cloud" className="text-2xl" />
                 <span className="ml-2">Clouds</span>

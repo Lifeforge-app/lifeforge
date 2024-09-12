@@ -48,14 +48,14 @@ function EntryItem({
         <div className="flex-center relative flex h-96 w-full overflow-hidden rounded-md bg-bg-100 dark:bg-bg-800">
           <Icon
             icon="mingcute:guitar-line"
-            className="absolute left-1/2 top-1/2 size-16 -translate-x-1/2 -translate-y-1/2 text-bg-700"
+            className="absolute left-1/2 top-1/2 size-16 -translate-x-1/2 -translate-y-1/2 text-bg-300 dark:text-bg-700"
           />
           <img
             src={`${import.meta.env.VITE_API_HOST}/media/${
               entry.collectionId
             }/${entry.id}/${entry.thumbnail}?thumb=500x0`}
             alt=""
-            className="relative -m-px object-cover object-top"
+            className="relative h-full object-cover object-top"
           />
         </div>
         <div className="absolute bottom-0 right-0 rounded-br-md rounded-tl-md bg-bg-500/80 p-1 px-2">

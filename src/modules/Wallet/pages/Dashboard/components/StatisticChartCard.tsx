@@ -90,7 +90,6 @@ function StatisticChardCard(): React.ReactElement {
               <EmptyStateScreen
                 title={t('emptyState.wallet.transactions.title')}
                 description={t('emptyState.wallet.transactions.description')}
-                icon="tabler:currency-dollar-off"
               />
             ) : (
               <Line

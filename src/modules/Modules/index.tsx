@@ -3,7 +3,7 @@
 import React from 'react'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import Loading from '@components/Screens/Loading'
+import LoadingScreen from '@components/Screens/LoadingScreen'
 import _ROUTES from '@constants/routes_config.json'
 // import { type IModuleEntry } from '@interfaces/module_interfaces'
 import { type IRoutes } from '@interfaces/routes_interfaces'
@@ -138,7 +138,7 @@ function Modules(): React.ReactElement {
             ))}
         </ul>
       ) : (
-        <Loading />
+        <LoadingScreen />
       )}
     </ModuleWrapper>
   )

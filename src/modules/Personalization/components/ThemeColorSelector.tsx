@@ -38,13 +38,16 @@ function ThemeColorSelector(): React.ReactElement {
 
   return (
     <div className="flex-between flex w-full flex-col gap-6 px-4 md:flex-row">
-      <div className="w-full md:w-auto">
-        <h3 className="block text-xl font-medium leading-normal">
-          {t('personalization.themeColorSelector.title')}
-        </h3>
-        <p className="text-bg-500">
-          {t('personalization.themeColorSelector.desc')}
-        </p>
+      <div className="flex items-center gap-4">
+        <Icon icon="tabler:palette" className="size-6 text-bg-500" />
+        <div className="w-full md:w-auto">
+          <h3 className="block text-xl font-medium leading-normal">
+            {t('personalization.themeColorSelector.title')}
+          </h3>
+          <p className="text-bg-500">
+            {t('personalization.themeColorSelector.desc')}
+          </p>
+        </div>
       </div>
       <Listbox
         value={themeColor}
@@ -53,7 +56,7 @@ function ThemeColorSelector(): React.ReactElement {
         }}
       >
         <div className="relative mt-1 w-full md:w-48">
-          <ListboxButton className="flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 py-4 pl-4 pr-10 text-left outline-none transition-all hover:bg-bg-100 focus:outline-none dark:border-bg-700 dark:bg-bg-900 dark:hover:bg-bg-800/70 sm:text-sm">
+          <ListboxButton className="flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 py-4 pl-4 pr-10 text-left outline-none transition-all hover:bg-bg-200/50 focus:outline-none dark:border-bg-700 dark:bg-bg-900 dark:hover:bg-bg-800/70">
             <span className="inline-block size-4 shrink-0 rounded-full bg-custom-500" />
             <span className="-mt-px block truncate">
               {t(
@@ -73,7 +76,7 @@ function ThemeColorSelector(): React.ReactElement {
           <ListboxOptions
             transition
             anchor="bottom end"
-            className="h-64 w-80 divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base text-bg-800 shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-100 sm:text-sm"
+            className="h-64 w-80 divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base text-bg-800 shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-100"
           >
             {COLORS.map(color => (
               <ListboxOption

@@ -10,7 +10,7 @@ export default function Date(): React.ReactElement {
   return (
     <div
       ref={ref}
-      className={`flex size-full gap-4 rounded-lg bg-custom-500 p-4 text-bg-900 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] ${
+      className={`flex size-full gap-4 rounded-lg bg-custom-500 p-4 text-bg-800 shadow-custom ${
         (ref.current?.offsetHeight ?? 0) < 240
           ? 'flex-row items-end'
           : 'flex-col items-start justify-end'

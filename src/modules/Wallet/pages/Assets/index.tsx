@@ -1,3 +1,4 @@
+import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
@@ -68,8 +69,8 @@ function Assets(): React.ReactElement {
             </div>
           ) : (
             <EmptyStateScreen
-              title="Oops! No assets found."
-              description="You don't have any assets yet. Add some to get started."
+              title={t('emptyState.wallet.assets.title')}
+              description={t('emptyState.wallet.assets.description')}
               ctaContent="Add Asset"
               onCTAClick={setModifyModalOpenType}
               icon="tabler:wallet-off"

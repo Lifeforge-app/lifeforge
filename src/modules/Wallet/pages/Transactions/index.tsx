@@ -1,3 +1,4 @@
+import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import FAB from '@components/ButtonsAndInputs/FAB'
@@ -145,8 +146,10 @@ function Transactions(): React.ReactElement {
                   )
                 ) : (
                   <EmptyStateScreen
-                    title="Oops! No Transaction found."
-                    description="You don't have any transactions yet. Add some to get started."
+                    title={t('emptyState.wallet.transactions.title')}
+                    description={t(
+                      'emptyState.wallet.transactions.description'
+                    )}
                     ctaContent="Add Transaction"
                     onCTAClick={setModifyModalOpenType}
                     icon="tabler:wallet-off"

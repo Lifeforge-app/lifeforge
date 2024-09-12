@@ -28,7 +28,7 @@ function AudioPlayer({ url }: { url: string }): React.ReactElement {
 
           setIsPlaying(prev => !prev)
         }}
-        className="!p-2 text-bg-500 hover:bg-bg-200 hover:text-bg-900 dark:hover:bg-bg-800 dark:hover:text-bg-100"
+        className="!p-2 text-bg-500 hover:bg-bg-200 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100"
       />
     </div>
   )

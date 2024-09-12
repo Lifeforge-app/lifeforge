@@ -5,7 +5,7 @@ import { type ChartOptions, type ScriptableContext } from 'chart.js'
 import React, { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-import Loading from '@components/Screens/Loading'
+import LoadingScreen from '@components/Screens/LoadingScreen'
 import useFetch from '@hooks/useFetch'
 import useThemeColorHex from '@hooks/useThemeColorHex'
 
@@ -134,8 +134,12 @@ export default function CodeTime(): React.ReactElement {
         <span className="ml-2">{t('dashboard.widgets.codeTime.title')}</span>
       </h1>
       <div className="flex-center flex size-full min-h-0 flex-1">
-        {/* @ts-expect-error - lazy to fix =) */}
-        {chartData ? <Line data={chartData} options={options2} /> : <Loading />}
+        {chartData ? (
+          /* @ts-expect-error - lazy to fix =) */
+          <Line data={chartData} options={options2} />
+        ) : (
+          <LoadingScreen />
+        )}
       </div>
     </div>
   )

@@ -11,20 +11,23 @@ function BgTempSelector(): React.ReactElement {
 
   return (
     <div className="flex-between flex w-full flex-col gap-6 px-4 md:flex-row">
-      <div>
-        <h3 className="block w-full text-xl font-medium leading-normal md:w-auto">
-          {t('personalization.bgTempSelector.title')}
-        </h3>
-        <p className="text-bg-500">
-          {t('personalization.bgTempSelector.desc')}
-        </p>
+      <div className="flex items-center gap-4">
+        <Icon icon="uil:temperature" className="size-6 text-bg-500" />
+        <div>
+          <h3 className="block w-full text-xl font-medium leading-normal md:w-auto">
+            {t('personalization.bgTempSelector.title')}
+          </h3>
+          <p className="text-bg-500">
+            {t('personalization.bgTempSelector.desc')}
+          </p>
+        </div>
       </div>
       <div className="flex w-full flex-col items-center gap-2 md:w-auto">
         <div className="flex items-center gap-4">
           {COLORS.map((color, index) => (
             <button
               key={index}
-              className={`flex size-8 items-center justify-center rounded-full ${color} bg-bg-500 ring-offset-2 ring-offset-bg-950 transition-all ${
+              className={`flex size-8 items-center justify-center rounded-full ${color} bg-bg-500 ring-offset-2 ring-offset-bg-50 transition-all dark:ring-offset-bg-950 ${
                 bgTemp === color
                   ? 'ring-2 ring-bg-500'
                   : 'hover:ring-2 hover:ring-bg-500'
@@ -34,7 +37,7 @@ function BgTempSelector(): React.ReactElement {
               }}
             >
               {bgTemp === color && (
-                <Icon icon="tabler:check" className="size-5 text-bg-900" />
+                <Icon icon="tabler:check" className="size-5 text-bg-800" />
               )}
             </button>
           ))}

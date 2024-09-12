@@ -45,7 +45,7 @@ function ListboxInput({
         unmount={false}
         transition
         anchor="bottom start"
-        className="relative z-[9999] max-h-56 w-[var(--button-width)] divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base text-bg-800 shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:divide-bg-700 dark:border-bg-700 dark:bg-bg-800 dark:text-bg-100 sm:text-sm"
+        className="relative z-[9999] max-h-56 w-[var(--button-width)] divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base text-bg-800 shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:divide-bg-700 dark:border-bg-700 dark:bg-bg-800 dark:text-bg-100"
       >
         {children}
       </ListboxOptions>

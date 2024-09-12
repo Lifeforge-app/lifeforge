@@ -218,7 +218,6 @@ function TransactionsCard(): React.ReactElement {
                     </>
                   ) : (
                     <EmptyStateScreen
-                      icon="tabler:currency-dollar-off"
                       title={t('emptyState.wallet.transactions.title')}
                       description={t(
                         'emptyState.wallet.transactions.description'

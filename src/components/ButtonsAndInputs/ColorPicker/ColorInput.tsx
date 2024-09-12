@@ -57,7 +57,7 @@ function ColorInput({
           onClick={() => {
             handleColorPickerOpen()
           }}
-          className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-500/30 hover:text-bg-200 focus:outline-none"
+          className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-200 hover:text-bg-200 focus:outline-none"
         >
           <Icon icon="tabler:color-picker" className="size-6" />
         </button>

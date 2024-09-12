@@ -1,8 +1,7 @@
-import { Listbox } from '@headlessui/react'
+import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import ListboxTransition from '@components/ButtonsAndInputs/ListboxInput/components/ListboxTransition'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -235,7 +234,7 @@ function ChangiFlightStatus(): React.ReactElement {
             setSearchParams({ type: value })
           }}
         >
-          <Listbox.Button className="flex-between flex w-48 gap-2 rounded-md bg-bg-50 p-4 shadow-custom dark:bg-bg-800/50">
+          <ListboxButton className="flex-between flex w-48 gap-2 rounded-md bg-bg-50 p-4 shadow-custom dark:bg-bg-800/50">
             <div className="flex items-center gap-2">
               <Icon
                 icon={
@@ -252,39 +251,35 @@ function ChangiFlightStatus(): React.ReactElement {
               </span>
             </div>
             <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
-          </Listbox.Button>
-          <ListboxTransition>
-            <Listbox.Options className="absolute top-[120%] z-50 mt-1 max-h-56 w-48 divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800">
-              {SEARCH_TYPE.map(([name, icon, value]) => (
-                <Listbox.Option
-                  key={value}
-                  className={({ active }) =>
-                    `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
-                      active
-                        ? 'bg-bg-500/30 dark:bg-bg-700/50'
-                        : '!bg-transparent'
-                    }`
-                  }
-                  value={value}
-                >
-                  {({ selected }) => (
-                    <>
-                      <div className="flex items-center gap-2 whitespace-nowrap">
-                        <Icon icon={icon} className="size-5" />
-                        {name}
-                      </div>
-                      {selected && (
-                        <Icon
-                          icon="tabler:check"
-                          className="block text-lg text-custom-500"
-                        />
-                      )}
-                    </>
-                  )}
-                </Listbox.Option>
-              ))}
-            </Listbox.Options>
-          </ListboxTransition>
+          </ListboxButton>
+          <ListboxOptions
+            transition
+            anchor="bottom start"
+            className="w-[var(--button-width)] divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base text-bg-800 shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-100"
+          >
+            {SEARCH_TYPE.map(([name, icon, value]) => (
+              <Listbox.Option
+                key={value}
+                className="flex-between relative flex cursor-pointer select-none p-4 transition-all hover:bg-bg-200 dark:bg-bg-700/50"
+                value={value}
+              >
+                {({ selected }) => (
+                  <>
+                    <div className="flex items-center gap-2 whitespace-nowrap">
+                      <Icon icon={icon} className="size-5" />
+                      {name}
+                    </div>
+                    {selected && (
+                      <Icon
+                        icon="tabler:check"
+                        className="block text-lg text-custom-500"
+                      />
+                    )}
+                  </>
+                )}
+              </Listbox.Option>
+            ))}
+          </ListboxOptions>
         </Listbox>
         <SearchInput
           stuffToSearch="flights"
