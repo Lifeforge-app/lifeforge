@@ -27,7 +27,7 @@ function EntryItem({
       <div className="relative">
         <HamburgerMenu
           className="absolute right-2 top-2 shrink-0"
-          customTailwindColor="bg-zinc-500/50 hover:bg-zinc-500/70"
+          customTailwindColor="bg-bg-100 hover:bg-bg-200 shadow-custom dark:bg-bg-500/50 dark:hover:bg-bg-500/70"
         >
           <MenuItem
             onClick={() => {
