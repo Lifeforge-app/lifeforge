@@ -22,7 +22,7 @@ function GuitarTabs(): React.ReactElement {
     page: number
     items: IGuitarTabsEntry[]
   }>(
-    `/guitar-tabs/list?page=${page}&query=${encodeURIComponent(
+    `guitar-tabs/list?page=${page}&query=${encodeURIComponent(
       debouncedSearchQuery.trim()
     )}`
   )
