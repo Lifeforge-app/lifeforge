@@ -90,7 +90,7 @@ function AlgEntry({
   return (
     <li className="flex w-full items-center justify-between gap-8 rounded-md bg-bg-50 p-4 shadow-custom dark:bg-bg-900">
       <div className="flex items-center gap-8">
-        <div className="rounded-md bg-bg-800/70 p-2">
+        <div className="rounded-md bg-bg-200/70 p-2 dark:bg-bg-800/70">
           <div className="relative flex flex-col gap-0.5" ref={containerRef}>
             <div className="flex gap-0.5">
               <div className="size-5"></div>
