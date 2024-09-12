@@ -37,7 +37,7 @@ function CFOPF2L(): React.ReactElement {
               className="flex w-full items-center justify-between gap-8 rounded-md bg-bg-50 p-4 shadow-custom dark:bg-bg-900"
             >
               <div className="flex items-center gap-8">
-                <div className="rounded-md bg-bg-800/70 p-2">
+                <div className="rounded-md bg-bg-200/70 p-2 dark:bg-bg-800/70">
                   <div className="flex flex-col gap-0.5">
                     <div className="flex gap-0.5">
                       <div className="size-5"></div>
@@ -45,7 +45,9 @@ function CFOPF2L(): React.ReactElement {
                         <div key={i} className="flex size-5 items-end gap-0.5">
                           <div
                             className={`h-1 w-5 rounded-full ${
-                              col === 'Y' ? 'bg-yellow-500' : 'bg-bg-700'
+                              col === 'Y'
+                                ? 'bg-yellow-500'
+                                : 'bg-bg-400 dark:bg-bg-700'
                             }`}
                           ></div>
                         </div>
@@ -59,7 +61,7 @@ function CFOPF2L(): React.ReactElement {
                             className={`h-5 w-1 rounded-full ${
                               cube.left[0][i] === 'Y'
                                 ? 'bg-yellow-500'
-                                : 'bg-bg-700'
+                                : 'bg-bg-400 dark:bg-bg-700'
                             }`}
                           ></div>
                         </div>
@@ -67,7 +69,9 @@ function CFOPF2L(): React.ReactElement {
                           <div
                             key={i}
                             className={`size-5 rounded-sm ${
-                              col === 'Y' ? 'bg-yellow-500' : 'bg-bg-700'
+                              col === 'Y'
+                                ? 'bg-yellow-500'
+                                : 'bg-bg-400 dark:bg-bg-700'
                             }`}
                           ></div>
                         ))}
@@ -76,7 +80,7 @@ function CFOPF2L(): React.ReactElement {
                             className={`h-5 w-1 rounded-full ${
                               cube.right[0][2 - i] === 'Y'
                                 ? 'bg-yellow-500'
-                                : 'bg-bg-700'
+                                : 'bg-bg-400 dark:bg-bg-700'
                             }`}
                           ></div>
                         </div>
@@ -88,7 +92,9 @@ function CFOPF2L(): React.ReactElement {
                         <div key={i} className="flex size-5 items-start">
                           <div
                             className={`h-1 w-5 rounded-full ${
-                              col === 'Y' ? 'bg-yellow-500' : 'bg-bg-700'
+                              col === 'Y'
+                                ? 'bg-yellow-500'
+                                : 'bg-bg-400 dark:bg-bg-700'
                             }`}
                           ></div>
                         </div>

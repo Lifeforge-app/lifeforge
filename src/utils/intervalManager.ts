@@ -36,6 +36,10 @@ class IntervalManager {
   public hasIntervals(): boolean {
     return this.intervals.size > 0
   }
+
+  public getSize(): number {
+    return this.intervals.size
+  }
 }
 
 export default IntervalManager

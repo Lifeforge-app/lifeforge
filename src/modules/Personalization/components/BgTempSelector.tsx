@@ -10,7 +10,7 @@ function BgTempSelector(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="flex-between mb-12 flex w-full flex-col gap-6 px-4 md:flex-row">
+    <div className="flex-between flex w-full flex-col gap-6 px-4 md:flex-row">
       <div>
         <h3 className="block w-full text-xl font-medium leading-normal md:w-auto">
           {t('personalization.bgTempSelector.title')}
