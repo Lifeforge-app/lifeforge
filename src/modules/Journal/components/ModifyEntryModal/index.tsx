@@ -165,7 +165,7 @@ function ModifyJournalEntryModal({
               key={index}
               className={`step ${
                 step >= index + 1
-                  ? 'step-primary text-bg-100 before:bg-custom-500 after:!bg-custom-500 after:text-bg-900'
+                  ? 'step-primary text-bg-100 before:bg-custom-500 after:!bg-custom-500 after:text-bg-800'
                   : 'text-bg-500 before:bg-bg-800 after:bg-bg-800'
               } before:font-medium`}
             >

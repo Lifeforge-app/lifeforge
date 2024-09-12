@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
 import React, { useMemo, useState } from 'react'
 import { Doughnut } from 'react-chartjs-2'
@@ -80,7 +81,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                         numberToMoney(incomeExpenses.monthlyExpenses)}
                     </div>
                     <div className="mt-2 w-1/2 text-center text-base text-bg-500">
-                      Total spending for this month
+                      {t('wallet.dashboard.expensesBreakdown.desc')}
                     </div>
                   </div>
                   <Doughnut
@@ -155,7 +156,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                                       transaction.category === category.id
                                   ).length
                                 }{' '}
-                                transactions
+                                {t('wallet.transactionCount')}
                               </div>
                             </div>
                           </div>
@@ -187,7 +188,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                                       (acc, curr) => acc + curr.amount,
                                       0
                                     )) *
-                                100
+                                  100 || 0
                               ).toFixed(2)}
                               %
                             </div>

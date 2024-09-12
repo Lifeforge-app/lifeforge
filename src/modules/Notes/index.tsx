@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import Error from '@components/Screens/Error'
-import Loading from '@components/Screens/Loading'
+import ErrorScreen from '@components/Screens/ErrorScreen'
+import LoadingScreen from '@components/Screens/LoadingScreen'
 import useFetch from '@hooks/useFetch'
 import { type INotesWorkspace } from '@interfaces/notes_interfaces'
 
@@ -25,9 +25,9 @@ function Notes(): React.ReactElement {
       />
       {(() => {
         if (data === 'loading') {
-          return <Loading />
+          return <LoadingScreen />
         } else if (data === 'error') {
-          return <Error message="Failed to fetch data from server." />
+          return <ErrorScreen message="Failed to fetch data from server." />
         } else {
           return (
             <div className="flex-center grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-4 py-8">

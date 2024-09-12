@@ -9,13 +9,18 @@ function ThemeSelector(): React.ReactElement {
 
   return (
     <div className="w-full px-4">
-      <h3 className="block text-xl font-medium leading-normal">
-        {t('personalization.themeSelector.title')}
-      </h3>
-      <p className="text-neutral-500">
-        {t('personalization.themeSelector.desc')}
-      </p>
-      <div className="mt-6 flex w-full flex-col gap-8 px-2 md:flex-row">
+      <div className="flex items-center gap-4">
+        <Icon icon="tabler:sun-moon" className="size-6 text-bg-500" />
+        <div>
+          <h3 className="block text-xl font-medium leading-normal">
+            {t('personalization.themeSelector.title')}
+          </h3>
+          <p className="text-neutral-500">
+            {t('personalization.themeSelector.desc')}
+          </p>
+        </div>
+      </div>
+      <div className="mt-8 flex w-full flex-col gap-8 px-2 md:flex-row">
         {[
           {
             id: 'system',

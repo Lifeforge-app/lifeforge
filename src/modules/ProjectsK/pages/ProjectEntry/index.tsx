@@ -151,7 +151,7 @@ function ProjectsKEntry(): React.ReactElement {
                               />
                             </Listbox.Button>
                             <ListboxTransition>
-                              <Listbox.Options className="absolute top-8 z-50 mt-1 max-h-56 w-48 divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800 sm:text-sm">
+                              <Listbox.Options className="absolute top-8 z-50 mt-1 max-h-56 w-48 divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800">
                                 {Object.entries(PROJECT_STATUS).map(
                                   ([id, { name, color }]) => (
                                     <Listbox.Option

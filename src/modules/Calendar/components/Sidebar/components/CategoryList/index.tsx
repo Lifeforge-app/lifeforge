@@ -20,7 +20,7 @@ function CategoryList({
 }): React.ReactElement {
   return (
     <>
-      <section className="flex w-full min-w-0 flex-1 flex-col gap-4 rounded-lg bg-bg-50 shadow-[4px_4px_10px_0px_rgba(0,0,0,0.05)] dark:bg-bg-900">
+      <section className="flex w-full min-w-0 flex-1 flex-col gap-4 rounded-lg bg-bg-50 shadow-custom dark:bg-bg-900">
         <div className="mt-4">
           <SidebarTitle
             name="Categories"

@@ -4,6 +4,8 @@ import DatePicker from 'react-date-picker'
 import { useTranslation } from 'react-i18next'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { toCamelCase } from '@utils/strings'
+import InputLabel from './Input/components/InputLabel'
+import InputWrapper from './Input/components/InputWrapper'
 
 type ValuePiece = Date | null
 type Value = ValuePiece | [ValuePiece, ValuePiece]
@@ -29,25 +31,17 @@ const DateInput: React.FC<DateInputProps> = ({
   const { language } = usePersonalizationContext()
 
   return (
-    <div
-      className={`group relative ${
-        hasMargin && 'mt-4'
-      } flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 dark:bg-bg-800/50 ${className}`}
+    <InputWrapper
+      additionalClassName={`${className} ${hasMargin ? 'mt-4' : ''}`}
     >
       <Icon
         icon={icon}
         className={`ml-6 size-6 shrink-0 ${
-          date !== '' ? 'text-bg-100' : 'text-bg-500'
+          date !== '' ? 'text-bg-800 dark:text-bg-100' : 'text-bg-500'
         }`}
       />
       <div className="flex w-full items-center gap-2">
-        <span
-          className={
-            'pointer-events-none absolute left-[4.2rem] top-6 -translate-y-1/2 text-[14px] font-medium tracking-wide text-bg-500 transition-all group-focus-within:!text-custom-500'
-          }
-        >
-          {t(`input.${toCamelCase(name)}`)}
-        </span>
+        <InputLabel label={t(`input.${toCamelCase(name)}`)} active />
         <DatePicker
           value={date}
           onChange={(newDate: Value) => {
@@ -74,14 +68,14 @@ const DateInput: React.FC<DateInputProps> = ({
             onClick={() => {
               setDate('')
             }}
-            className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-500/30 hover:text-bg-200 focus:outline-none"
+            className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-200 hover:text-bg-200 focus:outline-none"
             aria-label="Clear date"
           >
             <Icon icon="tabler:x" className="size-6" />
           </button>
         )}
       </div>
-    </div>
+    </InputWrapper>
   )
 }
 

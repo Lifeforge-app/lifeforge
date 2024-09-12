@@ -1,6 +1,5 @@
 // App.tsx
 import React from 'react'
-import { ToastContainer } from 'react-toastify'
 import Providers from './Providers'
 import AppRouter from './Router'
 
@@ -12,17 +11,6 @@ function App(): React.ReactElement {
     >
       <Providers>
         <AppRouter />
-        <ToastContainer
-          position="bottom-center"
-          autoClose={3000}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
       </Providers>
     </div>
   )

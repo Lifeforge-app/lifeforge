@@ -1,9 +1,12 @@
+import { t } from 'i18next'
 import React, { Suspense, useMemo, useCallback, useEffect } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import Loading from '@components/Screens/Loading'
-import NotFound from '@components/Screens/NotFound'
+import { ToastContainer } from 'react-toastify'
+import LoadingScreen from '@components/Screens/LoadingScreen'
+import NotFoundScreen from '@components/Screens/NotFoundScreen'
 import { type IRoutes } from '@interfaces/routes_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { titleToPath, convertToDashCase } from '@utils/strings'
 import Auth from './auth'
 import { COMPONENTS } from './Components'
@@ -14,6 +17,7 @@ const ROUTES = _ROUTES as IRoutes[]
 
 function AppRouter(): React.ReactElement {
   const { auth, authLoading, userData } = useAuthContext()
+  const { theme } = usePersonalizationContext()
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -70,10 +74,12 @@ function AppRouter(): React.ReactElement {
     document.title = `Lifeforge. ${target !== '' ? '- ' + target : ''}`
   }, [location])
 
-  if (authLoading) return <Loading customMessage="Loading user data" />
+  if (authLoading) return <LoadingScreen customMessage="Loading user data" />
 
   return (
-    <Suspense fallback={<Loading customMessage="Loading module" />}>
+    <Suspense
+      fallback={<LoadingScreen customMessage={t('modules.loadingModule')} />}
+    >
       <Routes>
         <Route path="/" element={<MainApplication />}>
           {userData !== null ? (
@@ -106,12 +112,23 @@ function AppRouter(): React.ReactElement {
                   : renderRoutes(item.routes, convertToDashCase(item.name))
               )
           ) : (
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFoundScreen />} />
           )}
         </Route>
         <Route path="auth" element={<Auth />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFoundScreen />} />
       </Routes>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={theme}
+      />
     </Suspense>
   )
 }

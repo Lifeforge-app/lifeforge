@@ -79,7 +79,7 @@ function ModuleItem({
 
   return (
     <li className="flex flex-col items-center rounded-lg bg-bg-50 p-4 dark:bg-bg-900">
-      <div className="flex w-full flex-between gap-4">
+      <div className="flex-between flex w-full gap-4">
         <div className="flex items-center gap-4">
           <div className="rounded-lg bg-custom-500/20 p-3 dark:bg-bg-800">
             <Icon
@@ -111,7 +111,7 @@ function ModuleItem({
           </Switch>
           <button
             onClick={toggleExpandConfig}
-            className="rounded-lg p-2 text-bg-500 hover:bg-bg-800/50"
+            className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800/50"
           >
             <Icon
               icon={
@@ -176,7 +176,7 @@ function ModuleItem({
                     )
                   case 'switch':
                     return (
-                      <div key={key} className="flex flex-between gap-4">
+                      <div key={key} className="flex-between flex gap-4">
                         <div>
                           <label htmlFor={key} className="text-lg font-medium">
                             {property.name}

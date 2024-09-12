@@ -127,10 +127,7 @@ export default function PersonalizationProvider({
                 console.error(err)
               }
 
-              const appContainer = document.getElementById('app')
-              if (appContainer) {
-                appContainer.style.fontFamily = `${font.family}, sans-serif`
-              }
+              document.body.style.fontFamily = `${font.family}, sans-serif`
             })
           })
         }

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import Button from '../ButtonsAndInputs/Button'
 
-function NotFound(): React.ReactElement {
+function NotFoundScreen(): React.ReactElement {
   const navigate = useNavigate()
   const { t } = useTranslation()
 
@@ -40,4 +40,4 @@ function NotFound(): React.ReactElement {
   )
 }
 
-export default NotFound
+export default NotFoundScreen
