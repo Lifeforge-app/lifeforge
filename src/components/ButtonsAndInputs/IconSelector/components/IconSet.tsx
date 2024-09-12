@@ -6,7 +6,11 @@
 /* eslint-disable react/prop-types */
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
+import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
+import List from 'react-virtualized/dist/commonjs/List'
 import Input from './Input'
+
+const AS = AutoSizer
 
 export interface IIconSetData {
   title: string
@@ -73,7 +77,7 @@ function IconSet({
   }, [searchTerm, currentTag, iconData])
 
   return iconData ? (
-    <div className="flex min-h-0 w-full flex-col overflow-scroll p-8">
+    <div className="flex size-full min-h-0 flex-1 flex-col">
       <h1 className="mb-6 flex flex-col items-center gap-1 text-center text-3xl font-semibold tracking-wide sm:inline">
         {iconData.title}
       </h1>
@@ -106,23 +110,51 @@ function IconSet({
           )}
         </div>
       )}
-      <div className="mt-6 grid min-h-0 w-full grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-3 pb-8">
-        {filteredIconList.map(icon => (
-          <button
-            key={icon}
-            type="button"
-            onClick={() => {
-              setSelectedIcon(`${iconSet}:${icon}`)
-              setOpen(false)
-            }}
-            className="flex cursor-pointer flex-col items-center rounded-lg p-4 transition-all hover:bg-bg-800"
-          >
-            <Icon icon={`${iconSet}:${icon}`} width="32" height="32" />
-            <p className="-mb-0.5 mt-4 break-all  text-center text-xs font-medium tracking-wide">
-              {icon.replace(/-/g, ' ')}
-            </p>
-          </button>
-        ))}
+      <div className="min-h-0 flex-1">
+        <AS className="mt-8">
+          {({ width, height }) => {
+            const itemsPerRow = Math.floor(width / 160) || 1
+
+            return (
+              <List
+                width={width}
+                height={height - 12}
+                rowHeight={120}
+                rowCount={Math.ceil(filteredIconList.length / itemsPerRow)}
+                itemsPerRow={Math.floor(width / filteredIconList.length) || 1}
+                rowRenderer={({ index, key, style }) => {
+                  const fromIndex = index * itemsPerRow
+                  const toIndex = fromIndex + itemsPerRow
+
+                  return (
+                    <div key={key} style={style} className="flex w-full gap-4">
+                      {filteredIconList.slice(fromIndex, toIndex).map(icon => (
+                        <button
+                          key={icon}
+                          type="button"
+                          onClick={() => {
+                            setSelectedIcon(`${iconSet}:${icon}`)
+                            setOpen(false)
+                          }}
+                          className="flex h-min w-full cursor-pointer flex-col items-center rounded-lg p-4 transition-all hover:bg-bg-800"
+                        >
+                          <Icon
+                            icon={`${iconSet}:${icon}`}
+                            width="32"
+                            height="32"
+                          />
+                          <p className="-mb-0.5 mt-4 break-all  text-center text-xs font-medium tracking-wide">
+                            {icon.replace(/-/g, ' ')}
+                          </p>
+                        </button>
+                      ))}
+                    </div>
+                  )
+                }}
+              />
+            )
+          }}
+        </AS>
       </div>
     </div>
   ) : (

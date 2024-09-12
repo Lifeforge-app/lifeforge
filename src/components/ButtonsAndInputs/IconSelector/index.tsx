@@ -13,6 +13,7 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Modal from '@components/Modals/Modal.tsx'
+import Scrollbar from '@components/Scrollbar.tsx'
 import IconSet from './components/IconSet.tsx'
 import IconSetList from './components/IconSetList.tsx'
 import Search from './components/Search.tsx'
@@ -29,8 +30,8 @@ function IconSelector({
   const [currentIconSet, setCurrentIconSet] = useState(null)
 
   return (
-    <Modal isOpen={isOpen} className="md:!min-w-[60vw]">
-      <div className="flex-between mb-6 flex w-full p-8 pb-0">
+    <Modal isOpen={isOpen} minWidth="80vw" minHeight="80vh">
+      <div className="flex-between mb-6 flex w-full pb-0">
         {currentIconSet ? (
           <button
             onClick={() => {
