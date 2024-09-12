@@ -93,8 +93,9 @@ export default function PersonalizationProvider({
 
   useEffect(() => {
     fetch(
-      `https://www.googleapis.com/webfonts/v1/webfonts?family=${encodeURIComponent(
-        fontFamily
+      `https://www.googleapis.com/webfonts/v1/webfonts?family=${fontFamily.replace(
+        / /g,
+        '+'
       )}&key=${import.meta.env.VITE_GOOGLE_API_KEY}`
     )
       .then(async res => {
