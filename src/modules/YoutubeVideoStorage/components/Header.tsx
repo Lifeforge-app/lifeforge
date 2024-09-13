@@ -104,6 +104,7 @@ function Header({
               refreshVideos()
               setIsAddVideosModalOpen(true)
             }}
+            className="hidden whitespace-nowrap md:flex"
           >
             Add Video
           </Button>
