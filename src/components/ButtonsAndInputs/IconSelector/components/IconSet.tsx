@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable react/jsx-one-expression-per-line */
@@ -10,7 +11,8 @@ import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
 import Input from './Input'
 
-const AS = AutoSizer
+const AS = AutoSizer as any
+const L = List as any
 
 export interface IIconSetData {
   title: string
@@ -112,17 +114,25 @@ function IconSet({
       )}
       <div className="min-h-0 flex-1">
         <AS className="mt-8">
-          {({ width, height }) => {
+          {({ width, height }: { width: number; height: number }) => {
             const itemsPerRow = Math.floor(width / 160) || 1
 
             return (
-              <List
+              <L
                 width={width}
                 height={height - 12}
                 rowHeight={120}
                 rowCount={Math.ceil(filteredIconList.length / itemsPerRow)}
                 itemsPerRow={Math.floor(width / filteredIconList.length) || 1}
-                rowRenderer={({ index, key, style }) => {
+                rowRenderer={({
+                  index,
+                  key,
+                  style
+                }: {
+                  index: number
+                  key: string
+                  style: React.CSSProperties
+                }) => {
                   const fromIndex = index * itemsPerRow
                   const toIndex = fromIndex + itemsPerRow
 

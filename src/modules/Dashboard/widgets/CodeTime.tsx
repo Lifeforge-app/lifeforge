@@ -94,6 +94,7 @@ export default function CodeTime(): React.ReactElement {
 
   useEffect(() => {
     if (typeof data !== 'string') {
+      console.log(theme)
       const data2 = {
         labels: data.map(({ date }) =>
           new Date(date).toDateString().split(' ').slice(1, 3).join(' ')
@@ -105,8 +106,8 @@ export default function CodeTime(): React.ReactElement {
             backgroundColor: (context: ScriptableContext<'line'>) => {
               const ctx = context.chart.ctx
               const gradient = ctx.createLinearGradient(0, 0, 0, 250)
-              gradient.addColorStop(0, theme + '80')
-              gradient.addColorStop(1, theme + '00')
+              gradient.addColorStop(0, theme.replace(')', ', 0.5)'))
+              gradient.addColorStop(1, theme.replace(')', ', 0)'))
               return gradient
             },
             fill: 'origin',

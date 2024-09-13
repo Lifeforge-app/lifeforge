@@ -205,6 +205,7 @@ function ModifyTaskWindow(): React.ReactElement {
             setSubtasks={setSubtasks}
           />
           <DateInput
+            darker
             date={dueDate}
             setDate={setDueDate}
             name="Due date"

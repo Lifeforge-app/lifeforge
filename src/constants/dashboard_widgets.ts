@@ -34,7 +34,8 @@ const DASHBOARD_WIDGETS: Record<
     icon: 'tabler:clock'
   },
   codeTime: {
-    icon: 'tabler:code'
+    icon: 'tabler:code',
+    minH: 3
   },
   ideaBox: {
     icon: 'tabler:bulb'
