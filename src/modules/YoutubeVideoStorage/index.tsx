@@ -1,5 +1,6 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
+import FAB from '@components/ButtonsAndInputs/FAB'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -120,6 +121,13 @@ function YoutubeVideoStorage(): React.ReactElement {
         itemName="video"
         nameKey="title"
         data={videoToDelete}
+      />
+      <FAB
+        onClick={() => {
+          refreshVideos()
+          setIsAddVideosModalOpen(true)
+        }}
+        hideWhen="md"
       />
     </ModuleWrapper>
   )

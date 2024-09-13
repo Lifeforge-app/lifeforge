@@ -46,24 +46,26 @@ function ModuleHeader({
   const { t } = useTranslation()
 
   return (
-    <div className="flex-between flex gap-8">
-      <div className="flex items-center gap-4">
+    <div className="flex-between flex w-full min-w-0 gap-8">
+      <div className="flex w-full min-w-0 items-center gap-4">
         {icon !== undefined && (
-          <div className="flex size-16 items-center justify-center rounded-lg bg-custom-500/20">
+          <div className="flex size-16 shrink-0 items-center justify-center rounded-lg bg-custom-500/20">
             <Icon icon={icon} className="size-8 text-custom-500" />
           </div>
         )}
-        <div className="space-y-1">
-          <h1 className="flex items-end gap-3 text-3xl font-semibold  md:text-4xl">
-            {t(`modules.${toCamelCase(title?.toString() ?? '')}`)}
-            <span className="text-base font-medium text-bg-500">
+        <div className="w-full min-w-0 space-y-1">
+          <h1 className="flex w-full min-w-0 items-end gap-3 whitespace-nowrap text-3xl font-semibold md:text-4xl">
+            <span className="block truncate">
+              {t(`modules.${toCamelCase(title?.toString() ?? '')}`)}
+            </span>
+            <span className="min-w-0  text-base font-medium text-bg-500">
               {totalItems !== undefined
                 ? `(${totalItems.toLocaleString()})`
                 : ''}
             </span>
           </h1>
           {desc !== undefined && (
-            <div className="text-bg-500">
+            <div className="w-full min-w-0 truncate whitespace-nowrap text-bg-500">
               {t(
                 `modules.descriptions.${toCamelCase(title?.toString() ?? '')}`
               )}

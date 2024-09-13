@@ -24,11 +24,15 @@ function VideoEntry({
       rel="noreferrer"
       className="relative flex w-full items-center justify-between gap-8 rounded-md bg-bg-50 p-4 shadow-custom hover:bg-bg-200 dark:bg-bg-900 dark:hover:bg-bg-800/70"
     >
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col items-start md:flex-row">
         <VideoThumbnail id={video.youtube_id} duration={video.duration} />
         <VideoDetails video={video} />
       </div>
-      <HamburgerMenu className="absolute right-4 top-4" customWidth="">
+      <HamburgerMenu
+        className="absolute right-4 top-4"
+        customTailwindColor="md:text-bg-500 text-bg-100"
+        customWidth=""
+      >
         <MenuItem
           onClick={() => {
             window.open(`https://www.youtube.com/watch?v=${video.youtube_id}`)
