@@ -17,6 +17,7 @@ interface DateInputProps {
   icon: string
   hasMargin?: boolean
   className?: string
+  darker?: boolean
 }
 
 const DateInput: React.FC<DateInputProps> = ({
@@ -25,7 +26,8 @@ const DateInput: React.FC<DateInputProps> = ({
   name,
   icon,
   hasMargin = true,
-  className = ''
+  className = '',
+  darker = false
 }) => {
   const { t } = useTranslation()
   const { language } = usePersonalizationContext()
@@ -33,6 +35,7 @@ const DateInput: React.FC<DateInputProps> = ({
   return (
     <InputWrapper
       additionalClassName={`${className} ${hasMargin ? 'mt-4' : ''}`}
+      darker={darker}
     >
       <Icon
         icon={icon}
