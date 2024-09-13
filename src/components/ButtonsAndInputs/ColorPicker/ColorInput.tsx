@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
+import InputWrapper from '../Input/components/InputWrapper'
 
 function ColorInput({
   name,
@@ -21,7 +22,7 @@ function ColorInput({
   }, [setColorPickerOpen])
 
   return (
-    <div className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 focus-within:!border-custom-500 dark:bg-bg-800/50">
+    <InputWrapper darker additionalClassName="mt-4">
       <Icon
         icon="tabler:palette"
         className={`ml-6 size-6 shrink-0 ${
@@ -57,12 +58,12 @@ function ColorInput({
           onClick={() => {
             handleColorPickerOpen()
           }}
-          className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-200 hover:text-bg-200 focus:outline-none"
+          className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200 hover:text-bg-800 focus:outline-none dark:hover:bg-bg-700/70 dark:hover:text-bg-200"
         >
           <Icon icon="tabler:color-picker" className="size-6" />
         </button>
       </div>
-    </div>
+    </InputWrapper>
   )
 }
 
