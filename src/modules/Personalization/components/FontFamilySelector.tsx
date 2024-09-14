@@ -93,7 +93,7 @@ function FontFamilySelector(): React.ReactElement {
 
   return (
     <div className="flex-between mb-16 flex w-full flex-col gap-6 px-4 md:flex-row">
-      <div className="flex items-center gap-4">
+      <div className="flex w-full items-center gap-4">
         <Icon icon="uil:font" className="size-6 text-bg-500" />
         <div>
           <h3 className="flex w-full items-center gap-2 text-xl font-medium leading-normal md:w-auto">
