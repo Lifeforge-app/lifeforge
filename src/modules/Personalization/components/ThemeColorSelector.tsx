@@ -38,7 +38,7 @@ function ThemeColorSelector(): React.ReactElement {
 
   return (
     <div className="flex-between flex w-full flex-col gap-6 px-4 md:flex-row">
-      <div className="flex items-center gap-4">
+      <div className="flex w-full items-center gap-4">
         <Icon icon="tabler:palette" className="size-6 text-bg-500" />
         <div className="w-full md:w-auto">
           <h3 className="block text-xl font-medium leading-normal">
