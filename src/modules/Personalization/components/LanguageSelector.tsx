@@ -42,8 +42,8 @@ function LanguageSelector(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="flex-between relative z-20 mt-4 flex w-full flex-col gap-6 px-4 md:flex-row">
-      <div className="mt-6 flex items-center gap-4">
+    <div className="flex-between relative z-20 mt-8 flex w-full flex-col gap-6 px-4 md:flex-row">
+      <div className="flex w-full items-center gap-4">
         <Icon icon="uil:language" className="size-6 text-bg-500" />
         <div className="w-full md:w-auto">
           <h3 className="block text-xl font-medium leading-normal">
