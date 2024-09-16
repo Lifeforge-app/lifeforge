@@ -43,7 +43,6 @@ function PhotosTrash(): React.ReactElement {
               onClick={() => {
                 setIsEmptyTrashConfirmationModalOpen(true)
               }}
-              className="shrink-0"
               isRed
             >
               Empty trash

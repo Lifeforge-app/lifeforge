@@ -18,8 +18,11 @@ function InputWrapper({
           ? 'dark:bg-bg-800/50 dark:hover:bg-bg-800'
           : 'dark:bg-bg-800 dark:hover:bg-bg-700'
       } ${additionalClassName} ${
-        disabled ? '!pointer-events-none opacity-50' : ''
+        disabled ? '!pointer-events-none opacity-50' : 'cursor-text'
       }`}
+      onClick={e => {
+        e.currentTarget.querySelector('input')?.focus()
+      }}
     >
       {children}
     </div>
