@@ -8,6 +8,7 @@ interface ButtonProps {
   CustomElement?: React.ElementType
   icon: string
   iconAtEnd?: boolean
+  iconSize?: string
   onClick: () => void
   loading?: boolean
   disabled?: boolean
@@ -18,7 +19,7 @@ interface ButtonProps {
 
 const generateBaseClass = (hasChildren: boolean, iconAtEnd: boolean): string =>
   `flex items-center justify-center gap-2 whitespace-nowrap rounded-lg p-4 ${
-    hasChildren && iconAtEnd ? 'pl-5' : 'pr-5'
+    hasChildren && (iconAtEnd ? 'pl-5' : 'pr-5')
   } font-medium tracking-wide transition-all disabled:cursor-not-allowed`
 
 const generateColorClass = (isRed: boolean, variant: string): string => {
@@ -32,7 +33,7 @@ const generateColorClass = (isRed: boolean, variant: string): string => {
     case 'primary':
       return 'bg-custom-500 shadow-custom hover:bg-custom-600 text-bg-100 dark:text-bg-800 disabled:bg-bg-500 disabled:hover:bg-bg-500'
     case 'no-bg':
-      return 'hover:bg-bg-200 dark:hover:bg-bg-800 text-bg-500 hover:text-bg-800 dark:hover:text-bg-100 disabled:bg-bg-100/20 disabled:dark:bg-bg-950 disabled:hover:bg-bg-950 disabled:dark:hover:bg-bg-950 disabled:hover:text-bg-500 disabled:dark:hover:text-bg-500'
+      return 'hover:bg-bg-200/50 dark:hover:bg-bg-800 text-bg-500 hover:text-bg-800 dark:hover:text-bg-100 disabled:bg-bg-100/20 disabled:dark:bg-bg-950 disabled:hover:bg-bg-transparent disabled:dark:hover:bg-bg-950 disabled:hover:text-bg-500 disabled:dark:hover:text-bg-500'
     case 'secondary':
     default:
       return 'bg-bg-300 shadow-custom text-bg-500 dark:text-bg-100 dark:bg-bg-600 hover:bg-bg-400/50 dark:hover:bg-bg-500/80 text-bg-100 dark:text-bg-800 disabled:bg-bg-500 disabled:hover:bg-bg-500'
@@ -56,6 +57,7 @@ const Button: React.FC<ButtonProps> = ({
   CustomElement,
   icon,
   iconAtEnd = false,
+  iconSize,
   onClick,
   loading = false,
   disabled = false,
@@ -85,7 +87,7 @@ const Button: React.FC<ButtonProps> = ({
       {!iconAtEnd && (
         <Icon
           icon={loading ? 'svg-spinners:180-ring' : icon}
-          className="shrink-0 text-xl"
+          className={`shrink-0 ${iconSize ?? 'text-xl'}`}
         />
       )}
       {typeof children === 'string'
@@ -96,7 +98,7 @@ const Button: React.FC<ButtonProps> = ({
       {iconAtEnd && (
         <Icon
           icon={loading ? 'svg-spinners:180-ring' : icon}
-          className="shrink-0 text-xl"
+          className={`shrink-0 ${iconSize ?? 'text-xl'}`}
         />
       )}
     </FinalElement>

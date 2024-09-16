@@ -212,7 +212,7 @@ function Ideas(): React.ReactElement {
                                   }
                                 ]}
                                 gap="0.5rem"
-                                className="mb-12 mt-6 shrink-0 !overflow-x-visible"
+                                className="mb-8 mt-6 shrink-0 !overflow-x-visible"
                               >
                                 {data.map(entry => {
                                   const Component = {

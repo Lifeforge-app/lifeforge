@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Button from '@components/ButtonsAndInputs/Button'
+import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
 import { useAuthContext } from '@providers/AuthProvider'
 import ModifyModal from './ModifyModal'
 
@@ -19,24 +20,20 @@ function OrdinaryColumn({
 
   return (
     <>
-      <div className="relative z-20 flex w-full flex-col flex-between gap-6 px-4 md:flex-row">
-        <div className="w-full md:w-auto">
-          <h3 className="block text-xl font-medium leading-normal">
-            {t(`accountSettings.title.${title}`)}
-          </h3>
-          <p className="text-bg-500">{t(`accountSettings.desc.${title}`)}</p>
-        </div>
-        <div className="flex w-full flex-between gap-4 md:w-auto">
-          <span className="text-bg-500">{userData[id]}</span>
-          <Button
-            onClick={() => {
-              setModifyModalOpen(true)
-            }}
-            variant="no-bg"
-            icon="tabler:pencil"
-          />
-        </div>
-      </div>
+      <ConfigColumn
+        title={t(`accountSettings.title.${title}`)}
+        desc={t(`accountSettings.desc.${title}`)}
+        icon={icon}
+      >
+        <span className="whitespace-nowrap text-bg-500">{userData[id]}</span>
+        <Button
+          onClick={() => {
+            setModifyModalOpen(true)
+          }}
+          variant="no-bg"
+          icon="tabler:pencil"
+        />
+      </ConfigColumn>
       <ModifyModal
         title={title}
         id={id}

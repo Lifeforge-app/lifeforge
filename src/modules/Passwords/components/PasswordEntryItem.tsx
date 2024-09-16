@@ -172,13 +172,21 @@ function PasswordEntryITem({
           <p
             className={`mr-4 select-text ${
               decryptedPassword === null
-                ? 'hidden text-5xl md:flex'
+                ? 'hidden text-5xl tracking-tighter md:flex'
                 : 'hidden text-lg lg:flex '
             }`}
+            style={
+              decryptedPassword === null
+                ? { fontFamily: 'Times New Roman' }
+                : {}
+            }
           >
             {decryptedPassword ?? '············'}
           </p>
-          <button
+          <Button
+            variant="no-bg"
+            className="hidden !p-2 sm:flex"
+            iconSize="size-6"
             onClick={() => {
               decryptedPassword === null
                 ? (() => {
@@ -192,28 +200,22 @@ function PasswordEntryITem({
                   })()
                 : setDecryptedPassword(null)
             }}
-            className="hidden rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-800/70 hover:text-bg-100 md:block"
-          >
-            <Icon
-              icon={
-                loading
-                  ? 'svg-spinners:180-ring'
-                  : decryptedPassword === null
-                  ? 'tabler:eye'
-                  : 'tabler:eye-off'
-              }
-              className="pointer-events-none size-6"
-            />
-          </button>
-          <button
+            loading={loading}
+            icon={
+              loading
+                ? 'svg-spinners:180-ring'
+                : decryptedPassword === null
+                ? 'tabler:eye'
+                : 'tabler:eye-off'
+            }
+          />
+          <Button
             onClick={copyPassword}
-            className="hidden rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-800/70 hover:text-bg-100 sm:block"
-          >
-            <Icon
-              icon={copyLoading ? 'svg-spinners:180-ring' : 'tabler:copy'}
-              className="size-6"
-            />
-          </button>
+            loading={copyLoading}
+            icon="tabler:copy"
+            className="hidden !p-2 sm:flex"
+            variant="no-bg"
+          />
           <HamburgerMenu className="relative">
             <MenuItem
               onClick={() => {

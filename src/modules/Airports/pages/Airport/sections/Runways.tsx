@@ -12,7 +12,7 @@ function Runways({ code }: { code: string }): React.ReactElement {
   >(`airports/airport/${code}/runways`)
 
   return (
-    <div className="mb-12 mt-8 space-y-8">
+    <div className="my-8 space-y-8">
       <APIComponentWithFallback data={runways}>
         {runways =>
           runways.length > 0 ? (
