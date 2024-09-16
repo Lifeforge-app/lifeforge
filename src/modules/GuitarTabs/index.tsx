@@ -3,6 +3,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
@@ -32,7 +33,7 @@ function GuitarTabs(): React.ReactElement {
     page: number
     items: IGuitarTabsEntry[]
   }>(
-    `guitar-tabs/list?page=${page}&query=${encodeURIComponent(
+    `guitar-tabs?page=${page}&query=${encodeURIComponent(
       debouncedSearchQuery.trim()
     )}&category=${searchParams.get('category') ?? 'all'}&starred=${
       searchParams.get('starred') ?? 'false'
@@ -45,6 +46,8 @@ function GuitarTabs(): React.ReactElement {
   const [existingEntry, setExistingEntry] = useState<IGuitarTabsEntry | null>(
     null
   )
+  const [deleteConfirmationModalOpen, setDeleteConfirmationModalOpen] =
+    useState(false)
 
   useEffect(() => {
     setPage(1)
@@ -64,8 +67,25 @@ function GuitarTabs(): React.ReactElement {
         <Sidebar sidebarData={sidebarData} />
         <div className="flex w-full flex-col lg:ml-8">
           <h1 className="text-3xl font-semibold sm:text-4xl">
-            All Scores{' '}
-            <span className="text-base text-bg-500">
+            {`${searchParams.get('starred') === 'true' ? 'Starred ' : ''} ${
+              searchParams.get('category') !== null
+                ? {
+                    fingerstyle: 'Fingerstyle',
+                    singalong: 'Singalong'
+                  }[searchParams.get('category') as 'fingerstyle' | 'singalong']
+                : ''
+            } ${
+              searchParams.get('category') === null &&
+              searchParams.get('author') === null &&
+              searchParams.get('starred') === null
+                ? 'All'
+                : ''
+            } Guitar Tabs ${
+              searchParams.get('author') !== null
+                ? `by ${searchParams.get('author')}`
+                : ''
+            }`.trim()}
+            <span className="ml-2 text-base text-bg-500">
               ({typeof entries !== 'string' ? entries.totalItems : 0})
             </span>
           </h1>
@@ -113,12 +133,18 @@ function GuitarTabs(): React.ReactElement {
                       entries={entries.items}
                       setExistingEntry={setExistingEntry}
                       setModifyEntryModalOpen={setModifyEntryModalOpen}
+                      setDeleteConfirmationModalOpen={
+                        setDeleteConfirmationModalOpen
+                      }
                     />
                   ) : (
                     <ListView
                       entries={entries.items}
                       setExistingEntry={setExistingEntry}
                       setModifyEntryModalOpen={setModifyEntryModalOpen}
+                      setDeleteConfirmationModalOpen={
+                        setDeleteConfirmationModalOpen
+                      }
                     />
                   )
                 ) : debouncedSearchQuery.trim() === '' ? (
@@ -148,6 +174,20 @@ function GuitarTabs(): React.ReactElement {
         }}
         existingItem={existingEntry}
         refreshEntries={() => {
+          refreshEntries()
+          refreshSidebarData()
+        }}
+      />
+      <DeleteConfirmationModal
+        isOpen={deleteConfirmationModalOpen}
+        onClose={() => {
+          setDeleteConfirmationModalOpen(false)
+        }}
+        apiEndpoint="guitar-tabs"
+        data={existingEntry}
+        nameKey="title"
+        itemName="guitar tab"
+        updateDataList={() => {
           refreshEntries()
           refreshSidebarData()
         }}
