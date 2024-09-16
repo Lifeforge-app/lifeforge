@@ -60,7 +60,7 @@ function CalendarModule(): React.ReactElement {
             setModifyCategoryModalOpenType={setModifyCategoryOpenType}
             setExistedData={setExistedCategoryData}
           />
-          <div className="flex size-full flex-col pb-8 xl:ml-8">
+          <div className="flex size-full flex-col xl:ml-8">
             <Scrollbar>
               <div className="mb-8 size-full pr-4">
                 <CalendarComponent

@@ -7,7 +7,7 @@ function CFOPAlgorithms(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:cube" title="CFOP Algorithms" desc="..." />
-      <div className="mt-8 grid grid-cols-3 gap-6">
+      <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {Object.entries({
           F2L: 'First Two Layers',
           OLL: 'Orientation of the Last Layer',
@@ -23,8 +23,10 @@ function CFOPAlgorithms(): React.ReactElement {
               alt={key}
               className="mb-8 size-48"
             />
-            <h2 className="text-5xl font-semibold tracking-wider">{key}</h2>
-            <p className="mt-2 text-xl">{value}</p>
+            <h2 className="text-center text-5xl font-semibold tracking-wider">
+              {key}
+            </h2>
+            <p className="mt-2 text-center text-xl">{value}</p>
           </Link>
         ))}
       </div>

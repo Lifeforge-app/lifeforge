@@ -27,7 +27,7 @@ function CFOPPLL(): React.ReactElement {
           </h1>
         </div>
       </header>
-      <ul className="mb-16 mt-8 space-y-4">
+      <ul className="my-8 space-y-4">
         {algsetScrambles.map((algset, index) => {
           let cube = DEFAULT_CUBE
           cube = applyMoves(cube, algset[0])

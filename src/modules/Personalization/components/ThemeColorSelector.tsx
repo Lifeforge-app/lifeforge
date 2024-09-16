@@ -8,6 +8,7 @@ import {
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { toCamelCase } from '@utils/strings'
 
@@ -37,18 +38,11 @@ function ThemeColorSelector(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="flex-between flex w-full flex-col gap-6 px-4 md:flex-row">
-      <div className="flex w-full items-center gap-4">
-        <Icon icon="tabler:palette" className="size-6 text-bg-500" />
-        <div className="w-full md:w-auto">
-          <h3 className="block text-xl font-medium leading-normal">
-            {t('personalization.themeColorSelector.title')}
-          </h3>
-          <p className="text-bg-500">
-            {t('personalization.themeColorSelector.desc')}
-          </p>
-        </div>
-      </div>
+    <ConfigColumn
+      title={t('personalization.themeColorSelector.title')}
+      desc={t('personalization.themeColorSelector.desc')}
+      icon="tabler:palette"
+    >
       <Listbox
         value={themeColor}
         onChange={color => {
@@ -114,7 +108,7 @@ function ThemeColorSelector(): React.ReactElement {
           </ListboxOptions>
         </div>
       </Listbox>
-    </div>
+    </ConfigColumn>
   )
 }
 

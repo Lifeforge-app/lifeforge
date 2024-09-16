@@ -258,7 +258,7 @@ function DNSRecords(): JSX.Element {
                 description="There is no DNS record related to your search query."
               />
             ) : (
-              <table className="mb-16">
+              <table className="mb-8">
                 <thead>
                   <tr className="border-b-2 border-bg-200 dark:border-bg-800">
                     <th className="pl-4 pr-0">

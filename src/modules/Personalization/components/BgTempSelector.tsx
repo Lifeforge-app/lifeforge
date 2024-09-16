@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 const COLORS = ['bg-slate', 'bg-gray', 'bg-zinc', 'bg-neutral', 'bg-stone']
@@ -10,18 +11,11 @@ function BgTempSelector(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="flex-between flex w-full flex-col gap-6 px-4 md:flex-row">
-      <div className="flex w-full items-center gap-4">
-        <Icon icon="uil:temperature" className="size-6 text-bg-500" />
-        <div>
-          <h3 className="block w-full text-xl font-medium leading-normal md:w-auto">
-            {t('personalization.bgTempSelector.title')}
-          </h3>
-          <p className="text-bg-500">
-            {t('personalization.bgTempSelector.desc')}
-          </p>
-        </div>
-      </div>
+    <ConfigColumn
+      title={t('personalization.bgTempSelector.title')}
+      desc={t('personalization.bgTempSelector.desc')}
+      icon="tabler:temperature"
+    >
       <div className="flex w-full flex-col items-center gap-2 md:w-auto">
         <div className="flex items-center gap-4">
           {COLORS.map((color, index) => (
@@ -37,7 +31,10 @@ function BgTempSelector(): React.ReactElement {
               }}
             >
               {bgTemp === color && (
-                <Icon icon="tabler:check" className="size-5 text-bg-800" />
+                <Icon
+                  icon="tabler:check"
+                  className="size-4 text-bg-50 dark:text-bg-800"
+                />
               )}
             </button>
           ))}
@@ -52,7 +49,7 @@ function BgTempSelector(): React.ReactElement {
           </span>
         </div>
       </div>
-    </div>
+    </ConfigColumn>
   )
 }
 

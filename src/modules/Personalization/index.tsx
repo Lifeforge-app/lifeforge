@@ -15,15 +15,13 @@ function Personalization(): React.ReactElement {
         title="Personalization"
         desc="Customise your experience with the app."
       />
-      <LanguageSelector />
-      <div className="my-6 w-full border-b-[1.5px] border-bg-200 dark:border-bg-800/50" />
-      <ThemeSelector />
-      <div className="my-6 w-full border-b-[1.5px] border-bg-200 dark:border-bg-800/50" />
-      <ThemeColorSelector />
-      <div className="my-6 w-full border-b-[1.5px] border-bg-200 dark:border-bg-800/50" />
-      <BgTempSelector />
-      <div className="my-6 w-full border-b-[1.5px] border-bg-200 dark:border-bg-800/50" />
-      <FontFamilySelector />
+      <div className="my-8">
+        <LanguageSelector />
+        <ThemeSelector />
+        <ThemeColorSelector />
+        <BgTempSelector />
+        <FontFamilySelector />
+      </div>
     </ModuleWrapper>
   )
 }

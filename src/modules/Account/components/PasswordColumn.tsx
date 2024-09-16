@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
+import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
 import APIRequest from '@utils/fetchData'
 
 function PasswordColumn(): React.ReactElement {
@@ -26,13 +27,12 @@ function PasswordColumn(): React.ReactElement {
   }
 
   return (
-    <div className="relative z-20 mb-8 flex w-full flex-col flex-between gap-6 px-4 md:flex-row">
-      <div className="w-full md:w-auto">
-        <h3 className="block text-xl font-medium leading-normal">
-          {t('accountSettings.title.password')}
-        </h3>
-        <p className="text-bg-500">{t('accountSettings.desc.password')}</p>
-      </div>
+    <ConfigColumn
+      title={t('accountSettings.title.password')}
+      desc={t('accountSettings.desc.password')}
+      icon="tabler:key"
+      hasDivider={false}
+    >
       <Button
         onClick={() => {
           onPasswordChange().catch(console.error)
@@ -44,7 +44,7 @@ function PasswordColumn(): React.ReactElement {
       >
         change password
       </Button>
-    </div>
+    </ConfigColumn>
   )
 }
 
