@@ -9,11 +9,13 @@ import AudioPlayer from '../../ListView/components/AudioPlayer'
 function EntryItem({
   entry,
   setModifyEntryModalOpen,
-  setExistingEntry
+  setExistingEntry,
+  setDeleteConfirmationModalOpen
 }: {
   entry: IGuitarTabsEntry
   setModifyEntryModalOpen: (value: boolean) => void
   setExistingEntry: (value: IGuitarTabsEntry) => void
+  setDeleteConfirmationModalOpen: (value: boolean) => void
 }): React.ReactElement {
   return (
     <a
@@ -26,25 +28,6 @@ function EntryItem({
       rel="noreferrer"
     >
       <div className="relative">
-        <HamburgerMenu
-          className="absolute right-2 top-2 shrink-0"
-          customTailwindColor="bg-bg-100 hover:bg-bg-200 shadow-custom dark:bg-bg-500/50 dark:hover:bg-bg-500/70"
-        >
-          <MenuItem
-            onClick={() => {
-              setExistingEntry(entry)
-              setModifyEntryModalOpen(true)
-            }}
-            text="Edit"
-            icon="tabler:pencil"
-          />
-          <MenuItem
-            text="Delete"
-            icon="tabler:trash"
-            isRed
-            onClick={() => {}}
-          />
-        </HamburgerMenu>
         <div className="flex-center relative flex h-96 w-full overflow-hidden rounded-md bg-bg-100 dark:bg-bg-800">
           <Icon
             icon="mingcute:guitar-line"
@@ -61,6 +44,28 @@ function EntryItem({
         <div className="absolute bottom-0 right-0 rounded-br-md rounded-tl-md bg-bg-500/80 p-1 px-2">
           <p className="text-xs text-white">{entry.pageCount} pages</p>
         </div>
+        <HamburgerMenu
+          className="absolute right-2 top-2 shrink-0"
+          customTailwindColor="bg-bg-100 hover:bg-bg-200 shadow-custom dark:bg-bg-500/50 dark:hover:bg-bg-500/70"
+        >
+          <MenuItem
+            onClick={() => {
+              setExistingEntry(entry)
+              setModifyEntryModalOpen(true)
+            }}
+            text="Edit"
+            icon="tabler:pencil"
+          />
+          <MenuItem
+            text="Delete"
+            icon="tabler:trash"
+            isRed
+            onClick={() => {
+              setExistingEntry(entry)
+              setDeleteConfirmationModalOpen(true)
+            }}
+          />
+        </HamburgerMenu>
       </div>
       <div className="mt-4 flex w-full min-w-0 items-center justify-between gap-8">
         <div className="w-full min-w-0">

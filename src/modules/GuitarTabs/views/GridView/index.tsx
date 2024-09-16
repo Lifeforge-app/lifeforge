@@ -5,11 +5,13 @@ import EntryItem from './components/EntryItem'
 function GridView({
   entries,
   setExistingEntry,
-  setModifyEntryModalOpen
+  setModifyEntryModalOpen,
+  setDeleteConfirmationModalOpen
 }: {
   entries: IGuitarTabsEntry[]
   setExistingEntry: React.Dispatch<React.SetStateAction<any>>
   setModifyEntryModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   return (
     <div className="mb-6 grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
@@ -19,6 +21,7 @@ function GridView({
           entry={entry}
           setExistingEntry={setExistingEntry}
           setModifyEntryModalOpen={setModifyEntryModalOpen}
+          setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
         />
       ))}
     </div>

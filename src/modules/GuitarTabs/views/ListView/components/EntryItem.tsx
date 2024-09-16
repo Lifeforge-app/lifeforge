@@ -9,11 +9,13 @@ import DownloadMenu from '../../../components/DownloadMenu'
 function EntryItem({
   entry,
   setExistingEntry,
-  setModifyEntryModalOpen
+  setModifyEntryModalOpen,
+  setDeleteConfirmationModalOpen
 }: {
   entry: IGuitarTabsEntry
   setExistingEntry: React.Dispatch<React.SetStateAction<IGuitarTabsEntry>>
   setModifyEntryModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   return (
     <li
@@ -70,7 +72,10 @@ function EntryItem({
             text="Delete"
             icon="tabler:trash"
             isRed
-            onClick={() => {}}
+            onClick={() => {
+              setExistingEntry(entry)
+              setDeleteConfirmationModalOpen(true)
+            }}
           />
         </HamburgerMenu>
       </a>

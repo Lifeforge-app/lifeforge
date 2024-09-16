@@ -38,9 +38,12 @@ function Sidebar({
               icon="tabler:star-filled"
               name="Starred"
               number={sidebarData.favourites}
-              active={location.search === '?starred=true'}
+              active={searchParams.get('starred') === 'true'}
               onClick={() => {
-                navigate('/guitar-tabs?starred=true')
+                setSearchParams({
+                  ...Object.fromEntries(searchParams.entries()),
+                  starred: 'true'
+                })
                 setSidebarOpen(false)
               }}
             />
