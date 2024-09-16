@@ -1,5 +1,4 @@
 import React from 'react'
-import Scrollbar from '@components/Scrollbar'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
 import EntryItem from './components/EntryItem'
 
