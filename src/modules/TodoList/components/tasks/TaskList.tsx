@@ -7,10 +7,10 @@ function TaskList(): React.ReactElement {
   const { entries } = useTodoListContext()
 
   return (
-    <div className="mb-8 mt-6 flex flex-1 flex-col px-4">
+    <div className="mt-6 flex flex-1 flex-col">
       <Scrollbar>
         {typeof entries !== 'string' && entries.length > 0 && (
-          <ul className="mt-4 flex flex-1 flex-col gap-4 pb-24 sm:pb-8">
+          <ul className="mt-4 flex flex-1 flex-col gap-4 px-4 pb-8">
             {entries.map(entry => (
               <TaskItem entry={entry} key={entry.id} />
             ))}

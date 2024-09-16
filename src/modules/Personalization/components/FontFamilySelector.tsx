@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 import {
   Listbox,
   ListboxButton,
@@ -7,7 +8,9 @@ import {
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Tooltip } from 'react-tooltip'
+import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
+import List from 'react-virtualized/dist/commonjs/List'
+import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 export interface IFontFamily {
@@ -22,6 +25,9 @@ export interface IFontFamily {
   menu: string
   colorCapabilities?: ColorCapability[]
 }
+
+const AS = AutoSizer as any
+const L = List as any
 
 enum Category {
   Display = 'display',
@@ -92,95 +98,103 @@ function FontFamilySelector(): React.ReactElement {
   }, [])
 
   return (
-    <div className="flex-between mb-16 flex w-full flex-col gap-6 px-4 md:flex-row">
-      <div className="flex w-full items-center gap-4">
-        <Icon icon="uil:font" className="size-6 text-bg-500" />
-        <div>
-          <h3 className="flex w-full items-center gap-2 text-xl font-medium leading-normal md:w-auto">
-            {t('personalization.fontFamily.title')}
-            <a data-tooltip-id="my-tooltip">
-              <Icon icon="tabler:info-circle" className="size-5 text-bg-500" />
-            </a>
+    <ConfigColumn
+      title={t('personalization.fontFamily.title')}
+      desc={t('personalization.fontFamily.desc')}
+      icon="uil:font"
+      tooltip={
+        <>
+          <h3 className="mb-2 flex items-center gap-2 text-xl font-medium">
+            <Icon icon="simple-icons:googlefonts" className="size-6" />
+            {t('personalization.fontFamily.tooltipTitle')}
           </h3>
-          <p className="text-bg-500">{t('personalization.fontFamily.desc')}</p>
-        </div>
-      </div>
-      <div className="flex items-center gap-4">
-        <Listbox
-          value={fontFamily}
-          onChange={font => {
-            setFontFamily(font)
-          }}
-        >
-          <div className="relative mt-1 w-full md:w-64">
-            <ListboxButton className="flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 py-4 pl-4 pr-10 text-left outline-none transition-all hover:bg-bg-200/50 focus:outline-none dark:border-bg-700 dark:bg-bg-900 dark:hover:bg-bg-800/70">
-              <span
-                style={{
-                  fontFamily
-                }}
-                className="-mt-px block truncate"
-              >
-                {fontFamily}
-              </span>
-              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                <Icon
-                  icon="tabler:chevron-down"
-                  className="size-5 text-bg-500"
-                />
-              </span>
-            </ListboxButton>
-            <ListboxOptions
-              transition
-              anchor="bottom end"
-              className="h-56 w-80 divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base text-bg-800 shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-100"
-            >
-              {allFonts.map(({ family }) => (
-                <ListboxOption
-                  key={family}
-                  className="flex-between relative flex cursor-pointer select-none bg-transparent p-4 transition-all hover:bg-bg-200/50 hover:dark:bg-bg-800"
-                  value={family}
-                >
-                  {({ selected }) => (
-                    <>
-                      <div>
-                        <span
-                          style={{
-                            fontFamily: family
-                          }}
-                          className="flex items-center gap-2 text-base"
-                        >
-                          {family}
-                        </span>
-                      </div>
-                      {selected && (
-                        <Icon
-                          icon="tabler:check"
-                          className="block text-lg text-custom-500"
-                        />
-                      )}
-                    </>
-                  )}
-                </ListboxOption>
-              ))}
-            </ListboxOptions>
-          </div>
-        </Listbox>
-      </div>
-      <Tooltip
-        id="my-tooltip"
-        className="z-[9999] !rounded-md bg-bg-50 !p-4 !text-base text-bg-800 shadow-custom dark:bg-bg-900 dark:text-bg-100"
-        classNameArrow="!size-6"
-        place="top-start"
-        positionStrategy="fixed"
-        opacity={1}
+          <p className="text-bg-500">
+            {t('personalization.fontFamily.tooltip')}
+          </p>
+        </>
+      }
+      hasDivider={false}
+    >
+      <Listbox
+        value={fontFamily}
+        onChange={font => {
+          setFontFamily(font)
+        }}
       >
-        <h3 className="mb-2 flex items-center gap-2 text-xl font-medium">
-          <Icon icon="simple-icons:googlefonts" className="size-6" />
-          {t('personalization.fontFamily.tooltipTitle')}
-        </h3>
-        <p className="text-bg-500">{t('personalization.fontFamily.tooltip')}</p>
-      </Tooltip>
-    </div>
+        <div className="relative mt-1 w-full md:w-64">
+          <ListboxButton className="flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 py-4 pl-4 pr-10 text-left outline-none transition-all hover:bg-bg-200/50 focus:outline-none dark:border-bg-700 dark:bg-bg-900 dark:hover:bg-bg-800/70">
+            <span
+              style={{
+                fontFamily
+              }}
+              className="-mt-px block truncate"
+            >
+              {fontFamily}
+            </span>
+            <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+              <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
+            </span>
+          </ListboxButton>
+          <ListboxOptions
+            transition
+            anchor="bottom end"
+            className="h-72 w-80 divide-y divide-bg-200 rounded-md bg-bg-100 py-1 text-base text-bg-800 shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-100"
+          >
+            <AS>
+              {({ height, width }: { height: number; width: number }) => (
+                <L
+                  height={height}
+                  width={width}
+                  rowCount={allFonts.length}
+                  rowHeight={50}
+                  rowRenderer={({
+                    key,
+                    index,
+                    style
+                  }: {
+                    key: string
+                    index: number
+                    style: React.CSSProperties
+                  }) => {
+                    const family = allFonts[index].family
+
+                    return (
+                      <ListboxOption
+                        key={key}
+                        style={style}
+                        className="flex-between relative flex cursor-pointer select-none bg-transparent p-4 transition-all hover:bg-bg-200/50 hover:dark:bg-bg-800"
+                        value={family}
+                      >
+                        {({ selected }) => (
+                          <>
+                            <div>
+                              <span
+                                style={{
+                                  fontFamily: family
+                                }}
+                                className="flex items-center gap-2 text-base"
+                              >
+                                {family}
+                              </span>
+                            </div>
+                            {selected && (
+                              <Icon
+                                icon="tabler:check"
+                                className="block text-lg text-custom-500"
+                              />
+                            )}
+                          </>
+                        )}
+                      </ListboxOption>
+                    )
+                  }}
+                />
+              )}
+            </AS>
+          </ListboxOptions>
+        </div>
+      </Listbox>
+    </ConfigColumn>
   )
 }
 

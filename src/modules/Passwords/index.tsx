@@ -114,7 +114,7 @@ function Passwords(): React.ReactElement {
           {() =>
             typeof filteredPasswordList !== 'string' ? (
               filteredPasswordList.length > 0 ? (
-                <div className="mb-12 mt-8 flex w-full flex-col gap-4">
+                <div className="my-8 flex w-full flex-col gap-4">
                   {filteredPasswordList.map(password => (
                     <PasswordEntryITem
                       key={password.id}

@@ -41,7 +41,7 @@ function ProjectKanban(): React.ReactElement {
           <Scrollbar>
             <div
               ref={containerRef}
-              className="mb-12 mt-6 flex h-full min-h-0 min-w-0 flex-1 gap-4"
+              className="mb-8 mt-6 flex h-full min-h-0 min-w-0 flex-1 gap-4"
             >
               {columns.map((column, id) => (
                 <div
@@ -51,7 +51,7 @@ function ProjectKanban(): React.ReactElement {
                     borderColor: column.color
                   }}
                 >
-                  <div className="flex flex-between">
+                  <div className="flex-between flex">
                     <h3 className="flex items-center gap-4">
                       <Icon icon={column.icon} className="text-2xl" />
                       <span className="text-xl font-semibold ">

@@ -18,7 +18,7 @@ function SidebarWrapper({
       className={`absolute ${
         isOpen ? 'left-0' : 'left-full'
       } top-0 z-[9990] size-full shrink-0 rounded-lg bg-bg-50 py-4 shadow-custom duration-300 dark:bg-bg-900 xl:static ${
-        customHeight ?? 'xl:h-[calc(100%-4rem)]'
+        customHeight ?? 'xl:h-[calc(100%-2rem)]'
       } xl:w-1/4`}
     >
       <Scrollbar>

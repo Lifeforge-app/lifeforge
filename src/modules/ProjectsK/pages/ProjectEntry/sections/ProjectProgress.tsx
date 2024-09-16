@@ -36,7 +36,7 @@ export default function ProjectProgress({
   return (
     <APIComponentWithFallback data={projectData}>
       {() => (
-        <div className="mb-12 mt-6 flex size-full min-h-0 pr-8 sm:pr-12">
+        <div className="mb-8 mt-6 flex size-full min-h-0 pr-8 sm:pr-12">
           <APIComponentWithFallback data={progress}>
             {progress => (
               <div className="flex w-full flex-col px-6">

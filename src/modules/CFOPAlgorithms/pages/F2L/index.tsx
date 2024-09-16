@@ -180,7 +180,7 @@ function CFOPF2L(): React.ReactElement {
         </div>
       </header>
       {sections.map((section, i) => (
-        <section key={`section-${i + 1}`} className="mb-16 mt-8 space-y-4">
+        <section key={`section-${i + 1}`} className="my-8 space-y-4">
           <p className="w-full text-center text-lg font-semibold tracking-wider text-custom-500">
             SECTION {i + 1}
           </p>

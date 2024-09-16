@@ -4,8 +4,8 @@ import { toast } from 'react-toastify'
 import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
 import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
+import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
@@ -117,7 +117,7 @@ function ModifyEntryModal(): React.ReactElement {
 
   return (
     <>
-      <Modal isOpen={openType !== null} className="sm:min-w-[30rem]">
+      <Modal isOpen={openType !== null} minWidth="50vw">
         <ModalHeader
           icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
           title={openType === 'update' ? 'Edit Project' : 'Add Project'}

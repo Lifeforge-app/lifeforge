@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 function ThemeSelector(): React.ReactElement {
@@ -8,19 +9,13 @@ function ThemeSelector(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="w-full px-4">
-      <div className="flex items-center gap-4">
-        <Icon icon="tabler:sun-moon" className="size-6 text-bg-500" />
-        <div>
-          <h3 className="block text-xl font-medium leading-normal">
-            {t('personalization.themeSelector.title')}
-          </h3>
-          <p className="text-neutral-500">
-            {t('personalization.themeSelector.desc')}
-          </p>
-        </div>
-      </div>
-      <div className="mt-8 flex w-full flex-col gap-8 px-2 md:flex-row">
+    <ConfigColumn
+      title={t('personalization.themeSelector.title')}
+      desc={t('personalization.themeSelector.desc')}
+      icon="tabler:palette"
+      vertical
+    >
+      <div className="mt-4 flex w-full flex-col gap-8 px-2 md:flex-row">
         {[
           {
             id: 'system',
@@ -71,7 +66,7 @@ function ThemeSelector(): React.ReactElement {
           </button>
         ))}
       </div>
-    </div>
+    </ConfigColumn>
   )
 }
 

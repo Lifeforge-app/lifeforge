@@ -8,6 +8,7 @@ import {
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 const LANGUAGES: Array<{
@@ -42,18 +43,11 @@ function LanguageSelector(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="flex-between relative z-20 mt-8 flex w-full flex-col gap-6 px-4 md:flex-row">
-      <div className="flex w-full items-center gap-4">
-        <Icon icon="uil:language" className="size-6 text-bg-500" />
-        <div className="w-full md:w-auto">
-          <h3 className="block text-xl font-medium leading-normal">
-            {t('personalization.languageSelector.title')}
-          </h3>
-          <p className="text-bg-500">
-            {t('personalization.languageSelector.desc')}
-          </p>
-        </div>
-      </div>
+    <ConfigColumn
+      title={t('personalization.languageSelector.title')}
+      desc={t('personalization.languageSelector.desc')}
+      icon="tabler:language"
+    >
       <Listbox
         value={language}
         onChange={language => {
@@ -105,7 +99,7 @@ function LanguageSelector(): React.ReactElement {
           </ListboxOptions>
         </div>
       </Listbox>
-    </div>
+    </ConfigColumn>
   )
 }
 
