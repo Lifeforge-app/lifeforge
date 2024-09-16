@@ -171,7 +171,6 @@ function LockedFolderGallery(): React.ReactElement {
                     }}
                     loading={fileImportLoading}
                     icon="tabler:upload"
-                    className="shrink-0"
                   >
                     {!fileImportLoading ? (
                       <>Import</>

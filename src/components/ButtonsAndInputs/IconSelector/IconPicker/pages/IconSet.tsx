@@ -1,15 +1,12 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable operator-linebreak */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable react/prop-types */
 import { Icon } from '@iconify/react'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
-import Input from './Input'
+import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import Chip from '../components/Chip'
+import IconEntry from '../components/IconEntry'
 
 const AS = AutoSizer as any
 const L = List as any
@@ -27,10 +24,6 @@ async function getIconSet(prefix: string): Promise<any> {
     const res: IIconSetData = await fetch(
       `https://api.iconify.design/collection?prefix=${prefix}`
     ).then(async res => await res.json())
-
-    if (!res.uncategorized) {
-      res.uncategorized = Object.values(res.categories).flat()
-    }
 
     return res
   } catch (err) {
@@ -51,65 +44,60 @@ function IconSet({
   const [searchTerm, setSearchTerm] = useState('')
   const [currentTag, setCurrentTag] = useState<string | null>(null)
   const [iconData, setIconData] = useState<IIconSetData | null>(null)
-  const [filteredIconList, setFilteredIconList] = useState<string[]>([])
 
-  useEffect(() => {
-    getIconSet(iconSet).then(data => {
-      setIconData(data)
-      setFilteredIconList(data.uncategorized)
-    })
-  }, [])
+  const filteredIconList = useMemo(() => {
+    const allIcons = [
+      ...(iconData?.uncategorized ?? []),
+      ...Object.values(iconData?.categories ?? {}).flat()
+    ]
 
-  useEffect(() => {
-    if (iconData) {
-      if (currentTag) {
-        setFilteredIconList(
-          iconData.categories[currentTag].filter(icon =>
-            icon.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-        )
-      } else {
-        setFilteredIconList(
-          iconData.uncategorized.filter(icon =>
-            icon.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-        )
-      }
+    if (!iconData) return []
+
+    if (!currentTag) {
+      return allIcons.filter(icon =>
+        icon.toLowerCase().includes(searchTerm.toLowerCase())
+      )
     }
+
+    return (iconData.categories[currentTag] || []).filter(icon =>
+      icon.toLowerCase().includes(searchTerm.toLowerCase())
+    )
   }, [searchTerm, currentTag, iconData])
+
+  useEffect(() => {
+    getIconSet(iconSet)
+      .then(data => {
+        setIconData(data)
+      })
+      .catch(console.error)
+  }, [])
 
   return iconData ? (
     <div className="flex size-full min-h-0 flex-1 flex-col">
       <h1 className="mb-6 flex flex-col items-center gap-1 text-center text-3xl font-semibold tracking-wide sm:inline">
         {iconData.title}
       </h1>
-      <Input
-        value={searchTerm}
-        setValue={setSearchTerm}
-        placeholder={`Search ${iconData.total.toLocaleString()} icons`}
-        icon="uil:search"
+      <SearchInput
+        hasTopMargin={false}
+        searchQuery={searchTerm}
+        setSearchQuery={setSearchTerm}
+        stuffToSearch="icons"
+        lighter
       />
       {Object.keys(iconData.categories || {}).length > 0 && (
         <div className="mt-4 flex flex-wrap justify-center gap-2">
-          {Object.keys(iconData.categories).map(
-            tag =>
-              tag && (
-                <button
-                  key={tag}
-                  type="button"
-                  onClick={() => {
-                    setCurrentTag(currentTag === tag ? null : tag)
-                  }}
-                  className={`${
-                    currentTag === tag
-                      ? '!bg-bg-200 !text-bg-800 shadow-md'
-                      : ''
-                  } flex-center flex h-8 grow whitespace-nowrap rounded-full bg-bg-800 px-6 text-sm text-bg-100 shadow-md transition-all md:grow-0`}
-                >
-                  {tag}
-                </button>
-              )
-          )}
+          {Object.keys(iconData.categories)
+            .filter(t => t)
+            .map(tag => (
+              <Chip
+                key={tag}
+                onClick={() => {
+                  setCurrentTag(currentTag === tag ? null : tag)
+                }}
+                selected={currentTag === tag}
+                text={tag}
+              />
+            ))}
         </div>
       )}
       <div className="min-h-0 flex-1">
@@ -139,24 +127,13 @@ function IconSet({
                   return (
                     <div key={key} style={style} className="flex w-full gap-4">
                       {filteredIconList.slice(fromIndex, toIndex).map(icon => (
-                        <button
+                        <IconEntry
                           key={icon}
-                          type="button"
-                          onClick={() => {
-                            setSelectedIcon(`${iconSet}:${icon}`)
-                            setOpen(false)
-                          }}
-                          className="flex h-min w-full cursor-pointer flex-col items-center rounded-lg p-4 transition-all hover:bg-bg-800"
-                        >
-                          <Icon
-                            icon={`${iconSet}:${icon}`}
-                            width="32"
-                            height="32"
-                          />
-                          <p className="-mb-0.5 mt-4 break-all  text-center text-xs font-medium tracking-wide">
-                            {icon.replace(/-/g, ' ')}
-                          </p>
-                        </button>
+                          icon={icon}
+                          iconSet={iconSet}
+                          setSelectedIcon={setSelectedIcon}
+                          setOpen={setOpen}
+                        />
                       ))}
                     </div>
                   )

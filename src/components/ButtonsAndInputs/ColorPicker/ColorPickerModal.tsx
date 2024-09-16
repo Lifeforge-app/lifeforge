@@ -1,6 +1,6 @@
-import { Icon } from '@iconify/react'
 import { type ColorResult, Colorful, EditableInput } from '@uiw/react-color'
 import React, { useCallback, useEffect, useState } from 'react'
+import ModalHeader from '@components/Modals/ModalHeader'
 import Modal from '../../Modals/Modal'
 import Button from '../Button'
 
@@ -50,19 +50,12 @@ function ColorPickerModal({
   }, [color])
 
   return (
-    <Modal isOpen={isOpen}>
-      <div className="mb-8 flex flex-between ">
-        <h1 className="flex items-center gap-3 text-2xl font-semibold">
-          <Icon icon="tabler:palette" className="h-7 w-7" />
-          Color picker
-        </h1>
-        <button
-          onClick={handleClose}
-          className="rounded-md p-2 text-bg-100 transition-all hover:bg-bg-800"
-        >
-          <Icon icon="tabler:x" className="size-6" />
-        </button>
-      </div>
+    <Modal affectSidebar={false} isOpen={isOpen}>
+      <ModalHeader
+        title="Pick a color"
+        icon="tabler:color-picker"
+        onClose={handleClose}
+      />
       <Colorful
         color={innerColor}
         onChange={handleColorChange}

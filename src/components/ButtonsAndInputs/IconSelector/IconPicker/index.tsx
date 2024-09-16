@@ -1,24 +1,15 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable tailwindcss/migration-from-tailwind-2 */
-
-/* eslint-disable no-nested-ternary */
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable react/jsx-indent */
-/* eslint-disable operator-linebreak */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable no-param-reassign */
-/* eslint-disable react/prop-types */
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Modal from '@components/Modals/Modal.tsx'
-import Scrollbar from '@components/Scrollbar.tsx'
-import IconSet from './components/IconSet.tsx'
-import IconSetList from './components/IconSetList.tsx'
-import Search from './components/Search.tsx'
+import ModalHeader from '@components/Modals/ModalHeader.tsx'
+import IconSetList from './pages/IconSetList/index.tsx'
+import IconSet from '../IconPicker/pages/IconSet.tsx'
+import Search from '../IconPicker/pages/Search.tsx'
 
-function IconSelector({
+function IconPicker({
   isOpen,
   setOpen,
   setSelectedIcon
@@ -30,9 +21,14 @@ function IconSelector({
   const [currentIconSet, setCurrentIconSet] = useState(null)
 
   return (
-    <Modal isOpen={isOpen} minWidth="80vw" minHeight="80vh">
-      <div className="flex-between mb-6 flex w-full pb-0">
-        {currentIconSet ? (
+    <Modal
+      affectSidebar={false}
+      isOpen={isOpen}
+      minWidth="80vw"
+      minHeight="80vh"
+    >
+      {currentIconSet ? (
+        <div className="flex-between flex w-full">
           <button
             onClick={() => {
               setCurrentIconSet(null)
@@ -43,12 +39,25 @@ function IconSelector({
             <Icon icon="uil:arrow-left" className="size-7" />
             Go Back
           </button>
-        ) : (
-          <div className="flex items-end gap-2">
-            <h1 className="flex items-center gap-3 text-2xl font-semibold">
-              <Icon icon="tabler:icons" className="size-7" />
-              Icon Selector
-            </h1>
+          <button
+            onClick={() => {
+              setCurrentIconSet(null)
+              setSelectedIcon('')
+              setOpen(false)
+            }}
+            className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100"
+          >
+            <Icon icon="tabler:x" className="size-6" />
+          </button>
+        </div>
+      ) : (
+        <ModalHeader
+          title="Select an Icon"
+          icon="tabler:icons"
+          onClose={() => {
+            setOpen(false)
+          }}
+          appendTitle={
             <p className="shrink-0 text-right text-sm sm:text-base">
               powered by&nbsp;
               <a
@@ -60,17 +69,9 @@ function IconSelector({
                 Iconify
               </a>
             </p>
-          </div>
-        )}
-        <button
-          onClick={() => {
-            setOpen(false)
-          }}
-          className="rounded-md p-2 text-bg-100 transition-all hover:bg-bg-800"
-        >
-          <Icon icon="tabler:x" className="size-6" />
-        </button>
-      </div>
+          }
+        />
+      )}
       {currentIconSet ? (
         currentIconSet.search ? (
           <Search
@@ -93,4 +94,4 @@ function IconSelector({
   )
 }
 
-export default IconSelector
+export default IconPicker
