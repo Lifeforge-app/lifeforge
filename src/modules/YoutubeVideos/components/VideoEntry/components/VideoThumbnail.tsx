@@ -18,7 +18,7 @@ function VideoThumbnail({
       <img
         src={`${
           import.meta.env.VITE_API_HOST
-        }/youtube-video-storage/video/thumbnail/${id}`}
+        }/youtube-videos/video/thumbnail/${id}`}
         alt=""
         className="relative object-cover"
       />

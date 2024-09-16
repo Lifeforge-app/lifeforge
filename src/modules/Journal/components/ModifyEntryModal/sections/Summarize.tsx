@@ -21,7 +21,7 @@ function Summarize({
   masterPassword: string
 }): React.ReactElement {
   const { t } = useTranslation()
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState(false)
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
   function updateTextAreaHeight(): void {

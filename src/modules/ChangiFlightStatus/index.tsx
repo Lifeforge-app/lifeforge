@@ -228,7 +228,7 @@ function ChangiFlightStatus(): React.ReactElement {
       <div className="flex items-center gap-2">
         <Listbox
           as="div"
-          className="relative mt-2 sm:mt-6"
+          className="relative mt-2"
           value={searchParams.get('type') ?? 'dep'}
           onChange={value => {
             setSearchParams({ type: value })

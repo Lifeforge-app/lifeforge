@@ -28,7 +28,7 @@ function SearchInput({
         lighter
           ? 'bg-white hover:bg-bg-50 dark:bg-bg-800/70 dark:hover:bg-bg-800'
           : 'bg-bg-50 hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/70'
-      } ${hasTopMargin ? 'mt-4 sm:mt-6' : ''}`}
+      } ${hasTopMargin ? 'mt-4' : ''}`}
       onClick={e => {
         e.currentTarget.querySelector('input')?.focus()
       }}

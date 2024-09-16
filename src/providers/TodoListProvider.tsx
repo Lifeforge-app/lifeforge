@@ -91,13 +91,13 @@ export function TodoListProvider({
     'create' | 'update' | null
   >(null)
   const [deleteListConfirmationModalOpen, setDeleteListConfirmationModalOpen] =
-    useState<boolean>(false)
+    useState(false)
   const [selectedList, setSelectedList] = useState<ITodoListList | null>(null)
   const [modifyTagModalOpenType, setModifyTagModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
   const [deleteTagConfirmationModalOpen, setDeleteTagConfirmationModalOpen] =
-    useState<boolean>(false)
+    useState(false)
   const [selectedTag, setSelectedTag] = useState<ITodoListTag | null>(null)
 
   return (

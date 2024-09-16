@@ -49,7 +49,7 @@ function CalendarModule(): React.ReactElement {
           icon="tabler:calendar"
           desc="Make sure you don't miss important event."
         />
-        <div className="mb-8 mt-6 flex min-h-0 w-full flex-1">
+        <div className="mt-6 flex min-h-0 w-full flex-1">
           <Sidebar
             events={events}
             categories={categories}
@@ -60,7 +60,7 @@ function CalendarModule(): React.ReactElement {
             setModifyCategoryModalOpenType={setModifyCategoryOpenType}
             setExistedData={setExistedCategoryData}
           />
-          <div className="flex size-full flex-col xl:ml-8">
+          <div className="flex size-full flex-col pb-8 xl:ml-8">
             <Scrollbar>
               <div className="mb-8 size-full pr-4">
                 <CalendarComponent

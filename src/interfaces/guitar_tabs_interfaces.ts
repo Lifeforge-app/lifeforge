@@ -8,6 +8,16 @@ interface IGuitarTabsEntry extends BasePBCollection {
   pdf: string
   audio: string
   musescore: string
+  type: 'fingerstyle' | 'singalong'
+  isFavourite: boolean
 }
 
-export default IGuitarTabsEntry
+interface IGuitarTabsSidebarData {
+  total: number
+  favourites: number
+  fingerstyle: number
+  singalong: number
+  authors: Record<string, number>
+}
+
+export type { IGuitarTabsEntry, IGuitarTabsSidebarData }

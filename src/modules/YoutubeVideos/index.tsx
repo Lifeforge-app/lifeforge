@@ -12,11 +12,11 @@ import AddVideosModal from './components/AddVideosModal'
 import Header from './components/Header'
 import VideoList from './components/VideoList'
 
-function YoutubeVideoStorage(): React.ReactElement {
+function YoutubeVideos(): React.ReactElement {
   const [isAddVideosModalOpen, setIsAddVideosModalOpen] = useState(false)
   const [videos, refreshVideos, setVideos] = useFetch<
     IYoutubeVideosStorageEntry[]
-  >('youtube-video-storage/video')
+  >('youtube-videos/video')
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
     useState(false)
   const [videoToDelete, setVideoToDelete] =
@@ -117,7 +117,7 @@ function YoutubeVideoStorage(): React.ReactElement {
           })
           setVideoToDelete(undefined)
         }}
-        apiEndpoint="/youtube-video-storage/video"
+        apiEndpoint="/youtube-videos/video"
         itemName="video"
         nameKey="title"
         data={videoToDelete}
@@ -133,4 +133,4 @@ function YoutubeVideoStorage(): React.ReactElement {
   )
 }
 
-export default YoutubeVideoStorage
+export default YoutubeVideos

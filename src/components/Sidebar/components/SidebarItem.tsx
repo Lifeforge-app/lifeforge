@@ -13,9 +13,11 @@ interface SidebarItemProps {
   subsection?: string[][]
   onClick?: () => void
   isMainSidebarItem?: boolean
+  autoActive?: boolean
   active?: boolean
   prefix?: string
   number?: number
+  needTranslate?: boolean
 }
 
 function SidebarItem({
@@ -25,9 +27,11 @@ function SidebarItem({
   subsection,
   isMainSidebarItem = false,
   onClick,
+  autoActive = true,
   active = false,
   prefix = '',
-  number
+  number,
+  needTranslate = true
 }: SidebarItemProps): React.ReactElement {
   // @ts-expect-error - Lazy to fix yay =)
   const { sidebarExpanded, toggleSidebar } = isMainSidebarItem
@@ -45,22 +49,26 @@ function SidebarItem({
     <>
       <li
         className={`relative flex items-center gap-6 px-4 transition-all ${
-          location.pathname
-            .slice(1)
-            .startsWith(
-              (prefix !== '' ? `${prefix}/` : '') + titleToPath(name)
-            ) || active
+          (autoActive &&
+            location.pathname
+              .slice(1)
+              .startsWith(
+                (prefix !== '' ? `${prefix}/` : '') + titleToPath(name)
+              )) ||
+          active
             ? "font-semibold text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-100"
             : 'text-bg-500 dark:text-bg-500'
         }`}
       >
         <div
           className={`flex-between relative flex w-full gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 ${
-            location.pathname
-              .slice(1)
-              .startsWith(
-                (prefix !== '' ? `${prefix}/` : '') + titleToPath(name)
-              ) || active
+            (autoActive &&
+              location.pathname
+                .slice(1)
+                .startsWith(
+                  (prefix !== '' ? `${prefix}/` : '') + titleToPath(name)
+                )) ||
+            active
               ? 'bg-bg-200/50 dark:bg-bg-800'
               : 'hover:bg-bg-200/30 dark:hover:bg-bg-800/50'
           }`}
@@ -70,17 +78,19 @@ function SidebarItem({
               <Icon
                 icon={icon}
                 className={`size-6 shrink-0 ${
-                  location.pathname
-                    .slice(1)
-                    .startsWith(
-                      (prefix !== '' ? `${prefix}/` : '') + titleToPath(name)
-                    ) || active
+                  (autoActive &&
+                    location.pathname
+                      .slice(1)
+                      .startsWith(
+                        (prefix !== '' ? `${prefix}/` : '') + titleToPath(name)
+                      )) ||
+                  active
                     ? 'text-custom-500'
                     : ''
                 }`}
               />
             </div>
-            <span className="flex-between flex w-full gap-4">
+            <span className="flex-between flex w-full min-w-0 gap-4">
               {sidebarExpanded &&
                 (isMainSidebarItem ? (
                   <span className="flex-between flex w-full gap-2 truncate">
@@ -95,11 +105,18 @@ function SidebarItem({
                     )}
                   </span>
                 ) : (
-                  t(
-                    `sidebar.${
-                      location.pathname.split('/').slice(1)[0]
-                    }.${toCamelCase(name)}`
-                  )
+                  <span className="block w-full min-w-0 truncate">
+                    {needTranslate
+                      ? t(
+                          `sidebar.${toCamelCase(
+                            location.pathname
+                              .split('/')
+                              .slice(1)[0]
+                              .replace(/-/g, ' ')
+                          )}.${toCamelCase(name)}`
+                        )
+                      : name}
+                  </span>
                 ))}
               {number !== undefined && (
                 <span className="text-sm text-bg-500">

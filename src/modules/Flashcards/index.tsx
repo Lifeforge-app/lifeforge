@@ -50,7 +50,7 @@ export default function Flashcards(): React.ReactElement {
           <APIComponentWithFallback data={decks}>
             {decks => (
               <Scrollbar>
-                <div className="mt-6 grid w-full grid-cols-3 gap-6 px-4 pb-12">
+                <div className="mt-6 grid w-full grid-cols-3 gap-6 px-4 pb-16">
                   {decks.map(deck => (
                     <Link
                       to={`/flashcards/${deck.id}`}

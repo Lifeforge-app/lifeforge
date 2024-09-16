@@ -36,7 +36,7 @@ function Repositories(): React.ReactElement {
       <div className="mt-6 flex min-h-0 w-full flex-1">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className="flex h-full flex-1 flex-col lg:m-8">
-          <div className="flex flex-between">
+          <div className="flex-between flex">
             <h1 className="text-3xl font-semibold  md:text-4xl">
               All Repositories{' '}
               {/* <span className="text-base text-bg-500">(10)</span> */}
@@ -68,7 +68,7 @@ function Repositories(): React.ReactElement {
                     key={index}
                     className="space-y-4 rounded-lg bg-bg-50 p-4 shadow-custom transition-all hover:shadow-[4px_4px_10px_0px_rgba(0,0,0,0.1)] dark:bg-bg-900"
                   >
-                    <div className="flex flex-between gap-4">
+                    <div className="flex-between flex gap-4">
                       <div>
                         <h2 className="text-lg font-semibold text-bg-800 dark:!text-bg-100">
                           {repo.name}

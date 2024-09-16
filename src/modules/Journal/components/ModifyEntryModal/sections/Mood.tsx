@@ -27,7 +27,7 @@ function Mood({
   }
   masterPassword: string
 }): React.ReactElement {
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState(false)
   async function fetchSummarizedText(): Promise<void> {
     setMood({
       text: '',

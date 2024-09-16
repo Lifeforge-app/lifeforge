@@ -236,10 +236,10 @@
         "togglable": true
       },
       {
-        "name": "Youtube Video Storage",
+        "name": "Youtube Videos",
         "icon": "tabler:brand-youtube",
         "routes": {
-          "youtube-video-storage": "youtube-video-storage"
+          "youtube-videos": "youtube-videos"
         },
         "togglable": true
       }

@@ -51,7 +51,7 @@ function ModifyTransactionsModal({
 
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null)
   const [receipt, setReceipt] = useState<File | null>(null)
-  const [toRemoveReceipt, setToRemoveReceipt] = useState<boolean>(false)
+  const [toRemoveReceipt, setToRemoveReceipt] = useState(false)
 
   useEffect(() => {
     if (openType) {

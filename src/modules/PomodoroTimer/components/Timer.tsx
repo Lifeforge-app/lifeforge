@@ -17,7 +17,7 @@ export default function Timer(): React.ReactElement {
       if (timeLeft > 0) {
         const timer = setTimeout(() => {
           setTimeLeft(timeLeft - 1)
-        }, 1)
+        }, 1000)
 
         return () => {
           clearTimeout(timer)

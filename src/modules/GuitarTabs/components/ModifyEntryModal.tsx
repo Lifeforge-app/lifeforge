@@ -3,30 +3,19 @@ import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyBut
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
-import type IGuitarTabsEntry from '@interfaces/guitar_tabs_interfaces'
+import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
 import APIRequest from '@utils/fetchData'
 
 function ModifyEntryModal({
   isOpen,
   onClose,
   existingItem,
-  setEntries
+  refreshEntries
 }: {
   isOpen: boolean
   onClose: () => void
   existingItem: IGuitarTabsEntry | null
-  setEntries: React.Dispatch<
-    React.SetStateAction<
-      | {
-          totalItems: number
-          totalPages: number
-          page: number
-          items: IGuitarTabsEntry[]
-        }
-      | 'loading'
-      | 'error'
-    >
-  >
+  refreshEntries: () => void
 }): React.ReactElement {
   const [name, setName] = useState('')
   const [author, setAuthor] = useState('')
@@ -59,16 +48,8 @@ function ModifyEntryModal({
       },
       successInfo: 'update',
       failureInfo: 'update',
-      callback: data => {
-        setEntries(prev => {
-          if (typeof prev === 'string') return prev
-          return {
-            ...prev,
-            items: prev.items.map(item =>
-              item.id === existingItem?.id ? data.data : item
-            )
-          }
-        })
+      callback: () => {
+        refreshEntries()
         onClose()
       },
       finalCallback: () => {

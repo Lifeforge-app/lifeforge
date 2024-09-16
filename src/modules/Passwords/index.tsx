@@ -48,7 +48,7 @@ function Passwords(): React.ReactElement {
   const [
     isDeletePasswordConfirmationModalOpen,
     setIsDeletePasswordConfirmationModalOpen
-  ] = useState<boolean>(false)
+  ] = useState(false)
   const [existedData, setExistedData] = useState<IPasswordEntry | null>(null)
 
   async function fetchChallenge(): Promise<string> {

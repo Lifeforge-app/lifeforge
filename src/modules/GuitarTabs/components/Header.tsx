@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Icon } from '@iconify/react/dist/iconify.js'
 import { cookieParse } from 'pocketbase'
 import React, { useRef } from 'react'
 import { type Id, toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
+import FAB from '@components/ButtonsAndInputs/FAB'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import useThemeColorHex from '@hooks/useThemeColorHex'
 import APIRequest from '@utils/fetchData'
@@ -14,17 +13,9 @@ import IntervalManager from '@utils/intervalManager'
 const intervalManager = IntervalManager.getInstance()
 
 function Header({
-  searchQuery,
-  setSearchQuery,
-  setView,
-  view,
   refreshEntries,
   totalItems
 }: {
-  searchQuery: string
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>
-  setView: React.Dispatch<React.SetStateAction<'grid' | 'list'>>
-  view: 'grid' | 'list'
   refreshEntries: () => void
   totalItems: number
 }): React.ReactElement {
@@ -167,6 +158,7 @@ function Header({
               uploadFiles().catch(console.error)
             }}
             icon="tabler:upload"
+            className="hidden md:flex"
           >
             Upload
           </Button>
@@ -183,39 +175,7 @@ function Header({
         }
         tips="If you want to append audio and Musescore files to your guitar tabs, make sure to name them the same as the PDF file and upload them together."
       />
-      <div className="flex items-center gap-2">
-        <SearchInput
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          stuffToSearch="guitar tabs"
-        />
-        <div className="mt-2 flex items-center gap-2 rounded-md bg-bg-50 p-2 shadow-custom dark:bg-bg-900 sm:mt-6">
-          {['grid', 'list'].map(viewType => (
-            <button
-              key={viewType}
-              onClick={() => {
-                setView(viewType as 'grid' | 'list')
-              }}
-              className={`flex items-center gap-2 rounded-md p-2 transition-all ${
-                viewType === view
-                  ? 'bg-bg-200/50 dark:bg-bg-800'
-                  : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-100'
-              }`}
-            >
-              <Icon
-                icon={
-                  viewType === 'grid'
-                    ? 'uil:apps'
-                    : viewType === 'list'
-                    ? 'uil:list-ul'
-                    : ''
-                }
-                className="size-6"
-              />
-            </button>
-          ))}
-        </div>
-      </div>
+      <FAB onClick={uploadFiles} icon="tabler:plus" />
     </>
   )
 }

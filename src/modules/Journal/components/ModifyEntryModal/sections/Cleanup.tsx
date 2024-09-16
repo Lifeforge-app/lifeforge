@@ -18,7 +18,7 @@ function Cleanup({
   cleanedUpText: string
   masterPassword: string
 }): React.ReactElement {
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState(false)
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
   function updateTextAreaHeight(): void {

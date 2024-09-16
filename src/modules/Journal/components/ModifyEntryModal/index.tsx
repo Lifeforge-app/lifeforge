@@ -47,8 +47,7 @@ function ModifyJournalEntryModal({
     text: '',
     emoji: ''
   })
-  const [titleGenerationLoading, setTitleGenerationLoading] =
-    useState<boolean>(false)
+  const [titleGenerationLoading, setTitleGenerationLoading] = useState(false)
 
   async function generateTitle(): Promise<void> {
     setTitle('')
