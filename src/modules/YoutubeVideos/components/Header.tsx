@@ -49,7 +49,7 @@ function Header({
     setIsFirstTime(false)
 
     APIRequest({
-      endpoint: 'youtube-video-storage/video/download-status',
+      endpoint: 'youtube-videos/video/download-status',
       method: 'POST',
       failureInfo: 'Failed to get download status',
       body: { id: 'all' },
@@ -94,7 +94,7 @@ function Header({
     <>
       <ModuleHeader
         icon="tabler:brand-youtube"
-        title="Youtube Video Storage"
+        title="Youtube Videos"
         desc="..."
         totalItems={videosLength}
         actionButton={

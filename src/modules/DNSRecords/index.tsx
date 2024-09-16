@@ -242,7 +242,7 @@ function DNSRecords(): JSX.Element {
             }}
             icon="tabler:trash"
             isRed
-            className="mt-2 whitespace-nowrap sm:mt-6"
+            className="mt-2 whitespace-nowrap"
           >
             Bulk Delete
           </Button>

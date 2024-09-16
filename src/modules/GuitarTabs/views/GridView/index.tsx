@@ -1,5 +1,6 @@
 import React from 'react'
-import type IGuitarTabsEntry from '@interfaces/guitar_tabs_interfaces'
+import Scrollbar from '@components/Scrollbar'
+import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
 import EntryItem from './components/EntryItem'
 
 function GridView({
@@ -12,7 +13,7 @@ function GridView({
   setModifyEntryModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   return (
-    <div className="my-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div className="mb-6 grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
       {entries.map(entry => (
         <EntryItem
           key={entry.id}

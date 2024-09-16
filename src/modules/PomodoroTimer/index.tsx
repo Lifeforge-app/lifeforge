@@ -28,7 +28,7 @@ export default function PomodoroTimer(): React.ReactElement {
       <div className="mt-6 flex w-full flex-1">
         <Timer />
         <TodoListProvider>
-          <aside className="mb-12 w-2/6 rounded-lg bg-bg-50 p-6 dark:bg-bg-900">
+          <aside className="mb-16 w-2/6 rounded-lg bg-bg-50 p-6 dark:bg-bg-900">
             <h1 className="mb-8 flex items-center gap-2 text-xl font-semibold">
               <Icon icon="tabler:clipboard-list" className="text-2xl" />
               <span className="ml-2">

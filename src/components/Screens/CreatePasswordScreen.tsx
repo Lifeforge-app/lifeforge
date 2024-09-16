@@ -17,7 +17,7 @@ function CreatePasswordScreen({
   const { setUserData, userData } = useAuthContext()
   const [newPassword, setNewPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const inputRef2 = useRef<HTMLInputElement>(null)
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false)

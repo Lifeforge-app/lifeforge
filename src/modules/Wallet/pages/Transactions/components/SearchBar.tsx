@@ -19,7 +19,7 @@ function SearchBar({
         setSearchQuery={setSearchQuery}
         stuffToSearch="transactions"
       />
-      <div className="mt-2 flex items-center gap-2 rounded-md bg-bg-50 p-2 shadow-custom dark:bg-bg-900 sm:mt-6">
+      <div className="mt-2 flex items-center gap-2 rounded-md bg-bg-50 p-2 shadow-custom dark:bg-bg-900">
         {['list', 'table'].map(viewType => (
           <button
             key={viewType}
