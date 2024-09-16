@@ -7,18 +7,36 @@ function SearchInput({
   searchQuery,
   setSearchQuery,
   stuffToSearch,
-  onKeyUp
+  onKeyUp,
+  customIcon,
+  lighter = false,
+  hasTopMargin = true
 }: {
   searchQuery: string
   setSearchQuery: (query: string) => void
   stuffToSearch: string
   onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  customIcon?: string
+  lighter?: boolean
+  hasTopMargin?: boolean
 }): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <search className="mt-4 flex w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/70 sm:mt-6">
-      <Icon icon="tabler:search" className="size-5 text-bg-500" />
+    <search
+      className={`flex w-full cursor-text items-center gap-4 rounded-lg p-4 shadow-custom transition-all ${
+        lighter
+          ? 'bg-white hover:bg-bg-50 dark:bg-bg-800/70 dark:hover:bg-bg-800'
+          : 'bg-bg-50 hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/70'
+      } ${hasTopMargin ? 'mt-4 sm:mt-6' : ''}`}
+      onClick={e => {
+        e.currentTarget.querySelector('input')?.focus()
+      }}
+    >
+      <Icon
+        icon={customIcon ?? 'tabler:search'}
+        className="size-5 text-bg-500"
+      />
       <input
         type="text"
         onKeyUp={onKeyUp}

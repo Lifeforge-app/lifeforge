@@ -10,7 +10,10 @@
 /* eslint-disable react/prop-types */
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
-import Input from './Input'
+import Button from '@components/ButtonsAndInputs/Button'
+import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import Chip from '../components/Chip'
+import IconEntry from '../components/IconEntry'
 
 async function getIconSet(searchTerm: string): Promise<any> {
   try {
@@ -85,61 +88,53 @@ function Search({
   return iconData ? (
     <div className="flex min-h-0 w-full flex-col overflow-scroll p-8">
       <div className="flex w-full gap-2">
-        <Input
-          value={searchQuery}
-          setValue={setSearchQuery}
-          placeholder="Search icons"
-          icon="uil:search"
-        />
-        <button
-          type="button"
-          onClick={() => {
-            if (searchQuery) setCurrentIconSetProp({ search: searchQuery })
+        <SearchInput
+          hasTopMargin={false}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          stuffToSearch="icons"
+          onKeyUp={e => {
+            if (e.key === 'Enter' && searchQuery) {
+              setCurrentIconSetProp({ search: searchQuery })
+            }
           }}
-          className="flex-center flex gap-1 rounded-md bg-bg-200 px-6 py-4 font-medium text-bg-800 shadow-md transition-all hover:bg-[#b3bdc9]"
+          lighter
+        />
+        <Button
+          onClick={() => {
+            if (searchQuery) setCurrentIconSet({ search: searchQuery })
+          }}
+          icon="tabler:arrow-right"
+          iconAtEnd
         >
           Search
-          <Icon icon="uil:arrow-right" className="size-5 text-bg-800" />
-        </button>
+        </Button>
       </div>
       {Object.keys(iconData.iconSets).length > 0 && (
         <div className="mt-4 flex flex-wrap justify-center gap-2">
           {Object.entries(iconData.iconSets)
             .sort()
             .map(([name, iconSet]) => (
-              <button
+              <Chip
                 key={name}
-                type="button"
                 onClick={() => {
                   setCurrentIconSet(currentIconSet === name ? null : name)
                 }}
-                className={`${
-                  currentIconSet === name
-                    ? 'bg-bg-200 text-bg-800 shadow-md'
-                    : 'bg-bg-800'
-                } flex-center flex h-8 grow whitespace-nowrap rounded-full px-6 text-sm text-bg-100 shadow-md transition-all md:grow-0`}
-              >
-                {iconSet.name}
-              </button>
+                selected={currentIconSet === name}
+                text={name}
+              />
             ))}
         </div>
       )}
       <div className=" mt-6 grid min-h-0 grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-3 pb-8">
         {filteredIconList.map(icon => (
-          <button
+          <IconEntry
             key={icon}
-            type="button"
-            onClick={() => {
-              setSelectedIcon(icon.name || icon)
-              setOpen(false)
-            }}
-            className="flex cursor-pointer flex-col items-center rounded-lg p-4 transition-all hover:bg-bg-800"
-          >
-            <Icon icon={icon.name || icon} width="32" height="32" />
-            <p className="-mb-0.5 mt-4 break-all  text-center text-xs font-medium tracking-wide">
-              {(icon.name || icon).replace(/-/g, ' ')}
-            </p>
-          </button>
+            icon={icon.split(':').pop()}
+            iconSet={icon.split(':').shift()}
+            setSelectedIcon={setSelectedIcon}
+            setOpen={setOpen}
+          />
         ))}
       </div>
     </div>
