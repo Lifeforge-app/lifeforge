@@ -31,7 +31,7 @@ function PlaylistSection({
   const [playlistUrl, setPlaylistUrl] = useState<string>('')
   const debouncedPlaylistUrl = useDebounce(playlistUrl, 500)
   const [playlistInfo] = useFetch<IYoutubePlaylistEntry>(
-    `/youtube-video-storage/playlist/get-info/${
+    `/youtube-videos/playlist/get-info/${
       debouncedPlaylistUrl.match(URL_REGEX)?.groups?.list
     }`,
     URL_REGEX.test(debouncedPlaylistUrl)
@@ -60,9 +60,7 @@ function PlaylistSection({
     >
   > {
     const res = await fetch(
-      `${
-        import.meta.env.VITE_API_HOST
-      }/youtube-video-storage/video/download-status`,
+      `${import.meta.env.VITE_API_HOST}/youtube-videos/video/download-status`,
       {
         method: 'POST',
         headers: {
@@ -92,9 +90,9 @@ function PlaylistSection({
     downloadingVideos.current.add(metadata.id)
 
     fetch(
-      `${
-        import.meta.env.VITE_API_HOST
-      }/youtube-video-storage/video/async-download/${metadata.id}`,
+      `${import.meta.env.VITE_API_HOST}/youtube-videos/video/async-download/${
+        metadata.id
+      }`,
       {
         method: 'POST',
         headers: {

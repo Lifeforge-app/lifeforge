@@ -23,12 +23,11 @@ function Journal(): React.ReactElement {
   const [entries, setEntries] = useState<IJournalEntry[] | 'loading' | 'error'>(
     'loading'
   )
-  const [journalViewModalOpen, setJournalViewModalOpen] =
-    useState<boolean>(false)
+  const [journalViewModalOpen, setJournalViewModalOpen] = useState(false)
   const [
     deleteJournalConfirmationModalOpen,
     setDeleteJournalConfirmationModalOpen
-  ] = useState<boolean>(false)
+  ] = useState(false)
   const [currentViewingJournal, setCurrentViewingJournal] = useState<
     string | null
   >(null)

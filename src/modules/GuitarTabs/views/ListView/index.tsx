@@ -1,5 +1,5 @@
 import React from 'react'
-import type IGuitarTabsEntry from '@interfaces/guitar_tabs_interfaces'
+import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
 import EntryItem from './components/EntryItem'
 
 function ListView({

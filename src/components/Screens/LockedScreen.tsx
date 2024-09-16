@@ -24,7 +24,7 @@ function LockedScreen({
   const { userData } = useAuthContext()
   const [masterPassWordInputContent, setMasterPassWordInputContent] =
     useState<string>('')
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState(false)
   const { t } = useTranslation()
 
   async function onSubmit(): Promise<void> {

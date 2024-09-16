@@ -17,9 +17,9 @@ function VideoEntry({
   return (
     <a
       key={video.id}
-      href={`${
-        import.meta.env.VITE_API_HOST
-      }/youtube-video-storage/video/stream/${video.youtube_id}`}
+      href={`${import.meta.env.VITE_API_HOST}/youtube-videos/video/stream/${
+        video.youtube_id
+      }`}
       target="_blank"
       rel="noreferrer"
       className="relative flex w-full items-center justify-between gap-8 rounded-md bg-bg-50 p-4 shadow-custom hover:bg-bg-200 dark:bg-bg-900 dark:hover:bg-bg-800/70"

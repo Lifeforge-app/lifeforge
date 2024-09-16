@@ -5,9 +5,7 @@ export default async function checkDownloadStatus(id: string): Promise<{
   progress: number
 }> {
   const res = await fetch(
-    `${
-      import.meta.env.VITE_API_HOST
-    }/youtube-video-storage/video/download-status`,
+    `${import.meta.env.VITE_API_HOST}/youtube-videos/video/download-status`,
     {
       method: 'POST',
       headers: {

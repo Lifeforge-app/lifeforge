@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import type IGuitarTabsEntry from '@interfaces/guitar_tabs_interfaces'
+import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
 import DownloadMenu from '../../../components/DownloadMenu'
 import AudioPlayer from '../../ListView/components/AudioPlayer'
 
