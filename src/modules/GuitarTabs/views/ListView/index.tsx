@@ -5,11 +5,13 @@ import EntryItem from './components/EntryItem'
 function ListView({
   entries,
   setExistingEntry,
-  setModifyEntryModalOpen
+  setModifyEntryModalOpen,
+  setDeleteConfirmationModalOpen
 }: {
   entries: IGuitarTabsEntry[]
   setExistingEntry: React.Dispatch<React.SetStateAction<any>>
   setModifyEntryModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   return (
     <ul className="my-6 space-y-4">
@@ -19,6 +21,7 @@ function ListView({
           entry={entry}
           setExistingEntry={setExistingEntry}
           setModifyEntryModalOpen={setModifyEntryModalOpen}
+          setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
         />
       ))}
     </ul>
