@@ -1,4 +1,5 @@
-import * as webauthn from '@passwordless-id/webauthn'
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+// import * as webauthn from '@passwordless-id/webauthn'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -14,36 +15,9 @@ function AuthForm(): React.ReactElement {
   const { t } = useTranslation()
 
   const {
-    setAuth,
-    setUserData,
     authenticate,
-    loginQuota: { quota, dismissQuota },
-    verifyToken
+    loginQuota: { quota, dismissQuota }
   } = useAuthContext()
-
-  async function fetchPassKeyChallenge(): Promise<string> {
-    return await fetch(
-      `${import.meta.env.VITE_API_HOST}/user/passkey/challenge`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (res.ok && data.state === 'success') {
-          return data.data
-        } else {
-          throw new Error(data.message)
-        }
-      })
-      .catch(err => {
-        toast.error(t('auth.errorMessages.passkeyChallenge'))
-        console.error(err)
-      })
-  }
 
   function signIn(): void {
     if (emailOrUsername.length === 0 || password.length === 0) {
@@ -69,92 +43,6 @@ function AuthForm(): React.ReactElement {
       })
       .catch(() => {
         toast.error(t(AUTH_ERROR_MESSAGES.UNKNOWN_ERROR))
-      })
-  }
-
-  // async function registerWithPasskey(): Promise<void> {
-  //   const res = await webauthn.client.register(
-  //     'melvinchia623600@gmail.com',
-  //     '20e47b44-293a-417a-8559-d7f32affd8b4',
-  //     {
-  //       authenticatorType: 'both',
-  //       userVerification: 'required',
-  //       discoverable: 'preferred',
-  //       timeout: 60000,
-  //       attestation: true
-  //     }
-  //   )
-
-  //   await fetch(`${import.meta.env.VITE_API_HOST}/user/passkey/register`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(res)
-  //   })
-  //     .then(async res => {
-  //       const data = await res.json()
-  //       if (res.ok && data.state === 'success') {
-  //         toast.success(t('auth.passkey.createSuccess'))
-  //       } else {
-  //         throw new Error(data.message)
-  //       }
-  //     })
-  //     .catch(err => {
-  //       toast.error(t('auth.errorMessages.passkeyRegister'))
-  //       console.error(err)
-  //     })
-  //     .finally(() => {
-  //       setLoading(false)
-  //     })
-  // }
-
-  async function signInWithPasskey(): Promise<void> {
-    setLoading(true)
-    const challenge = await fetchPassKeyChallenge()
-
-    const res = await webauthn.client.authenticate([], challenge)
-
-    await fetch(`${import.meta.env.VITE_API_HOST}/user/passkey/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(res)
-    })
-      .then(async res => {
-        const data = await res.json()
-
-        if (res.ok && data.state === 'success') {
-          document.cookie = `token=${data.token}; path=/; expires=${new Date(
-            Date.now() + 7 * 24 * 60 * 60 * 1000
-          ).toUTCString()}`
-
-          verifyToken(data.token)
-            .then(async ({ success, userData }) => {
-              if (success) {
-                setUserData(userData)
-                setAuth(true)
-
-                toast.success(t('auth.welcome') + userData.username)
-              }
-            })
-            .catch(() => {
-              setAuth(false)
-            })
-            .finally(() => {
-              setLoading(false)
-            })
-        } else {
-          throw new Error(data.message)
-        }
-      })
-      .catch(err => {
-        toast.error(t('auth.errorMessages.passkeyLogin'))
-        console.error(err)
-      })
-      .finally(() => {
-        setLoading(false)
       })
   }
 
@@ -204,9 +92,6 @@ function AuthForm(): React.ReactElement {
         password={password}
         loading={loading}
         signIn={signIn}
-        signInWithPasskey={() => {
-          signInWithPasskey().catch(console.error)
-        }}
       />
     </div>
   )

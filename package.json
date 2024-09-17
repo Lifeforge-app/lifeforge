@@ -58,6 +58,7 @@
     "react-leaflet": "^4.2.1",
     "react-markdown": "^9.0.1",
     "react-medium-image-zoom": "^5.1.9",
+    "react-otp-input": "^3.1.1",
     "react-photo-album": "^2.4.0",
     "react-router": "^6.20.0",
     "react-router-dom": "^6.23.1",

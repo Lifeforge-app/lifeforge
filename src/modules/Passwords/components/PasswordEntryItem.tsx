@@ -175,11 +175,7 @@ function PasswordEntryITem({
                 ? 'hidden text-5xl tracking-tighter md:flex'
                 : 'hidden text-lg lg:flex '
             }`}
-            style={
-              decryptedPassword === null
-                ? { fontFamily: 'Times New Roman' }
-                : {}
-            }
+            style={decryptedPassword === null ? { fontFamily: 'Arial' } : {}}
           >
             {decryptedPassword ?? '············'}
           </p>

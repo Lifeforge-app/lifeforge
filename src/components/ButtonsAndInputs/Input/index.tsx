@@ -74,6 +74,7 @@ function Input({
           onKeyDown={onKeyDown}
           type={isPassword ? 'password' : 'text'}
           autoComplete={noAutoComplete ? 'false' : 'true'}
+          style={isPassword ? { fontFamily: 'Arial' } : {}}
           className={`mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500 ${
             isPassword && value ? 'text-2xl focus:text-base' : ''
           }`}

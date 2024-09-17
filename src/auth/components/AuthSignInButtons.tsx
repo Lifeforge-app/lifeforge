@@ -1,21 +1,50 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import { useAuthContext } from '@providers/AuthProvider'
 
 function AuthSignInButton({
   loading,
-  signIn,
-  signInWithPasskey
+  signIn
 }: {
   emailOrUsername: string
   password: string
   loading: boolean
   signIn: () => void
-  signInWithPasskey: () => void
 }): React.ReactElement {
   const { auth } = useAuthContext()
   const { t } = useTranslation()
+  const [searchParams] = useSearchParams()
+
+  async function signInWithProvider(providerName: string): Promise<void> {
+    const provider = await fetch(
+      `${
+        import.meta.env.VITE_API_HOST
+      }/user/auth/oauth-endpoint?provider=${providerName}`
+    )
+      .then(async res => {
+        const data = await res.json()
+        if (res.ok) {
+          return data.data
+        } else {
+          throw new Error(data.message)
+        }
+      })
+      .catch(err => {
+        toast.error("Couldn't fetch provider data")
+        console.error(err)
+      })
+
+    if (!provider) return
+
+    localStorage.setItem('authState', provider.state)
+    localStorage.setItem('authProvider', providerName)
+
+    window.location.href = provider.authUrl + `${window.location.origin}/auth`
+  }
 
   return (
     <div className="mt-6 space-y-6">
@@ -29,19 +58,46 @@ function AuthSignInButton({
         sign in
       </Button>
       <div className="flex items-center gap-3">
-        <div className="h-[2px] w-full bg-bg-600"></div>
-        <div className="shrink-0 font-medium text-bg-600">{t('auth.or')}</div>
-        <div className="h-[2px] w-full bg-bg-600"></div>
+        <div className="h-[2px] w-full bg-bg-500"></div>
+        <div className="shrink-0 font-medium text-bg-500">
+          {t('auth.orSignInWith')}
+        </div>
+        <div className="h-[2px] w-full bg-bg-500"></div>
       </div>
       <div className="flex w-full gap-4">
         <Button
-          onClick={signInWithPasskey}
-          loading={loading || auth}
-          icon="tabler:key"
+          onClick={() => {
+            signInWithProvider('github').catch(console.error)
+          }}
+          loading={
+            loading ||
+            auth ||
+            (searchParams.get('code') !== null &&
+              searchParams.get('state') !== null)
+          }
+          icon="uil:github"
           variant="secondary"
           className="w-full"
+          needTranslate={false}
         >
-          sign in with passkey
+          Github
+        </Button>
+        <Button
+          onClick={() => {
+            signInWithProvider('google').catch(console.error)
+          }}
+          loading={
+            loading ||
+            auth ||
+            (searchParams.get('code') !== null &&
+              searchParams.get('state') !== null)
+          }
+          icon="uil:google"
+          variant="secondary"
+          className="w-full"
+          needTranslate={false}
+        >
+          Google
         </Button>
       </div>
     </div>

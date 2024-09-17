@@ -15,6 +15,7 @@ interface ButtonProps {
   className?: string
   variant?: 'primary' | 'secondary' | 'no-bg'
   isRed?: boolean
+  needTranslate?: boolean
 }
 
 const generateBaseClass = (hasChildren: boolean, iconAtEnd: boolean): string =>
@@ -36,7 +37,7 @@ const generateColorClass = (isRed: boolean, variant: string): string => {
       return 'hover:bg-bg-200/50 dark:hover:bg-bg-800 text-bg-500 hover:text-bg-800 dark:hover:text-bg-100 disabled:bg-bg-100/20 disabled:dark:bg-bg-950 disabled:hover:bg-bg-transparent disabled:dark:hover:bg-bg-950 disabled:hover:text-bg-500 disabled:dark:hover:text-bg-500'
     case 'secondary':
     default:
-      return 'bg-bg-300 shadow-custom text-bg-500 dark:text-bg-100 dark:bg-bg-600 hover:bg-bg-400/50 dark:hover:bg-bg-500/80 text-bg-100 dark:text-bg-800 disabled:bg-bg-500 disabled:hover:bg-bg-500'
+      return 'bg-bg-300 shadow-custom text-bg-500 dark:text-bg-100 dark:bg-bg-500 hover:bg-bg-400/50 dark:hover:bg-bg-500/80 text-bg-100 dark:text-bg-800 disabled:bg-bg-200 disabled:hover:bg-bg-200 dark:disabled:bg-bg-900 dark:disabled:hover:bg-bg-900 dark:disabled:text-bg-600'
   }
 }
 
@@ -64,6 +65,7 @@ const Button: React.FC<ButtonProps> = ({
   className = '',
   variant = 'primary',
   isRed = false,
+  needTranslate = true,
   ...otherProps
 }) => {
   const { t } = useTranslation()
@@ -92,7 +94,9 @@ const Button: React.FC<ButtonProps> = ({
       )}
       {typeof children === 'string'
         ? children !== ''
-          ? t(`button.${toCamelCase(children)}`)
+          ? needTranslate
+            ? t(`button.${toCamelCase(children)}`)
+            : children
           : ''
         : children}
       {iconAtEnd && (

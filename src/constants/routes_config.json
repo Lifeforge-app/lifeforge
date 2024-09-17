@@ -374,6 +374,14 @@
           "server-status": "server-status"
         },
         "togglable": false
+      },
+      {
+        "name": "API Keys",
+        "icon": "tabler:password",
+        "routes": {
+          "api-keys": "api-keys"
+        },
+        "togglable": false
       }
     ]
   },
