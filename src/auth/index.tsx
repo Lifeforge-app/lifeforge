@@ -1,11 +1,24 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { useAuthContext } from '@providers/AuthProvider'
 import AuthForm from './components/AuthForm'
 import AuthHeader from './components/AuthHeader'
 import AuthSideImage from './components/AuthSideImage'
 
 function Auth(): React.ReactElement {
+  const { verifyOAuth } = useAuthContext()
+  const [searchParams] = useSearchParams()
+
+  useEffect(() => {
+    const code = searchParams.get('code')
+    const state = searchParams.get('state')
+
+    if (!code || !state) return
+    verifyOAuth(code, state)
+  }, [searchParams])
+
   return (
     <>
       <section className="flex-center flex size-full flex-col overflow-y-auto px-8 pb-4 pt-12 sm:px-12 lg:w-1/2">

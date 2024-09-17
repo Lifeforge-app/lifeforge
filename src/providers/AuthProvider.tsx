@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/member-delimiter-style */
+import { t } from 'i18next'
 import React, { createContext, useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
+import APIRequest from '@utils/fetchData'
 import { AUTH_ERROR_MESSAGES } from '../constants/auth'
 
 interface IAuthData {
@@ -15,6 +18,7 @@ interface IAuthData {
     password: string
   }) => Promise<string>
   verifyToken: (token: string) => Promise<{ success: boolean; userData: any }>
+  verifyOAuth: (code: string, state: string) => void
   logout: () => void
   loginQuota: {
     quota: number
@@ -37,6 +41,7 @@ export default function AuthProvider({
   const [userData, setUserData] = useState<any>(null)
   const [quota, setQuota] = useState(5)
   const [authLoading, setAuthLoading] = useState(true)
+  const navigate = useNavigate()
 
   function updateQuota(): number {
     const storedQuota = window.localStorage.getItem('quota')
@@ -152,6 +157,64 @@ export default function AuthProvider({
     return await res
   }
 
+  function verifyOAuth(code: string, state: string): void {
+    try {
+      const storedState = localStorage.getItem('authState')
+      const storedProvider = localStorage.getItem('authProvider')
+      if (!state || !storedState || !storedProvider) {
+        throw new Error('Invalid login attempt')
+      }
+
+      localStorage.removeItem('authProvider')
+      localStorage.removeItem('authState')
+
+      if (storedState !== state) {
+        throw new Error('Invalid state')
+      }
+
+      APIRequest({
+        endpoint: 'user/auth/oauth-verify',
+        method: 'POST',
+        body: { code, provider: storedProvider },
+        callback: data => {
+          if (data.state === 'success') {
+            document.cookie = `token=${data.token}; path=/; expires=${new Date(
+              Date.now() + 7 * 24 * 60 * 60 * 1000
+            ).toUTCString()}`
+
+            verifyToken(data.token)
+              .then(async ({ success, userData }) => {
+                if (success) {
+                  setUserData(userData)
+                  setAuth(true)
+
+                  toast.success(t('auth.welcome') + userData.username)
+                }
+              })
+              .catch(() => {
+                setAuth(false)
+              })
+              .finally(() => {
+                setAuthLoading(false)
+              })
+          } else {
+            throw new Error(data.message)
+          }
+        },
+        onFailure: () => {
+          navigate('/auth')
+          toast.error('Invalid login attempt')
+        }
+      }).catch(() => {
+        navigate('/auth')
+        toast.error('Invalid login attempt')
+      })
+    } catch (error) {
+      navigate('/auth')
+      toast.error('Invalid login attempt')
+    }
+  }
+
   function logout(): void {
     setAuth(false)
     document.cookie = `token=; path=/; expires=${new Date(0).toUTCString()}`
@@ -199,6 +262,7 @@ export default function AuthProvider({
         setAuth,
         authenticate,
         verifyToken,
+        verifyOAuth,
         logout,
         loginQuota: {
           quota,
