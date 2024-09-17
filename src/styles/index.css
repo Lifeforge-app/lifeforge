@@ -438,6 +438,14 @@ progress::-moz-progress-bar {
   width: min(100%, 400px);
 }
 
+.Toastify__toast-container * {
+  font-family: inherit !important;
+}
+
+.Toastify__toast {
+  @apply bg-bg-50 dark:bg-bg-800 text-bg-800 dark:text-bg-50;
+}
+
 input:autofill {
   background: transparent; /* or any other */
 }

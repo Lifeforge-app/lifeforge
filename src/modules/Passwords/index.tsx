@@ -13,6 +13,7 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import CreatePasswordScreen from '@components/Screens/CreatePasswordScreen'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import OTPScreen from '@components/Screens/OTPScreen'
 import useFetch from '@hooks/useFetch'
 import { type IPasswordEntry } from '@interfaces/password_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
@@ -23,6 +24,7 @@ import LockedScreen from '../../components/Screens/LockedScreen'
 function Passwords(): React.ReactElement {
   const { t } = useTranslation()
   const { userData } = useAuthContext()
+  const [otpSuccess, setOtpSuccess] = useState(false)
   const [masterPassword, setMasterPassword] = useState<string>('')
   const [createPasswordModalOpenType, setCreatePasswordModalOpenType] =
     useState<'create' | 'update' | null>(null)
@@ -78,7 +80,7 @@ function Passwords(): React.ReactElement {
           title="Passwords"
           desc="A vault to store your passwords securely."
         />
-        {masterPassword !== '' && (
+        {otpSuccess && masterPassword !== '' && (
           <Button
             onClick={() => {
               setCreatePasswordModalOpenType('create')
@@ -90,95 +92,107 @@ function Passwords(): React.ReactElement {
           </Button>
         )}
       </div>
-      {masterPassword !== '' && (
-        <SearchInput
-          searchQuery={query}
-          setSearchQuery={setQuery}
-          stuffToSearch="passwords"
-        />
-      )}
-      {userData?.hasMasterPassword === false ? (
-        <CreatePasswordScreen
-          endpoint="passwords/master"
-          keyInUserData="hasMasterPassword"
-        />
-      ) : masterPassword === '' ? (
-        <LockedScreen
-          module="vault"
-          endpoint="passwords/master/verify"
-          setMasterPassword={setMasterPassword}
+      {otpSuccess ? (
+        <>
+          {masterPassword !== '' && (
+            <SearchInput
+              searchQuery={query}
+              setSearchQuery={setQuery}
+              stuffToSearch="passwords"
+            />
+          )}
+          {userData?.hasMasterPassword === false ? (
+            <CreatePasswordScreen
+              endpoint="passwords/master"
+              keyInUserData="hasMasterPassword"
+            />
+          ) : masterPassword === '' ? (
+            <LockedScreen
+              module="vault"
+              endpoint="passwords/master/verify"
+              setMasterPassword={setMasterPassword}
+              fetchChallenge={fetchChallenge}
+            />
+          ) : (
+            <APIComponentWithFallback data={passwordList}>
+              {() =>
+                typeof filteredPasswordList !== 'string' ? (
+                  filteredPasswordList.length > 0 ? (
+                    <div className="my-8 flex w-full flex-col gap-4">
+                      {filteredPasswordList.map(password => (
+                        <PasswordEntryITem
+                          key={password.id}
+                          password={password}
+                          masterPassword={masterPassword}
+                          setSelectedPassword={setSelectedPassword}
+                          setIsDeletePasswordConfirmationModalOpen={
+                            setIsDeletePasswordConfirmationModalOpen
+                          }
+                          setCreatePasswordModalOpenType={
+                            setCreatePasswordModalOpenType
+                          }
+                          setExistedData={setExistedData}
+                          setPasswordList={setPasswordList}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <EmptyStateScreen
+                      description="No passwords are found in your vault yet."
+                      title="Hmm... Seems a bit empty here."
+                      icon="tabler:key-off"
+                      ctaContent="new password"
+                      onCTAClick={() => {
+                        setSelectedPassword(null)
+                        setCreatePasswordModalOpenType('create')
+                      }}
+                    />
+                  )
+                ) : (
+                  <></>
+                )
+              }
+            </APIComponentWithFallback>
+          )}
+          {masterPassword !== '' && passwordList.length > 0 && (
+            <FAB
+              onClick={() => {
+                setSelectedPassword(null)
+                setCreatePasswordModalOpenType('create')
+              }}
+              hideWhen="lg"
+            />
+          )}
+          <CreatePasswordModal
+            openType={createPasswordModalOpenType}
+            onClose={() => {
+              setCreatePasswordModalOpenType(null)
+            }}
+            refreshPasswordList={refreshPasswordList}
+            masterPassword={masterPassword}
+            existedData={existedData}
+          />
+          <DeleteConfirmationModal
+            apiEndpoint="passwords/password"
+            data={selectedPassword}
+            isOpen={isDeletePasswordConfirmationModalOpen}
+            itemName="password"
+            onClose={() => {
+              setIsDeletePasswordConfirmationModalOpen(false)
+            }}
+            updateDataList={refreshPasswordList}
+            customText={`Are you sure you want to delete the password for ${selectedPassword?.name}? This action is irreversible.`}
+          />
+        </>
+      ) : (
+        <OTPScreen
+          verificationEndpoint="passwords/master/otp"
+          callback={() => {
+            setOtpSuccess(true)
+          }}
           fetchChallenge={fetchChallenge}
         />
-      ) : (
-        <APIComponentWithFallback data={passwordList}>
-          {() =>
-            typeof filteredPasswordList !== 'string' ? (
-              filteredPasswordList.length > 0 ? (
-                <div className="my-8 flex w-full flex-col gap-4">
-                  {filteredPasswordList.map(password => (
-                    <PasswordEntryITem
-                      key={password.id}
-                      password={password}
-                      masterPassword={masterPassword}
-                      setSelectedPassword={setSelectedPassword}
-                      setIsDeletePasswordConfirmationModalOpen={
-                        setIsDeletePasswordConfirmationModalOpen
-                      }
-                      setCreatePasswordModalOpenType={
-                        setCreatePasswordModalOpenType
-                      }
-                      setExistedData={setExistedData}
-                      setPasswordList={setPasswordList}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <EmptyStateScreen
-                  description="No passwords are found in your vault yet."
-                  title="Hmm... Seems a bit empty here."
-                  icon="tabler:key-off"
-                  ctaContent="new password"
-                  onCTAClick={() => {
-                    setSelectedPassword(null)
-                    setCreatePasswordModalOpenType('create')
-                  }}
-                />
-              )
-            ) : (
-              <></>
-            )
-          }
-        </APIComponentWithFallback>
       )}
-      {masterPassword !== '' && passwordList.length > 0 && (
-        <FAB
-          onClick={() => {
-            setSelectedPassword(null)
-            setCreatePasswordModalOpenType('create')
-          }}
-          hideWhen="lg"
-        />
-      )}
-      <CreatePasswordModal
-        openType={createPasswordModalOpenType}
-        onClose={() => {
-          setCreatePasswordModalOpenType(null)
-        }}
-        refreshPasswordList={refreshPasswordList}
-        masterPassword={masterPassword}
-        existedData={existedData}
-      />
-      <DeleteConfirmationModal
-        apiEndpoint="passwords/password"
-        data={selectedPassword}
-        isOpen={isDeletePasswordConfirmationModalOpen}
-        itemName="password"
-        onClose={() => {
-          setIsDeletePasswordConfirmationModalOpen(false)
-        }}
-        updateDataList={refreshPasswordList}
-        customText={`Are you sure you want to delete the password for ${selectedPassword?.name}? This action is irreversible.`}
-      />
     </ModuleWrapper>
   )
 }

@@ -28,7 +28,9 @@ export default async function APIRequest({
   await fetch(`${import.meta.env.VITE_API_HOST}/${endpoint}`, {
     method,
     headers: {
-      Authorization: `Bearer ${cookieParse(document.cookie).token}`,
+      Authorization: cookieParse(document.cookie).token
+        ? `Bearer ${cookieParse(document.cookie).token}`
+        : '',
       ...(isJSON ? { 'Content-Type': 'application/json' } : {})
     },
     body: body !== undefined ? (isJSON ? JSON.stringify(body) : body) : null

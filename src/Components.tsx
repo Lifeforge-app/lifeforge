@@ -119,6 +119,10 @@ const CFOPPLL = lazy(
   async () => await import('./modules/CFOPAlgorithms/pages/PLL')
 )
 const YoutubeVideos = lazy(async () => await import('./modules/YoutubeVideos'))
+        const APIKeys = lazy(
+          async () => await import('./modules/APIKeys')
+        )
+        
 
 export const COMPONENTS = {
   dashboard: {
@@ -252,5 +256,8 @@ export const COMPONENTS = {
   },
   'youtube-videos': {
     'youtube-videos': YoutubeVideos
+  },
+  'api-keys': {
+    'api-keys': APIKeys
   }
-}
+};
