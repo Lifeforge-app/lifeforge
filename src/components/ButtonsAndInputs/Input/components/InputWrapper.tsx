@@ -22,10 +22,8 @@ function InputWrapper({
       } ${additionalClassName} ${
         disabled ? '!pointer-events-none opacity-50' : 'cursor-text'
       }`}
-      onClick={e => {
-        console.log(inputRef)
-        if (inputRef?.current) {
-          console.log(inputRef.current)
+      onClick={() => {
+        if (inputRef?.current !== undefined && inputRef.current !== null) {
           inputRef.current.focus()
         }
       }}

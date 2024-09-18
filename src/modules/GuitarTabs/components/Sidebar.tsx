@@ -1,5 +1,5 @@
 import { t } from 'i18next'
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -33,7 +33,7 @@ function Sidebar({
               active={location.search === ''}
               onClick={() => {
                 navigate('/guitar-tabs')
-                setSidebarOpen(false)
+                setOpen(false)
               }}
             />
             <SidebarItem
@@ -46,7 +46,7 @@ function Sidebar({
                   ...Object.fromEntries(searchParams.entries()),
                   starred: 'true'
                 })
-                setSidebarOpen(false)
+                setOpen(false)
               }}
             />
             <SidebarDivider />
@@ -61,7 +61,7 @@ function Sidebar({
                   ...Object.fromEntries(searchParams.entries()),
                   category: 'singalong'
                 })
-                setSidebarOpen(false)
+                setOpen(false)
               }}
             />
             <SidebarItem
@@ -74,7 +74,7 @@ function Sidebar({
                   ...Object.fromEntries(searchParams.entries()),
                   category: 'fingerstyle'
                 })
-                setSidebarOpen(false)
+                setOpen(false)
               }}
             />
             <SidebarDivider />
@@ -98,7 +98,7 @@ function Sidebar({
                       ...Object.fromEntries(searchParams.entries()),
                       author
                     })
-                    setSidebarOpen(false)
+                    setOpen(false)
                   }}
                 />
               ))}
