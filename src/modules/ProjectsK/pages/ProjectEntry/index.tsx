@@ -159,7 +159,7 @@ function ProjectsKEntry(): React.ReactElement {
                                       className={({ active }) =>
                                         `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
                                           active
-                                            ? 'hover:bg-bg-200/50 dark:hover:bg-bg-700/50'
+                                            ? 'hover:bg-bg-100 dark:hover:bg-bg-700/50'
                                             : '!bg-transparent'
                                         }`
                                       }
@@ -195,10 +195,10 @@ function ProjectsKEntry(): React.ReactElement {
                 })()}
               </h1>
               <div className="flex-center flex gap-2">
-                <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
+                <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
                   <Icon icon="tabler:bulb" className="text-2xl" />
                 </button>
-                <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
+                <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
                   <Icon icon="tabler:share" className="text-2xl" />
                 </button>
               </div>

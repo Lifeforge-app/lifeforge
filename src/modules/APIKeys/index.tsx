@@ -1,11 +1,8 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
+import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -16,6 +13,7 @@ import { type APIKeyEntry } from '@interfaces/api_keys_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
+import EntryItem from './components/EntryItem'
 import ModifyAPIKeyModal from './components/ModifyAPIKeyModal'
 import { fetchChallenge } from './utils/fetchChallenge'
 
@@ -27,6 +25,8 @@ function APIKeys(): React.ReactElement {
   const [modifyAPIKeyModalOpenType, setModifyAPIKeyModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
+  const [deleteConfirmationModalOpen, setDeleteConfirmationModalOpen] =
+    useState(false)
   const [entries, setEntries] = useState<'loading' | 'error' | APIKeyEntry[]>(
     'loading'
   )
@@ -100,49 +100,18 @@ function APIKeys(): React.ReactElement {
                 {entries => (
                   <>
                     {entries.map((entry, idx) => (
-                      <ConfigColumn
+                      <EntryItem
                         key={entry.id}
-                        title={
-                          <>
-                            {entry.name}
-                            <span className="text-sm text-bg-500">
-                              ({entry.keyId})
-                            </span>
-                          </>
-                        }
-                        desc={entry.description}
-                        icon={entry.icon}
+                        entry={entry}
                         hasDivider={idx !== entries.length - 1}
-                      >
-                        <code className="flex items-center gap-1 text-lg">
-                          {Array(12)
-                            .fill(0)
-                            .map((_, i) => (
-                              <Icon
-                                key={i}
-                                icon="tabler:circle-filled"
-                                className="size-1"
-                              />
-                            ))}
-                          <span className="ml-0.5">{entry.key}</span>
-                        </code>
-                        <HamburgerMenu className="relative ml-2">
-                          <MenuItem
-                            onClick={() => {
-                              setExistingData(entry)
-                              setModifyAPIKeyModalOpenType('update')
-                            }}
-                            text="edit"
-                            icon="tabler:pencil"
-                          />
-                          <MenuItem
-                            onClick={() => {}}
-                            text="delete"
-                            icon="tabler:trash"
-                            isRed
-                          />
-                        </HamburgerMenu>
-                      </ConfigColumn>
+                        setExistingData={setExistingData}
+                        setModifyAPIKeyModalOpenType={
+                          setModifyAPIKeyModalOpenType
+                        }
+                        setDeleteConfirmationModalOpen={
+                          setDeleteConfirmationModalOpen
+                        }
+                      />
                     ))}
                   </>
                 )}
@@ -154,6 +123,19 @@ function APIKeys(): React.ReactElement {
               existingData={existingData}
               onClose={() => {
                 setModifyAPIKeyModalOpenType(null)
+                fetchData().catch(console.error)
+              }}
+            />
+            <DeleteConfirmationModal
+              isOpen={deleteConfirmationModalOpen}
+              onClose={() => {
+                setDeleteConfirmationModalOpen(false)
+              }}
+              apiEndpoint="api-keys"
+              data={existingData}
+              itemName="API Key"
+              nameKey="name"
+              updateDataList={() => {
                 fetchData().catch(console.error)
               }}
             />

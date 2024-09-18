@@ -10,17 +10,19 @@ import SidebarWrapper from '@components/Sidebar/components/SidebarWrapper'
 import { type IGuitarTabsSidebarData } from '@interfaces/guitar_tabs_interfaces'
 
 function Sidebar({
-  sidebarData
+  sidebarData,
+  isOpen,
+  setOpen
 }: {
   sidebarData: IGuitarTabsSidebarData | 'loading' | 'error'
+  isOpen: boolean
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (
-    <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
+    <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
       <APIComponentWithFallback data={sidebarData}>
         {sidebarData => (
           <>

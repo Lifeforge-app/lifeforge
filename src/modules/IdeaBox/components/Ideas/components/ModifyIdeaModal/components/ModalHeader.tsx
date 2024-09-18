@@ -41,7 +41,7 @@ function ModalHeader({
         }{' '}
         {innerOpenType === 'create' ? (
           <Menu as="div" className="relative inline-block text-left">
-            <MenuButton className="flex-center inline-flex w-full rounded-md border-2 border-bg-300 p-2 px-4 text-lg font-semibold tracking-wide text-bg-800 shadow-sm outline-none hover:bg-bg-200/50 focus:outline-none dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200">
+            <MenuButton className="flex-center inline-flex w-full rounded-md border-2 border-bg-300 p-2 px-4 text-lg font-semibold tracking-wide text-bg-800 shadow-sm outline-none hover:bg-bg-100 focus:outline-none dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200">
               <Icon
                 icon={
                   {
@@ -86,7 +86,7 @@ function ModalHeader({
                           ? ''
                           : active
                           ? 'bg-bg-200/50 text-bg-800 dark:bg-bg-800 dark:text-bg-100'
-                          : 'text-bg-500 hover:bg-bg-200/50 dark:text-bg-500 dark:hover:bg-bg-800'
+                          : 'text-bg-500 hover:bg-bg-100 dark:text-bg-500 dark:hover:bg-bg-800'
                       }`}
                     >
                       <Icon
@@ -119,7 +119,7 @@ function ModalHeader({
         onClick={() => {
           setOpenType(null)
         }}
-        className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 dark:text-bg-100 dark:hover:bg-bg-800"
+        className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-100 dark:text-bg-100 dark:hover:bg-bg-800"
       >
         <Icon icon="tabler:x" className="size-6" />
       </button>

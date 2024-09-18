@@ -33,7 +33,7 @@ function Sidebar({
           key={index}
           className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
         >
-          <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
+          <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800">
             <Icon icon={icon} className="size-6 shrink-0" />
             <div className="flex-between flex w-full">{name}</div>
             <span className="text-sm">{Math.floor(Math.random() * 10)}</span>
@@ -51,7 +51,7 @@ function Sidebar({
                 key={index}
                 className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
               >
-                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-200/50 dark:hover:bg-bg-800">
+                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800">
                   <div className="flex w-full items-center gap-6">
                     <span
                       className="block size-2 shrink-0 rounded-full"

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import { t } from 'i18next'
 import React, { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
@@ -24,7 +25,7 @@ function CreatePasswordScreen({
 
   async function onSubmit(): Promise<void> {
     if (newPassword.trim() === '' || confirmPassword.trim() === '') {
-      toast.error('Please fill in both fields')
+      toast.error(t('input.error.fieldEmpty'))
 
       return
     }
@@ -54,7 +55,7 @@ function CreatePasswordScreen({
 
   function confirmAction(): void {
     if (newPassword.trim() === '' || confirmPassword.trim() === '') {
-      toast.error('Please fill in both fields')
+      toast.error(t('input.error.fieldEmpty'))
 
       return
     }

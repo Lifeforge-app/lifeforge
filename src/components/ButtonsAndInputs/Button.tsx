@@ -35,7 +35,7 @@ const generateColorClass = (isRed: boolean, variant: string): string => {
     case 'primary':
       return 'bg-custom-500 shadow-custom hover:bg-custom-600 text-bg-100 dark:text-bg-800 disabled:bg-bg-500 disabled:hover:bg-bg-500'
     case 'no-bg':
-      return 'hover:bg-bg-200/50 dark:hover:bg-bg-800 text-bg-500 hover:text-bg-800 dark:hover:text-bg-100 disabled:bg-bg-100/20 disabled:dark:bg-bg-950 disabled:hover:bg-bg-transparent disabled:dark:hover:bg-bg-950 disabled:hover:text-bg-500 disabled:dark:hover:text-bg-500'
+      return 'hover:bg-bg-100 dark:hover:bg-bg-800 text-bg-500 hover:text-bg-800 dark:hover:text-bg-100 disabled:bg-bg-100/20 disabled:dark:bg-bg-950 disabled:hover:bg-bg-transparent disabled:dark:hover:bg-bg-950 disabled:hover:text-bg-500 disabled:dark:hover:text-bg-500'
     case 'secondary':
     default:
       return 'bg-bg-300 shadow-custom text-bg-500 dark:text-bg-100 dark:bg-bg-500 hover:bg-bg-400/50 dark:hover:bg-bg-500/80 text-bg-100 dark:text-bg-800 disabled:bg-bg-200 disabled:hover:bg-bg-200 dark:disabled:bg-bg-900 dark:disabled:hover:bg-bg-900 dark:disabled:text-bg-600'

@@ -87,7 +87,7 @@ function AddVideosModal({
         {RESOURCE_TYPES.map(resourceType => (
           <ListboxOption
             key={resourceType.value}
-            className="flex-between relative flex cursor-pointer select-none p-4 text-base transition-all hover:bg-bg-200/50 dark:hover:bg-bg-700/50"
+            className="flex-between relative flex cursor-pointer select-none p-4 text-base transition-all hover:bg-bg-100 dark:hover:bg-bg-700/50"
             value={resourceType.value}
           >
             {({ selected }) => (

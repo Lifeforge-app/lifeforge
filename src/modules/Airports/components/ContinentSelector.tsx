@@ -47,7 +47,7 @@ function ContinentSelector(): React.ReactElement {
             className={({ active }) =>
               `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
                 active
-                  ? 'hover:bg-bg-200/50 dark:hover:bg-bg-700/50'
+                  ? 'hover:bg-bg-100 dark:hover:bg-bg-700/50'
                   : '!bg-transparent'
               }`
             }
@@ -73,7 +73,7 @@ function ContinentSelector(): React.ReactElement {
               className={({ active }) =>
                 `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
                   active
-                    ? 'hover:bg-bg-200/50 dark:hover:bg-bg-700/50'
+                    ? 'hover:bg-bg-100 dark:hover:bg-bg-700/50'
                     : '!bg-transparent'
                 }`
               }

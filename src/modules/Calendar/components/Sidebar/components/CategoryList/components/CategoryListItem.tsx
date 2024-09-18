@@ -38,7 +38,7 @@ function CategoryListItem({
             category: item.id
           })
         }}
-        className="group flex w-full min-w-0 items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-200/50 dark:hover:bg-bg-800"
+        className="group flex w-full min-w-0 items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-100 dark:hover:bg-bg-800"
       >
         <span
           className="block h-8 w-1 shrink-0 rounded-full"

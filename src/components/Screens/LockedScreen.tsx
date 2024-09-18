@@ -30,7 +30,7 @@ function LockedScreen({
 
   async function onSubmit(): Promise<void> {
     if (masterPassWordInputContent.trim() === '') {
-      toast.error('Please fill in the field')
+      toast.error('Please fill in all the field')
       return
     }
 
