@@ -55,7 +55,7 @@ function EntryText({
           className="absolute -left-2 -top-2 z-50 size-5 -rotate-90 text-red-500 drop-shadow-md"
         />
       )}
-      <p className="mt-1.5 !select-text whitespace-pre-wrap">{entry.content}</p>
+      <p className="!select-text whitespace-pre-wrap">{entry.content}</p>
       <EntryContextMenu
         entry={entry}
         setTypeOfModifyIdea={setTypeOfModifyIdea}

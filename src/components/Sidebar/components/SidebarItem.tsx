@@ -70,7 +70,7 @@ function SidebarItem({
                 )) ||
             active
               ? 'bg-bg-200/50 dark:bg-bg-800'
-              : 'hover:bg-bg-200/30 dark:hover:bg-bg-800/50'
+              : 'hover:bg-bg-100 dark:hover:bg-bg-800/50'
           }`}
         >
           <div className="flex w-full min-w-0 items-center gap-6">
@@ -192,7 +192,7 @@ function SidebarItem({
                     !sidebarExpanded ? 'justify-center' : ''
                   } gap-4 rounded-lg py-4 ${
                     sidebarExpanded ? 'pl-[3.8rem]' : 'px-2'
-                  } font-medium transition-all hover:bg-bg-200/30 dark:hover:bg-bg-800  ${
+                  } font-medium transition-all hover:bg-bg-100 dark:hover:bg-bg-800  ${
                     location.pathname.split('/').slice(1)[0] ===
                       titleToPath(name) &&
                     (location.pathname.split('/').slice(1)[1] ===

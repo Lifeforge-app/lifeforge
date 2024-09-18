@@ -9,13 +9,14 @@ interface ButtonProps {
   icon: string
   iconAtEnd?: boolean
   iconSize?: string
-  onClick: () => void
+  onClick?: () => void
   loading?: boolean
   disabled?: boolean
   className?: string
   variant?: 'primary' | 'secondary' | 'no-bg'
   isRed?: boolean
   needTranslate?: boolean
+  [key: string]: any
 }
 
 const generateBaseClass = (hasChildren: boolean, iconAtEnd: boolean): string =>

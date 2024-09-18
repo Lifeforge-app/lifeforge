@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
-import React from 'react'
+import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
 import InputLabel from './components/InputLabel'
@@ -44,12 +44,14 @@ function Input({
   disabled?: boolean
 }): React.ReactElement {
   const { t } = useTranslation()
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   return (
     <InputWrapper
       darker={darker}
       additionalClassName={additionalClassName}
       disabled={disabled}
+      inputRef={inputRef}
     >
       <Icon
         icon={icon}
@@ -66,7 +68,12 @@ function Input({
           <input type="password" hidden value="" onChange={() => {}} />
         )}
         <input
-          ref={reference}
+          ref={ref => {
+            if (reference) {
+              reference.current = ref
+            }
+            inputRef.current = ref
+          }}
           disabled={disabled}
           value={value}
           onChange={updateValue}
@@ -75,7 +82,7 @@ function Input({
           type={isPassword ? 'password' : 'text'}
           autoComplete={noAutoComplete ? 'false' : 'true'}
           style={isPassword ? { fontFamily: 'Arial' } : {}}
-          className={`mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500 ${
+          className={`mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider caret-custom-500 placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500 ${
             isPassword && value ? 'text-2xl focus:text-base' : ''
           }`}
           autoFocus={autoFocus}

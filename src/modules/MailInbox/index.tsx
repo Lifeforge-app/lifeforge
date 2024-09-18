@@ -12,7 +12,7 @@ function MailInbox(): React.ReactElement {
       <ModuleHeader icon="tabler:mail" title="Mail Inbox" desc="..." />
       <APIComponentWithFallback data={mails}>
         {mails => (
-          <ul className="divide-y-2 divide-bg-900">
+          <ul className="mt-4 divide-y-2 divide-bg-200 dark:divide-bg-900">
             {mails.map((mail: any) => (
               <li key={mail.id} className="space-y-1 p-4">
                 <span className="block text-sm text-bg-500">
