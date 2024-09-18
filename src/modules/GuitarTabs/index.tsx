@@ -13,6 +13,7 @@ import {
   type IGuitarTabsSidebarData,
   type IGuitarTabsEntry
 } from '@interfaces/guitar_tabs_interfaces'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import Header from './components/Header'
 import ModifyEntryModal from './components/ModifyEntryModal'
 import Pagination from './components/PageNumber'
@@ -21,6 +22,7 @@ import GridView from './views/GridView'
 import ListView from './views/ListView'
 
 function GuitarTabs(): React.ReactElement {
+  const { setSubSidebarExpanded } = useGlobalStateContext()
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [page, setPage] = useState<number>(1)
   const [searchQuery, setSearchQuery] = useState<string>('')
@@ -42,6 +44,7 @@ function GuitarTabs(): React.ReactElement {
   const [sidebarData, refreshSidebarData] = useFetch<IGuitarTabsSidebarData>(
     'guitar-tabs/sidebar-data'
   )
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [modifyEntryModalOpen, setModifyEntryModalOpen] = useState(false)
   const [existingEntry, setExistingEntry] = useState<IGuitarTabsEntry | null>(
     null
@@ -57,6 +60,10 @@ function GuitarTabs(): React.ReactElement {
     setPage(1)
   }, [searchParams])
 
+  useEffect(() => {
+    setSubSidebarExpanded(sidebarOpen)
+  }, [setSubSidebarExpanded, sidebarOpen])
+
   return (
     <ModuleWrapper>
       <Header
@@ -64,31 +71,49 @@ function GuitarTabs(): React.ReactElement {
         totalItems={typeof entries !== 'string' ? entries.totalItems : 0}
       />
       <div className="mt-6 flex min-h-0 w-full flex-1">
-        <Sidebar sidebarData={sidebarData} />
+        <Sidebar
+          sidebarData={sidebarData}
+          isOpen={sidebarOpen}
+          setOpen={setSidebarOpen}
+        />
         <div className="flex w-full flex-col lg:ml-8">
-          <h1 className="text-3xl font-semibold sm:text-4xl">
-            {`${searchParams.get('starred') === 'true' ? 'Starred ' : ''} ${
-              searchParams.get('category') !== null
-                ? {
-                    fingerstyle: 'Fingerstyle',
-                    singalong: 'Singalong'
-                  }[searchParams.get('category') as 'fingerstyle' | 'singalong']
-                : ''
-            } ${
-              searchParams.get('category') === null &&
-              searchParams.get('author') === null &&
-              searchParams.get('starred') === null
-                ? 'All'
-                : ''
-            } Guitar Tabs ${
-              searchParams.get('author') !== null
-                ? `by ${searchParams.get('author')}`
-                : ''
-            }`.trim()}
-            <span className="ml-2 text-base text-bg-500">
+          <div className="flex w-full items-center">
+            <h1 className="truncate text-3xl font-semibold sm:text-4xl">
+              {`${searchParams.get('starred') === 'true' ? 'Starred ' : ''} ${
+                searchParams.get('category') !== null
+                  ? {
+                      fingerstyle: 'Fingerstyle',
+                      singalong: 'Singalong'
+                    }[
+                      searchParams.get('category') as
+                        | 'fingerstyle'
+                        | 'singalong'
+                    ]
+                  : ''
+              } ${
+                searchParams.get('category') === null &&
+                searchParams.get('author') === null &&
+                searchParams.get('starred') === null
+                  ? 'All'
+                  : ''
+              } Guitar Tabs ${
+                searchParams.get('author') !== null
+                  ? `by ${searchParams.get('author')}`
+                  : ''
+              }`.trim()}
+            </h1>
+            <span className="ml-2 mr-8 text-base text-bg-500">
               ({typeof entries !== 'string' ? entries.totalItems : 0})
             </span>
-          </h1>
+            <button
+              onClick={() => {
+                setSidebarOpen(true)
+              }}
+              className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-100 lg:hidden"
+            >
+              <Icon icon="tabler:menu" className="text-2xl" />
+            </button>
+          </div>
           <div className="flex gap-2">
             <SearchInput
               searchQuery={searchQuery}

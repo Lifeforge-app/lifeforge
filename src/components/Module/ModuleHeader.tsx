@@ -76,9 +76,9 @@ function ModuleHeader({
       <div className="flex items-center gap-2">
         {actionButton}
         {tips !== '' && (
-          <div className="relative">
+          <div className="relative hidden md:block">
             <Menu as="div" className="relative z-50">
-              <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-100">
+              <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-100">
                 <Icon icon="tabler:question-circle" className="size-5" />
               </MenuButton>
               <MenuItems
@@ -100,7 +100,7 @@ function ModuleHeader({
         {customElement}
         {hasHamburgerMenu && (
           <Menu as="div" className="relative z-50 overscroll-contain">
-            <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-100">
+            <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-100">
               <Icon icon="tabler:dots-vertical" className="size-5" />
             </MenuButton>
             <MenuItems

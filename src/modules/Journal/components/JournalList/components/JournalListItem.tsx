@@ -29,7 +29,7 @@ function JournalListItem({
         setCurrentViewingJournal(entry.id)
         setJournalViewModalOpen(true)
       }}
-      className="w-full rounded-lg bg-bg-100 p-6 text-left shadow-custom hover:bg-bg-200/50 dark:bg-bg-900 dark:hover:bg-bg-800/70"
+      className="w-full rounded-lg bg-bg-100 p-6 text-left shadow-custom hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/70"
     >
       <div className="flex-between flex">
         <div className="flex flex-col gap-2">

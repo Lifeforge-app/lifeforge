@@ -136,14 +136,14 @@ function BottomBar({
         </p>
       </div>
       <div className="flex items-center gap-4">
-        <button className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30">
+        <button className="rounded-md p-2 text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30">
           <Icon icon="tabler:share" className="size-5" />
         </button>
         <button
           onClick={() => {
             addToFavourites().catch(() => {})
           }}
-          className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30"
+          className="rounded-md p-2 text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30"
         >
           <Icon icon="tabler:star" className="size-5" />
         </button>
@@ -169,7 +169,7 @@ function BottomBar({
               setAddPhotosToAlbumModalOpen(true)
             }
           }}
-          className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30"
+          className="rounded-md p-2 text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30"
         >
           <Icon
             icon={inAlbumGallery ? 'tabler:layout-grid-remove' : 'tabler:plus'}
@@ -181,7 +181,7 @@ function BottomBar({
           onClick={() => {
             requestBulkDownload().catch(() => {})
           }}
-          className="rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-500 dark:hover:bg-bg-700/30"
+          className="rounded-md p-2 text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30"
         >
           <Icon
             icon={

@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
+import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import CurrencyInputComponent from '@components/ButtonsAndInputs/CurrencyInput'
-import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
+import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
@@ -60,7 +61,7 @@ function ModifyAssetsModal({
       !assetStartingBalance ||
       assetIcon.trim().length === 0
     ) {
-      toast.error('Please fill in all the fields.')
+      toast.error(t('input.error.fieldEmpty'))
       return
     }
 

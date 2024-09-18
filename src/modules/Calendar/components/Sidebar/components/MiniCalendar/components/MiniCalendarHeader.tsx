@@ -34,7 +34,7 @@ function MiniCalendarHeader({
               setCurrentMonth(11)
             }
           }}
-          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-100 dark:hover:bg-bg-700/50"
+          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-100 dark:hover:bg-bg-700/50"
         >
           <Icon icon="uil:angle-left" className="size-6" />
         </button>
@@ -46,7 +46,7 @@ function MiniCalendarHeader({
               setCurrentMonth(0)
             }
           }}
-          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-100 dark:hover:bg-bg-700/50"
+          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-100 dark:hover:bg-bg-700/50"
         >
           <Icon icon="uil:angle-right" className="size-6" />
         </button>

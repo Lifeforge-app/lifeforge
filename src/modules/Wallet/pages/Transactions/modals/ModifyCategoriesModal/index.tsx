@@ -6,8 +6,8 @@ import { toast } from 'react-toastify'
 import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
 import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
+import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
@@ -73,7 +73,7 @@ function ModifyCategoriesModal({
       !categoryColor ||
       categoryIcon.trim().length === 0
     ) {
-      toast.error('Please fill in all the fields.')
+      toast.error(t('input.error.fieldEmpty'))
       return
     }
 
@@ -113,7 +113,7 @@ function ModifyCategoriesModal({
           }}
         />
         <div
-          className={`flex flex-between gap-4 ${
+          className={`flex-between flex gap-4 ${
             openType === 'update' ? 'mb-4' : 'mb-2'
           }`}
         >
