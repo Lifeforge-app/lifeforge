@@ -21,7 +21,7 @@ function ContinentSelector(): React.ReactElement {
   return (
     <Listbox
       as="div"
-      className="relative mt-2"
+      className="relative"
       value={continentID}
       onChange={value => {
         if (value !== 'all') {

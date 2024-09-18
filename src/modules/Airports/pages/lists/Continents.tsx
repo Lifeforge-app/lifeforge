@@ -30,12 +30,13 @@ function Continents(): React.ReactElement {
     <ModuleWrapper>
       <ModuleHeader title="Airports" desc="..." />
       <MasterSearchBar />
-      <div className="flex items-center gap-2">
+      <div className="mt-4 flex items-center gap-2">
         <ContinentSelector />
         <SearchInput
           stuffToSearch="continents"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
+          hasTopMargin={false}
         />
       </div>
       <APIComponentWithFallback data={continentsData}>
@@ -46,7 +47,7 @@ function Continents(): React.ReactElement {
                 <Link
                   key={id}
                   to={`/aviation/airports/${id}`}
-                  className="flex-between flex w-full rounded-lg bg-bg-50 p-4 px-6 shadow-custom transition-all hover:bg-bg-200/30 dark:bg-bg-900 dark:hover:bg-bg-800"
+                  className="flex-between flex w-full rounded-lg bg-bg-50 p-4 px-6 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800"
                 >
                   <div>
                     <p className="text-left text-xl font-medium">

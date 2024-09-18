@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify'
 import LoadingScreen from '@components/Screens/LoadingScreen'
 import NotFoundScreen from '@components/Screens/NotFoundScreen'
 import { type IRoutes } from '@interfaces/routes_interfaces'
+import APIKeyStatusProvider from '@providers/APIKeyStatusProvider'
 import { useAuthContext } from '@providers/AuthProvider'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { titleToPath, convertToDashCase } from '@utils/strings'
@@ -46,7 +47,8 @@ function AppRouter(): React.ReactElement {
     (
       routes: Record<string, string>,
       name: string,
-      isNested: boolean = false
+      isNested: boolean = false,
+      APIKeys: string[] = []
     ): React.ReactElement[] => {
       return Object.entries(routes).map(([route, path], index) => {
         const Comp = COMPONENTS[name as keyof typeof COMPONENTS][
@@ -57,7 +59,21 @@ function AppRouter(): React.ReactElement {
           <Route
             key={`${name}-${index}`}
             path={(!isNested ? '/' : '') + path}
-            element={Comp !== undefined ? <Comp /> : <></>}
+            element={
+              Comp !== undefined ? (
+                <Suspense
+                  fallback={
+                    <LoadingScreen customMessage={t('modules.loadingModule')} />
+                  }
+                >
+                  <APIKeyStatusProvider APIKeys={APIKeys}>
+                    <Comp />
+                  </APIKeyStatusProvider>
+                </Suspense>
+              ) : (
+                <></>
+              )
+            }
           />
         )
       })
@@ -77,9 +93,7 @@ function AppRouter(): React.ReactElement {
   if (authLoading) return <LoadingScreen customMessage="Loading user data" />
 
   return (
-    <Suspense
-      fallback={<LoadingScreen customMessage={t('modules.loadingModule')} />}
-    >
+    <>
       <Routes>
         <Route path="/" element={<MainApplication />}>
           {userData !== null ? (
@@ -104,12 +118,18 @@ function AppRouter(): React.ReactElement {
                           {renderRoutes(
                             item.routes,
                             convertToDashCase(item.name),
-                            true
+                            true,
+                            item.requiredAPIKeys
                           )}
                         </Route>
                       )
                     })()
-                  : renderRoutes(item.routes, convertToDashCase(item.name))
+                  : renderRoutes(
+                      item.routes,
+                      convertToDashCase(item.name),
+                      false,
+                      item.requiredAPIKeys
+                    )
               )
           ) : (
             <Route path="*" element={<NotFoundScreen />} />
@@ -129,7 +149,7 @@ function AppRouter(): React.ReactElement {
         pauseOnHover
         theme={theme}
       />
-    </Suspense>
+    </>
   )
 }
 

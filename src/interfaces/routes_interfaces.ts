@@ -7,6 +7,7 @@ interface IRoutesItem {
   togglable: boolean
   hasAI?: boolean
   hidden?: boolean
+  requiredAPIKeys?: string[]
 }
 
 export interface IRoutes {

@@ -7,6 +7,7 @@ import Input from '@components/ButtonsAndInputs/Input'
 import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
+import { toCamelCase } from '@utils/strings'
 
 function LockedScreen({
   module,
@@ -77,9 +78,11 @@ function LockedScreen({
   return (
     <div className="flex-center flex size-full flex-1 flex-col gap-4">
       <Icon icon="tabler:lock-access" className="size-28" />
-      <h2 className="text-4xl font-semibold">{t(`${module}.lockedMessage`)}</h2>
+      <h2 className="text-4xl font-semibold">
+        {t(`${toCamelCase(module)}.lockedMessage`)}
+      </h2>
       <p className="mb-8 text-center text-lg text-bg-500">
-        {t(`${module}.passwordRequired`)}
+        {t(`${toCamelCase(module)}.passwordRequired`)}
       </p>
       <Input
         isPassword
