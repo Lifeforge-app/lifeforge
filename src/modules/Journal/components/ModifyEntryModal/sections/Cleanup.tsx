@@ -72,7 +72,7 @@ function Cleanup({
 
   return (
     <>
-      <div className="flex-center mt-4 flex size-full flex-col rounded-lg bg-bg-800/50 p-6 transition-all focus-within:ring-1 focus-within:ring-bg-500">
+      <div className="mt-4 size-full rounded-lg bg-bg-200/70 p-6 shadow-custom transition-all focus-within:ring-1 focus-within:ring-bg-300 dark:bg-bg-800/50 dark:focus-within:ring-bg-500">
         {loading ? (
           <div className="flex size-full flex-col items-center justify-center gap-2">
             <Icon

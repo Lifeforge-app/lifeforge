@@ -24,13 +24,13 @@ function SpicinessSlider({
               SPICINESS_COLOR[index][spiciness === index ? 1 : 2]
             } ${
               spiciness === index
-                ? `ring-2 ring-offset-2 ring-offset-bg-800 ${SPICINESS_COLOR[index][3]}`
+                ? `ring-2 ring-offset-2 ring-offset-bg-50 dark:ring-offset-bg-800 ${SPICINESS_COLOR[index][3]}`
                 : ''
             }`}
           ></button>
         ))}
       </div>
-      <div className="mt-2 flex w-full flex-between gap-2">
+      <div className="flex-between mt-2 flex w-full gap-2">
         <span className="text-sm text-bg-500">Mild</span>
         <span className="h-0.5 w-full rounded-full bg-gradient-to-r from-lime-500 to-red-500" />
         <span className="text-sm text-bg-500">Spicy</span>

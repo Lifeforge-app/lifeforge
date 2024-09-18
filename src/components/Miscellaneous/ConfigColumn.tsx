@@ -12,7 +12,7 @@ function ConfigColumn({
   hasDivider = true,
   children
 }: {
-  title: string
+  title: string | React.ReactNode
   desc: string
   icon: string
   vertical?: boolean

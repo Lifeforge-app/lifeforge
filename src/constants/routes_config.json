@@ -51,7 +51,10 @@
           "todo-list": "todo-list"
         },
         "togglable": true,
-        "hasAI": true
+        "hasAI": true,
+        "requiredAPIKeys": [
+          "groq"
+        ]
       },
       {
         "name": "Calendar",
@@ -130,7 +133,10 @@
         "routes": {
           "journal": "journal"
         },
-        "togglable": true
+        "togglable": true,
+        "requiredAPIKeys": [
+          "groq"
+        ]
       },
       {
         "name": "Achievements",
@@ -270,7 +276,10 @@
         "routes": {
           "mail-inbox": "mail-inbox"
         },
-        "togglable": true
+        "togglable": true,
+        "requiredAPIKeys": [
+          "gmail"
+        ]
       },
       {
         "name": "DNS Records",
@@ -278,7 +287,10 @@
         "routes": {
           "dns-records": "dns-records"
         },
-        "togglable": true
+        "togglable": true,
+        "requiredAPIKeys": [
+          "cpanel"
+        ]
       },
       {
         "name": "Blog Posts",
@@ -322,7 +334,10 @@
           "airports-airport": "aviation/airports/:continentID/:countryID/:regionID/:airportID"
         },
         "togglable": true,
-        "hasAI": true
+        "hasAI": true,
+        "requiredAPIKeys": [
+          "groq"
+        ]
       },
       {
         "name": "Changi Flight Status",

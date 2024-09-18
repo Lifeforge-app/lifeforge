@@ -58,7 +58,7 @@ function SubtaskBoxHeader({
   }
 
   return (
-    <div className="flex w-full flex-between gap-6">
+    <div className="flex-between flex w-full gap-6">
       <div className="flex items-center gap-5 text-bg-500">
         <Icon icon="icon-park-outline:right-branch" className="size-6" />
         <h2 className="font-medium">{t('input.subtasks')}</h2>

@@ -18,9 +18,7 @@ function APIComponentWithFallback<T>({
     case 'error':
       return <ErrorScreen message="Failed to fetch data from server." />
     default:
-      if (data) {
-        return <>{children(data)}</>
-      } else return <></>
+      return <>{children(data)}</>
   }
 }
 

@@ -4,11 +4,13 @@ function InputWrapper({
   darker = false,
   additionalClassName = '',
   disabled = false,
+  inputRef,
   children
 }: {
   darker?: boolean
   additionalClassName?: string
   disabled?: boolean
+  inputRef?: React.RefObject<HTMLInputElement | null>
   children: React.ReactNode
 }): React.ReactElement {
   return (
@@ -21,7 +23,11 @@ function InputWrapper({
         disabled ? '!pointer-events-none opacity-50' : 'cursor-text'
       }`}
       onClick={e => {
-        e.currentTarget.querySelector('input')?.focus()
+        console.log(inputRef)
+        if (inputRef?.current) {
+          console.log(inputRef.current)
+          inputRef.current.focus()
+        }
       }}
     >
       {children}
