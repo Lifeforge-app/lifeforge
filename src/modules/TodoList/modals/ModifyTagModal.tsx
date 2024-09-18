@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { useDebounce } from '@uidotdev/usehooks'
+import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
@@ -27,7 +28,7 @@ function ModifyTagModal(): React.ReactElement {
 
   async function onSubmitButtonClick(): Promise<void> {
     if (tagName.trim().length === 0) {
-      toast.error('Please fill in all the fields.')
+      toast.error(t('input.error.fieldEmpty'))
       return
     }
 

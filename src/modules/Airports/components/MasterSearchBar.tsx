@@ -83,7 +83,7 @@ function MasterSearchBar(): React.ReactElement {
                       <Link
                         key={airport.id}
                         to={`/aviation/airports/${airport.continentCode}/${airport.country.code}/${airport.region.code}/${airport.id}`}
-                        className="flex-between flex w-full p-4 px-6 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-800/50"
+                        className="flex-between flex w-full p-4 px-6 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50"
                       >
                         <div className="flex items-center gap-4">
                           <Icon

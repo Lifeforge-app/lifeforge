@@ -1,3 +1,4 @@
+import { t } from 'i18next'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
@@ -30,7 +31,7 @@ function ModifyAlbumModal({
 
   async function onSubmitButtonClick(): Promise<void> {
     if (albumName.trim().length === 0) {
-      toast.error('Please fill in all the fields.')
+      toast.error(t('input.error.fieldEmpty'))
       return
     }
 

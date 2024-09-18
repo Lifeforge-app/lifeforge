@@ -32,10 +32,10 @@ export default function Header(): React.ReactElement {
         <QuickActions />
       </div>
       <div className="flex items-center">
-        <button className="relative flex rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 lg:hidden">
+        <button className="relative flex rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 lg:hidden">
           <Icon icon="tabler:search" className="text-2xl" />
         </button>
-        <button className="relative rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800">
+        <button className="relative rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800">
           <Icon icon="tabler:bell" className="text-2xl" />
           <div className="absolute bottom-4 right-4 size-2 rounded-full bg-red-500" />
         </button>

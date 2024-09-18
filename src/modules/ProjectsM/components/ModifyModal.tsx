@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
+import { t } from 'i18next'
 import React, { useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
 import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
+import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
@@ -68,7 +69,7 @@ function ModifyModal({
       icon.trim().length === 0 ||
       (stuff === 'statuses' && !color)
     ) {
-      toast.error('Please fill in all the fields.')
+      toast.error(t('input.error.fieldEmpty'))
       return
     }
 

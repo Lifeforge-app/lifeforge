@@ -1,9 +1,10 @@
-import { Icon } from '@iconify/react'
+import { t } from 'i18next'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
+import ModalHeader from '@components/Modals/ModalHeader'
 import { useMusicContext } from '@providers/MusicProvider'
 import APIRequest from '@utils/fetchData'
 
@@ -29,7 +30,7 @@ function ModifyMusicModal(): React.ReactElement {
 
   async function onSubmitButtonClick(): Promise<void> {
     if (musicName.trim().length === 0 || musicAuthor.trim().length === 0) {
-      toast.error('Please fill in all the fields.')
+      toast.error(t('input.error.fieldEmpty'))
       return
     }
 
@@ -84,20 +85,13 @@ function ModifyMusicModal(): React.ReactElement {
 
   return (
     <Modal isOpen={isOpen}>
-      <div className="mb-8 flex flex-between ">
-        <h1 className="flex items-center gap-3 text-2xl font-semibold">
-          <Icon icon="tabler:pencil" className="size-7" />
-          Update music
-        </h1>
-        <button
-          onClick={() => {
-            setOpen(false)
-          }}
-          className="hover: rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 dark:hover:bg-bg-800"
-        >
-          <Icon icon="tabler:x" className="size-6" />
-        </button>
-      </div>
+      <ModalHeader
+        title={t('music.updateMusic')}
+        icon="tabler:pencil"
+        onClose={() => {
+          setOpen(false)
+        }}
+      />
       <Input
         icon="tabler:music"
         reference={ref}

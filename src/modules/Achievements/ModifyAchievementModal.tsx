@@ -58,7 +58,7 @@ function ModifyAchievementModal({
       achievementThoughts.trim().length === 0 ||
       achievementDifficulty.trim().length === 0
     ) {
-      toast.error('Please fill in all the fields.')
+      toast.error(t('input.error.fieldEmpty'))
       return
     }
 

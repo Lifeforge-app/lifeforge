@@ -72,7 +72,7 @@ function PhotosFavouritesGallery(): React.ReactElement {
                 </>
               </h1>
               <div className="flex-center flex gap-2">
-                <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
+                <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
                   <Icon icon="tabler:share" className="text-2xl" />
                 </button>
                 <HamburgerMenu largerPadding className="relative">

@@ -99,7 +99,7 @@ function WebPlayback(): React.ReactElement {
               onClick={() => {
                 player.previousTrack()
               }}
-              className="rounded-full p-4 hover:bg-bg-200/50 dark:hover:bg-bg-900"
+              className="rounded-full p-4 hover:bg-bg-100 dark:hover:bg-bg-900"
             >
               <Icon icon="tabler:player-skip-back-filled" className="text-xl" />
             </button>
@@ -122,7 +122,7 @@ function WebPlayback(): React.ReactElement {
               onClick={() => {
                 player.nextTrack()
               }}
-              className="rounded-full p-4 hover:bg-bg-200/50 dark:hover:bg-bg-900"
+              className="rounded-full p-4 hover:bg-bg-100 dark:hover:bg-bg-900"
             >
               <Icon
                 icon="tabler:player-skip-forward-filled"

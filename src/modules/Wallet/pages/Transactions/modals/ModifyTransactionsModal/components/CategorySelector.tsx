@@ -50,7 +50,7 @@ function CategorySelector({
     >
       <ListboxOption
         key={'none'}
-        className="flex-between relative flex cursor-pointer select-none p-4 transition-all hover:bg-bg-200/50 hover:dark:bg-bg-700/50"
+        className="flex-between relative flex cursor-pointer select-none p-4 transition-all hover:bg-bg-100 hover:dark:bg-bg-700/50"
         value={null}
       >
         {({ selected }) => (
@@ -84,7 +84,7 @@ function CategorySelector({
         .map(({ name, color, id, icon }, i) => (
           <ListboxOption
             key={i}
-            className="flex-between relative flex cursor-pointer select-none p-4 transition-all hover:bg-bg-200/50 hover:dark:bg-bg-700/50"
+            className="flex-between relative flex cursor-pointer select-none p-4 transition-all hover:bg-bg-100 hover:dark:bg-bg-700/50"
             value={id}
           >
             {({ selected }) => (

@@ -2,6 +2,7 @@
 
 import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import { t } from 'i18next'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
@@ -42,7 +43,7 @@ function CreateProjectModal({
 
   async function onSubmitButtonClick(): Promise<void> {
     if (projectName.trim().length === 0) {
-      toast.error('Please fill in all the fields.')
+      toast.error(t('input.error.fieldEmpty'))
       return
     }
 
@@ -205,7 +206,7 @@ function CreateProjectModal({
                   className={({ active }) =>
                     `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
                       active
-                        ? 'hover:bg-bg-200/50 dark:hover:bg-bg-700/50'
+                        ? 'hover:bg-bg-100 dark:hover:bg-bg-700/50'
                         : '!bg-transparent'
                     }`
                   }

@@ -46,10 +46,10 @@ function NotesFile(): React.ReactElement {
     //               </h1>
     //             </div>
     //             <div className="flex items-center gap-4">
-    //               <button className="hidden rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-700/50 dark:hover:text-bg-100 md:block">
+    //               <button className="hidden rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/50 dark:hover:text-bg-100 md:block">
     //                 <Icon icon="tabler:download" className="text-2xl" />
     //               </button>
-    //               <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
+    //               <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
     //                 <Icon
     //                   icon="tabler:dots-vertical"
     //                   className="text-xl sm:text-2xl"

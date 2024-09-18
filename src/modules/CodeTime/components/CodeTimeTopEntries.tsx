@@ -49,7 +49,7 @@ function CodeTimeTopEntries({
                 className={`rounded-md p-4 px-6 tracking-wide hover:bg-bg-700/50 ${
                   lastFor === last
                     ? 'bg-bg-200 font-semibold text-bg-800 dark:bg-bg-700/50 dark:text-bg-100'
-                    : 'text-bg-500 hover:bg-bg-200/50 dark:hover:bg-bg-700/50'
+                    : 'text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-700/50'
                 }`}
               >
                 {last}

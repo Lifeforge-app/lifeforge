@@ -84,7 +84,7 @@ export const QUICK_ACTIONS = {
     {
       module: 'Flashcards',
       action: 'View Flashcard by ID',
-      route: 'flashcardsid'
+      route: 'flashcards/:id'
     },
     {
       module: 'Flashcards',

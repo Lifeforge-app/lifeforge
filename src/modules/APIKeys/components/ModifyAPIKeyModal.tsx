@@ -1,4 +1,6 @@
+import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import IconPicker from '@components/ButtonsAndInputs/IconSelector/IconPicker'
@@ -46,6 +48,16 @@ function ModifyAPIKeyModal({
   }
 
   async function onSubmit(): Promise<void> {
+    if (
+      id.trim() === '' ||
+      name.trim() === '' ||
+      key.trim() === '' ||
+      icon.trim() === '' ||
+      description.trim() === ''
+    ) {
+      toast.error(t('input.error.fieldEmpty'))
+      return
+    }
     setLoading(true)
 
     const challenge = await fetchChallenge(setLoading)

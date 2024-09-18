@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { useDebounce } from '@uidotdev/usehooks'
+import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
+import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
@@ -49,7 +50,7 @@ function ModifySubjectModal({
       subjectIcon.trim().length === 0 ||
       subjectDescription.trim().length === 0
     ) {
-      toast.error('Please fill in all the fields.')
+      toast.error(t('input.error.fieldEmpty'))
       return
     }
 

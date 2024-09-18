@@ -40,7 +40,7 @@ function CategorySection({
           onClick={() => {
             setModifyCategoriesModalOpenType(type)
           }}
-          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100"
+          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100"
         >
           <Icon icon="tabler:plus" className="size-5" />
         </button>
