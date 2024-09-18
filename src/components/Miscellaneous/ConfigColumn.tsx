@@ -33,7 +33,11 @@ function ConfigColumn({
             <h3 className="flex w-full items-center gap-2 text-xl font-medium leading-normal md:w-auto">
               {title}
               {tooltip !== undefined && (
-                <a data-tooltip-id={`tooltip-${toDashCase(title)}`}>
+                <a
+                  data-tooltip-id={`tooltip-${toDashCase(
+                    title?.toString() ?? ''
+                  )}`}
+                >
                   <Icon
                     icon="tabler:info-circle"
                     className="size-5 text-bg-500"
@@ -49,7 +53,7 @@ function ConfigColumn({
         </div>
         {tooltip !== undefined && (
           <Tooltip
-            id={`tooltip-${toDashCase(title)}`}
+            id={`tooltip-${toDashCase(title?.toString() ?? '')}`}
             className="z-[9999] !rounded-md bg-bg-50 !p-4 !text-base text-bg-800 shadow-custom dark:bg-bg-900 dark:text-bg-100"
             classNameArrow="!size-6"
             place="top-start"
