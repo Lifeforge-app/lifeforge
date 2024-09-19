@@ -64,7 +64,7 @@ function TypeSection({
                 }[name]
               }`}
             />
-            <div className="w-full flex-between truncate">
+            <div className="flex-between w-full truncate">
               {t(
                 `sidebar.wallet.${
                   name === 'All' ? 'allType' : toCamelCase(name)
