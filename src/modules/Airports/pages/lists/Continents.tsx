@@ -28,7 +28,7 @@ function Continents(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Airports" desc="..." />
+      <ModuleHeader title="Airports" />
       <MasterSearchBar />
       <div className="mt-4 flex items-center gap-2">
         <ContinentSelector />

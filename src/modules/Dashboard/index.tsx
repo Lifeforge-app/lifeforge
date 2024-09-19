@@ -17,7 +17,6 @@ import FAB from '@components/ButtonsAndInputs/FAB'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import { useAuthContext } from '@providers/AuthProvider'
 import DashboardGrid from './components/DashboardGrid'
 import ManageWidgetsModal from './components/ManageWidgetsModal'
 
@@ -35,7 +34,6 @@ ChartJS.register(
 )
 
 function Dashboard(): React.ReactElement {
-  const { userData } = useAuthContext()
   const wrapperRef = useRef<HTMLDivElement>(null)
 
   const [canLayoutChange, setCanLayoutChange] = useState(false)
@@ -48,13 +46,6 @@ function Dashboard(): React.ReactElement {
       <div ref={wrapperRef} className="mb-12 flex w-full flex-1 flex-col">
         <ModuleHeader
           title="Dashboard"
-          desc={
-            <>
-              Good to see you here,{' '}
-              <span className="text-custom-500">{userData?.name}</span>!
-            </>
-          }
-          hasHamburgerMenu
           hamburgerMenuItems={
             <>
               <MenuItem

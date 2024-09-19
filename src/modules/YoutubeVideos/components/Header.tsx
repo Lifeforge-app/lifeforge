@@ -95,7 +95,6 @@ function Header({
       <ModuleHeader
         icon="tabler:brand-youtube"
         title="Youtube Videos"
-        desc="..."
         totalItems={videosLength}
         actionButton={
           <Button
@@ -109,7 +108,6 @@ function Header({
             Add Video
           </Button>
         }
-        hasHamburgerMenu
         hamburgerMenuItems={
           <MenuItem
             icon="tabler:refresh"

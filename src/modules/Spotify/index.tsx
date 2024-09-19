@@ -18,11 +18,7 @@ function Spotify(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader
-        icon="tabler:brand-spotify"
-        title="Spotify"
-        desc="Listen to your favourite music. Anywhere, anytime."
-      />
+      <ModuleHeader icon="tabler:brand-spotify" title="Spotify" />
 
       {userData?.spotifyAccessToken ? (
         <WebPlayback />

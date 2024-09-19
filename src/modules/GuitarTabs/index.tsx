@@ -77,13 +77,14 @@ function GuitarTabs(): React.ReactElement {
           setOpen={setSidebarOpen}
         />
         <div className="flex w-full flex-col lg:ml-8">
-          <div className="flex w-full items-center">
-            <h1 className="truncate text-3xl font-semibold sm:text-4xl">
+          <div className="flex w-full items-end">
+            <h1 className="truncate pb-1 text-3xl font-semibold sm:text-4xl">
               {`${searchParams.get('starred') === 'true' ? 'Starred ' : ''} ${
                 searchParams.get('category') !== null
                   ? {
                       fingerstyle: 'Fingerstyle',
-                      singalong: 'Singalong'
+                      singalong: 'Singalong',
+                      uncategorized: 'Uncategorized'
                     }[
                       searchParams.get('category') as
                         | 'fingerstyle'

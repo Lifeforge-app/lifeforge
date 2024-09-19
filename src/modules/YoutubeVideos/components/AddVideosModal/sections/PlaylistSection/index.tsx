@@ -163,7 +163,7 @@ function PlaylistSection({
         updateValue={updatePlaylistUrl}
         placeholder="https://www.youtube.com/playlist?list=PL..."
         darker
-        additionalClassName="mt-4"
+        className="mt-4"
         disabled={downloadingVideos.current.size > 0}
       />
       <div className="mt-6">

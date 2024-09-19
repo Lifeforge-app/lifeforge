@@ -50,7 +50,7 @@ function Regions(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Airports" desc="..." />
+      <ModuleHeader title="Airports" />
       <MasterSearchBar />
       <APIComponentWithFallback data={regionsData} showLoading={false}>
         {continentsData => (

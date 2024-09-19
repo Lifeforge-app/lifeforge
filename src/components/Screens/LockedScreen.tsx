@@ -94,7 +94,7 @@ function LockedScreen({
           setMasterPassWordInputContent(e.target.value)
         }}
         noAutoComplete
-        additionalClassName="w-full md:w-3/4 xl:w-1/2"
+        className="w-full md:w-3/4 xl:w-1/2"
         onKeyDown={e => {
           if (e.key === 'Enter') {
             onSubmit().catch(console.error)

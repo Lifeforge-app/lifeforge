@@ -48,8 +48,6 @@ function Changelog(): React.ReactElement {
       <ModuleHeader
         title="Change Log"
         icon="tabler:history"
-        desc="All the changes made to this application will be listed here."
-        hasHamburgerMenu
         hamburgerMenuItems={
           <MenuItem
             icon="tabler:refresh"

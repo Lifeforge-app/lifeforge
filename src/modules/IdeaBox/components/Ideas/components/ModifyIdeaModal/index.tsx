@@ -256,7 +256,7 @@ function ModifyIdeaModal({
           updateValue={updateIdeaTitle}
           darker
           placeholder="Mind blowing idea"
-          additionalClassName="mb-6"
+          className="mb-6"
         />
       )}
       {innerTypeOfModifyIdea !== 'image' ? (
@@ -293,7 +293,7 @@ function ModifyIdeaModal({
             updateValue={e => {
               setImageLink(e.target.value)
             }}
-            additionalClassName="mt-6"
+            className="mt-6"
           />
         </>
       )}

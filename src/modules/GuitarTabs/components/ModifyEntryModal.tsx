@@ -1,10 +1,18 @@
+import { ListboxOption } from '@headlessui/react'
+import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useEffect, useState } from 'react'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
+import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
 import APIRequest from '@utils/fetchData'
+
+const TYPES = [
+  { name: 'Fingerstyle', id: 'fingerstyle', icon: 'mingcute:guitar-line' },
+  { name: 'Singalong', id: 'singalong', icon: 'mdi:guitar-pick-outline' }
+]
 
 function ModifyEntryModal({
   isOpen,
@@ -19,6 +27,7 @@ function ModifyEntryModal({
 }): React.ReactElement {
   const [name, setName] = useState('')
   const [author, setAuthor] = useState('')
+  const [type, setType] = useState<'singalong' | 'fingerstyle' | null>(null)
   const [loading, setLoading] = useState(false)
 
   function handleNameChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -33,6 +42,11 @@ function ModifyEntryModal({
     if (existingItem !== null) {
       setName(existingItem.name)
       setAuthor(existingItem.author)
+      setType(existingItem.type === '' ? null : existingItem.type)
+    } else {
+      setName('')
+      setAuthor('')
+      setType(null)
     }
   }, [existingItem])
 
@@ -44,7 +58,8 @@ function ModifyEntryModal({
       method: 'PUT',
       body: {
         name,
-        author
+        author,
+        type
       },
       successInfo: 'update',
       failureInfo: 'update',
@@ -78,8 +93,79 @@ function ModifyEntryModal({
         placeholder="John Doe"
         value={author}
         updateValue={handleAuthorChange}
-        additionalClassName="mt-4"
+        className="mt-4"
       />
+      <ListboxInput
+        name="Type"
+        icon="tabler:category"
+        value={type}
+        setValue={setType}
+        buttonContent={
+          <>
+            <Icon
+              icon={
+                type !== null
+                  ? {
+                      fingerstyle: 'mingcute:guitar-line',
+                      singalong: 'mdi:guitar-pick-outline'
+                    }[type]
+                  : 'tabler:music-off'
+              }
+              className="size-5"
+            />
+            <span className="-mt-px block truncate">
+              {type !== null ? type[0].toUpperCase() + type.slice(1) : 'None'}
+            </span>
+          </>
+        }
+      >
+        <ListboxOption
+          key="none"
+          className="flex-between relative flex cursor-pointer select-none p-4 text-bg-500 transition-all hover:bg-bg-100 data-[selected]:text-bg-800 hover:dark:bg-bg-700/50 data-[selected]:dark:text-bg-100"
+          value={null}
+        >
+          {({ selected }) => (
+            <>
+              <div>
+                <span className="flex items-center gap-2 font-medium">
+                  <Icon icon="tabler:music-off" className="size-5" />
+                  None
+                </span>
+              </div>
+              {selected && (
+                <Icon
+                  icon="tabler:check"
+                  className="block text-lg text-custom-500"
+                />
+              )}
+            </>
+          )}
+        </ListboxOption>
+        {TYPES.map(({ name, id, icon }) => (
+          <ListboxOption
+            key={id}
+            className="flex-between relative flex cursor-pointer select-none p-4 text-bg-500 transition-all hover:bg-bg-100 data-[selected]:text-bg-800 hover:dark:bg-bg-700/50 data-[selected]:dark:text-bg-100"
+            value={id}
+          >
+            {({ selected }) => (
+              <>
+                <div>
+                  <span className="flex items-center gap-2 font-medium">
+                    <Icon icon={icon} className="size-5" />
+                    {name}
+                  </span>
+                </div>
+                {selected && (
+                  <Icon
+                    icon="tabler:check"
+                    className="block text-lg text-custom-500"
+                  />
+                )}
+              </>
+            )}
+          </ListboxOption>
+        ))}
+      </ListboxInput>
       <CreateOrModifyButton
         type="update"
         loading={loading}

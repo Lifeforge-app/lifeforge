@@ -100,7 +100,7 @@ function ModifyMusicModal(): React.ReactElement {
         updateValue={updateMusicName}
         darker
         placeholder="My lovely music"
-        additionalClassName="w-[40rem]"
+        className="w-[40rem]"
         onKeyDown={e => {
           if (e.key === 'Enter') {
             onSubmitButtonClick().catch(console.error)
@@ -115,7 +115,7 @@ function ModifyMusicModal(): React.ReactElement {
         updateValue={updateMusicAuthor}
         darker
         placeholder="John Doe"
-        additionalClassName="w-[40rem] mt-6"
+        className="w-[40rem] mt-6"
         onKeyDown={e => {
           if (e.key === 'Enter') {
             onSubmitButtonClick().catch(console.error)

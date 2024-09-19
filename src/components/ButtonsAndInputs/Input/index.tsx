@@ -15,7 +15,7 @@ function Input({
   updateValue,
   isPassword = false,
   darker = false,
-  additionalClassName = '',
+  className = '',
   onKeyDown = () => {},
   noAutoComplete = true,
   autoFocus = false,
@@ -33,7 +33,7 @@ function Input({
   updateValue: (e: React.ChangeEvent<HTMLInputElement>) => void
   isPassword?: boolean
   darker?: boolean
-  additionalClassName?: string
+  className?: string
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   noAutoComplete?: boolean
   autoFocus?: boolean
@@ -49,7 +49,7 @@ function Input({
   return (
     <InputWrapper
       darker={darker}
-      additionalClassName={additionalClassName}
+      className={className}
       disabled={disabled}
       inputRef={inputRef}
     >

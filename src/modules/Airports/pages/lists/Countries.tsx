@@ -50,7 +50,7 @@ function Countries(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Airports" desc="..." />
+      <ModuleHeader title="Airports" />
       <MasterSearchBar />
       <Breadcrumbs
         breadcrumbs={[CONTINENTS[continentID as keyof typeof CONTINENTS]]}

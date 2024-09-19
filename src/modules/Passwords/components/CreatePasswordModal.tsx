@@ -185,7 +185,7 @@ function CreatePasswordModal({
             updateValue={updateWebsite}
             darker
             placeholder="https://google.com"
-            additionalClassName="mt-6"
+            className="mt-6"
             noAutoComplete
           />
           <Input
@@ -195,7 +195,7 @@ function CreatePasswordModal({
             updateValue={updateUsername}
             darker
             placeholder="johndoe1234@gmail.com"
-            additionalClassName="mt-6"
+            className="mt-6"
             noAutoComplete
           />
           <Input
@@ -206,7 +206,7 @@ function CreatePasswordModal({
             isPassword
             darker
             placeholder="Your password"
-            additionalClassName="mt-6"
+            className="mt-6"
             noAutoComplete
           />
           <CreateOrModifyButton

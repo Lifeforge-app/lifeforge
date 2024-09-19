@@ -62,7 +62,7 @@ function AirportsList(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Airports" desc="..." />
+      <ModuleHeader title="Airports" />
       <MasterSearchBar />
       <APIComponentWithFallback data={airportsData} showLoading={false}>
         {continentsData => (

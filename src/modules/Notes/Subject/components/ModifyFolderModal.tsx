@@ -110,7 +110,7 @@ function ModifyFolderModal({
           value={folderName}
           updateValue={updateFolderName}
           darker
-          additionalClassName="w-[40vw]"
+          className="w-[40vw]"
           onKeyDown={e => {
             if (e.key === 'Enter') {
               onSubmitButtonClick().catch(console.error)

@@ -75,11 +75,7 @@ function ServerStatus(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader
-        icon="tabler:server"
-        title="Server Status"
-        desc="Monitor the server status to ensure everything is running smoothly."
-      />
+      <ModuleHeader icon="tabler:server" title="Server Status" />
       <div className="mt-16 flex w-full flex-col gap-6">
         <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
           <Icon icon="tabler:device-desktop-analytics" className="text-3xl" />

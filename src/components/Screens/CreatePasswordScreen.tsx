@@ -88,7 +88,7 @@ function CreatePasswordScreen({
             setNewPassword(e.target.value)
           }}
           noAutoComplete
-          additionalClassName="w-1/2"
+          className="w-1/2"
           actionButtonIcon="tabler:dice"
           onActionButtonClick={() => {
             const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -120,7 +120,7 @@ function CreatePasswordScreen({
             setConfirmPassword(e.target.value)
           }}
           noAutoComplete
-          additionalClassName="w-1/2"
+          className="w-1/2"
           onKeyDown={e => {
             if (e.key === 'Enter') {
               confirmAction()

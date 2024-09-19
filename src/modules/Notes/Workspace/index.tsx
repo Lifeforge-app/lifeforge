@@ -73,7 +73,6 @@ function NotesCategory(): React.ReactElement {
                 )}
               </>
             }
-            desc="A place to store all your involuntarily generated thoughts."
           />
           <APIComponentWithFallback data={subjectsData}>
             {subjectsData =>

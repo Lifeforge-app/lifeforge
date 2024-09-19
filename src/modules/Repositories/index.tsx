@@ -32,7 +32,7 @@ function Repositories(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Repositories" desc="" />
+      <ModuleHeader title="Repositories" />
       <div className="mt-6 flex min-h-0 w-full flex-1">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className="flex h-full flex-1 flex-col lg:m-8">

@@ -50,7 +50,6 @@ function PhotosMainGallery(): React.ReactElement {
       <ModuleHeader
         icon="tabler:camera"
         title="Photos"
-        desc="View and manage all your precious memories."
         actionButton={
           <button
             onClick={() => {

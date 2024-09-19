@@ -75,11 +75,7 @@ function Passwords(): React.ReactElement {
   return (
     <ModuleWrapper>
       <div className="flex-between flex">
-        <ModuleHeader
-          icon="tabler:key"
-          title="Passwords"
-          desc="A vault to store your passwords securely."
-        />
+        <ModuleHeader icon="tabler:key" title="Passwords" />
         {otpSuccess && masterPassword !== '' && (
           <Button
             onClick={() => {

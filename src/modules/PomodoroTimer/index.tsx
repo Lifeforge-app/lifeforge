@@ -20,11 +20,7 @@ export default function PomodoroTimer(): React.ReactElement {
   const navigate = useNavigate()
   return (
     <ModuleWrapper>
-      <ModuleHeader
-        icon="tabler:clock-bolt"
-        title="Pomodoro Timer"
-        desc="Increase your productivity by using the Pomodoro technique."
-      />
+      <ModuleHeader icon="tabler:clock-bolt" title="Pomodoro Timer" />
       <div className="mt-6 flex w-full flex-1">
         <Timer />
         <TodoListProvider>
