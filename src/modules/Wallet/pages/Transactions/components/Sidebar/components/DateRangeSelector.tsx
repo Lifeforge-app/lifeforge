@@ -12,6 +12,7 @@ function DateRangeSelector(): React.ReactElement {
       <SidebarTitle name="Date Range" />
       <div className="relative px-4">
         <DateInput
+          darker
           icon="tabler:calendar-up"
           date={
             searchParams.get('start_date') !== null &&
@@ -45,6 +46,7 @@ function DateRangeSelector(): React.ReactElement {
           hasMargin={false}
         />
         <DateInput
+          darker
           icon="tabler:calendar-down"
           date={
             searchParams.get('end_date') !== null &&

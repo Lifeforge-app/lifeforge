@@ -148,7 +148,7 @@ function ModifyJournalEntryModal({
         }}
         darker
         icon="tabler:file-text"
-        additionalClassName="mt-4"
+        className="mt-4"
         placeholder="A Beautiful Day"
         actionButtonIcon={
           titleGenerationLoading ? 'svg-spinners:180-ring' : 'mage:stars-c'

@@ -4,6 +4,7 @@ import React from 'react'
 import CurrencyInput from 'react-currency-input-field'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
+import InputWrapper from './Input/components/InputWrapper'
 
 function CurrencyInputComponent({
   name,
@@ -12,7 +13,7 @@ function CurrencyInputComponent({
   value,
   updateValue,
   darker = false,
-  additionalClassName = ''
+  className = ''
 }: {
   reference?: React.RefObject<HTMLInputElement | null>
   name: string
@@ -21,16 +22,12 @@ function CurrencyInputComponent({
   value: string | undefined
   updateValue: (value: string | undefined) => void
   darker?: boolean
-  additionalClassName?: string
+  className?: string
 }): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div
-      className={`group relative flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom focus-within:!border-custom-500 ${
-        darker ? 'dark:bg-bg-800/50' : 'dark:bg-bg-800'
-      } ${additionalClassName}`}
-    >
+    <InputWrapper darker={darker} className={className}>
       <Icon
         icon={icon}
         className={`ml-6 size-6 shrink-0 ${
@@ -58,7 +55,7 @@ function CurrencyInputComponent({
           }
         />
       </div>
-    </div>
+    </InputWrapper>
   )
 }
 

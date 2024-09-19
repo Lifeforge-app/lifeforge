@@ -6,7 +6,7 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 function CFOPAlgorithms(): React.ReactElement {
   return (
     <ModuleWrapper>
-      <ModuleHeader icon="tabler:cube" title="CFOP Algorithms" desc="..." />
+      <ModuleHeader icon="tabler:cube" title="CFOP Algorithms" />
       <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {Object.entries({
           F2L: 'First Two Layers',

@@ -133,7 +133,7 @@ function CreateProjectModal({
           placeholder="Project name"
           icon="tabler:clipboard"
           darker
-          additionalClassName="min-w-[40vw] mt-6"
+          className="min-w-[40vw] mt-6"
         />
         {projectVisibility === 'commercial' && (
           <>
@@ -144,7 +144,7 @@ function CreateProjectModal({
               placeholder="Customer name"
               icon="tabler:user"
               darker
-              additionalClassName="mt-6"
+              className="mt-6"
             />
             <div className="mt-6 flex items-center gap-4">
               <Input
@@ -154,7 +154,7 @@ function CreateProjectModal({
                 placeholder="Total payable"
                 icon="tabler:currency-dollar"
                 darker
-                additionalClassName="w-[20vw]"
+                className="w-[20vw]"
               />
               <Input
                 name="Deposit"
@@ -163,7 +163,7 @@ function CreateProjectModal({
                 placeholder="Deposit"
                 icon="tabler:currency-dollar"
                 darker
-                additionalClassName="w-[20vw]"
+                className="w-[20vw]"
               />
             </div>
           </>

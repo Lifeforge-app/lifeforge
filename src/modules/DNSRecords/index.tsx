@@ -149,7 +149,6 @@ function DNSRecords(): JSX.Element {
       <ModuleHeader
         icon="tabler:cloud"
         title="DNS Records"
-        desc="..."
         totalItems={
           typeof filteredRecords === 'string'
             ? undefined
@@ -165,7 +164,6 @@ function DNSRecords(): JSX.Element {
             Add Record
           </Button>
         }
-        hasHamburgerMenu
         hamburgerMenuItems={
           <>
             <MenuItem

@@ -150,7 +150,6 @@ function Header({
       <ModuleHeader
         title="Guitar Tabs"
         icon="mingcute:guitar-line"
-        desc="..."
         totalItems={totalItems}
         actionButton={
           <Button
@@ -163,7 +162,6 @@ function Header({
             Upload
           </Button>
         }
-        hasHamburgerMenu
         hamburgerMenuItems={
           <>
             <MenuItem

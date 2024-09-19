@@ -115,11 +115,7 @@ function Modules(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader
-        icon="tabler:plug"
-        title="Modules"
-        desc="A place to toggle which modules you want to use."
-      />
+      <ModuleHeader icon="tabler:plug" title="Modules" />
       {userData ? (
         <ul className="mb-8 mt-6 space-y-4">
           {ROUTES.flatMap(route => route.items)

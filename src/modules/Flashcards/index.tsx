@@ -18,11 +18,7 @@ export default function Flashcards(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader
-        icon="tabler:cards"
-        title="Flashcards"
-        desc="Memorizing could be a pain, but not with flashcards."
-      />
+      <ModuleHeader icon="tabler:cards" title="Flashcards" />
       <div className="mt-6 flex min-h-0 w-full flex-1">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className="flex h-full flex-1 flex-col lg:ml-8">
