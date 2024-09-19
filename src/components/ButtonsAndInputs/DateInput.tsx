@@ -34,7 +34,7 @@ const DateInput: React.FC<DateInputProps> = ({
 
   return (
     <InputWrapper
-      additionalClassName={`${className} ${hasMargin ? 'mt-4' : ''}`}
+      className={`${className} ${hasMargin ? 'mt-4' : ''}`}
       darker={darker}
     >
       <Icon

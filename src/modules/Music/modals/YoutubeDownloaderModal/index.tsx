@@ -60,7 +60,8 @@ function YoutubeDownloaderModal(): React.ReactElement {
   function downloadVideo(): void {
     setLoading(true)
     fetch(
-      `${import.meta.env.VITE_API_HOST}/music/youtube/async-download/${videoURL.match(URL_REGEX)?.groups?.id
+      `${import.meta.env.VITE_API_HOST}/music/youtube/async-download/${
+        videoURL.match(URL_REGEX)?.groups?.id
       }`,
       {
         method: 'POST',
@@ -129,7 +130,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
         value={videoURLinput}
         updateValue={updateVideoURL}
         placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-        additionalClassName="mb-8"
+        className="mb-8"
       />
       {URL_REGEX.test(videoURL) && (
         <APIComponentWithFallback data={videoInfo}>

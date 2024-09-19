@@ -10,11 +10,7 @@ import ThemeSelector from './components/ThemeSelector'
 function Personalization(): React.ReactElement {
   return (
     <ModuleWrapper>
-      <ModuleHeader
-        icon="tabler:palette"
-        title="Personalization"
-        desc="Customise your experience with the app."
-      />
+      <ModuleHeader icon="tabler:palette" title="Personalization" />
       <div className="my-8">
         <LanguageSelector />
         <ThemeSelector />

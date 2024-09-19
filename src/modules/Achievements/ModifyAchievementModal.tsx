@@ -138,7 +138,7 @@ function ModifyAchievementModal({
           updateValue={updateAchievementThoughts}
           darker
           placeholder="My thoughts"
-          additionalClassName="mt-4"
+          className="mt-4"
         />
         <ListboxInput
           name={t('input.achievementDifficulty')}

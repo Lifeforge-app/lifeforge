@@ -35,7 +35,6 @@ function Ledgers(): React.ReactElement {
       <ModuleHeader
         icon="tabler:book"
         title="Ledgers"
-        desc="Manage your Ledgers here."
         actionButton={
           typeof ledgers !== 'string' &&
           ledgers.length > 0 && (

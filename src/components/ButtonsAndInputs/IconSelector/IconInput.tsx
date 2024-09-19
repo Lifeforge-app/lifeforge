@@ -24,7 +24,7 @@ function IconInput({
 
   return (
     <>
-      <InputWrapper darker additionalClassName="mt-4">
+      <InputWrapper darker className="mt-4">
         <Icon
           icon="tabler:icons"
           className={`ml-6 size-6 shrink-0 ${

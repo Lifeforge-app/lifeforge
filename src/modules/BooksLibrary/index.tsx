@@ -17,11 +17,7 @@ function BooksLibrary(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader
-        title="Books Library"
-        icon="tabler:books"
-        desc="A collection of reference books that accompany you on your learning journey."
-      />
+      <ModuleHeader title="Books Library" icon="tabler:books" />
       <div className="mt-6 flex min-h-0 w-full min-w-0 flex-1">
         <Sidebar />
         <div className="flex h-full min-h-0 flex-1 flex-col pb-8 xl:ml-8">

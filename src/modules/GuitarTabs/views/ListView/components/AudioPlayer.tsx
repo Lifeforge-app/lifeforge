@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import IconButton from '../../../../Music/components/Bottombar/components/IconButton'
+import Button from '@components/ButtonsAndInputs/Button'
 
 function AudioPlayer({ url }: { url: string }): React.ReactElement {
   const [audioPlayer, setAudioPlayer] = useState<any>(null)
@@ -13,7 +13,7 @@ function AudioPlayer({ url }: { url: string }): React.ReactElement {
 
   return (
     <div className="flex items-center gap-4">
-      <IconButton
+      <Button
         icon={isPlaying ? 'tabler:pause' : 'tabler:play'}
         onClick={e => {
           e.preventDefault()
@@ -28,7 +28,8 @@ function AudioPlayer({ url }: { url: string }): React.ReactElement {
 
           setIsPlaying(prev => !prev)
         }}
-        className="!p-2 text-bg-500 hover:bg-bg-200 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100"
+        variant="no-bg"
+        className="!p-2"
       />
     </div>
   )

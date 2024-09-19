@@ -42,7 +42,7 @@ function AssetItem({
       >
         View Transactions
       </Button>
-      <HamburgerMenu className="absolute right-4 top-4">
+      <HamburgerMenu className="absolute right-4 top-0">
         <MenuItem
           icon="tabler:pencil"
           text="Edit"

@@ -2,13 +2,13 @@ import React from 'react'
 
 function InputWrapper({
   darker = false,
-  additionalClassName = '',
+  className = '',
   disabled = false,
   inputRef,
   children
 }: {
   darker?: boolean
-  additionalClassName?: string
+  className?: string
   disabled?: boolean
   inputRef?: React.RefObject<HTMLInputElement | null>
   children: React.ReactNode
@@ -19,7 +19,7 @@ function InputWrapper({
         darker
           ? 'dark:bg-bg-800/50 dark:hover:bg-bg-800'
           : 'dark:bg-bg-800 dark:hover:bg-bg-700'
-      } ${additionalClassName} ${
+      } ${className} ${
         disabled ? '!pointer-events-none opacity-50' : 'cursor-text'
       }`}
       onClick={() => {

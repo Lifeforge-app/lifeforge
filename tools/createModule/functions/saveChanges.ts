@@ -66,7 +66,7 @@ async function saveChanges({
           function ${moduleID}(): React.ReactElement {
             return (
               <ModuleWrapper>
-                <ModuleHeader title="${moduleNameEN.moduleName}" desc="..." />
+                <ModuleHeader title="${moduleNameEN.moduleName}"  />
               </ModuleWrapper>
             )
           }

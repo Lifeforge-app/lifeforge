@@ -126,7 +126,7 @@ function VideoSection({
         value={videoUrl}
         updateValue={updateValue}
         darker
-        additionalClassName="my-4"
+        className="my-4"
       />
       {URL_REGEX.test(debouncedVideoUrl) && (
         <VideoDetails

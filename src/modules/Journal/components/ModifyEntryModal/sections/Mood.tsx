@@ -100,7 +100,7 @@ function Mood({
                   setMood({ ...mood, emoji: e.target.value })
                 }}
                 placeholder="Emoji"
-                additionalClassName="mt-4"
+                className="mt-4"
               />
             </div>
             <Button

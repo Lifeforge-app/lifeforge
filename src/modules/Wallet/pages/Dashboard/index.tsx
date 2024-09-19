@@ -44,7 +44,6 @@ function WalletDashboard(): React.ReactElement {
       <ModuleHeader
         icon="tabler:wallet"
         title="Wallet"
-        desc="..."
         actionButton={
           <Button
             className="hidden md:flex"

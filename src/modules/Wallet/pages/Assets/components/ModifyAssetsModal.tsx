@@ -37,7 +37,7 @@ function ModifyAssetsModal({
         if (existedData) {
           setAssetName(existedData.name)
           setAssetIcon(existedData.icon)
-          setAssetStartingBalance(`${existedData.balance}`)
+          setAssetStartingBalance(`${existedData.starting_balance}`)
         }
       } else {
         setAssetName('')
@@ -113,17 +113,15 @@ function ModifyAssetsModal({
           name="Asset icon"
           setIconSelectorOpen={setIconSelectorOpen}
         />
-        {openType === 'create' && (
-          <CurrencyInputComponent
-            name="Initial Balance"
-            placeholder="0.00"
-            icon="tabler:currency-dollar"
-            value={`${assetStartingBalance}`}
-            updateValue={updateAssetBalance}
-            darker
-            additionalClassName="mt-6"
-          />
-        )}
+        <CurrencyInputComponent
+          name="Initial Balance"
+          placeholder="0.00"
+          icon="tabler:currency-dollar"
+          value={`${assetStartingBalance}`}
+          updateValue={updateAssetBalance}
+          darker
+          className="mt-6"
+        />
         <CreateOrModifyButton
           loading={isLoading}
           onClick={() => {

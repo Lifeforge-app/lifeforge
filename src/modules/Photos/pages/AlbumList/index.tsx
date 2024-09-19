@@ -75,7 +75,6 @@ function PhotosAlbumList(): React.ReactElement {
       <ModuleWrapper>
         <ModuleHeader
           title="Photos"
-          desc="View and manage all your precious memories."
           actionButton={
             <button
               onClick={() => {

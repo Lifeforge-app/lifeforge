@@ -26,10 +26,7 @@ function PhotosTrash(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader
-        title="Photos"
-        desc="View and manage all your precious memories."
-      />
+      <ModuleHeader title="Photos" />
       <div className="relative mt-6 flex size-full min-h-0 gap-8">
         <PhotosSidebar />
         <div className="flex h-full flex-1 flex-col">

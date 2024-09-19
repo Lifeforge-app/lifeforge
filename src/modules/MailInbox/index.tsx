@@ -9,7 +9,7 @@ function MailInbox(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader icon="tabler:mail" title="Mail Inbox" desc="..." />
+      <ModuleHeader icon="tabler:mail" title="Mail Inbox" />
       <APIComponentWithFallback data={mails}>
         {mails => (
           <ul className="mt-4 divide-y-2 divide-bg-200 dark:divide-bg-900">

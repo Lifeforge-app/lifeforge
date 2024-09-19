@@ -149,7 +149,7 @@ function ModifyAPIKeyModal({
           placeholder="My API Key"
           value={name}
           updateValue={updateName}
-          additionalClassName="mt-4"
+          className="mt-4"
         />
         <Input
           icon="tabler:info-circle"
@@ -157,7 +157,7 @@ function ModifyAPIKeyModal({
           placeholder="A short description of this key"
           value={description}
           updateValue={updateDescription}
-          additionalClassName="mt-4"
+          className="mt-4"
         />
         <IconInput
           icon={icon}
@@ -172,7 +172,7 @@ function ModifyAPIKeyModal({
           value={key}
           isPassword
           updateValue={updateKey}
-          additionalClassName="mt-4"
+          className="mt-4"
         />
         <CreateOrModifyButton
           loading={loading}

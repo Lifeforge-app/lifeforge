@@ -1,4 +1,5 @@
 import { useDebounce } from '@uidotdev/usehooks'
+import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
@@ -43,11 +44,7 @@ function IdeaBox(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader
-        icon="tabler:bulb"
-        title="Idea Box"
-        desc="Sometimes you will randomly stumble upon a great idea."
-      />
+      <ModuleHeader icon="tabler:bulb" title="Idea Box" />
       <div className="mt-6 flex min-h-0 w-full flex-1 flex-col">
         <SearchInput
           searchQuery={searchQuery}
@@ -68,8 +65,8 @@ function IdeaBox(): React.ReactElement {
             ) : (
               <EmptyStateScreen
                 onCTAClick={setModifyContainerModalOpenType}
-                title="No idea containers"
-                description="Hmm... Seems a bit empty here. Consider creating one."
+                title={t('emptyState.ideaBox.title')}
+                description={t('emptyState.ideaBox.description')}
                 icon="tabler:cube-off"
                 ctaContent="Create container"
               />

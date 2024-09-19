@@ -220,11 +220,7 @@ function ChangiFlightStatus(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader
-        icon="tabler:plane"
-        title="Changi Flight Status"
-        desc="..."
-      />
+      <ModuleHeader icon="tabler:plane" title="Changi Flight Status" />
       <div className="flex items-center gap-2">
         <Listbox
           as="div"

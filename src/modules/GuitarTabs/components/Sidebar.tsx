@@ -54,7 +54,7 @@ function Sidebar({
             <SidebarItem
               icon="mdi:guitar-pick-outline"
               name="Sing Along"
-              number={sidebarData.singalong}
+              number={sidebarData.categories.singalong}
               active={searchParams.get('category') === 'singalong'}
               onClick={() => {
                 setSearchParams({
@@ -67,12 +67,25 @@ function Sidebar({
             <SidebarItem
               icon="mingcute:guitar-line"
               name="Finger Style"
-              number={sidebarData.fingerstyle}
+              number={sidebarData.categories.fingerstyle}
               active={searchParams.get('category') === 'fingerstyle'}
               onClick={() => {
                 setSearchParams({
                   ...Object.fromEntries(searchParams.entries()),
                   category: 'fingerstyle'
+                })
+                setOpen(false)
+              }}
+            />
+            <SidebarItem
+              icon="tabler:music-off"
+              name="Uncategorized"
+              number={sidebarData.categories.uncategorized}
+              active={searchParams.get('category') === 'uncategorized'}
+              onClick={() => {
+                setSearchParams({
+                  ...Object.fromEntries(searchParams.entries()),
+                  category: 'uncategorized'
                 })
                 setOpen(false)
               }}

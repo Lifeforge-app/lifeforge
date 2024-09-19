@@ -4,49 +4,29 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
 
-interface ModuleHeaderPropsWithHamburgerMenu {
+interface ModuleHeaderProps {
+  icon?: string
   title: string | React.ReactNode
-  desc?: string | React.ReactNode
   totalItems?: number
   tips?: string
-  hasHamburgerMenu?: false
-  hamburgerMenuItems?: never
+  hamburgerMenuItems?: React.ReactNode
   actionButton?: React.ReactNode
-  icon?: string
   customElement?: React.ReactNode
 }
-
-interface ModuleHeaderPropsWithHamburgerMenuItems {
-  title: string | React.ReactNode
-  desc?: string | React.ReactNode
-  totalItems?: number
-  tips?: string
-  hasHamburgerMenu: true
-  hamburgerMenuItems: React.ReactNode
-  actionButton?: React.ReactNode
-  icon?: string
-  customElement?: React.ReactNode
-}
-
-type ModuleHeaderProps =
-  | ModuleHeaderPropsWithHamburgerMenu
-  | ModuleHeaderPropsWithHamburgerMenuItems
 
 function ModuleHeader({
+  icon,
   title,
-  desc,
   totalItems,
-  hasHamburgerMenu = false,
+  tips = '',
   hamburgerMenuItems,
   actionButton,
-  tips = '',
-  icon,
   customElement
 }: ModuleHeaderProps): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="flex-between flex w-full min-w-0 gap-8">
+    <header className="flex-between flex w-full min-w-0 gap-8">
       <div className="flex w-full min-w-0 items-center gap-4">
         {icon !== undefined && (
           <div className="flex size-16 shrink-0 items-center justify-center rounded-lg bg-custom-500/20">
@@ -64,13 +44,9 @@ function ModuleHeader({
                 : ''}
             </span>
           </h1>
-          {desc !== undefined && (
-            <div className="w-full min-w-0 truncate whitespace-nowrap text-bg-500">
-              {t(
-                `modules.descriptions.${toCamelCase(title?.toString() ?? '')}`
-              )}
-            </div>
-          )}
+          <div className="w-full min-w-0 truncate whitespace-nowrap text-bg-500">
+            {t(`modules.descriptions.${toCamelCase(title?.toString() ?? '')}`)}
+          </div>
         </div>
       </div>
       <div className="flex items-center gap-2">
@@ -78,7 +54,7 @@ function ModuleHeader({
         {tips !== '' && (
           <div className="relative hidden md:block">
             <Menu as="div" className="relative z-50">
-              <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-100">
+              <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-100">
                 <Icon icon="tabler:question-circle" className="size-5" />
               </MenuButton>
               <MenuItems
@@ -98,9 +74,9 @@ function ModuleHeader({
           </div>
         )}
         {customElement}
-        {hasHamburgerMenu && (
+        {hamburgerMenuItems !== undefined && (
           <Menu as="div" className="relative z-50 overscroll-contain">
-            <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-100">
+            <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-100">
               <Icon icon="tabler:dots-vertical" className="size-5" />
             </MenuButton>
             <MenuItems
@@ -113,7 +89,7 @@ function ModuleHeader({
           </Menu>
         )}
       </div>
-    </div>
+    </header>
   )
 }
 

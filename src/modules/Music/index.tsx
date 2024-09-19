@@ -32,7 +32,6 @@ function Music(): React.ReactElement {
     <ModuleWrapper>
       <ModuleHeader
         title="Music"
-        desc="..."
         actionButton={<AddMusicButton />}
         totalItems={musics.length}
         icon="tabler:music"

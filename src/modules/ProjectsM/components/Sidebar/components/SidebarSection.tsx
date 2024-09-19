@@ -1,3 +1,4 @@
+import { t } from 'i18next'
 import React from 'react'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
@@ -31,7 +32,9 @@ function SidebarSection({
               ))}
             </>
           ) : (
-            <p className="text-center text-bg-500">No {stuff} found.</p>
+            <p className="text-center text-bg-500">
+              {t(`emptyState.${stuff}`)}
+            </p>
           )
         }
       </APIComponentWithFallback>

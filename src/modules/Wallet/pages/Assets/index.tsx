@@ -35,7 +35,6 @@ function Assets(): React.ReactElement {
       <ModuleHeader
         icon="tabler:wallet"
         title="Assets"
-        desc="Manage your assets here."
         actionButton={
           typeof assets !== 'string' &&
           assets.length > 0 && (

@@ -18,7 +18,7 @@ import IconEntry from '../components/IconEntry'
 async function getIconSet(searchTerm: string): Promise<any> {
   try {
     const res = await fetch(
-      `https://cors-anywhere.thecodeblog.net/api.iconify.design/search?query=${searchTerm}&limit=9999`
+      `https://api.iconify.design/search?query=${searchTerm}&limit=9999`
     )
     const data = await res.json()
     let iconList = []

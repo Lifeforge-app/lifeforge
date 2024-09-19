@@ -186,7 +186,7 @@ function ModifyTransactionsModal({
             value={particular}
             darker
             name="Particulars"
-            additionalClassName="mt-4"
+            className="mt-4"
             updateValue={updateTransactionName}
           />
         )}
@@ -195,6 +195,7 @@ function ModifyTransactionsModal({
           date={transactionDate}
           setDate={setTransactionDate}
           icon="tabler:calendar"
+          darker
         />
         <CurrencyInputComponent
           icon="tabler:currency-dollar"
@@ -203,7 +204,7 @@ function ModifyTransactionsModal({
           updateValue={setAmount}
           placeholder="0.00"
           darker
-          additionalClassName="mt-4"
+          className="mt-4"
         />
         {transactionType !== 'transfer' && (
           <>

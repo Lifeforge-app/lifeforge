@@ -61,7 +61,7 @@ function Journal(): React.ReactElement {
   return (
     <ModuleWrapper>
       <div className="flex-between flex">
-        <ModuleHeader icon="tabler:book" title="Journal" desc="..." />
+        <ModuleHeader icon="tabler:book" title="Journal" />
         {masterPassword !== '' && (
           <Button
             onClick={() => {

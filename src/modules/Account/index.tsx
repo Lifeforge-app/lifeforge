@@ -8,7 +8,7 @@ import PasswordColumn from './components/PasswordColumn'
 function Account(): React.ReactElement {
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Account Settings" desc="..." />
+      <ModuleHeader title="Account Settings" />
       <div className="my-8">
         <AvatarColumn />
         <OrdinaryColumn title="username" id="username" icon="tabler:user" />

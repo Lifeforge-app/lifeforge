@@ -69,8 +69,21 @@ function EntryItem({
       </div>
       <div className="mt-4 flex w-full min-w-0 items-center justify-between gap-8">
         <div className="w-full min-w-0">
-          <h3 className="truncate text-lg font-medium">{entry.name}</h3>
-          <p className="text-sm text-bg-500">
+          <div className="flex items-center gap-2">
+            <h3 className="truncate text-lg font-medium">{entry.name}</h3>
+            {entry.type !== '' && (
+              <Icon
+                icon={
+                  {
+                    fingerstyle: 'mingcute:guitar-line',
+                    singalong: 'mdi:guitar-pick-outline'
+                  }[entry.type]
+                }
+                className="size-5 shrink-0 text-bg-500"
+              />
+            )}
+          </div>
+          <p className="truncate text-sm text-bg-500">
             {entry.author !== '' ? entry.author : 'Unknown'}
           </p>
         </div>

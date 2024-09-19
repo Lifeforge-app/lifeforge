@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import { t } from 'i18next'
 import React from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
@@ -27,11 +28,7 @@ function ProjectsM(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader
-        icon="tabler:clipboard"
-        title="Projects (M)"
-        desc="It's time to stop procrastinating."
-      />
+      <ModuleHeader icon="tabler:clipboard" title="Projects (M)" />
       <div className="mt-6 flex size-full min-h-0 flex-1">
         <Sidebar />
         <div className="relative z-10 flex h-full flex-1 flex-col lg:ml-8">
@@ -78,8 +75,8 @@ function ProjectsM(): React.ReactElement {
                   </Scrollbar>
                 ) : (
                   <EmptyStateScreen
-                    title="No Projects Found"
-                    description='Create a new project by clicking the "New Project" button above.'
+                    title={t('emptyState.projects.title')}
+                    description={t('emptyState.projects.description')}
                     icon="tabler:clipboard-off"
                     ctaContent="New Project"
                   />

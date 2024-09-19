@@ -8,15 +8,18 @@ interface IGuitarTabsEntry extends BasePBCollection {
   pdf: string
   audio: string
   musescore: string
-  type: 'fingerstyle' | 'singalong'
+  type: 'fingerstyle' | 'singalong' | ''
   isFavourite: boolean
 }
 
 interface IGuitarTabsSidebarData {
   total: number
   favourites: number
-  fingerstyle: number
-  singalong: number
+  categories: {
+    fingerstyle: number
+    singalong: number
+    uncategorized: number
+  }
   authors: Record<string, number>
 }
 

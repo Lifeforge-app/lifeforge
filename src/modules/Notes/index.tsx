@@ -18,11 +18,7 @@ function Notes(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader
-        icon="tabler:notebook"
-        title="Notes"
-        desc="A place to store all your involuntarily generated thoughts."
-      />
+      <ModuleHeader icon="tabler:notebook" title="Notes" />
       {(() => {
         if (data === 'loading') {
           return <LoadingScreen />

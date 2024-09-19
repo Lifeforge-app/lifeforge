@@ -80,8 +80,6 @@ function Transactions(): React.ReactElement {
       <ModuleHeader
         icon="tabler:arrows-exchange"
         title="Transactions"
-        desc="Manage your Transactions here."
-        hasHamburgerMenu
         hamburgerMenuItems={
           <>
             <MenuItem

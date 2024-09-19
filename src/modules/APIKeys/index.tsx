@@ -63,7 +63,6 @@ function APIKeys(): React.ReactElement {
         <ModuleHeader
           icon="tabler:password"
           title="API Keys"
-          desc="..."
           actionButton={
             otpSuccess &&
             masterPassword !== '' && (

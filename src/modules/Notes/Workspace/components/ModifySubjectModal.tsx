@@ -122,7 +122,7 @@ function ModifySubjectModal({
           value={subjectName}
           updateValue={updateSubjectName}
           darker
-          additionalClassName="w-[40vw]"
+          className="w-[40vw]"
           placeholder="My Subject"
         />
         <Input
@@ -131,7 +131,7 @@ function ModifySubjectModal({
           value={subjectDescription}
           updateValue={updateSubjectDescription}
           darker
-          additionalClassName="w-[40vw] mt-6"
+          className="w-[40vw] mt-6"
           placeholder="The best subject in the world"
         />
         <IconInput

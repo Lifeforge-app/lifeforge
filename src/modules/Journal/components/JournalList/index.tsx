@@ -111,8 +111,8 @@ function JournalList({
             ) : (
               <div className="mt-6 flex-1">
                 <EmptyStateScreen
-                  title="No entries found"
-                  description="You haven't written any journal entries yet."
+                  title={t('emptyState.journal.title')}
+                  description={t('emptyState.journal.description')}
                   icon="tabler:book-off"
                   ctaContent="new entry"
                   onCTAClick={() => {
