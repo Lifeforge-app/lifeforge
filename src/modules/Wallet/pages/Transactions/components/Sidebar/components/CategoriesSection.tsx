@@ -104,7 +104,7 @@ function CategoriesSection({
                         }`}
                       />
                     </div>
-                    <div className="w-full flex-between truncate">
+                    <div className="flex-between w-full truncate">
                       {name === 'All'
                         ? t('sidebar.wallet.allCategories')
                         : name}
