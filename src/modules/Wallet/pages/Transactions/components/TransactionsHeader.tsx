@@ -79,7 +79,7 @@ function TransactionsHeader({
   }, [searchParams, ledgers])
 
   return (
-    <div className="flex flex-between">
+    <div className="flex-between flex">
       <div>
         <h1 className="text-3xl font-semibold lg:text-4xl">
           {t(

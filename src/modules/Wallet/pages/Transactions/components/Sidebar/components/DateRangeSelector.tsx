@@ -7,80 +7,63 @@ import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 function DateRangeSelector(): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()
 
+  const handleDateChange = (
+    date: string,
+    type: 'start_date' | 'end_date'
+  ): void => {
+    setSearchParams(searchParams => {
+      if (date === '') {
+        searchParams.delete(type)
+        return searchParams
+      }
+
+      const otherType = type === 'start_date' ? 'end_date' : 'start_date'
+      const otherDate =
+        searchParams.get(otherType) !== null &&
+        moment(searchParams.get(otherType)).isValid()
+          ? moment(searchParams.get(otherType))
+          : moment()
+
+      if (
+        (type === 'start_date' && moment(date).isAfter(otherDate)) ||
+        (type === 'end_date' && moment(date).isBefore(otherDate))
+      ) {
+        searchParams.set(otherType, moment(date).format('YYYY-MM-DD'))
+      }
+
+      searchParams.set(type, moment(date).format('YYYY-MM-DD'))
+      return searchParams
+    })
+  }
+
+  const dateInputsConfig = [
+    { type: 'start_date', icon: 'tabler:calendar-up', name: 'Start Date' },
+    { type: 'end_date', icon: 'tabler:calendar-down', name: 'End Date' }
+  ] as const
+
   return (
     <>
       <SidebarTitle name="Date Range" />
       <div className="relative px-4">
-        <DateInput
-          darker
-          icon="tabler:calendar-up"
-          date={
-            searchParams.get('start_date') !== null &&
-            moment(searchParams.get('start_date')).isValid()
-              ? moment(searchParams.get('start_date')).format('YYYY-MM-DD')
-              : ''
-          }
-          setDate={date => {
-            setSearchParams(searchParams => {
-              if (date === '') {
-                searchParams.delete('start_date')
-                return searchParams
-              }
-
-              const endDate =
-                searchParams.get('end_date') !== null &&
-                moment(searchParams.get('end_date')).isValid()
-                  ? moment(searchParams.get('end_date'))
-                  : moment()
-
-              if (moment(date).isAfter(endDate)) {
-                searchParams.set('end_date', moment(date).format('YYYY-MM-DD'))
-              }
-
-              searchParams.set('start_date', moment(date).format('YYYY-MM-DD'))
-              return searchParams
-            })
-          }}
-          name="Start Date"
-          className="w-full"
-          hasMargin={false}
-        />
-        <DateInput
-          darker
-          icon="tabler:calendar-down"
-          date={
-            searchParams.get('end_date') !== null &&
-            moment(searchParams.get('end_date')).isValid()
-              ? moment(searchParams.get('end_date')).format('YYYY-MM-DD')
-              : ''
-          }
-          setDate={date => {
-            setSearchParams(searchParams => {
-              if (date === '') {
-                searchParams.delete('end_date')
-                return searchParams
-              }
-
-              const startDate =
-                searchParams.get('start_date') !== null &&
-                moment(searchParams.get('start_date')).isValid()
-                  ? moment(searchParams.get('start_date'))
-                  : moment()
-
-              if (moment(date).isBefore(startDate)) {
-                searchParams.set(
-                  'start_date',
-                  moment(date).format('YYYY-MM-DD')
-                )
-              }
-
-              searchParams.set('end_date', moment(date).format('YYYY-MM-DD'))
-              return searchParams
-            })
-          }}
-          name="End Date"
-          className="w-full"
-        />
+        {dateInputsConfig.map(({ type, icon, name }) => (
+          <DateInput
+            key={type}
+            darker
+            icon={icon}
+            date={
+              searchParams.get(type) !== null &&
+              moment(searchParams.get(type)).isValid()
+                ? moment(searchParams.get(type)).format('YYYY-MM-DD')
+                : ''
+            }
+            setDate={date => {
+              handleDateChange(date, type)
+            }}
+            name={name}
+            className="w-full"
+            hasMargin={false}
+          />
+        ))}
       </div>
     </>
   )
