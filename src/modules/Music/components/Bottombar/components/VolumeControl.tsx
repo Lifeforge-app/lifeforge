@@ -20,7 +20,7 @@ export default function VolumeControl(): React.ReactElement {
         className={
           currentMusic.is_favourite
             ? 'text-red-500 hover:text-red-600'
-            : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-100'
+            : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
         }
         icon={
           currentMusic.is_favourite ? 'tabler:heart-filled' : 'tabler:heart'

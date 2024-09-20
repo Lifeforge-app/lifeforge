@@ -56,7 +56,7 @@ function RawCodeAndSummary({
           Summarize with AI
         </Button>
       ) : (
-        <div className="mt-4 rounded-md bg-bg-300/50 p-4 text-bg-800 dark:bg-bg-700/50 dark:text-bg-100">
+        <div className="mt-4 rounded-md bg-bg-300/50 p-4 text-bg-800 dark:bg-bg-700/50 dark:text-bg-50">
           <Markdown className="prose">{summary}</Markdown>
           <div className="mt-4 rounded-md border-l-4 border-yellow-500 bg-yellow-500/20 p-4 text-yellow-500">
             <h2 className="flex items-center gap-2 text-xl font-medium">

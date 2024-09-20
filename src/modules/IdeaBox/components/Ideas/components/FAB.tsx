@@ -40,7 +40,7 @@ function FAB({
       >
         {({ open }) => (
           <>
-            <MenuButton className="relative z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800">
+            <MenuButton className="relative z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-semibold uppercase tracking-wider text-bg-50 shadow-lg hover:bg-custom-600 dark:text-bg-800">
               <Icon
                 icon="tabler:plus"
                 className={`size-6 shrink-0 transition-all ${
@@ -84,7 +84,7 @@ function FAB({
                           }
                         }}
                         className={`group flex w-full items-center justify-end gap-4 whitespace-nowrap rounded-md py-3 pr-2 ${
-                          active ? 'text-bg-200' : 'text-bg-100'
+                          active ? 'text-bg-200' : 'text-bg-50'
                         }`}
                       >
                         {t(`ideaBox.entryType.${name.toLowerCase()}`)}

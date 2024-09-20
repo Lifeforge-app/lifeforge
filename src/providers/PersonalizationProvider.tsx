@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
+import Gradient from 'javascript-color-gradient'
 import { cookieParse } from 'pocketbase'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { hexToRgb, hslToRgb, rgbToHex, rgbToHsl } from '@utils/colors'
 import { useAuthContext } from './AuthProvider'
 import THEME_COLOR_HEX from '../constants/theme_color_hex'
 import { type IFontFamily } from '../modules/Personalization/components/FontFamilySelector'
@@ -25,7 +28,7 @@ interface IPersonalizationData {
   fontFamily: string
   theme: 'light' | 'dark' | 'system'
   themeColor: string
-  bgTemp: 'bg-slate' | 'bg-gray' | 'bg-neutral' | 'bg-zinc' | 'bg-stone'
+  bgTemp: string
   language: string
   dashboardLayout: DashboardLayoutType
   setFontFamily: (font: string) => void
@@ -53,7 +56,7 @@ export default function PersonalizationProvider({
 
   const [fontFamily, setFontFamily] = useState<string>('Wix Madefor Text')
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system')
-  const [themeColor, setThemeColor] = useState('theme-lime')
+  const [themeColor, setThemeColor] = useState('theme-custom')
   const [bgTemp, setBgTemp] = useState<
     'bg-slate' | 'bg-gray' | 'bg-neutral' | 'bg-zinc' | 'bg-stone'
   >('bg-neutral')
@@ -61,6 +64,43 @@ export default function PersonalizationProvider({
   const [dashboardLayout, setDashboardLayout] = useState<DashboardLayoutType>(
     {}
   )
+
+  function clearCustomColorProperties(type: 'bg' | 'theme'): void {
+    const number = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
+
+    for (let i = 0; i < number.length; i++) {
+      document.body.style.removeProperty(
+        `--color-${type === 'bg' ? 'bg' : 'custom'}-${number[i]}`
+      )
+    }
+  }
+
+  function interpolateColors(color: string, type: 'bg' | 'theme'): void {
+    let finalColor = color
+
+    if (type === 'bg') {
+      const [r, g, b] = hexToRgb(color)
+      let [h, s, l] = rgbToHsl(r, g, b)
+      l = theme === 'dark' ? 0.5 : 0.7
+      const [r2, g2, b2] = hslToRgb(h, s, l)
+      finalColor = rgbToHex(r2, g2, b2)
+    }
+
+    const gradientArray = new Gradient()
+      .setColorGradient('#FFFFFF', finalColor, '#000000')
+      .setMidpoint(14)
+      .getColors()
+      .slice(1, -1)
+
+    const number = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
+
+    for (let i = 0; i < number.length; i++) {
+      document.body.style.setProperty(
+        `--color-${type === 'bg' ? 'bg' : 'custom'}-${number[i]}`,
+        hexToRgb(gradientArray[i]).join(' ')
+      )
+    }
+  }
 
   useEffect(() => {
     if (!userData) return
@@ -70,15 +110,22 @@ export default function PersonalizationProvider({
     }
 
     if (userData?.color !== '') {
-      setThemeColor(`theme-${userData.color}`)
+      setThemeColor(
+        userData.color.startsWith('#')
+          ? userData.color
+          : `theme-${userData.color}`
+      )
     }
 
     if (userData?.bgTemp !== '') {
-      setBgTemp(`bg-${userData.bgTemp}` as any)
+      setBgTemp(
+        userData.bgTemp.startsWith('#')
+          ? userData.bgTemp
+          : `bg-${userData.bgTemp}`
+      )
     }
 
     if (userData?.language !== '') {
-      console.log(userData.language)
       setLanguage(userData.language)
     }
 
@@ -148,6 +195,17 @@ export default function PersonalizationProvider({
     } else {
       document.body.classList.remove('dark')
     }
+
+    clearCustomColorProperties('theme')
+    clearCustomColorProperties('bg')
+
+    if (themeColor.startsWith('#')) {
+      interpolateColors(themeColor, 'theme')
+    }
+
+    if (bgTemp.startsWith('#')) {
+      interpolateColors(bgTemp, 'bg')
+    }
   }, [theme])
 
   useEffect(() => {
@@ -171,10 +229,20 @@ export default function PersonalizationProvider({
           'theme-orange',
           'theme-deep-orange',
           'theme-brown',
-          'theme-grey'
+          'theme-grey',
+          'theme-custom'
         ]
       )
-      document.body.classList.add(themeColor)
+
+      clearCustomColorProperties('theme')
+
+      document.body.classList.add(
+        themeColor.startsWith('#') ? 'theme-custom' : themeColor
+      )
+
+      if (themeColor.startsWith('#')) {
+        interpolateColors(themeColor, 'theme')
+      }
     }
   }, [themeColor])
 
@@ -185,9 +253,16 @@ export default function PersonalizationProvider({
         'bg-gray',
         'bg-neutral',
         'bg-zinc',
-        'bg-stone'
+        'bg-stone',
+        'bg-custom'
       )
-      document.body.classList.add(bgTemp)
+      document.body.classList.add(bgTemp.startsWith('#') ? 'bg-custom' : bgTemp)
+    }
+
+    clearCustomColorProperties('bg')
+
+    if (bgTemp.startsWith('#')) {
+      interpolateColors(bgTemp, 'bg')
     }
   }, [bgTemp])
 
@@ -376,9 +451,11 @@ export default function PersonalizationProvider({
       <meta
         name="theme-color"
         content={
-          THEME_COLOR_HEX[
-            themeColor.replace('theme-', '') as keyof typeof THEME_COLOR_HEX
-          ]
+          themeColor.startsWith('#')
+            ? themeColor
+            : THEME_COLOR_HEX[
+                themeColor.replace('theme-', '') as keyof typeof THEME_COLOR_HEX
+              ]
         }
       />
       {children}

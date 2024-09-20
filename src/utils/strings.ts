@@ -214,3 +214,9 @@ export function cleanFileSize(byte: number): string {
   const i = Math.floor(Math.log(byte) / Math.log(1024))
   return Math.round(byte / Math.pow(1024, i)) + ' ' + sizes[i]
 }
+
+export function addNumberSuffix(number: number): string {
+  const suffixes = ['th', 'st', 'nd', 'rd']
+  const v = number % 100
+  return number + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0])
+}

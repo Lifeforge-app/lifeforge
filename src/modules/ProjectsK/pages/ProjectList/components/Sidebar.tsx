@@ -55,7 +55,7 @@ function Sidebar({
                       }}
                       className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800 ${
                         searchParams.get('status') === id
-                          ? 'bg-bg-200/50 text-bg-800 dark:bg-bg-800 dark:text-bg-100'
+                          ? 'bg-bg-200/50 text-bg-800 dark:bg-bg-800 dark:text-bg-50'
                           : ''
                       }`}
                     >
@@ -107,7 +107,7 @@ function Sidebar({
                     }}
                     className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800 ${
                       searchParams.get('type') === name.toLowerCase()
-                        ? 'bg-bg-200/50 text-bg-800 dark:bg-bg-800 dark:text-bg-100'
+                        ? 'bg-bg-200/50 text-bg-800 dark:bg-bg-800 dark:text-bg-50'
                         : ''
                     }`}
                   >

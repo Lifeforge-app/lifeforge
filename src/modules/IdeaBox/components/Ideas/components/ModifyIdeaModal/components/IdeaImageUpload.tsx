@@ -25,7 +25,7 @@ function IdeaImageUpload({
       </div>
       <label
         htmlFor="idea-image"
-        className="mt-4 flex items-center gap-2 rounded-lg bg-bg-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 transition-all hover:bg-bg-600 dark:bg-bg-100 dark:text-bg-800 dark:hover:bg-bg-200"
+        className="mt-4 flex items-center gap-2 rounded-lg bg-bg-500 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-50 transition-all hover:bg-bg-600 dark:bg-bg-100 dark:text-bg-800 dark:hover:bg-bg-200"
       >
         <Icon icon="tabler:upload" className="size-5" />
         Upload image

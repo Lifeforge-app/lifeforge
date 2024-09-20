@@ -320,18 +320,17 @@
     ]
   },
   {
-    "title": "Aviation",
-    "prefix": "aviation",
+    "title": "Information",
     "items": [
       {
         "name": "Airports",
         "icon": "ic:round-connecting-airports",
         "routes": {
-          "airports": "aviation/airports",
-          "airports-countries": "aviation/airports/:continentID",
-          "airports-regions": "aviation/airports/:continentID/:countryID",
-          "airports-airports": "aviation/airports/:continentID/:countryID/:regionID",
-          "airports-airport": "aviation/airports/:continentID/:countryID/:regionID/:airportID"
+          "airports": "airports",
+          "airports-countries": "airports/:continentID",
+          "airports-regions": "airports/:continentID/:countryID",
+          "airports-airports": "airports/:continentID/:countryID/:regionID",
+          "airports-airport": "airports/:continentID/:countryID/:regionID/:airportID"
         },
         "togglable": true,
         "hasAI": true,
@@ -340,17 +339,23 @@
         ]
       },
       {
-        "name": "Changi Flight Status",
+        "name": "Changi Airport",
         "icon": "tabler:plane",
+        "subsection": [
+          [
+            "Flight Status",
+            "tabler:list",
+            "changi-flight-status"
+          ],
+          [
+            "Airline Information",
+            "tabler:line",
+            ""
+          ]
+        ],
         "routes": {
-          "changi-flight-status": "aviation/changi-flight-status"
+          "flight-status": "flight-status"
         },
-        "togglable": true
-      },
-      {
-        "name": "Changi Airline Information",
-        "icon": "tabler:line",
-        "routes": {},
         "togglable": true
       }
     ]

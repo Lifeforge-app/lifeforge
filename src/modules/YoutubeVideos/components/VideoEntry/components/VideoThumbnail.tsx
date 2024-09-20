@@ -22,7 +22,7 @@ function VideoThumbnail({
         alt=""
         className="relative object-cover"
       />
-      <p className="absolute bottom-2 right-2 rounded-md bg-bg-900/70 px-1.5 py-0.5 text-bg-100">
+      <p className="absolute bottom-2 right-2 rounded-md bg-bg-900/70 px-1.5 py-0.5 text-bg-50">
         {moment
           .utc(moment.duration(duration, 'seconds').asMilliseconds())
           .format(duration >= 3600 ? 'H:mm:ss' : 'm:ss')}

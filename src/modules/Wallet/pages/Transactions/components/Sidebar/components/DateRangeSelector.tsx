@@ -1,11 +1,16 @@
 import moment from 'moment'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 
 function DateRangeSelector(): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()
+  const ref = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    ref.current = document.querySelector('#root')
+  }, [])
 
   const handleDateChange = (
     date: string,
@@ -45,8 +50,10 @@ function DateRangeSelector(): React.ReactElement {
     <>
       <SidebarTitle name="Date Range" />
       <div className="relative px-4">
-        {dateInputsConfig.map(({ type, icon, name }) => (
+        {dateInputsConfig.map(({ type, icon, name }, idx) => (
           <DateInput
+            index={idx}
+            modalRef={ref}
             key={type}
             darker
             icon={icon}
@@ -60,7 +67,7 @@ function DateRangeSelector(): React.ReactElement {
               handleDateChange(date, type)
             }}
             name={name}
-            className="w-full"
+            className={`w-full ${idx === 1 && 'mt-4'}`}
             hasMargin={false}
           />
         ))}

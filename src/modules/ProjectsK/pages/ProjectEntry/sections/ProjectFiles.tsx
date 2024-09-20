@@ -154,7 +154,7 @@ export default function ProjectFiles({
                   clearMedium().catch(() => {})
                 }}
                 disabled={mediumClearLoading}
-                className="flex items-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-custom transition-all hover:bg-bg-700"
+                className="flex items-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-50 shadow-custom transition-all hover:bg-bg-700"
               >
                 {!mediumClearLoading ? (
                   <>
@@ -170,7 +170,7 @@ export default function ProjectFiles({
                   replaceFiles().catch(() => {})
                 }}
                 disabled={fileReplaceLoading}
-                className="flex items-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-custom transition-all hover:bg-bg-700"
+                className="flex items-center gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-50 shadow-custom transition-all hover:bg-bg-700"
               >
                 {!fileReplaceLoading ? (
                   <>

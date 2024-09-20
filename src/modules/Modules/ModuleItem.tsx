@@ -84,10 +84,10 @@ function ModuleItem({
           <div className="rounded-lg bg-custom-500/20 p-3 dark:bg-bg-800">
             <Icon
               icon={module.icon}
-              className="text-2xl text-custom-500 dark:text-bg-100"
+              className="text-2xl text-custom-500 dark:text-bg-50"
             />
           </div>
-          <h3 className="text-xl font-semibold">
+          <h3 className="text-xl font-medium">
             {t(`modules.${toCamelCase(module.name)}`)}
           </h3>
         </div>

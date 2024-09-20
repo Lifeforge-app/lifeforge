@@ -29,7 +29,7 @@ function LinkItem({
           ? 'font-bold text-custom-500 hover:text-custom-600'
           : `text-bg-500 ${
               to !== ''
-                ? 'hover:text-bg-600 dark:hover:text-bg-100'
+                ? 'hover:text-bg-600 dark:hover:text-bg-50'
                 : 'pointer-events-none'
             }`
       }`}

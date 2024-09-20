@@ -29,7 +29,7 @@ function TypeSection({
           className={`relative flex items-center gap-6 px-4 font-medium transition-all ${
             searchParams.get('type') === name.toLowerCase() ||
             (name === 'All' && searchParams.get('type') === null)
-              ? "text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-100"
+              ? "text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-50"
               : 'text-bg-500 dark:text-bg-500'
           }`}
         >
@@ -57,7 +57,7 @@ function TypeSection({
               icon={icon}
               className={`size-6 shrink-0 ${
                 {
-                  All: 'text-bg-500 dark:text-bg-100',
+                  All: 'text-bg-500 dark:text-bg-50',
                   Income: 'text-green-500',
                   Expenses: 'text-red-500',
                   Transfer: 'text-blue-500'

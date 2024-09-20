@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
+import React, { useRef } from 'react'
 import DatePicker from 'react-date-picker'
 import { useTranslation } from 'react-i18next'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
@@ -18,6 +18,8 @@ interface DateInputProps {
   hasMargin?: boolean
   className?: string
   darker?: boolean
+  modalRef: React.RefObject<HTMLElement | null>
+  index?: number
 }
 
 const DateInput: React.FC<DateInputProps> = ({
@@ -27,10 +29,41 @@ const DateInput: React.FC<DateInputProps> = ({
   icon,
   hasMargin = true,
   className = '',
-  darker = false
+  darker = false,
+  modalRef,
+  index = 0
 }) => {
   const { t } = useTranslation()
   const { language } = usePersonalizationContext()
+  const ref = useRef<HTMLInputElement | null>(null)
+
+  function updateCalendarLocation(): void {
+    setTimeout(() => {
+      if (modalRef?.current === null || ref.current === null) {
+        return
+      }
+
+      const reactCalendar = document.querySelectorAll('.react-calendar')[
+        index
+      ] as HTMLElement
+
+      const calendarInput = ref.current.querySelector('.react-date-picker')
+
+      if (reactCalendar === null || calendarInput === null) {
+        return
+      }
+
+      console.log(reactCalendar, calendarInput)
+
+      const inputRect = calendarInput.getBoundingClientRect()
+
+      reactCalendar.style.top = `${
+        inputRect.top + inputRect.height + window.scrollY
+      }px`
+
+      reactCalendar.style.left = `${inputRect.left + window.scrollX}px`
+    }, 1)
+  }
 
   return (
     <InputWrapper
@@ -40,12 +73,14 @@ const DateInput: React.FC<DateInputProps> = ({
       <Icon
         icon={icon}
         className={`ml-6 size-6 shrink-0 ${
-          date !== '' ? 'text-bg-800 dark:text-bg-100' : 'text-bg-500'
+          date !== '' ? 'text-bg-800 dark:text-bg-50' : 'text-bg-500'
         }`}
       />
-      <div className="flex w-full items-center gap-2">
+      <div ref={ref} className="flex w-full items-center gap-2">
         <InputLabel label={t(`input.${toCamelCase(name)}`)} active />
         <DatePicker
+          onCalendarOpen={updateCalendarLocation}
+          portalContainer={modalRef?.current}
           value={date}
           onChange={(newDate: Value) => {
             setDate(newDate?.toString() ?? '')
@@ -55,7 +90,7 @@ const DateInput: React.FC<DateInputProps> = ({
           calendarIcon={null}
           calendarProps={{
             className:
-              'bg-bg-200 dark:bg-bg-800 outline-none border-none rounded-lg p-4',
+              'bg-bg-200 dark:bg-bg-800 absolute z-[9999] outline-none border-none rounded-lg p-4',
             tileClassName:
               'hover:bg-bg-300 dark:hover:bg-bg-700/50 rounded-md disabled:text-bg-500 disabled:bg-transparent disabled:cursor-not-allowed disabled:hover:!bg-transparent disabled:dark:hover:!bg-transparent',
             locale: language,

@@ -178,7 +178,7 @@ function ProjectsKEntry(): React.ReactElement {
                                           {selected && (
                                             <Icon
                                               icon="tabler:check"
-                                              className="block text-lg text-bg-100"
+                                              className="block text-lg text-bg-50"
                                             />
                                           )}
                                         </>
@@ -195,10 +195,10 @@ function ProjectsKEntry(): React.ReactElement {
                 })()}
               </h1>
               <div className="flex-center flex gap-2">
-                <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
+                <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50">
                   <Icon icon="tabler:bulb" className="text-2xl" />
                 </button>
-                <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
+                <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50">
                   <Icon icon="tabler:share" className="text-2xl" />
                 </button>
               </div>
@@ -215,9 +215,9 @@ function ProjectsKEntry(): React.ReactElement {
                 onClick={() => {
                   navigate(`#${id}`)
                 }}
-                className={`flex-center flex w-full gap-2 p-6 text-bg-500 transition-all hover:text-bg-800 dark:hover:text-bg-100 ${
+                className={`flex-center flex w-full gap-2 p-6 text-bg-500 transition-all hover:text-bg-800 dark:hover:text-bg-50 ${
                   location.hash === `#${id}`
-                    ? 'border-b-2 border-bg-100 !text-bg-100'
+                    ? 'border-b-2 border-bg-100 !text-bg-50'
                     : ''
                 }`}
               >

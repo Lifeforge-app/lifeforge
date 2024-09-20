@@ -124,7 +124,7 @@ function ImagePreviewModal({
                 switch (name) {
                   case 'loading':
                     return (
-                      <div className="animate-pulse text-lg text-bg-100">
+                      <div className="animate-pulse text-lg text-bg-50">
                         Loading...
                       </div>
                     )
@@ -136,7 +136,7 @@ function ImagePreviewModal({
                       </div>
                     )
                   default:
-                    return <div className="text-lg text-bg-100">{name}</div>
+                    return <div className="text-lg text-bg-50">{name}</div>
                 }
               })()}
               <div className="flex items-center gap-4">
@@ -167,7 +167,7 @@ function ImagePreviewModal({
                   onClick={() => {
                     setDeletePhotosConfirmationModalOpen(true)
                   }}
-                  className="rounded-md p-2 text-bg-100 hover:bg-bg-700/50"
+                  className="rounded-md p-2 text-bg-50 hover:bg-bg-700/50"
                 >
                   <Icon icon="tabler:trash" className="size-5" />
                 </button>

@@ -221,7 +221,7 @@ function EditCardModal({
             behavior: 'smooth'
           })
         }}
-        className="flex-center mt-4 hidden w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-custom transition-all hover:bg-bg-800/50 dark:text-bg-100 sm:flex"
+        className="flex-center mt-4 hidden w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-50 shadow-custom transition-all hover:bg-bg-800/50 dark:text-bg-50 sm:flex"
       >
         <Icon icon="tabler:plus" className="text-xl" />
         new card
@@ -231,7 +231,7 @@ function EditCardModal({
         <button
           disabled={loading}
           onClick={onClose}
-          className="flex-center flex h-16 w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-100 shadow-custom transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
+          className="flex-center flex h-16 w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-50 shadow-custom transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
         >
           cancel
         </button>
