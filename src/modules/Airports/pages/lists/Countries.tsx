@@ -70,7 +70,6 @@ function Countries(): React.ReactElement {
               {Object.keys(filteredData).length > 0 ? (
                 Object.entries(filteredData)
                   .sort(([, [a]], [, [b]]) => {
-                    console.log(a, b)
                     return a.localeCompare(b)
                   })
                   .map(([key, [name, amount]]) => (

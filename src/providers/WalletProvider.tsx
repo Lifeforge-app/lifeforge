@@ -85,15 +85,7 @@ export default function WalletProvider(): React.ReactElement {
             moment(searchParams.get('end_date')).isValid()
               ? moment(searchParams.get('end_date'))
               : moment()
-          if (transaction.amount === 400) {
-            console.log(
-              moment(transaction.date).format('YYYY-MM-DD'),
-              startDate.format('YYYY-MM-DD'),
-              endDate.format('YYYY-MM-DD'),
-              moment(transaction.date).isSameOrAfter(startDate) &&
-                moment(transaction.date).isSameOrBefore(endDate)
-            )
-          }
+
           const transactionDate = moment(transaction.date).format('YYYY-MM-DD')
           return (
             moment(transactionDate).isSameOrAfter(startDate) &&
