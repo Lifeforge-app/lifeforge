@@ -53,8 +53,6 @@ const DateInput: React.FC<DateInputProps> = ({
         return
       }
 
-      console.log(reactCalendar, calendarInput)
-
       const inputRect = calendarInput.getBoundingClientRect()
 
       reactCalendar.style.top = `${

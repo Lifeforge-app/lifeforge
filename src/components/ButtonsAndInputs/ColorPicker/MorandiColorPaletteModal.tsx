@@ -34,6 +34,7 @@ function MorandiColorPaletteModal({
   color: string
   setColor: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
+  console.log(color) // TODO
   return (
     <Modal isOpen={isOpen} affectSidebar={false} minWidth="60vw">
       <ModalHeader

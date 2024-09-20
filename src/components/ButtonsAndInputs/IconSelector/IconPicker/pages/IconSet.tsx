@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { Icon } from '@iconify/react'
 import React, { useEffect, useMemo, useState } from 'react'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
