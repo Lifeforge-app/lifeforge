@@ -24,11 +24,11 @@ export default function MusicPlayer(): React.ReactElement {
       <div className="flex w-full flex-1 flex-col items-center justify-center gap-4">
         {currentMusic !== null ? (
           <>
-            <div className="flex aspect-square flex-1 items-center justify-center rounded-md bg-bg-800">
+            <div className="flex aspect-square flex-1 items-center justify-center rounded-md bg-bg-100 shadow-custom dark:bg-bg-800">
               <Icon
                 icon="tabler:disc"
                 className={`aspect-square h-full w-1/2 ${
-                  isPlaying ? 'animate-spin text-custom-500' : ' text-bg-500'
+                  isPlaying ? 'animate-spin text-custom-500' : 'text-bg-500'
                 }`}
               />
             </div>

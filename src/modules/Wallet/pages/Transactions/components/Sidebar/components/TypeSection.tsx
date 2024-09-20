@@ -51,7 +51,12 @@ function TypeSection({
               })
               setSidebarOpen(false)
             }}
-            className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-100 dark:hover:bg-bg-800"
+            className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left ${
+              searchParams.get('type') === name.toLowerCase() ||
+              (name === 'All' && searchParams.get('type') === null)
+                ? 'bg-bg-200/50'
+                : 'hover:bg-bg-100/50 dark:hover:bg-bg-800'
+            }`}
           >
             <Icon
               icon={icon}

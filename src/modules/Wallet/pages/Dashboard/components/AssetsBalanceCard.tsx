@@ -13,8 +13,8 @@ function AssetsBalanceCard(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="col-span-1 row-span-2 flex h-full min-h-96 flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
-      <div className="flex-between flex">
+    <div className="col-span-1 row-span-2 flex h-full min-h-96 flex-col rounded-lg bg-bg-50 p-6 px-2 shadow-custom dark:bg-bg-900">
+      <div className="flex-between flex px-4">
         <h1 className="flex items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:wallet" className="text-2xl" />
           <span className="ml-2">{t('dashboard.widgets.balances')}</span>
@@ -29,13 +29,13 @@ function AssetsBalanceCard(): React.ReactElement {
       <APIComponentWithFallback data={assets}>
         {assets =>
           assets.length > 0 ? (
-            <Scrollbar className="mt-6">
-              <ul className="flex h-full flex-col gap-4">
+            <Scrollbar className="mt-4">
+              <ul className="flex flex-col gap-4 p-4 pt-2">
                 {assets.map(asset => (
                   <Link
                     key={asset.id}
                     to={`/wallet/transactions?asset=${asset.id}`}
-                    className="flex-between flex w-full min-w-0 flex-1 flex-col gap-4 rounded-lg bg-bg-100 p-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 dark:hover:bg-bg-700/50 [@media(min-width:400px)]:flex-row"
+                    className="flex-between flex w-full min-w-0 flex-1 flex-col gap-4 rounded-lg bg-bg-100/50 p-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 dark:hover:bg-bg-700/50 [@media(min-width:400px)]:flex-row"
                   >
                     <div className="flex w-full min-w-0 items-center gap-4">
                       <Icon icon={asset.icon} className="size-6 shrink-0" />

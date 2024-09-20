@@ -1,6 +1,7 @@
 import { type ColorResult, Colorful, EditableInput } from '@uiw/react-color'
 import React, { useCallback, useEffect, useState } from 'react'
 import ModalHeader from '@components/Modals/ModalHeader'
+import MorandiColorPaletteModal from './MorandiColorPaletteModal'
 import Modal from '../../Modals/Modal'
 import Button from '../Button'
 
@@ -24,6 +25,8 @@ function ColorPickerModal({
   setColor: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
   const [innerColor, setInnerColor] = useState(color.toLowerCase())
+  const [morandiColorPaletteModalOpen, setMorandiColorPaletteModalOpen] =
+    useState(false)
 
   const confirmColor = useCallback(() => {
     setColor(innerColor)
@@ -50,36 +53,56 @@ function ColorPickerModal({
   }, [color])
 
   return (
-    <Modal affectSidebar={false} isOpen={isOpen}>
-      <ModalHeader
-        title="Pick a color"
-        icon="tabler:color-picker"
-        onClose={handleClose}
-      />
-      <Colorful
-        color={innerColor}
-        onChange={handleColorChange}
-        disableAlpha
-        className="!w-full"
-      />
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `.w-color-editable-input input {
-            background-color: ${innerColor} !important;
-            color: ${checkContrast(innerColor)} !important;
-          }`
+    <>
+      <Modal affectSidebar={false} isOpen={isOpen}>
+        <ModalHeader
+          title="Pick a color"
+          icon="tabler:color-picker"
+          onClose={handleClose}
+        />
+        <Colorful
+          color={innerColor}
+          onChange={handleColorChange}
+          disableAlpha
+          className="!w-full"
+        />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `.w-color-editable-input input {
+          background-color: ${innerColor} !important;
+          color: ${checkContrast(innerColor)} !important;
+        }`
+          }}
+        />
+        <EditableInput
+          label="Hex"
+          value={innerColor}
+          onChange={handleInputChange}
+          className="mt-4 border-0 p-4 text-2xl font-semibold"
+        />
+        <Button
+          variant="secondary"
+          icon="tabler:flower"
+          onClick={() => {
+            setMorandiColorPaletteModalOpen(true)
+          }}
+          className="mb-2"
+        >
+          Morandi Color Palette
+        </Button>
+        <Button onClick={confirmColor} icon="tabler:check">
+          Select
+        </Button>
+      </Modal>
+      <MorandiColorPaletteModal
+        isOpen={morandiColorPaletteModalOpen}
+        onClose={() => {
+          setMorandiColorPaletteModalOpen(false)
         }}
+        color={innerColor}
+        setColor={setInnerColor}
       />
-      <EditableInput
-        label="Hex"
-        value={innerColor}
-        onChange={handleInputChange}
-        className="mt-4 border-0 p-4 text-2xl font-semibold"
-      />
-      <Button onClick={confirmColor} icon="tabler:check">
-        Select
-      </Button>
-    </Modal>
+    </>
   )
 }
 
