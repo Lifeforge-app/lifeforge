@@ -29,7 +29,7 @@ function FontFamilyItem({ family }: { family: string }): React.ReactElement {
               className="block text-lg text-custom-500"
             />
           )}
-        </L>
+        </LLC>
       )}
     </ListboxOption>
   )
