@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
-import React from 'react'
+import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
 import InputWrapper from '../Input/components/InputWrapper'
@@ -17,6 +17,7 @@ function IconInput({
   setIconSelectorOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   const { t } = useTranslation()
+  const ref = useRef<HTMLInputElement | null>(null)
 
   function updateIcon(e: React.ChangeEvent<HTMLInputElement>): void {
     setIcon(e.target.value)
@@ -24,7 +25,7 @@ function IconInput({
 
   return (
     <>
-      <InputWrapper darker className="mt-4">
+      <InputWrapper inputRef={ref} darker className="mt-4">
         <Icon
           icon="tabler:icons"
           className={`ml-6 size-6 shrink-0 ${
@@ -50,6 +51,7 @@ function IconInput({
               icon={icon || 'tabler:question-mark'}
             />
             <input
+              ref={ref}
               value={icon}
               onChange={updateIcon}
               placeholder="tabler:cube"

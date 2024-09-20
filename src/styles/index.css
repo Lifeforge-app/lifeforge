@@ -425,6 +425,20 @@ progress::-moz-progress-bar {
   --color-bg-950: 12 10 9;
 }
 
+.bg-custom {
+  --color-bg-50: 0 0 0;
+  --color-bg-100: 0 0 0;
+  --color-bg-200: 0 0 0;
+  --color-bg-300: 0 0 0;
+  --color-bg-400: 0 0 0;
+  --color-bg-500: 0 0 0;
+  --color-bg-600: 0 0 0;
+  --color-bg-700: 0 0 0;
+  --color-bg-800: 0 0 0;
+  --color-bg-900: 0 0 0;
+  --color-bg-950: 0 0 0;
+}
+
 ::global {
   --toastify-color-light: var(--color-custom-500);
 }

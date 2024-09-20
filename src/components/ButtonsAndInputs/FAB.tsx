@@ -17,7 +17,7 @@ function FAB({
   return (
     <button
       onClick={onclick}
-      className={`fixed bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-medium tracking-wide text-bg-100 shadow-lg hover:bg-custom-600 dark:text-bg-800 ${
+      className={`fixed bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-medium tracking-wide text-bg-50 shadow-lg hover:bg-custom-600 dark:text-bg-800 ${
         alwaysShow
           ? ''
           : {

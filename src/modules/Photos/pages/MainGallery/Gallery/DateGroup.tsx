@@ -116,7 +116,7 @@ function DateGroup({
                   icon="uil:check"
                   className={`size-4 !stroke-[1px]  transition-all  ${
                     isSelectedAll
-                      ? 'stroke-bg-100 text-bg-100 dark:stroke-bg-900 dark:text-bg-800'
+                      ? 'stroke-bg-100 text-bg-50 dark:stroke-bg-900 dark:text-bg-800'
                       : 'stroke-bg-500 text-bg-500 group-hover/checkbox:!stroke-custom-500 group-hover/checkbox:!text-custom-500'
                   }`}
                 />

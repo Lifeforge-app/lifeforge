@@ -37,14 +37,14 @@ export default function ControlButtons({
           className={
             isShuffle
               ? 'text-custom-500 hover:text-custom-600'
-              : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-100'
+              : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
           }
           icon="uil:shuffle"
         />
       )}
       <IconButton
         onClick={lastMusic}
-        className="text-bg-500 hover:text-bg-800 dark:hover:text-bg-100"
+        className="text-bg-500 hover:text-bg-800 dark:hover:text-bg-50"
         icon="tabler:skip-back"
       />
       <IconButton
@@ -60,7 +60,7 @@ export default function ControlButtons({
       />
       <IconButton
         onClick={nextMusic}
-        className="text-bg-500 hover:text-bg-800 dark:hover:text-bg-100"
+        className="text-bg-500 hover:text-bg-800 dark:hover:text-bg-50"
         icon="tabler:skip-forward"
       />
       {(isFull || !isWidget) && (
@@ -72,7 +72,7 @@ export default function ControlButtons({
           className={
             isRepeat
               ? 'text-custom-500 hover:text-custom-600'
-              : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-100'
+              : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
           }
           icon="uil:repeat"
         />

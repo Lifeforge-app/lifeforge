@@ -200,7 +200,7 @@ function DNSRecords(): JSX.Element {
           <ListboxOptions
             transition
             anchor="bottom end"
-            className="w-96 rounded-md bg-bg-100 text-bg-800 shadow-lg outline-none transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800 dark:text-bg-100"
+            className="w-96 rounded-md bg-bg-100 text-bg-800 shadow-lg outline-none transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800 dark:text-bg-50"
           >
             <Scrollbar autoHeight autoHeightMax={300}>
               {FILTER_TYPE.map(type => (
@@ -302,7 +302,7 @@ function DNSRecords(): JSX.Element {
                           }}
                           className={`absolute right-4 top-1/2 -translate-y-1/2 !p-2 hover:bg-bg-800/70 ${
                             sortBy === header
-                              ? 'text-bg-800 dark:text-bg-100'
+                              ? 'text-bg-800 dark:text-bg-50'
                               : 'text-bg-500'
                           }`}
                         />
@@ -389,7 +389,7 @@ function DNSRecords(): JSX.Element {
                       </td>
                       <td className="p-4 text-center">
                         <div className="flex w-full items-center justify-center gap-2">
-                          <button className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/20 hover:text-bg-800 dark:hover:bg-bg-800/70 dark:hover:text-bg-100">
+                          <button className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/20 hover:text-bg-800 dark:hover:bg-bg-800/70 dark:hover:text-bg-50">
                             <Icon icon="tabler:pencil" className="size-6" />
                           </button>
                           <button

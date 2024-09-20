@@ -225,7 +225,7 @@ function CreateProjectModal({
                       {selected && (
                         <Icon
                           icon="tabler:check"
-                          className="block text-lg text-bg-100"
+                          className="block text-lg text-bg-50"
                         />
                       )}
                     </>
@@ -241,9 +241,9 @@ function CreateProjectModal({
               <div className="mt-6 flex items-center gap-2">
                 <Icon
                   icon="tabler:chart-bar"
-                  className="size-6 shrink-0 text-bg-800 group-focus-within:!text-custom-500 dark:text-bg-100"
+                  className="size-6 shrink-0 text-bg-800 group-focus-within:!text-custom-500 dark:text-bg-50"
                 />
-                <span className="pointer-events-none text-lg font-medium tracking-wide text-bg-100">
+                <span className="pointer-events-none text-lg font-medium tracking-wide text-bg-50">
                   Progress steps
                 </span>
               </div>

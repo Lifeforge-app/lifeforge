@@ -22,7 +22,7 @@ function SidebarHeader(): React.ReactElement {
       {sidebarExpanded && (
         <button
           onClick={toggleSidebar}
-          className="p-6 text-bg-500 transition-all hover:text-bg-800 dark:hover:text-bg-100"
+          className="p-6 text-bg-500 transition-all hover:text-bg-800 dark:hover:text-bg-50"
         >
           <Icon icon="tabler:menu" className="text-2xl" />
         </button>

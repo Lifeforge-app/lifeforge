@@ -1,5 +1,7 @@
 import { useMemo } from 'react'
+import THEME_COLOR_HEX from '@constants/theme_color_hex'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { hexToRgb } from '@utils/colors'
 import { toCamelCase } from '@utils/strings'
 
 const bgTheme = {
@@ -72,38 +74,19 @@ const bgTheme = {
   }
 }
 
-const colorTheme = {
-  red: 'rgb(244, 67, 54)',
-  pink: 'rgb(233, 30, 99)',
-  purple: 'rgb(156, 39, 176)',
-  'deep-purple': 'rgb(103, 58, 183)',
-  indigo: 'rgb(63, 81, 181)',
-  blue: 'rgb(33, 150, 243)',
-  'light-blue': 'rgb(3, 169, 244)',
-  cyan: 'rgb(0, 188, 212)',
-  teal: 'rgb(0, 150, 136)',
-  green: 'rgb(76, 175, 80)',
-  'light-green': 'rgb(139, 195, 74)',
-  lime: 'rgb(205, 220, 57)',
-  yellow: 'rgb(255, 235, 59)',
-  amber: 'rgb(255, 193, 7)',
-  orange: 'rgb(255, 152, 0)',
-  'deep-orange': 'rgb(255, 87, 34)',
-  brown: 'rgb(121, 85, 72)',
-  grey: 'rgb(158, 158, 158)'
-}
-
 export default function useThemeColorHex(): {
   theme: string
   bgTemp: Record<number, string>
 } {
   const { themeColor, bgTemp } = usePersonalizationContext()
   const finalTheme = useMemo(() => {
-    return colorTheme[
-      toCamelCase(
-        themeColor.replace('theme-', '').replace(/-/g, ' ')
-      ) as keyof typeof colorTheme
-    ]
+    return !themeColor.startsWith('#')
+      ? THEME_COLOR_HEX[
+          toCamelCase(
+            themeColor.replace('theme-', '').replace(/-/g, ' ')
+          ) as keyof typeof THEME_COLOR_HEX
+        ]
+      : `rgb(${hexToRgb(themeColor).join(', ')})`
   }, [themeColor])
 
   const finalBgTemp = useMemo(() => {

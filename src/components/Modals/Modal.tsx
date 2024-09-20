@@ -7,7 +7,8 @@ function Modal({
   minWidth,
   minHeight,
   className,
-  affectSidebar = true
+  affectSidebar = true,
+  modalRef
 }: {
   isOpen: boolean
   children: React.ReactNode
@@ -15,9 +16,11 @@ function Modal({
   minHeight?: string
   className?: string
   affectSidebar?: boolean
+  modalRef?: React.RefObject<HTMLDivElement | null>
 }): React.ReactElement {
   const { setSubSidebarExpanded } = useGlobalStateContext()
-  const [innerIsOpen, setInnerIsOpen] = useState(isOpen)
+  const [innerIsOpen, setInnerIsOpen] = useState(false)
+  const [fisrtTime, setFirstTime] = useState(true)
 
   useEffect(() => {
     if (affectSidebar) {
@@ -26,17 +29,19 @@ function Modal({
   }, [isOpen, setSubSidebarExpanded])
 
   useEffect(() => {
-    if (!isOpen) {
+    if (!isOpen && !fisrtTime) {
       setTimeout(() => {
         setInnerIsOpen(false)
       }, 500)
     } else {
       setInnerIsOpen(true)
     }
-  }, [isOpen])
+    setFirstTime(false)
+  }, [isOpen, setInnerIsOpen, fisrtTime])
 
   return (
     <div
+      ref={modalRef}
       className={`fixed left-0 top-0 h-dvh w-full bg-black/10 backdrop-blur-md transition-opacity ease-linear dark:bg-bg-950/60 ${
         isOpen
           ? 'z-[9990] opacity-100'

@@ -97,7 +97,7 @@ async function saveChanges({
   )
 
   const isModuleNameSaved = await saveTranslation({
-    key: `modules.${moduleID}`,
+    key: `modules.${moduleID[0].toLowerCase() + moduleID.slice(1)}`,
     en: moduleNameEN.moduleName,
     'zh-CN': moduleNameInOtherLangs.moduleNameZHCN,
     'zh-TW': moduleNameInOtherLangs.moduleNameZHTW,
@@ -110,7 +110,9 @@ async function saveChanges({
   }
 
   const isModuleDescSaved = await saveTranslation({
-    key: `modules.descriptions.${moduleID}`,
+    key: `modules.descriptions.${
+      moduleID[0].toLowerCase() + moduleID.slice(1)
+    }`,
     en: moduleDescEN.moduleDesc,
     'zh-CN': moduleDescInOtherLangs.moduleDescZHCN,
     'zh-TW': moduleDescInOtherLangs.moduleDescZHTW,

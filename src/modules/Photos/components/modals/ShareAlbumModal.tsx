@@ -91,7 +91,7 @@ function ShareAlbumModal({
       </div>
       {publicity && (
         <>
-          <div className="mt-4 flex gap-2 rounded-md bg-bg-700/50 p-3 text-bg-800 shadow-md dark:text-bg-100">
+          <div className="mt-4 flex gap-2 rounded-md bg-bg-700/50 p-3 text-bg-800 shadow-md dark:text-bg-50">
             <Icon icon="tabler:link" className="size-6" />
             <input
               type="text"

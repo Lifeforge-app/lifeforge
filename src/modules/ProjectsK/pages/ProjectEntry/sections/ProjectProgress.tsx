@@ -69,7 +69,7 @@ export default function ProjectProgress({
                       <div
                         className={`flex items-center gap-4 ${
                           index < progress.completed
-                            ? 'text-bg-100'
+                            ? 'text-bg-50'
                             : 'text-bg-500'
                         }`}
                       >

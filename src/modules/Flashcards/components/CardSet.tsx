@@ -126,7 +126,7 @@ function CardSet(): React.ReactElement {
             })()}
           </h1>
           <div className="flex-center flex gap-2">
-            <button className="rounded-md p-4 text-bg-500 transition-all hover:bg-bg-800 hover:text-bg-100">
+            <button className="rounded-md p-4 text-bg-500 transition-all hover:bg-bg-800 hover:text-bg-50">
               <Icon icon="tabler:border-corners" className="text-xl" />
             </button>
             <HamburgerMenu largerPadding className="relative">
