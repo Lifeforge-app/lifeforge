@@ -3,6 +3,8 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import { LazyLoadComponent } from 'react-lazy-load-image-component'
 
+const LLC = LazyLoadComponent as any
+
 function FontFamilyItem({ family }: { family: string }): React.ReactElement {
   return (
     <ListboxOption
@@ -10,8 +12,7 @@ function FontFamilyItem({ family }: { family: string }): React.ReactElement {
       value={family}
     >
       {({ selected }) => (
-        // @ts-expect-error No fix for that
-        <LazyLoadComponent threshold={280}>
+        <LLC threshold={280}>
           <div className="flex h-8 items-center">
             <span
               style={{
@@ -28,7 +29,7 @@ function FontFamilyItem({ family }: { family: string }): React.ReactElement {
               className="block text-lg text-custom-500"
             />
           )}
-        </LazyLoadComponent>
+        </L>
       )}
     </ListboxOption>
   )
