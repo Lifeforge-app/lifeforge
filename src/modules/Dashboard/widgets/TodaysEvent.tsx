@@ -16,8 +16,8 @@ export default function TodaysEvent(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
-      <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
+    <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 px-2 shadow-custom dark:bg-bg-900">
+      <h1 className="mb-2 flex items-center gap-2 px-4 text-xl font-semibold">
         <Icon icon="tabler:calendar" className="text-2xl" />
         <span className="ml-2">{t('dashboard.widgets.todaysEvent.title')}</span>
       </h1>
@@ -52,7 +52,7 @@ export default function TodaysEvent(): React.ReactElement {
                     .map(event => (
                       <ul
                         key={event.id}
-                        className="flex flex-col gap-4 overflow-y-auto"
+                        className="flex flex-1 flex-col gap-4 overflow-y-auto px-4"
                       >
                         <li className="flex-between flex max-h-24 flex-1 gap-4 rounded-lg bg-bg-100/50 p-4 shadow-custom dark:bg-bg-800">
                           <div

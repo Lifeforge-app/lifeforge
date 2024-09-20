@@ -18,8 +18,8 @@ export default function TodoList(): React.ReactElement {
   const navigate = useNavigate()
 
   return (
-    <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
-      <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
+    <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 px-2 shadow-custom dark:bg-bg-900">
+      <h1 className="mb-2 flex items-center gap-2 px-4 text-xl font-semibold">
         <Icon icon="tabler:clipboard-list" className="text-2xl" />
         <span className="ml-2">{t('dashboard.widgets.todoList.title')}</span>
       </h1>
@@ -28,7 +28,7 @@ export default function TodoList(): React.ReactElement {
           <APIComponentWithFallback data={entries}>
             {entries => (
               <div className="flex flex-1 flex-col ">
-                <ul className="flex flex-1 flex-col gap-4 pb-24 sm:pb-8">
+                <ul className="flex flex-1 flex-col gap-4 px-4 pb-24 sm:pb-8">
                   {entries.length > 0 ? (
                     entries.map(entry => (
                       <TaskItem
@@ -43,8 +43,8 @@ export default function TodoList(): React.ReactElement {
                     ))
                   ) : (
                     <EmptyStateScreen
-                      title="No tasks for today"
-                      description="Head to the Todo List module to create a new task."
+                      title={t('emptyState.todoList.todaysTask.title')}
+                      description={t('emptyState.todoList.todaysTask.desc')}
                       icon="tabler:calendar-smile"
                       ctaContent="new task"
                       onCTAClick={() => {

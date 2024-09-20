@@ -146,7 +146,7 @@ function IconSet({
     </div>
   ) : (
     <div className="flex w-full justify-center pb-8">
-      <Icon icon="svg-spinners:270-ring" className="size-8" />
+      <span className="loader"></span>
     </div>
   )
 }

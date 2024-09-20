@@ -46,7 +46,7 @@ function AssetsSection({
                   className={`relative flex items-center gap-6 px-4 font-medium transition-all ${
                     searchParams.get('asset') === id ||
                     (name === 'All' && searchParams.get('asset') === null)
-                      ? "text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-50"
+                      ? "font-semibold text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-50"
                       : 'text-bg-500 dark:text-bg-500'
                   }`}
                 >
@@ -67,7 +67,12 @@ function AssetsSection({
                       })
                       setSidebarOpen(false)
                     }}
-                    className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-100 dark:hover:bg-bg-800"
+                    className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left ${
+                      searchParams.get('asset') === id ||
+                      (name === 'All' && searchParams.get('asset') === null)
+                        ? 'bg-bg-200/50'
+                        : 'hover:bg-bg-100/50 dark:hover:bg-bg-800'
+                    }`}
                   >
                     <Icon icon={icon} className="size-6 shrink-0" />
                     <div className="flex-between w-full truncate">

@@ -17,7 +17,7 @@ function MiniCalendarHeader({
   const { language } = usePersonalizationContext()
 
   return (
-    <div className="mb-6 flex flex-between gap-2">
+    <div className="flex-between mb-4 flex gap-2">
       <div className="whitespace-nowrap text-lg font-semibold ">
         {moment()
           .year(currentYear)

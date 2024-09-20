@@ -28,7 +28,8 @@ code {
 .loader {
   width: 36px;
   height: 36px;
-  border: 4px solid rgb(115 115 115);
+  border: 4px solid;
+  @apply border-bg-500;
   border-bottom-color: transparent;
   border-radius: 50%;
   display: inline-block;

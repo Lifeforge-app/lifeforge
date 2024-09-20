@@ -162,7 +162,7 @@ export default function ProjectFiles({
                     Clear medium
                   </>
                 ) : (
-                  <Icon icon="svg-spinners:180-ring" className="text-xl" />
+                  <span className="loader"></span>
                 )}
               </button>
               <button
@@ -178,7 +178,7 @@ export default function ProjectFiles({
                     replace
                   </>
                 ) : (
-                  <Icon icon="svg-spinners:180-ring" className="text-xl" />
+                  <span className="loader"></span>
                 )}
               </button>
               <Button

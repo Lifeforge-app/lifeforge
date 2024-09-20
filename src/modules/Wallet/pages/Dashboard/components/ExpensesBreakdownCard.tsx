@@ -40,7 +40,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
             const date = new Date(transaction.date)
             return (
               date.getFullYear() === year &&
-              date.getMonth() + 1 === month &&
+              date.getMonth() === month &&
               transaction.category === category.id
             )
           })

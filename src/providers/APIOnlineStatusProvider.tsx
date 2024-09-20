@@ -44,7 +44,7 @@ function APIOnlineStatusProvider({
   return (
     <div className="flex-center flex h-dvh w-full">
       {isOnline === 'loading' ? (
-        <Icon icon="svg-spinners:180-ring" className="text-4xl text-bg-500" />
+        <span className="loader"></span>
       ) : isOnline ? (
         <>{children}</>
       ) : (
