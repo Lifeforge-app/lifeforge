@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 
+import { t } from 'i18next'
 import React from 'react'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -9,7 +10,7 @@ import _ROUTES from '@constants/routes_config.json'
 import { type IRoutes } from '@interfaces/routes_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
 import APIRequest from '@utils/fetchData'
-import { titleToPath } from '@utils/strings'
+import { titleToPath, toCamelCase } from '@utils/strings'
 import ModuleItem from './ModuleItem'
 
 const ROUTES = _ROUTES as IRoutes[]
@@ -123,7 +124,7 @@ function Modules(): React.ReactElement {
               route.items.filter(route => route.togglable).length > 0 && (
                 <li key={route.title}>
                   <h2 className="mb-6 border-l-4 border-custom-500 pl-4 text-3xl font-semibold">
-                    {route.title}
+                    {t(`modules.title.${toCamelCase(route.title)}`)}
                   </h2>
                   <ul className="space-y-4">
                     {route.items

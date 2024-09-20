@@ -1,17 +1,11 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
-import {
-  Listbox,
-  ListboxButton,
-  ListboxOptions,
-  ListboxOption
-} from '@headlessui/react'
+import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
-import List from 'react-virtualized/dist/commonjs/List'
 import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import FontFamilyItem from './components/FontFamilyItem'
 
 export interface IFontFamily {
   family: string
@@ -25,9 +19,6 @@ export interface IFontFamily {
   menu: string
   colorCapabilities?: ColorCapability[]
 }
-
-const AS = AutoSizer as any
-const L = List as any
 
 enum Category {
   Display = 'display',
@@ -140,57 +131,9 @@ function FontFamilySelector(): React.ReactElement {
             anchor="bottom end"
             className="h-72 w-80 divide-y divide-bg-200 rounded-md bg-bg-100 py-1 text-base text-bg-800 shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50"
           >
-            <AS>
-              {({ height, width }: { height: number; width: number }) => (
-                <L
-                  height={height}
-                  width={width}
-                  rowCount={allFonts.length}
-                  rowHeight={50}
-                  rowRenderer={({
-                    key,
-                    index,
-                    style
-                  }: {
-                    key: string
-                    index: number
-                    style: React.CSSProperties
-                  }) => {
-                    const family = allFonts[index].family
-
-                    return (
-                      <ListboxOption
-                        key={key}
-                        style={style}
-                        className="flex-between relative flex cursor-pointer select-none bg-transparent p-4 transition-all hover:bg-bg-100 hover:dark:bg-bg-800"
-                        value={family}
-                      >
-                        {({ selected }) => (
-                          <>
-                            <div>
-                              <span
-                                style={{
-                                  fontFamily: family
-                                }}
-                                className="flex items-center gap-2 text-base"
-                              >
-                                {family}
-                              </span>
-                            </div>
-                            {selected && (
-                              <Icon
-                                icon="tabler:check"
-                                className="block text-lg text-custom-500"
-                              />
-                            )}
-                          </>
-                        )}
-                      </ListboxOption>
-                    )
-                  }}
-                />
-              )}
-            </AS>
+            {allFonts.map(({ family }) => (
+              <FontFamilyItem key={family} family={family} />
+            ))}
           </ListboxOptions>
         </div>
       </Listbox>
