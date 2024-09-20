@@ -35,7 +35,6 @@ function ModifyTaskWindow(): React.ReactElement {
   } = useTodoListContext()
 
   const [summary, setSummary] = useState('')
-  console.log(selectedTask?.subtasks)
   const [subtasks, , setSubtasks] = useFetch<ITodoSubtask[]>(
     `todo-list/subtask/list/${selectedTask?.id}`,
     (selectedTask?.subtasks.length ?? 0) > 0 && openType === 'update'
@@ -62,7 +61,6 @@ function ModifyTaskWindow(): React.ReactElement {
     }
 
     setLoading(true)
-    console.log(subtasks)
 
     const task = {
       summary: summary.trim(),

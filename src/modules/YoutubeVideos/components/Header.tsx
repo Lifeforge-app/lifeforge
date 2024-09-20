@@ -44,7 +44,6 @@ function Header({
   const [isFirstTime, setIsFirstTime] = useState(true)
 
   function checkProgress(): void {
-    console.log('sus')
     if (!needsProgressCheck && !isFirstTime) return
     setIsFirstTime(false)
 

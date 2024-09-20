@@ -1,4 +1,3 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useEffect, useState } from 'react'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { initLocale } from '../i18n'
@@ -7,7 +6,6 @@ async function checkAPIStatus(): Promise<boolean> {
   const controller = new AbortController()
 
   const timeoutId = setTimeout(() => {
-    console.log('API request timed out')
     controller.abort()
   }, 5000)
 

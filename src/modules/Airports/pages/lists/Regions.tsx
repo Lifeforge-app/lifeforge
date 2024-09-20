@@ -90,7 +90,6 @@ function Regions(): React.ReactElement {
               {Object.keys(data).length > 0 ? (
                 Object.entries(data)
                   .sort(([, [a]], [, [b]]) => {
-                    console.log(a, b)
                     return a.localeCompare(b)
                   })
                   .map(([id, [name, amount]]) => (

@@ -94,7 +94,6 @@ export default function CodeTime(): React.ReactElement {
 
   useEffect(() => {
     if (typeof data !== 'string') {
-      console.log(theme)
       const data2 = {
         labels: data.map(({ date }) =>
           new Date(date).toDateString().split(' ').slice(1, 3).join(' ')
