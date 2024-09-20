@@ -50,7 +50,7 @@ const CATEGORIES = ROUTES.map((e: any) => e.title).filter((e: string) => e)
     return
   }
 
-  const moduleID = toCamelCase(moduleNameEN.moduleName.toLowercase())
+  const moduleID = toCamelCase(moduleNameEN.moduleName.toLowerCase())
   const modulePath = toDashCase(moduleNameEN.moduleName)
 
   const moduleNameInOtherLangs = await getModuleNameInOtherLangs({

@@ -3,7 +3,7 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
@@ -45,6 +45,7 @@ function ModifyEventModal({
   function updateEventTitle(e: React.ChangeEvent<HTMLInputElement>): void {
     setEventTitle(e.target.value)
   }
+  const ref = useRef<HTMLInputElement>(null)
 
   async function onSubmitButtonClick(): Promise<void> {
     if (
@@ -101,7 +102,7 @@ function ModifyEventModal({
 
   return (
     <>
-      <Modal isOpen={openType !== null} minWidth="40vw">
+      <Modal modalRef={ref} isOpen={openType !== null} minWidth="40vw">
         <ModalHeader
           icon={
             {
@@ -135,12 +136,14 @@ function ModifyEventModal({
           placeholder="My event"
         />
         <DateInput
+          modalRef={ref}
           date={eventStartTime}
           setDate={setEventStartTime}
           name="Start time"
           icon="tabler:clock"
         />
         <DateInput
+          modalRef={ref}
           date={eventEndTime}
           setDate={setEventEndTime}
           name="End time"

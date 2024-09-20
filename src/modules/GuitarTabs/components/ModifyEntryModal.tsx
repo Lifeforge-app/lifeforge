@@ -81,6 +81,7 @@ function ModifyEntryModal({
         title="Modify Guitar Tab"
       />
       <Input
+        darker
         icon="tabler:music"
         name="Music Name"
         placeholder="A cool tab"
@@ -88,6 +89,7 @@ function ModifyEntryModal({
         updateValue={handleNameChange}
       />
       <Input
+        darker
         icon="tabler:user"
         name="Author"
         placeholder="John Doe"
@@ -121,7 +123,7 @@ function ModifyEntryModal({
       >
         <ListboxOption
           key="none"
-          className="flex-between relative flex cursor-pointer select-none p-4 text-bg-500 transition-all hover:bg-bg-100 data-[selected]:text-bg-800 hover:dark:bg-bg-700/50 data-[selected]:dark:text-bg-100"
+          className="flex-between relative flex cursor-pointer select-none p-4 text-bg-500 transition-all hover:bg-bg-100 data-[selected]:text-bg-800 hover:dark:bg-bg-700/50 data-[selected]:dark:text-bg-50"
           value={null}
         >
           {({ selected }) => (
@@ -144,7 +146,7 @@ function ModifyEntryModal({
         {TYPES.map(({ name, id, icon }) => (
           <ListboxOption
             key={id}
-            className="flex-between relative flex cursor-pointer select-none p-4 text-bg-500 transition-all hover:bg-bg-100 data-[selected]:text-bg-800 hover:dark:bg-bg-700/50 data-[selected]:dark:text-bg-100"
+            className="flex-between relative flex cursor-pointer select-none p-4 text-bg-500 transition-all hover:bg-bg-100 data-[selected]:text-bg-800 hover:dark:bg-bg-700/50 data-[selected]:dark:text-bg-50"
             value={id}
           >
             {({ selected }) => (

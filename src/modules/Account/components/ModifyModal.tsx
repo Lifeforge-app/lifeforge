@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import moment from 'moment'
+import React, { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
+import DateInput from '@components/ButtonsAndInputs/DateInput'
 import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
@@ -8,12 +10,14 @@ import { useAuthContext } from '@providers/AuthProvider'
 import APIRequest from '@utils/fetchData'
 
 function ModifyModal({
+  type,
   title,
   id,
   icon,
   isOpen,
   onClose
 }: {
+  type?: string
   title: string
   id: string
   icon: string
@@ -23,6 +27,7 @@ function ModifyModal({
   const { userData, setUserData } = useAuthContext()
   const [value, setValue] = useState(userData[id])
   const [loading, setLoading] = useState(false)
+  const modalRef = useRef<HTMLDivElement>(null)
 
   async function onSubmit(): Promise<void> {
     setLoading(true)
@@ -31,7 +36,10 @@ function ModifyModal({
       endpoint: '/user/settings',
       body: {
         data: {
-          [id]: value
+          [id]:
+            type === 'date'
+              ? moment(value).subtract(1, 'second').format('YYYY-MM-DD')
+              : value
         }
       },
       successInfo: id !== 'email' && 'update',
@@ -60,24 +68,35 @@ function ModifyModal({
   }
 
   return (
-    <Modal isOpen={isOpen} className="sm:!min-w-[30rem]">
+    <Modal modalRef={modalRef} isOpen={isOpen} minWidth="30rem">
       <ModalHeader
         title={`Update ${title}`}
         onClose={onClose}
         icon="tabler:pencil"
       />
-      <Input
-        icon={icon}
-        name={title}
-        placeholder={`Enter new ${title}`}
-        updateValue={updateValue}
-        value={value}
-        onKeyDown={e => {
-          if (e.key === 'Enter') {
-            onSubmit().catch(console.error)
-          }
-        }}
-      />
+      {type !== 'date' ? (
+        <Input
+          icon={icon}
+          name={title}
+          placeholder={`Enter new ${title}`}
+          updateValue={updateValue}
+          value={value}
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              onSubmit().catch(console.error)
+            }
+          }}
+        />
+      ) : (
+        <DateInput
+          modalRef={modalRef}
+          icon={icon}
+          name={title}
+          date={value}
+          setDate={setValue}
+          darker
+        />
+      )}
       <Button
         onClick={() => {
           onSubmit().catch(console.error)

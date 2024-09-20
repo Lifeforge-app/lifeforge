@@ -25,7 +25,7 @@ function PlaylistVideoEntry({
             referrerPolicy="no-referrer"
             className="aspect-video size-full object-cover"
           />
-          <p className="absolute bottom-2 right-2 rounded-md bg-bg-900/70 px-1.5 py-0.5 text-sm text-bg-100">
+          <p className="absolute bottom-2 right-2 rounded-md bg-bg-900/70 px-1.5 py-0.5 text-sm text-bg-50">
             {moment
               .utc(moment.duration(video.duration, 'seconds').asMilliseconds())
               .format(video.duration >= 3600 ? 'H:mm:ss' : 'm:ss')}
@@ -71,7 +71,7 @@ function PlaylistVideoEntry({
           onClick={() => {
             downloadVideo(video)
           }}
-          className="text-bg-500 hover:bg-bg-800/70 hover:text-bg-800 dark:hover:text-bg-100"
+          className="text-bg-500 hover:bg-bg-800/70 hover:text-bg-800 dark:hover:text-bg-50"
         />
       )}
     </div>

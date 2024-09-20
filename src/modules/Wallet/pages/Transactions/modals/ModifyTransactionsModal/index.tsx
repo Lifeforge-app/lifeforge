@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import CurrencyInputComponent from '@components/ButtonsAndInputs/CurrencyInput'
@@ -52,6 +52,8 @@ function ModifyTransactionsModal({
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null)
   const [receipt, setReceipt] = useState<File | null>(null)
   const [toRemoveReceipt, setToRemoveReceipt] = useState(false)
+
+  const ref = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (openType) {
@@ -153,7 +155,7 @@ function ModifyTransactionsModal({
 
   return (
     <>
-      <Modal isOpen={openType !== null} minWidth="40vw">
+      <Modal modalRef={ref} isOpen={openType !== null} minWidth="40vw">
         <ModalHeader
           icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
           title={openType === 'create' ? 'Add Transaction' : 'Edit Transaction'}
@@ -191,6 +193,7 @@ function ModifyTransactionsModal({
           />
         )}
         <DateInput
+          modalRef={ref}
           name="Date"
           date={transactionDate}
           setDate={setTransactionDate}

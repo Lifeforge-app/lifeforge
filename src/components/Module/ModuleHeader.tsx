@@ -12,6 +12,7 @@ interface ModuleHeaderProps {
   hamburgerMenuItems?: React.ReactNode
   actionButton?: React.ReactNode
   customElement?: React.ReactNode
+  needTranslate?: boolean
 }
 
 function ModuleHeader({
@@ -21,7 +22,8 @@ function ModuleHeader({
   tips = '',
   hamburgerMenuItems,
   actionButton,
-  customElement
+  customElement,
+  needTranslate = true
 }: ModuleHeaderProps): React.ReactElement {
   const { t } = useTranslation()
 
@@ -36,7 +38,9 @@ function ModuleHeader({
         <div className="w-full min-w-0 space-y-1">
           <h1 className="flex w-full min-w-0 items-end gap-3 whitespace-nowrap text-3xl font-semibold md:text-4xl">
             <span className="block truncate">
-              {t(`modules.${toCamelCase(title?.toString() ?? '')}`)}
+              {needTranslate
+                ? t(`modules.${toCamelCase(title?.toString() ?? '')}`)
+                : title}
             </span>
             <span className="min-w-0  text-base font-medium text-bg-500">
               {totalItems !== undefined
@@ -45,7 +49,11 @@ function ModuleHeader({
             </span>
           </h1>
           <div className="w-full min-w-0 truncate whitespace-nowrap text-bg-500">
-            {t(`modules.descriptions.${toCamelCase(title?.toString() ?? '')}`)}
+            {needTranslate
+              ? t(
+                  `modules.descriptions.${toCamelCase(title?.toString() ?? '')}`
+                )
+              : ''}
           </div>
         </div>
       </div>
@@ -54,7 +62,7 @@ function ModuleHeader({
         {tips !== '' && (
           <div className="relative hidden md:block">
             <Menu as="div" className="relative z-50">
-              <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-100">
+              <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-50">
                 <Icon icon="tabler:question-circle" className="size-5" />
               </MenuButton>
               <MenuItems
@@ -76,7 +84,7 @@ function ModuleHeader({
         {customElement}
         {hamburgerMenuItems !== undefined && (
           <Menu as="div" className="relative z-50 overscroll-contain">
-            <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-100">
+            <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-50">
               <Icon icon="tabler:dots-vertical" className="size-5" />
             </MenuButton>
             <MenuItems

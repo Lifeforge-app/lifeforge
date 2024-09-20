@@ -8,6 +8,7 @@ function ConfigColumn({
   desc,
   icon,
   vertical = false,
+
   tooltip,
   hasDivider = true,
   children
@@ -23,11 +24,11 @@ function ConfigColumn({
   return (
     <>
       <div
-        className={`flex-between flex w-full flex-col gap-6 px-4 ${
+        className={`flex w-full min-w-0 flex-col justify-between gap-6 px-4 ${
           !vertical ? 'md:flex-row' : ''
         }`}
       >
-        <div className="flex w-full items-center gap-4">
+        <div className="flex shrink items-center gap-4">
           <Icon icon={icon} className="size-6 text-bg-500" />
           <div>
             <h3 className="flex w-full items-center gap-2 text-xl font-medium leading-normal md:w-auto">
@@ -48,13 +49,13 @@ function ConfigColumn({
             <p className="text-bg-500">{desc}</p>
           </div>
         </div>
-        <div className="flex-between flex w-full gap-4 md:w-auto">
+        <div className="flex w-full min-w-0 items-center gap-4 md:w-auto">
           {children}
         </div>
         {tooltip !== undefined && (
           <Tooltip
             id={`tooltip-${toDashCase(title?.toString() ?? '')}`}
-            className="z-[9999] !rounded-md bg-bg-50 !p-4 !text-base text-bg-800 shadow-custom dark:bg-bg-900 dark:text-bg-100"
+            className="z-[9999] !rounded-md bg-bg-50 !p-4 !text-base text-bg-800 shadow-custom dark:bg-bg-900 dark:text-bg-50"
             classNameArrow="!size-6"
             place="top-start"
             positionStrategy="fixed"

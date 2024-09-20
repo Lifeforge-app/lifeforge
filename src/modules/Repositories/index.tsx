@@ -49,7 +49,7 @@ function Repositories(): React.ReactElement {
                 onClick={() => {
                   setSidebarOpen(true)
                 }}
-                className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-100 lg:hidden"
+                className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
               >
                 <Icon icon="tabler:menu" className="text-2xl" />
               </button>
@@ -70,7 +70,7 @@ function Repositories(): React.ReactElement {
                   >
                     <div className="flex-between flex gap-4">
                       <div>
-                        <h2 className="text-lg font-semibold text-bg-800 dark:!text-bg-100">
+                        <h2 className="text-lg font-semibold text-bg-800 dark:!text-bg-50">
                           {repo.name}
                         </h2>
                         <p className="mt-1 text-sm text-bg-500">

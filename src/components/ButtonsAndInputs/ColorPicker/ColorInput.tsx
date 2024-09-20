@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React, { useCallback } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
 import InputWrapper from '../Input/components/InputWrapper'
@@ -8,21 +8,30 @@ function ColorInput({
   name,
   color,
   updateColor,
-  setColorPickerOpen
+  setColorPickerOpen,
+  hasTopMargin = true,
+  className
 }: {
   name: string
   color: string
   updateColor: (e: React.ChangeEvent<HTMLInputElement>) => void
   setColorPickerOpen: React.Dispatch<React.SetStateAction<boolean>>
+  hasTopMargin?: boolean
+  className?: string
 }): React.ReactElement {
   const { t } = useTranslation()
+  const ref = useRef<HTMLInputElement | null>(null)
 
   const handleColorPickerOpen = useCallback(() => {
     setColorPickerOpen(true)
   }, [setColorPickerOpen])
 
   return (
-    <InputWrapper darker className="mt-4">
+    <InputWrapper
+      inputRef={ref}
+      darker
+      className={`${hasTopMargin ? 'mt-4' : ''} ${className}`}
+    >
       <Icon
         icon="tabler:palette"
         className={`ml-6 size-6 shrink-0 ${
@@ -40,7 +49,7 @@ function ColorInput({
         >
           {t(`input.${toCamelCase(name)}`)}
         </span>
-        <div className="mr-12 mt-6 flex w-full items-center gap-2 pl-4">
+        <div className="mr-4 mt-6 flex w-full items-center gap-2 pl-4">
           <div
             className="mt-0.5 size-3 shrink-0 rounded-full"
             style={{
@@ -48,10 +57,11 @@ function ColorInput({
             }}
           ></div>
           <input
+            ref={ref}
             value={color}
             onChange={updateColor}
             placeholder="#FFFFFF"
-            className="h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
+            className="h-8 w-full min-w-28 rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
           />
         </div>
         <button

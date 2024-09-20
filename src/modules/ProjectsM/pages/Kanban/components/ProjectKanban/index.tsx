@@ -93,7 +93,7 @@ function ProjectKanban(): React.ReactElement {
                         </li>
                       ))}
                       <li className="flex-center flex">
-                        <button className="mb-4 flex w-full items-center gap-2 rounded-lg border-[1.5px] border-dashed border-bg-400 p-4 pl-3 font-medium text-bg-500 transition-all hover:border-bg-800 hover:bg-bg-200 dark:border-bg-500 dark:hover:border-bg-100 dark:hover:bg-bg-800/20 dark:hover:text-bg-100">
+                        <button className="mb-4 flex w-full items-center gap-2 rounded-lg border-[1.5px] border-dashed border-bg-400 p-4 pl-3 font-medium text-bg-500 transition-all hover:border-bg-800 hover:bg-bg-200 dark:border-bg-500 dark:hover:border-bg-100 dark:hover:bg-bg-800/20 dark:hover:text-bg-50">
                           <Icon icon="tabler:plus" className="text-xl" />
                           <span>Add a card</span>
                         </button>
@@ -107,7 +107,7 @@ function ProjectKanban(): React.ReactElement {
                   setModifyColumnModalOpenType('create')
                   setExistedData(null)
                 }}
-                className="flex h-min max-h-full w-72 shrink-0 flex-col items-center gap-2 rounded-lg border-2 border-dashed border-bg-400 p-8 text-bg-500 transition-all  hover:border-bg-800 hover:bg-bg-200 dark:border-bg-500 dark:hover:border-bg-100 dark:hover:bg-bg-800/20 dark:hover:text-bg-100"
+                className="flex h-min max-h-full w-72 shrink-0 flex-col items-center gap-2 rounded-lg border-2 border-dashed border-bg-400 p-8 text-bg-500 transition-all  hover:border-bg-800 hover:bg-bg-200 dark:border-bg-500 dark:hover:border-bg-100 dark:hover:bg-bg-800/20 dark:hover:text-bg-50"
               >
                 <Icon icon="tabler:plus" className="text-4xl" />
                 <span className="text-xl font-semibold">Add a column</span>

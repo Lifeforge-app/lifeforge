@@ -39,7 +39,7 @@ function CodeTimeStatistics(): React.ReactElement {
                       className={`text-3xl ${
                         index === 3
                           ? 'text-orange-300'
-                          : 'text-bg-500 dark:text-bg-100'
+                          : 'text-bg-500 dark:text-bg-50'
                       }`}
                     />
                   </div>

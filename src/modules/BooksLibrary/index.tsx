@@ -49,7 +49,7 @@ function BooksLibrary(): React.ReactElement {
                   className={`flex items-center gap-2 rounded-md p-2 transition-all ${
                     viewType === view
                       ? 'bg-bg-200/50 dark:bg-bg-800'
-                      : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-100'
+                      : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
                   }`}
                 >
                   <Icon

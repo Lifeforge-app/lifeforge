@@ -19,7 +19,7 @@ function Directory({
   setDeleteFolderConfirmationModalOpen: (state: boolean) => void
 }): React.ReactElement {
   return (
-    <ul className="mt-6 flex h-full min-h-0 flex-col divide-y divide-bg-300 dark:divide-bg-700/50">
+    <ul className="mb-8 mt-6 flex h-full min-h-0 flex-col divide-y divide-bg-300 dark:divide-bg-700/50">
       {notesEntries
         .sort(
           (a, b) =>

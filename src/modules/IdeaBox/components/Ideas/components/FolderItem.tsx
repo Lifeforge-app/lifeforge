@@ -69,7 +69,7 @@ function FolderItem({
       }}
       key={folder.id}
       className={`flex flex-between rounded-md p-4 shadow-custom ${
-        isOver ? 'text-bg-100 dark:text-bg-800' : ''
+        isOver ? 'text-bg-50 dark:text-bg-800' : ''
       } font-medium transition-all`}
       style={{
         backgroundColor:

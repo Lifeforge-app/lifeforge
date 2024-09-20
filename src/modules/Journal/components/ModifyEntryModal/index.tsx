@@ -1,5 +1,5 @@
 import { cookieParse } from 'pocketbase'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
@@ -48,6 +48,7 @@ function ModifyJournalEntryModal({
     emoji: ''
   })
   const [titleGenerationLoading, setTitleGenerationLoading] = useState(false)
+  const ref = useRef<HTMLInputElement>(null)
 
   async function generateTitle(): Promise<void> {
     setTitle('')
@@ -123,7 +124,11 @@ function ModifyJournalEntryModal({
   }, [existedData, openType])
 
   return (
-    <Modal isOpen={openType !== null} className="h-max md:!min-w-[40vw]">
+    <Modal
+      modalRef={ref}
+      isOpen={openType !== null}
+      className="h-max md:!min-w-[40vw]"
+    >
       <ModalHeader
         icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
         title={
@@ -134,6 +139,7 @@ function ModifyJournalEntryModal({
         onClose={onClose}
       />
       <DateInput
+        modalRef={ref}
         date={date}
         setDate={setDate}
         icon="tabler:calendar"
@@ -164,7 +170,7 @@ function ModifyJournalEntryModal({
               key={index}
               className={`step ${
                 step >= index + 1
-                  ? 'step-primary before:bg-custom-500 after:!bg-custom-500 after:text-bg-100 dark:after:text-bg-800'
+                  ? 'step-primary before:bg-custom-500 after:!bg-custom-500 after:text-bg-50 dark:after:text-bg-800'
                   : 'text-bg-500 before:bg-bg-200 after:bg-bg-200 dark:before:bg-bg-800 dark:after:bg-bg-800'
               } before:font-medium`}
             >

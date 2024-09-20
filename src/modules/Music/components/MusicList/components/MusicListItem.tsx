@@ -32,8 +32,8 @@ function MusicListItem({ music }: { music: IMusicEntry }): React.ReactElement {
             currentMusic?.id === music.id
               ? isPlaying
                 ? 'animate-spin text-custom-500'
-                : 'text-bg-100'
-              : 'text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100'
+                : 'text-bg-50'
+              : 'text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50'
           }`}
         >
           <Icon
@@ -73,7 +73,7 @@ function MusicListItem({ music }: { music: IMusicEntry }): React.ReactElement {
           className={`rounded-lg p-4 ${
             music.is_favourite
               ? 'text-red-500 hover:text-red-600'
-              : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-100'
+              : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
           } transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50`}
         >
           <Icon

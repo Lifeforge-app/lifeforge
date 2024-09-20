@@ -51,6 +51,7 @@ function ModifyTaskWindow(): React.ReactElement {
   >(openType)
   const [loading, setLoading] = useState(false)
   const summaryInputRef = useRef<HTMLInputElement>(null)
+  const ref = useRef<HTMLInputElement>(null)
 
   async function onSubmitButtonClick(): Promise<void> {
     if (openType === null) return
@@ -141,6 +142,7 @@ function ModifyTaskWindow(): React.ReactElement {
 
   return (
     <div
+      ref={ref}
       className={`fixed left-0 top-0 h-dvh w-full bg-bg-900/20 backdrop-blur-sm transition-all ${
         innerOpenType !== null
           ? 'z-[9990] opacity-100 [transition:z-index_0.1s_linear_0.1s,opacity_0.1s_linear_0.2s]'
@@ -205,6 +207,7 @@ function ModifyTaskWindow(): React.ReactElement {
             setSubtasks={setSubtasks}
           />
           <DateInput
+            modalRef={ref}
             darker
             date={dueDate}
             setDate={setDueDate}

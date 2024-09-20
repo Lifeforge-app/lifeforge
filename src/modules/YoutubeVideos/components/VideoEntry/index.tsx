@@ -30,7 +30,7 @@ function VideoEntry({
       </div>
       <HamburgerMenu
         className="absolute right-4 top-4"
-        customTailwindColor="md:text-bg-500 text-bg-100"
+        customTailwindColor="md:text-bg-500 text-bg-50"
         customWidth=""
       >
         <MenuItem

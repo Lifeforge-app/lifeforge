@@ -5,12 +5,13 @@ import React, { useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 import { Tooltip } from 'react-tooltip'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import THEME_COLOR_HEX from '@constants/theme_color_hex'
 import useFetch from '@hooks/useFetch'
+import useThemeColorHex from '@hooks/useThemeColorHex'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 function CodeTimeActivityCalendar(): React.ReactElement {
-  const { theme, themeColor } = usePersonalizationContext()
+  const { theme } = usePersonalizationContext()
+  const { theme: themeColor } = useThemeColorHex()
   const [year, setYear] = useState(new Date().getFullYear())
   const [data] = useFetch<{
     data: Array<{
@@ -101,12 +102,7 @@ function CodeTimeActivityCalendar(): React.ReactElement {
                       theme === 'dark'
                         ? 'rgb(38, 38, 38)'
                         : 'rgb(229, 229, 229)',
-                      THEME_COLOR_HEX[
-                        themeColor.replace(
-                          'theme-',
-                          ''
-                        ) as keyof typeof THEME_COLOR_HEX
-                      ]
+                      themeColor
                     ]
                   }}
                 />
@@ -129,7 +125,7 @@ function CodeTimeActivityCalendar(): React.ReactElement {
                   }}
                   className={`flex items-start gap-2 rounded-lg p-4 px-8 font-medium sm:px-12 ${
                     year === firstYear + index
-                      ? 'bg-bg-200 font-semibold text-bg-800 dark:bg-bg-700/50 dark:text-bg-100'
+                      ? 'bg-bg-200 font-semibold text-bg-800 dark:bg-bg-700/50 dark:text-bg-50'
                       : 'text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-700/50'
                   }`}
                 >

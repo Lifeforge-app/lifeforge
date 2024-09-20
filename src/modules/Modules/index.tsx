@@ -117,21 +117,33 @@ function Modules(): React.ReactElement {
     <ModuleWrapper>
       <ModuleHeader icon="tabler:plug" title="Modules" />
       {userData ? (
-        <ul className="mb-8 mt-6 space-y-4">
-          {ROUTES.flatMap(route => route.items)
-            .filter(route => route.togglable)
-            .map((route, index) => (
-              <ModuleItem
-                key={index}
-                module={route}
-                enabled={userData.enabledModules.includes(
-                  titleToPath(route.name)
-                )}
-                toggleModule={() => {
-                  toggleModule(route.name).catch(console.error)
-                }}
-              />
-            ))}
+        <ul className="my-8 space-y-12">
+          {ROUTES.map(
+            route =>
+              route.items.filter(route => route.togglable).length > 0 && (
+                <li key={route.title}>
+                  <h2 className="mb-6 border-l-4 border-custom-500 pl-4 text-3xl font-semibold">
+                    {route.title}
+                  </h2>
+                  <ul className="space-y-4">
+                    {route.items
+                      .filter(route => route.togglable)
+                      .map((route, index) => (
+                        <ModuleItem
+                          key={index}
+                          module={route}
+                          enabled={userData.enabledModules.includes(
+                            titleToPath(route.name)
+                          )}
+                          toggleModule={() => {
+                            toggleModule(route.name).catch(console.error)
+                          }}
+                        />
+                      ))}
+                  </ul>
+                </li>
+              )
+          )}
         </ul>
       ) : (
         <LoadingScreen />

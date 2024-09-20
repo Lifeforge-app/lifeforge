@@ -32,7 +32,7 @@ export default function Flashcards(): React.ReactElement {
               </Button>
               <button
                 onClick={() => {}}
-                className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-100 lg:hidden"
+                className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
               >
                 <Icon icon="tabler:menu" className="text-2xl" />
               </button>
@@ -80,7 +80,7 @@ export default function Flashcards(): React.ReactElement {
                           {Math.floor(Math.random() * 100)}% complete
                         </p>
                       </div>
-                      <button className="absolute right-4 top-4 hidden rounded-md p-2 text-bg-500 hover:bg-bg-700/30 hover:text-bg-100 group-hover:flex">
+                      <button className="absolute right-4 top-4 hidden rounded-md p-2 text-bg-500 hover:bg-bg-700/30 hover:text-bg-50 group-hover:flex">
                         <Icon icon="tabler:dots-vertical" className="size-5" />
                       </button>
                     </Link>
@@ -115,7 +115,7 @@ export default function Flashcards(): React.ReactElement {
                     <Icon icon="tabler:check" className="size-5" />
                     <p className="font-medium">Done</p>
                   </div>
-                  <button className="absolute right-4 top-4 hidden rounded-md p-2 text-bg-500 hover:bg-bg-700/30 hover:text-bg-100 group-hover:flex">
+                  <button className="absolute right-4 top-4 hidden rounded-md p-2 text-bg-500 hover:bg-bg-700/30 hover:text-bg-50 group-hover:flex">
                     <Icon icon="tabler:dots-vertical" className="size-5" />
                   </button>
                 </Link>

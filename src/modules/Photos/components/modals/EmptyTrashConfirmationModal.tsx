@@ -39,7 +39,7 @@ function EmptyTrashConfirmationModal({
 
   return (
     <Modal isOpen={isOpen}>
-      <h1 className="text-2xl font-semibold text-bg-100">
+      <h1 className="text-2xl font-semibold text-bg-50">
         Are you sure you want empty the trash?
       </h1>
       <p className="mt-2 text-bg-500">

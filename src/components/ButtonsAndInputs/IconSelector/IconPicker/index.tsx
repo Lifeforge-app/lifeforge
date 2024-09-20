@@ -45,7 +45,7 @@ function IconPicker({
               setSelectedIcon('')
               setOpen(false)
             }}
-            className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100"
+            className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50"
           >
             <Icon icon="tabler:x" className="size-6" />
           </button>

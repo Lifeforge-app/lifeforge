@@ -16,7 +16,7 @@ export default function Clock(): React.ReactElement {
       ref={ref}
       className={`flex size-full gap-4 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900 ${
         (ref.current?.offsetHeight ?? 0) < 160
-          ? 'flex-row flex-between'
+          ? 'flex-between flex-row'
           : 'flex-col'
       }`}
     >

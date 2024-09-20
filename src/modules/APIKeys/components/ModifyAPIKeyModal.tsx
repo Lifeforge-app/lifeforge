@@ -67,6 +67,7 @@ function ModifyAPIKeyModal({
 
     const encryptedEverything = encrypt(
       JSON.stringify({
+        id,
         name,
         description,
         icon,
@@ -137,6 +138,7 @@ function ModifyAPIKeyModal({
           onClose={onClose}
         />
         <Input
+          darker
           icon="tabler:id"
           name="Key ID"
           placeholder="IdOfTheAPIKey"
@@ -144,6 +146,7 @@ function ModifyAPIKeyModal({
           updateValue={updateId}
         />
         <Input
+          darker
           icon="tabler:key"
           name="Key Name"
           placeholder="My API Key"
@@ -152,6 +155,7 @@ function ModifyAPIKeyModal({
           className="mt-4"
         />
         <Input
+          darker
           icon="tabler:info-circle"
           name="Key Description"
           placeholder="A short description of this key"
@@ -166,6 +170,7 @@ function ModifyAPIKeyModal({
           name="Key Icon"
         />
         <Input
+          darker
           icon="tabler:key"
           name="API Key"
           placeholder="API Key"

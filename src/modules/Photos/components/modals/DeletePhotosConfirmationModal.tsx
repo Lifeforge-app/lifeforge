@@ -85,7 +85,7 @@ function DeletePhotosConfirmationModal({
 
   return (
     <Modal isOpen={customIsOpen ?? isDeletePhotosConfirmationModalOpen}>
-      <h1 className="text-2xl font-semibold text-bg-100">
+      <h1 className="text-2xl font-semibold text-bg-50">
         Are you sure you want to delete{' '}
         {customPhotoToBeDeleted
           ? 'this photo'

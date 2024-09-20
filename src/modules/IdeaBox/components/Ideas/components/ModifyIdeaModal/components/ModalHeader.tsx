@@ -66,7 +66,7 @@ function ModalHeader({
             <MenuItems
               transition
               anchor="bottom start"
-              className="z-[9999] mt-2 w-56 overflow-hidden rounded-lg bg-bg-100 text-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+              className="z-[9999] mt-2 w-56 overflow-hidden rounded-lg bg-bg-100 text-bg-50 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
             >
               {[
                 ['text', 'tabler:article', 'Text'],
@@ -85,7 +85,7 @@ function ModalHeader({
                         type === innerTypeOfModifyIdea
                           ? ''
                           : active
-                          ? 'bg-bg-200/50 text-bg-800 dark:bg-bg-800 dark:text-bg-100'
+                          ? 'bg-bg-200/50 text-bg-800 dark:bg-bg-800 dark:text-bg-50'
                           : 'text-bg-500 hover:bg-bg-100 dark:text-bg-500 dark:hover:bg-bg-800'
                       }`}
                     >
@@ -119,7 +119,7 @@ function ModalHeader({
         onClick={() => {
           setOpenType(null)
         }}
-        className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-100 dark:text-bg-100 dark:hover:bg-bg-800"
+        className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-100 dark:text-bg-50 dark:hover:bg-bg-800"
       >
         <Icon icon="tabler:x" className="size-6" />
       </button>

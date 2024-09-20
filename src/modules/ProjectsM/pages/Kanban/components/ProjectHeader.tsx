@@ -24,7 +24,7 @@ function ProjectHeader({
         }}
       />
       <div className="flex flex-between">
-        <h1 className="flex items-center gap-4 text-3xl font-semibold dark:text-bg-100">
+        <h1 className="flex items-center gap-4 text-3xl font-semibold dark:text-bg-50">
           <div
             className="rounded-lg p-3"
             style={{
@@ -68,7 +68,7 @@ function ProjectHeader({
               key={index}
               className={`rounded-md p-4 ${
                 index === 0
-                  ? 'bg-bg-300/50 dark:bg-bg-700/50 dark:text-bg-100'
+                  ? 'bg-bg-300/50 dark:bg-bg-700/50 dark:text-bg-50'
                   : 'text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-700/50'
               }`}
             >

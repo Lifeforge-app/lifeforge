@@ -13,11 +13,17 @@ function Account(): React.ReactElement {
         <AvatarColumn />
         <OrdinaryColumn title="username" id="username" icon="tabler:user" />
         <OrdinaryColumn
-          title="displayName"
+          title="display Name"
           id="name"
           icon="tabler:user-screen"
         />
         <OrdinaryColumn title="email" id="email" icon="tabler:mail" />
+        <OrdinaryColumn
+          title="date Of Birth"
+          id="dateOfBirth"
+          icon="tabler:cake"
+          type="date"
+        />
         <PasswordColumn />
       </div>
     </ModuleWrapper>

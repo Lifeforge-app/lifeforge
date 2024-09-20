@@ -39,9 +39,9 @@ function getPaddingClass(
 
 function getColorClass(lighter?: boolean): string {
   if (lighter === true) {
-    return 'text-bg-100 hover:bg-bg-700/50'
+    return 'text-bg-50 hover:bg-bg-700/50'
   } else {
-    return 'text-bg-500 hover:bg-bg-200/50 hover:text-bg-800 dark:hover:text-bg-100 dark:hover:bg-bg-700/30'
+    return 'text-bg-500 hover:bg-bg-200/50 hover:text-bg-800 dark:hover:text-bg-50 dark:hover:bg-bg-700/30'
   }
 }
 
