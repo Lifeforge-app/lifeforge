@@ -1,5 +1,6 @@
 import { ListboxOption } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
@@ -98,7 +99,7 @@ function ModifyEntryModal({
         className="mt-4"
       />
       <ListboxInput
-        name="Type"
+        name={t('input.scoreType')}
         icon="tabler:category"
         value={type}
         setValue={setType}

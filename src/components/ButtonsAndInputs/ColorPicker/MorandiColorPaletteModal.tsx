@@ -1,27 +1,10 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
+import { sortFn } from 'color-sorter'
 import React from 'react'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { MORANDI_COLORS } from '@constants/morandi_colors'
-import { rgbToHex, rgbToHsl } from '@utils/colors'
-
-function sortColor(color1: string, color2: string): number {
-  const [r1, g1, b1] = color1
-    .replace('rgb(', '')
-    .replace(')', '')
-    .split(',')
-    .map(Number)
-  const hsl1 = rgbToHsl(r1, g1, b1)
-
-  const [r2, g2, b2] = color2
-    .replace('rgb(', '')
-    .replace(')', '')
-    .split(',')
-    .map(Number)
-
-  const hsl2 = rgbToHsl(r2, g2, b2)
-
-  return hsl1[0] - hsl2[0]
-}
+import { isLightColor } from '@utils/colors'
 
 function MorandiColorPaletteModal({
   isOpen,
@@ -34,7 +17,6 @@ function MorandiColorPaletteModal({
   color: string
   setColor: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
-  console.log(color) // TODO
   return (
     <Modal isOpen={isOpen} affectSidebar={false} minWidth="60vw">
       <ModalHeader
@@ -43,21 +25,29 @@ function MorandiColorPaletteModal({
         onClose={onClose}
       />
       <ul className="grid w-full grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] gap-4 p-4 pt-0">
-        {MORANDI_COLORS.sort(sortColor).map((morandiColor, index) => (
+        {MORANDI_COLORS.sort(sortFn).map((morandiColor, index) => (
           <li
             key={index}
-            className="aspect-square size-full cursor-pointer rounded-md shadow-custom"
+            className={`flex-center flex aspect-square size-full cursor-pointer rounded-md shadow-custom ${
+              color === morandiColor
+                ? 'ring-2 ring-bg-900 ring-offset-2 ring-offset-bg-100 dark:ring-bg-50 dark:ring-offset-bg-900'
+                : ''
+            }`}
             style={{ backgroundColor: morandiColor }}
             onClick={() => {
-              const [r, g, b] = morandiColor
-                .replace('rgb(', '')
-                .replace(')', '')
-                .split(',')
-                .map(Number)
-              setColor(rgbToHex(r, g, b))
+              setColor(morandiColor)
               onClose()
             }}
-          />
+          >
+            {color === morandiColor && (
+              <Icon
+                icon="tabler:check"
+                className={`size-8 ${
+                  isLightColor(morandiColor) ? 'text-bg-800' : 'text-bg-50'
+                }`}
+              />
+            )}
+          </li>
         ))}
       </ul>
     </Modal>
