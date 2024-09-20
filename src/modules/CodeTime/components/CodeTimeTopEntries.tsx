@@ -46,7 +46,7 @@ function CodeTimeTopEntries({
                 onClick={() => {
                   setLastFor(last as '24 hours' | '7 days' | '30 days')
                 }}
-                className={`rounded-md p-4 px-6 tracking-wide hover:bg-bg-700/50 ${
+                className={`rounded-md p-4 px-6 tracking-wide ${
                   lastFor === last
                     ? 'bg-bg-200 font-semibold text-bg-800 dark:bg-bg-700/50 dark:text-bg-50'
                     : 'text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-700/50'
@@ -103,7 +103,7 @@ function CodeTimeTopEntries({
                   .map(([key, value], index) => (
                     <li
                       key={key}
-                      className="relative flex flex-between gap-8 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
+                      className="flex-between relative flex gap-8 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
                     >
                       <div className="flex items-center gap-4 break-all text-lg font-medium">
                         <div

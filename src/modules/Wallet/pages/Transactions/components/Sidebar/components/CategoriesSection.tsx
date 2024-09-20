@@ -77,7 +77,12 @@ function CategoriesSection({
                       })
                       setSidebarOpen(false)
                     }}
-                    className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left hover:bg-bg-100 dark:hover:bg-bg-800"
+                    className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left ${
+                      searchParams.get('category') === id ||
+                      (name === 'All' && searchParams.get('category') === null)
+                        ? 'bg-bg-200/50'
+                        : 'hover:bg-bg-100/50 dark:hover:bg-bg-800'
+                    }`}
                   >
                     <span
                       className="block h-8 w-1 shrink-0 rounded-full"

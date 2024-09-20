@@ -61,7 +61,7 @@ function NotesCategory(): React.ReactElement {
               <>
                 Notes -{' '}
                 {titleData === 'loading' ? (
-                  <Icon icon="svg-spinners:180-ring" className="size-8" />
+                  <span className="loader"></span>
                 ) : titleData === 'error' ? (
                   <span className="flex items-center gap-2 text-red-500">
                     <Icon
