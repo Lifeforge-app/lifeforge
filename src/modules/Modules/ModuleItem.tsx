@@ -78,7 +78,7 @@ function ModuleItem({
   }
 
   return (
-    <li className="flex flex-col items-center rounded-lg bg-bg-50 p-4 dark:bg-bg-900">
+    <li className="flex flex-col items-center rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900">
       <div className="flex-between flex w-full gap-4">
         <div className="flex items-center gap-4">
           <div className="rounded-lg bg-custom-500/20 p-3 dark:bg-bg-800">
