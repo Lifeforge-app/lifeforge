@@ -20,9 +20,7 @@ function TransactionTypeSelector({
   setTransactionType
 }: {
   transactionType: string
-  setTransactionType: React.Dispatch<
-    React.SetStateAction<'income' | 'expenses' | 'transfer'>
-  >
+  setTransactionType: (type: 'income' | 'expenses' | 'transfer') => void
 }): React.ReactElement {
   const { t } = useTranslation()
 
