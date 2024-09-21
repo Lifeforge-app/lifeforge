@@ -5,10 +5,7 @@ import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
 import APIRequest from '@utils/fetchData'
-import IntervalManager from '@utils/intervalManager'
 import DownloadProcessModal from './DownloadProcessModal'
-
-const intervalManager = IntervalManager.getInstance()
 
 function Header({
   videosLength,
@@ -82,10 +79,10 @@ function Header({
   }
 
   useEffect(() => {
-    const interval = intervalManager.setInterval(checkProgress, 1000)
+    const interval = setInterval(checkProgress, 1000)
 
     return () => {
-      intervalManager.clearInterval(interval)
+      clearInterval(interval)
     }
   }, [needsProgressCheck, isFirstTime, isAddVideosModalOpen])
 

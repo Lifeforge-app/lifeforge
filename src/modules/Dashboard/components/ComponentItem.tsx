@@ -100,7 +100,7 @@ function ComponentListItem({
   }
 
   return (
-    <li className="flex flex-between gap-8 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-800/50">
+    <li className="flex-between flex gap-8 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-800/50">
       <div className="flex items-center gap-4">
         <div
           className={`flex size-10 shrink-0 items-center justify-center rounded-lg transition-all ${
@@ -127,7 +127,7 @@ function ComponentListItem({
         }}
         className={`${
           isEnabled ? 'bg-custom-500' : 'bg-bg-200 dark:bg-bg-700/50'
-        } relative inline-flex h-6 w-11 items-center rounded-full`}
+        } relative inline-flex h-6 w-11 shrink-0 items-center rounded-full`}
       >
         <span
           className={`${
