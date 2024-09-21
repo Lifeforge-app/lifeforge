@@ -13,7 +13,7 @@ function VideoDetails({
   return (
     <div className="mt-6 flex flex-col justify-between md:mt-0 md:pl-4 md:pr-12">
       <h3 className="text-xl font-semibold">{video.title}</h3>
-      <p className="mt-6 flex flex-wrap items-center gap-2 text-bg-500">
+      <div className="mt-6 flex flex-wrap items-center gap-2 text-bg-500">
         {video.channel !== undefined && (
           <p className="flex items-center gap-2">
             <img
@@ -54,7 +54,7 @@ function VideoDetails({
           <Icon icon="tabler:file" className="mr-1 size-5" />
           {cleanFileSize(video.filesize)}
         </p>
-      </p>
+      </div>
     </div>
   )
 }

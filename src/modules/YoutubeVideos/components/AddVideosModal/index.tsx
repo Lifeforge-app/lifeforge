@@ -19,16 +19,6 @@ const RESOURCE_TYPES = [
     label: 'Playlist',
     value: 'playlist',
     icon: 'tabler:list'
-  },
-  {
-    label: 'Channel',
-    value: 'channel',
-    icon: 'tabler:user'
-  },
-  {
-    label: 'Search',
-    value: 'search',
-    icon: 'tabler:search'
   }
 ]
 
@@ -42,7 +32,7 @@ function AddVideosModal({
   videos: IYoutubeVideosStorageEntry[] | 'loading' | 'error'
 }): React.ReactElement {
   const [selectedResourceType, setSelectedResourceType] = useState<
-    'video' | 'playlist' | 'channel' | 'search'
+    'video' | 'playlist'
   >('video')
   const [isVideoDownloading, setIsVideoDownloading] = useState(false)
 
@@ -126,10 +116,6 @@ function AddVideosModal({
                 setIsVideoDownloading={setIsVideoDownloading}
               />
             )
-          case 'channel':
-            return <div>Channel</div>
-          case 'search':
-            return <div>Search</div>
         }
       })()}
     </Modal>
