@@ -28,11 +28,7 @@ function VideoEntry({
         <VideoThumbnail id={video.youtube_id} duration={video.duration} />
         <VideoDetails video={video} />
       </div>
-      <HamburgerMenu
-        className="absolute right-4 top-4"
-        customTailwindColor="md:text-bg-500 text-bg-50"
-        customWidth=""
-      >
+      <HamburgerMenu className="absolute right-4 top-4">
         <MenuItem
           onClick={() => {
             window.open(`https://www.youtube.com/watch?v=${video.youtube_id}`)

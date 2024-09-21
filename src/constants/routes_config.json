@@ -354,7 +354,8 @@
           ]
         ],
         "routes": {
-          "flight-status": "flight-status"
+          "changi-airport": "changi-airport",
+          "flight-status": "changi-airport/changi-flight-status"
         },
         "togglable": true
       }
