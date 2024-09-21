@@ -32,7 +32,7 @@ function MusicListItem({ music }: { music: IMusicEntry }): React.ReactElement {
             currentMusic?.id === music.id
               ? isPlaying
                 ? 'animate-spin text-custom-500'
-                : 'text-bg-50'
+                : 'text-bg-800 dark:text-bg-50'
               : 'text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50'
           }`}
         >

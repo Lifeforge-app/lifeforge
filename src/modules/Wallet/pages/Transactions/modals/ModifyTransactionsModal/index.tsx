@@ -53,8 +53,6 @@ function ModifyTransactionsModal({
   const [receipt, setReceipt] = useState<File | null>(null)
   const [toRemoveReceipt, setToRemoveReceipt] = useState(false)
 
-  const [firstTimeOpen, setFirstTimeOpen] = useState(true)
-
   const ref = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -92,13 +90,6 @@ function ModifyTransactionsModal({
       }
     }
   }, [openType, existedData])
-
-  useEffect(() => {
-    if (!firstTimeOpen) {
-      setCategory(null)
-    }
-    setFirstTimeOpen(false)
-  }, [transactionType])
 
   function updateTransactionName(e: React.ChangeEvent<HTMLInputElement>): void {
     setParticular(e.target.value)
@@ -171,7 +162,10 @@ function ModifyTransactionsModal({
         />
         <TransactionTypeSelector
           transactionType={transactionType}
-          setTransactionType={setTransactionType}
+          setTransactionType={(type: 'income' | 'expenses' | 'transfer') => {
+            setTransactionType(type)
+            setCategory(null)
+          }}
         />
         {transactionType === 'income' || transactionType === 'expenses' ? (
           <AssetsSelector
