@@ -34,7 +34,7 @@ function SubtaskBoxHeader({
     setAIGenerateLoading(true)
     await APIRequest({
       method: 'POST',
-      endpoint: 'todo-list/subtask/ai-generate',
+      endpoint: 'todo-list/subtasks/ai-generate',
       body: {
         summary,
         notes,

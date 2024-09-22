@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Modal from '@components/Modals/Modal.tsx'
@@ -18,7 +15,10 @@ function IconPicker({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   setSelectedIcon: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
-  const [currentIconSet, setCurrentIconSet] = useState(null)
+  const [currentIconSet, setCurrentIconSet] = useState<{
+    iconSet?: string
+    search?: string
+  } | null>(null)
 
   return (
     <Modal
@@ -27,8 +27,8 @@ function IconPicker({
       minWidth="80vw"
       minHeight="80vh"
     >
-      {currentIconSet ? (
-        <div className="flex-between flex w-full">
+      {currentIconSet !== null ? (
+        <div className="flex-between mb-8 flex w-full">
           <button
             onClick={() => {
               setCurrentIconSet(null)
@@ -72,17 +72,17 @@ function IconPicker({
           }
         />
       )}
-      {currentIconSet ? (
-        currentIconSet.search ? (
+      {currentIconSet !== null ? (
+        currentIconSet.search !== undefined ? (
           <Search
             searchTerm={currentIconSet.search}
-            setCurrentIconSet={setCurrentIconSet}
+            setCurrentIconSetProp={setCurrentIconSet}
             setSelectedIcon={setSelectedIcon}
             setOpen={setOpen}
           />
         ) : (
           <IconSet
-            iconSet={currentIconSet.iconSet}
+            iconSet={currentIconSet.iconSet ?? ''}
             setSelectedIcon={setSelectedIcon}
             setOpen={setOpen}
           />

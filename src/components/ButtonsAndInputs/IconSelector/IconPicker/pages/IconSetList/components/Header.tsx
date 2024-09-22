@@ -23,7 +23,7 @@ function Header({
     React.SetStateAction<{
       iconSet?: string
       search?: string
-    }>
+    } | null>
   >
   selectedCategory: string | null
   setSelectedCategory: React.Dispatch<React.SetStateAction<string | null>>
@@ -45,6 +45,7 @@ function Header({
     <>
       <div className="flex w-full flex-col gap-2 sm:flex-row">
         <SearchInput
+          lighter
           hasTopMargin={false}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
@@ -54,7 +55,6 @@ function Header({
               setCurrentIconSet({ search: searchQuery })
             }
           }}
-          lighter
         />
         <Button
           onClick={() => {
@@ -83,12 +83,12 @@ function Header({
         </div>
         <div className="w-full lg:w-3/5 xl:w-1/3">
           <SearchInput
+            lighter
             hasTopMargin={false}
             searchQuery={iconFilterTerm}
             setSearchQuery={setIconFilterTerm}
             stuffToSearch="filter icon sets"
             customIcon="tabler:filter"
-            lighter
           />
         </div>
       </div>

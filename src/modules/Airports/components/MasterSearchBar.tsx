@@ -62,7 +62,7 @@ function MasterSearchBar(): React.ReactElement {
           if (e.key === 'Enter' && typeof searchResults !== 'string') {
             if (searchResults.length > 0) {
               navigate(
-                `/aviation/airports/${searchResults[0].continentCode}/${searchResults[0].country.code}/${searchResults[0].region.code}/${searchResults[0].id}`
+                `/airports/${searchResults[0].continentCode}/${searchResults[0].country.code}/${searchResults[0].region.code}/${searchResults[0].id}`
               )
             }
           }
@@ -82,7 +82,7 @@ function MasterSearchBar(): React.ReactElement {
                     searchResults.map(airport => (
                       <Link
                         key={airport.id}
-                        to={`/aviation/airports/${airport.continentCode}/${airport.country.code}/${airport.region.code}/${airport.id}`}
+                        to={`/airports/${airport.continentCode}/${airport.country.code}/${airport.region.code}/${airport.id}`}
                         className="flex-between flex w-full p-4 px-6 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50"
                       >
                         <div className="flex items-center gap-4">

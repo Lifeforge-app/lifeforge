@@ -35,7 +35,7 @@ function SubtaskItem({
     }
 
     await APIRequest({
-      endpoint: `todo-list/subtask/toggle/${entry.id}`,
+      endpoint: `todo-list/subtasks/toggle/${entry.id}`,
       method: 'PATCH',
       failureInfo: 'update',
       onFailure: () => {

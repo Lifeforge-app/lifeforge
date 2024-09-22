@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { t } from 'i18next'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
 import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
@@ -32,10 +32,12 @@ function ModifyModal({
   const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
   const [colorPickerOpen, setColorPickerOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const singleStuff = useMemo(
-    () => stuff.replace(/ies$/, 'y').replace(/s$/, ''),
-    [stuff]
-  )
+  const singleStuff = {
+    categories: 'category',
+    technologies: 'technology',
+    visibilities: 'visibility',
+    statuses: 'status'
+  }[stuff]
 
   useEffect(() => {
     if (openType) {

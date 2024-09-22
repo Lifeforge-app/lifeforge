@@ -57,25 +57,25 @@ function Breadcrumbs({
 
   const breadcrumbItems = [
     {
-      to: '/aviation/airports',
+      to: '/airports',
       isHighlighted: continentID === undefined,
       label: 'All Continents',
       show: true
     },
     {
-      to: `/aviation/airports/${continentID}`,
+      to: `/airports/${continentID}`,
       isHighlighted: countryID === undefined,
       label: CONTINENTS[continentID as keyof typeof CONTINENTS],
       show: continentID !== undefined
     },
     {
-      to: `/aviation/airports/${continentID}/${countryID}`,
+      to: `/airports/${continentID}/${countryID}`,
       isHighlighted: regionID === undefined,
       label: breadcrumbs[0],
       show: countryID !== undefined
     },
     {
-      to: `/aviation/airports/${continentID}/${countryID}/${regionID}`,
+      to: `/airports/${continentID}/${countryID}/${regionID}`,
       isHighlighted: airportID === undefined,
       label: breadcrumbs[1],
       show: regionID !== undefined
@@ -87,7 +87,7 @@ function Breadcrumbs({
       show: airportID !== undefined
     },
     {
-      to: `/aviation/airports/${continentID}/${countryID}/${regionID}/${airportID}`,
+      to: `/airports/${continentID}/${countryID}/${regionID}/${airportID}`,
       isHighlighted: true,
       label: breadcrumbs[3],
       show: airportID !== undefined

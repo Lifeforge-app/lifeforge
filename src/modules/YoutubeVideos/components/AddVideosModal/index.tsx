@@ -1,8 +1,8 @@
-import { ListboxOption } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
+import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
@@ -74,29 +74,8 @@ function AddVideosModal({
           </>
         }
       >
-        {RESOURCE_TYPES.map(resourceType => (
-          <ListboxOption
-            key={resourceType.value}
-            className="flex-between relative flex cursor-pointer select-none p-4 text-base transition-all hover:bg-bg-100 dark:hover:bg-bg-700/50"
-            value={resourceType.value}
-          >
-            {({ selected }) => (
-              <>
-                <div>
-                  <span className="flex items-center gap-4">
-                    <Icon icon={resourceType.icon} className="size-5" />
-                    {resourceType.label}
-                  </span>
-                </div>
-                {selected && (
-                  <Icon
-                    icon="tabler:check"
-                    className="block text-lg text-custom-500"
-                  />
-                )}
-              </>
-            )}
-          </ListboxOption>
+        {RESOURCE_TYPES.map(({ value, label, icon }) => (
+          <ListboxOption key={value} text={label} icon={icon} value={value} />
         ))}
       </ListboxInput>
       {(() => {

@@ -1,7 +1,9 @@
-import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react'
+import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
+import ListboxOptions from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOptions'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -221,10 +223,10 @@ function ChangiFlightStatus(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:plane" title="Changi Flight Status" />
-      <div className="flex items-center gap-2">
+      <div className="mt-8 flex items-center gap-2">
         <Listbox
           as="div"
-          className="relative mt-2"
+          className="relative"
           value={searchParams.get('type') ?? 'dep'}
           onChange={value => {
             setSearchParams({ type: value })
@@ -248,36 +250,19 @@ function ChangiFlightStatus(): React.ReactElement {
             </div>
             <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
           </ListboxButton>
-          <ListboxOptions
-            transition
-            anchor="bottom start"
-            className="w-[var(--button-width)] divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base text-bg-800 shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50"
-          >
+          <ListboxOptions>
             {SEARCH_TYPE.map(([name, icon, value]) => (
-              <Listbox.Option
+              <ListboxOption
                 key={value}
-                className="flex-between relative flex cursor-pointer select-none p-4 transition-all hover:bg-bg-200 dark:bg-bg-700/50"
                 value={value}
-              >
-                {({ selected }) => (
-                  <>
-                    <div className="flex items-center gap-2 whitespace-nowrap">
-                      <Icon icon={icon} className="size-5" />
-                      {name}
-                    </div>
-                    {selected && (
-                      <Icon
-                        icon="tabler:check"
-                        className="block text-lg text-custom-500"
-                      />
-                    )}
-                  </>
-                )}
-              </Listbox.Option>
+                icon={icon}
+                text={name}
+              />
             ))}
           </ListboxOptions>
         </Listbox>
         <SearchInput
+          hasTopMargin={false}
           stuffToSearch="flights"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}

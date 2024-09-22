@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
-import Chip from '../components/Chip'
+import ChipSelector from '../components/ChipSelector'
 import IconEntry from '../components/IconEntry'
 
 const AS = AutoSizer as any
@@ -77,28 +77,17 @@ function IconSet({
         {iconData.title}
       </h1>
       <SearchInput
+        lighter
         hasTopMargin={false}
         searchQuery={searchTerm}
         setSearchQuery={setSearchTerm}
         stuffToSearch="icons"
-        lighter
       />
-      {Object.keys(iconData.categories || {}).length > 0 && (
-        <div className="mt-4 flex flex-wrap justify-center gap-2">
-          {Object.keys(iconData.categories)
-            .filter(t => t)
-            .map(tag => (
-              <Chip
-                key={tag}
-                onClick={() => {
-                  setCurrentTag(currentTag === tag ? null : tag)
-                }}
-                selected={currentTag === tag}
-                text={tag}
-              />
-            ))}
-        </div>
-      )}
+      <ChipSelector
+        options={Object.keys(iconData.categories)}
+        value={currentTag}
+        setValue={setCurrentTag}
+      />
       <div className="min-h-0 flex-1">
         <AS className="mt-8">
           {({ width, height }: { width: number; height: number }) => {

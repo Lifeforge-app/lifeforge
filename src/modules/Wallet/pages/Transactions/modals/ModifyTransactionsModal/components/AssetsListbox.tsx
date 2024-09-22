@@ -1,12 +1,12 @@
-import { ListboxOption } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
+import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
 
 interface Asset {
-  id: string | number
+  id: string
   name: string
-  icon: string // Assuming you're using a library like @iconify/react
+  icon: string
 }
 
 interface AssetListboxProps {
@@ -46,28 +46,7 @@ function AssetListbox({
       }
     >
       {assets.map(({ name, id, icon }, i) => (
-        <ListboxOption
-          key={i}
-          className="flex-between relative flex cursor-pointer select-none p-4 transition-all hover:bg-bg-100 hover:dark:bg-bg-700/50"
-          value={id}
-        >
-          {({ selected }) => (
-            <>
-              <div>
-                <span className="flex items-center gap-2 font-medium">
-                  <Icon icon={icon} className="size-5" />
-                  {name}
-                </span>
-              </div>
-              {selected && (
-                <Icon
-                  icon="tabler:check"
-                  className="block text-lg text-custom-500"
-                />
-              )}
-            </>
-          )}
-        </ListboxOption>
+        <ListboxOption key={i} text={name} icon={icon} value={id} />
       ))}
     </ListboxInput>
   )
