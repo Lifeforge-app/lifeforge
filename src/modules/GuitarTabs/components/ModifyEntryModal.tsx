@@ -1,10 +1,11 @@
-import { ListboxOption } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
+import ListboxNullOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxNullOption'
+import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
@@ -28,7 +29,7 @@ function ModifyEntryModal({
 }): React.ReactElement {
   const [name, setName] = useState('')
   const [author, setAuthor] = useState('')
-  const [type, setType] = useState<'singalong' | 'fingerstyle' | null>(null)
+  const [type, setType] = useState<'singalong' | 'fingerstyle' | ''>('')
   const [loading, setLoading] = useState(false)
 
   function handleNameChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -43,11 +44,11 @@ function ModifyEntryModal({
     if (existingItem !== null) {
       setName(existingItem.name)
       setAuthor(existingItem.author)
-      setType(existingItem.type === '' ? null : existingItem.type)
+      setType(existingItem.type)
     } else {
       setName('')
       setAuthor('')
-      setType(null)
+      setType('')
     }
   }, [existingItem])
 
@@ -107,7 +108,7 @@ function ModifyEntryModal({
           <>
             <Icon
               icon={
-                type !== null
+                type !== ''
                   ? {
                       fingerstyle: 'mingcute:guitar-line',
                       singalong: 'mdi:guitar-pick-outline'
@@ -117,56 +118,14 @@ function ModifyEntryModal({
               className="size-5"
             />
             <span className="-mt-px block truncate">
-              {type !== null ? type[0].toUpperCase() + type.slice(1) : 'None'}
+              {type !== '' ? type[0].toUpperCase() + type.slice(1) : 'None'}
             </span>
           </>
         }
       >
-        <ListboxOption
-          key="none"
-          className="flex-between relative flex cursor-pointer select-none p-4 text-bg-500 transition-all hover:bg-bg-100 data-[selected]:text-bg-800 hover:dark:bg-bg-700/50 data-[selected]:dark:text-bg-50"
-          value={null}
-        >
-          {({ selected }) => (
-            <>
-              <div>
-                <span className="flex items-center gap-2 font-medium">
-                  <Icon icon="tabler:music-off" className="size-5" />
-                  None
-                </span>
-              </div>
-              {selected && (
-                <Icon
-                  icon="tabler:check"
-                  className="block text-lg text-custom-500"
-                />
-              )}
-            </>
-          )}
-        </ListboxOption>
+        <ListboxNullOption icon="tabler:music-off" />
         {TYPES.map(({ name, id, icon }) => (
-          <ListboxOption
-            key={id}
-            className="flex-between relative flex cursor-pointer select-none p-4 text-bg-500 transition-all hover:bg-bg-100 data-[selected]:text-bg-800 hover:dark:bg-bg-700/50 data-[selected]:dark:text-bg-50"
-            value={id}
-          >
-            {({ selected }) => (
-              <>
-                <div>
-                  <span className="flex items-center gap-2 font-medium">
-                    <Icon icon={icon} className="size-5" />
-                    {name}
-                  </span>
-                </div>
-                {selected && (
-                  <Icon
-                    icon="tabler:check"
-                    className="block text-lg text-custom-500"
-                  />
-                )}
-              </>
-            )}
-          </ListboxOption>
+          <ListboxOption key={id} text={name} icon={icon} value={id} />
         ))}
       </ListboxInput>
       <CreateOrModifyButton

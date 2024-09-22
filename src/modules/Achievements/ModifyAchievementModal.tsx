@@ -1,24 +1,24 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { ListboxOption } from '@headlessui/react'
-import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import COLOR from 'tailwindcss/colors'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
+import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
 import Modal from '@components/Modals/Modal'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
 import APIRequest from '@utils/fetchData'
 
 const difficulties = [
-  ['easy', 'bg-green-500'],
-  ['medium', 'bg-yellow-500'],
-  ['hard', 'bg-red-500'],
-  ['impossible', 'bg-purple-500']
+  ['easy', 'green'],
+  ['medium', 'yellow'],
+  ['hard', 'red'],
+  ['impossible', 'purple']
 ]
 
 function ModifyAchievementModal({
@@ -149,9 +149,15 @@ function ModifyAchievementModal({
             <>
               {achievementDifficulty !== '' && (
                 <span
-                  className={`h-4 w-1 rounded-full ${
-                    difficulties.find(l => l[0] === achievementDifficulty)?.[1]
-                  }`}
+                  className="h-4 w-1 rounded-full"
+                  style={{
+                    backgroundColor:
+                      COLOR[
+                        difficulties.find(
+                          l => l[0] === achievementDifficulty
+                        )?.[1] as keyof typeof COLOR
+                      ][500]
+                  }}
                 />
               )}
               <span className="-mt-px block truncate">
@@ -170,31 +176,10 @@ function ModifyAchievementModal({
           {difficulties.map(([name, color], i) => (
             <ListboxOption
               key={i}
-              className="flex-between relative flex cursor-pointer select-none bg-bg-200/50 p-4 transition-all dark:bg-bg-700/50"
+              text={name[0].toUpperCase() + name.slice(1)}
+              color={COLOR[color as keyof typeof COLOR][500]}
               value={name}
-            >
-              {({ selected }) => (
-                <>
-                  <div>
-                    <span className="flex items-center gap-4">
-                      <span
-                        className={`h-4 w-1 rounded-full
-                      ${color}`}
-                      />
-                      <div className="flex items-center gap-2">
-                        {name[0].toUpperCase() + name.slice(1)}
-                      </div>
-                    </span>
-                  </div>
-                  {selected && (
-                    <Icon
-                      icon="tabler:check"
-                      className="block text-lg text-custom-500"
-                    />
-                  )}
-                </>
-              )}
-            </ListboxOption>
+            />
           ))}
         </ListboxInput>
         <CreateOrModifyButton

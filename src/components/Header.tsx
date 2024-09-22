@@ -1,6 +1,6 @@
-import { Menu, MenuButton, MenuItems, Transition } from '@headlessui/react'
+import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React, { Fragment } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { useAuthContext } from '@providers/AuthProvider'
@@ -61,36 +61,30 @@ export default function Header(): React.ReactElement {
               className="stroke-[2px] text-bg-500"
             />
           </MenuButton>
-          <Transition
-            as={Fragment}
-            enter="transition ease-out duration-100"
-            enterFrom="transform opacity-0 scale-95"
-            enterTo="transform opacity-100 scale-100"
-            leave="transition ease-in duration-75"
-            leaveFrom="transform opacity-100 scale-100"
-            leaveTo="transform opacity-0 scale-95"
+          <MenuItems
+            transition
+            anchor="bottom end"
+            className="z-[9991] mt-2 w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md border border-bg-200 bg-bg-100 shadow-lg outline-none transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:border-bg-700 dark:bg-bg-800"
           >
-            <MenuItems className="absolute right-0 mt-4 w-56 overflow-hidden rounded-lg bg-bg-100 shadow-lg focus:outline-none dark:bg-bg-800">
-              <div className="py-1">
-                <MenuItem
-                  onClick={() => {
-                    navigate('/account')
-                  }}
-                  icon="tabler:user-cog"
-                  text="Account settings"
-                />
-                <MenuItem
-                  isRed
-                  onClick={() => {
-                    logout()
-                    toast.warning('Logged out successfully!')
-                  }}
-                  icon="tabler:logout"
-                  text="Sign out"
-                />
-              </div>
-            </MenuItems>
-          </Transition>
+            <div className="py-1">
+              <MenuItem
+                onClick={() => {
+                  navigate('/account')
+                }}
+                icon="tabler:user-cog"
+                text="Account settings"
+              />
+              <MenuItem
+                isRed
+                onClick={() => {
+                  logout()
+                  toast.warning('Logged out successfully!')
+                }}
+                icon="tabler:logout"
+                text="Sign out"
+              />
+            </div>
+          </MenuItems>
         </Menu>
       </div>
     </header>

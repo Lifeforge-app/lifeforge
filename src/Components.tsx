@@ -58,12 +58,6 @@ const Personalization = lazy(
 const ServerStatus = lazy(async () => await import('./modules/ServerStatus'))
 const Spotify = lazy(async () => await import('./modules/Spotify'))
 const Modules = lazy(async () => await import('./modules/Modules'))
-const ProjectsKList = lazy(
-  async () => await import('./modules/ProjectsK/pages/ProjectList')
-)
-const ProjectsKEntry = lazy(
-  async () => await import('./modules/ProjectsK/pages/ProjectEntry')
-)
 const NotesFile = lazy(async () => await import('./modules/Notes/File'))
 const Passwords = lazy(async () => await import('./modules/Passwords'))
 const Journal = lazy(async () => await import('./modules/Journal'))
@@ -141,10 +135,6 @@ export const COMPONENTS = {
   },
   music: {
     music: Music
-  },
-  'projects-k': {
-    'projects-k': ProjectsKList,
-    'projects-k-id': ProjectsKEntry
   },
   'idea-box': {
     'idea-box': IdeaBox,

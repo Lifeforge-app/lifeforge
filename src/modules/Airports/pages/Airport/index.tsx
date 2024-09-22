@@ -53,9 +53,7 @@ function Airport(): React.ReactElement {
             <>
               <GoBackButton
                 onClick={() => {
-                  navigate(
-                    `/aviation/airports/${continentID}/${countryID}/${regionID}`
-                  )
+                  navigate(`/airports/${continentID}/${countryID}/${regionID}`)
                 }}
               />
               <Breadcrumbs breadcrumbs={airportData.breadcrumbs} />

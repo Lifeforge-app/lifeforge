@@ -1,11 +1,14 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 
 function Chip({
   text,
+  icon,
   selected,
   onClick
 }: {
-  text: string
+  text?: string
+  icon?: string
   selected: boolean
   onClick: () => void
 }): React.ReactElement {
@@ -16,9 +19,10 @@ function Chip({
       className={`${
         selected
           ? '!bg-custom-500 font-semibold text-bg-50 shadow-sm dark:text-bg-800'
-          : 'bg-white hover:bg-bg-50 dark:bg-bg-800 dark:hover:bg-bg-700/70'
-      } flex-center flex h-8 grow whitespace-nowrap rounded-full px-6 text-sm shadow-sm transition-all duration-100 md:grow-0`}
+          : 'bg-bg-50 hover:!bg-white/70 dark:bg-bg-800 dark:hover:bg-bg-700/70'
+      } flex-center flex h-8 grow gap-2 whitespace-nowrap rounded-full px-6 text-sm shadow-sm transition-all duration-100 md:grow-0`}
     >
+      {icon !== undefined && <Icon icon={icon} className="size-5" />}
       {text}
     </button>
   )

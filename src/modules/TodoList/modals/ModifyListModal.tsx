@@ -58,7 +58,7 @@ function ModifyListModal(): React.ReactElement {
 
     await APIRequest({
       endpoint:
-        'todo-list/list' +
+        'todo-list/lists' +
         (innerOpenType === 'update' ? `/${selectedList?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: list,

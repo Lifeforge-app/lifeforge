@@ -1,8 +1,9 @@
-import { ListboxOption } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React from 'react'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
+import ListboxNullOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxNullOption'
+import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
 import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
 
 function CategorySelector({
@@ -39,56 +40,15 @@ function CategorySelector({
         </>
       }
     >
-      <ListboxOption
-        key={'none'}
-        className="flex-between relative flex cursor-pointer select-none bg-bg-200/50 p-4 transition-all dark:bg-bg-700/50"
-        value={''}
-      >
-        {({ selected }) => (
-          <>
-            <div>
-              <span className="flex items-center gap-2">None</span>
-            </div>
-            {selected && (
-              <Icon
-                icon="tabler:check"
-                className="block text-lg text-custom-500"
-              />
-            )}
-          </>
-        )}
-      </ListboxOption>
+      <ListboxNullOption icon="tabler:apps-off" hasBgColor />
       {categories.map(({ name, color, icon, id }, i) => (
         <ListboxOption
           key={i}
-          className="flex-between relative flex cursor-pointer select-none bg-bg-200/50 p-4 transition-all dark:bg-bg-700/50"
           value={id}
-        >
-          {({ selected }) => (
-            <>
-              <div>
-                <span className="flex items-center gap-4">
-                  <span
-                    className="h-4 w-1 rounded-full"
-                    style={{
-                      backgroundColor: color
-                    }}
-                  />
-                  <div className="flex items-center gap-2">
-                    <Icon icon={icon} className="size-4" />
-                    {name}
-                  </div>
-                </span>
-              </div>
-              {selected && (
-                <Icon
-                  icon="tabler:check"
-                  className="block text-lg text-custom-500"
-                />
-              )}
-            </>
-          )}
-        </ListboxOption>
+          text={name}
+          icon={icon}
+          color={color}
+        />
       ))}
     </ListboxInput>
   )

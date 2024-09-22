@@ -12,11 +12,13 @@ import Sidebar from './Sidebar'
 import TaskList from './tasks/TaskList'
 import TodoListHeader from './TodoListHeader'
 import ModifyListModal from '../modals/ModifyListModal'
+import ModifyPriorityModal from '../modals/ModifyPriorityModal'
 import ModifyTagModal from '../modals/ModifyTagModal'
 
 function TodoListContainer(): React.ReactElement {
   const {
     entries,
+    refreshPriorities,
     refreshLists,
     refreshTagsList,
     refreshEntries,
@@ -25,9 +27,12 @@ function TodoListContainer(): React.ReactElement {
     deleteTaskConfirmationModalOpen,
     setDeleteTaskConfirmationModalOpen,
     selectedTask,
+    selectedPriority,
     selectedList,
     selectedTag,
     setSelectedTask,
+    deletePriorityConfirmationModalOpen,
+    setDeletePriorityConfirmationModalOpen,
     deleteListConfirmationModalOpen,
     setDeleteListConfirmationModalOpen,
     deleteTagConfirmationModalOpen,
@@ -84,6 +89,7 @@ function TodoListContainer(): React.ReactElement {
         isOpen={deleteTaskConfirmationModalOpen}
         onClose={() => {
           setDeleteTaskConfirmationModalOpen(false)
+          refreshPriorities()
           refreshLists()
           refreshTagsList()
           refreshStatusCounter()
@@ -101,9 +107,21 @@ function TodoListContainer(): React.ReactElement {
           }}
         />
       )}
+      <ModifyPriorityModal />
+      <DeleteConfirmationModal
+        apiEndpoint="todo-list/priorities"
+        data={selectedPriority}
+        isOpen={deletePriorityConfirmationModalOpen}
+        itemName="priority"
+        onClose={() => {
+          setDeletePriorityConfirmationModalOpen(false)
+        }}
+        updateDataList={refreshPriorities}
+        customText="Are you sure you want to delete this priority? The tasks with this priority will not be deleted."
+      />
       <ModifyListModal />
       <DeleteConfirmationModal
-        apiEndpoint="todo-list/list"
+        apiEndpoint="todo-list/lists"
         data={selectedList}
         isOpen={deleteListConfirmationModalOpen}
         itemName="list"
@@ -115,7 +133,7 @@ function TodoListContainer(): React.ReactElement {
       />
       <ModifyTagModal />
       <DeleteConfirmationModal
-        apiEndpoint="todo-list/tag"
+        apiEndpoint="todo-list/tags"
         data={selectedTag}
         isOpen={deleteTagConfirmationModalOpen}
         itemName="tag"

@@ -3,35 +3,35 @@ import React from 'react'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { useTodoListContext } from '@providers/TodoListProvider'
-import TaskListListItem from './TaskListListItem'
+import TaskPriorityListItem from './TaskPriorityListItem'
 
-function TaskListList({
+function TaskPriorityList({
   setSidebarOpen
 }: {
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
   const {
-    setModifyListModalOpenType: setModifyModalOpenType,
+    setModifyPriorityModalOpenType: setModifyModalOpenType,
     setSelectedPriority: setSelectedData,
-    lists
+    priorities
   } = useTodoListContext()
 
   return (
     <>
       <SidebarTitle
-        name="lists"
+        name="priorities"
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           setModifyModalOpenType('create')
           setSelectedData(null)
         }}
       />
-      <APIComponentWithFallback data={lists}>
-        {lists =>
-          lists.length > 0 ? (
+      <APIComponentWithFallback data={priorities}>
+        {priorities =>
+          priorities.length > 0 ? (
             <>
-              {lists.map(item => (
-                <TaskListListItem
+              {priorities.map(item => (
+                <TaskPriorityListItem
                   key={item.id}
                   item={item}
                   setSidebarOpen={setSidebarOpen}
@@ -39,7 +39,9 @@ function TaskListList({
               ))}
             </>
           ) : (
-            <p className="text-center text-bg-500">{t('emptyState.lists')}</p>
+            <p className="text-center text-bg-500">
+              {t('emptyState.priority')}
+            </p>
           )
         }
       </APIComponentWithFallback>
@@ -47,4 +49,4 @@ function TaskListList({
   )
 }
 
-export default TaskListList
+export default TaskPriorityList

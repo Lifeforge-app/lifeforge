@@ -1,8 +1,9 @@
-import { Listbox } from '@headlessui/react'
+import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import { useNavigate, useParams } from 'react-router'
-import ListboxTransition from '@components/ButtonsAndInputs/ListboxInput/components/ListboxTransition'
+import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
+import ListboxOptions from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOptions'
 
 const CONTINENTS = {
   AF: 'Africa',
@@ -25,13 +26,13 @@ function ContinentSelector(): React.ReactElement {
       value={continentID}
       onChange={value => {
         if (value !== 'all') {
-          navigate(`/aviation/airports/${value}`)
+          navigate(`/airports/${value}`)
         } else {
-          navigate('/aviation/airports')
+          navigate('/airports')
         }
       }}
     >
-      <Listbox.Button className="flex-between flex w-48 gap-2 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-800/50">
+      <ListboxButton className="flex-between flex w-48 gap-2 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-800/50">
         <div className="flex items-center gap-2">
           <span className="whitespace-nowrap font-medium">
             {continentID === 'all'
@@ -40,64 +41,17 @@ function ContinentSelector(): React.ReactElement {
           </span>
         </div>
         <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
-      </Listbox.Button>
-      <ListboxTransition>
-        <Listbox.Options className="absolute top-[120%] z-50 mt-1 max-h-56 w-48 divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base shadow-lg focus:outline-none dark:divide-bg-700 dark:bg-bg-800">
-          <Listbox.Option
-            className={({ active }) =>
-              `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
-                active
-                  ? 'hover:bg-bg-100 dark:hover:bg-bg-700/50'
-                  : '!bg-transparent'
-              }`
-            }
-            value="all"
-          >
-            {({ selected }) => (
-              <>
-                <div className="flex items-center gap-2 whitespace-nowrap">
-                  <span>All Continents</span>
-                </div>
-                {selected && (
-                  <Icon
-                    icon="tabler:check"
-                    className="block text-lg text-custom-500"
-                  />
-                )}
-              </>
-            )}
-          </Listbox.Option>
-          {Object.keys(CONTINENTS).map(continent => (
-            <Listbox.Option
-              key={continent}
-              className={({ active }) =>
-                `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
-                  active
-                    ? 'hover:bg-bg-100 dark:hover:bg-bg-700/50'
-                    : '!bg-transparent'
-                }`
-              }
-              value={continent}
-            >
-              {({ selected }) => (
-                <>
-                  <div className="flex items-center gap-2 whitespace-nowrap">
-                    <span>
-                      {CONTINENTS[continent as keyof typeof CONTINENTS]}
-                    </span>
-                  </div>
-                  {selected && (
-                    <Icon
-                      icon="tabler:check"
-                      className="block text-lg text-custom-500"
-                    />
-                  )}
-                </>
-              )}
-            </Listbox.Option>
-          ))}
-        </Listbox.Options>
-      </ListboxTransition>
+      </ListboxButton>
+      <ListboxOptions lighter>
+        <ListboxOption value="all" text="All Continents" />
+        {Object.keys(CONTINENTS).map(continent => (
+          <ListboxOption
+            key={continent}
+            value={continent}
+            text={CONTINENTS[continent as keyof typeof CONTINENTS]}
+          />
+        ))}
+      </ListboxOptions>
     </Listbox>
   )
 }

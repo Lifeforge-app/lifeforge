@@ -46,7 +46,7 @@ function Continents(): React.ReactElement {
               {Object.entries(data).map(([id, amount]) => (
                 <Link
                   key={id}
-                  to={`/aviation/airports/${id}`}
+                  to={`/airports/${id}`}
                   className="flex-between flex w-full rounded-lg bg-bg-50 p-4 px-6 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800"
                 >
                   <div>

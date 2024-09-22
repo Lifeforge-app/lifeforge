@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { Icon } from '@iconify/react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import { useTodoListContext } from '@providers/TodoListProvider'
-import { toCamelCase } from '@utils/strings'
 
 function TaskStatusList({
   setSidebarOpen
@@ -14,7 +12,6 @@ function TaskStatusList({
 }): React.ReactElement {
   const { statusCounter } = useTodoListContext()
   const [searchParams, setSearchParams] = useSearchParams()
-  const { t } = useTranslation()
 
   return (
     <APIComponentWithFallback data={statusCounter}>
@@ -26,48 +23,35 @@ function TaskStatusList({
             ['tabler:calendar-up', 'Scheduled'],
             ['tabler:calendar-x', 'Overdue'],
             ['tabler:calendar-check', 'Completed']
-          ].map(([icon, name], index) => (
-            <li
-              key={index}
-              className={`relative flex items-center gap-6 px-4 font-medium transition-all ${
+          ].map(([icon, name]) => (
+            <SidebarItem
+              key={name}
+              icon={icon}
+              name={name}
+              active={
                 searchParams.get('status') === name.toLowerCase() ||
                 (name === 'All' && !searchParams.get('status'))
-                  ? "text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-50"
-                  : 'text-bg-500 dark:text-bg-500'
-              }`}
-            >
-              <button
-                type="button"
-                onClick={() => {
-                  if (name === 'All') {
-                    setSearchParams(searchParams => {
-                      searchParams.delete('status')
-                      return searchParams
-                    })
-                    setSidebarOpen(false)
-                    return
-                  }
-                  setSearchParams({
-                    ...Object.fromEntries(searchParams.entries()),
-                    status: name.toLowerCase()
+              }
+              onClick={() => {
+                if (name === 'All') {
+                  setSearchParams(searchParams => {
+                    searchParams.delete('status')
+                    return searchParams
                   })
                   setSidebarOpen(false)
-                }}
-                className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800"
-              >
-                <Icon icon={icon} className="size-6 shrink-0" />
-                <div className="flex w-full flex-between">
-                  {t(`sidebar.todoList.${toCamelCase(name)}`)}
-                </div>
-                <span className="text-sm">
-                  {
-                    statusCounter[
-                      name.toLowerCase() as keyof typeof statusCounter
-                    ]
-                  }
-                </span>
-              </button>
-            </li>
+                  return
+                }
+                setSearchParams({
+                  ...Object.fromEntries(searchParams.entries()),
+                  status: name.toLowerCase()
+                })
+                setSidebarOpen(false)
+              }}
+              autoActive={false}
+              number={
+                statusCounter[name.toLowerCase() as keyof typeof statusCounter]
+              }
+            />
           ))}
         </>
       )}

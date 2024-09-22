@@ -1,8 +1,8 @@
-import { ListboxOption } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
+import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
 
 const TRANSACTION_TYPES = [
   { name: 'Income', color: '#10B981', id: 'income', icon: 'tabler:login-2' },
@@ -50,38 +50,7 @@ function TransactionTypeSelector({
       }
     >
       {TRANSACTION_TYPES.map(({ name, color, id }, i) => (
-        <ListboxOption
-          key={i}
-          className={({ active }) =>
-            `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
-              active
-                ? 'hover:bg-bg-100 dark:hover:bg-bg-700/50'
-                : '!bg-transparent'
-            }`
-          }
-          value={id}
-        >
-          {({ selected }) => (
-            <>
-              <div>
-                <span className="flex items-center gap-2">
-                  <Icon
-                    icon={TRANSACTION_TYPES.find(l => l.id === id)?.icon ?? ''}
-                    style={{ color }}
-                    className="size-5"
-                  />
-                  {name}
-                </span>
-              </div>
-              {selected && (
-                <Icon
-                  icon="tabler:check"
-                  className="block text-lg text-custom-500"
-                />
-              )}
-            </>
-          )}
-        </ListboxOption>
+        <ListboxOption key={i} text={name} color={color} value={id} />
       ))}
     </ListboxInput>
   )

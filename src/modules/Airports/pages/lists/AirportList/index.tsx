@@ -69,12 +69,13 @@ function AirportsList(): React.ReactElement {
           <Breadcrumbs breadcrumbs={continentsData.breadcrumbs} />
         )}
       </APIComponentWithFallback>
-      <div className="flex items-center gap-2">
+      <div className="mt-4 flex items-center gap-2">
         <ContinentSelector />
         <SearchInput
           stuffToSearch="airports"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
+          hasTopMargin={false}
         />
       </div>
       <APIComponentWithFallback data={filteredData}>

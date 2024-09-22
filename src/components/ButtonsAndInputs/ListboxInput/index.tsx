@@ -1,7 +1,8 @@
-import { ListboxButton, ListboxOptions } from '@headlessui/react'
+import { ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
 import ListboxInputWrapper from './components/ListboxInputWrapper'
+import ListboxOptions from './components/ListboxOptions'
 
 function ListboxInput({
   name,
@@ -37,18 +38,11 @@ function ListboxInput({
         <div className="relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-none">
           {buttonContent}
         </div>
-        <span className="pointer-events-none absolute inset-y-0 right-0 mt-1 flex items-center pr-4">
+        <span className="pointer-events-none absolute inset-y-0 right-0 mr-2 mt-1 flex items-center pr-4">
           <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
         </span>
       </ListboxButton>
-      <ListboxOptions
-        unmount={false}
-        transition
-        anchor="bottom start"
-        className="relative z-[9999] max-h-56 w-[var(--button-width)] divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base text-bg-800 shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:divide-bg-700 dark:border-bg-700 dark:bg-bg-800 dark:text-bg-50"
-      >
-        {children}
-      </ListboxOptions>
+      <ListboxOptions>{children}</ListboxOptions>
     </ListboxInputWrapper>
   )
 }

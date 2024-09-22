@@ -1,8 +1,8 @@
-import { Listbox } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
+import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
 import { type IProjectsMTechnology } from '@interfaces/projects_m_interfaces'
 
 function TechnologySelector({
@@ -53,31 +53,8 @@ function TechnologySelector({
         </>
       }
     >
-      {technologies.map(({ name, id, icon }, i) => (
-        <Listbox.Option
-          key={i}
-          className="flex-between relative flex cursor-pointer select-none p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-700/50"
-          value={id}
-        >
-          {({ selected }) => (
-            <>
-              <div>
-                <span className="flex items-center gap-2 font-medium">
-                  <span className="rounded-md p-2">
-                    <Icon icon={icon} className="size-5" />
-                  </span>
-                  {name}
-                </span>
-              </div>
-              {selected && (
-                <Icon
-                  icon="tabler:check"
-                  className="block text-lg text-custom-500"
-                />
-              )}
-            </>
-          )}
-        </Listbox.Option>
+      {technologies.map(({ name, id, icon }) => (
+        <ListboxOption key={id} value={id} text={name} icon={icon} />
       ))}
     </ListboxInput>
   )

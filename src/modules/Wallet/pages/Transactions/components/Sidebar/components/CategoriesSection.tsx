@@ -80,8 +80,8 @@ function CategoriesSection({
                     className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left ${
                       searchParams.get('category') === id ||
                       (name === 'All' && searchParams.get('category') === null)
-                        ? 'bg-bg-200/50'
-                        : 'hover:bg-bg-100/50 dark:hover:bg-bg-800'
+                        ? 'bg-bg-200/50 dark:bg-bg-800'
+                        : 'hover:bg-bg-100/50 dark:hover:bg-bg-800/50'
                     }`}
                   >
                     <span

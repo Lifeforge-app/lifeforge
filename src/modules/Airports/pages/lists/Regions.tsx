@@ -55,19 +55,16 @@ function Regions(): React.ReactElement {
       <APIComponentWithFallback data={regionsData} showLoading={false}>
         {continentsData => (
           <div className="mt-8 flex items-center gap-2">
-            <Link to="/aviation/airports" className="text-bg-500">
+            <Link to="/airports" className="text-bg-500">
               All Continents
             </Link>
             <Icon icon="tabler:chevron-right" className="size-5 text-bg-500" />
-            <Link
-              to={`/aviation/airports/${continentID}`}
-              className="text-bg-500"
-            >
+            <Link to={`/airports/${continentID}`} className="text-bg-500">
               {CONTINENTS[continentID as keyof typeof CONTINENTS]}
             </Link>
             <Icon icon="tabler:chevron-right" className="size-5 text-bg-500" />
             <Link
-              to={`/aviation/airports/${continentID}/${countryID}`}
+              to={`/airports/${continentID}/${countryID}`}
               className="font-medium text-custom-500"
             >
               {continentsData.breadcrumbs[0]}
@@ -75,12 +72,13 @@ function Regions(): React.ReactElement {
           </div>
         )}
       </APIComponentWithFallback>
-      <div className="flex items-center gap-2">
+      <div className="mt-4 flex items-center gap-2">
         <ContinentSelector />
         <SearchInput
           stuffToSearch="regions"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
+          hasTopMargin={false}
         />
       </div>
       <APIComponentWithFallback data={filteredData}>
@@ -94,7 +92,7 @@ function Regions(): React.ReactElement {
                   })
                   .map(([id, [name, amount]]) => (
                     <Link
-                      to={`/aviation/airports/${continentID}/${countryID}/${id}`}
+                      to={`/airports/${continentID}/${countryID}/${id}`}
                       key={name}
                       className="flex-between flex w-full rounded-lg bg-bg-50 p-4 px-6 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800"
                     >

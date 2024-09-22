@@ -24,10 +24,10 @@ function SearchInput({
 
   return (
     <search
-      className={`flex w-full cursor-text items-center gap-4 rounded-lg p-4 shadow-custom transition-all ${
+      className={`flex w-full cursor-text items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-custom transition-all hover:!bg-white/70 ${
         lighter
-          ? 'bg-white hover:bg-bg-50 dark:bg-bg-800/70 dark:hover:bg-bg-800'
-          : 'bg-bg-50 hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/70'
+          ? 'dark:bg-bg-800/70 dark:hover:bg-bg-800'
+          : 'dark:bg-bg-900 dark:hover:bg-bg-800/70'
       } ${hasTopMargin ? 'mt-4' : ''}`}
       onClick={e => {
         e.currentTarget.querySelector('input')?.focus()

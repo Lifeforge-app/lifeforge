@@ -15,7 +15,7 @@ function CategoryEntry({
     React.SetStateAction<{
       iconSet?: string
       search?: string
-    }>
+    } | null>
   >
 }): React.ReactElement {
   return (

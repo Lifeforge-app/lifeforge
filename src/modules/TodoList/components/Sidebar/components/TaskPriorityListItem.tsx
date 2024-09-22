@@ -3,20 +3,20 @@ import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { type ITodoListList } from '@interfaces/todo_list_interfaces'
+import { type ITodoPriority } from '@interfaces/todo_list_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
 
-function TaskListListItem({
+function TaskPriorityListItem({
   item,
   setSidebarOpen
 }: {
-  item: ITodoListList
+  item: ITodoPriority
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
   const {
     setSelectedPriority: setSelectedData,
-    setModifyListModalOpenType: setModifyModalOpenType,
-    setDeleteListConfirmationModalOpen: setDeleteConfirmationModalOpen
+    setModifyPriorityModalOpenType: setModifyModalOpenType,
+    setDeletePriorityConfirmationModalOpen: setDeleteConfirmationModalOpen
   } = useTodoListContext()
 
   const [searchParams, setSearchParams] = useSearchParams()
@@ -25,7 +25,7 @@ function TaskListListItem({
   return (
     <li
       className={`relative flex items-center gap-6 px-4 font-medium transition-all ${
-        searchParams.get('list') === item.id
+        searchParams.get('priority') === item.id
           ? "text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-50"
           : 'text-bg-500 dark:text-bg-500'
       }`}
@@ -36,7 +36,7 @@ function TaskListListItem({
         onClick={() => {
           setSearchParams({
             ...Object.fromEntries(searchParams.entries()),
-            list: item.id
+            priority: item.id
           })
           setSidebarOpen(false)
         }}
@@ -48,17 +48,16 @@ function TaskListListItem({
             backgroundColor: item.color
           }}
         />
-        <Icon icon={item.icon} className="size-6 shrink-0" />
         <div className="w-full truncate">{item.name}</div>
         <span className={!isMenuOpen ? 'text-sm group-hover:hidden' : 'hidden'}>
           {item.amount}
         </span>
-        {searchParams.get('list') === item.id ? (
+        {searchParams.get('priority') === item.id ? (
           <button
             onClick={e => {
               e.stopPropagation()
               setSearchParams(searchParams => {
-                searchParams.delete('list')
+                searchParams.delete('priority')
                 return searchParams
               })
               setSidebarOpen(false)
@@ -107,4 +106,4 @@ function TaskListListItem({
   )
 }
 
-export default TaskListListItem
+export default TaskPriorityListItem
