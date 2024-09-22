@@ -19,6 +19,12 @@ interface ITodoSubtask {
   hasChanged?: boolean
 }
 
+interface ITodoPriority extends BasePBCollection {
+  color: string
+  name: string
+  amount: number
+}
+
 interface ITodoListList extends BasePBCollection {
   color: string
   icon: string
@@ -43,6 +49,7 @@ interface ITodoListStatusCounter {
 export type {
   ITodoListEntry,
   ITodoSubtask,
+  ITodoPriority,
   ITodoListList,
   ITodoListTag,
   ITodoListStatusCounter

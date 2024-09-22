@@ -29,6 +29,7 @@ function ModifyTaskWindow(): React.ReactElement {
     setSelectedTask,
     refreshEntries,
     refreshTagsList,
+    refreshPriorities,
     refreshLists,
     refreshStatusCounter,
     setDeleteTaskConfirmationModalOpen
@@ -36,13 +37,13 @@ function ModifyTaskWindow(): React.ReactElement {
 
   const [summary, setSummary] = useState('')
   const [subtasks, , setSubtasks] = useFetch<ITodoSubtask[]>(
-    `todo-list/subtask/list/${selectedTask?.id}`,
+    `todo-list/subtasks/list/${selectedTask?.id}`,
     (selectedTask?.subtasks.length ?? 0) > 0 && openType === 'update'
   )
 
   const [notes, setNotes] = useState('')
   const [dueDate, setDueDate] = useState('')
-  const [priority, setPriority] = useState('low')
+  const [priority, setPriority] = useState<string | null>(null)
   const [list, setList] = useState<string | null>(null)
   const [tags, setTags] = useState<string[]>([])
   const [innerOpenType, setInnerOpenType] = useState<
@@ -85,6 +86,7 @@ function ModifyTaskWindow(): React.ReactElement {
         setSelectedTask(null)
         refreshEntries()
         refreshTagsList()
+        refreshPriorities()
         refreshLists()
         refreshStatusCounter()
       },
@@ -131,7 +133,7 @@ function ModifyTaskWindow(): React.ReactElement {
       setSummary('')
       setNotes('')
       setDueDate('')
-      setPriority('low')
+      setPriority(null)
       setList(null)
       setTags([])
       setSubtasks([])

@@ -1,33 +1,21 @@
 // PriorityListbox.tsx
-import { Listbox } from '@headlessui/react'
-import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
-
-const PRIORITIES = [
-  {
-    name: 'Low',
-    color: 'text-green-500'
-  },
-  {
-    name: 'Medium',
-    color: 'text-yellow-500'
-  },
-  {
-    name: 'High',
-    color: 'text-red-500'
-  }
-]
+import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
+import { useTodoListContext } from '@providers/TodoListProvider'
 
 function PrioritySelector({
   priority,
   setPriority
 }: {
   priority: string | null
-  setPriority: React.Dispatch<React.SetStateAction<string>>
+  setPriority: React.Dispatch<React.SetStateAction<string | null>>
 }): React.ReactElement {
   const { t } = useTranslation()
+  const { priorities } = useTodoListContext()
+
+  if (typeof priorities === 'string') return <></>
 
   return (
     <ListboxInput
@@ -38,51 +26,21 @@ function PrioritySelector({
       buttonContent={
         <>
           <span
-            className={`text-center font-semibold ${
-              PRIORITIES.find(e => e.name.toLowerCase() === priority)?.color
-            }`}
-          >
-            {'!'.repeat(
-              PRIORITIES.findIndex(e => e.name.toLowerCase() === priority) + 1
-            )}
-          </span>
+            className="block h-6 w-1 rounded-full"
+            style={{
+              backgroundColor:
+                priorities.find(p => p.id === priority)?.color ?? 'lightgray'
+            }}
+          />
           <span className="-mt-px block truncate">
-            {(priority?.[0].toUpperCase() ?? '') + (priority?.slice(1) ?? '')}
+            {priorities.find(p => p.id === priority)?.name ?? 'None'}
           </span>
         </>
       }
     >
-      {PRIORITIES.map(({ name, color }, i) => (
-        <Listbox.Option
-          key={i}
-          className={({ active }) =>
-            `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
-              active
-                ? 'hover:bg-bg-100 dark:hover:bg-bg-700/50'
-                : '!bg-transparent'
-            }`
-          }
-          value={name.toLowerCase()}
-        >
-          {({ selected }) => (
-            <>
-              <div>
-                <span className="flex items-center gap-2">
-                  <span className={`mr-2 text-center font-semibold ${color}`}>
-                    {'!'.repeat(i + 1)}
-                  </span>
-                  {name}
-                </span>
-              </div>
-              {selected && (
-                <Icon
-                  icon="tabler:check"
-                  className="block text-lg text-custom-500"
-                />
-              )}
-            </>
-          )}
-        </Listbox.Option>
+      <ListboxOption key={'none'} value="" text="None" color="lightgray" />
+      {priorities.map(({ name, color, id }, i) => (
+        <ListboxOption key={i} value={id} text={name} color={color} />
       ))}
     </ListboxInput>
   )

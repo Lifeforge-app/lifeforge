@@ -20,7 +20,7 @@ function Kanban(): React.ReactElement {
   useEffect(() => {
     if (typeof valid === 'boolean' && !valid) {
       toast.error('Invalid ID')
-      navigate('/idea-box')
+      navigate('/projects-m')
     }
   }, [valid])
 

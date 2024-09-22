@@ -25,7 +25,11 @@ function SidebarTitle({
   const { t } = useTranslation()
 
   return (
-    <li className="flex flex-between gap-4 py-4 pl-8 pr-5 pt-2 transition-all">
+    <li
+      className={`flex-between flex gap-4 ${
+        actionButtonIcon !== undefined ? 'pb-2' : 'pb-4'
+      } pl-8 pr-5 pt-2 transition-all`}
+    >
       <h3 className="whitespace-nowrap text-sm font-semibold uppercase tracking-widest text-bg-600">
         {t(`modules.title.${toCamelCase(name)}`)}
       </h3>

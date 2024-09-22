@@ -14,7 +14,7 @@ function TaskListListItem({
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
   const {
-    setSelectedList: setSelectedData,
+    setSelectedPriority: setSelectedData,
     setModifyListModalOpenType: setModifyModalOpenType,
     setDeleteListConfirmationModalOpen: setDeleteConfirmationModalOpen
   } = useTodoListContext()

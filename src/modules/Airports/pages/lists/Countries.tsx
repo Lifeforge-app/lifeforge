@@ -55,12 +55,13 @@ function Countries(): React.ReactElement {
       <Breadcrumbs
         breadcrumbs={[CONTINENTS[continentID as keyof typeof CONTINENTS]]}
       />
-      <div className="flex items-center gap-2">
+      <div className="mt-4 flex items-center gap-2">
         <ContinentSelector />
         <SearchInput
           stuffToSearch="countries"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
+          hasTopMargin={false}
         />
       </div>
       <APIComponentWithFallback data={filteredData}>
@@ -74,7 +75,7 @@ function Countries(): React.ReactElement {
                   })
                   .map(([key, [name, amount]]) => (
                     <Link
-                      to={`/aviation/airports/${continentID}/${key}`}
+                      to={`/airports/${continentID}/${key}`}
                       key={name}
                       className="flex-between flex w-full rounded-lg bg-bg-50 p-4 px-6 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800"
                     >

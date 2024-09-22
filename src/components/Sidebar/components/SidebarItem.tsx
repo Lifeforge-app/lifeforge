@@ -33,17 +33,20 @@ function SidebarItem({
   number,
   needTranslate = true
 }: SidebarItemProps): React.ReactElement {
+  const location = useLocation()
   // @ts-expect-error - Lazy to fix yay =)
   const { sidebarExpanded, toggleSidebar } = isMainSidebarItem
     ? useGlobalStateContext()
     : { sidebarExpanded: true }
-  const [subsectionExpanded, setSubsectionExpanded] = useState(false)
+  const [subsectionExpanded, setSubsectionExpanded] = useState(
+    subsection !== undefined &&
+      location.pathname.slice(1).startsWith(titleToPath(name))
+  )
   const { t } = useTranslation()
 
   function toggleSubsection(): void {
     setSubsectionExpanded(!subsectionExpanded)
   }
-  const location = useLocation()
 
   return (
     <>
@@ -142,6 +145,9 @@ function SidebarItem({
                 if (window.innerWidth < 1024) {
                   toggleSidebar()
                 }
+                if (isMainSidebarItem) {
+                  setSubsectionExpanded(true)
+                }
               }}
               to={`./${prefix !== '' ? `${prefix}/` : ''}${titleToPath(name)}`}
               className="absolute left-0 top-0 size-full rounded-lg"
@@ -167,10 +173,7 @@ function SidebarItem({
       {subsection !== undefined && (
         <li
           className={`flex h-auto shrink-0 flex-col gap-2 overflow-hidden px-4 transition-all ${
-            subsectionExpanded ||
-            location.pathname.slice(1).startsWith(titleToPath(name))
-              ? 'max-h-[1000px] py-2'
-              : 'max-h-0 py-0'
+            subsectionExpanded ? 'max-h-[1000px] py-2' : 'max-h-0 py-0'
           }`}
         >
           <ul
@@ -192,7 +195,7 @@ function SidebarItem({
                     !sidebarExpanded ? 'justify-center' : ''
                   } gap-4 rounded-lg py-4 ${
                     sidebarExpanded ? 'pl-[3.8rem]' : 'px-2'
-                  } font-medium transition-all hover:bg-bg-100/50 dark:hover:bg-bg-800  ${
+                  } font-medium transition-all hover:bg-bg-100/50 dark:hover:bg-bg-800/50  ${
                     location.pathname.split('/').slice(1)[0] ===
                       titleToPath(name) &&
                     (location.pathname.split('/').slice(1)[1] ===
@@ -201,7 +204,7 @@ function SidebarItem({
                         .replace(titleToPath(name), '')
                         .replace(/\//g, '') === '' &&
                         subsectionName === 'Dashboard'))
-                      ? 'bg-bg-200/50 dark:bg-bg-800/50'
+                      ? 'bg-bg-200/50 dark:bg-bg-800'
                       : 'text-bg-500'
                   }`}
                 >

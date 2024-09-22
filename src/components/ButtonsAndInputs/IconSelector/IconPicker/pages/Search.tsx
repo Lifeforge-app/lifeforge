@@ -1,19 +1,45 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
-
-/* eslint-disable @typescript-eslint/require-array-sort-compare */
-
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable operator-linebreak */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable react/prop-types */
-import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
+import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
+import List from 'react-virtualized/dist/commonjs/List'
 import Button from '@components/ButtonsAndInputs/Button'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
-import Chip from '../components/Chip'
+import ChipSelector from '../components/ChipSelector'
 import IconEntry from '../components/IconEntry'
+
+const AS = AutoSizer as any
+const L = List as any
+
+export interface IIconSearchResult {
+  iconList: string[]
+  iconSets: Record<string, IIconSetEntry>
+}
+
+export interface IIconSetEntry {
+  name: string
+  total: number
+  author: {
+    name: string
+    url: string
+  }
+  license: {
+    title: string
+    spdx: string
+    url: string
+  }
+  samples: string[]
+  height?: number
+  displayHeight?: number
+  category: string
+  palette: boolean
+  version?: string
+}
+
+export interface Author {
+  name: string
+  url: string
+}
 
 async function getIconSet(searchTerm: string): Promise<any> {
   try {
@@ -22,7 +48,7 @@ async function getIconSet(searchTerm: string): Promise<any> {
     )
     const data = await res.json()
     let iconList = []
-    if (data.icons.length) {
+    if (data.icons.length > 0) {
       iconList = data.icons
     } else {
       iconList = []
@@ -43,27 +69,28 @@ function Search({
   setOpen,
   searchTerm,
   setSelectedIcon,
-  setCurrentIconSet: setCurrentIconSetProp
+  setCurrentIconSetProp
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   searchTerm: string
   setSelectedIcon: React.Dispatch<React.SetStateAction<string>>
-  setCurrentIconSet: React.Dispatch<
+  setCurrentIconSetProp: React.Dispatch<
     React.SetStateAction<{
       iconSet?: string
       search?: string
-    }>
+    } | null>
   >
 }): React.ReactElement {
-  const [currentIconSet, setCurrentIconSet] = useState(null)
-  const [iconData, setIconData] = useState(null)
-  const [filteredIconList, setFilteredIconList] = useState([])
-  const [searchQuery, setSearchQuery] = useState(searchTerm || '')
+  const [currentIconSet, setCurrentIconSet] = useState<string | null>(null)
+  const [iconData, setIconData] = useState<IIconSearchResult | null>(null)
+  const [filteredIconList, setFilteredIconList] = useState<string[]>([])
+  const [searchQuery, setSearchQuery] = useState(searchTerm ?? '')
 
   useEffect(() => {
     setIconData(null)
     getIconSet(searchTerm)
       .then(data => {
+        console.log(data)
         setIconData(data)
         setFilteredIconList(data.iconList)
         setCurrentIconSet(null)
@@ -74,9 +101,9 @@ function Search({
   }, [searchTerm])
 
   useEffect(() => {
-    if (iconData) {
+    if (iconData !== null) {
       setFilteredIconList(
-        currentIconSet
+        currentIconSet !== null
           ? iconData.iconList.filter(
               e => e.split(':').shift() === currentIconSet
             )
@@ -85,24 +112,26 @@ function Search({
     }
   }, [currentIconSet, iconData])
 
-  return iconData ? (
-    <div className="flex min-h-0 w-full flex-col overflow-scroll p-8">
+  return iconData !== null ? (
+    <div className="flex min-h-0 w-full flex-1 flex-col">
       <div className="flex w-full gap-2">
         <SearchInput
+          lighter
           hasTopMargin={false}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           stuffToSearch="icons"
           onKeyUp={e => {
-            if (e.key === 'Enter' && searchQuery) {
+            if (e.key === 'Enter' && searchQuery !== '') {
               setCurrentIconSetProp({ search: searchQuery })
             }
           }}
-          lighter
         />
         <Button
           onClick={() => {
-            if (searchQuery) setCurrentIconSet({ search: searchQuery })
+            if (searchQuery !== '') {
+              setCurrentIconSetProp({ search: searchQuery })
+            }
           }}
           icon="tabler:arrow-right"
           iconAtEnd
@@ -110,32 +139,53 @@ function Search({
           Search
         </Button>
       </div>
-      {Object.keys(iconData.iconSets).length > 0 && (
-        <div className="mt-4 flex flex-wrap justify-center gap-2">
-          {Object.entries(iconData.iconSets)
-            .sort()
-            .map(([name, iconSet]) => (
-              <Chip
-                key={name}
-                onClick={() => {
-                  setCurrentIconSet(currentIconSet === name ? null : name)
+      <ChipSelector
+        options={Object.keys(iconData.iconSets)}
+        value={currentIconSet}
+        setValue={setCurrentIconSet}
+      />
+      <div className="min-h-0 flex-1">
+        <AS className="mt-8">
+          {({ width, height }: { width: number; height: number }) => {
+            const itemsPerRow = Math.floor(width / 160) || 1
+
+            return (
+              <L
+                width={width}
+                height={height - 12}
+                rowHeight={120}
+                rowCount={Math.ceil(filteredIconList.length / itemsPerRow)}
+                itemsPerRow={Math.floor(width / filteredIconList.length) || 1}
+                rowRenderer={({
+                  index,
+                  key,
+                  style
+                }: {
+                  index: number
+                  key: string
+                  style: React.CSSProperties
+                }) => {
+                  const fromIndex = index * itemsPerRow
+                  const toIndex = fromIndex + itemsPerRow
+
+                  return (
+                    <div key={key} style={style} className="flex w-full gap-4">
+                      {filteredIconList.slice(fromIndex, toIndex).map(icon => (
+                        <IconEntry
+                          key={icon}
+                          icon={icon.split(':').pop() ?? ''}
+                          iconSet={icon.split(':').shift() ?? ''}
+                          setSelectedIcon={setSelectedIcon}
+                          setOpen={setOpen}
+                        />
+                      ))}
+                    </div>
+                  )
                 }}
-                selected={currentIconSet === name}
-                text={name}
               />
-            ))}
-        </div>
-      )}
-      <div className=" mt-6 grid min-h-0 grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-3 pb-8">
-        {filteredIconList.map(icon => (
-          <IconEntry
-            key={icon}
-            icon={icon.split(':').pop()}
-            iconSet={icon.split(':').shift()}
-            setSelectedIcon={setSelectedIcon}
-            setOpen={setOpen}
-          />
-        ))}
+            )
+          }}
+        </AS>
       </div>
     </div>
   ) : (

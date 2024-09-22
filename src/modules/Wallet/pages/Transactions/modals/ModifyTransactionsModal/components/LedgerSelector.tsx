@@ -1,8 +1,9 @@
-import { ListboxOption } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
+import ListboxNullOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxNullOption'
+import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function LedgerSelector({
@@ -32,7 +33,7 @@ function LedgerSelector({
       buttonContent={
         <>
           <Icon
-            icon={ledgers.find(l => l.id === ledger)?.icon ?? 'tabler:book'}
+            icon={ledgers.find(l => l.id === ledger)?.icon ?? 'tabler:book-off'}
             style={{
               color: ledgers.find(l => l.id === ledger)?.color
             }}
@@ -44,65 +45,15 @@ function LedgerSelector({
         </>
       }
     >
-      <ListboxOption
-        key={'none'}
-        className="flex-between relative flex cursor-pointer select-none p-4 transition-all hover:bg-bg-100 hover:dark:bg-bg-700/50"
-        value={null}
-      >
-        {({ selected }) => (
-          <>
-            <div>
-              <span className="flex items-center gap-2 font-medium">
-                <span
-                  className="rounded-md p-2"
-                  style={{ backgroundColor: '#FFFFFF20' }}
-                >
-                  <Icon
-                    icon="tabler:book"
-                    className="size-5"
-                    style={{ color: 'white' }}
-                  />
-                </span>
-                {t('input.none')}
-              </span>
-            </div>
-            {selected && (
-              <Icon
-                icon="tabler:check"
-                className="block text-lg text-custom-500"
-              />
-            )}
-          </>
-        )}
-      </ListboxOption>
-      {ledgers.map(({ name, color, id, icon }, i) => (
+      <ListboxNullOption icon="tabler:book-off" value={null} hasBgColor />
+      {ledgers.map(({ name, color, id, icon }) => (
         <ListboxOption
-          key={i}
-          className="flex-between relative flex cursor-pointer select-none p-4 transition-all hover:bg-bg-100 hover:dark:bg-bg-700/50"
+          key={id}
+          text={name}
+          icon={icon}
+          color={color}
           value={id}
-        >
-          {({ selected }) => (
-            <>
-              <div>
-                <span className="flex items-center gap-2 font-medium">
-                  <span
-                    className="rounded-md p-2"
-                    style={{ backgroundColor: color + '20' }}
-                  >
-                    <Icon icon={icon} className="size-5" style={{ color }} />
-                  </span>
-                  {name}
-                </span>
-              </div>
-              {selected && (
-                <Icon
-                  icon="tabler:check"
-                  className="block text-lg text-custom-500"
-                />
-              )}
-            </>
-          )}
-        </ListboxOption>
+        />
       ))}
     </ListboxInput>
   )

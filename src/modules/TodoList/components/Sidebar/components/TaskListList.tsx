@@ -1,3 +1,4 @@
+import { t } from 'i18next'
 import React from 'react'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
@@ -11,7 +12,7 @@ function TaskListList({
 }): React.ReactElement {
   const {
     setModifyListModalOpenType: setModifyModalOpenType,
-    setSelectedList: setSelectedData,
+    setSelectedPriority: setSelectedData,
     lists
   } = useTodoListContext()
 
@@ -26,17 +27,21 @@ function TaskListList({
         }}
       />
       <APIComponentWithFallback data={lists}>
-        {lists => (
-          <>
-            {lists.map(item => (
-              <TaskListListItem
-                key={item.id}
-                item={item}
-                setSidebarOpen={setSidebarOpen}
-              />
-            ))}
-          </>
-        )}
+        {lists =>
+          lists.length > 0 ? (
+            <>
+              {lists.map(item => (
+                <TaskListListItem
+                  key={item.id}
+                  item={item}
+                  setSidebarOpen={setSidebarOpen}
+                />
+              ))}
+            </>
+          ) : (
+            <p className="text-center text-bg-500">{t('emptyState.lists')}</p>
+          )
+        }
       </APIComponentWithFallback>
     </>
   )

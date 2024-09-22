@@ -40,7 +40,7 @@ function ModifyTagModal(): React.ReactElement {
 
     await APIRequest({
       endpoint:
-        'todo-list/tag' +
+        'todo-list/tags' +
         (innerOpenType === 'update' ? `/${selectedTag?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: tag,

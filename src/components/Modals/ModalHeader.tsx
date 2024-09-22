@@ -27,7 +27,7 @@ function ModalHeader({
   const { t } = useTranslation()
 
   return (
-    <div className={`flex-between mb-8 flex ${className}`}>
+    <div className={`flex-between mb-6 flex ${className}`}>
       <div className="flex items-center gap-4">
         <h1 className="flex items-center gap-3 text-2xl font-semibold">
           <Icon icon={icon} className="size-7" />

@@ -31,7 +31,7 @@ function EntryItem({
 
   return (
     <Link
-      to={`/aviation/airports/${continentID}/${countryID}/${regionID}/${id}`}
+      to={`/airports/${continentID}/${countryID}/${regionID}/${id}`}
       className="flex-between flex w-full rounded-lg bg-bg-50 p-4 px-6 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800"
     >
       <div className="flex items-center gap-4">

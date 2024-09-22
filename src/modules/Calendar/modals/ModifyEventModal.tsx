@@ -141,6 +141,7 @@ function ModifyEventModal({
           setDate={setEventStartTime}
           name="Start time"
           icon="tabler:clock"
+          darker
         />
         <DateInput
           modalRef={ref}
@@ -148,6 +149,7 @@ function ModifyEventModal({
           setDate={setEventEndTime}
           name="End time"
           icon="tabler:clock"
+          darker
         />
         <CategorySelector
           categories={categories}

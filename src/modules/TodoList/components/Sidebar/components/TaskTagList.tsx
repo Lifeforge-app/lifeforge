@@ -1,3 +1,4 @@
+import { t } from 'i18next'
 import React from 'react'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
@@ -12,7 +13,7 @@ function TaskTagList({
   const {
     tags,
     setModifyTagModalOpenType: setModifyModalOpenType,
-    setSelectedList: setSelectedData
+    setSelectedPriority: setSelectedData
   } = useTodoListContext()
 
   return (
@@ -26,17 +27,21 @@ function TaskTagList({
         }}
       />
       <APIComponentWithFallback data={tags}>
-        {tags => (
-          <>
-            {tags.map(item => (
-              <TaskTagListItem
-                key={item.id}
-                item={item}
-                setSidebarOpen={setSidebarOpen}
-              />
-            ))}
-          </>
-        )}
+        {tags =>
+          tags.length > 0 ? (
+            <>
+              {tags.map(item => (
+                <TaskTagListItem
+                  key={item.id}
+                  item={item}
+                  setSidebarOpen={setSidebarOpen}
+                />
+              ))}
+            </>
+          ) : (
+            <p className="text-center text-bg-500">{t('emptyState.tags')}</p>
+          )
+        }
       </APIComponentWithFallback>
     </>
   )

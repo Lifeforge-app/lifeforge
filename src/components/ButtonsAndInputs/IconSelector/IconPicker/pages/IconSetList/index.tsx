@@ -27,7 +27,7 @@ export default function IconSetList({
     React.SetStateAction<{
       iconSet?: string
       search?: string
-    }>
+    } | null>
   >
 }): React.ReactElement {
   const [searchQuery, setSearchQuery] = useState('')
@@ -35,7 +35,7 @@ export default function IconSetList({
   const [iconFilterTerm, setIconFilterTerm] = useState('')
 
   return (
-    <div className="flex h-full min-h-0 flex-1 flex-col pb-2 pt-0">
+    <div className="flex h-full min-h-0 flex-1 flex-col">
       <Header
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
