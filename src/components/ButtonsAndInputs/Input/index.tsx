@@ -7,41 +7,41 @@ import InputLabel from './components/InputLabel'
 import InputWrapper from './components/InputWrapper'
 
 function Input({
-  reference,
-  name,
-  placeholder,
-  icon,
-  value,
-  updateValue,
-  isPassword = false,
-  darker = false,
-  className = '',
-  onKeyDown = () => {},
-  noAutoComplete = true,
-  autoFocus = false,
   actionButtonIcon = '',
-  onActionButtonClick = () => {},
   actionButtonLoading = false,
+  autoFocus = false,
+  className = '',
+  darker = false,
+  disabled = false,
+  icon,
+  isPassword = false,
+  name,
   needTranslate = true,
-  disabled = false
+  noAutoComplete = true,
+  onActionButtonClick = () => {},
+  onKeyDown = () => {},
+  placeholder,
+  reference,
+  updateValue,
+  value
 }: {
-  reference?: React.RefObject<HTMLInputElement | null>
-  name: string
-  placeholder: string
-  icon: string
-  value: string
-  updateValue: (e: React.ChangeEvent<HTMLInputElement>) => void
-  isPassword?: boolean
-  darker?: boolean
-  className?: string
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
-  noAutoComplete?: boolean
-  autoFocus?: boolean
   actionButtonIcon?: string
-  onActionButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   actionButtonLoading?: boolean
-  needTranslate?: boolean
+  autoFocus?: boolean
+  className?: string
+  darker?: boolean
   disabled?: boolean
+  icon: string
+  isPassword?: boolean
+  name: string
+  needTranslate?: boolean
+  noAutoComplete?: boolean
+  onActionButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  placeholder: string
+  reference?: React.RefObject<HTMLInputElement | null>
+  updateValue: (e: React.ChangeEvent<HTMLInputElement>) => void
+  value: string
 }): React.ReactElement {
   const { t } = useTranslation()
   const inputRef = useRef<HTMLInputElement | null>(null)
