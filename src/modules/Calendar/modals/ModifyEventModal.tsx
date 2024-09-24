@@ -1,22 +1,21 @@
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
 import moment from 'moment'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useReducer, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import DateInput from '@components/ButtonsAndInputs/DateInput'
-import Input from '@components/ButtonsAndInputs/Input'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import Modal from '@components/Modals/Modal'
-import ModalHeader from '@components/Modals/ModalHeader'
+import ErrorScreen from '@components/Screens/ErrorScreen'
+import LoadingScreen from '@components/Screens/LoadingScreen'
 import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
+import { type IFieldProps } from '@interfaces/modal_interfaces'
 import APIRequest from '@utils/fetchData'
-import CategorySelector from './ModifyCategoryModal/components/CategorySelector'
 
 interface ModifyEventModalProps {
   openType: 'create' | 'update' | null
@@ -33,33 +32,86 @@ function ModifyEventModal({
   existedData,
   categories
 }: ModifyEventModalProps): React.ReactElement {
-  const [loading, setLoading] = useState(false)
-  const [eventTitle, setEventTitle] = useState('')
-  const [eventStartTime, setEventStartTime] = useState('')
-  const [eventEndTime, setEventEndTime] = useState('')
-  const [eventCategory, setEventCategory] = useState('')
+  if (categories === 'loading') return <LoadingScreen />
+  if (categories === 'error') {
+    return <ErrorScreen message="Failed to fetch data" />
+  }
+
+  const [data, setData] = useReducer(
+    (state, _newState) => {
+      const newState = { ...state, ..._newState }
+
+      if (newState.start > newState.end) {
+        newState.end = newState.start
+      }
+
+      return newState
+    },
+    {
+      title: '',
+      start: '',
+      end: '',
+      category: ''
+    }
+  )
+  const ref = useRef<HTMLInputElement>(null)
+
+  const FIELDS: IFieldProps[] = [
+    {
+      id: 'title',
+      name: 'Event title',
+      icon: 'tabler:calendar',
+      type: 'text',
+      placeholder: 'My event'
+    },
+    {
+      id: 'start',
+      name: 'Start time',
+      icon: 'tabler:clock',
+      type: 'date',
+      index: 0,
+      modalRef: ref
+    },
+    {
+      id: 'end',
+      name: 'End time',
+      icon: 'tabler:clock',
+      type: 'date',
+      index: 1,
+      modalRef: ref
+    },
+    {
+      id: 'category',
+      name: 'Category',
+      icon: 'tabler:list',
+      type: 'listbox',
+      options: categories.map(({ name, color, icon, id }) => ({
+        value: id,
+        text: name,
+        icon,
+        color
+      })),
+      nullOption: 'tabler:apps-off'
+    }
+  ]
+
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
   const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
     useState(false)
-  const ref = useRef<HTMLInputElement>(null)
 
   async function onSubmitButtonClick(): Promise<void> {
-    if (
-      eventTitle.trim().length === 0 ||
-      eventStartTime === '' ||
-      eventEndTime === ''
-    ) {
+    const { title, start, end, category } = data
+
+    if (title.trim().length === 0 || start === '' || end === '') {
       toast.error(t('input.error.fieldEmpty'))
       return
     }
 
-    setLoading(true)
-
     const event = {
-      title: eventTitle.trim(),
-      start: moment(eventStartTime).toISOString(),
-      end: moment(eventEndTime).toISOString(),
-      category: eventCategory
+      title: title.trim(),
+      start: moment(start).toISOString(),
+      end: moment(end).toISOString(),
+      category
     }
 
     await APIRequest({
@@ -70,9 +122,6 @@ function ModifyEventModal({
       body: event,
       successInfo: innerOpenType,
       failureInfo: innerOpenType,
-      finalCallback: () => {
-        setLoading(false)
-      },
       callback: () => {
         setOpenType(null)
         updateEventList()
@@ -82,84 +131,50 @@ function ModifyEventModal({
 
   useEffect(() => {
     if (innerOpenType === 'update' && existedData !== null) {
-      setEventTitle(existedData.title)
-      setEventStartTime(moment(existedData.start).toISOString())
-      setEventEndTime(moment(existedData.end).toISOString())
-      setEventCategory(existedData.category)
+      setData({
+        title: existedData.title,
+        start: moment(existedData.start).toISOString(),
+        end: moment(existedData.end).toISOString(),
+        category: existedData.category
+      })
     } else {
-      setEventTitle('')
+      setData({
+        title: '',
+        category: ''
+      })
+
       if (existedData !== null) {
-        setEventStartTime(moment(existedData.start).toISOString())
-        setEventEndTime(moment(existedData.end).toISOString())
+        setData({
+          start: moment(existedData.start).toISOString(),
+          end: moment(existedData.end).toISOString()
+        })
       }
-      setEventCategory('')
     }
   }, [innerOpenType, existedData])
 
   return (
     <>
-      <Modal modalRef={ref} isOpen={openType !== null} minWidth="40vw">
-        <ModalHeader
-          icon={
-            {
-              create: 'tabler:plus',
-              update: 'tabler:pencil'
-            }[innerOpenType!]
-          }
-          title={`${
-            {
-              create: 'Create ',
-              update: 'Update '
-            }[innerOpenType!]
-          } event`}
-          actionButtonIcon={
-            innerOpenType === 'update' ? 'tabler:trash' : undefined
-          }
-          actionButtonIsRed
-          onActionButtonClick={() => {
-            setIsDeleteConfirmationModalOpen(true)
-          }}
-          onClose={() => {
-            setOpenType(null)
-          }}
-        />
-        <Input
-          name="Event title"
-          icon="tabler:calendar"
-          value={eventTitle}
-          updateValue={setEventTitle}
-          darker
-          placeholder="My event"
-        />
-        <DateInput
-          modalRef={ref}
-          date={eventStartTime}
-          setDate={setEventStartTime}
-          name="Start time"
-          icon="tabler:clock"
-          darker
-        />
-        <DateInput
-          modalRef={ref}
-          date={eventEndTime}
-          setDate={setEventEndTime}
-          name="End time"
-          icon="tabler:clock"
-          darker
-        />
-        <CategorySelector
-          categories={categories}
-          category={eventCategory}
-          setCategory={setEventCategory}
-        />
-        <CreateOrModifyButton
-          loading={loading}
-          onClick={() => {
-            onSubmitButtonClick().catch(console.error)
-          }}
-          type={innerOpenType}
-        />
-      </Modal>
+      <Modal
+        modalRef={ref}
+        openType={openType}
+        setOpenType={setOpenType}
+        onSubmit={onSubmitButtonClick}
+        title={`${
+          {
+            create: 'Create ',
+            update: 'Update '
+          }[innerOpenType!]
+        } event`}
+        icon={
+          {
+            create: 'tabler:plus',
+            update: 'tabler:pencil'
+          }[innerOpenType!]
+        }
+        fields={FIELDS}
+        data={data}
+        setData={setData}
+      />
       <DeleteConfirmationModal
         apiEndpoint="calendar/event"
         isOpen={isDeleteConfirmationModalOpen}

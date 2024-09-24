@@ -7,7 +7,7 @@ import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyBut
 import CurrencyInputComponent from '@components/ButtonsAndInputs/CurrencyInput'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
@@ -147,7 +147,7 @@ function ModifyTransactionsModal({
 
   return (
     <>
-      <Modal modalRef={ref} isOpen={openType !== null} minWidth="40vw">
+      <ModalWrapper modalRef={ref} isOpen={openType !== null} minWidth="40vw">
         <ModalHeader
           icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
           title={openType === 'create' ? 'Add Transaction' : 'Edit Transaction'}
@@ -228,7 +228,7 @@ function ModifyTransactionsModal({
           }}
           type={openType === 'update' ? 'update' : 'create'}
         />
-      </Modal>
+      </ModalWrapper>
     </>
   )
 }

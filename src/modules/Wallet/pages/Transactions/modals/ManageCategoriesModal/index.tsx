@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
@@ -35,7 +35,7 @@ function ManageCategoriesModal({
 
   return (
     <>
-      <Modal isOpen={isOpen !== false} className="sm:!min-w-[40rem]">
+      <ModalWrapper isOpen={isOpen !== false} className="sm:!min-w-[40rem]">
         <ModalHeader
           title="Manage Categories"
           icon="tabler:apps"
@@ -76,7 +76,7 @@ function ManageCategoriesModal({
             )
           }
         </APIComponentWithFallback>
-      </Modal>
+      </ModalWrapper>
       <ModifyCategoriesModal
         existedData={existedData}
         setExistedData={setExistedData}

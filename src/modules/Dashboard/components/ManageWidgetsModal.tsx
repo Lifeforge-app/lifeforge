@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-dynamic-delete */
 import React from 'react'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import DASHBOARD_WIDGETS from '@constants/dashboard_widgets'
 import ComponentListItem from './ComponentItem'
@@ -15,7 +15,7 @@ function ManageWidgetsModal({
   setReady: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   return (
-    <Modal isOpen={isOpen} minWidth="40vw">
+    <ModalWrapper isOpen={isOpen} minWidth="40vw">
       <ModalHeader
         title="Manage Widgets"
         onClose={onClose}
@@ -35,7 +35,7 @@ function ManageWidgetsModal({
           )
         )}
       </ul>
-    </Modal>
+    </ModalWrapper>
   )
 }
 export default ManageWidgetsModal

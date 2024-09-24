@@ -9,7 +9,7 @@ function IconEntry({
 }: {
   icon: string
   iconSet: string
-  setSelectedIcon: React.Dispatch<React.SetStateAction<string>>
+  setSelectedIcon: (icon: string) => void
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   return (

@@ -9,7 +9,7 @@ import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyBut
 import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IWalletCategory } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
@@ -96,7 +96,7 @@ function ModifyCategoriesModal({
 
   return (
     <>
-      <Modal isOpen={openType !== null} className="sm:min-w-[30rem]">
+      <ModalWrapper isOpen={openType !== null} className="sm:min-w-[30rem]">
         <ModalHeader
           icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
           title={openType === 'update' ? 'Edit Category' : 'Add Category'}
@@ -184,7 +184,7 @@ function ModifyCategoriesModal({
           }}
           type={openType === 'update' ? 'update' : 'create'}
         />
-      </Modal>
+      </ModalWrapper>
       <IconSelector
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}

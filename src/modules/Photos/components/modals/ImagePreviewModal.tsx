@@ -5,7 +5,7 @@ import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import useFetch from '@hooks/useFetch'
 import {
@@ -115,7 +115,7 @@ function ImagePreviewModal({
 
   return (
     <>
-      <Modal isOpen={isOpen} minWidth="90%" minHeight="90vh">
+      <ModalWrapper isOpen={isOpen} minWidth="90%" minHeight="90vh">
         <ModalHeader title="Image Preview" onClose={onClose} icon="uil:image" />
         {isOpen && (
           <>
@@ -185,7 +185,7 @@ function ImagePreviewModal({
             <img src={img} alt="" className="h-full object-contain" />
           </>
         )}
-      </Modal>
+      </ModalWrapper>
       <DeletePhotosConfirmationModal
         setPhotos={setPhotos}
         isInAlbumGallery={beingDisplayedInAlbum}

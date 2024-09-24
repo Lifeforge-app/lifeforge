@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
@@ -27,7 +27,7 @@ function DownloadProcessModal({
     | 'error'
 }): React.ReactElement {
   return (
-    <Modal isOpen={isOpen} minWidth="70vw">
+    <ModalWrapper isOpen={isOpen} minWidth="70vw">
       <ModalHeader
         icon="tabler:download"
         title="Download Process"
@@ -92,7 +92,7 @@ function DownloadProcessModal({
           )
         }
       </APIComponentWithFallback>
-    </Modal>
+    </ModalWrapper>
   )
 }
 

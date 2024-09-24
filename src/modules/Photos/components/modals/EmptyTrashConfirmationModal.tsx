@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import APIRequest from '@utils/fetchData'
 
 function EmptyTrashConfirmationModal({
@@ -38,7 +38,7 @@ function EmptyTrashConfirmationModal({
   }
 
   return (
-    <Modal isOpen={isOpen}>
+    <ModalWrapper isOpen={isOpen}>
       <h1 className="text-2xl font-semibold text-bg-50">
         Are you sure you want empty the trash?
       </h1>
@@ -69,7 +69,7 @@ function EmptyTrashConfirmationModal({
           Empty
         </Button>
       </div>
-    </Modal>
+    </ModalWrapper>
   )
 }
 

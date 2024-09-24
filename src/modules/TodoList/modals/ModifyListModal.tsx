@@ -10,7 +10,7 @@ import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyBut
 import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import APIRequest from '@utils/fetchData'
@@ -80,7 +80,7 @@ function ModifyListModal(): React.ReactElement {
 
   return (
     <>
-      <Modal isOpen={openType !== null}>
+      <ModalWrapper isOpen={openType !== null}>
         <ModalHeader
           title={`${
             {
@@ -126,7 +126,7 @@ function ModifyListModal(): React.ReactElement {
           }}
           type={innerOpenType}
         />
-      </Modal>
+      </ModalWrapper>
       <IconSelector
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}

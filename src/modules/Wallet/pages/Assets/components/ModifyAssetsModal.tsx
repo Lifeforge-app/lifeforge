@@ -7,7 +7,7 @@ import CurrencyInputComponent from '@components/ButtonsAndInputs/CurrencyInput'
 import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IWalletAsset } from '@interfaces/wallet_interfaces'
 import APIRequest from '@utils/fetchData'
@@ -87,7 +87,7 @@ function ModifyAssetsModal({
 
   return (
     <>
-      <Modal isOpen={openType !== null} className="sm:min-w-[30rem]">
+      <ModalWrapper isOpen={openType !== null} className="sm:min-w-[30rem]">
         <ModalHeader
           icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
           title={openType === 'create' ? 'Add Asset' : 'Edit Asset'}
@@ -125,7 +125,7 @@ function ModifyAssetsModal({
           }}
           type={openType}
         />
-      </Modal>
+      </ModalWrapper>
       <IconSelector
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}

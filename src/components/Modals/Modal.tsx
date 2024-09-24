@@ -1,65 +1,217 @@
-import React, { useEffect, useState } from 'react'
-import { useGlobalStateContext } from '@providers/GlobalStateProvider'
+import { Icon } from '@iconify/react/dist/iconify.js'
+import React, { useState } from 'react'
+import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
+import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
+import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
+import DateInput from '@components/ButtonsAndInputs/DateInput'
+import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
+import IconPicker from '@components/ButtonsAndInputs/IconSelector/IconPicker'
+import Input from '@components/ButtonsAndInputs/Input'
+import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
+import ListboxNullOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxNullOption'
+import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
+import { type IFieldProps } from '@interfaces/modal_interfaces'
+import ModalHeader from './ModalHeader'
+import ModalWrapper from './ModalWrapper'
 
 function Modal({
-  isOpen,
-  children,
-  minWidth,
-  minHeight,
-  className,
-  affectSidebar = true,
-  modalRef
+  modalRef,
+  fields,
+  data,
+  setData,
+  title,
+  icon,
+  openType,
+  setOpenType,
+  onSubmit
 }: {
-  isOpen: boolean
-  children: React.ReactNode
-  minWidth?: string
-  minHeight?: string
-  className?: string
-  affectSidebar?: boolean
   modalRef?: React.RefObject<HTMLDivElement | null>
+  fields: IFieldProps[]
+  data: Record<string, string>
+  setData: (data: Record<string, string>) => void
+  title: string
+  icon: string
+  openType: string | null
+  setOpenType: (type: 'create' | 'update' | null) => void
+  onSubmit: () => Promise<void>
 }): React.ReactElement {
-  const { setSubSidebarExpanded } = useGlobalStateContext()
-  const [innerIsOpen, setInnerIsOpen] = useState(false)
-  const [fisrtTime, setFirstTime] = useState(true)
+  const [colorPickerOpen, setColorPickerOpen] = useState<string | null>(null)
+  const [iconSelectorOpen, setIconSelectorOpen] = useState<string | null>(null)
 
-  useEffect(() => {
-    if (affectSidebar) {
-      setSubSidebarExpanded(isOpen)
-    }
-  }, [isOpen, setSubSidebarExpanded])
+  const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    if (!isOpen && !fisrtTime) {
-      setTimeout(() => {
-        setInnerIsOpen(false)
-      }, 500)
-    } else {
-      setInnerIsOpen(true)
-    }
-    setFirstTime(false)
-  }, [isOpen, setInnerIsOpen, fisrtTime])
+  async function onSubmitButtonClick(): Promise<void> {
+    setLoading(true)
+    await onSubmit()
+    setLoading(false)
+  }
 
   return (
-    <div
-      ref={modalRef}
-      className={`fixed left-0 top-0 h-dvh w-full bg-black/10 backdrop-blur-md transition-opacity ease-linear dark:bg-bg-950/60 ${
-        isOpen
-          ? 'z-[9990] opacity-100'
-          : 'z-[-1] opacity-0 [transition:z-index_0.1s_linear_0.5s,opacity_0.1s_linear_0.1s]'
-      }`}
-    >
-      <div
-        style={{
-          minWidth: minWidth ?? '0',
-          minHeight: minHeight ?? '0'
-        }}
-        className={`absolute ${
-          isOpen ? 'right-1/2' : 'right-[-100dvw]'
-        } ${className} top-1/2 flex max-h-[calc(100dvh-8rem)] w-full max-w-[calc(100vw-4rem)] -translate-y-1/2 translate-x-1/2 flex-col overflow-auto rounded-xl bg-bg-100 p-6 shadow-2xl transition-all duration-500 dark:bg-bg-900 sm:max-w-[calc(100vw-8rem)] lg:w-auto`}
+    <>
+      <ModalWrapper
+        minWidth="50vw"
+        modalRef={modalRef}
+        isOpen={openType !== null}
       >
-        {innerIsOpen && children}
-      </div>
-    </div>
+        <ModalHeader
+          title={title}
+          icon={icon}
+          onClose={() => {
+            setOpenType(null)
+          }}
+        />
+        {fields.map(field => {
+          switch (field.type) {
+            case 'text':
+              return (
+                <Input
+                  key={field.id}
+                  name={field.name}
+                  icon={field.icon}
+                  value={data[field.id]}
+                  updateValue={value => {
+                    setData({ [field.id]: value })
+                  }}
+                  darker
+                  placeholder={field.placeholder}
+                />
+              )
+            case 'date':
+              return (
+                <DateInput
+                  key={field.id}
+                  modalRef={field.modalRef}
+                  index={field.index}
+                  date={data[field.id]}
+                  setDate={(date: string) => {
+                    setData({ [field.id]: date })
+                  }}
+                  name={field.name}
+                  icon={field.icon}
+                  darker
+                />
+              )
+            case 'listbox':
+              return (
+                <ListboxInput
+                  key={field.id}
+                  name={field.name}
+                  icon={field.icon}
+                  value={data[field.id]}
+                  setValue={(value: string) => {
+                    setData({ [field.id]: value })
+                  }}
+                  buttonContent={
+                    <>
+                      <Icon
+                        icon={
+                          field.options.find(l => l.value === data[field.id])
+                            ?.icon ??
+                          field.nullOption ??
+                          ''
+                        }
+                        style={{
+                          color: field.options.find(
+                            l => l.value === data[field.id]
+                          )?.color
+                        }}
+                        className="size-5"
+                      />
+                      <span className="-mt-px block truncate">
+                        {field.options.find(l => l.value === data[field.id])
+                          ?.text ?? 'None'}
+                      </span>
+                    </>
+                  }
+                >
+                  {field.nullOption !== undefined && (
+                    <ListboxNullOption
+                      icon={field.nullOption}
+                      hasBgColor={field.options[0].color !== undefined}
+                    />
+                  )}
+                  {field.options.map(({ text, color, icon, value }) => (
+                    <ListboxOption
+                      key={value}
+                      value={value}
+                      text={text}
+                      icon={icon}
+                      color={color}
+                    />
+                  ))}
+                </ListboxInput>
+              )
+            case 'color':
+              return (
+                <ColorInput
+                  key={field.id}
+                  name={field.name}
+                  color={data[field.id]}
+                  updateColor={value => {
+                    setData({ [field.id]: value })
+                  }}
+                  setColorPickerOpen={() => {
+                    setColorPickerOpen(field.id)
+                  }}
+                />
+              )
+            case 'icon':
+              return (
+                <>
+                  <IconInput
+                    key={field.id}
+                    name={field.name}
+                    icon={data[field.id]}
+                    setIcon={value => {
+                      setData({ [field.id]: value })
+                    }}
+                    setIconSelectorOpen={() => {
+                      setIconSelectorOpen(field.id)
+                    }}
+                  />
+                </>
+              )
+            default:
+              return null
+          }
+        })}
+        <CreateOrModifyButton
+          loading={loading}
+          onClick={() => {
+            onSubmitButtonClick().catch(console.error)
+          }}
+          type={openType as 'create' | 'update'}
+        />
+      </ModalWrapper>
+      {fields.some(f => f.type === 'color') && (
+        <ColorPickerModal
+          isOpen={colorPickerOpen !== null}
+          setOpen={() => {
+            setColorPickerOpen(null)
+          }}
+          color={data[colorPickerOpen ?? ''] ?? '#FFFFFF'}
+          setColor={value => {
+            setData({
+              [colorPickerOpen ?? '']: value
+            })
+          }}
+        />
+      )}
+
+      {fields.some(f => f.type === 'icon') && (
+        <IconPicker
+          isOpen={iconSelectorOpen !== null}
+          setOpen={() => {
+            setIconSelectorOpen(null)
+          }}
+          setSelectedIcon={value => {
+            setData({
+              [iconSelectorOpen ?? '']: value
+            })
+          }}
+        />
+      )}
+    </>
   )
 }
 

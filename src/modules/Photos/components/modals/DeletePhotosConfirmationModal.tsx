@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import {
   type IPhotosEntryDimensionsAll,
   type IPhotoAlbumEntryItem,
@@ -84,7 +84,7 @@ function DeletePhotosConfirmationModal({
   }
 
   return (
-    <Modal isOpen={customIsOpen ?? isDeletePhotosConfirmationModalOpen}>
+    <ModalWrapper isOpen={customIsOpen ?? isDeletePhotosConfirmationModalOpen}>
       <h1 className="text-2xl font-semibold text-bg-50">
         Are you sure you want to delete{' '}
         {customPhotoToBeDeleted
@@ -120,7 +120,7 @@ function DeletePhotosConfirmationModal({
           Delete
         </Button>
       </div>
-    </Modal>
+    </ModalWrapper>
   )
 }
 

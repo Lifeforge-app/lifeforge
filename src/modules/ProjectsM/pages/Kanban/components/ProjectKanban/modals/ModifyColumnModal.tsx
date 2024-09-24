@@ -9,7 +9,7 @@ import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyBut
 import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IProjectsMKanbanColumn } from '@interfaces/projects_m_interfaces'
 import APIRequest from '@utils/fetchData'
@@ -89,7 +89,7 @@ function ModifyColumnModal({
 
   return (
     <>
-      <Modal isOpen={openType !== null} className="sm:min-w-[30rem]">
+      <ModalWrapper isOpen={openType !== null} className="sm:min-w-[30rem]">
         <ModalHeader
           icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
           title={openType === 'update' ? 'Edit Column' : 'Add Column'}
@@ -124,7 +124,7 @@ function ModifyColumnModal({
           }}
           type={openType}
         />
-      </Modal>
+      </ModalWrapper>
       <IconSelector
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}

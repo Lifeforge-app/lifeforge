@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { encrypt } from '@utils/encryption'
@@ -124,7 +124,7 @@ function ModifyJournalEntryModal({
   }, [existedData, openType])
 
   return (
-    <Modal
+    <ModalWrapper
       modalRef={ref}
       isOpen={openType !== null}
       className="h-max md:!min-w-[40vw]"
@@ -264,7 +264,7 @@ function ModifyJournalEntryModal({
             )
         }
       })()}
-    </Modal>
+    </ModalWrapper>
   )
 }
 
