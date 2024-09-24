@@ -25,10 +25,6 @@ function ModifyAlbumTagsModal({
   const [loading, setLoading] = useState(false)
   const ref = useRef<HTMLInputElement>(null)
 
-  const updateTagName = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setTagName(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (tagName.trim().length === 0) {
       toast.error(t('input.error.fieldEmpty'))
@@ -114,7 +110,7 @@ function ModifyAlbumTagsModal({
         reference={ref}
         name="Tag name"
         value={tagName}
-        updateValue={updateTagName}
+        updateValue={setTagName}
         darker
         placeholder="My lovely tag"
         onKeyDown={e => {

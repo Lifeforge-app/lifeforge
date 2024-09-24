@@ -36,14 +36,6 @@ function ModifyFolderModal({
   const [colorPickerOpen, setColorPickerOpen] = useState(false)
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
 
-  function updateFolderName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setFolderName(e.target.value)
-  }
-
-  function updateFolderColor(e: React.ChangeEvent<HTMLInputElement>): void {
-    setFolderColor(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (
       folderName.trim().length === 0 ||
@@ -120,14 +112,14 @@ function ModifyFolderModal({
           name="Folder name"
           icon="tabler:cube"
           value={folderName}
-          updateValue={updateFolderName}
+          updateValue={setFolderName}
           darker
           placeholder="My folder"
         />
         <ColorInput
           name="Folder color"
           color={folderColor}
-          updateColor={updateFolderColor}
+          updateColor={setFolderColor}
           setColorPickerOpen={setColorPickerOpen}
         />
         <IconInput

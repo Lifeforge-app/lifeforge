@@ -91,10 +91,6 @@ function ModifyTransactionsModal({
     }
   }, [openType, existedData])
 
-  function updateTransactionName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setParticular(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (transactionType === 'transfer') {
       if (!fromAsset || !toAsset) {
@@ -188,7 +184,7 @@ function ModifyTransactionsModal({
             darker
             name="Particulars"
             className="mt-4"
-            updateValue={updateTransactionName}
+            updateValue={setParticular}
           />
         )}
         <DateInput

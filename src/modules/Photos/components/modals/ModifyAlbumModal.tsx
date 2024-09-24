@@ -25,10 +25,6 @@ function ModifyAlbumModal({
   const [loading, setLoading] = useState(false)
   const ref = useRef<HTMLInputElement>(null)
 
-  const updateAlbumName = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setAlbumName(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (albumName.trim().length === 0) {
       toast.error(t('input.error.fieldEmpty'))
@@ -115,7 +111,7 @@ function ModifyAlbumModal({
         reference={ref}
         name="Album name"
         value={albumName}
-        updateValue={updateAlbumName}
+        updateValue={setAlbumName}
         darker
         placeholder="My lovely album"
         onKeyDown={e => {

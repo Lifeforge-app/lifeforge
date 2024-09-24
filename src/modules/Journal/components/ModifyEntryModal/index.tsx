@@ -149,9 +149,7 @@ function ModifyJournalEntryModal({
       <Input
         name="Journal Title"
         value={title}
-        updateValue={e => {
-          setTitle(e.target.value)
-        }}
+        updateValue={setTitle}
         darker
         icon="tabler:file-text"
         className="mt-4"

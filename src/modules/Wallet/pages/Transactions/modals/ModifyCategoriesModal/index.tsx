@@ -59,14 +59,6 @@ function ModifyCategoriesModal({
     }
   }, [openType, existedData])
 
-  function updateCategoryName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setCategoryName(e.target.value)
-  }
-
-  function updateCategoryColor(e: React.ChangeEvent<HTMLInputElement>): void {
-    setCategoryColor(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (
       categoryName.trim().length === 0 ||
@@ -171,7 +163,7 @@ function ModifyCategoriesModal({
           value={categoryName}
           darker
           name="Category name"
-          updateValue={updateCategoryName}
+          updateValue={setCategoryName}
         />
         <IconInput
           icon={categoryIcon}
@@ -183,7 +175,7 @@ function ModifyCategoriesModal({
           color={categoryColor}
           name="Category color"
           setColorPickerOpen={setColorPickerOpen}
-          updateColor={updateCategoryColor}
+          updateColor={setCategoryColor}
         />
         <CreateOrModifyButton
           loading={isLoading}

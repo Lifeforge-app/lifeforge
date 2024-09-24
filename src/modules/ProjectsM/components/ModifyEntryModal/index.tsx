@@ -66,14 +66,6 @@ function ModifyEntryModal(): React.ReactElement {
     }
   }, [openType, existedData])
 
-  function updateEntryName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setEntryName(e.target.value)
-  }
-
-  function updateEntryColor(e: React.ChangeEvent<HTMLInputElement>): void {
-    setEntryColor(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (
       entryName.trim().length === 0 ||
@@ -131,7 +123,7 @@ function ModifyEntryModal(): React.ReactElement {
           value={entryName}
           darker
           name="Project name"
-          updateValue={updateEntryName}
+          updateValue={setEntryName}
         />
         <IconInput
           icon={entryIcon}
@@ -143,7 +135,7 @@ function ModifyEntryModal(): React.ReactElement {
           color={entryColor}
           name="Project color"
           setColorPickerOpen={setColorPickerOpen}
-          updateColor={updateEntryColor}
+          updateColor={setEntryColor}
         />
         <CategorySelector
           categories={categories}

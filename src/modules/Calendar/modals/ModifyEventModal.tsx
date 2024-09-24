@@ -41,10 +41,6 @@ function ModifyEventModal({
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
   const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
     useState(false)
-
-  function updateEventTitle(e: React.ChangeEvent<HTMLInputElement>): void {
-    setEventTitle(e.target.value)
-  }
   const ref = useRef<HTMLInputElement>(null)
 
   async function onSubmitButtonClick(): Promise<void> {
@@ -131,7 +127,7 @@ function ModifyEventModal({
           name="Event title"
           icon="tabler:calendar"
           value={eventTitle}
-          updateValue={updateEventTitle}
+          updateValue={setEventTitle}
           darker
           placeholder="My event"
         />

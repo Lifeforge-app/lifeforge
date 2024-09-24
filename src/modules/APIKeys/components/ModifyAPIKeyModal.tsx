@@ -31,22 +31,6 @@ function ModifyAPIKeyModal({
   const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  function updateId(e: React.ChangeEvent<HTMLInputElement>): void {
-    setId(e.target.value)
-  }
-
-  function updateName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setName(e.target.value)
-  }
-
-  function updateDescription(e: React.ChangeEvent<HTMLInputElement>): void {
-    setDescription(e.target.value)
-  }
-
-  function updateKey(e: React.ChangeEvent<HTMLInputElement>): void {
-    setKey(e.target.value)
-  }
-
   async function onSubmit(): Promise<void> {
     if (
       id.trim() === '' ||
@@ -143,7 +127,7 @@ function ModifyAPIKeyModal({
           name="Key ID"
           placeholder="IdOfTheAPIKey"
           value={id}
-          updateValue={updateId}
+          updateValue={setId}
         />
         <Input
           darker
@@ -151,7 +135,7 @@ function ModifyAPIKeyModal({
           name="Key Name"
           placeholder="My API Key"
           value={name}
-          updateValue={updateName}
+          updateValue={setName}
           className="mt-4"
         />
         <Input
@@ -160,7 +144,7 @@ function ModifyAPIKeyModal({
           name="Key Description"
           placeholder="A short description of this key"
           value={description}
-          updateValue={updateDescription}
+          updateValue={setDescription}
           className="mt-4"
         />
         <IconInput
@@ -176,7 +160,7 @@ function ModifyAPIKeyModal({
           placeholder="API Key"
           value={key}
           isPassword
-          updateValue={updateKey}
+          updateValue={setKey}
           className="mt-4"
         />
         <CreateOrModifyButton
