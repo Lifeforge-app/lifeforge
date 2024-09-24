@@ -66,10 +66,6 @@ function ModifyIdeaModal({
     onDrop
   })
 
-  function updateIdeaTitle(event: React.ChangeEvent<HTMLInputElement>): void {
-    setIdeaTitle(event.target.value)
-  }
-
   function updateIdeaContent(
     event: React.FormEvent<HTMLTextAreaElement>
   ): void {
@@ -253,7 +249,7 @@ function ModifyIdeaModal({
           name="Idea title"
           icon="tabler:bulb"
           value={ideaTitle}
-          updateValue={updateIdeaTitle}
+          updateValue={setIdeaTitle}
           darker
           placeholder="Mind blowing idea"
           className="mb-6"
@@ -290,9 +286,7 @@ function ModifyIdeaModal({
             name="Image link"
             placeholder="https://example.com/image.jpg"
             value={imageLink}
-            updateValue={e => {
-              setImageLink(e.target.value)
-            }}
+            updateValue={setImageLink}
             className="mt-6"
           />
         </>

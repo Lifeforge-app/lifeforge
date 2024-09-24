@@ -37,10 +37,6 @@ function ModifyFolderModal({
   const [folderName, setFolderName] = useState('')
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
 
-  function updateFolderName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setFolderName(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (folderName.trim().length === 0) {
       toast.error(t('input.error.fieldEmpty'))
@@ -108,7 +104,7 @@ function ModifyFolderModal({
           placeholder="My lovely folder"
           icon="tabler:folder"
           value={folderName}
-          updateValue={updateFolderName}
+          updateValue={setFolderName}
           darker
           className="w-[40vw]"
           onKeyDown={e => {

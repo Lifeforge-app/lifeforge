@@ -22,10 +22,6 @@ function ModifyTagModal(): React.ReactElement {
   const [tagName, setTagName] = useState('')
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
 
-  function updateTagName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setTagName(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (tagName.trim().length === 0) {
       toast.error(t('input.error.fieldEmpty'))
@@ -87,7 +83,7 @@ function ModifyTagModal(): React.ReactElement {
         <Input
           name="Tag name"
           value={tagName}
-          updateValue={updateTagName}
+          updateValue={setTagName}
           placeholder="Tag name"
           icon="tabler:tag"
           darker

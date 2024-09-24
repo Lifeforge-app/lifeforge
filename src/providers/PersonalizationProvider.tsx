@@ -56,7 +56,7 @@ export default function PersonalizationProvider({
 
   const [fontFamily, setFontFamily] = useState<string>('Wix Madefor Text')
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system')
-  const [themeColor, setThemeColor] = useState('theme-custom')
+  const [themeColor, setThemeColor] = useState('theme-lime')
   const [bgTemp, setBgTemp] = useState<
     'bg-slate' | 'bg-gray' | 'bg-neutral' | 'bg-zinc' | 'bg-stone'
   >('bg-neutral')

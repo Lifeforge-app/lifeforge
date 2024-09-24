@@ -53,14 +53,6 @@ function ModifyColumnModal({
     }
   }, [openType, existedData])
 
-  function updateColumnName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setColumnName(e.target.value)
-  }
-
-  function updateColumnColor(e: React.ChangeEvent<HTMLInputElement>): void {
-    setColumnColor(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (
       columnName.trim().length === 0 ||
@@ -111,7 +103,7 @@ function ModifyColumnModal({
           value={columnName}
           darker
           name="Column name"
-          updateValue={updateColumnName}
+          updateValue={setColumnName}
         />
         <IconInput
           icon={columnIcon}
@@ -123,7 +115,7 @@ function ModifyColumnModal({
           color={columnColor}
           name="Column color"
           setColorPickerOpen={setColorPickerOpen}
-          updateColor={updateColumnColor}
+          updateColor={setColumnColor}
         />
         <CreateOrModifyButton
           loading={isLoading}

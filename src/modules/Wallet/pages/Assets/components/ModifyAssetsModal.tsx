@@ -47,10 +47,6 @@ function ModifyAssetsModal({
     }
   }, [openType, existedData])
 
-  function updateAssetName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setAssetName(e.target.value)
-  }
-
   function updateAssetBalance(value: string | undefined): void {
     setAssetStartingBalance(value ?? '')
   }
@@ -105,7 +101,7 @@ function ModifyAssetsModal({
           value={assetName}
           darker
           name="Asset name"
-          updateValue={updateAssetName}
+          updateValue={setAssetName}
         />
         <IconInput
           icon={assetIcon}

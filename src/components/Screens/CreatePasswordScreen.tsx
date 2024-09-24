@@ -84,9 +84,7 @@ function CreatePasswordScreen({
           name="New Password"
           placeholder="Enter your preferred master password"
           value={newPassword}
-          updateValue={e => {
-            setNewPassword(e.target.value)
-          }}
+          updateValue={setNewPassword}
           noAutoComplete
           className="w-1/2"
           actionButtonIcon="tabler:dice"
@@ -116,9 +114,7 @@ function CreatePasswordScreen({
           name="Confirm Password"
           placeholder="Enter the password again"
           value={confirmPassword}
-          updateValue={e => {
-            setConfirmPassword(e.target.value)
-          }}
+          updateValue={setConfirmPassword}
           noAutoComplete
           className="w-1/2"
           onKeyDown={e => {

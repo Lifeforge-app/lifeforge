@@ -14,7 +14,7 @@ function ColorInput({
 }: {
   name: string
   color: string
-  updateColor: (e: React.ChangeEvent<HTMLInputElement>) => void
+  updateColor: (value: string) => void
   setColorPickerOpen: React.Dispatch<React.SetStateAction<boolean>>
   hasTopMargin?: boolean
   className?: string
@@ -59,7 +59,9 @@ function ColorInput({
           <input
             ref={ref}
             value={color}
-            onChange={updateColor}
+            onChange={e => {
+              updateColor(e.target.value)
+            }}
             placeholder="#FFFFFF"
             className="h-8 w-full min-w-28 rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
           />

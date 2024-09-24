@@ -33,10 +33,6 @@ function VideoSection({
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
 
-  function updateValue(e: React.ChangeEvent<HTMLInputElement>): void {
-    setVideoUrl(e.target.value)
-  }
-
   function downloadVideo(): void {
     setLoading(true)
     setProgress(0)
@@ -124,7 +120,7 @@ function VideoSection({
         name="Video URL"
         placeholder="https://www.youtube.com/watch?v=..."
         value={videoUrl}
-        updateValue={updateValue}
+        updateValue={setVideoUrl}
         darker
         className="my-4"
       />

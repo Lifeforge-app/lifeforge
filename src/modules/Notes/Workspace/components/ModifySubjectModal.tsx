@@ -34,16 +34,6 @@ function ModifySubjectModal({
   const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
 
-  function updateSubjectName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setSubjectName(e.target.value)
-  }
-
-  function updateSubjectDescription(
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void {
-    setSubjectDescription(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (
       subjectName.trim().length === 0 ||
@@ -120,7 +110,7 @@ function ModifySubjectModal({
           name="Subject name"
           icon="tabler:book"
           value={subjectName}
-          updateValue={updateSubjectName}
+          updateValue={setSubjectName}
           darker
           className="w-[40vw]"
           placeholder="My Subject"
@@ -129,9 +119,9 @@ function ModifySubjectModal({
           name="Subject description"
           icon="tabler:file-text"
           value={subjectDescription}
-          updateValue={updateSubjectDescription}
+          updateValue={setSubjectDescription}
           darker
-          className="w-[40vw] mt-6"
+          className="mt-6 w-[40vw]"
           placeholder="The best subject in the world"
         />
         <IconInput

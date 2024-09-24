@@ -36,14 +36,6 @@ function ModifyCategoryModal({
   const [colorPickerOpen, setColorPickerOpen] = useState(false)
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
 
-  function updateCategoryName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setCategoryName(e.target.value)
-  }
-
-  function updateCategoryColor(e: React.ChangeEvent<HTMLInputElement>): void {
-    setCategoryColor(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (
       categoryName.trim().length === 0 ||
@@ -115,7 +107,7 @@ function ModifyCategoryModal({
         <Input
           name="Category name"
           value={categoryName}
-          updateValue={updateCategoryName}
+          updateValue={setCategoryName}
           placeholder="Category name"
           icon="tabler:category"
           darker
@@ -129,7 +121,7 @@ function ModifyCategoryModal({
         <ColorInput
           name="Category color"
           color={categoryColor}
-          updateColor={updateCategoryColor}
+          updateColor={setCategoryColor}
           setColorPickerOpen={setColorPickerOpen}
         />
 

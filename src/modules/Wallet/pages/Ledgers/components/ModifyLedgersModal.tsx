@@ -49,14 +49,6 @@ function ModifyLedgersModal({
     }
   }, [openType, existedData])
 
-  function updateLedgerName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setLedgerName(e.target.value)
-  }
-
-  function updateLedgerColor(e: React.ChangeEvent<HTMLInputElement>): void {
-    setLedgerColor(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (
       ledgerName.trim().length === 0 ||
@@ -107,7 +99,7 @@ function ModifyLedgersModal({
           value={ledgerName}
           darker
           name="Ledger name"
-          updateValue={updateLedgerName}
+          updateValue={setLedgerName}
         />
         <IconInput
           icon={ledgerIcon}
@@ -119,7 +111,7 @@ function ModifyLedgersModal({
           color={ledgerColor}
           name="Ledger color"
           setColorPickerOpen={setColorPickerOpen}
-          updateColor={updateLedgerColor}
+          updateColor={setLedgerColor}
         />
         <CreateOrModifyButton
           loading={isLoading}

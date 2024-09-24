@@ -99,10 +99,6 @@ function ModifyTaskWindow(): React.ReactElement {
     })
   }
 
-  function updateSummary(event: React.ChangeEvent<HTMLInputElement>): void {
-    setSummary(event.target.value)
-  }
-
   function updateNotes(event: React.FormEvent<HTMLTextAreaElement>): void {
     setNotes(event.currentTarget.value)
   }
@@ -196,7 +192,7 @@ function ModifyTaskWindow(): React.ReactElement {
             placeholder="An urgent task"
             icon="tabler:abc"
             darker
-            updateValue={updateSummary}
+            updateValue={setSummary}
             className="w-full"
             reference={summaryInputRef}
           />

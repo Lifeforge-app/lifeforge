@@ -63,10 +63,6 @@ function ModifyModal({
     })
   }
 
-  function updateValue(e: React.ChangeEvent<HTMLInputElement>): void {
-    setValue(e.target.value)
-  }
-
   return (
     <Modal modalRef={modalRef} isOpen={isOpen} minWidth="30rem">
       <ModalHeader
@@ -79,7 +75,7 @@ function ModifyModal({
           icon={icon}
           name={title}
           placeholder={`Enter new ${title}`}
-          updateValue={updateValue}
+          updateValue={setValue}
           value={value}
           onKeyDown={e => {
             if (e.key === 'Enter') {

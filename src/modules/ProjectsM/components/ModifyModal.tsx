@@ -57,14 +57,6 @@ function ModifyModal({
     }
   }, [openType, existedData])
 
-  function updateVisibilityName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setName(e.target.value)
-  }
-
-  function updateColor(e: React.ChangeEvent<HTMLInputElement>): void {
-    setColor(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (
       name.trim().length === 0 ||
@@ -117,7 +109,7 @@ function ModifyModal({
           value={name}
           darker
           name={`${singleStuff} name`}
-          updateValue={updateVisibilityName}
+          updateValue={setName}
         />
         <IconInput
           icon={icon}
@@ -130,7 +122,7 @@ function ModifyModal({
             color={color}
             name="Status color"
             setColorPickerOpen={setColorPickerOpen}
-            updateColor={updateColor}
+            updateColor={setColor}
           />
         )}
         <CreateOrModifyButton

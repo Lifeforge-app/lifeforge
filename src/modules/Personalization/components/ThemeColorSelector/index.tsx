@@ -17,12 +17,6 @@ function ThemeColorSelector(): React.ReactElement {
     useState<boolean>(false)
   const { t } = useTranslation()
 
-  function updateCustomThemeColor(
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void {
-    setCustomThemeColor(e.target.value)
-  }
-
   return (
     <ConfigColumn
       title={t('personalization.themeColorSelector.title')}
@@ -40,7 +34,7 @@ function ThemeColorSelector(): React.ReactElement {
             className="w-min"
             name="Color Hex"
             color={customThemeColor}
-            updateColor={updateCustomThemeColor}
+            updateColor={setCustomThemeColor}
             setColorPickerOpen={setColorPickerModalOpen}
             hasTopMargin={false}
           />

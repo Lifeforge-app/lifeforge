@@ -26,14 +26,6 @@ function ModifyPriorityModal(): React.ReactElement {
   const [colorPickerOpen, setColorPickerOpen] = useState(false)
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
 
-  function updateListName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setName(e.target.value)
-  }
-
-  function updateListColor(e: React.ChangeEvent<HTMLInputElement>): void {
-    setColor(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (name.trim().length === 0 || color.trim().length === 0) {
       toast.error(t('input.error.fieldEmpty'))
@@ -98,7 +90,7 @@ function ModifyPriorityModal(): React.ReactElement {
         <Input
           name="Priority name"
           value={name}
-          updateValue={updateListName}
+          updateValue={setName}
           placeholder="Priority name"
           icon="tabler:sort-ascending-numbers"
           darker
@@ -106,7 +98,7 @@ function ModifyPriorityModal(): React.ReactElement {
         <ColorInput
           name="Priority color"
           color={color}
-          updateColor={updateListColor}
+          updateColor={setColor}
           setColorPickerOpen={setColorPickerOpen}
         />
 
