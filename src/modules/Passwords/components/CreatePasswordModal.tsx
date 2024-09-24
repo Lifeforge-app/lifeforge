@@ -8,7 +8,7 @@ import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyBut
 import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IPasswordEntry } from '@interfaces/password_interfaces'
 import { encrypt } from '@utils/encryption'
@@ -117,7 +117,7 @@ function CreatePasswordModal({
 
   return (
     <>
-      <Modal isOpen={openType !== null}>
+      <ModalWrapper isOpen={openType !== null}>
         <ModalHeader
           title={
             {
@@ -200,7 +200,7 @@ function CreatePasswordModal({
             type={openType}
           />
         </form>
-      </Modal>
+      </ModalWrapper>
       <IconSelector
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}

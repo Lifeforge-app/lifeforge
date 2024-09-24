@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IPhotoAlbumTag } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '@providers/PhotosProvider'
@@ -97,7 +97,7 @@ function ModifyAlbumTagsModal({
   }, [openType, targetTag])
 
   return (
-    <Modal isOpen={openType !== false} minWidth="40rem">
+    <ModalWrapper isOpen={openType !== false} minWidth="40rem">
       <ModalHeader
         title={`${openType === 'create' ? 'Create' : 'Rename'} tag`}
         onClose={() => {
@@ -127,7 +127,7 @@ function ModifyAlbumTagsModal({
           onSubmitButtonClick().catch(console.error)
         }}
       />
-    </Modal>
+    </ModalWrapper>
   )
 }
 

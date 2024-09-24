@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { sortFn } from 'color-sorter'
 import React from 'react'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { MORANDI_COLORS } from '@constants/morandi_colors'
 import { isLightColor } from '@utils/colors'
@@ -18,7 +18,7 @@ function MorandiColorPaletteModal({
   setColor: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
   return (
-    <Modal isOpen={isOpen} affectSidebar={false} minWidth="60vw">
+    <ModalWrapper isOpen={isOpen} affectSidebar={false} minWidth="60vw">
       <ModalHeader
         icon="tabler:flower"
         title="Morandi Color Palette"
@@ -50,7 +50,7 @@ function MorandiColorPaletteModal({
           </li>
         ))}
       </ul>
-    </Modal>
+    </ModalWrapper>
   )
 }
 

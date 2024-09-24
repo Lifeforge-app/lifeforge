@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
@@ -111,7 +111,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
   }, [])
 
   return (
-    <Modal isOpen={isOpen} minWidth="40vw">
+    <ModalWrapper isOpen={isOpen} minWidth="40vw">
       <ModalHeader
         title="Download from YouTube"
         icon="tabler:brand-youtube"
@@ -147,7 +147,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
           )}
         </APIComponentWithFallback>
       )}
-    </Modal>
+    </ModalWrapper>
   )
 }
 export default YoutubeDownloaderModal

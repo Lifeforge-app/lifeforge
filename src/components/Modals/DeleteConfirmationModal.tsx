@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import APIRequest from '@utils/fetchData'
-import Modal from './Modal'
+import ModalWrapper from './ModalWrapper'
 import Button from '../ButtonsAndInputs/Button'
 
 function DeleteConfirmationModal({
@@ -59,7 +59,7 @@ function DeleteConfirmationModal({
   }
 
   return (
-    <Modal isOpen={isOpen}>
+    <ModalWrapper isOpen={isOpen}>
       <h1 className="text-2xl font-semibold">
         {t('modals.deleteConfirmation.title', {
           itemName: nameKey ? data?.[nameKey] : `the ${itemName}`
@@ -89,7 +89,7 @@ function DeleteConfirmationModal({
           Delete
         </Button>
       </div>
-    </Modal>
+    </ModalWrapper>
   )
 }
 

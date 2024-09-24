@@ -2,7 +2,7 @@ import { type ColorResult, Colorful, EditableInput } from '@uiw/react-color'
 import React, { useCallback, useEffect, useState } from 'react'
 import ModalHeader from '@components/Modals/ModalHeader'
 import MorandiColorPaletteModal from './MorandiColorPaletteModal'
-import Modal from '../../Modals/Modal'
+import ModalWrapper from '../../Modals/ModalWrapper'
 import Button from '../Button'
 
 function checkContrast(hexColor: string): string {
@@ -22,7 +22,7 @@ function ColorPickerModal({
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   color: string
-  setColor: React.Dispatch<React.SetStateAction<string>>
+  setColor: (color: string) => void
 }): React.ReactElement {
   const [innerColor, setInnerColor] = useState(color.toLowerCase())
   const [morandiColorPaletteModalOpen, setMorandiColorPaletteModalOpen] =
@@ -54,7 +54,7 @@ function ColorPickerModal({
 
   return (
     <>
-      <Modal affectSidebar={false} isOpen={isOpen}>
+      <ModalWrapper affectSidebar={false} isOpen={isOpen}>
         <ModalHeader
           title="Pick a color"
           icon="tabler:color-picker"
@@ -93,7 +93,7 @@ function ColorPickerModal({
         <Button onClick={confirmColor} icon="tabler:check">
           Select
         </Button>
-      </Modal>
+      </ModalWrapper>
       <MorandiColorPaletteModal
         isOpen={morandiColorPaletteModalOpen}
         onClose={() => {

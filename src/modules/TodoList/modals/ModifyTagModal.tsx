@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import APIRequest from '@utils/fetchData'
@@ -62,7 +62,7 @@ function ModifyTagModal(): React.ReactElement {
 
   return (
     <>
-      <Modal isOpen={openType !== null}>
+      <ModalWrapper isOpen={openType !== null}>
         <ModalHeader
           title={`${
             {
@@ -101,7 +101,7 @@ function ModifyTagModal(): React.ReactElement {
           }}
           type={innerOpenType}
         />
-      </Modal>
+      </ModalWrapper>
     </>
   )
 }

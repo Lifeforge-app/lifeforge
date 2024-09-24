@@ -7,7 +7,7 @@ import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyBut
 import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import APIRequest from '@utils/fetchData'
@@ -109,7 +109,7 @@ function ModifyEntryModal(): React.ReactElement {
 
   return (
     <>
-      <Modal isOpen={openType !== null} minWidth="50vw">
+      <ModalWrapper isOpen={openType !== null} minWidth="50vw">
         <ModalHeader
           icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
           title={openType === 'update' ? 'Edit Project' : 'Add Project'}
@@ -164,7 +164,7 @@ function ModifyEntryModal(): React.ReactElement {
           }}
           type={openType}
         />
-      </Modal>
+      </ModalWrapper>
       <IconSelector
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}

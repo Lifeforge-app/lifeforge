@@ -13,7 +13,7 @@ function IconInput({
 }: {
   name: string
   icon: string
-  setIcon: React.Dispatch<React.SetStateAction<string>>
+  setIcon: (icon: string) => void
   setIconSelectorOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   const { t } = useTranslation()

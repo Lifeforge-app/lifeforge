@@ -3,7 +3,7 @@ import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
 import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
 import PlaylistSection from './sections/PlaylistSection'
@@ -44,7 +44,7 @@ function AddVideosModal({
   }, [isOpen])
 
   return (
-    <Modal isOpen={isOpen} minWidth="50vw">
+    <ModalWrapper isOpen={isOpen} minWidth="50vw">
       <ModalHeader
         title="Add Videos"
         icon="tabler:plus"
@@ -97,7 +97,7 @@ function AddVideosModal({
             )
         }
       })()}
-    </Modal>
+    </ModalWrapper>
   )
 }
 

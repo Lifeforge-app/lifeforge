@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
@@ -57,7 +57,7 @@ function JournalViewModal({
   }, [id, isOpen])
 
   return (
-    <Modal isOpen={isOpen} className="md:!min-w-[60rem]">
+    <ModalWrapper isOpen={isOpen} className="md:!min-w-[60rem]">
       <ModalHeader
         icon="tabler:eye"
         title="View Journal Entry"
@@ -81,7 +81,7 @@ function JournalViewModal({
           />
         )}
       </APIComponentWithFallback>
-    </Modal>
+    </ModalWrapper>
   )
 }
 

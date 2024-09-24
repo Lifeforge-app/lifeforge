@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
@@ -30,7 +30,7 @@ function ManageTagsModal({
 
   return (
     <>
-      <Modal isOpen={isOpen} minWidth="40rem">
+      <ModalWrapper isOpen={isOpen} minWidth="40rem">
         <ModalHeader
           icon="tabler:tags"
           title="Manage Tags"
@@ -89,7 +89,7 @@ function ManageTagsModal({
             )
           }
         </APIComponentWithFallback>
-      </Modal>
+      </ModalWrapper>
       <DeleteConfirmationModal
         apiEndpoint="photos/album/tag"
         isOpen={isDeleteConfirmationModalOpen}
