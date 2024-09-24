@@ -34,14 +34,6 @@ function ModifyContainerModal({
   const [colorPickerOpen, setColorPickerOpen] = useState(false)
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
 
-  function updateContainerName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setContainerName(e.target.value)
-  }
-
-  function updateContainerColor(e: React.ChangeEvent<HTMLInputElement>): void {
-    setContainerColor(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (
       containerName.trim().length === 0 ||
@@ -117,14 +109,14 @@ function ModifyContainerModal({
           name="Container name"
           icon="tabler:cube"
           value={containerName}
-          updateValue={updateContainerName}
+          updateValue={setContainerName}
           darker
           placeholder="My container"
         />
         <ColorInput
           name="Container color"
           color={containerColor}
-          updateColor={updateContainerColor}
+          updateColor={setContainerColor}
           setColorPickerOpen={setColorPickerOpen}
         />
         <IconInput

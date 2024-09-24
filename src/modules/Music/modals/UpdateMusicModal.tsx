@@ -20,14 +20,6 @@ function ModifyMusicModal(): React.ReactElement {
   const [loading, setLoading] = useState(false)
   const ref = useRef<HTMLInputElement>(null)
 
-  const updateMusicName = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setMusicName(e.target.value)
-  }
-
-  const updateMusicAuthor = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setMusicAuthor(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (musicName.trim().length === 0 || musicAuthor.trim().length === 0) {
       toast.error(t('input.error.fieldEmpty'))
@@ -97,7 +89,7 @@ function ModifyMusicModal(): React.ReactElement {
         reference={ref}
         name="Music name"
         value={musicName}
-        updateValue={updateMusicName}
+        updateValue={setMusicName}
         darker
         placeholder="My lovely music"
         className="w-[40rem]"
@@ -112,10 +104,10 @@ function ModifyMusicModal(): React.ReactElement {
         icon="tabler:user"
         name="Author"
         value={musicAuthor}
-        updateValue={updateMusicAuthor}
+        updateValue={setMusicAuthor}
         darker
         placeholder="John Doe"
-        className="w-[40rem] mt-6"
+        className="mt-6 w-[40rem]"
         onKeyDown={e => {
           if (e.key === 'Enter') {
             onSubmitButtonClick().catch(console.error)

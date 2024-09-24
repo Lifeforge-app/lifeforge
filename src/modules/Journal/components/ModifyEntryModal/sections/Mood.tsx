@@ -87,8 +87,8 @@ function Mood({
                 value={mood.text}
                 icon="tabler:mood-neutral"
                 name="Mood of the day"
-                updateValue={e => {
-                  setMood({ ...mood, text: e.target.value })
+                updateValue={value => {
+                  setMood({ ...mood, text: value })
                 }}
                 placeholder="How do you feel?"
               />
@@ -96,8 +96,8 @@ function Mood({
                 value={mood.emoji}
                 icon="uil:icons"
                 name="Emoji"
-                updateValue={e => {
-                  setMood({ ...mood, emoji: e.target.value })
+                updateValue={value => {
+                  setMood({ ...mood, emoji: value })
                 }}
                 placeholder="Emoji"
                 className="mt-4"

@@ -40,18 +40,6 @@ function ModifyAchievementModal({
   const [achievementDifficulty, setAchievementDifficulty] = useState('easy')
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
 
-  function updateAchievementTitle(
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void {
-    setAchievementTitle(e.target.value)
-  }
-
-  function updateAchievementThoughts(
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void {
-    setAchievementThoughts(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (
       achievementTitle.trim().length === 0 ||
@@ -127,7 +115,7 @@ function ModifyAchievementModal({
           name="Achievement title"
           icon="tabler:award"
           value={achievementTitle}
-          updateValue={updateAchievementTitle}
+          updateValue={setAchievementTitle}
           darker
           placeholder="My achievement"
         />
@@ -135,7 +123,7 @@ function ModifyAchievementModal({
           name="Achievement thoughts"
           icon="tabler:bubble-text"
           value={achievementThoughts}
-          updateValue={updateAchievementThoughts}
+          updateValue={setAchievementThoughts}
           darker
           placeholder="My thoughts"
           className="mt-4"

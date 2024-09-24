@@ -77,10 +77,6 @@ function PlaylistSection({
     return [] as any
   }
 
-  function updatePlaylistUrl(e: React.ChangeEvent<HTMLInputElement>): void {
-    setPlaylistUrl(e.target.value)
-  }
-
   function downloadVideo(metadata: IYoutubePlaylistVideoEntry): void {
     if (downloadingVideos.current.has(metadata.id)) {
       toast.error('Video is already being downloaded')
@@ -160,7 +156,7 @@ function PlaylistSection({
         icon="tabler:link"
         name="Playlist URL"
         value={playlistUrl}
-        updateValue={updatePlaylistUrl}
+        updateValue={setPlaylistUrl}
         placeholder="https://www.youtube.com/playlist?list=PL..."
         darker
         className="mt-4"

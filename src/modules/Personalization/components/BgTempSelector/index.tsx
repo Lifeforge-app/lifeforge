@@ -17,12 +17,6 @@ function BgTempSelector(): React.ReactElement {
     useState<boolean>(false)
   const { t } = useTranslation()
 
-  function updateCustomThemeColor(
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void {
-    setCustomBgTemp(e.target.value)
-  }
-
   return (
     <ConfigColumn
       title={t('personalization.bgTempSelector.title')}
@@ -55,7 +49,7 @@ function BgTempSelector(): React.ReactElement {
             className="w-min"
             name="Color Hex"
             color={customBgTemp}
-            updateColor={updateCustomThemeColor}
+            updateColor={setBgTemp}
             setColorPickerOpen={setColorPickerModalOpen}
             hasTopMargin={false}
           />

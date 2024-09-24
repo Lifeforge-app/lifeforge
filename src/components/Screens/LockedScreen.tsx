@@ -90,9 +90,7 @@ function LockedScreen({
         name="Master Password"
         placeholder="Enter your master password"
         value={masterPassWordInputContent}
-        updateValue={e => {
-          setMasterPassWordInputContent(e.target.value)
-        }}
+        updateValue={setMasterPassWordInputContent}
         noAutoComplete
         className="w-full md:w-3/4 xl:w-1/2"
         onKeyDown={e => {

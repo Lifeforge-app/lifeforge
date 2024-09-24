@@ -33,10 +33,6 @@ function YoutubeDownloaderModal(): React.ReactElement {
     URL_REGEX.test(videoURL)
   )
 
-  function updateVideoURL(e: React.ChangeEvent<HTMLInputElement>): void {
-    setVideoURLInput(e.target.value)
-  }
-
   async function checkDownloadStatus(): Promise<
     'completed' | 'failed' | 'in_progress'
   > {
@@ -128,7 +124,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
         name="Video URL"
         icon="tabler:link"
         value={videoURLinput}
-        updateValue={updateVideoURL}
+        updateValue={setVideoURLInput}
         placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
         className="mb-8"
       />

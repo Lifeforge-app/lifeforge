@@ -30,14 +30,6 @@ function ModifyListModal(): React.ReactElement {
   const [colorPickerOpen, setColorPickerOpen] = useState(false)
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
 
-  function updateListName(e: React.ChangeEvent<HTMLInputElement>): void {
-    setListName(e.target.value)
-  }
-
-  function updateListColor(e: React.ChangeEvent<HTMLInputElement>): void {
-    setListColor(e.target.value)
-  }
-
   async function onSubmitButtonClick(): Promise<void> {
     if (
       listName.trim().length === 0 ||
@@ -109,7 +101,7 @@ function ModifyListModal(): React.ReactElement {
         <Input
           name="List name"
           value={listName}
-          updateValue={updateListName}
+          updateValue={setListName}
           placeholder="List name"
           icon="tabler:list"
           darker
@@ -123,7 +115,7 @@ function ModifyListModal(): React.ReactElement {
         <ColorInput
           name="List color"
           color={listColor}
-          updateColor={updateListColor}
+          updateColor={setListColor}
           setColorPickerOpen={setColorPickerOpen}
         />
 

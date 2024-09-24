@@ -40,7 +40,7 @@ function Input({
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   placeholder: string
   reference?: React.RefObject<HTMLInputElement | null>
-  updateValue: (e: React.ChangeEvent<HTMLInputElement>) => void
+  updateValue: (value: string) => void
   value: string
 }): React.ReactElement {
   const { t } = useTranslation()
@@ -76,7 +76,9 @@ function Input({
           }}
           disabled={disabled}
           value={value}
-          onChange={updateValue}
+          onChange={e => {
+            updateValue(e.target.value)
+          }}
           placeholder={placeholder}
           onKeyDown={onKeyDown}
           type={isPassword ? 'password' : 'text'}

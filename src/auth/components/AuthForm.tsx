@@ -46,16 +46,6 @@ function AuthForm(): React.ReactElement {
       })
   }
 
-  function updateEmailOrUsername(
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void {
-    setEmail(event.target.value)
-  }
-
-  function updatePassword(event: React.ChangeEvent<HTMLInputElement>): void {
-    setPassword(event.target.value)
-  }
-
   return (
     <div className="mt-6 flex w-full max-w-md flex-col gap-8 sm:mt-12">
       {[
@@ -64,14 +54,14 @@ function AuthForm(): React.ReactElement {
           placeholder: 'someone@somemail.com',
           icon: 'tabler:user',
           value: emailOrUsername,
-          updateValue: updateEmailOrUsername
+          updateValue: setEmail
         },
         {
           name: t('auth.password'),
           placeholder: '••••••••••••••••',
           icon: 'tabler:key',
           value: password,
-          updateValue: updatePassword
+          updateValue: setPassword
         }
       ].map((input, index) => (
         <Input

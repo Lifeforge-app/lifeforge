@@ -37,22 +37,6 @@ function CreatePasswordModal({
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const updateName = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setName(e.target.value)
-  }
-
-  const updateWebsite = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setWebsite(e.target.value)
-  }
-
-  const updateUsername = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setUsername(e.target.value)
-  }
-
-  const updatePassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setPassword(e.target.value)
-  }
-
   async function onSubmit(): Promise<void> {
     if (
       name.trim() === '' ||
@@ -160,7 +144,7 @@ function CreatePasswordModal({
             name="Service Name"
             icon="tabler:lock"
             value={name}
-            updateValue={updateName}
+            updateValue={setName}
             darker
             placeholder="Google"
           />
@@ -174,15 +158,13 @@ function CreatePasswordModal({
             color={color}
             name="Service Color"
             setColorPickerOpen={setColorPickerOpen}
-            updateColor={e => {
-              setColor(e.target.value)
-            }}
+            updateColor={setColor}
           />
           <Input
             name="Website"
             icon="tabler:link"
             value={website}
-            updateValue={updateWebsite}
+            updateValue={setWebsite}
             darker
             placeholder="https://google.com"
             className="mt-6"
@@ -192,7 +174,7 @@ function CreatePasswordModal({
             name="Username / Email"
             icon="tabler:user"
             value={username}
-            updateValue={updateUsername}
+            updateValue={setUsername}
             darker
             placeholder="johndoe1234@gmail.com"
             className="mt-6"
@@ -202,7 +184,7 @@ function CreatePasswordModal({
             name="Password"
             icon="tabler:key"
             value={password}
-            updateValue={updatePassword}
+            updateValue={setPassword}
             isPassword
             darker
             placeholder="Your password"
