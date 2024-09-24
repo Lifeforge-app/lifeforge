@@ -39,6 +39,7 @@ function SidebarItems(): React.ReactElement {
               {enabledModules.map(subItem => (
                 <SidebarItem
                   key={titleToPath(subItem.name)}
+                  autoActive
                   name={subItem.name}
                   hasAI={subItem.hasAI}
                   icon={subItem.icon ?? ''}
