@@ -2,15 +2,8 @@
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
-import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
-import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
-import Input from '@components/ButtonsAndInputs/Input'
 import Modal from '@components/Modals/Modal'
-import ModalHeader from '@components/Modals/ModalHeader'
-import { type IProjectsMStatus } from '@interfaces/projects_m_interfaces'
+import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import APIRequest from '@utils/fetchData'
 
@@ -26,38 +19,59 @@ function ModifyModal({
     setExistedData,
     refreshData
   } = useProjectsMContext()[stuff]
-  const [name, setName] = useState('')
-  const [icon, setIcon] = useState('')
-  const [color, setColor] = useState<string>('#FFFFFF')
-  const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
-  const [colorPickerOpen, setColorPickerOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   const singleStuff = {
     categories: 'category',
     technologies: 'technology',
     visibilities: 'visibility',
     statuses: 'status'
   }[stuff]
+  const [data, setData] = useState({
+    name: '',
+    icon: '',
+    ...(stuff === 'statuses' && { color: '#FFFFFF' })
+  })
+  const FIELDS: IFieldProps[] = [
+    {
+      id: 'name',
+      name: `${singleStuff} name`,
+      icon: 'tabler:book',
+      placeholder: `Project ${singleStuff}`,
+      type: 'text'
+    },
+    {
+      id: 'icon',
+      name: `${singleStuff} icon`,
+      type: 'icon'
+    },
+    ...(stuff === 'statuses'
+      ? [
+          {
+            id: 'color',
+            name: `${singleStuff} color`,
+            type: 'color' as const
+          }
+        ]
+      : [])
+  ]
 
   useEffect(() => {
     if (openType) {
       if (openType === 'update') {
         if (existedData) {
-          setName(existedData.name)
-          setIcon(existedData.icon)
-          if (stuff === 'statuses') {
-            setColor((existedData as IProjectsMStatus).color)
-          }
+          setData(existedData)
         }
       } else {
-        setName('')
-        setIcon('')
-        setColor('#FFFFFF')
+        setData({
+          name: '',
+          icon: '',
+          ...(stuff === 'statuses' && { color: '#FFFFFF' })
+        })
       }
     }
   }, [openType, existedData])
 
   async function onSubmitButtonClick(): Promise<void> {
+    const { name, icon, color } = data
     if (
       name.trim().length === 0 ||
       icon.trim().length === 0 ||
@@ -67,7 +81,6 @@ function ModifyModal({
       return
     }
 
-    setIsLoading(true)
     await APIRequest({
       endpoint: `projects-m/${stuff}${
         openType === 'update' ? `/${existedData?.id}` : ''
@@ -84,69 +97,23 @@ function ModifyModal({
         refreshData()
         setExistedData(null)
         setOpenType(null)
-      },
-      finalCallback: () => {
-        setIsLoading(false)
       }
     })
   }
 
   return (
-    <>
-      <Modal isOpen={openType !== null} className="sm:min-w-[30rem]">
-        <ModalHeader
-          icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
-          title={
-            openType === 'update' ? `Edit ${singleStuff}` : `Add ${singleStuff}`
-          }
-          onClose={() => {
-            setOpenType(null)
-          }}
-        />
-        <Input
-          icon="tabler:book"
-          placeholder={`Project ${singleStuff}`}
-          value={name}
-          darker
-          name={`${singleStuff} name`}
-          updateValue={setName}
-        />
-        <IconInput
-          icon={icon}
-          setIcon={setIcon}
-          name={`${singleStuff} icon`}
-          setIconSelectorOpen={setIconSelectorOpen}
-        />
-        {stuff === 'statuses' && (
-          <ColorInput
-            color={color}
-            name="Status color"
-            setColorPickerOpen={setColorPickerOpen}
-            updateColor={setColor}
-          />
-        )}
-        <CreateOrModifyButton
-          loading={isLoading}
-          onClick={() => {
-            onSubmitButtonClick().catch(console.error)
-          }}
-          type={openType}
-        />
-      </Modal>
-      <IconSelector
-        isOpen={iconSelectorOpen}
-        setOpen={setIconSelectorOpen}
-        setSelectedIcon={setIcon}
-      />
-      {stuff === 'statuses' && (
-        <ColorPickerModal
-          isOpen={colorPickerOpen}
-          setOpen={setColorPickerOpen}
-          setColor={setColor}
-          color={color}
-        />
-      )}
-    </>
+    <Modal
+      data={data}
+      setData={setData as (data: Record<string, string>) => void}
+      title={
+        openType === 'update' ? `Edit ${singleStuff}` : `Add ${singleStuff}`
+      }
+      fields={FIELDS}
+      icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
+      openType={openType}
+      setOpenType={setOpenType}
+      onSubmit={onSubmitButtonClick}
+    />
   )
 }
 

@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
@@ -71,7 +71,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
   }, [isOpen])
 
   return (
-    <Modal isOpen={isOpen} minWidth="40rem">
+    <ModalWrapper isOpen={isOpen} minWidth="40rem">
       <APIComponentWithFallback data={photos}>
         {() => (
           <>
@@ -161,7 +161,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
           </>
         )}
       </APIComponentWithFallback>
-    </Modal>
+    </ModalWrapper>
   )
 }
 

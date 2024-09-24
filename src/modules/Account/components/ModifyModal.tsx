@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { useAuthContext } from '@providers/AuthProvider'
 import APIRequest from '@utils/fetchData'
@@ -64,7 +64,7 @@ function ModifyModal({
   }
 
   return (
-    <Modal modalRef={modalRef} isOpen={isOpen} minWidth="30rem">
+    <ModalWrapper modalRef={modalRef} isOpen={isOpen} minWidth="30rem">
       <ModalHeader
         title={`Update ${title}`}
         onClose={onClose}
@@ -103,7 +103,7 @@ function ModifyModal({
       >
         Update
       </Button>
-    </Modal>
+    </ModalWrapper>
   )
 }
 

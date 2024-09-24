@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import { useAuthContext } from '@providers/AuthProvider'
 import APIRequest from '@utils/fetchData'
 
@@ -133,7 +133,7 @@ function CreatePasswordScreen({
           Submit
         </Button>
       </div>
-      <Modal isOpen={confirmationModalOpen}>
+      <ModalWrapper isOpen={confirmationModalOpen}>
         <h1 className="text-2xl font-semibold">
           Make sure you remember your master password!
         </h1>
@@ -165,7 +165,7 @@ function CreatePasswordScreen({
             {!loading ? 'Confirm' : ''}
           </Button>
         </div>
-      </Modal>
+      </ModalWrapper>
     </>
   )
 }

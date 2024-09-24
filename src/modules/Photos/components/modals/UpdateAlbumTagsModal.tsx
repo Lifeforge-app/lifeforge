@@ -3,7 +3,7 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '@providers/PhotosProvider'
@@ -64,7 +64,7 @@ function UpdateAlbumTagsModal({
   }
 
   return (
-    <Modal isOpen={isOpen}>
+    <ModalWrapper isOpen={isOpen}>
       <div className="flex-between mb-8 flex ">
         <h1 className="flex items-center gap-3 text-2xl font-semibold">
           <Icon icon="tabler:tags" className="size-7" />
@@ -121,7 +121,7 @@ function UpdateAlbumTagsModal({
       >
         {!loading ? 'Update Tags' : ''}
       </Button>
-    </Modal>
+    </ModalWrapper>
   )
 }
 

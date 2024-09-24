@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import APIRequest from '@utils/fetchData'
 
@@ -48,7 +48,7 @@ function RemovePhotosFromAlbumConfirmationModal({
   }
 
   return (
-    <Modal isOpen={isRemovePhotosFromAlbumConfirmationModalOpen}>
+    <ModalWrapper isOpen={isRemovePhotosFromAlbumConfirmationModalOpen}>
       <h1 className="text-2xl font-semibold">
         Are you sure you want to remove {selectedPhotos.length} photo
         {selectedPhotos.length > 1 ? 's' : ''} from the album?
@@ -80,7 +80,7 @@ function RemovePhotosFromAlbumConfirmationModal({
           remove
         </Button>
       </div>
-    </Modal>
+    </ModalWrapper>
   )
 }
 

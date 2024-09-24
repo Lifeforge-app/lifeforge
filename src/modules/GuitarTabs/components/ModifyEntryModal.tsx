@@ -6,7 +6,7 @@ import Input from '@components/ButtonsAndInputs/Input'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
 import ListboxNullOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxNullOption'
 import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
 import APIRequest from '@utils/fetchData'
@@ -80,7 +80,7 @@ function ModifyEntryModal({
   }
 
   return (
-    <Modal isOpen={isOpen} className="md:!min-w-[30vw]">
+    <ModalWrapper isOpen={isOpen} className="md:!min-w-[30vw]">
       <ModalHeader
         icon="tabler:pencil"
         onClose={onClose}
@@ -147,7 +147,7 @@ function ModifyEntryModal({
           onSubmit().catch(console.error)
         }}
       />
-    </Modal>
+    </ModalWrapper>
   )
 }
 

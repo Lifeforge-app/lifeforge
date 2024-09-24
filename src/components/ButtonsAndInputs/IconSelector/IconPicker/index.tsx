@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
-import Modal from '@components/Modals/Modal.tsx'
-import ModalHeader from '@components/Modals/ModalHeader.tsx'
-import IconSetList from './pages/IconSetList/index.tsx'
-import IconSet from '../IconPicker/pages/IconSet.tsx'
-import Search from '../IconPicker/pages/Search.tsx'
+import ModalHeader from '@components/Modals/ModalHeader'
+import ModalWrapper from '@components/Modals/ModalWrapper'
+import IconSetList from './pages/IconSetList/index'
+import IconSet from '../IconPicker/pages/IconSet'
+import Search from '../IconPicker/pages/Search'
 
 function IconPicker({
   isOpen,
@@ -13,7 +13,7 @@ function IconPicker({
 }: {
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setSelectedIcon: React.Dispatch<React.SetStateAction<string>>
+  setSelectedIcon: (icon: string) => void
 }): React.ReactElement {
   const [currentIconSet, setCurrentIconSet] = useState<{
     iconSet?: string
@@ -21,7 +21,7 @@ function IconPicker({
   } | null>(null)
 
   return (
-    <Modal
+    <ModalWrapper
       affectSidebar={false}
       isOpen={isOpen}
       minWidth="80vw"
@@ -90,7 +90,7 @@ function IconPicker({
       ) : (
         <IconSetList setCurrentIconSet={setCurrentIconSet} />
       )}
-    </Modal>
+    </ModalWrapper>
   )
 }
 

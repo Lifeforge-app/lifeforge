@@ -7,7 +7,7 @@ import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type INotesEntry } from '@interfaces/notes_interfaces'
 import APIRequest from '@utils/fetchData'
@@ -81,7 +81,7 @@ function ModifyFolderModal({
 
   return (
     <>
-      <Modal isOpen={openType !== null}>
+      <ModalWrapper isOpen={openType !== null}>
         <ModalHeader
           title={`${
             {
@@ -120,7 +120,7 @@ function ModifyFolderModal({
           }}
           type={innerOpenType}
         />
-      </Modal>
+      </ModalWrapper>
     </>
   )
 }

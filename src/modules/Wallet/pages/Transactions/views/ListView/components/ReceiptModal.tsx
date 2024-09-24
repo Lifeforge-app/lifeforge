@@ -1,5 +1,5 @@
 import React from 'react'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 
 function ReceiptModal({
@@ -12,7 +12,7 @@ function ReceiptModal({
   receiptSrc: string
 }): React.ReactElement {
   return (
-    <Modal isOpen={isOpen}>
+    <ModalWrapper isOpen={isOpen}>
       <ModalHeader
         title="View Receipt"
         icon="tabler:receipt"
@@ -25,7 +25,7 @@ function ReceiptModal({
           <img key={receiptSrc} src={receiptSrc} alt="receipt" />
         )}
       </div>
-    </Modal>
+    </ModalWrapper>
   )
 }
 

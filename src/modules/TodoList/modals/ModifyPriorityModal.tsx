@@ -8,7 +8,7 @@ import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
 import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import APIRequest from '@utils/fetchData'
@@ -69,7 +69,7 @@ function ModifyPriorityModal(): React.ReactElement {
 
   return (
     <>
-      <Modal isOpen={openType !== null}>
+      <ModalWrapper isOpen={openType !== null}>
         <ModalHeader
           title={`${
             {
@@ -109,7 +109,7 @@ function ModifyPriorityModal(): React.ReactElement {
           }}
           type={innerOpenType}
         />
-      </Modal>
+      </ModalWrapper>
       <ColorPickerModal
         isOpen={colorPickerOpen}
         setOpen={setColorPickerOpen}

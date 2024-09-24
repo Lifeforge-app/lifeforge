@@ -73,7 +73,7 @@ function Search({
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   searchTerm: string
-  setSelectedIcon: React.Dispatch<React.SetStateAction<string>>
+  setSelectedIcon: (icon: string) => void
   setCurrentIconSetProp: React.Dispatch<
     React.SetStateAction<{
       iconSet?: string

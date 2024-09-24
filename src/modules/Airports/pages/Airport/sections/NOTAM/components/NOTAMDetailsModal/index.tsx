@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React from 'react'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
@@ -28,7 +28,7 @@ function NOTAMDetailsModal({
   )
 
   return (
-    <Modal isOpen={isOpen} className="h-full md:!min-w-[40vw]">
+    <ModalWrapper isOpen={isOpen} className="h-full md:!min-w-[40vw]">
       <ModalHeader
         icon="uil:exclamation-octagon"
         title="NOTAM Details"
@@ -65,7 +65,7 @@ function NOTAMDetailsModal({
           )
         }
       </APIComponentWithFallback>
-    </Modal>
+    </ModalWrapper>
   )
 }
 

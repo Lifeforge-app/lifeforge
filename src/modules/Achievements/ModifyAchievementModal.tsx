@@ -9,7 +9,7 @@ import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyBut
 import Input from '@components/ButtonsAndInputs/Input'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
 import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
 import APIRequest from '@utils/fetchData'
@@ -93,7 +93,7 @@ function ModifyAchievementModal({
 
   return (
     <>
-      <Modal isOpen={openType !== null} minWidth="40vw">
+      <ModalWrapper isOpen={openType !== null} minWidth="40vw">
         <ModalHeader
           icon={
             {
@@ -177,7 +177,7 @@ function ModifyAchievementModal({
           }}
           type={innerOpenType}
         />
-      </Modal>
+      </ModalWrapper>
     </>
   )
 }

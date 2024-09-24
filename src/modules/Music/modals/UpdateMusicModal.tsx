@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { useMusicContext } from '@providers/MusicProvider'
 import APIRequest from '@utils/fetchData'
@@ -76,7 +76,7 @@ function ModifyMusicModal(): React.ReactElement {
   }, [isOpen, targetMusic])
 
   return (
-    <Modal isOpen={isOpen}>
+    <ModalWrapper isOpen={isOpen}>
       <ModalHeader
         title={t('music.updateMusic')}
         icon="tabler:pencil"
@@ -121,7 +121,7 @@ function ModifyMusicModal(): React.ReactElement {
           onSubmitButtonClick().catch(console.error)
         }}
       />
-    </Modal>
+    </ModalWrapper>
   )
 }
 

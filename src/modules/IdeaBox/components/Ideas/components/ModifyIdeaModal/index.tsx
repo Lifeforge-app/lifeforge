@@ -7,7 +7,7 @@ import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
-import Modal from '@components/Modals/Modal'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import APIRequest from '@utils/fetchData'
 import IdeaContentInput from './components/IdeaContentInput'
@@ -231,7 +231,7 @@ function ModifyIdeaModal({
   }, [innerTypeOfModifyIdea])
 
   return (
-    <Modal isOpen={openType !== null}>
+    <ModalWrapper isOpen={openType !== null}>
       <ModalHeader
         innerOpenType={
           innerOpenType !== null
@@ -314,7 +314,7 @@ function ModifyIdeaModal({
             paste: 'CREATE'
           }[innerOpenType!]}
       </Button>
-    </Modal>
+    </ModalWrapper>
   )
 }
 
