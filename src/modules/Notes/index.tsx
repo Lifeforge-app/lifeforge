@@ -31,11 +31,11 @@ function Notes(): React.ReactElement {
                 <Link
                   to={`/notes/${workspace.id}`}
                   key={workspace.id}
-                  className="group flex size-full  flex-col items-center rounded-lg bg-bg-50 p-16 shadow-custom hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800"
+                  className="group flex size-full flex-col items-center rounded-lg bg-bg-50 p-16 shadow-custom hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50"
                 >
                   <Icon
                     icon={workspace.icon}
-                    className="size-20 shrink-0 group-hover:text-custom-500"
+                    className="size-20 shrink-0 transition-all group-hover:text-custom-500"
                   />
                   <h2 className="mt-6 text-center text-2xl font-medium uppercase tracking-widest">
                     {workspace.name}

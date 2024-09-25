@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import Scrollbar from '@components/Scrollbar'
-import _ROUTES from '@constants/routes_config.json'
 import { type IRoutes } from '@interfaces/routes_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
@@ -8,6 +7,7 @@ import { titleToPath } from '@utils/strings'
 import SidebarDivider from './SidebarDivider'
 import SidebarItem from './SidebarItem'
 import SidebarTitle from './SidebarTitle'
+import _ROUTES from '../../../routes_config.json'
 
 const ROUTES = _ROUTES as IRoutes[]
 

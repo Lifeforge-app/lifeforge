@@ -3,9 +3,9 @@ import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { QUICK_ACTIONS } from '@constants/quick_actions'
-import _ROUTES from '@constants/routes_config.json'
 import { type IRoutes } from '@interfaces/routes_interfaces'
 import { titleToPath } from '@utils/strings'
+import _ROUTES from '../../routes_config.json'
 
 const ROUTES = _ROUTES as IRoutes[]
 
@@ -33,7 +33,7 @@ function QuickActions(): React.ReactElement {
   }, [debouncedSearchQuery])
 
   useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
+    const onKeyDown = (e: KeyboardEvent): void => {
       if (e.key === '/' && (e.ctrlKey || e.metaKey)) {
         e.preventDefault()
         searchInputRef.current?.focus()
