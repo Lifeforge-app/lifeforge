@@ -1,15 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
-import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
-import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import ModalHeader from '@components/Modals/ModalHeader'
+import Modal from '@components/Modals/Modal'
+import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import APIRequest from '@utils/fetchData'
 
@@ -20,36 +15,44 @@ function ModifyPriorityModal(): React.ReactElement {
     refreshPriorities,
     selectedPriority
   } = useTodoListContext()
-  const [loading, setLoading] = useState(false)
-  const [name, setName] = useState('')
-  const [color, setColor] = useState('#FFFFFF')
-  const [colorPickerOpen, setColorPickerOpen] = useState(false)
-  const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
+  const [data, setData] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      name: '',
+      color: ''
+    }
+  )
+
+  const FIELDS: IFieldProps[] = [
+    {
+      id: 'name',
+      name: 'Priority name',
+      icon: 'tabler:sort-ascending-numbers',
+      placeholder: 'Priority name',
+      type: 'text'
+    },
+    {
+      id: 'color',
+      name: 'Priority color',
+      type: 'color'
+    }
+  ]
 
   async function onSubmitButtonClick(): Promise<void> {
+    const { name, color } = data
     if (name.trim().length === 0 || color.trim().length === 0) {
       toast.error(t('input.error.fieldEmpty'))
       return
     }
 
-    setLoading(true)
-
-    const priority = {
-      name: name.trim(),
-      color: color.trim()
-    }
-
     await APIRequest({
       endpoint:
         'todo-list/priorities' +
-        (innerOpenType === 'update' ? `/${selectedPriority?.id}` : ''),
-      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-      body: priority,
-      successInfo: innerOpenType,
-      failureInfo: innerOpenType,
-      finalCallback: () => {
-        setLoading(false)
-      },
+        (openType === 'update' ? `/${selectedPriority?.id}` : ''),
+      method: openType === 'create' ? 'POST' : 'PATCH',
+      body: data,
+      successInfo: openType,
+      failureInfo: openType,
       callback: () => {
         setOpenType(null)
         refreshPriorities()
@@ -58,65 +61,37 @@ function ModifyPriorityModal(): React.ReactElement {
   }
 
   useEffect(() => {
-    if (innerOpenType === 'update' && selectedPriority !== null) {
-      setName(selectedPriority.name)
-      setColor(selectedPriority.color)
+    if (openType === 'update' && selectedPriority !== null) {
+      setData(selectedPriority)
     } else {
-      setName('')
-      setColor('#FFFFFF')
+      setData({
+        name: '',
+        color: '#FFFFFF'
+      })
     }
-  }, [innerOpenType, selectedPriority])
+  }, [openType, selectedPriority])
 
   return (
-    <>
-      <ModalWrapper isOpen={openType !== null}>
-        <ModalHeader
-          title={`${
-            {
-              create: 'Create ',
-              update: 'Update '
-            }[innerOpenType!]
-          }priority`}
-          icon={
-            {
-              create: 'tabler:plus',
-              update: 'tabler:pencil'
-            }[innerOpenType!]
-          }
-          onClose={() => {
-            setOpenType(null)
-          }}
-        />
-        <Input
-          name="Priority name"
-          value={name}
-          updateValue={setName}
-          placeholder="Priority name"
-          icon="tabler:sort-ascending-numbers"
-          darker
-        />
-        <ColorInput
-          name="Priority color"
-          color={color}
-          updateColor={setColor}
-          setColorPickerOpen={setColorPickerOpen}
-        />
-
-        <CreateOrModifyButton
-          loading={loading}
-          onClick={() => {
-            onSubmitButtonClick().catch(console.error)
-          }}
-          type={innerOpenType}
-        />
-      </ModalWrapper>
-      <ColorPickerModal
-        isOpen={colorPickerOpen}
-        setOpen={setColorPickerOpen}
-        color={color}
-        setColor={setColor}
-      />
-    </>
+    <Modal
+      openType={openType}
+      setOpenType={setOpenType}
+      title={`${
+        {
+          create: 'Create ',
+          update: 'Update '
+        }[openType!]
+      }priority`}
+      icon={
+        {
+          create: 'tabler:plus',
+          update: 'tabler:pencil'
+        }[openType!]
+      }
+      fields={FIELDS}
+      data={data}
+      setData={setData}
+      onSubmit={onSubmitButtonClick}
+    />
   )
 }
 

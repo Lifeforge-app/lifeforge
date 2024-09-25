@@ -50,7 +50,7 @@ function SidebarItemSubsection({
                   .replace(titleToPath(name), '')
                   .replace(/\//g, '') === '' &&
                   subsectionName === 'Dashboard'))
-                ? 'bg-bg-200/50 dark:bg-bg-800'
+                ? 'bg-bg-200/30 shadow-custom dark:bg-bg-800'
                 : 'text-bg-500'
             }`}
           >
