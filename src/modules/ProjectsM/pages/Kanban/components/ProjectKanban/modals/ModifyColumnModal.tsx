@@ -9,8 +9,8 @@ import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyBut
 import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import { type IProjectsMKanbanColumn } from '@interfaces/projects_m_interfaces'
 import APIRequest from '@utils/fetchData'
 

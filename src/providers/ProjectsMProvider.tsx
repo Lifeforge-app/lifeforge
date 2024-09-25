@@ -105,7 +105,7 @@ export default function ProjectsMProvider(): React.ReactElement {
     visibility: visibilitiesState,
     technology: technologiesState
   } as Record<string, IProjectsMCommon<any>>).map(([key, state]) => ({
-    apiEndpoint: `projects-m/${key}`,
+    apiEndpoint: `projects-m/${key.replace(/s$/, 'ses').replace(/y$/, 'ies')}`,
     isOpen: state.deleteDataConfirmationModalOpen,
     data: state.existedData,
     itemName: key,

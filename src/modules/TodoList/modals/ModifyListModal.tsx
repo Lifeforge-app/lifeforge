@@ -1,17 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
-import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
-import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
-import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import ModalHeader from '@components/Modals/ModalHeader'
+import Modal from '@components/Modals/Modal'
+import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import APIRequest from '@utils/fetchData'
 
@@ -22,43 +15,54 @@ function ModifyListModal(): React.ReactElement {
     refreshLists,
     selectedList
   } = useTodoListContext()
-  const [loading, setLoading] = useState(false)
-  const [listName, setListName] = useState('')
-  const [listIcon, setListIcon] = useState('')
-  const [listColor, setListColor] = useState('#FFFFFF')
-  const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
-  const [colorPickerOpen, setColorPickerOpen] = useState(false)
-  const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
+  const [data, setData] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      name: '',
+      icon: '',
+      color: ''
+    }
+  )
+
+  const FIELDS: IFieldProps[] = [
+    {
+      id: 'name',
+      name: 'List name',
+      icon: 'tabler:list',
+      placeholder: 'List name',
+      type: 'text'
+    },
+    {
+      id: 'icon',
+      name: 'List icon',
+      type: 'icon'
+    },
+    {
+      id: 'color',
+      name: 'List color',
+      type: 'color'
+    }
+  ]
 
   async function onSubmitButtonClick(): Promise<void> {
+    const { name, icon, color } = data
     if (
-      listName.trim().length === 0 ||
-      listIcon.trim().length === 0 ||
-      listColor.trim().length === 0
+      name.trim().length === 0 ||
+      icon.trim().length === 0 ||
+      color.trim().length === 0
     ) {
       toast.error(t('input.error.fieldEmpty'))
       return
     }
 
-    setLoading(true)
-
-    const list = {
-      name: listName.trim(),
-      icon: listIcon.trim(),
-      color: listColor.trim()
-    }
-
     await APIRequest({
       endpoint:
         'todo-list/lists' +
-        (innerOpenType === 'update' ? `/${selectedList?.id}` : ''),
-      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-      body: list,
-      successInfo: innerOpenType,
-      failureInfo: innerOpenType,
-      finalCallback: () => {
-        setLoading(false)
-      },
+        (openType === 'update' ? `/${selectedList?.id}` : ''),
+      method: openType === 'create' ? 'POST' : 'PATCH',
+      body: data,
+      successInfo: openType,
+      failureInfo: openType,
       callback: () => {
         setOpenType(null)
         refreshLists()
@@ -67,78 +71,38 @@ function ModifyListModal(): React.ReactElement {
   }
 
   useEffect(() => {
-    if (innerOpenType === 'update' && selectedList !== null) {
-      setListName(selectedList.name)
-      setListColor(selectedList.color)
-      setListIcon(selectedList.icon)
+    if (openType === 'update' && selectedList !== null) {
+      setData(selectedList)
     } else {
-      setListName('')
-      setListColor('#FFFFFF')
-      setListIcon('')
+      setData({
+        name: '',
+        icon: '',
+        color: '#FFFFFF'
+      })
     }
-  }, [innerOpenType, selectedList])
+  }, [openType, selectedList])
 
   return (
-    <>
-      <ModalWrapper isOpen={openType !== null}>
-        <ModalHeader
-          title={`${
-            {
-              create: 'Create ',
-              update: 'Update '
-            }[innerOpenType!]
-          }list`}
-          icon={
-            {
-              create: 'tabler:plus',
-              update: 'tabler:pencil'
-            }[innerOpenType!]
-          }
-          onClose={() => {
-            setOpenType(null)
-          }}
-        />
-        <Input
-          name="List name"
-          value={listName}
-          updateValue={setListName}
-          placeholder="List name"
-          icon="tabler:list"
-          darker
-        />
-        <IconInput
-          name="List icon"
-          icon={listIcon}
-          setIcon={setListIcon}
-          setIconSelectorOpen={setIconSelectorOpen}
-        />
-        <ColorInput
-          name="List color"
-          color={listColor}
-          updateColor={setListColor}
-          setColorPickerOpen={setColorPickerOpen}
-        />
-
-        <CreateOrModifyButton
-          loading={loading}
-          onClick={() => {
-            onSubmitButtonClick().catch(console.error)
-          }}
-          type={innerOpenType}
-        />
-      </ModalWrapper>
-      <IconSelector
-        isOpen={iconSelectorOpen}
-        setOpen={setIconSelectorOpen}
-        setSelectedIcon={setListIcon}
-      />
-      <ColorPickerModal
-        isOpen={colorPickerOpen}
-        setOpen={setColorPickerOpen}
-        color={listColor}
-        setColor={setListColor}
-      />
-    </>
+    <Modal
+      openType={openType}
+      setOpenType={setOpenType}
+      title={`${
+        {
+          create: 'Create ',
+          update: 'Update '
+        }[openType!]
+      }list`}
+      icon={`${
+        {
+          create: 'tabler:plus',
+          update: 'tabler:pencil'
+        }[openType!]
+      }`}
+      data={data}
+      setData={setData}
+      fields={FIELDS}
+      onSubmit={onSubmitButtonClick}
+    />
   )
 }
 

@@ -1,13 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import ModalHeader from '@components/Modals/ModalHeader'
+import Modal from '@components/Modals/Modal'
+import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import APIRequest from '@utils/fetchData'
 
@@ -18,33 +15,36 @@ function ModifyTagModal(): React.ReactElement {
     refreshTagsList,
     selectedTag
   } = useTodoListContext()
-  const [loading, setLoading] = useState(false)
-  const [tagName, setTagName] = useState('')
-  const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
+  const [data, setData] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      name: ''
+    }
+  )
+
+  const FIELDS: IFieldProps[] = [
+    {
+      id: 'name',
+      name: 'Tag name',
+      icon: 'tabler:tag',
+      placeholder: 'Tag name',
+      type: 'text'
+    }
+  ]
 
   async function onSubmitButtonClick(): Promise<void> {
-    if (tagName.trim().length === 0) {
+    if (data.name.trim().length === 0) {
       toast.error(t('input.error.fieldEmpty'))
       return
     }
 
-    setLoading(true)
-
-    const tag = {
-      name: tagName.trim()
-    }
-
     await APIRequest({
       endpoint:
-        'todo-list/tags' +
-        (innerOpenType === 'update' ? `/${selectedTag?.id}` : ''),
-      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-      body: tag,
-      successInfo: innerOpenType,
-      failureInfo: innerOpenType,
-      finalCallback: () => {
-        setLoading(false)
-      },
+        'todo-list/tags' + (openType === 'update' ? `/${selectedTag?.id}` : ''),
+      method: openType === 'create' ? 'POST' : 'PATCH',
+      body: data,
+      successInfo: openType,
+      failureInfo: openType,
       callback: () => {
         setOpenType(null)
         refreshTagsList()
@@ -53,56 +53,29 @@ function ModifyTagModal(): React.ReactElement {
   }
 
   useEffect(() => {
-    if (innerOpenType === 'update' && selectedTag !== null) {
-      setTagName(selectedTag.name)
+    if (openType === 'update' && selectedTag !== null) {
+      setData(selectedTag)
     } else {
-      setTagName('')
+      setData({ name: '' })
     }
-  }, [innerOpenType, selectedTag])
+  }, [openType, selectedTag])
 
   return (
-    <>
-      <ModalWrapper isOpen={openType !== null}>
-        <ModalHeader
-          title={`${
-            {
-              create: 'Create ',
-              update: 'Update '
-            }[innerOpenType!]
-          } tag`}
-          icon={`${
-            {
-              create: 'tabler:plus',
-              update: 'tabler:pencil'
-            }[innerOpenType!]
-          }`}
-          onClose={() => {
-            setOpenType(null)
-          }}
-        />
-        <Input
-          name="Tag name"
-          value={tagName}
-          updateValue={setTagName}
-          placeholder="Tag name"
-          icon="tabler:tag"
-          darker
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              onSubmitButtonClick().catch(console.error)
-            }
-          }}
-        />
-
-        <CreateOrModifyButton
-          loading={loading}
-          onClick={() => {
-            onSubmitButtonClick().catch(console.error)
-          }}
-          type={innerOpenType}
-        />
-      </ModalWrapper>
-    </>
+    <Modal
+      openType={openType}
+      setOpenType={setOpenType}
+      title={`${
+        {
+          create: 'Create',
+          update: 'Update'
+        }[openType!]
+      } tag`}
+      icon="tabler:tag"
+      data={data}
+      setData={setData}
+      fields={FIELDS}
+      onSubmit={onSubmitButtonClick}
+    />
   )
 }
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { t } from 'i18next'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
 import Modal from '@components/Modals/Modal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
@@ -25,11 +25,14 @@ function ModifyModal({
     visibilities: 'visibility',
     statuses: 'status'
   }[stuff]
-  const [data, setData] = useState({
-    name: '',
-    icon: '',
-    ...(stuff === 'statuses' && { color: '#FFFFFF' })
-  })
+  const [data, setData] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      name: '',
+      icon: '',
+      ...(stuff === 'statuses' && { color: '' })
+    }
+  )
   const FIELDS: IFieldProps[] = [
     {
       id: 'name',
@@ -104,7 +107,7 @@ function ModifyModal({
   return (
     <Modal
       data={data}
-      setData={setData as (data: Record<string, string>) => void}
+      setData={setData as (data: Record<string, string | string[]>) => void}
       title={
         openType === 'update' ? `Edit ${singleStuff}` : `Add ${singleStuff}`
       }

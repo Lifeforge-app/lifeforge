@@ -23,7 +23,8 @@ interface IListboxInputFieldProps {
     icon?: string
     color?: string
   }>
-  nullOption: string
+  nullOption?: string
+  multiple?: boolean
 }
 
 interface IColorInputFieldProps {
