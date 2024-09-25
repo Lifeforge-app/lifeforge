@@ -7,7 +7,7 @@ function App(): React.ReactElement {
   return (
     <main
       id="app"
-      className="relative flex h-dvh w-full overflow-hidden bg-bg-200/50 text-bg-800 dark:bg-bg-950 dark:text-bg-50"
+      className="relative flex h-dvh w-full overflow-hidden bg-bg-200/50 text-bg-800 dark:bg-bg-900/50 dark:text-bg-50"
     >
       <Providers>
         <AppRouter />
