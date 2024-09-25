@@ -15,7 +15,7 @@ function SidebarHeader(): React.ReactElement {
         <Icon icon="tabler:hammer" className="text-3xl text-custom-500" />
         {sidebarExpanded && (
           <div>
-            LifeForge<span className="text-2xl text-custom-500"> .</span>
+            LifeForge<span className="text-2xl text-custom-500">.</span>
           </div>
         )}
       </h1>

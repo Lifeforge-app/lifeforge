@@ -198,46 +198,44 @@ function TransactionsHeader({
               </button>
             </span>
           )}
-          {typeof ledgers !== 'string' &&
-            Boolean(searchParams.get('ledger')) && (
-              <span
-                style={{
-                  backgroundColor:
-                    ledgers.find(
-                      ledger => ledger.id === searchParams.get('ledger')
-                    )?.color + '20',
-                  color:
-                    ledgers.find(
-                      ledger => ledger.id === searchParams.get('ledger')
-                    )?.color ?? 'black'
-                }}
-                className="flex-center flex gap-1 rounded-full px-2 py-1 text-sm"
-              >
-                <Icon
-                  icon={
-                    ledgers.find(
-                      ledger => ledger.id === searchParams.get('ledger')
-                    )?.icon ?? ''
-                  }
-                  className="size-4"
-                />
-                {
+          {typeof ledgers !== 'string' && Boolean(searchParams.get('ledger')) && (
+            <span
+              style={{
+                backgroundColor:
                   ledgers.find(
                     ledger => ledger.id === searchParams.get('ledger')
-                  )?.name
+                  )?.color + '20',
+                color:
+                  ledgers.find(
+                    ledger => ledger.id === searchParams.get('ledger')
+                  )?.color ?? 'black'
+              }}
+              className="flex-center flex gap-1 rounded-full px-2 py-1 text-sm"
+            >
+              <Icon
+                icon={
+                  ledgers.find(
+                    ledger => ledger.id === searchParams.get('ledger')
+                  )?.icon ?? ''
                 }
-                <button
-                  onClick={() => {
-                    setSearchParams(searchParams => {
-                      searchParams.delete('ledger')
-                      return searchParams
-                    })
-                  }}
-                >
-                  <Icon icon="tabler:x" className="size-4" />
-                </button>
-              </span>
-            )}
+                className="size-4"
+              />
+              {
+                ledgers.find(ledger => ledger.id === searchParams.get('ledger'))
+                  ?.name
+              }
+              <button
+                onClick={() => {
+                  setSearchParams(searchParams => {
+                    searchParams.delete('ledger')
+                    return searchParams
+                  })
+                }}
+              >
+                <Icon icon="tabler:x" className="size-4" />
+              </button>
+            </span>
+          )}
         </div>
       </div>
       <div className="flex items-center gap-6">

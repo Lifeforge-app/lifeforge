@@ -21,4 +21,4 @@ interface IFlashcardCard {
   question: string
 }
 
-export type { IFlashcardDeck, IFlashcardTag, IFlashcardCard }
+export type { IFlashcardCard, IFlashcardDeck, IFlashcardTag }

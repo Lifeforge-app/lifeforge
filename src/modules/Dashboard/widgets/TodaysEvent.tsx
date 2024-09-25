@@ -6,8 +6,8 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import {
-  type ICalendarEvent,
-  type ICalendarCategory
+  type ICalendarCategory,
+  type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
 
 export default function TodaysEvent(): React.ReactElement {

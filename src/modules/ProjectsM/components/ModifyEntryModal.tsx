@@ -6,10 +6,10 @@ import ErrorScreen from '@components/Screens/ErrorScreen'
 import LoadingScreen from '@components/Screens/LoadingScreen'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import {
+  type IProjectsMCategory,
   type IProjectsMStatus,
   type IProjectsMTechnology,
-  type IProjectsMVisibility,
-  type IProjectsMCategory
+  type IProjectsMVisibility
 } from '@interfaces/projects_m_interfaces'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import APIRequest from '@utils/fetchData'

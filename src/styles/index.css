@@ -494,7 +494,10 @@ input:-webkit-autofill:active {
 }
 
 button[class^='react-calendar__navigation'] {
-  @apply flex flex-center rounded-md hover:bg-bg-200 dark:hover:bg-bg-700/50 focus:bg-bg-200 dark:focus:bg-bg-700/50 disabled:text-bg-500 disabled:bg-transparent disabled:hover:bg-transparent disabled:dark:hover:bg-transparent;
+  @apply flex flex-center rounded-md hover:bg-bg-200 dark:hover:bg-bg-700/50
+    focus:bg-bg-200 dark:focus:bg-bg-700/50 disabled:text-bg-500
+    disabled:bg-transparent disabled:hover:bg-transparent
+    disabled:dark:hover:bg-transparent;
 }
 
 .react-calendar__tile--now {
@@ -575,7 +578,8 @@ button[class^='react-calendar__navigation'] {
 }
 
 input[type='range'].main {
-  @apply appearance-none accent-custom-500 bg-gradient-to-r from-custom-500 to-custom-500 bg-no-repeat;
+  @apply appearance-none accent-custom-500 bg-gradient-to-r from-custom-500
+    to-custom-500 bg-no-repeat;
 }
 
 input[type='range'].secondary {

@@ -8,7 +8,7 @@ import Input from '@components/ButtonsAndInputs/Input'
 import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import { type APIKeyEntry } from '@interfaces/api_keys_interfaces'
-import { encrypt, decrypt } from '@utils/encryption'
+import { decrypt, encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 import { fetchChallenge } from '../utils/fetchChallenge'
 

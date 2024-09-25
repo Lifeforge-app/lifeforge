@@ -8,9 +8,9 @@ import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
 import {
+  type IModuleConfigInput,
   type IModuleConfigSelect,
   type IModuleConfigSwitch,
-  type IModuleConfigInput,
   type IModuleEntry
 } from '@interfaces/module_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'

@@ -12,10 +12,10 @@ function useFetch<T>(
   changeStateWhenLoading: boolean = true,
   showError: boolean = true
 ): [
-    data: T | 'loading' | 'error',
-    refresh: () => void,
-    setData: React.Dispatch<React.SetStateAction<T | 'loading' | 'error'>>
-  ] {
+  data: T | 'loading' | 'error',
+  refresh: () => void,
+  setData: React.Dispatch<React.SetStateAction<T | 'loading' | 'error'>>
+] {
   const { t } = useTranslation()
   const [data, setData] = useState<T | 'loading' | 'error'>('loading')
 

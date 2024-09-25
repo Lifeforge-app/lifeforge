@@ -5,11 +5,11 @@ import { Outlet } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import useFetch from '@hooks/useFetch'
 import {
-  type IWalletTransaction,
-  type IWalletLedger,
   type IWalletAsset,
   type IWalletCategory,
-  type IWalletIncomeExpenses
+  type IWalletIncomeExpenses,
+  type IWalletLedger,
+  type IWalletTransaction
 } from '@interfaces/wallet_interfaces'
 
 interface IWalletData {

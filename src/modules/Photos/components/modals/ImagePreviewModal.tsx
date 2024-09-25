@@ -9,9 +9,9 @@ import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import useFetch from '@hooks/useFetch'
 import {
+  type IPhotoAlbumEntryItem,
   type IPhotosEntry,
-  type IPhotosEntryDimensionsAll,
-  type IPhotoAlbumEntryItem
+  type IPhotosEntryDimensionsAll
 } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import forceDown from '@utils/forceDown'

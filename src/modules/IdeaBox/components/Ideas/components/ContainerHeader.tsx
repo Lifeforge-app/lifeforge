@@ -6,8 +6,8 @@ import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
 import {
-  type IIdeaBoxFolder,
-  type IIdeaBoxContainer
+  type IIdeaBoxContainer,
+  type IIdeaBoxFolder
 } from '@interfaces/ideabox_interfaces'
 
 function ContainerHeader({

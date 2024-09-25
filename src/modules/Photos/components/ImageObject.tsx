@@ -3,9 +3,9 @@ import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import {
-  type IPhotosEntryDimensionsAll,
+  type IPhotoAlbumEntryItem,
   type IPhotosEntry,
-  type IPhotoAlbumEntryItem
+  type IPhotosEntryDimensionsAll
 } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '../../../providers/PhotosProvider'
 import ImagePreviewModal from './modals/ImagePreviewModal'

@@ -8,8 +8,8 @@ import { toast } from 'react-toastify'
 import useResizeObserver from 'use-resize-observer'
 import useOnScreen from '@hooks/useOnScreen'
 import {
-  type IPhotosEntryDimensionsAll,
   type IPhotosEntry,
+  type IPhotosEntryDimensionsAll,
   type IPhotosEntryDimensionsItem
 } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '../../../../../providers/PhotosProvider'

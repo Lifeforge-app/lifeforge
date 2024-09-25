@@ -1,4 +1,4 @@
-import { type ColorResult, Colorful, EditableInput } from '@uiw/react-color'
+import { Colorful, type ColorResult, EditableInput } from '@uiw/react-color'
 import React, { useCallback, useEffect, useState } from 'react'
 import ModalHeader from '@components/Modals/ModalHeader'
 import MorandiColorPaletteModal from './MorandiColorPaletteModal'

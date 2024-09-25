@@ -1,6 +1,8 @@
 import { type RefObject, useEffect, useMemo, useState } from 'react'
 
-export default function useOnScreen(ref: RefObject<HTMLElement | null>): boolean {
+export default function useOnScreen(
+  ref: RefObject<HTMLElement | null>
+): boolean {
   const [isIntersecting, setIntersecting] = useState(false)
 
   const observer = useMemo(

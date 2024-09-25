@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import {
-  type ICalendarEvent,
-  type ICalendarCategory
+  type ICalendarCategory,
+  type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
 import MiniCalendarContent from '../../Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
 import MiniCalendarHeader from '../../Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'

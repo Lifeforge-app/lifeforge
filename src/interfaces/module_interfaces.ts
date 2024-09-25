@@ -36,8 +36,8 @@ interface IModuleEntry {
 }
 
 export type {
-  IModuleEntry,
   IModuleConfigInput,
   IModuleConfigSelect,
-  IModuleConfigSwitch
+  IModuleConfigSwitch,
+  IModuleEntry
 }

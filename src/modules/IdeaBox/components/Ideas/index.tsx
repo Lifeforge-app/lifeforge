@@ -13,8 +13,8 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import {
-  type IIdeaBoxFolder,
-  type IIdeaBoxEntry
+  type IIdeaBoxEntry,
+  type IIdeaBoxFolder
 } from '@interfaces/ideabox_interfaces'
 import ContainerHeader from './components/ContainerHeader'
 import FAB from './components/FAB'
