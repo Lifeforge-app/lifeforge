@@ -18,8 +18,8 @@ function SidebarItemWrapper({
       <div
         className={`flex-between group relative flex w-full gap-6 whitespace-nowrap rounded-lg p-4 pr-3 transition-all duration-100 ${
           active
-            ? 'bg-bg-200/30 shadow-custom dark:bg-bg-800'
-            : 'hover:bg-bg-100/50 dark:hover:bg-bg-800/50'
+            ? 'bg-bg-200/30 shadow-custom dark:bg-bg-800/50'
+            : 'hover:bg-bg-100/50 dark:hover:bg-bg-800/30'
         }`}
       >
         {children}
