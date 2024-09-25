@@ -52,7 +52,7 @@ function AppRouter(): React.ReactElement {
     ): React.ReactElement[] => {
       return Object.entries(routes).map(([route, path], index) => {
         const Comp = COMPONENTS[name as keyof typeof COMPONENTS][
-          route as keyof typeof COMPONENTS[keyof typeof COMPONENTS]
+          route as keyof (typeof COMPONENTS)[keyof typeof COMPONENTS]
         ] as React.FC
 
         return (
@@ -106,9 +106,15 @@ function AppRouter(): React.ReactElement {
               .map(item =>
                 item.provider !== undefined
                   ? (() => {
-                      const Provider =
-                        // @ts-expect-error - I don't know how to fix this ;-;
-                        COMPONENTS[convertToDashCase(item.name)][item.provider]
+                      const Provider: React.FC =
+                        COMPONENTS[
+                          convertToDashCase(
+                            item.name
+                          ) as keyof typeof COMPONENTS
+                        ][
+                          item.provider as keyof (typeof COMPONENTS)[keyof typeof COMPONENTS]
+                        ]
+
                       return (
                         <Route
                           key={item.name}
