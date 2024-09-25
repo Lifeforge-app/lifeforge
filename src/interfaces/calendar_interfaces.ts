@@ -14,4 +14,4 @@ interface ICalendarCategory extends BasePBCollection {
   amount: number
 }
 
-export type { ICalendarEvent, ICalendarCategory }
+export type { ICalendarCategory, ICalendarEvent }

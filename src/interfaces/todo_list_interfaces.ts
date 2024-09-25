@@ -48,9 +48,9 @@ interface ITodoListStatusCounter {
 
 export type {
   ITodoListEntry,
-  ITodoSubtask,
-  ITodoPriority,
   ITodoListList,
+  ITodoListStatusCounter,
   ITodoListTag,
-  ITodoListStatusCounter
+  ITodoPriority,
+  ITodoSubtask
 }

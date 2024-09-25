@@ -10,8 +10,8 @@ import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import Scrollbar from '@components/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import {
-  type IGuitarTabsSidebarData,
-  type IGuitarTabsEntry
+  type IGuitarTabsEntry,
+  type IGuitarTabsSidebarData
 } from '@interfaces/guitar_tabs_interfaces'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import Header from './components/Header'

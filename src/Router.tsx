@@ -1,5 +1,5 @@
 import { t } from 'i18next'
-import React, { Suspense, useMemo, useCallback, useEffect } from 'react'
+import React, { Suspense, useCallback, useEffect, useMemo } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import LoadingScreen from '@components/Screens/LoadingScreen'
@@ -8,7 +8,7 @@ import { type IRoutes } from '@interfaces/routes_interfaces'
 import APIKeyStatusProvider from '@providers/APIKeyStatusProvider'
 import { useAuthContext } from '@providers/AuthProvider'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import { titleToPath, convertToDashCase } from '@utils/strings'
+import { convertToDashCase, titleToPath } from '@utils/strings'
 import Auth from './auth'
 import { COMPONENTS } from './Components'
 import _ROUTES from './constants/routes_config.json'
@@ -52,7 +52,7 @@ function AppRouter(): React.ReactElement {
     ): React.ReactElement[] => {
       return Object.entries(routes).map(([route, path], index) => {
         const Comp = COMPONENTS[name as keyof typeof COMPONENTS][
-          route as keyof (typeof COMPONENTS)[keyof typeof COMPONENTS]
+          route as keyof typeof COMPONENTS[keyof typeof COMPONENTS]
         ] as React.FC
 
         return (

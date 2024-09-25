@@ -52,9 +52,7 @@
         },
         "togglable": true,
         "hasAI": true,
-        "requiredAPIKeys": [
-          "groq"
-        ]
+        "requiredAPIKeys": ["groq"]
       },
       {
         "name": "Calendar",
@@ -134,9 +132,7 @@
           "journal": "journal"
         },
         "togglable": true,
-        "requiredAPIKeys": [
-          "groq"
-        ]
+        "requiredAPIKeys": ["groq"]
       },
       {
         "name": "Achievements",
@@ -157,26 +153,10 @@
         "icon": "tabler:currency-dollar",
         "provider": "wallet-provider",
         "subsection": [
-          [
-            "Dashboard",
-            "tabler:dashboard",
-            ""
-          ],
-          [
-            "Transactions",
-            "tabler:arrows-exchange",
-            "transactions"
-          ],
-          [
-            "Assets",
-            "tabler:wallet",
-            "assets"
-          ],
-          [
-            "Ledgers",
-            "tabler:book",
-            "ledgers"
-          ]
+          ["Dashboard", "tabler:dashboard", ""],
+          ["Transactions", "tabler:arrows-exchange", "transactions"],
+          ["Assets", "tabler:wallet", "assets"],
+          ["Ledgers", "tabler:book", "ledgers"]
         ],
         "routes": {
           "wallet": "",
@@ -277,9 +257,7 @@
           "mail-inbox": "mail-inbox"
         },
         "togglable": true,
-        "requiredAPIKeys": [
-          "gmail"
-        ]
+        "requiredAPIKeys": ["gmail"]
       },
       {
         "name": "DNS Records",
@@ -288,9 +266,7 @@
           "dns-records": "dns-records"
         },
         "togglable": true,
-        "requiredAPIKeys": [
-          "cpanel"
-        ]
+        "requiredAPIKeys": ["cpanel"]
       },
       {
         "name": "Blog Posts",
@@ -334,24 +310,14 @@
         },
         "togglable": true,
         "hasAI": true,
-        "requiredAPIKeys": [
-          "groq"
-        ]
+        "requiredAPIKeys": ["groq"]
       },
       {
         "name": "Changi Airport",
         "icon": "tabler:plane",
         "subsection": [
-          [
-            "Flight Status",
-            "tabler:list",
-            "changi-flight-status"
-          ],
-          [
-            "Airline Information",
-            "tabler:line",
-            ""
-          ]
+          ["Flight Status", "tabler:list", "changi-flight-status"],
+          ["Airline Information", "tabler:line", ""]
         ],
         "routes": {
           "changi-airport": "changi-airport",

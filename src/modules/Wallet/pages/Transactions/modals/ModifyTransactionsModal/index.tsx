@@ -7,8 +7,8 @@ import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyBut
 import CurrencyInputComponent from '@components/ButtonsAndInputs/CurrencyInput'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
 import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 import APIRequest from '@utils/fetchData'
@@ -107,7 +107,7 @@ function ModifyTransactionsModal({
     const data = new FormData()
     data.append('particulars', particular)
     data.append('date', moment(transactionDate).format('YYYY-MM-DD'))
-    data.append('amount', parseFloat(`${amount}` ?? '0').toString())
+    data.append('amount', parseFloat(`${amount}` || '0').toString())
     data.append('category', category ?? '')
 
     data.append('asset', transactionAsset ?? '')

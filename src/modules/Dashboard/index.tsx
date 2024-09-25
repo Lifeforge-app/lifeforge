@@ -1,15 +1,15 @@
 import {
-  Chart as ChartJS,
   ArcElement,
-  Tooltip,
-  Legend,
+  BarElement,
   CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
+  Chart as ChartJS,
   Filler,
-  BarElement
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip
 } from 'chart.js'
 import React, { useRef, useState } from 'react'
 

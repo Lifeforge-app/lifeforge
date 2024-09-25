@@ -54,11 +54,11 @@ interface IPhotoAlbumTag extends BasePBCollection {
 }
 
 export type {
-  IPhotosEntryDimensionsItem,
-  IPhotosEntryDimensionsAll,
-  IPhotosEntryDimensionsPagination,
-  IPhotosEntry,
-  IPhotosAlbum,
+  IPhotoAlbumEntryItem,
   IPhotoAlbumTag,
-  IPhotoAlbumEntryItem
+  IPhotosAlbum,
+  IPhotosEntry,
+  IPhotosEntryDimensionsAll,
+  IPhotosEntryDimensionsItem,
+  IPhotosEntryDimensionsPagination
 }

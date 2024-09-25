@@ -4,9 +4,9 @@ import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import ModalWrapper from '@components/Modals/ModalWrapper'
 import {
-  type IPhotosEntryDimensionsAll,
   type IPhotoAlbumEntryItem,
-  type IPhotosEntry
+  type IPhotosEntry,
+  type IPhotosEntryDimensionsAll
 } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import APIRequest from '@utils/fetchData'

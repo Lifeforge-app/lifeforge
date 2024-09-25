@@ -10,4 +10,4 @@ interface IChangeLogEntry {
   description: string
 }
 
-export type { IChangeLogVersion, IChangeLogEntry }
+export type { IChangeLogEntry, IChangeLogVersion }
