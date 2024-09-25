@@ -1,17 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
 import COLOR from 'tailwindcss/colors'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import Input from '@components/ButtonsAndInputs/Input'
-import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
-import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import ModalHeader from '@components/Modals/ModalHeader'
+import Modal from '@components/Modals/Modal'
 import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
+import { type IFieldProps } from '@interfaces/modal_interfaces'
 import APIRequest from '@utils/fetchData'
 
 const difficulties = [
@@ -34,151 +29,105 @@ function ModifyAchievementModal({
   existedData: IAchievementEntry | null
   currentDifficulty: string
 }): React.ReactElement {
-  const [loading, setLoading] = useState(false)
-  const [achievementTitle, setAchievementTitle] = useState('')
-  const [achievementThoughts, setAchievementThoughts] = useState('')
-  const [achievementDifficulty, setAchievementDifficulty] = useState('easy')
-  const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
+  const [data, setData] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      title: '',
+      thoughts: '',
+      difficulty: ''
+    }
+  )
+
+  const FIELDS: IFieldProps[] = [
+    {
+      id: 'title',
+      name: 'Achievement title',
+      icon: 'tabler:award',
+      placeholder: 'My achievement',
+      type: 'text'
+    },
+    {
+      id: 'thoughts',
+      name: 'Achievement thoughts',
+      icon: 'tabler:bubble-text',
+      placeholder: 'My thoughts',
+      type: 'text'
+    },
+    {
+      id: 'difficulty',
+      name: 'Achievement difficulty',
+      icon: 'tabler:list',
+      type: 'listbox',
+      options: difficulties.map(([name, color]) => ({
+        text: name[0].toUpperCase() + name.slice(1),
+        value: name,
+        color: COLOR[color as keyof typeof COLOR][500]
+      }))
+    }
+  ]
 
   async function onSubmitButtonClick(): Promise<void> {
+    const { title, thoughts, difficulty } = data
     if (
-      achievementTitle.trim().length === 0 ||
-      achievementThoughts.trim().length === 0 ||
-      achievementDifficulty.trim().length === 0
+      title.trim().length === 0 ||
+      thoughts.trim().length === 0 ||
+      difficulty.trim().length === 0
     ) {
       toast.error(t('input.error.fieldEmpty'))
       return
     }
 
-    setLoading(true)
-
-    const achievement = {
-      title: achievementTitle.trim(),
-      thoughts: achievementThoughts.trim(),
-      difficulty: achievementDifficulty.trim()
-    }
-
     await APIRequest({
       endpoint:
         'achievements/entries' +
-        (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
-      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-      body: achievement,
-      successInfo: innerOpenType,
-      failureInfo: innerOpenType,
+        (openType === 'update' ? `/${existedData?.id}` : ''),
+      method: openType === 'create' ? 'POST' : 'PATCH',
+      body: data,
+      successInfo: openType,
+      failureInfo: openType,
       callback: () => {
         setOpenType(null)
         updateAchievementList()
       },
       onFailure: () => {
         setOpenType(null)
-      },
-      finalCallback: () => {
-        setLoading(false)
       }
     })
   }
 
   useEffect(() => {
-    if (innerOpenType === 'update' && existedData !== null) {
-      setAchievementTitle(existedData.title)
-      setAchievementThoughts(existedData.thoughts)
-      setAchievementDifficulty(existedData.difficulty)
+    if (openType === 'update' && existedData !== null) {
+      setData(existedData)
     } else {
-      setAchievementTitle('')
-      setAchievementThoughts('')
-      setAchievementDifficulty(currentDifficulty)
+      setData({
+        title: '',
+        thoughts: '',
+        difficulty: currentDifficulty
+      })
     }
-  }, [innerOpenType, existedData])
+  }, [openType, existedData])
 
   return (
-    <>
-      <ModalWrapper isOpen={openType !== null} minWidth="40vw">
-        <ModalHeader
-          icon={
-            {
-              create: 'tabler:plus',
-              update: 'tabler:pencil'
-            }[innerOpenType!]
-          }
-          title={`${
-            {
-              create: 'Create ',
-              update: 'Update '
-            }[innerOpenType!]
-          } achievement`}
-          onClose={() => {
-            setOpenType(null)
-          }}
-        />
-        <Input
-          name="Achievement title"
-          icon="tabler:award"
-          value={achievementTitle}
-          updateValue={setAchievementTitle}
-          darker
-          placeholder="My achievement"
-        />
-        <Input
-          name="Achievement thoughts"
-          icon="tabler:bubble-text"
-          value={achievementThoughts}
-          updateValue={setAchievementThoughts}
-          darker
-          placeholder="My thoughts"
-          className="mt-4"
-        />
-        <ListboxInput
-          name={t('input.achievementDifficulty')}
-          icon="tabler:list"
-          value={achievementDifficulty}
-          setValue={setAchievementDifficulty}
-          buttonContent={
-            <>
-              {achievementDifficulty !== '' && (
-                <span
-                  className="h-4 w-1 rounded-full"
-                  style={{
-                    backgroundColor:
-                      COLOR[
-                        difficulties.find(
-                          l => l[0] === achievementDifficulty
-                        )?.[1] as keyof typeof COLOR
-                      ][500]
-                  }}
-                />
-              )}
-              <span className="-mt-px block truncate">
-                {(() => {
-                  const diff = difficulties.find(
-                    l => l[0] === achievementDifficulty
-                  )?.[0]
-                  return diff !== undefined
-                    ? diff[0].toUpperCase() + diff.slice(1)
-                    : 'None'
-                })()}
-              </span>
-            </>
-          }
-        >
-          {difficulties.map(([name, color], i) => (
-            <ListboxOption
-              key={i}
-              text={name[0].toUpperCase() + name.slice(1)}
-              color={COLOR[color as keyof typeof COLOR][500]}
-              value={name}
-            />
-          ))}
-        </ListboxInput>
-        <CreateOrModifyButton
-          loading={loading}
-          onClick={() => {
-            onSubmitButtonClick().catch(console.error)
-          }}
-          type={innerOpenType}
-        />
-      </ModalWrapper>
-    </>
+    <Modal
+      title={`${
+        {
+          create: 'Create ',
+          update: 'Update '
+        }[openType!]
+      } achievement`}
+      icon={
+        {
+          create: 'tabler:plus',
+          update: 'tabler:pencil'
+        }[openType!]
+      }
+      data={data}
+      setData={setData}
+      fields={FIELDS}
+      openType={openType}
+      setOpenType={setOpenType}
+      onSubmit={onSubmitButtonClick}
+    />
   )
 }
 
