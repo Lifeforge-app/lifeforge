@@ -14,6 +14,7 @@ import SidebarItemWrapper from './components/SidebarItemWrapper'
 interface SidebarItemProps {
   name: string
   icon?: string
+  smallIcon?: React.ReactElement
   color?: string
   hasAI?: boolean
   subsection?: string[][]
@@ -31,6 +32,7 @@ interface SidebarItemProps {
 function SidebarItem({
   name,
   icon,
+  smallIcon,
   color,
   hasAI = false,
   subsection,
@@ -80,6 +82,7 @@ function SidebarItem({
           <SidebarItemIcon
             active={autoActive ? isLocationMatched : active}
             icon={icon}
+            smallIcon={smallIcon}
           />
           <SidebarItemContent
             name={name}

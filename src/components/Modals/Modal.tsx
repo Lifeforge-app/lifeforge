@@ -27,8 +27,8 @@ function Modal({
 }: {
   modalRef?: React.RefObject<HTMLDivElement | null>
   fields: IFieldProps[]
-  data: Record<string, string>
-  setData: (data: Record<string, string>) => void
+  data: Record<string, string | string[]>
+  setData: (data: Record<string, string | string[]>) => void
   title: string
   icon: string
   openType: string | null
@@ -37,7 +37,6 @@ function Modal({
 }): React.ReactElement {
   const [colorPickerOpen, setColorPickerOpen] = useState<string | null>(null)
   const [iconSelectorOpen, setIconSelectorOpen] = useState<string | null>(null)
-
   const [loading, setLoading] = useState(false)
 
   async function onSubmitButtonClick(): Promise<void> {
@@ -61,6 +60,8 @@ function Modal({
           }}
         />
         {fields.map(field => {
+          const selectedData = data[field.id]
+
           switch (field.type) {
             case 'text':
               return (
@@ -68,7 +69,7 @@ function Modal({
                   key={field.id}
                   name={field.name}
                   icon={field.icon}
-                  value={data[field.id]}
+                  value={selectedData as string}
                   updateValue={value => {
                     setData({ [field.id]: value })
                   }}
@@ -82,7 +83,7 @@ function Modal({
                   key={field.id}
                   modalRef={field.modalRef}
                   index={field.index}
-                  date={data[field.id]}
+                  date={selectedData as string}
                   setDate={(date: string) => {
                     setData({ [field.id]: date })
                   }}
@@ -97,31 +98,59 @@ function Modal({
                   key={field.id}
                   name={field.name}
                   icon={field.icon}
-                  value={data[field.id]}
-                  setValue={(value: string) => {
+                  value={selectedData}
+                  setValue={(value: string | string[]) => {
                     setData({ [field.id]: value })
                   }}
+                  multiple={field.multiple}
                   buttonContent={
-                    <>
-                      <Icon
-                        icon={
-                          field.options.find(l => l.value === data[field.id])
-                            ?.icon ??
-                          field.nullOption ??
-                          ''
-                        }
-                        style={{
-                          color: field.options.find(
-                            l => l.value === data[field.id]
-                          )?.color
-                        }}
-                        className="size-5"
-                      />
-                      <span className="-mt-px block truncate">
-                        {field.options.find(l => l.value === data[field.id])
-                          ?.text ?? 'None'}
-                      </span>
-                    </>
+                    field.multiple === true && Array.isArray(selectedData) ? (
+                      <>
+                        {selectedData.length > 0 ? (
+                          selectedData.map(item => (
+                            <Icon
+                              key={item}
+                              icon={
+                                field.options.find(l => l.value === item)
+                                  ?.icon ?? ''
+                              }
+                              className="size-5"
+                            />
+                          ))
+                        ) : (
+                          <>
+                            {field.nullOption !== undefined && (
+                              <Icon
+                                icon={field.nullOption}
+                                className="size-5"
+                              />
+                            )}
+                            None
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <Icon
+                          icon={
+                            field.options.find(l => l.value === selectedData)
+                              ?.icon ??
+                            field.nullOption ??
+                            ''
+                          }
+                          style={{
+                            color: field.options.find(
+                              l => l.value === selectedData
+                            )?.color
+                          }}
+                          className="size-5"
+                        />
+                        <span className="-mt-px block truncate">
+                          {field.options.find(l => l.value === selectedData)
+                            ?.text ?? 'None'}
+                        </span>
+                      </>
+                    )
                   }
                 >
                   {field.nullOption !== undefined && (
@@ -146,7 +175,7 @@ function Modal({
                 <ColorInput
                   key={field.id}
                   name={field.name}
-                  color={data[field.id]}
+                  color={selectedData as string}
                   updateColor={value => {
                     setData({ [field.id]: value })
                   }}
@@ -161,7 +190,7 @@ function Modal({
                   <IconInput
                     key={field.id}
                     name={field.name}
-                    icon={data[field.id]}
+                    icon={selectedData as string}
                     setIcon={value => {
                       setData({ [field.id]: value })
                     }}
@@ -189,7 +218,7 @@ function Modal({
           setOpen={() => {
             setColorPickerOpen(null)
           }}
-          color={data[colorPickerOpen ?? ''] ?? '#FFFFFF'}
+          color={(data[colorPickerOpen ?? ''] as string) ?? '#FFFFFF'}
           setColor={value => {
             setData({
               [colorPickerOpen ?? '']: value

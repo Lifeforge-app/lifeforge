@@ -3,19 +3,22 @@ import React from 'react'
 
 function SidebarItemIcon({
   icon,
-  active
+  active,
+  smallIcon
 }: {
   icon?: string
   active: boolean
+  smallIcon?: React.ReactElement
 }): React.ReactElement {
   return (
     <>
       {icon !== undefined && (
-        <div className="flex size-7 items-center justify-center">
+        <div className="relative flex size-7 items-center justify-center">
           <Icon
             icon={icon}
             className={`size-6 shrink-0 ${active ? 'text-custom-500' : ''}`}
           />
+          {smallIcon}
         </div>
       )}
     </>

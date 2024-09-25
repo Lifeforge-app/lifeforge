@@ -1,18 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
-import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
-import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
-import IconSelector from '@components/ButtonsAndInputs/IconSelector/IconPicker'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import ModalHeader from '@components/Modals/ModalHeader'
+import Modal from '@components/Modals/Modal'
 import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
+import { type IFieldProps } from '@interfaces/modal_interfaces'
 import APIRequest from '@utils/fetchData'
 
 function ModifyContainerModal({
@@ -26,125 +19,103 @@ function ModifyContainerModal({
   updateContainerList: () => void
   existedData: IIdeaBoxContainer | null
 }): React.ReactElement {
-  const [loading, setLoading] = useState(false)
-  const [containerName, setContainerName] = useState('')
-  const [containerColor, setContainerColor] = useState('#FFFFFF')
-  const [containerIcon, setContainerIcon] = useState('tabler:cube')
-  const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
-  const [colorPickerOpen, setColorPickerOpen] = useState(false)
-  const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
+  const [data, setData] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      name: '',
+      icon: '',
+      color: ''
+    }
+  )
+
+  const FIELDS: IFieldProps[] = [
+    {
+      id: 'name',
+      name: 'Container name',
+      icon: 'tabler:cube',
+      placeholder: 'My container',
+      type: 'text'
+    },
+    {
+      id: 'icon',
+      name: 'Container icon',
+      type: 'icon'
+    },
+    {
+      id: 'color',
+      name: 'Container color',
+      type: 'color'
+    }
+  ]
 
   async function onSubmitButtonClick(): Promise<void> {
+    const { name, icon, color } = data
     if (
-      containerName.trim().length === 0 ||
-      containerColor.trim().length === 0 ||
-      containerIcon.trim().length === 0
+      name.trim().length === 0 ||
+      color.trim().length === 0 ||
+      icon.trim().length === 0
     ) {
       toast.error(t('input.error.fieldEmpty'))
       return
     }
 
-    setLoading(true)
-
     const container = {
-      name: containerName.trim(),
-      color: containerColor.trim(),
-      icon: containerIcon.trim()
+      name: name.trim(),
+      color: color.trim(),
+      icon: icon.trim()
     }
 
     await APIRequest({
       endpoint:
         'idea-box/container' +
-        (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
-      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
+        (openType === 'update' ? `/${existedData?.id}` : ''),
+      method: openType === 'create' ? 'POST' : 'PATCH',
       body: container,
-      successInfo: innerOpenType,
-      failureInfo: innerOpenType,
+      successInfo: openType,
+      failureInfo: openType,
       callback: () => {
         setOpenType(null)
         updateContainerList()
       },
       onFailure: () => {
         setOpenType(null)
-      },
-      finalCallback: () => {
-        setLoading(false)
       }
     })
   }
 
   useEffect(() => {
-    if (innerOpenType === 'update' && existedData !== null) {
-      setContainerName(existedData.name)
-      setContainerColor(existedData.color)
-      setContainerIcon(existedData.icon)
+    if (openType === 'update' && existedData !== null) {
+      setData(existedData)
     } else {
-      setContainerName('')
-      setContainerColor('#FFFFFF')
-      setContainerIcon('tabler:cube')
+      setData({
+        name: '',
+        icon: '',
+        color: ''
+      })
     }
-  }, [innerOpenType, existedData])
+  }, [openType, existedData])
 
   return (
-    <>
-      <ModalWrapper isOpen={openType !== null}>
-        <ModalHeader
-          icon={
-            {
-              create: 'tabler:plus',
-              update: 'tabler:pencil'
-            }[innerOpenType!]
-          }
-          title={`${
-            {
-              create: 'Create ',
-              update: 'Update '
-            }[innerOpenType!]
-          } container`}
-          onClose={() => {
-            setOpenType(null)
-          }}
-        />
-        <Input
-          name="Container name"
-          icon="tabler:cube"
-          value={containerName}
-          updateValue={setContainerName}
-          darker
-          placeholder="My container"
-        />
-        <ColorInput
-          name="Container color"
-          color={containerColor}
-          updateColor={setContainerColor}
-          setColorPickerOpen={setColorPickerOpen}
-        />
-        <IconInput
-          name="Container icon"
-          icon={containerIcon}
-          setIcon={setContainerIcon}
-          setIconSelectorOpen={setIconSelectorOpen}
-        />
-        <CreateOrModifyButton
-          loading={loading}
-          onClick={() => {
-            onSubmitButtonClick().catch(console.error)
-          }}
-          type={innerOpenType}
-        />
-      </ModalWrapper>
-      <ColorPickerModal
-        isOpen={colorPickerOpen}
-        setOpen={setColorPickerOpen}
-        color={containerColor}
-        setColor={setContainerColor}
-      />
-      <IconSelector
-        isOpen={iconSelectorOpen}
-        setOpen={setIconSelectorOpen}
-        setSelectedIcon={setContainerIcon}
-      />
-    </>
+    <Modal
+      fields={FIELDS}
+      data={data}
+      setData={setData}
+      title={`${
+        {
+          create: 'Create ',
+          update: 'Update '
+        }[openType!]
+      } container`}
+      icon={
+        {
+          create: 'tabler:plus',
+          update: 'tabler:pencil'
+        }[openType!]
+      }
+      openType={openType}
+      setOpenType={setOpenType}
+      onSubmit={onSubmitButtonClick}
+    />
   )
 }
 
