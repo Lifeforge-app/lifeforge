@@ -4,6 +4,7 @@
 
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 
+import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -71,11 +72,10 @@ function NotesSubject(): React.ReactElement {
                   />
                 ) : (
                   <EmptyStateScreen
-                    ctaContent="New Note"
+                    ctaContent="upload"
                     icon="tabler:file-off"
-                    title="Hmm... it seems a bit empty here."
-                    description="Time to upload some notes!"
-                    onCTAClick={() => {}}
+                    title={t('emptyState.notes.title')}
+                    description={t('emptyState.notes.description')}
                   />
                 )
               }

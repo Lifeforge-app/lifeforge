@@ -8,7 +8,7 @@ function EntryItem({ mail }: { mail: IMailInboxEntry }): React.ReactElement {
   return (
     <li
       key={mail.id}
-      className="flex-between group flex rounded-md bg-bg-50 p-4 shadow-custom transition-all hover:bg-bg-100/30"
+      className="flex-between group flex rounded-md bg-bg-50 p-4 shadow-custom transition-all hover:bg-bg-100/30 dark:bg-bg-900"
     >
       <div>
         <span className="block text-sm text-bg-500">

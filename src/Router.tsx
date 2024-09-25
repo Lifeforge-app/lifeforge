@@ -11,8 +11,8 @@ import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { convertToDashCase, titleToPath } from '@utils/strings'
 import Auth from './auth'
 import { COMPONENTS } from './Components'
-import _ROUTES from './constants/routes_config.json'
 import MainApplication from './MainApplication'
+import _ROUTES from './routes_config.json'
 
 const ROUTES = _ROUTES as IRoutes[]
 
