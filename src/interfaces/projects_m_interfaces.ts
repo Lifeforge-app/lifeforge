@@ -43,10 +43,10 @@ interface IProjectsMKanbanColumn extends BasePBCollection {
 }
 
 export type {
-  IProjectsMEntry,
   IProjectsMCategory,
+  IProjectsMEntry,
+  IProjectsMKanbanColumn,
   IProjectsMStatus,
-  IProjectsMVisibility,
   IProjectsMTechnology,
-  IProjectsMKanbanColumn
+  IProjectsMVisibility
 }

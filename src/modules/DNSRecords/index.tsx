@@ -6,7 +6,7 @@ import {
   ListboxOptions
 } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React, { useEffect, useState, type JSX } from 'react'
+import React, { type JSX, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'

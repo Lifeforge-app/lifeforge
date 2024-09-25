@@ -10,8 +10,8 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import {
-  type IFlashcardDeck,
-  type IFlashcardCard
+  type IFlashcardCard,
+  type IFlashcardDeck
 } from '@interfaces/flashcard_interfaces'
 import EditCardModal from './EditCardModal'
 

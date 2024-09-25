@@ -43,8 +43,8 @@ interface IProjectsKEntry extends BasePBCollection {
 }
 
 export type {
-  IProjectsKVersion,
+  IProjectsKEntry,
   IProjectsKProgress,
   IProjectsKProgressStep,
-  IProjectsKEntry
+  IProjectsKVersion
 }

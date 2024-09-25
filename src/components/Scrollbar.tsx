@@ -2,7 +2,7 @@
 // @ts-nocheck
 
 import React from 'react'
-import { Scrollbars, type ScrollbarProps } from 'react-custom-scrollbars'
+import { type ScrollbarProps, Scrollbars } from 'react-custom-scrollbars'
 
 function Scrollbar({
   children,

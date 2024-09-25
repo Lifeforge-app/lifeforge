@@ -56,12 +56,11 @@ function WebPlayback(): React.ReactElement {
         <div className="flex-center mt-6 flex w-full flex-col gap-4">
           <div className="flex w-full flex-col">
             <div className="flex-center flex gap-6">
-              <p className="hidden w-20 justify-end sm:flex">{`${Math.floor(
-                Number(position) / 60000
-              )}:${`${Math.floor((Number(position) % 60000) / 1000)}`.padStart(
-                2,
-                '0'
-              )}`}</p>
+              <p className="hidden w-20 justify-end sm:flex">
+                {`${Math.floor(Number(position) / 60000)}:${`${Math.floor(
+                  (Number(position) % 60000) / 1000
+                )}`.padStart(2, '0')}`}
+              </p>
               <input
                 type="range"
                 min="1"
@@ -73,11 +72,13 @@ function WebPlayback(): React.ReactElement {
                 className="w-full sm:w-96"
                 id="myRange"
               />
-              <p className="hidden w-20 justify-start sm:flex">{`${Math.floor(
-                currentTrack.duration_ms / 60000
-              )}:${`${Math.floor(
-                (currentTrack.duration_ms % 60000) / 1000
-              )}`.padStart(2, '0')}`}</p>
+              <p className="hidden w-20 justify-start sm:flex">
+                {`${Math.floor(
+                  currentTrack.duration_ms / 60000
+                )}:${`${Math.floor(
+                  (currentTrack.duration_ms % 60000) / 1000
+                )}`.padStart(2, '0')}`}
+              </p>
             </div>
             <div className="flex w-full flex-between sm:hidden">
               <p className="text-sm text-bg-500">

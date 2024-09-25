@@ -26,4 +26,4 @@ interface IIdeaBoxEntry extends BasePBCollection {
   archived: boolean
 }
 
-export type { IIdeaBoxContainer, IIdeaBoxFolder, IIdeaBoxEntry }
+export type { IIdeaBoxContainer, IIdeaBoxEntry, IIdeaBoxFolder }

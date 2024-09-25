@@ -45,8 +45,8 @@ interface IYoutubePlaylistEntry {
 }
 
 export type {
-  IYoutubeVideoInfo,
-  IYoutubeVideosStorageEntry,
   IYoutubePlaylistEntry,
-  IYoutubePlaylistVideoEntry
+  IYoutubePlaylistVideoEntry,
+  IYoutubeVideoInfo,
+  IYoutubeVideosStorageEntry
 }

@@ -5,12 +5,16 @@
 ## The Problem
 
 - Managing various aspects of life can be overwhelming. 😩
-- Lack of a centralized system to keep track of tasks, projects, and personal goals. 🤯
-- Difficulty in integrating different tools and resources into one cohesive platform. 🛠️
+- Lack of a centralized system to keep track of tasks, projects, and personal
+  goals. 🤯
+- Difficulty in integrating different tools and resources into one cohesive
+  platform. 🛠️
 
 ## The Solution
 
-Lifeforge is a personal management system designed to help you manage your life efficiently. Whether it's keeping track of tasks, organizing projects, or setting personal goals, Lifeforge has got you covered. 
+Lifeforge is a personal management system designed to help you manage your life
+efficiently. Whether it's keeping track of tasks, organizing projects, or
+setting personal goals, Lifeforge has got you covered.
 
 ## 🌟 Features
 
@@ -20,7 +24,8 @@ Lifeforge is a personal management system designed to help you manage your life 
 - **Idea Box**: Store and organize your ideas for future projects.
 - **Todo List**: Manage your daily tasks and stay on top of your to-do list.
 - **Calendar**: Keep track of important dates and events.
-- **Spotify Integration**: Listen to your favorite music while managing your tasks.
+- **Spotify Integration**: Listen to your favorite music while managing your
+  tasks.
 - **Code Time**: Track and manage your coding time.
 - **Pomodoro Timer**: Use the Pomodoro technique to enhance your productivity.
 - **Flashcards**: Create and study flashcards for better retention.
@@ -28,7 +33,8 @@ Lifeforge is a personal management system designed to help you manage your life 
 - **Books Library**: Keep track of your reading list and favorite books.
 - **Journal**: Maintain a personal journal to reflect on your daily activities.
 - **Achievements**: Track and celebrate your achievements.
-- **Wallet**: Manage your finances, including balance, transactions, budgets, and reports.
+- **Wallet**: Manage your finances, including balance, transactions, budgets,
+  and reports.
 - **Wish List**: Keep track of items you wish to purchase.
 - **Photos**: A replica of Google Photos but better!
 - **Music**: Access and manage your music library.
@@ -47,7 +53,8 @@ Lifeforge is a personal management system designed to help you manage your life 
 
 ## 🖥 Screenshots
 
-The screenshots provided are just a glimpse of Lifeforge. There's a lot more to explore and discover within the project.
+The screenshots provided are just a glimpse of Lifeforge. There's a lot more to
+explore and discover within the project.
 
 <div align="center">
 <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/d30f7bb2-9323-4ac5-8489-2a46a0bb81e9">
@@ -81,16 +88,23 @@ The screenshots provided are just a glimpse of Lifeforge. There's a lot more to 
 
 ## ⌨️ Setup
 
-Setting up Lifeforge can be a bit challenging and may require some technical expertise and your own hardware. Full documentation will be released soon to assist with the setup process.
+Setting up Lifeforge can be a bit challenging and may require some technical
+expertise and your own hardware. Full documentation will be released soon to
+assist with the setup process.
 
 ## 📈 Status
 
-Lifeforge is currently under active development, with new features being added regularly. If you encounter any bugs or issues, please report them [here](https://github.com/melvinchia3636lifeforge/issues), and they will be addressed promptly.
+Lifeforge is currently under active development, with new features being added
+regularly. If you encounter any bugs or issues, please report them
+[here](https://github.com/melvinchia3636lifeforge/issues), and they will be
+addressed promptly.
 
 ## 💡 Inspirations
 
-Lifeforge was inspired by the need for a unified personal management system that integrates various tools and resources to help streamline daily life, and also [this project](https://github.com/Volmarg/personal-management-system).
+Lifeforge was inspired by the need for a unified personal management system that
+integrates various tools and resources to help streamline daily life, and also
+[this project](https://github.com/Volmarg/personal-management-system).
 
 ## 📄 License
 
-<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/melvinchia3636/lifeforge">Lifeforge</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://thecodeblog.net">Melvin Chia</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p> 
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/melvinchia3636/lifeforge">Lifeforge</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://thecodeblog.net">Melvin Chia</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>

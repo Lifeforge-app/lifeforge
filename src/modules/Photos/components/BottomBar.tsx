@@ -4,9 +4,9 @@ import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import {
-  type IPhotosEntryDimensionsItem,
+  type IPhotoAlbumEntryItem,
   type IPhotosEntryDimensionsAll,
-  type IPhotoAlbumEntryItem
+  type IPhotosEntryDimensionsItem
 } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '../../../providers/PhotosProvider'
 

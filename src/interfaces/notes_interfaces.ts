@@ -24,4 +24,4 @@ interface INotesPath extends BasePBCollection {
   name: string
 }
 
-export type { INotesWorkspace, INotesSubject, INotesEntry, INotesPath }
+export type { INotesEntry, INotesPath, INotesSubject, INotesWorkspace }

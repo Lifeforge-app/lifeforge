@@ -10,7 +10,7 @@ function AuthHeader(): React.ReactElement {
       <h1 className="mb-8 flex items-center gap-2 whitespace-nowrap text-3xl font-semibold">
         <Icon icon="tabler:hammer" className="text-5xl text-custom-500" />
         <div>
-          LifeForge<span className="text-4xl text-custom-500"> .</span>
+          LifeForge<span className="text-4xl text-custom-500">.</span>
         </div>
       </h1>
       <h2 className="text-center text-4xl font-semibold tracking-wide sm:text-5xl">

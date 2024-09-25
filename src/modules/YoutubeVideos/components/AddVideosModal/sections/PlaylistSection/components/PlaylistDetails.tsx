@@ -1,7 +1,7 @@
 import React from 'react'
 import {
-  type IYoutubePlaylistVideoEntry,
   type IYoutubePlaylistEntry,
+  type IYoutubePlaylistVideoEntry,
   type IYoutubeVideosStorageEntry
 } from '@interfaces/youtube_video_storage_interfaces'
 import PlaylistInfo from './PlaylistInfo'

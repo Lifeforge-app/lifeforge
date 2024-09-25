@@ -2,10 +2,10 @@ import React, { useContext, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import useFetch from '@hooks/useFetch'
 import {
-  type ITodoListList,
-  type ITodoListTag,
   type ITodoListEntry,
+  type ITodoListList,
   type ITodoListStatusCounter,
+  type ITodoListTag,
   type ITodoPriority
 } from '../interfaces/todo_list_interfaces'
 

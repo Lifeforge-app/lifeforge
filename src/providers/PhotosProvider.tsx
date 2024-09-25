@@ -14,10 +14,10 @@ import React, {
 import { Outlet } from 'react-router'
 import useFetch from '@hooks/useFetch'
 import {
-  type IPhotosEntryDimensionsPagination,
   type IPhotoAlbumTag,
   type IPhotosAlbum,
-  type IPhotosEntryDimensionsAll
+  type IPhotosEntryDimensionsAll,
+  type IPhotosEntryDimensionsPagination
 } from '@interfaces/photos_interfaces'
 import IntervalManager from '@utils/intervalManager'
 import { useAuthContext } from './AuthProvider'

@@ -1,10 +1,10 @@
 import React from 'react'
 import {
-  TileLayer,
-  Polygon,
   Circle,
   CircleMarker,
-  MapContainer
+  MapContainer,
+  Polygon,
+  TileLayer
 } from 'react-leaflet'
 
 function RegionMap({

@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import { algsetScrambles, algsetAlgs } from '../../algorithms/OLL'
+import { algsetAlgs, algsetScrambles } from '../../algorithms/OLL'
 import { applyMoves, DEFAULT_CUBE } from '../../scripts/genCube'
 
 function CFOPF2L(): React.ReactElement {

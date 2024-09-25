@@ -1,14 +1,14 @@
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
   ArcElement,
-  LogarithmicScale
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  LineElement,
+  LogarithmicScale,
+  PointElement,
+  Title,
+  Tooltip
 } from 'chart.js'
 import React from 'react'
 import { useNavigate } from 'react-router'

@@ -128,14 +128,14 @@ interface ICPUTemp {
 }
 
 export type {
+  Cache,
+  CPU,
+  ICPUTemp,
+  ICPUUSage,
   IDiskUsage,
   IMemoryUsage,
-  ICPUUSage,
   ISystemInfo,
-  CPU,
-  Cache,
   NetworkInterface,
   NetworkStat,
-  OSInfo,
-  ICPUTemp
+  OSInfo
 }

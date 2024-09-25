@@ -3,10 +3,10 @@ import { useSearchParams } from 'react-router-dom'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import {
+  type IProjectsMCategory,
   type IProjectsMStatus,
   type IProjectsMTechnology,
-  type IProjectsMVisibility,
-  type IProjectsMCategory
+  type IProjectsMVisibility
 } from '@interfaces/projects_m_interfaces'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 
