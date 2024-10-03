@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
 import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
@@ -145,6 +145,7 @@ function ModifyJournalEntryModal({
         icon="tabler:calendar"
         name="Date"
         hasMargin={false}
+        darker
       />
       <Input
         name="Journal Title"
