@@ -672,3 +672,7 @@ td {
 .runway-tables table td {
   @apply text-bg-500 dark:text-bg-400;
 }
+
+.steps .step::after {
+  content: counter(step) !important;
+}
