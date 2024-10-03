@@ -84,6 +84,7 @@ function Mood({
           <>
             <div className="w-full flex-1">
               <Input
+                darker
                 value={mood.text}
                 icon="tabler:mood-neutral"
                 name="Mood of the day"
@@ -93,6 +94,7 @@ function Mood({
                 placeholder="How do you feel?"
               />
               <Input
+                darker
                 value={mood.emoji}
                 icon="uil:icons"
                 name="Emoji"

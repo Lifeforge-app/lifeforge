@@ -11,6 +11,7 @@ function Sidebar(): React.ReactElement {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { sidebarOpen, setSidebarOpen } = useProjectsMContext().miscellaneous
+
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
       <SidebarItem
