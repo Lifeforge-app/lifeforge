@@ -12,7 +12,7 @@ function DefaultBgTempSelector({
   setBgTemp: (value: string) => void
 }): React.ReactElement {
   return (
-    <div className="flex w-full flex-col items-center gap-2 md:w-auto">
+    <div className="flex w-full flex-col items-center gap-2 xl:w-auto">
       <div className="flex items-center gap-4">
         {COLORS.map((color, index) => (
           <button

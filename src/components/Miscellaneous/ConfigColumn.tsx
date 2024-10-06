@@ -11,7 +11,10 @@ function ConfigColumn({
 
   tooltip,
   hasDivider = true,
-  children
+  children,
+  wrapWhen = 'md',
+  noDefaultBreakpoints = false,
+  className
 }: {
   title: string | React.ReactNode
   desc: string
@@ -20,16 +23,27 @@ function ConfigColumn({
   tooltip?: React.ReactNode
   hasDivider?: boolean
   children: React.ReactNode
+  wrapWhen?: 'sm' | 'md' | 'lg' | 'xl'
+  noDefaultBreakpoints?: boolean
+  className?: string
 }): React.ReactElement {
   return (
     <>
       <div
         className={`flex w-full min-w-0 flex-col justify-between gap-6 px-4 ${
-          !vertical ? 'md:flex-row' : ''
-        }`}
+          !vertical
+            ? !noDefaultBreakpoints &&
+              {
+                sm: 'sm:flex-row',
+                md: 'md:flex-row',
+                lg: 'lg:flex-row',
+                xl: 'xl:flex-row'
+              }[wrapWhen]
+            : 'flex-col'
+        } ${className}`}
       >
         <div className="flex shrink items-center gap-4">
-          <Icon icon={icon} className="size-6 text-bg-500" />
+          <Icon icon={icon} className="size-6 shrink-0 text-bg-500" />
           <div>
             <h3 className="flex w-full items-center gap-2 text-xl font-medium leading-normal md:w-auto">
               {title}

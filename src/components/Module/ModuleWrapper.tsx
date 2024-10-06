@@ -1,5 +1,5 @@
 import React from 'react'
-import Scrollbar from '@components/Scrollbar'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 
 function ModuleWrapper({

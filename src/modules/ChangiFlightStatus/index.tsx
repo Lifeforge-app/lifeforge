@@ -8,7 +8,7 @@ import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import Scrollbar from '@components/Scrollbar'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
 
 export interface IFlightStatus {

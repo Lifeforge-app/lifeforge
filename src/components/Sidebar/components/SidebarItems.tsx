@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import Scrollbar from '@components/Scrollbar'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import { type IRoutes } from '@interfaces/routes_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
