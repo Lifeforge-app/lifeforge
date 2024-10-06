@@ -1,6 +1,6 @@
 import React from 'react'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
-import Scrollbar from '@components/Scrollbar'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 
 function SidebarWrapper({
   isOpen,

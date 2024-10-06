@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import Scrollbar from '@components/Scrollbar'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import {
   type ICalendarCategory,

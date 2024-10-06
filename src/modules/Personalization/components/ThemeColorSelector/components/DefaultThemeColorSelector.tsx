@@ -46,7 +46,7 @@ function DefaultThemeColorSelector({
         setThemeColor(color === 'theme-custom' ? customThemeColor : color)
       }}
     >
-      <div className="relative mt-1 w-full md:w-56">
+      <div className="relative mt-1 w-full lg:w-56">
         <ListboxButton
           className={`flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 ${
             !themeColor.startsWith('#') ? 'py-4 pl-4 pr-10' : 'py-6 pl-6 pr-12'

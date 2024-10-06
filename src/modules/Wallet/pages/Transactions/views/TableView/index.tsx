@@ -1,5 +1,5 @@
 import React from 'react'
-import Scrollbar from '@components/Scrollbar'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 import TableBody from './components/TableBody'
 import TableHeader from './components/TableHeader'

@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import Scrollbar from '@components/Scrollbar'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import { type IDiskUsage } from '@interfaces/server_status_interfaces'
 

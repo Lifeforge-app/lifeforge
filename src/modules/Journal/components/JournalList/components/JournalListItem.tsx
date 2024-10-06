@@ -40,8 +40,8 @@ function JournalListItem({
             {entry.title === '' ? 'Untitled' : entry.title}
           </h2>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="block rounded-full bg-bg-700/50 px-3 py-1 text-base font-medium">
+        <div className="flex items-center gap-4">
+          <span className="block whitespace-nowrap rounded-full bg-bg-200 px-3 py-1 text-base font-medium shadow-custom dark:bg-bg-700/50">
             {entry.mood.emoji} {entry.mood.text}
           </span>
           <HamburgerMenu className="relative">
