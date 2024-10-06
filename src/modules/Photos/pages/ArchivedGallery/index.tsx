@@ -13,7 +13,7 @@ import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu/index.tsx'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem.tsx'
 import ModuleWrapper from '@components/Module/ModuleWrapper.tsx'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback.tsx'
-import Scrollbar from '@components/Scrollbar.tsx'
+import Scrollbar from '@components/Miscellaneous/Scrollbar.tsx'
 import useFetch from '@hooks/useFetch'
 import {
   type IPhotoAlbumEntryItem,

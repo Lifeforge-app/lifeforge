@@ -2,7 +2,7 @@
 import { collections as importedCollections } from '@iconify/collections'
 import { type IconifyInfo } from '@iconify/types'
 import React, { useState } from 'react'
-import Scrollbar from '@components/Scrollbar'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import { type IIconSet } from '@interfaces/icon_selector_interfaces'
 import CategoryEntry from './components/CategoryEntry'
 import Header from './components/Header'

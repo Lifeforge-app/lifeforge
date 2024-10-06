@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import Scrollbar from '@components/Scrollbar'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
 
 const AIRPORT_TYPES = {

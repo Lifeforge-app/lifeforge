@@ -1,5 +1,5 @@
 import React from 'react'
-import Scrollbar from '@components/Scrollbar'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import TaskItem from './TaskItem'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
-import Scrollbar from '@components/Scrollbar'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 import TransactionListItem from './components/TransactionListItem'

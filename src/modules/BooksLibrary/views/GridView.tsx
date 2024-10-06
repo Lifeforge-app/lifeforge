@@ -1,5 +1,5 @@
 import React from 'react'
-import Scrollbar from '@components/Scrollbar'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 
 function GridView({ books }: { books: any[] }): React.ReactElement {
   return (
