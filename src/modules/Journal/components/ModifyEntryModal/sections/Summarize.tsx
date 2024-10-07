@@ -91,8 +91,6 @@ function Summarize({
     fetchSummarizedText().catch(console.error)
   }, [])
 
-  console.log(summarizedText)
-
   return (
     <>
       <div className="mt-4 size-full rounded-lg bg-bg-200/70 p-6 shadow-custom transition-all focus-within:ring-1 focus-within:ring-bg-300 dark:bg-bg-800/50 dark:focus-within:ring-bg-500">

@@ -66,17 +66,17 @@ function JournalView({
               <span className="text-sm text-bg-500">({photos.length})</span>
             </span>
           </h3>
-          <div className="mt-4 grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-4">
+          <div className="mt-4 flex flex-wrap gap-2">
             {photos.map(photo => (
               <img
                 src={
                   typeof photo === 'string'
-                    ? photo + '&thumb=300x300'
+                    ? photo + '&thumb=0x300'
                     : photo.preview
                 }
                 alt=""
                 key={typeof photo === 'string' ? photo : photo.preview}
-                className="size-full rounded-lg object-contain"
+                className="h-32 grow rounded-md object-cover"
               />
             ))}
           </div>
