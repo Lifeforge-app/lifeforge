@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React from 'react'
+import React, { useRef } from 'react'
+import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 
@@ -24,6 +25,8 @@ function Photos({
   >
   openType: 'create' | 'update' | null
 }): React.ReactElement {
+  const originalPhotosLength = useRef(photos.length)
+
   async function uploadPhotos(
     e: React.ChangeEvent<HTMLInputElement>
   ): Promise<void> {
@@ -33,7 +36,7 @@ function Photos({
     }
 
     const newPhotos = Array.from(files)
-      .slice(0, 10 - photos.length)
+      .slice(0, 25 - photos.length)
       .filter(file => file.type.startsWith('image/'))
       .filter(file => photos.every(p => p.file.name !== file.name))
       .map(async file => {
@@ -61,7 +64,8 @@ function Photos({
   }
 
   function onUploadClick(): void {
-    if (photos.length >= 10) {
+    if (photos.length >= 25) {
+      toast.error('You can only upload up to 25 photos')
       return
     }
 
@@ -72,61 +76,11 @@ function Photos({
     input.onchange = uploadPhotos as any
     input.click()
   }
+
   return (
     <>
-      <div className="mt-4 flex w-full flex-1 shrink-0 flex-col rounded-lg bg-bg-800/50 p-6 transition-all focus-within:ring-1 focus-within:ring-bg-500">
-        {openType === 'create' ? (
-          photos.length > 0 ? (
-            <>
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-4">
-                {photos.map(photo => (
-                  <div
-                    key={photo.preview}
-                    className="relative overflow-hidden rounded-lg"
-                  >
-                    <img
-                      src={photo.preview}
-                      alt=""
-                      className="size-full object-contain"
-                    />
-                    <button
-                      onClick={() => {
-                        setPhotos(
-                          photos.filter(p => p.preview !== photo.preview)
-                        )
-                      }}
-                      className="flex-center absolute left-0 top-0 flex size-full bg-red-900/50 opacity-0 transition-opacity duration-200 hover:opacity-100"
-                    >
-                      <Icon
-                        icon="tabler:trash"
-                        className="size-6 text-red-500"
-                      />
-                    </button>
-                  </div>
-                ))}
-              </div>
-              {photos.length < 10 && (
-                <Button
-                  onClick={onUploadClick}
-                  className="mt-4 w-full"
-                  disabled={photos.length >= 10}
-                  icon="tabler:plus"
-                  variant="secondary"
-                >
-                  upload photos
-                </Button>
-              )}
-            </>
-          ) : (
-            <EmptyStateScreen
-              icon="tabler:photo-off"
-              title="No photos uploaded"
-              description="Upload some photos to make your journal entry more memorable!"
-              ctaContent="Upload Photos"
-              onCTAClick={onUploadClick}
-            />
-          )
-        ) : (
+      <div className="mt-4 flex w-full flex-1 shrink-0 flex-col rounded-lg bg-bg-200/50 p-6 shadow-custom transition-all focus-within:ring-1 focus-within:ring-bg-500 dark:bg-bg-800/50">
+        {openType === 'update' && originalPhotosLength.current > 0 ? (
           <div className="flex-center flex size-full flex-col gap-4">
             <Icon icon="tabler:lock" className="size-28" />
             <h2 className="text-4xl font-semibold">Photos are locked</h2>
@@ -134,6 +88,50 @@ function Photos({
               You can&apos;t upload photos in update mode.
             </p>
           </div>
+        ) : photos.length > 0 ? (
+          <>
+            <div className="flex flex-wrap gap-2">
+              {photos.map(photo => (
+                <div
+                  key={photo.preview}
+                  className="relative h-32 grow overflow-hidden rounded-lg"
+                >
+                  <img
+                    src={photo.preview}
+                    alt=""
+                    className="size-full object-cover"
+                  />
+                  <button
+                    onClick={() => {
+                      setPhotos(photos.filter(p => p.preview !== photo.preview))
+                    }}
+                    className="flex-center absolute left-0 top-0 flex size-full bg-red-900/50 opacity-0 transition-opacity duration-200 hover:opacity-100"
+                  >
+                    <Icon icon="tabler:trash" className="size-6 text-red-500" />
+                  </button>
+                </div>
+              ))}
+            </div>
+            {photos.length < 25 && (
+              <Button
+                onClick={onUploadClick}
+                className="mt-4 w-full"
+                disabled={photos.length >= 25}
+                icon="tabler:plus"
+                variant="secondary"
+              >
+                upload photos
+              </Button>
+            )}
+          </>
+        ) : (
+          <EmptyStateScreen
+            icon="tabler:photo-off"
+            title="No photos uploaded"
+            description="Upload some photos to make your journal entry more memorable!"
+            ctaContent="Upload Photos"
+            onCTAClick={onUploadClick}
+          />
         )}
       </div>
       <div className="flex-between mt-6 flex">
