@@ -1,3 +1,4 @@
+import moment from 'moment'
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import { encrypt } from '@utils/encryption'
@@ -55,7 +56,7 @@ function Review({
 
     const encryptedEverything = encrypt(
       JSON.stringify({
-        date,
+        date: moment(date).format('YYYY-MM-DD'),
         title: encryptedTitle,
         raw: encryptedRaw,
         cleanedUp: encryptedCleanedUp,
@@ -72,13 +73,15 @@ function Review({
       formData.append('files', photo.file)
     })
 
+    console.log(formData)
+
     await APIRequest({
       endpoint: `/journal/entries/${openType}${
         openType === 'update' ? `/${id}` : ''
       }`,
       method: openType === 'update' ? 'PUT' : 'POST',
-      isJSON: openType === 'update',
-      body: openType === 'update' ? { data: encryptedEverything } : formData,
+      isJSON: false,
+      body: formData,
       successInfo: openType,
       failureInfo: openType,
       callback: () => {
