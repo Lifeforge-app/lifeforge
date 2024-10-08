@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { type IWalletIncomeExpenses } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 
 function IncomeExpenseCard({
@@ -14,6 +15,7 @@ function IncomeExpenseCard({
   data: IWalletIncomeExpenses | 'loading' | 'error'
 }): React.ReactElement {
   const isIncome = title.toLowerCase() === 'income'
+  const { isAmountHidden } = useWalletContext()
   const { t } = useTranslation()
 
   return (
@@ -28,15 +30,49 @@ function IncomeExpenseCard({
         <>
           <p className="flex w-full items-end justify-start gap-2 text-5xl font-medium">
             <span className="-mb-0.5 text-2xl text-bg-500 xl:text-3xl">RM</span>
-            {numberToMoney(
-              +data[`total${title}` as 'totalIncome' | 'totalExpenses']
+            {isAmountHidden ? (
+              <span className="flex items-center">
+                {Array(4)
+                  .fill(0)
+                  .map((_, i) => (
+                    <Icon
+                      key={i}
+                      icon="uil:asterisk"
+                      className="-mx-0.5 size-8"
+                    />
+                  ))}
+              </span>
+            ) : (
+              numberToMoney(
+                +data[`total${title}` as 'totalIncome' | 'totalExpenses']
+              )
             )}
           </p>
           <p>
-            <span className={isIncome ? 'text-green-500' : 'text-red-500'}>
+            <span
+              className={`${
+                isIncome ? 'text-green-500' : 'text-red-500'
+              } inline-flex items-center`}
+            >
               {isIncome ? '+' : '-'}RM
-              {numberToMoney(
-                +data[`monthly${title}` as 'monthlyIncome' | 'monthlyExpenses']
+              {isAmountHidden ? (
+                <span className="ml-1 flex items-center">
+                  {Array(4)
+                    .fill(0)
+                    .map((_, i) => (
+                      <Icon
+                        key={i}
+                        icon="uil:asterisk"
+                        className="-mx-0.5 size-4"
+                      />
+                    ))}
+                </span>
+              ) : (
+                numberToMoney(
+                  +data[
+                    `monthly${title}` as 'monthlyIncome' | 'monthlyExpenses'
+                  ]
+                )
               )}
             </span>{' '}
             from this month

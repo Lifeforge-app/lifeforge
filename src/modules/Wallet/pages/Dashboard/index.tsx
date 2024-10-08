@@ -14,6 +14,7 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
 import FAB from '@components/ButtonsAndInputs/FAB'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import { useWalletContext } from '@providers/WalletProvider'
@@ -37,7 +38,8 @@ ChartJS.register(
 
 function WalletDashboard(): React.ReactElement {
   const navigate = useNavigate()
-  const { incomeExpenses } = useWalletContext()
+  const { incomeExpenses, isAmountHidden, toggleAmountVisibility } =
+    useWalletContext()
 
   return (
     <ModuleWrapper>
@@ -55,8 +57,20 @@ function WalletDashboard(): React.ReactElement {
             Add Transaction
           </Button>
         }
+        hamburgerMenuItems={
+          <>
+            <MenuItem
+              text="Hide Amount"
+              icon="tabler:eye-off"
+              onClick={() => {
+                toggleAmountVisibility(!isAmountHidden)
+              }}
+              isToggled={isAmountHidden}
+            />
+          </>
+        }
       />
-      <div className="mt-6 flex size-full grid-cols-3 grid-rows-[repeat(6,minmax(200px,1fr))] flex-col gap-4 pb-8 xl:grid">
+      <div className="mt-6 flex size-full grid-cols-3 grid-rows-[repeat(6,minmax(120px,200px))] flex-col gap-4 pb-8 xl:grid">
         <IncomeExpenseCard
           title="Income"
           icon="tabler:login-2"
