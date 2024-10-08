@@ -5,6 +5,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { type IWalletAsset } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 
 function AssetItem({
@@ -18,6 +19,7 @@ function AssetItem({
   setModifyModalOpenType: React.Dispatch<'create' | 'update' | null>
   setDeleteAssetsConfirmationOpen: React.Dispatch<boolean>
 }): React.ReactElement {
+  const { isAmountHidden } = useWalletContext()
   const navigate = useNavigate()
 
   return (
@@ -28,9 +30,23 @@ function AssetItem({
         </span>
         <h2 className="text-xl font-medium">{asset.name}</h2>
       </div>
-      <p className="text-5xl font-medium">
+      <p
+        className={`flex text-5xl font-medium ${
+          isAmountHidden ? 'items-center' : 'items-end'
+        }`}
+      >
         <span className="mr-2 text-3xl text-bg-500">RM</span>
-        {numberToMoney(asset.balance)}
+        {isAmountHidden ? (
+          <span className="flex items-center">
+            {Array(4)
+              .fill(0)
+              .map((_, i) => (
+                <Icon key={i} icon="uil:asterisk" className="size-8" />
+              ))}
+          </span>
+        ) : (
+          numberToMoney(asset.balance)
+        )}
       </p>
       <Button
         variant="secondary"
