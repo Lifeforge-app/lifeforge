@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
 import FAB from '@components/ButtonsAndInputs/FAB'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -14,7 +15,8 @@ import AssetItem from './components/AssetItem'
 import ModifyAssetsModal from './components/ModifyAssetsModal'
 
 function Assets(): React.ReactElement {
-  const { assets, refreshAssets } = useWalletContext()
+  const { assets, refreshAssets, isAmountHidden, toggleAmountVisibility } =
+    useWalletContext()
   const [modifyAssetsModalOpenType, setModifyModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
@@ -48,6 +50,18 @@ function Assets(): React.ReactElement {
               Add Asset
             </Button>
           )
+        }
+        hamburgerMenuItems={
+          <>
+            <MenuItem
+              text="Hide Amount"
+              icon="tabler:eye-off"
+              onClick={() => {
+                toggleAmountVisibility(!isAmountHidden)
+              }}
+              isToggled={isAmountHidden}
+            />
+          </>
         }
       />
       <APIComponentWithFallback data={assets}>
