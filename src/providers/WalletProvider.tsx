@@ -24,6 +24,8 @@ interface IWalletData {
   refreshLedgers: () => void
   refreshCategories: () => void
   refreshIncomeExpenses: () => void
+  isAmountHidden: boolean
+  toggleAmountVisibility: React.Dispatch<React.SetStateAction<boolean>>
   searchQuery: string
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
 }
@@ -34,6 +36,7 @@ export const WalletContext = React.createContext<IWalletData | undefined>(
 
 export default function WalletProvider(): React.ReactElement {
   const [searchParams] = useSearchParams()
+  const [isAmountHidden, toggleAmountVisibility] = useState(true)
   const [transactions, refreshTransactions] = useFetch<IWalletTransaction[]>(
     'wallet/transactions'
   )
@@ -109,6 +112,8 @@ export default function WalletProvider(): React.ReactElement {
         refreshLedgers,
         refreshCategories,
         refreshIncomeExpenses,
+        isAmountHidden,
+        toggleAmountVisibility,
         searchQuery,
         setSearchQuery
       }}
