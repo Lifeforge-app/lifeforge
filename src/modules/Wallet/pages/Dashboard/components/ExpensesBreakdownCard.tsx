@@ -5,8 +5,8 @@ import { Doughnut } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 
@@ -22,7 +22,8 @@ const options2 = {
 }
 
 function ExpensesBreakdownCard(): React.ReactElement {
-  const { categories, transactions, incomeExpenses } = useWalletContext()
+  const { categories, transactions, incomeExpenses, isAmountHidden } =
+    useWalletContext()
   // TODO
   const [year] = useState(new Date().getFullYear())
   const [month] = useState(new Date().getMonth())
@@ -75,10 +76,28 @@ function ExpensesBreakdownCard(): React.ReactElement {
               <>
                 <div className="relative mx-auto mt-6 flex aspect-square w-4/5 min-w-0 flex-col gap-4">
                   <div className="absolute left-1/2 top-1/2 mt-2 flex size-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center">
-                    <div className="text-4xl font-medium">
+                    <div
+                      className={`flex text-4xl font-medium ${
+                        isAmountHidden ? 'items-center' : 'items-end'
+                      }`}
+                    >
                       <span className="mr-1 text-xl text-bg-500">RM</span>
                       {typeof incomeExpenses !== 'string' &&
-                        numberToMoney(incomeExpenses.monthlyExpenses)}
+                        (isAmountHidden ? (
+                          <span className="flex items-center">
+                            {Array(4)
+                              .fill(0)
+                              .map((_, i) => (
+                                <Icon
+                                  key={i}
+                                  icon="uil:asterisk"
+                                  className="-mx-0.5 size-8"
+                                />
+                              ))}
+                          </span>
+                        ) : (
+                          numberToMoney(incomeExpenses.monthlyExpenses)
+                        ))}
                     </div>
                     <div className="mt-2 w-1/2 text-center text-base text-bg-500">
                       {t('wallet.dashboard.expensesBreakdown.desc')}
@@ -107,7 +126,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                     className="relative aspect-square w-full min-w-0"
                   />
                 </div>
-                <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
+                <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
                   {categories
                     .filter(category => category.type === 'expenses')
                     .map(category => (
@@ -133,7 +152,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                         <Link
                           key={category.id}
                           to={`/wallet/transactions?type=expenses&category=${category.id}`}
-                          className="flex-between flex gap-4 p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50"
+                          className="flex-between flex gap-4 rounded-md p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50"
                         >
                           <div className="flex items-center gap-4">
                             <div
@@ -161,15 +180,33 @@ function ExpensesBreakdownCard(): React.ReactElement {
                             </div>
                           </div>
                           <div className="flex flex-col">
-                            <div className="text-right font-medium">
+                            <div
+                              className={`flex gap-2 text-right font-medium ${
+                                isAmountHidden ? 'items-center' : 'items-end'
+                              }`}
+                            >
                               - RM{' '}
-                              {transactions
-                                .filter(
-                                  transaction =>
-                                    transaction.category === category.id
-                                )
-                                .reduce((acc, curr) => acc + curr.amount, 0)
-                                .toFixed(2)}
+                              {isAmountHidden ? (
+                                <span className="flex items-center">
+                                  {Array(4)
+                                    .fill(0)
+                                    .map((_, i) => (
+                                      <Icon
+                                        key={i}
+                                        icon="uil:asterisk"
+                                        className="-mx-0.5 size-4"
+                                      />
+                                    ))}
+                                </span>
+                              ) : (
+                                transactions
+                                  .filter(
+                                    transaction =>
+                                      transaction.category === category.id
+                                  )
+                                  .reduce((acc, curr) => acc + curr.amount, 0)
+                                  .toFixed(2)
+                              )}
                             </div>
                             <div className="text-right text-sm text-bg-500">
                               {(

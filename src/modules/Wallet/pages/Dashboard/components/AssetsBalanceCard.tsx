@@ -2,14 +2,14 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function AssetsBalanceCard(): React.ReactElement {
   const navigate = useNavigate()
-  const { assets } = useWalletContext()
+  const { assets, isAmountHidden } = useWalletContext()
   const { t } = useTranslation()
 
   return (
@@ -43,9 +43,27 @@ function AssetsBalanceCard(): React.ReactElement {
                         {asset.name}
                       </div>
                     </div>
-                    <div className="whitespace-nowrap text-right text-3xl font-medium">
-                      <span className="text-xl text-bg-500">RM</span>{' '}
-                      {(+asset.balance).toFixed(2)}
+                    <div
+                      className={`flex ${
+                        isAmountHidden ? 'items-center' : 'items-end'
+                      } gap-2 whitespace-nowrap text-right text-3xl font-medium`}
+                    >
+                      <span className="text-xl text-bg-500">RM</span>
+                      {isAmountHidden ? (
+                        <span className="flex items-center">
+                          {Array(4)
+                            .fill(0)
+                            .map((_, i) => (
+                              <Icon
+                                key={i}
+                                icon="uil:asterisk"
+                                className="-mx-0.5 size-4"
+                              />
+                            ))}
+                        </span>
+                      ) : (
+                        <span>{(+asset.balance).toFixed(2)}</span>
+                      )}
                     </div>
                   </Link>
                 ))}
