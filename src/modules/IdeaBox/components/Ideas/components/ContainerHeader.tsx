@@ -22,10 +22,10 @@ function ContainerHeader({
   folderId?: string
 }): React.ReactElement {
   const [containerDetails] = useFetch<IIdeaBoxContainer>(
-    `idea-box/container/${id}`
+    `idea-box/containers/${id}`
   )
   const [folderDetails] = useFetch<IIdeaBoxFolder>(
-    `idea-box/folder/get/${folderId}`,
+    `idea-box/folders/${folderId}`,
     folderId !== undefined
   )
   const navigate = useNavigate()

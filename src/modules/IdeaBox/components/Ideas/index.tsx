@@ -34,13 +34,13 @@ function Ideas(): React.ReactElement {
     searchParams.get('archived') === 'true'
   )
 
-  const [valid] = useFetch<boolean>(`idea-box/container/valid/${id}`)
+  const [valid] = useFetch<boolean>(`idea-box/containers/valid/${id}`)
   const [data, refreshData, setData] = useFetch<IIdeaBoxEntry[]>(
-    `idea-box/idea/${id}?archived=${viewArchived}`,
+    `idea-box/ideas?container=${id}&archived=${viewArchived}`,
     valid === true
   )
   const [folders, refreshFolders] = useFetch<IIdeaBoxFolder[]>(
-    `idea-box/folder/list/${id}`,
+    `idea-box/folders?container=${id}`,
     valid === true
   )
 
@@ -273,7 +273,7 @@ function Ideas(): React.ReactElement {
               onClose={() => {
                 setDeleteIdeaModalOpen(false)
               }}
-              apiEndpoint="idea-box/idea"
+              apiEndpoint="idea-box/ideas"
               itemName="idea"
               data={existedData}
               updateDataList={refreshData}
@@ -283,7 +283,7 @@ function Ideas(): React.ReactElement {
               onClose={() => {
                 setDeleteFolderModalOpen(false)
               }}
-              apiEndpoint="idea-box/folder"
+              apiEndpoint="idea-box/folders"
               itemName="folder"
               data={existedFolderData}
               updateDataList={refreshFolders}

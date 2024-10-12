@@ -26,20 +26,19 @@ function EntryContextMenu({
   updateIdeaList: () => void
 }): React.ReactElement {
   const { folderId } = useParams()
-  async function pinIdea(ideaId: string): Promise<void> {
+  async function pinIdea(): Promise<void> {
     await APIRequest({
-      endpoint: `idea-box/idea/pin/${ideaId}`,
+      endpoint: `idea-box/ideas/pin/${entry.id}`,
       method: 'POST',
-      body: { ideaId },
       successInfo: entry.pinned ? 'unpin' : 'pin',
       failureInfo: entry.pinned ? 'unpin' : 'pin',
       callback: updateIdeaList
     })
   }
 
-  async function archiveIdea(ideaId: string): Promise<void> {
+  async function archiveIdea(): Promise<void> {
     await APIRequest({
-      endpoint: `idea-box/idea/archive/${ideaId}`,
+      endpoint: `idea-box/ideas/archive/${entry.id}`,
       method: 'POST',
       successInfo: entry.archived ? 'unarchive' : 'archive',
       failureInfo: entry.archived ? 'unarchive' : 'archive',
@@ -49,9 +48,8 @@ function EntryContextMenu({
 
   async function removeFromFolder(): Promise<void> {
     await APIRequest({
-      endpoint: `idea-box/folder/idea/${folderId}`,
+      endpoint: `idea-box/ideas/folder/${entry.id}?folder=${folderId}`,
       method: 'DELETE',
-      body: { ideaId: entry.id },
       successInfo: 'remove',
       failureInfo: 'remove',
       callback: updateIdeaList
@@ -74,12 +72,12 @@ function EntryContextMenu({
       <MenuItems
         transition
         anchor="bottom end"
-        className="mt-2 w-48 overflow-hidden rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+        className="mt-2 min-w-56 overflow-hidden rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
       >
         {!entry.archived && (
           <MenuItem
             onClick={() => {
-              pinIdea(entry.id).catch(console.error)
+              pinIdea().catch(console.error)
             }}
             icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
             text={entry.pinned ? 'Unpin' : 'Pin'}
@@ -87,7 +85,7 @@ function EntryContextMenu({
         )}
         <MenuItem
           onClick={() => {
-            archiveIdea(entry.id).catch(console.error)
+            archiveIdea().catch(console.error)
           }}
           icon={entry.archived ? 'tabler:archive-off' : 'tabler:archive'}
           text={entry.archived ? 'Unarchive' : 'Archive'}
