@@ -27,10 +27,11 @@ function Folder(): React.ReactElement {
     searchParams.get('archived') === 'true'
   )
 
-  const [valid] = useFetch<boolean>(`idea-box/container/valid/${id}`)
+  const [containerValid] = useFetch<boolean>(`idea-box/containers/valid/${id}`)
+  const [folderValid] = useFetch<boolean>(`idea-box/folders/valid/${folderId}`)
   const [data, refreshData] = useFetch<IIdeaBoxEntry[]>(
-    `idea-box/idea/${id}/${folderId}?archived=${viewArchived}`,
-    valid === true
+    `idea-box/ideas?container=${id}&folder=${folderId}&archived=${viewArchived}`,
+    containerValid === true && folderValid === true
   )
 
   const [modifyIdeaModalOpenType, setModifyIdeaModalOpenType] = useState<
@@ -51,11 +52,18 @@ function Folder(): React.ReactElement {
   }, [viewArchived])
 
   useEffect(() => {
-    if (typeof valid === 'boolean' && !valid) {
+    if (typeof containerValid === 'boolean' && !containerValid) {
       toast.error('Invalid ID')
       navigate('/idea-box')
     }
-  }, [valid])
+  }, [containerValid])
+
+  useEffect(() => {
+    if (typeof folderValid === 'boolean' && !folderValid) {
+      toast.error('Invalid ID')
+      navigate('/idea-box')
+    }
+  }, [folderValid])
 
   function onPasteImage(event: ClipboardEvent): void {
     if (modifyIdeaModalOpenType !== null) return
@@ -109,7 +117,7 @@ function Folder(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <APIComponentWithFallback data={valid}>
+      <APIComponentWithFallback data={containerValid}>
         {() => (
           <>
             <ContainerHeader
@@ -199,7 +207,7 @@ function Folder(): React.ReactElement {
               onClose={() => {
                 setDeleteIdeaModalOpen(false)
               }}
-              apiEndpoint="idea-box/idea"
+              apiEndpoint="idea-box/ideas"
               itemName="idea"
               data={existedData}
               updateDataList={refreshData}

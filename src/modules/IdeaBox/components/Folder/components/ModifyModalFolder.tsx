@@ -57,7 +57,7 @@ function ModifyFolderModal({
 
     await APIRequest({
       endpoint:
-        'idea-box/folder' +
+        'idea-box/folders' +
         (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
       method: innerOpenType === 'create' ? 'POST' : 'PATCH',
       body: folder,
