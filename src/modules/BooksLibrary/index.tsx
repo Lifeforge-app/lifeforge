@@ -1,11 +1,14 @@
+import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
+import LibgenModal from './components/LibgenModal'
 import Sidebar from './components/Sidebar'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
@@ -14,6 +17,7 @@ function BooksLibrary(): React.ReactElement {
   const [searchQuery, setSearchQuery] = useState('')
   const [books] = useFetch<any>('books-library/list')
   const [view, setView] = useState<'list' | 'grid'>('list')
+  const [libgenModalOpen, setLibgenModalOpen] = useState(false)
 
   return (
     <ModuleWrapper>
@@ -25,13 +29,34 @@ function BooksLibrary(): React.ReactElement {
             <h1 className="text-3xl font-semibold sm:text-4xl">
               All Books <span className="text-base text-bg-500">(10)</span>
             </h1>
-            <Button
-              onClick={() => {}}
-              icon="tabler:plus"
-              className="hidden sm:flex"
-            >
-              upload
-            </Button>
+            <Menu as="div" className="relative z-50 hidden md:block">
+              <Button
+                onClick={() => {}}
+                icon="tabler:plus"
+                className="hidden sm:flex"
+                CustomElement={MenuButton}
+              >
+                add Book
+              </Button>
+              <MenuItems
+                transition
+                anchor="bottom end"
+                className="mt-2 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+              >
+                <MenuItem
+                  onClick={() => {}}
+                  icon="tabler:upload"
+                  text="Upload from device"
+                />
+                <MenuItem
+                  onClick={() => {
+                    setLibgenModalOpen(true)
+                  }}
+                  icon="tabler:books"
+                  text="Download from Libgen"
+                />
+              </MenuItems>
+            </Menu>
           </div>
           <div className="flex items-center gap-2">
             <SearchInput
@@ -77,6 +102,7 @@ function BooksLibrary(): React.ReactElement {
           </APIComponentWithFallback>
         </div>
       </div>
+      <LibgenModal isOpen={libgenModalOpen} setOpen={setLibgenModalOpen} />
     </ModuleWrapper>
   )
 }

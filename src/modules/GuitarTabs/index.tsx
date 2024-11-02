@@ -3,11 +3,11 @@ import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import {
   type IGuitarTabsEntry,
@@ -16,10 +16,10 @@ import {
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import Header from './components/Header'
 import ModifyEntryModal from './components/ModifyEntryModal'
-import Pagination from './components/PageNumber'
 import Sidebar from './components/Sidebar'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
+import Pagination from '../../components/Miscellaneous/Pagination'
 
 function GuitarTabs(): React.ReactElement {
   const { setSubSidebarExpanded } = useGlobalStateContext()
@@ -186,7 +186,12 @@ function GuitarTabs(): React.ReactElement {
                     icon="tabler:search-off"
                   />
                 )}
-                <Pagination entries={entries} setPage={setPage} />
+                <Pagination
+                  currentPage={entries.page}
+                  onPageChange={setPage}
+                  totalPages={entries.totalPages}
+                  className="mt-4 pb-12"
+                />
               </Scrollbar>
             )}
           </APIComponentWithFallback>
