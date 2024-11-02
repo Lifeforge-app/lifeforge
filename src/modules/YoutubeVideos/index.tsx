@@ -1,11 +1,11 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import FAB from '@components/ButtonsAndInputs/FAB'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
 import AddVideosModal from './components/AddVideosModal'
@@ -117,7 +117,7 @@ function YoutubeVideos(): React.ReactElement {
           })
           setVideoToDelete(undefined)
         }}
-        apiEndpoint="/youtube-videos/video"
+        apiEndpoint="youtube-videos/video"
         itemName="video"
         nameKey="title"
         data={videoToDelete}

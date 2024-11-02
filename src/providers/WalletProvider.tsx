@@ -43,10 +43,10 @@ export default function WalletProvider(): React.ReactElement {
   const [assets, refreshAssets] = useFetch<IWalletAsset[]>('wallet/assets')
   const [ledgers, refreshLedgers] = useFetch<IWalletLedger[]>('wallet/ledgers')
   const [categories, refreshCategories] =
-    useFetch<IWalletCategory[]>('wallet/category')
+    useFetch<IWalletCategory[]>('wallet/categories')
   const [incomeExpenses, refreshIncomeExpenses] =
     useFetch<IWalletIncomeExpenses>(
-      `wallet/transactions/income-expenses/${new Date().getFullYear()}/${
+      `wallet/transactions/income-expenses?year=${new Date().getFullYear()}&month=${
         new Date().getMonth() + 1
       }`
     )

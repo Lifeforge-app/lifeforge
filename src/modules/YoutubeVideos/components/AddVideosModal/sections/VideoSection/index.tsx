@@ -25,7 +25,7 @@ function VideoSection({
   const [videoUrl, setVideoUrl] = useState<string>('')
   const debouncedVideoUrl = useDebounce(videoUrl, 500)
   const [videoInfo] = useFetch<IYoutubeVideoInfo>(
-    `/youtube-videos/video/get-info/${
+    `youtube-videos/video/get-info/${
       debouncedVideoUrl.match(URL_REGEX)?.groups?.id
     }`,
     URL_REGEX.test(debouncedVideoUrl)

@@ -6,8 +6,8 @@ import Input from '@components/ButtonsAndInputs/Input'
 import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
 import ListboxNullOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxNullOption'
 import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
-import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
 import APIRequest from '@utils/fetchData'
 
@@ -64,7 +64,7 @@ function ModifyEntryModal({
     setLoading(true)
 
     await APIRequest({
-      endpoint: `/guitar-tabs/${existingItem?.id}`,
+      endpoint: `guitar-tabs/${existingItem?.id}`,
       method: 'PUT',
       body: data,
       successInfo: 'update',

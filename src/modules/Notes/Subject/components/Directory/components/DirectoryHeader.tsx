@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 
-import { Menu, MenuItems } from '@headlessui/react'
+import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React from 'react'
@@ -286,7 +286,7 @@ function DirectoryHeader({
           <Menu as="div" className="relative z-50 hidden md:block">
             <Button
               onClick={() => {}}
-              CustomElement={Menu.Button}
+              CustomElement={MenuButton}
               icon="tabler:plus"
             >
               new
