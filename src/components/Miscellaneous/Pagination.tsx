@@ -3,24 +3,17 @@ import React from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 
 function Pagination({
-  entries,
-  setPage
+  currentPage,
+  onPageChange,
+  totalPages,
+  className = ''
 }: {
-  entries: {
-    totalPages: number
-    page: number
-  }
-  setPage: React.Dispatch<React.SetStateAction<number>>
+  totalPages: number
+  onPageChange: (page: number) => void
+  currentPage: number
+  className?: string
 }): React.ReactElement {
-  const renderPageNumbers = ({
-    currentPage,
-    totalPages,
-    handlePageChange
-  }: {
-    currentPage: number
-    totalPages: number
-    handlePageChange: (page: number) => void
-  }): React.ReactElement[] => {
+  const renderPageNumbers = (): React.ReactElement[] => {
     const pageNumbers: React.ReactElement[] = []
     const pagesToShow = 5
 
@@ -34,7 +27,7 @@ function Pagination({
             <button
               key={1}
               onClick={() => {
-                handlePageChange(1)
+                onPageChange(1)
               }}
               className={`rounded-md px-3 py-2  ${
                 currentPage === 1
@@ -55,7 +48,7 @@ function Pagination({
         <button
           key={i}
           onClick={() => {
-            handlePageChange(i)
+            onPageChange(i)
           }}
           className={`rounded-md px-5 py-3  ${
             currentPage === i
@@ -77,7 +70,7 @@ function Pagination({
           <button
             key={totalPages}
             onClick={() => {
-              handlePageChange(totalPages)
+              onPageChange(totalPages)
             }}
             className={`rounded-md px-5 py-3  ${
               currentPage === totalPages
@@ -95,12 +88,12 @@ function Pagination({
   }
 
   return (
-    <div className="flex-between mt-4 flex gap-2 pb-12">
-      {entries.page > 1 ? (
+    <div className={`flex-between flex gap-2 ${className}`}>
+      {currentPage > 1 ? (
         <Button
           onClick={() => {
-            if (entries.page > 1) {
-              setPage(entries.page - 1)
+            if (currentPage > 1) {
+              onPageChange(currentPage - 1)
             }
           }}
           icon="uil:angle-left"
@@ -111,18 +104,12 @@ function Pagination({
       ) : (
         <span className="w-32"></span>
       )}
-      <div className="flex items-center gap-2">
-        {renderPageNumbers({
-          currentPage: entries.page,
-          totalPages: entries.totalPages,
-          handlePageChange: setPage
-        })}
-      </div>
-      {entries.page < entries.totalPages ? (
+      <div className="flex items-center gap-2">{renderPageNumbers()}</div>
+      {currentPage < totalPages ? (
         <Button
           onClick={() => {
-            if (entries.page < entries.totalPages) {
-              setPage(entries.page + 1)
+            if (currentPage < totalPages) {
+              onPageChange(currentPage + 1)
             }
           }}
           icon="uil:angle-right"

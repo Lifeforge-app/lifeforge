@@ -174,7 +174,7 @@ function Transactions(): React.ReactElement {
         setOpenType={setModifyModalOpenType}
       />
       <DeleteConfirmationModal
-        apiEndpoint="wallet/Transactions"
+        apiEndpoint="wallet/transactions"
         isOpen={deleteTransactionsConfirmationOpen}
         data={selectedData}
         itemName="transaction"
