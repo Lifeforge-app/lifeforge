@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Chip from './Chip'
 
@@ -18,7 +18,7 @@ function ChipSelector({
       <div
         className={`flex pb-1 transition-all ${
           expanded ? 'flex-wrap' : 'overflow-x-auto'
-        } justify-center gap-2`}
+        } gap-2`}
       >
         {options
           .sort((a, b) => {
@@ -37,7 +37,6 @@ function ChipSelector({
             />
           ))}
       </div>
-
       <button
         type="button"
         onClick={() => {

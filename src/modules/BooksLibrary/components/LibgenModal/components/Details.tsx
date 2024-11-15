@@ -1,9 +1,9 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
+import AddToLibraryButton from './AddToLibraryButton'
 
 interface BookDetailProps {
   image: string
@@ -17,10 +17,12 @@ interface BookDetailProps {
 
 function Details({
   id,
-  onClose
+  onClose,
+  setAddToLibraryFor
 }: {
   id: string
   onClose: () => void
+  setAddToLibraryFor: (id: string) => void
 }): React.ReactElement {
   const [book] = useFetch<BookDetailProps>(
     `books-library/libgen/details/${id}`,
@@ -86,13 +88,10 @@ function Details({
                       ))}
                     </div>
                   </div>
-                  <Button
-                    icon="tabler:plus"
-                    onClick={() => {}}
-                    className="hidden sm:flex"
-                  >
-                    Add to Library
-                  </Button>
+                  <AddToLibraryButton
+                    md5={id}
+                    setAddToLibraryFor={setAddToLibraryFor}
+                  />
                 </div>
                 <table className="mt-6">
                   <tbody>
@@ -196,7 +195,7 @@ function Details({
                   ([key, value]) =>
                     Boolean(data[key]) && (
                       <div key={key}>
-                        <h2 className="mb-3 mt-8 text-2xl font-semibold">
+                        <h2 className="mb-3 mt-6 text-2xl font-semibold">
                           {value}
                         </h2>
                         <div

@@ -17,7 +17,7 @@ import PhotosSidebar from '../../components/PhotosSidebar'
 
 function PhotosTrash(): React.ReactElement {
   const { selectedPhotos, setSelectedPhotos } = usePhotosContext()
-  const [photos, refreshPhotos, setPhotos] =
+  const [photos, refreshPhotos] =
     useFetch<IPhotoAlbumEntryItem[]>('photos/trash/list')
   const [
     isEmptyTrashConfirmationModalOpen,
@@ -67,12 +67,13 @@ function PhotosTrash(): React.ReactElement {
                       imageProps: { src, alt, style, ...restImageProps }
                     }) => (
                       <ImageObject
+                        // TODO
+                        setImagePreviewOpenFor={() => {}}
                         beingDisplayedInAlbum
                         photo={photo}
                         style={style}
                         details={photos.find(image => image.id === photo.key)!}
                         {...restImageProps}
-                        refreshPhotos={refreshPhotos}
                         selected={
                           selectedPhotos.find(image => image === photo.key) !==
                           undefined
@@ -125,11 +126,6 @@ function PhotosTrash(): React.ReactElement {
                           }
                         }}
                         selectedPhotosLength={selectedPhotos.length}
-                        setPhotos={
-                          setPhotos as React.Dispatch<
-                            React.SetStateAction<IPhotoAlbumEntryItem[]>
-                          >
-                        }
                       />
                     )}
                   />

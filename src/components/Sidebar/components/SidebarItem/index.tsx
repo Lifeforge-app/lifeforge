@@ -16,6 +16,7 @@ interface SidebarItemProps {
   icon?: string
   smallIcon?: React.ReactElement
   color?: string
+  iconColor?: string
   hasAI?: boolean
   subsection?: string[][]
   onClick?: () => void
@@ -34,6 +35,7 @@ function SidebarItem({
   icon,
   smallIcon,
   color,
+  iconColor,
   hasAI = false,
   subsection,
   isMainSidebarItem = false,
@@ -82,6 +84,7 @@ function SidebarItem({
           <SidebarItemIcon
             active={autoActive ? isLocationMatched : active}
             icon={icon}
+            iconColor={iconColor}
             smallIcon={smallIcon}
           />
           <SidebarItemContent
@@ -116,7 +119,7 @@ function SidebarItem({
               e.stopPropagation()
               onCancelButtonClick()
             }}
-            className="z-[9999] hidden overscroll-contain rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-800 group-hover:block dark:hover:bg-bg-700/50 dark:hover:text-bg-50"
+            className="z-[9999] overscroll-contain rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-700/50 dark:hover:text-bg-50"
           >
             <Icon icon="tabler:x" className="size-5" />
           </button>

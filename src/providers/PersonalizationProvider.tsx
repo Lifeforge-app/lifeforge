@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import Gradient from 'javascript-color-gradient'
 import { cookieParse } from 'pocketbase'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { hexToRgb, hslToRgb, rgbToHex, rgbToHsl } from '@utils/colors'
+import { getColorPalette, hexToRgb } from '@utils/colors'
 import { useAuthContext } from './AuthProvider'
 import THEME_COLOR_HEX from '../constants/theme_color_hex'
 import { type IFontFamily } from '../modules/Personalization/components/FontFamilySelector'
@@ -76,30 +73,22 @@ export default function PersonalizationProvider({
   }
 
   function interpolateColors(color: string, type: 'bg' | 'theme'): void {
-    let finalColor = color
+    const colorPalette = getColorPalette(
+      color,
+      type,
+      theme === 'system'
+        ? window.matchMedia('(prefers-color-scheme: dark)').matches
+          ? 'dark'
+          : 'light'
+        : theme
+    )
 
-    if (type === 'bg') {
-      const [r, g, b] = hexToRgb(color)
-      let [h, s, l] = rgbToHsl(r, g, b)
-      l = theme === 'dark' ? 0.5 : 0.7
-      const [r2, g2, b2] = hslToRgb(h, s, l)
-      finalColor = rgbToHex(r2, g2, b2)
-    }
-
-    const gradientArray = new Gradient()
-      .setColorGradient('#FFFFFF', finalColor, '#000000')
-      .setMidpoint(14)
-      .getColors()
-      .slice(1, -1)
-
-    const number = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
-
-    for (let i = 0; i < number.length; i++) {
+    Object.entries(colorPalette).forEach(([key, value]) => {
       document.body.style.setProperty(
-        `--color-${type === 'bg' ? 'bg' : 'custom'}-${number[i]}`,
-        hexToRgb(gradientArray[i]).join(' ')
+        `--color-${type === 'bg' ? 'bg' : 'custom'}-${key}`,
+        hexToRgb(value).join(' ')
       )
-    }
+    })
   }
 
   useEffect(() => {

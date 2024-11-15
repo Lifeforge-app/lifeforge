@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'

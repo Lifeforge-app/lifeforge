@@ -8,18 +8,17 @@ import ModalHeader from '@components/Modals/ModalHeader'
 import ModalWrapper from '@components/Modals/ModalWrapper'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import LoadingScreen from '@components/Screens/LoadingScreen'
+import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import APIRequest from '@utils/fetchData'
 import Details from './components/Details'
 import SearchResultItem from './components/SearchResultItem'
 import Pagination from '../../../../components/Miscellaneous/Pagination'
+import AddToLibraryModal from '../AddToLibraryModal'
 
-function LibgenModal({
-  isOpen,
-  setOpen
-}: {
-  isOpen: boolean
-  setOpen: (open: boolean) => void
-}): React.ReactElement {
+function LibgenModal(): React.ReactElement {
+  const {
+    miscellaneous: { libgenModalOpen: isOpen, setLibgenModalOpen: setOpen }
+  } = useBooksLibraryContext()
   const [searchQuery, setSearchQuery] = useState('')
   const [hasSearched, setHasSearched] = useState(false)
   const [data, setData] = useState<{
@@ -31,6 +30,7 @@ function LibgenModal({
   const [loading, setLoading] = useState(false)
   const [totalPages, setTotalPages] = useState(0)
   const [viewDetailsFor, setViewDetailsFor] = useState<string | null>(null)
+  const [addToLibraryFor, setAddToLibraryFor] = useState<string | null>(null)
 
   async function fetchBookResults(page: number): Promise<void> {
     setLoading(true)
@@ -42,7 +42,6 @@ function LibgenModal({
       method: 'GET',
       callback: (response: any) => {
         setData(response.data.data.length === 0 ? null : response.data)
-        console.log(response.data)
         setTotalPages(Math.ceil(parseInt(response.data.resultsCount) / 25))
       },
       finalCallback: () => {
@@ -74,122 +73,137 @@ function LibgenModal({
   }, [isOpen])
 
   return (
-    <ModalWrapper isOpen={isOpen} minWidth="70vw" minHeight="80vh">
-      <ModalHeader
-        icon="tabler:books"
-        title="Library Genesis"
-        onClose={() => {
-          setOpen(false)
-        }}
-      />
-      {viewDetailsFor !== null ? (
-        <Details
-          id={viewDetailsFor}
+    <>
+      <ModalWrapper isOpen={isOpen} minWidth="70vw" minHeight="80vh">
+        <ModalHeader
+          icon="tabler:books"
+          title="Library Genesis"
           onClose={() => {
-            setViewDetailsFor(null)
+            setOpen(false)
           }}
         />
-      ) : (
-        <>
-          <div className="flex items-center gap-2">
-            <SearchInput
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              stuffToSearch="among millions of books"
-              lighter
-              hasTopMargin={false}
-              onKeyUp={e => {
-                if (e.key === 'Enter') {
+        {viewDetailsFor !== null ? (
+          <Details
+            id={viewDetailsFor}
+            onClose={() => {
+              setViewDetailsFor(null)
+            }}
+            setAddToLibraryFor={setAddToLibraryFor}
+          />
+        ) : (
+          <>
+            <div className="flex items-center gap-2">
+              <SearchInput
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                stuffToSearch="among millions of books"
+                lighter
+                hasTopMargin={false}
+                onKeyUp={e => {
+                  if (e.key === 'Enter') {
+                    searchBooks().catch(console.error)
+                  }
+                }}
+              />
+              <Button
+                onClick={() => {
                   searchBooks().catch(console.error)
+                }}
+                icon="tabler:arrow-right"
+                iconAtEnd
+                loading={loading}
+              >
+                search
+              </Button>
+            </div>
+            <Scrollbar className="mt-4 flex-1">
+              {(() => {
+                if (loading) {
+                  return <LoadingScreen />
                 }
-              }}
-            />
-            <Button
-              onClick={() => {
-                searchBooks().catch(console.error)
-              }}
-              icon="tabler:arrow-right"
-              iconAtEnd
-              loading={loading}
-            >
-              search
-            </Button>
-          </div>
-          <Scrollbar className="mt-4 flex-1">
-            {(() => {
-              if (loading) {
-                return <LoadingScreen />
-              }
 
-              if (hasSearched) {
-                if (data === null) {
+                if (hasSearched) {
+                  if (data === null) {
+                    return (
+                      <EmptyStateScreen
+                        icon="tabler:books-off"
+                        title={t(
+                          'emptyState.booksLibrary.libgen.results.title'
+                        )}
+                        description={t(
+                          'emptyState.booksLibrary.libgen.results.description'
+                        )}
+                      />
+                    )
+                  }
+
                   return (
-                    <EmptyStateScreen
-                      icon="tabler:books-off"
-                      title={t('emptyState.booksLibrary.results.title')}
-                      description={t(
-                        'emptyState.booksLibrary.results.description'
-                      )}
-                    />
+                    <>
+                      <div className="mb-4 space-y-1">
+                        <p className="text-lg font-medium text-bg-500">
+                          Search results for{' '}
+                          <span className="text-bg-100">
+                            &quot;{data.query}&quot;
+                          </span>
+                        </p>
+                        <p className="text-sm font-light text-bg-500">
+                          {data.resultsCount}
+                        </p>
+                      </div>
+                      <Pagination
+                        currentPage={data.page}
+                        totalPages={totalPages}
+                        onPageChange={page => {
+                          fetchBookResults(page).catch(console.error)
+                        }}
+                        className="mb-4"
+                      />
+                      <ul className="space-y-4">
+                        {data.data.map((book: any) => (
+                          <SearchResultItem
+                            key={book.id}
+                            book={book}
+                            setViewDetailsFor={setViewDetailsFor}
+                            setAddToLibraryFor={setAddToLibraryFor}
+                          />
+                        ))}
+                      </ul>
+                      <Pagination
+                        currentPage={data.page}
+                        totalPages={totalPages}
+                        onPageChange={page => {
+                          fetchBookResults(page).catch(console.error)
+                        }}
+                        className="mt-4"
+                      />
+                    </>
                   )
                 }
 
                 return (
-                  <>
-                    <div className="mb-4 space-y-1">
-                      <p className="text-lg font-medium text-bg-500">
-                        Search results for{' '}
-                        <span className="text-bg-100">
-                          &quot;{data.query}&quot;
-                        </span>
-                      </p>
-                      <p className="text-sm font-light text-bg-500">
-                        {data.resultsCount}
-                      </p>
-                    </div>
-                    <Pagination
-                      currentPage={data.page}
-                      totalPages={totalPages}
-                      onPageChange={page => {
-                        fetchBookResults(page).catch(console.error)
-                      }}
-                      className="mb-4"
-                    />
-                    <ul className="space-y-4">
-                      {data.data.map((book: any) => (
-                        <SearchResultItem
-                          key={book.id}
-                          book={book}
-                          setViewDetailsFor={setViewDetailsFor}
-                        />
-                      ))}
-                    </ul>
-                    <Pagination
-                      currentPage={data.page}
-                      totalPages={totalPages}
-                      onPageChange={page => {
-                        fetchBookResults(page).catch(console.error)
-                      }}
-                      className="mt-4"
-                    />
-                  </>
+                  <EmptyStateScreen
+                    icon="tabler:search-off"
+                    title={t(
+                      'emptyState.booksLibrary.libgen.searchQuery.title'
+                    )}
+                    description={t(
+                      'emptyState.booksLibrary.libgen.searchQuery.description'
+                    )}
+                  />
                 )
-              }
-
-              return (
-                <EmptyStateScreen
-                  icon="tabler:search-off"
-                  title={t('emptyState.booksLibrary.searchQuery.title')}
-                  description={t(
-                    'emptyState.booksLibrary.searchQuery.description'
-                  )}
-                />
-              )
-            })()}
-          </Scrollbar>
-        </>
-      )}
-    </ModalWrapper>
+              })()}
+            </Scrollbar>
+          </>
+        )}
+      </ModalWrapper>
+      <AddToLibraryModal
+        isOpen={addToLibraryFor !== null}
+        onClose={() => {
+          setAddToLibraryFor(null)
+        }}
+        md5={addToLibraryFor}
+      />
+    </>
   )
 }
 

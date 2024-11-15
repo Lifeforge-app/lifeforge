@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
 import { VIDEO_RESOLUTIONS } from '@constants/video_res'

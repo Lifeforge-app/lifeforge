@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { useWalletContext } from '@providers/WalletProvider'
 
@@ -13,8 +11,7 @@ function AssetsSection({
 }: {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
-  const { t } = useTranslation()
-  const { assets, transactions } = useWalletContext()
+  const { assets, filteredTransactions } = useWalletContext()
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -41,52 +38,48 @@ function AssetsSection({
             ]
               .concat(assets as any)
               .map(({ icon, name, id }, index) => (
-                <li
-                  key={index}
-                  className={`relative flex items-center gap-6 px-4 font-medium transition-all ${
+                <SidebarItem
+                  key={id}
+                  name={name}
+                  icon={icon}
+                  needTranslate={false}
+                  active={
                     searchParams.get('asset') === id ||
-                    (name === 'All' && searchParams.get('asset') === null)
-                      ? "font-semibold text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-50"
-                      : 'text-bg-500 dark:text-bg-500'
-                  }`}
-                >
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (name === 'All') {
-                        setSearchParams(searchParams => {
-                          searchParams.delete('asset')
-                          return searchParams
-                        })
-                        setSidebarOpen(false)
-                        return
-                      }
-                      setSearchParams({
-                        ...Object.fromEntries(searchParams.entries()),
-                        asset: id!
+                    (searchParams.get('asset') === null && index === 0)
+                  }
+                  number={
+                    typeof filteredTransactions !== 'string'
+                      ? filteredTransactions.filter(
+                          transaction => transaction.asset === id || id === null
+                        ).length
+                      : 0
+                  }
+                  onClick={() => {
+                    if (id === null) {
+                      setSearchParams(searchParams => {
+                        searchParams.delete('asset')
+                        return searchParams
                       })
-                      setSidebarOpen(false)
-                    }}
-                    className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 text-left ${
-                      searchParams.get('asset') === id ||
-                      (name === 'All' && searchParams.get('asset') === null)
-                        ? 'bg-bg-200/50 dark:bg-bg-800'
-                        : 'hover:bg-bg-100/50 dark:hover:bg-bg-800/50'
-                    }`}
-                  >
-                    <Icon icon={icon} className="size-6 shrink-0" />
-                    <div className="flex-between w-full truncate">
-                      {name === 'All' ? t('sidebar.wallet.allAssets') : name}
-                    </div>
-                    <span className="text-sm">
-                      {typeof transactions !== 'string' &&
-                        transactions.filter(
-                          transaction =>
-                            transaction.asset === id || name === 'All'
-                        ).length}
-                    </span>
-                  </button>
-                </li>
+                    } else {
+                      setSearchParams(searchParams => {
+                        searchParams.set('asset', id)
+                        return searchParams
+                      })
+                    }
+                    setSidebarOpen(false)
+                  }}
+                  onCancelButtonClick={
+                    name !== 'All'
+                      ? () => {
+                          setSearchParams(searchParams => {
+                            searchParams.delete('asset')
+                            return searchParams
+                          })
+                          setSidebarOpen(false)
+                        }
+                      : undefined
+                  }
+                />
               ))}
           </>
         )}

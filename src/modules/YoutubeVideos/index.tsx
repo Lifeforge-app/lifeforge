@@ -56,7 +56,7 @@ function YoutubeVideos(): React.ReactElement {
         setNeedsProgressCheck={setNeedsProgressCheck}
         isAddVideosModalOpen={isAddVideosModalOpen}
       />
-      <Scrollbar className="mt-8">
+      <Scrollbar className="mt-6">
         <APIComponentWithFallback data={videos}>
           {videos =>
             videos.length === 0 ? (

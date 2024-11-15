@@ -38,9 +38,7 @@ function ModifyTransactionsModal({
     'income' | 'expenses' | 'transfer'
   >('income')
 
-  const [transactionDate, setTransactionDate] = useState<string>(
-    new Date().toISOString().split('T')[0]
-  )
+  const [transactionDate, setTransactionDate] = useState<string>('')
   const [amount, setAmount] = useState<string>()
   const [category, setCategory] = useState<string | null>(null)
   const [transactionAsset, setTransactionAsset] = useState<string | null>(null)
@@ -78,7 +76,7 @@ function ModifyTransactionsModal({
       } else {
         setParticular('')
         setTransactionType('income')
-        setTransactionDate(new Date().toISOString().split('T')[0])
+        setTransactionDate(moment().format('YYYY-MM-DD'))
         setAmount(undefined)
         setCategory(null)
         setTransactionAsset(null)

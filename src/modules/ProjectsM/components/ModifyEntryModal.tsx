@@ -62,24 +62,24 @@ function ModifyEntryModal(): React.ReactElement {
     {
       id: 'name',
       type: 'text',
-      name: 'Project name',
+      label: 'Project name',
       icon: 'tabler:book',
       placeholder: 'My Project'
     },
     {
       id: 'icon',
       type: 'icon',
-      name: 'Project icon'
+      label: 'Project icon'
     },
     {
       id: 'color',
       type: 'color',
-      name: 'Project color'
+      label: 'Project color'
     },
     {
       id: 'category',
       type: 'listbox',
-      name: 'Project category',
+      label: 'Project category',
       icon: 'tabler:category',
       options: (categories as IProjectsMCategory[]).map(category => ({
         value: category.id,
@@ -91,7 +91,7 @@ function ModifyEntryModal(): React.ReactElement {
     {
       id: 'status',
       type: 'listbox',
-      name: 'Project status',
+      label: 'Project status',
       icon: 'tabler:info-circle',
       options: (statuses as IProjectsMStatus[]).map(status => ({
         value: status.id,
@@ -104,7 +104,7 @@ function ModifyEntryModal(): React.ReactElement {
     {
       id: 'visibility',
       type: 'listbox',
-      name: 'Project visibility',
+      label: 'Project visibility',
       icon: 'tabler:eye',
       options: (visibilities as IProjectsMVisibility[]).map(visibility => ({
         value: visibility.id,
@@ -116,7 +116,7 @@ function ModifyEntryModal(): React.ReactElement {
     {
       id: 'technologies',
       type: 'listbox',
-      name: 'Project technologies',
+      label: 'Project technologies',
       icon: 'tabler:cpu',
       options: (technologies as IProjectsMTechnology[]).map(technology => ({
         value: technology.id,
@@ -180,10 +180,14 @@ function ModifyEntryModal(): React.ReactElement {
 
   return (
     <Modal
+      isOpen={openType !== null}
       title={openType === 'update' ? 'Edit Project' : 'Add Project'}
       icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
       openType={openType}
-      setOpenType={setOpenType}
+      onClose={() => {
+        setOpenType(null)
+        setExistedData(null)
+      }}
       fields={FIELDS}
       data={data}
       setData={setData}

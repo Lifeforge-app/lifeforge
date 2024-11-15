@@ -1,13 +1,13 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import ModuleHeader from '@components/Module/ModuleHeader'
-import { type IPhotosEntryDimensionsAll } from '@interfaces/photos_interfaces'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import GalleryContainer from './Gallery/GalleryContainer'
 import GalleryHeader from './Gallery/GalleryHeader'
 import AddPhotosToAlbumModal from '../../components/modals/AddPhotosToAlbumModal'
 import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosConfirmationModal'
+import ImagePreviewModal from '../../components/modals/ImagePreviewModal'
 import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
 import PhotosSidebar from '../../components/PhotosSidebar'
 
@@ -18,8 +18,12 @@ function PhotosMainGallery(): React.ReactElement {
     hidePhotosInAlbum,
     setReady,
     sidebarOpen,
-    setSidebarOpen
+    setSidebarOpen,
+    refreshPhotos,
+    imagePreviewModalOpenFor,
+    setImagePreviewModalOpenFor
   } = usePhotosContext()
+
   const [showGallery, setShowGallery] = useState(true)
 
   useEffect(() => {
@@ -61,7 +65,7 @@ function PhotosMainGallery(): React.ReactElement {
           </button>
         }
       />
-      <div className="relative mt-8 flex size-full min-h-0 gap-8">
+      <div className="relative mt-6 flex size-full min-h-0 gap-8">
         <PhotosSidebar />
         <div className="relative flex size-full min-h-0 flex-col gap-8">
           <GalleryHeader />
@@ -70,15 +74,20 @@ function PhotosMainGallery(): React.ReactElement {
           </div>
         </div>
       </div>
+      <ImagePreviewModal
+        // TODO
+        // onNextPhoto={() => {}}
+        // onPreviousPhoto={() => {}}
+        isOpen={imagePreviewModalOpenFor !== null}
+        onClose={() => {
+          setImagePreviewModalOpenFor(null)
+        }}
+        data={imagePreviewModalOpenFor}
+        refreshPhotos={refreshPhotos}
+      />
       <AddPhotosToAlbumModal />
       <ModifyAlbumModal />
-      <DeletePhotosConfirmationModal
-        setPhotos={
-          setPhotoDimensions as React.Dispatch<
-            React.SetStateAction<IPhotosEntryDimensionsAll>
-          >
-        }
-      />
+      <DeletePhotosConfirmationModal setPhotos={setPhotoDimensions as any} />
     </section>
   ) : (
     <></>

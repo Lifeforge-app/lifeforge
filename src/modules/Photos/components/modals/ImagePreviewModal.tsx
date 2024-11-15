@@ -1,12 +1,13 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
+import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import useFetch from '@hooks/useFetch'
 import {
   type IPhotoAlbumEntryItem,
@@ -20,34 +21,40 @@ import DeletePhotosConfirmationModal from './DeletePhotosConfirmationModal'
 function ImagePreviewModal({
   isOpen,
   onClose,
-  img,
   data,
-  beingDisplayedInAlbum,
+  beingDisplayedInAlbum = false,
   refreshAlbumData,
   refreshPhotos,
-  setPhotos
+  setPhotos,
+  onNextPhoto,
+  onPreviousPhoto
 }: {
   isOpen: boolean
   onClose: () => void
-  img: any
-  data: IPhotosEntry
-  beingDisplayedInAlbum: boolean
+  data: IPhotosEntry | IPhotoAlbumEntryItem | null
+  beingDisplayedInAlbum?: boolean
   refreshAlbumData?: () => void
-  setPhotos:
+  setPhotos?:
     | React.Dispatch<React.SetStateAction<IPhotosEntryDimensionsAll>>
     | React.Dispatch<React.SetStateAction<IPhotoAlbumEntryItem[]>>
   refreshPhotos: () => void
+  onNextPhoto?: () => void
+  onPreviousPhoto?: () => void
 }): React.ReactElement {
   const { refreshAlbumList } = usePhotosContext()
   const { id: albumId } = useParams<{ id: string }>()
   const [name] = useFetch<string>(
-    `photos/entries/name/${data.id}?isInAlbum=${beingDisplayedInAlbum}`,
-    isOpen
+    `photos/entries/name/${data?.id}?isInAlbum=${beingDisplayedInAlbum}`,
+    isOpen && data !== null
   )
   const [deleteConfirmationModalOpen, setDeletePhotosConfirmationModalOpen] =
     useState(false)
 
   async function requestDownload(isRaw: boolean): Promise<void> {
+    if (data === null) {
+      return
+    }
+
     try {
       const { url, fileName } = await fetch(
         `${import.meta.env.VITE_API_HOST}/photos/entries/download/${
@@ -72,13 +79,17 @@ function ImagePreviewModal({
           throw new Error(error as string)
         })
 
-      forceDown(url, fileName)
+      forceDown(url, fileName).catch(console.error)
     } catch (error: any) {
       toast.error(`Failed to get download link. Error: ${error}`)
     }
   }
 
   function setAsCover(): void {
+    if (data === null) {
+      return
+    }
+
     fetch(
       `${import.meta.env.VITE_API_HOST}/photos/album/set-cover/${albumId}/${
         data.id
@@ -115,11 +126,16 @@ function ImagePreviewModal({
 
   return (
     <>
-      <ModalWrapper isOpen={isOpen} minWidth="90%" minHeight="90vh">
+      <ModalWrapper
+        isOpen={isOpen}
+        minWidth="90%"
+        minHeight="90vh"
+        className="h-full"
+      >
         <ModalHeader title="Image Preview" onClose={onClose} icon="uil:image" />
-        {isOpen && (
+        {isOpen && data !== null && (
           <>
-            <header className="flex-between mb-8 flex w-full gap-2">
+            <header className="flex-between mb-6 flex w-full gap-2">
               {(() => {
                 switch (name) {
                   case 'loading':
@@ -163,14 +179,15 @@ function ImagePreviewModal({
                     text="Download JPEG"
                   />
                 </HamburgerMenu>
-                <button
+                <Button
+                  icon="tabler:trash"
+                  isRed
+                  variant="no-bg"
                   onClick={() => {
                     setDeletePhotosConfirmationModalOpen(true)
                   }}
-                  className="rounded-md p-2 text-bg-50 hover:bg-bg-700/50"
-                >
-                  <Icon icon="tabler:trash" className="size-5" />
-                </button>
+                  className="!p-2"
+                />
                 <HamburgerMenu lighter className="relative" customWidth="w-56">
                   {beingDisplayedInAlbum && (
                     <MenuItem
@@ -182,16 +199,59 @@ function ImagePreviewModal({
                 </HamburgerMenu>
               </div>
             </header>
-            <img src={img} alt="" className="h-full object-contain" />
+            <div className="flex-between flex h-full flex-1 overflow-y-hidden">
+              {onPreviousPhoto !== undefined && (
+                <Button
+                  onClick={onPreviousPhoto}
+                  icon="tabler:chevron-left"
+                  className="h-full"
+                  variant="no-bg"
+                />
+              )}
+              <div className="flex-center flex size-full min-h-0 min-w-0">
+                <img
+                  key={data.id}
+                  src={`${import.meta.env.VITE_API_HOST}/media/${
+                    data.collectionId
+                  }/${
+                    Object.keys(data).includes('photoId')
+                      ? (data as IPhotoAlbumEntryItem).photoId
+                      : data.id
+                  }/${data.image}`}
+                  alt=""
+                  className="h-full object-contain"
+                />
+              </div>
+              {onNextPhoto !== undefined && (
+                <Button
+                  onClick={onNextPhoto}
+                  icon="tabler:chevron-right"
+                  className="h-full"
+                  variant="no-bg"
+                />
+              )}
+            </div>
           </>
         )}
       </ModalWrapper>
       <DeletePhotosConfirmationModal
-        setPhotos={setPhotos}
+        setPhotos={(photos: any) => {
+          if (setPhotos !== undefined) {
+            setPhotos(photos)
+          } else {
+            refreshPhotos()
+          }
+          refreshAlbumData?.()
+          if (onNextPhoto !== undefined) {
+            onNextPhoto()
+          } else {
+            onClose()
+          }
+        }}
         isInAlbumGallery={beingDisplayedInAlbum}
         customIsOpen={deleteConfirmationModalOpen}
         customSetIsOpen={setDeletePhotosConfirmationModalOpen}
-        customPhotoToBeDeleted={data}
+        customPhotoToBeDeleted={data ?? undefined}
       />
     </>
   )

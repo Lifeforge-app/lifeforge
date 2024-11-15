@@ -25,6 +25,7 @@ interface IPhotosEntryDimensionsPagination {
 
 interface IPhotosEntry {
   id: string
+  collectionId: string
   image: string
   has_raw: boolean
   is_in_album: boolean

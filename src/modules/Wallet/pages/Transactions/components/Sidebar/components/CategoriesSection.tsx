@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -16,7 +16,7 @@ function CategoriesSection({
   >
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
-  const { categories, transactions } = useWalletContext()
+  const { categories, filteredTransactions } = useWalletContext()
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (
@@ -91,8 +91,8 @@ function CategoriesSection({
                   }}
                   needTranslate={false}
                   number={
-                    typeof transactions !== 'string'
-                      ? transactions.filter(
+                    typeof filteredTransactions !== 'string'
+                      ? filteredTransactions.filter(
                           transaction =>
                             transaction.category === id || name === 'All'
                         ).length
