@@ -9,7 +9,7 @@ function DifficultySelector({
   setSelectedDifficulty: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
   return (
-    <div className="mt-8 flex items-center">
+    <div className="mt-6 flex items-center">
       {[
         ['easy', 'border-green-500', 'text-green-500'],
         ['medium', 'border-yellow-500', 'text-yellow-500'],

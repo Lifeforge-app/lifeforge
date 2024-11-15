@@ -7,10 +7,10 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { useTodoListContext } from '@providers/TodoListProvider'
+import Header from './Header'
 import ModifyTaskWindow from './ModifyTaskWindow'
 import Sidebar from './Sidebar'
 import TaskList from './tasks/TaskList'
-import TodoListHeader from './TodoListHeader'
 import ModifyListModal from '../modals/ModifyListModal'
 import ModifyPriorityModal from '../modals/ModifyPriorityModal'
 import ModifyTagModal from '../modals/ModifyTagModal'
@@ -60,7 +60,7 @@ function TodoListContainer(): React.ReactElement {
       <div className="mt-6 flex size-full min-h-0 flex-1">
         <Sidebar isOpen={sidebarOpen} setOpen={setSidebarOpen} />
         <div className="relative z-10 flex h-full flex-1 flex-col lg:ml-8">
-          <TodoListHeader setSidebarOpen={setSidebarOpen} />
+          <Header setSidebarOpen={setSidebarOpen} />
           <SearchInput
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
@@ -157,7 +157,7 @@ function Airport(): React.ReactElement {
                     )}
                   </div>
                 </div>
-                <div className="sticky top-0 z-10 mt-8 flex items-center rounded-md bg-bg-50 dark:bg-bg-950">
+                <div className="sticky top-0 z-10 mt-6 flex items-center rounded-md bg-bg-50 dark:bg-bg-950">
                   {[
                     ...(airportData.data.has_airline_service
                       ? [['Flights', 'tabler:plane']]

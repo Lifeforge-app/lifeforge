@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import OtpInput from 'react-otp-input'
@@ -133,7 +133,7 @@ function OTPScreen({
               })
             }}
             loading={verifyOtpLoading}
-            className="mt-8 w-full md:w-3/4 xl:w-1/2"
+            className="mt-6 w-full md:w-3/4 xl:w-1/2"
             icon="tabler:arrow-right"
             iconAtEnd
           >

@@ -11,11 +11,12 @@ import { toast } from 'react-toastify'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton.tsx'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu/index.tsx'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem.tsx'
+import Scrollbar from '@components/Miscellaneous/Scrollbar.tsx'
 import ModuleWrapper from '@components/Module/ModuleWrapper.tsx'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback.tsx'
-import Scrollbar from '@components/Miscellaneous/Scrollbar.tsx'
 import useFetch from '@hooks/useFetch'
 import {
+  type IPhotosEntry,
   type IPhotoAlbumEntryItem,
   type IPhotosAlbum
 } from '@interfaces/photos_interfaces.ts'
@@ -23,6 +24,7 @@ import { usePhotosContext } from '../../../../providers/PhotosProvider'
 import BottomBar from '../../components/BottomBar'
 import ImageObject from '../../components/ImageObject'
 import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosConfirmationModal.tsx'
+import ImagePreviewModal from '../../components/modals/ImagePreviewModal.tsx'
 import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal.tsx'
 import RemovePhotosFromAlbumConfirmationModal from '../../components/modals/RemovePhotosFromAlbumConfirmationModal.tsx.tsx'
 import ShareAlbumModal from '../../components/modals/ShareAlbumModal.tsx'
@@ -48,6 +50,9 @@ function PhotosAlbumGallery(): React.ReactElement {
     valid === true
   )
   const [isDownloadLoading, setIsDownloadLoading] = useState(false)
+  const [imagePreviewModalOpenFor, setImagePreviewOpenFor] = useState<
+    IPhotoAlbumEntryItem | IPhotosEntry | null
+  >(null)
 
   useEffect(() => {
     if (typeof valid === 'boolean' && !valid) {
@@ -108,11 +113,11 @@ function PhotosAlbumGallery(): React.ReactElement {
   }
 
   return (
-    <APIComponentWithFallback data={albumData}>
-      {albumData => (
-        <>
-          <div className="relative min-h-0 w-full flex-1 overflow-y-hidden">
-            <ModuleWrapper>
+    <>
+      <div className="relative min-h-0 w-full flex-1 overflow-y-hidden">
+        <ModuleWrapper>
+          <APIComponentWithFallback data={albumData}>
+            {albumData => (
               <div className="flex w-full min-w-0 flex-col gap-1">
                 <GoBackButton
                   onClick={() => {
@@ -234,122 +239,149 @@ function PhotosAlbumGallery(): React.ReactElement {
                   </div>
                 </div>
               </div>
-              <Scrollbar className="mt-6">
-                <div className="relative w-full flex-1 pb-14">
-                  <APIComponentWithFallback data={photos}>
-                    {photos => (
-                      <PhotoAlbum
-                        layout="rows"
-                        spacing={8}
-                        photos={photos.map(image => ({
-                          src: `${import.meta.env.VITE_API_HOST}/media/${
-                            image.collectionId
-                          }/${image.photoId}/${image.image}?thumb=0x300`,
-                          width: image.width,
-                          height: image.height,
-                          key: image.id
-                        }))}
-                        renderPhoto={({
-                          photo,
-                          imageProps: { src, alt, style, ...restImageProps }
-                        }) => (
-                          <ImageObject
-                            beingDisplayedInAlbum
-                            refreshAlbumData={refreshAlbumData}
-                            photo={photo}
-                            details={
-                              photos.find(image => image.id === photo.key)!
-                            }
-                            style={style}
-                            {...restImageProps}
-                            refreshPhotos={refreshPhotos}
-                            selected={
+            )}
+          </APIComponentWithFallback>
+          <Scrollbar className="mt-6">
+            <div className="relative w-full flex-1 pb-14">
+              <APIComponentWithFallback data={photos}>
+                {photos => (
+                  <PhotoAlbum
+                    layout="rows"
+                    spacing={8}
+                    photos={photos.map(image => ({
+                      src: `${import.meta.env.VITE_API_HOST}/media/${
+                        image.collectionId
+                      }/${image.photoId}/${image.image}?thumb=0x300`,
+                      width: image.width,
+                      height: image.height,
+                      key: image.id
+                    }))}
+                    renderPhoto={({
+                      photo,
+                      imageProps: { src, alt, style, ...restImageProps }
+                    }) => (
+                      <ImageObject
+                        beingDisplayedInAlbum
+                        photo={photo}
+                        details={photos.find(image => image.id === photo.key)!}
+                        style={style}
+                        {...restImageProps}
+                        selected={
+                          selectedPhotos.find(image => image === photo.key) !==
+                          undefined
+                        }
+                        toggleSelected={(
+                          e: React.MouseEvent<
+                            HTMLDivElement | HTMLButtonElement
+                          >
+                        ) => {
+                          if (photo.key !== undefined) {
+                            if (
                               selectedPhotos.find(
                                 image => image === photo.key
                               ) !== undefined
-                            }
-                            toggleSelected={(
-                              e: React.MouseEvent<
-                                HTMLDivElement | HTMLButtonElement
-                              >
-                            ) => {
-                              if (photo.key !== undefined) {
-                                if (
-                                  selectedPhotos.find(
-                                    image => image === photo.key
-                                  ) !== undefined
-                                ) {
-                                  setSelectedPhotos(
-                                    selectedPhotos.filter(
-                                      image => image !== photo.key
-                                    )
-                                  )
-                                } else {
-                                  if (
-                                    e.shiftKey &&
-                                    typeof photos !== 'string'
-                                  ) {
-                                    const lastSelectedIndex = photos.findIndex(
-                                      image =>
-                                        image.id ===
-                                        selectedPhotos[
-                                          selectedPhotos.length - 1
-                                        ]
-                                    )
-                                    const currentIndex = photos.findIndex(
-                                      image => image.id === photo.key
-                                    )
-                                    const range = photos.slice(
-                                      Math.min(lastSelectedIndex, currentIndex),
-                                      Math.max(
-                                        lastSelectedIndex,
-                                        currentIndex
-                                      ) + 1
-                                    )
-                                    setSelectedPhotos(
-                                      Array.from(
-                                        new Set([
-                                          ...selectedPhotos,
-                                          ...range.map(image => image.id)
-                                        ])
-                                      )
-                                    )
-                                  } else {
-                                    setSelectedPhotos([
+                            ) {
+                              setSelectedPhotos(
+                                selectedPhotos.filter(
+                                  image => image !== photo.key
+                                )
+                              )
+                            } else {
+                              if (e.shiftKey && typeof photos !== 'string') {
+                                const lastSelectedIndex = photos.findIndex(
+                                  image =>
+                                    image.id ===
+                                    selectedPhotos[selectedPhotos.length - 1]
+                                )
+                                const currentIndex = photos.findIndex(
+                                  image => image.id === photo.key
+                                )
+                                const range = photos.slice(
+                                  Math.min(lastSelectedIndex, currentIndex),
+                                  Math.max(lastSelectedIndex, currentIndex) + 1
+                                )
+                                setSelectedPhotos(
+                                  Array.from(
+                                    new Set([
                                       ...selectedPhotos,
-                                      photo.key
+                                      ...range.map(image => image.id)
                                     ])
-                                  }
-                                }
+                                  )
+                                )
+                              } else {
+                                setSelectedPhotos([
+                                  ...selectedPhotos,
+                                  photo.key
+                                ])
                               }
-                            }}
-                            selectedPhotosLength={selectedPhotos.length}
-                            setPhotos={
-                              setPhotos as React.Dispatch<
-                                React.SetStateAction<IPhotoAlbumEntryItem[]>
-                              >
                             }
-                          />
-                        )}
+                          }
+                        }}
+                        selectedPhotosLength={selectedPhotos.length}
+                        setImagePreviewOpenFor={setImagePreviewOpenFor}
                       />
                     )}
-                  </APIComponentWithFallback>
-                </div>
-              </Scrollbar>
-            </ModuleWrapper>
-            <BottomBar
-              photos={photos as IPhotoAlbumEntryItem[]}
-              inAlbumGallery
-            />
-          </div>
-          <DeletePhotosConfirmationModal
-            setPhotos={
-              setPhotos as React.Dispatch<
-                React.SetStateAction<IPhotoAlbumEntryItem[]>
-              >
-            }
-            isInAlbumGallery={true}
-          />
+                  />
+                )}
+              </APIComponentWithFallback>
+            </div>
+          </Scrollbar>
+        </ModuleWrapper>
+        <BottomBar photos={photos as IPhotoAlbumEntryItem[]} inAlbumGallery />
+      </div>
+      <ImagePreviewModal
+        isOpen={imagePreviewModalOpenFor !== null}
+        onClose={() => {
+          setImagePreviewOpenFor(null)
+        }}
+        data={imagePreviewModalOpenFor}
+        setPhotos={
+          setPhotos as React.Dispatch<
+            React.SetStateAction<IPhotoAlbumEntryItem[]>
+          >
+        }
+        beingDisplayedInAlbum
+        refreshAlbumData={refreshAlbumData}
+        refreshPhotos={refreshPhotos}
+        onNextPhoto={() => {
+          if (photos === 'loading' || photos === 'error') {
+            return
+          }
+          const currentIndex = photos.findIndex(
+            photo => photo.id === imagePreviewModalOpenFor?.id
+          )
+          if (currentIndex === -1) {
+            return
+          }
+          setImagePreviewOpenFor(
+            photos[currentIndex + 1] ?? imagePreviewModalOpenFor
+          )
+        }}
+        onPreviousPhoto={() => {
+          if (photos === 'loading' || photos === 'error') {
+            return
+          }
+          const currentIndex = photos.findIndex(
+            photo => photo.id === imagePreviewModalOpenFor?.id
+          )
+          if (currentIndex === -1) {
+            return
+          }
+          setImagePreviewOpenFor(
+            photos[currentIndex - 1] ?? imagePreviewModalOpenFor
+          )
+        }}
+      />
+      <DeletePhotosConfirmationModal
+        setPhotos={(photos: any) => {
+          setPhotos(photos)
+          refreshAlbumData()
+        }}
+        isInAlbumGallery={true}
+      />
+
+      {typeof albumData !== 'string' && (
+        <>
           <RemovePhotosFromAlbumConfirmationModal
             albumId={albumData.id}
             refreshPhotos={refreshPhotos}
@@ -360,7 +392,7 @@ function PhotosAlbumGallery(): React.ReactElement {
           />
         </>
       )}
-    </APIComponentWithFallback>
+    </>
   )
 }
 

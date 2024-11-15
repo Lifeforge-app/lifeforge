@@ -9,7 +9,6 @@ import useResizeObserver from 'use-resize-observer'
 import useOnScreen from '@hooks/useOnScreen'
 import {
   type IPhotosEntry,
-  type IPhotosEntryDimensionsAll,
   type IPhotosEntryDimensionsItem
 } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '../../../../../providers/PhotosProvider'
@@ -32,14 +31,14 @@ function DateGroup({
 }): React.ReactElement {
   const {
     photos: allPhotos,
-    setPhotoDimensions,
-    refreshPhotos,
     updateEachDayDimensions,
-    ready
+    ready,
+    setImagePreviewModalOpenFor
   } = usePhotosContext()
   const thisRef = useRef<HTMLDivElement>(null)
   const [photos, setPhotos] = useState<IPhotosEntry[]>()
   const isOnScreen = useOnScreen(thisRef)
+
   const { ref, height = 1 } = useResizeObserver<HTMLDivElement>()
 
   useEffect(() => {
@@ -147,28 +146,15 @@ function DateGroup({
               <ImageObject
                 beingDisplayedInAlbum={false}
                 photo={photo}
-                refreshPhotos={refreshPhotos}
-                setPhotos={
-                  setPhotoDimensions as React.Dispatch<
-                    React.SetStateAction<IPhotosEntryDimensionsAll>
-                  >
-                }
                 details={
-                  photos !== undefined
-                    ? photos.find(image => image.id === photo.key) ?? {
-                        id: photo.key ?? '',
-                        image: '',
-                        has_raw: false,
-                        is_in_album: false,
-                        is_favourite: false
-                      }
-                    : {
-                        id: photo.key ?? '',
-                        image: '',
-                        has_raw: false,
-                        is_in_album: false,
-                        is_favourite: false
-                      }
+                  photos?.find(image => image.id === photo.key) ?? {
+                    id: photo.key ?? '',
+                    collectionId: '',
+                    image: '',
+                    has_raw: false,
+                    is_in_album: false,
+                    is_favourite: false
+                  }
                 }
                 style={style}
                 {...restImageProps}
@@ -218,6 +204,7 @@ function DateGroup({
                   }
                 }}
                 selectedPhotosLength={selectedPhotos.length}
+                setImagePreviewOpenFor={setImagePreviewModalOpenFor}
               />
             )}
           />

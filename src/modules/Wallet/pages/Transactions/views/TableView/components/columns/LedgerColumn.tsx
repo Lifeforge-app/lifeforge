@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { type IWalletLedger } from '@interfaces/wallet_interfaces'

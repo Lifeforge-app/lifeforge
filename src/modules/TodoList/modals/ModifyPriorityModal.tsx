@@ -26,14 +26,14 @@ function ModifyPriorityModal(): React.ReactElement {
   const FIELDS: IFieldProps[] = [
     {
       id: 'name',
-      name: 'Priority name',
+      label: 'Priority name',
       icon: 'tabler:sort-ascending-numbers',
       placeholder: 'Priority name',
       type: 'text'
     },
     {
       id: 'color',
-      name: 'Priority color',
+      label: 'Priority color',
       type: 'color'
     }
   ]
@@ -73,8 +73,11 @@ function ModifyPriorityModal(): React.ReactElement {
 
   return (
     <Modal
+      isOpen={openType !== null}
       openType={openType}
-      setOpenType={setOpenType}
+      onClose={() => {
+        setOpenType(null)
+      }}
       title={`${
         {
           create: 'Create ',

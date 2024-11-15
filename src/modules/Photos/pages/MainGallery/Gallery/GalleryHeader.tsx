@@ -22,12 +22,15 @@ function GalleryHeader(): React.ReactElement {
 
   const [showImportButton, setShowImportButton] = useState(false)
   const [fileImportLoading, setFileImportLoading] = useState(false)
-  const [progress, setProgress] = useState(0)
+  const [progress, setProgress] = useState<{
+    total: number
+    done: number
+  } | null>(null)
   const [isFirstLoad, setIsFirstLoad] = useState(true)
 
   async function importFiles(): Promise<void> {
     setFileImportLoading(true)
-    setProgress(0)
+    setProgress(null)
 
     fetch(`${import.meta.env.VITE_API_HOST}/photos/entries/import`, {
       method: 'POST',
@@ -53,7 +56,7 @@ function GalleryHeader(): React.ReactElement {
               }
             ).then(async response => await response.json())
 
-            setProgress(progressData.data)
+            setProgress(progressData.data === 'null' ? null : progressData.data)
 
             if (progressData.data >= 1) {
               clearInterval(progressFetchInterval)
@@ -85,7 +88,7 @@ function GalleryHeader(): React.ReactElement {
         }
       ).then(async response => await response.json())
 
-      if (![0, 1].includes(progressData.data)) {
+      if (progressData.data !== 'null') {
         setFileImportLoading(true)
         setProgress(progressData.data)
       } else {
@@ -132,8 +135,10 @@ function GalleryHeader(): React.ReactElement {
               text={
                 !fileImportLoading
                   ? 'Import photos'
-                  : progress > 0
-                  ? `Importing ${Math.round(progress * 100)}%`
+                  : progress !== null
+                  ? `Importing ${progress.done.toLocaleString()}/${progress.total.toLocaleString()} (${Math.round(
+                      (progress.done / progress.total) * 100
+                    )}%)`
                   : 'Importing'
               }
             />
@@ -168,8 +173,10 @@ function GalleryHeader(): React.ReactElement {
               'import'
             ) : (
               <>
-                {progress > 0
-                  ? `Importing ${Math.round(progress * 100)}%`
+                {progress !== null
+                  ? `Importing ${progress.done.toLocaleString()}/${progress.total.toLocaleString()} (${Math.round(
+                      (progress.done / progress.total) * 100
+                    )}%)`
                   : 'Importing'}
               </>
             )}

@@ -145,7 +145,7 @@ function Search({
         setValue={setCurrentIconSet}
       />
       <div className="min-h-0 flex-1">
-        <AS className="mt-8">
+        <AS className="mt-6">
           {({ width, height }: { width: number; height: number }) => {
             const itemsPerRow = Math.floor(width / 160) || 1
 

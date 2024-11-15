@@ -36,21 +36,21 @@ function ModifyModal({
   const FIELDS: IFieldProps[] = [
     {
       id: 'name',
-      name: `${singleStuff} name`,
+      label: `${singleStuff} name`,
       icon: 'tabler:book',
       placeholder: `Project ${singleStuff}`,
       type: 'text'
     },
     {
       id: 'icon',
-      name: `${singleStuff} icon`,
+      label: `${singleStuff} icon`,
       type: 'icon'
     },
     ...(stuff === 'statuses'
       ? [
           {
             id: 'color',
-            name: `${singleStuff} color`,
+            label: `${singleStuff} color`,
             type: 'color' as const
           }
         ]
@@ -106,6 +106,7 @@ function ModifyModal({
 
   return (
     <Modal
+      isOpen={openType !== null}
       data={data}
       setData={setData as (data: Record<string, string | string[]>) => void}
       title={
@@ -114,7 +115,10 @@ function ModifyModal({
       fields={FIELDS}
       icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
       openType={openType}
-      setOpenType={setOpenType}
+      onClose={() => {
+        setOpenType(null)
+        setExistedData(null)
+      }}
       onSubmit={onSubmitButtonClick}
     />
   )

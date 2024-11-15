@@ -57,7 +57,7 @@ interface IProjectsMData {
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
     sidebarOpen: boolean
     setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
-    modalConfigs: Array<{
+    deleteModalConfigs: Array<{
       apiEndpoint: string
       isOpen: boolean
       data: any
@@ -98,7 +98,7 @@ export default function ProjectsMProvider(): React.ReactElement {
     setSubSidebarExpanded(sidebarOpen)
   }, [sidebarOpen])
 
-  const modalConfigs = Object.entries({
+  const deleteModalConfigs = Object.entries({
     entry: entriesState,
     category: categoriesState,
     status: statusesState,
@@ -128,7 +128,7 @@ export default function ProjectsMProvider(): React.ReactElement {
           setSearchQuery,
           sidebarOpen,
           setSidebarOpen,
-          modalConfigs
+          deleteModalConfigs
         }
       }}
     >
@@ -140,7 +140,9 @@ export default function ProjectsMProvider(): React.ReactElement {
 export function useProjectsMContext(): IProjectsMData {
   const context = useContext(ProjectsMContext)
   if (context === undefined) {
-    throw new Error('useTodoListContext must be used within a TodoListProvider')
+    throw new Error(
+      'useProjectsMContext must be used within a ProjectsMProvider'
+    )
   }
   return context
 }

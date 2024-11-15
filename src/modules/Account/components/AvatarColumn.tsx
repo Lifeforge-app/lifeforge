@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Button from '@components/ButtonsAndInputs/Button'

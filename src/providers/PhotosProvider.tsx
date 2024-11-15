@@ -14,6 +14,8 @@ import React, {
 import { Outlet } from 'react-router'
 import useFetch from '@hooks/useFetch'
 import {
+  type IPhotoAlbumEntryItem,
+  type IPhotosEntry,
   type IPhotoAlbumTag,
   type IPhotosAlbum,
   type IPhotosEntryDimensionsAll,
@@ -33,6 +35,7 @@ interface IPhotosData {
   isAddPhotosToAlbumModalOpen: boolean
   isDeletePhotosConfirmationModalOpen: boolean
   isRemovePhotosFromAlbumConfirmationModalOpen: boolean
+  imagePreviewModalOpenFor: IPhotosEntry | IPhotoAlbumEntryItem | null
   modifyAlbumModalOpenType: 'create' | 'rename' | false
 
   // Data
@@ -74,6 +77,9 @@ interface IPhotosData {
   >
   setRemovePhotosFromAlbumConfirmationModalOpen: React.Dispatch<
     React.SetStateAction<boolean>
+  >
+  setImagePreviewModalOpenFor: React.Dispatch<
+    React.SetStateAction<IPhotosEntry | IPhotoAlbumEntryItem | null>
   >
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 
@@ -121,6 +127,9 @@ export default function PhotosProvider(): React.ReactElement {
     isRemovePhotosFromAlbumConfirmationModalOpen,
     setRemovePhotosFromAlbumConfirmationModalOpen
   ] = useState(false)
+  const [imagePreviewModalOpenFor, setImagePreviewModalOpenFor] = useState<
+    IPhotosEntry | IPhotoAlbumEntryItem | null
+  >(null)
 
   const sideSliderRef = useRef<HTMLDivElement>(null)
   const timelineDateDisplayRef = useRef<HTMLDivElement>(null)
@@ -284,6 +293,7 @@ export default function PhotosProvider(): React.ReactElement {
         isAddPhotosToAlbumModalOpen,
         isDeletePhotosConfirmationModalOpen,
         isRemovePhotosFromAlbumConfirmationModalOpen,
+        imagePreviewModalOpenFor,
         modifyAlbumModalOpenType,
 
         // Data
@@ -305,6 +315,7 @@ export default function PhotosProvider(): React.ReactElement {
         setAddPhotosToAlbumModalOpen,
         setDeletePhotosConfirmationModalOpen,
         setRemovePhotosFromAlbumConfirmationModalOpen,
+        setImagePreviewModalOpenFor,
         setSidebarOpen,
 
         // Actions

@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
 import React, { useRef } from 'react'
 import DatePicker from 'react-date-picker'
@@ -18,7 +20,7 @@ interface DateInputProps {
   hasMargin?: boolean
   className?: string
   darker?: boolean
-  modalRef: React.RefObject<HTMLElement | null>
+  modalRef?: React.RefObject<HTMLElement | null>
   index?: number
 }
 
@@ -60,7 +62,7 @@ const DateInput: React.FC<DateInputProps> = ({
       }px`
 
       reactCalendar.style.left = `${inputRect.left + window.scrollX}px`
-    }, 1)
+    }, 10)
   }
 
   return (
@@ -78,7 +80,9 @@ const DateInput: React.FC<DateInputProps> = ({
         <InputLabel label={t(`input.${toCamelCase(name)}`)} active />
         <DatePicker
           onCalendarOpen={updateCalendarLocation}
-          portalContainer={modalRef?.current}
+          portalContainer={
+            modalRef?.current ?? (document.querySelector('#app') as HTMLElement)
+          }
           value={date}
           onChange={(newDate: Value) => {
             setDate(newDate?.toString() ?? '')
@@ -97,14 +101,14 @@ const DateInput: React.FC<DateInputProps> = ({
             prev2Label: <Icon icon="tabler:chevrons-left" />,
             next2Label: <Icon icon="tabler:chevrons-right" />
           }}
-          className="mt-8 h-10 w-full rounded-lg border-none bg-transparent px-4 tracking-wider outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
+          className="mt-6 h-10 w-full rounded-lg border-none bg-transparent px-4 tracking-wider outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
         />
         {date !== '' && (
           <button
             onClick={() => {
               setDate('')
             }}
-            className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 hover:bg-bg-200 hover:text-bg-200 focus:outline-none"
+            className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-300 hover:text-bg-800 focus:outline-none dark:hover:bg-bg-700/70 dark:hover:text-bg-200"
             aria-label="Clear date"
           >
             <Icon icon="tabler:x" className="size-6" />

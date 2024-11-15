@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
 import { type IYoutubePlaylistVideoEntry } from '@interfaces/youtube_video_storage_interfaces'

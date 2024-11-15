@@ -11,9 +11,9 @@ import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { useWalletContext } from '@providers/WalletProvider'
+import Header from './components/Header'
 import SearchBar from './components/SearchBar'
 import Sidebar from './components/Sidebar'
-import TransactionsHeader from './components/TransactionsHeader'
 import ManageCategoriesModal from './modals/ManageCategoriesModal'
 import ModifyTransactionsModal from './modals/ModifyTransactionsModal'
 import ListView from './views/ListView'
@@ -105,12 +105,12 @@ function Transactions(): React.ReactElement {
           setManageCategoriesModalOpen={setManageCategoriesModalOpen}
         />
         <div className="flex h-full min-w-0 flex-1 flex-col lg:ml-8">
-          <TransactionsHeader
+          <Header
             setModifyModalOpenType={setModifyModalOpenType}
             setSidebarOpen={setSidebarOpen}
           />
           <SearchBar setView={setView} view={view} />
-          <div className="mt-8 size-full">
+          <div className="mt-6 size-full">
             <APIComponentWithFallback data={transactions}>
               {transactions =>
                 transactions.length > 0 ? (

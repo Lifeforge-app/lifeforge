@@ -36,9 +36,17 @@ export default async function APIRequest({
     body: body !== undefined ? (isJSON ? JSON.stringify(body) : body) : null
   })
     .then(async res => {
-      const data = await res.json()
+      if (!res.ok) {
+        try {
+          const data = await res.json().catch(() => {
+            throw new Error("Couldn't perform API request")
+          })
+          throw new Error(data.message)
+        } catch (err) {
+          throw new Error("Couldn't perform API request")
+        }
+      }
 
-      if (!res.ok) throw new Error(data.message)
       if (successInfo) {
         toast.success(
           successInfo === 'NASFilesReady'
@@ -49,6 +57,12 @@ export default async function APIRequest({
         )
       }
 
+      if (res.status === 204) {
+        callback?.({})
+        return
+      }
+
+      const data = await res.json()
       callback?.(data)
       return data
     })

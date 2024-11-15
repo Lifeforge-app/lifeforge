@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import Markdown from 'react-markdown'
 import { toast } from 'react-toastify'

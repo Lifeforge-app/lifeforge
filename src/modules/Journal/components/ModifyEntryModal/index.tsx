@@ -162,7 +162,7 @@ function ModifyJournalEntryModal({
           generateTitle().catch(console.error)
         }}
       />
-      <ul className="steps mt-8 shrink-0">
+      <ul className="steps mt-6 shrink-0">
         {['Raw Text', 'Cleanup', 'Summarize', 'Photos', 'Mood', 'Review'].map(
           (stepName, index) => (
             <li
