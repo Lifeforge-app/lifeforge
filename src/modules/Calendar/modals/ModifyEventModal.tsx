@@ -59,14 +59,14 @@ function ModifyEventModal({
   const FIELDS: IFieldProps[] = [
     {
       id: 'title',
-      name: 'Event title',
+      label: 'Event title',
       icon: 'tabler:calendar',
       type: 'text',
       placeholder: 'My event'
     },
     {
       id: 'start',
-      name: 'Start time',
+      label: 'Start time',
       icon: 'tabler:clock',
       type: 'date',
       index: 0,
@@ -74,7 +74,7 @@ function ModifyEventModal({
     },
     {
       id: 'end',
-      name: 'End time',
+      label: 'End time',
       icon: 'tabler:clock',
       type: 'date',
       index: 1,
@@ -82,7 +82,7 @@ function ModifyEventModal({
     },
     {
       id: 'category',
-      name: 'Category',
+      label: 'Category',
       icon: 'tabler:list',
       type: 'listbox',
       options: categories.map(({ name, color, icon, id }) => ({
@@ -155,9 +155,12 @@ function ModifyEventModal({
   return (
     <>
       <Modal
+        isOpen={openType !== null}
         modalRef={ref}
         openType={openType}
-        setOpenType={setOpenType}
+        onClose={() => {
+          setOpenType(null)
+        }}
         onSubmit={onSubmitButtonClick}
         title={`${
           {

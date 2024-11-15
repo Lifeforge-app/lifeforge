@@ -7,6 +7,7 @@ import AssetsSection from './components/AssetsSection'
 import CategoriesSection from './components/CategoriesSection'
 import DateRangeSelector from './components/DateRangeSelector'
 import LedgerSection from './components/LedgerSection'
+import MiniCalendar from './components/MiniCalendar'
 import TypeSection from './components/TypeSection'
 
 function Sidebar({
@@ -32,6 +33,8 @@ function Sidebar({
           setSidebarOpen(false)
         }}
       />
+      <SidebarDivider />
+      <MiniCalendar />
       <SidebarDivider />
       <DateRangeSelector />
       <SidebarDivider />

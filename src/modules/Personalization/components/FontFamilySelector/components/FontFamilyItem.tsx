@@ -1,5 +1,5 @@
 import { ListboxOption } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 import { LazyLoadComponent } from 'react-lazy-load-image-component'
 

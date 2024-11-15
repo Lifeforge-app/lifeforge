@@ -20,7 +20,7 @@ function MiniCalendar({
 
   return (
     <section className="flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 pt-6 shadow-custom dark:bg-bg-900">
-      <div className="h-full w-full">
+      <div className="size-full">
         <MiniCalendarHeader
           currentMonth={currentMonth}
           setCurrentMonth={setCurrentMonth}

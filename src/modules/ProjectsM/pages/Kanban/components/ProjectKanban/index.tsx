@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'

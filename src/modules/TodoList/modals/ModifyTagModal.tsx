@@ -25,7 +25,7 @@ function ModifyTagModal(): React.ReactElement {
   const FIELDS: IFieldProps[] = [
     {
       id: 'name',
-      name: 'Tag name',
+      label: 'Tag name',
       icon: 'tabler:tag',
       placeholder: 'Tag name',
       type: 'text'
@@ -62,8 +62,11 @@ function ModifyTagModal(): React.ReactElement {
 
   return (
     <Modal
+      isOpen={openType !== null}
       openType={openType}
-      setOpenType={setOpenType}
+      onClose={() => {
+        setOpenType(null)
+      }}
       title={`${
         {
           create: 'Create',

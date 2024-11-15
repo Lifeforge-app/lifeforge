@@ -10,7 +10,7 @@ export default function CodeTime(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:code" title="Code Time" />
-      <div className="mt-8 min-h-0 w-full space-y-12">
+      <div className="mt-6 min-h-0 w-full space-y-12">
         <CodeTimeStatistics />
         <CodeTimeActivityCalendar />
         {['projects', 'languages'].map(type => (

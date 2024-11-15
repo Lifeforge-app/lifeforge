@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 
@@ -97,7 +97,7 @@ function Breadcrumbs({
   return (
     <div
       className={`${
-        airportID !== undefined ? 'mb-4 mt-2' : 'mt-8'
+        airportID !== undefined ? 'mb-4 mt-2' : 'mt-6'
       } flex items-center gap-2`}
     >
       {breadcrumbItems.map(

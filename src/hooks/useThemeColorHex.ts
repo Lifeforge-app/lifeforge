@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import THEME_COLOR_HEX from '@constants/theme_color_hex'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import { hexToRgb } from '@utils/colors'
+import { getColorPalette } from '@utils/colors'
 import { toCamelCase } from '@utils/strings'
 
 const bgTheme = {
@@ -78,6 +78,8 @@ export default function useThemeColorHex(): {
   theme: string
   bgTemp: Record<number, string>
 } {
+  const { theme } = usePersonalizationContext()
+
   const { themeColor, bgTemp } = usePersonalizationContext()
   const finalTheme = useMemo(() => {
     return !themeColor.startsWith('#')
@@ -86,11 +88,21 @@ export default function useThemeColorHex(): {
             themeColor.replace('theme-', '').replace(/-/g, ' ')
           ) as keyof typeof THEME_COLOR_HEX
         ]
-      : `rgb(${hexToRgb(themeColor).join(', ')})`
+      : themeColor
   }, [themeColor])
 
   const finalBgTemp = useMemo(() => {
-    return bgTheme[bgTemp.replace('bg-', '') as keyof typeof bgTheme]
+    return !bgTemp.startsWith('#')
+      ? bgTheme[bgTemp.replace('bg-', '') as keyof typeof bgTheme]
+      : getColorPalette(
+          bgTemp,
+          'bg',
+          theme === 'system'
+            ? window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light'
+            : theme
+        )
   }, [bgTemp])
 
   return { theme: finalTheme, bgTemp: finalBgTemp }

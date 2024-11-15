@@ -1,5 +1,5 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 import { useNavigate, useParams } from 'react-router'
 import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'

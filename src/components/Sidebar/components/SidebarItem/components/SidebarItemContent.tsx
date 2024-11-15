@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React from 'react'
 import { toCamelCase } from '@utils/strings'
@@ -52,10 +52,9 @@ function SidebarItemContent({
       {number !== undefined && (
         <span
           className={`pr-2 text-sm ${
-            isMenuOpen
+            isMenuOpen || (onCancelButtonClick !== undefined && active)
               ? 'hidden'
-              : hamburgerMenuItems !== undefined ||
-                (active && onCancelButtonClick !== undefined)
+              : hamburgerMenuItems !== undefined
               ? 'group-hover:hidden'
               : 'block'
           }`}

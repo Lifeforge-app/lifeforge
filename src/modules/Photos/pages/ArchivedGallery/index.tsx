@@ -11,9 +11,9 @@ import { toast } from 'react-toastify'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton.tsx'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu/index.tsx'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem.tsx'
+import Scrollbar from '@components/Miscellaneous/Scrollbar.tsx'
 import ModuleWrapper from '@components/Module/ModuleWrapper.tsx'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback.tsx'
-import Scrollbar from '@components/Miscellaneous/Scrollbar.tsx'
 import useFetch from '@hooks/useFetch'
 import {
   type IPhotoAlbumEntryItem,
@@ -254,15 +254,15 @@ function PhotosAlbumGallery(): React.ReactElement {
                           imageProps: { src, alt, style, ...restImageProps }
                         }) => (
                           <ImageObject
+                            // TODO
+                            setImagePreviewOpenFor={() => {}}
                             beingDisplayedInAlbum
-                            refreshAlbumData={refreshAlbumData}
                             photo={photo}
                             details={
                               photos.find(image => image.id === photo.key)!
                             }
                             style={style}
                             {...restImageProps}
-                            refreshPhotos={refreshPhotos}
                             selected={
                               selectedPhotos.find(
                                 image => image === photo.key
@@ -324,11 +324,6 @@ function PhotosAlbumGallery(): React.ReactElement {
                               }
                             }}
                             selectedPhotosLength={selectedPhotos.length}
-                            setPhotos={
-                              setPhotos as React.Dispatch<
-                                React.SetStateAction<IPhotoAlbumEntryItem[]>
-                              >
-                            }
                           />
                         )}
                       />
@@ -343,11 +338,7 @@ function PhotosAlbumGallery(): React.ReactElement {
             />
           </div>
           <DeletePhotosConfirmationModal
-            setPhotos={
-              setPhotos as React.Dispatch<
-                React.SetStateAction<IPhotoAlbumEntryItem[]>
-              >
-            }
+            setPhotos={setPhotos as any}
             isInAlbumGallery={true}
           />
           <RemovePhotosFromAlbumConfirmationModal

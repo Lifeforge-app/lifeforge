@@ -1,5 +1,5 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
@@ -223,7 +223,7 @@ function ChangiFlightStatus(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:plane" title="Changi Flight Status" />
-      <div className="mt-8 flex items-center gap-2">
+      <div className="mt-6 flex items-center gap-2">
         <Listbox
           as="div"
           className="relative"

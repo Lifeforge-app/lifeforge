@@ -51,7 +51,7 @@ function Achievements(): React.ReactElement {
       <APIComponentWithFallback data={entries}>
         {entries =>
           entries.length > 0 ? (
-            <div className="mt-8 space-y-4">
+            <div className="mt-6 space-y-4">
               {entries.map(entry => (
                 <EntryItem
                   key={entry.id}

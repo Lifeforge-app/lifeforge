@@ -38,19 +38,19 @@ function ModifyCategoryModal({
   const FIELDS: IFieldProps[] = [
     {
       id: 'name',
-      name: 'Category name',
+      label: 'Category name',
       icon: 'tabler:category',
       placeholder: 'Category name',
       type: 'text'
     },
     {
       id: 'icon',
-      name: 'Category icon',
+      label: 'Category icon',
       type: 'icon'
     },
     {
       id: 'color',
-      name: 'Category color',
+      label: 'Category color',
       type: 'color'
     }
   ]
@@ -101,6 +101,7 @@ function ModifyCategoryModal({
 
   return (
     <Modal
+      isOpen={openType !== null}
       modalRef={modalRef}
       title={`${
         {
@@ -115,7 +116,9 @@ function ModifyCategoryModal({
         }[innerOpenType!]
       }
       openType={openType}
-      setOpenType={setOpenType}
+      onClose={() => {
+        setOpenType(null)
+      }}
       onSubmit={onSubmitButtonClick}
       fields={FIELDS}
       data={data}

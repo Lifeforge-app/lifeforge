@@ -1,14 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
-import React, { useState } from 'react'
+import React from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import {
   type IPhotoAlbumEntryItem,
-  type IPhotosEntry,
-  type IPhotosEntryDimensionsAll
+  type IPhotosEntry
 } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '../../../providers/PhotosProvider'
-import ImagePreviewModal from './modals/ImagePreviewModal'
 
 const LLI = LazyLoadImage as any
 
@@ -19,10 +17,8 @@ function ImageObject({
   toggleSelected,
   selectedPhotosLength,
   beingDisplayedInAlbum,
-  refreshAlbumData,
-  refreshPhotos,
-  setPhotos,
-  style
+  style,
+  setImagePreviewOpenFor
 }: {
   photo: any
   details: IPhotosEntry
@@ -32,16 +28,13 @@ function ImageObject({
   ) => void
   selectedPhotosLength: number
   beingDisplayedInAlbum: boolean
-  refreshAlbumData?: () => void
-  refreshPhotos: () => void
-  setPhotos:
-    | React.Dispatch<React.SetStateAction<IPhotosEntryDimensionsAll>>
-    | React.Dispatch<React.SetStateAction<IPhotoAlbumEntryItem[]>>
   style?: React.CSSProperties
-  [key: string]: any
+  setImagePreviewOpenFor: (
+    details: (IPhotoAlbumEntryItem | IPhotosEntry) | null
+  ) => void
 }): React.ReactElement {
   const { ready } = usePhotosContext()
-  const [imagePreviewModalOpen, setImagePreviewOpen] = useState(false)
+  console.log(details)
 
   return (
     <div
@@ -68,7 +61,7 @@ function ImageObject({
                   selected ? 'rounded-md' : ''
                 }`}
                 onClick={() => {
-                  setImagePreviewOpen(true)
+                  setImagePreviewOpenFor(details)
                 }}
               >
                 <LLI
@@ -81,18 +74,6 @@ function ImageObject({
                   className="size-full object-cover"
                 />
               </button>
-              <ImagePreviewModal
-                isOpen={imagePreviewModalOpen}
-                onClose={() => {
-                  setImagePreviewOpen(false)
-                }}
-                data={details}
-                img={photo.src.split('?')[0]}
-                setPhotos={setPhotos}
-                beingDisplayedInAlbum={beingDisplayedInAlbum}
-                refreshAlbumData={refreshAlbumData}
-                refreshPhotos={refreshPhotos}
-              />
             </div>
             {!selected && (
               <div className="pointer-events-none absolute top-0 h-12 w-full bg-gradient-to-t from-transparent to-black/50 opacity-0 transition-all group-hover/image:opacity-100" />

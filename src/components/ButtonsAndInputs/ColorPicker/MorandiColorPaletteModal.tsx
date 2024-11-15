@@ -1,8 +1,8 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { sortFn } from 'color-sorter'
 import React from 'react'
-import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import { MORANDI_COLORS } from '@constants/morandi_colors'
 import { isLightColor } from '@utils/colors'
 

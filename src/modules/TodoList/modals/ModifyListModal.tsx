@@ -27,19 +27,19 @@ function ModifyListModal(): React.ReactElement {
   const FIELDS: IFieldProps[] = [
     {
       id: 'name',
-      name: 'List name',
+      label: 'List name',
       icon: 'tabler:list',
       placeholder: 'List name',
       type: 'text'
     },
     {
       id: 'icon',
-      name: 'List icon',
+      label: 'List icon',
       type: 'icon'
     },
     {
       id: 'color',
-      name: 'List color',
+      label: 'List color',
       type: 'color'
     }
   ]
@@ -84,8 +84,11 @@ function ModifyListModal(): React.ReactElement {
 
   return (
     <Modal
+      isOpen={openType !== null}
       openType={openType}
-      setOpenType={setOpenType}
+      onClose={() => {
+        setOpenType(null)
+      }}
       title={`${
         {
           create: 'Create ',

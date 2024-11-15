@@ -21,10 +21,10 @@ function DeletePhotosConfirmationModal({
   isInAlbumGallery?: boolean
   customIsOpen?: boolean
   customSetIsOpen?: (isOpen: boolean) => void
-  customPhotoToBeDeleted?: IPhotosEntry
-  setPhotos:
-    | React.Dispatch<React.SetStateAction<IPhotoAlbumEntryItem[]>>
-    | React.Dispatch<React.SetStateAction<IPhotosEntryDimensionsAll>>
+  customPhotoToBeDeleted?: IPhotosEntry | IPhotoAlbumEntryItem
+  setPhotos: (
+    photos: IPhotosEntryDimensionsAll | IPhotoAlbumEntryItem[]
+  ) => void
 }): React.ReactElement {
   const {
     selectedPhotos,
@@ -53,7 +53,9 @@ function DeletePhotosConfirmationModal({
       successInfo: 'delete',
       failureInfo: 'delete',
       callback: () => {
-        setDeletePhotosConfirmationModalOpen(false)
+        customSetIsOpen
+          ? customSetIsOpen(false)
+          : setDeletePhotosConfirmationModalOpen(false)
         setSelectedPhotos([])
 
         if (isInAlbumGallery) {
@@ -75,7 +77,9 @@ function DeletePhotosConfirmationModal({
         }
       },
       onFailure: () => {
-        setDeletePhotosConfirmationModalOpen(false)
+        customSetIsOpen
+          ? customSetIsOpen(false)
+          : setDeletePhotosConfirmationModalOpen(false)
       },
       finalCallback: () => {
         setLoading(false)

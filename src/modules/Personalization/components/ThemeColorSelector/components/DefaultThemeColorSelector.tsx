@@ -4,7 +4,7 @@ import {
   ListboxOption,
   ListboxOptions
 } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React from 'react'
 import { toCamelCase } from '@utils/strings'

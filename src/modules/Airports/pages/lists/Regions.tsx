@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
@@ -54,7 +54,7 @@ function Regions(): React.ReactElement {
       <MasterSearchBar />
       <APIComponentWithFallback data={regionsData} showLoading={false}>
         {continentsData => (
-          <div className="mt-8 flex items-center gap-2">
+          <div className="mt-6 flex items-center gap-2">
             <Link to="/airports" className="text-bg-500">
               All Continents
             </Link>

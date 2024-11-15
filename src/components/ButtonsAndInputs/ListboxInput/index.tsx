@@ -1,5 +1,5 @@
 import { ListboxButton } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 import ListboxInputWrapper from './components/ListboxInputWrapper'
 import ListboxOptions from './components/ListboxOptions'
@@ -27,7 +27,7 @@ function ListboxInput({
         <Icon
           icon={icon}
           className={`ml-6 size-6 shrink-0 ${
-            value !== null ? '' : 'text-bg-500'
+            value !== null && value.length !== 0 ? '' : 'text-bg-500'
           } group-data-[open]:!text-custom-500`}
         />
         <span

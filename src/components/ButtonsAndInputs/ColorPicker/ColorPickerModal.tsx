@@ -2,6 +2,7 @@ import { Colorful, type ColorResult, EditableInput } from '@uiw/react-color'
 import React, { useCallback, useEffect, useState } from 'react'
 import ModalHeader from '@components/Modals/ModalHeader'
 import MorandiColorPaletteModal from './MorandiColorPaletteModal'
+import TailwindCSSColorsModal from './TailwindCSSColorsModal'
 import ModalWrapper from '../../Modals/ModalWrapper'
 import Button from '../Button'
 
@@ -26,6 +27,8 @@ function ColorPickerModal({
 }): React.ReactElement {
   const [innerColor, setInnerColor] = useState(color.toLowerCase())
   const [morandiColorPaletteModalOpen, setMorandiColorPaletteModalOpen] =
+    useState(false)
+  const [tailwindCSSColorsModalOpen, setTailwindCSSColorsModalOpen] =
     useState(false)
 
   const confirmColor = useCallback(() => {
@@ -90,6 +93,16 @@ function ColorPickerModal({
         >
           Morandi Color Palette
         </Button>
+        <Button
+          variant="primary"
+          icon="tabler:brand-tailwind"
+          onClick={() => {
+            setTailwindCSSColorsModalOpen(true)
+          }}
+          className="mb-2 !bg-teal-500 hover:!bg-teal-600"
+        >
+          Tailwind CSS Color Palette
+        </Button>
         <Button onClick={confirmColor} icon="tabler:check">
           Select
         </Button>
@@ -98,6 +111,14 @@ function ColorPickerModal({
         isOpen={morandiColorPaletteModalOpen}
         onClose={() => {
           setMorandiColorPaletteModalOpen(false)
+        }}
+        color={innerColor}
+        setColor={setInnerColor}
+      />
+      <TailwindCSSColorsModal
+        isOpen={tailwindCSSColorsModalOpen}
+        onClose={() => {
+          setTailwindCSSColorsModalOpen(false)
         }}
         color={innerColor}
         setColor={setInnerColor}

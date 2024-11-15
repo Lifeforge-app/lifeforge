@@ -106,8 +106,8 @@ function PhotosFavouritesGallery(): React.ReactElement {
                     imageProps: { src, alt, style, ...restImageProps }
                   }) => (
                     <ImageObject
-                      refreshPhotos={() => {}}
-                      setPhotos={() => {}}
+                      // TODO
+                      setImagePreviewOpenFor={() => {}}
                       beingDisplayedInAlbum
                       photo={photo}
                       details={photos.find(image => image.id === photo.key)!}

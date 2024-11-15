@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
+import Gradient from 'javascript-color-gradient'
+
 export function isLightColor(color: string): boolean {
   const r = parseInt(color.slice(1, 3), 16)
   const g = parseInt(color.slice(3, 5), 16)
@@ -86,4 +88,33 @@ export function rgbToHex(r: number, g: number, b: number): string {
       })
       .join('')
   )
+}
+
+export function getColorPalette(
+  color: string,
+  type: 'bg' | 'theme',
+  theme: 'dark' | 'light'
+): Record<number, string> {
+  let finalColor = color
+
+  if (type === 'bg') {
+    const [r, g, b] = hexToRgb(color)
+    let [h, s, l] = rgbToHsl(r, g, b)
+    l = theme === 'dark' ? 0.5 : 0.7
+    const [r2, g2, b2] = hslToRgb(h, s, l)
+    finalColor = rgbToHex(r2, g2, b2)
+  }
+
+  const gradientArray = new Gradient()
+    .setColorGradient('#FFFFFF', finalColor, '#000000')
+    .setMidpoint(14)
+    .getColors()
+    .slice(1, -1)
+
+  const number = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
+
+  return number.reduce<Record<number, string>>((acc, cur, idx) => {
+    acc[cur] = gradientArray[idx]
+    return acc
+  }, {})
 }

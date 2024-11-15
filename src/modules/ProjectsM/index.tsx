@@ -3,12 +3,12 @@ import { t } from 'i18next'
 import React from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import EntryItem from './components/EntryItem'
 import ModifyEntryModal from './components/ModifyEntryModal'
@@ -18,7 +18,7 @@ import Sidebar from './components/Sidebar'
 function ProjectsM(): React.ReactElement {
   const {
     miscellaneous: {
-      modalConfigs,
+      deleteModalConfigs,
       searchQuery,
       setSearchQuery,
       setSidebarOpen
@@ -93,7 +93,7 @@ function ProjectsM(): React.ReactElement {
         <ModifyModal key={index} stuff={stuff} />
       ))}
 
-      {modalConfigs.map((config, index) => (
+      {deleteModalConfigs.map((config, index) => (
         <DeleteConfirmationModal
           key={index}
           apiEndpoint={config.apiEndpoint}

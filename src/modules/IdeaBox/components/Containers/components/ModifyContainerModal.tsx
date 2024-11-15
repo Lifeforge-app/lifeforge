@@ -31,19 +31,19 @@ function ModifyContainerModal({
   const FIELDS: IFieldProps[] = [
     {
       id: 'name',
-      name: 'Container name',
+      label: 'Container name',
       icon: 'tabler:cube',
       placeholder: 'My container',
       type: 'text'
     },
     {
       id: 'icon',
-      name: 'Container icon',
+      label: 'Container icon',
       type: 'icon'
     },
     {
       id: 'color',
-      name: 'Container color',
+      label: 'Container color',
       type: 'color'
     }
   ]
@@ -97,6 +97,7 @@ function ModifyContainerModal({
 
   return (
     <Modal
+      isOpen={openType !== null}
       fields={FIELDS}
       data={data}
       setData={setData}
@@ -113,7 +114,9 @@ function ModifyContainerModal({
         }[openType!]
       }
       openType={openType}
-      setOpenType={setOpenType}
+      onClose={() => {
+        setOpenType(null)
+      }}
       onSubmit={onSubmitButtonClick}
     />
   )

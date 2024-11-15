@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
@@ -76,7 +76,7 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
     <APIComponentWithFallback data={flightsData}>
       {(data: FlightData[]) => (
         <>
-          <div className="sticky top-[3.64rem] z-10 mt-8 flex items-center rounded-md bg-bg-50 dark:bg-bg-950">
+          <div className="sticky top-[3.64rem] z-10 mt-6 flex items-center rounded-md bg-bg-50 dark:bg-bg-950">
             {[
               ['Arrivals', 'tabler:plane-arrival'],
               ['Departures', 'tabler:plane-departure']

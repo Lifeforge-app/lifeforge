@@ -62,30 +62,31 @@ function MiniCalendarDateItem({
       }`}
     >
       <span>{actualIndex}</span>
-      {(() => {
-        const eventsOnTheDay = getEventsOnTheDay()
+      {!(firstDay > index || index - firstDay + 1 > lastDate) &&
+        (() => {
+          const eventsOnTheDay = getEventsOnTheDay()
 
-        return (
-          eventsOnTheDay.length > 0 && (
-            <div className="flex w-full items-center justify-center gap-px">
-              {eventsOnTheDay.slice(0, 3).map(event => (
-                <div
-                  key={event.id}
-                  style={{
-                    backgroundColor:
-                      typeof categories !== 'string'
-                        ? categories.find(
-                            category => category.id === event.category
-                          )?.color
-                        : ''
-                  }}
-                  className={'size-1 rounded-full'}
-                />
-              ))}
-            </div>
+          return (
+            eventsOnTheDay.length > 0 && (
+              <div className="flex w-full items-center justify-center gap-px">
+                {eventsOnTheDay.slice(0, 3).map(event => (
+                  <div
+                    key={event.id}
+                    style={{
+                      backgroundColor:
+                        typeof categories !== 'string'
+                          ? categories.find(
+                              category => category.id === event.category
+                            )?.color
+                          : ''
+                    }}
+                    className={'size-1 rounded-full'}
+                  />
+                ))}
+              </div>
+            )
           )
-        )
-      })()}
+        })()}
     </div>
   )
 }

@@ -1,12 +1,13 @@
 interface ITextInputFieldProps {
-  name: string
+  label: string
   icon: string
   type: 'text'
   placeholder: string
+  disabled?: boolean
 }
 
 interface IDateInputFieldProps {
-  name: string
+  label: string
   icon: string
   type: 'date'
   index: number
@@ -14,7 +15,7 @@ interface IDateInputFieldProps {
 }
 
 interface IListboxInputFieldProps {
-  name: string
+  label: string
   icon: string
   type: 'listbox'
   options: Array<{
@@ -28,12 +29,12 @@ interface IListboxInputFieldProps {
 }
 
 interface IColorInputFieldProps {
-  name: string
+  label: string
   type: 'color'
 }
 
 interface IIconInputFieldProps {
-  name: string
+  label: string
   type: 'icon'
 }
 

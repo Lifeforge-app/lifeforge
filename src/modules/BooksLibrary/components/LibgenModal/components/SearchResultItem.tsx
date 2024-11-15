@@ -1,26 +1,21 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
-import APIRequest from '@utils/fetchData'
+import AddToLibraryButton from './AddToLibraryButton'
 
 function SearchResultItem({
   book,
-  setViewDetailsFor
+  setViewDetailsFor,
+  setAddToLibraryFor
 }: {
   book: Record<string, any>
   setViewDetailsFor: (id: string) => void
+  setAddToLibraryFor: (id: string) => void
 }): React.ReactElement {
-  async function addToLibrary(): Promise<void> {
-    await APIRequest({
-      endpoint: `books-library/libgen/add-to-library/${book.md5}`,
-      method: 'POST'
-    })
-  }
-
   return (
     <li className="flex gap-6 rounded-md bg-bg-800/50 p-6 shadow-custom">
-      <div className="relative h-min w-56 shrink-0 overflow-hidden rounded-md bg-bg-800">
+      <div className="flex-center relative inline-flex h-min min-h-80 w-56 shrink-0 flex-col overflow-hidden rounded-md bg-bg-800">
         <Icon
           icon="tabler:book-2"
           className="absolute left-1/2 top-1/2 size-24 -translate-x-1/2 -translate-y-1/2 text-bg-700"
@@ -85,15 +80,10 @@ function SearchResultItem({
           >
             View Details
           </Button>
-          <Button
-            onClick={() => {
-              addToLibrary().catch(console.error)
-            }}
-            icon="tabler:plus"
-            className="w-1/2"
-          >
-            Add to Library
-          </Button>
+          <AddToLibraryButton
+            md5={book.md5}
+            setAddToLibraryFor={setAddToLibraryFor}
+          />
         </div>
       </div>
     </li>

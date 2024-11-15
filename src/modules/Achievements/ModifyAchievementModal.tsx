@@ -41,21 +41,21 @@ function ModifyAchievementModal({
   const FIELDS: IFieldProps[] = [
     {
       id: 'title',
-      name: 'Achievement title',
+      label: 'Achievement title',
       icon: 'tabler:award',
       placeholder: 'My achievement',
       type: 'text'
     },
     {
       id: 'thoughts',
-      name: 'Achievement thoughts',
+      label: 'Achievement thoughts',
       icon: 'tabler:bubble-text',
       placeholder: 'My thoughts',
       type: 'text'
     },
     {
       id: 'difficulty',
-      name: 'Achievement difficulty',
+      label: 'Achievement difficulty',
       icon: 'tabler:list',
       type: 'listbox',
       options: difficulties.map(([name, color]) => ({
@@ -109,6 +109,7 @@ function ModifyAchievementModal({
 
   return (
     <Modal
+      isOpen={openType !== null}
       title={`${
         {
           create: 'Create ',
@@ -125,7 +126,9 @@ function ModifyAchievementModal({
       setData={setData}
       fields={FIELDS}
       openType={openType}
-      setOpenType={setOpenType}
+      onClose={() => {
+        setOpenType(null)
+      }}
       onSubmit={onSubmitButtonClick}
     />
   )
