@@ -17,7 +17,7 @@ function TailwindCSSColorsModal({
   setColor: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
   return (
-    <ModalWrapper isOpen={isOpen} affectSidebar={false} minWidth="60vw">
+    <ModalWrapper isOpen={isOpen} affectHeader={false} minWidth="60vw">
       <ModalHeader
         icon="tabler:brand-tailwind"
         title="Tailwind CSS Color Palette"

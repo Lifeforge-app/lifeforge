@@ -71,7 +71,7 @@ function PlaylistVideoEntry({
           onClick={() => {
             downloadVideo(video)
           }}
-          className="text-bg-500 hover:bg-bg-800/70 hover:text-bg-800 dark:hover:text-bg-50"
+          className="text-bg-500 hover:bg-bg-800/50 hover:text-bg-800 dark:hover:text-bg-50"
         />
       )}
     </div>

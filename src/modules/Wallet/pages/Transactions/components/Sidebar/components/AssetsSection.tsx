@@ -1,6 +1,5 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
@@ -11,9 +10,9 @@ function AssetsSection({
 }: {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
-  const { assets, filteredTransactions } = useWalletContext()
+  const { assets, filteredTransactions, searchParams, setSearchParams } =
+    useWalletContext()
   const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
 
   return (
     <>
@@ -56,25 +55,19 @@ function AssetsSection({
                   }
                   onClick={() => {
                     if (id === null) {
-                      setSearchParams(searchParams => {
-                        searchParams.delete('asset')
-                        return searchParams
-                      })
+                      searchParams.delete('asset')
+                      setSearchParams(searchParams)
                     } else {
-                      setSearchParams(searchParams => {
-                        searchParams.set('asset', id)
-                        return searchParams
-                      })
+                      searchParams.set('asset', id)
+                      setSearchParams(searchParams)
                     }
                     setSidebarOpen(false)
                   }}
                   onCancelButtonClick={
                     name !== 'All'
                       ? () => {
-                          setSearchParams(searchParams => {
-                            searchParams.delete('asset')
-                            return searchParams
-                          })
+                          searchParams.delete('asset')
+                          setSearchParams(searchParams)
                           setSidebarOpen(false)
                         }
                       : undefined

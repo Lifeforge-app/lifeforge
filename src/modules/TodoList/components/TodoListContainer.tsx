@@ -17,6 +17,8 @@ import ModifyTagModal from '../modals/ModifyTagModal'
 
 function TodoListContainer(): React.ReactElement {
   const {
+    searchParams,
+    setSearchParams,
     entries,
     refreshPriorities,
     refreshLists,
@@ -55,11 +57,24 @@ function TodoListContainer(): React.ReactElement {
     setSubSidebarExpanded(sidebarOpen)
   }, [sidebarOpen])
 
+  useEffect(() => {
+    const status = searchParams.get('status')
+    if (status === null || status === '') return
+    if (
+      !['all', 'today', 'scheduled', 'overdue', 'completed'].includes(status)
+    ) {
+      setSearchParams({
+        ...Object.fromEntries(searchParams.entries()),
+        status: 'all'
+      })
+    }
+  }, [searchParams])
+
   return (
     <>
       <div className="mt-6 flex size-full min-h-0 flex-1">
         <Sidebar isOpen={sidebarOpen} setOpen={setSidebarOpen} />
-        <div className="relative z-10 flex h-full flex-1 flex-col lg:ml-8">
+        <div className="relative z-10 flex h-full flex-1 flex-col xl:ml-8">
           <Header setSidebarOpen={setSidebarOpen} />
           <SearchInput
             searchQuery={searchQuery}

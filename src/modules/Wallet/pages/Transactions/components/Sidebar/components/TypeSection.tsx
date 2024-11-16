@@ -1,6 +1,5 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router-dom'
 import colors from 'tailwindcss/colors'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
@@ -14,8 +13,8 @@ function TypeSection({
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   const { t } = useTranslation()
-  const { filteredTransactions } = useWalletContext()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { filteredTransactions, searchParams, setSearchParams } =
+    useWalletContext()
   const { bgTemp } = useThemeColorHex()
 
   return (
@@ -55,10 +54,8 @@ function TypeSection({
           }
           onClick={() => {
             if (name === 'All Assets') {
-              setSearchParams(searchParams => {
-                searchParams.delete('type')
-                return searchParams
-              })
+              searchParams.delete('type')
+              setSearchParams(searchParams)
               setSidebarOpen(false)
               return
             }
@@ -72,10 +69,8 @@ function TypeSection({
           onCancelButtonClick={
             name !== 'All Assets'
               ? () => {
-                  setSearchParams(searchParams => {
-                    searchParams.delete('type')
-                    return searchParams
-                  })
+                  searchParams.delete('type')
+                  setSearchParams(searchParams)
                 }
               : undefined
           }

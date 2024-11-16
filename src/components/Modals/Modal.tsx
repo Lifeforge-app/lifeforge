@@ -17,6 +17,7 @@ import ModalHeader from './ModalHeader'
 import ModalWrapper from './ModalWrapper'
 
 function Modal({
+  affectHeader,
   modalRef,
   fields,
   data,
@@ -29,8 +30,12 @@ function Modal({
   submitButtonLabel,
   submitButtonIcon,
   onSubmit,
-  loading = false
+  loading = false,
+  actionButtonIcon,
+  actionButtonIsRed,
+  onActionButtonClick
 }: {
+  affectHeader?: boolean
   modalRef?: React.RefObject<HTMLDivElement | null>
   fields: IFieldProps[]
   data: Record<string, string | string[]>
@@ -44,6 +49,9 @@ function Modal({
   submitButtonIcon?: string
   onSubmit: () => Promise<void>
   loading?: boolean
+  actionButtonIcon?: string
+  actionButtonIsRed?: boolean
+  onActionButtonClick?: () => void
 }): React.ReactElement {
   const [colorPickerOpen, setColorPickerOpen] = useState<string | null>(null)
   const [iconSelectorOpen, setIconSelectorOpen] = useState<string | null>(null)
@@ -57,8 +65,20 @@ function Modal({
 
   return (
     <>
-      <ModalWrapper minWidth="50vw" modalRef={modalRef} isOpen={isOpen}>
-        <ModalHeader title={title} icon={icon} onClose={onClose} />
+      <ModalWrapper
+        affectHeader={affectHeader}
+        minWidth="50vw"
+        modalRef={modalRef}
+        isOpen={isOpen}
+      >
+        <ModalHeader
+          title={title}
+          icon={icon}
+          onClose={onClose}
+          actionButtonIcon={actionButtonIcon}
+          actionButtonIsRed={actionButtonIsRed}
+          onActionButtonClick={onActionButtonClick}
+        />
         {!loading ? (
           <>
             <div className="space-y-4">

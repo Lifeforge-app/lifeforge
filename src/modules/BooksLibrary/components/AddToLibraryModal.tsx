@@ -172,6 +172,7 @@ function AddToLibraryModal({
 
   return (
     <Modal
+      affectHeader={false}
       isOpen={isOpen}
       title="Add to library"
       icon="majesticons:book-plus-line"

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
 import useFetch from '@hooks/useFetch'
+import useHashParams from '@hooks/useHashParams'
 import {
   type ITodoListEntry,
   type ITodoListList,
@@ -11,6 +11,7 @@ import {
 
 interface ITodoListData {
   // Data
+  searchParams: URLSearchParams
   priorities: ITodoPriority[] | 'loading' | 'error'
   lists: ITodoListList[] | 'loading' | 'error'
   tags: ITodoListTag[] | 'loading' | 'error'
@@ -39,6 +40,7 @@ interface ITodoListData {
   refreshStatusCounter: () => void
 
   // Setters
+  setSearchParams: (params: Record<string, string> | URLSearchParams) => void
   setModifyTaskWindowOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
@@ -83,7 +85,7 @@ export function TodoListProvider({
 }: {
   children: React.ReactNode
 }): React.ReactElement {
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useHashParams()
   const [statusCounter, refreshStatusCounter] =
     useFetch<ITodoListStatusCounter>('todo-list/entries/status-counter')
   const [priorities, refreshPriorities] = useFetch<ITodoPriority[]>(
@@ -130,6 +132,7 @@ export function TodoListProvider({
     <TodoListContext
       value={{
         // Data
+        searchParams,
         priorities,
         lists,
         tags: tagsList,
@@ -158,6 +161,7 @@ export function TodoListProvider({
         refreshStatusCounter,
 
         // Setters
+        setSearchParams,
         setModifyTaskWindowOpenType,
         setModifyPriorityModalOpenType,
         setModifyListModalOpenType,

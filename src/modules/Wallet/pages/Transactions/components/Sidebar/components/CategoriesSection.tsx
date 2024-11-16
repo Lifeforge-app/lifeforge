@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
@@ -16,8 +15,8 @@ function CategoriesSection({
   >
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
-  const { categories, filteredTransactions } = useWalletContext()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { categories, filteredTransactions, searchParams, setSearchParams } =
+    useWalletContext()
 
   return (
     <>
@@ -74,14 +73,13 @@ function CategoriesSection({
                   active={searchParams.get('category') === id}
                   onClick={() => {
                     if (name === 'All') {
-                      setSearchParams(searchParams => {
-                        searchParams.delete('category')
-                        searchParams.delete('type')
-                        return searchParams
-                      })
+                      searchParams.delete('category')
+                      searchParams.delete('type')
+                      setSearchParams(searchParams)
                       setSidebarOpen(false)
                       return
                     }
+
                     setSearchParams({
                       ...Object.fromEntries(searchParams.entries()),
                       category: id!,
@@ -101,11 +99,9 @@ function CategoriesSection({
                   onCancelButtonClick={
                     name !== 'All'
                       ? () => {
-                          setSearchParams(searchParams => {
-                            searchParams.delete('category')
-                            searchParams.delete('type')
-                            return searchParams
-                          })
+                          searchParams.delete('category')
+                          searchParams.delete('type')
+                          setSearchParams(searchParams)
                           setSidebarOpen(false)
                         }
                       : undefined

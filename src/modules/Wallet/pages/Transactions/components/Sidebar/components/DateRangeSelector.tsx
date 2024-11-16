@@ -1,39 +1,39 @@
 import moment from 'moment'
 import React from 'react'
-import { useSearchParams } from 'react-router-dom'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
+import { useWalletContext } from '@providers/WalletProvider'
 
 function DateRangeSelector(): React.ReactElement {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { searchParams, setSearchParams } = useWalletContext()
 
   const handleDateChange = (
     date: string,
     type: 'start_date' | 'end_date'
   ): void => {
-    setSearchParams(searchParams => {
-      if (date === '') {
-        searchParams.delete(type)
-        return searchParams
-      }
+    if (date === '') {
+      searchParams.delete(type)
+      setSearchParams(searchParams)
+      return
+    }
 
-      const otherType = type === 'start_date' ? 'end_date' : 'start_date'
-      const otherDate =
-        searchParams.get(otherType) !== null &&
-        moment(searchParams.get(otherType)).isValid()
-          ? moment(searchParams.get(otherType))
-          : moment()
+    const otherType = type === 'start_date' ? 'end_date' : 'start_date'
+    const otherDate =
+      searchParams.get(otherType) !== null &&
+      moment(searchParams.get(otherType)).isValid()
+        ? moment(searchParams.get(otherType))
+        : moment()
 
-      if (
-        (type === 'start_date' && moment(date).isAfter(otherDate)) ||
-        (type === 'end_date' && moment(date).isBefore(otherDate))
-      ) {
-        searchParams.set(otherType, moment(date).format('YYYY-MM-DD'))
-      }
+    if (
+      (type === 'start_date' && moment(date).isAfter(otherDate)) ||
+      (type === 'end_date' && moment(date).isBefore(otherDate))
+    ) {
+      searchParams.set(otherType, moment(date).format('YYYY-MM-DD'))
+    }
 
-      searchParams.set(type, moment(date).format('YYYY-MM-DD'))
-      return searchParams
-    })
+    searchParams.set(type, moment(date).format('YYYY-MM-DD'))
+
+    setSearchParams(searchParams)
   }
 
   const dateInputsConfig = [

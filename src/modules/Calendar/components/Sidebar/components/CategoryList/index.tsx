@@ -8,7 +8,10 @@ import CategoryListItem from './components/CategoryListItem'
 function CategoryList({
   categories,
   setModifyCategoryModalOpenType,
-  setExistedData
+  setExistedData,
+  searchParams,
+  setSearchParams,
+  setDeleteCategoryConfirmationModalOpen
 }: {
   categories: ICalendarCategory[] | 'loading' | 'error'
   refreshCategories: () => void
@@ -17,6 +20,11 @@ function CategoryList({
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedData: React.Dispatch<React.SetStateAction<ICalendarCategory | null>>
+  searchParams: URLSearchParams
+  setSearchParams: (params: Record<string, string> | URLSearchParams) => void
+  setDeleteCategoryConfirmationModalOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >
 }): React.ReactElement {
   return (
     <>
@@ -41,6 +49,11 @@ function CategoryList({
                     item={item}
                     setModifyModalOpenType={setModifyCategoryModalOpenType}
                     setSelectedData={setExistedData}
+                    searchParams={searchParams}
+                    setSearchParams={setSearchParams}
+                    setDeleteConfirmationModalOpen={
+                      setDeleteCategoryConfirmationModalOpen
+                    }
                   />
                 ))}
               </ul>

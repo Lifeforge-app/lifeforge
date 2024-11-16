@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
@@ -12,9 +11,9 @@ function LedgerSection({
 }: {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
-  const { ledgers, filteredTransactions } = useWalletContext()
+  const { ledgers, filteredTransactions, searchParams, setSearchParams } =
+    useWalletContext()
   const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
 
   return (
     <>
@@ -58,10 +57,8 @@ function LedgerSection({
                   }
                   onClick={() => {
                     if (name === 'All') {
-                      setSearchParams(searchParams => {
-                        searchParams.delete('ledger')
-                        return searchParams
-                      })
+                      searchParams.delete('ledger')
+                      setSearchParams(searchParams)
                       return
                     }
                     setSearchParams({
@@ -73,10 +70,8 @@ function LedgerSection({
                   onCancelButtonClick={
                     name !== 'All'
                       ? () => {
-                          setSearchParams(searchParams => {
-                            searchParams.delete('ledger')
-                            return searchParams
-                          })
+                          searchParams.delete('ledger')
+                          setSearchParams(searchParams)
                           setSidebarOpen(false)
                         }
                       : undefined

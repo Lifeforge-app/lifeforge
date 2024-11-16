@@ -300,7 +300,7 @@ function DNSRecords(): JSX.Element {
                           onClick={() => {
                             setSortBy(header)
                           }}
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 !p-2 hover:bg-bg-800/70 ${
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 !p-2 hover:bg-bg-800/50 ${
                             sortBy === header
                               ? 'text-bg-800 dark:text-bg-50'
                               : 'text-bg-500'
@@ -389,7 +389,7 @@ function DNSRecords(): JSX.Element {
                       </td>
                       <td className="p-4 text-center">
                         <div className="flex w-full items-center justify-center gap-2">
-                          <button className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/20 hover:text-bg-800 dark:hover:bg-bg-800/70 dark:hover:text-bg-50">
+                          <button className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/20 hover:text-bg-800 dark:hover:bg-bg-800/50 dark:hover:text-bg-50">
                             <Icon icon="tabler:pencil" className="size-6" />
                           </button>
                           <button

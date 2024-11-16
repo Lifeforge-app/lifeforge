@@ -1,7 +1,7 @@
-import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
+import FAB from '@components/ButtonsAndInputs/FAB'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
@@ -31,7 +31,7 @@ function ProjectsM(): React.ReactElement {
       <ModuleHeader icon="tabler:clipboard" title="Projects (M)" />
       <div className="mt-6 flex size-full min-h-0 flex-1">
         <Sidebar />
-        <div className="relative z-10 flex h-full flex-1 flex-col lg:ml-8">
+        <div className="relative z-10 flex h-full flex-1 flex-col xl:ml-8">
           <div className="flex-between flex">
             <h1 className="text-3xl font-semibold lg:text-4xl">
               All Projects <span className="text-base text-bg-500">(10)</span>
@@ -47,14 +47,14 @@ function ProjectsM(): React.ReactElement {
               >
                 new project
               </Button>
-              <button
+              <Button
                 onClick={() => {
                   setSidebarOpen(true)
                 }}
-                className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
-              >
-                <Icon icon="tabler:menu" className="text-2xl" />
-              </button>
+                variant="no-bg"
+                icon="tabler:menu"
+                className="xl:hidden"
+              />
             </div>
           </div>
           <SearchInput
@@ -86,13 +86,19 @@ function ProjectsM(): React.ReactElement {
           </div>
         </div>
       </div>
+      <FAB
+        onClick={() => {
+          setModifyDataModalOpenType('create')
+          setExistedData(null)
+        }}
+        hideWhen="sm"
+      />
       <ModifyEntryModal />
       {(
         ['statuses', 'categories', 'visibilities', 'technologies'] as const
       ).map((stuff, index) => (
         <ModifyModal key={index} stuff={stuff} />
       ))}
-
       {deleteModalConfigs.map((config, index) => (
         <DeleteConfirmationModal
           key={index}
