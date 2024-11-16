@@ -29,7 +29,7 @@ function Pagination({
               onClick={() => {
                 onPageChange(1)
               }}
-              className={`rounded-md px-3 py-2  ${
+              className={`hidden rounded-md px-3 py-2 lg:block  ${
                 currentPage === 1
                   ? 'font-semibold text-custom-500'
                   : 'text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800'
@@ -37,7 +37,10 @@ function Pagination({
             >
               {1}
             </button>
-            <Icon icon="uil:ellipsis-h" className="text-bg-500" />
+            <Icon
+              icon="uil:ellipsis-h"
+              className="hidden text-bg-500 lg:block"
+            />
           </>
         )
       }
@@ -52,11 +55,13 @@ function Pagination({
           }}
           className={`rounded-md px-5 py-3  ${
             currentPage === i
-              ? 'font-semibold text-custom-500'
-              : 'text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800'
+              ? 'font-semibold lg:text-custom-500'
+              : 'hidden text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800 lg:block'
           }`}
         >
+          <span className="inline lg:hidden">Page </span>
           {i}
+          <span className="inline lg:hidden"> / {totalPages}</span>
         </button>
       )
     }
@@ -65,14 +70,17 @@ function Pagination({
       pageNumbers.push(
         <>
           {endPage < totalPages && (
-            <Icon icon="uil:ellipsis-h" className="text-bg-500" />
+            <Icon
+              icon="uil:ellipsis-h"
+              className="hidden text-bg-500 lg:block"
+            />
           )}
           <button
             key={totalPages}
             onClick={() => {
               onPageChange(totalPages)
             }}
-            className={`rounded-md px-5 py-3  ${
+            className={`hidden rounded-md px-5 py-3 lg:block  ${
               currentPage === totalPages
                 ? 'font-semibold text-custom-500'
                 : 'text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800'
@@ -89,21 +97,19 @@ function Pagination({
 
   return (
     <div className={`flex-between flex gap-2 ${className}`}>
-      {currentPage > 1 ? (
-        <Button
-          onClick={() => {
-            if (currentPage > 1) {
-              onPageChange(currentPage - 1)
-            }
-          }}
-          icon="uil:angle-left"
-          variant="no-bg"
-        >
-          Previous
-        </Button>
-      ) : (
-        <span className="w-32"></span>
-      )}
+      <Button
+        disabled={currentPage === 1}
+        onClick={() => {
+          if (currentPage > 1) {
+            onPageChange(currentPage - 1)
+          }
+        }}
+        icon="uil:angle-left"
+        variant="no-bg"
+        className="w-32"
+      >
+        Previous
+      </Button>
       <div className="flex items-center gap-2">{renderPageNumbers()}</div>
       {currentPage < totalPages ? (
         <Button
@@ -115,6 +121,7 @@ function Pagination({
           icon="uil:angle-right"
           variant="no-bg"
           iconAtEnd
+          className="w-32"
         >
           Next
         </Button>

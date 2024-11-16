@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React from 'react'
-import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import { useTodoListContext } from '@providers/TodoListProvider'
@@ -10,8 +9,7 @@ function TaskStatusList({
 }: {
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
-  const { statusCounter } = useTodoListContext()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { statusCounter, searchParams, setSearchParams } = useTodoListContext()
 
   return (
     <APIComponentWithFallback data={statusCounter}>
@@ -34,10 +32,8 @@ function TaskStatusList({
               }
               onClick={() => {
                 if (name === 'All') {
-                  setSearchParams(searchParams => {
-                    searchParams.delete('status')
-                    return searchParams
-                  })
+                  searchParams.delete('status')
+                  setSearchParams(searchParams)
                   setSidebarOpen(false)
                   return
                 }

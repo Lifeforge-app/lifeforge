@@ -14,7 +14,7 @@ function SearchResultItem({
   setAddToLibraryFor: (id: string) => void
 }): React.ReactElement {
   return (
-    <li className="flex gap-6 rounded-md bg-bg-800/50 p-6 shadow-custom">
+    <li className="flex flex-col gap-6 rounded-md bg-bg-800/50 p-6 shadow-custom md:flex-row">
       <div className="flex-center relative inline-flex h-min min-h-80 w-56 shrink-0 flex-col overflow-hidden rounded-md bg-bg-800">
         <Icon
           icon="tabler:book-2"
@@ -42,7 +42,7 @@ function SearchResultItem({
         <p className="mt-1 text-base font-light text-custom-500">
           {book['Author(s)']}
         </p>
-        <div className="mt-6 grid grid-cols-4 gap-6">
+        <div className="mt-6 flex flex-wrap gap-6 lg:grid lg:grid-cols-4">
           {Object.keys(book)
             .filter(
               (key: string) =>
@@ -69,14 +69,14 @@ function SearchResultItem({
               </div>
             ))}
         </div>
-        <div className="mt-6 flex w-full items-center gap-4">
+        <div className="mt-6 flex w-full flex-col items-center gap-2 lg:flex-row lg:gap-4">
           <Button
             onClick={() => {
               setViewDetailsFor(book.md5)
             }}
             variant="secondary"
             icon="tabler:eye"
-            className="w-1/2"
+            className="w-full lg:w-1/2"
           >
             View Details
           </Button>

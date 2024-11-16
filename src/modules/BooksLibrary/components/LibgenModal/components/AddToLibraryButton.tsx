@@ -34,7 +34,7 @@ function AddToLibraryButton({
           ? 'tabler:check'
           : 'tabler:plus'
       }
-      className="w-1/2"
+      className="w-full xl:w-1/2"
     >
       {Object.keys(processes).includes(md5)
         ? `${t('button.downloading')} (${processes[md5].percentage})`

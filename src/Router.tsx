@@ -52,7 +52,7 @@ function AppRouter(): React.ReactElement {
     ): React.ReactElement[] => {
       return Object.entries(routes).map(([route, path], index) => {
         const Comp = COMPONENTS[name as keyof typeof COMPONENTS][
-          route as keyof typeof COMPONENTS[keyof typeof COMPONENTS]
+          route as keyof (typeof COMPONENTS)[keyof typeof COMPONENTS]
         ] as React.FC
 
         return (
@@ -112,7 +112,7 @@ function AppRouter(): React.ReactElement {
                             item.name
                           ) as keyof typeof COMPONENTS
                         ][
-                          item.provider as keyof typeof COMPONENTS[keyof typeof COMPONENTS]
+                          item.provider as keyof (typeof COMPONENTS)[keyof typeof COMPONENTS]
                         ]
 
                       return (

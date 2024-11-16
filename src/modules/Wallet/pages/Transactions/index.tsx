@@ -27,7 +27,8 @@ function Transactions(): React.ReactElement {
     refreshTransactions,
     refreshAssets,
     refreshCategories,
-    filteredTransactions
+    filteredTransactions,
+    searchParams
   } = useWalletContext()
 
   const [modifyTransactionsModalOpenType, setModifyModalOpenType] = useState<
@@ -47,7 +48,7 @@ function Transactions(): React.ReactElement {
     deleteTransactionsConfirmationOpen,
     setDeleteTransactionsConfirmationOpen
   ] = useState(false)
-  const { setSubSidebarExpanded } = useGlobalStateContext()
+  const { setSubSidebarExpanded, subSidebarExpanded } = useGlobalStateContext()
   const [isManageCategoriesModalOpen, setManageCategoriesModalOpen] = useState<
     boolean | 'new'
   >(false)
@@ -65,15 +66,17 @@ function Transactions(): React.ReactElement {
     if (hash === '#new') {
       setSelectedData(null)
       setModifyModalOpenType('create')
-      return
     }
+  }, [hash])
 
+  useEffect(() => {
+    console.log(subSidebarExpanded)
     if (sidebarOpen) {
       setSubSidebarExpanded(true)
     } else {
       setSubSidebarExpanded(false)
     }
-  }, [hash, sidebarOpen])
+  }, [sidebarOpen, setSubSidebarExpanded, searchParams])
 
   return (
     <ModuleWrapper>
@@ -104,7 +107,7 @@ function Transactions(): React.ReactElement {
           setSidebarOpen={setSidebarOpen}
           setManageCategoriesModalOpen={setManageCategoriesModalOpen}
         />
-        <div className="flex h-full min-w-0 flex-1 flex-col lg:ml-8">
+        <div className="flex h-full min-w-0 flex-1 flex-col xl:ml-8">
           <Header
             setModifyModalOpenType={setModifyModalOpenType}
             setSidebarOpen={setSidebarOpen}

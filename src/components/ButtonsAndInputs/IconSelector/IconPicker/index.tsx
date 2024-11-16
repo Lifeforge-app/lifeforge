@@ -22,7 +22,7 @@ function IconPicker({
 
   return (
     <ModalWrapper
-      affectSidebar={false}
+      affectHeader={false}
       isOpen={isOpen}
       minWidth="80vw"
       minHeight="80vh"

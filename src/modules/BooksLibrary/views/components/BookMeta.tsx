@@ -57,7 +57,7 @@ function BookMeta({
         <>
           <p className="flex shrink-0 items-center whitespace-nowrap text-bg-500">
             <Icon icon="tabler:user" className="mr-1 size-4" />
-            {item.publisher}
+            <span className="max-w-44 truncate">{item.publisher}</span>
           </p>
           <Icon icon="tabler:circle-filled" className="size-1" />
         </>

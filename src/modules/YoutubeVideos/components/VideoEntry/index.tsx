@@ -22,7 +22,7 @@ function VideoEntry({
       }`}
       target="_blank"
       rel="noreferrer"
-      className="relative flex w-full items-center justify-between gap-8 rounded-md bg-bg-50 p-4 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/70"
+      className="relative flex w-full items-center justify-between gap-8 rounded-md bg-bg-50 p-4 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50"
     >
       <div className="flex flex-col items-start md:flex-row">
         <VideoThumbnail id={video.youtube_id} duration={video.duration} />

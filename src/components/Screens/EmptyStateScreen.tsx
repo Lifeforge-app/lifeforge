@@ -42,7 +42,7 @@ function EmptyStateScreen({
         {name ? t(`emptyState.${name}.title`) : title}
       </h2>
       <p
-        className={`-mt-2 text-center ${
+        className={`-mt-2 px-8 text-center ${
           forSidebar ? 'text-base' : 'text-lg'
         } text-bg-500`}
       >

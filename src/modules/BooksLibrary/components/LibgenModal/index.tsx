@@ -92,7 +92,7 @@ function LibgenModal(): React.ReactElement {
           />
         ) : (
           <>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col items-center gap-2 sm:flex-row">
               <SearchInput
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
@@ -112,6 +112,7 @@ function LibgenModal(): React.ReactElement {
                 icon="tabler:arrow-right"
                 iconAtEnd
                 loading={loading}
+                className="w-full sm:w-auto"
               >
                 search
               </Button>

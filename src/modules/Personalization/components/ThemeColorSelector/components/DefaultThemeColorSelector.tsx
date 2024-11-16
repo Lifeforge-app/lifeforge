@@ -50,7 +50,7 @@ function DefaultThemeColorSelector({
         <ListboxButton
           className={`flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 ${
             !themeColor.startsWith('#') ? 'py-4 pl-4 pr-10' : 'py-6 pl-6 pr-12'
-          } text-left outline-none transition-all hover:bg-bg-100 focus:outline-none dark:border-bg-700 dark:bg-bg-900 dark:hover:bg-bg-800/70`}
+          } text-left outline-none transition-all hover:bg-bg-100 focus:outline-none dark:border-bg-700 dark:bg-bg-900 dark:hover:bg-bg-800/50`}
         >
           <span
             className={`inline-block size-4 shrink-0 rounded-full ${
