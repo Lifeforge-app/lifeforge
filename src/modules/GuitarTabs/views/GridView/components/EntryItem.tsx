@@ -24,7 +24,7 @@ function EntryItem({
         entry.id
       }/${entry.pdf}`}
       target="_blank"
-      className="block rounded-lg bg-bg-50 p-4 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/70"
+      className="block rounded-lg bg-bg-50 p-4 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50"
       rel="noreferrer"
     >
       <div className="relative">

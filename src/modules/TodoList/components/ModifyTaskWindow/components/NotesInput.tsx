@@ -18,7 +18,7 @@ function NotesInput({
           e.currentTarget.querySelector('textarea input') as HTMLInputElement
         )?.focus()
       }}
-      className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 transition-all focus-within:!border-custom-500 hover:bg-bg-200 dark:bg-bg-800/50 dark:hover:bg-bg-800/70"
+      className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 transition-all focus-within:!border-custom-500 hover:bg-bg-200 dark:bg-bg-800/50 dark:hover:bg-bg-800/50"
     >
       <Icon
         icon="tabler:file-text"

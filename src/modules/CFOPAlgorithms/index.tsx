@@ -16,7 +16,7 @@ function CFOPAlgorithms(): React.ReactElement {
           <Link
             key={key}
             to={`/cfop-algorithms/${key.toLowerCase()}`}
-            className="flex flex-col items-center justify-center rounded-md bg-bg-50 p-4 shadow-custom transition-all hover:bg-bg-100/50 dark:bg-bg-900 dark:hover:bg-bg-800/70"
+            className="flex flex-col items-center justify-center rounded-md bg-bg-50 p-4 shadow-custom transition-all hover:bg-bg-100/50 dark:bg-bg-900 dark:hover:bg-bg-800/50"
           >
             <img
               src={`/assets/cfop/landing-${key.toLowerCase()}.webp`}

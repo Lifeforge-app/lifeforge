@@ -20,7 +20,7 @@ function EntryItem({
   return (
     <li
       key={entry.id}
-      className="relative rounded-lg bg-bg-50 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/70"
+      className="relative rounded-lg bg-bg-50 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50"
     >
       <a
         key={entry.id}

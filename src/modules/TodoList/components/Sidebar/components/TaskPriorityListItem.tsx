@@ -1,5 +1,4 @@
 import React from 'react'
-import { useSearchParams } from 'react-router-dom'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import { type ITodoPriority } from '@interfaces/todo_list_interfaces'
@@ -13,12 +12,12 @@ function TaskPriorityListItem({
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
   const {
+    searchParams,
+    setSearchParams,
     setSelectedPriority: setSelectedData,
     setModifyPriorityModalOpenType: setModifyModalOpenType,
     setDeletePriorityConfirmationModalOpen: setDeleteConfirmationModalOpen
   } = useTodoListContext()
-
-  const [searchParams, setSearchParams] = useSearchParams()
 
   return (
     <SidebarItem
@@ -35,10 +34,8 @@ function TaskPriorityListItem({
         setSidebarOpen(false)
       }}
       onCancelButtonClick={() => {
-        setSearchParams(searchParams => {
-          searchParams.delete('priority')
-          return searchParams
-        })
+        searchParams.delete('priority')
+        setSearchParams(searchParams)
         setSidebarOpen(false)
       }}
       hamburgerMenuItems={

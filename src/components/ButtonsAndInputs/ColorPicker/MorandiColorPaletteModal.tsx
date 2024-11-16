@@ -18,7 +18,7 @@ function MorandiColorPaletteModal({
   setColor: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
   return (
-    <ModalWrapper isOpen={isOpen} affectSidebar={false} minWidth="60vw">
+    <ModalWrapper isOpen={isOpen} affectHeader={false} minWidth="60vw">
       <ModalHeader
         icon="tabler:flower"
         title="Morandi Color Palette"

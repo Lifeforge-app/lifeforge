@@ -15,7 +15,10 @@ function Sidebar({
   setSidebarOpen,
   modifyCategoryModalOpenType,
   setModifyCategoryModalOpenType,
-  setExistedData
+  setExistedData,
+  searchParams,
+  setSearchParams,
+  setDeleteCategoryConfirmationModalOpen
 }: {
   events: ICalendarEvent[]
   categories: ICalendarCategory[] | 'loading' | 'error'
@@ -27,6 +30,11 @@ function Sidebar({
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedData: React.Dispatch<React.SetStateAction<ICalendarCategory | null>>
+  searchParams: URLSearchParams
+  setSearchParams: (params: Record<string, string> | URLSearchParams) => void
+  setDeleteCategoryConfirmationModalOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >
 }): React.ReactElement {
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
@@ -37,6 +45,11 @@ function Sidebar({
         modifyCategoryModalOpenType={modifyCategoryModalOpenType}
         setModifyCategoryModalOpenType={setModifyCategoryModalOpenType}
         setExistedData={setExistedData}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
+        setDeleteCategoryConfirmationModalOpen={
+          setDeleteCategoryConfirmationModalOpen
+        }
       />
     </SidebarWrapper>
   )

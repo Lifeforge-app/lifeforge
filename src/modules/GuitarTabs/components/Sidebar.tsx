@@ -1,7 +1,5 @@
 import { t } from 'i18next'
 import React from 'react'
-import { useNavigate } from 'react-router'
-import { useSearchParams } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
@@ -12,15 +10,16 @@ import { type IGuitarTabsSidebarData } from '@interfaces/guitar_tabs_interfaces'
 function Sidebar({
   sidebarData,
   isOpen,
-  setOpen
+  setOpen,
+  searchParams,
+  setSearchParams
 }: {
   sidebarData: IGuitarTabsSidebarData | 'loading' | 'error'
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  searchParams: URLSearchParams
+  setSearchParams: (params: Record<string, string> | URLSearchParams) => void
 }): React.ReactElement {
-  const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
-
   return (
     <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
       <APIComponentWithFallback data={sidebarData}>
@@ -30,9 +29,9 @@ function Sidebar({
               icon="tabler:list"
               name="All scores"
               number={sidebarData.total}
-              active={location.search === ''}
+              active={Array.from(searchParams.keys()).length === 0}
               onClick={() => {
-                navigate('/guitar-tabs')
+                setSearchParams({})
                 setOpen(false)
               }}
             />

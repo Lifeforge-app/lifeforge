@@ -26,7 +26,7 @@ function Auth(): React.ReactElement {
           <AuthHeader />
           <AuthForm />
         </div>
-        <div className="flex flex-col items-center justify-center gap-2">
+        <div className="mt-8 flex flex-col items-center justify-center gap-2">
           <div className="flex items-center gap-2 text-bg-500">
             <Icon icon="tabler:creative-commons" className="size-6" />
             <Icon icon="tabler:creative-commons-by" className="size-6" />

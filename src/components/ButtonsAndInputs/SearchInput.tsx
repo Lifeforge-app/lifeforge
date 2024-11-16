@@ -26,8 +26,8 @@ function SearchInput({
     <search
       className={`flex w-full cursor-text items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-custom transition-all hover:!bg-white/70 ${
         lighter
-          ? 'dark:bg-bg-800/70 dark:hover:bg-bg-800'
-          : 'dark:bg-bg-900 dark:hover:bg-bg-800/70'
+          ? 'dark:bg-bg-800/50 dark:hover:bg-bg-800'
+          : 'dark:bg-bg-900 dark:hover:bg-bg-800/50'
       } ${hasTopMargin ? 'mt-4' : ''}`}
       onClick={e => {
         e.currentTarget.querySelector('input')?.focus()

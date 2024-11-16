@@ -147,7 +147,7 @@ function TransactionsCard(): React.ReactElement {
                           })}
                         </tbody>
                       </table>
-                      <ul className="flex flex-col divide-y divide-bg-800/70 lg:hidden">
+                      <ul className="flex flex-col divide-y divide-bg-800/50 lg:hidden">
                         {transactions.slice(0, 20).map(transaction => (
                           <li
                             key={transaction.id}

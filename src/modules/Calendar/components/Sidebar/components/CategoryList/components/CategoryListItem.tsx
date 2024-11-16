@@ -1,13 +1,15 @@
 import React from 'react'
-import { useSearchParams } from 'react-router-dom'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
+import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
 
 function CategoryListItem({
   item,
   setSelectedData,
-  setModifyModalOpenType
+  setModifyModalOpenType,
+  searchParams,
+  setSearchParams,
+  setDeleteConfirmationModalOpen
 }: {
   item: ICalendarCategory
   setSelectedData: React.Dispatch<
@@ -16,9 +18,10 @@ function CategoryListItem({
   setModifyModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
+  searchParams: URLSearchParams
+  setSearchParams: (params: Record<string, string> | URLSearchParams) => void
+  setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
-  const [searchParams, setSearchParams] = useSearchParams()
-
   return (
     <SidebarItem
       active={searchParams.get('category') === item.id}
@@ -34,10 +37,8 @@ function CategoryListItem({
         })
       }}
       onCancelButtonClick={() => {
-        setSearchParams(searchParams => {
-          searchParams.delete('category')
-          return searchParams
-        })
+        searchParams.delete('category')
+        setSearchParams(searchParams)
       }}
       hamburgerMenuItems={
         <>
@@ -56,7 +57,7 @@ function CategoryListItem({
             onClick={e => {
               e.stopPropagation()
               setSelectedData(item)
-              // setDeleteConfirmationModalOpen(true)
+              setDeleteConfirmationModalOpen(true)
             }}
             text="Delete"
           />

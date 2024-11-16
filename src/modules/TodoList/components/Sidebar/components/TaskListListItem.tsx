@@ -1,5 +1,4 @@
 import React from 'react'
-import { useSearchParams } from 'react-router-dom'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import { type ITodoListList } from '@interfaces/todo_list_interfaces'
@@ -13,12 +12,12 @@ function TaskListListItem({
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
   const {
+    searchParams,
+    setSearchParams,
     setSelectedList: setSelectedData,
     setModifyListModalOpenType: setModifyModalOpenType,
     setDeleteListConfirmationModalOpen: setDeleteConfirmationModalOpen
   } = useTodoListContext()
-
-  const [searchParams, setSearchParams] = useSearchParams()
 
   return (
     <SidebarItem
@@ -36,10 +35,8 @@ function TaskListListItem({
         setSidebarOpen(false)
       }}
       onCancelButtonClick={() => {
-        setSearchParams(searchParams => {
-          searchParams.delete('list')
-          return searchParams
-        })
+        searchParams.delete('list')
+        setSearchParams(searchParams)
         setSidebarOpen(false)
       }}
       hamburgerMenuItems={

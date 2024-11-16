@@ -1,22 +1,35 @@
-import React, { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import React, { useEffect } from 'react'
 import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarWrapper from '@components/Sidebar/components/SidebarWrapper'
+import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import SidebarSection from './components/SidebarSection'
 
 function Sidebar(): React.ReactElement {
-  const [isOpen, setOpen] = useState(true)
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { setSubSidebarExpanded } = useGlobalStateContext()
+  const {
+    miscellaneous: {
+      searchParams,
+      setSearchParams,
+      sidebarOpen,
+      setSidebarOpen
+    }
+  } = useBooksLibraryContext()
+
+  useEffect(() => {
+    setSubSidebarExpanded(sidebarOpen)
+  }, [sidebarOpen])
 
   return (
-    <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
+    <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
       <SidebarItem
         icon="tabler:list"
         name="All books"
         active={Array.from(searchParams.keys()).length === 0}
         onClick={() => {
           setSearchParams({})
+          setSidebarOpen(false)
         }}
       />
       <SidebarItem
@@ -24,10 +37,9 @@ function Sidebar(): React.ReactElement {
         name="Favourite"
         active={searchParams.get('favourite') === 'true'}
         onClick={() => {
-          setSearchParams(searchParams => {
-            searchParams.set('favourite', 'true')
-            return searchParams
-          })
+          searchParams.set('favourite', 'true')
+          setSearchParams(searchParams)
+          setSidebarOpen(false)
         }}
       />
       <SidebarDivider />

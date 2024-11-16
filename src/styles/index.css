@@ -10,6 +10,7 @@
   overscroll-behavior: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
+  interpolate-size: allow-keywords;
   @apply select-none;
 }
 
@@ -450,7 +451,7 @@ progress::-moz-progress-bar {
 }
 
 .Toastify__toast-container {
-  width: min(100%, 400px);
+  @apply sm:w-min sm:min-w-96 w-full;
 }
 
 .Toastify__toast-container * {

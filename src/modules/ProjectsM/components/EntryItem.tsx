@@ -18,8 +18,9 @@ function EntryItem({ entry }: { entry: IProjectsMEntry }): React.ReactElement {
     visibilities: { data: visibilities },
     technologies: { data: technologies }
   } = useProjectsMContext()
+
   return (
-    <li className="m-4 mt-0 flex items-center gap-4 rounded-lg bg-bg-50 shadow-custom transition-all hover:bg-bg-200 dark:bg-bg-900 dark:hover:bg-bg-800/70">
+    <li className="m-4 mt-0 flex items-center gap-4 rounded-lg bg-bg-50 shadow-custom transition-all hover:bg-bg-200 dark:bg-bg-900 dark:hover:bg-bg-800/50">
       <Link
         to={`/projects-m/${entry.id}`}
         className="flex-between flex w-full gap-4 p-6"

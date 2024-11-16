@@ -177,6 +177,11 @@ function ModifyEventModal({
         fields={FIELDS}
         data={data}
         setData={setData}
+        actionButtonIcon="tabler:trash"
+        actionButtonIsRed
+        onActionButtonClick={() => {
+          setIsDeleteConfirmationModalOpen(true)
+        }}
       />
       <DeleteConfirmationModal
         apiEndpoint="calendar/event"

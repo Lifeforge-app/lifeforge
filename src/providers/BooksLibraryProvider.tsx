@@ -3,6 +3,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Outlet } from 'react-router'
 import useFetch from '@hooks/useFetch'
+import useHashParams from '@hooks/useHashParams'
 import {
   type IBooksLibraryLanguage,
   type IBooksLibraryCategory,
@@ -52,6 +53,8 @@ interface IBooksLibraryData {
   categories: IBooksLibraryCommon<IBooksLibraryCategory>
   languages: IBooksLibraryCommon<IBooksLibraryLanguage>
   miscellaneous: {
+    searchParams: URLSearchParams
+    setSearchParams: (params: Record<string, string> | URLSearchParams) => void
     processes: Record<
       string,
       {
@@ -87,6 +90,7 @@ export const BooksLibraryContext = React.createContext<
 >(undefined)
 
 export default function BooksLibraryProvider(): React.ReactElement {
+  const [searchParams, setSearchParams] = useHashParams()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [libgenModalOpen, setLibgenModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -184,6 +188,8 @@ export default function BooksLibraryProvider(): React.ReactElement {
         categories: categoriesState,
         languages: languagesState,
         miscellaneous: {
+          searchParams,
+          setSearchParams,
           processes,
           searchQuery,
           setSearchQuery,

@@ -21,7 +21,7 @@ function ContainerItem({
   >
 }): React.ReactElement {
   return (
-    <div className="relative flex flex-col items-center justify-start gap-6 rounded-lg bg-bg-50 p-8 shadow-custom hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/70">
+    <div className="relative flex flex-col items-center justify-start gap-6 rounded-lg bg-bg-50 p-8 shadow-custom hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50">
       <div
         className="rounded-lg p-4"
         style={{

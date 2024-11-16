@@ -14,7 +14,7 @@ function MiniCalendarContent({
   const [nextToSelect, setNextToSelect] = useState<'start' | 'end'>('start')
 
   return (
-    <div className="grid grid-cols-7 gap-4">
+    <div className="grid grid-cols-7 gap-y-2">
       {{
         en: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         'zh-CN': ['一', '二', '三', '四', '五', '六', '日'],

@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Outlet } from 'react-router'
 import useFetch from '@hooks/useFetch'
+import useHashParams from '@hooks/useHashParams'
 import {
   type IProjectsMCategory,
   type IProjectsMEntry,
@@ -53,6 +54,8 @@ interface IProjectsMData {
   visibilities: IProjectsMCommon<IProjectsMVisibility>
   technologies: IProjectsMCommon<IProjectsMTechnology>
   miscellaneous: {
+    searchParams: URLSearchParams
+    setSearchParams: (params: Record<string, string> | URLSearchParams) => void
     searchQuery: string
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
     sidebarOpen: boolean
@@ -76,6 +79,7 @@ export const ProjectsMContext = React.createContext<IProjectsMData | undefined>(
 
 export default function ProjectsMProvider(): React.ReactElement {
   const { setSubSidebarExpanded } = useGlobalStateContext()
+  const [searchParams, setSearchParams] = useHashParams()
   const [searchQuery, setSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -124,6 +128,8 @@ export default function ProjectsMProvider(): React.ReactElement {
         visibilities: visibilitiesState,
         technologies: technologiesState,
         miscellaneous: {
+          searchParams,
+          setSearchParams,
           searchQuery,
           setSearchQuery,
           sidebarOpen,

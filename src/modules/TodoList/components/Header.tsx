@@ -126,14 +126,14 @@ function Header({
         >
           new task
         </Button>
-        <button
+        <Button
           onClick={() => {
             setSidebarOpen(true)
           }}
-          className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
-        >
-          <Icon icon="tabler:menu" className="text-2xl" />
-        </button>
+          icon="tabler:menu"
+          variant="no-bg"
+          className="xl:hidden"
+        />
       </div>
     </div>
   )

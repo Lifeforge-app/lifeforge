@@ -1,12 +1,17 @@
 import React, { useMemo } from 'react'
-import { useSearchParams } from 'react-router-dom'
 import useThemeColorHex from '@hooks/useThemeColorHex'
 import { rgbToHex } from '@utils/colors'
 import HeaderFilterChip from './components/HeaderFilterChip'
 
 function HeaderFilter({
+  searchParams,
+  setSearchParams,
   items
 }: {
+  searchParams: URLSearchParams
+  setSearchParams: (
+    searchParams: Record<string, string> | URLSearchParams
+  ) => void
   items: Record<
     string,
     {
@@ -23,9 +28,11 @@ function HeaderFilter({
     }
   >
 }): React.ReactElement {
-  const [searchParams, setSearchParams] = useSearchParams()
   const { theme } = useThemeColorHex()
   const themeColorHex = useMemo(() => {
+    if (theme.startsWith('#')) {
+      return theme
+    }
     const [r, g, b] = theme.match(/\((\d+), (\d+), (\d+)\)/)?.slice(1) ?? []
     return rgbToHex(Number(r), Number(g), Number(b))
   }, [theme])
@@ -62,10 +69,8 @@ function HeaderFilter({
                   icon={target.icon ?? ''}
                   text={target.name ?? ''}
                   onRemove={() => {
-                    setSearchParams(searchParams => {
-                      searchParams.delete(query)
-                      return searchParams
-                    })
+                    searchParams.delete(query)
+                    setSearchParams(searchParams)
                   }}
                 />
               )

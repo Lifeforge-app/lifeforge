@@ -1,8 +1,10 @@
+import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import Button from '@components/ButtonsAndInputs/Button'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
@@ -28,10 +30,15 @@ function BooksLibrary(): React.ReactElement {
       existedData: existedBookData,
       setExistedData: setExistedBookData
     },
-    miscellaneous: { deleteModalConfigs, searchQuery, setSearchQuery }
+    miscellaneous: {
+      searchParams,
+      deleteModalConfigs,
+      searchQuery,
+      setSearchQuery,
+      setLibgenModalOpen
+    }
   } = useBooksLibraryContext()
   const debouncedSearchQuery = useDebounce(searchQuery, 500)
-  const [searchParams] = useSearchParams()
   const [filteredEntries, setFilteredEntries] = useState(entries)
   const [view, setView] = useState<'list' | 'grid'>('list')
 
@@ -152,6 +159,31 @@ function BooksLibrary(): React.ReactElement {
         }}
         updateDataList={refreshEntries}
       />
+      <Menu as="div" className="fixed bottom-6 right-6 z-50 block md:hidden">
+        <Button
+          onClick={() => {}}
+          icon="tabler:plus"
+          CustomElement={MenuButton}
+        ></Button>
+        <MenuItems
+          transition
+          anchor="top end"
+          className="overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out [--anchor-gap:6px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+        >
+          <MenuItem
+            onClick={() => {}}
+            icon="tabler:upload"
+            text="Upload from device"
+          />
+          <MenuItem
+            onClick={() => {
+              setLibgenModalOpen(true)
+            }}
+            icon="tabler:books"
+            text="Download from Libgen"
+          />
+        </MenuItems>
+      </Menu>
     </ModuleWrapper>
   )
 }

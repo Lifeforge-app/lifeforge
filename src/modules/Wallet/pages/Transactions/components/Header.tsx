@@ -1,4 +1,3 @@
-import { Icon } from '@iconify/react'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
@@ -93,6 +92,8 @@ function Header({
           </span>
         </h1>
         <HeaderFilter
+          searchParams={searchParams}
+          setSearchParams={setSearchParams}
           items={{
             type: {
               data: [
@@ -142,14 +143,14 @@ function Header({
             Add Transaction
           </Button>
         )}
-        <button
+        <Button
+          icon="tabler:menu"
           onClick={() => {
             setSidebarOpen(true)
           }}
-          className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
-        >
-          <Icon icon="tabler:menu" className="text-2xl" />
-        </button>
+          variant="no-bg"
+          className="lg:hidden"
+        />
       </div>
     </div>
   )

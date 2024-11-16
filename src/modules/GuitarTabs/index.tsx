@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
@@ -9,6 +8,7 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
+import useHashParams from '@hooks/useHashParams'
 import {
   type IGuitarTabsEntry,
   type IGuitarTabsSidebarData
@@ -27,7 +27,7 @@ function GuitarTabs(): React.ReactElement {
   const [page, setPage] = useState<number>(1)
   const [searchQuery, setSearchQuery] = useState<string>('')
   const debouncedSearchQuery = useDebounce(searchQuery, 500)
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useHashParams()
 
   const [entries, refreshEntries] = useFetch<{
     totalItems: number
@@ -75,37 +75,42 @@ function GuitarTabs(): React.ReactElement {
           sidebarData={sidebarData}
           isOpen={sidebarOpen}
           setOpen={setSidebarOpen}
+          searchParams={searchParams}
+          setSearchParams={setSearchParams}
         />
         <div className="flex w-full flex-col lg:ml-8">
-          <div className="flex w-full items-end">
-            <h1 className="truncate pb-1 text-3xl font-semibold sm:text-4xl">
-              {`${searchParams.get('starred') === 'true' ? 'Starred ' : ''} ${
-                searchParams.get('category') !== null
-                  ? {
-                      fingerstyle: 'Fingerstyle',
-                      singalong: 'Singalong',
-                      uncategorized: 'Uncategorized'
-                    }[
-                      searchParams.get('category') as
-                        | 'fingerstyle'
-                        | 'singalong'
-                    ]
-                  : ''
-              } ${
-                searchParams.get('category') === null &&
-                searchParams.get('author') === null &&
-                searchParams.get('starred') === null
-                  ? 'All'
-                  : ''
-              } Guitar Tabs ${
-                searchParams.get('author') !== null
-                  ? `by ${searchParams.get('author')}`
-                  : ''
-              }`.trim()}
-            </h1>
-            <span className="ml-2 mr-8 text-base text-bg-500">
-              ({typeof entries !== 'string' ? entries.totalItems : 0})
-            </span>
+          <div className="flex-between flex w-full">
+            <div className="flex min-w-0 items-end">
+              <h1 className="truncate pb-1 text-3xl font-semibold sm:text-4xl">
+                {`${searchParams.get('starred') === 'true' ? 'Starred ' : ''} ${
+                  searchParams.get('category') !== null
+                    ? {
+                        fingerstyle: 'Fingerstyle',
+                        singalong: 'Singalong',
+                        uncategorized: 'Uncategorized'
+                      }[
+                        searchParams.get('category') as
+                          | 'fingerstyle'
+                          | 'singalong'
+                      ]
+                    : ''
+                } ${
+                  searchParams.get('category') === null &&
+                  searchParams.get('author') === null &&
+                  searchParams.get('starred') === null
+                    ? 'All'
+                    : ''
+                } Guitar Tabs ${
+                  searchParams.get('author') !== null
+                    ? `by ${searchParams.get('author')}`
+                    : ''
+                }`.trim()}
+              </h1>
+              <span className="mb-2 ml-1 mr-8 text-base text-bg-500">
+                ({typeof entries !== 'string' ? entries.totalItems : 0})
+              </span>
+            </div>
+
             <button
               onClick={() => {
                 setSidebarOpen(true)

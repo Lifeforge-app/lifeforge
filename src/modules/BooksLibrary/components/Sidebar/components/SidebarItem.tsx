@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react'
-import { useSearchParams } from 'react-router-dom'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import {
@@ -20,10 +19,9 @@ function _SidebarItem({
   item: IBooksLibraryCategory | IBooksLibraryLanguage
   stuff: 'categories' | 'languages'
 }): React.ReactElement {
-  const [searchParams, setSearchParams] = useSearchParams()
   const {
     entries: { data: entries },
-    miscellaneous: { setSidebarOpen },
+    miscellaneous: { searchParams, setSearchParams, setSidebarOpen },
     ...booksLibraryContext
   } = useBooksLibraryContext()
 
@@ -60,17 +58,16 @@ function _SidebarItem({
             : 0
         }
         onClick={() => {
+          console.log('sus')
+          setSidebarOpen(false)
           setSearchParams({
             ...Object.fromEntries(searchParams.entries()),
             [singleStuff]: item.id
           })
-          setSidebarOpen(false)
         }}
         onCancelButtonClick={() => {
-          setSearchParams(searchParams => {
-            searchParams.delete(singleStuff)
-            return searchParams
-          })
+          searchParams.delete(singleStuff)
+          setSearchParams(searchParams)
           setSidebarOpen(false)
         }}
         hamburgerMenuItems={

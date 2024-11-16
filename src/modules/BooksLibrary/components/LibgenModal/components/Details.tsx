@@ -36,7 +36,7 @@ function Details({
         <APIComponentWithFallback data={book}>
           {data => (
             <section className="flex flex-1 flex-col justify-center gap-8 md:flex-row">
-              <div className="top-0 flex h-full flex-col md:sticky">
+              <div className="flex-center top-0 flex h-full flex-col md:sticky">
                 {data.image !== '../img/blank.png' ? (
                   <img
                     src={`http://libgen.is${data.image}`}
@@ -69,7 +69,7 @@ function Details({
                 </div>
               </div>
               <div className="flex size-full flex-col md:w-3/5 lg:w-4/5">
-                <div className="flex-between flex gap-8">
+                <div className="flex-between flex flex-col gap-8 xl:flex-row">
                   <div>
                     <h1 className="text-3xl font-medium">{data.title}</h1>
                     <div className="mt-2 flex flex-wrap">

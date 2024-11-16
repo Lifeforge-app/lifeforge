@@ -33,7 +33,7 @@ function TransactionListItem({
   }
 
   return (
-    <div className="flex-between relative flex gap-12 border-b border-bg-200 p-4 pl-2 dark:border-bg-800/70">
+    <div className="flex-between relative flex gap-12 border-b border-bg-200 p-4 pl-2 dark:border-bg-800/50">
       <div className="flex w-full min-w-0 items-center gap-2 [@media(min-width:400px)]:gap-4">
         <div
           className="h-12 w-1 shrink-0 rounded-full"

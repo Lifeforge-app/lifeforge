@@ -4,7 +4,6 @@ import moment from 'moment'
 import React, { useCallback } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
-import { useSearchParams } from 'react-router-dom'
 import {
   type ICalendarCategory,
   type ICalendarEvent
@@ -27,6 +26,7 @@ interface CalendarComponentProps {
   >
   setExistedData: React.Dispatch<React.SetStateAction<ICalendarEvent | null>>
   refreshRawEvents: () => void
+  searchParams: URLSearchParams
 }
 
 function CalendarComponent({
@@ -35,9 +35,9 @@ function CalendarComponent({
   categories,
   setModifyEventModalOpenType,
   setExistedData,
-  refreshRawEvents
+  refreshRawEvents,
+  searchParams
 }: CalendarComponentProps): React.ReactElement {
-  const [searchParams] = useSearchParams()
   async function updateEvent({
     event,
     start,

@@ -7,7 +7,7 @@ function ModalWrapper({
   minWidth,
   minHeight,
   className,
-  affectSidebar = true,
+  affectHeader: affectSidebar = true,
   modalRef
 }: {
   isOpen: boolean
@@ -15,7 +15,7 @@ function ModalWrapper({
   minWidth?: string
   minHeight?: string
   className?: string
-  affectSidebar?: boolean
+  affectHeader?: boolean
   modalRef?: React.RefObject<HTMLDivElement | null>
 }): React.ReactElement {
   const { setSubSidebarExpanded } = useGlobalStateContext()

@@ -1,6 +1,5 @@
 import moment from 'moment'
 import React, { useMemo } from 'react'
-import { useSearchParams } from 'react-router-dom'
 import { useWalletContext } from '@providers/WalletProvider'
 
 interface MiniCalendarDateItemProps {
@@ -22,8 +21,7 @@ function MiniCalendarDateItem({
   nextToSelect,
   setNextToSelect
 }: MiniCalendarDateItemProps): React.ReactElement {
-  const { transactions } = useWalletContext()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { transactions, searchParams, setSearchParams } = useWalletContext()
   const transactionCount = useMemo(() => {
     if (typeof transactions === 'string') return 0
 
@@ -91,33 +89,37 @@ function MiniCalendarDateItem({
     <div
       key={index}
       onClick={() => {
-        setSearchParams(searchParams => {
-          const target = `${date.getFullYear()}-${
-            date.getMonth() + 1
-          }-${actualIndex}`
-          searchParams.set(
-            `${nextToSelect}_date`,
-            moment(target).format('YYYY-MM-DD')
-          )
-          if (nextToSelect === 'start') {
-            searchParams.delete('end_date')
-          }
-          if (
-            nextToSelect === 'end' &&
-            searchParams.get('start_date') !== null &&
-            moment(searchParams.get('start_date')).isAfter(moment(target))
-          ) {
-            searchParams.set('start_date', moment(target).format('YYYY-MM-DD'))
-            searchParams.delete('end_date')
-            setNextToSelect('end')
-            return searchParams
-          }
+        const target = `${date.getFullYear()}-${
+          date.getMonth() + 1
+        }-${actualIndex}`
 
-          setNextToSelect(nextToSelect === 'start' ? 'end' : 'start')
+        searchParams.set(
+          `${nextToSelect}_date`,
+          moment(target, 'YYYY-MM-DD').format('YYYY-M-DD')
+        )
+        if (nextToSelect === 'start') {
+          searchParams.delete('end_date')
+        }
+        if (
+          nextToSelect === 'end' &&
+          searchParams.get('start_date') !== null &&
+          moment(searchParams.get('start_date')).isAfter(
+            moment(target, 'YYYY-MM-DD')
+          )
+        ) {
+          searchParams.set(
+            'start_date',
+            moment(target, 'YYYY-MM-DD').format('YYYY-M-DD')
+          )
+          searchParams.delete('end_date')
+          setNextToSelect('end')
           return searchParams
-        })
+        }
+
+        setNextToSelect(nextToSelect === 'start' ? 'end' : 'start')
+        setSearchParams(searchParams)
       }}
-      className={`relative isolate flex flex-col items-center gap-1 text-sm ${
+      className={`flex-center relative isolate flex aspect-square w-full flex-col gap-1 text-sm ${
         firstDay > index || index - firstDay + 1 > lastDate
           ? 'pointer-events-none text-bg-300 dark:text-bg-600'
           : 'cursor-pointer'
@@ -127,13 +129,13 @@ function MiniCalendarDateItem({
         (searchParams.get('start_date') !== null ||
         searchParams.get('end_date') !== null
           ? isFirstAndLastDay !== ''
-            ? `font-semibold after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:h-9 after:w-10 after:-translate-x-1/2 after:-translate-y-1/2 after:border-custom-500 after:content-[''] ${
+            ? `font-semibold after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:h-12 after:w-full after:-translate-x-1/2 after:-translate-y-1/2 after:border-custom-500 after:content-[''] ${
                 isFirstAndLastDay === 'first'
                   ? 'after:rounded-l-md after:border-y after:border-l'
                   : 'after:rounded-r-md after:border-y after:border-r'
               }`
             : isBetweenFirstAndLastDay
-            ? "after:absolute after:left-1/2 after:top-1/2 after:z-[-2] after:h-9 after:w-10 after:-translate-x-1/2 after:-translate-y-1/2 after:border-y after:border-custom-500 after:content-['']"
+            ? "after:absolute after:left-1/2 after:top-1/2 after:z-[-2] after:h-12 after:w-full after:-translate-x-1/2 after:-translate-y-1/2 after:border-y after:border-custom-500 after:content-['']"
             : ''
           : '')
       }`}
@@ -141,7 +143,7 @@ function MiniCalendarDateItem({
       <span>{actualIndex}</span>
       {!(firstDay > index || index - firstDay + 1 > lastDate) && (
         <div
-          className={`absolute left-1/2 top-1/2 z-[-1] size-8 -translate-x-1/2 -translate-y-1/2 rounded-md ${
+          className={`absolute left-1/2 top-1/2 z-[-1] size-10 -translate-x-1/2 -translate-y-1/2 rounded-md ${
             transactionCount >= 7
               ? 'bg-custom-500/70'
               : transactionCount >= 5
