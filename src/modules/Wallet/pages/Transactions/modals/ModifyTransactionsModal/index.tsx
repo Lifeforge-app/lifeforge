@@ -96,7 +96,13 @@ function ModifyTransactionsModal({
         return
       }
     } else {
-      if (particular.trim().length === 0 || !transactionDate || !amount) {
+      if (
+        particular.trim().length === 0 ||
+        !transactionDate ||
+        !amount ||
+        !category ||
+        !transactionAsset
+      ) {
         toast.error('Please fill in the particulars, date, and amount.')
         return
       }
