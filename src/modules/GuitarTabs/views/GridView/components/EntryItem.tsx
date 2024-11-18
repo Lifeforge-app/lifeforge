@@ -28,7 +28,7 @@ function EntryItem({
       rel="noreferrer"
     >
       <div className="relative">
-        <div className="flex-center relative flex h-96 w-full overflow-hidden rounded-md bg-bg-100 dark:bg-bg-800">
+        <div className="flex-center relative flex aspect-[1/1.4142] w-full overflow-hidden rounded-md bg-bg-100 dark:bg-bg-800">
           <Icon
             icon="mingcute:guitar-line"
             className="absolute left-1/2 top-1/2 size-16 -translate-x-1/2 -translate-y-1/2 text-bg-300 dark:text-bg-700"
