@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React, { useRef } from 'react'
+import React, { useMemo } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
@@ -25,7 +25,7 @@ function Photos({
   >
   openType: 'create' | 'update' | null
 }): React.ReactElement {
-  const originalPhotosLength = useRef(photos.length)
+  const originalPhotosLength = useMemo(() => photos.length, [photos])
 
   async function uploadPhotos(
     e: React.ChangeEvent<HTMLInputElement>
@@ -80,7 +80,7 @@ function Photos({
   return (
     <>
       <div className="mt-4 flex w-full flex-1 shrink-0 flex-col rounded-lg bg-bg-200/50 p-6 shadow-custom transition-all focus-within:ring-1 focus-within:ring-bg-500 dark:bg-bg-800/50">
-        {openType === 'update' && originalPhotosLength.current > 0 ? (
+        {openType === 'update' && originalPhotosLength > 0 ? (
           <div className="flex-center flex size-full flex-col gap-4">
             <Icon icon="tabler:lock" className="size-28" />
             <h2 className="text-4xl font-semibold">Photos are locked</h2>

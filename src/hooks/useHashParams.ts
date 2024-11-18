@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router'
 
@@ -34,11 +35,11 @@ function useHashParams(): [
     const newParams = new URLSearchParams()
     if (params instanceof URLSearchParams) {
       params.forEach((value, key) => {
-        newParams.set(key, value)
+        if (value) newParams.set(key, value)
       })
     } else {
       Object.entries(params).forEach(([key, value]) => {
-        newParams.set(key, value)
+        if (value) newParams.set(key, value)
       })
     }
 

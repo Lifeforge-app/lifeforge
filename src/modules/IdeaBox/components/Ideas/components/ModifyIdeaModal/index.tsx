@@ -148,9 +148,12 @@ function ModifyIdeaModal({
     setLoading(true)
 
     const formData = new FormData()
+    formData.append('container', containerId)
     formData.append('title', ideaTitle.trim())
-    formData.append('content', ideaContent.trim())
-    formData.append('link', ideaLink.trim())
+    formData.append(
+      'content',
+      innerTypeOfModifyIdea === 'text' ? ideaContent.trim() : ideaLink.trim()
+    )
     formData.append('image', ideaImage!)
     formData.append('imageLink', debouncedImageLink)
     formData.append('type', innerTypeOfModifyIdea)
@@ -161,7 +164,7 @@ function ModifyIdeaModal({
 
     await APIRequest({
       endpoint: `idea-box/ideas/${
-        innerOpenType === 'update' ? existedData?.id : containerId
+        innerOpenType === 'update' ? existedData?.id : ''
       }`,
       method: innerOpenType === 'update' ? 'PATCH' : 'POST',
       body:

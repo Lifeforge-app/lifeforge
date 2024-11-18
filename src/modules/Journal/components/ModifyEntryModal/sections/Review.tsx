@@ -27,10 +27,12 @@ function Review({
   rawText: string
   cleanedUpText: string
   summarizedText: string
-  photos: Array<{
-    file: File
-    preview: string
-  }>
+  photos:
+    | Array<{
+        file: File
+        preview: string
+      }>
+    | string[]
   mood: {
     text: string
     emoji: string
@@ -69,11 +71,11 @@ function Review({
 
     const formData = new FormData()
     formData.append('data', encryptedEverything)
-    photos.forEach(photo => {
-      formData.append('files', photo.file)
-    })
-
-    console.log(formData)
+    if (photos.every(p => typeof p === 'object')) {
+      photos.forEach(photo => {
+        formData.append('files', photo.file)
+      })
+    }
 
     await APIRequest({
       endpoint: `/journal/entries/${openType}${

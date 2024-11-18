@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
 import moment from 'moment'
 import React from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
@@ -41,6 +42,12 @@ function JournalListItem({
           </h2>
         </div>
         <div className="flex items-center gap-4">
+          {entry.photos.length > 0 && (
+            <span className="flex items-center gap-2 whitespace-nowrap rounded-full bg-bg-200 px-3 py-1 text-base font-medium text-bg-400 shadow-custom dark:bg-bg-700/50">
+              <Icon icon="tabler:photo" className="size-5" />
+              {entry.photos.length} photos
+            </span>
+          )}
           <span className="block whitespace-nowrap rounded-full bg-bg-200 px-3 py-1 text-base font-medium shadow-custom dark:bg-bg-700/50">
             {entry.mood.emoji} {entry.mood.text}
           </span>

@@ -50,45 +50,37 @@ function Sidebar({
             />
             <SidebarDivider />
             <SidebarTitle name="categories" />
-            <SidebarItem
-              icon="mdi:guitar-pick-outline"
-              name="Sing Along"
-              number={sidebarData.categories.singalong}
-              active={searchParams.get('category') === 'singalong'}
-              onClick={() => {
-                setSearchParams({
-                  ...Object.fromEntries(searchParams.entries()),
-                  category: 'singalong'
-                })
-                setOpen(false)
-              }}
-            />
-            <SidebarItem
-              icon="mingcute:guitar-line"
-              name="Finger Style"
-              number={sidebarData.categories.fingerstyle}
-              active={searchParams.get('category') === 'fingerstyle'}
-              onClick={() => {
-                setSearchParams({
-                  ...Object.fromEntries(searchParams.entries()),
-                  category: 'fingerstyle'
-                })
-                setOpen(false)
-              }}
-            />
-            <SidebarItem
-              icon="tabler:music-off"
-              name="Uncategorized"
-              number={sidebarData.categories.uncategorized}
-              active={searchParams.get('category') === 'uncategorized'}
-              onClick={() => {
-                setSearchParams({
-                  ...Object.fromEntries(searchParams.entries()),
-                  category: 'uncategorized'
-                })
-                setOpen(false)
-              }}
-            />
+            {[
+              ['singalong', 'mdi:guitar-pick-outline', 'Sing Along'],
+              ['fingerstyle', 'mingcute:guitar-line', 'Finger Style'],
+              ['uncategorized', 'tabler:music-off', 'Uncategorized']
+            ].map(([category, icon, name]) => (
+              <SidebarItem
+                key={category}
+                icon={icon}
+                name={name}
+                number={
+                  sidebarData.categories[
+                    category as keyof typeof sidebarData.categories
+                  ]
+                }
+                active={searchParams.get('category') === category}
+                onClick={() => {
+                  setSearchParams({
+                    ...Object.fromEntries(searchParams.entries()),
+                    category
+                  })
+                  setOpen(false)
+                }}
+                onCancelButtonClick={() => {
+                  setSearchParams({
+                    ...Object.fromEntries(searchParams.entries()),
+                    category: ''
+                  })
+                  setOpen(false)
+                }}
+              />
+            ))}
             <SidebarDivider />
             <SidebarTitle name="authors" />
             {Object.entries(sidebarData.authors)
@@ -109,6 +101,13 @@ function Sidebar({
                     setSearchParams({
                       ...Object.fromEntries(searchParams.entries()),
                       author
+                    })
+                    setOpen(false)
+                  }}
+                  onCancelButtonClick={() => {
+                    setSearchParams({
+                      ...Object.fromEntries(searchParams.entries()),
+                      author: ''
                     })
                     setOpen(false)
                   }}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -35,10 +36,11 @@ function ModifyJournalEntryModal({
   const [cleanedUpText, setCleanedUpText] = useState<string>('')
   const [summarizedText, setSummarizedText] = useState<string>('')
   const [photos, setPhotos] = useState<
-    Array<{
-      file: File
-      preview: string
-    }>
+    | Array<{
+        file: File
+        preview: string
+      }>
+    | string[]
   >([])
   const [mood, setMood] = useState<{
     text: string
@@ -107,6 +109,7 @@ function ModifyJournalEntryModal({
         setCleanedUpText(existedData.content)
         setSummarizedText(existedData.summary)
         setDate(existedData.date)
+        setPhotos(existedData.photos)
         setMood(existedData.mood)
       }, 500)
     } else {
@@ -231,8 +234,22 @@ function ModifyJournalEntryModal({
             return (
               <Photos
                 setStep={setStep}
-                photos={photos}
-                setPhotos={setPhotos}
+                photos={
+                  photos as Array<{
+                    file: File
+                    preview: string
+                  }>
+                }
+                setPhotos={
+                  setPhotos as React.Dispatch<
+                    React.SetStateAction<
+                      Array<{
+                        file: File
+                        preview: string
+                      }>
+                    >
+                  >
+                }
                 openType={openType}
               />
             )
@@ -255,7 +272,7 @@ function ModifyJournalEntryModal({
                 setStep={setStep}
                 cleanedUpText={cleanedUpText}
                 summarizedText={summarizedText}
-                photos={photos}
+                photos={photos.every(p => typeof p === 'string') ? [] : photos}
                 mood={mood}
                 rawText={rawText}
                 masterPassword={masterPassword}
