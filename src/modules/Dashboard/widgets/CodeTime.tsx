@@ -6,6 +6,7 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { Bar, Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import LoadingScreen from '@components/Screens/LoadingScreen'
 import useFetch from '@hooks/useFetch'
 import useThemeColorHex from '@hooks/useThemeColorHex'
@@ -97,6 +98,11 @@ export default function CodeTime(): React.ReactElement {
 
   useEffect(() => {
     if (typeof data !== 'string') {
+      if (data.length === 0) {
+        setChartData('No data')
+        return
+      }
+
       const data2 = {
         labels: getDatesBetween(
           moment(data[0].date),
@@ -173,7 +179,13 @@ export default function CodeTime(): React.ReactElement {
       </div>
       <div className="flex-center flex size-full min-h-0 flex-1">
         {chartData ? (
-          view === 'bar' ? (
+          chartData === 'No data' ? (
+            <EmptyStateScreen
+              icon="tabler:database-off"
+              title="No Data"
+              description="No data available for this chart"
+            />
+          ) : view === 'bar' ? (
             /* @ts-expect-error - lazy to fix =) */
             <Bar data={chartData} options={options2} />
           ) : (
