@@ -62,7 +62,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
         </h1>
         <button
           onClick={() => {
-            navigate('/wallet/transactions?type=expenses')
+            navigate('/wallet/transactions#type=expenses')
           }}
           className="flex items-center gap-2 rounded-lg p-2 font-medium text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50"
         >
@@ -151,7 +151,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                       .map(category => (
                         <Link
                           key={category.id}
-                          to={`/wallet/transactions?type=expenses&category=${category.id}`}
+                          to={`/wallet/transactions#type=expenses&category=${category.id}`}
                           className="flex-between flex gap-4 rounded-md p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50"
                         >
                           <div className="flex items-center gap-4">
