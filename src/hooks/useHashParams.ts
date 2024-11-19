@@ -7,8 +7,9 @@ function useHashParams(): [
   (params: Record<string, string> | URLSearchParams) => void
 ] {
   const { hash } = useLocation()
+  const [localHash, setLocalHash] = useState(new URLSearchParams())
 
-  const hashParams = useMemo(() => {
+  useEffect(() => {
     const hashArray = hash
       .replace(/^#/, '')
       .split('&')
@@ -18,16 +19,14 @@ function useHashParams(): [
     hashArray.forEach(hash => {
       try {
         const [key, value] = hash.split('=')
-        params.set(key, value)
+        if (value) params.set(key, value)
       } catch {
         throw new Error('Invalid hash')
       }
     })
 
-    return params
+    setLocalHash(params)
   }, [hash])
-
-  const [localHash, setLocalHash] = useState(hashParams)
 
   const setHashParams = (
     params: Record<string, string> | URLSearchParams
