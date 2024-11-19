@@ -9,7 +9,7 @@ function TypeColumn({
   return (
     <td className="p-4 text-center">
       <Link
-        to={`/wallet/transactions?type=${type}`}
+        to={`/wallet/transactions#type=${type}`}
         className={`rounded-full px-3 py-1 text-sm ${
           {
             income: 'bg-green-500/20 text-green-500',

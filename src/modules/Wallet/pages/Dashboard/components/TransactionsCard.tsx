@@ -4,9 +4,9 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 
@@ -76,7 +76,7 @@ function TransactionsCard(): React.ReactElement {
                                 </td>
                                 <td className="py-4 text-center">
                                   <Link
-                                    to={`/wallet/transactions?type=${transaction.type}`}
+                                    to={`/wallet/transactions#type=${transaction.type}`}
                                     className={`rounded-full px-3 py-1 text-sm ${
                                       {
                                         income:
@@ -96,7 +96,7 @@ function TransactionsCard(): React.ReactElement {
                                 <td className="py-2 text-center">
                                   {transaction.category !== '' ? (
                                     <Link
-                                      to={`/wallet/transactions?category=${transaction.category}`}
+                                      to={`/wallet/transactions#category=${transaction.category}`}
                                       className="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm"
                                       style={{
                                         backgroundColor:
