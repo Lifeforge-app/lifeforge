@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { cookieParse } from 'pocketbase'
 import React, { useRef } from 'react'
 import { type Id, toast } from 'react-toastify'
@@ -14,10 +15,12 @@ const intervalManager = IntervalManager.getInstance()
 
 function Header({
   refreshEntries,
-  totalItems
+  totalItems,
+  setGuitarWorldModalOpen
 }: {
   refreshEntries: () => void
   totalItems: number
+  setGuitarWorldModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   const toastId = useRef<Id>(null)
   const { theme } = useThemeColorHex()
@@ -41,7 +44,7 @@ function Header({
           formData.append('files', files[i], encodeURIComponent(files[i].name))
         }
 
-        fetch(`${import.meta.env.VITE_API_HOST}/guitar-tabs/upload`, {
+        fetch(`${import.meta.env.VITE_API_HOST}/guitar-tabs/entries/upload`, {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${cookieParse(document.cookie).token}`
@@ -96,7 +99,7 @@ function Header({
     total: number
   }> {
     const res = await fetch(
-      `${import.meta.env.VITE_API_HOST}/guitar-tabs/process-status`,
+      `${import.meta.env.VITE_API_HOST}/guitar-tabs/entries/process-status`,
       {
         method: 'GET',
         headers: {
@@ -138,7 +141,7 @@ function Header({
 
   async function downloadAll(): Promise<void> {
     await APIRequest({
-      endpoint: '/guitar-tabs/download-all',
+      endpoint: '/guitar-tabs/entries/download-all',
       method: 'GET',
       successInfo: 'NASFilesReady',
       failureInfo: 'download'
@@ -152,15 +155,34 @@ function Header({
         icon="mingcute:guitar-line"
         totalItems={totalItems}
         actionButton={
-          <Button
-            onClick={() => {
-              uploadFiles().catch(console.error)
-            }}
-            icon="tabler:upload"
-            className="hidden md:flex"
-          >
-            Upload
-          </Button>
+          <Menu as="div" className="relative z-50 hidden md:block">
+            <Button
+              onClick={() => {}}
+              icon="tabler:plus"
+              className="hidden md:flex"
+              CustomElement={MenuButton}
+            >
+              Add Score
+            </Button>
+            <MenuItems
+              transition
+              anchor="bottom end"
+              className="mt-2 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+            >
+              <MenuItem
+                onClick={uploadFiles}
+                icon="tabler:upload"
+                text="Upload from device"
+              />
+              <MenuItem
+                onClick={() => {
+                  setGuitarWorldModalOpen(true)
+                }}
+                icon="mingcute:guitar-line"
+                text="Download from Guitar World"
+              />
+            </MenuItems>
+          </Menu>
         }
         hamburgerMenuItems={
           <>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable operator-linebreak */
 
@@ -16,6 +17,7 @@ import {
   type IMemoryUsage,
   type ISystemInfo
 } from '@interfaces/server_status_interfaces'
+import { useAPIOnlineStatus } from '@providers/APIOnlineStatusProvider'
 
 function formatBytes(bytes: number, decimals = 2): string {
   if (!+bytes) return '0 Bytes'
@@ -34,6 +36,8 @@ function camelCaseToTitleCase(text: string): string {
 }
 
 function ServerStatus(): React.ReactElement {
+  const { environment } = useAPIOnlineStatus()
+
   const [diskUsage] = useFetch<IDiskUsage[]>('server/disks')
   const [memoryUsage, refreshMemoryUsage] = useFetch<IMemoryUsage>(
     'server/memory',
@@ -76,6 +80,32 @@ function ServerStatus(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:server" title="Server Status" />
+      <div className="mt-16 flex w-full items-center justify-between gap-6">
+        <h1 className="flex items-center gap-2 text-2xl font-semibold">
+          <Icon icon="tabler:plug-connected" className="text-3xl" />
+          <span className="ml-2">API Environment</span>
+        </h1>
+        <span
+          className={`flex items-center gap-2 rounded-full px-4 py-2 text-lg font-medium uppercase tracking-widest ${
+            environment === 'production'
+              ? 'bg-green-500/20 text-green-500'
+              : environment === 'development'
+              ? 'bg-yellow-500/20 text-yellow-500'
+              : 'bg-red-500/20 text-red-500'
+          }`}
+        >
+          <Icon
+            icon={
+              {
+                production: 'tabler:briefcase',
+                development: 'tabler:traffic-cone'
+              }[environment!]
+            }
+            className="text-2xl"
+          />
+          {environment}
+        </span>
+      </div>
       <div className="mt-16 flex w-full flex-col gap-6">
         <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
           <Icon icon="tabler:device-desktop-analytics" className="text-3xl" />

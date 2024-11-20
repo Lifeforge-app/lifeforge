@@ -23,4 +23,25 @@ interface IGuitarTabsSidebarData {
   authors: Record<string, number>
 }
 
-export type { IGuitarTabsEntry, IGuitarTabsSidebarData }
+interface IGuitarTabsGuitarWorldScoreEntry {
+  id: number
+  name: string
+  subtitle: string
+  category: string
+  mainArtist: string
+  uploader: string
+  audioUrl: string
+}
+
+interface IGuitarTabsGuitarWorldScores {
+  data: IGuitarTabsGuitarWorldScoreEntry[]
+  perPage: number
+  totalItems: number
+}
+
+export type {
+  IGuitarTabsEntry,
+  IGuitarTabsSidebarData,
+  IGuitarTabsGuitarWorldScores,
+  IGuitarTabsGuitarWorldScoreEntry
+}

@@ -34,6 +34,7 @@ function EntryItem({
             className="absolute left-1/2 top-1/2 size-16 -translate-x-1/2 -translate-y-1/2 text-bg-300 dark:text-bg-700"
           />
           <img
+            key={entry.id}
             src={`${import.meta.env.VITE_API_HOST}/media/${
               entry.collectionId
             }/${entry.id}/${entry.thumbnail}?thumb=500x0`}

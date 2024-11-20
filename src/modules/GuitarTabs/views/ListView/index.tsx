@@ -14,7 +14,7 @@ function ListView({
   setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   return (
-    <ul className="my-6 space-y-4">
+    <ul className="mb-6 space-y-4">
       {entries.map(entry => (
         <EntryItem
           key={entry.id}

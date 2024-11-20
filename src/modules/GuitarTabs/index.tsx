@@ -1,6 +1,9 @@
+import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
+import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
+import ListboxOptions from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOptions'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
@@ -14,12 +17,20 @@ import {
   type IGuitarTabsSidebarData
 } from '@interfaces/guitar_tabs_interfaces'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
+import GuitarWorldModal from './components/GuitarWorldModal'
 import Header from './components/Header'
 import ModifyEntryModal from './components/ModifyEntryModal'
 import Sidebar from './components/Sidebar'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
 import Pagination from '../../components/Miscellaneous/Pagination'
+
+const SORT_TYPE = [
+  ['Newest', 'tabler:clock', 'newest'],
+  ['Oldest', 'tabler:clock', 'oldest'],
+  ['Author', 'tabler:at', 'author'],
+  ['Title', 'tabler:abc', 'name']
+]
 
 function GuitarTabs(): React.ReactElement {
   const { setSubSidebarExpanded } = useGlobalStateContext()
@@ -35,14 +46,16 @@ function GuitarTabs(): React.ReactElement {
     page: number
     items: IGuitarTabsEntry[]
   }>(
-    `guitar-tabs?page=${page}&query=${encodeURIComponent(
+    `guitar-tabs/entries?page=${page}&query=${encodeURIComponent(
       debouncedSearchQuery.trim()
     )}&category=${searchParams.get('category') ?? 'all'}&starred=${
       searchParams.get('starred') ?? 'false'
-    }&author=${searchParams.get('author') ?? 'all'}`
+    }&author=${searchParams.get('author') ?? 'all'}&sort=${
+      searchParams.get('sort') ?? 'newest'
+    }`
   )
   const [sidebarData, refreshSidebarData] = useFetch<IGuitarTabsSidebarData>(
-    'guitar-tabs/sidebar-data'
+    'guitar-tabs/entries/sidebar-data'
   )
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [modifyEntryModalOpen, setModifyEntryModalOpen] = useState(false)
@@ -51,6 +64,7 @@ function GuitarTabs(): React.ReactElement {
   )
   const [deleteConfirmationModalOpen, setDeleteConfirmationModalOpen] =
     useState(false)
+  const [guitarWorldModalOpen, setGuitarWorldModalOpen] = useState(false)
 
   useEffect(() => {
     setPage(1)
@@ -69,6 +83,7 @@ function GuitarTabs(): React.ReactElement {
       <Header
         refreshEntries={refreshEntries}
         totalItems={typeof entries !== 'string' ? entries.totalItems : 0}
+        setGuitarWorldModalOpen={setGuitarWorldModalOpen}
       />
       <div className="mt-6 flex min-h-0 w-full flex-1">
         <Sidebar
@@ -121,6 +136,46 @@ function GuitarTabs(): React.ReactElement {
             </button>
           </div>
           <div className="flex gap-2">
+            <Listbox
+              as="div"
+              className="relative"
+              value={searchParams.get('sort') ?? 'newest'}
+              onChange={value => {
+                setSearchParams({ sort: value })
+              }}
+            >
+              <ListboxButton className="flex-between mt-4 flex w-48 gap-2 rounded-md bg-bg-50 p-4 shadow-custom dark:bg-bg-900 dark:hover:bg-bg-800/50">
+                <div className="flex items-center gap-2">
+                  <Icon
+                    icon={
+                      SORT_TYPE.find(
+                        ([_, __, value]) => value === searchParams.get('sort')
+                      )?.[1] ?? 'tabler:clock'
+                    }
+                    className="size-6"
+                  />
+                  <span className="whitespace-nowrap font-medium">
+                    {SORT_TYPE.find(
+                      ([_, __, value]) => value === searchParams.get('sort')
+                    )?.[0] ?? 'Newest'}
+                  </span>
+                </div>
+                <Icon
+                  icon="tabler:chevron-down"
+                  className="size-5 text-bg-500"
+                />
+              </ListboxButton>
+              <ListboxOptions>
+                {SORT_TYPE.map(([name, icon, value]) => (
+                  <ListboxOption
+                    key={value}
+                    value={value}
+                    icon={icon}
+                    text={name}
+                  />
+                ))}
+              </ListboxOptions>
+            </Listbox>
             <SearchInput
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
@@ -219,13 +274,21 @@ function GuitarTabs(): React.ReactElement {
         onClose={() => {
           setDeleteConfirmationModalOpen(false)
         }}
-        apiEndpoint="guitar-tabs"
+        apiEndpoint="guitar-tabs/entries"
         data={existingEntry}
         nameKey="title"
         itemName="guitar tab"
         updateDataList={() => {
           refreshEntries()
           refreshSidebarData()
+        }}
+      />
+      <GuitarWorldModal
+        isOpen={guitarWorldModalOpen}
+        onClose={() => {
+          refreshEntries()
+          refreshSidebarData()
+          setGuitarWorldModalOpen(false)
         }}
       />
     </ModuleWrapper>
