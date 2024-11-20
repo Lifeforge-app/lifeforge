@@ -64,7 +64,7 @@ function ModifyEntryModal({
     setLoading(true)
 
     await APIRequest({
-      endpoint: `guitar-tabs/${existingItem?.id}`,
+      endpoint: `guitar-tabs/entries/${existingItem?.id}`,
       method: 'PUT',
       body: data,
       successInfo: 'update',

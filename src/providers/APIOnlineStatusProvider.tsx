@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { initLocale } from '../i18n'
 
-async function checkAPIStatus(): Promise<boolean> {
+async function checkAPIStatus(): Promise<'production' | 'development' | false> {
   const controller = new AbortController()
 
   const timeoutId = setTimeout(() => {
@@ -12,27 +12,46 @@ async function checkAPIStatus(): Promise<boolean> {
   return await fetch(`${import.meta.env.VITE_API_HOST}/status`, {
     signal: controller.signal
   })
-    .then(res => res.ok)
+    .then(async res => {
+      if (res.ok) {
+        const data = await res.json()
+        return data.data.environment
+      }
+      return null
+    })
     .catch(() => false)
     .finally(() => {
       clearTimeout(timeoutId)
     })
 }
 
-function APIOnlineStatusProvider({
+interface IAPIOnlineStatus {
+  isOnline: boolean | 'loading'
+  environment: 'production' | 'development' | null
+}
+
+const APIOnlineStatusContext = createContext<IAPIOnlineStatus | undefined>(
+  undefined
+)
+
+export default function APIOnlineStatusProvider({
   children
 }: {
   children: React.ReactNode
 }): React.ReactElement {
   const [isOnline, setIsOnline] = useState<boolean | 'loading'>('loading')
+  const [environment, setEnvironment] = useState<
+    'production' | 'development' | null
+  >(null)
 
   useEffect(() => {
     checkAPIStatus()
       .then(status => {
-        setIsOnline(status)
-        if (status) {
+        if (status !== false) {
           initLocale()
         }
+        setEnvironment(status === false ? null : status)
+        setIsOnline(status !== false)
       })
       .catch(() => {
         setIsOnline(false)
@@ -44,7 +63,14 @@ function APIOnlineStatusProvider({
       {isOnline === 'loading' ? (
         <span className="loader"></span>
       ) : isOnline ? (
-        <>{children}</>
+        <APIOnlineStatusContext
+          value={{
+            isOnline,
+            environment
+          }}
+        >
+          {children}
+        </APIOnlineStatusContext>
       ) : (
         <EmptyStateScreen
           icon="tabler:wifi-off"
@@ -56,4 +82,12 @@ function APIOnlineStatusProvider({
   )
 }
 
-export default APIOnlineStatusProvider
+export function useAPIOnlineStatus(): IAPIOnlineStatus {
+  const context = React.useContext(APIOnlineStatusContext)
+  if (context === undefined) {
+    throw new Error(
+      'useAPIOnlineStatus must be used within a APIOnlineStatusProvider'
+    )
+  }
+  return context
+}
