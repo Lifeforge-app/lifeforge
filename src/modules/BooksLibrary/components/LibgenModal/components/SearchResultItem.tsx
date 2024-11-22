@@ -22,7 +22,7 @@ function SearchResultItem({
         />
         {book.image !== '' && (
           <img
-            src={`http://libgen.is/${book.image}`}
+            src={`https://libgen.is/${book.image}`}
             referrerPolicy="no-referrer"
             alt=""
             className="relative z-10 border-none object-cover"
