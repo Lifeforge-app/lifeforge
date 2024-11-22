@@ -149,96 +149,101 @@ function ExpensesBreakdownCard(): React.ReactElement {
                       </div>
                     ))}
                 </div>
-                <Scrollbar className="mt-6">
-                  <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
-                    {categories
-                      .filter(category => category.type === 'expenses')
-                      .map(category => (
-                        <Link
-                          key={category.id}
-                          to={`/wallet/transactions#type=expenses&category=${category.id}`}
-                          className="flex-between flex gap-4 rounded-md p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50"
-                        >
-                          <div className="flex items-center gap-4">
-                            <div
-                              className="rounded-md bg-blue-500/20 p-2"
-                              style={{
-                                backgroundColor: category.color + '20',
-                                color: category.color
-                              }}
-                            >
-                              <Icon icon={category.icon} className="size-6" />
+                <div className="h-full min-h-96">
+                  <Scrollbar className="mt-6">
+                    <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
+                      {categories
+                        .filter(category => category.type === 'expenses')
+                        .map(category => (
+                          <Link
+                            key={category.id}
+                            to={`/wallet/transactions#type=expenses&category=${category.id}`}
+                            className="flex-between flex gap-4 rounded-md p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50"
+                          >
+                            <div className="flex items-center gap-4">
+                              <div
+                                className="rounded-md bg-blue-500/20 p-2"
+                                style={{
+                                  backgroundColor: category.color + '20',
+                                  color: category.color
+                                }}
+                              >
+                                <Icon icon={category.icon} className="size-6" />
+                              </div>
+                              <div className="flex flex-col">
+                                <div className="font-semibold ">
+                                  {category.name}
+                                </div>
+                                <div className="text-sm text-bg-500">
+                                  {
+                                    thisMonthsTransactions.filter(
+                                      transaction =>
+                                        transaction.category === category.id
+                                    ).length
+                                  }{' '}
+                                  {t('wallet.transactionCount')}
+                                </div>
+                              </div>
                             </div>
                             <div className="flex flex-col">
-                              <div className="font-semibold ">
-                                {category.name}
-                              </div>
-                              <div className="text-sm text-bg-500">
-                                {
-                                  thisMonthsTransactions.filter(
-                                    transaction =>
-                                      transaction.category === category.id
-                                  ).length
-                                }{' '}
-                                {t('wallet.transactionCount')}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="flex flex-col">
-                            <div
-                              className={`flex gap-2 text-right font-medium ${
-                                isAmountHidden ? 'items-center' : 'items-end'
-                              }`}
-                            >
-                              - RM{' '}
-                              {isAmountHidden ? (
-                                <span className="flex items-center">
-                                  {Array(4)
-                                    .fill(0)
-                                    .map((_, i) => (
-                                      <Icon
-                                        key={i}
-                                        icon="uil:asterisk"
-                                        className="-mx-0.5 size-4"
-                                      />
-                                    ))}
-                                </span>
-                              ) : (
-                                thisMonthsTransactions
-                                  .filter(
-                                    transaction =>
-                                      transaction.category === category.id
-                                  )
-                                  .reduce((acc, curr) => acc + curr.amount, 0)
-                                  .toFixed(2)
-                              )}
-                            </div>
-                            <div className="text-right text-sm text-bg-500">
-                              {(
-                                (thisMonthsTransactions
-                                  .filter(
-                                    transaction =>
-                                      transaction.category === category.id
-                                  )
-                                  .reduce((acc, curr) => acc + curr.amount, 0) /
+                              <div
+                                className={`flex gap-2 text-right font-medium ${
+                                  isAmountHidden ? 'items-center' : 'items-end'
+                                }`}
+                              >
+                                - RM{' '}
+                                {isAmountHidden ? (
+                                  <span className="flex items-center">
+                                    {Array(4)
+                                      .fill(0)
+                                      .map((_, i) => (
+                                        <Icon
+                                          key={i}
+                                          icon="uil:asterisk"
+                                          className="-mx-0.5 size-4"
+                                        />
+                                      ))}
+                                  </span>
+                                ) : (
                                   thisMonthsTransactions
                                     .filter(
                                       transaction =>
-                                        transaction.type === 'expenses'
+                                        transaction.category === category.id
+                                    )
+                                    .reduce((acc, curr) => acc + curr.amount, 0)
+                                    .toFixed(2)
+                                )}
+                              </div>
+                              <div className="text-right text-sm text-bg-500">
+                                {(
+                                  (thisMonthsTransactions
+                                    .filter(
+                                      transaction =>
+                                        transaction.category === category.id
                                     )
                                     .reduce(
                                       (acc, curr) => acc + curr.amount,
                                       0
-                                    )) *
-                                  100 || 0
-                              ).toFixed(2)}
-                              %
+                                    ) /
+                                    thisMonthsTransactions
+                                      .filter(
+                                        transaction =>
+                                          transaction.type === 'expenses'
+                                      )
+                                      .reduce(
+                                        (acc, curr) => acc + curr.amount,
+                                        0
+                                      )) *
+                                    100 || 0
+                                ).toFixed(2)}
+                                %
+                              </div>
                             </div>
-                          </div>
-                        </Link>
-                      ))}
-                  </ul>
-                </Scrollbar>
+                          </Link>
+                        ))}
+                    </ul>
+                  </Scrollbar>
+                </div>
               </>
             )}
           </APIComponentWithFallback>

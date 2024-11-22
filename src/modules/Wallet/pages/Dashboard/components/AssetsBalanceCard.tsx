@@ -14,7 +14,7 @@ function AssetsBalanceCard(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="col-span-1 row-span-2 flex h-full flex-col rounded-lg bg-bg-50 p-6 px-2 shadow-custom dark:bg-bg-900">
+    <div className="col-span-1 row-span-2 flex h-full min-h-96 flex-col rounded-lg bg-bg-50 p-6 px-2 shadow-custom dark:bg-bg-900">
       <div className="flex-between flex px-4">
         <h1 className="flex items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:wallet" className="text-2xl" />

@@ -65,7 +65,7 @@ function TransactionsCard(): React.ReactElement {
                           </tr>
                         </thead>
                         <tbody>
-                          {transactions.slice(0, 20).map(transaction => {
+                          {transactions.slice(0, 50).map(transaction => {
                             return (
                               <tr
                                 key={transaction.id}

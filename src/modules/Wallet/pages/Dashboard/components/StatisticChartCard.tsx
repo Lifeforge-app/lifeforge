@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useMemo } from 'react'
-import { Line } from 'react-chartjs-2'
+import { Bar } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
@@ -19,7 +19,12 @@ const options = {
     y: {
       display: true,
       type: 'logarithmic',
-      min: 0.1
+      min: 0.1,
+      stacked: true
+    },
+    x: {
+      display: true,
+      stacked: true
     }
   },
   hover: {
@@ -92,7 +97,7 @@ function StatisticChardCard(): React.ReactElement {
                 description={t('emptyState.wallet.transactions.description')}
               />
             ) : (
-              <Line
+              <Bar
                 data={{
                   labels: dates,
                   datasets: [
@@ -101,18 +106,14 @@ function StatisticChardCard(): React.ReactElement {
                       data: groupedByDate[0],
                       borderWidth: 1,
                       borderColor: 'rgb(34 197 94)',
-                      backgroundColor: 'rgb(34 197 94)',
-                      pointRadius: 4,
-                      pointBackgroundColor: 'rgba(34,197,94,0.5)'
+                      backgroundColor: 'rgba(34,197,94,0.2)'
                     },
                     {
-                      label: 'Expenses'[1],
+                      label: 'Expenses',
                       data: groupedByDate[1],
                       borderWidth: 1,
-                      pointRadius: 4,
                       borderColor: 'rgb(239 68 68)',
-                      backgroundColor: 'rgb(239 68 68)',
-                      pointBackgroundColor: 'rgba(239,68,68,0.5)'
+                      backgroundColor: 'rgba(239,68,68,0.2)'
                     }
                   ]
                 }}
