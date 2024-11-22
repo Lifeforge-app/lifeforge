@@ -23,6 +23,7 @@ import ExpensesBreakdownCard from './components/ExpensesBreakdownCard'
 import IncomeExpenseCard from './components/IncomeExpensesCard'
 import StatisticChardCard from './components/StatisticChartCard'
 import TransactionsCard from './components/TransactionsCard'
+import TransactionsCountCard from './components/TransactionsCountCard'
 
 ChartJS.register(
   CategoryScale,
@@ -70,7 +71,7 @@ function WalletDashboard(): React.ReactElement {
           </>
         }
       />
-      <div className="mt-6 flex size-full grid-cols-3 grid-rows-[repeat(6,minmax(120px,200px))] flex-col gap-4 pb-8 xl:grid">
+      <div className="mt-6 flex size-full grid-cols-3 grid-rows-8 flex-col gap-4 pb-8 xl:grid">
         <IncomeExpenseCard
           title="Income"
           icon="tabler:login-2"
@@ -83,8 +84,9 @@ function WalletDashboard(): React.ReactElement {
         />
         <AssetsBalanceCard />
         <StatisticChardCard />
-        <ExpensesBreakdownCard />
+        <TransactionsCountCard />
         <TransactionsCard />
+        <ExpensesBreakdownCard />
       </div>
       <FAB
         onClick={() => {

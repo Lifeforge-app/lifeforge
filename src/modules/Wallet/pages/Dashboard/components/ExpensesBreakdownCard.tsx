@@ -28,6 +28,17 @@ function ExpensesBreakdownCard(): React.ReactElement {
   const [year] = useState(new Date().getFullYear())
   const [month] = useState(new Date().getMonth())
 
+  const thisMonthsTransactions = useMemo(() => {
+    if (typeof transactions === 'string') {
+      return []
+    }
+
+    return transactions.filter(transaction => {
+      const date = new Date(transaction.date)
+      return date.getFullYear() === year && date.getMonth() === month
+    })
+  }, [transactions, year, month])
+
   const spentOnEachCategory = useMemo(() => {
     if (typeof categories === 'string' || typeof transactions === 'string') {
       return []
@@ -36,18 +47,12 @@ function ExpensesBreakdownCard(): React.ReactElement {
     return categories
       .filter(category => category.type === 'expenses')
       .map(category =>
-        transactions
-          .filter(transaction => {
-            const date = new Date(transaction.date)
-            return (
-              date.getFullYear() === year &&
-              date.getMonth() === month &&
-              transaction.category === category.id
-            )
-          })
+        thisMonthsTransactions
+          .filter(transaction => transaction.category === category.id)
           .reduce((acc, curr) => acc + curr.amount, 0)
       )
-  }, [categories, transactions])
+  }, [categories, thisMonthsTransactions])
+
   const navigate = useNavigate()
   const { t } = useTranslation()
 
@@ -70,7 +75,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
         </button>
       </div>
       <APIComponentWithFallback data={transactions}>
-        {transactions => (
+        {() => (
           <APIComponentWithFallback data={categories}>
             {categories => (
               <>
@@ -144,7 +149,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                       </div>
                     ))}
                 </div>
-                <Scrollbar autoHeight autoHeightMax={384} className="mt-6">
+                <Scrollbar className="mt-6">
                   <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
                     {categories
                       .filter(category => category.type === 'expenses')
@@ -170,7 +175,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                               </div>
                               <div className="text-sm text-bg-500">
                                 {
-                                  transactions.filter(
+                                  thisMonthsTransactions.filter(
                                     transaction =>
                                       transaction.category === category.id
                                   ).length
@@ -199,7 +204,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                                     ))}
                                 </span>
                               ) : (
-                                transactions
+                                thisMonthsTransactions
                                   .filter(
                                     transaction =>
                                       transaction.category === category.id
@@ -210,13 +215,13 @@ function ExpensesBreakdownCard(): React.ReactElement {
                             </div>
                             <div className="text-right text-sm text-bg-500">
                               {(
-                                (transactions
+                                (thisMonthsTransactions
                                   .filter(
                                     transaction =>
                                       transaction.category === category.id
                                   )
                                   .reduce((acc, curr) => acc + curr.amount, 0) /
-                                  transactions
+                                  thisMonthsTransactions
                                     .filter(
                                       transaction =>
                                         transaction.type === 'expenses'
