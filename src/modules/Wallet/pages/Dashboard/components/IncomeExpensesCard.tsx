@@ -54,7 +54,7 @@ function IncomeExpenseCard({
                 isIncome ? 'text-green-500' : 'text-red-500'
               } inline-flex items-center`}
             >
-              {isIncome ? '+' : '-'}RM
+              {isIncome ? '+' : '-'} RM
               {isAmountHidden ? (
                 <span className="ml-1 flex items-center">
                   {Array(4)
