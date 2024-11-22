@@ -16,7 +16,7 @@ function TransactionsCard(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="col-span-2 row-span-3 flex h-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+    <div className="col-span-2 row-span-5 flex h-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       <div className="flex-between flex gap-4">
         <h1 className="flex w-full items-center gap-2 text-xl font-semibold sm:w-auto">
           <Icon icon="tabler:list" className="text-2xl" />
