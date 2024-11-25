@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
-import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
-import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
+import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
 import ModalHeader from '@components/Modals/ModalHeader'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
 import PlaylistSection from './sections/PlaylistSection'
 import VideoSection from './sections/VideoSection'
@@ -53,7 +53,7 @@ function AddVideosModal({
         }}
         className="!mb-4"
       />
-      <ListboxInput
+      <ListboxOrComboboxInput
         icon="tabler:category"
         name={t('input.resourceType')}
         value={selectedResourceType}
@@ -75,9 +75,14 @@ function AddVideosModal({
         }
       >
         {RESOURCE_TYPES.map(({ value, label, icon }) => (
-          <ListboxOption key={value} text={label} icon={icon} value={value} />
+          <ListboxOrComboboxOption
+            key={value}
+            text={label}
+            icon={icon}
+            value={value}
+          />
         ))}
-      </ListboxInput>
+      </ListboxOrComboboxInput>
       {(() => {
         switch (selectedResourceType) {
           case 'video':

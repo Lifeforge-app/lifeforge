@@ -7,6 +7,7 @@ import AssetColumn from './columns/AssetColumn'
 import CategoryColumn from './columns/CategoryColumn'
 import DateColumn from './columns/DateColumn'
 import LedgerColumn from './columns/LedgerColumn'
+import LocationColumn from './columns/LocationColumn'
 import ParticularsColumn from './columns/ParticularsColumn'
 import ReceiptColumn from './columns/ReceiptColumn'
 import TypeColumn from './columns/TypeColumn'
@@ -57,6 +58,11 @@ function TableBody({
                   'Particulars',
                   ParticularsColumn,
                   { particulars: transaction.particulars }
+                ],
+                [
+                  'Location',
+                  LocationColumn,
+                  { location: transaction.location }
                 ],
                 [
                   'Category',

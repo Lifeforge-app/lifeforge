@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
 import InputActionButton from './components/InputActionButton'
 import InputBox from './components/InputBox'
+import InputIcon from './components/InputIcon'
 import InputLabel from './components/InputLabel'
 import InputWrapper from './components/InputWrapper'
 
@@ -55,12 +56,7 @@ function Input({
       disabled={disabled}
       inputRef={inputRef}
     >
-      <Icon
-        icon={icon}
-        className={`ml-6 size-6 shrink-0 ${
-          value ? '' : 'text-bg-500'
-        } group-focus-within:!text-custom-500`}
-      />
+      <InputIcon icon={icon} active={String(value).length > 0} />
       <div className="flex w-full items-center gap-2">
         <InputLabel
           label={needTranslate ? t(`input.${toCamelCase(name)}`) : name}
