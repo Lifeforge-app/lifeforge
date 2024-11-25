@@ -18,6 +18,7 @@ function TableHeader({
           'Ledger',
           'Asset',
           'Particulars',
+          'Location',
           'Category',
           'Amount',
           'Receipt',

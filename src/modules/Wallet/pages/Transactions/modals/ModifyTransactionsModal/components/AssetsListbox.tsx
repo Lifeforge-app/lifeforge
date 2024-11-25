@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
-import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
+import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
+import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
 
 interface Asset {
   id: string
@@ -25,7 +25,7 @@ function AssetListbox({
   iconName
 }: AssetListboxProps): React.ReactElement {
   return (
-    <ListboxInput
+    <ListboxOrComboboxInput
       name={label}
       icon={iconName}
       value={selectedAsset}
@@ -46,9 +46,9 @@ function AssetListbox({
       }
     >
       {assets.map(({ name, id, icon }, i) => (
-        <ListboxOption key={i} text={name} icon={icon} value={id} />
+        <ListboxOrComboboxOption key={i} text={name} icon={icon} value={id} />
       ))}
-    </ListboxInput>
+    </ListboxOrComboboxInput>
   )
 }
 

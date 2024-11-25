@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
@@ -8,7 +8,8 @@ function Photos({
   setStep,
   photos,
   setPhotos,
-  openType
+  openType,
+  originalPhotosLength
 }: {
   setStep: React.Dispatch<React.SetStateAction<number>>
   photos: Array<{
@@ -24,9 +25,8 @@ function Photos({
     >
   >
   openType: 'create' | 'update' | null
+  originalPhotosLength: number
 }): React.ReactElement {
-  const originalPhotosLength = useMemo(() => photos.length, [photos])
-
   async function uploadPhotos(
     e: React.ChangeEvent<HTMLInputElement>
   ): Promise<void> {
@@ -94,12 +94,12 @@ function Photos({
               {photos.map(photo => (
                 <div
                   key={photo.preview}
-                  className="relative h-32 grow overflow-hidden rounded-lg"
+                  className="relative max-h-[300px] min-h-32 grow overflow-hidden rounded-lg"
                 >
                   <img
                     src={photo.preview}
                     alt=""
-                    className="size-full object-cover"
+                    className="size-full max-h-[300px] min-h-32 object-cover"
                   />
                   <button
                     onClick={() => {

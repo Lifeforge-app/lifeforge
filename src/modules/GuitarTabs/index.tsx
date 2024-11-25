@@ -2,8 +2,8 @@ import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
-import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
-import ListboxOptions from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOptions'
+import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
+import ListboxOrComboboxOptions from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOptions'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
@@ -165,16 +165,16 @@ function GuitarTabs(): React.ReactElement {
                   className="size-5 text-bg-500"
                 />
               </ListboxButton>
-              <ListboxOptions>
+              <ListboxOrComboboxOptions>
                 {SORT_TYPE.map(([name, icon, value]) => (
-                  <ListboxOption
+                  <ListboxOrComboboxOption
                     key={value}
                     value={value}
                     icon={icon}
                     text={name}
                   />
                 ))}
-              </ListboxOptions>
+              </ListboxOrComboboxOptions>
             </Listbox>
             <SearchInput
               searchQuery={searchQuery}

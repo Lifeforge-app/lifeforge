@@ -76,7 +76,7 @@ function JournalView({
                 }
                 alt=""
                 key={typeof photo === 'string' ? photo : photo.preview}
-                className="min-h-32 grow rounded-md object-cover"
+                className="max-h-[300px] min-h-32 grow rounded-md object-cover"
               />
             ))}
           </div>

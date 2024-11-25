@@ -28,13 +28,15 @@ function MiniCalendarDateItem({
     expenses: number
     transfer: number
     total: number
+    count: number
   }>(() => {
     if (typeof transactions === 'string') {
       return {
         income: 0,
         expenses: 0,
         transfer: 0,
-        total: 0
+        total: 0,
+        count: 0
       }
     }
 
@@ -64,10 +66,11 @@ function MiniCalendarDateItem({
 
         acc.total +=
           transaction.amount / (transaction.type === 'transfer' ? 2 : 1)
+        acc.count += 1 / (transaction.type === 'transfer' ? 2 : 1)
 
         return acc
       },
-      { income: 0, expenses: 0, transfer: 0, total: 0 }
+      { income: 0, expenses: 0, transfer: 0, total: 0, count: 0 }
     )
   }, [transactions, date, actualIndex])
 
@@ -200,13 +203,13 @@ function MiniCalendarDateItem({
         transactionCount.total > 0 && (
           <div
             className={`absolute left-1/2 top-1/2 z-[-1] flex size-10 -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-md  ${
-              transactionCount.total >= 7
+              transactionCount.count >= 7
                 ? 'opacity-70'
-                : transactionCount.total >= 5
+                : transactionCount.count >= 5
                 ? 'opacity-50'
-                : transactionCount.total >= 3
+                : transactionCount.count >= 3
                 ? 'opacity-30'
-                : transactionCount.total >= 1
+                : transactionCount.count >= 1
                 ? 'opacity-10'
                 : ''
             }`}
