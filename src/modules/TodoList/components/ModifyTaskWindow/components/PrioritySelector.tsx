@@ -19,6 +19,7 @@ function PrioritySelector({
 
   return (
     <ListboxOrComboboxInput
+      type="listbox"
       name={t('input.priority')}
       icon="tabler:alert-triangle"
       value={priority}

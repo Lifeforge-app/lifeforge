@@ -108,6 +108,7 @@ function ModifyEntryModal({
         className="mt-4"
       />
       <ListboxOrComboboxInput
+        type="listbox"
         name={t('input.scoreType')}
         icon="tabler:category"
         value={data.type}
@@ -137,7 +138,12 @@ function ModifyEntryModal({
       >
         <ListboxNullOption icon="tabler:music-off" />
         {TYPES.map(({ name, id, icon }) => (
-          <ListboxOption key={id} text={name} icon={icon} value={id} />
+          <ListboxOrComboboxOption
+            key={id}
+            text={name}
+            icon={icon}
+            value={id}
+          />
         ))}
       </ListboxOrComboboxInput>
       <CreateOrModifyButton
