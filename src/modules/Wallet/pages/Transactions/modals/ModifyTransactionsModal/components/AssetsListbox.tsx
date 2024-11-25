@@ -26,6 +26,7 @@ function AssetListbox({
 }: AssetListboxProps): React.ReactElement {
   return (
     <ListboxOrComboboxInput
+      type="listbox"
       name={label}
       icon={iconName}
       value={selectedAsset}

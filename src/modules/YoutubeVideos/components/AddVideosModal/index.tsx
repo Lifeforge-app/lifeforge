@@ -54,6 +54,7 @@ function AddVideosModal({
         className="!mb-4"
       />
       <ListboxOrComboboxInput
+        type="listbox"
         icon="tabler:category"
         name={t('input.resourceType')}
         value={selectedResourceType}

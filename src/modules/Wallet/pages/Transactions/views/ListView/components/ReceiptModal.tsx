@@ -1,6 +1,6 @@
 import React from 'react'
-import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 
 function ReceiptModal({
   isOpen,

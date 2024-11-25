@@ -26,6 +26,7 @@ function LedgerSelector({
 
   return (
     <ListboxOrComboboxInput
+      type="listbox"
       name={t('input.ledger')}
       icon="tabler:book"
       value={ledger}

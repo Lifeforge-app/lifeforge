@@ -18,6 +18,7 @@ function TagsSelector({
 
   return (
     <ListboxOrComboboxInput
+      type="listbox"
       name={t('input.tags')}
       icon="tabler:tags"
       value={tags}

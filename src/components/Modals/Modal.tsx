@@ -119,6 +119,7 @@ function Modal({
                   case 'listbox':
                     return (
                       <ListboxOrComboboxInput
+                        type="listbox"
                         key={field.id}
                         name={field.label}
                         icon={field.icon}

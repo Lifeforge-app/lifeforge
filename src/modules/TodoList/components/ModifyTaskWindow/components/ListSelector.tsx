@@ -18,6 +18,7 @@ function ListSelector({
 
   return (
     <ListboxOrComboboxInput
+      type="listbox"
       name={t('input.lists')}
       icon="tabler:list"
       value={list}
