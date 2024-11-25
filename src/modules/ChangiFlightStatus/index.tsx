@@ -2,13 +2,13 @@ import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
-import ListboxOptions from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOptions'
+import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
+import ListboxOrComboboxOptions from '@components/ButtonsAndInputs/ListboxOrComboBoxInput/components/ListboxOrComboboxOptions'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
 
 export interface IFlightStatus {
@@ -250,16 +250,16 @@ function ChangiFlightStatus(): React.ReactElement {
             </div>
             <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
           </ListboxButton>
-          <ListboxOptions>
+          <ListboxOrComboboxOptions>
             {SEARCH_TYPE.map(([name, icon, value]) => (
-              <ListboxOption
+              <ListboxOrComboboxOption
                 key={value}
                 value={value}
                 icon={icon}
                 text={name}
               />
             ))}
-          </ListboxOptions>
+          </ListboxOrComboboxOptions>
         </Listbox>
         <SearchInput
           hasTopMargin={false}

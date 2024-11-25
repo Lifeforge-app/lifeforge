@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
-import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
+import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
+import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
 import { useTodoListContext } from '@providers/TodoListProvider'
 
 function TagsSelector({
@@ -17,7 +17,7 @@ function TagsSelector({
   if (typeof tagsList === 'string') return <></>
 
   return (
-    <ListboxInput
+    <ListboxOrComboboxInput
       name={t('input.tags')}
       icon="tabler:tags"
       value={tags}
@@ -34,9 +34,14 @@ function TagsSelector({
       }
     >
       {tagsList.map(({ name, id }, i) => (
-        <ListboxOption key={i} icon="tabler:hash" text={name} value={id} />
+        <ListboxOrComboboxOption
+          key={i}
+          icon="tabler:hash"
+          text={name}
+          value={id}
+        />
       ))}
-    </ListboxInput>
+    </ListboxOrComboboxInput>
   )
 }
 

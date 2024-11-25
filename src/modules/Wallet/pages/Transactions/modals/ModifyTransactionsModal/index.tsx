@@ -16,6 +16,7 @@ import AssetsFromToSelector from './components/AssetsFromToSelector'
 import AssetsSelector from './components/AssetsSelector'
 import CategorySelector from './components/CategorySelector'
 import LedgerSelector from './components/LedgerSelector'
+import LocationSelector from './components/LocationSelector'
 import ReceiptUploader from './components/ReceiptUploader'
 import TransactionTypeSelector from './components/TransactionTypeSelector'
 
@@ -40,6 +41,7 @@ function ModifyTransactionsModal({
 
   const [transactionDate, setTransactionDate] = useState<string>('')
   const [amount, setAmount] = useState<string>()
+  const [location, setLocation] = useState<string | null>(null)
   const [category, setCategory] = useState<string | null>(null)
   const [transactionAsset, setTransactionAsset] = useState<string | null>(null)
   const [ledger, setLedger] = useState<string | null>(null)
@@ -62,6 +64,7 @@ function ModifyTransactionsModal({
           setTransactionDate(existedData.date)
           setAmount(`${existedData.amount}`)
           setCategory(existedData.category)
+          setLocation(existedData.location)
           setTransactionAsset(existedData.asset)
           setLedger(existedData.ledger)
           setReceipt(null)
@@ -78,6 +81,7 @@ function ModifyTransactionsModal({
         setTransactionType('income')
         setTransactionDate(moment().format('YYYY-MM-DD'))
         setAmount(undefined)
+        setLocation('')
         setCategory(null)
         setTransactionAsset(null)
         setLedger(null)
@@ -113,6 +117,7 @@ function ModifyTransactionsModal({
     data.append('date', moment(transactionDate).format('YYYY-MM-DD'))
     data.append('amount', parseFloat(`${amount}` || '0').toString())
     data.append('category', category ?? '')
+    data.append('location', location ?? '')
 
     data.append('asset', transactionAsset ?? '')
     data.append('ledger', ledger ?? '')
@@ -180,6 +185,14 @@ function ModifyTransactionsModal({
             setToAsset={setToAsset}
           />
         )}
+        <DateInput
+          modalRef={ref}
+          name="Date"
+          date={transactionDate}
+          setDate={setTransactionDate}
+          icon="tabler:calendar"
+          darker
+        />
         {transactionType !== 'transfer' && (
           <Input
             icon="tabler:file-text"
@@ -191,14 +204,6 @@ function ModifyTransactionsModal({
             updateValue={setParticular}
           />
         )}
-        <DateInput
-          modalRef={ref}
-          name="Date"
-          date={transactionDate}
-          setDate={setTransactionDate}
-          icon="tabler:calendar"
-          darker
-        />
         <CurrencyInputComponent
           icon="tabler:currency-dollar"
           name="Amount"
@@ -210,6 +215,7 @@ function ModifyTransactionsModal({
         />
         {transactionType !== 'transfer' && (
           <>
+            <LocationSelector location={location} setLocation={setLocation} />
             <CategorySelector
               transactionType={transactionType}
               category={category}
@@ -219,6 +225,7 @@ function ModifyTransactionsModal({
           </>
         )}
         <ReceiptUploader
+          receipt={receipt}
           imagePreviewUrl={imagePreviewUrl}
           setImagePreviewUrl={setImagePreviewUrl}
           setReceipt={setReceipt}

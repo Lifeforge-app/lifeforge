@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
 import HeaderFilter from '@components/Miscellaneous/HeaderFilter'
 import { useWalletContext } from '@providers/WalletProvider'
@@ -22,17 +21,15 @@ function Header({
     searchQuery,
     filteredTransactions
   } = useWalletContext()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { searchParams, setSearchParams } = useWalletContext()
   const { t } = useTranslation()
 
   useEffect(() => {
     const params = searchParams.get('type')
     if (params === null) return
     if (!['income', 'expenses', 'transfer'].includes(params)) {
-      setSearchParams(searchParams => {
-        searchParams.delete('type')
-        return searchParams
-      })
+      searchParams.delete('type')
+      setSearchParams(searchParams)
     }
   }, [searchParams])
 
@@ -43,10 +40,8 @@ function Header({
       categories.find(category => category.id === params) === undefined &&
       params !== 'all'
     ) {
-      setSearchParams(searchParams => {
-        searchParams.delete('category')
-        return searchParams
-      })
+      searchParams.delete('category')
+      setSearchParams(searchParams)
     }
   }, [searchParams, categories])
 
@@ -57,10 +52,9 @@ function Header({
       assets.find(asset => asset.id === params) === undefined &&
       params !== 'all'
     ) {
-      setSearchParams(searchParams => {
-        searchParams.delete('asset')
-        return searchParams
-      })
+      searchParams.delete('asset')
+
+      setSearchParams(searchParams)
     }
   }, [searchParams, assets])
 
@@ -71,10 +65,8 @@ function Header({
       ledgers.find(ledger => ledger.id === params) === undefined &&
       params !== 'all'
     ) {
-      setSearchParams(searchParams => {
-        searchParams.delete('ledger')
-        return searchParams
-      })
+      searchParams.delete('ledger')
+      setSearchParams(searchParams)
     }
   }, [searchParams, ledgers])
 
@@ -126,7 +118,8 @@ function Header({
               data: assets
             },
             ledger: {
-              data: ledgers
+              data: ledgers,
+              isColored: true
             }
           }}
         />

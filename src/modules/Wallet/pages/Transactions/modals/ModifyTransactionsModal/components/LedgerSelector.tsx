@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
-import ListboxNullOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxNullOption'
-import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
+import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
+import ListboxNullOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxNullOption'
+import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function LedgerSelector({
@@ -25,7 +25,7 @@ function LedgerSelector({
   }
 
   return (
-    <ListboxInput
+    <ListboxOrComboboxInput
       name={t('input.ledger')}
       icon="tabler:book"
       value={ledger}
@@ -47,7 +47,7 @@ function LedgerSelector({
     >
       <ListboxNullOption icon="tabler:book-off" value={null} hasBgColor />
       {ledgers.map(({ name, color, id, icon }) => (
-        <ListboxOption
+        <ListboxOrComboboxOption
           key={id}
           text={name}
           icon={icon}
@@ -55,7 +55,7 @@ function LedgerSelector({
           value={id}
         />
       ))}
-    </ListboxInput>
+    </ListboxOrComboboxInput>
   )
 }
 

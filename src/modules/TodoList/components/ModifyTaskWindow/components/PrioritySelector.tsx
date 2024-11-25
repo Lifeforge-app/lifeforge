@@ -1,8 +1,8 @@
 // PriorityListbox.tsx
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
-import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
+import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
+import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
 import { useTodoListContext } from '@providers/TodoListProvider'
 
 function PrioritySelector({
@@ -18,7 +18,7 @@ function PrioritySelector({
   if (typeof priorities === 'string') return <></>
 
   return (
-    <ListboxInput
+    <ListboxOrComboboxInput
       name={t('input.priority')}
       icon="tabler:alert-triangle"
       value={priority}
@@ -38,11 +38,16 @@ function PrioritySelector({
         </>
       }
     >
-      <ListboxOption key={'none'} value="" text="None" color="lightgray" />
+      <ListboxOrComboboxOption
+        key={'none'}
+        value=""
+        text="None"
+        color="lightgray"
+      />
       {priorities.map(({ name, color, id }, i) => (
-        <ListboxOption key={i} value={id} text={name} color={color} />
+        <ListboxOrComboboxOption key={i} value={id} text={name} color={color} />
       ))}
-    </ListboxInput>
+    </ListboxOrComboboxInput>
   )
 }
 

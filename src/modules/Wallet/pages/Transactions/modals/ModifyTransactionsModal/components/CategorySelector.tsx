@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
-import ListboxNullOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxNullOption'
-import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
+import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
+import ListboxNullOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxNullOption'
+import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function CategorySelector({
@@ -27,7 +27,7 @@ function CategorySelector({
   }
 
   return (
-    <ListboxInput
+    <ListboxOrComboboxInput
       name={t('input.category')}
       icon="tabler:apps"
       value={category}
@@ -53,7 +53,7 @@ function CategorySelector({
       {categories
         .filter(e => e.type === transactionType)
         .map(({ name, color, id, icon }, i) => (
-          <ListboxOption
+          <ListboxOrComboboxOption
             key={i}
             text={name}
             icon={icon}
@@ -61,7 +61,7 @@ function CategorySelector({
             value={id}
           />
         ))}
-    </ListboxInput>
+    </ListboxOrComboboxInput>
   )
 }
 

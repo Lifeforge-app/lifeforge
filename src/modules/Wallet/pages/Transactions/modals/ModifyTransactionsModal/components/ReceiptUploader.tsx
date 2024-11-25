@@ -1,18 +1,21 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { Icon } from '@iconify/react'
+import { parse } from 'file-type-mime'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import Zoom from 'react-medium-image-zoom'
 import Button from '@components/ButtonsAndInputs/Button'
 
 function ReceiptUploader({
+  receipt,
   imagePreviewUrl,
   setImagePreviewUrl,
   setReceipt,
   setToRemoveReceipt,
   openType
 }: {
+  receipt: File | null
   imagePreviewUrl: string | null
   setImagePreviewUrl: React.Dispatch<React.SetStateAction<string | null>>
   setReceipt: React.Dispatch<React.SetStateAction<File | null>>
@@ -23,14 +26,18 @@ function ReceiptUploader({
   function uploadReceipt(): void {
     const input = document.createElement('input')
     input.type = 'file'
-    input.accept = 'image/*'
+    input.accept = 'image/*, application/pdf'
     input.onchange = async () => {
       if (input.files && input.files[0]) {
-        const reader = new FileReader()
-        reader.onloadend = () => {
-          setImagePreviewUrl(reader.result as string)
+        const buffer = await input.files[0].arrayBuffer()
+        const mimeType = parse(buffer)
+        if (mimeType?.mime.startsWith('image')) {
+          const reader = new FileReader()
+          reader.onloadend = () => {
+            setImagePreviewUrl(reader.result as string)
+          }
+          reader.readAsDataURL(input.files[0])
         }
-        reader.readAsDataURL(input.files[0])
         setReceipt(input.files[0])
       }
     }
@@ -53,7 +60,7 @@ function ReceiptUploader({
           />
         </Zoom>
       )}
-      {imagePreviewUrl !== null ? (
+      {imagePreviewUrl !== null && (
         <Button
           onClick={() => {
             setImagePreviewUrl(null)
@@ -66,15 +73,33 @@ function ReceiptUploader({
         >
           Remove Receipt
         </Button>
-      ) : (
-        <Button
-          onClick={uploadReceipt}
-          className="mt-6 w-full"
-          icon="tabler:upload"
-          variant="secondary"
-        >
-          Upload Receipt
-        </Button>
+      )}
+      {receipt !== null && imagePreviewUrl === null && (
+        <div className="flex items-center justify-between">
+          <p className="mt-6">{receipt.name}</p>
+          <Button
+            onClick={() => {
+              setReceipt(null)
+              if (openType === 'update') setToRemoveReceipt(true)
+            }}
+            className="mt-6"
+            variant="no-bg"
+            icon="tabler:x"
+          />
+        </div>
+      )}
+      {receipt === null && imagePreviewUrl === null && (
+        <div className="mt-6 flex flex-col items-center gap-3">
+          <Button
+            onClick={uploadReceipt}
+            className="w-full"
+            icon="tabler:upload"
+            variant="secondary"
+          >
+            Upload Receipt
+          </Button>
+          <p className="text-xs text-bg-500">{t('wallet.receiptUploadInfo')}</p>
+        </div>
       )}
     </div>
   )

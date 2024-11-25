@@ -52,7 +52,13 @@ function TransactionListItem({
         <div className="w-full min-w-0">
           <div className="flex w-full min-w-0 items-center gap-2">
             <div className="min-w-0 truncate text-lg font-medium">
-              {transaction.particulars}
+              {transaction.particulars}{' '}
+              {transaction.location !== '' && (
+                <>
+                  <span className="text-bg-500">@</span>{' '}
+                  {`${transaction.location}`}
+                </>
+              )}
             </div>
             {transaction.receipt !== '' && (
               <button

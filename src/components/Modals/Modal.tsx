@@ -8,9 +8,9 @@ import DateInput from '@components/ButtonsAndInputs/DateInput'
 import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
 import IconPicker from '@components/ButtonsAndInputs/IconSelector/IconPicker'
 import Input from '@components/ButtonsAndInputs/Input'
-import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
-import ListboxNullOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxNullOption'
-import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
+import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
+import ListboxNullOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxNullOption'
+import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
 import LoadingScreen from '@components/Screens/LoadingScreen'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import ModalHeader from './ModalHeader'
@@ -118,7 +118,7 @@ function Modal({
                     )
                   case 'listbox':
                     return (
-                      <ListboxInput
+                      <ListboxOrComboboxInput
                         key={field.id}
                         name={field.label}
                         icon={field.icon}
@@ -200,7 +200,7 @@ function Modal({
                           />
                         )}
                         {field.options.map(({ text, color, icon, value }) => (
-                          <ListboxOption
+                          <ListboxOrComboboxOption
                             key={value}
                             value={value}
                             text={text}
@@ -208,7 +208,7 @@ function Modal({
                             color={color}
                           />
                         ))}
-                      </ListboxInput>
+                      </ListboxOrComboboxInput>
                     )
                   case 'color':
                     return (

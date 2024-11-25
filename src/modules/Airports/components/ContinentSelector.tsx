@@ -2,8 +2,8 @@ import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useNavigate, useParams } from 'react-router'
-import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
-import ListboxOptions from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOptions'
+import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
+import ListboxOrComboboxOptions from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOptions'
 
 const CONTINENTS = {
   AF: 'Africa',
@@ -42,16 +42,16 @@ function ContinentSelector(): React.ReactElement {
         </div>
         <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
       </ListboxButton>
-      <ListboxOptions lighter>
-        <ListboxOption value="all" text="All Continents" />
+      <ListboxOrComboboxOptions lighter>
+        <ListboxOrComboboxOption value="all" text="All Continents" />
         {Object.keys(CONTINENTS).map(continent => (
-          <ListboxOption
+          <ListboxOrComboboxOption
             key={continent}
             value={continent}
             text={CONTINENTS[continent as keyof typeof CONTINENTS]}
           />
         ))}
-      </ListboxOptions>
+      </ListboxOrComboboxOptions>
     </Listbox>
   )
 }

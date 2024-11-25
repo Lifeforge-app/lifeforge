@@ -1,24 +1,34 @@
-import { ListboxOption as HeadlessListboxOption } from '@headlessui/react'
+import {
+  ListboxOption as HeadlessListboxOption,
+  ComboboxOption as HeadlessComboboxOption
+} from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 
-function ListboxOption({
+function ListboxOrComboboxOption({
   value,
   text,
   icon,
-  color
+  color,
+  type = 'listbox',
+  matchedSubstrings
 }: {
-  value: string
+  value: string | number | Record<string, any>
   text: string
   icon?: string
   color?: string
+  type?: 'listbox' | 'combobox'
+  matchedSubstrings?: Array<{ length: number; offset: number }>
 }): React.ReactElement {
+  const Element =
+    type === 'listbox' ? HeadlessListboxOption : HeadlessComboboxOption
+
   return (
-    <HeadlessListboxOption
+    <Element
       className="flex-between relative flex cursor-pointer select-none p-4 transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
       value={value}
     >
-      {({ selected }) => (
+      {({ selected }: { selected: boolean }) => (
         <>
           <div
             className={`flex items-center ${
@@ -47,7 +57,25 @@ function ListboxOption({
                 />
               )
             )}
-            {text}
+            <span>
+              {text.split('').map((char, index) => (
+                <span
+                  key={index}
+                  className={
+                    matchedSubstrings !== undefined
+                      ? matchedSubstrings.some(
+                          ({ offset, length }) =>
+                            index >= offset && index < offset + length
+                        )
+                        ? 'font-medium text-bg-800 dark:text-bg-100'
+                        : ''
+                      : ''
+                  }
+                >
+                  {char}
+                </span>
+              ))}
+            </span>
           </div>
           {selected && (
             <Icon
@@ -57,8 +85,8 @@ function ListboxOption({
           )}
         </>
       )}
-    </HeadlessListboxOption>
+    </Element>
   )
 }
 
-export default ListboxOption
+export default ListboxOrComboboxOption

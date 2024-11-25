@@ -22,6 +22,7 @@ interface IWalletTransaction extends BasePBCollection {
   side: 'debit' | 'credit'
   particulars: string
   amount: number
+  location: string
   date: string
   category: string
   asset: string

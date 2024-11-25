@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
-import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
+import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
+import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
 import { useTodoListContext } from '@providers/TodoListProvider'
 
 function ListSelector({
@@ -17,7 +17,7 @@ function ListSelector({
   if (typeof lists === 'string') return <></>
 
   return (
-    <ListboxInput
+    <ListboxOrComboboxInput
       name={t('input.lists')}
       icon="tabler:list"
       value={list}
@@ -37,11 +37,16 @@ function ListSelector({
         </>
       }
     >
-      <ListboxOption text="None" value="" color="lightgray" />
+      <ListboxOrComboboxOption text="None" value="" color="lightgray" />
       {lists.map(({ name, color, id }) => (
-        <ListboxOption key={id} text={name} value={id} color={color} />
+        <ListboxOrComboboxOption
+          key={id}
+          text={name}
+          value={id}
+          color={color}
+        />
       ))}
-    </ListboxInput>
+    </ListboxOrComboboxInput>
   )
 }
 

@@ -84,7 +84,7 @@ function IconSet({
         stuffToSearch="icons"
       />
       <ChipSelector
-        options={Object.keys(iconData.categories)}
+        options={Object.keys(iconData.categories ?? {})}
         value={currentTag}
         setValue={setCurrentTag}
       />

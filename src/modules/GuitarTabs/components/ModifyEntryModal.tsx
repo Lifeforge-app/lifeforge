@@ -3,9 +3,9 @@ import { t } from 'i18next'
 import React, { useEffect, useReducer, useState } from 'react'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
-import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
-import ListboxNullOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxNullOption'
-import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
+import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
+import ListboxNullOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxNullOption'
+import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
 import ModalHeader from '@components/Modals/ModalHeader'
 import ModalWrapper from '@components/Modals/ModalWrapper'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
@@ -107,7 +107,7 @@ function ModifyEntryModal({
         }}
         className="mt-4"
       />
-      <ListboxInput
+      <ListboxOrComboboxInput
         name={t('input.scoreType')}
         icon="tabler:category"
         value={data.type}
@@ -139,7 +139,7 @@ function ModifyEntryModal({
         {TYPES.map(({ name, id, icon }) => (
           <ListboxOption key={id} text={name} icon={icon} value={id} />
         ))}
-      </ListboxInput>
+      </ListboxOrComboboxInput>
       <CreateOrModifyButton
         type="update"
         loading={loading}

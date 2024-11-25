@@ -28,6 +28,7 @@
     "crypto-js": "^4.2.0",
     "daisyui": "^4.12.10",
     "emoji-picker-react": "^4.12.0",
+    "file-type-mime": "^0.4.5",
     "get-stream": "^9.0.1",
     "i18next": "^23.15.1",
     "i18next-http-backend": "^2.6.1",

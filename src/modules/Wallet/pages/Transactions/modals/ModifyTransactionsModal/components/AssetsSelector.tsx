@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
-import ListboxNullOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxNullOption'
-import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
+import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
+import ListboxNullOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxNullOption'
+import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function AssetsSelector({
@@ -25,7 +25,7 @@ function AssetsSelector({
   }
 
   return (
-    <ListboxInput
+    <ListboxOrComboboxInput
       name={t('input.asset')}
       icon="tabler:wallet"
       value={transactionAsset}
@@ -47,9 +47,9 @@ function AssetsSelector({
     >
       <ListboxNullOption icon="tabler:wallet-off" value={null} />
       {assets.map(({ name, id, icon }, i) => (
-        <ListboxOption key={i} text={name} icon={icon} value={id} />
+        <ListboxOrComboboxOption key={i} text={name} icon={icon} value={id} />
       ))}
-    </ListboxInput>
+    </ListboxOrComboboxInput>
   )
 }
 

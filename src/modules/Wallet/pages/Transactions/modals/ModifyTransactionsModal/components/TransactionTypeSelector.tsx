@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import ListboxInput from '@components/ButtonsAndInputs/ListboxInput'
-import ListboxOption from '@components/ButtonsAndInputs/ListboxInput/components/ListboxOption'
+import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
+import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
 
 const TRANSACTION_TYPES = [
   { name: 'Income', color: '#10B981', id: 'income', icon: 'tabler:login-2' },
@@ -25,7 +25,7 @@ function TransactionTypeSelector({
   const { t } = useTranslation()
 
   return (
-    <ListboxInput
+    <ListboxOrComboboxInput
       name={t('input.transactionType')}
       icon="tabler:list"
       value={transactionType}
@@ -50,9 +50,9 @@ function TransactionTypeSelector({
       }
     >
       {TRANSACTION_TYPES.map(({ name, color, id }, i) => (
-        <ListboxOption key={i} text={name} color={color} value={id} />
+        <ListboxOrComboboxOption key={i} text={name} color={color} value={id} />
       ))}
-    </ListboxInput>
+    </ListboxOrComboboxInput>
   )
 }
 

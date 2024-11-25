@@ -42,6 +42,7 @@ function ModifyJournalEntryModal({
       }>
     | string[]
   >([])
+  const [originalPhotosLength, setOriginalPhotosLength] = useState<number>(0)
   const [mood, setMood] = useState<{
     text: string
     emoji: string
@@ -111,6 +112,7 @@ function ModifyJournalEntryModal({
         setDate(existedData.date)
         setPhotos(existedData.photos)
         setMood(existedData.mood)
+        setOriginalPhotosLength(existedData.photos.length)
       }, 500)
     } else {
       setTitle('')
@@ -123,6 +125,7 @@ function ModifyJournalEntryModal({
         text: '',
         emoji: ''
       })
+      setOriginalPhotosLength(0)
     }
   }, [existedData, openType])
 
@@ -251,6 +254,7 @@ function ModifyJournalEntryModal({
                   >
                 }
                 openType={openType}
+                originalPhotosLength={originalPhotosLength}
               />
             )
           case 5:
