@@ -26,6 +26,7 @@ function TransactionTypeSelector({
 
   return (
     <ListboxOrComboboxInput
+      type="listbox"
       name={t('input.transactionType')}
       icon="tabler:list"
       value={transactionType}

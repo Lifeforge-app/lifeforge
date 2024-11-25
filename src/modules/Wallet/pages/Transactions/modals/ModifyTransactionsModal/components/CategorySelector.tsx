@@ -28,6 +28,7 @@ function CategorySelector({
 
   return (
     <ListboxOrComboboxInput
+      type="listbox"
       name={t('input.category')}
       icon="tabler:apps"
       value={category}

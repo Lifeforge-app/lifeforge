@@ -26,6 +26,7 @@ function AssetsSelector({
 
   return (
     <ListboxOrComboboxInput
+      type="listbox"
       name={t('input.asset')}
       icon="tabler:wallet"
       value={transactionAsset}
