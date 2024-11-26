@@ -3,11 +3,11 @@ import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import EntryItem from './components/EntryItem'
 import ContinentSelector from '../../../components/ContinentSelector'
@@ -36,7 +36,7 @@ function AirportsList(): React.ReactElement {
       name: string
     }>
     breadcrumbs: string[]
-  }>(`airports/airports/${regionID}`)
+  }>(`airports/airport/list/${regionID}`)
   const [filteredData, setFilteredData] = useState<
     | Array<{
         id: string

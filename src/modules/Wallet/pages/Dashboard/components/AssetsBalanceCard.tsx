@@ -5,16 +5,20 @@ import { Link, useNavigate } from 'react-router-dom'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import useThemeColors from '@hooks/useThemeColor'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 
 function AssetsBalanceCard(): React.ReactElement {
+  const { componentBg, componentBgLighterWithHover } = useThemeColors()
   const navigate = useNavigate()
   const { assets, isAmountHidden } = useWalletContext()
   const { t } = useTranslation()
 
   return (
-    <div className="col-span-1 row-span-2 flex h-full min-h-96 flex-col rounded-lg bg-bg-50 p-6 px-2 shadow-custom dark:bg-bg-900">
+    <div
+      className={`col-span-1 row-span-2 flex h-full min-h-96 flex-col rounded-lg p-4 shadow-custom ${componentBg}`}
+    >
       <div className="flex-between flex px-4">
         <h1 className="flex items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:wallet" className="text-2xl" />
@@ -36,7 +40,7 @@ function AssetsBalanceCard(): React.ReactElement {
                   <Link
                     key={asset.id}
                     to={`/wallet/transactions#asset=${asset.id}`}
-                    className="flex-between flex w-full min-w-0 flex-1 flex-col gap-4 rounded-lg bg-bg-100/50 p-6 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 dark:hover:bg-bg-700/50 [@media(min-width:400px)]:flex-row"
+                    className={`flex-between flex w-full min-w-0 flex-1 flex-col gap-4 rounded-lg p-6 shadow-custom transition-all [@media(min-width:400px)]:flex-row ${componentBgLighterWithHover}`}
                   >
                     <div className="flex w-full min-w-0 items-center gap-4">
                       <Icon icon={asset.icon} className="size-6 shrink-0" />

@@ -10,6 +10,7 @@ import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
+import useThemeColors from '@hooks/useThemeColor'
 import {
   type ICPUTemp,
   type ICPUUSage,
@@ -36,6 +37,7 @@ function camelCaseToTitleCase(text: string): string {
 }
 
 function ServerStatus(): React.ReactElement {
+  const { componentBg, componentBgLighter } = useThemeColors()
   const { environment } = useAPIOnlineStatus()
 
   const [diskUsage] = useFetch<IDiskUsage[]>('server/disks')
@@ -114,7 +116,9 @@ function ServerStatus(): React.ReactElement {
         <div className="grid gap-6 lg:grid-cols-3">
           <APIComponentWithFallback data={cpuUsage}>
             {cpuUsage => (
-              <div className="space-y-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+              <div
+                className={`space-y-4 rounded-lg p-6 shadow-custom ${componentBg}`}
+              >
                 <div className="flex-between flex">
                   <div className="flex items-center gap-2">
                     <Icon icon="tabler:cpu" className="text-2xl" />
@@ -124,7 +128,9 @@ function ServerStatus(): React.ReactElement {
                     {cpuUsage.usage.toFixed(2)}%
                   </p>
                 </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-bg-200 dark:bg-bg-800">
+                <div
+                  className={`h-2 w-full overflow-hidden rounded-full ${componentBgLighter}`}
+                >
                   <div
                     className={`h-full rounded-full transition-all ${
                       cpuUsage.usage > 80
@@ -148,7 +154,9 @@ function ServerStatus(): React.ReactElement {
           </APIComponentWithFallback>
           <APIComponentWithFallback data={memoryUsage}>
             {memoryUsage => (
-              <div className="space-y-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+              <div
+                className={`space-y-4 rounded-lg p-6 shadow-custom ${componentBg}`}
+              >
                 <div className="flex-between flex">
                   <div className="flex items-center gap-2">
                     <Icon
@@ -161,7 +169,9 @@ function ServerStatus(): React.ReactElement {
                     {memoryUsage.percent.toFixed(2)}%
                   </p>
                 </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-bg-200 dark:bg-bg-800">
+                <div
+                  className={`h-2 w-full overflow-hidden rounded-full ${componentBgLighter}`}
+                >
                   <div
                     className={`h-full rounded-full transition-all ${
                       memoryUsage.percent > 80
@@ -182,7 +192,9 @@ function ServerStatus(): React.ReactElement {
           </APIComponentWithFallback>
           <APIComponentWithFallback data={cpuTemp}>
             {cpuTemp => (
-              <div className="space-y-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+              <div
+                className={`space-y-4 rounded-lg p-6 shadow-custom ${componentBg}`}
+              >
                 <div className="flex-between flex">
                   <div className="flex items-center gap-2">
                     <Icon
@@ -195,7 +207,9 @@ function ServerStatus(): React.ReactElement {
                     {cpuTemp.main.toFixed(2)}°C
                   </p>
                 </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-bg-200 dark:bg-bg-800">
+                <div
+                  className={`h-2 w-full overflow-hidden rounded-full ${componentBgLighter}`}
+                >
                   <div
                     className={`h-full rounded-full transition-all ${
                       cpuTemp.main > 80
@@ -226,7 +240,7 @@ function ServerStatus(): React.ReactElement {
               {diskUsage.map(disk => (
                 <div
                   key={disk.name}
-                  className="space-y-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
+                  className={`space-y-4 rounded-lg p-6 shadow-custom ${componentBg}`}
                 >
                   <div className="flex-between flex w-full min-w-0">
                     <div className="flex min-w-0 flex-1 items-center gap-2">
@@ -250,7 +264,9 @@ function ServerStatus(): React.ReactElement {
                     <p className="text-lg text-bg-500">Available</p>
                     <p className="text-lg text-bg-500">{disk.avail}B</p>
                   </div>
-                  <div className="mt-4 h-3 w-full overflow-hidden rounded-full border border-bg-200 dark:border-bg-500">
+                  <div
+                    className={`mt-4 h-3 w-full overflow-hidden rounded-full ${componentBgLighter}`}
+                  >
                     <div
                       className="h-full rounded-full bg-green-500"
                       style={{ width: disk.usedPercent }}
@@ -273,7 +289,7 @@ function ServerStatus(): React.ReactElement {
               {Object.entries(systemInfo).map(([key, value]) => (
                 <div
                   key={key}
-                  className="space-y-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
+                  className={`space-y-4 rounded-lg p-6 shadow-custom ${componentBg}`}
                 >
                   <h2 className="text-xl text-bg-500">
                     {key === 'mem' ? 'Memory' : camelCaseToTitleCase(key)}

@@ -33,29 +33,28 @@ function ThemeSelector(): React.ReactElement {
             Image: '/assets/mockup/dark.png'
           }
         ].map(({ id, name, Image }) => (
-          <button
-            key={id}
-            type="button"
-            onClick={() => {
-              setTheme(id as 'system' | 'light' | 'dark')
-            }}
-            className="flex-1"
-          >
-            <div
-              className={`ring-2 ring-offset-8 ring-offset-bg-50 transition-all dark:ring-offset-bg-900 ${
+          <div key={id} className="flex flex-col items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setTheme(id as 'system' | 'light' | 'dark')
+              }}
+              className={`flex-1 rounded-lg border-2 lg:rounded-xl  ${
                 theme === id
-                  ? 'ring-custom-500'
-                  : 'ring-bg-200 hover:ring-bg-500 dark:ring-bg-700 dark:hover:ring-bg-500'
-              } relative overflow-hidden rounded-lg lg:rounded-2xl`}
+                  ? 'border-custom-500'
+                  : 'border-bg-200 hover:border-bg-500 dark:border-bg-700 dark:hover:border-bg-500'
+              }`}
             >
-              {theme === id && (
-                <Icon
-                  icon="tabler:circle-check-filled"
-                  className="absolute bottom-2 right-2.5 block size-6 text-xl text-custom-500"
-                />
-              )}
-              <img src={Image} alt={id} className="w-full" />
-            </div>
+              <div className="relative rounded-lg p-2 lg:rounded-2xl">
+                {theme === id && (
+                  <Icon
+                    icon="tabler:circle-check-filled"
+                    className="absolute bottom-2 right-2.5 block size-6 text-xl text-custom-500"
+                  />
+                )}
+                <img src={Image} alt={id} className="w-full rounded-lg" />
+              </div>
+            </button>
             <p
               className={`mt-4 ${
                 theme === id ? 'font-medium text-custom-500' : ''
@@ -63,7 +62,7 @@ function ThemeSelector(): React.ReactElement {
             >
               {name}
             </p>
-          </button>
+          </div>
         ))}
       </div>
     </ConfigColumn>

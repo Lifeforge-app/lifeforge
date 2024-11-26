@@ -2,11 +2,14 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
+import useThemeColors from '@hooks/useThemeColor'
 import { algsetAlgs, algsetScrambles } from '../../algorithms/OLL'
 import { applyMoves, DEFAULT_CUBE } from '../../scripts/genCube'
 
 function CFOPF2L(): React.ReactElement {
   const navigate = useNavigate()
+  const { componentBg } = useThemeColors()
+
   return (
     <ModuleWrapper>
       <header className="space-y-1">
@@ -34,7 +37,7 @@ function CFOPF2L(): React.ReactElement {
           return (
             <li
               key={index}
-              className="flex w-full items-center justify-between gap-8 rounded-md bg-bg-50 p-4 shadow-custom dark:bg-bg-900"
+              className={`flex w-full items-center justify-between gap-8 rounded-md p-4 shadow-custom ${componentBg}`}
             >
               <div className="flex items-center gap-8">
                 <div className="rounded-md bg-bg-200/70 p-2 dark:bg-bg-800/50">

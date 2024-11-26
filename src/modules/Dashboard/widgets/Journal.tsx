@@ -1,7 +1,12 @@
 import React from 'react'
+import useThemeColors from '@hooks/useThemeColor'
 
 export default function Journal(): React.ReactElement {
+  const { componentBg } = useThemeColors()
+
   return (
-    <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-8 pt-6 shadow-custom dark:bg-bg-900"></div>
+    <div
+      className={`flex size-full flex-col gap-4 rounded-lg p-4 shadow-custom ${componentBg}`}
+    ></div>
   )
 }

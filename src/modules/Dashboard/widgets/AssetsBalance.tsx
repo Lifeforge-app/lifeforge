@@ -4,15 +4,19 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IWalletAsset } from '@interfaces/wallet_interfaces'
 import { numberToMoney } from '@utils/strings'
 
 export default function AssetsBalance(): React.ReactElement {
   const { t } = useTranslation()
+  const { componentBg } = useThemeColors()
   const [assets] = useFetch<IWalletAsset[]>('wallet/assets')
 
   return (
-    <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+    <div
+      className={`flex size-full flex-col gap-4 rounded-lg p-4 shadow-custom ${componentBg}`}
+    >
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:wallet" className="text-2xl" />
         <span className="ml-2">
@@ -26,7 +30,7 @@ export default function AssetsBalance(): React.ReactElement {
               <Link
                 to={'/wallet/assets'}
                 key={asset.id}
-                className="flex h-full flex-between gap-4 rounded-lg bg-bg-100 p-4 pl-6 pr-0 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 dark:hover:bg-bg-700/50"
+                className="flex-between flex h-full gap-4 rounded-lg bg-bg-100 p-4 pl-6 pr-0 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all hover:bg-bg-200 dark:bg-bg-800 dark:hover:bg-bg-700/50"
               >
                 <div className="flex w-full min-w-0 items-center gap-4">
                   <div className="rounded-md bg-bg-700 p-2">

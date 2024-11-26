@@ -3,14 +3,16 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IProjectsMKanbanColumn } from '@interfaces/projects_m_interfaces'
 import ModifyColumnsModal from './modals/ModifyColumnModal'
 
 function ProjectKanban(): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const { id } = useParams()
   const [columns, refreshColumns] = useFetch<IProjectsMKanbanColumn[]>(
     `projects-m/kanban/column/${id}`
@@ -46,7 +48,7 @@ function ProjectKanban(): React.ReactElement {
               {columns.map((column, id) => (
                 <div
                   key={id}
-                  className="flex h-min max-h-full w-72 shrink-0 flex-col rounded-lg border-t-4 bg-bg-50 p-6 pb-0 pr-4 dark:bg-bg-900"
+                  className={`flex h-min max-h-full w-72 shrink-0 flex-col rounded-lg border-t-4 p-6 pb-0 pr-4 ${componentBg}`}
                   style={{
                     borderColor: column.color
                   }}

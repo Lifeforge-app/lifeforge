@@ -370,7 +370,10 @@
         "routes": {
           "personalization": "personalization"
         },
-        "togglable": false
+        "togglable": false,
+        "requiredAPIKeys": [
+          "pixabay"
+        ]
       },
       {
         "name": "Modules",

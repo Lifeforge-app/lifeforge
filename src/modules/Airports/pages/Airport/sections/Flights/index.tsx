@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
+import useThemeColors from '@hooks/useThemeColor'
 import APIRequest from '@utils/fetchData'
 import FlightsTable from './components/FlightsTable'
 
@@ -20,6 +21,7 @@ interface FlightData {
 }
 
 function Flights({ IATA }: { IATA: string }): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const [nextPageNum, setPageNum] = useState([-1, 1])
   const location = useLocation()
   const [flightsData, , setFlightsData] = useFetch<FlightData[]>(
@@ -76,7 +78,9 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
     <APIComponentWithFallback data={flightsData}>
       {(data: FlightData[]) => (
         <>
-          <div className="sticky top-[3.64rem] z-10 mt-6 flex items-center rounded-md bg-bg-50 dark:bg-bg-950">
+          <div
+            className={`sticky top-[3.64rem] z-10 mt-6 flex items-center rounded-md ${componentBg}`}
+          >
             {[
               ['Arrivals', 'tabler:plane-arrival'],
               ['Departures', 'tabler:plane-departure']

@@ -5,6 +5,7 @@ import { Bar } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import useThemeColors from '@hooks/useThemeColor'
 import { useWalletContext } from '@providers/WalletProvider'
 
 const options = {
@@ -33,6 +34,7 @@ const options = {
 }
 
 function StatisticChardCard(): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const { transactions } = useWalletContext()
   const dates = useMemo(() => {
     if (typeof transactions === 'string') {
@@ -69,7 +71,9 @@ function StatisticChardCard(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="col-span-2 row-span-2 flex size-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+    <div
+      className={`col-span-2 row-span-2 flex size-full flex-col rounded-lg p-6 shadow-custom ${componentBg}`}
+    >
       <div className="flex-between flex w-full">
         <h1 className="flex items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:chart-dots" className="text-2xl" />

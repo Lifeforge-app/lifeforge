@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IPasswordEntry } from '@interfaces/password_interfaces'
 import { Clipboard } from '@utils/clipboard'
 import { decrypt, encrypt } from '@utils/encryption'
@@ -35,6 +36,7 @@ function PasswordEntryITem({
     React.SetStateAction<IPasswordEntry[] | 'loading' | 'error'>
   >
 }): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const [decryptedPassword, setDecryptedPassword] = useState<string | null>(
     null
   )
@@ -142,7 +144,9 @@ function PasswordEntryITem({
   }
 
   return (
-    <div className="relative flex flex-col items-center gap-4 rounded-md bg-bg-50 p-4 shadow-custom dark:bg-bg-900">
+    <div
+      className={`relative flex flex-col items-center gap-4 rounded-md p-4 shadow-custom ${componentBg}`}
+    >
       {password.pinned && (
         <Icon
           icon="tabler:pin-filled"
@@ -177,7 +181,16 @@ function PasswordEntryITem({
             }`}
             style={decryptedPassword === null ? { fontFamily: 'Arial' } : {}}
           >
-            {decryptedPassword ?? '············'}
+            {decryptedPassword ?? (
+              <span className="flex items-center gap-1.5">
+                {Array.from({ length: 12 }, (_, i) => (
+                  <span
+                    key={i}
+                    className="size-1.5 rounded-full bg-bg-500 dark:bg-bg-100"
+                  ></span>
+                ))}
+              </span>
+            )}
           </p>
           <Button
             variant="no-bg"

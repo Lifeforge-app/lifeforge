@@ -2,18 +2,20 @@ import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React from 'react'
 import { useNavigate } from 'react-router'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
+import useThemeColors from '@hooks/useThemeColor'
 import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
 import { TodoListProvider } from '@providers/TodoListProvider'
 import Timer from './components/Timer'
 import TaskItem from '../TodoList/components/tasks/TaskItem'
 
 export default function PomodoroTimer(): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry[]>(
     'todo-list/entries?status=today'
   )
@@ -24,7 +26,7 @@ export default function PomodoroTimer(): React.ReactElement {
       <div className="mt-6 flex w-full flex-1">
         <Timer />
         <TodoListProvider>
-          <aside className="mb-16 w-2/6 rounded-lg bg-bg-50 p-6 dark:bg-bg-900">
+          <aside className={`mb-16 w-2/6 rounded-lg p-6 ${componentBg}`}>
             <h1 className="mb-8 flex items-center gap-2 text-xl font-semibold">
               <Icon icon="tabler:clipboard-list" className="text-2xl" />
               <span className="ml-2">

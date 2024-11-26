@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import colors from 'tailwindcss/colors'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
-import useThemeColorHex from '@hooks/useThemeColorHex'
+import useThemeColors from '@hooks/useThemeColor'
 import { useWalletContext } from '@providers/WalletProvider'
 import { toCamelCase } from '@utils/strings'
 
@@ -15,7 +15,7 @@ function TypeSection({
   const { t } = useTranslation()
   const { filteredTransactions, searchParams, setSearchParams } =
     useWalletContext()
-  const { bgTemp } = useThemeColorHex()
+  const { bgTemp } = useThemeColors()
 
   return (
     <>

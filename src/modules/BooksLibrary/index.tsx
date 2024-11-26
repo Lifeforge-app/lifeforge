@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import ViewModeSelector from '@components/Miscellaneous/ViewModeSelector'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
@@ -68,39 +69,25 @@ function BooksLibrary(): React.ReactElement {
       <div className="mt-6 flex min-h-0 w-full min-w-0 flex-1">
         <Sidebar />
         <div className="flex h-full min-h-0 flex-1 flex-col pb-8 xl:ml-8">
-          <Header itemCount={filteredEntries.length} />
+          <Header
+            itemCount={
+              typeof filteredEntries !== 'string' ? filteredEntries.length : 0
+            }
+          />
           <div className="flex items-center gap-2">
             <SearchInput
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
               stuffToSearch="books"
             />
-            <div className="mt-4 flex items-center gap-2 rounded-md bg-bg-50 p-2 shadow-custom dark:bg-bg-900">
-              {['grid', 'list'].map(viewType => (
-                <button
-                  key={viewType}
-                  onClick={() => {
-                    setView(viewType as 'grid' | 'list')
-                  }}
-                  className={`flex items-center gap-2 rounded-md p-2 transition-all ${
-                    viewType === view
-                      ? 'bg-bg-200/50 dark:bg-bg-800'
-                      : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
-                  }`}
-                >
-                  <Icon
-                    icon={
-                      viewType === 'grid'
-                        ? 'uil:apps'
-                        : viewType === 'list'
-                        ? 'uil:list-ul'
-                        : ''
-                    }
-                    className="size-6"
-                  />
-                </button>
-              ))}
-            </div>
+            <ViewModeSelector
+              viewMode={view}
+              setViewMode={setView}
+              options={[
+                { value: 'list', icon: 'uil:list-ul' },
+                { value: 'grid', icon: 'uil:apps' }
+              ]}
+            />
           </div>
           <APIComponentWithFallback data={filteredEntries}>
             {filteredEntries =>

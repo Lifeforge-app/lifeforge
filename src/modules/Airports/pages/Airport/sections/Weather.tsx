@@ -5,6 +5,7 @@ import { useParams } from 'react-router'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
+import useThemeColors from '@hooks/useThemeColor'
 
 export interface IAirportMETARData {
   raw_text: string
@@ -138,7 +139,26 @@ const ICONS = {
   FC: 'wi-day-fog'
 }
 
+function WidgetWrapper({
+  children,
+  className
+}: {
+  children: React.ReactNode
+  className?: string
+}): React.ReactElement {
+  const { componentBg } = useThemeColors()
+
+  return (
+    <div
+      className={`${className} flex size-full flex-col gap-4 rounded-lg p-6 shadow-custom ${componentBg}`}
+    >
+      {children}
+    </div>
+  )
+}
+
 function Weather(): React.ReactElement {
+  const { componentBgLighter } = useThemeColors()
   const { airportID } = useParams()
   const [METARData] = useFetch<IAirportMETARData | 'none'>(
     `airports/airport/${airportID}/METAR`
@@ -149,7 +169,7 @@ function Weather(): React.ReactElement {
       {data =>
         data !== 'none' ? (
           <div className="mb-8 mt-6 grid w-full grid-cols-4 gap-4">
-            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+            <WidgetWrapper>
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:plane" className="text-2xl" />
                 <span className="ml-2">Flight Category</span>
@@ -170,8 +190,8 @@ function Weather(): React.ReactElement {
                   {data.flight_category}
                 </div>
               </div>
-            </div>
-            <div className="col-span-3 flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+            </WidgetWrapper>
+            <WidgetWrapper className="col-span-3">
               <div className="flex-between flex">
                 <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                   <Icon icon="tabler:code" className="text-2xl" />
@@ -181,11 +201,13 @@ function Weather(): React.ReactElement {
                   Last fetched {moment(data.observed).fromNow()}
                 </span>
               </div>
-              <code className="rounded-md bg-bg-200/50 p-4 text-bg-500 shadow-custom dark:bg-bg-800">
+              <code
+                className={`rounded-md p-4 text-bg-500 shadow-custom ${componentBgLighter}`}
+              >
                 {data.raw_text}
               </code>
-            </div>
-            <div className="col-span-2 flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+            </WidgetWrapper>
+            <WidgetWrapper className="col-span-2">
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:cloud-exclamation" className="text-2xl" />
                 <span className="ml-2">Weather</span>
@@ -219,8 +241,8 @@ function Weather(): React.ReactElement {
                   </span>
                 )}
               </div>
-            </div>
-            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+            </WidgetWrapper>
+            <WidgetWrapper>
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:thermometer" className="text-2xl" />
                 <span className="ml-2">Temperature</span>
@@ -231,8 +253,8 @@ function Weather(): React.ReactElement {
                   {data.temperature.fahrenheit.toFixed(2)}°F
                 </p>
               </div>
-            </div>
-            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+            </WidgetWrapper>
+            <WidgetWrapper>
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:droplet" className="text-2xl" />
                 <span className="ml-2">Dewpoint</span>
@@ -243,8 +265,8 @@ function Weather(): React.ReactElement {
                   {data.dewpoint.fahrenheit.toFixed(2)}°F
                 </p>
               </div>
-            </div>
-            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+            </WidgetWrapper>
+            <WidgetWrapper>
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:wind" className="text-2xl" />
                 <span className="ml-2">Wind</span>
@@ -276,8 +298,8 @@ function Weather(): React.ReactElement {
                   <p className="text-center text-3xl font-medium">Calm</p>
                 </div>
               )}
-            </div>
-            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+            </WidgetWrapper>
+            <WidgetWrapper>
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:eye" className="text-2xl" />
                 <span className="ml-2">Visibility</span>
@@ -296,8 +318,8 @@ function Weather(): React.ReactElement {
                   <span className="text-lg">({data.visibility.meters} m)</span>
                 </p>
               </div>
-            </div>
-            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+            </WidgetWrapper>
+            <WidgetWrapper>
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:arrow-bar-to-up" className="text-2xl" />
                 <span className="ml-2">Celling</span>
@@ -325,8 +347,8 @@ function Weather(): React.ReactElement {
                   <p className="text-center text-3xl font-medium">No ceiling</p>
                 </div>
               )}
-            </div>
-            <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+            </WidgetWrapper>
+            <WidgetWrapper>
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="uil:monitor" className="text-2xl" />
                 <span className="ml-2">Barometer</span>
@@ -340,8 +362,8 @@ function Weather(): React.ReactElement {
                   {data.barometer.mb.toFixed(2)} mb)
                 </p>
               </div>
-            </div>
-            <div className="col-span-4 flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+            </WidgetWrapper>
+            <WidgetWrapper className="col-span-4">
               <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
                 <Icon icon="tabler:cloud" className="text-2xl" />
                 <span className="ml-2">Clouds</span>
@@ -351,7 +373,7 @@ function Weather(): React.ReactElement {
                   data.clouds.map(cloud => (
                     <div
                       key={cloud.code}
-                      className="flex-between flex rounded-md bg-bg-200/50 p-4 pl-6 dark:bg-bg-800"
+                      className={`flex-between flex rounded-md p-4 pl-6 ${componentBgLighter}`}
                     >
                       <p className="text-2xl font-medium">
                         {metarCodes[cloud.code as keyof typeof metarCodes]}
@@ -370,7 +392,7 @@ function Weather(): React.ReactElement {
                   </div>
                 )}
               </ul>
-            </div>
+            </WidgetWrapper>
           </div>
         ) : (
           <div className="my-8 w-full">

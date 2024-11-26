@@ -3,10 +3,12 @@ import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
+import useThemeColors from '@hooks/useThemeColor'
 import { useMusicContext } from '@providers/MusicProvider'
 import ControlButtons from '../../Music/components/Bottombar/components/ControlButtons'
 
 export default function MusicPlayer(): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const { t } = useTranslation()
   const { currentMusic, isPlaying } = useMusicContext()
   const navigate = useNavigate()
@@ -15,7 +17,7 @@ export default function MusicPlayer(): React.ReactElement {
   return (
     <div
       ref={ref}
-      className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
+      className={`flex size-full flex-col gap-4 rounded-lg p-4 shadow-custom ${componentBg}`}
     >
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:music" className="text-2xl" />

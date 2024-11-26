@@ -6,9 +6,11 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import ErrorScreen from '@components/Screens/ErrorScreen'
 import LoadingScreen from '@components/Screens/LoadingScreen'
 import useFetch from '@hooks/useFetch'
+import useThemeColors from '@hooks/useThemeColor'
 import { type INotesWorkspace } from '@interfaces/notes_interfaces'
 
 function Notes(): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
   const [bounded, setBounded] = useState(false)
   const [data] = useFetch<INotesWorkspace[]>('notes/workspace/list', bounded)
 
@@ -31,7 +33,7 @@ function Notes(): React.ReactElement {
                 <Link
                   to={`/notes/${workspace.id}`}
                   key={workspace.id}
-                  className="group flex size-full flex-col items-center rounded-lg bg-bg-50 p-16 shadow-custom hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50"
+                  className={`group flex size-full flex-col items-center rounded-lg p-16 shadow-custom ${componentBgWithHover}`}
                 >
                   <Icon
                     icon={workspace.icon}

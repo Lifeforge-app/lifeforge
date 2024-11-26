@@ -9,6 +9,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
+import useThemeColors from '@hooks/useThemeColor'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 const LANGUAGES: Array<{
@@ -39,6 +40,7 @@ const LANGUAGES: Array<{
 ]
 
 function LanguageSelector(): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
   const { language, setLanguage } = usePersonalizationContext()
   const { t } = useTranslation()
 
@@ -55,7 +57,9 @@ function LanguageSelector(): React.ReactElement {
         }}
       >
         <div className="relative mt-1 w-full md:w-64">
-          <ListboxButton className="flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 py-4 pl-4 pr-10 text-left outline-none transition-all hover:bg-bg-100 focus:outline-none dark:border-bg-700 dark:bg-bg-900 dark:hover:bg-bg-800/50">
+          <ListboxButton
+            className={`flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left shadow-custom outline-none transition-all focus:outline-none ${componentBgWithHover}`}
+          >
             <Icon
               icon={LANGUAGES.find(({ code }) => code === language)?.icon ?? ''}
               className="size-5"

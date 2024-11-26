@@ -1,6 +1,7 @@
 import React from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
 
 function EntryItem({
@@ -18,8 +19,12 @@ function EntryItem({
     React.SetStateAction<boolean>
   >
 }): React.ReactElement {
+  const { componentBg } = useThemeColors()
+
   return (
-    <div className="flex items-start justify-between gap-4 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900">
+    <div
+      className={`flex items-start justify-between gap-4 rounded-lg p-4 shadow-custom ${componentBg}`}
+    >
       <div className="flex h-full gap-4">
         <div
           className={`h-full w-1 shrink-0 rounded-full ${

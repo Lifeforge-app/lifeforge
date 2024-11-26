@@ -1,8 +1,8 @@
 import React from 'react'
-import { useNavigate } from 'react-router'
 import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarWrapper from '@components/Sidebar/components/SidebarWrapper'
+import { useWalletContext } from '@providers/WalletProvider'
 import AssetsSection from './components/AssetsSection'
 import CategoriesSection from './components/CategoriesSection'
 import DateRangeSelector from './components/DateRangeSelector'
@@ -21,15 +21,16 @@ function Sidebar({
     React.SetStateAction<boolean | 'new'>
   >
 }): React.ReactElement {
-  const navigate = useNavigate()
+  const { searchParams, setSearchParams } = useWalletContext()
+
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
       <SidebarItem
         icon="tabler:list"
         name="All Transactions"
-        active={location.search === ''}
+        active={searchParams.entries().next().done}
         onClick={() => {
-          navigate('/wallet/transactions')
+          setSearchParams(new URLSearchParams())
           setSidebarOpen(false)
         }}
       />

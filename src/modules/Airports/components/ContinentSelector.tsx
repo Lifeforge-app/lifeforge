@@ -4,6 +4,7 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router'
 import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
 import ListboxOrComboboxOptions from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOptions'
+import useThemeColors from '@hooks/useThemeColor'
 
 const CONTINENTS = {
   AF: 'Africa',
@@ -16,6 +17,7 @@ const CONTINENTS = {
 }
 
 function ContinentSelector(): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const continentID = useParams().continentID ?? 'all'
   const navigate = useNavigate()
 
@@ -32,7 +34,9 @@ function ContinentSelector(): React.ReactElement {
         }
       }}
     >
-      <ListboxButton className="flex-between flex w-48 gap-2 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-800/50">
+      <ListboxButton
+        className={`flex-between flex w-48 gap-2 rounded-lg p-4 shadow-custom ${componentBg}`}
+      >
         <div className="flex items-center gap-2">
           <span className="whitespace-nowrap font-medium">
             {continentID === 'all'

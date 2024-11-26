@@ -7,16 +7,20 @@ import { Link } from 'react-router-dom'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import useThemeColors from '@hooks/useThemeColor'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 
 function TransactionsCard(): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const { transactions, categories } = useWalletContext()
   const navigate = useNavigate()
   const { t } = useTranslation()
 
   return (
-    <div className="col-span-2 row-span-5 flex h-full flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+    <div
+      className={`col-span-2 row-span-5 flex h-full flex-col rounded-lg p-6 shadow-custom ${componentBg}`}
+    >
       <div className="flex-between flex gap-4">
         <h1 className="flex w-full items-center gap-2 text-xl font-semibold sm:w-auto">
           <Icon icon="tabler:list" className="text-2xl" />
