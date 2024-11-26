@@ -61,13 +61,14 @@ function BgImageSelector(): React.ReactElement {
         icon="tabler:photo"
       >
         {bgImage !== '' ? (
-          <div className="flex gap-2">
+          <>
             <Button
               onClick={() => {
                 setAdjustBgImageModalOpen(true)
               }}
               icon="tabler:adjustments"
               variant="no-bg"
+              className="w-1/2 md:w-auto"
             >
               adjust
             </Button>
@@ -78,16 +79,17 @@ function BgImageSelector(): React.ReactElement {
               icon="tabler:trash"
               variant="no-bg"
               isRed
+              className="w-1/2 md:w-auto"
             >
               remove
             </Button>
-          </div>
+          </>
         ) : (
           <Button
             onClick={() => {
               setImageSelectorModalOpen(true)
             }}
-            className="mt-4"
+            className="w-full md:w-auto"
             icon="tabler:photo-hexagon"
           >
             select

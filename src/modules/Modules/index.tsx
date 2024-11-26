@@ -126,7 +126,7 @@ function Modules(): React.ReactElement {
                   <h2 className="relative mb-6 pl-4 text-3xl font-semibold before:absolute before:left-0 before:top-1/2 before:h-8 before:w-1 before:-translate-y-1/2 before:rounded-full before:bg-custom-500">
                     {t(`modules.title.${toCamelCase(route.title)}`)}
                   </h2>
-                  <ul className="space-y-4">
+                  <ul className="space-y-2">
                     {route.items
                       .filter(route => route.togglable)
                       .map((route, index) => (

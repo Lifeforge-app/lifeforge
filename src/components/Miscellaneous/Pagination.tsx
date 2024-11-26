@@ -106,9 +106,9 @@ function Pagination({
         }}
         icon="uil:angle-left"
         variant="no-bg"
-        className="w-32"
+        className="w-auto sm:w-32"
       >
-        Previous
+        <span className="hidden sm:inline">Previous</span>
       </Button>
       <div className="flex items-center gap-2">{renderPageNumbers()}</div>
       {currentPage < totalPages ? (
@@ -121,9 +121,9 @@ function Pagination({
           icon="uil:angle-right"
           variant="no-bg"
           iconAtEnd
-          className="w-32"
+          className="w-auto sm:w-32"
         >
-          Next
+          <span className="hidden sm:inline">Next</span>
         </Button>
       ) : (
         <span className="w-32"></span>
