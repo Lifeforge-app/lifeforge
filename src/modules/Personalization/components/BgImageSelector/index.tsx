@@ -1,4 +1,3 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
 import { t } from 'i18next'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -7,11 +6,14 @@ import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import APIRequest from '@utils/fetchData'
+import AdjustBgImageModal from './components/AdjustBgImageModal'
 import ImageSelectorModal from './components/ImageSelectorModal'
 
 function BgImageSelector(): React.ReactElement {
-  const { bgImage, setBgImage } = usePersonalizationContext()
+  const { bgImage, setBgImage, setBackdropFilters } =
+    usePersonalizationContext()
   const [imageSelectorModalOpen, setImageSelectorModalOpen] = useState(false)
+  const [adjustBgImageModalOpen, setAdjustBgImageModalOpen] = useState(false)
   const [
     deleteBgImageConfirmationModalOpen,
     setDeleteBgImageConfirmationModalOpen
@@ -59,16 +61,26 @@ function BgImageSelector(): React.ReactElement {
         icon="tabler:photo"
       >
         {bgImage !== '' ? (
-          <div className="relative overflow-hidden rounded-lg border-2 border-bg-50 shadow-custom dark:border-bg-800/50">
-            <img src={bgImage} alt="" className="h-32 object-contain" />
-            <button
+          <div className="flex gap-2">
+            <Button
+              onClick={() => {
+                setAdjustBgImageModalOpen(true)
+              }}
+              icon="tabler:adjustments"
+              variant="no-bg"
+            >
+              adjust
+            </Button>
+            <Button
               onClick={() => {
                 setDeleteBgImageConfirmationModalOpen(true)
               }}
-              className="absolute right-0 top-0 flex size-full items-center justify-center rounded-lg bg-red-500/30 opacity-0 transition-all hover:opacity-100"
+              icon="tabler:trash"
+              variant="no-bg"
+              isRed
             >
-              <Icon icon="tabler:trash" className="size-6 text-red-500" />
-            </button>
+              remove
+            </Button>
           </div>
         ) : (
           <Button
@@ -89,16 +101,29 @@ function BgImageSelector(): React.ReactElement {
         }}
         onSelect={onSubmit}
       />
+      <AdjustBgImageModal
+        isOpen={adjustBgImageModalOpen}
+        onClose={() => {
+          setAdjustBgImageModalOpen(false)
+        }}
+      />
       <DeleteConfirmationModal
         isOpen={deleteBgImageConfirmationModalOpen}
         onClose={() => {
           setDeleteBgImageConfirmationModalOpen(false)
         }}
         apiEndpoint="user/personalization/bg-image"
-        customText="Are you sure you want to remove the background image? This action cannot be undone."
+        customText="Deleting the background image will revert the system appearance to plain colors. Are you sure you want to proceed?"
         itemName="background image"
         customCallback={async () => {
           setBgImage('')
+          setBackdropFilters({
+            brightness: 100,
+            blur: 'none',
+            contrast: 100,
+            saturation: 100,
+            overlayOpacity: 50
+          })
         }}
       />
     </>
