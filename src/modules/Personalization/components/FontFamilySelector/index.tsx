@@ -101,7 +101,7 @@ function FontFamilySelector(): React.ReactElement {
             <Icon icon="simple-icons:googlefonts" className="size-6" />
             {t('personalization.fontFamily.tooltipTitle')}
           </h3>
-          <p className="text-bg-500">
+          <p className="relative z-40 text-bg-500">
             {t('personalization.fontFamily.tooltip')}
           </p>
         </>

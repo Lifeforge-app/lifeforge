@@ -54,14 +54,16 @@ function ImageSelectorModal({
               setMode(name.toLowerCase() as 'local' | 'url' | 'pixabay')
               setFile(null)
             }}
-            className={`flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all ${
+            className={`flex w-full min-w-0 cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all ${
               mode === name.toLowerCase()
                 ? 'border-custom-500 font-medium text-custom-500'
                 : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
             }`}
           >
-            <Icon icon={icon} className="size-5" />
-            {t(`imageUpload.${name.toLowerCase()}`)}
+            <Icon icon={icon} className="size-5 shrink-0" />
+            <span className="truncate sm:block">
+              {t(`imageUpload.${name.toLowerCase()}`)}
+            </span>
           </button>
         ))}
       </div>

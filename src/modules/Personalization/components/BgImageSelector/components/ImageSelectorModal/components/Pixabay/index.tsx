@@ -93,7 +93,7 @@ function Pixabay({
 
   return (
     <>
-      <div className="flex items-center gap-2">
+      <div className="flex w-full min-w-0 flex-col items-center gap-2 sm:flex-row">
         <SearchInput
           searchQuery={query}
           setSearchQuery={setQuery}
@@ -126,6 +126,7 @@ function Pixabay({
           }}
           icon="tabler:arrow-right"
           iconAtEnd
+          className="w-full sm:w-auto"
         >
           Search
         </Button>
