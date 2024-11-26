@@ -2,12 +2,12 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import React from 'react'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import { useMusicContext } from '@providers/MusicProvider'
 import AddMusicButton from './components/AddMusicButton'
 import BottomBar from './components/Bottombar'
@@ -36,7 +36,7 @@ function Music(): React.ReactElement {
         totalItems={musics.length}
         icon="tabler:music"
       />
-      <div className="relative mt-4 flex size-full min-h-0 min-w-0 flex-col sm:mt-0">
+      <div className="music relative mt-4 flex size-full min-h-0 min-w-0 flex-col sm:mt-0">
         <SearchInput
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}

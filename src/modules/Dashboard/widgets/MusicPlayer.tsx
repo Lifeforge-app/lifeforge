@@ -17,7 +17,7 @@ export default function MusicPlayer(): React.ReactElement {
   return (
     <div
       ref={ref}
-      className={`flex size-full flex-col gap-4 rounded-lg p-4 shadow-custom ${componentBg}`}
+      className={`music flex size-full flex-col gap-4 rounded-lg p-4 shadow-custom ${componentBg}`}
     >
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:music" className="text-2xl" />

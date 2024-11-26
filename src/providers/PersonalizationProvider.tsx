@@ -21,11 +21,20 @@ type DashboardLayoutType = Record<
   }>
 >
 
+interface IBackdropFilters {
+  blur: 'none' | 'sm' | 'base' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
+  brightness: number
+  contrast: number
+  saturation: number
+  overlayOpacity: number
+}
+
 interface IPersonalizationData {
   fontFamily: string
   theme: 'light' | 'dark' | 'system'
   themeColor: string
   bgTemp: string
+  backdropFilters: IBackdropFilters
   bgImage: string
   language: string
   dashboardLayout: DashboardLayoutType
@@ -34,6 +43,7 @@ interface IPersonalizationData {
   setThemeColor: (color: string) => void
   setBgTemp: (color: string) => void
   setBgImage: (image: string) => void
+  setBackdropFilters: (filters: IBackdropFilters) => void
   setLanguage: (language: string) => void
   setDashboardLayout: (layout: DashboardLayoutType) => void
   setDashboardLayoutWithoutPost: React.Dispatch<
@@ -64,6 +74,13 @@ export default function PersonalizationProvider({
   const [dashboardLayout, setDashboardLayout] = useState<DashboardLayoutType>(
     {}
   )
+  const [backdropFilters, setBackdropFilters] = useState<IBackdropFilters>({
+    blur: 'none',
+    brightness: 100,
+    contrast: 100,
+    saturation: 100,
+    overlayOpacity: 50
+  })
 
   function clearCustomColorProperties(type: 'bg' | 'theme'): void {
     const number = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
@@ -115,6 +132,10 @@ export default function PersonalizationProvider({
           ? userData.bgTemp
           : `bg-${userData.bgTemp}`
       )
+    }
+
+    if (userData?.backdropFilters) {
+      setBackdropFilters(userData.backdropFilters)
     }
 
     if (userData?.bgImage !== '') {
@@ -378,6 +399,32 @@ export default function PersonalizationProvider({
       })
   }
 
+  function changeBackdropFilters(filters: IBackdropFilters): void {
+    setBackdropFilters(filters)
+    fetch(`${import.meta.env.VITE_API_HOST}/user/personalization`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+      },
+      body: JSON.stringify({
+        id: userData.id,
+        data: {
+          backdropFilters: filters
+        }
+      })
+    })
+      .then(async response => {
+        const data = await response.json()
+        if (response.status !== 200) {
+          throw data.message
+        }
+      })
+      .catch(() => {
+        toast.error('Failed to update personalization settings.')
+      })
+  }
+
   function changeLanguage(language: string): void {
     setLanguage(language)
     fetch(`${import.meta.env.VITE_API_HOST}/user/personalization`, {
@@ -438,6 +485,7 @@ export default function PersonalizationProvider({
         themeColor,
         bgTemp,
         bgImage,
+        backdropFilters,
         language,
         dashboardLayout,
         setFontFamily: changeFontFamily,
@@ -445,6 +493,7 @@ export default function PersonalizationProvider({
         setThemeColor: changeThemeColor,
         setBgTemp: changeBgTemp,
         setBgImage,
+        setBackdropFilters: changeBackdropFilters,
         setLanguage: changeLanguage,
         setDashboardLayoutWithoutPost: setDashboardLayout,
         setDashboardLayout: changeDashboardLayout

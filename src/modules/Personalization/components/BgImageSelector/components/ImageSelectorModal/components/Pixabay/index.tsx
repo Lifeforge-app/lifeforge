@@ -113,14 +113,16 @@ function Pixabay({
           }
           onKeyUp={e => {
             if (e.key === 'Enter') {
-              onSearch(page).catch(console.error)
+              setPage(1)
+              onSearch(1).catch(console.error)
             }
           }}
         />
         <Button
           loading={loading}
           onClick={() => {
-            onSearch(page).catch(console.error)
+            setPage(1)
+            onSearch(1).catch(console.error)
           }}
           icon="tabler:arrow-right"
           iconAtEnd

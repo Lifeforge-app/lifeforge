@@ -578,36 +578,35 @@ button[class^='react-calendar__navigation'] {
   @apply min-h-[7rem];
 }
 
-input[type='range'].main {
+.music input[type='range'].main {
   @apply appearance-none accent-custom-500 bg-gradient-to-r from-custom-500
     to-custom-500 bg-no-repeat;
 }
 
-input[type='range'].secondary {
+.music input[type='range'].secondary {
   @apply accent-bg-500 dark:accent-bg-100;
 }
 
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-input[type='range']::-webkit-slider-thumb {
+.music input[type='range']::-webkit-slider-thumb {
   @apply appearance-none w-0 h-0 border-none;
 }
 
-input[type='range']::-moz-range-thumb {
+.music input[type='range']::-moz-range-thumb {
   @apply appearance-none w-0 h-0 border-none;
 }
 
-input[type='range']::-webkit-progress-value,
-input[type='range']::-moz-range-progress {
+.music input[type='range']::-webkit-progress-value,
+.music input[type='range']::-moz-range-progress {
   @apply rounded-full h-full;
 }
 
-input[type='range'].main::-webkit-progress-value,
-input[type='range'].main::-moz-range-progress {
+.music input[type='range'].main::-webkit-progress-value,
+.music input[type='range'].main::-moz-range-progress {
   @apply appearance-none !bg-custom-500 rounded-full h-full;
 }
 
-input[type='range'].secondary::-webkit-progress-value,
-input[type='range'].secondary::-moz-range-progress {
+.music input[type='range'].secondary::-webkit-progress-value,
+.music input[type='range'].secondary::-moz-range-progress {
   @apply appearance-none bg-bg-500 dark:bg-bg-100 rounded-full h-full;
 }
 
@@ -676,4 +675,8 @@ td {
 
 .steps .step::after {
   content: counter(step) !important;
+}
+
+.\!range {
+  --range-shdw: rgb(var(--color-custom-500)) !important;
 }

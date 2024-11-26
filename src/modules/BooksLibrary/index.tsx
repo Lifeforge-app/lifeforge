@@ -1,5 +1,4 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'

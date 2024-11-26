@@ -141,7 +141,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
                 icon={loading ? 'svg-spinners:180-ring' : 'tabler:download'}
                 className="mt-6"
               >
-                {loading ? 'Downloading...' : 'Download'}
+                {loading ? 'Downloading' : 'Download'}
               </Button>
             </>
           )}
