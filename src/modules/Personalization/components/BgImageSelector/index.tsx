@@ -26,7 +26,7 @@ function BgImageSelector(): React.ReactElement {
         method: 'PUT',
         body: { url },
         callback: data => {
-          setBgImage(data.data)
+          setBgImage(`${import.meta.env.VITE_API_HOST}/${data.data}`)
           toast.success('Background image updated')
         },
         onFailure: () => {
@@ -43,7 +43,7 @@ function BgImageSelector(): React.ReactElement {
         isJSON: false,
         callback: data => {
           console.log(data)
-          setBgImage(data.data)
+          setBgImage(`${import.meta.env.VITE_API_HOST}/${data.data}`)
           toast.success('Background image updated')
         },
         onFailure: () => {
