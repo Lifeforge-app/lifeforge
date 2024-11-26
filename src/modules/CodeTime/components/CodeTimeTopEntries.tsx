@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
+import useThemeColors from '@hooks/useThemeColor'
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
 function CodeTimeTopEntries({
@@ -9,10 +10,10 @@ function CodeTimeTopEntries({
 }: {
   type: 'languages' | 'projects'
 }): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const [lastFor, setLastFor] = useState<'24 hours' | '7 days' | '30 days'>(
     '24 hours'
   )
-
   const [topEntries] = useFetch<Record<string, number>>(
     `code-time/${type}?last=${lastFor}`
   )
@@ -103,7 +104,7 @@ function CodeTimeTopEntries({
                   .map(([key, value], index) => (
                     <li
                       key={key}
-                      className="flex-between relative flex gap-8 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900"
+                      className={`flex-between relative flex gap-8 rounded-lg p-6 shadow-custom ${componentBg}`}
                     >
                       <div className="flex items-center gap-4 break-all text-lg font-medium">
                         <div

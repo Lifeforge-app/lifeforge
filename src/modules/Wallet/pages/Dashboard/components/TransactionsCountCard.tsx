@@ -4,10 +4,12 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import useThemeColors from '@hooks/useThemeColor'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 
 function TransactionsCountCard(): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const { transactions, isAmountHidden } = useWalletContext()
   const { t } = useTranslation()
 
@@ -76,7 +78,9 @@ function TransactionsCountCard(): React.ReactElement {
   }, [transactions])
 
   return (
-    <div className="col-span-1 row-span-2 flex h-full flex-col rounded-lg bg-bg-50 p-6 px-2 shadow-custom dark:bg-bg-900">
+    <div
+      className={`col-span-1 row-span-2 flex h-full flex-col rounded-lg p-4 shadow-custom ${componentBg}`}
+    >
       <div className="flex-between flex px-4">
         <h1 className="flex items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:arrows-exchange" className="text-2xl" />

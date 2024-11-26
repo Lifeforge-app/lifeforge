@@ -19,7 +19,7 @@ function MiniCalendar({
   const [currentYear, setCurrentYear] = useState(moment().year())
 
   return (
-    <section className="flex w-full flex-col gap-4 rounded-lg bg-bg-50 p-8 pt-6 shadow-custom dark:bg-bg-900">
+    <section className="flex w-full flex-col gap-4 p-8 pt-6">
       <div className="size-full">
         <MiniCalendarHeader
           currentMonth={currentMonth}

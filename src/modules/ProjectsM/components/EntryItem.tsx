@@ -3,6 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IProjectsMEntry } from '@interfaces/projects_m_interfaces'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 
@@ -18,9 +19,12 @@ function EntryItem({ entry }: { entry: IProjectsMEntry }): React.ReactElement {
     visibilities: { data: visibilities },
     technologies: { data: technologies }
   } = useProjectsMContext()
+  const { componentBgWithHover } = useThemeColors()
 
   return (
-    <li className="m-4 mt-0 flex items-center gap-4 rounded-lg bg-bg-50 shadow-custom transition-all hover:bg-bg-200 dark:bg-bg-900 dark:hover:bg-bg-800/50">
+    <li
+      className={`m-4 mt-0 flex items-center gap-4 rounded-lg ${componentBgWithHover} shadow-custom transition-all`}
+    >
       <Link
         to={`/projects-m/${entry.id}`}
         className="flex-between flex w-full gap-4 p-6"

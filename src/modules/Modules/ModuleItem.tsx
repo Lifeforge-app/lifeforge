@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
+import useThemeColors from '@hooks/useThemeColor'
 import {
   type IModuleConfigInput,
   type IModuleConfigSelect,
@@ -25,6 +26,8 @@ function ModuleItem({
   enabled: boolean
   toggleModule: (moduleName: string) => void
 }): React.ReactElement {
+  const { componentBg, componentBgLighter, componentBgLighterWithHover } =
+    useThemeColors()
   const [expandConfig, setExpandConfig] = useState(false)
   const { t } = useTranslation()
   const [saveLoading, setButtonLoading] = useState(false)
@@ -78,10 +81,12 @@ function ModuleItem({
   }
 
   return (
-    <li className="flex flex-col items-center rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900">
+    <li
+      className={`flex flex-col items-center rounded-lg p-4 shadow-custom ${componentBg}`}
+    >
       <div className="flex-between flex w-full gap-4">
         <div className="flex items-center gap-4">
-          <div className="rounded-lg bg-custom-500/20 p-3 dark:bg-bg-800">
+          <div className={`rounded-lg p-3 ${componentBgLighter}`}>
             <Icon
               icon={module.icon}
               className="text-2xl text-custom-500 dark:text-bg-50"
@@ -98,7 +103,7 @@ function ModuleItem({
               toggleModule(module.name)
             }}
             className={`${
-              enabled ? 'bg-custom-500' : 'bg-bg-300 dark:bg-bg-800'
+              enabled ? 'bg-custom-500' : componentBgLighterWithHover
             } relative inline-flex h-6 w-11 items-center rounded-full`}
           >
             <span

@@ -6,12 +6,14 @@ import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrCombo
 import ListboxOrComboboxOptions from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOptions'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
+import ViewModeSelector from '@components/Miscellaneous/ViewModeSelector'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import useHashParams from '@hooks/useHashParams'
+import useThemeColors from '@hooks/useThemeColor'
 import {
   type IGuitarTabsEntry,
   type IGuitarTabsSidebarData
@@ -33,6 +35,7 @@ const SORT_TYPE = [
 ]
 
 function GuitarTabs(): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
   const { setSubSidebarExpanded } = useGlobalStateContext()
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [page, setPage] = useState<number>(1)
@@ -144,7 +147,9 @@ function GuitarTabs(): React.ReactElement {
                 setSearchParams({ sort: value })
               }}
             >
-              <ListboxButton className="flex-between mt-4 flex w-48 gap-2 rounded-md bg-bg-50 p-4 shadow-custom dark:bg-bg-900 dark:hover:bg-bg-800/50">
+              <ListboxButton
+                className={`flex-between mt-4 flex w-48 gap-2 rounded-md p-4 shadow-custom ${componentBgWithHover}`}
+              >
                 <div className="flex items-center gap-2">
                   <Icon
                     icon={
@@ -181,34 +186,14 @@ function GuitarTabs(): React.ReactElement {
               setSearchQuery={setSearchQuery}
               stuffToSearch="guitar tabs"
             />
-            <div className="mt-4 flex items-center gap-2">
-              <div className="flex items-center gap-2 rounded-md bg-bg-50 p-2 shadow-custom dark:bg-bg-900">
-                {['grid', 'list'].map(viewType => (
-                  <button
-                    key={viewType}
-                    onClick={() => {
-                      setView(viewType as 'grid' | 'list')
-                    }}
-                    className={`flex items-center gap-2 rounded-md p-2 transition-all ${
-                      viewType === view
-                        ? 'bg-bg-200/50 dark:bg-bg-800'
-                        : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
-                    }`}
-                  >
-                    <Icon
-                      icon={
-                        viewType === 'grid'
-                          ? 'uil:apps'
-                          : viewType === 'list'
-                          ? 'uil:list-ul'
-                          : ''
-                      }
-                      className="size-6"
-                    />
-                  </button>
-                ))}
-              </div>
-            </div>
+            <ViewModeSelector
+              viewMode={view}
+              setViewMode={setView}
+              options={[
+                { value: 'list', icon: 'uil:list-ul' },
+                { value: 'grid', icon: 'uil:apps' }
+              ]}
+            />
           </div>
           <APIComponentWithFallback data={entries}>
             {entries => (

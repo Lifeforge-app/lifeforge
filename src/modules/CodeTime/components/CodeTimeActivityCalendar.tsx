@@ -6,12 +6,12 @@ import ActivityCalendar from 'react-activity-calendar'
 import { Tooltip } from 'react-tooltip'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
-import useThemeColorHex from '@hooks/useThemeColorHex'
+import useThemeColors from '@hooks/useThemeColor'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 function CodeTimeActivityCalendar(): React.ReactElement {
-  const { theme } = usePersonalizationContext()
-  const { theme: themeColor } = useThemeColorHex()
+  const { theme, bgImage } = usePersonalizationContext()
+  const { theme: themeColor } = useThemeColors()
   const [year, setYear] = useState(new Date().getFullYear())
   const [data] = useFetch<{
     data: Array<{

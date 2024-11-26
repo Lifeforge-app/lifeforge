@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import APIRequest from '@utils/fetchData'
@@ -13,6 +14,7 @@ export default function EntryItem({
 }: {
   item: IBooksLibraryEntry
 }): React.ReactElement {
+  const { componentBgWithHover, componentBgLighter } = useThemeColors()
   const {
     categories: { data: categories },
     entries: { refreshData: refreshEntries }
@@ -43,7 +45,7 @@ export default function EntryItem({
   return (
     <li
       key={item.id}
-      className="relative flex gap-4 rounded-lg bg-bg-50 p-4 shadow-custom transition-all hover:bg-bg-200/70 dark:bg-bg-900 dark:hover:bg-bg-800/50"
+      className={`relative flex gap-4 rounded-lg p-4 shadow-custom transition-all ${componentBgWithHover}`}
     >
       <div className="absolute right-3 top-4 z-20 flex">
         <Button
@@ -72,7 +74,9 @@ export default function EntryItem({
         }/${item.file}`}
         className="absolute inset-0 z-10 size-full rounded-lg"
       />
-      <div className="flex-center flex aspect-[10/12] h-min w-24 rounded-lg bg-bg-200 p-2 dark:bg-bg-800">
+      <div
+        className={`flex-center flex aspect-[10/12] h-min w-24 rounded-lg p-2 ${componentBgLighter}`}
+      >
         <img
           src={`${import.meta.env.VITE_API_HOST}/media/${item.collectionId}/${
             item.id

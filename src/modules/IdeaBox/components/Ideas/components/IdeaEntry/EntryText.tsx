@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useDrag } from 'react-dnd'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import EntryContextMenu from '../EntryContextMenu'
 
@@ -23,6 +24,7 @@ function EntryText({
   setDeleteIdeaModalOpen: (state: boolean) => void
   updateIdeaList: () => void
 }): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const [{ opacity, isDragging }, dragRef] = useDrag(
     () => ({
       type: 'IDEA',
@@ -42,7 +44,7 @@ function EntryText({
       ref={node => {
         dragRef(node)
       }}
-      className={`group relative my-4 flex items-start justify-between gap-2 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900 ${
+      className={`group relative my-4 flex items-start justify-between gap-2 rounded-lg p-4 shadow-custom ${componentBg} ${
         isDragging ? 'cursor-move' : ''
       }`}
       style={{

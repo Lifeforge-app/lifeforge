@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
+import useThemeColors from '@hooks/useThemeColor'
 
 const AIRPORT_TYPES = {
   large_airport: ['text-yellow-500', 'uil:plane'],
@@ -23,6 +24,8 @@ function EntryItem({
   location: string
   type: string
 }): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
+
   const { continentID, countryID, regionID } = useParams<{
     continentID?: string
     countryID?: string
@@ -32,7 +35,7 @@ function EntryItem({
   return (
     <Link
       to={`/airports/${continentID}/${countryID}/${regionID}/${id}`}
-      className="flex-between flex w-full rounded-lg bg-bg-50 p-4 px-6 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800"
+      className={`flex-between flex w-full rounded-lg p-4 px-6 shadow-custom transition-all ${componentBgWithHover}`}
     >
       <div className="flex items-center gap-4">
         <Icon

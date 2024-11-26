@@ -3,12 +3,13 @@ import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
+import useThemeColors from '@hooks/useThemeColor'
 import Breadcrumbs from './Breadcrumb'
 import ContinentSelector from '../../components/ContinentSelector'
 import MasterSearchBar from '../../components/MasterSearchBar'
@@ -24,6 +25,7 @@ const CONTINENTS = {
 }
 
 function Countries(): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
   const { continentID } = useParams()
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 500)
@@ -77,7 +79,7 @@ function Countries(): React.ReactElement {
                     <Link
                       to={`/airports/${continentID}/${key}`}
                       key={name}
-                      className="flex-between flex w-full rounded-lg bg-bg-50 p-4 px-6 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800"
+                      className={`flex-between flex w-full rounded-lg p-4 px-6 shadow-custom transition-all ${componentBgWithHover}`}
                     >
                       <div className="flex items-center gap-4">
                         <Icon

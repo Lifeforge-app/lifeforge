@@ -7,7 +7,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import FAB from '@components/ButtonsAndInputs/FAB'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import ModuleHeader from '@components/Module/ModuleHeader'
-import useThemeColorHex from '@hooks/useThemeColorHex'
+import useThemeColors from '@hooks/useThemeColor'
 import APIRequest from '@utils/fetchData'
 import IntervalManager from '@utils/intervalManager'
 
@@ -23,7 +23,7 @@ function Header({
   setGuitarWorldModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   const toastId = useRef<Id>(null)
-  const { theme } = useThemeColorHex()
+  const { theme } = useThemeColors()
 
   async function uploadFiles(): Promise<void> {
     const input = document.createElement('input')

@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
+import useThemeColors from '@hooks/useThemeColor'
 import Cube from './Cube'
 
 const sections: Array<{
@@ -160,6 +161,8 @@ const sections: Array<{
 
 function CFOPF2L(): React.ReactElement {
   const navigate = useNavigate()
+  const { componentBg } = useThemeColors()
+
   return (
     <ModuleWrapper>
       <header className="space-y-1">
@@ -204,7 +207,7 @@ function CFOPF2L(): React.ReactElement {
                     {subsubsection.algs.map(({ alg, pattern, warn }, i) => (
                       <div
                         key={i}
-                        className="flex w-full items-center gap-6 rounded-md bg-bg-50 p-4 shadow-custom dark:bg-bg-900"
+                        className={`flex w-full items-center gap-6 rounded-md p-4 shadow-custom ${componentBg}`}
                       >
                         <div className="rounded-md bg-bg-800/50 p-1 pb-2">
                           <Cube pattern={pattern} />

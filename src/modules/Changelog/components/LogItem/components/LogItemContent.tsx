@@ -1,4 +1,5 @@
 import React from 'react'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IChangeLogVersion } from '@interfaces/changelog_interfaces'
 
 function LogItemContent({
@@ -6,6 +7,7 @@ function LogItemContent({
 }: {
   entry: IChangeLogVersion
 }): React.ReactElement {
+  const { componentBgLighter } = useThemeColors()
   return (
     <ul className="list-outside list-disc space-y-2">
       {entry.entries
@@ -22,7 +24,7 @@ function LogItemContent({
                   __html: subEntry.description.replace(
                     /<code>(.*?)<\/code>/g,
                     `
-                                <code class="inline-block rounded-md bg-bg-200 p-1 px-1.5 font-['Jetbrains_Mono', text-sm shadow-[2px_2px_2px_rgba(0,0,0,0.05), dark:bg-bg-800">$1</code>
+                                <code class="inline-block rounded-md p-1 px-1.5 font-['Jetbrains_Mono'] text-sm shadow-[2px_2px_2px_rgba(0,0,0,0.05)] ${componentBgLighter}">$1</code>
                                 `
                   )
                 }}

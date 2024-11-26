@@ -6,11 +6,12 @@ import { useNavigate, useParams } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IAirportNOTAMEntry } from '@interfaces/airports_interfaces'
 import { toTitleCase } from '@utils/strings'
 import Flights from './sections/Flights'
@@ -22,6 +23,7 @@ import Weather from './sections/Weather'
 import Breadcrumbs from '../lists/Breadcrumb'
 
 function Airport(): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const [searchParams, setSearchParams] = useSearchParams()
   const section = searchParams.get('section')
   const { airportID, countryID, continentID, regionID } = useParams()
@@ -157,7 +159,9 @@ function Airport(): React.ReactElement {
                     )}
                   </div>
                 </div>
-                <div className="sticky top-0 z-10 mt-6 flex items-center rounded-md bg-bg-50 dark:bg-bg-950">
+                <div
+                  className={`sticky top-0 z-10 mt-6 flex items-center rounded-md ${componentBg}`}
+                >
                   {[
                     ...(airportData.data.has_airline_service
                       ? [['Flights', 'tabler:plane']]

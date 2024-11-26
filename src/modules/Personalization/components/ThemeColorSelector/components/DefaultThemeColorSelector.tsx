@@ -7,6 +7,7 @@ import {
 import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React from 'react'
+import useThemeColors from '@hooks/useThemeColor'
 import { toCamelCase } from '@utils/strings'
 
 const COLORS = [
@@ -39,6 +40,8 @@ function DefaultThemeColorSelector({
   setThemeColor: (color: string) => void
   customThemeColor: string
 }): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
+
   return (
     <Listbox
       value={themeColor.startsWith('#') ? 'theme-custom' : themeColor}
@@ -48,9 +51,9 @@ function DefaultThemeColorSelector({
     >
       <div className="relative mt-1 w-full lg:w-56">
         <ListboxButton
-          className={`flex w-full items-center gap-2 rounded-lg border-[1.5px] border-bg-300/50 ${
+          className={`flex w-full items-center gap-2 rounded-lg shadow-custom ${
             !themeColor.startsWith('#') ? 'py-4 pl-4 pr-10' : 'py-6 pl-6 pr-12'
-          } text-left outline-none transition-all hover:bg-bg-100 focus:outline-none dark:border-bg-700 dark:bg-bg-900 dark:hover:bg-bg-800/50`}
+          } text-left outline-none transition-all focus:outline-none ${componentBgWithHover}`}
         >
           <span
             className={`inline-block size-4 shrink-0 rounded-full ${

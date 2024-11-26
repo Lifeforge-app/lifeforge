@@ -3,6 +3,7 @@ import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import useThemeColors from '@hooks/useThemeColor'
 import { type INotesSubject } from '@interfaces/notes_interfaces'
 
 function SubjectItem({
@@ -18,10 +19,13 @@ function SubjectItem({
   setExistedData: (data: any) => void
   setDeleteSubjectConfirmationModalOpen: (state: boolean) => void
 }): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
   const { workspace } = useParams<{ workspace: string }>()
 
   return (
-    <div className="group relative flex size-full flex-col items-center rounded-lg bg-bg-50 p-8 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50">
+    <div
+      className={`group relative flex size-full flex-col items-center rounded-lg p-8 shadow-custom transition-all ${componentBgWithHover}`}
+    >
       <Icon
         icon={subject.icon}
         className="pointer-events-none z-10 size-20 shrink-0 transition-all group-hover:text-custom-500"

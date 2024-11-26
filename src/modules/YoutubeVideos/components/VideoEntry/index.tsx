@@ -1,6 +1,7 @@
 import React from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
 import VideoDetails from './components/VideoDetails'
 import VideoThumbnail from './components/VideoThumbnail'
@@ -14,6 +15,8 @@ function VideoEntry({
   setVideoToDelete: (video: IYoutubeVideosStorageEntry) => void
   setIsConfirmDeleteModalOpen: (value: boolean) => void
 }): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
+
   return (
     <a
       key={video.id}
@@ -22,7 +25,7 @@ function VideoEntry({
       }`}
       target="_blank"
       rel="noreferrer"
-      className="relative flex w-full items-center justify-between gap-8 rounded-md bg-bg-50 p-4 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50"
+      className={`relative flex w-full items-center justify-between gap-8 rounded-md p-4 shadow-custom transition-all ${componentBgWithHover}`}
     >
       <div className="flex flex-col items-start md:flex-row">
         <VideoThumbnail id={video.youtube_id} duration={video.duration} />

@@ -4,9 +4,11 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
+import useThemeColors from '@hooks/useThemeColor'
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
 function CodeTimeStatistics(): React.ReactElement {
+  const { componentBg, componentBgLighter } = useThemeColors()
   const [stats] = useFetch<Record<string, number>>('code-time/statistics')
 
   return (
@@ -22,10 +24,12 @@ function CodeTimeStatistics(): React.ReactElement {
             {Object.entries(stats).map(([key, value], index) => (
               <div
                 key={key}
-                className="flex-between flex w-full gap-2 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900 sm:flex-col sm:items-start"
+                className={`flex-between flex w-full gap-2 rounded-lg p-6 shadow-custom sm:flex-col sm:items-start ${componentBg}`}
               >
                 <div className="flex flex-row items-center gap-2 sm:flex-col sm:items-start">
-                  <div className="flex rounded-lg bg-bg-200/70 p-4 shadow-custom dark:bg-bg-800">
+                  <div
+                    className={`flex rounded-lg p-4 shadow-custom ${componentBgLighter}`}
+                  >
                     <Icon
                       icon={
                         {

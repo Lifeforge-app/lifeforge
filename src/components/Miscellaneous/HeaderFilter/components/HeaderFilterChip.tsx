@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
+import useThemeColors from '@hooks/useThemeColor'
 
-function HeaderFilterChip({
+function FilterChip({
   icon,
   text,
   color,
@@ -12,11 +13,13 @@ function HeaderFilterChip({
   color?: string
   onRemove: () => void
 }): React.ReactElement {
+  const { componentBgLighter } = useThemeColors()
+
   return (
     <span
       className={`flex-center flex gap-1 rounded-full px-2 py-1 text-sm ${
         color === undefined &&
-        'bg-bg-200 text-bg-500 dark:bg-bg-800 dark:text-bg-400'
+        `text-bg-500 dark:text-bg-400 ${componentBgLighter}`
       }`}
       style={
         color !== undefined ? { backgroundColor: color + '20', color } : {}
@@ -31,4 +34,4 @@ function HeaderFilterChip({
   )
 }
 
-export default HeaderFilterChip
+export default FilterChip

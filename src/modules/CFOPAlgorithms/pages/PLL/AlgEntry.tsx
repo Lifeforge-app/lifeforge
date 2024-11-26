@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+import useThemeColors from '@hooks/useThemeColor'
 import { algsetAlgs } from '../../algorithms/PLL'
 import { type DEFAULT_CUBE } from '../../scripts/genCube'
 
@@ -20,6 +21,7 @@ function AlgEntry({
 }): React.ReactElement {
   const refs = useRef<Array<HTMLDivElement | null>>(Array(9).map(() => null))
   const containerRef = useRef<HTMLDivElement>(null)
+  const { componentBg } = useThemeColors()
 
   useEffect(() => {
     if (!refs.current.every(Boolean) || containerRef.current === null) return
@@ -88,7 +90,9 @@ function AlgEntry({
   }, [])
 
   return (
-    <li className="flex w-full items-center justify-between gap-8 rounded-md bg-bg-50 p-4 shadow-custom dark:bg-bg-900">
+    <li
+      className={`flex w-full items-center justify-between gap-8 rounded-md p-4 shadow-custom ${componentBg}`}
+    >
       <div className="flex items-center gap-8">
         <div className="rounded-md bg-bg-200/70 p-2 dark:bg-bg-800/50">
           <div className="relative flex flex-col gap-0.5" ref={containerRef}>

@@ -26,12 +26,14 @@ interface IPersonalizationData {
   theme: 'light' | 'dark' | 'system'
   themeColor: string
   bgTemp: string
+  bgImage: string
   language: string
   dashboardLayout: DashboardLayoutType
   setFontFamily: (font: string) => void
   setTheme: (theme: 'light' | 'dark' | 'system') => void
   setThemeColor: (color: string) => void
   setBgTemp: (color: string) => void
+  setBgImage: (image: string) => void
   setLanguage: (language: string) => void
   setDashboardLayout: (layout: DashboardLayoutType) => void
   setDashboardLayoutWithoutPost: React.Dispatch<
@@ -57,6 +59,7 @@ export default function PersonalizationProvider({
   const [bgTemp, setBgTemp] = useState<
     'bg-slate' | 'bg-gray' | 'bg-neutral' | 'bg-zinc' | 'bg-stone'
   >('bg-neutral')
+  const [bgImage, setBgImage] = useState('')
   const [language, setLanguage] = useState('en')
   const [dashboardLayout, setDashboardLayout] = useState<DashboardLayoutType>(
     {}
@@ -111,6 +114,14 @@ export default function PersonalizationProvider({
         userData.bgTemp.startsWith('#')
           ? userData.bgTemp
           : `bg-${userData.bgTemp}`
+      )
+    }
+
+    if (userData?.bgImage !== '') {
+      setBgImage(
+        `${import.meta.env.VITE_API_HOST}/media/${userData?.collectionId}/${
+          userData?.id
+        }/${userData?.bgImage}`
       )
     }
 
@@ -426,12 +437,14 @@ export default function PersonalizationProvider({
         theme,
         themeColor,
         bgTemp,
+        bgImage,
         language,
         dashboardLayout,
         setFontFamily: changeFontFamily,
         setTheme: changeTheme,
         setThemeColor: changeThemeColor,
         setBgTemp: changeBgTemp,
+        setBgImage,
         setLanguage: changeLanguage,
         setDashboardLayoutWithoutPost: setDashboardLayout,
         setDashboardLayout: changeDashboardLayout

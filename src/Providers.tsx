@@ -4,6 +4,7 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import APIOnlineStatusProvider from '@providers/APIOnlineStatusProvider'
 import AuthProvider from '@providers/AuthProvider'
+import BackgroundProvider from '@providers/BackgroundProvider'
 import GlobalStateProvider from '@providers/GlobalStateProvider'
 import { MusicProvider } from '@providers/MusicProvider'
 import PersonalizationProvider from '@providers/PersonalizationProvider'
@@ -20,9 +21,11 @@ function Providers({
         <DndProvider backend={HTML5Backend}>
           <AuthProvider>
             <PersonalizationProvider>
-              <MusicProvider>
-                <SpotifyProvider>{children}</SpotifyProvider>
-              </MusicProvider>
+              <BackgroundProvider>
+                <MusicProvider>
+                  <SpotifyProvider>{children}</SpotifyProvider>
+                </MusicProvider>
+              </BackgroundProvider>
             </PersonalizationProvider>
           </AuthProvider>
         </DndProvider>

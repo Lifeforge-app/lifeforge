@@ -3,6 +3,7 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IWalletLedger } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 
@@ -21,6 +22,7 @@ function LedgerItem({
     React.SetStateAction<boolean>
   >
 }): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
   const navigate = useNavigate()
   const { transactions } = useWalletContext()
 
@@ -30,7 +32,7 @@ function LedgerItem({
       onClick={() => {
         navigate(`/wallet/transactions?ledger=${ledger.id}`)
       }}
-      className="flex-between relative flex w-full gap-4 rounded-lg bg-bg-100 p-4 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50"
+      className={`flex-between relative flex w-full gap-4 rounded-lg p-4 shadow-custom transition-all ${componentBgWithHover}`}
     >
       <div className="flex items-center gap-3">
         <span

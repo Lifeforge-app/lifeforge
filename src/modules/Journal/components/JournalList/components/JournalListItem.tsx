@@ -3,6 +3,7 @@ import moment from 'moment'
 import React from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 
 function JournalListItem({
@@ -24,13 +25,15 @@ function JournalListItem({
   updateEntry: (id: string) => Promise<void>
   editLoading: boolean
 }): React.ReactElement {
+  const { componentBgWithHover, componentBgLighter } = useThemeColors()
+
   return (
     <button
       onClick={() => {
         setCurrentViewingJournal(entry.id)
         setJournalViewModalOpen(true)
       }}
-      className="w-full rounded-lg bg-bg-100 p-6 text-left shadow-custom hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50"
+      className={`w-full rounded-lg p-6 text-left shadow-custom ${componentBgWithHover}`}
     >
       <div className="flex-between flex">
         <div className="flex flex-col gap-2">
@@ -43,12 +46,16 @@ function JournalListItem({
         </div>
         <div className="flex items-center gap-4">
           {entry.photos.length > 0 && (
-            <span className="flex items-center gap-2 whitespace-nowrap rounded-full bg-bg-200 px-3 py-1 text-base font-medium text-bg-400 shadow-custom dark:bg-bg-700/50">
+            <span
+              className={`flex items-center gap-2 whitespace-nowrap rounded-full px-3 py-1 text-base font-medium text-bg-400 shadow-custom ${componentBgLighter}`}
+            >
               <Icon icon="tabler:photo" className="size-5" />
               {entry.photos.length} photos
             </span>
           )}
-          <span className="block whitespace-nowrap rounded-full bg-bg-200 px-3 py-1 text-base font-medium shadow-custom dark:bg-bg-700/50">
+          <span
+            className={`block whitespace-nowrap rounded-full px-3 py-1 text-base font-medium shadow-custom ${componentBgLighter}`}
+          >
             {entry.mood.emoji} {entry.mood.text}
           </span>
           <HamburgerMenu className="relative">

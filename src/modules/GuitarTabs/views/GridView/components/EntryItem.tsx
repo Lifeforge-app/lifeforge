@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
 import DownloadMenu from '../../../components/DownloadMenu'
 import AudioPlayer from '../../ListView/components/AudioPlayer'
@@ -17,6 +18,8 @@ function EntryItem({
   setExistingEntry: (value: IGuitarTabsEntry) => void
   setDeleteConfirmationModalOpen: (value: boolean) => void
 }): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
+
   return (
     <a
       key={entry.id}
@@ -24,7 +27,7 @@ function EntryItem({
         entry.id
       }/${entry.pdf}`}
       target="_blank"
-      className="block rounded-lg bg-bg-50 p-4 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50"
+      className={`block rounded-lg p-4 shadow-custom transition-all ${componentBgWithHover}`}
       rel="noreferrer"
     >
       <div className="relative">

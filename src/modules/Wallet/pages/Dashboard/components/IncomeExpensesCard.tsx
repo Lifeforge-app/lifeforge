@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IWalletIncomeExpenses } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
@@ -14,12 +15,15 @@ function IncomeExpenseCard({
   icon: string
   data: IWalletIncomeExpenses | 'loading' | 'error'
 }): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const isIncome = title.toLowerCase() === 'income'
   const { isAmountHidden } = useWalletContext()
   const { t } = useTranslation()
 
   return (
-    <div className="col-span-1 row-span-1 flex flex-col justify-between gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+    <div
+      className={`col-span-1 row-span-1 flex flex-col justify-between gap-4 rounded-lg p-6 shadow-custom ${componentBg}`}
+    >
       <h1 className="flex items-center gap-2 text-xl font-semibold">
         <Icon icon={icon} className="text-2xl" />
         <span className="ml-2">
