@@ -10,7 +10,7 @@ import useThemeColors from '@hooks/useThemeColor'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 function CodeTimeActivityCalendar(): React.ReactElement {
-  const { theme, bgImage } = usePersonalizationContext()
+  const { theme } = usePersonalizationContext()
   const { theme: themeColor } = useThemeColors()
   const [year, setYear] = useState(new Date().getFullYear())
   const [data] = useFetch<{
