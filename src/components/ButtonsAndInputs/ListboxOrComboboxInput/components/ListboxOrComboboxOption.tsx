@@ -53,7 +53,7 @@ function ListboxOrComboboxOption({
             ) : (
               color !== undefined && (
                 <span
-                  className="block h-6 w-1 rounded-full"
+                  className="block h-6 w-1 rounded-full border border-bg-200 dark:border-bg-700"
                   style={{ backgroundColor: color }}
                 />
               )

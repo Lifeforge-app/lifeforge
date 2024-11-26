@@ -1,4 +1,5 @@
 import React from 'react'
+import useThemeColors from '@hooks/useThemeColor'
 
 function SidebarItemWrapper({
   active,
@@ -7,6 +8,8 @@ function SidebarItemWrapper({
   active: boolean
   children: React.ReactNode
 }): React.ReactElement {
+  const { componentBgLighter } = useThemeColors()
+
   return (
     <li
       className={`relative isolate flex h-16 items-center gap-6 px-4 transition-all ${
@@ -18,7 +21,7 @@ function SidebarItemWrapper({
       <div
         className={`flex-between group relative flex w-full gap-6 whitespace-nowrap rounded-lg p-4 pr-3 transition-all duration-100 ${
           active
-            ? 'bg-bg-200/30 shadow-custom dark:bg-bg-800/50'
+            ? `shadow-custom ${componentBgLighter}`
             : 'hover:bg-bg-100/50 dark:hover:bg-bg-800/30'
         }`}
       >

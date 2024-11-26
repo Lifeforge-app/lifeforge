@@ -1,8 +1,11 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useDrag } from 'react-dnd'
+import useFetch from '@hooks/useFetch'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
-import EntryContextMenu from '../EntryContextMenu'
+import EntryOGData from './components/EntryOGData'
+import EntryContextMenu from '../../EntryContextMenu'
 
 function EntryLink({
   entry,
@@ -23,6 +26,15 @@ function EntryLink({
   setDeleteIdeaModalOpen: (state: boolean) => void
   updateIdeaList: () => void
 }): React.ReactElement {
+  const { componentBg } = useThemeColors()
+  const [ogData] = useFetch<Record<string, any>>(
+    `idea-box/og-data/${entry.id}`,
+    true,
+    'GET',
+    undefined,
+    true,
+    false
+  )
   const [{ opacity, isDragging }, dragRef] = useDrag(
     () => ({
       type: 'IDEA',
@@ -42,7 +54,7 @@ function EntryLink({
       ref={node => {
         dragRef(node)
       }}
-      className={`group relative my-4 flex flex-col items-start justify-between gap-2 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900 ${
+      className={`group relative my-4 flex flex-col items-start justify-between gap-2 rounded-lg p-4 shadow-custom ${componentBg} ${
         isDragging ? 'cursor-move' : ''
       }`}
       style={{
@@ -66,14 +78,19 @@ function EntryLink({
           updateIdeaList={updateIdeaList}
         />
       </div>
-      <a
-        target="_blank"
-        rel="noreferrer"
-        href={entry.content}
-        className="break-all text-custom-500 underline underline-offset-2"
-      >
-        {entry.content}
-      </a>
+
+      {typeof ogData !== 'string' ? (
+        <EntryOGData data={ogData} href={entry.content} />
+      ) : (
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={entry.content}
+          className="break-all text-custom-500 underline underline-offset-2"
+        >
+          {entry.content}
+        </a>
+      )}
     </div>
   )
 }

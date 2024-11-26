@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import useThemeColors from '@hooks/useThemeColor'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 
@@ -22,6 +23,7 @@ const options2 = {
 }
 
 function ExpensesBreakdownCard(): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const { categories, transactions, incomeExpenses, isAmountHidden } =
     useWalletContext()
   // TODO
@@ -57,7 +59,9 @@ function ExpensesBreakdownCard(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div className="col-span-1 row-span-4 flex w-full min-w-0 flex-col rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+    <div
+      className={`col-span-1 row-span-4 flex w-full min-w-0 flex-col rounded-lg p-6 shadow-custom ${componentBg}`}
+    >
       <div className="flex-between flex w-full min-w-0 gap-4">
         <h1 className="flex w-full min-w-0 items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:chart-donut-3" className="shrink-0 text-2xl" />

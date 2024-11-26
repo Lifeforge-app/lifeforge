@@ -1,6 +1,6 @@
-import { Icon } from '@iconify/react'
 import React from 'react'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import ViewModeSelector from '@components/Miscellaneous/ViewModeSelector'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function SearchBar({
@@ -19,32 +19,14 @@ function SearchBar({
         setSearchQuery={setSearchQuery}
         stuffToSearch="transactions"
       />
-      <div className="mt-2 flex items-center gap-2 rounded-md bg-bg-50 p-2 shadow-custom dark:bg-bg-900">
-        {['list', 'table'].map(viewType => (
-          <button
-            key={viewType}
-            onClick={() => {
-              setView(viewType as 'table' | 'list')
-            }}
-            className={`flex items-center gap-2 rounded-md p-2 transition-all ${
-              viewType === view
-                ? 'bg-bg-200/50 dark:bg-bg-800'
-                : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
-            }`}
-          >
-            <Icon
-              icon={
-                viewType === 'table'
-                  ? 'tabler:table'
-                  : viewType === 'list'
-                  ? 'uil:list-ul'
-                  : ''
-              }
-              className="size-6"
-            />
-          </button>
-        ))}
-      </div>
+      <ViewModeSelector
+        viewMode={view}
+        setViewMode={setView}
+        options={[
+          { value: 'table', icon: 'tabler:table' },
+          { value: 'list', icon: 'uil:list-ul' }
+        ]}
+      />
     </div>
   )
 }

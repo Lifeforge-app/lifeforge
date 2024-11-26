@@ -3,15 +3,17 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IFlashcardDeck } from '@interfaces/flashcard_interfaces'
 import Sidebar from './components/Sidebar'
 
 export default function Flashcards(): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
   const [searchQuery, setSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [decks] = useFetch<IFlashcardDeck[]>('flashcards/deck/list')
@@ -51,7 +53,7 @@ export default function Flashcards(): React.ReactElement {
                     <Link
                       to={`/flashcards/${deck.id}`}
                       key={deck.id}
-                      className="group relative flex flex-col justify-start gap-6 rounded-lg bg-bg-50 p-8 shadow-custom hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800"
+                      className={`group relative flex flex-col justify-start gap-6 rounded-lg p-8 shadow-custom ${componentBgWithHover}`}
                     >
                       <div className="space-y-2">
                         {deck.tag !== '' && (

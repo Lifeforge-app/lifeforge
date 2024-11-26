@@ -10,6 +10,7 @@ import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
+import useThemeColors from '@hooks/useThemeColor'
 
 export interface IFlightStatus {
   getFlights: GetFlights
@@ -214,6 +215,7 @@ const SEARCH_TYPE = [
 ]
 
 function ChangiFlightStatus(): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
   const [searchQuery, setSearchQuery] = useState('')
   const [searchParams, setSearchParams] = useSearchParams()
   const [flights] = useFetch<IFlightStatus>(
@@ -232,7 +234,9 @@ function ChangiFlightStatus(): React.ReactElement {
             setSearchParams({ type: value })
           }}
         >
-          <ListboxButton className="flex-between flex w-48 gap-2 rounded-md bg-bg-50 p-4 shadow-custom dark:bg-bg-800/50">
+          <ListboxButton
+            className={`flex-between flex w-48 gap-2 rounded-md p-4 shadow-custom ${componentBgWithHover}`}
+          >
             <div className="flex items-center gap-2">
               <Icon
                 icon={

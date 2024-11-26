@@ -2,8 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
+import useThemeColors from '@hooks/useThemeColor'
 
 function CFOPAlgorithms(): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
+
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:cube" title="CFOP Algorithms" />
@@ -16,7 +19,7 @@ function CFOPAlgorithms(): React.ReactElement {
           <Link
             key={key}
             to={`/cfop-algorithms/${key.toLowerCase()}`}
-            className="flex flex-col items-center justify-center rounded-md bg-bg-50 p-4 shadow-custom transition-all hover:bg-bg-100/50 dark:bg-bg-900 dark:hover:bg-bg-800/50"
+            className={`flex flex-col items-center justify-center rounded-md p-4 shadow-custom transition-all ${componentBgWithHover}`}
           >
             <img
               src={`/assets/cfop/landing-${key.toLowerCase()}.webp`}

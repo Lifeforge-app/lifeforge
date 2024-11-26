@@ -3,6 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
 
 function ContainerItem({
@@ -20,8 +21,12 @@ function ContainerItem({
     React.SetStateAction<boolean>
   >
 }): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
+
   return (
-    <div className="relative flex flex-col items-center justify-start gap-6 rounded-lg bg-bg-50 p-8 shadow-custom hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50">
+    <div
+      className={`relative flex flex-col items-center justify-start gap-6 rounded-lg p-8 shadow-custom ${componentBgWithHover}`}
+    >
       <div
         className="rounded-lg p-4"
         style={{
@@ -53,7 +58,7 @@ function ContainerItem({
       </div>
       <Link
         to={`/idea-box/${container.id}`}
-        className="absolute left-0 top-0 h-full w-full"
+        className="absolute left-0 top-0 size-full"
       />
       <HamburgerMenu className="absolute right-4 top-4 overscroll-contain">
         <MenuItem

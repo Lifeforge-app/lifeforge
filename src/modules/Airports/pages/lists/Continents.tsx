@@ -2,11 +2,12 @@ import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
+import useThemeColors from '@hooks/useThemeColor'
 import ContinentSelector from '../../components/ContinentSelector'
 import MasterSearchBar from '../../components/MasterSearchBar'
 
@@ -21,6 +22,7 @@ const CONTINENTS = {
 }
 
 function Continents(): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
   const [searchQuery, setSearchQuery] = useState('')
   const [continentsData] = useFetch<Record<string, number>>(
     'airports/continents'
@@ -47,7 +49,7 @@ function Continents(): React.ReactElement {
                 <Link
                   key={id}
                   to={`/airports/${id}`}
-                  className="flex-between flex w-full rounded-lg bg-bg-50 p-4 px-6 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800"
+                  className={`flex-between flex w-full rounded-lg p-4 px-6 shadow-custom transition-all ${componentBgWithHover}`}
                 >
                   <div>
                     <p className="text-left text-xl font-medium">

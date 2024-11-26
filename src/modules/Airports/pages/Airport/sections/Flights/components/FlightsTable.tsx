@@ -1,4 +1,5 @@
 import React from 'react'
+import useThemeColors from '@hooks/useThemeColor'
 
 function FlightsTable({
   data
@@ -15,6 +16,7 @@ function FlightsTable({
     status: string
   }>
 }): React.ReactElement {
+  const { componentBg } = useThemeColors()
   return (
     <table className="mb-4 w-full border-separate border-spacing-0">
       <thead className="sticky top-[7.2rem]">
@@ -23,7 +25,7 @@ function FlightsTable({
             title => (
               <th
                 key={title}
-                className="border-b-2 border-bg-200 bg-bg-50 px-4 py-2 pt-4 text-bg-500 dark:border-bg-700 dark:bg-bg-950"
+                className={`border-b-2 border-bg-200 px-4 py-2 pt-4 text-bg-500 dark:border-bg-700 ${componentBg}`}
               >
                 {title}
               </th>

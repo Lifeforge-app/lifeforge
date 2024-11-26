@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
 import AudioPlayer from './AudioPlayer'
 import DownloadMenu from '../../../components/DownloadMenu'
@@ -17,10 +18,12 @@ function EntryItem({
   setModifyEntryModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
+
   return (
     <li
       key={entry.id}
-      className="relative rounded-lg bg-bg-50 shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50"
+      className={`relative rounded-lg shadow-custom transition-all ${componentBgWithHover}`}
     >
       <a
         key={entry.id}

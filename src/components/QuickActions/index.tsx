@@ -3,6 +3,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { QUICK_ACTIONS } from '@constants/quick_actions'
+import useThemeColors from '@hooks/useThemeColor'
 import { type IRoutes } from '@interfaces/routes_interfaces'
 import { titleToPath } from '@utils/strings'
 import _ROUTES from '../../routes_config.json'
@@ -10,6 +11,7 @@ import _ROUTES from '../../routes_config.json'
 const ROUTES = _ROUTES as IRoutes[]
 
 function QuickActions(): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
   const { t } = useTranslation()
   const searchInputRef = useRef<HTMLInputElement>(null)
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
@@ -48,7 +50,9 @@ function QuickActions(): React.ReactElement {
   }, [])
 
   return (
-    <search className="relative hidden w-full items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900 lg:flex">
+    <search
+      className={`relative hidden w-full items-center gap-4 rounded-lg p-4 shadow-custom lg:flex ${componentBgWithHover}`}
+    >
       <Icon icon="tabler:search" className="size-5 text-bg-500" />
       <form className="w-full">
         <input

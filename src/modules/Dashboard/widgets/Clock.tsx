@@ -1,7 +1,9 @@
 import moment from 'moment/min/moment-with-locales'
 import React, { useRef, useState } from 'react'
+import useThemeColors from '@hooks/useThemeColor'
 
 export default function Clock(): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const [time, setTime] = useState(moment().format('HH:mm'))
   const [seocond, setSecond] = useState(moment().format('ss') as any)
   const ref = useRef<HTMLDivElement>(null)
@@ -14,7 +16,7 @@ export default function Clock(): React.ReactElement {
   return (
     <div
       ref={ref}
-      className={`flex size-full gap-4 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900 ${
+      className={`flex size-full gap-4 rounded-lg p-4 shadow-custom ${componentBg} ${
         (ref.current?.offsetHeight ?? 0) < 160
           ? 'flex-between flex-row'
           : 'flex-col'

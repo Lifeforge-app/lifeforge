@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
-import useThemeColorHex from '@hooks/useThemeColorHex'
+import useThemeColors from '@hooks/useThemeColor'
 import { rgbToHex } from '@utils/colors'
-import HeaderFilterChip from './components/HeaderFilterChip'
+import FilterChip from './components/HeaderFilterChip'
 
 function HeaderFilter({
   searchParams,
@@ -28,7 +28,7 @@ function HeaderFilter({
     }
   >
 }): React.ReactElement {
-  const { theme } = useThemeColorHex()
+  const { theme } = useThemeColors()
   const themeColorHex = useMemo(() => {
     if (theme.startsWith('#')) {
       return theme
@@ -59,7 +59,7 @@ function HeaderFilter({
               }
 
               return (
-                <HeaderFilterChip
+                <FilterChip
                   key={query}
                   color={
                     isColored === true

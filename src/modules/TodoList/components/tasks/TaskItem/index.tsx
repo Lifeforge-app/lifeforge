@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React from 'react'
+import useThemeColors from '@hooks/useThemeColor'
 import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import APIRequest from '@utils/fetchData'
@@ -26,6 +27,7 @@ function TaskItem({
   >
   refreshEntries?: () => void
 }): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
   const {
     entries: innerEntries,
     lists,
@@ -97,8 +99,8 @@ function TaskItem({
     <>
       <li
         key={entry.id}
-        className={`flex-between relative isolate flex gap-4 rounded-lg p-4 pl-5 pr-6 shadow-custom transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50 ${
-          lighter ? 'bg-bg-100/50 dark:bg-bg-800' : 'bg-bg-50 dark:bg-bg-900'
+        className={`flex-between relative isolate flex gap-4 rounded-lg p-4 pl-5 pr-6 shadow-custom transition-all ${
+          lighter ? 'bg-bg-100/50 dark:bg-bg-800' : componentBgWithHover
         }`}
       >
         <div className="flex items-center gap-4">

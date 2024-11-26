@@ -2,6 +2,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import useThemeColors from '@hooks/useThemeColor'
 import {
   type IPhotoAlbumEntryItem,
   type IPhotosEntry
@@ -33,8 +34,8 @@ function ImageObject({
     details: (IPhotoAlbumEntryItem | IPhotosEntry) | null
   ) => void
 }): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const { ready } = usePhotosContext()
-  console.log(details)
 
   return (
     <div
@@ -45,7 +46,7 @@ function ImageObject({
       }}
       style={style}
       className={`group/image relative size-full min-w-20 overflow-hidden ${
-        selected ? 'bg-custom-500/20' : 'bg-bg-200 dark:bg-bg-800'
+        selected ? 'bg-custom-500/20' : componentBg
       } transition-all ${selectedPhotosLength > 0 ? 'cursor-pointer' : ''}`}
     >
       {(ready || beingDisplayedInAlbum) &&

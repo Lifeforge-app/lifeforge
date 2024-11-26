@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import LoadingScreen from '@components/Screens/LoadingScreen'
 import useFetch from '@hooks/useFetch'
-import useThemeColorHex from '@hooks/useThemeColorHex'
+import useThemeColors from '@hooks/useThemeColor'
 import { getDatesBetween } from '@utils/date'
 
 function msToTime(ms: number): string {
@@ -90,10 +90,11 @@ interface ICodeTimeEachDay {
 }
 
 export default function CodeTime(): React.ReactElement {
+  const { componentBg } = useThemeColors()
   const [data] = useFetch<ICodeTimeEachDay[]>('code-time/each-day')
   const [chartData, setChartData] = useState<any>(null)
   const { t } = useTranslation()
-  const { theme } = useThemeColorHex()
+  const { theme } = useThemeColors()
   const [view, setView] = useState<'bar' | 'line'>('bar')
 
   useEffect(() => {
@@ -143,7 +144,9 @@ export default function CodeTime(): React.ReactElement {
   }, [data])
 
   return (
-    <div className="flex size-full flex-col gap-4 rounded-lg bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+    <div
+      className={`flex size-full flex-col gap-4 rounded-lg p-4 shadow-custom ${componentBg}`}
+    >
       <div className="flex-between flex">
         <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
           <Icon icon="tabler:chart-line" className="text-2xl" />
