@@ -30,7 +30,7 @@ function SearchInput({
 
   return (
     <search
-      className={`flex h-14 w-full cursor-text items-center gap-4 rounded-lg bg-bg-50 px-4 shadow-custom transition-all hover:!bg-white/70 ${
+      className={`flex h-14 max-h-14 flex-1 shrink-0 cursor-text items-center gap-4 rounded-lg bg-bg-50 px-4 shadow-custom transition-all hover:!bg-white/70 ${
         lighter
           ? 'dark:bg-bg-800/50 dark:hover:bg-bg-800'
           : componentBgWithHover
@@ -41,7 +41,7 @@ function SearchInput({
     >
       <Icon
         icon={customIcon ?? 'tabler:search'}
-        className="size-5 text-bg-500"
+        className="size-5 shrink-0 text-bg-500"
       />
       <input
         type="text"

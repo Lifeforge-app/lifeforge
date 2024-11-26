@@ -46,14 +46,14 @@ function SearchResults({
               onClick={() => {
                 setFile(photo.fullResURL)
               }}
-              className={`overflow-hidden rounded-md outline outline-2 transition-all ${
+              className={`relative isolate overflow-hidden rounded-md bg-bg-200 outline outline-2 transition-all dark:bg-bg-800/50 ${
                 photo.fullResURL === file
                   ? 'outline-custom-500'
                   : 'outline-transparent hover:outline-bg-500'
               }`}
               style={style}
             >
-              <img src={src} alt={alt} />
+              <img src={src} alt={alt} className="size-full object-cover" />
             </div>
           )}
         />
