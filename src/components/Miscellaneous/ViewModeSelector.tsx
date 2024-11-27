@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 import useThemeColors from '@hooks/useThemeColor'
 

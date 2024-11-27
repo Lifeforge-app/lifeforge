@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import { type IGuitarTabsGuitarWorldScoreEntry } from '@interfaces/guitar_tabs_interfaces'
