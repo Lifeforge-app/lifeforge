@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'

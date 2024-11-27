@@ -16,9 +16,7 @@ export default defineConfig({
       '@hooks': path.resolve(__dirname, './src/hooks'),
       '@interfaces': path.resolve(__dirname, './src/interfaces'),
       '@utils': path.resolve(__dirname, './src/utils'),
-      '@constants': path.resolve(__dirname, './src/constants'),
-      process: 'process/browser',
-      util: 'util'
+      '@constants': path.resolve(__dirname, './src/constants')
     }
   },
   build: {

@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 import { BG_BLURS } from '@constants/bg_blurs'
 import useThemeColors from '@hooks/useThemeColor'
