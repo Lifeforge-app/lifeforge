@@ -29,21 +29,16 @@ function BackgroundProvider({
         <div
           className="absolute left-0 top-0 z-[-1] size-full bg-bg-50 opacity-80 dark:bg-bg-950"
           style={{
-            opacity: `${overlayOpacity}%`
+            opacity: `${overlayOpacity}%`,
+            backdropFilter:
+              bgImage !== ''
+                ? `brightness(${brightness}%) blur(${BG_BLURS[blur]}) contrast(${contrast}%) saturate(${saturation}%)`
+                : ''
           }}
         />
       )}
-      <div
-        className="flex size-full"
-        style={{
-          backdropFilter:
-            bgImage !== ''
-              ? `brightness(${brightness}%) blur(${BG_BLURS[blur]}) contrast(${contrast}%) saturate(${saturation}%)`
-              : ''
-        }}
-      >
-        {children}
-      </div>
+
+      {children}
     </div>
   )
 }
