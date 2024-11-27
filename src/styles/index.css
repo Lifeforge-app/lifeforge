@@ -514,7 +514,11 @@ button[class^='react-calendar__navigation'] {
 }
 
 .rbc-off-range-bg {
-  @apply bg-bg-200 dark:bg-bg-900;
+  @apply bg-bg-200/50 dark:bg-bg-900/50;
+}
+
+.rbc-off-range > .rbc-button-link {
+  @apply text-bg-500;
 }
 
 .rbc-today {
