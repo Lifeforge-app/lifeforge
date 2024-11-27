@@ -165,73 +165,75 @@ function ModifyTransactionsModal({
           }}
           className="!mb-4"
         />
-        <TransactionTypeSelector
-          transactionType={transactionType}
-          setTransactionType={(type: 'income' | 'expenses' | 'transfer') => {
-            setTransactionType(type)
-            setCategory(null)
-          }}
-        />
-        {transactionType === 'income' || transactionType === 'expenses' ? (
-          <AssetsSelector
-            transactionAsset={transactionAsset}
-            setTransactionAsset={setTransactionAsset}
+        <div className="space-y-4">
+          <TransactionTypeSelector
+            transactionType={transactionType}
+            setTransactionType={(type: 'income' | 'expenses' | 'transfer') => {
+              setTransactionType(type)
+              setCategory(null)
+            }}
           />
-        ) : (
-          <AssetsFromToSelector
-            fromAsset={fromAsset}
-            setFromAsset={setFromAsset}
-            toAsset={toAsset}
-            setToAsset={setToAsset}
-          />
-        )}
-        <DateInput
-          modalRef={ref}
-          name="Date"
-          date={transactionDate}
-          setDate={setTransactionDate}
-          icon="tabler:calendar"
-          darker
-        />
-        {transactionType !== 'transfer' && (
-          <Input
-            icon="tabler:file-text"
-            placeholder="My Transactions"
-            value={particular}
-            darker
-            name="Particulars"
-            className="mt-4"
-            updateValue={setParticular}
-          />
-        )}
-        <CurrencyInputComponent
-          icon="tabler:currency-dollar"
-          name="Amount"
-          value={amount}
-          updateValue={setAmount}
-          placeholder="0.00"
-          darker
-          className="mt-4"
-        />
-        {transactionType !== 'transfer' && (
-          <>
-            <LocationSelector location={location} setLocation={setLocation} />
-            <CategorySelector
-              transactionType={transactionType}
-              category={category}
-              setCategory={setCategory}
+          {transactionType === 'income' || transactionType === 'expenses' ? (
+            <AssetsSelector
+              transactionAsset={transactionAsset}
+              setTransactionAsset={setTransactionAsset}
             />
-            <LedgerSelector ledger={ledger} setLedger={setLedger} />
-          </>
-        )}
-        <ReceiptUploader
-          receipt={receipt}
-          imagePreviewUrl={imagePreviewUrl}
-          setImagePreviewUrl={setImagePreviewUrl}
-          setReceipt={setReceipt}
-          setToRemoveReceipt={setToRemoveReceipt}
-          openType={openType}
-        />
+          ) : (
+            <AssetsFromToSelector
+              fromAsset={fromAsset}
+              setFromAsset={setFromAsset}
+              toAsset={toAsset}
+              setToAsset={setToAsset}
+            />
+          )}
+          <DateInput
+            modalRef={ref}
+            name="Date"
+            date={transactionDate}
+            setDate={setTransactionDate}
+            icon="tabler:calendar"
+            darker
+          />
+          {transactionType !== 'transfer' && (
+            <Input
+              icon="tabler:file-text"
+              placeholder="My Transactions"
+              value={particular}
+              darker
+              name="Particulars"
+              className="mt-4"
+              updateValue={setParticular}
+            />
+          )}
+          <CurrencyInputComponent
+            icon="tabler:currency-dollar"
+            name="Amount"
+            value={amount}
+            updateValue={setAmount}
+            placeholder="0.00"
+            darker
+            className="mt-4"
+          />
+          {transactionType !== 'transfer' && (
+            <>
+              <LocationSelector location={location} setLocation={setLocation} />
+              <CategorySelector
+                transactionType={transactionType}
+                category={category}
+                setCategory={setCategory}
+              />
+              <LedgerSelector ledger={ledger} setLedger={setLedger} />
+            </>
+          )}
+          <ReceiptUploader
+            receipt={receipt}
+            imagePreviewUrl={imagePreviewUrl}
+            setImagePreviewUrl={setImagePreviewUrl}
+            setReceipt={setReceipt}
+            setToRemoveReceipt={setToRemoveReceipt}
+            openType={openType}
+          />
+        </div>
         <CreateOrModifyButton
           loading={loading}
           onClick={() => {

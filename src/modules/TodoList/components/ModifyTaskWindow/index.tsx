@@ -186,34 +186,36 @@ function ModifyTaskWindow(): React.ReactElement {
               />
             </HamburgerMenu>
           </div>
-          <Input
-            name="Summary"
-            value={summary}
-            placeholder="An urgent task"
-            icon="tabler:abc"
-            darker
-            updateValue={setSummary}
-            className="w-full"
-            reference={summaryInputRef}
-          />
-          <SubtaskBox
-            summary={summary}
-            notes={notes}
-            subtasks={subtasks}
-            setSubtasks={setSubtasks}
-          />
-          <DateInput
-            modalRef={ref}
-            darker
-            date={dueDate}
-            setDate={setDueDate}
-            name="Due date"
-            icon="tabler:calendar"
-          />
-          <PrioritySelector priority={priority} setPriority={setPriority} />
-          <ListSelector list={list} setList={setList} />
-          <TagsSelector tags={tags} setTags={setTags} />
-          <NotesInput notes={notes} updateNotes={updateNotes} />
+          <div className="space-y-4">
+            <Input
+              name="Summary"
+              value={summary}
+              placeholder="An urgent task"
+              icon="tabler:abc"
+              darker
+              updateValue={setSummary}
+              className="w-full"
+              reference={summaryInputRef}
+            />
+            <SubtaskBox
+              summary={summary}
+              notes={notes}
+              subtasks={subtasks}
+              setSubtasks={setSubtasks}
+            />
+            <DateInput
+              modalRef={ref}
+              darker
+              date={dueDate}
+              setDate={setDueDate}
+              name="Due date"
+              icon="tabler:calendar"
+            />
+            <PrioritySelector priority={priority} setPriority={setPriority} />
+            <ListSelector list={list} setList={setList} />
+            <TagsSelector tags={tags} setTags={setTags} />
+            <NotesInput notes={notes} updateNotes={updateNotes} />
+          </div>
           <div className="mt-12 flex flex-1 flex-col-reverse items-end gap-2 sm:flex-row">
             <Button
               loading={loading}
