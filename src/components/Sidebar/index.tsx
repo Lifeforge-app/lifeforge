@@ -16,7 +16,7 @@ function Sidebar(): React.ReactElement {
   const eventType = useMemo(() => {
     if (moment().format('MM-DD') === '08-31') return 'merdeka'
 
-    if (userData.dateOfBirth !== '') {
+    if (userData !== undefined && userData?.dateOfBirth !== '') {
       if (
         moment(userData.dateOfBirth).format('MM-DD') ===
         moment().format('MM-DD')
@@ -25,7 +25,7 @@ function Sidebar(): React.ReactElement {
       }
     }
     return ''
-  }, [userData.dateOfBirth])
+  }, [userData])
 
   return (
     <aside
