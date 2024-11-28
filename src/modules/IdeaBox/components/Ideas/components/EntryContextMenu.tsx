@@ -26,6 +26,7 @@ function EntryContextMenu({
   updateIdeaList: () => void
 }): React.ReactElement {
   const { folderId } = useParams()
+
   async function pinIdea(): Promise<void> {
     await APIRequest({
       endpoint: `idea-box/ideas/pin/${entry.id}`,

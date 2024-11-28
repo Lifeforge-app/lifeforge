@@ -1,5 +1,5 @@
-import { Icon } from '@iconify/react'
 import React from 'react'
+import Button from '@components/ButtonsAndInputs/Button'
 
 function IdeaImagePreview({
   preview,
@@ -11,22 +11,22 @@ function IdeaImagePreview({
   setImageLink: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
   return (
-    <div className="flex-center flex">
-      <div className="flex-center relative flex h-[30rem] min-h-32 w-full overflow-hidden rounded-lg bg-bg-800">
+    <div className="flex-center flex flex-1">
+      <div className="flex-center relative flex h-[30rem] min-h-32 w-full overflow-hidden rounded-lg bg-bg-200/50 shadow-custom dark:bg-bg-800/50">
         <img
           src={preview as string}
           alt="preview"
           className="size-full object-scale-down"
         />
-        <button
+        <Button
+          icon="tabler:x"
           onClick={() => {
             setPreview(null)
             setImageLink('')
           }}
-          className="absolute right-4 top-4 rounded-lg bg-bg-800 p-2 text-bg-500 transition-all hover:bg-bg-900"
-        >
-          <Icon icon="tabler:x" className="size-5" />
-        </button>
+          variant="no-bg"
+          className="absolute right-4 top-4"
+        />
       </div>
     </div>
   )

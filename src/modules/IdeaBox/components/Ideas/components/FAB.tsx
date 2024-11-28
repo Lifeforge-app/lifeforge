@@ -36,7 +36,7 @@ function FAB({
     <>
       <Menu
         as="div"
-        className="group fixed bottom-6 right-6 z-[9998] overscroll-contain sm:bottom-12 sm:right-12 "
+        className="group fixed bottom-6 right-6 z-[9990] overscroll-contain sm:bottom-12 sm:right-12 "
       >
         {({ open }) => (
           <>
