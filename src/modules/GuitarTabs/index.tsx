@@ -51,8 +51,8 @@ function GuitarTabs(): React.ReactElement {
   }>(
     `guitar-tabs/entries?page=${page}&query=${encodeURIComponent(
       debouncedSearchQuery.trim()
-    )}&category=${searchParams.get('category') ?? 'all'}&starred=${
-      searchParams.get('starred') ?? 'false'
+    )}&category=${searchParams.get('category') ?? 'all'}${
+      searchParams.get('starred') !== null ? '&starred=true' : ''
     }&author=${searchParams.get('author') ?? 'all'}&sort=${
       searchParams.get('sort') ?? 'newest'
     }`
@@ -99,7 +99,7 @@ function GuitarTabs(): React.ReactElement {
         <div className="flex w-full flex-col lg:ml-8">
           <div className="flex-between flex w-full">
             <div className="flex min-w-0 items-end">
-              <h1 className="truncate pb-1 text-3xl font-semibold sm:text-4xl">
+              <h1 className="truncate text-3xl font-semibold sm:text-4xl">
                 {`${searchParams.get('starred') === 'true' ? 'Starred ' : ''} ${
                   searchParams.get('category') !== null
                     ? {
@@ -124,7 +124,7 @@ function GuitarTabs(): React.ReactElement {
                     : ''
                 }`.trim()}
               </h1>
-              <span className="mb-2 ml-1 mr-8 text-base text-bg-500">
+              <span className="ml-2 mr-8 text-base text-bg-500">
                 ({typeof entries !== 'string' ? entries.totalItems : 0})
               </span>
             </div>
@@ -202,6 +202,10 @@ function GuitarTabs(): React.ReactElement {
                   view === 'grid' ? (
                     <GridView
                       entries={entries.items}
+                      refreshEntries={() => {
+                        refreshEntries()
+                        refreshSidebarData()
+                      }}
                       setExistingEntry={setExistingEntry}
                       setModifyEntryModalOpen={setModifyEntryModalOpen}
                       setDeleteConfirmationModalOpen={

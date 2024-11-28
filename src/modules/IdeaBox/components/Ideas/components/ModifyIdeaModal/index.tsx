@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useDebounce } from '@uidotdev/usehooks'
+import { t } from 'i18next'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useParams } from 'react-router'
@@ -282,7 +283,7 @@ function ModifyIdeaModal({
             />
           )}
           <div className="mt-6 text-center font-medium uppercase tracking-widest text-bg-500">
-            or paste the link to the image
+            {t('imageUpload.orPasteLink')}
           </div>
           <Input
             icon="tabler:link"
@@ -291,6 +292,7 @@ function ModifyIdeaModal({
             value={imageLink}
             updateValue={setImageLink}
             className="mt-6"
+            darker
           />
         </>
       )}

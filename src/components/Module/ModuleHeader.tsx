@@ -42,7 +42,7 @@ function ModuleHeader({
                 ? t(`modules.${toCamelCase(title?.toString() ?? '')}`)
                 : title}
             </span>
-            <span className="min-w-0  text-base font-medium text-bg-500">
+            <span className="min-w-0 text-base font-medium text-bg-500">
               {totalItems !== undefined
                 ? `(${totalItems.toLocaleString()})`
                 : ''}
