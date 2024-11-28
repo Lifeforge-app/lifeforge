@@ -4,21 +4,34 @@ import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
+import APIRequest from '@utils/fetchData'
 import DownloadMenu from '../../../components/DownloadMenu'
 import AudioPlayer from '../../ListView/components/AudioPlayer'
 
 function EntryItem({
   entry,
+  refreshEntries,
   setModifyEntryModalOpen,
   setExistingEntry,
   setDeleteConfirmationModalOpen
 }: {
   entry: IGuitarTabsEntry
+  refreshEntries: () => void
   setModifyEntryModalOpen: (value: boolean) => void
   setExistingEntry: (value: IGuitarTabsEntry) => void
   setDeleteConfirmationModalOpen: (value: boolean) => void
 }): React.ReactElement {
   const { componentBgWithHover } = useThemeColors()
+
+  async function favouriteTab(): Promise<void> {
+    await APIRequest({
+      endpoint: `guitar-tabs/entries/favourite/${entry.id}`,
+      method: 'POST',
+      successInfo: entry.isFavourite ? 'unfavourite' : 'favourite',
+      failureInfo: entry.isFavourite ? 'unfavourite' : 'favourite',
+      callback: refreshEntries
+    })
+  }
 
   return (
     <a
@@ -54,6 +67,13 @@ function EntryItem({
         >
           <MenuItem
             onClick={() => {
+              favouriteTab().catch(console.error)
+            }}
+            text={entry.isFavourite ? 'Unfavourite' : 'Favourite'}
+            icon={entry.isFavourite ? 'tabler:star-off' : 'tabler:star'}
+          />
+          <MenuItem
+            onClick={() => {
               setExistingEntry(entry)
               setModifyEntryModalOpen(true)
             }}
@@ -84,6 +104,12 @@ function EntryItem({
                   }[entry.type]
                 }
                 className="size-5 shrink-0 text-bg-500"
+              />
+            )}
+            {entry.isFavourite && (
+              <Icon
+                icon="tabler:star-filled"
+                className="size-4 shrink-0 text-yellow-500"
               />
             )}
           </div>

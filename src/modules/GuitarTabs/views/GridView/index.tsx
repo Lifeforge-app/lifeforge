@@ -4,11 +4,13 @@ import EntryItem from './components/EntryItem'
 
 function GridView({
   entries,
+  refreshEntries,
   setExistingEntry,
   setModifyEntryModalOpen,
   setDeleteConfirmationModalOpen
 }: {
   entries: IGuitarTabsEntry[]
+  refreshEntries: () => void
   setExistingEntry: React.Dispatch<React.SetStateAction<any>>
   setModifyEntryModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -18,6 +20,7 @@ function GridView({
       {entries.map(entry => (
         <EntryItem
           key={entry.id}
+          refreshEntries={refreshEntries}
           entry={entry}
           setExistingEntry={setExistingEntry}
           setModifyEntryModalOpen={setModifyEntryModalOpen}
