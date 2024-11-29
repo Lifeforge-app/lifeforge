@@ -122,8 +122,16 @@ export default function CodeTime(): React.ReactElement {
             backgroundColor: (context: ScriptableContext<'line'>) => {
               const ctx = context.chart.ctx
               const gradient = ctx.createLinearGradient(0, 0, 0, 250)
-              gradient.addColorStop(0, theme.replace(')', ', 0.5)'))
-              gradient.addColorStop(1, theme.replace(')', ', 0)'))
+              let finalTheme = theme
+              if (theme.startsWith('#')) {
+                const hex = theme.replace('#', '')
+                const r = parseInt(hex.substring(0, 2), 16)
+                const g = parseInt(hex.substring(2, 4), 16)
+                const b = parseInt(hex.substring(4, 6), 16)
+                finalTheme = `rgba(${r}, ${g}, ${b})`
+              }
+              gradient.addColorStop(0, finalTheme.replace(')', ', 0.5)'))
+              gradient.addColorStop(1, finalTheme.replace(')', ', 0)'))
               return gradient
             },
             fill: 'origin',
