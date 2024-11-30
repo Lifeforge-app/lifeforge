@@ -131,6 +131,7 @@ function Ideas(): React.ReactElement {
           <>
             <ContainerHeader
               id={id!}
+              valid={valid}
               viewArchived={viewArchived}
               setViewArchived={setViewArchived}
             />

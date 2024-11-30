@@ -1,7 +1,6 @@
 import React from 'react'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
-import useThemeColors from '@hooks/useThemeColor'
 
 function SidebarWrapper({
   isOpen,
@@ -14,13 +13,11 @@ function SidebarWrapper({
   customHeight?: string
   children: React.ReactNode
 }): React.ReactElement {
-  const { componentBg } = useThemeColors()
-
   return (
     <aside
       className={`absolute ${
         isOpen ? 'left-0' : 'left-full'
-      } top-0 z-[9990] size-full shrink-0 rounded-lg py-4 shadow-custom duration-300 xl:static ${componentBg} ${
+      } top-0 z-[9990] size-full shrink-0 rounded-lg bg-bg-50 py-4 shadow-custom backdrop-blur-sm transition-all duration-300 dark:bg-bg-900 lg:relative lg:bg-bg-50/50 lg:backdrop-blur-sm lg:dark:bg-bg-900/50 xl:static ${
         customHeight ?? 'xl:h-[calc(100%-2rem)]'
       } xl:w-1/4 xl:min-w-96`}
     >

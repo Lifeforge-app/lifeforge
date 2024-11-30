@@ -20,6 +20,7 @@ function SearchBar({
         stuffToSearch="transactions"
       />
       <ViewModeSelector
+        className="hidden md:flex"
         viewMode={view}
         setViewMode={setView}
         options={[

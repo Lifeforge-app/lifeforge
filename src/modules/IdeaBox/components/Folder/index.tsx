@@ -26,7 +26,6 @@ function Folder(): React.ReactElement {
   const [viewArchived, setViewArchived] = useState(
     searchParams.get('archived') === 'true'
   )
-
   const [containerValid] = useFetch<boolean>(`idea-box/containers/valid/${id}`)
   const [folderValid] = useFetch<boolean>(`idea-box/folders/valid/${folderId}`)
   const [data, refreshData] = useFetch<IIdeaBoxEntry[]>(
@@ -122,6 +121,7 @@ function Folder(): React.ReactElement {
           <>
             <ContainerHeader
               id={id!}
+              valid={containerValid === true && folderValid === true}
               viewArchived={viewArchived}
               setViewArchived={setViewArchived}
               folderId={folderId}

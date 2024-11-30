@@ -36,7 +36,7 @@ function Photos({
     }
 
     const newPhotos = Array.from(files)
-      .slice(0, 25 - photos.length)
+      .slice(0, 50 - photos.length)
       .filter(file => file.type.startsWith('image/'))
       .filter(file => photos.every(p => p.file.name !== file.name))
       .map(async file => {
@@ -64,8 +64,8 @@ function Photos({
   }
 
   function onUploadClick(): void {
-    if (photos.length >= 25) {
-      toast.error('You can only upload up to 25 photos')
+    if (photos.length >= 50) {
+      toast.error('You can only upload up to 50 photos')
       return
     }
 
@@ -112,11 +112,11 @@ function Photos({
                 </div>
               ))}
             </div>
-            {photos.length < 25 && (
+            {photos.length < 50 && (
               <Button
                 onClick={onUploadClick}
                 className="mt-4 w-full"
-                disabled={photos.length >= 25}
+                disabled={photos.length >= 50}
                 icon="tabler:plus"
                 variant="secondary"
               >

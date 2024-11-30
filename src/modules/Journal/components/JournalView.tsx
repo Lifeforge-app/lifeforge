@@ -3,7 +3,9 @@ import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useState } from 'react'
 import Markdown from 'react-markdown'
+import Zoom from 'react-medium-image-zoom'
 import Button from '@components/ButtonsAndInputs/Button'
+import CustomZoomContent from '../../IdeaBox/components/Ideas/components/CustomZoomContent'
 
 function JournalView({
   date,
@@ -25,7 +27,7 @@ function JournalView({
   const [viewRaw, setViewRaw] = useState(false)
   return (
     <>
-      <div className="flex-between my-6 flex !items-end">
+      <div className="flex-between mb-6 flex !items-end">
         <div className="flex flex-col gap-2">
           <span className="text-lg font-medium text-bg-500">
             {moment(date).format('MMMM Do, YYYY')} - {mood.emoji} {mood.text}
@@ -68,16 +70,28 @@ function JournalView({
           </h3>
           <div className="mt-4 flex flex-wrap gap-2">
             {photos.map(photo => (
-              <img
-                src={
-                  typeof photo === 'string'
-                    ? photo + '&thumb=0x300'
-                    : photo.preview
-                }
-                alt=""
+              <div
                 key={typeof photo === 'string' ? photo : photo.preview}
-                className="max-h-[300px] min-h-32 grow rounded-md object-cover"
-              />
+                className="relative max-h-[300px] min-h-32 grow overflow-hidden rounded-lg"
+              >
+                <Zoom
+                  zoomMargin={40}
+                  ZoomContent={CustomZoomContent}
+                  zoomImg={{
+                    src: typeof photo === 'string' ? photo : photo.preview
+                  }}
+                >
+                  <img
+                    src={
+                      typeof photo === 'string'
+                        ? photo + '&thumb=0x300'
+                        : photo.preview
+                    }
+                    alt={''}
+                    className="size-full max-h-[300px] min-h-32 object-cover"
+                  />
+                </Zoom>
+              </div>
             ))}
           </div>
         </>

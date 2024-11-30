@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
 
@@ -25,13 +25,17 @@ function ModalHeader({
   appendTitle?: React.ReactElement
 }): React.ReactElement {
   const { t } = useTranslation()
+  const innerTitle = useMemo(() => title, [])
+  const innerIcon = useMemo(() => icon, [])
 
   return (
     <div className={`flex-between mb-6 flex ${className}`}>
       <div className="flex items-center gap-4">
         <h1 className="flex items-center gap-3 text-2xl font-semibold">
-          <Icon icon={icon} className="size-7" />
-          {needTranslate ? t(`modals.header.${toCamelCase(title)}`) : title}
+          <Icon icon={innerIcon} className="size-7" />
+          {needTranslate
+            ? t(`modals.header.${toCamelCase(innerTitle)}`)
+            : innerTitle}
         </h1>
         {appendTitle}
       </div>
