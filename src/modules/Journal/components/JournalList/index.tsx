@@ -92,7 +92,7 @@ function JournalList({
         <APIComponentWithFallback data={entries}>
           {entries =>
             entries.length > 0 ? (
-              <div className="mt-6 grid grid-cols-1 gap-6 pb-8">
+              <div className="mt-6 flex flex-col gap-4 pb-8">
                 {entries.map(entry => (
                   <JournalListItem
                     key={entry.id}

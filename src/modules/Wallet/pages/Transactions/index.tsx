@@ -2,6 +2,7 @@ import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import FAB from '@components/ButtonsAndInputs/FAB'
+import HamburgerSelectorWrapper from '@components/ButtonsAndInputs/HamburgerMenu/HamburgerSelectorWrapper'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
@@ -39,6 +40,7 @@ function Transactions(): React.ReactElement {
     'Type',
     'Ledger',
     'Asset',
+    'Location',
     'Particulars',
     'Category',
     'Amount',
@@ -92,6 +94,22 @@ function Transactions(): React.ReactElement {
                 setManageCategoriesModalOpen(true)
               }}
             />
+            <div className="block md:hidden">
+              <HamburgerSelectorWrapper icon="tabler:eye" title="View as">
+                {['list', 'table'].map(type => (
+                  <MenuItem
+                    key={type}
+                    text={type.charAt(0).toUpperCase() + type.slice(1)}
+                    icon={type === 'list' ? 'uil:apps' : 'uil:list-ul'}
+                    onClick={() => {
+                      setView(type as 'list' | 'table')
+                    }}
+                    isToggled={view === type}
+                    needTranslate={false}
+                  />
+                ))}
+              </HamburgerSelectorWrapper>
+            </div>
             {view === 'table' && (
               <ColumnVisibilityToggle
                 visibleColumn={visibleColumn}

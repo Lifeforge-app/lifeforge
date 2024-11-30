@@ -1,9 +1,7 @@
 import fs from 'fs'
 import saveTranslation from './saveTranslations'
 
-const ROUTES = JSON.parse(
-  fs.readFileSync('./src/constants/routes_config.json', 'utf-8')
-)
+const ROUTES = JSON.parse(fs.readFileSync('./src/routes_config.json', 'utf-8'))
 
 async function saveChanges({
   login,
@@ -47,10 +45,7 @@ async function saveChanges({
     }
   )
 
-  fs.writeFileSync(
-    './src/constants/routes_config.json',
-    JSON.stringify(ROUTES, null, 2)
-  )
+  fs.writeFileSync('./src/routes_config.json', JSON.stringify(ROUTES, null, 2))
 
   if (fs.existsSync(`./src/modules/${moduleID}`)) {
     console.error('Module already exists')
@@ -66,7 +61,7 @@ async function saveChanges({
           function ${moduleID}(): React.ReactElement {
             return (
               <ModuleWrapper>
-                <ModuleHeader title="${moduleNameEN.moduleName}"  />
+                <ModuleHeader title="${moduleNameEN.moduleName}" icon="${moduleIcon}"  />
               </ModuleWrapper>
             )
           }
