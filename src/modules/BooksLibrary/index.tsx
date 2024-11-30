@@ -3,6 +3,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
+import HamburgerSelectorWrapper from '@components/ButtonsAndInputs/HamburgerMenu/HamburgerSelectorWrapper'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ViewModeSelector from '@components/Miscellaneous/ViewModeSelector'
@@ -64,7 +65,27 @@ function BooksLibrary(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Books Library" icon="tabler:books" />
+      <ModuleHeader
+        title="Books Library"
+        icon="tabler:books"
+        hamburgerMenuItems={
+          <HamburgerSelectorWrapper title="View as" icon="tabler:eye">
+            {['grid', 'list'].map(type => (
+              <MenuItem
+                key={type}
+                text={type.charAt(0).toUpperCase() + type.slice(1)}
+                icon={type === 'grid' ? 'uil:apps' : 'uil:list-ul'}
+                onClick={() => {
+                  setView(type as 'grid' | 'list')
+                }}
+                isToggled={view === type}
+                needTranslate={false}
+              />
+            ))}
+          </HamburgerSelectorWrapper>
+        }
+        hamburgerMenuClassName="block md:hidden"
+      />
       <div className="mt-6 flex min-h-0 w-full min-w-0 flex-1">
         <Sidebar />
         <div className="flex h-full min-h-0 flex-1 flex-col pb-8 xl:ml-8">
@@ -80,6 +101,7 @@ function BooksLibrary(): React.ReactElement {
               stuffToSearch="books"
             />
             <ViewModeSelector
+              className="hidden md:flex"
               viewMode={view}
               setViewMode={setView}
               options={[

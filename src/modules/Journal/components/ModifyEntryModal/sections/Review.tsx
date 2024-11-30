@@ -78,7 +78,7 @@ function Review({
     }
 
     await APIRequest({
-      endpoint: `/journal/entries/${openType}${
+      endpoint: `journal/entries/${openType}${
         openType === 'update' ? `/${id}` : ''
       }`,
       method: openType === 'update' ? 'PUT' : 'POST',

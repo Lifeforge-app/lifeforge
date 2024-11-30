@@ -1,26 +1,44 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { t } from 'i18next'
 import { cookieParse } from 'pocketbase'
 import React, { useRef } from 'react'
 import { type Id, toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import FAB from '@components/ButtonsAndInputs/FAB'
+import HamburgerSelectorWrapper from '@components/ButtonsAndInputs/HamburgerMenu/HamburgerSelectorWrapper'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import ModuleHeader from '@components/Module/ModuleHeader'
+import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import useThemeColors from '@hooks/useThemeColor'
 import APIRequest from '@utils/fetchData'
 import IntervalManager from '@utils/intervalManager'
 
 const intervalManager = IntervalManager.getInstance()
 
+const SORT_TYPE = [
+  ['tabler:clock', 'newest'],
+  ['tabler:clock', 'oldest'],
+  ['tabler:at', 'author'],
+  ['tabler:abc', 'name']
+]
+
 function Header({
   refreshEntries,
   totalItems,
-  setGuitarWorldModalOpen
+  setGuitarWorldModalOpen,
+  searchParams,
+  setSearchParams,
+  view,
+  setView
 }: {
   refreshEntries: () => void
   totalItems: number
   setGuitarWorldModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  searchParams: URLSearchParams
+  setSearchParams: (params: Record<string, string> | URLSearchParams) => void
+  view: 'grid' | 'list'
+  setView: React.Dispatch<React.SetStateAction<'grid' | 'list'>>
 }): React.ReactElement {
   const toastId = useRef<Id>(null)
   const { theme } = useThemeColors()
@@ -191,6 +209,45 @@ function Header({
               icon="tabler:download"
               onClick={downloadAll}
             />
+            <div className="block md:hidden">
+              <SidebarDivider noMargin />
+              <HamburgerSelectorWrapper
+                icon="tabler:sort-ascending"
+                title="Sort by"
+              >
+                {SORT_TYPE.map(([icon, id]) => (
+                  <MenuItem
+                    key={id}
+                    icon={icon}
+                    text={t(`sortType.${id}`)}
+                    onClick={() => {
+                      searchParams.set('sort', id)
+                      setSearchParams(searchParams)
+                    }}
+                    isToggled={
+                      searchParams.get('sort') === id ||
+                      (id === 'newest' && !searchParams.has('sort'))
+                    }
+                    needTranslate={false}
+                  />
+                ))}
+              </HamburgerSelectorWrapper>
+              <SidebarDivider noMargin />
+              <HamburgerSelectorWrapper icon="tabler:eye" title="View as">
+                {['grid', 'list'].map(type => (
+                  <MenuItem
+                    key={type}
+                    text={type.charAt(0).toUpperCase() + type.slice(1)}
+                    icon={type === 'grid' ? 'uil:apps' : 'uil:list-ul'}
+                    onClick={() => {
+                      setView(type as 'grid' | 'list')
+                    }}
+                    isToggled={view === type}
+                    needTranslate={false}
+                  />
+                ))}
+              </HamburgerSelectorWrapper>
+            </div>
           </>
         }
         tips="If you want to append audio and Musescore files to your guitar tabs, make sure to name them the same as the PDF file and upload them together."

@@ -87,6 +87,10 @@ function GuitarTabs(): React.ReactElement {
         refreshEntries={refreshEntries}
         totalItems={typeof entries !== 'string' ? entries.totalItems : 0}
         setGuitarWorldModalOpen={setGuitarWorldModalOpen}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
+        view={view}
+        setView={setView}
       />
       <div className="mt-6 flex min-h-0 w-full flex-1">
         <Sidebar
@@ -141,10 +145,11 @@ function GuitarTabs(): React.ReactElement {
           <div className="flex gap-2">
             <Listbox
               as="div"
-              className="relative"
+              className="relative hidden md:block"
               value={searchParams.get('sort') ?? 'newest'}
               onChange={value => {
-                setSearchParams({ sort: value })
+                searchParams.set('sort', value)
+                setSearchParams(searchParams)
               }}
             >
               <ListboxButton
@@ -187,6 +192,7 @@ function GuitarTabs(): React.ReactElement {
               stuffToSearch="guitar tabs"
             />
             <ViewModeSelector
+              className="hidden md:flex"
               viewMode={view}
               setViewMode={setView}
               options={[
@@ -198,6 +204,12 @@ function GuitarTabs(): React.ReactElement {
           <APIComponentWithFallback data={entries}>
             {entries => (
               <Scrollbar className="mt-6 pb-16">
+                <Pagination
+                  currentPage={entries.page}
+                  onPageChange={setPage}
+                  totalPages={entries.totalPages}
+                  className="mb-4"
+                />
                 {entries.totalItems > 0 ? (
                   view === 'grid' ? (
                     <GridView

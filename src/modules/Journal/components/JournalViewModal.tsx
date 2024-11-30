@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
-import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
@@ -26,7 +26,7 @@ function JournalViewModal({
     id !== null
   )
   const [challenge, , setChallenge] = useFetch<string>(
-    '/journal/auth/challenge',
+    'journal/auth/challenge',
     valid === true
   )
   const url = useMemo(() => {

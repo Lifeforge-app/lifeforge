@@ -116,6 +116,11 @@ const CFOPPLL = lazy(
 )
 const YoutubeVideos = lazy(async () => await import('./modules/YoutubeVideos'))
 const APIKeys = lazy(async () => await import('./modules/APIKeys'))
+const Wishlist = lazy(async () => await import('./modules/Wishlist'))
+const WishlistEntries = lazy(
+  async () => await import('./modules/Wishlist/pages/WishlistEntries')
+)
+const Budget = lazy(async () => await import('./modules/Budget'))
 
 export const COMPONENTS = {
   dashboard: {
@@ -248,5 +253,12 @@ export const COMPONENTS = {
   },
   'api-keys': {
     'api-keys': APIKeys
+  },
+  wishlist: {
+    wishlist: Wishlist,
+    'wishlist-entries': WishlistEntries
+  },
+  budget: {
+    budget: Budget
   }
 }

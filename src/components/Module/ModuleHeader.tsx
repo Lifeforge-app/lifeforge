@@ -10,6 +10,7 @@ interface ModuleHeaderProps {
   totalItems?: number
   tips?: string
   hamburgerMenuItems?: React.ReactNode
+  hamburgerMenuClassName?: string
   actionButton?: React.ReactNode
   customElement?: React.ReactNode
   needTranslate?: boolean
@@ -21,6 +22,7 @@ function ModuleHeader({
   totalItems,
   tips = '',
   hamburgerMenuItems,
+  hamburgerMenuClassName,
   actionButton,
   customElement,
   needTranslate = true
@@ -83,7 +85,10 @@ function ModuleHeader({
         )}
         {customElement}
         {hamburgerMenuItems !== undefined && (
-          <Menu as="div" className="relative z-50 overscroll-contain">
+          <Menu
+            as="div"
+            className={`relative z-50 overscroll-contain ${hamburgerMenuClassName}`}
+          >
             <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-50">
               <Icon icon="tabler:dots-vertical" className="size-5" />
             </MenuButton>

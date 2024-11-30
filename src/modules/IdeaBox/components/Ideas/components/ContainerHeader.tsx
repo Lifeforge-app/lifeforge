@@ -12,17 +12,20 @@ import {
 
 function ContainerHeader({
   id,
+  valid,
   viewArchived,
   setViewArchived,
   folderId
 }: {
   id: string
+  valid: boolean | 'loading' | 'error'
   viewArchived: boolean
   setViewArchived: React.Dispatch<React.SetStateAction<boolean>>
   folderId?: string
 }): React.ReactElement {
   const [containerDetails] = useFetch<IIdeaBoxContainer>(
-    `idea-box/containers/${id}`
+    `idea-box/containers/${id}`,
+    valid === true
   )
   const [folderDetails] = useFetch<IIdeaBoxFolder>(
     `idea-box/folders/${folderId}`,
