@@ -22,9 +22,9 @@ function WishlistListItem({
   return (
     <Link
       to={`/wishlist/${list.id}`}
-      className={`flex-between group relative flex w-full rounded-md p-4 ${componentBgWithHover}`}
+      className={`flex-between group relative flex w-full gap-8 rounded-md p-4 ${componentBgWithHover}`}
     >
-      <div className="flex items-center">
+      <div className="flex w-full min-w-0 items-center">
         <div
           className="rounded-md p-4"
           style={{
@@ -34,14 +34,18 @@ function WishlistListItem({
         >
           <Icon icon={list.icon} className="size-8" />
         </div>
-        <div className="ml-4">
+        <div className="ml-4 w-full min-w-0">
           <h2 className="text-xl font-semibold">{list.name}</h2>
-          <p className="text-sm text-bg-500">{list.description}</p>
+          <p className="min-w-0 truncate text-sm text-bg-500">
+            {list.description}
+          </p>
         </div>
       </div>
       <div className="space-y-2 text-right">
         <p className="text-sm text-bg-500">{list.item_count} items</p>
-        <p className="text-sm text-bg-500">totalling RM 0.00</p>
+        <p className="whitespace-nowrap text-sm text-bg-500">
+          totalling RM 0.00
+        </p>
       </div>
       <Menu as="div" className="absolute right-2 top-2">
         <MenuButton>
