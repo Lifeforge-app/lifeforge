@@ -30,7 +30,8 @@ function ContainerItem({
       <div
         className="rounded-lg p-4"
         style={{
-          backgroundColor: container.color + '30'
+          backgroundColor: container.color + '30',
+          borderColor: container.color
         }}
       >
         <Icon

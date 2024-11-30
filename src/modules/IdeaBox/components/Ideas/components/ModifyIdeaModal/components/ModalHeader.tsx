@@ -3,6 +3,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
+import Button from '@components/ButtonsAndInputs/Button'
 
 function ModalHeader({
   innerOpenType,
@@ -115,14 +116,14 @@ function ModalHeader({
         )}
         Idea
       </h1>
-      <button
+      <Button
+        variant="no-bg"
         onClick={() => {
           setOpenType(null)
         }}
-        className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-100 dark:text-bg-50 dark:hover:bg-bg-800"
-      >
-        <Icon icon="tabler:x" className="size-6" />
-      </button>
+        iconSize="size-6"
+        icon="tabler:x"
+      />
     </div>
   )
 }

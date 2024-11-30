@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
+import FAB from '@components/ButtonsAndInputs/FAB'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -21,6 +22,7 @@ function Wishlist(): React.ReactElement {
         icon="tabler:heart"
         actionButton={
           <Button
+            className="hidden md:flex"
             icon="tabler:plus"
             onClick={() => {
               setModifyWishlistListModalOpenType('create')
@@ -53,6 +55,13 @@ function Wishlist(): React.ReactElement {
         setOpenType={setModifyWishlistListModalOpenType}
         updateWishlistList={refreshLists}
         existedData={existedData}
+      />
+      <FAB
+        icon="tabler:plus"
+        onClick={() => {
+          setModifyWishlistListModalOpenType('create')
+        }}
+        hideWhen="md"
       />
     </ModuleWrapper>
   )

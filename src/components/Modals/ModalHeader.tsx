@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import Button from '@components/ButtonsAndInputs/Button'
 import { toCamelCase } from '@utils/strings'
 
 function ModalHeader({
@@ -52,12 +53,14 @@ function ModalHeader({
             <Icon icon={actionButtonIcon} className="size-6" />
           </button>
         )}
-        <button
-          onClick={onClose}
-          className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50"
-        >
-          <Icon icon="tabler:x" className="size-6" />
-        </button>
+        <Button
+          variant="no-bg"
+          onClick={() => {
+            onClose()
+          }}
+          iconSize="size-6"
+          icon="tabler:x"
+        />
       </div>
     </div>
   )
