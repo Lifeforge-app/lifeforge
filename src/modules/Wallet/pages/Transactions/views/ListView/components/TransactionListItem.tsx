@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
+import { Tooltip } from 'react-tooltip'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
@@ -33,7 +34,7 @@ function TransactionListItem({
   }
 
   return (
-    <div className="flex-between relative flex gap-12 border-b border-bg-200 p-4 pl-2 dark:border-bg-800/50">
+    <div className="flex-between relative flex gap-12 border-b border-bg-200 py-4 pl-2 dark:border-bg-800/50">
       <div className="flex w-full min-w-0 items-center gap-2 [@media(min-width:400px)]:gap-4">
         <div
           className="h-12 w-1 shrink-0 rounded-full"
@@ -49,14 +50,14 @@ function TransactionListItem({
           }
           className="size-8 text-bg-500"
         />
-        <div className="w-full min-w-0">
+        <div className="flex w-full min-w-0 flex-col-reverse sm:flex-col">
           <div className="flex w-full min-w-0 items-center gap-2">
             <div className="min-w-0 truncate text-lg font-medium">
               {transaction.particulars}{' '}
               {transaction.location !== '' && (
                 <>
                   <span className="text-bg-500">@</span>{' '}
-                  {`${transaction.location}`}
+                  {`${transaction.location.split(',')[0]}`}
                 </>
               )}
             </div>
@@ -74,9 +75,33 @@ function TransactionListItem({
                 <Icon icon="tabler:file-text" className="size-5 text-bg-500" />
               </button>
             )}
+            {transaction.location !== '' && (
+              <>
+                <a data-tooltip-id={`tooltip-location-${transaction.id}`}>
+                  <Icon icon="tabler:map-pin" className="size-5 text-bg-500" />
+                </a>
+                <Tooltip
+                  id={`tooltip-location-${transaction.id}`}
+                  className="z-[9999] !rounded-md bg-bg-50 !p-4 !text-base text-bg-800 shadow-custom dark:bg-bg-800 dark:text-bg-50"
+                  classNameArrow="!size-6"
+                  place="top-start"
+                  positionStrategy="fixed"
+                  opacity={1}
+                >
+                  <div className="relative z-10 max-w-sm">
+                    {transaction.location}
+                  </div>
+                </Tooltip>
+              </>
+            )}
           </div>
           <div className="flex items-center gap-2 text-sm font-medium text-bg-500">
-            {moment(transaction.date).format('MMM DD, YYYY')}
+            <span className="block sm:hidden">
+              {moment(transaction.date).format('DD MMM')}
+            </span>
+            <span className="hidden sm:block">
+              {moment(transaction.date).format('MMM DD, YYYY')}
+            </span>
             <Icon icon="tabler:circle-filled" className="size-1" />
             <div className="flex items-center gap-1">
               <Icon

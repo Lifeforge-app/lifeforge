@@ -142,7 +142,7 @@ function Header({
             setSidebarOpen(true)
           }}
           variant="no-bg"
-          className="lg:hidden"
+          className="xl:hidden"
         />
       </div>
     </div>
