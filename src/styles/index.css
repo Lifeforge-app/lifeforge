@@ -684,3 +684,7 @@ td {
 .\!range {
   --range-shdw: rgb(var(--color-custom-500)) !important;
 }
+
+.react-date-picker__calendar {
+  @apply absolute top-0 left-0;
+}
