@@ -2,11 +2,11 @@ import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import ModalHeader from '@components/Modals/ModalHeader'
 import ModalWrapper from '@components/Modals/ModalWrapper'
+import IconSet from './pages/IconSet'
 import IconSetList from './pages/IconSetList/index'
-import IconSet from '../IconPicker/pages/IconSet'
-import Search from '../IconPicker/pages/Search'
+import Search from './pages/Search'
 
-function IconPicker({
+function IconPickerModal({
   isOpen,
   setOpen,
   setSelectedIcon
@@ -94,4 +94,4 @@ function IconPicker({
   )
 }
 
-export default IconPicker
+export default IconPickerModal

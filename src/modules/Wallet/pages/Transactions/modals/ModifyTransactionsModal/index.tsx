@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import CurrencyInputComponent from '@components/ButtonsAndInputs/CurrencyInput'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
+import ImagePickerModal from '@components/ButtonsAndInputs/ImagePicker/ImagePickerModal'
 import Input from '@components/ButtonsAndInputs/Input'
 import ModalHeader from '@components/Modals/ModalHeader'
 import ModalWrapper from '@components/Modals/ModalWrapper'
@@ -52,6 +53,7 @@ function ModifyTransactionsModal({
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null)
   const [receipt, setReceipt] = useState<File | null>(null)
   const [toRemoveReceipt, setToRemoveReceipt] = useState(false)
+  const [isImagePickerModalOpen, setIsImagePickerModalOpen] = useState(false)
 
   const ref = useRef<HTMLInputElement>(null)
 
@@ -232,6 +234,7 @@ function ModifyTransactionsModal({
             setReceipt={setReceipt}
             setToRemoveReceipt={setToRemoveReceipt}
             openType={openType}
+            setIsImagePickerModalOpen={setIsImagePickerModalOpen}
           />
         </div>
         <CreateOrModifyButton
@@ -242,6 +245,22 @@ function ModifyTransactionsModal({
           type={openType === 'update' ? 'update' : 'create'}
         />
       </ModalWrapper>
+      <ImagePickerModal
+        isOpen={isImagePickerModalOpen}
+        onClose={() => {
+          setIsImagePickerModalOpen(false)
+        }}
+        onSelect={async (file, preview) => {
+          if (typeof file === 'string') return
+
+          setReceipt(file)
+          setImagePreviewUrl(preview)
+        }}
+        acceptedMimeTypes={{
+          images: ['image/jpeg', 'image/png'],
+          documents: ['application/pdf']
+        }}
+      />
     </>
   )
 }

@@ -2,11 +2,11 @@ import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
-import IconPicker from '@components/ButtonsAndInputs/IconSelector/IconPicker'
+import IconInput from '@components/ButtonsAndInputs/IconPicker/IconInput'
+import IconPickerModal from '@components/ButtonsAndInputs/IconPicker/IconPickerModal'
 import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import { type APIKeyEntry } from '@interfaces/api_keys_interfaces'
 import { decrypt, encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
@@ -171,7 +171,7 @@ function ModifyAPIKeyModal({
           }}
         />
       </ModalWrapper>
-      <IconPicker
+      <IconPickerModal
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}
         setSelectedIcon={setIcon}
