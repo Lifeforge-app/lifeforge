@@ -24,7 +24,7 @@ export default function MiniCalendar(): React.ReactElement {
 
   return (
     <div
-      className={`flex size-full flex-col gap-4 rounded-lg p-8 pt-6 shadow-custom ${componentBg}`}
+      className={`flex size-full flex-col gap-4 rounded-lg p-4 shadow-custom ${componentBg}`}
     >
       <h1 className="my-2 flex items-center gap-2 text-xl font-semibold">
         <Icon icon="tabler:calendar" className="text-2xl" />

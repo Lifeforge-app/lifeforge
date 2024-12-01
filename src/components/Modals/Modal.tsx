@@ -5,8 +5,8 @@ import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
 import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
-import IconInput from '@components/ButtonsAndInputs/IconSelector/IconInput'
-import IconPicker from '@components/ButtonsAndInputs/IconSelector/IconPicker'
+import IconInput from '@components/ButtonsAndInputs/IconPicker/IconInput'
+import IconPickerModal from '@components/ButtonsAndInputs/IconPicker/IconPickerModal'
 import Input from '@components/ButtonsAndInputs/Input'
 import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
 import ListboxNullOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxNullOption'
@@ -285,7 +285,7 @@ function Modal({
       )}
 
       {fields.some(f => f.type === 'icon') && (
-        <IconPicker
+        <IconPickerModal
           isOpen={iconSelectorOpen !== null}
           setOpen={() => {
             setIconSelectorOpen(null)

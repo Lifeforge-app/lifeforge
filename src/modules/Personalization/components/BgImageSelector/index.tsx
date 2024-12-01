@@ -7,7 +7,7 @@ import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import APIRequest from '@utils/fetchData'
 import AdjustBgImageModal from './components/AdjustBgImageModal'
-import ImageSelectorModal from './components/ImageSelectorModal'
+import ImagePickerModal from '../../../../components/ButtonsAndInputs/ImagePicker/ImagePickerModal'
 
 function BgImageSelector(): React.ReactElement {
   const { bgImage, setBgImage, setBackdropFilters } =
@@ -96,11 +96,17 @@ function BgImageSelector(): React.ReactElement {
           </Button>
         )}
       </ConfigColumn>
-      <ImageSelectorModal
+      <ImagePickerModal
+        affectHeader
         isOpen={imageSelectorModalOpen}
         onClose={() => {
           setImageSelectorModalOpen(false)
         }}
+        acceptedMimeTypes={{
+          'image/*': ['png', 'jpg', 'jpeg', 'gif', 'webp']
+        }}
+        enablePixaBay
+        enableUrl
         onSelect={onSubmit}
       />
       <AdjustBgImageModal
