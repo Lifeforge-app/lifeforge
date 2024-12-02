@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
+import { t } from 'i18next'
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import CurrencyInputComponent from '@components/ButtonsAndInputs/CurrencyInput'
 import DateInput from '@components/ButtonsAndInputs/DateInput'
-import ImagePickerModal from '@components/ButtonsAndInputs/ImagePicker/ImagePickerModal'
+import ImageAndFileInput from '@components/ButtonsAndInputs/ImageAndFilePicker/ImageAndFileInput'
+import ImagePickerModal from '@components/ButtonsAndInputs/ImageAndFilePicker/ImagePickerModal'
 import Input from '@components/ButtonsAndInputs/Input'
 import ModalHeader from '@components/Modals/ModalHeader'
 import ModalWrapper from '@components/Modals/ModalWrapper'
@@ -18,7 +20,6 @@ import AssetsSelector from './components/AssetsSelector'
 import CategorySelector from './components/CategorySelector'
 import LedgerSelector from './components/LedgerSelector'
 import LocationSelector from './components/LocationSelector'
-import ReceiptUploader from './components/ReceiptUploader'
 import TransactionTypeSelector from './components/TransactionTypeSelector'
 
 function ModifyTransactionsModal({
@@ -51,7 +52,7 @@ function ModifyTransactionsModal({
   const [loading, setLoading] = useState(false)
 
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null)
-  const [receipt, setReceipt] = useState<File | null>(null)
+  const [receipt, setReceipt] = useState<File | string | null>(null)
   const [toRemoveReceipt, setToRemoveReceipt] = useState(false)
   const [isImagePickerModalOpen, setIsImagePickerModalOpen] = useState(false)
 
@@ -227,14 +228,18 @@ function ModifyTransactionsModal({
               <LedgerSelector ledger={ledger} setLedger={setLedger} />
             </>
           )}
-          <ReceiptUploader
-            receipt={receipt}
-            imagePreviewUrl={imagePreviewUrl}
-            setImagePreviewUrl={setImagePreviewUrl}
-            setReceipt={setReceipt}
-            setToRemoveReceipt={setToRemoveReceipt}
-            openType={openType}
-            setIsImagePickerModalOpen={setIsImagePickerModalOpen}
+          <ImageAndFileInput
+            icon="tabler:receipt"
+            name="Receipt"
+            image={receipt}
+            setImage={setReceipt}
+            preview={imagePreviewUrl}
+            setPreview={setImagePreviewUrl}
+            setImagePickerModalOpen={setIsImagePickerModalOpen}
+            onImageRemoved={() => {
+              if (openType === 'update') setToRemoveReceipt(true)
+            }}
+            reminderText={t('wallet.receiptUploadInfo')}
           />
         </div>
         <CreateOrModifyButton

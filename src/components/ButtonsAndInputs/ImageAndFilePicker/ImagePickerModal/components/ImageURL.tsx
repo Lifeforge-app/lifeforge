@@ -4,10 +4,12 @@ import Input from '@components/ButtonsAndInputs/Input'
 
 function ImageURL({
   file,
-  setFile
+  setFile,
+  setPreview
 }: {
   file: string | File | null
   setFile: React.Dispatch<React.SetStateAction<string | File | null>>
+  setPreview: React.Dispatch<React.SetStateAction<string | null>>
 }): React.ReactElement {
   return (
     <>
@@ -16,7 +18,10 @@ function ImageURL({
         name="Image link"
         placeholder="https://example.com/image.jpg"
         value={file === null ? '' : (file as string)}
-        updateValue={setFile}
+        updateValue={(value: string) => {
+          setFile(value)
+          setPreview(value)
+        }}
         darker
       />
 

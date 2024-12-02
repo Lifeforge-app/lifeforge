@@ -7,7 +7,7 @@ import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import APIRequest from '@utils/fetchData'
 import AdjustBgImageModal from './components/AdjustBgImageModal'
-import ImagePickerModal from '../../../../components/ButtonsAndInputs/ImagePicker/ImagePickerModal'
+import ImagePickerModal from '../../../../components/ButtonsAndInputs/ImageAndFilePicker/ImagePickerModal'
 
 function BgImageSelector(): React.ReactElement {
   const { bgImage, setBgImage, setBackdropFilters } =

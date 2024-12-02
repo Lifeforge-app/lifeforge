@@ -97,7 +97,13 @@ function ImagePickerModal({
                 />
               )
             case 'url':
-              return <ImageURL setFile={setFile} file={file} />
+              return (
+                <ImageURL
+                  setFile={setFile}
+                  file={file}
+                  setPreview={setPreview}
+                />
+              )
             case 'pixabay':
               return <Pixabay setFile={setFile} file={file} />
           }
