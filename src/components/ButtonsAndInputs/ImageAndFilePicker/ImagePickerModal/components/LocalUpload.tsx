@@ -19,6 +19,7 @@ function LocalUpload({
   preview: string | null
 }): React.ReactElement {
   const onDrop = useCallback((acceptedFiles: File[]) => {
+    setPreview(null)
     acceptedFiles[0]
       .arrayBuffer()
       .then(buffer => {
