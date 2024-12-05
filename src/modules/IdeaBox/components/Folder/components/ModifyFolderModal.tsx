@@ -11,8 +11,8 @@ import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyBut
 import IconInput from '@components/ButtonsAndInputs/IconPicker/IconInput'
 import IconSelector from '@components/ButtonsAndInputs/IconPicker/IconPickerModal'
 import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import { type IIdeaBoxFolder } from '@interfaces/ideabox_interfaces'
 import APIRequest from '@utils/fetchData'
 
@@ -100,8 +100,8 @@ function ModifyFolderModal({
           }
           title={`${
             {
-              create: 'Create ',
-              update: 'Update '
+              create: 'Create',
+              update: 'Update'
             }[innerOpenType!]
           } folder`}
           onClose={() => {

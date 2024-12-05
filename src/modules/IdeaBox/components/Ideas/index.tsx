@@ -23,7 +23,7 @@ import EntryImage from './components/IdeaEntry/EntryImage'
 import EntryLink from './components/IdeaEntry/EntryLink'
 import EntryText from './components/IdeaEntry/EntryText'
 import ModifyIdeaModal from './components/ModifyIdeaModal'
-import ModifyFolderModal from '../Folder/components/ModifyModalFolder'
+import ModifyFolderModal from '../Folder/components/ModifyFolderModal'
 
 function Ideas(): React.ReactElement {
   const { t } = useTranslation()

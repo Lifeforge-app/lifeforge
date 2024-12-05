@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
-import React, { useMemo } from 'react'
+import { useDebounce } from '@uidotdev/usehooks'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import Button from '@components/ButtonsAndInputs/Button'
 import { toCamelCase } from '@utils/strings'
@@ -26,8 +27,8 @@ function ModalHeader({
   appendTitle?: React.ReactElement
 }): React.ReactElement {
   const { t } = useTranslation()
-  const innerTitle = useMemo(() => title, [])
-  const innerIcon = useMemo(() => icon, [])
+  const innerTitle = useDebounce(title, 100)
+  const innerIcon = useDebounce(icon, 100)
 
   return (
     <div className={`flex-between mb-6 flex ${className}`}>
