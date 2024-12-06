@@ -7,7 +7,6 @@ import AppRouter from './Router.tsx'
 function App(): React.ReactElement {
   return (
     <Providers>
-      <Sidebar />
       <AppRouter />
     </Providers>
   )
