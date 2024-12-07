@@ -37,14 +37,16 @@ function JournalListItem({
     >
       <div className="flex-between flex">
         <div className="flex flex-col gap-2">
-          <span className="text-sm font-medium text-bg-500">
+          <span className="flex items-center gap-2 text-sm font-medium text-bg-500">
             {moment(entry.date).format('MMMM Do, YYYY')}
+            <Icon icon="tabler:circle-filled" className="size-1.5" />
+            {entry.wordCount?.toLocaleString()} words
           </span>
           <h2 className="text-2xl font-semibold">
             {entry.title === '' ? 'Untitled' : entry.title}
           </h2>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           {entry.photos.length > 0 && (
             <span
               className={`flex items-center gap-2 whitespace-nowrap rounded-full px-3 py-1 text-base font-medium text-bg-400 shadow-custom ${componentBgLighter}`}
