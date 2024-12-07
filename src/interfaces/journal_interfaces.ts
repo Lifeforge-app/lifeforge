@@ -6,6 +6,7 @@ interface IJournalEntry extends BasePBCollection {
   content: string
   raw: string
   summary: string
+  wordCount?: number
   mood: {
     text: string
     emoji: string
