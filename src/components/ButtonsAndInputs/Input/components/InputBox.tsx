@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 
 function InputBox({
   value,
@@ -23,6 +23,9 @@ function InputBox({
   noAutoComplete?: boolean
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }): React.ReactElement {
+  const innerRef = useRef<HTMLInputElement | null>(null)
+  const [focused, setFocused] = useState(false)
+
   return (
     <>
       {isPassword && (
@@ -34,6 +37,7 @@ function InputBox({
             reference.current = ref
           }
           inputRef.current = ref
+          innerRef.current = ref
         }}
         disabled={disabled}
         value={value}
@@ -42,22 +46,18 @@ function InputBox({
         }}
         placeholder={placeholder}
         onKeyDown={onKeyDown}
-        type={isPassword ? 'password' : 'text'}
+        type={isPassword && !focused ? 'password' : 'text'}
         autoComplete={noAutoComplete ? 'false' : 'true'}
         style={isPassword ? { fontFamily: 'Arial' } : {}}
         className={`mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider caret-custom-500 placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500 ${
           isPassword && Boolean(value) ? 'text-2xl focus:text-base' : ''
         }`}
         autoFocus={autoFocus}
-        onFocus={e => {
-          if (isPassword) {
-            e.target.type = 'text'
-          }
+        onFocus={() => {
+          setFocused(true)
         }}
-        onBlur={e => {
-          if (isPassword) {
-            e.target.type = 'password'
-          }
+        onBlur={() => {
+          setFocused(false)
         }}
       />
     </>

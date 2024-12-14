@@ -19,7 +19,7 @@ import { fetchChallenge } from './utils/fetchChallenge'
 
 function APIKeys(): React.ReactElement {
   const { userData } = useAuthContext()
-  const [otpSuccess, setOtpSuccess] = useState(false)
+  const [otpSuccess, setOtpSuccess] = useState(true)
   const [masterPassword, setMasterPassword] = useState<string>('')
   const [existingData, setExistingData] = useState<APIKeyEntry | null>(null)
   const [modifyAPIKeyModalOpenType, setModifyAPIKeyModalOpenType] = useState<
