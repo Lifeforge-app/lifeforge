@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import moment from 'moment'
 import React from 'react'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
@@ -33,14 +34,19 @@ function EntryItem({
       icon={entry.icon}
       hasDivider={hasDivider}
     >
-      <code className="flex items-center gap-1 text-lg">
-        {Array(12)
-          .fill(0)
-          .map((_, i) => (
-            <Icon key={i} icon="tabler:circle-filled" className="size-1" />
-          ))}
-        <span className="ml-0.5">{entry.key}</span>
-      </code>
+      <div>
+        <code className="flex items-center justify-end gap-1 text-lg">
+          {Array(12)
+            .fill(0)
+            .map((_, i) => (
+              <Icon key={i} icon="tabler:circle-filled" className="size-1" />
+            ))}
+          <span className="ml-0.5">{entry.key}</span>
+        </code>
+        <span className="text-sm text-bg-500">
+          Last updated: {moment(entry.updated).fromNow()}
+        </span>
+      </div>
       <HamburgerMenu className="relative ml-2">
         <MenuItem
           onClick={() => {
