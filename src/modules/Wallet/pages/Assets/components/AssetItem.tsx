@@ -51,7 +51,7 @@ function AssetItem({
       <Button
         variant="secondary"
         onClick={() => {
-          navigate(`/wallet/transactions?asset=${asset.id}`)
+          navigate(`/wallet/transactions#asset=${asset.id}`)
         }}
         icon="tabler:eye"
         className="mt-2 w-full"
