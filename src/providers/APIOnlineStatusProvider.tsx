@@ -10,14 +10,15 @@ async function checkAPIStatus(): Promise<'production' | 'development' | false> {
   }, 5000)
 
   return await fetch(`${import.meta.env.VITE_API_HOST}/status`, {
-    signal: controller.signal
+    signal: controller.signal,
+    cache: 'no-store'
   })
     .then(async res => {
       if (res.ok) {
         const data = await res.json()
         return data.data.environment
       }
-      return null
+      return false
     })
     .catch(() => false)
     .finally(() => {
