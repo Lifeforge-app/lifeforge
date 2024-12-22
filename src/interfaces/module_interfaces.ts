@@ -33,6 +33,7 @@ interface IModuleEntry {
     string,
     IModuleConfigInput | IModuleConfigSelect | IModuleConfigSwitch
   >
+  deprecated?: boolean
 }
 
 export type {

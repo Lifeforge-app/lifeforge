@@ -6,9 +6,16 @@ import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
+import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
-import { type IWishlistList } from '@interfaces/wishlist_interfaces'
+import {
+  type IWishlistEntry,
+  type IWishlistList
+} from '@interfaces/wishlist_interfaces'
+import EntryItem from './components/EntryItem'
 import FromOtherAppsModal from './components/FromOtherAppsModal'
 
 function WishlistEntries(): React.ReactElement {
@@ -17,6 +24,10 @@ function WishlistEntries(): React.ReactElement {
   const [valid] = useFetch<boolean>(`wishlist/lists/valid/${id}`)
   const [wishlistListDetails] = useFetch<IWishlistList>(
     `wishlist/lists/${id}`,
+    valid === true
+  )
+  const [entries, refreshEntries] = useFetch<IWishlistEntry[]>(
+    `wishlist/entries/${id}`,
     valid === true
   )
   const [isFromOtherAppsModalOpen, setFromOtherAppsModalOpen] = useState(false)
@@ -118,12 +129,54 @@ function WishlistEntries(): React.ReactElement {
           </MenuItems>
         </Menu>
       </header>
+      <APIComponentWithFallback data={entries}>
+        {entries =>
+          entries.length > 0 ? (
+            <Scrollbar>
+              <ul className="mt-6 flex flex-col">
+                {entries.map(entry => (
+                  <EntryItem key={entry.id} entry={entry} />
+                ))}
+              </ul>
+            </Scrollbar>
+          ) : (
+            <EmptyStateScreen
+              title="No entries"
+              description="Add items to your wishlist"
+              icon="tabler:shopping-cart-off"
+              ctaContent="New Item"
+            />
+          )
+        }
+      </APIComponentWithFallback>
       <FromOtherAppsModal
         isOpen={isFromOtherAppsModalOpen}
         onClose={() => {
           setFromOtherAppsModalOpen(false)
         }}
+        onCreate={refreshEntries}
       />
+      <Menu as="div" className="absolute bottom-6 right-6 z-50 block md:hidden">
+        <Button
+          onClick={() => {}}
+          icon="tabler:plus"
+          CustomElement={MenuButton}
+        />
+        <MenuItems
+          transition
+          anchor="top end"
+          className="overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+        >
+          <MenuItem onClick={() => {}} icon="tabler:plus" text="Add Manually" />
+          <MenuItem
+            onClick={() => {
+              setFromOtherAppsModalOpen(true)
+            }}
+            icon="tabler:apps"
+            text="From Other Apps"
+          />
+        </MenuItems>
+      </Menu>
     </ModuleWrapper>
   )
 }

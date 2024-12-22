@@ -16,7 +16,7 @@ function ModuleWrapper({
       className={`absolute ${
         subSidebarExpanded
           ? 'top-0'
-          : 'no-overflow-x top-20 !h-[calc(100%-4rem)] sm:top-28 sm:!h-[calc(100%-7rem)]'
+          : 'no-overflow-x top-20 !h-[calc(100%-5rem)] sm:top-28 sm:!h-[calc(100%-7rem)]'
       } flex min-h-0 flex-col transition-all ${className}`}
     >
       <div

@@ -32,12 +32,14 @@ function ModalHeader({
 
   return (
     <div className={`flex-between mb-6 flex ${className}`}>
-      <div className="flex items-center gap-4">
-        <h1 className="flex items-center gap-3 text-2xl font-semibold">
+      <div className="flex w-full min-w-0 items-center gap-4">
+        <h1 className="flex w-full min-w-0 items-center gap-3 text-2xl font-semibold">
           <Icon icon={innerIcon} className="size-7" />
-          {needTranslate
-            ? t(`modals.header.${toCamelCase(innerTitle)}`)
-            : innerTitle}
+          <span className="w-full min-w-0 truncate">
+            {needTranslate
+              ? t(`modals.header.${toCamelCase(innerTitle)}`)
+              : innerTitle}
+          </span>
         </h1>
         {appendTitle}
       </div>

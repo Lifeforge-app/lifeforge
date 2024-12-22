@@ -47,7 +47,7 @@ function AuthForm(): React.ReactElement {
   }
 
   return (
-    <div className="mt-6 flex w-full max-w-md flex-col gap-8 sm:mt-12">
+    <div className="mt-6 flex w-full max-w-md flex-col gap-6 sm:mt-12">
       {[
         {
           name: t('auth.emailOrUsername'),

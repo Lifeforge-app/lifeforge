@@ -29,10 +29,12 @@ const PROVIDERS = [
 
 function FromOtherAppsModal({
   isOpen,
-  onClose
+  onClose,
+  onCreate
 }: {
   isOpen: boolean
   onClose: () => void
+  onCreate: () => void
 }): React.ReactElement {
   const [provider, setProvider] = useState('shopee')
   const [url, setUrl] = useState('')
@@ -159,15 +161,19 @@ function FromOtherAppsModal({
               case false:
                 return (
                   <DataInput
+                    url={url}
                     name={name}
                     price={price}
                     image={image}
                     preview={preview}
+                    setUrl={setUrl}
                     setName={setName}
                     setPrice={setPrice}
                     setImage={setImage}
                     setPreview={setPreview}
                     setImagePickerOpen={setImagePickerOpen}
+                    onClose={onClose}
+                    onCreate={onCreate}
                   />
                 )
             }
