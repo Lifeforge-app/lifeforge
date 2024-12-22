@@ -186,7 +186,8 @@
           "wishlist": "wishlist",
           "wishlist-entries": "wishlist/:id"
         },
-        "togglable": true
+        "togglable": true,
+        "hasAI": true
       },
       {
         "name": "Budget",
