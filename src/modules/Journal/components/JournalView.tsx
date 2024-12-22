@@ -27,7 +27,7 @@ function JournalView({
   const [viewRaw, setViewRaw] = useState(false)
   return (
     <>
-      <div className="flex-between mb-6 flex !items-end">
+      <div className="flex-between mb-6 mt-4 flex !items-end">
         <div className="flex flex-col gap-2">
           <span className="text-lg font-medium text-bg-500">
             {moment(date).format('MMMM Do, YYYY')} - {mood.emoji} {mood.text}

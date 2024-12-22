@@ -9,6 +9,8 @@ import APIComponentWithFallback from '@components/Screens/APIComponentWithFallba
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IProjectsMKanbanColumn } from '@interfaces/projects_m_interfaces'
+import AddCardButton from './modals/AddCardButton'
+import ModifyCardModal from './modals/ModifyCardModal'
 import ModifyColumnsModal from './modals/ModifyColumnModal'
 
 function ProjectKanban(): React.ReactElement {
@@ -18,6 +20,9 @@ function ProjectKanban(): React.ReactElement {
     `projects-m/kanban/column/${id}`
   )
   const [modifyColumnModalOpenType, setModifyColumnModalOpenType] = useState<
+    'create' | 'update' | null
+  >(null)
+  const [modifyCardModalOpenType, setModifyCardModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
   const [
@@ -48,7 +53,7 @@ function ProjectKanban(): React.ReactElement {
               {columns.map((column, id) => (
                 <div
                   key={id}
-                  className={`flex h-min max-h-full w-72 shrink-0 flex-col rounded-lg border-t-4 p-6 pb-0 pr-4 ${componentBg}`}
+                  className={`flex h-min max-h-full w-96 shrink-0 flex-col rounded-lg border-t-4 p-6 pb-0 pr-4 ${componentBg}`}
                   style={{
                     borderColor: column.color
                   }}
@@ -94,12 +99,7 @@ function ProjectKanban(): React.ReactElement {
                           <span className="">{entry.title}</span>
                         </li>
                       ))}
-                      <li className="flex-center flex">
-                        <button className="mb-4 flex w-full items-center gap-2 rounded-lg border-[1.5px] border-dashed border-bg-400 p-4 pl-3 font-medium text-bg-500 transition-all hover:border-bg-800 hover:bg-bg-200 dark:border-bg-500 dark:hover:border-bg-100 dark:hover:bg-bg-800/20 dark:hover:text-bg-50">
-                          <Icon icon="tabler:plus" className="text-xl" />
-                          <span>Add a card</span>
-                        </button>
-                      </li>
+                      <AddCardButton />
                     </ul>
                   </Scrollbar>
                 </div>
@@ -124,6 +124,10 @@ function ProjectKanban(): React.ReactElement {
         existedData={existedData}
         setExistedData={setExistedData}
         refreshColumns={refreshColumns}
+      />
+      <ModifyCardModal
+        openType={modifyCardModalOpenType}
+        setOpenType={setModifyCardModalOpenType}
       />
       <DeleteConfirmationModal
         isOpen={deleteColumnConfirmationModalOpen}

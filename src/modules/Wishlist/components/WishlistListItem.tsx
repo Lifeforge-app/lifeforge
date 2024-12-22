@@ -35,7 +35,7 @@ function WishlistListItem({
           <Icon icon={list.icon} className="size-8" />
         </div>
         <div className="ml-4 w-full min-w-0">
-          <h2 className="text-xl font-semibold">{list.name}</h2>
+          <h2 className="truncate text-xl font-semibold">{list.name}</h2>
           <p className="min-w-0 truncate text-sm text-bg-500">
             {list.description}
           </p>
