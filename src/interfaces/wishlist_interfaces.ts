@@ -8,4 +8,12 @@ interface IWishlistList extends BasePBCollection {
   item_count: number
 }
 
-export type { IWishlistList }
+interface IWishlistEntry extends BasePBCollection {
+  name: string
+  url: string
+  price: number
+  image: string
+  list: IWishlistList
+}
+
+export type { IWishlistList, IWishlistEntry }

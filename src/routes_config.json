@@ -32,7 +32,8 @@
           "projects-k": "projects-k",
           "projects-k-id": "projects-k/:id"
         },
-        "togglable": true
+        "togglable": true,
+        "deprecated": true
       },
       {
         "name": "Idea Box",
@@ -70,7 +71,8 @@
         "routes": {
           "spotify": "spotify"
         },
-        "togglable": true
+        "togglable": true,
+        "deprecated": true
       },
       {
         "name": "Code Time",
