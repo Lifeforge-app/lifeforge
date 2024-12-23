@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import {
+  type IBooksLibraryFileType,
   type IBooksLibraryCategory,
   type IBooksLibraryLanguage
 } from '@interfaces/books_library_interfaces'
@@ -9,15 +10,20 @@ import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 
 const recordKeyInDB = {
   categories: 'category',
-  languages: 'languages'
+  languages: 'languages',
+  fileTypes: 'file_type'
 }
 
 function _SidebarItem({
   item,
-  stuff
+  stuff,
+  fallbackIcon,
+  hasHamburgerMenu = true
 }: {
-  item: IBooksLibraryCategory | IBooksLibraryLanguage
-  stuff: 'categories' | 'languages'
+  item: IBooksLibraryCategory | IBooksLibraryLanguage | IBooksLibraryFileType
+  stuff: 'categories' | 'languages' | 'fileTypes'
+  fallbackIcon?: string
+  hasHamburgerMenu?: boolean
 }): React.ReactElement {
   const {
     entries: { data: entries },
@@ -40,11 +46,12 @@ function _SidebarItem({
     <>
       <SidebarItem
         active={searchParams.get(singleStuff) === item.id}
-        icon={item.icon}
+        icon={item.icon ?? fallbackIcon}
         name={item.name}
         needTranslate={false}
         number={
-          typeof entries !== 'string'
+          item.count ??
+          (typeof entries !== 'string'
             ? entries.filter(entry =>
                 Array.isArray(entry[recordKeyInDB[stuff] as keyof typeof entry])
                   ? (
@@ -55,7 +62,7 @@ function _SidebarItem({
                   : entry[recordKeyInDB[stuff] as keyof typeof entry] ===
                     item.id
               ).length
-            : 0
+            : 0)
         }
         onClick={() => {
           console.log('sus')
@@ -71,27 +78,29 @@ function _SidebarItem({
           setSidebarOpen(false)
         }}
         hamburgerMenuItems={
-          <>
-            <MenuItem
-              icon="tabler:edit"
-              onClick={e => {
-                e.stopPropagation()
-                setExistedData(item as any)
-                setModifyDataModalOpenType('update')
-              }}
-              text="Edit"
-            />
-            <MenuItem
-              isRed
-              icon="tabler:trash"
-              onClick={e => {
-                e.stopPropagation()
-                setExistedData(item as any)
-                setDeleteDataConfirmationOpen(true)
-              }}
-              text="Delete"
-            />
-          </>
+          hasHamburgerMenu ? (
+            <>
+              <MenuItem
+                icon="tabler:edit"
+                onClick={e => {
+                  e.stopPropagation()
+                  setExistedData(item as any)
+                  setModifyDataModalOpenType('update')
+                }}
+                text="Edit"
+              />
+              <MenuItem
+                isRed
+                icon="tabler:trash"
+                onClick={e => {
+                  e.stopPropagation()
+                  setExistedData(item as any)
+                  setDeleteDataConfirmationOpen(true)
+                }}
+                text="Delete"
+              />
+            </>
+          ) : undefined
         }
       />
     </>

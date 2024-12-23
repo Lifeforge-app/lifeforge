@@ -20,11 +20,23 @@ export interface IBooksLibraryEntry extends BasePBCollection {
 interface IBooksLibraryCategory extends BasePBCollection {
   name: string
   icon: string
+  count: number
 }
 
 interface IBooksLibraryLanguage extends BasePBCollection {
   name: string
   icon: string
+  count: number
 }
 
-export type { IBooksLibraryCategory, IBooksLibraryLanguage }
+interface IBooksLibraryFileType extends BasePBCollection {
+  name: string
+  icon: never
+  count: number
+}
+
+export type {
+  IBooksLibraryCategory,
+  IBooksLibraryLanguage,
+  IBooksLibraryFileType
+}

@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
 
 interface PropsWithActionButton {
-  actionButtonIcon: string
-  actionButtonOnClick: () => void
+  actionButtonIcon: string | undefined
+  actionButtonOnClick: (() => void) | undefined
 }
 
 interface PropsWithoutActionButton {

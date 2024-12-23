@@ -6,9 +6,15 @@ import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import SidebarItem from './SidebarItem'
 
 function SidebarSection({
-  stuff
+  stuff,
+  fallbackIcon,
+  hasActionButton = true,
+  hasHamburgerMenu = true
 }: {
-  stuff: 'categories' | 'languages'
+  stuff: 'categories' | 'languages' | 'fileTypes'
+  fallbackIcon?: string
+  hasActionButton?: boolean
+  hasHamburgerMenu?: boolean
 }): React.ReactElement {
   const { data, setExistedData, setModifyDataModalOpenType } =
     useBooksLibraryContext()[stuff]
@@ -17,18 +23,28 @@ function SidebarSection({
     <>
       <SidebarTitle
         name={stuff}
-        actionButtonIcon="tabler:plus"
-        actionButtonOnClick={() => {
-          setExistedData(null)
-          setModifyDataModalOpenType('create')
-        }}
+        {...(hasActionButton
+          ? {
+              actionButtonIcon: 'tabler:plus',
+              actionButtonOnClick: () => {
+                setExistedData(null)
+                setModifyDataModalOpenType('create')
+              }
+            }
+          : {})}
       />
       <APIComponentWithFallback data={data}>
         {data =>
           data.length > 0 ? (
             <>
               {data.map(item => (
-                <SidebarItem key={item.id} item={item} stuff={stuff} />
+                <SidebarItem
+                  key={item.id}
+                  item={item}
+                  stuff={stuff}
+                  fallbackIcon={fallbackIcon}
+                  hasHamburgerMenu={hasHamburgerMenu}
+                />
               ))}
             </>
           ) : (

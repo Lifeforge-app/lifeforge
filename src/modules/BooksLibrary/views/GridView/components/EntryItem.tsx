@@ -14,7 +14,7 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }): React.ReactElement {
   return (
     <li
       key={item.id}
-      className="relative flex flex-col items-start rounded-lg bg-bg-50 p-4 transition-all hover:bg-bg-200/70 dark:bg-bg-900 dark:hover:bg-bg-800/50"
+      className="relative flex w-full min-w-0 flex-col items-start rounded-lg bg-bg-50 p-4 transition-all hover:bg-bg-200/70 dark:bg-bg-900 dark:hover:bg-bg-800/50"
     >
       <a
         target="_blank"
@@ -55,17 +55,17 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }): React.ReactElement {
             )
           })()}
       </div>
-      <div className="mt-1 text-xl font-medium">
+      <div className="mt-1 line-clamp-3 w-full min-w-0 text-xl font-medium">
         {item.title}{' '}
         {item.edition !== '' && (
           <span className="text-sm text-bg-500">({item.edition} ed)</span>
         )}
       </div>
-      <div className="mt-0.5 break-all text-sm font-medium text-custom-500">
+      <div className="mt-0.5 line-clamp-3 break-all text-sm font-medium text-custom-500">
         {item.authors}
       </div>
-      <div className="mt-auto">
-        <BookMeta item={item} />
+      <div className="mt-auto w-full min-w-0">
+        <BookMeta isGridView item={item} />
       </div>
     </li>
   )

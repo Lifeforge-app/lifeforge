@@ -30,6 +30,10 @@ function WishlistEntries(): React.ReactElement {
     `wishlist/entries/${id}`,
     valid === true
   )
+  const [collectionId] = useFetch<string>(
+    'wishlist/entries/collection-id',
+    valid === true
+  )
   const [isFromOtherAppsModalOpen, setFromOtherAppsModalOpen] = useState(false)
 
   useEffect(() => {
@@ -129,25 +133,33 @@ function WishlistEntries(): React.ReactElement {
           </MenuItems>
         </Menu>
       </header>
-      <APIComponentWithFallback data={entries}>
-        {entries =>
-          entries.length > 0 ? (
-            <Scrollbar>
-              <ul className="mt-6 flex flex-col">
-                {entries.map(entry => (
-                  <EntryItem key={entry.id} entry={entry} />
-                ))}
-              </ul>
-            </Scrollbar>
-          ) : (
-            <EmptyStateScreen
-              title="No entries"
-              description="Add items to your wishlist"
-              icon="tabler:shopping-cart-off"
-              ctaContent="New Item"
-            />
-          )
-        }
+      <APIComponentWithFallback data={collectionId}>
+        {collectionId => (
+          <APIComponentWithFallback data={entries}>
+            {entries =>
+              entries.length > 0 ? (
+                <Scrollbar>
+                  <ul className="mt-6 flex flex-col space-y-2">
+                    {entries.map(entry => (
+                      <EntryItem
+                        key={entry.id}
+                        entry={entry}
+                        collectionId={collectionId}
+                      />
+                    ))}
+                  </ul>
+                </Scrollbar>
+              ) : (
+                <EmptyStateScreen
+                  title="No entries"
+                  description="Add items to your wishlist"
+                  icon="tabler:shopping-cart-off"
+                  ctaContent="New Item"
+                />
+              )
+            }
+          </APIComponentWithFallback>
+        )}
       </APIComponentWithFallback>
       <FromOtherAppsModal
         isOpen={isFromOtherAppsModalOpen}
