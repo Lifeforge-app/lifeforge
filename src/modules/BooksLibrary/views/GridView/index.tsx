@@ -18,11 +18,11 @@ function GridView({
 
   return (
     <Scrollbar className="mt-6">
-      <ul className="grid gap-6 px-4 pb-8 sm:grid-cols-2 md:grid-cols-3">
+      <ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2 px-4 pb-8 sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] sm:gap-4">
         {Object.entries(processes).map(([key, value]) => (
           <li
             key={key}
-            className="relative flex flex-col items-start rounded-lg bg-bg-50 p-4 transition-all dark:bg-bg-900"
+            className="relative flex w-full min-w-0 flex-col items-start rounded-lg bg-bg-50 p-4 transition-all dark:bg-bg-900"
           >
             <div className="flex-center absolute left-0 top-0 flex size-full rounded-lg bg-bg-50/50 p-8 text-center font-medium dark:bg-bg-900/70">
               Downloading... {value.percentage}
@@ -53,19 +53,19 @@ function GridView({
                   )
                 })()}
             </div>
-            <div className="mt-1 text-xl font-medium">
+            <p className="mt-1 line-clamp-3 w-full min-w-0 text-xl font-medium">
               {value.metadata.title}{' '}
               {value.metadata.edition !== '' && (
                 <span className="text-sm text-bg-500">
                   ({value.metadata.edition} ed)
                 </span>
               )}
-            </div>
-            <div className="mt-0.5 break-all text-sm font-medium text-custom-500">
+            </p>
+            <div className="mt-0.5 line-clamp-3 break-all text-sm font-medium text-custom-500">
               {value.metadata.authors}
             </div>
-            <div className="mt-auto">
-              <BookMeta item={value.metadata} />
+            <div className="mt-auto w-full min-w-0">
+              <BookMeta isGridView item={value.metadata} />
             </div>
           </li>
         ))}

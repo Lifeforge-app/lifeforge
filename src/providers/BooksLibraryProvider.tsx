@@ -7,7 +7,8 @@ import useHashParams from '@hooks/useHashParams'
 import {
   type IBooksLibraryLanguage,
   type IBooksLibraryCategory,
-  type IBooksLibraryEntry
+  type IBooksLibraryEntry,
+  type IBooksLibraryFileType
 } from '@interfaces/books_library_interfaces'
 import APIRequest from '@utils/fetchData'
 
@@ -52,6 +53,7 @@ interface IBooksLibraryData {
   entries: IBooksLibraryCommon<IBooksLibraryEntry>
   categories: IBooksLibraryCommon<IBooksLibraryCategory>
   languages: IBooksLibraryCommon<IBooksLibraryLanguage>
+  fileTypes: IBooksLibraryCommon<IBooksLibraryFileType>
   miscellaneous: {
     searchParams: URLSearchParams
     setSearchParams: (params: Record<string, string> | URLSearchParams) => void
@@ -103,6 +105,9 @@ export default function BooksLibraryProvider(): React.ReactElement {
   const languagesState = useBooksLibraryCommonState<IBooksLibraryLanguage>(
     'books-library/languages'
   )
+  const fileTypesState = useBooksLibraryCommonState<IBooksLibraryFileType>(
+    'books-library/file-types'
+  )
 
   const deleteModalConfigs = Object.entries({
     category: categoriesState,
@@ -140,7 +145,6 @@ export default function BooksLibraryProvider(): React.ReactElement {
     APIRequest({
       endpoint: 'books-library/libgen/download-progresses',
       method: 'GET',
-      failureInfo: 'Failed to get download status',
       callback(data) {
         if (data.state === 'success') {
           const processes = data.data as Record<
@@ -165,6 +169,7 @@ export default function BooksLibraryProvider(): React.ReactElement {
             lastProcessesLength.current !== Object.keys(processes).length
           ) {
             entriesState.refreshData()
+            fileTypesState.refreshData()
           }
           lastProcessesLength.current = Object.keys(processes).length
           setIsFirstTime(false)
@@ -187,6 +192,7 @@ export default function BooksLibraryProvider(): React.ReactElement {
         entries: entriesState,
         categories: categoriesState,
         languages: languagesState,
+        fileTypes: fileTypesState,
         miscellaneous: {
           searchParams,
           setSearchParams,

@@ -43,6 +43,23 @@ function AddToLibraryModal({
     }
   )
 
+  useEffect(() => {
+    setData({
+      authors: '',
+      category: '',
+      edition: '',
+      extension: '',
+      isbn: '',
+      languages: [],
+      md5,
+      publisher: '',
+      size: '',
+      thumbnail: '',
+      title: '',
+      year_published: ''
+    })
+  }, [md5])
+
   const FIELDS: IFieldProps[] = [
     {
       id: 'md5',

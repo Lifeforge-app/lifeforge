@@ -39,7 +39,7 @@ function Details({
               <div className="flex-center top-0 flex h-full flex-col md:sticky">
                 {data.image !== '../img/blank.png' ? (
                   <img
-                    src={`http://libgen.is${data.image}`}
+                    src={`${import.meta.env.VITE_API_HOST}${data.image}`}
                     className="size-full max-w-64 object-contain"
                     referrerPolicy="no-referrer"
                     alt=""

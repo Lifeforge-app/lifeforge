@@ -46,6 +46,13 @@ function Sidebar(): React.ReactElement {
       <SidebarSection stuff="categories" />
       <SidebarDivider />
       <SidebarSection stuff="languages" />
+      <SidebarDivider />
+      <SidebarSection
+        fallbackIcon="tabler:file-text"
+        stuff="fileTypes"
+        hasActionButton={false}
+        hasHamburgerMenu={false}
+      />
     </SidebarWrapper>
   )
 }

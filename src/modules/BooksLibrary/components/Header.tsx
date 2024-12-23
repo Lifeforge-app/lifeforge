@@ -9,6 +9,7 @@ function Header({ itemCount }: { itemCount: number }): React.ReactElement {
   const {
     categories: { data: categories },
     languages: { data: languages },
+    fileTypes: { data: fileTypes },
     miscellaneous: {
       searchParams,
       setSearchParams,
@@ -79,6 +80,12 @@ function Header({ itemCount }: { itemCount: number }): React.ReactElement {
           language: {
             data: languages,
             isColored: true
+          },
+          fileType: {
+            data:
+              typeof fileTypes !== 'string'
+                ? fileTypes.map(e => ({ ...e, icon: 'tabler:file-text' }))
+                : []
           }
         }}
       />
