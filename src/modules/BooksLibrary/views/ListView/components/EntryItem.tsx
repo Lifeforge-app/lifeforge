@@ -104,7 +104,7 @@ export default function EntryItem({
             })()}
           </div>
         )}
-        <div className="mr-20 text-lg font-semibold">
+        <div className="mr-20 line-clamp-3 text-lg font-semibold">
           {item.title}{' '}
           {item.edition !== '' && (
             <span className="text-sm text-bg-500">({item.edition} ed)</span>

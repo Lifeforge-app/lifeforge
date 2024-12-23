@@ -22,7 +22,9 @@ function SearchResultItem({
         />
         {book.image !== '' && (
           <img
-            src={`https://libgen.is/${book.image}`}
+            src={`${import.meta.env.VITE_API_HOST}/books-library/libgen${
+              book.image
+            }`}
             referrerPolicy="no-referrer"
             alt=""
             className="relative z-10 border-none object-cover"

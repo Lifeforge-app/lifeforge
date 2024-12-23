@@ -31,6 +31,7 @@ function BooksLibrary(): React.ReactElement {
       existedData: existedBookData,
       setExistedData: setExistedBookData
     },
+    fileTypes: { data: fileTypes, refreshData: refreshFileTypes },
     miscellaneous: {
       searchParams,
       deleteModalConfigs,
@@ -57,11 +58,19 @@ function BooksLibrary(): React.ReactElement {
         (searchParams.get('language') !== null
           ? entry.languages.includes(searchParams.get('language') as string)
           : true) &&
-        (searchParams.get('favourite') === 'true' ? entry.is_favourite : true)
+        (searchParams.get('favourite') === 'true'
+          ? entry.is_favourite
+          : true) &&
+        (searchParams.get('fileType') !== null && typeof fileTypes !== 'string'
+          ? entry.extension ===
+            fileTypes.find(
+              fileType => fileType.id === searchParams.get('fileType')
+            )?.name
+          : true)
     )
 
     setFilteredEntries(filteredEntries)
-  }, [entries, debouncedSearchQuery, searchParams])
+  }, [entries, debouncedSearchQuery, searchParams, fileTypes])
 
   return (
     <ModuleWrapper>
@@ -165,7 +174,10 @@ function BooksLibrary(): React.ReactElement {
           setDeleteBookConfirmationModalOpen(false)
           setExistedBookData(null)
         }}
-        updateDataList={refreshEntries}
+        updateDataList={() => {
+          refreshEntries()
+          refreshFileTypes()
+        }}
       />
       <Menu as="div" className="fixed bottom-6 right-6 z-50 block md:hidden">
         <Button

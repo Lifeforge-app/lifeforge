@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer } from 'react'
+import { toast } from 'react-toastify'
 import Modal from '@components/Modals/Modal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
@@ -140,6 +141,14 @@ function ModifyBookModal(): React.ReactElement {
   ]
 
   async function onSubmit(): Promise<void> {
+    if (data.title.trim() === '') {
+      toast.error('Title cannot be empty')
+    }
+
+    if (data.year_published === '') {
+      data.year_published = '0'
+    }
+
     await APIRequest({
       endpoint: `books-library/entries/${existedData?.id}`,
       method: 'PATCH',
@@ -157,6 +166,9 @@ function ModifyBookModal(): React.ReactElement {
   useEffect(() => {
     if (existedData !== null) {
       setData(existedData)
+      if (existedData.year_published === 0) {
+        setData({ year_published: '' })
+      }
     }
   }, [existedData])
 
