@@ -92,14 +92,23 @@ function ModuleItem({
               className="text-2xl text-custom-500 dark:text-bg-50"
             />
           </div>
-          <h3 className="text-xl font-medium">
-            {t(`modules.${toCamelCase(module.name)}`)}
-            {module.deprecated && (
-              <span className="ml-4 text-sm text-red-500">
-                ({t('modules.deprecated')})
-              </span>
-            )}
-          </h3>
+          <div>
+            <h3 className="flex items-center text-xl font-medium">
+              {t(`modules.${toCamelCase(module.name)}`)}
+              {module.deprecated && (
+                <span className="ml-2 text-sm text-red-500">
+                  ({t('modules.deprecated')})
+                </span>
+              )}
+            </h3>
+            <p className="text-bg-500">
+              {t(
+                `modules.descriptions.${toCamelCase(
+                  module.name?.toString() ?? ''
+                )}`
+              )}
+            </p>
+          </div>
         </div>
         <div className="flex items-center gap-4">
           <Switch

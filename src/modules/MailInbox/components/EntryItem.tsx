@@ -4,7 +4,6 @@ import Button from '@components/ButtonsAndInputs/Button'
 import { type IMailInboxEntry } from '@interfaces/mail_inbox_interfaces'
 
 function EntryItem({ mail }: { mail: IMailInboxEntry }): React.ReactElement {
-  console.log(mail)
   return (
     <li
       key={mail.id}
