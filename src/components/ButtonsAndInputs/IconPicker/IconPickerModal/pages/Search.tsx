@@ -90,7 +90,7 @@ function Search({
     setIconData(null)
     getIconSet(searchTerm)
       .then(data => {
-        console.log(data)
+        data
         setIconData(data)
         setFilteredIconList(data.iconList)
         setCurrentIconSet(null)

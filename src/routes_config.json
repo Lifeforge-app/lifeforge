@@ -139,6 +139,14 @@
           "achievements-id": "achievements/:id"
         },
         "togglable": true
+      },
+      {
+        "name": "Workout",
+        "icon": "tabler:barbell",
+        "routes": {
+          "workout": "workout"
+        },
+        "togglable": true
       }
     ]
   },
@@ -254,6 +262,14 @@
         "icon": "tabler:brand-youtube",
         "routes": {
           "youtube-videos": "youtube-videos"
+        },
+        "togglable": true
+      },
+      {
+        "name": "3D Models",
+        "icon": "tabler:cube",
+        "routes": {
+          "3d-models": "3d-models"
         },
         "togglable": true
       }

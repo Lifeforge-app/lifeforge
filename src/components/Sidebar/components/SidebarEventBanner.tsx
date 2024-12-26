@@ -31,7 +31,7 @@ function SidebarEventBanner(): React.ReactElement {
         <div
           className={`flex-between flex w-full gap-2 whitespace-nowrap rounded-tr-2xl ${
             eventType === 'christmas'
-              ? 'bg-[#f14e63] !text-bg-50'
+              ? 'bg-[#f14e63] !text-bg-100'
               : 'bg-custom-500'
           } p-4 text-lg font-medium ${
             isLightColor(theme ?? '#000000') ? 'text-bg-800' : 'text-bg-50'

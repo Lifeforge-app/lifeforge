@@ -96,12 +96,6 @@ export default function useThemeColors(): {
       : themeColor
   }, [themeColor])
 
-  console.log(
-    toCamelCase(
-      themeColor.replace('theme-', '').replace(/-/g, ' ')
-    ) as keyof typeof THEME_COLOR_HEX
-  )
-
   const finalBgTemp = useMemo(() => {
     return !bgTemp.startsWith('#')
       ? bgTheme[bgTemp.replace('bg-', '') as keyof typeof bgTheme]

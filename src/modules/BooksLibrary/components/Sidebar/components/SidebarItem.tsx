@@ -65,7 +65,7 @@ function _SidebarItem({
             : 0)
         }
         onClick={() => {
-          console.log('sus')
+          ;('sus')
           setSidebarOpen(false)
           setSearchParams({
             ...Object.fromEntries(searchParams.entries()),
