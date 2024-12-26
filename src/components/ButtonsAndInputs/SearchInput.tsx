@@ -13,7 +13,9 @@ function SearchInput({
   lighter = false,
   hasTopMargin = true,
   onFilterIconClick,
-  filterAmount
+  filterAmount,
+  sideButtonIcon,
+  onSideButtonClick
 }: {
   searchQuery: string
   setSearchQuery: (query: string) => void
@@ -24,6 +26,8 @@ function SearchInput({
   hasTopMargin?: boolean
   onFilterIconClick?: () => void
   filterAmount?: number
+  sideButtonIcon?: string
+  onSideButtonClick?: () => void
 }): React.ReactElement {
   const { t } = useTranslation()
   const { componentBgWithHover } = useThemeColors()
@@ -66,6 +70,14 @@ function SearchInput({
           {filterAmount !== undefined && filterAmount > 0 && (
             <span className="-mt-0.5">({filterAmount})</span>
           )}
+        </button>
+      )}
+      {sideButtonIcon !== undefined && onSideButtonClick !== undefined && (
+        <button
+          onClick={onSideButtonClick}
+          className="flex items-center gap-1 rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200 hover:text-bg-900 dark:hover:bg-bg-700/50 dark:hover:text-bg-100"
+        >
+          <Icon icon={sideButtonIcon} className="text-xl" />
         </button>
       )}
     </search>

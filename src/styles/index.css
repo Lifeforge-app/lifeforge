@@ -688,3 +688,7 @@ td {
 .react-date-picker__calendar {
   @apply absolute top-0 left-0;
 }
+
+#qr-scanner svg {
+  @apply hidden;
+}

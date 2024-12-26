@@ -121,6 +121,9 @@ const WishlistEntries = lazy(
   async () => await import('./modules/Wishlist/pages/WishlistEntries')
 )
 const Budget = lazy(async () => await import('./modules/Budget'))
+const Workout = lazy(async () => await import('./modules/Workout'))
+
+const _3dModels = lazy(async () => await import('./modules/3dModels'))
 
 export const COMPONENTS = {
   dashboard: {
@@ -260,5 +263,11 @@ export const COMPONENTS = {
   },
   budget: {
     budget: Budget
+  },
+  workout: {
+    workout: Workout
+  },
+  '3d-models': {
+    '3d-models': _3dModels
   }
 }
