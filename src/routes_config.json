@@ -40,8 +40,7 @@
         "icon": "tabler:bulb",
         "routes": {
           "idea-box": "idea-box",
-          "idea-box-id": "idea-box/:id",
-          "idea-box-folder": "idea-box/:id/:folderId"
+          "idea-box-id": "idea-box/:id/*"
         },
         "togglable": true
       },

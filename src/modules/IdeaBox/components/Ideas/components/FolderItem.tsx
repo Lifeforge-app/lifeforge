@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { useDrop } from 'react-dnd'
+import { useDrag, useDrop } from 'react-dnd'
 import { Link, useParams } from 'react-router-dom'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
@@ -13,6 +14,7 @@ import APIRequest from '@utils/fetchData'
 function FolderItem({
   folder,
   setIdeaList,
+  setFolderList,
   setModifyFolderModalOpenType,
   setDeleteFolderConfirmationModalOpen,
   setExistedFolderData
@@ -20,6 +22,9 @@ function FolderItem({
   folder: IIdeaBoxFolder
   setIdeaList: React.Dispatch<
     React.SetStateAction<IIdeaBoxEntry[] | 'loading' | 'error'>
+  >
+  setFolderList: React.Dispatch<
+    React.SetStateAction<IIdeaBoxFolder[] | 'loading' | 'error'>
   >
   setModifyFolderModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
@@ -31,11 +36,26 @@ function FolderItem({
     React.SetStateAction<IIdeaBoxFolder | null>
   >
 }): React.ReactElement {
-  const { id } = useParams<{ id: string }>()
+  const { id, '*': path } = useParams<{ id: string; '*': string }>()
+  const [{ opacity, isDragging }, dragRef] = useDrag(
+    () => ({
+      type: 'FOLDER',
+      item: {
+        id: folder.id,
+        type: 'folder'
+      },
+      collect: monitor => ({
+        opacity: monitor.isDragging() ? 0.5 : 1,
+        isDragging: !!monitor.isDragging()
+      })
+    }),
+    []
+  )
+
   const [{ isOver, canDrop }, drop] = useDrop(() => ({
-    accept: 'IDEA',
-    drop: (e: { id: string }) => {
-      putIntoFolder(e.id).catch(console.error)
+    accept: ['IDEA', 'FOLDER'],
+    drop: (e: { id: string; type: 'idea' | 'folder' }) => {
+      putIntoFolder(e).catch(console.error)
     },
     collect: monitor => ({
       isOver: !!monitor.isOver(),
@@ -43,19 +63,46 @@ function FolderItem({
     })
   }))
 
-  async function putIntoFolder(id: string): Promise<void> {
+  async function putIntoFolder({
+    id,
+    type
+  }: {
+    id: string
+    type: 'idea' | 'folder'
+  }): Promise<void> {
     await APIRequest({
       method: 'POST',
-      endpoint: `idea-box/ideas/folder/${id}?folder=${folder.id}`,
-      body: {
-        ideaId: id
-      },
+      endpoint: `idea-box/${type}s/move/${id}?target=${folder.id}`,
       successInfo: 'add',
       failureInfo: 'add',
       callback: () => {
-        setIdeaList(prev => {
+        switch (type) {
+          case 'idea':
+            setIdeaList(prev => {
+              if (prev === 'loading' || prev === 'error') return prev
+              return prev.filter(idea => idea.id !== id)
+            })
+            break
+          case 'folder':
+            setFolderList(prev => {
+              if (prev === 'loading' || prev === 'error') return prev
+              return prev.filter(folder => folder.id !== id)
+            })
+        }
+      }
+    })
+  }
+
+  async function removeFromFolder(): Promise<void> {
+    await APIRequest({
+      endpoint: `idea-box/folders/move/${folder.id}`,
+      method: 'DELETE',
+      successInfo: 'remove',
+      failureInfo: 'remove',
+      callback: () => {
+        setFolderList(prev => {
           if (prev === 'loading' || prev === 'error') return prev
-          return prev.filter(idea => idea.id !== id)
+          return prev.filter(f => f.id !== folder.id)
         })
       }
     })
@@ -63,18 +110,20 @@ function FolderItem({
 
   return (
     <Link
-      to={`/idea-box/${id}/${folder.id}`}
+      to={`/idea-box/${id}/${path}/${folder.id}`.replace('//', '/')}
       ref={stuff => {
+        dragRef(stuff)
         drop(stuff)
       }}
       key={folder.id}
       className={`flex-between relative isolate flex rounded-md p-4 shadow-custom backdrop-blur-sm before:absolute before:left-0 before:top-0 before:size-full before:rounded-md before:transition-all hover:before:bg-white/5 ${
         isOver ? 'text-bg-50 dark:text-bg-800' : ''
-      } font-medium transition-all`}
+      } ${isDragging ? 'cursor-move' : ''} font-medium transition-all`}
       style={{
         backgroundColor:
           folder.color + (!isOver ? (canDrop ? '50' : '20') : ''),
-        color: !isOver ? folder.color : ''
+        color: !isOver ? folder.color : '',
+        opacity
       }}
     >
       <div className="flex">
@@ -89,6 +138,15 @@ function FolderItem({
           color: !isOver ? folder.color : ''
         }}
       >
+        {folder.parent !== '' && (
+          <MenuItem
+            onClick={() => {
+              removeFromFolder().catch(console.error)
+            }}
+            icon="tabler:folder-minus"
+            text="Remove from folder"
+          />
+        )}
         <MenuItem
           onClick={() => {
             setModifyFolderModalOpenType('update')

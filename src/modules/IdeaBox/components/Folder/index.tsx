@@ -120,11 +120,9 @@ function Folder(): React.ReactElement {
         {() => (
           <>
             <ContainerHeader
-              id={id!}
               valid={containerValid === true && folderValid === true}
               viewArchived={viewArchived}
               setViewArchived={setViewArchived}
-              folderId={folderId}
             />
             <APIComponentWithFallback data={data}>
               {data =>
@@ -197,7 +195,6 @@ function Folder(): React.ReactElement {
               openType={modifyIdeaModalOpenType}
               typeOfModifyIdea={typeOfModifyIdea}
               setOpenType={setModifyIdeaModalOpenType}
-              containerId={id as string}
               updateIdeaList={refreshData}
               existedData={existedData}
               pastedData={pastedData}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { Icon } from '@iconify/react'
@@ -16,33 +17,32 @@ import {
   type IIdeaBoxEntry,
   type IIdeaBoxFolder
 } from '@interfaces/ideabox_interfaces'
+import APIRequest from '@utils/fetchData'
 import ContainerHeader from './components/ContainerHeader'
 import FAB from './components/FAB'
 import FolderItem from './components/FolderItem'
 import EntryImage from './components/IdeaEntry/EntryImage'
 import EntryLink from './components/IdeaEntry/EntryLink'
 import EntryText from './components/IdeaEntry/EntryText'
+import ModifyFolderModal from './components/ModifyFolderModal'
 import ModifyIdeaModal from './components/ModifyIdeaModal'
-import ModifyFolderModal from '../Folder/components/ModifyFolderModal'
 
 function Ideas(): React.ReactElement {
   const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
-  const { id } = useParams<{ id: string }>()
+  const { id, '*': path } = useParams<{ id: string; '*': string }>()
   const [viewArchived, setViewArchived] = useState(
     searchParams.get('archived') === 'true'
   )
 
-  const [valid] = useFetch<boolean>(`idea-box/containers/valid/${id}`)
-  const [data, refreshData, setData] = useFetch<IIdeaBoxEntry[]>(
-    `idea-box/ideas?container=${id}&archived=${viewArchived}`,
-    valid === true
+  const [valid] = useFetch<boolean>(`idea-box/valid/${id}/${path}`)
+  const [data, setData] = useState<IIdeaBoxEntry[] | 'loading' | 'error'>(
+    'loading'
   )
-  const [folders, refreshFolders] = useFetch<IIdeaBoxFolder[]>(
-    `idea-box/folders?container=${id}`,
-    valid === true
-  )
+  const [folders, setFolders] = useState<
+    IIdeaBoxFolder[] | 'loading' | 'error'
+  >('loading')
 
   const [modifyIdeaModalOpenType, setModifyIdeaModalOpenType] = useState<
     null | 'create' | 'update' | 'paste'
@@ -73,6 +73,35 @@ function Ideas(): React.ReactElement {
       navigate('/idea-box')
     }
   }, [valid])
+
+  function refreshData(): void {
+    setData('loading')
+    APIRequest({
+      endpoint: `idea-box/ideas/${id}/${path}?archived=${viewArchived}`,
+      method: 'GET',
+      callback: data => {
+        setData(data.data)
+      }
+    }).catch(console.error)
+  }
+
+  function refreshFolders(): void {
+    setFolders('loading')
+    APIRequest({
+      endpoint: `idea-box/folders/${id}/${path}`,
+      method: 'GET',
+      callback: data => {
+        setFolders(data.data)
+      }
+    }).catch(console.error)
+  }
+
+  useEffect(() => {
+    if (valid === true) {
+      refreshData()
+      refreshFolders()
+    }
+  }, [id, path, viewArchived, valid])
 
   function onPasteImage(event: ClipboardEvent): void {
     if (modifyIdeaModalOpenType !== null) return
@@ -130,7 +159,6 @@ function Ideas(): React.ReactElement {
         {() => (
           <>
             <ContainerHeader
-              id={id!}
               valid={valid}
               viewArchived={viewArchived}
               setViewArchived={setViewArchived}
@@ -174,6 +202,7 @@ function Ideas(): React.ReactElement {
                                       key={folder.id}
                                       folder={folder}
                                       setIdeaList={setData}
+                                      setFolderList={setFolders}
                                       setExistedFolderData={
                                         setExistedFolderData
                                       }
@@ -258,7 +287,6 @@ function Ideas(): React.ReactElement {
               openType={modifyIdeaModalOpenType}
               typeOfModifyIdea={typeOfModifyIdea}
               setOpenType={setModifyIdeaModalOpenType}
-              containerId={id as string}
               updateIdeaList={refreshData}
               existedData={existedData}
               pastedData={pastedData}

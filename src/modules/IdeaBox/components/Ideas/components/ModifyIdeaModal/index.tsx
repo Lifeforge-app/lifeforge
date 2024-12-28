@@ -20,7 +20,6 @@ function ModifyIdeaModal({
   openType,
   setOpenType,
   typeOfModifyIdea,
-  containerId,
   updateIdeaList,
   existedData,
   pastedData
@@ -30,7 +29,6 @@ function ModifyIdeaModal({
     React.SetStateAction<'create' | 'update' | 'paste' | null>
   >
   typeOfModifyIdea: 'text' | 'image' | 'link'
-  containerId: string
   updateIdeaList: () => void
   existedData: IIdeaBoxEntry | null
   pastedData: {
@@ -38,7 +36,7 @@ function ModifyIdeaModal({
     file: File
   } | null
 }): React.ReactElement {
-  const { folderId } = useParams<{ folderId: string }>()
+  const { id, '*': path } = useParams<{ id: string; '*': string }>()
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
   const [innerTypeOfModifyIdea, setInnerTypeOfModifyIdea] = useState<
     'text' | 'image' | 'link'
@@ -149,7 +147,7 @@ function ModifyIdeaModal({
     setLoading(true)
 
     const formData = new FormData()
-    formData.append('container', containerId)
+    formData.append('container', id ?? '')
     formData.append('title', ideaTitle.trim())
     formData.append(
       'content',
@@ -158,10 +156,7 @@ function ModifyIdeaModal({
     formData.append('image', ideaImage!)
     formData.append('imageLink', debouncedImageLink)
     formData.append('type', innerTypeOfModifyIdea)
-
-    if (folderId !== undefined) {
-      formData.append('folder', folderId)
-    }
+    formData.append('folder', path?.split('/').pop() ?? '')
 
     await APIRequest({
       endpoint: `idea-box/ideas/${
