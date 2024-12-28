@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import moment from 'moment'
 import React from 'react'
 import { useDrag } from 'react-dnd'
 import useFetch from '@hooks/useFetch'
@@ -39,7 +40,8 @@ function EntryLink({
     () => ({
       type: 'IDEA',
       item: {
-        id: entry.id
+        id: entry.id,
+        type: 'idea'
       },
       collect: monitor => ({
         opacity: monitor.isDragging() ? 0.5 : 1,
@@ -68,7 +70,12 @@ function EntryLink({
         />
       )}
       <div className="flex items-start justify-between gap-2">
-        <h3 className="text-xl font-semibold ">{entry.title}</h3>
+        <div>
+          <h3 className="text-xl font-semibold ">{entry.title}</h3>
+          <span className="text-sm text-bg-500">
+            {moment(entry.created).fromNow()}
+          </span>
+        </div>
         <EntryContextMenu
           entry={entry}
           setTypeOfModifyIdea={setTypeOfModifyIdea}

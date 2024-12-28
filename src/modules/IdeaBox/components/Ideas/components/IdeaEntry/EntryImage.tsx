@@ -29,7 +29,8 @@ function EntryImage({
     () => ({
       type: 'IDEA',
       item: {
-        id: entry.id
+        id: entry.id,
+        type: 'idea'
       },
       collect: monitor => ({
         opacity: monitor.isDragging() ? 0.5 : 1,

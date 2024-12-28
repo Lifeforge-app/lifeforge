@@ -27,7 +27,7 @@ function ModifyFolderModal({
   updateFolderList: () => void
   existedData: IIdeaBoxFolder | null
 }): React.ReactElement {
-  const { id } = useParams<{ id: string }>()
+  const { id, '*': path } = useParams<{ id: string; '*': string }>()
   const [loading, setLoading] = useState(false)
   const [folderName, setFolderName] = useState('')
   const [folderColor, setFolderColor] = useState('#FFFFFF')
@@ -52,7 +52,10 @@ function ModifyFolderModal({
       name: folderName.trim(),
       color: folderColor.trim(),
       icon: folderIcon.trim(),
-      ...(innerOpenType === 'create' && { container: id })
+      ...(innerOpenType === 'create' && {
+        container: id,
+        parent: path?.split('/').pop()
+      })
     }
 
     await APIRequest({

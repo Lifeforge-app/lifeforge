@@ -1,37 +1,52 @@
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 import { Icon } from '@iconify/react'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import useFetch from '@hooks/useFetch'
 import {
   type IIdeaBoxContainer,
   type IIdeaBoxFolder
 } from '@interfaces/ideabox_interfaces'
+import APIRequest from '@utils/fetchData'
 
 function ContainerHeader({
-  id,
   valid,
   viewArchived,
-  setViewArchived,
-  folderId
+  setViewArchived
 }: {
-  id: string
   valid: boolean | 'loading' | 'error'
   viewArchived: boolean
   setViewArchived: React.Dispatch<React.SetStateAction<boolean>>
-  folderId?: string
 }): React.ReactElement {
-  const [containerDetails] = useFetch<IIdeaBoxContainer>(
-    `idea-box/containers/${id}`,
-    valid === true
-  )
-  const [folderDetails] = useFetch<IIdeaBoxFolder>(
-    `idea-box/folders/${folderId}`,
-    folderId !== undefined
-  )
+  const { id, '*': path } = useParams<{ id: string; '*': string }>()
+  const [pathDetails, setPathDetails] = useState<
+    | {
+        container: IIdeaBoxContainer
+        path: IIdeaBoxFolder[]
+      }
+    | 'loading'
+    | 'error'
+  >('loading')
   const navigate = useNavigate()
+
+  async function fetchPathDetails(): Promise<void> {
+    setPathDetails('loading')
+    await APIRequest({
+      method: 'GET',
+      endpoint: `idea-box/path/${id}/${path}`,
+      callback: data => {
+        setPathDetails(data.data)
+      }
+    })
+  }
+
+  useEffect(() => {
+    if (valid === true) {
+      fetchPathDetails().catch(console.error)
+    }
+  }, [valid, id, path])
 
   return (
     <header className="space-y-1">
@@ -39,21 +54,20 @@ function ContainerHeader({
         onClick={() => {
           if (viewArchived) {
             setViewArchived(false)
-            return
           }
-          navigate(`/idea-box/${folderId !== undefined ? id : ''}`)
+          navigate(location.pathname.split('/').slice(0, -1).join('/'))
         }}
       />
       <div className="flex-between flex">
         <h1
           className={`flex items-center gap-4 ${
-            typeof containerDetails !== 'string'
+            typeof pathDetails !== 'string'
               ? 'text-2xl sm:text-3xl'
               : 'text-2xl'
           } font-semibold `}
         >
           {(() => {
-            switch (containerDetails) {
+            switch (pathDetails) {
               case 'loading':
                 return (
                   <>
@@ -77,71 +91,58 @@ function ContainerHeader({
                     <div
                       className="rounded-lg p-3"
                       style={{
-                        backgroundColor: containerDetails.color + '20'
+                        backgroundColor: pathDetails.container.color + '20'
                       }}
                     >
                       <Icon
-                        icon={containerDetails.icon}
+                        icon={pathDetails.container.icon}
                         className="text-2xl sm:text-3xl"
                         style={{
-                          color: containerDetails.color
+                          color: pathDetails.container.color
                         }}
                       />
                     </div>
                     {viewArchived ? 'Archived ideas in ' : ''}
-                    {containerDetails.name}
+                    {pathDetails.container.name}
+                    {pathDetails.path.length > 0 && (
+                      <Icon
+                        icon="tabler:chevron-right"
+                        className="size-6 text-gray-500"
+                      />
+                    )}
+                    {pathDetails.path.map((folder, index) => (
+                      <>
+                        <Link
+                          key={folder.id}
+                          to={`/idea-box/${id}/${path
+                            ?.split('/')
+                            .slice(0, index + 1)
+                            .join('/')
+                            .replace('//', '/')}`}
+                          className="relative flex items-center gap-2 rounded-lg p-3 text-base before:absolute before:left-0 before:top-0 before:size-full before:rounded-md before:transition-all hover:before:bg-white/5"
+                          style={{
+                            backgroundColor: folder.color + '20',
+                            color: folder.color
+                          }}
+                        >
+                          <Icon
+                            icon={folder.icon}
+                            className="shrink-0 text-xl"
+                          />
+                          <span className="hidden md:block">{folder.name}</span>
+                        </Link>
+                        {index !== pathDetails.path.length - 1 && (
+                          <Icon
+                            icon="tabler:chevron-right"
+                            className="size-6 text-gray-500"
+                          />
+                        )}
+                      </>
+                    ))}
                   </>
                 )
             }
           })()}
-          {folderId !== undefined && (
-            <Icon
-              icon="tabler:chevron-right"
-              className="size-5 shrink-0 text-bg-500"
-            />
-          )}
-          {folderId !== undefined &&
-            (() => {
-              switch (folderDetails) {
-                case 'loading':
-                  return (
-                    <>
-                      <span className="small-loader-light"></span>
-                      Loading...
-                    </>
-                  )
-                case 'error':
-                  return (
-                    <>
-                      <Icon
-                        icon="tabler:alert-triangle"
-                        className="mt-0.5 size-7 text-red-500"
-                      />
-                      Failed to fetch data from server.
-                    </>
-                  )
-                default:
-                  return folderDetails !== undefined ? (
-                    <div
-                      className="flex items-center gap-2 rounded-lg p-3 text-base"
-                      style={{
-                        backgroundColor: folderDetails.color + '20',
-                        color: folderDetails.color
-                      }}
-                    >
-                      <Icon
-                        icon={folderDetails.icon}
-                        className="shrink-0 text-xl"
-                      />
-                      <span className="hidden md:block">
-                        {folderDetails.name}
-                      </span>
-                    </div>
-                  ) : (
-                    'Folder'
-                  )
-              }
-            })()}
         </h1>
         {!viewArchived && (
           <HamburgerMenu largerPadding className="relative">

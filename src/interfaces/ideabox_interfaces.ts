@@ -14,6 +14,7 @@ interface IIdeaBoxFolder extends BasePBCollection {
   icon: string
   name: string
   containers: string
+  parent: string
 }
 
 interface IIdeaBoxEntry extends BasePBCollection {
