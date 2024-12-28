@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import moment from 'moment'
 import React from 'react'
 import { useDrag } from 'react-dnd'
 import useThemeColors from '@hooks/useThemeColor'
@@ -29,7 +30,8 @@ function EntryText({
     () => ({
       type: 'IDEA',
       item: {
-        id: entry.id
+        id: entry.id,
+        type: 'idea'
       },
       collect: monitor => ({
         opacity: monitor.isDragging() ? 0.5 : 1,
@@ -57,7 +59,12 @@ function EntryText({
           className="absolute -left-2 -top-2 z-50 size-5 -rotate-90 text-red-500 drop-shadow-md"
         />
       )}
-      <p className="!select-text whitespace-pre-wrap">{entry.content}</p>
+      <div>
+        <p className="!select-text whitespace-pre-wrap">{entry.content}</p>
+        <span className="text-sm text-bg-500">
+          {moment(entry.created).fromNow()}
+        </span>
+      </div>
       <EntryContextMenu
         entry={entry}
         setTypeOfModifyIdea={setTypeOfModifyIdea}

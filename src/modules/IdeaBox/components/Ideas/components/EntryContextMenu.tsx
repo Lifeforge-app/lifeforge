@@ -49,7 +49,7 @@ function EntryContextMenu({
 
   async function removeFromFolder(): Promise<void> {
     await APIRequest({
-      endpoint: `idea-box/ideas/folder/${entry.id}?folder=${folderId}`,
+      endpoint: `idea-box/ideas/move/${entry.id}?folder=${folderId}`,
       method: 'DELETE',
       successInfo: 'remove',
       failureInfo: 'remove',
