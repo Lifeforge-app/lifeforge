@@ -23,7 +23,7 @@ function MiniCalendarHeader({
           .year(currentYear)
           .month(currentMonth)
           .locale(language)
-          .format(language.startsWith('zh') ? 'YYYY[年] MMMM' : 'MMMM YYYY')}
+          .format(language.startsWith('zh') ? 'YYYY[年] MMM' : 'MMMM YYYY')}
       </div>
       <div className="-mr-4 flex gap-1">
         <button

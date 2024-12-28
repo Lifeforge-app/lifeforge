@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
+import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
@@ -10,32 +11,30 @@ import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 
 function AssetsBalanceCard(): React.ReactElement {
-  const { componentBg, componentBgLighterWithHover } = useThemeColors()
+  const { componentBgLighterWithHover } = useThemeColors()
   const navigate = useNavigate()
   const { assets, isAmountHidden } = useWalletContext()
   const { t } = useTranslation()
 
   return (
-    <div
-      className={`col-span-1 row-span-2 flex h-full min-h-96 flex-col rounded-lg p-4 shadow-custom ${componentBg}`}
-    >
-      <div className="flex-between flex px-4">
-        <h1 className="flex items-center gap-2 text-xl font-semibold">
-          <Icon icon="tabler:wallet" className="text-2xl" />
-          <span className="ml-2">{t('dashboard.widgets.balances')}</span>
-        </h1>
+    <DashboardItem
+      icon="tabler:wallet"
+      title={t('dashboard.widgets.assetsBalance.title')}
+      className="col-span-1 row-span-2"
+      componentBesideTitle={
         <Link
           to="./assets"
           className="flex items-center gap-2 rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50"
         >
           <Icon icon="tabler:chevron-right" className="text-xl" />
         </Link>
-      </div>
+      }
+    >
       <APIComponentWithFallback data={assets}>
         {assets =>
           assets.length > 0 ? (
-            <Scrollbar className="mt-4">
-              <ul className="flex flex-col gap-4 p-4 pt-2">
+            <Scrollbar>
+              <ul className="flex flex-col gap-2 py-2">
                 {assets.map(asset => (
                   <Link
                     key={asset.id}
@@ -86,7 +85,7 @@ function AssetsBalanceCard(): React.ReactElement {
           )
         }
       </APIComponentWithFallback>
-    </div>
+    </DashboardItem>
   )
 }
 

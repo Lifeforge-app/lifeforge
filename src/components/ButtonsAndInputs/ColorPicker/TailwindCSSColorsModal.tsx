@@ -17,7 +17,7 @@ function TailwindCSSColorsModal({
   setColor: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
   return (
-    <ModalWrapper isOpen={isOpen} affectHeader={false} minWidth="60vw">
+    <ModalWrapper isOpen={isOpen} affectHeader={false} minWidth="70vw">
       <ModalHeader
         icon="tabler:brand-tailwind"
         title="Tailwind CSS Color Palette"
@@ -37,11 +37,14 @@ function TailwindCSSColorsModal({
               ].includes(colorGroup)
           )
           .map((colorGroup, index) => (
-            <div key={colorGroup} className="flex">
-              <h2 className="mb-2 mt-4 w-28 text-left font-medium">
+            <div key={colorGroup} className="flex flex-col sm:flex-row">
+              <h2 className="my-4 w-28 text-left text-xl font-medium sm:mb-2 sm:text-base">
                 {colorGroup[0].toUpperCase() + colorGroup.slice(1)}
               </h2>
-              <ul key={index} className="flex w-full gap-3 pt-0">
+              <ul
+                key={index}
+                className="grid w-full grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] flex-wrap gap-3 pt-0"
+              >
                 {Object.entries(
                   colors[colorGroup] as Record<string, string>
                 ).map(([colorName, colorValue]) => (

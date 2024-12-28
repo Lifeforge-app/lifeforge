@@ -1,12 +1,11 @@
 import React from 'react'
-import useThemeColors from '@hooks/useThemeColor'
+import DashboardItem from '@components/Miscellaneous/DashboardItem'
 
 export default function RecentTransactions(): React.ReactElement {
-  const { componentBg } = useThemeColors()
-
   return (
-    <div
-      className={`flex size-full flex-col gap-4 rounded-lg p-4 shadow-custom ${componentBg}`}
-    ></div>
+    <DashboardItem
+      icon="tabler:history"
+      title="Recent Transactions"
+    ></DashboardItem>
   )
 }

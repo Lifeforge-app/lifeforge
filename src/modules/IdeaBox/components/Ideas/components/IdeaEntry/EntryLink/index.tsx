@@ -73,7 +73,7 @@ function EntryLink({
         <div>
           <h3 className="text-xl font-semibold ">{entry.title}</h3>
           <span className="text-sm text-bg-500">
-            {moment(entry.created).fromNow()}
+            {moment(entry.updated).fromNow()}
           </span>
         </div>
         <EntryContextMenu

@@ -62,7 +62,7 @@ function EntryText({
       <div>
         <p className="!select-text whitespace-pre-wrap">{entry.content}</p>
         <span className="text-sm text-bg-500">
-          {moment(entry.created).fromNow()}
+          {moment(entry.updated).fromNow()}
         </span>
       </div>
       <EntryContextMenu

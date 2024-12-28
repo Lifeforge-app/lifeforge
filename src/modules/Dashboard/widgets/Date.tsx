@@ -1,8 +1,8 @@
 import moment from 'moment/min/moment-with-locales'
 import React, { useRef } from 'react'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import { arabicToChinese } from '@utils/strings'
 import { isLightColor } from '@utils/colors'
+import { arabicToChinese } from '@utils/strings'
 
 export default function Date(): React.ReactElement {
   const { language, themeColor } = usePersonalizationContext()

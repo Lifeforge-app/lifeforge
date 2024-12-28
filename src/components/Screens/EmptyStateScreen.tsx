@@ -31,21 +31,17 @@ function EmptyStateScreen({
       {icon !== undefined && (
         <Icon
           icon={icon}
-          className={forSidebar ? 'size-16 text-bg-600' : 'size-32 text-bg-500'}
+          className={
+            forSidebar
+              ? 'size-16 text-bg-600'
+              : 'size-32 text-bg-300 dark:text-bg-500'
+          }
         />
       )}
-      <h2
-        className={`text-center ${
-          forSidebar ? 'text-2xl' : 'text-3xl'
-        } font-semibold`}
-      >
+      <h2 className="text-center text-2xl font-semibold text-bg-500">
         {name ? t(`emptyState.${name}.title`) : title}
       </h2>
-      <p
-        className={`-mt-2 px-8 text-center ${
-          forSidebar ? 'text-base' : 'text-lg'
-        } text-bg-500`}
-      >
+      <p className="-mt-2 text-center text-bg-500">
         {name ? t(`emptyState.${name}.description`) : description}
       </p>
       {customCTAButton ??
