@@ -1,12 +1,8 @@
 import React from 'react'
-import useThemeColors from '@hooks/useThemeColor'
+import DashboardItem from '@components/Miscellaneous/DashboardItem'
 
 export default function Achievements(): React.ReactElement {
-  const { componentBg } = useThemeColors()
-
   return (
-    <div
-      className={`flex size-full flex-col gap-4 rounded-lg p-8 pt-6 shadow-custom ${componentBg}`}
-    ></div>
+    <DashboardItem icon="tabler:award" title="Achievements"></DashboardItem>
   )
 }

@@ -6,6 +6,7 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { Bar, Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
+import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import LoadingScreen from '@components/Screens/LoadingScreen'
 import useFetch from '@hooks/useFetch'
@@ -152,14 +153,10 @@ export default function CodeTime(): React.ReactElement {
   }, [data])
 
   return (
-    <div
-      className={`flex size-full flex-col gap-4 rounded-lg p-4 shadow-custom ${componentBg}`}
-    >
-      <div className="flex-between flex">
-        <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
-          <Icon icon="tabler:chart-line" className="text-2xl" />
-          <span className="ml-2">{t('dashboard.widgets.codeTime.title')}</span>
-        </h1>
+    <DashboardItem
+      icon="tabler:chart-line"
+      title="Code Time"
+      componentBesideTitle={
         <div className="flex items-center gap-2 rounded-md bg-bg-50 p-2 shadow-custom dark:bg-bg-800/50">
           {['bar', 'line'].map(viewType => (
             <button
@@ -187,7 +184,8 @@ export default function CodeTime(): React.ReactElement {
             </button>
           ))}
         </div>
-      </div>
+      }
+    >
       <div className="flex-center flex size-full min-h-0 flex-1">
         {chartData ? (
           chartData === 'No data' ? (
@@ -207,6 +205,6 @@ export default function CodeTime(): React.ReactElement {
           <LoadingScreen />
         )}
       </div>
-    </div>
+    </DashboardItem>
   )
 }

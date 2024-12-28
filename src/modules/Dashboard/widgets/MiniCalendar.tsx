@@ -2,9 +2,9 @@ import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
-import useThemeColors from '@hooks/useThemeColor'
 import {
   type ICalendarCategory,
   type ICalendarEvent
@@ -14,7 +14,6 @@ import MiniCalendarHeader from '../../Calendar/components/Sidebar/components/Min
 
 export default function MiniCalendar(): React.ReactElement {
   const { t } = useTranslation()
-  const { componentBg } = useThemeColors()
 
   const [currentMonth, setCurrentMonth] = useState(moment().month())
   const [currentYear, setCurrentYear] = useState(moment().year())
@@ -23,15 +22,10 @@ export default function MiniCalendar(): React.ReactElement {
   const [categories] = useFetch<ICalendarCategory[]>('calendar/category')
 
   return (
-    <div
-      className={`flex size-full flex-col gap-4 rounded-lg p-4 shadow-custom ${componentBg}`}
+    <DashboardItem
+      icon="tabler:calendar"
+      title={t('dashboard.widgets.miniCalendar.title')}
     >
-      <h1 className="my-2 flex items-center gap-2 text-xl font-semibold">
-        <Icon icon="tabler:calendar" className="text-2xl" />
-        <span className="ml-2">
-          {t('dashboard.widgets.miniCalendar.title')}
-        </span>
-      </h1>
       <APIComponentWithFallback data={events}>
         {events => (
           <div className="size-full">
@@ -52,6 +46,6 @@ export default function MiniCalendar(): React.ReactElement {
           </div>
         )}
       </APIComponentWithFallback>
-    </div>
+    </DashboardItem>
   )
 }

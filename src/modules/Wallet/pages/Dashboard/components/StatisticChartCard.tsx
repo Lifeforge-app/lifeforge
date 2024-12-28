@@ -1,8 +1,8 @@
-import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
+import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useThemeColors from '@hooks/useThemeColor'
@@ -34,7 +34,6 @@ const options = {
 }
 
 function StatisticChardCard(): React.ReactElement {
-  const { componentBg } = useThemeColors()
   const { transactions } = useWalletContext()
   const dates = useMemo(() => {
     if (typeof transactions === 'string') {
@@ -71,14 +70,11 @@ function StatisticChardCard(): React.ReactElement {
   const { t } = useTranslation()
 
   return (
-    <div
-      className={`col-span-2 row-span-2 flex size-full flex-col rounded-lg p-6 shadow-custom ${componentBg}`}
-    >
-      <div className="flex-between flex w-full">
-        <h1 className="flex items-center gap-2 text-xl font-semibold">
-          <Icon icon="tabler:chart-dots" className="text-2xl" />
-          <span className="ml-2">{t('dashboard.widgets.statistics')}</span>
-        </h1>
+    <DashboardItem
+      className="col-span-2 row-span-2"
+      icon="tabler:chart-dots"
+      title={t('dashboard.widgets.statistics')}
+      componentBesideTitle={
         <div className="hidden items-center gap-8 sm:flex">
           {['income', 'expenses'].map(type => (
             <div key={type} className="flex items-center gap-2">
@@ -91,7 +87,8 @@ function StatisticChardCard(): React.ReactElement {
             </div>
           ))}
         </div>
-      </div>
+      }
+    >
       <div className="flex-center mt-6 flex size-full min-h-0 flex-1">
         <APIComponentWithFallback data={transactions}>
           {transactions =>
@@ -138,7 +135,7 @@ function StatisticChardCard(): React.ReactElement {
           <span className="text-sm">Expenses</span>
         </div>
       </div>
-    </div>
+    </DashboardItem>
   )
 }
 

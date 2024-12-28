@@ -1,30 +1,25 @@
-import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
-import useThemeColors from '@hooks/useThemeColor'
 import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
 
 export default function TodaysEvent(): React.ReactElement {
-  const { componentBg } = useThemeColors()
   const [rawEvents] = useFetch<ICalendarEvent[]>('calendar/event')
   const [categories] = useFetch<ICalendarCategory[]>('calendar/category')
   const { t } = useTranslation()
 
   return (
-    <div
-      className={`flex size-full flex-col gap-4 rounded-lg p-4 shadow-custom ${componentBg}`}
+    <DashboardItem
+      icon="tabler:calendar"
+      title={t('dashboard.widgets.todaysEvent.title')}
     >
-      <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold">
-        <Icon icon="tabler:calendar" className="text-2xl" />
-        <span className="ml-2">{t('dashboard.widgets.todaysEvent.title')}</span>
-      </h1>
       <APIComponentWithFallback
         data={
           [rawEvents, categories].some(d => d === 'loading')
@@ -92,6 +87,6 @@ export default function TodaysEvent(): React.ReactElement {
           )
         }
       </APIComponentWithFallback>
-    </div>
+    </DashboardItem>
   )
 }
