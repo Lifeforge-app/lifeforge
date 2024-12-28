@@ -12,7 +12,7 @@ import { type IChangeLogVersion } from '@interfaces/changelog_interfaces'
 import LogItem from './components/LogItem'
 
 function Changelog(): React.ReactElement {
-  const [data, refreshData] = useFetch<IChangeLogVersion[]>('change-log/list')
+  const [data, refreshData] = useFetch<IChangeLogVersion[]>('change-log')
   const [searchQuery, setSearchQuery] = useState('')
   const [filteredData, setFilteredData] = useState<IChangeLogVersion[]>([])
 
