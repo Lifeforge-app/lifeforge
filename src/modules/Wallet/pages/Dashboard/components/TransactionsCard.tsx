@@ -2,41 +2,32 @@ import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
+import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import useThemeColors from '@hooks/useThemeColor'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 
 function TransactionsCard(): React.ReactElement {
-  const { componentBg } = useThemeColors()
   const { transactions, categories } = useWalletContext()
-  const navigate = useNavigate()
   const { t } = useTranslation()
 
   return (
-    <div
-      className={`col-span-2 row-span-5 flex h-full flex-col rounded-lg p-6 shadow-custom ${componentBg}`}
-    >
-      <div className="flex-between flex gap-4">
-        <h1 className="flex w-full items-center gap-2 text-xl font-semibold sm:w-auto">
-          <Icon icon="tabler:list" className="text-2xl" />
-          <span className="ml-2">
-            {t('dashboard.widgets.recentTransactions.title')}
-          </span>
-        </h1>
-        <button
-          onClick={() => {
-            navigate('/wallet/transactions')
-          }}
+    <DashboardItem
+      className="col-span-2 row-span-3"
+      icon="tabler:list"
+      title={t('dashboard.widgets.recentTransactions.title')}
+      componentBesideTitle={
+        <Link
+          to="/wallet/transactions"
           className="flex items-center gap-2 rounded-lg p-2 font-medium text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50"
         >
           <Icon icon="tabler:chevron-right" className="text-xl" />
-        </button>
-      </div>
+        </Link>
+      }
+    >
       <APIComponentWithFallback data={transactions}>
         {transactions => (
           <APIComponentWithFallback data={categories}>
@@ -234,7 +225,7 @@ function TransactionsCard(): React.ReactElement {
           </APIComponentWithFallback>
         )}
       </APIComponentWithFallback>
-    </div>
+    </DashboardItem>
   )
 }
 

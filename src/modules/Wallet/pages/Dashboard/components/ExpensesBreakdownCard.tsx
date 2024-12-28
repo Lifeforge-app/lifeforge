@@ -3,11 +3,10 @@ import { Icon } from '@iconify/react'
 import React, { useMemo, useState } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
+import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
-import useThemeColors from '@hooks/useThemeColor'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 
@@ -23,7 +22,6 @@ const options2 = {
 }
 
 function ExpensesBreakdownCard(): React.ReactElement {
-  const { componentBg } = useThemeColors()
   const { categories, transactions, incomeExpenses, isAmountHidden } =
     useWalletContext()
   // TODO
@@ -55,38 +53,31 @@ function ExpensesBreakdownCard(): React.ReactElement {
       )
   }, [categories, thisMonthsTransactions])
 
-  const navigate = useNavigate()
   const { t } = useTranslation()
 
   return (
-    <div
-      className={`col-span-1 row-span-4 flex w-full min-w-0 flex-col rounded-lg p-6 shadow-custom ${componentBg}`}
-    >
-      <div className="flex-between flex w-full min-w-0 gap-4">
-        <h1 className="flex w-full min-w-0 items-center gap-2 text-xl font-semibold">
-          <Icon icon="tabler:chart-donut-3" className="shrink-0 text-2xl" />
-          <span className="ml-2 w-full min-w-0 truncate">
-            {t('dashboard.widgets.expensesBreakdown.title')}
-          </span>
-        </h1>
-        <button
-          onClick={() => {
-            navigate('/wallet/transactions#type=expenses')
-          }}
+    <DashboardItem
+      icon="tabler:chart-donut-3"
+      title={t('dashboard.widgets.expensesBreakdown.title')}
+      className="col-span-1 row-span-3"
+      componentBesideTitle={
+        <Link
+          to="/wallet/transactions#type=expenses"
           className="flex items-center gap-2 rounded-lg p-2 font-medium text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50"
         >
           <Icon icon="tabler:chevron-right" className="text-xl" />
-        </button>
-      </div>
+        </Link>
+      }
+    >
       <APIComponentWithFallback data={transactions}>
         {() => (
           <APIComponentWithFallback data={categories}>
             {categories => (
               <>
-                <div className="relative mx-auto mt-6 flex aspect-square w-4/5 min-w-0 flex-col gap-4">
+                <div className="relative mx-auto flex aspect-square w-4/5 min-w-0 flex-col gap-4">
                   <div className="absolute left-1/2 top-1/2 mt-2 flex size-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center">
                     <div
-                      className={`flex text-4xl font-medium ${
+                      className={`flex text-3xl font-medium sm:text-4xl ${
                         isAmountHidden ? 'items-center' : 'items-end'
                       }`}
                     >
@@ -100,7 +91,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                                 <Icon
                                   key={i}
                                   icon="uil:asterisk"
-                                  className="-mx-0.5 size-8"
+                                  className="-mx-0.5 size-6 sm:size-8"
                                 />
                               ))}
                           </span>
@@ -108,7 +99,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                           numberToMoney(incomeExpenses.monthlyExpenses)
                         ))}
                     </div>
-                    <div className="mt-2 w-1/2 text-center text-base text-bg-500">
+                    <div className="mt-2 w-1/2 text-center text-sm text-bg-500 sm:text-base">
                       {t('wallet.dashboard.expensesBreakdown.desc')}
                     </div>
                   </div>
@@ -153,8 +144,8 @@ function ExpensesBreakdownCard(): React.ReactElement {
                       </div>
                     ))}
                 </div>
-                <div className="h-full min-h-96">
-                  <Scrollbar className="mt-6">
+                <div className="h-full">
+                  <Scrollbar className="mb-4">
                     <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
                       {categories
                         .filter(category => category.type === 'expenses')
@@ -253,7 +244,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
           </APIComponentWithFallback>
         )}
       </APIComponentWithFallback>
-    </div>
+    </DashboardItem>
   )
 }
 

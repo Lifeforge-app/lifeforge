@@ -20,7 +20,7 @@ function ModalWrapper({
 }): React.ReactElement {
   const { setSubSidebarExpanded } = useGlobalStateContext()
   const [innerIsOpen, setInnerIsOpen] = useState(false)
-  const [fisrtTime, setFirstTime] = useState(true)
+  const [firstTime, setFirstTime] = useState(true)
 
   useEffect(() => {
     if (affectSidebar) {
@@ -29,7 +29,7 @@ function ModalWrapper({
   }, [isOpen, setSubSidebarExpanded])
 
   useEffect(() => {
-    if (!isOpen && !fisrtTime) {
+    if (!isOpen && !firstTime) {
       setTimeout(() => {
         setInnerIsOpen(false)
       }, 500)
@@ -37,7 +37,7 @@ function ModalWrapper({
       setInnerIsOpen(true)
     }
     setFirstTime(false)
-  }, [isOpen, setInnerIsOpen, fisrtTime])
+  }, [isOpen, setInnerIsOpen, firstTime])
 
   return (
     <div

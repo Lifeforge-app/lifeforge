@@ -57,7 +57,11 @@ function ColorPickerModal({
 
   return (
     <>
-      <ModalWrapper affectHeader={false} isOpen={isOpen} minWidth="28rem">
+      <ModalWrapper
+        affectHeader={false}
+        isOpen={isOpen}
+        className="sm:!min-w-[28rem]"
+      >
         <ModalHeader
           title="Pick a color"
           icon="tabler:color-picker"

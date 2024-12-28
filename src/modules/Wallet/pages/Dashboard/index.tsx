@@ -73,7 +73,7 @@ function WalletDashboard(): React.ReactElement {
           </>
         }
       />
-      <div className="mt-6 flex size-full grid-cols-3 grid-rows-8 flex-col gap-4 pb-8 xl:grid">
+      <div className="mt-6 flex size-full grid-cols-3 grid-rows-6 flex-col gap-4 pb-8 xl:grid">
         <IncomeExpenseCard
           title="Income"
           icon="tabler:login-2"
