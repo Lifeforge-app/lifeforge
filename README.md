@@ -57,22 +57,20 @@ The screenshots provided are just a glimpse of Lifeforge. There's a lot more to
 explore and discover within the project.
 
 <div align="center">
-<img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/d30f7bb2-9323-4ac5-8489-2a46a0bb81e9">
-  <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/7e672640-9282-4ae7-a002-50a1dc36a749">
-  <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/14102e07-4e49-4c31-a09b-94373e390a5a">
-  <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/69769859-0ece-4db7-a3b7-cba59d3c8a9e">
-  <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/70d0b59b-5c24-4f31-bde4-1665050690c8">
-  <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/c6de2b18-c756-4535-8c3e-2df7cdd566f4">
-  <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/f3f3014c-8e42-4fbd-9cb6-5ad1bddf7db6">
-  <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/978d0306-6ff5-4a34-8355-cafda10d0ab3">
-  <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/a28350b4-b1c6-4ad6-847c-c6b498e4d695">
-  <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/659d8668-9451-489b-9aa4-9fd535c4e85c">
-  <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/462c2e26-1e7c-41d1-a9a3-399184a28aa2">
-  <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/5a53d21a-0020-428e-a50a-f8152bfc8489">
-  <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/95714d87-a8c6-484b-805e-c4c22c2fe742">
-  <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/788bbc2d-a4f8-42e8-80ef-35a7ef7743cd">
-  <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/2cbc0864-b416-404c-847c-cb6b9fc6b60b">
-  <img width="49%" src="https://github.com/melvinchia3636/personalManagementSystem/assets/64565584/ca9b3e44-5fe0-48bf-aa1f-fe8df2afb357">
+  <img width="49%" src="https://github.com/user-attachments/assets/77825f76-a22b-4328-94a0-b2781937f723">
+  <img width="49%" src="https://github.com/user-attachments/assets/36fd4d70-4aed-4685-999b-1a3f5f46bad1">
+  <img width="49%" src="https://github.com/user-attachments/assets/934525cf-6547-4e37-a288-76974f5e43e2">
+  <img width="49%" src="https://github.com/user-attachments/assets/2f404c76-a359-4c54-b994-ce0f509b87e4">
+  <img width="49%" src="https://github.com/user-attachments/assets/ac3a576e-ee16-4bf5-81cd-370fbdf44230">
+  <img width="49%" src="https://github.com/user-attachments/assets/09cb8dc8-cee4-495e-91d9-f034b462de0d">
+  <img width="49%" src="https://github.com/user-attachments/assets/e23c6642-f343-432a-89bb-c3b8cd10f872">
+  <img width="49%" src="https://github.com/user-attachments/assets/e8096faf-2f1d-48ed-af69-bdba47171178">
+  <img width="49%" src="https://github.com/user-attachments/assets/1c010398-84df-4d7b-a4f0-79355af3298e">
+  <img width="49%" src="https://github.com/user-attachments/assets/d885aa0b-ef8b-41dd-8caf-471e6fbf203a">
+  <img width="49%" src="https://github.com/user-attachments/assets/d4939935-f4a6-4890-ae9e-e0ef4ca06355">
+  <img width="49%" src="https://github.com/user-attachments/assets/81d93f20-0177-4750-a6b1-581243b14873">
+  <img width="49%" src="https://github.com/user-attachments/assets/04037e8d-7cb6-4552-afda-89c29ac96120">
+  <img width="49%" src="https://github.com/user-attachments/assets/a93df997-71cf-4351-8c5d-cdd6f1676fcb">
 </div>
 
 ## 🔬 Technologies Used
