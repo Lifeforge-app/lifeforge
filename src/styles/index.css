@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  interpolate-size: allow-keywords;
+}
+
 * {
   scrollbar-color: rgba(64, 64, 64, 0.5) rgba(38, 38, 38, 0.5);
   scrollbar-width: thin;
@@ -669,7 +673,7 @@ button[class^='react-calendar__navigation'] {
 }
 
 .runway-tables table th,
-td {
+.runway-tables table td {
   @apply py-4 px-6 border-b border-bg-200 dark:border-bg-700/50;
 }
 
@@ -691,4 +695,21 @@ td {
 
 #qr-scanner svg {
   @apply hidden;
+}
+
+@page {
+  size: A4;
+  margin: 17mm 17mm 17mm 17mm;
+}
+
+@media print {
+  .print-area footer {
+    position: fixed;
+    bottom: -5rem;
+    width: 100%;
+  }
+
+  .print-area {
+    page-break-inside: avoid;
+  }
 }
