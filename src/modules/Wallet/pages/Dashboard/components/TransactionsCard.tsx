@@ -32,7 +32,7 @@ function TransactionsCard(): React.ReactElement {
         {transactions => (
           <APIComponentWithFallback data={categories}>
             {categories => (
-              <div className="mt-6 size-full min-h-96">
+              <div className="mt-6 size-full min-h-96 xl:min-h-0">
                 <Scrollbar>
                   {transactions.length > 0 ? (
                     <>
@@ -60,7 +60,7 @@ function TransactionsCard(): React.ReactElement {
                           </tr>
                         </thead>
                         <tbody>
-                          {transactions.slice(0, 50).map(transaction => {
+                          {transactions.slice(0, 25).map(transaction => {
                             return (
                               <tr
                                 key={transaction.id}

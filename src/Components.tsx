@@ -1,5 +1,6 @@
 import React, { lazy } from 'react'
 import { Navigate } from 'react-router'
+import Statements from './modules/Wallet/pages/Statements'
 
 const PhotosProvider = lazy(
   async () => await import('./providers/PhotosProvider')
@@ -35,9 +36,6 @@ const Kanban = lazy(
 const IdeaBox = lazy(async () => await import('./modules/IdeaBox'))
 const Ideas = lazy(
   async () => await import('./modules/IdeaBox/components/Ideas')
-)
-const Folder = lazy(
-  async () => await import('./modules/IdeaBox/components/Folder')
 )
 const CodeTime = lazy(async () => await import('./modules/CodeTime'))
 const PomodoroTimer = lazy(async () => await import('./modules/PomodoroTimer'))
@@ -148,8 +146,7 @@ export const COMPONENTS = {
   },
   'idea-box': {
     'idea-box': IdeaBox,
-    'idea-box-id': Ideas,
-    'idea-box-folder': Folder
+    'idea-box-id': Ideas
   },
   'todo-list': {
     'todo-list': TodoList
@@ -217,7 +214,8 @@ export const COMPONENTS = {
     wallet: Wallet,
     assets: Assets,
     ledgers: Ledgers,
-    transactions: Transactions
+    transactions: Transactions,
+    statements: Statements
   },
   'localization-manager': {
     'localization-manager': LocalizationManager

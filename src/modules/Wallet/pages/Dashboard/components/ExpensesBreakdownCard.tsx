@@ -144,7 +144,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                       </div>
                     ))}
                 </div>
-                <div className="h-full">
+                <div className="h-full  min-h-96 xl:min-h-0">
                   <Scrollbar className="mb-4">
                     <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
                       {categories
