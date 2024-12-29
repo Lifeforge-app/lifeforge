@@ -21,7 +21,7 @@ function DashboardItem({
   return (
     <div
       ref={ref}
-      className={`${className} flex size-full min-h-0 flex-col gap-4 rounded-lg p-6 shadow-custom ${componentBg}`}
+      className={`${className} flex size-full flex-col gap-4 rounded-lg p-6 shadow-custom ${componentBg}`}
     >
       <div className="flex-between flex">
         <h2 className="mb-2 flex items-center gap-2 text-xl font-semibold">
