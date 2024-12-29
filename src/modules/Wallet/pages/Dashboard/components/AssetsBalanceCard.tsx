@@ -20,7 +20,7 @@ function AssetsBalanceCard(): React.ReactElement {
     <DashboardItem
       icon="tabler:wallet"
       title={t('dashboard.widgets.assetsBalance.title')}
-      className="col-span-1 row-span-2"
+      className="col-span-1 row-span-2 min-h-96 xl:min-h-0"
       componentBesideTitle={
         <Link
           to="./assets"

@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import useThemeColors from '@hooks/useThemeColor'
 import { useWalletContext } from '@providers/WalletProvider'
 
 const options = {
