@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'

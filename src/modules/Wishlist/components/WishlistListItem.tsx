@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
