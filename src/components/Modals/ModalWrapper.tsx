@@ -42,7 +42,7 @@ function ModalWrapper({
   return (
     <div
       ref={modalRef}
-      className={`fixed left-0 top-0 h-dvh w-full bg-black/10 backdrop-blur-sm transition-opacity ease-linear dark:bg-bg-950/40 ${
+      className={`fixed left-0 top-0 h-dvh w-full overscroll-contain bg-black/10 backdrop-blur-sm transition-opacity ease-linear dark:bg-bg-950/40 ${
         isOpen
           ? 'z-[9990] opacity-100'
           : 'z-[-1] opacity-0 [transition:z-index_0.1s_linear_0.5s,opacity_0.1s_linear_0.1s]'
