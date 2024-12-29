@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import ImagePickerModal from '@components/ButtonsAndInputs/ImageAndFilePicker/ImagePickerModal'
