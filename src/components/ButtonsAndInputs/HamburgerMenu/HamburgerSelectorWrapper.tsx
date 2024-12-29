@@ -1,14 +1,14 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 
 function HamburgerSelectorWrapper({
-    icon,
-    title,
-    children
-    }: {
-    icon: string
-    title: string
-    children: React.ReactNode
+  icon,
+  title,
+  children
+}: {
+  icon: string
+  title: string
+  children: React.ReactNode
 }): React.ReactElement {
   return (
     <>
