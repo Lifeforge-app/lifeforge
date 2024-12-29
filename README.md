@@ -54,7 +54,7 @@ The modular approach ensures flexibility and scalability, allowing users to togg
 - Guitar Tabs: A unique feature for musicians to store, manage, and access guitar tabs conveniently.
 - Flashcards: A powerful tool for students and lifelong learners to master new information.
 - CFOP Algorithms: Perfect for Rubik's Cube enthusiasts, this module provides detailed algorithms for the CFOP method.
-- Mail Inbox: An email management system integrated directly into the platform. (requires gmail API key)
+- Mail Inbox: An email management system integrated directly into the platform.
 - Personalization: A customization module allowing users to tailor the platform’s appearance and behavior to their preferences.
 
 ## 🖥 Screenshots
