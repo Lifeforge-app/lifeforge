@@ -91,10 +91,8 @@ interface ICodeTimeEachDay {
 }
 
 export default function CodeTime(): React.ReactElement {
-  const { componentBg } = useThemeColors()
   const [data] = useFetch<ICodeTimeEachDay[]>('code-time/each-day')
   const [chartData, setChartData] = useState<any>(null)
-  const { t } = useTranslation()
   const { theme } = useThemeColors()
   const [view, setView] = useState<'bar' | 'line'>('bar')
 

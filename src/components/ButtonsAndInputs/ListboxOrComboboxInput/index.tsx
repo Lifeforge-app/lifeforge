@@ -12,6 +12,7 @@ interface IGeneralProps {
   icon: string
   value: any
   setValue: (value: any) => void
+  className?: string
   children: React.ReactNode
 }
 
@@ -43,6 +44,7 @@ function ListboxOrComboboxInput(
           value={value}
           onChange={setValue}
           multiple={props.multiple}
+          className={props.className}
         >
           <ListboxButton className="group flex w-full items-center">
             <Icon
