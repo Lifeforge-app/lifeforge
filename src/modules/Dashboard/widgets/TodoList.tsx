@@ -1,6 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
+import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
@@ -8,7 +9,6 @@ import useFetch from '@hooks/useFetch'
 import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
 import { TodoListProvider } from '@providers/TodoListProvider'
 import TaskItem from '../../TodoList/components/tasks/TaskItem'
-import DashboardItem from '@components/Miscellaneous/DashboardItem'
 
 export default function TodoList(): React.ReactElement {
   const { t } = useTranslation()
@@ -42,6 +42,7 @@ export default function TodoList(): React.ReactElement {
                     ))
                   ) : (
                     <EmptyStateScreen
+                      smaller
                       title={t('emptyState.todoList.todaysTask.title')}
                       description={t('emptyState.todoList.todaysTask.desc')}
                       icon="tabler:calendar-smile"

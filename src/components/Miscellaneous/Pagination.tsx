@@ -17,7 +17,12 @@ function Pagination({
     const pageNumbers: React.ReactElement[] = []
     const pagesToShow = 5
 
-    const startPage = Math.max(1, currentPage - Math.floor(pagesToShow / 2))
+    const startPage =
+      currentPage > totalPages - pagesToShow
+        ? totalPages - pagesToShow + 1
+        : currentPage < pagesToShow
+        ? 1
+        : currentPage - Math.floor(pagesToShow / 2)
     const endPage = Math.min(totalPages, startPage + pagesToShow - 1)
 
     if (startPage > 1) {
@@ -69,7 +74,7 @@ function Pagination({
     if (endPage < totalPages) {
       pageNumbers.push(
         <>
-          {endPage < totalPages && (
+          {endPage < totalPages - 1 && (
             <Icon
               icon="uil:ellipsis-h"
               className="hidden text-bg-500 lg:block"
