@@ -176,13 +176,19 @@
             "Ledgers",
             "tabler:book",
             "ledgers"
+          ],
+          [
+            "Financial Statements",
+            "tabler:file-text",
+            "statements"
           ]
         ],
         "routes": {
           "wallet": "",
           "transactions": "transactions",
           "assets": "assets",
-          "ledgers": "ledgers"
+          "ledgers": "ledgers",
+          "statements": "statements"
         },
         "togglable": true
       },

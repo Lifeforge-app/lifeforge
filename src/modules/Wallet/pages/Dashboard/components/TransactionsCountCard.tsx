@@ -83,7 +83,7 @@ function TransactionsCountCard(): React.ReactElement {
     <DashboardItem
       icon="tabler:arrows-exchange"
       title={t('dashboard.widgets.transactionsCount')}
-      className="col-span-1 row-span-1"
+      className="col-span-1 row-span-1 min-h-96 xl:min-h-0"
       componentBesideTitle={
         <Link
           to="./transactions"
