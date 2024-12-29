@@ -1,18 +1,20 @@
 import moment from 'moment/min/moment-with-locales'
 import React, { useRef } from 'react'
+import useThemeColors from '@hooks/useThemeColor'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { isLightColor } from '@utils/colors'
 import { arabicToChinese } from '@utils/strings'
 
 export default function Date(): React.ReactElement {
-  const { language, themeColor } = usePersonalizationContext()
+  const { language } = usePersonalizationContext()
+  const { theme } = useThemeColors()
   const ref = useRef<HTMLDivElement>(null)
 
   return (
     <div
       ref={ref}
       className={`flex size-full gap-4 rounded-lg bg-custom-500 p-4 ${
-        isLightColor(themeColor) ? 'text-bg-800' : 'text-bg-50'
+        isLightColor(theme) ? 'text-bg-800' : 'text-bg-50'
       } shadow-custom ${
         (ref.current?.offsetHeight ?? 0) < 240
           ? 'flex-row items-end'

@@ -2,12 +2,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { Icon } from '@iconify/react'
+import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 // @ts-expect-error no types available
 import Column from 'react-columns'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
@@ -62,6 +64,11 @@ function Ideas(): React.ReactElement {
     useState<IIdeaBoxFolder | null>(null)
   const [deleteIdeaModalOpen, setDeleteIdeaModalOpen] = useState(false)
   const [deleteFolderModalOpen, setDeleteFolderModalOpen] = useState(false)
+  const [searchResults, setSearchResults] = useState<
+    IIdeaBoxEntry[] | 'loading' | 'error'
+  >([])
+  const [searchQuery, setSearchQuery] = useState('')
+  const debouncedSearchQuery = useDebounce(searchQuery, 500)
 
   useEffect(() => {
     setSearchParams({ archived: viewArchived.toString() })
@@ -96,12 +103,36 @@ function Ideas(): React.ReactElement {
     }).catch(console.error)
   }
 
+  function refreshSearchResults(): void {
+    setSearchResults('loading')
+    APIRequest({
+      endpoint: `idea-box/search?q=${encodeURIComponent(
+        debouncedSearchQuery.trim()
+      )}&container=${id}`,
+      method: 'GET',
+      callback: data => {
+        setSearchResults(data.data)
+      },
+      onFailure: () => {
+        setSearchResults('error')
+      }
+    }).catch(console.error)
+  }
+
   useEffect(() => {
     if (valid === true) {
       refreshData()
       refreshFolders()
     }
   }, [id, path, viewArchived, valid])
+
+  useEffect(() => {
+    if (debouncedSearchQuery.trim().length > 0) {
+      refreshSearchResults()
+    } else {
+      setSearchResults([])
+    }
+  }, [debouncedSearchQuery])
 
   function onPasteImage(event: ClipboardEvent): void {
     if (modifyIdeaModalOpenType !== null) return
@@ -163,119 +194,191 @@ function Ideas(): React.ReactElement {
               viewArchived={viewArchived}
               setViewArchived={setViewArchived}
             />
-            <APIComponentWithFallback data={data}>
-              {data => (
-                <APIComponentWithFallback data={folders}>
-                  {folders => (
-                    <>
-                      {typeof folders !== 'string' &&
-                        (data.length === 0 && folders.length === 0 ? (
-                          !viewArchived ? (
-                            <EmptyStateScreen
-                              onCTAClick={setModifyIdeaModalOpenType as any}
-                              title="No ideas yet"
-                              description="Hmm... Seems a bit empty here. Consider adding some innovative ideas."
-                              icon="tabler:bulb-off"
-                              ctaContent="new idea"
-                            />
+            <SearchInput
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              stuffToSearch="ideas"
+            />
+            {debouncedSearchQuery.trim().length === 0 ? (
+              <APIComponentWithFallback data={data}>
+                {data => (
+                  <APIComponentWithFallback data={folders}>
+                    {folders => (
+                      <>
+                        {typeof folders !== 'string' &&
+                          (data.length === 0 && folders.length === 0 ? (
+                            !viewArchived ? (
+                              <EmptyStateScreen
+                                onCTAClick={setModifyIdeaModalOpenType as any}
+                                title="No ideas yet"
+                                description="Hmm... Seems a bit empty here. Consider adding some innovative ideas."
+                                icon="tabler:bulb-off"
+                                ctaContent="new idea"
+                              />
+                            ) : (
+                              <EmptyStateScreen
+                                title="No archived ideas"
+                                description="You don't have any archived ideas yet."
+                                icon="tabler:archive-off"
+                              />
+                            )
                           ) : (
-                            <EmptyStateScreen
-                              title="No archived ideas"
-                              description="You don't have any archived ideas yet."
-                              icon="tabler:archive-off"
+                            <>
+                              {folders.length > 0 && !viewArchived && (
+                                <div className="mt-6">
+                                  <h2 className="mb-2 flex items-center gap-2 text-lg font-medium text-bg-500">
+                                    <Icon
+                                      icon="tabler:folder"
+                                      className="size-6"
+                                    />
+                                    {t('ideaBox.entryType.folder')}
+                                  </h2>
+                                  <div className="mt-2 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+                                    {folders.map(folder => (
+                                      <FolderItem
+                                        key={folder.id}
+                                        folder={folder}
+                                        setIdeaList={setData}
+                                        setFolderList={setFolders}
+                                        setExistedFolderData={
+                                          setExistedFolderData
+                                        }
+                                        setModifyFolderModalOpenType={
+                                          setModifyFolderModalOpenType
+                                        }
+                                        setDeleteFolderConfirmationModalOpen={
+                                          setDeleteFolderModalOpen
+                                        }
+                                      />
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                              {data.length > 0 && (
+                                <Column
+                                  queries={[
+                                    {
+                                      columns: 1,
+                                      query: 'min-width: 0px'
+                                    },
+                                    {
+                                      columns: 2,
+                                      query: 'min-width: 768px'
+                                    },
+                                    {
+                                      columns: 3,
+                                      query: 'min-width: 1024px'
+                                    },
+                                    {
+                                      columns: 4,
+                                      query: 'min-width: 1280px'
+                                    },
+                                    {
+                                      columns: 5,
+                                      query: 'min-width: 1536px'
+                                    }
+                                  ]}
+                                  gap="0.5rem"
+                                  className="mb-8 mt-6 shrink-0 !overflow-x-visible"
+                                >
+                                  {data.map(entry => {
+                                    const Component = {
+                                      image: EntryImage,
+                                      text: EntryText,
+                                      link: EntryLink
+                                    }[entry.type]
+
+                                    return (
+                                      <Component
+                                        key={entry.id}
+                                        entry={entry}
+                                        setTypeOfModifyIdea={
+                                          setTypeOfModifyIdea
+                                        }
+                                        setModifyIdeaModalOpenType={
+                                          setModifyIdeaModalOpenType
+                                        }
+                                        setExistedData={setSearchResults}
+                                        setDeleteIdeaModalOpen={
+                                          setDeleteIdeaModalOpen
+                                        }
+                                        updateIdeaList={refreshData}
+                                      />
+                                    )
+                                  })}
+                                </Column>
+                              )}
+                            </>
+                          ))}
+                      </>
+                    )}
+                  </APIComponentWithFallback>
+                )}
+              </APIComponentWithFallback>
+            ) : (
+              <APIComponentWithFallback data={searchResults}>
+                {searchResults => (
+                  <>
+                    {searchResults.length === 0 ? (
+                      <EmptyStateScreen
+                        title="No results"
+                        description="No ideas found for your search query."
+                        icon="tabler:search"
+                      />
+                    ) : (
+                      <Column
+                        queries={[
+                          {
+                            columns: 1,
+                            query: 'min-width: 0px'
+                          },
+                          {
+                            columns: 2,
+                            query: 'min-width: 768px'
+                          },
+                          {
+                            columns: 3,
+                            query: 'min-width: 1024px'
+                          },
+                          {
+                            columns: 4,
+                            query: 'min-width: 1280px'
+                          },
+                          {
+                            columns: 5,
+                            query: 'min-width: 1536px'
+                          }
+                        ]}
+                        gap="0.5rem"
+                        className="mb-8 mt-6 shrink-0 !overflow-x-visible"
+                      >
+                        {searchResults.map(entry => {
+                          const Component = {
+                            image: EntryImage,
+                            text: EntryText,
+                            link: EntryLink
+                          }[entry.type]
+
+                          return (
+                            <Component
+                              key={entry.id}
+                              entry={entry}
+                              setTypeOfModifyIdea={setTypeOfModifyIdea}
+                              setModifyIdeaModalOpenType={
+                                setModifyIdeaModalOpenType
+                              }
+                              setExistedData={setExistedData}
+                              setDeleteIdeaModalOpen={setDeleteIdeaModalOpen}
+                              updateIdeaList={refreshSearchResults}
                             />
                           )
-                        ) : (
-                          <>
-                            {folders.length > 0 && !viewArchived && (
-                              <div className="mt-6">
-                                <h2 className="mb-2 flex items-center gap-2 text-lg font-medium text-bg-500">
-                                  <Icon
-                                    icon="tabler:folder"
-                                    className="size-6"
-                                  />
-                                  {t('ideaBox.entryType.folder')}
-                                </h2>
-                                <div className="mt-2 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
-                                  {folders.map(folder => (
-                                    <FolderItem
-                                      key={folder.id}
-                                      folder={folder}
-                                      setIdeaList={setData}
-                                      setFolderList={setFolders}
-                                      setExistedFolderData={
-                                        setExistedFolderData
-                                      }
-                                      setModifyFolderModalOpenType={
-                                        setModifyFolderModalOpenType
-                                      }
-                                      setDeleteFolderConfirmationModalOpen={
-                                        setDeleteFolderModalOpen
-                                      }
-                                    />
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-                            {data.length > 0 && (
-                              <Column
-                                queries={[
-                                  {
-                                    columns: 1,
-                                    query: 'min-width: 0px'
-                                  },
-                                  {
-                                    columns: 2,
-                                    query: 'min-width: 768px'
-                                  },
-                                  {
-                                    columns: 3,
-                                    query: 'min-width: 1024px'
-                                  },
-                                  {
-                                    columns: 4,
-                                    query: 'min-width: 1280px'
-                                  },
-                                  {
-                                    columns: 5,
-                                    query: 'min-width: 1536px'
-                                  }
-                                ]}
-                                gap="0.5rem"
-                                className="mb-8 mt-6 shrink-0 !overflow-x-visible"
-                              >
-                                {data.map(entry => {
-                                  const Component = {
-                                    image: EntryImage,
-                                    text: EntryText,
-                                    link: EntryLink
-                                  }[entry.type]
-
-                                  return (
-                                    <Component
-                                      key={entry.id}
-                                      entry={entry}
-                                      setTypeOfModifyIdea={setTypeOfModifyIdea}
-                                      setModifyIdeaModalOpenType={
-                                        setModifyIdeaModalOpenType
-                                      }
-                                      setExistedData={setExistedData}
-                                      setDeleteIdeaModalOpen={
-                                        setDeleteIdeaModalOpen
-                                      }
-                                      updateIdeaList={refreshData}
-                                    />
-                                  )
-                                })}
-                              </Column>
-                            )}
-                          </>
-                        ))}
-                    </>
-                  )}
-                </APIComponentWithFallback>
-              )}
-            </APIComponentWithFallback>
+                        })}
+                      </Column>
+                    )}
+                  </>
+                )}
+              </APIComponentWithFallback>
+            )}
             <FAB
               setModifyIdeaModalOpenType={setModifyIdeaModalOpenType}
               setTypeOfModifyIdea={setTypeOfModifyIdea}
@@ -287,7 +390,13 @@ function Ideas(): React.ReactElement {
               openType={modifyIdeaModalOpenType}
               typeOfModifyIdea={typeOfModifyIdea}
               setOpenType={setModifyIdeaModalOpenType}
-              updateIdeaList={refreshData}
+              updateIdeaList={() => {
+                if (debouncedSearchQuery.trim().length > 0) {
+                  refreshSearchResults()
+                } else {
+                  refreshData()
+                }
+              }}
               existedData={existedData}
               pastedData={pastedData}
             />
@@ -305,7 +414,13 @@ function Ideas(): React.ReactElement {
               apiEndpoint="idea-box/ideas"
               itemName="idea"
               data={existedData}
-              updateDataList={refreshData}
+              updateDataList={() => {
+                if (debouncedSearchQuery.trim().length > 0) {
+                  refreshSearchResults()
+                } else {
+                  refreshData()
+                }
+              }}
             />
             <DeleteConfirmationModal
               isOpen={deleteFolderModalOpen}

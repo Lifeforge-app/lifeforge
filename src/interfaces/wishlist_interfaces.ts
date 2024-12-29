@@ -6,6 +6,7 @@ interface IWishlistList extends BasePBCollection {
   icon: string
   color: string
   item_count: number
+  total_amount: number
 }
 
 interface IWishlistEntry extends BasePBCollection {

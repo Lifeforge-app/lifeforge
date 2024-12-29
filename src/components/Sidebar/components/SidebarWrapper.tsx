@@ -29,7 +29,7 @@ function SidebarWrapper({
             }}
           />
         </div>
-        <ul className="flex w-full min-w-0 flex-col">{children}</ul>
+        <ul className="flex size-full min-w-0 flex-col">{children}</ul>
       </Scrollbar>
     </aside>
   )

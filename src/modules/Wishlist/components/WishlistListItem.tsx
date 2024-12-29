@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IWishlistList } from '@interfaces/wishlist_interfaces'
+import { numberToMoney } from '@utils/strings'
 
 function WishlistListItem({
   list,
@@ -44,7 +45,7 @@ function WishlistListItem({
       <div className="space-y-2 text-right">
         <p className="text-sm text-bg-500">{list.item_count} items</p>
         <p className="whitespace-nowrap text-sm text-bg-500">
-          totalling RM 0.00
+          totalling RM {numberToMoney(list.total_amount)}
         </p>
       </div>
       <Menu as="div" className="absolute right-2 top-2">

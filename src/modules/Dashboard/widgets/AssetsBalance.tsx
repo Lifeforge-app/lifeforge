@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import Button from '@components/ButtonsAndInputs/Button'
 import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
@@ -13,11 +14,21 @@ export default function AssetsBalance(): React.ReactElement {
   const { t } = useTranslation()
   const { componentBgLighterWithHover } = useThemeColors()
   const [assets] = useFetch<IWalletAsset[]>('wallet/assets')
+  const [showBalance, setShowBalance] = useState(false)
 
   return (
     <DashboardItem
       icon="tabler:wallet"
       title={t('dashboard.widgets.assetsBalance.title')}
+      componentBesideTitle={
+        <Button
+          variant="no-bg"
+          onClick={() => {
+            setShowBalance(!showBalance)
+          }}
+          icon={!showBalance ? 'tabler:eye-off' : 'tabler:eye'}
+        />
+      }
     >
       <APIComponentWithFallback data={assets}>
         {assets => (
@@ -39,8 +50,23 @@ export default function AssetsBalance(): React.ReactElement {
                     <div className="w-full min-w-0 truncate font-semibold">
                       {asset.name}
                     </div>
-                    <div className="text-sm text-bg-500">
-                      RM {numberToMoney(asset.balance)}
+                    <div className="flex items-center gap-1 text-sm text-bg-500">
+                      RM{' '}
+                      {showBalance ? (
+                        numberToMoney(asset.balance)
+                      ) : (
+                        <span className="flex items-center">
+                          {Array(4)
+                            .fill(0)
+                            .map((_, i) => (
+                              <Icon
+                                key={i}
+                                icon="uil:asterisk"
+                                className="size-3"
+                              />
+                            ))}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
