@@ -15,7 +15,8 @@ function SearchInput({
   onFilterIconClick,
   filterAmount,
   sideButtonIcon,
-  onSideButtonClick
+  onSideButtonClick,
+  className
 }: {
   searchQuery: string
   setSearchQuery: (query: string) => void
@@ -28,6 +29,7 @@ function SearchInput({
   filterAmount?: number
   sideButtonIcon?: string
   onSideButtonClick?: () => void
+  className?: string
 }): React.ReactElement {
   const { t } = useTranslation()
   const { componentBgWithHover } = useThemeColors()
@@ -38,7 +40,7 @@ function SearchInput({
         lighter
           ? 'dark:bg-bg-800/50 dark:hover:bg-bg-800'
           : componentBgWithHover
-      } ${hasTopMargin ? 'mt-4' : ''}`}
+      } ${hasTopMargin ? 'mt-4' : ''} ${className}`}
       onClick={e => {
         e.currentTarget.querySelector('input')?.focus()
       }}

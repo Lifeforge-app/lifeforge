@@ -1,9 +1,9 @@
-import { Icon } from '@iconify/react'
+import { Icon } from '@iconify/react/dist/iconify.js'
 import { t } from 'i18next'
 import React from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 
-function IdeaImageUpload({
+function DnDContainer({
   getRootProps,
   getInputProps,
   isDragActive
@@ -14,7 +14,7 @@ function IdeaImageUpload({
 }): React.ReactElement {
   return (
     <div
-      className="flex-center flex size-full flex-1 flex-col rounded-lg border-[3px] border-dashed border-bg-500 py-12"
+      className="flex-center flex size-full min-h-96 flex-1 flex-col rounded-lg border-[3px] border-dashed border-bg-500 py-12"
       {...getRootProps()}
     >
       <input {...getInputProps()} />
@@ -28,7 +28,7 @@ function IdeaImageUpload({
       <Button
         CustomElement="label"
         icon="tabler:upload"
-        className="mt-4"
+        className="mt-4 cursor-pointer"
         variant="secondary"
       >
         upload from local
@@ -37,4 +37,4 @@ function IdeaImageUpload({
   )
 }
 
-export default IdeaImageUpload
+export default DnDContainer

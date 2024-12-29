@@ -124,7 +124,7 @@ function PhotosSidebar(): React.ReactElement {
                   icon="tabler:books-off"
                   title="No albums yet"
                   description="Create an album to organize your photos."
-                  forSidebar
+                  smaller
                 />
               </div>
             )}

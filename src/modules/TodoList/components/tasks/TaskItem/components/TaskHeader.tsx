@@ -9,10 +9,10 @@ function TaskHeader({ entry }: { entry: ITodoListEntry }): React.ReactElement {
 
   return (
     <div className="flex items-center gap-2 font-semibold">
-      {entry.summary}
+      <span>{entry.summary}</span>
       {entry.priority !== '' && (
         <span
-          className="block size-2 shrink-0 rounded-full"
+          className="-mb-1 block size-2 shrink-0 rounded-full"
           style={{
             backgroundColor:
               priorities.find(p => p.id === entry.priority)?.color ??

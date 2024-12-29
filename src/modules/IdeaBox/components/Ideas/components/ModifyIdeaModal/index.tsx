@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useDebounce } from '@uidotdev/usehooks'
@@ -7,13 +8,13 @@ import { useDropzone } from 'react-dropzone'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
+import DnDContainer from '@components/ButtonsAndInputs/ImageAndFilePicker/ImagePickerModal/components/LocalUpload/components/DnDContainer'
+import PreviewContainer from '@components/ButtonsAndInputs/ImageAndFilePicker/ImagePickerModal/components/LocalUpload/components/PreviewContainer'
 import Input from '@components/ButtonsAndInputs/Input'
 import ModalWrapper from '@components/Modals/ModalWrapper'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import APIRequest from '@utils/fetchData'
 import IdeaContentInput from './components/IdeaContentInput'
-import IdeaImagePreview from './components/IdeaImagePreview'
-import IdeaImageUpload from './components/IdeaImageUpload'
 import ModalHeader from './components/ModalHeader'
 
 function ModifyIdeaModal({
@@ -46,7 +47,7 @@ function ModifyIdeaModal({
   const [ideaLink, setIdeaLink] = useState('')
   const [ideaImage, setIdeaImage] = useState<File | null>(null)
   const [imageLink, setImageLink] = useState<string>('')
-  const debouncedImageLink = useDebounce(imageLink, imageLink === '' ? 300 : 0)
+  const debouncedImageLink = useDebounce(imageLink, 500)
   const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -105,7 +106,17 @@ function ModifyIdeaModal({
   }, [existedData, innerOpenType])
 
   useEffect(() => {
-    if (innerTypeOfModifyIdea === 'image' && debouncedImageLink !== '') {
+    if (innerTypeOfModifyIdea === 'image') {
+      if (debouncedImageLink === '') {
+        setPreview(null)
+        return
+      }
+
+      if (!debouncedImageLink.match(/^http(s)?:\/\/.+/)) {
+        toast.error('Invalid image link.')
+        return
+      }
+
       fetch(debouncedImageLink, {
         method: 'HEAD'
       })
@@ -230,7 +241,7 @@ function ModifyIdeaModal({
   }, [innerTypeOfModifyIdea])
 
   return (
-    <ModalWrapper isOpen={openType !== null}>
+    <ModalWrapper isOpen={openType !== null} minWidth="60vw">
       <ModalHeader
         innerOpenType={
           innerOpenType !== null
@@ -265,30 +276,41 @@ function ModifyIdeaModal({
       ) : (
         <>
           {preview ? (
-            <IdeaImagePreview
-              preview={preview}
-              setPreview={setPreview}
-              setImageLink={setImageLink}
-            />
+            <>
+              <PreviewContainer
+                file={ideaImage}
+                preview={preview as string}
+                setFile={setIdeaImage}
+                setPreview={setPreview}
+                fileName={debouncedImageLink.split('/').pop() ?? undefined}
+                onRemove={() => {
+                  setImageLink('')
+                }}
+              />
+            </>
           ) : (
-            <IdeaImageUpload
+            <DnDContainer
               getRootProps={getRootProps}
               getInputProps={getInputProps}
               isDragActive={isDragActive}
             />
           )}
-          <div className="mt-6 text-center font-medium uppercase tracking-widest text-bg-500">
-            {t('imageUpload.orPasteLink')}
-          </div>
-          <Input
-            icon="tabler:link"
-            name="Image link"
-            placeholder="https://example.com/image.jpg"
-            value={imageLink}
-            updateValue={setImageLink}
-            className="mt-6"
-            darker
-          />
+          {ideaImage === null && (
+            <>
+              <div className="mt-6 text-center font-medium uppercase tracking-widest text-bg-500">
+                {t('imageUpload.orPasteLink')}
+              </div>
+              <Input
+                icon="tabler:link"
+                name="Image link"
+                placeholder="https://example.com/image.jpg"
+                value={imageLink}
+                updateValue={setImageLink}
+                className="mt-6"
+                darker
+              />
+            </>
+          )}
         </>
       )}
       <Button
