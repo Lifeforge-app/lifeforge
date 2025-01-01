@@ -21,7 +21,7 @@ const DASHBOARD_WIDGETS: Record<
   },
   miniCalendar: {
     icon: 'tabler:calendar',
-    minH: 4,
+    minH: 3,
     minW: 2
   },
   todaysEvent: {

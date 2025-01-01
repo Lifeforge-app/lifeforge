@@ -15,7 +15,7 @@ import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import {
@@ -247,7 +247,7 @@ function DNSRecords(): JSX.Element {
         )}
       </div>
       <Scrollbar className="mt-6">
-        <APIComponentWithFallback data={filteredRecords}>
+        <APIFallbackComponent data={filteredRecords}>
           {records =>
             records.length === 0 ? (
               <EmptyStateScreen
@@ -416,7 +416,7 @@ function DNSRecords(): JSX.Element {
               </table>
             )
           }
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       </Scrollbar>
       <DeleteConfirmationModal
         isOpen={deleteConfirmationModalOpen !== false}

@@ -1,9 +1,9 @@
-import { Icon } from '@iconify/react'
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 import React, { useMemo, useState } from 'react'
 import { useLocation } from 'react-router'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { titleToPath } from '@utils/strings'
+import SidebarCancelButton from './components/SidebarCancelButton'
 import SidebarItemContent from './components/SidebarItemContent'
 import SidebarItemIcon from './components/SidebarItemIcon'
 import SidebarItemOnClickElement from './components/SidebarItemOnClickElement'
@@ -11,32 +11,62 @@ import SidebarItemSubsection from './components/SidebarItemSubsection'
 import SidebarItemSubsectionExpandIcon from './components/SidebarItemSubsectionExpandIcon'
 import SidebarItemWrapper from './components/SidebarItemWrapper'
 
-interface SidebarItemProps {
-  name: string
-  icon?: string
-  smallIcon?: React.ReactElement
-  color?: string
-  iconColor?: string
-  hasAI?: boolean
+type SidebarItemAutoActiveProps =
+  | {
+      autoActive: true
+      active?: never
+    }
+  | {
+      autoActive?: false
+      active: boolean
+    }
+
+interface MainSidebarItemProps {
+  isMainSidebarItem: true
+
+  showAIIcon: boolean
   subsection?: string[][]
-  onClick?: () => void
-  isMainSidebarItem?: boolean
-  autoActive?: boolean
-  active?: boolean
   prefix?: string
-  number?: number
+
+  sideStripColor?: never
+  needTranslate?: never
+  onClick?: never
+
+  number?: never
+  onCancelButtonClick?: never
+  hamburgerMenuItems?: never
+}
+
+interface SubSidebarItemProps {
+  isMainSidebarItem?: false
+
+  showAIIcon?: never
+  subsection?: never
+  prefix?: never
+
+  onClick: () => void
+  sideStripColor?: string
   needTranslate?: boolean
+
+  number?: number
   onCancelButtonClick?: () => void
   hamburgerMenuItems?: React.ReactElement
 }
 
+interface SidebarItemBaseProps {
+  name: string
+  icon?: string | React.ReactElement
+}
+
+type SidebarItemProps = SidebarItemAutoActiveProps &
+  (MainSidebarItemProps | SubSidebarItemProps) &
+  SidebarItemBaseProps
+
 function SidebarItem({
   name,
   icon,
-  smallIcon,
-  color,
-  iconColor,
-  hasAI = false,
+  sideStripColor,
+  showAIIcon = false,
   subsection,
   isMainSidebarItem = false,
   onClick,
@@ -52,11 +82,13 @@ function SidebarItem({
   const { sidebarExpanded, toggleSidebar } = isMainSidebarItem
     ? useGlobalStateContext()
     : { sidebarExpanded: true, toggleSidebar: () => {} }
-  const [subsectionExpanded, setSubsectionExpanded] = useState(
-    subsection !== undefined &&
-      location.pathname.slice(1).startsWith(titleToPath(name))
-  )
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const [subsectionExpanded, setSubsectionExpanded] = isMainSidebarItem
+    ? useState(
+        subsection !== undefined &&
+          location.pathname.slice(1).startsWith(titleToPath(name))
+      )
+    : [false, () => {}]
   const isLocationMatched = useMemo(
     () =>
       location.pathname
@@ -65,41 +97,32 @@ function SidebarItem({
     [location.pathname, prefix, name]
   )
 
-  function toggleSubsection(): void {
-    setSubsectionExpanded(!subsectionExpanded)
-  }
-
   return (
     <>
       <SidebarItemWrapper active={autoActive ? isLocationMatched : active}>
-        {color !== undefined && (
+        {sideStripColor !== undefined && (
           <span
             className="block h-8 w-1 shrink-0 rounded-full"
             style={{
-              backgroundColor: color
+              backgroundColor: sideStripColor
             }}
           />
         )}
-        <div className="flex w-full min-w-0 items-center gap-6">
-          <SidebarItemIcon
-            active={autoActive ? isLocationMatched : active}
-            icon={icon}
-            iconColor={iconColor}
-            smallIcon={smallIcon}
-          />
-          <SidebarItemContent
-            name={name}
-            sidebarExpanded={sidebarExpanded}
-            isMainSidebarItem={isMainSidebarItem}
-            hasAI={hasAI}
-            number={number}
-            isMenuOpen={isMenuOpen}
-            hamburgerMenuItems={hamburgerMenuItems}
-            active={autoActive ? isLocationMatched : active}
-            onCancelButtonClick={onCancelButtonClick}
-            needTranslate={needTranslate}
-          />
-        </div>
+        <SidebarItemIcon
+          active={autoActive ? isLocationMatched : active}
+          icon={icon}
+        />
+        <SidebarItemContent
+          name={name}
+          sidebarExpanded={sidebarExpanded}
+          isMainSidebarItem={isMainSidebarItem}
+          hasAI={showAIIcon}
+          number={number}
+          hamburgerMenuItems={hamburgerMenuItems}
+          active={autoActive ? isLocationMatched : active}
+          onCancelButtonClick={onCancelButtonClick}
+          needTranslate={needTranslate}
+        />
         <SidebarItemOnClickElement
           onClick={onClick}
           setSubsectionExpanded={setSubsectionExpanded}
@@ -110,36 +133,13 @@ function SidebarItem({
         {sidebarExpanded && subsection !== undefined && (
           <SidebarItemSubsectionExpandIcon
             subsectionExpanded={subsectionExpanded}
-            toggleSubsection={toggleSubsection}
+            toggleSubsection={() => {
+              setSubsectionExpanded(!subsectionExpanded)
+            }}
           />
         )}
         {active && onCancelButtonClick !== undefined && (
-          <button
-            onClick={e => {
-              e.stopPropagation()
-              onCancelButtonClick()
-            }}
-            className="z-[9999] overscroll-contain rounded-md p-2 text-bg-500 hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-700/50 dark:hover:text-bg-50"
-          >
-            <Icon icon="tabler:x" className="size-5" />
-          </button>
-        )}
-        {!active && hamburgerMenuItems !== undefined && (
-          <HamburgerMenu
-            smallerPadding
-            onButtonClick={e => {
-              e.stopPropagation()
-              setIsMenuOpen(true)
-            }}
-            className={`relative overscroll-contain ${
-              !isMenuOpen ? 'hidden group-hover:block' : ''
-            }`}
-            onClose={() => {
-              setIsMenuOpen(false)
-            }}
-          >
-            {hamburgerMenuItems}
-          </HamburgerMenu>
+          <SidebarCancelButton onClick={onCancelButtonClick} />
         )}
       </SidebarItemWrapper>
       {subsection !== undefined && (

@@ -5,7 +5,7 @@ import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IChangeLogVersion } from '@interfaces/changelog_interfaces'
@@ -61,7 +61,7 @@ function Changelog(): React.ReactElement {
         setSearchQuery={setSearchQuery}
         stuffToSearch="features"
       />
-      <APIComponentWithFallback data={data}>
+      <APIFallbackComponent data={data}>
         {() => (
           <ul className="relative isolate my-8 space-y-4">
             {filteredData.length > 0 ? (
@@ -69,7 +69,7 @@ function Changelog(): React.ReactElement {
                 <LogItem key={entry.version} entry={entry} />
               ))
             ) : (
-              <div className="flex-center flex size-full">
+              <div className="flex-center size-full">
                 <EmptyStateScreen
                   title="Oops, no results found"
                   description="Your search query did not match any results."
@@ -80,7 +80,7 @@ function Changelog(): React.ReactElement {
             <div className="absolute left-[calc(9rem+8px)] top-0 z-[-1] hidden h-full -translate-x-1/2 border-r-2 border-bg-200 dark:border-bg-700 sm:block" />
           </ul>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </ModuleWrapper>
   )
 }

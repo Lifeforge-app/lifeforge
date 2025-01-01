@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React from 'react'
 import { useNavigate } from 'react-router'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { useWalletContext } from '@providers/WalletProvider'
@@ -24,7 +24,7 @@ function LedgerSection({
           navigate('/wallet/ledgers#new')
         }}
       />
-      <APIComponentWithFallback data={ledgers}>
+      <APIFallbackComponent data={ledgers}>
         {ledgers => (
           <>
             {[
@@ -42,7 +42,7 @@ function LedgerSection({
                   name={name}
                   icon={icon}
                   needTranslate={false}
-                  color={color}
+                  sideStripColor={color}
                   active={
                     searchParams.get('ledger') === id ||
                     (searchParams.get('ledger') === null && index === 0)
@@ -80,7 +80,7 @@ function LedgerSection({
               ))}
           </>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </>
   )
 }

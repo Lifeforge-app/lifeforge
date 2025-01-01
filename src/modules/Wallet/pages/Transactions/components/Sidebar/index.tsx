@@ -28,7 +28,7 @@ function Sidebar({
       <SidebarItem
         icon="tabler:list"
         name="All Transactions"
-        active={searchParams.entries().next().done}
+        active={searchParams.entries().next().done === true}
         onClick={() => {
           setSearchParams(new URLSearchParams())
           setSidebarOpen(false)

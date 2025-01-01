@@ -17,12 +17,14 @@ function Pagination({
     const pageNumbers: React.ReactElement[] = []
     const pagesToShow = 5
 
-    const startPage =
+    const startPage = Math.max(
       currentPage > totalPages - pagesToShow
         ? totalPages - pagesToShow + 1
         : currentPage < pagesToShow
         ? 1
-        : currentPage - Math.floor(pagesToShow / 2)
+        : currentPage - Math.floor(pagesToShow / 2),
+      1
+    )
     const endPage = Math.min(totalPages, startPage + pagesToShow - 1)
 
     if (startPage > 1) {

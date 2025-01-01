@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import DateGroup from './DateGroup'
@@ -15,7 +15,7 @@ function Gallery(): React.ReactElement {
   }, [])
 
   return (
-    <APIComponentWithFallback data={photos}>
+    <APIFallbackComponent data={photos}>
       {photos => (
         <>
           <div className="relative flex min-h-full min-w-0 flex-col gap-8 pb-8">
@@ -54,7 +54,7 @@ function Gallery(): React.ReactElement {
                 />
               ))
             ) : (
-              <div className="flex-center flex size-full flex-1">
+              <div className="flex-center size-full flex-1">
                 <EmptyStateScreen
                   icon="tabler:photo-off"
                   title="Hmm... Seems a bit empty here"
@@ -66,7 +66,7 @@ function Gallery(): React.ReactElement {
           <BottomBar photos={photos as any} />
         </>
       )}
-    </APIComponentWithFallback>
+    </APIFallbackComponent>
   )
 }
 

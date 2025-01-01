@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
 import VideoInfo from '../../../../../../Music/modals/YoutubeDownloaderModal/components/VideoInfo'
 
@@ -16,7 +16,7 @@ function VideoDetails({
   progress: number
 }): React.ReactElement {
   return (
-    <APIComponentWithFallback data={videoInfo}>
+    <APIFallbackComponent data={videoInfo}>
       {videoInfo => (
         <>
           <div className="mt-6 flex w-full gap-6">
@@ -40,7 +40,7 @@ function VideoDetails({
           </Button>
         </>
       )}
-    </APIComponentWithFallback>
+    </APIFallbackComponent>
   )
 }
 

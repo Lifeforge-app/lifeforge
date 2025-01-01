@@ -3,7 +3,7 @@ import { useLocation } from 'react-router'
 import FAB from '@components/ButtonsAndInputs/FAB'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { useTodoListContext } from '@providers/TodoListProvider'
@@ -81,7 +81,7 @@ function TodoListContainer(): React.ReactElement {
             setSearchQuery={setSearchQuery}
             stuffToSearch="tasks"
           />
-          <APIComponentWithFallback data={entries}>
+          <APIFallbackComponent data={entries}>
             {entries =>
               entries.length > 0 ? (
                 <TaskList />
@@ -95,7 +95,7 @@ function TodoListContainer(): React.ReactElement {
                 />
               )
             }
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
         </div>
       </div>
       <ModifyTaskWindow />

@@ -10,7 +10,7 @@ import ViewModeSelector from '@components/Miscellaneous/ViewModeSelector'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import Header from './components/Header'
@@ -119,7 +119,7 @@ function BooksLibrary(): React.ReactElement {
               ]}
             />
           </div>
-          <APIComponentWithFallback data={filteredEntries}>
+          <APIFallbackComponent data={filteredEntries}>
             {filteredEntries =>
               filteredEntries.length > 0 ? (
                 view === 'grid' ? (
@@ -141,7 +141,7 @@ function BooksLibrary(): React.ReactElement {
                 />
               )
             }
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
         </div>
       </div>
       <LibgenModal />
@@ -180,11 +180,7 @@ function BooksLibrary(): React.ReactElement {
         }}
       />
       <Menu as="div" className="fixed bottom-6 right-6 z-50 block md:hidden">
-        <Button
-          onClick={() => {}}
-          icon="tabler:plus"
-          CustomElement={MenuButton}
-        ></Button>
+        <Button onClick={() => {}} icon="tabler:plus" as={MenuButton}></Button>
         <MenuItems
           transition
           anchor="top end"

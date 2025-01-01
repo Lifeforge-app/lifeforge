@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import APIRequest from '@utils/fetchData'
@@ -75,7 +75,7 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
   }, [location, navigate])
 
   return (
-    <APIComponentWithFallback data={flightsData}>
+    <APIFallbackComponent data={flightsData}>
       {(data: FlightData[]) => (
         <>
           <div
@@ -130,7 +130,7 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
           </Button>
         </>
       )}
-    </APIComponentWithFallback>
+    </APIFallbackComponent>
   )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import EntryItem from './components/EntryItem'
 
@@ -11,7 +11,7 @@ function MailInbox(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:mail" title="Mail Inbox" />
-      <APIComponentWithFallback data={mails}>
+      <APIFallbackComponent data={mails}>
         {mails => (
           <ul className="mt-4 space-y-2">
             {mails.map((mail: any) => (
@@ -19,7 +19,7 @@ function MailInbox(): React.ReactElement {
             ))}
           </ul>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </ModuleWrapper>
   )
 }

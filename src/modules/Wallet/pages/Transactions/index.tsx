@@ -7,7 +7,7 @@ import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
@@ -132,7 +132,7 @@ function Transactions(): React.ReactElement {
           />
           <SearchBar setView={setView} view={view} />
           <div className="mt-6 size-full">
-            <APIComponentWithFallback data={transactions}>
+            <APIFallbackComponent data={transactions}>
               {transactions =>
                 transactions.length > 0 ? (
                   filteredTransactions.length > 0 ? (
@@ -175,7 +175,7 @@ function Transactions(): React.ReactElement {
                   />
                 )
               }
-            </APIComponentWithFallback>
+            </APIFallbackComponent>
             {transactions.length > 0 && (
               <FAB
                 onClick={() => {

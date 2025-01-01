@@ -38,7 +38,7 @@ function Container({
         onClick={() => {
           setCreateContainerModalOpen('create')
         }}
-        className="flex-center relative flex h-full flex-col gap-6 rounded-lg border-2 border-dashed border-bg-400 p-8 hover:bg-bg-200 dark:border-bg-700 dark:hover:bg-bg-800/20"
+        className="flex-center relative h-full flex-col gap-6 rounded-lg border-2 border-dashed border-bg-400 p-8 hover:bg-bg-200 dark:border-bg-700 dark:hover:bg-bg-800/20"
       >
         <Icon
           icon="tabler:cube-plus"

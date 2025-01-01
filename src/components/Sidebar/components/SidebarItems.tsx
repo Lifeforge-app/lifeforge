@@ -61,7 +61,7 @@ function SidebarItems({ query }: { query: string }): React.ReactElement {
                     key={titleToPath(subItem.name)}
                     autoActive
                     name={subItem.name}
-                    hasAI={subItem.hasAI}
+                    showAIIcon={subItem.hasAI === true}
                     icon={subItem.icon ?? ''}
                     subsection={subItem.subsection}
                     prefix={item.prefix}

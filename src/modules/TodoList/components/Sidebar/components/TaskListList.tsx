@@ -1,6 +1,6 @@
 import { t } from 'i18next'
 import React from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import TaskListListItem from './TaskListListItem'
@@ -26,7 +26,7 @@ function TaskListList({
           setSelectedData(null)
         }}
       />
-      <APIComponentWithFallback data={lists}>
+      <APIFallbackComponent data={lists}>
         {lists =>
           lists.length > 0 ? (
             <>
@@ -42,7 +42,7 @@ function TaskListList({
             <p className="text-center text-bg-500">{t('emptyState.lists')}</p>
           )
         }
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </>
   )
 }

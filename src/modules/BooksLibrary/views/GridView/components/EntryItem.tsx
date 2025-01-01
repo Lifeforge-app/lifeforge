@@ -30,7 +30,7 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }): React.ReactElement {
       >
         <EntryContextMenu item={item} />
       </HamburgerMenu>
-      <div className="flex-center flex aspect-[9/12] w-full overflow-hidden rounded-lg bg-bg-200/70 shadow-custom dark:bg-bg-800/50">
+      <div className="flex-center aspect-[9/12] w-full overflow-hidden rounded-lg bg-bg-200/70 shadow-custom dark:bg-bg-800/50">
         <img
           src={`${import.meta.env.VITE_API_HOST}/media/${item.collectionId}/${
             item.id

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
 import React from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { useWalletContext } from '@providers/WalletProvider'
@@ -27,7 +27,7 @@ function CategoriesSection({
           setManageCategoriesModalOpen('new')
         }}
       />
-      <APIComponentWithFallback data={categories}>
+      <APIFallbackComponent data={categories}>
         {categories => (
           <>
             {[
@@ -50,26 +50,35 @@ function CategoriesSection({
                 <SidebarItem
                   key={id}
                   name={name}
-                  icon={icon}
-                  smallIcon={
-                    <Icon
-                      icon={
-                        {
-                          income: 'tabler:login-2',
-                          expenses: 'tabler:logout',
-                          all: 'tabler:arrow-bar-both'
-                        }[type] ?? ''
-                      }
-                      className={`absolute -bottom-2 -right-2 size-4 shrink-0 ${
-                        {
-                          income: 'text-green-500',
-                          expenses: 'text-red-500',
-                          all: 'text-yellow-500'
-                        }[type]
-                      }`}
-                    />
+                  icon={
+                    <div className="relative flex size-7 items-center justify-center">
+                      <Icon
+                        icon={icon}
+                        className={`size-6 shrink-0 ${
+                          searchParams.get('category') === id
+                            ? 'text-custom-500'
+                            : ''
+                        }`}
+                      />
+                      <Icon
+                        icon={
+                          {
+                            income: 'tabler:login-2',
+                            expenses: 'tabler:logout',
+                            all: 'tabler:arrow-bar-both'
+                          }[type] ?? ''
+                        }
+                        className={`absolute -bottom-2 -right-2 size-4 shrink-0 ${
+                          {
+                            income: 'text-green-500',
+                            expenses: 'text-red-500',
+                            all: 'text-yellow-500'
+                          }[type]
+                        }`}
+                      />
+                    </div>
                   }
-                  color={color}
+                  sideStripColor={color}
                   active={searchParams.get('category') === id}
                   onClick={() => {
                     if (name === 'All') {
@@ -110,7 +119,7 @@ function CategoriesSection({
               ))}
           </>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </>
   )
 }

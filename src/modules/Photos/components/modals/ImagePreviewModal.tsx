@@ -208,7 +208,7 @@ function ImagePreviewModal({
                   variant="no-bg"
                 />
               )}
-              <div className="flex-center flex size-full min-h-0 min-w-0">
+              <div className="flex-center size-full min-h-0 min-w-0">
                 <img
                   key={data.id}
                   src={`${import.meta.env.VITE_API_HOST}/media/${

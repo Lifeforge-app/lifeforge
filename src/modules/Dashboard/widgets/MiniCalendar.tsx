@@ -2,7 +2,7 @@ import moment from 'moment'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import DashboardItem from '@components/Miscellaneous/DashboardItem'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import {
   type ICalendarCategory,
@@ -25,7 +25,7 @@ export default function MiniCalendar(): React.ReactElement {
       icon="tabler:calendar"
       title={t('dashboard.widgets.miniCalendar.title')}
     >
-      <APIComponentWithFallback data={events}>
+      <APIFallbackComponent data={events}>
         {events => (
           <div className="size-full">
             <div className="px-2">
@@ -44,7 +44,7 @@ export default function MiniCalendar(): React.ReactElement {
             />
           </div>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </DashboardItem>
   )
 }

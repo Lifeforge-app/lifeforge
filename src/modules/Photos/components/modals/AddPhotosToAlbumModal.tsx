@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import APIRequest from '@utils/fetchData'
 
@@ -72,7 +72,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
 
   return (
     <ModalWrapper isOpen={isOpen} minWidth="40rem">
-      <APIComponentWithFallback data={photos}>
+      <APIFallbackComponent data={photos}>
         {() => (
           <>
             <ModalHeader
@@ -90,7 +90,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
               }}
             />
             <ul className="relative w-full">
-              <APIComponentWithFallback data={albumList}>
+              <APIFallbackComponent data={albumList}>
                 {albumList => (
                   <>
                     {albumList.map(album => (
@@ -108,7 +108,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                               : 'hover:bg-bg-200 dark:hover:bg-bg-800/50'
                           }`}
                         >
-                          <div className="flex-center flex size-10 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
+                          <div className="flex-center size-10 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                             {album.cover !== '' ? (
                               <img
                                 src={`${import.meta.env.VITE_API_HOST}/media/${
@@ -142,7 +142,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                     ))}
                   </>
                 )}
-              </APIComponentWithFallback>
+              </APIFallbackComponent>
               {loading && (
                 <div className="absolute left-0 top-0 size-full"></div>
               )}
@@ -160,7 +160,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
             </Button>
           </>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </ModalWrapper>
   )
 }

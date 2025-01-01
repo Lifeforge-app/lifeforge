@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useThemeColors from '@hooks/useThemeColor'
 import { useWalletContext } from '@providers/WalletProvider'
@@ -30,7 +30,7 @@ function AssetsBalanceCard(): React.ReactElement {
         </Link>
       }
     >
-      <APIComponentWithFallback data={assets}>
+      <APIFallbackComponent data={assets}>
         {assets =>
           assets.length > 0 ? (
             <Scrollbar>
@@ -84,7 +84,7 @@ function AssetsBalanceCard(): React.ReactElement {
             />
           )
         }
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </DashboardItem>
   )
 }

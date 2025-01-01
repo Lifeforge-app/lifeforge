@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import { useTodoListContext } from '@providers/TodoListProvider'
 
@@ -12,7 +12,7 @@ function TaskStatusList({
   const { statusCounter, searchParams, setSearchParams } = useTodoListContext()
 
   return (
-    <APIComponentWithFallback data={statusCounter}>
+    <APIFallbackComponent data={statusCounter}>
       {statusCounter => (
         <>
           {[
@@ -51,7 +51,7 @@ function TaskStatusList({
           ))}
         </>
       )}
-    </APIComponentWithFallback>
+    </APIFallbackComponent>
   )
 }
 

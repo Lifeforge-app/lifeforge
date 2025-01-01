@@ -42,7 +42,7 @@ function ChipSelector({
         onClick={() => {
           setExpanded(!expanded)
         }}
-        className="flex-center flex h-8 grow gap-2 whitespace-nowrap rounded-full px-2 text-sm text-bg-500 transition-all duration-100 hover:text-bg-800 dark:hover:text-bg-100 md:grow-0"
+        className="flex-center h-8 grow gap-2 whitespace-nowrap rounded-full px-2 text-sm text-bg-500 transition-all duration-100 hover:text-bg-800 dark:hover:text-bg-100 md:grow-0"
       >
         <Icon
           icon="uil:angle-up"

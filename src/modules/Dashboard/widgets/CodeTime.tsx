@@ -183,7 +183,7 @@ export default function CodeTime(): React.ReactElement {
         </div>
       }
     >
-      <div className="flex-center flex size-full min-h-0 flex-1">
+      <div className="flex-center size-full min-h-0 flex-1">
         {chartData ? (
           chartData === 'No data' ? (
             <EmptyStateScreen

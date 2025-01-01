@@ -5,10 +5,9 @@ import { toCamelCase } from '@utils/strings'
 
 interface ButtonProps {
   children?: React.ReactNode
-  CustomElement?: React.ElementType
   icon: string
   iconAtEnd?: boolean
-  iconSize?: string
+  iconClassName?: string
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   loading?: boolean
   disabled?: boolean
@@ -16,8 +15,19 @@ interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'no-bg'
   isRed?: boolean
   needTranslate?: boolean
-  [key: string]: any
 }
+
+interface AsProp<C extends React.ElementType> {
+  as?: C
+}
+
+type PropsToOmit<C extends React.ElementType, P> = keyof (AsProp<C> & P)
+
+type PolymorphicComponentProps<
+  C extends React.ElementType,
+  Props = Record<string, unknown>
+> = React.PropsWithChildren<Props & AsProp<C>> &
+  Omit<React.ComponentPropsWithoutRef<C>, PropsToOmit<C, Props>>
 
 const generateBaseClass = (hasChildren: boolean, iconAtEnd: boolean): string =>
   `flex items-center justify-center gap-2 whitespace-nowrap rounded-lg p-4 ${
@@ -54,12 +64,12 @@ const generateClassName = (
     variant
   )} ${className}`
 
-const Button: React.FC<ButtonProps> = ({
+function Button<C extends React.ElementType = 'button'>({
+  as,
   children,
-  CustomElement,
   icon,
   iconAtEnd = false,
-  iconSize,
+  iconClassName,
   onClick,
   loading = false,
   disabled = false,
@@ -68,9 +78,9 @@ const Button: React.FC<ButtonProps> = ({
   isRed = false,
   needTranslate = true,
   ...otherProps
-}) => {
+}: PolymorphicComponentProps<C, ButtonProps>): React.ReactElement {
   const { t } = useTranslation()
-  const FinalElement = CustomElement ?? 'button'
+  const FinalElement = as ?? 'button'
   const finalClassName = generateClassName(
     Boolean(children),
     iconAtEnd,
@@ -90,7 +100,7 @@ const Button: React.FC<ButtonProps> = ({
       {!iconAtEnd && (
         <Icon
           icon={loading ? 'svg-spinners:180-ring' : icon}
-          className={`shrink-0 ${iconSize ?? 'text-xl'}`}
+          className={`shrink-0 text-xl ${iconClassName}`}
         />
       )}
       {typeof children === 'string'
@@ -103,7 +113,7 @@ const Button: React.FC<ButtonProps> = ({
       {iconAtEnd && (
         <Icon
           icon={loading ? 'svg-spinners:180-ring' : icon}
-          className={`shrink-0 ${iconSize ?? 'text-xl'}`}
+          className={`shrink-0 text-xl ${iconClassName}`}
         />
       )}
     </FinalElement>

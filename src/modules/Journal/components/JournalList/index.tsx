@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { encrypt } from '@utils/encryption'
@@ -89,7 +89,7 @@ function JournalList({
           setSearchQuery={setSearchQuery}
           stuffToSearch="daily journal entries"
         />
-        <APIComponentWithFallback data={entries}>
+        <APIFallbackComponent data={entries}>
           {entries =>
             entries.length > 0 ? (
               <div className="mt-6 flex flex-col gap-4 pb-8">
@@ -123,7 +123,7 @@ function JournalList({
               </div>
             )
           }
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       </div>
     </>
   )

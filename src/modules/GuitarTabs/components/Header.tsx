@@ -178,7 +178,7 @@ function Header({
               onClick={() => {}}
               icon="tabler:plus"
               className="hidden md:flex"
-              CustomElement={MenuButton}
+              as={MenuButton}
             >
               Add Score
             </Button>

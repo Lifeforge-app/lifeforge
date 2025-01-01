@@ -35,7 +35,7 @@ function EntryItem({
         className="flex items-center justify-between gap-4 p-4"
       >
         <div className="flex w-full min-w-0 items-center gap-4">
-          <div className="flex-center flex w-12 rounded-lg bg-bg-200 dark:bg-bg-800">
+          <div className="flex-center w-12 rounded-lg bg-bg-200 dark:bg-bg-800">
             <img
               src={`${import.meta.env.VITE_API_HOST}/media/${
                 entry.collectionId

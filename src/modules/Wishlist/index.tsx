@@ -3,7 +3,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import FAB from '@components/ButtonsAndInputs/FAB'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IWishlistList } from '@interfaces/wishlist_interfaces'
 import ModifyWishlistListModal from './components/ModifyWishlistModal'
@@ -32,7 +32,7 @@ function Wishlist(): React.ReactElement {
           </Button>
         }
       />
-      <APIComponentWithFallback data={lists}>
+      <APIFallbackComponent data={lists}>
         {lists => {
           return (
             <div className="mt-6 space-y-4">
@@ -49,7 +49,7 @@ function Wishlist(): React.ReactElement {
             </div>
           )
         }}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
       <ModifyWishlistListModal
         openType={modifyWishlistListModalOpenType}
         setOpenType={setModifyWishlistListModalOpenType}

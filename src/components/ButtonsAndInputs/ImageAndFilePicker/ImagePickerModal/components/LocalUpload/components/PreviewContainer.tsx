@@ -17,7 +17,7 @@ function PreviewContainer({
   onRemove?: () => void
 }): React.ReactElement {
   return (
-    <div className="flex-center flex flex-1">
+    <div className="flex-center flex-1">
       {preview !== null && (
         <div className="flex-center relative min-h-32 w-full overflow-hidden rounded-lg bg-bg-200/50 p-6 shadow-custom dark:bg-bg-800/50">
           <div className="flex-between mb-6 ml-4 flex">
