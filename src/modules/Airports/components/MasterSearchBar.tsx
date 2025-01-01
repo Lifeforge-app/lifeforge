@@ -3,7 +3,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
@@ -74,7 +74,7 @@ function MasterSearchBar(): React.ReactElement {
             typeof searchResults === 'string' && 'pt-6'
           }`}
         >
-          <APIComponentWithFallback data={searchResults}>
+          <APIFallbackComponent data={searchResults}>
             {searchResults => (
               <Scrollbar className="flex-1" autoHeight autoHeightMax={384}>
                 <div className="flex-1 divide-y divide-bg-200 dark:divide-bg-800">
@@ -121,7 +121,7 @@ function MasterSearchBar(): React.ReactElement {
                 </div>
               </Scrollbar>
             )}
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
         </div>
       )}
     </div>

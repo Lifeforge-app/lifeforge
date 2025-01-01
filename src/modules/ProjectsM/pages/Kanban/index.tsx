@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IProjectsMEntry } from '@interfaces/projects_m_interfaces'
 import ProjectHeader from './components/ProjectHeader'
@@ -26,18 +26,18 @@ function Kanban(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <APIComponentWithFallback data={valid}>
+      <APIFallbackComponent data={valid}>
         {() => (
-          <APIComponentWithFallback data={projectData}>
+          <APIFallbackComponent data={projectData}>
             {projectData => (
               <>
                 <ProjectHeader projectData={projectData} />
                 <ProjectKanban />
               </>
             )}
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </ModuleWrapper>
   )
 }

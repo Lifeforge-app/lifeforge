@@ -25,7 +25,7 @@ function CategoryListItem({
   return (
     <SidebarItem
       active={searchParams.get('category') === item.id}
-      color={item.color}
+      sideStripColor={item.color}
       icon={item.icon}
       name={item.name}
       needTranslate={false}

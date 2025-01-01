@@ -19,7 +19,7 @@ function SidebarHeader({
           !sidebarExpanded ? 'overflow-hidden' : ''
         }`}
       >
-        <h1 className="ml-1 flex shrink-0 items-center gap-2 whitespace-nowrap text-xl font-semibold ">
+        <h1 className="ml-1 flex shrink-0 items-center gap-2 whitespace-nowrap text-xl font-semibold">
           <Icon icon="tabler:hammer" className="text-3xl text-custom-500" />
           {sidebarExpanded && (
             <div>
@@ -39,6 +39,7 @@ function SidebarHeader({
       {sidebarExpanded && (
         <div className="px-4">
           <SearchInput
+            lighter
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             stuffToSearch="modules"

@@ -36,7 +36,7 @@ function Header({ itemCount }: { itemCount: number }): React.ReactElement {
               onClick={() => {}}
               icon="tabler:plus"
               className="hidden sm:flex"
-              CustomElement={MenuButton}
+              as={MenuButton}
             >
               add Book
             </Button>

@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import useThemeColors from '@hooks/useThemeColor'
 import { toCamelCase } from '@utils/strings'
 
 function SearchInput({
@@ -32,14 +31,13 @@ function SearchInput({
   className?: string
 }): React.ReactElement {
   const { t } = useTranslation()
-  const { componentBgWithHover } = useThemeColors()
 
   return (
     <search
-      className={`flex h-14 max-h-14 min-h-14 w-full flex-1 shrink-0 cursor-text items-center gap-4 rounded-lg bg-bg-50 px-4 shadow-custom transition-all hover:!bg-white/70 ${
+      className={`flex h-14 max-h-14 min-h-14 w-full flex-1 shrink-0 cursor-text items-center gap-4 rounded-lg bg-bg-200/50 px-4 shadow-sm transition-all hover:!bg-bg-200 ${
         lighter
           ? 'dark:bg-bg-800/50 dark:hover:bg-bg-800'
-          : componentBgWithHover
+          : 'dark:bg-bg-900 dark:hover:bg-bg-800/50'
       } ${hasTopMargin ? 'mt-4' : ''} ${className}`}
       onClick={e => {
         e.currentTarget.querySelector('input')?.focus()

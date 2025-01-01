@@ -24,13 +24,13 @@ function ListView({
             key={key}
             className="relative flex items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900"
           >
-            <div className="flex-center absolute left-0 top-0 flex size-full rounded-lg bg-bg-50/50 text-center font-medium dark:bg-bg-900/70">
+            <div className="flex-center absolute left-0 top-0 size-full rounded-lg bg-bg-50/50 text-center font-medium dark:bg-bg-900/70">
               Downloading... {value.percentage}
               <br />
               {value.downloaded}/{value.total}, {value.speed}/s, ETA:{' '}
               {value.ETA}s
             </div>
-            <div className="flex-center flex aspect-[9/12] w-20 rounded-lg bg-bg-200 p-2 dark:bg-bg-800">
+            <div className="flex-center aspect-[9/12] w-20 rounded-lg bg-bg-200 p-2 dark:bg-bg-800">
               <Icon icon="tabler:clock" className="size-8 text-bg-500" />
             </div>
             <div className="flex min-w-0 flex-1 flex-col">

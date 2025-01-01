@@ -8,7 +8,7 @@ function AddCardButton(): React.ReactElement {
   const { componentBgLighter } = useThemeColors()
 
   return (
-    <li className="flex-center flex">
+    <li className="flex-center">
       {isFocused ? (
         <div className="mb-4 w-full space-y-2">
           <input

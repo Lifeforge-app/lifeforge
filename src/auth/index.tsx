@@ -21,8 +21,8 @@ function Auth(): React.ReactElement {
 
   return (
     <>
-      <section className="flex-center flex size-full flex-col overflow-y-auto px-8 pb-4 pt-12 sm:px-12 lg:w-1/2">
-        <div className="flex-center flex size-full flex-col">
+      <section className="flex-center size-full flex-col overflow-y-auto px-8 pb-4 pt-12 sm:px-12 lg:w-1/2">
+        <div className="flex-center size-full flex-col">
           <AuthHeader />
           <AuthForm />
         </div>

@@ -9,7 +9,7 @@ import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import ViewModeSelector from '@components/Miscellaneous/ViewModeSelector'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import useHashParams from '@hooks/useHashParams'
@@ -201,7 +201,7 @@ function GuitarTabs(): React.ReactElement {
               ]}
             />
           </div>
-          <APIComponentWithFallback data={entries}>
+          <APIFallbackComponent data={entries}>
             {entries => (
               <Scrollbar className="mt-6 pb-16">
                 <Pagination
@@ -255,7 +255,7 @@ function GuitarTabs(): React.ReactElement {
                 />
               </Scrollbar>
             )}
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
         </div>
       </div>
       <ModifyEntryModal

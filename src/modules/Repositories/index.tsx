@@ -5,7 +5,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import LANGUAGE_COLORS from '@constants/language_colors'
 import useFetch from '@hooks/useFetch'
 import Sidebar from './Sidebar'
@@ -60,7 +60,7 @@ function Repositories(): React.ReactElement {
             setSearchQuery={setSearchQuery}
             stuffToSearch="tasks"
           />
-          <APIComponentWithFallback data={repos}>
+          <APIFallbackComponent data={repos}>
             {repos => (
               <ul className="mt-4 flex flex-1 flex-col gap-4 overflow-y-auto pb-24 sm:pb-8">
                 {repos.map((repo, index) => (
@@ -116,7 +116,7 @@ function Repositories(): React.ReactElement {
                 ))}
               </ul>
             )}
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
         </div>
       </div>
     </ModuleWrapper>

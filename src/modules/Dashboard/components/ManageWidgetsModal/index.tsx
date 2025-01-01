@@ -3,7 +3,7 @@ import React from 'react'
 import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
 import DASHBOARD_WIDGETS from '@constants/dashboard_widgets'
-import ComponentListItem from './ComponentItem'
+import ComponentListItem from './components/ComponentItem'
 
 function ManageWidgetsModal({
   isOpen,

@@ -8,7 +8,7 @@ import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import {
@@ -109,7 +109,7 @@ function WishlistEntries(): React.ReactElement {
             onClick={() => {}}
             icon="tabler:plus"
             className="hidden md:flex"
-            CustomElement={MenuButton}
+            as={MenuButton}
           >
             New Item
           </Button>
@@ -133,9 +133,9 @@ function WishlistEntries(): React.ReactElement {
           </MenuItems>
         </Menu>
       </header>
-      <APIComponentWithFallback data={collectionId}>
+      <APIFallbackComponent data={collectionId}>
         {collectionId => (
-          <APIComponentWithFallback data={entries}>
+          <APIFallbackComponent data={entries}>
             {entries =>
               entries.length > 0 ? (
                 <Scrollbar>
@@ -158,9 +158,9 @@ function WishlistEntries(): React.ReactElement {
                 />
               )
             }
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
       <FromOtherAppsModal
         isOpen={isFromOtherAppsModalOpen}
         onClose={() => {
@@ -169,11 +169,7 @@ function WishlistEntries(): React.ReactElement {
         onCreate={refreshEntries}
       />
       <Menu as="div" className="absolute bottom-6 right-6 z-50 block md:hidden">
-        <Button
-          onClick={() => {}}
-          icon="tabler:plus"
-          CustomElement={MenuButton}
-        />
+        <Button onClick={() => {}} icon="tabler:plus" as={MenuButton} />
         <MenuItems
           transition
           anchor="top end"

@@ -5,7 +5,7 @@ import FAB from '@components/ButtonsAndInputs/FAB'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
@@ -48,7 +48,7 @@ function Achievements(): React.ReactElement {
         selectedDifficulty={selectedDifficulty}
         setSelectedDifficulty={setSelectedDifficulty}
       />
-      <APIComponentWithFallback data={entries}>
+      <APIFallbackComponent data={entries}>
         {entries =>
           entries.length > 0 ? (
             <div className="mt-6 space-y-4">
@@ -79,7 +79,7 @@ function Achievements(): React.ReactElement {
             />
           )
         }
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
       <ModifyAchievementModal
         openType={modifyAchievementModalOpenType}
         setOpenType={setModifyAchievementModalOpenType}

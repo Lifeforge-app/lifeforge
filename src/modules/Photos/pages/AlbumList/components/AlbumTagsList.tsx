@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
 
 function AlbumTagsList({
@@ -16,7 +16,7 @@ function AlbumTagsList({
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (
-    <APIComponentWithFallback data={albumTagList}>
+    <APIFallbackComponent data={albumTagList}>
       {albumTagList => (
         <>
           <div className="mt-4 flex items-start">
@@ -81,7 +81,7 @@ function AlbumTagsList({
           </div>
         </>
       )}
-    </APIComponentWithFallback>
+    </APIFallbackComponent>
   )
 }
 

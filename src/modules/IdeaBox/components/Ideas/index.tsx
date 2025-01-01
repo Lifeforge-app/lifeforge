@@ -12,7 +12,7 @@ import { toast } from 'react-toastify'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import {
@@ -186,7 +186,7 @@ function Ideas(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <APIComponentWithFallback data={valid}>
+      <APIFallbackComponent data={valid}>
         {() => (
           <>
             <ContainerHeader
@@ -200,9 +200,9 @@ function Ideas(): React.ReactElement {
               stuffToSearch="ideas"
             />
             {debouncedSearchQuery.trim().length === 0 ? (
-              <APIComponentWithFallback data={data}>
+              <APIFallbackComponent data={data}>
                 {data => (
-                  <APIComponentWithFallback data={folders}>
+                  <APIFallbackComponent data={folders}>
                     {folders => (
                       <>
                         {typeof folders !== 'string' &&
@@ -298,7 +298,7 @@ function Ideas(): React.ReactElement {
                                         setModifyIdeaModalOpenType={
                                           setModifyIdeaModalOpenType
                                         }
-                                        setExistedData={setSearchResults}
+                                        setExistedData={setExistedData}
                                         setDeleteIdeaModalOpen={
                                           setDeleteIdeaModalOpen
                                         }
@@ -312,11 +312,11 @@ function Ideas(): React.ReactElement {
                           ))}
                       </>
                     )}
-                  </APIComponentWithFallback>
+                  </APIFallbackComponent>
                 )}
-              </APIComponentWithFallback>
+              </APIFallbackComponent>
             ) : (
-              <APIComponentWithFallback data={searchResults}>
+              <APIFallbackComponent data={searchResults}>
                 {searchResults => (
                   <>
                     {searchResults.length === 0 ? (
@@ -377,7 +377,7 @@ function Ideas(): React.ReactElement {
                     )}
                   </>
                 )}
-              </APIComponentWithFallback>
+              </APIFallbackComponent>
             )}
             <FAB
               setModifyIdeaModalOpenType={setModifyIdeaModalOpenType}
@@ -434,7 +434,7 @@ function Ideas(): React.ReactElement {
             />
           </>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </ModuleWrapper>
   )
 }

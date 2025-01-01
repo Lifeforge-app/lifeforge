@@ -1,5 +1,5 @@
 import React from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 
@@ -13,7 +13,7 @@ function Runways({ code }: { code: string }): React.ReactElement {
 
   return (
     <div className="my-8 space-y-8">
-      <APIComponentWithFallback data={runways}>
+      <APIFallbackComponent data={runways}>
         {runways =>
           runways.length > 0 ? (
             <>
@@ -32,7 +32,7 @@ function Runways({ code }: { code: string }): React.ReactElement {
             />
           )
         }
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </div>
   )
 }

@@ -5,7 +5,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IDiskUsage } from '@interfaces/server_status_interfaces'
 
@@ -19,7 +19,7 @@ export default function StorageStatus(): React.ReactElement {
       title={t('dashboard.widgets.storageStatus.title')}
     >
       <Scrollbar>
-        <APIComponentWithFallback data={diskUsage}>
+        <APIFallbackComponent data={diskUsage}>
           {diskUsage => (
             <div className="-mt-4 flex max-h-96 flex-col divide-y divide-bg-200 dark:divide-bg-700">
               {diskUsage.map(disk => (
@@ -56,7 +56,7 @@ export default function StorageStatus(): React.ReactElement {
               ))}
             </div>
           )}
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       </Scrollbar>
     </DashboardItem>
   )

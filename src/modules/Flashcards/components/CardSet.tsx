@@ -7,7 +7,7 @@ import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import {
   type IFlashcardCard,
@@ -125,7 +125,7 @@ function CardSet(): React.ReactElement {
               }
             })()}
           </h1>
-          <div className="flex-center flex gap-2">
+          <div className="flex-center gap-2">
             <button className="rounded-md p-4 text-bg-500 transition-all hover:bg-bg-800 hover:text-bg-50">
               <Icon icon="tabler:border-corners" className="text-xl" />
             </button>
@@ -141,14 +141,14 @@ function CardSet(): React.ReactElement {
           </div>
         </div>
       </div>
-      <div className="flex-center flex w-full flex-1 flex-col">
-        <APIComponentWithFallback data={cards}>
+      <div className="flex-center w-full flex-1 flex-col">
+        <APIFallbackComponent data={cards}>
           {cards => (
             <>
-              <div className="flex-center flex h-1/2 w-3/5 gap-4">
+              <div className="flex-center h-1/2 w-3/5 gap-4">
                 <button
                   onClick={gotoLastCard}
-                  className="flex-center flex h-full shrink-0 p-4"
+                  className="flex-center h-full shrink-0 p-4"
                 >
                   <Icon icon="tabler:chevron-left" className="text-3xl" />
                 </button>
@@ -169,7 +169,7 @@ function CardSet(): React.ReactElement {
                           />
                         </button>
                       </div>
-                      <div className="flex-center flex w-full flex-1 flex-col text-center text-3xl">
+                      <div className="flex-center w-full flex-1 flex-col text-center text-3xl">
                         {isShowingAnswer
                           ? cards[currentIndex]?.answer
                           : cards[currentIndex]?.question}
@@ -181,7 +181,7 @@ function CardSet(): React.ReactElement {
                 </div>
                 <button
                   onClick={gotoNextCard}
-                  className="flex-center flex h-full shrink-0 p-4"
+                  className="flex-center h-full shrink-0 p-4"
                 >
                   <Icon icon="tabler:chevron-right" className="text-3xl" />
                 </button>
@@ -206,7 +206,7 @@ function CardSet(): React.ReactElement {
               />
             </>
           )}
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       </div>
     </ModuleWrapper>
   )

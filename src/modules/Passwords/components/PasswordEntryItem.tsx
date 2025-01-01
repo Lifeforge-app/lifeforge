@@ -195,7 +195,7 @@ function PasswordEntryITem({
           <Button
             variant="no-bg"
             className="hidden !p-2 sm:flex"
-            iconSize="size-6"
+            iconClassName="size-6"
             onClick={() => {
               decryptedPassword === null
                 ? (() => {

@@ -138,7 +138,7 @@ export default function useThemeColors(): {
     if (bgImage !== '') {
       return 'bg-bg-50/50 backdrop-blur-sm dark:bg-bg-800/50 hover:bg-bg-200/50 dark:hover:bg-bg-700/50 transition-all'
     }
-    return 'bg-bg-100/50 dark:bg-bg-800/50 dark:hover:bg-bg-800/80 hover:bg-bg-200 transition-all'
+    return 'bg-bg-200/50 dark:bg-bg-800/50 dark:hover:bg-bg-800/80 hover:bg-bg-200 transition-all'
   }, [bgImage])
 
   return {

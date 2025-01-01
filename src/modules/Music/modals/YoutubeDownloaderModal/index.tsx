@@ -7,7 +7,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
 import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
 import { useMusicContext } from '@providers/MusicProvider'
@@ -129,7 +129,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
         className="mb-8"
       />
       {URL_REGEX.test(videoURL) && (
-        <APIComponentWithFallback data={videoInfo}>
+        <APIFallbackComponent data={videoInfo}>
           {videoInfo => (
             <>
               <div className="mt-6 flex w-full gap-6">
@@ -145,7 +145,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
               </Button>
             </>
           )}
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       )}
     </ModalWrapper>
   )

@@ -510,11 +510,11 @@ button[class^='react-calendar__navigation'] {
 }
 
 .flex-center {
-  @apply items-center justify-center;
+  @apply flex items-center justify-center;
 }
 
 .flex-between {
-  @apply items-center justify-between;
+  @apply flex items-center justify-between;
 }
 
 .rbc-off-range-bg {

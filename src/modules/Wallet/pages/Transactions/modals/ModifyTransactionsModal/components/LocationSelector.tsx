@@ -2,7 +2,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
 import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 
 export interface ILocationAutoComplete {
@@ -67,7 +67,7 @@ function LocationSelector({
       customActive={Boolean(location)}
     >
       {query.trim() !== '' && (
-        <APIComponentWithFallback data={data}>
+        <APIFallbackComponent data={data}>
           {data => (
             <>
               {data.predictions.map((prediction: Prediction) => (
@@ -81,7 +81,7 @@ function LocationSelector({
               ))}
             </>
           )}
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       )}
     </ListboxOrComboboxInput>
   )

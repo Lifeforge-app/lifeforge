@@ -75,7 +75,7 @@ export default function EntryItem({
         className="absolute inset-0 z-10 size-full rounded-lg"
       />
       <div
-        className={`flex-center flex aspect-[10/12] h-min w-24 rounded-lg p-2 ${componentBgLighter}`}
+        className={`flex-center aspect-[10/12] h-min w-24 rounded-lg p-2 ${componentBgLighter}`}
       >
         <img
           src={`${import.meta.env.VITE_API_HOST}/media/${item.collectionId}/${

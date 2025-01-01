@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
@@ -7,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
+import Switch from '@components/ButtonsAndInputs/Switch'
 import useThemeColors from '@hooks/useThemeColor'
 import {
   type IModuleConfigInput,
@@ -26,8 +26,7 @@ function ModuleItem({
   enabled: boolean
   toggleModule: (moduleName: string) => void
 }): React.ReactElement {
-  const { componentBg, componentBgLighter, componentBgLighterWithHover } =
-    useThemeColors()
+  const { componentBg, componentBgLighter } = useThemeColors()
   const [expandConfig, setExpandConfig] = useState(false)
   const { t } = useTranslation()
   const [saveLoading, setButtonLoading] = useState(false)
@@ -93,13 +92,15 @@ function ModuleItem({
             />
           </div>
           <div>
-            <h3 className="flex items-center text-xl font-medium">
-              {t(`modules.${toCamelCase(module.name)}`)}
-              {module.deprecated && (
-                <span className="ml-2 text-sm text-red-500">
-                  ({t('modules.deprecated')})
-                </span>
-              )}
+            <h3 className="flex flex-wrap items-center gap-2 text-xl font-medium">
+              <span>{t(`modules.${toCamelCase(module.name)}`)}</span>
+              <span>
+                {module.deprecated && (
+                  <span className="text-sm text-red-500">
+                    ({t('modules.deprecated')})
+                  </span>
+                )}
+              </span>
             </h3>
             <p className="text-bg-500">
               {t(
@@ -116,18 +117,7 @@ function ModuleItem({
             onChange={() => {
               toggleModule(module.name)
             }}
-            className={`${
-              enabled ? 'bg-custom-500' : componentBgLighterWithHover
-            } relative inline-flex h-6 w-11 items-center rounded-full`}
-          >
-            <span
-              className={`${
-                enabled
-                  ? 'translate-x-6 bg-bg-100'
-                  : 'translate-x-1 bg-bg-100 dark:bg-bg-500'
-              } inline-block size-4 rounded-full transition`}
-            />
-          </Switch>
+          />
           <button
             onClick={toggleExpandConfig}
             className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800/50"
@@ -209,20 +199,7 @@ function ModuleItem({
                               !moduleConfig[module.name][key]
                             setModuleConfig({ ...moduleConfig })
                           }}
-                          className={`${
-                            moduleConfig[module.name][key]
-                              ? 'bg-custom-500'
-                              : 'bg-bg-300 dark:bg-bg-800'
-                          } relative inline-flex h-6 w-11 items-center rounded-full`}
-                        >
-                          <span
-                            className={`${
-                              moduleConfig[module.name][key]
-                                ? 'translate-x-6 bg-bg-100'
-                                : 'translate-x-1 bg-bg-100 dark:bg-bg-500'
-                            } inline-block size-4 rounded-full transition`}
-                          />
-                        </Switch>
+                        />
                       </div>
                     )
                 }

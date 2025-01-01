@@ -79,7 +79,7 @@ function AddMusicButton(): React.ReactElement {
 
   return (
     <Menu as="div" className="relative z-50 hidden md:block">
-      <Button onClick={() => {}} CustomElement={MenuButton} icon="tabler:plus">
+      <Button onClick={() => {}} as={MenuButton} icon="tabler:plus">
         add music
       </Button>
       <MenuItems

@@ -7,7 +7,7 @@ import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import EntryItem from './components/EntryItem'
@@ -63,7 +63,7 @@ function ProjectsM(): React.ReactElement {
             stuffToSearch="projects"
           />
           <div className="mt-6 flex flex-1 flex-col">
-            <APIComponentWithFallback data={entries}>
+            <APIFallbackComponent data={entries}>
               {entries =>
                 entries.length > 0 ? (
                   <Scrollbar>
@@ -82,7 +82,7 @@ function ProjectsM(): React.ReactElement {
                   />
                 )
               }
-            </APIComponentWithFallback>
+            </APIFallbackComponent>
           </div>
         </div>
       </div>

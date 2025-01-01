@@ -21,7 +21,7 @@ function TypeSection({
     <>
       <SidebarTitle name="Type" />
       {[
-        ['tabler:arrow-bar-both', 'All Assets'],
+        ['tabler:arrow-bar-both', 'All Types'],
         ['tabler:login-2', 'Income'],
         ['tabler:logout', 'Expenses'],
         ['tabler:transfer', 'Transfer']
@@ -30,12 +30,12 @@ function TypeSection({
           key={name}
           active={
             searchParams.get('type') === name.toLowerCase() ||
-            (searchParams.get('type') === null && name === 'All Assets')
+            (searchParams.get('type') === null && name === 'All Types')
           }
           icon={icon}
-          iconColor={
+          sideStripColor={
             {
-              'All Assets': bgTemp[100],
+              'All Types': bgTemp[100],
               Income: colors.green[500],
               Expenses: colors.red[500],
               Transfer: colors.blue[500]
@@ -48,12 +48,12 @@ function TypeSection({
               ? filteredTransactions.filter(
                   transaction =>
                     transaction.type === name.toLowerCase() ||
-                    name === 'All Assets'
+                    name === 'All Types'
                 ).length
               : 0
           }
           onClick={() => {
-            if (name === 'All Assets') {
+            if (name === 'All Types') {
               searchParams.delete('type')
               setSearchParams(searchParams)
               setSidebarOpen(false)
@@ -67,7 +67,7 @@ function TypeSection({
             setSidebarOpen(false)
           }}
           onCancelButtonClick={
-            name !== 'All Assets'
+            name !== 'All Types'
               ? () => {
                   searchParams.delete('type')
                   setSearchParams(searchParams)

@@ -57,8 +57,8 @@ export default function Timer(): React.ReactElement {
   }, [timeLeft, isRunning, currentSection])
 
   return (
-    <div className="flex-center flex min-h-0 w-full flex-1 flex-col gap-12">
-      <div className="flex-center relative flex flex-col">
+    <div className="flex-center min-h-0 w-full flex-1 flex-col gap-12">
+      <div className="flex-center relative flex-col">
         <div
           className="radial-progress absolute text-bg-200 dark:text-bg-800"
           style={{
@@ -70,7 +70,7 @@ export default function Timer(): React.ReactElement {
           role="progressbar"
         ></div>
         <div
-          className="flex-center radial-progress flex text-custom-500"
+          className="flex-center radial-progress text-custom-500"
           style={{
             // @ts-expect-error - Cannot fix lah this one ;-;
             '--value': `${(timeLeft / timeDistribution[currentSection]) * 100}`,

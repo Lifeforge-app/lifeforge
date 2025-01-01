@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
 import { useParams } from 'react-router'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
@@ -165,7 +165,7 @@ function Weather(): React.ReactElement {
   )
 
   return (
-    <APIComponentWithFallback data={METARData}>
+    <APIFallbackComponent data={METARData}>
       {data =>
         data !== 'none' ? (
           <div className="mb-8 mt-6 grid w-full grid-cols-4 gap-4">
@@ -404,7 +404,7 @@ function Weather(): React.ReactElement {
           </div>
         )
       }
-    </APIComponentWithFallback>
+    </APIFallbackComponent>
   )
 }
 

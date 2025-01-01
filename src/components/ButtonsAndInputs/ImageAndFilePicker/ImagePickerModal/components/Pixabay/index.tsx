@@ -136,17 +136,17 @@ function Pixabay({
           switch (results) {
             case 'error':
               return (
-                <div className="flex-center flex size-full flex-1">
+                <div className="flex-center size-full flex-1">
                   <ErrorScreen message="Failed to fetch data" />
                 </div>
               )
             case null:
               return loading ? (
-                <div className="flex-center flex size-full flex-1">
+                <div className="flex-center size-full flex-1">
                   <LoadingScreen />
                 </div>
               ) : (
-                <div className="flex-center flex size-full flex-1">
+                <div className="flex-center size-full flex-1">
                   <EmptyStateScreen
                     icon="simple-icons:pixabay"
                     title="Powered by Pixabay"

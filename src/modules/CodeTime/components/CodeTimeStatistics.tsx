@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
 import React from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
@@ -18,7 +18,7 @@ function CodeTimeStatistics(): React.ReactElement {
         <span className="ml-2">Statistics</span>
       </h1>
 
-      <APIComponentWithFallback data={stats}>
+      <APIFallbackComponent data={stats}>
         {stats => (
           <div className="flex-between grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-4">
             {Object.entries(stats).map(([key, value], index) => (
@@ -67,7 +67,7 @@ function CodeTimeStatistics(): React.ReactElement {
             ))}
           </div>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </div>
   )
 }

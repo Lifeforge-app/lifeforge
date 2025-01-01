@@ -2,7 +2,7 @@
 
 import { Icon } from '@iconify/react'
 import React from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
@@ -21,7 +21,12 @@ function Sidebar({
 
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
-      <SidebarItem icon="tabler:cards" name="All Decks" />
+      <SidebarItem
+        autoActive
+        onClick={() => {}}
+        icon="tabler:cards"
+        name="All Decks"
+      />
       <SidebarDivider />
       <SidebarTitle name="progress" />
       {[
@@ -43,7 +48,7 @@ function Sidebar({
 
       <SidebarDivider />
       <SidebarTitle name="Tags" />
-      <APIComponentWithFallback data={tagsList}>
+      <APIFallbackComponent data={tagsList}>
         {tagsList => (
           <>
             {tagsList.map((tag, index) => (
@@ -69,7 +74,7 @@ function Sidebar({
             ))}
           </>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </SidebarWrapper>
   )
 }

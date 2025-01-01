@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 
@@ -16,7 +16,7 @@ function Radio(): React.ReactElement {
   )
 
   return (
-    <APIComponentWithFallback data={radiosData}>
+    <APIFallbackComponent data={radiosData}>
       {data => (
         <ul className="mb-8 flex flex-col divide-y-2 divide-bg-800">
           {data.length > 0 ? (
@@ -40,7 +40,7 @@ function Radio(): React.ReactElement {
           )}
         </ul>
       )}
-    </APIComponentWithFallback>
+    </APIFallbackComponent>
   )
 }
 

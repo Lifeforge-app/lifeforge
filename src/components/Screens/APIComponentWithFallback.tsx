@@ -3,7 +3,7 @@ import React from 'react'
 import ErrorScreen from './ErrorScreen'
 import LoadingScreen from './LoadingScreen'
 
-function APIComponentWithFallback<T>({
+function APIFallbackComponent<T>({
   data,
   children,
   showLoading = true
@@ -22,4 +22,4 @@ function APIComponentWithFallback<T>({
   }
 }
 
-export default APIComponentWithFallback
+export default APIFallbackComponent

@@ -6,7 +6,7 @@ import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IFlashcardDeck } from '@interfaces/flashcard_interfaces'
@@ -45,7 +45,7 @@ export default function Flashcards(): React.ReactElement {
             setSearchQuery={setSearchQuery}
             stuffToSearch="tasks"
           />
-          <APIComponentWithFallback data={decks}>
+          <APIFallbackComponent data={decks}>
             {decks => (
               <Scrollbar>
                 <div className="mt-6 grid w-full grid-cols-3 gap-6 px-4 pb-16">
@@ -87,7 +87,7 @@ export default function Flashcards(): React.ReactElement {
                       </button>
                     </Link>
                   ))}
-                  <div className="flex-center relative flex h-full flex-col gap-4 rounded-lg border-2 border-dashed border-bg-500 p-12">
+                  <div className="flex-center relative h-full flex-col gap-4 rounded-lg border-2 border-dashed border-bg-500 p-12">
                     <Icon icon="tabler:plus" className="size-8 text-bg-500" />
                     <div className="text-xl font-semibold text-bg-500">
                       Create new set
@@ -96,7 +96,7 @@ export default function Flashcards(): React.ReactElement {
                 </div>
               </Scrollbar>
             )}
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
           {/* {Array(4)
               .fill(0)
               .map((_, index) => (

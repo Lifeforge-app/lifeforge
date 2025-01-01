@@ -104,7 +104,7 @@ function OTPScreen({
   }, [otpCooldown, otpSent])
 
   return (
-    <div className="flex-center flex size-full flex-1 flex-col gap-4">
+    <div className="flex-center size-full flex-1 flex-col gap-4">
       <Icon icon="tabler:shield-lock" className="size-28" />
       <h2 className="text-center text-4xl font-semibold">
         {t('fetch.otp.required.title')}

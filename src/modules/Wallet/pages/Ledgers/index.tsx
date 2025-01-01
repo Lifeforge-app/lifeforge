@@ -6,7 +6,7 @@ import FAB from '@components/ButtonsAndInputs/FAB'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { type IWalletLedger } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
@@ -50,7 +50,7 @@ function Ledgers(): React.ReactElement {
           )
         }
       />
-      <APIComponentWithFallback data={ledgers}>
+      <APIFallbackComponent data={ledgers}>
         {ledgers =>
           ledgers.length > 0 ? (
             <div className="mt-6 space-y-4">
@@ -76,7 +76,7 @@ function Ledgers(): React.ReactElement {
             />
           )
         }
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
       <ModifyLedgersModal
         existedData={selectedData}
         setExistedData={setSelectedData}

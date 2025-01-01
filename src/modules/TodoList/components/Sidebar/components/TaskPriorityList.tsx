@@ -1,6 +1,6 @@
 import { t } from 'i18next'
 import React from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import TaskPriorityListItem from './TaskPriorityListItem'
@@ -26,7 +26,7 @@ function TaskPriorityList({
           setSelectedData(null)
         }}
       />
-      <APIComponentWithFallback data={priorities}>
+      <APIFallbackComponent data={priorities}>
         {priorities =>
           priorities.length > 0 ? (
             <>
@@ -44,7 +44,7 @@ function TaskPriorityList({
             </p>
           )
         }
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </>
   )
 }

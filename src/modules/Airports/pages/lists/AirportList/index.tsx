@@ -6,7 +6,7 @@ import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import EntryItem from './components/EntryItem'
@@ -64,11 +64,11 @@ function AirportsList(): React.ReactElement {
     <ModuleWrapper>
       <ModuleHeader title="Airports" />
       <MasterSearchBar />
-      <APIComponentWithFallback data={airportsData} showLoading={false}>
+      <APIFallbackComponent data={airportsData} showLoading={false}>
         {continentsData => (
           <Breadcrumbs breadcrumbs={continentsData.breadcrumbs} />
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
       <div className="mt-4 flex items-center gap-2">
         <ContinentSelector />
         <SearchInput
@@ -78,7 +78,7 @@ function AirportsList(): React.ReactElement {
           hasTopMargin={false}
         />
       </div>
-      <APIComponentWithFallback data={filteredData}>
+      <APIFallbackComponent data={filteredData}>
         {data => (
           <Scrollbar className="mt-6">
             <div className="mb-8 flex-1 space-y-4 px-4">
@@ -115,7 +115,7 @@ function AirportsList(): React.ReactElement {
             </div>
           </Scrollbar>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </ModuleWrapper>
   )
 }

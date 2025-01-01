@@ -169,7 +169,7 @@ function MiniCalendarDateItem({
         setNextToSelect(nextToSelect === 'start' ? 'end' : 'start')
         setSearchParams(searchParams)
       }}
-      className={`flex-center relative isolate flex aspect-square w-full flex-col gap-1 text-sm ${
+      className={`flex-center relative isolate aspect-square w-full flex-col gap-1 text-sm ${
         firstDay > index || index - firstDay + 1 > lastDate
           ? 'pointer-events-none text-bg-300 dark:text-bg-600'
           : 'cursor-pointer'

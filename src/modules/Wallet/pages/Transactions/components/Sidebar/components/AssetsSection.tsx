@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { useWalletContext } from '@providers/WalletProvider'
@@ -23,7 +23,7 @@ function AssetsSection({
           navigate('/wallet/assets#new')
         }}
       />
-      <APIComponentWithFallback data={assets}>
+      <APIFallbackComponent data={assets}>
         {assets => (
           <>
             {[
@@ -76,7 +76,7 @@ function AssetsSection({
               ))}
           </>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </>
   )
 }

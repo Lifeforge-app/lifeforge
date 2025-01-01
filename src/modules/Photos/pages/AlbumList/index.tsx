@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import {
@@ -96,7 +96,7 @@ function PhotosAlbumList(): React.ReactElement {
                 setManageTagsModalOpen={setManageTagsModalOpen}
                 setModifyAlbumTagModalOpenType={setModifyAlbumTagModalOpenType}
               />
-              <APIComponentWithFallback data={filteredAlbumList}>
+              <APIFallbackComponent data={filteredAlbumList}>
                 {filteredAlbumList =>
                   albumList.length > 0 ? (
                     filteredAlbumList.length > 0 ? (
@@ -128,7 +128,7 @@ function PhotosAlbumList(): React.ReactElement {
                     />
                   )
                 }
-              </APIComponentWithFallback>
+              </APIFallbackComponent>
             </div>
           </Scrollbar>
         </div>

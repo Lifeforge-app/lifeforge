@@ -35,7 +35,7 @@ function EntryOGData({
             return url
           })()}
           alt=""
-          className="h-24 w-full rounded-md border-0 object-cover"
+          className="w-full rounded-md border-0 object-contain"
         />
       )}
       <p className="text-xs font-medium text-custom-500">

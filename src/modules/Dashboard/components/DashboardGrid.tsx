@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import LoadingScreen from '@components/Screens/LoadingScreen'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import Achievements from '../widgets/Achievements'
@@ -91,7 +92,7 @@ function DashboardGrid({
   }
 
   if (width === 0) {
-    return <div>Loading...</div>
+    return <LoadingScreen />
   }
 
   return Object.values(enabledWidgets).every(e => e.length === 0) ? (

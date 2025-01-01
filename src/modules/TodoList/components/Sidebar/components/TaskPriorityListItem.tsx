@@ -22,7 +22,7 @@ function TaskPriorityListItem({
   return (
     <SidebarItem
       name={item.name}
-      color={item.color}
+      sideStripColor={item.color}
       active={searchParams.get('priority') === item.id}
       needTranslate={false}
       number={item.amount}

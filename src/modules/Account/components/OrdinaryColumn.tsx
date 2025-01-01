@@ -29,20 +29,22 @@ function OrdinaryColumn({
         desc={t(`accountSettings.desc.${toCamelCase(title)}`)}
         icon={icon}
       >
-        <span className="whitespace-nowrap text-bg-500">
-          {userData[id] === ''
-            ? t('accountSettings.empty')
-            : type === 'date'
-            ? moment(userData[id]).format('DD MMM YYYY')
-            : userData[id]}
-        </span>
-        <Button
-          onClick={() => {
-            setModifyModalOpen(true)
-          }}
-          variant="no-bg"
-          icon="tabler:pencil"
-        />
+        <div className="flex-between w-full">
+          <span className="whitespace-nowrap text-bg-500">
+            {userData[id] === ''
+              ? t('accountSettings.empty')
+              : type === 'date'
+              ? moment(userData[id]).format('DD MMM YYYY')
+              : userData[id]}
+          </span>
+          <Button
+            onClick={() => {
+              setModifyModalOpen(true)
+            }}
+            variant="no-bg"
+            icon="tabler:pencil"
+          />
+        </div>
       </ConfigColumn>
       <ModifyModal
         type={type}

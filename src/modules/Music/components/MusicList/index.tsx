@@ -2,7 +2,7 @@
 import React from 'react'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import { useMusicContext } from '@providers/MusicProvider'
 import MusicListItem from './components/MusicListItem'
 
@@ -17,7 +17,7 @@ function MusicList({
   const { musics } = useMusicContext()
 
   return (
-    <APIComponentWithFallback data={musics}>
+    <APIFallbackComponent data={musics}>
       {musics => (
         <AS>
           {({ height, width }: { height: number; width: number }) => (
@@ -57,7 +57,7 @@ function MusicList({
           )}
         </AS>
       )}
-    </APIComponentWithFallback>
+    </APIFallbackComponent>
   )
 }
 

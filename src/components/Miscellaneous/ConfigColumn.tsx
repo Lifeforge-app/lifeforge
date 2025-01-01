@@ -30,7 +30,7 @@ function ConfigColumn({
   return (
     <>
       <div
-        className={`flex w-full min-w-0 flex-col justify-between gap-6 px-4 ${
+        className={`flex w-full min-w-0 flex-col justify-between gap-8 px-4 ${
           !vertical
             ? !noDefaultBreakpoints &&
               {
@@ -63,7 +63,7 @@ function ConfigColumn({
             <p className="text-bg-500">{desc}</p>
           </div>
         </div>
-        <div className="flex w-full min-w-0 items-center gap-4 md:w-auto">
+        <div className="flex w-full min-w-0 shrink-0 items-center gap-4 md:w-auto">
           {children}
         </div>
         {tooltip !== undefined && (

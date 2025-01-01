@@ -10,7 +10,7 @@ import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import CreatePasswordScreen from '@components/Screens/CreatePasswordScreen'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import OTPScreen from '@components/Screens/OTPScreen'
@@ -110,7 +110,7 @@ function Passwords(): React.ReactElement {
               fetchChallenge={fetchChallenge}
             />
           ) : (
-            <APIComponentWithFallback data={passwordList}>
+            <APIFallbackComponent data={passwordList}>
               {() =>
                 typeof filteredPasswordList !== 'string' ? (
                   filteredPasswordList.length > 0 ? (
@@ -148,7 +148,7 @@ function Passwords(): React.ReactElement {
                   <></>
                 )
               }
-            </APIComponentWithFallback>
+            </APIFallbackComponent>
           )}
           {masterPassword !== '' && passwordList.length > 0 && (
             <FAB

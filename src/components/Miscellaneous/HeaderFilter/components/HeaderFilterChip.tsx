@@ -17,7 +17,7 @@ function FilterChip({
 
   return (
     <span
-      className={`flex-center flex gap-1 rounded-full px-2 py-1 text-sm ${
+      className={`flex-center gap-1 rounded-full px-2 py-1 text-sm ${
         color === undefined &&
         `text-bg-500 dark:text-bg-400 ${componentBgLighter}`
       }`}

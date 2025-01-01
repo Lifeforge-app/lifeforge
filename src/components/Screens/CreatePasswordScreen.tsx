@@ -70,7 +70,7 @@ function CreatePasswordScreen({
 
   return (
     <>
-      <div className="flex-center flex size-full flex-1 flex-col gap-4">
+      <div className="flex-center size-full flex-1 flex-col gap-4">
         <Icon icon="tabler:lock-plus" className="size-28" />
         <h2 className="text-4xl font-semibold">Create your master password</h2>
         <p className="mb-8 w-1/2 text-center text-lg text-bg-500">

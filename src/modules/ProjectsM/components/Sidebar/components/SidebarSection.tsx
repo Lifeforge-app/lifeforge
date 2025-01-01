@@ -1,6 +1,6 @@
 import { t } from 'i18next'
 import React from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import SidebarItem from './SidebarItem'
@@ -23,7 +23,7 @@ function SidebarSection({
           setModifyDataModalOpenType('create')
         }}
       />
-      <APIComponentWithFallback data={data}>
+      <APIFallbackComponent data={data}>
         {data =>
           data.length > 0 ? (
             <>
@@ -37,7 +37,7 @@ function SidebarSection({
             </p>
           )
         }
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </>
   )
 }

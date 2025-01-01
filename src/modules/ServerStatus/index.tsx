@@ -8,7 +8,7 @@ import moment from 'moment'
 import React, { useEffect } from 'react'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import {
@@ -114,7 +114,7 @@ function ServerStatus(): React.ReactElement {
           <span className="ml-2">System Status</span>
         </h1>
         <div className="grid gap-6 lg:grid-cols-3">
-          <APIComponentWithFallback data={cpuUsage}>
+          <APIFallbackComponent data={cpuUsage}>
             {cpuUsage => (
               <div
                 className={`space-y-4 rounded-lg p-6 shadow-custom ${componentBg}`}
@@ -151,8 +151,8 @@ function ServerStatus(): React.ReactElement {
                 </p>
               </div>
             )}
-          </APIComponentWithFallback>
-          <APIComponentWithFallback data={memoryUsage}>
+          </APIFallbackComponent>
+          <APIFallbackComponent data={memoryUsage}>
             {memoryUsage => (
               <div
                 className={`space-y-4 rounded-lg p-6 shadow-custom ${componentBg}`}
@@ -189,8 +189,8 @@ function ServerStatus(): React.ReactElement {
                 </p>
               </div>
             )}
-          </APIComponentWithFallback>
-          <APIComponentWithFallback data={cpuTemp}>
+          </APIFallbackComponent>
+          <APIFallbackComponent data={cpuTemp}>
             {cpuTemp => (
               <div
                 className={`space-y-4 rounded-lg p-6 shadow-custom ${componentBg}`}
@@ -226,7 +226,7 @@ function ServerStatus(): React.ReactElement {
                 </p>
               </div>
             )}
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
         </div>
       </div>
       <div className="mt-16 flex w-full flex-col gap-6">
@@ -234,7 +234,7 @@ function ServerStatus(): React.ReactElement {
           <Icon icon="tabler:chart-pie" className="text-3xl" />
           <span className="ml-2">Disks Usage</span>
         </h1>
-        <APIComponentWithFallback data={diskUsage}>
+        <APIFallbackComponent data={diskUsage}>
           {diskUsage => (
             <div className="grid gap-6 lg:grid-cols-2">
               {diskUsage.map(disk => (
@@ -276,14 +276,14 @@ function ServerStatus(): React.ReactElement {
               ))}
             </div>
           )}
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       </div>
       <div className="mb-8 mt-16 flex w-full flex-col gap-6">
         <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
           <Icon icon="tabler:info-circle" className="text-3xl" />
           <span className="ml-2">System Information</span>
         </h1>
-        <APIComponentWithFallback data={systemInfo}>
+        <APIFallbackComponent data={systemInfo}>
           {systemInfo => (
             <>
               {Object.entries(systemInfo).map(([key, value]) => (
@@ -356,7 +356,7 @@ function ServerStatus(): React.ReactElement {
               ))}
             </>
           )}
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       </div>
     </ModuleWrapper>
   )

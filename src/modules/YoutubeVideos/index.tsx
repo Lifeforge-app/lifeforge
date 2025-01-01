@@ -4,7 +4,7 @@ import FAB from '@components/ButtonsAndInputs/FAB'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
@@ -57,7 +57,7 @@ function YoutubeVideos(): React.ReactElement {
         isAddVideosModalOpen={isAddVideosModalOpen}
       />
       <Scrollbar className="mt-6">
-        <APIComponentWithFallback data={videos}>
+        <APIFallbackComponent data={videos}>
           {videos =>
             videos.length === 0 ? (
               <EmptyStateScreen
@@ -71,7 +71,7 @@ function YoutubeVideos(): React.ReactElement {
                 }}
               />
             ) : (
-              <APIComponentWithFallback data={filteredVideos}>
+              <APIFallbackComponent data={filteredVideos}>
                 {videos =>
                   videos.length === 0 ? (
                     <EmptyStateScreen
@@ -87,10 +87,10 @@ function YoutubeVideos(): React.ReactElement {
                     />
                   )
                 }
-              </APIComponentWithFallback>
+              </APIFallbackComponent>
             )
           }
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       </Scrollbar>
       <AddVideosModal
         isOpen={isAddVideosModalOpen}

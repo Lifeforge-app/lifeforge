@@ -8,7 +8,7 @@ import GoBackButton from '@components/ButtonsAndInputs/GoBackButton.tsx'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu/index.tsx'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem.tsx'
 import ModuleWrapper from '@components/Module/ModuleWrapper.tsx'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback.tsx'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback.tsx'
 import useFetch from '@hooks/useFetch.ts'
 import { type IPhotoAlbumEntryItem } from '@interfaces/photos_interfaces.ts'
 import { usePhotosContext } from '../../../../providers/PhotosProvider.tsx'
@@ -40,7 +40,7 @@ function PhotosFavouritesGallery(): React.ReactElement {
             <div className="flex-between flex">
               <h1 className="flex items-center gap-4 text-2xl font-semibold">
                 <>
-                  <div className="flex-center flex size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
+                  <div className="flex-center size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                     <Icon icon="tabler:star-filled" className="size-7" />
                   </div>
                   <span className="space-y-1">
@@ -71,7 +71,7 @@ function PhotosFavouritesGallery(): React.ReactElement {
                   </span>
                 </>
               </h1>
-              <div className="flex-center flex gap-2">
+              <div className="flex-center gap-2">
                 <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50">
                   <Icon icon="tabler:share" className="text-2xl" />
                 </button>
@@ -88,7 +88,7 @@ function PhotosFavouritesGallery(): React.ReactElement {
             </div>
           </div>
           <div className="relative my-6 w-full flex-1">
-            <APIComponentWithFallback data={photos}>
+            <APIFallbackComponent data={photos}>
               {photos => (
                 <PhotoAlbum
                   layout="rows"
@@ -164,7 +164,7 @@ function PhotosFavouritesGallery(): React.ReactElement {
                   )}
                 />
               )}
-            </APIComponentWithFallback>
+            </APIFallbackComponent>
           </div>
         </ModuleWrapper>
         <BottomBar photos={photos as IPhotoAlbumEntryItem[]} inAlbumGallery />

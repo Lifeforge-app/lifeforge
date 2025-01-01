@@ -5,7 +5,7 @@ import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import ContinentSelector from '../../components/ContinentSelector'
@@ -41,7 +41,7 @@ function Continents(): React.ReactElement {
           hasTopMargin={false}
         />
       </div>
-      <APIComponentWithFallback data={continentsData}>
+      <APIFallbackComponent data={continentsData}>
         {data => (
           <Scrollbar className="mt-6">
             <div className="mb-8 space-y-4 px-4">
@@ -68,7 +68,7 @@ function Continents(): React.ReactElement {
             </div>
           </Scrollbar>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </ModuleWrapper>
   )
 }

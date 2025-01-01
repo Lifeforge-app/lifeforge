@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
@@ -39,6 +39,7 @@ function PhotosSidebar(): React.ReactElement {
         number={typeof photos !== 'string' ? photos.totalItems : 0}
       />
       <SidebarItem
+        active={location.pathname === '/photos/favourites'}
         icon="tabler:star-filled"
         name="Favourites"
         onClick={() => {
@@ -54,7 +55,7 @@ function PhotosSidebar(): React.ReactElement {
           setCreateAlbumModalOpen('create')
         }}
       />
-      <APIComponentWithFallback data={albumList}>
+      <APIFallbackComponent data={albumList}>
         {albumList => (
           <>
             {albumList.length > 0 ? (
@@ -72,7 +73,7 @@ function PhotosSidebar(): React.ReactElement {
                         }}
                         className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 hover:bg-bg-100 dark:hover:bg-bg-800"
                       >
-                        <div className="flex-center flex size-10 shrink-0 rounded-md bg-bg-200/50 shadow-sm dark:bg-bg-700/50">
+                        <div className="flex-center size-10 shrink-0 rounded-md bg-bg-200/50 shadow-sm dark:bg-bg-700/50">
                           {album.cover !== '' ? (
                             <img
                               src={`${import.meta.env.VITE_API_HOST}/media/${
@@ -106,7 +107,7 @@ function PhotosSidebar(): React.ReactElement {
                     }}
                     className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800"
                   >
-                    <div className="flex-center flex size-10 shrink-0">
+                    <div className="flex-center size-10 shrink-0">
                       <Icon
                         icon="tabler:arrow-right"
                         className="size-6 text-bg-500"
@@ -130,10 +131,20 @@ function PhotosSidebar(): React.ReactElement {
             )}
           </>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
       <SidebarDivider />
-      <SidebarItem icon="tabler:archive" name="Archive" />
-      <SidebarItem icon="tabler:lock" name="Locked Folder" />
+      <SidebarItem
+        autoActive
+        onClick={() => {}}
+        icon="tabler:archive"
+        name="Archive"
+      />
+      <SidebarItem
+        autoActive
+        onClick={() => {}}
+        icon="tabler:lock"
+        name="Locked Folder"
+      />
       <SidebarItem
         icon="tabler:trash"
         name="Trash"

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import Button from '@components/ButtonsAndInputs/Button'
 import DashboardItem from '@components/Miscellaneous/DashboardItem'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IWalletAsset } from '@interfaces/wallet_interfaces'
@@ -30,7 +30,7 @@ export default function AssetsBalance(): React.ReactElement {
         />
       }
     >
-      <APIComponentWithFallback data={assets}>
+      <APIFallbackComponent data={assets}>
         {assets => (
           <ul className="grid h-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-2 overflow-y-auto">
             {assets.map(asset => (
@@ -77,7 +77,7 @@ export default function AssetsBalance(): React.ReactElement {
             ))}
           </ul>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </DashboardItem>
   )
 }

@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import AddToLibraryButton from './AddToLibraryButton'
 
@@ -33,10 +33,10 @@ function Details({
     <>
       <GoBackButton onClick={onClose} />
       <div className="mt-4">
-        <APIComponentWithFallback data={book}>
+        <APIFallbackComponent data={book}>
           {data => (
             <section className="flex flex-1 flex-col justify-center gap-8 md:flex-row">
-              <div className="flex-center top-0 flex h-full flex-col md:sticky">
+              <div className="flex-center top-0 h-full flex-col md:sticky">
                 {data.image !== '../img/blank.png' ? (
                   <img
                     src={`${import.meta.env.VITE_API_HOST}${data.image}`}
@@ -210,7 +210,7 @@ function Details({
               </div>
             </section>
           )}
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       </div>
     </>
   )

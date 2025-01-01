@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { type IWalletCategory } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
@@ -41,7 +41,7 @@ function ManageCategoriesModal({
           icon="tabler:apps"
           onClose={onClose}
         />
-        <APIComponentWithFallback data={categories}>
+        <APIFallbackComponent data={categories}>
           {categories =>
             categories.length > 0 ? (
               <>
@@ -75,7 +75,7 @@ function ManageCategoriesModal({
               />
             )
           }
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       </ModalWrapper>
       <ModifyCategoriesModal
         existedData={existedData}

@@ -8,7 +8,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
@@ -50,7 +50,7 @@ function Airport(): React.ReactElement {
   return (
     <>
       <ModuleWrapper>
-        <APIComponentWithFallback data={airportData}>
+        <APIFallbackComponent data={airportData}>
           {airportData => (
             <>
               <GoBackButton
@@ -233,7 +233,7 @@ function Airport(): React.ReactElement {
               </Scrollbar>
             </>
           )}
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       </ModuleWrapper>
       <NOTAMDetailsModal
         isOpen={viewDetailsModalOpen}

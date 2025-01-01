@@ -14,7 +14,7 @@ function DnDContainer({
 }): React.ReactElement {
   return (
     <div
-      className="flex-center flex size-full min-h-96 flex-1 flex-col rounded-lg border-[3px] border-dashed border-bg-500 py-12"
+      className="flex-center size-full min-h-96 flex-1 flex-col rounded-lg border-[3px] border-dashed border-bg-500 py-12"
       {...getRootProps()}
     >
       <input {...getInputProps()} />
@@ -26,7 +26,7 @@ function DnDContainer({
         {t('auth.or')}
       </div>
       <Button
-        CustomElement="label"
+        as="label"
         icon="tabler:upload"
         className="mt-4 cursor-pointer"
         variant="secondary"

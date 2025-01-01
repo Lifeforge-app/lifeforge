@@ -10,7 +10,7 @@ function MissingAPIKeyScreen({
   requiredAPIKeys: string[]
 }): React.ReactElement {
   return (
-    <div className="flex-center flex size-full flex-1 flex-col gap-4">
+    <div className="flex-center size-full flex-1 flex-col gap-4">
       <Icon icon="tabler:key-off" className="size-28" />
       <h2 className="text-4xl font-semibold">{t('apiKeys.missing.title')}</h2>
       <p className="text-center text-lg text-bg-500">
@@ -20,12 +20,7 @@ function MissingAPIKeyScreen({
         {t('apiKeys.missing.requiredKeysAre')}{' '}
         <code>{requiredAPIKeys.join(', ')}</code>
       </p>
-      <Button
-        CustomElement={Link}
-        to="/api-keys"
-        icon="tabler:arrow-right"
-        iconAtEnd
-      >
+      <Button as={Link} to="/api-keys" icon="tabler:arrow-right" iconAtEnd>
         Config API Keys
       </Button>
     </div>

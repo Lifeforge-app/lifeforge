@@ -3,7 +3,7 @@
 import React from 'react'
 import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import useFetch from '@hooks/useFetch'
@@ -34,7 +34,7 @@ function NOTAMDetailsModal({
         title="NOTAM Details"
         onClose={onClose}
       />
-      <APIComponentWithFallback data={NOTAMData}>
+      <APIFallbackComponent data={NOTAMData}>
         {NOTAMData =>
           selectedNOTAMData !== null && NOTAMData !== 'none' ? (
             <Scrollbar>
@@ -64,7 +64,7 @@ function NOTAMDetailsModal({
             />
           )
         }
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </ModalWrapper>
   )
 }

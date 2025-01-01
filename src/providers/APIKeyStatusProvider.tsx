@@ -1,6 +1,6 @@
 import React from 'react'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import MissingAPIKeyScreen from '@components/Screens/MissingAPIKeyScreen'
 import useFetch from '@hooks/useFetch'
 
@@ -19,7 +19,7 @@ function APIKeyStatusProvider({
   return (
     <>
       {APIKeys.length > 0 ? (
-        <APIComponentWithFallback data={hasRequiredAPIKeys}>
+        <APIFallbackComponent data={hasRequiredAPIKeys}>
           {hasRequiredAPIKeys =>
             hasRequiredAPIKeys ? (
               <>{children}</>
@@ -29,7 +29,7 @@ function APIKeyStatusProvider({
               </ModuleWrapper>
             )
           }
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       ) : (
         children
       )}

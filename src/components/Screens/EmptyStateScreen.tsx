@@ -28,7 +28,7 @@ function EmptyStateScreen({
 
   return (
     <div
-      className={`flex-center flex size-full flex-col ${
+      className={`flex-center size-full flex-col ${
         smaller ? 'gap-4' : 'gap-6'
       }`}
     >

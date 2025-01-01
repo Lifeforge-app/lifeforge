@@ -6,7 +6,7 @@ import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import {
@@ -46,7 +46,7 @@ function NotesCategory(): React.ReactElement {
   }, [valid])
 
   return (
-    <APIComponentWithFallback data={valid}>
+    <APIFallbackComponent data={valid}>
       {() => (
         <ModuleWrapper>
           <GoBackButton
@@ -76,7 +76,7 @@ function NotesCategory(): React.ReactElement {
               </>
             }
           />
-          <APIComponentWithFallback data={subjectsData}>
+          <APIFallbackComponent data={subjectsData}>
             {subjectsData =>
               subjectsData.length > 0 ? (
                 <div className="flex-center mb-8 grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-4 py-8">
@@ -110,7 +110,7 @@ function NotesCategory(): React.ReactElement {
                 />
               )
             }
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
           <DeleteConfirmationModal
             isOpen={deleteSubjectConfirmationModalOpen}
             onClose={() => {
@@ -130,7 +130,7 @@ function NotesCategory(): React.ReactElement {
           />
         </ModuleWrapper>
       )}
-    </APIComponentWithFallback>
+    </APIFallbackComponent>
   )
 }
 

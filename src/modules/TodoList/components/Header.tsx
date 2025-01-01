@@ -61,7 +61,7 @@ function Header({
           Boolean(searchParams.get('priority'))) && (
           <div className="flex flex-wrap items-center gap-2">
             {Boolean(searchParams.get('priority')) && (
-              <span className="flex-center flex gap-1 rounded-full bg-custom-500/20 px-2 py-1 text-sm text-custom-500">
+              <span className="flex-center gap-1 rounded-full bg-custom-500/20 px-2 py-1 text-sm text-custom-500">
                 <Icon icon="tabler:sort-ascending-numbers" className="size-4" />
                 {
                   priorities.find(
@@ -81,7 +81,7 @@ function Header({
               </span>
             )}
             {Boolean(searchParams.get('list')) && (
-              <span className="flex-center flex gap-1 rounded-full bg-custom-500/20 px-2 py-1 text-sm text-custom-500">
+              <span className="flex-center gap-1 rounded-full bg-custom-500/20 px-2 py-1 text-sm text-custom-500">
                 <Icon icon="tabler:list" className="size-4" />
                 {lists.find(list => list.id === searchParams.get('list'))?.name}
                 <button
@@ -97,7 +97,7 @@ function Header({
               </span>
             )}
             {Boolean(searchParams.get('tag')) && (
-              <span className="flex-center flex gap-1 rounded-full bg-custom-500/20 px-2 py-1 text-sm text-custom-500">
+              <span className="flex-center gap-1 rounded-full bg-custom-500/20 px-2 py-1 text-sm text-custom-500">
                 <Icon icon="tabler:hash" className="size-4" />
                 {tags.find(tag => tag.id === searchParams.get('tag'))?.name}
                 <button

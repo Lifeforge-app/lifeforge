@@ -3,7 +3,7 @@ import React, { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import DashboardItem from '@components/Miscellaneous/DashboardItem'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { useWalletContext } from '@providers/WalletProvider'
 
@@ -88,8 +88,8 @@ function StatisticChardCard(): React.ReactElement {
         </div>
       }
     >
-      <div className="flex-center mt-6 flex size-full min-h-0 flex-1">
-        <APIComponentWithFallback data={transactions}>
+      <div className="flex-center mt-6 size-full min-h-0 flex-1">
+        <APIFallbackComponent data={transactions}>
           {transactions =>
             transactions.length === 0 ? (
               <EmptyStateScreen
@@ -122,7 +122,7 @@ function StatisticChardCard(): React.ReactElement {
               />
             )
           }
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       </div>
       <div className="mt-4 flex items-center justify-center gap-8 sm:hidden">
         <div className="flex items-center gap-2">

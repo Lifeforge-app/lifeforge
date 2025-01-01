@@ -40,7 +40,7 @@ function _SidebarItem({
     <>
       <SidebarItem
         active={searchParams.get(singleStuff) === item.id}
-        color={
+        sideStripColor={
           stuff === 'statuses' ? (item as IProjectsMStatus).color : undefined
         }
         icon={item.icon}

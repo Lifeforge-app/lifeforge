@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import ModalHeader from '@components/Modals/ModalHeader'
 import ModalWrapper from '@components/Modals/ModalWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { encrypt } from '@utils/encryption'
@@ -63,7 +63,7 @@ function JournalViewModal({
         title="View Journal Entry"
         onClose={onClose}
       />
-      <APIComponentWithFallback data={entry}>
+      <APIFallbackComponent data={entry}>
         {entry => (
           <JournalView
             date={entry.date}
@@ -80,7 +80,7 @@ function JournalViewModal({
             summarizedText={entry.summary}
           />
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </ModalWrapper>
   )
 }

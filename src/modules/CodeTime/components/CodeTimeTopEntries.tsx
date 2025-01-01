@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
@@ -59,7 +59,7 @@ function CodeTimeTopEntries({
           </div>
         </div>
       </div>
-      <APIComponentWithFallback data={topEntries}>
+      <APIFallbackComponent data={topEntries}>
         {topEntries => (
           <>
             <div className="flex w-full">
@@ -128,7 +128,7 @@ function CodeTimeTopEntries({
             </ul>
           </>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </div>
   )
 }

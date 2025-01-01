@@ -6,7 +6,7 @@ import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { useMusicContext } from '@providers/MusicProvider'
 import AddMusicButton from './components/AddMusicButton'
@@ -44,7 +44,7 @@ function Music(): React.ReactElement {
         />
         <div className="relative flex size-full min-w-0 flex-col divide-y-2 divide-bg-200/50 dark:divide-bg-900">
           <Scrollbar>
-            <APIComponentWithFallback data={musics}>
+            <APIFallbackComponent data={musics}>
               {musics =>
                 musics.filter(music =>
                   music.name
@@ -75,7 +75,7 @@ function Music(): React.ReactElement {
                   />
                 )
               }
-            </APIComponentWithFallback>
+            </APIFallbackComponent>
           </Scrollbar>
         </div>
         {currentMusic !== null && <BottomBar />}

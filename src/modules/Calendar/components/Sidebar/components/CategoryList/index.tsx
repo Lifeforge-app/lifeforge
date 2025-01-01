@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
 import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
 import CategoryListItem from './components/CategoryListItem'
@@ -39,7 +39,7 @@ function CategoryList({
             }}
           />
         </div>
-        <APIComponentWithFallback data={categories}>
+        <APIFallbackComponent data={categories}>
           {categories =>
             categories.length > 0 ? (
               <ul className="-mt-2 flex h-full min-w-0 flex-col pb-4">
@@ -69,7 +69,7 @@ function CategoryList({
               </div>
             )
           }
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       </section>
     </>
   )

@@ -4,7 +4,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
 import ModalHeader from '@components/Modals/ModalHeader'
 import ModalWrapper from '@components/Modals/ModalWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import { type IGuitarTabsGuitarWorldScores } from '@interfaces/guitar_tabs_interfaces'
 import APIRequest from '@utils/fetchData'
 import ScoreList from './components/ScoreList'
@@ -88,7 +88,7 @@ function GuitarWorldModal({
           </Button>
         </>
       ) : (
-        <APIComponentWithFallback data={data}>
+        <APIFallbackComponent data={data}>
           {data => (
             <ScoreList
               data={data}
@@ -100,7 +100,7 @@ function GuitarWorldModal({
               cookie={cookie}
             />
           )}
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       )}
     </ModalWrapper>
   )
