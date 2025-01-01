@@ -1,7 +1,7 @@
-import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import Switch from '@components/ButtonsAndInputs/Switch'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 function ComponentListItem({
@@ -78,7 +78,7 @@ function ComponentListItem({
         value.filter(i => i.i !== id)
       ])
     )
-    setEnabledWidgets(newEnabledWidgets)
+    setDashboardLayout(newEnabledWidgets)
     if (Object.values(newEnabledWidgets).every(e => e.length === 0)) {
       setDashboardLayout({})
     }
@@ -122,19 +122,10 @@ function ComponentListItem({
       </div>
       <Switch
         checked={isEnabled}
-        onClick={() => {
+        onChange={() => {
           toggleComponent()
         }}
-        className={`${
-          isEnabled ? 'bg-custom-500' : 'bg-bg-200 dark:bg-bg-700/50'
-        } relative inline-flex h-6 w-11 shrink-0 items-center rounded-full`}
-      >
-        <span
-          className={`${
-            isEnabled ? 'translate-x-6' : 'translate-x-1 dark:bg-bg-500'
-          } inline-block size-4 rounded-full bg-bg-50 transition`}
-        />
-      </Switch>
+      />
     </li>
   )
 }

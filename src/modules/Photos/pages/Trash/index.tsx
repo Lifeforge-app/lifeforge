@@ -6,7 +6,7 @@ import PhotoAlbum from 'react-photo-album'
 import Button from '@components/ButtonsAndInputs/Button'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IPhotoAlbumEntryItem } from '@interfaces/photos_interfaces'
@@ -46,7 +46,7 @@ function PhotosTrash(): React.ReactElement {
             </Button>
           </div>
           <div className="relative my-6 w-full flex-1 overflow-y-auto">
-            <APIComponentWithFallback data={photos}>
+            <APIFallbackComponent data={photos}>
               {photos =>
                 photos.length === 0 ? (
                   <EmptyStateScreen name="trash" icon="tabler:trash-off" />
@@ -131,7 +131,7 @@ function PhotosTrash(): React.ReactElement {
                   />
                 )
               }
-            </APIComponentWithFallback>
+            </APIFallbackComponent>
           </div>
         </div>
       </div>

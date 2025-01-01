@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import ModalWrapper from '@components/Modals/ModalWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import APIRequest from '@utils/fetchData'
@@ -81,7 +81,7 @@ function UpdateAlbumTagsModal({
           </button>
         )}
       </div>
-      <APIComponentWithFallback data={albumTagList}>
+      <APIFallbackComponent data={albumTagList}>
         {albumTagList => (
           <div className="flex max-w-[50vw] flex-wrap gap-2">
             {albumTagList.map(tag => (
@@ -110,7 +110,7 @@ function UpdateAlbumTagsModal({
             </button>
           </div>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
       <Button
         onClick={() => {
           onSubmitButtonClick().catch(console.error)

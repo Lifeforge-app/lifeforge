@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
@@ -34,7 +34,7 @@ export default function PomodoroTimer(): React.ReactElement {
               </span>
             </h1>
             <Scrollbar>
-              <APIComponentWithFallback data={entries}>
+              <APIFallbackComponent data={entries}>
                 {entries => (
                   <div className="flex flex-1 flex-col ">
                     <ul className="flex flex-1 flex-col gap-4 pb-24 sm:pb-8">
@@ -64,7 +64,7 @@ export default function PomodoroTimer(): React.ReactElement {
                     </ul>
                   </div>
                 )}
-              </APIComponentWithFallback>
+              </APIFallbackComponent>
             </Scrollbar>
           </aside>
         </TodoListProvider>

@@ -23,7 +23,7 @@ function TaskTagListItem({
     <SidebarItem
       icon="tabler:hash"
       name={item.name}
-      color={item.color}
+      sideStripColor={item.color}
       active={searchParams.get('tag') === item.id}
       needTranslate={false}
       number={item.amount}

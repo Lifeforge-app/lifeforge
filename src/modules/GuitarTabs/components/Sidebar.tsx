@@ -1,6 +1,6 @@
 import { t } from 'i18next'
 import React from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
@@ -22,7 +22,7 @@ function Sidebar({
 }): React.ReactElement {
   return (
     <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
-      <APIComponentWithFallback data={sidebarData}>
+      <APIFallbackComponent data={sidebarData}>
         {sidebarData => (
           <>
             <SidebarItem
@@ -115,7 +115,7 @@ function Sidebar({
               ))}
           </>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </SidebarWrapper>
   )
 }

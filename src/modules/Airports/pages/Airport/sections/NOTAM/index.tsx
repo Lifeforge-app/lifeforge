@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IAirportNOTAMEntry } from '@interfaces/airports_interfaces'
@@ -54,7 +54,7 @@ function NOTAM({
   }
 
   return (
-    <APIComponentWithFallback data={NOTAMData}>
+    <APIFallbackComponent data={NOTAMData}>
       {NOTAMData =>
         NOTAMData !== 'none' ? (
           <div className="my-8 space-y-4">
@@ -91,7 +91,7 @@ function NOTAM({
           </div>
         )
       }
-    </APIComponentWithFallback>
+    </APIFallbackComponent>
   )
 }
 

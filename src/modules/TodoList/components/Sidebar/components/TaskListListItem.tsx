@@ -23,7 +23,7 @@ function TaskListListItem({
     <SidebarItem
       icon={item.icon}
       name={item.name}
-      color={item.color}
+      sideStripColor={item.color}
       active={searchParams.get('list') === item.id}
       needTranslate={false}
       number={item.amount}

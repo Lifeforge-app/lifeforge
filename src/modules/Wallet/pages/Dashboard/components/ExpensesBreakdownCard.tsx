@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 
@@ -69,9 +69,9 @@ function ExpensesBreakdownCard(): React.ReactElement {
         </Link>
       }
     >
-      <APIComponentWithFallback data={transactions}>
+      <APIFallbackComponent data={transactions}>
         {() => (
-          <APIComponentWithFallback data={categories}>
+          <APIFallbackComponent data={categories}>
             {categories => (
               <>
                 <div className="relative mx-auto flex aspect-square w-4/5 min-w-0 flex-col gap-4">
@@ -241,9 +241,9 @@ function ExpensesBreakdownCard(): React.ReactElement {
                 </div>
               </>
             )}
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </DashboardItem>
   )
 }

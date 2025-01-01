@@ -60,7 +60,7 @@ export default function APIOnlineStatusProvider({
   }, [])
 
   return (
-    <div className="flex-center flex h-dvh w-full">
+    <div className="flex-center h-dvh w-full">
       {isOnline === 'loading' ? (
         <span className="loader"></span>
       ) : isOnline ? (

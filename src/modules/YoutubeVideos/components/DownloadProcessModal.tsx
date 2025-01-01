@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
 import VideoInfo from '../../Music/modals/YoutubeDownloaderModal/components/VideoInfo'
@@ -33,7 +33,7 @@ function DownloadProcessModal({
         title="Download Process"
         onClose={onClose}
       />
-      <APIComponentWithFallback data={processes}>
+      <APIFallbackComponent data={processes}>
         {processes =>
           Object.keys(processes).length === 0 ? (
             <EmptyStateScreen
@@ -91,7 +91,7 @@ function DownloadProcessModal({
             </>
           )
         }
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </ModalWrapper>
   )
 }

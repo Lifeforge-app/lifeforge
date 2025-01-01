@@ -18,7 +18,7 @@ function Sidebar(): React.ReactElement {
         onClick={() => {
           navigate('/projects-m')
         }}
-        active={searchParams.entries().next().done}
+        active={searchParams.entries().next().done === true}
         icon="tabler:list"
         name="All Projects"
       />

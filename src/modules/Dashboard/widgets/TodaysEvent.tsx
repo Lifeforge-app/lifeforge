@@ -3,7 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import {
@@ -22,7 +22,7 @@ export default function TodaysEvent(): React.ReactElement {
       title={t('dashboard.widgets.todaysEvent.title')}
     >
       <Scrollbar>
-        <APIComponentWithFallback
+        <APIFallbackComponent
           data={
             [rawEvents, categories].some(d => d === 'loading')
               ? 'loading'
@@ -39,7 +39,7 @@ export default function TodaysEvent(): React.ReactElement {
               )
             ).length > 0 ? (
               <ul className="flex flex-1 flex-col gap-4">
-                <APIComponentWithFallback data={categories}>
+                <APIFallbackComponent data={categories}>
                   {categories => (
                     <>
                       {rawEvents
@@ -80,7 +80,7 @@ export default function TodaysEvent(): React.ReactElement {
                         ))}
                     </>
                   )}
-                </APIComponentWithFallback>
+                </APIFallbackComponent>
               </ul>
             ) : (
               <div>
@@ -93,7 +93,7 @@ export default function TodaysEvent(): React.ReactElement {
               </div>
             )
           }
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       </Scrollbar>
     </DashboardItem>
   )

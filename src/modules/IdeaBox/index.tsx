@@ -5,7 +5,7 @@ import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
@@ -52,7 +52,7 @@ function IdeaBox(): React.ReactElement {
           setSearchQuery={setSearchQuery}
           stuffToSearch="idea containers"
         />
-        <APIComponentWithFallback data={data}>
+        <APIFallbackComponent data={data}>
           {data =>
             data.length > 0 ? (
               <Containers
@@ -73,7 +73,7 @@ function IdeaBox(): React.ReactElement {
               />
             )
           }
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       </div>
       <ModifyContainerModal
         openType={modifyContainerModalOpenType}

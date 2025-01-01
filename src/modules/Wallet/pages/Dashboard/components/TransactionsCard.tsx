@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
@@ -28,9 +28,9 @@ function TransactionsCard(): React.ReactElement {
         </Link>
       }
     >
-      <APIComponentWithFallback data={transactions}>
+      <APIFallbackComponent data={transactions}>
         {transactions => (
-          <APIComponentWithFallback data={categories}>
+          <APIFallbackComponent data={categories}>
             {categories => (
               <div className="mt-6 size-full min-h-96 xl:min-h-0">
                 <Scrollbar>
@@ -222,9 +222,9 @@ function TransactionsCard(): React.ReactElement {
                 </Scrollbar>
               </div>
             )}
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </DashboardItem>
   )
 }

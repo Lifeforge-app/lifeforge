@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 import { Tooltip } from 'react-tooltip'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
@@ -47,7 +47,7 @@ function CodeTimeActivityCalendar(): React.ReactElement {
             Array.isArray(activities) ? 'justify-start' : 'justify-center'
           }`}
         >
-          <APIComponentWithFallback data={data}>
+          <APIFallbackComponent data={data}>
             {() =>
               Array.isArray(activities) ? (
                 <ActivityCalendar
@@ -110,7 +110,7 @@ function CodeTimeActivityCalendar(): React.ReactElement {
                 <div className="text-bg-500">No activities found</div>
               )
             }
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
         </div>
         <Tooltip id="react-tooltip" className="z-[9999]" />
         {firstYear && (

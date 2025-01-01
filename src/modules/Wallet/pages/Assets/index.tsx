@@ -7,7 +7,7 @@ import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { type IWalletAsset } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
@@ -64,7 +64,7 @@ function Assets(): React.ReactElement {
           </>
         }
       />
-      <APIComponentWithFallback data={assets}>
+      <APIFallbackComponent data={assets}>
         {assets =>
           assets.length > 0 ? (
             <div className="my-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -90,7 +90,7 @@ function Assets(): React.ReactElement {
             />
           )
         }
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
       {assets.length > 0 && (
         <FAB
           onClick={() => {

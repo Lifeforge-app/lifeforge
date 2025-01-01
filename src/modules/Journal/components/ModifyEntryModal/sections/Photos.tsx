@@ -81,7 +81,7 @@ function Photos({
     <>
       <div className="mt-4 flex w-full flex-1 shrink-0 flex-col rounded-lg bg-bg-200/50 p-6 shadow-custom transition-all focus-within:ring-1 focus-within:ring-bg-500 dark:bg-bg-800/50">
         {openType === 'update' && originalPhotosLength > 0 ? (
-          <div className="flex-center flex size-full flex-col gap-4">
+          <div className="flex-center size-full flex-col gap-4">
             <Icon icon="tabler:lock" className="size-28" />
             <h2 className="text-4xl font-semibold">Photos are locked</h2>
             <p className="text-center text-lg text-bg-500">
@@ -105,7 +105,7 @@ function Photos({
                     onClick={() => {
                       setPhotos(photos.filter(p => p.preview !== photo.preview))
                     }}
-                    className="flex-center absolute left-0 top-0 flex size-full bg-red-900/50 opacity-0 transition-opacity duration-200 hover:opacity-100"
+                    className="flex-center absolute left-0 top-0 size-full bg-red-900/50 opacity-0 transition-opacity duration-200 hover:opacity-100"
                   >
                     <Icon icon="tabler:trash" className="size-6 text-red-500" />
                   </button>

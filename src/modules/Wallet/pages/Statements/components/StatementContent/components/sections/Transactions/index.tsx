@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 
@@ -20,7 +20,7 @@ function Transactions({
         <span className="text-custom-500 print:text-lime-600">02. </span>
         Transactions
       </h2>
-      <APIComponentWithFallback data={transactions}>
+      <APIFallbackComponent data={transactions}>
         {transactions => (
           <div className="mt-6 flex w-full flex-col">
             <div className="flex items-center justify-between p-3">
@@ -86,7 +86,7 @@ function Transactions({
             </div>
           </div>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
       {['income', 'expenses', 'transfer'].map(type => (
         <div key={type}>
           <h2 className="mt-16 text-2xl font-semibold uppercase tracking-widest">
@@ -96,7 +96,7 @@ function Transactions({
             </span>
             {type.charAt(0).toUpperCase() + type.slice(1)}
           </h2>
-          <APIComponentWithFallback data={transactions}>
+          <APIFallbackComponent data={transactions}>
             {transactions => (
               <div className="overflow-x-auto">
                 <table className="mt-6 w-full">
@@ -264,7 +264,7 @@ function Transactions({
                 </table>
               </div>
             )}
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
         </div>
       ))}
     </>

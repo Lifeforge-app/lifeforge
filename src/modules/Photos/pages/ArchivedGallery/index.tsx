@@ -13,7 +13,7 @@ import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu/index.tsx'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem.tsx'
 import Scrollbar from '@components/Miscellaneous/Scrollbar.tsx'
 import ModuleWrapper from '@components/Module/ModuleWrapper.tsx'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback.tsx'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback.tsx'
 import useFetch from '@hooks/useFetch'
 import {
   type IPhotoAlbumEntryItem,
@@ -108,7 +108,7 @@ function PhotosAlbumGallery(): React.ReactElement {
   }
 
   return (
-    <APIComponentWithFallback data={albumData}>
+    <APIFallbackComponent data={albumData}>
       {albumData => (
         <>
           <div className="relative min-h-0 w-full flex-1 overflow-y-hidden">
@@ -121,7 +121,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                 />
                 <div className="flex-between flex w-full min-w-0 gap-8">
                   <h1 className="flex w-full min-w-0 items-center gap-4 text-2xl font-semibold">
-                    <div className="flex-center flex size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
+                    <div className="flex-center size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                       {albumData.cover !== '' ? (
                         <img
                           src={`${import.meta.env.VITE_API_HOST}/media/${
@@ -196,7 +196,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                       })()}
                     </span>
                   </h1>
-                  <div className="flex-center flex gap-2">
+                  <div className="flex-center gap-2">
                     <HamburgerMenu
                       largerPadding
                       className="relative"
@@ -236,7 +236,7 @@ function PhotosAlbumGallery(): React.ReactElement {
               </div>
               <Scrollbar className="mt-6">
                 <div className="relative w-full flex-1 pb-6">
-                  <APIComponentWithFallback data={photos}>
+                  <APIFallbackComponent data={photos}>
                     {photos => (
                       <PhotoAlbum
                         layout="rows"
@@ -328,7 +328,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                         )}
                       />
                     )}
-                  </APIComponentWithFallback>
+                  </APIFallbackComponent>
                 </div>
               </Scrollbar>
             </ModuleWrapper>
@@ -351,7 +351,7 @@ function PhotosAlbumGallery(): React.ReactElement {
           />
         </>
       )}
-    </APIComponentWithFallback>
+    </APIFallbackComponent>
   )
 }
 

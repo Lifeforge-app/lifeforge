@@ -28,7 +28,7 @@ function MorandiColorPaletteModal({
         {MORANDI_COLORS.sort(sortFn).map((morandiColor, index) => (
           <li
             key={index}
-            className={`flex-center flex aspect-square size-full cursor-pointer rounded-md shadow-custom ${
+            className={`flex-center aspect-square size-full cursor-pointer rounded-md shadow-custom ${
               color === morandiColor
                 ? 'ring-2 ring-bg-900 ring-offset-2 ring-offset-bg-100 dark:ring-bg-50 dark:ring-offset-bg-900'
                 : ''

@@ -5,7 +5,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import CreatePasswordScreen from '@components/Screens/CreatePasswordScreen'
 import LockedScreen from '@components/Screens/LockedScreen'
 import OTPScreen from '@components/Screens/OTPScreen'
@@ -95,7 +95,7 @@ function APIKeys(): React.ReactElement {
         ) : (
           <>
             <div className="mt-6 flex-1">
-              <APIComponentWithFallback data={entries}>
+              <APIFallbackComponent data={entries}>
                 {entries => (
                   <>
                     {entries.map((entry, idx) => (
@@ -114,7 +114,7 @@ function APIKeys(): React.ReactElement {
                     ))}
                   </>
                 )}
-              </APIComponentWithFallback>
+              </APIFallbackComponent>
             </div>
             <ModifyAPIKeyModal
               openType={modifyAPIKeyModalOpenType}

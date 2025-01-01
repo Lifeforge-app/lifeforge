@@ -50,7 +50,7 @@ function TailwindCSSColorsModal({
                 ).map(([colorName, colorValue]) => (
                   <li key={colorValue} className="w-full">
                     <div
-                      className={`flex-center flex aspect-square w-full cursor-pointer rounded-md shadow-custom ${
+                      className={`flex-center aspect-square w-full cursor-pointer rounded-md shadow-custom ${
                         color === colorValue
                           ? 'ring-2 ring-bg-900 ring-offset-2 ring-offset-bg-100 dark:ring-bg-50 dark:ring-offset-bg-900'
                           : ''

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
@@ -24,7 +24,7 @@ export default function TodoList(): React.ReactElement {
     >
       <TodoListProvider>
         <Scrollbar>
-          <APIComponentWithFallback data={entries}>
+          <APIFallbackComponent data={entries}>
             {entries => (
               <div className="flex flex-1 flex-col ">
                 <ul className="flex flex-1 flex-col gap-4 px-4 pb-24 sm:pb-8">
@@ -55,7 +55,7 @@ export default function TodoList(): React.ReactElement {
                 </ul>
               </div>
             )}
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
         </Scrollbar>
       </TodoListProvider>
     </DashboardItem>

@@ -4,7 +4,7 @@ import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import Input from '@components/ButtonsAndInputs/Input'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import {
   type IYoutubePlaylistEntry,
@@ -164,7 +164,7 @@ function PlaylistSection({
       />
       <div className="mt-6">
         {URL_REGEX.test(playlistUrl) && (
-          <APIComponentWithFallback data={playlistInfo}>
+          <APIFallbackComponent data={playlistInfo}>
             {playlistInfo => (
               <PlaylistDetails
                 playlistInfo={playlistInfo}
@@ -175,7 +175,7 @@ function PlaylistSection({
                 processes={processes}
               />
             )}
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
         )}
       </div>
     </>

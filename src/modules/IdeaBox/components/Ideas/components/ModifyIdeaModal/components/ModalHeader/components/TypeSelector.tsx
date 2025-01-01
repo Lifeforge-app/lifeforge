@@ -25,7 +25,7 @@ function TypeSelector({
           inline ? 'p-2 px-4' : 'p-4 px-6'
         } text-lg font-semibold tracking-wide text-bg-800 shadow-sm outline-none hover:bg-bg-100 focus:outline-none dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200`}
       >
-        <div className="flex-center flex">
+        <div className="flex-center">
           <Icon
             icon={
               {

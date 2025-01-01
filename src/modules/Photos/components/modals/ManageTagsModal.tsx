@@ -4,7 +4,7 @@ import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { type IPhotoAlbumTag } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '@providers/PhotosProvider'
@@ -42,7 +42,7 @@ function ManageTagsModal({
             setModifyAlbumModalOpenType('create')
           }}
         />
-        <APIComponentWithFallback data={albumTagList}>
+        <APIFallbackComponent data={albumTagList}>
           {albumTagList =>
             albumTagList.length === 0 ? (
               <EmptyStateScreen
@@ -88,7 +88,7 @@ function ManageTagsModal({
               </ul>
             )
           }
-        </APIComponentWithFallback>
+        </APIFallbackComponent>
       </ModalWrapper>
       <DeleteConfirmationModal
         apiEndpoint="photos/album/tag"

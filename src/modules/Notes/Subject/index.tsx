@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type INotesEntry } from '@interfaces/notes_interfaces'
@@ -50,7 +50,7 @@ function NotesSubject(): React.ReactElement {
   }, [valid])
 
   return (
-    <APIComponentWithFallback data={valid}>
+    <APIFallbackComponent data={valid}>
       {() => (
         <>
           <ModuleWrapper className="mb-28 flex size-full min-h-0 flex-1 flex-col px-8 md:px-12">
@@ -59,7 +59,7 @@ function NotesSubject(): React.ReactElement {
               setModifyFolderModalOpenType={setModifyFolderModalOpenType}
               setExistedData={setExistedData}
             />
-            <APIComponentWithFallback data={notesEntries}>
+            <APIFallbackComponent data={notesEntries}>
               {notesEntries =>
                 notesEntries.length > 0 ? (
                   <Directory
@@ -79,7 +79,7 @@ function NotesSubject(): React.ReactElement {
                   />
                 )
               }
-            </APIComponentWithFallback>
+            </APIFallbackComponent>
             <ModifyFolderModal
               openType={modifyFolderModalOpenType}
               setOpenType={setModifyFolderModalOpenType}
@@ -100,7 +100,7 @@ function NotesSubject(): React.ReactElement {
           </ModuleWrapper>
         </>
       )}
-    </APIComponentWithFallback>
+    </APIFallbackComponent>
   )
 }
 

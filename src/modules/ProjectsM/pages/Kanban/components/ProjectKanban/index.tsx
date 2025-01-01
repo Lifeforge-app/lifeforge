@@ -5,7 +5,7 @@ import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IProjectsMKanbanColumn } from '@interfaces/projects_m_interfaces'
@@ -43,7 +43,7 @@ function ProjectKanban(): React.ReactElement {
 
   return (
     <>
-      <APIComponentWithFallback data={columns}>
+      <APIFallbackComponent data={columns}>
         {columns => (
           <Scrollbar>
             <div
@@ -117,7 +117,7 @@ function ProjectKanban(): React.ReactElement {
             </div>
           </Scrollbar>
         )}
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
       <ModifyColumnsModal
         openType={modifyColumnModalOpenType}
         setOpenType={setModifyColumnModalOpenType}

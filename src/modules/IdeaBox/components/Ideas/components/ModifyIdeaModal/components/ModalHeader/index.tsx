@@ -60,7 +60,7 @@ function ModalHeader({
           onClick={() => {
             setOpenType(null)
           }}
-          iconSize="size-6"
+          iconClassName="size-6"
           icon="tabler:x"
         />
       </div>

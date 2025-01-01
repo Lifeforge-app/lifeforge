@@ -1,6 +1,6 @@
 import update from 'immutability-helper'
 import React, { useCallback, useState } from 'react'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
 import SubtaskBoxHeader from './components/SubtaskBoxHeader'
 import SubtaskItem from './components/SubtaskItem'
@@ -43,7 +43,7 @@ function SubtaskBox({
         summary={summary}
         notes={notes}
       />
-      <APIComponentWithFallback data={subtasks}>
+      <APIFallbackComponent data={subtasks}>
         {subtasks =>
           subtasks.length > 0 ? (
             <div className="mt-4 grid gap-2">
@@ -63,7 +63,7 @@ function SubtaskBox({
             <></>
           )
         }
-      </APIComponentWithFallback>
+      </APIFallbackComponent>
     </div>
   )
 }

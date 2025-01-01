@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import { useNavigate } from 'react-router'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
-import APIComponentWithFallback from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import { type IProjectsMEntry } from '@interfaces/projects_m_interfaces'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 
@@ -35,7 +35,7 @@ function ProjectHeader({
             <Icon icon="tabler:hammer" className="text-3xl" />
           </div>
           {projectData.name}
-          <APIComponentWithFallback data={statuses}>
+          <APIFallbackComponent data={statuses}>
             {statuses => (
               <div
                 className="ml-2 flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-widest shadow-custom"
@@ -56,7 +56,7 @@ function ProjectHeader({
                 <Icon icon="tabler:chevron-down" className="ml-1" />
               </div>
             )}
-          </APIComponentWithFallback>
+          </APIFallbackComponent>
         </h1>
         <div className="flex gap-2 rounded-lg p-2">
           {[

@@ -105,7 +105,7 @@ function DateGroup({
             >
               <button
                 onClick={toggleSelectAll}
-                className={`group/checkbox flex-center flex rounded-full border-2  p-0.5 transition-all ${
+                className={`group/checkbox flex-center rounded-full border-2  p-0.5 transition-all ${
                   isSelectedAll
                     ? 'border-custom-500 bg-custom-500'
                     : 'border-bg-500 hover:!border-custom-500'
