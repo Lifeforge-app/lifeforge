@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import React, { useRef, useState } from 'react'
+import React, { memo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
 import InputActionButton from './components/InputActionButton'
@@ -121,4 +121,4 @@ function Input({
   )
 }
 
-export default Input
+export default memo(Input)

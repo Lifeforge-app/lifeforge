@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
+import React, { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
 
@@ -120,4 +120,4 @@ function Button<C extends React.ElementType = 'button'>({
   )
 }
 
-export default Button
+export default memo(Button)

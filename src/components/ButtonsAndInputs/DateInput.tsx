@@ -6,6 +6,7 @@ import DatePicker from 'react-date-picker'
 import { useTranslation } from 'react-i18next'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { toCamelCase } from '@utils/strings'
+import InputIcon from './Input/components/InputIcon'
 import InputLabel from './Input/components/InputLabel'
 import InputWrapper from './Input/components/InputWrapper'
 
@@ -70,12 +71,7 @@ const DateInput: React.FC<DateInputProps> = ({
       className={`${className} ${hasMargin ? 'mt-4' : ''}`}
       darker={darker}
     >
-      <Icon
-        icon={icon}
-        className={`ml-6 size-6 shrink-0 ${
-          date !== '' ? 'text-bg-800 dark:text-bg-50' : 'text-bg-500'
-        }`}
-      />
+      <InputIcon icon={icon} active={date !== ''} />
       <div ref={ref} className="flex w-full items-center gap-2">
         <InputLabel label={t(`input.${toCamelCase(name)}`)} active />
         <DatePicker
