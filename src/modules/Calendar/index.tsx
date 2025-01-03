@@ -110,7 +110,7 @@ function CalendarModule(): React.ReactElement {
         data={existedCategoryData}
         itemName="category"
         nameKey="name"
-        updateDataList={() => {
+        updateDataLists={() => {
           if (typeof categories === 'string') return
 
           setCategories(

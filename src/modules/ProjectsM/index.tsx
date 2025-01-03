@@ -111,7 +111,7 @@ function ProjectsM(): React.ReactElement {
             config.setOpen(false)
             config.setData(null)
           }}
-          updateDataList={config.updateDataList}
+          updateDataLists={config.updateDataList}
         />
       ))}
     </ModuleWrapper>

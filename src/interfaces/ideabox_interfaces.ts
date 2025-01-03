@@ -1,11 +1,12 @@
 import type BasePBCollection from '@interfaces/pocketbase_interfaces'
 
 interface IIdeaBoxContainer extends BasePBCollection {
+  name: string
   color: string
   icon: string
+  cover: string
   image_count: number
   link_count: number
-  name: string
   text_count: number
 }
 

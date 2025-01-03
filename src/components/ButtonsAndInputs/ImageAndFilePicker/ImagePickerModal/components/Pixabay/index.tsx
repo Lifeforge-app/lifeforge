@@ -42,10 +42,12 @@ function reducer(
 
 function Pixabay({
   file,
-  setFile
+  setFile,
+  setPreview
 }: {
   file: string | File | null
   setFile: React.Dispatch<React.SetStateAction<string | File | null>>
+  setPreview: React.Dispatch<React.SetStateAction<string | null>>
 }): React.ReactElement {
   const [query, setQuery] = useState('')
   const [isSearchFilterModalOpen, setIsSearchFilterModalOpen] = useState(false)
@@ -146,7 +148,7 @@ function Pixabay({
                   <LoadingScreen />
                 </div>
               ) : (
-                <div className="flex-center size-full flex-1">
+                <div className="flex-center mb-6 size-full flex-1">
                   <EmptyStateScreen
                     icon="simple-icons:pixabay"
                     title="Powered by Pixabay"
@@ -166,6 +168,7 @@ function Pixabay({
                   results={results}
                   file={file}
                   setFile={setFile}
+                  setPreview={setPreview}
                   page={page}
                   setPage={setPage}
                   onSearch={onSearch}

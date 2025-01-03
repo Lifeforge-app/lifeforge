@@ -78,7 +78,7 @@ function CreatePasswordScreen({
         </p>
         <Input
           key="newPassword"
-          reference={inputRef}
+          ref={inputRef}
           isPassword
           icon="tabler:lock"
           name="New Password"
@@ -108,7 +108,7 @@ function CreatePasswordScreen({
         />
         <Input
           key="confirmPassword"
-          reference={inputRef2}
+          ref={inputRef2}
           isPassword
           icon="tabler:lock-check"
           name="Confirm Password"

@@ -116,7 +116,7 @@ function Assets(): React.ReactElement {
           setDeleteAssetsConfirmationOpen(false)
           setSelectedData(null)
         }}
-        updateDataList={refreshAssets}
+        updateDataLists={refreshAssets}
         nameKey="name"
       />
     </ModuleWrapper>

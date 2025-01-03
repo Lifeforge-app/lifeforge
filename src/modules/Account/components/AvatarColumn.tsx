@@ -90,7 +90,7 @@ function AvatarColumn(): React.ReactElement {
         apiEndpoint="/user/settings/avatar"
         data={{}}
         itemName="avatar"
-        updateDataList={() => {
+        updateDataLists={() => {
           setUserData({ ...userData, avatar: '' })
         }}
         isOpen={deleteAvatarConfirmationModal}

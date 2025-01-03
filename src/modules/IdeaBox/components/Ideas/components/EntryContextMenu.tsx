@@ -12,7 +12,7 @@ function EntryContextMenu({
   setModifyIdeaModalOpenType,
   setExistedData,
   setDeleteIdeaModalOpen,
-  updateIdeaList
+  setIdeaList
 }: {
   entry: IIdeaBoxEntry
   setTypeOfModifyIdea: React.Dispatch<
@@ -23,9 +23,9 @@ function EntryContextMenu({
   >
   setExistedData: (data: any) => void
   setDeleteIdeaModalOpen: (state: boolean) => void
-  updateIdeaList: () => void
+  setIdeaList: React.Dispatch<React.SetStateAction<IIdeaBoxEntry[]>>
 }): React.ReactElement {
-  const { folderId } = useParams()
+  const { '*': path } = useParams<{ '*': string }>()
 
   async function pinIdea(): Promise<void> {
     await APIRequest({
@@ -33,7 +33,20 @@ function EntryContextMenu({
       method: 'POST',
       successInfo: entry.pinned ? 'unpin' : 'pin',
       failureInfo: entry.pinned ? 'unpin' : 'pin',
-      callback: updateIdeaList
+      callback: res => {
+        setIdeaList(prev =>
+          prev
+            .map(idea =>
+              idea.id === entry.id ? (res.data as IIdeaBoxEntry) : idea
+            )
+            .sort((a, b) => {
+              if (a.pinned === b.pinned) {
+                return a.created < b.created ? 1 : -1
+              }
+              return a.pinned ? -1 : 1
+            })
+        )
+      }
     })
   }
 
@@ -43,7 +56,11 @@ function EntryContextMenu({
       method: 'POST',
       successInfo: entry.archived ? 'unarchive' : 'archive',
       failureInfo: entry.archived ? 'unarchive' : 'archive',
-      callback: updateIdeaList
+      callback: res => {
+        setIdeaList(prev =>
+          prev.filter(idea => idea.id !== entry.id).concat(res.data)
+        )
+      }
     })
   }
 
@@ -53,7 +70,9 @@ function EntryContextMenu({
       method: 'DELETE',
       successInfo: 'remove',
       failureInfo: 'remove',
-      callback: updateIdeaList
+      callback: () => {
+        setIdeaList(prev => prev.filter(idea => idea.id !== entry.id))
+      }
     })
   }
 
@@ -102,7 +121,7 @@ function EntryContextMenu({
             text="Edit"
           />
         )}
-        {folderId !== undefined && (
+        {path !== '' && (
           <MenuItem
             onClick={() => {
               removeFromFolder().catch(console.error)

@@ -98,7 +98,7 @@ function ManageTagsModal({
         onClose={() => {
           setIsDeleteConfirmationModalOpen(false)
         }}
-        updateDataList={() => {
+        updateDataLists={() => {
           refreshAlbumTagList()
         }}
         nameKey="name"

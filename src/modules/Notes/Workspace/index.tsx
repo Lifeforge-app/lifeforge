@@ -119,7 +119,7 @@ function NotesCategory(): React.ReactElement {
             apiEndpoint="notes/subject"
             itemName="subject"
             data={existedData}
-            updateDataList={refreshSubjectData}
+            updateDataLists={refreshSubjectData}
             nameKey="title"
           />
           <ModifySubjectModal

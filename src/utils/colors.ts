@@ -112,7 +112,7 @@ export function getColorPalette(
   if (type === 'bg') {
     const [r, g, b] = hexToRgb(color)
     let [h, s, l] = rgbToHsl(r, g, b)
-    l = theme === 'dark' ? 0.5 : 0.7
+    l = theme === 'dark' ? 0.4 : 0.7
     const [r2, g2, b2] = hslToRgb(h, s, l)
     finalColor = rgbToHex(r2, g2, b2)
   }

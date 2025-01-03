@@ -11,12 +11,12 @@ import APIRequest from '@utils/fetchData'
 function ModifyContainerModal({
   openType,
   setOpenType,
-  updateContainerList,
+  setContainerList,
   existedData
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  updateContainerList: () => void
+  setContainerList: React.Dispatch<React.SetStateAction<IIdeaBoxContainer[]>>
   existedData: IIdeaBoxContainer | null
 }): React.ReactElement {
   const [data, setData] = useReducer(
@@ -24,7 +24,11 @@ function ModifyContainerModal({
     {
       name: '',
       icon: '',
-      color: ''
+      color: '',
+      cover: {
+        image: null as File | string | null,
+        preview: null as string | null
+      }
     }
   )
 
@@ -45,11 +49,28 @@ function ModifyContainerModal({
       id: 'color',
       label: 'Container color',
       type: 'color'
+    },
+    {
+      id: 'cover',
+      label: 'Cover Image',
+      type: 'file'
     }
   ]
 
+  function updateDataList(data: IIdeaBoxContainer): void {
+    if (openType === 'update') {
+      setContainerList(prev =>
+        prev.map(container =>
+          container.id === existedData?.id ? data : container
+        )
+      )
+    } else {
+      setContainerList(prev => [...prev, data])
+    }
+  }
+
   async function onSubmitButtonClick(): Promise<void> {
-    const { name, icon, color } = data
+    const { name, icon, color, cover } = data
     if (
       name.trim().length === 0 ||
       color.trim().length === 0 ||
@@ -59,38 +80,83 @@ function ModifyContainerModal({
       return
     }
 
-    const container = {
-      name: name.trim(),
-      color: color.trim(),
-      icon: icon.trim()
-    }
+    if (cover.image instanceof File) {
+      const formData = new FormData()
+      formData.append('file', cover.image)
+      formData.append('name', name.trim())
+      formData.append('color', color.trim())
+      formData.append('icon', icon.trim())
 
-    await APIRequest({
-      endpoint:
-        'idea-box/containers' +
-        (openType === 'update' ? `/${existedData?.id}` : ''),
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: container,
-      successInfo: openType,
-      failureInfo: openType,
-      callback: () => {
-        setOpenType(null)
-        updateContainerList()
-      },
-      onFailure: () => {
-        setOpenType(null)
+      await APIRequest({
+        endpoint:
+          'idea-box/containers' +
+          (openType === 'update' ? `/${existedData?.id}` : ''),
+        method: openType === 'create' ? 'POST' : 'PATCH',
+        body: formData,
+        isJSON: false,
+        successInfo: openType,
+        failureInfo: openType,
+        callback: res => {
+          setOpenType(null)
+          updateDataList(res.data)
+        },
+        onFailure: () => {
+          setOpenType(null)
+        }
+      })
+    } else {
+      const container = {
+        name: name.trim(),
+        color: color.trim(),
+        icon: icon.trim(),
+        cover: cover.image
       }
-    })
+
+      await APIRequest({
+        endpoint:
+          'idea-box/containers' +
+          (openType === 'update' ? `/${existedData?.id}` : ''),
+        method: openType === 'create' ? 'POST' : 'PATCH',
+        body: container,
+        successInfo: openType,
+        failureInfo: openType,
+        callback: res => {
+          setOpenType(null)
+          updateDataList(res.data)
+        },
+        onFailure: () => {
+          setOpenType(null)
+        }
+      })
+    }
   }
 
   useEffect(() => {
     if (openType === 'update' && existedData !== null) {
-      setData(existedData)
+      setData({
+        ...existedData,
+        cover:
+          existedData.cover !== ''
+            ? {
+                image: 'keep',
+                preview: `${import.meta.env.VITE_API_HOST}/media/${
+                  existedData.cover
+                }`
+              }
+            : {
+                image: null,
+                preview: null
+              }
+      })
     } else {
       setData({
         name: '',
         icon: '',
-        color: ''
+        color: '',
+        cover: {
+          image: null,
+          preview: null
+        }
       })
     }
   }, [openType, existedData])
