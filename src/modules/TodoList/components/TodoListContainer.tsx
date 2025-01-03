@@ -111,7 +111,7 @@ function TodoListContainer(): React.ReactElement {
         }}
         data={selectedTask}
         itemName="task"
-        updateDataList={refreshEntries}
+        updateDataLists={refreshEntries}
         nameKey="summary"
       />
       {entries.length > 0 && (
@@ -131,7 +131,7 @@ function TodoListContainer(): React.ReactElement {
         onClose={() => {
           setDeletePriorityConfirmationModalOpen(false)
         }}
-        updateDataList={refreshPriorities}
+        updateDataLists={refreshPriorities}
         customText="Are you sure you want to delete this priority? The tasks with this priority will not be deleted."
       />
       <ModifyListModal />
@@ -143,7 +143,7 @@ function TodoListContainer(): React.ReactElement {
         onClose={() => {
           setDeleteListConfirmationModalOpen(false)
         }}
-        updateDataList={refreshLists}
+        updateDataLists={refreshLists}
         customText="Are you sure you want to delete this list? The tasks inside this list will not be deleted."
       />
       <ModifyTagModal />
@@ -155,7 +155,7 @@ function TodoListContainer(): React.ReactElement {
         onClose={() => {
           setDeleteTagConfirmationModalOpen(false)
         }}
-        updateDataList={refreshTagsList}
+        updateDataLists={refreshTagsList}
         customText="Are you sure you want to delete this tag? The tasks with this tag will not be deleted."
       />
     </>

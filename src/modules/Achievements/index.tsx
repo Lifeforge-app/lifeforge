@@ -96,7 +96,7 @@ function Achievements(): React.ReactElement {
           setExistedData(null)
           setDeleteAchievementConfirmationModalOpen(false)
         }}
-        updateDataList={refreshEntries}
+        updateDataLists={refreshEntries}
         nameKey="title"
       />
       {typeof entries !== 'string' && entries.length > 0 && (

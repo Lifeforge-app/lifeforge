@@ -11,7 +11,7 @@ function DeleteConfirmationModal({
   isOpen,
   onClose,
   data,
-  updateDataList,
+  updateDataLists: updateDataList,
   apiEndpoint,
   customText,
   nameKey,
@@ -21,7 +21,7 @@ function DeleteConfirmationModal({
   isOpen: boolean
   onClose: () => void
   data?: any
-  updateDataList?: () => void
+  updateDataLists?: () => void
   apiEndpoint?: string
   customText?: string
   nameKey?: string

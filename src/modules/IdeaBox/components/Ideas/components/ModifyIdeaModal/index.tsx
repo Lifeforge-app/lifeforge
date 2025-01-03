@@ -21,7 +21,7 @@ function ModifyIdeaModal({
   openType,
   setOpenType,
   typeOfModifyIdea,
-  updateIdeaList,
+  setIdeaList,
   existedData,
   pastedData
 }: {
@@ -30,7 +30,7 @@ function ModifyIdeaModal({
     React.SetStateAction<'create' | 'update' | 'paste' | null>
   >
   typeOfModifyIdea: 'text' | 'image' | 'link'
-  updateIdeaList: () => void
+  setIdeaList: React.Dispatch<React.SetStateAction<IIdeaBoxEntry[]>>
   existedData: IIdeaBoxEntry | null
   pastedData: {
     preview: string
@@ -188,8 +188,16 @@ function ModifyIdeaModal({
       },
       successInfo: innerOpenType,
       failureInfo: innerOpenType,
-      callback: () => {
-        updateIdeaList()
+      callback: res => {
+        if (innerOpenType === 'update') {
+          setIdeaList(prev =>
+            prev.map(idea =>
+              idea.id === existedData?.id ? (res.data as IIdeaBoxEntry) : idea
+            )
+          )
+        } else {
+          setIdeaList(prev => [res.data as IIdeaBoxEntry, ...prev])
+        }
         setOpenType(null)
       },
       isJSON: innerOpenType === 'update'

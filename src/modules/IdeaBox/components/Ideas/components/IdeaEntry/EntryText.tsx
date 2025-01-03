@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
-import React from 'react'
+import React, { useState } from 'react'
 import { useDrag } from 'react-dnd'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
@@ -12,7 +12,7 @@ function EntryText({
   setModifyIdeaModalOpenType,
   setExistedData,
   setDeleteIdeaModalOpen,
-  updateIdeaList
+  setIdeaList
 }: {
   entry: IIdeaBoxEntry
   setTypeOfModifyIdea: React.Dispatch<
@@ -23,8 +23,9 @@ function EntryText({
   >
   setExistedData: (data: any) => void
   setDeleteIdeaModalOpen: (state: boolean) => void
-  updateIdeaList: () => void
+  setIdeaList: React.Dispatch<React.SetStateAction<IIdeaBoxEntry[]>>
 }): React.ReactElement {
+  const [expanded, setExpanded] = useState(false)
   const { componentBg } = useThemeColors()
   const [{ opacity, isDragging }, dragRef] = useDrag(
     () => ({
@@ -43,10 +44,13 @@ function EntryText({
 
   return (
     <div
+      onClick={() => {
+        setExpanded(prev => !prev)
+      }}
       ref={node => {
         dragRef(node)
       }}
-      className={`group relative my-4 flex items-start justify-between gap-2 rounded-lg p-4 shadow-custom ${componentBg} ${
+      className={`group relative my-4 flex cursor-pointer items-start justify-between gap-2 rounded-lg p-4 shadow-custom ${componentBg} ${
         isDragging ? 'cursor-move' : ''
       }`}
       style={{
@@ -60,7 +64,13 @@ function EntryText({
         />
       )}
       <div>
-        <p className="!select-text whitespace-pre-wrap">{entry.content}</p>
+        <p
+          className={`${
+            !expanded && 'line-clamp-6'
+          } !select-text whitespace-pre-wrap`}
+        >
+          {entry.content}
+        </p>
         <span className="text-sm text-bg-500">
           {moment(entry.updated).fromNow()}
         </span>
@@ -71,7 +81,7 @@ function EntryText({
         setModifyIdeaModalOpenType={setModifyIdeaModalOpenType}
         setExistedData={setExistedData}
         setDeleteIdeaModalOpen={setDeleteIdeaModalOpen}
-        updateIdeaList={updateIdeaList}
+        setIdeaList={setIdeaList}
       />
     </div>
   )

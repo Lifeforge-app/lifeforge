@@ -195,7 +195,7 @@ function ModifyTaskWindow(): React.ReactElement {
               darker
               updateValue={setSummary}
               className="w-full"
-              reference={summaryInputRef}
+              ref={summaryInputRef}
             />
             <SubtaskBox
               summary={summary}

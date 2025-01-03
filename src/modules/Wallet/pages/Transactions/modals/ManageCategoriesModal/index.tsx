@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
-import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { type IWalletCategory } from '@interfaces/wallet_interfaces'
@@ -90,7 +90,7 @@ function ManageCategoriesModal({
         }}
         apiEndpoint="wallet/category"
         data={existedData}
-        updateDataList={refreshCategories}
+        updateDataLists={refreshCategories}
         nameKey="name"
         itemName="category"
       />

@@ -7,6 +7,8 @@ import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyBut
 import DateInput from '@components/ButtonsAndInputs/DateInput'
 import IconInput from '@components/ButtonsAndInputs/IconPicker/IconInput'
 import IconPickerModal from '@components/ButtonsAndInputs/IconPicker/IconPickerModal'
+import ImageAndFileInput from '@components/ButtonsAndInputs/ImageAndFilePicker/ImageAndFileInput'
+import ImagePickerModal from '@components/ButtonsAndInputs/ImageAndFilePicker/ImagePickerModal'
 import Input from '@components/ButtonsAndInputs/Input'
 import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
 import ListboxNullOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxNullOption'
@@ -38,8 +40,26 @@ function Modal({
   affectHeader?: boolean
   modalRef?: React.RefObject<HTMLDivElement | null>
   fields: IFieldProps[]
-  data: Record<string, string | string[]>
-  setData: (data: Record<string, string | string[]>) => void
+  data: Record<
+    string,
+    | string
+    | string[]
+    | {
+        image: string | File | null
+        preview: string | null
+      }
+  >
+  setData: (
+    data: Record<
+      string,
+      | string
+      | string[]
+      | {
+          image: string | File | null
+          preview: string | null
+        }
+    >
+  ) => void
   title: string
   icon: string
   isOpen: boolean
@@ -55,6 +75,9 @@ function Modal({
 }): React.ReactElement {
   const [colorPickerOpen, setColorPickerOpen] = useState<string | null>(null)
   const [iconSelectorOpen, setIconSelectorOpen] = useState<string | null>(null)
+  const [imagePickerModalOpen, setImagePickerModalOpen] = useState<
+    string | null
+  >(null)
   const [submitLoading, setSubmitLoading] = useState(false)
 
   async function onSubmitButtonClick(): Promise<void> {
@@ -239,6 +262,62 @@ function Modal({
                         }}
                       />
                     )
+                  case 'file':
+                    return (
+                      <ImageAndFileInput
+                        icon="tabler:file"
+                        name={field.label}
+                        preview={
+                          (
+                            selectedData as {
+                              image: string | File | null
+                              preview: string | null
+                            }
+                          ).preview
+                        }
+                        image={
+                          (
+                            selectedData as {
+                              image: string | File | null
+                              preview: string | null
+                            }
+                          ).image
+                        }
+                        setPreview={value => {
+                          setData({
+                            [field.id]: {
+                              ...(selectedData as {
+                                image: string | File | null
+                                preview: string | null
+                              }),
+                              preview: value
+                            }
+                          })
+                        }}
+                        setImage={value => {
+                          setData({
+                            [field.id]: {
+                              ...(selectedData as {
+                                image: string | File | null
+                                preview: string | null
+                              }),
+                              image: value
+                            }
+                          })
+                        }}
+                        setImagePickerModalOpen={() => {
+                          setImagePickerModalOpen(field.id)
+                        }}
+                        onImageRemoved={() => {
+                          setData({
+                            [field.id]: {
+                              image: null,
+                              preview: null
+                            }
+                          })
+                        }}
+                      />
+                    )
                   default:
                     return <></>
                 }
@@ -283,7 +362,6 @@ function Modal({
           }}
         />
       )}
-
       {fields.some(f => f.type === 'icon') && (
         <IconPickerModal
           isOpen={iconSelectorOpen !== null}
@@ -295,6 +373,28 @@ function Modal({
               [iconSelectorOpen ?? '']: value
             })
           }}
+        />
+      )}
+      {fields.some(f => f.type === 'file') && (
+        <ImagePickerModal
+          isOpen={imagePickerModalOpen !== null}
+          onClose={() => {
+            setImagePickerModalOpen(null)
+          }}
+          onSelect={async (file, preview) => {
+            setData({
+              [imagePickerModalOpen ?? '']: {
+                image: file,
+                preview
+              }
+            })
+          }}
+          acceptedMimeTypes={{
+            images: ['image/png', 'image/jpeg', 'image/webp']
+          }}
+          affectHeader={false}
+          enableUrl
+          enablePixaBay
         />
       )}
     </>

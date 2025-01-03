@@ -279,7 +279,7 @@ function GuitarTabs(): React.ReactElement {
         data={existingEntry}
         nameKey="title"
         itemName="guitar tab"
-        updateDataList={() => {
+        updateDataLists={() => {
           refreshEntries()
           refreshSidebarData()
         }}

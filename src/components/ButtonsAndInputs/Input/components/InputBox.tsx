@@ -1,9 +1,11 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 
 function InputBox({
   value,
   updateValue,
   isPassword = false,
+  inputMode,
+  showPassword,
   placeholder,
   inputRef,
   reference,
@@ -15,6 +17,16 @@ function InputBox({
   value: string
   updateValue: (value: string) => void
   isPassword?: boolean
+  inputMode?:
+    | 'text'
+    | 'none'
+    | 'tel'
+    | 'url'
+    | 'email'
+    | 'numeric'
+    | 'decimal'
+    | 'search'
+  showPassword: boolean
   placeholder: string
   inputRef: React.RefObject<HTMLInputElement | null>
   reference?: React.RefObject<HTMLInputElement | null>
@@ -24,7 +36,6 @@ function InputBox({
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }): React.ReactElement {
   const innerRef = useRef<HTMLInputElement | null>(null)
-  const [focused, setFocused] = useState(false)
 
   return (
     <>
@@ -46,19 +57,12 @@ function InputBox({
         }}
         placeholder={placeholder}
         onKeyDown={onKeyDown}
-        type={isPassword && !focused ? 'password' : 'text'}
+        type={isPassword && !showPassword ? 'password' : 'text'}
         autoComplete={noAutoComplete ? 'false' : 'true'}
-        style={isPassword ? { fontFamily: 'Arial' } : {}}
-        className={`mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider caret-custom-500 placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500 ${
-          isPassword && Boolean(value) ? 'text-2xl focus:text-base' : ''
-        }`}
+        style={isPassword && !showPassword ? { fontFamily: 'Arial' } : {}}
+        className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider caret-custom-500 placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
         autoFocus={autoFocus}
-        onFocus={() => {
-          setFocused(true)
-        }}
-        onBlur={() => {
-          setFocused(false)
-        }}
+        inputMode={inputMode}
       />
     </>
   )

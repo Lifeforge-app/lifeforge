@@ -13,9 +13,7 @@ import Containers from './components/Containers'
 import ModifyContainerModal from './components/Containers/components/ModifyContainerModal'
 
 function IdeaBox(): React.ReactElement {
-  const [data, refreshData] = useFetch<IIdeaBoxContainer[]>(
-    'idea-box/containers'
-  )
+  const [data, , setData] = useFetch<IIdeaBoxContainer[]>('idea-box/containers')
   const [modifyContainerModalOpenType, setModifyContainerModalOpenType] =
     useState<'create' | 'update' | null>(null)
   const [
@@ -78,7 +76,9 @@ function IdeaBox(): React.ReactElement {
       <ModifyContainerModal
         openType={modifyContainerModalOpenType}
         setOpenType={setModifyContainerModalOpenType}
-        updateContainerList={refreshData}
+        setContainerList={
+          setData as React.Dispatch<React.SetStateAction<IIdeaBoxContainer[]>>
+        }
         existedData={existedData}
       />
       <DeleteConfirmationModal
@@ -90,7 +90,13 @@ function IdeaBox(): React.ReactElement {
         data={existedData}
         apiEndpoint="idea-box/containers"
         itemName="container"
-        updateDataList={refreshData}
+        updateDataLists={() => {
+          setData(prev =>
+            typeof prev !== 'string'
+              ? prev.filter(container => container.id !== existedData?.id)
+              : prev
+          )
+        }}
       />
     </ModuleWrapper>
   )

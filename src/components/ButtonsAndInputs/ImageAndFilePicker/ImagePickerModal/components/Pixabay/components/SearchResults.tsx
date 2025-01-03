@@ -10,6 +10,7 @@ function SearchResults({
   setPage,
   file,
   setFile,
+  setPreview,
   onSearch
 }: {
   results: IPixabaySearchResult
@@ -17,6 +18,7 @@ function SearchResults({
   setPage: React.Dispatch<React.SetStateAction<number>>
   file: string | File | null
   setFile: React.Dispatch<React.SetStateAction<string | File | null>>
+  setPreview: React.Dispatch<React.SetStateAction<string | null>>
   onSearch: (page: number) => Promise<void>
 }): React.ReactElement {
   return (
@@ -45,6 +47,7 @@ function SearchResults({
             <div
               onClick={() => {
                 setFile(photo.fullResURL)
+                setPreview(photo.src)
               }}
               className={`relative isolate overflow-hidden rounded-md bg-bg-200 outline outline-2 transition-all dark:bg-bg-800/50 ${
                 photo.fullResURL === file

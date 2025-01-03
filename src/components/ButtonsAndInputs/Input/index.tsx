@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
 import InputActionButton from './components/InputActionButton'
@@ -7,6 +7,37 @@ import InputBox from './components/InputBox'
 import InputIcon from './components/InputIcon'
 import InputLabel from './components/InputLabel'
 import InputWrapper from './components/InputWrapper'
+import Button from '../Button'
+
+interface IInputProps {
+  icon: string
+  name: string
+  placeholder: string
+  value: string
+  updateValue: (value: string) => void
+
+  inputMode?:
+    | 'text'
+    | 'none'
+    | 'tel'
+    | 'url'
+    | 'email'
+    | 'numeric'
+    | 'decimal'
+    | 'search'
+  actionButtonIcon?: string
+  actionButtonLoading?: boolean
+  autoFocus?: boolean
+  className?: string
+  darker?: boolean
+  disabled?: boolean
+  isPassword?: boolean
+  needTranslate?: boolean
+  noAutoComplete?: boolean
+  onActionButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  ref?: React.RefObject<HTMLInputElement | null>
+}
 
 function Input({
   actionButtonIcon = '',
@@ -16,6 +47,7 @@ function Input({
   darker = false,
   disabled = false,
   icon,
+  inputMode = 'text',
   isPassword = false,
   name,
   needTranslate = true,
@@ -23,29 +55,12 @@ function Input({
   onActionButtonClick = () => {},
   onKeyDown = () => {},
   placeholder,
-  reference,
+  ref,
   updateValue,
   value
-}: {
-  actionButtonIcon?: string
-  actionButtonLoading?: boolean
-  autoFocus?: boolean
-  className?: string
-  darker?: boolean
-  disabled?: boolean
-  icon: string
-  isPassword?: boolean
-  name: string
-  needTranslate?: boolean
-  noAutoComplete?: boolean
-  onActionButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
-  placeholder: string
-  reference?: React.RefObject<HTMLInputElement | null>
-  updateValue: (value: string) => void
-  value: string
-}): React.ReactElement {
+}: IInputProps): React.ReactElement {
   const { t } = useTranslation()
+  const [showPassword, setShowPassword] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   return (
@@ -65,14 +80,35 @@ function Input({
           value={value}
           updateValue={updateValue}
           isPassword={isPassword}
+          inputMode={inputMode}
+          showPassword={showPassword}
           placeholder={placeholder}
           inputRef={inputRef}
-          reference={reference}
+          reference={ref}
           autoFocus={autoFocus}
           disabled={disabled}
           noAutoComplete={noAutoComplete}
           onKeyDown={onKeyDown}
         />
+        {isPassword && (
+          <Button
+            variant="no-bg"
+            className="mr-2"
+            icon={showPassword ? 'tabler:eye' : 'tabler:eye-off'}
+            onMouseDown={() => {
+              setShowPassword(true)
+            }}
+            onMouseUp={() => {
+              setShowPassword(false)
+            }}
+            onTouchStart={() => {
+              setShowPassword(true)
+            }}
+            onTouchEnd={() => {
+              setShowPassword(false)
+            }}
+          />
+        )}
         {actionButtonIcon && (
           <InputActionButton
             actionButtonLoading={actionButtonLoading}

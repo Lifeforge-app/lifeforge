@@ -134,7 +134,7 @@ function APIKeys(): React.ReactElement {
               data={existingData}
               itemName="API Key"
               nameKey="name"
-              updateDataList={() => {
+              updateDataLists={() => {
                 fetchData().catch(console.error)
               }}
             />

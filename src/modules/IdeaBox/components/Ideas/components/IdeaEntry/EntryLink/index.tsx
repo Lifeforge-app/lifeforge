@@ -14,7 +14,7 @@ function EntryLink({
   setModifyIdeaModalOpenType,
   setExistedData,
   setDeleteIdeaModalOpen,
-  updateIdeaList
+  setIdeaList
 }: {
   entry: IIdeaBoxEntry
   setTypeOfModifyIdea: React.Dispatch<
@@ -25,7 +25,7 @@ function EntryLink({
   >
   setExistedData: (data: any) => void
   setDeleteIdeaModalOpen: (state: boolean) => void
-  updateIdeaList: () => void
+  setIdeaList: React.Dispatch<React.SetStateAction<IIdeaBoxEntry[]>>
 }): React.ReactElement {
   const { componentBg } = useThemeColors()
   const [ogData] = useFetch<Record<string, any>>(
@@ -82,10 +82,9 @@ function EntryLink({
           setModifyIdeaModalOpenType={setModifyIdeaModalOpenType}
           setExistedData={setExistedData}
           setDeleteIdeaModalOpen={setDeleteIdeaModalOpen}
-          updateIdeaList={updateIdeaList}
+          setIdeaList={setIdeaList}
         />
       </div>
-
       {typeof ogData !== 'string' ? (
         <EntryOGData data={ogData} href={entry.content} />
       ) : (

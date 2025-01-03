@@ -203,7 +203,7 @@ function Transactions(): React.ReactElement {
           setDeleteTransactionsConfirmationOpen(false)
           setSelectedData(null)
         }}
-        updateDataList={() => {
+        updateDataLists={() => {
           refreshTransactions()
           refreshAssets()
         }}

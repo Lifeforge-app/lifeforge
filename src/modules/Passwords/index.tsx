@@ -176,7 +176,7 @@ function Passwords(): React.ReactElement {
             onClose={() => {
               setIsDeletePasswordConfirmationModalOpen(false)
             }}
-            updateDataList={refreshPasswordList}
+            updateDataLists={refreshPasswordList}
             customText={`Are you sure you want to delete the password for ${selectedPassword?.name}? This action is irreversible.`}
           />
         </>

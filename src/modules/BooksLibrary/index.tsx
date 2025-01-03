@@ -161,7 +161,7 @@ function BooksLibrary(): React.ReactElement {
             config.setOpen(false)
             config.setData(null)
           }}
-          updateDataList={config.updateDataList}
+          updateDataLists={config.updateDataList}
         />
       ))}
       <DeleteConfirmationModal
@@ -174,7 +174,7 @@ function BooksLibrary(): React.ReactElement {
           setDeleteBookConfirmationModalOpen(false)
           setExistedBookData(null)
         }}
-        updateDataList={() => {
+        updateDataLists={() => {
           refreshEntries()
           refreshFileTypes()
         }}

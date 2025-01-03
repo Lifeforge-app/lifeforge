@@ -21,8 +21,8 @@ function ImageAndFileInput({
   reminderText?: string
   image: string | File | null
   preview: string | null
-  setPreview: React.Dispatch<React.SetStateAction<string | null>>
-  setImage: React.Dispatch<React.SetStateAction<string | File | null>>
+  setPreview: (value: string | null) => void
+  setImage: (value: string | File | null) => void
   setImagePickerModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   onImageRemoved?: () => void
 }): React.ReactElement {

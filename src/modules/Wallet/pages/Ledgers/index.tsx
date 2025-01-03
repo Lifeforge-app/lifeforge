@@ -93,7 +93,7 @@ function Ledgers(): React.ReactElement {
           setDeleteLedgersConfirmationOpen(false)
           setSelectedData(null)
         }}
-        updateDataList={refreshLedgers}
+        updateDataLists={refreshLedgers}
         nameKey="name"
       />
       <FAB

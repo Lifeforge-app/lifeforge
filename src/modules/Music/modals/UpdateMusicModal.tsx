@@ -86,7 +86,7 @@ function ModifyMusicModal(): React.ReactElement {
       />
       <Input
         icon="tabler:music"
-        reference={ref}
+        ref={ref}
         name="Music name"
         value={musicName}
         updateValue={setMusicName}
