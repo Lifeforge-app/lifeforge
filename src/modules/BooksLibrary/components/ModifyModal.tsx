@@ -88,9 +88,9 @@ function ModifyModal({
 
   return (
     <Modal
-    isOpen={openType !== null}
+      isOpen={openType !== null}
       data={data}
-      setData={setData as (data: Record<string, string | string[]>) => void}
+      setData={setData}
       title={
         openType === 'update' ? `Edit ${singleStuff}` : `Add ${singleStuff}`
       }
