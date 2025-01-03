@@ -31,7 +31,7 @@ function ModalHeader({
   const innerIcon = useDebounce(icon, 100)
 
   return (
-    <div className={`flex-between mb-6 flex ${className}`}>
+    <div className={`flex-between mb-4 flex ${className}`}>
       <div className="flex w-full min-w-0 items-center gap-4">
         <h1 className="flex w-full min-w-0 items-center gap-3 text-2xl font-semibold">
           <Icon icon={innerIcon} className="size-7" />

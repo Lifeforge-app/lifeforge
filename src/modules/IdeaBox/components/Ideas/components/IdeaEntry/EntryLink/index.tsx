@@ -2,10 +2,9 @@ import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
 import { useDrag } from 'react-dnd'
-import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
-import EntryOGData from './components/EntryOGData'
+import EntryContent from './components/EntryContent'
 import EntryContextMenu from '../../EntryContextMenu'
 
 function EntryLink({
@@ -28,14 +27,7 @@ function EntryLink({
   setIdeaList: React.Dispatch<React.SetStateAction<IIdeaBoxEntry[]>>
 }): React.ReactElement {
   const { componentBg } = useThemeColors()
-  const [ogData] = useFetch<Record<string, any>>(
-    `idea-box/og-data/${entry.id}`,
-    true,
-    'GET',
-    undefined,
-    true,
-    false
-  )
+
   const [{ opacity, isDragging }, dragRef] = useDrag(
     () => ({
       type: 'IDEA',
@@ -85,18 +77,7 @@ function EntryLink({
           setIdeaList={setIdeaList}
         />
       </div>
-      {typeof ogData !== 'string' ? (
-        <EntryOGData data={ogData} href={entry.content} />
-      ) : (
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href={entry.content}
-          className="break-all text-custom-500 underline underline-offset-2"
-        >
-          {entry.content}
-        </a>
-      )}
+      <EntryContent entry={entry} />
     </div>
   )
 }

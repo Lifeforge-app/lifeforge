@@ -1,6 +1,6 @@
-import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import Button from './Button'
 
 function GoBackButton({
   onClick
@@ -10,15 +10,14 @@ function GoBackButton({
   const { t } = useTranslation()
 
   return (
-    <button
+    <Button
       onClick={onClick}
-      className="-ml-1 mb-2 flex w-min items-center gap-1 rounded-lg pl-0 text-bg-500 transition-all hover:text-bg-800 dark:hover:text-bg-50 sm:gap-2"
+      icon="tabler:chevron-left"
+      variant="no-bg"
+      className="px-0 py-2 hover:!bg-transparent dark:hover:!bg-transparent"
     >
-      <Icon icon="tabler:chevron-left" className="text-lg sm:text-xl" />
-      <span className="whitespace-nowrap text-base font-medium sm:text-lg">
-        {t('button.goBack')}
-      </span>
-    </button>
+      {t('button.goBack')}
+    </Button>
   )
 }
 

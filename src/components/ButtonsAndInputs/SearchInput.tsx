@@ -34,7 +34,7 @@ function SearchInput({
 
   return (
     <search
-      className={`flex h-14 max-h-14 min-h-14 w-full flex-1 shrink-0 cursor-text items-center gap-4 rounded-lg bg-bg-200/50 px-4 shadow-sm transition-all hover:!bg-bg-200 ${
+      className={`flex min-h-14 w-full cursor-text items-center gap-4 rounded-lg bg-bg-200/50 px-4 shadow-sm transition-all hover:!bg-bg-200 ${
         lighter
           ? 'dark:bg-bg-800/50 dark:hover:bg-bg-800'
           : 'dark:bg-bg-900 dark:hover:bg-bg-800/50'
@@ -55,7 +55,7 @@ function SearchInput({
           setSearchQuery(e.target.value)
         }}
         placeholder={t(`search.${toCamelCase(stuffToSearch)}`)}
-        className="w-full bg-transparent placeholder:text-bg-500 focus:outline-none"
+        className="w-full bg-transparent placeholder:text-bg-500"
       />
       {onFilterIconClick !== undefined && (
         <button

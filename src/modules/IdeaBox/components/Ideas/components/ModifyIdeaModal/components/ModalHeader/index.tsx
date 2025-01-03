@@ -22,8 +22,8 @@ function ModalHeader({
 }): React.ReactElement {
   return (
     <>
-      <div className="flex-between flex w-full gap-16 sm:mb-8">
-        <h1 className="flex items-center gap-3 text-2xl font-semibold">
+      <div className="flex-between flex w-full gap-4 sm:mb-6">
+        <h1 className="flex w-full min-w-0 items-center gap-3 text-2xl font-semibold">
           <Icon
             key={innerOpenType}
             icon={
@@ -35,25 +35,27 @@ function ModalHeader({
             }
             className="size-7"
           />
-          {
+          <span className="w-full min-w-0 items-center gap-3 truncate sm:flex">
             {
-              create: 'New ',
-              update: 'Update ',
-              paste: 'New '
-            }[innerOpenType!]
-          }{' '}
-          {innerOpenType === 'update' ? (
-            innerTypeOfModifyIdea[0].toUpperCase() +
-            innerTypeOfModifyIdea.slice(1) +
-            ' '
-          ) : (
-            <TypeSelector
-              inline
-              innerTypeOfModifyIdea={innerTypeOfModifyIdea}
-              setInnerTypeOfModifyIdea={setInnerTypeOfModifyIdea}
-            />
-          )}
-          Idea
+              {
+                create: 'New ',
+                update: 'Update ',
+                paste: 'New '
+              }[innerOpenType!]
+            }{' '}
+            {innerOpenType === 'update' ? (
+              innerTypeOfModifyIdea[0].toUpperCase() +
+              innerTypeOfModifyIdea.slice(1) +
+              ' '
+            ) : (
+              <TypeSelector
+                inline
+                innerTypeOfModifyIdea={innerTypeOfModifyIdea}
+                setInnerTypeOfModifyIdea={setInnerTypeOfModifyIdea}
+              />
+            )}
+            Idea
+          </span>
         </h1>
         <Button
           variant="no-bg"
