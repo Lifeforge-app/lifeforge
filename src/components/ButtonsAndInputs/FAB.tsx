@@ -1,5 +1,5 @@
-import { Icon } from '@iconify/react'
 import React from 'react'
+import Button from './Button'
 
 function FAB({
   onClick: onclick,
@@ -15,9 +15,10 @@ function FAB({
   text?: string
 }): React.ReactElement {
   return (
-    <button
+    <Button
+      icon={icon}
       onClick={onclick}
-      className={`fixed bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-custom-500 p-4 font-medium tracking-wide text-bg-50 shadow-lg hover:bg-custom-600 dark:text-bg-800 ${
+      className={`fixed bottom-6 right-6 z-10 shadow-lg ${
         alwaysShow
           ? ''
           : {
@@ -29,9 +30,8 @@ function FAB({
       }
       `}
     >
-      <Icon icon={icon} className="size-6 shrink-0 transition-all" />
       {text}
-    </button>
+    </Button>
   )
 }
 

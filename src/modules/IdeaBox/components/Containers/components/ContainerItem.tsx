@@ -41,7 +41,7 @@ function ContainerItem({
         )}
       </div>
       <div className="flex flex-col items-center justify-start gap-6 p-8 pt-0">
-        <div className="-mt-12 overflow-hidden rounded-lg bg-bg-900">
+        <div className="-mt-12 overflow-hidden rounded-lg bg-bg-950">
           <div
             style={{
               backgroundColor: container.color + '30',
