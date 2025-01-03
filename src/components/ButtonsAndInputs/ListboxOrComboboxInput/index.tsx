@@ -1,6 +1,6 @@
 import { ComboboxInput, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React from 'react'
+import React, { memo } from 'react'
 import ComboboxInputWrapper from './components/ComboboxInputWrapper'
 import ListboxInputWrapper from './components/ListboxInputWrapper'
 import ListboxOrComboboxOptions from './components/ListboxOrComboboxOptions'
@@ -34,6 +34,7 @@ type IListboxOrComboboxInputProps = IListboxProps | IComboboxProps
 function ListboxOrComboboxInput(
   props: IListboxOrComboboxInputProps
 ): React.ReactElement {
+  console.log('sus')
   const { name, icon, value, setValue, type, children } = props
 
   switch (type) {
@@ -47,11 +48,9 @@ function ListboxOrComboboxInput(
           className={props.className}
         >
           <ListboxButton className="group flex w-full items-center">
-            <Icon
+            <InputIcon
               icon={icon}
-              className={`ml-6 size-6 shrink-0 ${
-                value !== null && value.length !== 0 ? '' : 'text-bg-500'
-              } group-data-[open]:!text-custom-500`}
+              active={value !== null && value.length !== 0}
             />
             <span
               className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-data-[open]:!text-custom-500 ${'top-6 -translate-y-1/2 text-[14px]'}`}
@@ -106,4 +105,4 @@ function ListboxOrComboboxInput(
   }
 }
 
-export default ListboxOrComboboxInput
+export default memo(ListboxOrComboboxInput)

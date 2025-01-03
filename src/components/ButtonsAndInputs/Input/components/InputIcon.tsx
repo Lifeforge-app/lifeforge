@@ -11,9 +11,9 @@ function InputIcon({
   return (
     <Icon
       icon={icon}
-      className={`ml-6 size-6 shrink-0 ${
+      className={`size-6 shrink-0 ${
         active ? '' : 'text-bg-500'
-      } group-focus-within:!text-custom-500`}
+      } transition-all group-focus-within:!text-custom-500`}
     />
   )
 }

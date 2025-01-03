@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import React, { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
+import InputIcon from '../Input/components/InputIcon'
 import InputWrapper from '../Input/components/InputWrapper'
 
 function ColorInput({
@@ -32,13 +33,7 @@ function ColorInput({
       darker
       className={`${hasTopMargin ? 'mt-4' : ''} ${className}`}
     >
-      <Icon
-        icon="tabler:palette"
-        className={`ml-6 size-6 shrink-0 ${
-          color !== '' ? '' : 'text-bg-500'
-        } group-focus-within:!text-custom-500`}
-      />
-
+      <InputIcon icon="tabler:palette" active={color !== ''} />
       <div className="flex w-full items-center gap-2">
         <span
           className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 group-focus-within:!text-custom-500 ${

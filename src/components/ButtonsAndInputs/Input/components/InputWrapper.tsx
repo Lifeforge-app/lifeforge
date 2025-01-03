@@ -18,7 +18,7 @@ function InputWrapper({
 
   return (
     <div
-      className={`group relative flex shrink-0 items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 shadow-custom transition-all focus-within:!border-custom-500 hover:bg-bg-200 ${
+      className={`group relative flex shrink-0 items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 pl-6 shadow-custom transition-all focus-within:!border-custom-500 hover:bg-bg-200 ${
         darker ? darkerComponentBgWithHover : componentBgWithHover
       } ${className} ${
         disabled ? '!pointer-events-none opacity-50' : 'cursor-text'
