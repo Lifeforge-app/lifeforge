@@ -28,7 +28,7 @@ function ImagePickerModal({
   enablePixaBay?: boolean
   enableUrl?: boolean
   acceptedMimeTypes: Record<string, string[]>
-  onSelect: (url: string | File, preview: string | null) => Promise<void>
+  onSelect: (file: string | File, preview: string | null) => Promise<void>
   affectHeader?: boolean
 }): React.ReactElement {
   const [file, setFile] = useState<File | string | null>(null)
@@ -105,7 +105,13 @@ function ImagePickerModal({
                 />
               )
             case 'pixabay':
-              return <Pixabay setFile={setFile} file={file} />
+              return (
+                <Pixabay
+                  setFile={setFile}
+                  file={file}
+                  setPreview={setPreview}
+                />
+              )
           }
         })()}
       </div>

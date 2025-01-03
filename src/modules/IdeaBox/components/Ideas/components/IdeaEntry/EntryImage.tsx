@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import moment from 'moment'
 import React from 'react'
 import { useDrag } from 'react-dnd'
 import Zoom from 'react-medium-image-zoom'
@@ -12,7 +13,7 @@ function EntryImage({
   setModifyIdeaModalOpenType,
   setExistedData,
   setDeleteIdeaModalOpen,
-  updateIdeaList
+  setIdeaList
 }: {
   entry: IIdeaBoxEntry
   setTypeOfModifyIdea: React.Dispatch<
@@ -23,7 +24,7 @@ function EntryImage({
   >
   setExistedData: (data: any) => void
   setDeleteIdeaModalOpen: (state: boolean) => void
-  updateIdeaList: () => void
+  setIdeaList: React.Dispatch<React.SetStateAction<IIdeaBoxEntry[]>>
 }): React.ReactElement {
   const [{ opacity, isDragging }, dragRef] = useDrag(
     () => ({
@@ -71,13 +72,16 @@ function EntryImage({
           className="my-4 rounded-lg shadow-custom"
         />
       </Zoom>
+      <div className="pointer-events-none absolute left-0 top-0 z-[9999] flex size-full items-end rounded-lg bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,0.7)_90%)] p-3 text-sm opacity-0 transition-all group-hover:opacity-100">
+        {moment(entry.updated).fromNow()}
+      </div>
       <EntryContextMenu
         entry={entry}
         setTypeOfModifyIdea={setTypeOfModifyIdea}
         setModifyIdeaModalOpenType={setModifyIdeaModalOpenType}
         setExistedData={setExistedData}
         setDeleteIdeaModalOpen={setDeleteIdeaModalOpen}
-        updateIdeaList={updateIdeaList}
+        setIdeaList={setIdeaList}
       />
     </div>
   )

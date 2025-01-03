@@ -36,7 +36,7 @@ function Journal(): React.ReactElement {
     'create' | 'update' | null
   >(null)
   const [existedData, setExistedData] = useState<IJournalEntry | null>(null)
-  const [otpSuccess, setOtpSuccess] = useState(true)
+  const [otpSuccess, setOtpSuccess] = useState(false)
 
   async function fetchData(): Promise<void> {
     setEntries('loading')
@@ -129,7 +129,7 @@ function Journal(): React.ReactElement {
                 setDeleteJournalConfirmationModalOpen(false)
               }}
               itemName="journal entry"
-              updateDataList={() => {
+              updateDataLists={() => {
                 setExistedData(null)
                 fetchData().catch(console.error)
               }}

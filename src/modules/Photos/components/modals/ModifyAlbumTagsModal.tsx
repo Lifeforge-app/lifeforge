@@ -107,7 +107,7 @@ function ModifyAlbumTagsModal({
       />
       <Input
         icon="tabler:photo"
-        reference={ref}
+        ref={ref}
         name="Tag name"
         value={tagName}
         updateValue={setTagName}

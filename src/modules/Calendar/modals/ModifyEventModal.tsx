@@ -191,7 +191,7 @@ function ModifyEventModal({
         onClose={() => {
           setIsDeleteConfirmationModalOpen(false)
         }}
-        updateDataList={() => {
+        updateDataLists={() => {
           updateEventList()
           setOpenType(null)
         }}

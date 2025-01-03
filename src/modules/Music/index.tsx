@@ -89,7 +89,7 @@ function Music(): React.ReactElement {
         onClose={() => {
           setIsDeleteMusicConfirmationModalOpen(false)
         }}
-        updateDataList={refreshMusics}
+        updateDataLists={refreshMusics}
         nameKey="name"
       />
       <ModifyMusicModal />

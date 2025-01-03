@@ -19,6 +19,7 @@ function OTPScreen({
 }): React.ReactElement {
   const [otp, setOtp] = useState('')
   const [otpSent, setOtpSent] = useState(false)
+  const [otpId, setOtpId] = useState(localStorage.getItem('otpId') ?? '')
   const [otpCooldown, setOtpCooldown] = useState(
     localStorage.getItem('otpCooldown')
       ? Math.floor(
@@ -40,8 +41,9 @@ function OTPScreen({
     APIRequest({
       method: 'GET',
       endpoint: 'user/auth/otp',
-      callback: () => {
+      callback: response => {
         setOtpSent(true)
+        setOtpId(response.data)
         setOtpCooldown(60)
         const coolDown = new Date().getTime() + 60000
         localStorage.setItem('otpCooldown', coolDown.toString())
@@ -66,7 +68,8 @@ function OTPScreen({
       endpoint: verificationEndpoint,
       method: 'POST',
       body: {
-        otp: encrypt(otp, challenge)
+        otp: encrypt(otp, challenge),
+        otpId
       },
       callback(data) {
         if (data.state === 'success' && data.data === true) {

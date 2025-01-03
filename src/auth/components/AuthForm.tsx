@@ -48,22 +48,25 @@ function AuthForm(): React.ReactElement {
 
   return (
     <div className="mt-6 flex w-full max-w-md flex-col gap-6 sm:mt-12">
-      {[
-        {
-          name: t('auth.emailOrUsername'),
-          placeholder: 'someone@somemail.com',
-          icon: 'tabler:user',
-          value: emailOrUsername,
-          updateValue: setEmail
-        },
-        {
-          name: t('auth.password'),
-          placeholder: '••••••••••••••••',
-          icon: 'tabler:key',
-          value: password,
-          updateValue: setPassword
-        }
-      ].map((input, index) => (
+      {(
+        [
+          {
+            name: t('auth.emailOrUsername'),
+            placeholder: 'someone@somemail.com',
+            icon: 'tabler:user',
+            value: emailOrUsername,
+            updateValue: setEmail,
+            inputMode: 'email'
+          },
+          {
+            name: t('auth.password'),
+            placeholder: '••••••••••••••••',
+            icon: 'tabler:key',
+            value: password,
+            updateValue: setPassword
+          }
+        ] as const
+      ).map((input, index) => (
         <Input
           key={index}
           {...input}

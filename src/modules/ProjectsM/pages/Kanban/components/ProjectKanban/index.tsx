@@ -138,7 +138,7 @@ function ProjectKanban(): React.ReactElement {
         itemName="column"
         data={existedData}
         nameKey="name"
-        updateDataList={refreshColumns}
+        updateDataLists={refreshColumns}
       />
     </>
   )

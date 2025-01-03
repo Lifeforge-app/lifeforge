@@ -38,12 +38,18 @@ interface IIconInputFieldProps {
   type: 'icon'
 }
 
+interface IImageAndFileInputFieldProps {
+  label: string
+  type: 'file'
+}
+
 type IFieldProps = (
   | ITextInputFieldProps
   | IDateInputFieldProps
   | IListboxInputFieldProps
   | IColorInputFieldProps
   | IIconInputFieldProps
+  | IImageAndFileInputFieldProps
 ) & {
   id: string
 }

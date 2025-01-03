@@ -142,7 +142,7 @@ function PhotosAlbumList(): React.ReactElement {
         }}
         isOpen={isDeleteModalOpen}
         itemName="album"
-        updateDataList={() => {
+        updateDataLists={() => {
           refreshAlbumList()
           refreshPhotos()
         }}

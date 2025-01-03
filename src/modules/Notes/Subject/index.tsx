@@ -95,7 +95,7 @@ function NotesSubject(): React.ReactElement {
               apiEndpoint="notes/entries/delete"
               itemName="folder"
               data={existedData}
-              updateDataList={refreshNotesEntries}
+              updateDataLists={refreshNotesEntries}
             />
           </ModuleWrapper>
         </>
