@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react'
 import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
+import InputIcon from '../Input/components/InputIcon'
 import InputWrapper from '../Input/components/InputWrapper'
 
 function IconInput({
@@ -26,12 +27,7 @@ function IconInput({
   return (
     <>
       <InputWrapper inputRef={ref} darker className="mt-4">
-        <Icon
-          icon="tabler:icons"
-          className={`ml-6 size-6 shrink-0 ${
-            icon ? '' : 'text-bg-500'
-          } group-focus-within:!text-custom-500`}
-        />
+        <InputIcon icon="tabler:icons" active={!!icon} />
         <div className="flex w-full items-center gap-2">
           <span
             className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 transition-all group-focus-within:!text-custom-500 ${

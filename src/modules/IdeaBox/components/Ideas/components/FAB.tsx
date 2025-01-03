@@ -63,23 +63,7 @@ function FAB({
                 ['Image', 'tabler:photo']
               ].map(([name, icon]) => (
                 <MenuItem key={name}>
-                  <button
-                    onClick={() => {
-                      if (
-                        name === 'Folder' &&
-                        setExistedFolderData !== undefined &&
-                        setModifyFolderModalOpenType !== undefined
-                      ) {
-                        setExistedFolderData(null)
-                        setModifyFolderModalOpenType('create')
-                      } else {
-                        setExistedData(null)
-                        setTypeOfModifyIdea(
-                          name.toLowerCase() as 'link' | 'image' | 'text'
-                        )
-                        setModifyIdeaModalOpenType('create')
-                      }
-                    }}
+                  <div
                     className={
                       'group flex w-full items-center justify-end gap-4 whitespace-nowrap rounded-md py-2 pr-2'
                     }
@@ -87,10 +71,28 @@ function FAB({
                     <span className="text-bg-50 transition-all group-data-[focus]:text-bg-200">
                       {t(`ideaBox.entryType.${name.toLowerCase()}`)}
                     </span>
-                    <button className="rounded-full bg-bg-200 p-3 transition-all group-data-[focus]:bg-bg-300">
+                    <button
+                      onClick={() => {
+                        if (
+                          name === 'Folder' &&
+                          setExistedFolderData !== undefined &&
+                          setModifyFolderModalOpenType !== undefined
+                        ) {
+                          setExistedFolderData(null)
+                          setModifyFolderModalOpenType('create')
+                        } else {
+                          setExistedData(null)
+                          setTypeOfModifyIdea(
+                            name.toLowerCase() as 'link' | 'image' | 'text'
+                          )
+                          setModifyIdeaModalOpenType('create')
+                        }
+                      }}
+                      className="rounded-full bg-bg-200 p-3 transition-all group-data-[focus]:bg-bg-300"
+                    >
                       <Icon icon={icon} className="size-5" />
                     </button>
-                  </button>
+                  </div>
                 </MenuItem>
               ))}
             </MenuItems>
