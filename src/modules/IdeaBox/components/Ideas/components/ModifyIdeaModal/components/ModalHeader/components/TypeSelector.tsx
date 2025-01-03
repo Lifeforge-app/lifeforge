@@ -17,11 +17,11 @@ function TypeSelector({
     <Menu
       as="div"
       className={`relative text-left ${
-        inline ? 'hidden sm:block' : 'mb-8 mt-4 block sm:hidden'
+        inline ? 'hidden sm:inline' : 'mb-8 mt-4 block sm:hidden'
       }`}
     >
       <MenuButton
-        className={`flex-between inline-flex w-full rounded-md border-2 border-bg-300 ${
+        className={`flex-between inline-flex w-full rounded-md border-2 border-bg-300 sm:w-auto ${
           inline ? 'p-2 px-4' : 'p-4 px-6'
         } text-lg font-semibold tracking-wide text-bg-800 shadow-sm outline-none hover:bg-bg-100 focus:outline-none dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200`}
       >

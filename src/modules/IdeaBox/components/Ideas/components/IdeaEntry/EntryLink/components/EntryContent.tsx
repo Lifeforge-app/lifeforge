@@ -1,20 +1,24 @@
-import React from 'react'
+import React, { memo } from 'react'
+import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
+import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 
-function EntryOGData({
-  data,
-  href
-}: {
-  data: Record<string, any>
-  href: string
-}): React.ReactElement {
+function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
   const { componentBgLighterWithHover } = useThemeColors()
+  const [data] = useFetch<Record<string, any>>(
+    `idea-box/og-data/${entry.id}`,
+    true,
+    'GET',
+    undefined,
+    true,
+    false
+  )
 
-  return (
+  return typeof data !== 'string' ? (
     <div
       onClick={() => {
         const a = document.createElement('a')
-        a.href = href
+        a.href = entry.content
         a.target = '_blank'
         a.rel = 'noreferrer noopener'
         a.click()
@@ -27,7 +31,7 @@ function EntryOGData({
             const url: string = data.ogImage?.[0].url
 
             if (!url.startsWith('http')) {
-              return `${new URL(href).origin}${
+              return `${new URL(entry.content).origin}${
                 !url.startsWith('/') ? '/' : ''
               }${url}`
             }
@@ -39,7 +43,7 @@ function EntryOGData({
         />
       )}
       <p className="text-xs font-medium text-custom-500">
-        {data.ogSiteName ?? new URL(href).hostname}
+        {data.ogSiteName ?? new URL(entry.content).hostname}
       </p>
       {data.ogTitle !== undefined && (
         <p className="text-sm font-medium">{data.ogTitle}</p>
@@ -50,7 +54,16 @@ function EntryOGData({
         </p>
       )}
     </div>
+  ) : (
+    <a
+      target="_blank"
+      rel="noreferrer"
+      href={entry.content}
+      className="break-all text-custom-500 underline underline-offset-2"
+    >
+      {entry.content}
+    </a>
   )
 }
 
-export default EntryOGData
+export default memo(EntryContent)

@@ -68,6 +68,7 @@
     "react-qr-barcode-scanner": "^2.0.0",
     "react-router": "^6.26.2",
     "react-router-dom": "^6.26.2",
+    "react-tag-input": "^6.10.3",
     "react-to-print": "^3.0.4",
     "react-toastify": "^10.0.5",
     "react-tooltip": "^5.28.0",
