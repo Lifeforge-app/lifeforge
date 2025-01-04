@@ -20,13 +20,13 @@ async function confirmData({
   moduleNameInOtherLangs: {
     moduleNameZHCN: string
     moduleNameZHTW: string
-    moduleNameMY: string
+    moduleNameMS: string
   }
   moduleDescInOtherLangs: {
     moduleDescEN: string
     moduleDescZHCN: string
     moduleDescZHTW: string
-    moduleDescMY: string
+    moduleDescMS: string
   }
   moduleCategory: { moduleCategory: string }
   togglable: { value: boolean }
@@ -38,11 +38,11 @@ async function confirmData({
     ['Module Name (EN)', moduleNameEN.moduleName],
     ['Module Name (ZH-CN)', moduleNameInOtherLangs.moduleNameZHCN],
     ['Module Name (ZH-TW)', moduleNameInOtherLangs.moduleNameZHTW],
-    ['Module Name (MY)', moduleNameInOtherLangs.moduleNameMY],
+    ['Module Name (MS)', moduleNameInOtherLangs.moduleNameMS],
     ['Module Description (EN)', moduleDescInOtherLangs.moduleDescEN],
     ['Module Description (ZH-CN)', moduleDescInOtherLangs.moduleDescZHCN],
     ['Module Description (ZH-TW)', moduleDescInOtherLangs.moduleDescZHTW],
-    ['Module Description (MY)', moduleDescInOtherLangs.moduleDescMY],
+    ['Module Description (MS)', moduleDescInOtherLangs.moduleDescMS],
     ['Module Category', moduleCategory.moduleCategory],
     ['Togglable', togglable.value ? 'Yes' : 'No']
   ]
