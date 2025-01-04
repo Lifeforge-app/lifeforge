@@ -18,6 +18,7 @@ import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import APIRequest from '@utils/fetchData'
 import IdeaContentInput from './components/IdeaContentInput'
 import ModalHeader from './components/ModalHeader'
+import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 
 function ModifyIdeaModal(): React.ReactElement {
   const {
@@ -28,7 +29,8 @@ function ModifyIdeaModal(): React.ReactElement {
     setSearchResults,
     refreshTags,
     existedEntry,
-    pastedData
+    pastedData,
+    tags
   } = useIdeaBoxContext()
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
@@ -338,15 +340,20 @@ function ModifyIdeaModal(): React.ReactElement {
             </>
           )
         )}
-        <TagInput
-          name="Idea tags"
-          icon="tabler:tag"
-          value={ideaTags}
-          updateValue={setIdeaTags}
-          placeholder='Tag your idea with "awesome", "cool", etc.'
-          className="mt-6"
-          darker
-        />
+        <APIFallbackComponent data={tags}>
+          {tags => (
+            <TagInput
+              name="Idea tags"
+              icon="tabler:tag"
+              value={ideaTags}
+              updateValue={setIdeaTags}
+              placeholder='Tag your idea with "awesome", "cool", etc.'
+              className="mt-6"
+              existedTags={tags}
+              darker
+            />
+          )}
+        </APIFallbackComponent>
       </div>
       <Button
         className="mt-6"
