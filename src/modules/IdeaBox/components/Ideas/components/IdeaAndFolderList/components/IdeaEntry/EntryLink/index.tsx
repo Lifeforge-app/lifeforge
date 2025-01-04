@@ -46,7 +46,7 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
       )}
       <div className="flex items-start justify-between gap-2">
         <div>
-          {entry.tags?.length !== 0 && (
+          {entry.tags !== null && entry.tags?.length !== 0 && (
             <div className="flex gap-2">
               {entry.tags?.map((tag, index) => (
                 <TagChip key={index} text={tag} />

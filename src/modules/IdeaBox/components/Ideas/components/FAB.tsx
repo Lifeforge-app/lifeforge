@@ -12,10 +12,11 @@ function FAB(): React.ReactElement {
     setModifyIdeaModalOpenType,
     setExistedFolder,
     setModifyFolderModalOpenType,
-    setExistedEntry
+    setExistedEntry,
+    viewArchived
   } = useIdeaBoxContext()
 
-  return (
+  return !viewArchived ? (
     <>
       <Menu
         as="div"
@@ -87,6 +88,8 @@ function FAB(): React.ReactElement {
         )}
       </Menu>
     </>
+  ) : (
+    <></>
   )
 }
 

@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
@@ -18,6 +19,11 @@ interface ITagInputProps {
   disabled?: boolean
   className?: string
   darker?: boolean
+  existedTags?: Array<{
+    name: string
+    icon: string
+    color: string
+  }>
 }
 
 function TagInput({
@@ -30,7 +36,8 @@ function TagInput({
   maxTags = 100,
   disabled = false,
   className = '',
-  darker
+  darker,
+  existedTags
 }: ITagInputProps): React.ReactElement {
   const { t } = useTranslation()
   const [currentTag, setCurrentTag] = useState<string>('')
@@ -71,25 +78,36 @@ function TagInput({
           active={String(value).length > 0}
         />
         <div className="mb-4 ml-[14px] mt-12 flex flex-wrap items-center gap-2">
-          {value.map((tag, index) => (
-            <div
-              key={index}
-              className="flex items-center rounded-full bg-bg-200 py-1 pl-3 pr-2 dark:bg-bg-700/50"
-            >
-              <span className="mr-2 text-sm">{tag}</span>
-              {!disabled && (
-                <Button
-                  variant="no-bg"
-                  icon="tabler:x"
-                  onClick={() => {
-                    removeTag(index)
-                  }}
-                  className="!m-0 !h-4 !w-4 !p-0"
-                  iconClassName="size-3"
-                />
-              )}
-            </div>
-          ))}
+          {value.map((tag, index) => {
+            const existedTag = existedTags?.find(t => t.name === tag)
+
+            return (
+              <div
+                key={index}
+                className="flex items-center rounded-full bg-bg-200 py-1 pl-3 pr-2 dark:bg-bg-700/50"
+              >
+                {existedTag !== undefined && (
+                  <Icon
+                    icon={existedTag.icon}
+                    className="mr-2 size-3"
+                    style={{ color: existedTag.color }}
+                  />
+                )}
+                <span className="mr-2 text-sm">{tag}</span>
+                {!disabled && (
+                  <Button
+                    variant="no-bg"
+                    icon="tabler:x"
+                    onClick={() => {
+                      removeTag(index)
+                    }}
+                    className="!m-0 !h-4 !w-4 !p-0"
+                    iconClassName="size-3"
+                  />
+                )}
+              </div>
+            )
+          })}
           {!disabled && (
             <InputBox
               inputRef={inputRef}
