@@ -5,37 +5,22 @@ import { useDrag, useDrop } from 'react-dnd'
 import { Link, useParams } from 'react-router-dom'
 import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import {
-  type IIdeaBoxEntry,
-  type IIdeaBoxFolder
-} from '@interfaces/ideabox_interfaces'
+import { type IIdeaBoxFolder } from '@interfaces/ideabox_interfaces'
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import APIRequest from '@utils/fetchData'
 
 function FolderItem({
-  folder,
-  setIdeaList,
-  setFolderList,
-  setModifyFolderModalOpenType,
-  setDeleteFolderConfirmationModalOpen,
-  setExistedFolderData
+  folder
 }: {
   folder: IIdeaBoxFolder
-  setIdeaList: React.Dispatch<
-    React.SetStateAction<IIdeaBoxEntry[] | 'loading' | 'error'>
-  >
-  setFolderList: React.Dispatch<
-    React.SetStateAction<IIdeaBoxFolder[] | 'loading' | 'error'>
-  >
-  setModifyFolderModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setDeleteFolderConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
-  setExistedFolderData: React.Dispatch<
-    React.SetStateAction<IIdeaBoxFolder | null>
-  >
 }): React.ReactElement {
+  const {
+    setEntries,
+    setFolders,
+    setModifyFolderModalOpenType,
+    setDeleteFolderConfirmationModalOpen,
+    setExistedFolder
+  } = useIdeaBoxContext()
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
   const [{ opacity, isDragging }, dragRef] = useDrag(
     () => ({
@@ -78,13 +63,13 @@ function FolderItem({
       callback: () => {
         switch (type) {
           case 'idea':
-            setIdeaList(prev => {
+            setEntries(prev => {
               if (prev === 'loading' || prev === 'error') return prev
               return prev.filter(idea => idea.id !== id)
             })
             break
           case 'folder':
-            setFolderList(prev => {
+            setFolders(prev => {
               if (prev === 'loading' || prev === 'error') return prev
               return prev.filter(folder => folder.id !== id)
             })
@@ -100,7 +85,7 @@ function FolderItem({
       successInfo: 'remove',
       failureInfo: 'remove',
       callback: () => {
-        setFolderList(prev => {
+        setFolders(prev => {
           if (prev === 'loading' || prev === 'error') return prev
           return prev.filter(f => f.id !== folder.id)
         })
@@ -150,14 +135,14 @@ function FolderItem({
         <MenuItem
           onClick={() => {
             setModifyFolderModalOpenType('update')
-            setExistedFolderData(folder)
+            setExistedFolder(folder)
           }}
           icon="tabler:pencil"
           text="Edit"
         ></MenuItem>
         <MenuItem
           onClick={() => {
-            setExistedFolderData(folder)
+            setExistedFolder(folder)
             setDeleteFolderConfirmationModalOpen(true)
           }}
           icon="tabler:trash"

@@ -1,17 +1,21 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React from 'react'
-import { type IIdeaBoxTag } from '@interfaces/ideabox_interfaces'
+import React, { useMemo } from 'react'
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import { isLightColor } from '@utils/colors'
 
-function TagChip({
-  text,
-  active,
-  metadata
-}: {
-  text: string
-  active: boolean
-  metadata?: IIdeaBoxTag
-}): React.ReactElement {
+function TagChip({ text }: { text: string }): React.ReactElement {
+  const { selectedTags, tags } = useIdeaBoxContext()
+  const metadata = useMemo(
+    () =>
+      typeof tags !== 'string'
+        ? tags.find(tag => tag.name === text)
+        : undefined,
+    [selectedTags, text]
+  )
+  const active = useMemo(
+    () => selectedTags.includes(text),
+    [selectedTags, text]
+  )
   return (
     <div
       className={`flex items-center rounded-full px-3 py-1 text-sm ${

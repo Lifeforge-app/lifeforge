@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import Markdown from 'react-markdown'
 import Zoom from 'react-medium-image-zoom'
 import Button from '@components/ButtonsAndInputs/Button'
-import CustomZoomContent from '../../IdeaBox/components/Ideas/components/CustomZoomContent'
+import CustomZoomContent from '../../IdeaBox/components/Ideas/components/IdeaAndFolderList/components/IdeaEntry/components/CustomZoomContent'
 
 function JournalView({
   date,
