@@ -2,36 +2,18 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router'
 import Button from '@components/ButtonsAndInputs/Button'
-import {
-  type IIdeaBoxEntry,
-  type IIdeaBoxFolder
-} from '@interfaces/ideabox_interfaces'
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 
-function FAB({
-  setTypeOfModifyIdea,
-  setModifyIdeaModalOpenType,
-  setModifyFolderModalOpenType,
-  setExistedData,
-  setExistedFolderData
-}: {
-  setTypeOfModifyIdea: React.Dispatch<
-    React.SetStateAction<'link' | 'image' | 'text'>
-  >
-  setModifyIdeaModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | 'paste' | null>
-  >
-  setModifyFolderModalOpenType?: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setExistedData: React.Dispatch<React.SetStateAction<IIdeaBoxEntry | null>>
-  setExistedFolderData?: React.Dispatch<
-    React.SetStateAction<IIdeaBoxFolder | null>
-  >
-}): React.ReactElement {
+function FAB(): React.ReactElement {
   const { t } = useTranslation()
-  const { folderId } = useParams()
+  const {
+    setTypeOfModifyIdea,
+    setModifyIdeaModalOpenType,
+    setExistedFolder,
+    setModifyFolderModalOpenType,
+    setExistedEntry
+  } = useIdeaBoxContext()
 
   return (
     <>
@@ -55,9 +37,7 @@ function FAB({
               "
             >
               {[
-                ...(folderId === undefined
-                  ? [['Folder', 'tabler:folder']]
-                  : []),
+                ['Folder', 'tabler:folder'],
                 ['Text', 'tabler:text-size'],
                 ['Link', 'tabler:link'],
                 ['Image', 'tabler:photo']
@@ -73,15 +53,11 @@ function FAB({
                     </span>
                     <button
                       onClick={() => {
-                        if (
-                          name === 'Folder' &&
-                          setExistedFolderData !== undefined &&
-                          setModifyFolderModalOpenType !== undefined
-                        ) {
-                          setExistedFolderData(null)
+                        if (name === 'Folder') {
+                          setExistedFolder(null)
                           setModifyFolderModalOpenType('create')
                         } else {
-                          setExistedData(null)
+                          setExistedEntry(null)
                           setTypeOfModifyIdea(
                             name.toLowerCase() as 'link' | 'image' | 'text'
                           )

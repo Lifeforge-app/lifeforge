@@ -3,37 +3,12 @@ import moment from 'moment'
 import React from 'react'
 import { useDrag } from 'react-dnd'
 import useThemeColors from '@hooks/useThemeColor'
-import {
-  type IIdeaBoxTag,
-  type IIdeaBoxEntry
-} from '@interfaces/ideabox_interfaces'
+import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import EntryContent from './components/EntryContent'
-import EntryContextMenu from '../../EntryContextMenu'
-import TagChip from '../../TagChip'
+import EntryContextMenu from '../components/EntryContextMenu'
+import TagChip from '../components/TagChip'
 
-function EntryLink({
-  entry,
-  setTypeOfModifyIdea,
-  setModifyIdeaModalOpenType,
-  setExistedData,
-  setDeleteIdeaModalOpen,
-  setIdeaList,
-  selectedTags,
-  tags
-}: {
-  entry: IIdeaBoxEntry
-  setTypeOfModifyIdea: React.Dispatch<
-    React.SetStateAction<'link' | 'image' | 'text'>
-  >
-  setModifyIdeaModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | 'paste' | null>
-  >
-  setExistedData: (data: any) => void
-  setDeleteIdeaModalOpen: (state: boolean) => void
-  setIdeaList: React.Dispatch<React.SetStateAction<IIdeaBoxEntry[]>>
-  selectedTags: string[]
-  tags: IIdeaBoxTag[] | 'loading' | 'error'
-}): React.ReactElement {
+function EntryLink({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
   const { componentBg } = useThemeColors()
 
   const [{ opacity, isDragging }, dragRef] = useDrag(
@@ -74,16 +49,7 @@ function EntryLink({
           {entry.tags?.length !== 0 && (
             <div className="flex gap-2">
               {entry.tags?.map((tag, index) => (
-                <TagChip
-                  key={index}
-                  text={tag}
-                  active={selectedTags.includes(tag)}
-                  metadata={
-                    typeof tags !== 'string'
-                      ? tags.find(t => t.name === tag)
-                      : undefined
-                  }
-                />
+                <TagChip key={index} text={tag} />
               ))}
             </div>
           )}
@@ -107,14 +73,7 @@ function EntryLink({
             </span>
           )}
         </div>
-        <EntryContextMenu
-          entry={entry}
-          setTypeOfModifyIdea={setTypeOfModifyIdea}
-          setModifyIdeaModalOpenType={setModifyIdeaModalOpenType}
-          setExistedData={setExistedData}
-          setDeleteIdeaModalOpen={setDeleteIdeaModalOpen}
-          setIdeaList={setIdeaList}
-        />
+        <EntryContextMenu entry={entry} />
       </div>
       <EntryContent entry={entry} />
     </div>
