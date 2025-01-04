@@ -9,7 +9,6 @@ async function saveChanges({
   modulePath,
   moduleNameEN,
   moduleNameInOtherLangs,
-  moduleDescEN,
   moduleDescInOtherLangs,
   moduleCategory,
   togglable,
@@ -24,8 +23,8 @@ async function saveChanges({
     moduleNameZHTW: string
     moduleNameMY: string
   }
-  moduleDescEN: { moduleDesc: string }
   moduleDescInOtherLangs: {
+    moduleDescEN: string
     moduleDescZHCN: string
     moduleDescZHTW: string
     moduleDescMY: string
@@ -108,7 +107,7 @@ async function saveChanges({
     key: `modules.descriptions.${
       moduleID[0].toLowerCase() + moduleID.slice(1)
     }`,
-    en: moduleDescEN.moduleDesc,
+    en: moduleDescInOtherLangs.moduleDescEN,
     'zh-CN': moduleDescInOtherLangs.moduleDescZHCN,
     'zh-TW': moduleDescInOtherLangs.moduleDescZHTW,
     ms: moduleDescInOtherLangs.moduleDescMY,

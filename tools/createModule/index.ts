@@ -35,7 +35,7 @@ const CATEGORIES = ROUTES.map((e: any) => e.title).filter((e: string) => e)
   const moduleNameEN = await prompts({
     type: 'text',
     name: 'moduleName',
-    message: 'Enter the module name (in English)',
+    message: 'Module name (in English)',
     validate: value => {
       if (!value) {
         return 'Module name is required'
@@ -60,25 +60,9 @@ const CATEGORIES = ROUTES.map((e: any) => e.title).filter((e: string) => e)
     return
   }
 
-  const moduleDescEN = await prompts({
-    type: 'text',
-    name: 'moduleDesc',
-    message: 'Enter the module description (in English)',
-    validate: value => {
-      if (!value) {
-        return 'Module description is required'
-      }
-      return true
-    }
-  })
-
-  if (!moduleDescEN.moduleDesc) {
-    return
-  }
-
   const moduleDescInOtherLangs = await getModuleDescInOtherLangs({
     login,
-    moduleDesc: moduleDescEN.moduleDesc
+    moduleName: moduleNameEN.moduleName
   })
 
   if (!moduleDescInOtherLangs) {
@@ -117,7 +101,6 @@ const CATEGORIES = ROUTES.map((e: any) => e.title).filter((e: string) => e)
     moduleIcon,
     moduleNameEN,
     moduleNameInOtherLangs,
-    moduleDescEN,
     moduleDescInOtherLangs,
     moduleCategory,
     togglable
@@ -133,7 +116,6 @@ const CATEGORIES = ROUTES.map((e: any) => e.title).filter((e: string) => e)
     modulePath,
     moduleNameEN,
     moduleNameInOtherLangs,
-    moduleDescEN,
     moduleDescInOtherLangs,
     moduleCategory,
     togglable,

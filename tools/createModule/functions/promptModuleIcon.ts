@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
+import chalk from 'chalk'
 import ora from 'ora'
 import prompts from 'prompts'
+import { errorAndProceed } from '../utils/errorAndProceed'
 
 async function promptModuleIcon(): Promise<string | null> {
   const spinner = ora('Fetching icon collections from Iconify...').start()
@@ -17,20 +19,36 @@ async function promptModuleIcon(): Promise<string | null> {
 
   const iconCollectionsList = Object.keys(iconCollections)
 
-  const moduleIconCollection = await prompts({
-    type: 'autocomplete',
-    name: 'iconCollection',
-    message: 'Select an icon collection',
-    choices: iconCollectionsList.map(iconCollection => ({
-      title: `${iconCollection}: ${
-        iconCollections[iconCollection].name
-      } (${iconCollections[iconCollection].total.toLocaleString()} icons)`,
-      value: iconCollection
-    }))
-  })
+  let moduleIconCollection
+  while (true) {
+    moduleIconCollection = await prompts(
+      {
+        type: 'autocomplete',
+        name: 'iconCollection',
+        message: 'Select an icon collection',
+        choices: iconCollectionsList.map(iconCollection => ({
+          title: `${iconCollection}: ${
+            iconCollections[iconCollection].name
+          } (${iconCollections[iconCollection].total.toLocaleString()} icons)`,
+          value: iconCollection
+        }))
+      },
+      {
+        onCancel: () => {
+          console.log(chalk.red('✖ Module creation cancelled'))
+          process.exit(0)
+        }
+      }
+    )
 
-  if (!moduleIconCollection.iconCollection) {
-    return null
+    if (
+      moduleIconCollection.iconCollection &&
+      iconCollections[moduleIconCollection.iconCollection]
+    ) {
+      break
+    }
+
+    await errorAndProceed("Icon collection doesn't exist")
   }
 
   const spinner2 = ora('Fetching icons from Iconify...').start()
@@ -52,18 +70,34 @@ async function promptModuleIcon(): Promise<string | null> {
     ...Object.values(icons.categories ?? {}).flat()
   ]
 
-  const moduleIcon = await prompts({
-    type: 'autocomplete',
-    name: 'icon',
-    message: 'Select an icon',
-    choices: iconsList.map((icon: string) => ({
-      title: icon,
-      value: `${moduleIconCollection.iconCollection}:${icon}`
-    }))
-  })
+  let moduleIcon
+  while (true) {
+    moduleIcon = await prompts(
+      {
+        type: 'autocomplete',
+        name: 'icon',
+        message: 'Select an icon',
+        choices: iconsList.map((icon: string) => ({
+          title: icon,
+          value: `${moduleIconCollection.iconCollection}:${icon}`
+        }))
+      },
+      {
+        onCancel: () => {
+          console.log(chalk.red('✖ Module creation cancelled'))
+          process.exit(0)
+        }
+      }
+    )
 
-  if (!moduleIcon.icon) {
-    return null
+    if (
+      moduleIcon.icon &&
+      iconsList.includes(moduleIcon.icon.split(':').pop())
+    ) {
+      break
+    }
+
+    await errorAndProceed("Icon doesn't exist")
   }
 
   return moduleIcon.icon
