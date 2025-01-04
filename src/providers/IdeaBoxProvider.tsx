@@ -276,18 +276,15 @@ export default function IdeaBoxProvider({
   }, [viewArchived])
 
   useEffect(() => {
-    if (debouncedSearchQuery.trim().length > 0) {
+    if (
+      debouncedSearchQuery.trim().length > 0 ||
+      (selectedTags.length > 0 && path === '')
+    ) {
       refreshSearchResults()
     } else {
       setSearchResults([])
     }
-  }, [debouncedSearchQuery])
-
-  useEffect(() => {
-    if (path === '') {
-      refreshSearchResults()
-    }
-  }, [selectedTags])
+  }, [debouncedSearchQuery, selectedTags, path])
 
   useEffect(() => {
     if (id === undefined) {

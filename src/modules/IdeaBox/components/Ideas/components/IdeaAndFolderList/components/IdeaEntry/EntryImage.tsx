@@ -45,7 +45,7 @@ function EntryImage({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
         />
       )}
       <div className="space-y-2">
-        {entry.tags?.length !== 0 && (
+        {entry.tags !== null && entry.tags?.length !== 0 && (
           <div className="mb-2 flex flex-wrap gap-1">
             {entry.tags?.map((tag, index) => (
               <TagChip key={index} text={tag} />

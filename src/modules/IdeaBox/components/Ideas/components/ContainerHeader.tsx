@@ -53,17 +53,15 @@ function ContainerHeader(): React.ReactElement {
             navigate(location.pathname.split('/').slice(0, -1).join('/'))
           }}
         />
-        {!viewArchived && (
-          <HamburgerMenu largerPadding className="relative">
-            <MenuItem
-              icon="tabler:archive"
-              text="View Archived"
-              onClick={() => {
-                setViewArchived(true)
-              }}
-            />
-          </HamburgerMenu>
-        )}
+        <HamburgerMenu largerPadding className="relative">
+          <MenuItem
+            icon={viewArchived ? 'tabler:archive-off' : 'tabler:archive'}
+            text={viewArchived ? 'View Active' : 'View Archived'}
+            onClick={() => {
+              setViewArchived(!viewArchived)
+            }}
+          />
+        </HamburgerMenu>
       </div>
       <div
         style={{
