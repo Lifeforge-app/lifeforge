@@ -9,7 +9,6 @@ async function confirmData({
   moduleIcon,
   moduleNameEN,
   moduleNameInOtherLangs,
-  moduleDescEN,
   moduleDescInOtherLangs,
   moduleCategory,
   togglable
@@ -23,8 +22,8 @@ async function confirmData({
     moduleNameZHTW: string
     moduleNameMY: string
   }
-  moduleDescEN: { moduleDesc: string }
   moduleDescInOtherLangs: {
+    moduleDescEN: string
     moduleDescZHCN: string
     moduleDescZHTW: string
     moduleDescMY: string
@@ -40,7 +39,7 @@ async function confirmData({
     ['Module Name (ZH-CN)', moduleNameInOtherLangs.moduleNameZHCN],
     ['Module Name (ZH-TW)', moduleNameInOtherLangs.moduleNameZHTW],
     ['Module Name (MY)', moduleNameInOtherLangs.moduleNameMY],
-    ['Module Description (EN)', moduleDescEN.moduleDesc],
+    ['Module Description (EN)', moduleDescInOtherLangs.moduleDescEN],
     ['Module Description (ZH-CN)', moduleDescInOtherLangs.moduleDescZHCN],
     ['Module Description (ZH-TW)', moduleDescInOtherLangs.moduleDescZHTW],
     ['Module Description (MY)', moduleDescInOtherLangs.moduleDescMY],

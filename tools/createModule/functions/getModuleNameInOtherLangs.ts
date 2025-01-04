@@ -42,7 +42,7 @@ async function getModuleNameInOtherLangs({
   const moduleNameZHCN = await prompts({
     type: 'text',
     name: 'moduleName',
-    message: 'Enter the module name (in Simplified Chinese)',
+    message: 'Module name (in Simplified Chinese)',
     initial: zhCN,
     validate: value => {
       if (!value) {
@@ -59,7 +59,7 @@ async function getModuleNameInOtherLangs({
   const moduleNameZHTW = await prompts({
     type: 'text',
     name: 'moduleName',
-    message: 'Enter the module name (in Traditional Chinese)',
+    message: 'Module name (in Traditional Chinese)',
     initial: zhTW,
     validate: value => {
       if (!value) {
@@ -76,7 +76,7 @@ async function getModuleNameInOtherLangs({
   const moduleNameMY = await prompts({
     type: 'text',
     name: 'moduleName',
-    message: 'Enter the module name (in Malay)',
+    message: 'Module name (in Malay)',
     initial: ms,
     validate: value => {
       if (!value) {
