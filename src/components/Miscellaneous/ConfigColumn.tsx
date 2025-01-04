@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { Tooltip } from 'react-tooltip'
-import { toDashCase } from '../../../tools/createModule/utils/strings'
+import { toDashCase } from '../../../tools/module-tools/utils/strings'
 
 function ConfigColumn({
   title,
