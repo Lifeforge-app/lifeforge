@@ -14,20 +14,16 @@ import IconSelector from '@components/ButtonsAndInputs/IconPicker/IconPickerModa
 import Input from '@components/ButtonsAndInputs/Input'
 import ModalHeader from '@components/Modals/ModalHeader'
 import ModalWrapper from '@components/Modals/ModalWrapper'
-import { type IIdeaBoxFolder } from '@interfaces/ideabox_interfaces'
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import APIRequest from '@utils/fetchData'
 
-function ModifyFolderModal({
-  openType,
-  setOpenType,
-  updateFolderList,
-  existedData
-}: {
-  openType: 'create' | 'update' | null
-  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  updateFolderList: () => void
-  existedData: IIdeaBoxFolder | null
-}): React.ReactElement {
+function ModifyFolderModal(): React.ReactElement {
+  const {
+    modifyFolderModalOpenType: openType,
+    setModifyFolderModalOpenType: setOpenType,
+    existedFolder: existedData,
+    setFolders
+  } = useIdeaBoxContext()
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
   const [loading, setLoading] = useState(false)
   const [folderName, setFolderName] = useState('')
@@ -67,9 +63,19 @@ function ModifyFolderModal({
       body: folder,
       successInfo: innerOpenType,
       failureInfo: innerOpenType,
-      callback: () => {
+      callback: res => {
         setOpenType(null)
-        updateFolderList()
+        if (innerOpenType === 'create') {
+          setFolders(prevFolders => [...prevFolders, res.data])
+        } else {
+          setFolders(prevFolders =>
+            typeof prevFolders === 'string'
+              ? prevFolders
+              : prevFolders.map(folder =>
+                  folder.id === res.data.id ? res.data : folder
+                )
+          )
+        }
       },
       onFailure: () => {
         setOpenType(null)

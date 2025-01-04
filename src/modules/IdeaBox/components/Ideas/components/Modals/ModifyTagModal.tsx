@@ -7,24 +7,16 @@ import { toast } from 'react-toastify'
 import Modal from '@components/Modals/Modal'
 import { type IIdeaBoxTag } from '@interfaces/ideabox_interfaces'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import APIRequest from '@utils/fetchData'
 
-function ModifyTagModal({
-  openType,
-  setOpenType,
-  setTagList,
-  existedData
-}: {
-  openType: 'create' | 'update' | null
-  setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  setTagList: React.Dispatch<React.SetStateAction<IIdeaBoxTag[]>>
-  existedData: {
-    id?: string
-    name: string
-    icon: string
-    color: string
-  } | null
-}): React.ReactElement {
+function ModifyTagModal(): React.ReactElement {
+  const {
+    modifyTagModalOpenType: openType,
+    setModifyTagModalOpenType: setOpenType,
+    existedTag: existedData,
+    setTags
+  } = useIdeaBoxContext()
   const { id } = useParams<{ id: string }>()
   const [data, setData] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -58,11 +50,13 @@ function ModifyTagModal({
 
   function updateDataList(data: IIdeaBoxTag): void {
     if (openType === 'update') {
-      setTagList(prev =>
-        prev.map(tag => (tag.id === existedData?.id ? data : tag))
+      setTags(prev =>
+        typeof prev !== 'string'
+          ? prev.map(tag => (tag.id === existedData?.id ? data : tag))
+          : prev
       )
     } else {
-      setTagList(prev => [...prev, data])
+      setTags(prev => (typeof prev !== 'string' ? [...prev, data] : prev))
     }
   }
 

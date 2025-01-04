@@ -14,32 +14,22 @@ import Input from '@components/ButtonsAndInputs/Input'
 import TagInput from '@components/ButtonsAndInputs/TagInput'
 import ModalWrapper from '@components/Modals/ModalWrapper'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import APIRequest from '@utils/fetchData'
 import IdeaContentInput from './components/IdeaContentInput'
 import ModalHeader from './components/ModalHeader'
 
-function ModifyIdeaModal({
-  openType,
-  setOpenType,
-  typeOfModifyIdea,
-  setIdeaList,
-  refreshTags,
-  existedData,
-  pastedData
-}: {
-  openType: 'create' | 'update' | 'paste' | null
-  setOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | 'paste' | null>
-  >
-  typeOfModifyIdea: 'text' | 'image' | 'link'
-  setIdeaList: Array<React.Dispatch<React.SetStateAction<IIdeaBoxEntry[]>>>
-  refreshTags: () => void
-  existedData: IIdeaBoxEntry | null
-  pastedData: {
-    preview: string
-    file: File
-  } | null
-}): React.ReactElement {
+function ModifyIdeaModal(): React.ReactElement {
+  const {
+    modifyIdeaModalOpenType: openType,
+    setModifyIdeaModalOpenType: setOpenType,
+    typeOfModifyIdea,
+    setEntries,
+    setSearchResults,
+    refreshTags,
+    existedEntry,
+    pastedData
+  } = useIdeaBoxContext()
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
   const [innerTypeOfModifyIdea, setInnerTypeOfModifyIdea] = useState<
@@ -94,13 +84,13 @@ function ModifyIdeaModal({
       setPreview(null)
       setIdeaTags([])
     } else if (innerOpenType === 'update') {
-      if (existedData !== null) {
-        setIdeaTitle(existedData.title)
-        setIdeaContent(existedData.content)
-        setIdeaLink(existedData.content)
+      if (existedEntry !== null) {
+        setIdeaTitle(existedEntry.title)
+        setIdeaContent(existedEntry.content)
+        setIdeaLink(existedEntry.content)
         setIdeaImage(null)
         setPreview(null)
-        setIdeaTags(existedData.tags ?? [])
+        setIdeaTags(existedEntry.tags ?? [])
       }
     } else if (innerOpenType === 'paste' && pastedData !== null) {
       setIdeaTitle('')
@@ -110,7 +100,7 @@ function ModifyIdeaModal({
       setPreview(pastedData.preview)
       setIdeaTags([])
     }
-  }, [existedData, innerOpenType])
+  }, [existedEntry, innerOpenType])
 
   useEffect(() => {
     if (innerTypeOfModifyIdea === 'image') {
@@ -183,7 +173,7 @@ function ModifyIdeaModal({
 
     await APIRequest({
       endpoint: `idea-box/ideas/${
-        innerOpenType === 'update' ? existedData?.id : ''
+        innerOpenType === 'update' ? existedEntry?.id : ''
       }`,
       method: innerOpenType === 'update' ? 'PATCH' : 'POST',
       body:
@@ -203,16 +193,24 @@ function ModifyIdeaModal({
       failureInfo: innerOpenType,
       callback: res => {
         if (innerOpenType === 'update') {
-          setIdeaList.forEach(e => {
+          ;[setEntries, setSearchResults].forEach(e => {
             e(prev =>
-              prev.map(idea =>
-                idea.id === existedData?.id ? (res.data as IIdeaBoxEntry) : idea
-              )
+              typeof prev !== 'string'
+                ? prev.map(idea =>
+                    idea.id === existedEntry?.id
+                      ? (res.data as IIdeaBoxEntry)
+                      : idea
+                  )
+                : prev
             )
           })
         } else {
-          setIdeaList.forEach(e => {
-            e(prev => [res.data as IIdeaBoxEntry, ...prev])
+          ;[setEntries, setSearchResults].forEach(e => {
+            e(prev =>
+              typeof prev !== 'string'
+                ? [res.data as IIdeaBoxEntry, ...prev]
+                : prev
+            )
           })
         }
         refreshTags()

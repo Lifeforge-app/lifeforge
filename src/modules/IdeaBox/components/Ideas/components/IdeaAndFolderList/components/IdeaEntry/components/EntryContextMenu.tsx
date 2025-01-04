@@ -4,27 +4,22 @@ import React from 'react'
 import { useParams } from 'react-router'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import APIRequest from '@utils/fetchData'
 
 function EntryContextMenu({
-  entry,
-  setTypeOfModifyIdea,
-  setModifyIdeaModalOpenType,
-  setExistedData,
-  setDeleteIdeaModalOpen,
-  setIdeaList
+  entry
 }: {
   entry: IIdeaBoxEntry
-  setTypeOfModifyIdea: React.Dispatch<
-    React.SetStateAction<'link' | 'image' | 'text'>
-  >
-  setModifyIdeaModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | 'paste' | null>
-  >
-  setExistedData: (data: any) => void
-  setDeleteIdeaModalOpen: (state: boolean) => void
-  setIdeaList: React.Dispatch<React.SetStateAction<IIdeaBoxEntry[]>>
 }): React.ReactElement {
+  const {
+    setTypeOfModifyIdea,
+    setModifyIdeaModalOpenType,
+    setExistedEntry,
+    setDeleteIdeaConfirmationModalOpen,
+    setEntries
+  } = useIdeaBoxContext()
+
   const { '*': path } = useParams<{ '*': string }>()
 
   async function pinIdea(): Promise<void> {
@@ -34,17 +29,19 @@ function EntryContextMenu({
       successInfo: entry.pinned ? 'unpin' : 'pin',
       failureInfo: entry.pinned ? 'unpin' : 'pin',
       callback: res => {
-        setIdeaList(prev =>
-          prev
-            .map(idea =>
-              idea.id === entry.id ? (res.data as IIdeaBoxEntry) : idea
-            )
-            .sort((a, b) => {
-              if (a.pinned === b.pinned) {
-                return a.created < b.created ? 1 : -1
-              }
-              return a.pinned ? -1 : 1
-            })
+        setEntries(prev =>
+          typeof prev !== 'string'
+            ? prev
+                .map(idea =>
+                  idea.id === entry.id ? (res.data as IIdeaBoxEntry) : idea
+                )
+                .sort((a, b) => {
+                  if (a.pinned === b.pinned) {
+                    return a.created < b.created ? 1 : -1
+                  }
+                  return a.pinned ? -1 : 1
+                })
+            : prev
         )
       }
     })
@@ -57,8 +54,12 @@ function EntryContextMenu({
       successInfo: entry.archived ? 'unarchive' : 'archive',
       failureInfo: entry.archived ? 'unarchive' : 'archive',
       callback: res => {
-        setIdeaList(prev =>
-          prev.filter(idea => idea.id !== entry.id).concat(res.data)
+        setEntries(prev =>
+          typeof prev !== 'string'
+            ? prev.map(idea =>
+                idea.id === entry.id ? (res.data as IIdeaBoxEntry) : idea
+              )
+            : prev
         )
       }
     })
@@ -71,7 +72,11 @@ function EntryContextMenu({
       successInfo: 'remove',
       failureInfo: 'remove',
       callback: () => {
-        setIdeaList(prev => prev.filter(idea => idea.id !== entry.id))
+        setEntries(prev =>
+          typeof prev !== 'string'
+            ? prev.filter(idea => idea.id !== entry.id)
+            : prev
+        )
       }
     })
   }
@@ -113,7 +118,7 @@ function EntryContextMenu({
         <MenuItem
           onClick={() => {
             setTypeOfModifyIdea(entry.type)
-            setExistedData(entry)
+            setExistedEntry(entry)
             setModifyIdeaModalOpenType('update')
           }}
           icon="tabler:pencil"
@@ -130,8 +135,8 @@ function EntryContextMenu({
         )}
         <MenuItem
           onClick={() => {
-            setExistedData(entry)
-            setDeleteIdeaModalOpen(true)
+            setExistedEntry(entry)
+            setDeleteIdeaConfirmationModalOpen(true)
           }}
           icon="tabler:trash"
           text="Delete"

@@ -9,17 +9,11 @@ import {
   type IIdeaBoxContainer,
   type IIdeaBoxFolder
 } from '@interfaces/ideabox_interfaces'
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import APIRequest from '@utils/fetchData'
 
-function ContainerHeader({
-  valid,
-  viewArchived,
-  setViewArchived
-}: {
-  valid: boolean | 'loading' | 'error'
-  viewArchived: boolean
-  setViewArchived: React.Dispatch<React.SetStateAction<boolean>>
-}): React.ReactElement {
+function ContainerHeader(): React.ReactElement {
+  const { valid, viewArchived, setViewArchived } = useIdeaBoxContext()
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
   const [pathDetails, setPathDetails] = useState<
     | {

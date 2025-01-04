@@ -3,36 +3,11 @@ import moment from 'moment'
 import React, { useState } from 'react'
 import { useDrag } from 'react-dnd'
 import useThemeColors from '@hooks/useThemeColor'
-import {
-  type IIdeaBoxTag,
-  type IIdeaBoxEntry
-} from '@interfaces/ideabox_interfaces'
-import EntryContextMenu from '../EntryContextMenu'
-import TagChip from '../TagChip'
+import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
+import EntryContextMenu from './components/EntryContextMenu'
+import TagChip from './components/TagChip'
 
-function EntryText({
-  entry,
-  setTypeOfModifyIdea,
-  setModifyIdeaModalOpenType,
-  setExistedData,
-  setDeleteIdeaModalOpen,
-  setIdeaList,
-  selectedTags,
-  tags
-}: {
-  entry: IIdeaBoxEntry
-  setTypeOfModifyIdea: React.Dispatch<
-    React.SetStateAction<'link' | 'image' | 'text'>
-  >
-  setModifyIdeaModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | 'paste' | null>
-  >
-  setExistedData: (data: any) => void
-  setDeleteIdeaModalOpen: (state: boolean) => void
-  setIdeaList: React.Dispatch<React.SetStateAction<IIdeaBoxEntry[]>>
-  selectedTags: string[]
-  tags: IIdeaBoxTag[] | 'loading' | 'error'
-}): React.ReactElement {
+function EntryText({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
   const [expanded, setExpanded] = useState(false)
   const { componentBg } = useThemeColors()
   const [{ opacity, isDragging }, dragRef] = useDrag(
@@ -75,16 +50,7 @@ function EntryText({
         {entry.tags?.length !== 0 && (
           <div className="mb-2 flex flex-wrap gap-1">
             {entry.tags?.map((tag, index) => (
-              <TagChip
-                key={index}
-                text={tag}
-                active={selectedTags.includes(tag)}
-                metadata={
-                  typeof tags !== 'string'
-                    ? tags.find(t => t.name === tag)
-                    : undefined
-                }
-              />
+              <TagChip key={index} text={tag} />
             ))}
           </div>
         )}
@@ -114,14 +80,7 @@ function EntryText({
           </span>
         )}
       </div>
-      <EntryContextMenu
-        entry={entry}
-        setTypeOfModifyIdea={setTypeOfModifyIdea}
-        setModifyIdeaModalOpenType={setModifyIdeaModalOpenType}
-        setExistedData={setExistedData}
-        setDeleteIdeaModalOpen={setDeleteIdeaModalOpen}
-        setIdeaList={setIdeaList}
-      />
+      <EntryContextMenu entry={entry} />
     </div>
   )
 }
