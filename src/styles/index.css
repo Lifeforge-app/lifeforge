@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600&family=Outfit:wght@100..900&family=Urbanist:wght@100;200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -698,8 +699,8 @@ button[class^='react-calendar__navigation'] {
 }
 
 @page {
-  size: A4;
-  margin: 17mm 17mm 17mm 17mm;
+  size: A4 portrait;
+  margin: auto;
 }
 
 @media print {

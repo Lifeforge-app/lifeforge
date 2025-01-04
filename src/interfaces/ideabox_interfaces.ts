@@ -19,13 +19,23 @@ interface IIdeaBoxFolder extends BasePBCollection {
 }
 
 interface IIdeaBoxEntry extends BasePBCollection {
+  folder: string | IIdeaBoxFolder
   container: string
   content: string
   image: string
   title: string
   type: 'text' | 'image' | 'link'
+  tags?: string[]
   pinned: boolean
   archived: boolean
 }
 
-export type { IIdeaBoxContainer, IIdeaBoxEntry, IIdeaBoxFolder }
+interface IIdeaBoxTag extends BasePBCollection {
+  name: string
+  color: string
+  icon: string
+  container: string
+  count: number
+}
+
+export type { IIdeaBoxContainer, IIdeaBoxEntry, IIdeaBoxFolder, IIdeaBoxTag }

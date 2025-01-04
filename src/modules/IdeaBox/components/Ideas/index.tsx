@@ -16,6 +16,7 @@ import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import {
+  type IIdeaBoxTag,
   type IIdeaBoxEntry,
   type IIdeaBoxFolder
 } from '@interfaces/ideabox_interfaces'
@@ -28,6 +29,8 @@ import EntryLink from './components/IdeaEntry/EntryLink'
 import EntryText from './components/IdeaEntry/EntryText'
 import ModifyFolderModal from './components/ModifyFolderModal'
 import ModifyIdeaModal from './components/ModifyIdeaModal'
+import ModifyTagModal from './components/ModifyTagModal'
+import TagsSelector from './components/TagsSelector'
 
 function Ideas(): React.ReactElement {
   const { t } = useTranslation()
@@ -45,6 +48,9 @@ function Ideas(): React.ReactElement {
   const [folders, setFolders] = useState<
     IIdeaBoxFolder[] | 'loading' | 'error'
   >('loading')
+  const [tags, setTags] = useState<IIdeaBoxTag[] | 'loading' | 'error'>(
+    'loading'
+  )
 
   const [modifyIdeaModalOpenType, setModifyIdeaModalOpenType] = useState<
     null | 'create' | 'update' | 'paste'
@@ -52,10 +58,19 @@ function Ideas(): React.ReactElement {
   const [modifyFolderModalOpenType, setModifyFolderModalOpenType] = useState<
     null | 'create' | 'update'
   >(null)
+  const [modifyTagModalOpenType, setModifyTagModalOpenType] = useState<
+    null | 'create' | 'update'
+  >(null)
   const [typeOfModifyIdea, setTypeOfModifyIdea] = useState<
     'text' | 'image' | 'link'
   >('text')
   const [existedData, setExistedData] = useState<IIdeaBoxEntry | null>(null)
+  const [existedTag, setExistedTag] = useState<{
+    id?: string
+    name: string
+    icon: string
+    color: string
+  } | null>(null)
   const [pastedData, setPastedData] = useState<{
     preview: string
     file: File
@@ -68,6 +83,7 @@ function Ideas(): React.ReactElement {
     IIdeaBoxEntry[] | 'loading' | 'error'
   >([])
   const [searchQuery, setSearchQuery] = useState('')
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
   const debouncedSearchQuery = useDebounce(searchQuery, 500)
 
   useEffect(() => {
@@ -103,12 +119,25 @@ function Ideas(): React.ReactElement {
     }).catch(console.error)
   }
 
+  function refreshTags(): void {
+    setTags('loading')
+    APIRequest({
+      endpoint: `idea-box/tags/${id}`,
+      method: 'GET',
+      callback: data => {
+        setTags(data.data)
+      }
+    }).catch(console.error)
+  }
+
   function refreshSearchResults(): void {
     setSearchResults('loading')
     APIRequest({
       endpoint: `idea-box/search?q=${encodeURIComponent(
         debouncedSearchQuery.trim()
-      )}&container=${id}`,
+      )}&container=${id}&tags=${encodeURIComponent(selectedTags.join(','))}${
+        path !== '' ? `&folder=${path?.split('/').pop()}` : ''
+      }`,
       method: 'GET',
       callback: data => {
         setSearchResults(data.data)
@@ -123,6 +152,7 @@ function Ideas(): React.ReactElement {
     if (valid === true) {
       refreshData()
       refreshFolders()
+      refreshTags()
     }
   }, [id, path, viewArchived, valid])
 
@@ -133,6 +163,12 @@ function Ideas(): React.ReactElement {
       setSearchResults([])
     }
   }, [debouncedSearchQuery])
+
+  useEffect(() => {
+    if (path === '') {
+      refreshSearchResults()
+    }
+  }, [selectedTags])
 
   function onPasteImage(event: ClipboardEvent): void {
     if (modifyIdeaModalOpenType !== null) return
@@ -197,10 +233,27 @@ function Ideas(): React.ReactElement {
             <SearchInput
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
-              stuffToSearch="ideas"
+              stuffToSearch={path === '' ? 'ideas' : 'ideas in folder'}
             />
+            <APIFallbackComponent data={tags} showLoading={false}>
+              {tags => (
+                <TagsSelector
+                  tags={tags.filter(
+                    tag =>
+                      path === '' ||
+                      (typeof data !== 'string' &&
+                        data.some(entry => entry.tags?.includes(tag.name)))
+                  )}
+                  selectedTags={selectedTags}
+                  setSelectedTags={setSelectedTags}
+                  setExistedTag={setExistedTag}
+                  setModifyTagModalOpenType={setModifyTagModalOpenType}
+                />
+              )}
+            </APIFallbackComponent>
             <div className="mb-20 mt-6">
-              {debouncedSearchQuery.trim().length === 0 ? (
+              {debouncedSearchQuery.trim().length === 0 &&
+              !(path === '' && selectedTags.length > 0) ? (
                 <APIFallbackComponent data={data}>
                   {data => (
                     <APIFallbackComponent data={folders}>
@@ -208,21 +261,25 @@ function Ideas(): React.ReactElement {
                         <>
                           {typeof folders !== 'string' &&
                             (data.length === 0 && folders.length === 0 ? (
-                              !viewArchived ? (
-                                <EmptyStateScreen
-                                  onCTAClick={setModifyIdeaModalOpenType as any}
-                                  title="No ideas yet"
-                                  description="Hmm... Seems a bit empty here. Consider adding some innovative ideas."
-                                  icon="tabler:bulb-off"
-                                  ctaContent="new idea"
-                                />
-                              ) : (
-                                <EmptyStateScreen
-                                  title="No archived ideas"
-                                  description="You don't have any archived ideas yet."
-                                  icon="tabler:archive-off"
-                                />
-                              )
+                              <div className="mt-6">
+                                {!viewArchived ? (
+                                  <EmptyStateScreen
+                                    onCTAClick={
+                                      setModifyIdeaModalOpenType as any
+                                    }
+                                    title="No ideas yet"
+                                    description="Hmm... Seems a bit empty here. Consider adding some innovative ideas."
+                                    icon="tabler:bulb-off"
+                                    ctaContent="new idea"
+                                  />
+                                ) : (
+                                  <EmptyStateScreen
+                                    title="No archived ideas"
+                                    description="You don't have any archived ideas yet."
+                                    icon="tabler:archive-off"
+                                  />
+                                )}
+                              </div>
                             ) : (
                               <>
                                 {folders.length > 0 && !viewArchived && (
@@ -282,37 +339,49 @@ function Ideas(): React.ReactElement {
                                     gap="0.5rem"
                                     className="mb-8 shrink-0 !overflow-x-visible"
                                   >
-                                    {data.map(entry => {
-                                      const Component = {
-                                        image: EntryImage,
-                                        text: EntryText,
-                                        link: EntryLink
-                                      }[entry.type]
+                                    {data
+                                      .filter(item => {
+                                        if (selectedTags.length === 0) {
+                                          return true
+                                        }
 
-                                      return (
-                                        <Component
-                                          key={entry.id}
-                                          entry={entry}
-                                          setTypeOfModifyIdea={
-                                            setTypeOfModifyIdea
-                                          }
-                                          setModifyIdeaModalOpenType={
-                                            setModifyIdeaModalOpenType
-                                          }
-                                          setExistedData={setExistedData}
-                                          setDeleteIdeaModalOpen={
-                                            setDeleteIdeaModalOpen
-                                          }
-                                          setIdeaList={
-                                            setData as React.Dispatch<
-                                              React.SetStateAction<
-                                                IIdeaBoxEntry[]
+                                        return selectedTags.every(tag =>
+                                          item.tags?.includes(tag)
+                                        )
+                                      })
+                                      .map(entry => {
+                                        const Component = {
+                                          image: EntryImage,
+                                          text: EntryText,
+                                          link: EntryLink
+                                        }[entry.type]
+
+                                        return (
+                                          <Component
+                                            key={entry.id}
+                                            entry={entry}
+                                            setTypeOfModifyIdea={
+                                              setTypeOfModifyIdea
+                                            }
+                                            setModifyIdeaModalOpenType={
+                                              setModifyIdeaModalOpenType
+                                            }
+                                            setExistedData={setExistedData}
+                                            setDeleteIdeaModalOpen={
+                                              setDeleteIdeaModalOpen
+                                            }
+                                            setIdeaList={
+                                              setData as React.Dispatch<
+                                                React.SetStateAction<
+                                                  IIdeaBoxEntry[]
+                                                >
                                               >
-                                            >
-                                          }
-                                        />
-                                      )
-                                    })}
+                                            }
+                                            selectedTags={selectedTags}
+                                            tags={tags}
+                                          />
+                                        )
+                                      })}
                                   </Column>
                                 )}
                               </>
@@ -327,63 +396,75 @@ function Ideas(): React.ReactElement {
                   {searchResults => (
                     <>
                       {searchResults.length === 0 ? (
-                        <EmptyStateScreen
-                          title="No results"
-                          description="No ideas found for your search query."
-                          icon="tabler:search"
-                        />
+                        <div className="mt-6">
+                          <EmptyStateScreen
+                            title="No results"
+                            description="No ideas found for your search query."
+                            icon="tabler:search"
+                          />
+                        </div>
                       ) : (
                         <Column
                           queries={[
                             {
                               columns: 1,
-                              query: 'min-width: 0px'
-                            },
-                            {
-                              columns: 2,
                               query: 'min-width: 768px'
                             },
                             {
-                              columns: 3,
+                              columns: 2,
                               query: 'min-width: 1024px'
                             },
                             {
-                              columns: 4,
+                              columns: 3,
                               query: 'min-width: 1280px'
                             },
                             {
-                              columns: 5,
+                              columns: 4,
                               query: 'min-width: 1536px'
                             }
                           ]}
                           gap="0.5rem"
                           className="mb-8 shrink-0 !overflow-x-visible"
                         >
-                          {searchResults.map(entry => {
-                            const Component = {
-                              image: EntryImage,
-                              text: EntryText,
-                              link: EntryLink
-                            }[entry.type]
+                          {searchResults
+                            .filter(item => {
+                              if (selectedTags.length === 0) {
+                                return true
+                              }
 
-                            return (
-                              <Component
-                                key={entry.id}
-                                entry={entry}
-                                setTypeOfModifyIdea={setTypeOfModifyIdea}
-                                setModifyIdeaModalOpenType={
-                                  setModifyIdeaModalOpenType
-                                }
-                                setExistedData={setExistedData}
-                                setDeleteIdeaModalOpen={setDeleteIdeaModalOpen}
-                                setIdeaList={
-                                  setData as React.Dispatch<
-                                    React.SetStateAction<IIdeaBoxEntry[]>
-                                  >
-                                }
-                              />
-                            )
-                          })}
+                              return selectedTags.every(tag =>
+                                item.tags?.includes(tag)
+                              )
+                            })
+                            .map(entry => {
+                              const Component = {
+                                image: EntryImage,
+                                text: EntryText,
+                                link: EntryLink
+                              }[entry.type]
+
+                              return (
+                                <Component
+                                  key={entry.id}
+                                  entry={entry}
+                                  setTypeOfModifyIdea={setTypeOfModifyIdea}
+                                  setModifyIdeaModalOpenType={
+                                    setModifyIdeaModalOpenType
+                                  }
+                                  setExistedData={setExistedData}
+                                  setDeleteIdeaModalOpen={
+                                    setDeleteIdeaModalOpen
+                                  }
+                                  setIdeaList={
+                                    setData as React.Dispatch<
+                                      React.SetStateAction<IIdeaBoxEntry[]>
+                                    >
+                                  }
+                                  selectedTags={selectedTags}
+                                  tags={tags}
+                                />
+                              )
+                            })}
                         </Column>
                       )}
                     </>
@@ -403,12 +484,11 @@ function Ideas(): React.ReactElement {
               typeOfModifyIdea={typeOfModifyIdea}
               setOpenType={setModifyIdeaModalOpenType}
               setIdeaList={
-                (debouncedSearchQuery.trim().length > 0
-                  ? setSearchResults
-                  : setData) as React.Dispatch<
-                  React.SetStateAction<IIdeaBoxEntry[]>
+                [setData, setSearchResults] as Array<
+                  React.Dispatch<React.SetStateAction<IIdeaBoxEntry[]>>
                 >
               }
+              refreshTags={refreshTags}
               existedData={existedData}
               pastedData={pastedData}
             />
@@ -417,6 +497,14 @@ function Ideas(): React.ReactElement {
               setOpenType={setModifyFolderModalOpenType}
               updateFolderList={refreshFolders}
               existedData={existedFolderData}
+            />
+            <ModifyTagModal
+              openType={modifyTagModalOpenType}
+              setOpenType={setModifyTagModalOpenType}
+              setTagList={
+                setTags as React.Dispatch<React.SetStateAction<IIdeaBoxTag[]>>
+              }
+              existedData={existedTag}
             />
             <DeleteConfirmationModal
               isOpen={deleteIdeaModalOpen}
@@ -427,13 +515,17 @@ function Ideas(): React.ReactElement {
               itemName="idea"
               data={existedData}
               updateDataLists={() => {
-                ;(debouncedSearchQuery.trim().length > 0
-                  ? setSearchResults
-                  : setData)(prevData =>
+                setData(prevData =>
                   typeof prevData !== 'string'
                     ? prevData.filter(entry => entry.id !== existedData?.id)
                     : prevData
                 )
+                setSearchResults(prevData =>
+                  typeof prevData !== 'string'
+                    ? prevData.filter(entry => entry.id !== existedData?.id)
+                    : prevData
+                )
+                refreshTags()
               }}
             />
             <DeleteConfirmationModal

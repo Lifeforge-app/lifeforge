@@ -113,22 +113,27 @@ function ContainerHeader({
                 default:
                   return (
                     <div className="flex flex-wrap items-center gap-3">
-                      <div
-                        className="rounded-lg p-3"
-                        style={{
-                          backgroundColor: pathDetails.container.color + '20'
-                        }}
+                      <Link
+                        to={`/idea-box/${id}`}
+                        className="flex items-center gap-3"
                       >
-                        <Icon
-                          icon={pathDetails.container.icon}
-                          className="text-2xl sm:text-3xl"
+                        <div
+                          className="rounded-lg p-3"
                           style={{
-                            color: pathDetails.container.color
+                            backgroundColor: pathDetails.container.color + '20'
                           }}
-                        />
-                      </div>
-                      {viewArchived ? 'Archived ideas in ' : ''}
-                      {pathDetails.container.name}
+                        >
+                          <Icon
+                            icon={pathDetails.container.icon}
+                            className="text-2xl sm:text-3xl"
+                            style={{
+                              color: pathDetails.container.color
+                            }}
+                          />
+                        </div>
+                        {viewArchived ? 'Archived ideas in ' : ''}
+                        {pathDetails.container.name}
+                      </Link>
                       {pathDetails.path.length > 0 && (
                         <Icon
                           icon="tabler:chevron-right"

@@ -11,7 +11,7 @@ function InputWrapper({
   darker?: boolean
   className?: string
   disabled?: boolean
-  inputRef?: React.RefObject<HTMLInputElement | null>
+  inputRef?: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>
   children: React.ReactNode
 }): React.ReactElement {
   const { componentBgWithHover, darkerComponentBgWithHover } = useThemeColors()

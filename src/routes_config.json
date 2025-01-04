@@ -391,6 +391,19 @@
     ]
   },
   {
+    "title": "Utilities",
+    "items": [
+      {
+        "name": "Sudoku",
+        "icon": "uil:table",
+        "routes": {
+          "sudoku": "sudoku"
+        },
+        "togglable": true
+      }
+    ]
+  },
+  {
     "title": "Settings",
     "items": [
       {
