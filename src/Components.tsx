@@ -120,8 +120,8 @@ const WishlistEntries = lazy(
 )
 const Budget = lazy(async () => await import('./modules/Budget'))
 const Workout = lazy(async () => await import('./modules/Workout'))
-
 const _3dModels = lazy(async () => await import('./modules/3dModels'))
+const Sudoku = lazy(async () => await import('./modules/Sudoku'))
 
 export const COMPONENTS = {
   dashboard: {
@@ -267,5 +267,8 @@ export const COMPONENTS = {
   },
   '3d-models': {
     '3d-models': _3dModels
+  },
+  sudoku: {
+    sudoku: Sudoku
   }
 }

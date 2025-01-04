@@ -14,7 +14,7 @@ function GoBackButton({
       onClick={onClick}
       icon="tabler:chevron-left"
       variant="no-bg"
-      className="px-0 py-2 hover:!bg-transparent dark:hover:!bg-transparent"
+      className="px-0 py-2 pl-2 hover:!bg-transparent dark:hover:!bg-transparent"
     >
       {t('button.goBack')}
     </Button>

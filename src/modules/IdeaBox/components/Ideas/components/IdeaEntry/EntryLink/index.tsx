@@ -3,9 +3,13 @@ import moment from 'moment'
 import React from 'react'
 import { useDrag } from 'react-dnd'
 import useThemeColors from '@hooks/useThemeColor'
-import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
+import {
+  type IIdeaBoxTag,
+  type IIdeaBoxEntry
+} from '@interfaces/ideabox_interfaces'
 import EntryContent from './components/EntryContent'
 import EntryContextMenu from '../../EntryContextMenu'
+import TagChip from '../../TagChip'
 
 function EntryLink({
   entry,
@@ -13,7 +17,9 @@ function EntryLink({
   setModifyIdeaModalOpenType,
   setExistedData,
   setDeleteIdeaModalOpen,
-  setIdeaList
+  setIdeaList,
+  selectedTags,
+  tags
 }: {
   entry: IIdeaBoxEntry
   setTypeOfModifyIdea: React.Dispatch<
@@ -25,6 +31,8 @@ function EntryLink({
   setExistedData: (data: any) => void
   setDeleteIdeaModalOpen: (state: boolean) => void
   setIdeaList: React.Dispatch<React.SetStateAction<IIdeaBoxEntry[]>>
+  selectedTags: string[]
+  tags: IIdeaBoxTag[] | 'loading' | 'error'
 }): React.ReactElement {
   const { componentBg } = useThemeColors()
 
@@ -63,10 +71,41 @@ function EntryLink({
       )}
       <div className="flex items-start justify-between gap-2">
         <div>
+          {entry.tags?.length !== 0 && (
+            <div className="flex gap-2">
+              {entry.tags?.map((tag, index) => (
+                <TagChip
+                  key={index}
+                  text={tag}
+                  active={selectedTags.includes(tag)}
+                  metadata={
+                    typeof tags !== 'string'
+                      ? tags.find(t => t.name === tag)
+                      : undefined
+                  }
+                />
+              ))}
+            </div>
+          )}
           <h3 className="text-xl font-semibold ">{entry.title}</h3>
           <span className="text-sm text-bg-500">
             {moment(entry.updated).fromNow()}
           </span>
+          {typeof entry.folder !== 'string' && (
+            <span className="mt-3 flex items-center gap-2 text-sm">
+              In
+              <span
+                style={{
+                  color: entry.folder.color,
+                  backgroundColor: entry.folder.color + '30'
+                }}
+                className="inline-flex items-center gap-2 rounded-full px-3 py-1 pl-2"
+              >
+                <Icon icon={entry.folder.icon} className="size-4" />
+                {entry.folder.name}
+              </span>
+            </span>
+          )}
         </div>
         <EntryContextMenu
           entry={entry}

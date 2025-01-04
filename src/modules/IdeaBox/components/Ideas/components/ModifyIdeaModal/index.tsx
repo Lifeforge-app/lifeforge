@@ -11,6 +11,7 @@ import Button from '@components/ButtonsAndInputs/Button'
 import DnDContainer from '@components/ButtonsAndInputs/ImageAndFilePicker/ImagePickerModal/components/LocalUpload/components/DnDContainer'
 import PreviewContainer from '@components/ButtonsAndInputs/ImageAndFilePicker/ImagePickerModal/components/LocalUpload/components/PreviewContainer'
 import Input from '@components/ButtonsAndInputs/Input'
+import TagInput from '@components/ButtonsAndInputs/TagInput'
 import ModalWrapper from '@components/Modals/ModalWrapper'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import APIRequest from '@utils/fetchData'
@@ -22,6 +23,7 @@ function ModifyIdeaModal({
   setOpenType,
   typeOfModifyIdea,
   setIdeaList,
+  refreshTags,
   existedData,
   pastedData
 }: {
@@ -30,7 +32,8 @@ function ModifyIdeaModal({
     React.SetStateAction<'create' | 'update' | 'paste' | null>
   >
   typeOfModifyIdea: 'text' | 'image' | 'link'
-  setIdeaList: React.Dispatch<React.SetStateAction<IIdeaBoxEntry[]>>
+  setIdeaList: Array<React.Dispatch<React.SetStateAction<IIdeaBoxEntry[]>>>
+  refreshTags: () => void
   existedData: IIdeaBoxEntry | null
   pastedData: {
     preview: string
@@ -47,6 +50,7 @@ function ModifyIdeaModal({
   const [ideaLink, setIdeaLink] = useState('')
   const [ideaImage, setIdeaImage] = useState<File | null>(null)
   const [imageLink, setImageLink] = useState<string>('')
+  const [ideaTags, setIdeaTags] = useState<string[]>([])
   const debouncedImageLink = useDebounce(imageLink, 500)
   const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
   const [loading, setLoading] = useState(false)
@@ -88,6 +92,7 @@ function ModifyIdeaModal({
       setIdeaImage(null)
       setImageLink('')
       setPreview(null)
+      setIdeaTags([])
     } else if (innerOpenType === 'update') {
       if (existedData !== null) {
         setIdeaTitle(existedData.title)
@@ -95,13 +100,15 @@ function ModifyIdeaModal({
         setIdeaLink(existedData.content)
         setIdeaImage(null)
         setPreview(null)
+        setIdeaTags(existedData.tags ?? [])
       }
     } else if (innerOpenType === 'paste' && pastedData !== null) {
-      setIdeaTitle(pastedData.file.name)
+      setIdeaTitle('')
       setIdeaContent('')
       setIdeaLink('')
       setIdeaImage(pastedData.file)
       setPreview(pastedData.preview)
+      setIdeaTags([])
     }
   }, [existedData, innerOpenType])
 
@@ -142,7 +149,11 @@ function ModifyIdeaModal({
         }
         break
       case 'image':
-        if (ideaImage === null && debouncedImageLink.trim().length === 0) {
+        if (
+          innerOpenType === 'create' &&
+          ideaImage === null &&
+          debouncedImageLink.trim().length === 0
+        ) {
           toast.error('Idea image cannot be empty.')
           return
         }
@@ -168,6 +179,7 @@ function ModifyIdeaModal({
     formData.append('imageLink', debouncedImageLink)
     formData.append('type', innerTypeOfModifyIdea)
     formData.append('folder', path?.split('/').pop() ?? '')
+    formData.append('tags', JSON.stringify(ideaTags))
 
     await APIRequest({
       endpoint: `idea-box/ideas/${
@@ -180,7 +192,8 @@ function ModifyIdeaModal({
               title: ideaTitle.trim(),
               content: ideaContent.trim(),
               link: ideaLink.trim(),
-              type: innerTypeOfModifyIdea
+              type: innerTypeOfModifyIdea,
+              tags: ideaTags
             }
           : formData,
       finalCallback: () => {
@@ -190,14 +203,19 @@ function ModifyIdeaModal({
       failureInfo: innerOpenType,
       callback: res => {
         if (innerOpenType === 'update') {
-          setIdeaList(prev =>
-            prev.map(idea =>
-              idea.id === existedData?.id ? (res.data as IIdeaBoxEntry) : idea
+          setIdeaList.forEach(e => {
+            e(prev =>
+              prev.map(idea =>
+                idea.id === existedData?.id ? (res.data as IIdeaBoxEntry) : idea
+              )
             )
-          )
+          })
         } else {
-          setIdeaList(prev => [res.data as IIdeaBoxEntry, ...prev])
+          setIdeaList.forEach(e => {
+            e(prev => [res.data as IIdeaBoxEntry, ...prev])
+          })
         }
+        refreshTags()
         setOpenType(null)
       },
       isJSON: innerOpenType === 'update'
@@ -262,65 +280,76 @@ function ModifyIdeaModal({
         innerTypeOfModifyIdea={innerTypeOfModifyIdea}
         setInnerTypeOfModifyIdea={setInnerTypeOfModifyIdea}
       />
-      {innerTypeOfModifyIdea === 'link' && (
-        <Input
-          name="Idea title"
-          icon="tabler:bulb"
-          value={ideaTitle}
-          updateValue={setIdeaTitle}
+      <div className="space-y-4">
+        {innerTypeOfModifyIdea !== 'text' && (
+          <Input
+            name="Idea title"
+            icon="tabler:bulb"
+            value={ideaTitle}
+            updateValue={setIdeaTitle}
+            darker
+            placeholder="Mind blowing idea"
+          />
+        )}
+        {innerTypeOfModifyIdea !== 'image' ? (
+          <IdeaContentInput
+            innerTypeOfModifyIdea={innerTypeOfModifyIdea}
+            ideaContent={ideaContent}
+            ideaLink={ideaLink}
+            updateIdeaContent={updateIdeaContent}
+            updateIdeaLink={updateIdeaLink}
+          />
+        ) : (
+          innerOpenType !== 'update' && (
+            <>
+              {preview ? (
+                <>
+                  <PreviewContainer
+                    file={ideaImage}
+                    preview={preview as string}
+                    setFile={setIdeaImage}
+                    setPreview={setPreview}
+                    fileName={debouncedImageLink.split('/').pop() ?? undefined}
+                    onRemove={() => {
+                      setImageLink('')
+                    }}
+                  />
+                </>
+              ) : (
+                <DnDContainer
+                  getRootProps={getRootProps}
+                  getInputProps={getInputProps}
+                  isDragActive={isDragActive}
+                />
+              )}
+              {ideaImage === null && (
+                <>
+                  <div className="mt-6 text-center font-medium uppercase tracking-widest text-bg-500">
+                    {t('imageUpload.orPasteLink')}
+                  </div>
+                  <Input
+                    icon="tabler:link"
+                    name="Image link"
+                    placeholder="https://example.com/image.jpg"
+                    value={imageLink}
+                    updateValue={setImageLink}
+                    darker
+                  />
+                </>
+              )}
+            </>
+          )
+        )}
+        <TagInput
+          name="Idea tags"
+          icon="tabler:tag"
+          value={ideaTags}
+          updateValue={setIdeaTags}
+          placeholder='Tag your idea with "awesome", "cool", etc.'
+          className="mt-6"
           darker
-          placeholder="Mind blowing idea"
-          className="mb-6"
         />
-      )}
-      {innerTypeOfModifyIdea !== 'image' ? (
-        <IdeaContentInput
-          innerTypeOfModifyIdea={innerTypeOfModifyIdea}
-          ideaContent={ideaContent}
-          ideaLink={ideaLink}
-          updateIdeaContent={updateIdeaContent}
-          updateIdeaLink={updateIdeaLink}
-        />
-      ) : (
-        <>
-          {preview ? (
-            <>
-              <PreviewContainer
-                file={ideaImage}
-                preview={preview as string}
-                setFile={setIdeaImage}
-                setPreview={setPreview}
-                fileName={debouncedImageLink.split('/').pop() ?? undefined}
-                onRemove={() => {
-                  setImageLink('')
-                }}
-              />
-            </>
-          ) : (
-            <DnDContainer
-              getRootProps={getRootProps}
-              getInputProps={getInputProps}
-              isDragActive={isDragActive}
-            />
-          )}
-          {ideaImage === null && (
-            <>
-              <div className="mt-6 text-center font-medium uppercase tracking-widest text-bg-500">
-                {t('imageUpload.orPasteLink')}
-              </div>
-              <Input
-                icon="tabler:link"
-                name="Image link"
-                placeholder="https://example.com/image.jpg"
-                value={imageLink}
-                updateValue={setImageLink}
-                className="mt-6"
-                darker
-              />
-            </>
-          )}
-        </>
-      )}
+      </div>
       <Button
         className="mt-6"
         loading={loading}

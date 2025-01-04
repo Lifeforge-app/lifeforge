@@ -110,17 +110,15 @@ function EntryContextMenu({
           icon={entry.archived ? 'tabler:archive-off' : 'tabler:archive'}
           text={entry.archived ? 'Unarchive' : 'Archive'}
         />
-        {entry.type !== 'image' && (
-          <MenuItem
-            onClick={() => {
-              setTypeOfModifyIdea(entry.type)
-              setExistedData(entry)
-              setModifyIdeaModalOpenType('update')
-            }}
-            icon="tabler:pencil"
-            text="Edit"
-          />
-        )}
+        <MenuItem
+          onClick={() => {
+            setTypeOfModifyIdea(entry.type)
+            setExistedData(entry)
+            setModifyIdeaModalOpenType('update')
+          }}
+          icon="tabler:pencil"
+          text="Edit"
+        />
         {path !== '' && (
           <MenuItem
             onClick={() => {
