@@ -2,7 +2,7 @@
 import chalk from 'chalk'
 import ora from 'ora'
 import prompts from 'prompts'
-import { errorAndProceed } from '../utils/errorAndProceed'
+import { errorAndProceed } from '../../../utils/errorAndProceed'
 
 async function promptModuleIcon(): Promise<string | null> {
   const spinner = ora('Fetching icon collections from Iconify...').start()

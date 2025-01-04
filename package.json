@@ -9,7 +9,7 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "create-module": "tsx ./tools/createModule/index.ts"
+    "module-tools": "tsx ./tools/module-tools/index.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.8",
@@ -97,9 +97,11 @@
     "@types/react-virtualized": "^9.21.30",
     "@types/three": "^0.167.2",
     "@types/use-resize-observer": "^6.1.0",
+    "@types/yargs": "^17.0.33",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "boxen": "^8.0.1",
     "chalk": "^5.3.0",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.1",
@@ -112,13 +114,17 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.12",
     "eslint-plugin-tailwindcss": "^3.17.4",
+    "figlet": "^1.8.0",
     "ora": "^8.1.0",
+    "parent-require": "^1.0.0",
     "sass": "^1.79.3",
     "table": "^6.8.2",
     "tsx": "^4.19.1",
     "typescript": "^5.6.2",
     "vite": "^5.4.11",
-    "vite-plugin-mkcert": "^1.17.6"
+    "vite-plugin-mkcert": "^1.17.6",
+    "yargonaut": "^1.1.4",
+    "yargs": "^17.7.2"
   },
   "overrides": {
     "@types/react": "npm:types-react@rc",

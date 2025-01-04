@@ -122,6 +122,9 @@ const Budget = lazy(async () => await import('./modules/Budget'))
 const Workout = lazy(async () => await import('./modules/Workout'))
 const _3dModels = lazy(async () => await import('./modules/3dModels'))
 const Sudoku = lazy(async () => await import('./modules/Sudoku'))
+const MinecraftServerList = lazy(
+  async () => await import('./modules/MinecraftServerList')
+)
 
 export const COMPONENTS = {
   dashboard: {
@@ -270,5 +273,8 @@ export const COMPONENTS = {
   },
   sudoku: {
     sudoku: Sudoku
+  },
+  'minecraft-server-list': {
+    'minecraft-server-list': MinecraftServerList
   }
 }

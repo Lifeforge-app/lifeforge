@@ -21,13 +21,13 @@ async function saveChanges({
   moduleNameInOtherLangs: {
     moduleNameZHCN: string
     moduleNameZHTW: string
-    moduleNameMY: string
+    moduleNameMS: string
   }
   moduleDescInOtherLangs: {
     moduleDescEN: string
     moduleDescZHCN: string
     moduleDescZHTW: string
-    moduleDescMY: string
+    moduleDescMS: string
   }
   moduleCategory: { moduleCategory: string }
   togglable: { value: boolean }
@@ -95,7 +95,7 @@ async function saveChanges({
     en: moduleNameEN.moduleName,
     'zh-CN': moduleNameInOtherLangs.moduleNameZHCN,
     'zh-TW': moduleNameInOtherLangs.moduleNameZHTW,
-    ms: moduleNameInOtherLangs.moduleNameMY,
+    ms: moduleNameInOtherLangs.moduleNameMS,
     login
   })
 
@@ -110,7 +110,7 @@ async function saveChanges({
     en: moduleDescInOtherLangs.moduleDescEN,
     'zh-CN': moduleDescInOtherLangs.moduleDescZHCN,
     'zh-TW': moduleDescInOtherLangs.moduleDescZHTW,
-    ms: moduleDescInOtherLangs.moduleDescMY,
+    ms: moduleDescInOtherLangs.moduleDescMS,
     login
   })
 

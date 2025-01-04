@@ -11,7 +11,7 @@ async function getModuleNameInOtherLangs({
 }): Promise<{
   moduleNameZHCN: string
   moduleNameZHTW: string
-  moduleNameMY: string
+  moduleNameMS: string
 } | null> {
   const spinner = ora('Fetching translation suggestions...').start()
 
@@ -73,7 +73,7 @@ async function getModuleNameInOtherLangs({
     return null
   }
 
-  const moduleNameMY = await prompts({
+  const moduleNameMS = await prompts({
     type: 'text',
     name: 'moduleName',
     message: 'Module name (in Malay)',
@@ -86,14 +86,14 @@ async function getModuleNameInOtherLangs({
     }
   })
 
-  if (!moduleNameMY.moduleName) {
+  if (!moduleNameMS.moduleName) {
     return null
   }
 
   return {
     moduleNameZHCN: moduleNameZHCN.moduleName,
     moduleNameZHTW: moduleNameZHTW.moduleName,
-    moduleNameMY: moduleNameMY.moduleName
+    moduleNameMS: moduleNameMS.moduleName
   }
 }
 

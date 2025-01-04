@@ -387,6 +387,14 @@
           "flight-status": "changi-airport/changi-flight-status"
         },
         "togglable": true
+      },
+      {
+        "name": "Minecraft Server List",
+        "icon": "tabler:cube",
+        "routes": {
+          "minecraft-server-list": "minecraft-server-list"
+        },
+        "togglable": true
       }
     ]
   },

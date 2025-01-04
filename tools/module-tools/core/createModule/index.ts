@@ -1,25 +1,16 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import chalk from 'chalk'
-import dotenv from 'dotenv'
 import prompts from 'prompts'
-import fs from 'fs'
-
 import confirmData from './functions/confirmData'
 import getModuleDescInOtherLangs from './functions/getModuleDescInOtherLangs'
 import getModuleNameInOtherLangs from './functions/getModuleNameInOtherLangs'
-import loginUser from './functions/loginUser'
 import promptModuleIcon from './functions/promptModuleIcon'
 import saveChanges from './functions/saveChanges'
-import { toCamelCase, toDashCase } from './utils/strings'
+import { CATEGORIES } from '../../constants/categories'
+import loginUser from '../../utils/loginUser'
+import { toCamelCase, toDashCase } from '../../utils/strings'
 
-dotenv.config({
-  path: '.env.development.local'
-})
-
-const ROUTES = JSON.parse(fs.readFileSync('./src/routes_config.json', 'utf-8'))
-
-const CATEGORIES = ROUTES.map((e: any) => e.title).filter((e: string) => e)
-;(async () => {
+async function createModule(): Promise<void> {
   const [loggedIn, login] = await loginUser()
 
   if (!loggedIn) {
@@ -127,4 +118,6 @@ const CATEGORIES = ROUTES.map((e: any) => e.title).filter((e: string) => e)
   }
 
   console.log(chalk.green('✔ Module created successfully'))
-})().catch(console.error)
+}
+
+export default createModule
