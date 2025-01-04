@@ -4,33 +4,49 @@ import ora from 'ora'
 import prompts from 'prompts'
 
 async function loginUser(): Promise<[boolean, any]> {
-  const username = await prompts({
-    type: 'text',
-    name: 'username',
-    message: 'Enter your username',
-    validate: value => {
-      if (!value) {
-        return 'Username is required'
+  const username = await prompts(
+    {
+      type: 'text',
+      name: 'username',
+      message: 'Username',
+      validate: value => {
+        if (!value) {
+          return 'Username is required'
+        }
+        return true
       }
-      return true
+    },
+    {
+      onCancel: () => {
+        console.log(chalk.red('✖ Login cancelled'))
+        process.exit(0)
+      }
     }
-  })
+  )
 
   if (!username.username) {
     return [false, null]
   }
 
-  const password = await prompts({
-    type: 'password',
-    name: 'password',
-    message: 'Enter your password',
-    validate: value => {
-      if (!value) {
-        return 'Password is required'
+  const password = await prompts(
+    {
+      type: 'password',
+      name: 'password',
+      message: 'Password',
+      validate: value => {
+        if (!value) {
+          return 'Password is required'
+        }
+        return true
       }
-      return true
+    },
+    {
+      onCancel: () => {
+        console.log(chalk.red('✖ Login cancelled'))
+        process.exit(0)
+      }
     }
-  })
+  )
 
   if (!password.password) {
     return [false, null]
@@ -52,12 +68,18 @@ async function loginUser(): Promise<[boolean, any]> {
     .finally(() => spinner.stop())
 
   if (login.state === 'error') {
-    console.log(login)
     console.error('Invalid credentials')
     return [false, null]
   }
 
   console.log(chalk.green('✔ Login successful'))
+  await new Promise(resolve => setTimeout(resolve, 1000))
+  process.stdout.moveCursor(0, -1)
+  process.stdout.clearLine(1)
+  process.stdout.moveCursor(0, -1)
+  process.stdout.clearLine(1)
+  process.stdout.moveCursor(0, -1)
+  process.stdout.clearLine(1)
 
   return [true, login]
 }
