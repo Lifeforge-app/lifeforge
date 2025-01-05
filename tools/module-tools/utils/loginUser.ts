@@ -3,56 +3,75 @@ import chalk from 'chalk'
 import ora from 'ora'
 import prompts from 'prompts'
 
-async function loginUser(): Promise<[boolean, any]> {
-  const username = await prompts(
-    {
-      type: 'text',
-      name: 'username',
-      message: 'Username',
-      validate: value => {
-        if (!value) {
-          return 'Username is required'
-        }
-        return true
-      }
-    },
-    {
-      onCancel: () => {
-        console.log(chalk.red('✖ Login cancelled'))
-        process.exit(0)
-      }
-    }
-  )
+async function loginUser(
+  existedUsername: string = '',
+  existedPassword: string = '',
+  t: (key: string) => string
+): Promise<[boolean, any]> {
+  let username = existedUsername
+  let password = existedPassword
 
-  if (!username.username) {
-    return [false, null]
+  if (!username) {
+    const usernamePrompt = await prompts(
+      {
+        type: 'text',
+        name: 'username',
+        message: t('moduleTools.auth.prompts.username'),
+        validate: value => {
+          if (!value) {
+            return t('moduleTools.auth.empty.username')
+          }
+          return true
+        }
+      },
+      {
+        onCancel: () => {
+          console.log(
+            chalk.red(`✖ ${t('moduleTools.auth.authenticationCancelled')}`)
+          )
+          process.exit(0)
+        }
+      }
+    )
+
+    if (!usernamePrompt.username) {
+      return [false, null]
+    }
+
+    username = usernamePrompt.username
   }
 
-  const password = await prompts(
-    {
-      type: 'password',
-      name: 'password',
-      message: 'Password',
-      validate: value => {
-        if (!value) {
-          return 'Password is required'
+  if (!password) {
+    const passwordPrompt = await prompts(
+      {
+        type: 'password',
+        name: 'password',
+        message: t('moduleTools.auth.prompts.password'),
+        validate: value => {
+          if (!value) {
+            return t('moduleTools.auth.empty.password')
+          }
+          return true
         }
-        return true
+      },
+      {
+        onCancel: () => {
+          console.log(
+            chalk.red(`✖ ${t('moduleTools.auth.authenticationCancelled')}`)
+          )
+          process.exit(0)
+        }
       }
-    },
-    {
-      onCancel: () => {
-        console.log(chalk.red('✖ Login cancelled'))
-        process.exit(0)
-      }
-    }
-  )
+    )
 
-  if (!password.password) {
-    return [false, null]
+    if (!passwordPrompt.password) {
+      return [false, null]
+    }
+
+    password = passwordPrompt.password
   }
 
-  const spinner = ora('Logging in').start()
+  const spinner = ora(t('moduleTools.auth.validatingCredentials')).start()
 
   const login = await fetch(`${process.env.VITE_API_HOST}/user/auth/login`, {
     method: 'POST',
@@ -60,26 +79,29 @@ async function loginUser(): Promise<[boolean, any]> {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      email: username.username,
-      password: password.password
+      email: username,
+      password
     })
   })
     .then(async res => await res.json())
     .finally(() => spinner.stop())
 
   if (login.state === 'error') {
-    console.error('Invalid credentials')
+    console.error(chalk.red(`✖ ${t('moduleTools.auth.authenticationFailed')}`))
     return [false, null]
   }
 
-  console.log(chalk.green('✔ Login successful'))
+  console.log(chalk.green(`✔ ${t('moduleTools.auth.authenticationSuccess')}`))
   await new Promise(resolve => setTimeout(resolve, 1000))
-  process.stdout.moveCursor(0, -1)
-  process.stdout.clearLine(1)
-  process.stdout.moveCursor(0, -1)
-  process.stdout.clearLine(1)
-  process.stdout.moveCursor(0, -1)
-  process.stdout.clearLine(1)
+
+  if (!(existedUsername === username && existedPassword === password)) {
+    process.stdout.moveCursor(0, -1)
+    process.stdout.clearLine(1)
+    process.stdout.moveCursor(0, -1)
+    process.stdout.clearLine(1)
+    process.stdout.moveCursor(0, -1)
+    process.stdout.clearLine(1)
+  }
 
   return [true, login]
 }
