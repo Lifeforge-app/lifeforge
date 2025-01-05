@@ -16,36 +16,38 @@ function printHelp(t: (key: string) => string): void {
       borderStyle: 'double'
     }
   )}
-  ${t('moduleTools.usage')} node module-tools ${chalk.green(
-    `<${t('moduleTools.command')}>`
-  )} ${chalk.yellow(`[${t('moduleTools.options')}]`)}
+  ${chalk.bold(t('moduleTools.help.usage'))} ${chalk.green(
+    'node'
+  )} ${chalk.magenta('module-tools')} ${chalk.green(
+    `<${t('moduleTools.help.command')}>`
+  )} ${chalk.yellow(`[${t('moduleTools.help.options')}]`)}
   
-  ${t('moduleTools.commandsTitle')}:
+  ${chalk.bold(t('moduleTools.help.commandsTitle'))}:
     ${chalk.green('list')}    ${chalk.gray(
-    t('moduleTools.commandDescriptions.list')
+    t('moduleTools.help.commandDescriptions.list')
   )}
     ${chalk.green('create')}  ${chalk.gray(
-    t('moduleTools.commandDescriptions.create')
+    t('moduleTools.help.commandDescriptions.create')
   )}
     ${chalk.green('delete')}  ${chalk.gray(
-    t('moduleTools.commandDescriptions.delete')
+    t('moduleTools.help.commandDescriptions.delete')
   )}
     ${chalk.green('update')}  ${chalk.gray(
-    t('moduleTools.commandDescriptions.update')
+    t('moduleTools.help.commandDescriptions.update')
   )}
   
-  ${t('moduleTools.optionsTitle')}:
+  ${chalk.bold(t('moduleTools.help.optionsTitle'))}:
     ${chalk.yellow('-h, --help')}      ${chalk.gray(
-    t('moduleTools.optionDescriptions.help')
+    t('moduleTools.help.optionDescriptions.help')
   )}
     ${chalk.yellow('-l, --language')}  ${chalk.gray(
-    t('moduleTools.optionDescriptions.language')
+    t('moduleTools.help.optionDescriptions.language')
   )}
     ${chalk.yellow('-u, --username')}  ${chalk.gray(
-    t('moduleTools.optionDescriptions.username')
+    t('moduleTools.help.optionDescriptions.username')
   )}
     ${chalk.yellow('-p, --password')}  ${chalk.gray(
-    t('moduleTools.optionDescriptions.password')
+    t('moduleTools.help.optionDescriptions.password')
   )}
   `)
 }

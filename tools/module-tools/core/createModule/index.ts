@@ -6,12 +6,16 @@ import getModuleDescInOtherLangs from './functions/getModuleDescInOtherLangs'
 import getModuleNameInOtherLangs from './functions/getModuleNameInOtherLangs'
 import promptModuleIcon from './functions/promptModuleIcon'
 import saveChanges from './functions/saveChanges'
-import { CATEGORIES } from '../../constants/categories'
+import { CATEGORIES } from '../../constants/routes'
 import loginUser from '../../utils/loginUser'
 import { toCamelCase, toDashCase } from '../../utils/strings'
 
-async function createModule(): Promise<void> {
-  const [loggedIn, login] = await loginUser()
+async function createModule(
+  username: string,
+  password: string,
+  t: (key: string) => string
+): Promise<void> {
+  const [loggedIn, login] = await loginUser(username, password, t)
 
   if (!loggedIn) {
     return

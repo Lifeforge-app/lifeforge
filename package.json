@@ -9,7 +9,7 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "module-tools": "tsx ./tools/module-tools/index.ts"
+    "module-tools": "bun run ./tools/module-tools/index.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.8",

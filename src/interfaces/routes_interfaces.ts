@@ -8,6 +8,7 @@ interface IRoutesItem {
   hasAI?: boolean
   hidden?: boolean
   requiredAPIKeys?: string[]
+  deprecated?: boolean
 }
 
 export interface IRoutes {
