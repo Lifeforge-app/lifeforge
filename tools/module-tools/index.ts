@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
 import createModule from './core/createModule'
+import listModule from './core/listModule'
 import printHelp from './utils/printHelp'
 
 dotenv.config({
@@ -28,6 +29,17 @@ if (args.language !== undefined || args.l !== undefined) {
   }
 }
 
+let username = ''
+let password = ''
+
+if (args.username !== undefined || args.u !== undefined) {
+  username = args.username ?? args.u
+}
+
+if (args.password !== undefined || args.p !== undefined) {
+  password = args.password ?? args.p
+}
+
 if (args.help !== undefined || args.h !== undefined) {
   printHelp(t)
   process.exit(0)
@@ -47,15 +59,18 @@ function t(key: string): string {
     for (const k of keys) {
       value = value[k]
     }
-    return value
+    return value ?? key
   } catch {
     return key
   }
 }
 
 switch (command) {
+  case 'list':
+    listModule(username, password, t).catch(console.error)
+    break
   case 'create':
-    createModule().catch(console.error)
+    createModule(username, password, t).catch(console.error)
     break
   default:
     printHelp(t)
