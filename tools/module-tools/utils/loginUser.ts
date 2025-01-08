@@ -94,9 +94,10 @@ async function loginUser(
   console.log(chalk.green(`✔ ${t('moduleTools.auth.authenticationSuccess')}`))
   await new Promise(resolve => setTimeout(resolve, 1000))
 
+  process.stdout.moveCursor(0, -1)
+  process.stdout.clearLine(1)
+
   if (!(existedUsername === username && existedPassword === password)) {
-    process.stdout.moveCursor(0, -1)
-    process.stdout.clearLine(1)
     process.stdout.moveCursor(0, -1)
     process.stdout.clearLine(1)
     process.stdout.moveCursor(0, -1)
