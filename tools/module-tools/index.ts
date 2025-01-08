@@ -1,11 +1,15 @@
 import dotenv from 'dotenv'
 import createModule from './core/createModule'
+import deleteModule from './core/deleteModule'
 import listModule from './core/listModule'
+import loginUser from './utils/loginUser'
 import printHelp from './utils/printHelp'
 
 dotenv.config({
   path: '.env.development.local'
 })
+
+const COMMANDS = ['list', 'create', 'delete', 'update', 'reorder', 'help']
 
 function parseArgs(): Record<string, string> {
   const args = process.argv.slice(3)
@@ -18,7 +22,10 @@ function parseArgs(): Record<string, string> {
 
 const command = process.argv[2]
 const args = parseArgs()
+
 let lang: 'en' | 'zh-CN' | 'zh-TW' | 'ms' = 'en'
+let username = ''
+let password = ''
 
 if (args.language !== undefined || args.l !== undefined) {
   if (['en', 'zh-CN', 'zh-TW', 'ms'].includes(args.language ?? args.l)) {
@@ -29,20 +36,12 @@ if (args.language !== undefined || args.l !== undefined) {
   }
 }
 
-let username = ''
-let password = ''
-
 if (args.username !== undefined || args.u !== undefined) {
   username = args.username ?? args.u
 }
 
 if (args.password !== undefined || args.p !== undefined) {
   password = args.password ?? args.p
-}
-
-if (args.help !== undefined || args.h !== undefined) {
-  printHelp(t)
-  process.exit(0)
 }
 
 const translations = await fetch(
@@ -65,14 +64,35 @@ function t(key: string): string {
   }
 }
 
+if (!COMMANDS.includes(command)) {
+  printHelp(COMMANDS, t)
+  process.exit(1)
+}
+
+let session = null
+
+if (command !== 'help') {
+  const [loggedIn, login] = await loginUser(username, password, t)
+
+  if (!loggedIn) {
+    process.exit(1)
+  }
+
+  session = login
+}
+
 switch (command) {
   case 'list':
-    listModule(username, password, t).catch(console.error)
+    listModule(t).catch(console.error)
     break
   case 'create':
-    createModule(username, password, t).catch(console.error)
+    createModule(session, t).catch(console.error)
     break
+  case 'delete':
+    deleteModule(session, t).catch(console.error)
+    break
+  case 'help':
   default:
-    printHelp(t)
+    printHelp(COMMANDS, t)
     break
 }

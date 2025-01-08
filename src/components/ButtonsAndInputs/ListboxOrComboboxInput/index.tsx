@@ -34,7 +34,6 @@ type IListboxOrComboboxInputProps = IListboxProps | IComboboxProps
 function ListboxOrComboboxInput(
   props: IListboxOrComboboxInputProps
 ): React.ReactElement {
-  console.log('sus')
   const { name, icon, value, setValue, type, children } = props
 
   switch (type) {
