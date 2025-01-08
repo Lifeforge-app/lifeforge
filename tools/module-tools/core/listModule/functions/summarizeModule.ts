@@ -21,7 +21,7 @@ function padNumber(
   )
 }
 
-function getSeparator(str: string, tableLength: number): string {
+function getSeparator(str: string): string {
   const remainingSpace = 50 - getLength(str) - 17
   return chalk.ansi256(238).dim('.').repeat(remainingSpace)
 }
@@ -59,20 +59,19 @@ function summarizeModules(
   const summary = [
     `${chalk.blue('\uf114')}  ${chalk.bold(
       labels.totalCategories
-    )} ${getSeparator(labels.totalCategories, tableWidth)} ${padNumber(
+    )} ${getSeparator(labels.totalCategories)} ${padNumber(
       categories.size,
       4,
       'blue'
     )}`,
 
     `${chalk.blue('\uf022')}  ${chalk.bold(labels.totalModules)} ${getSeparator(
-      labels.totalModules,
-      tableWidth
+      labels.totalModules
     )} ${padNumber(totalModules, 4, 'blue')}`,
 
     `${chalk.green('\uf204')}  ${chalk.bold(
       labels.togglableModules
-    )} ${getSeparator(labels.togglableModules, tableWidth)} ${padNumber(
+    )} ${getSeparator(labels.togglableModules)} ${padNumber(
       togglableModules,
       4,
       'green'
@@ -80,7 +79,7 @@ function summarizeModules(
 
     `${chalk.yellow('\uf52f')}  ${chalk.bold(
       labels.deprecatedModules
-    )} ${getSeparator(labels.deprecatedModules, tableWidth)} ${padNumber(
+    )} ${getSeparator(labels.deprecatedModules)} ${padNumber(
       deprecatedModules,
       4,
       'yellow'
@@ -88,7 +87,7 @@ function summarizeModules(
 
     `${chalk.cyan('\uf0d0')}  ${chalk.bold(
       labels.aiEnabledModules
-    )} ${getSeparator(labels.aiEnabledModules, tableWidth)} ${padNumber(
+    )} ${getSeparator(labels.aiEnabledModules)} ${padNumber(
       aiEnabledModules,
       4,
       'cyan'
