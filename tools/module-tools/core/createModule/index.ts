@@ -15,6 +15,8 @@ async function createModule(
 ): Promise<void> {
   const moduleIcon = await promptModuleIcon()
 
+  t('lol') // TODO - remove this line lol
+
   if (!moduleIcon) {
     return
   }
