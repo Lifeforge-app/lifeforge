@@ -125,6 +125,10 @@ const Sudoku = lazy(async () => await import('./modules/Sudoku'))
 const MinecraftServerList = lazy(
   async () => await import('./modules/MinecraftServerList')
 )
+        const AsciiTextGenerator = lazy(
+          async () => await import('./modules/AsciiTextGenerator')
+        )
+        
 
 export const COMPONENTS = {
   dashboard: {
@@ -276,5 +280,8 @@ export const COMPONENTS = {
   },
   'minecraft-server-list': {
     'minecraft-server-list': MinecraftServerList
+  },
+  'ascii-text-generator': {
+    'ascii-text-generator': AsciiTextGenerator
   }
-}
+};

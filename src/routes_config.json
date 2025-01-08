@@ -408,6 +408,14 @@
           "sudoku": "sudoku"
         },
         "togglable": true
+      },
+      {
+        "name": "ASCII Text Generator",
+        "icon": "tabler:terminal",
+        "routes": {
+          "ascii-text-generator": "ascii-text-generator"
+        },
+        "togglable": true
       }
     ]
   },
