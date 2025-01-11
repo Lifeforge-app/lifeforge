@@ -1,6 +1,8 @@
 import moment from 'moment'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import Button from '@components/ButtonsAndInputs/Button'
 import DashboardItem from '@components/Miscellaneous/DashboardItem'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
@@ -20,6 +22,15 @@ export default function TodaysEvent(): React.ReactElement {
     <DashboardItem
       icon="tabler:calendar"
       title={t('dashboard.widgets.todaysEvent.title')}
+      componentBesideTitle={
+        <Button
+          variant="no-bg"
+          icon="tabler:chevron-right"
+          as={Link}
+          to="/calendar"
+          className="!p-2"
+        />
+      }
     >
       <Scrollbar>
         <APIFallbackComponent
@@ -83,7 +94,7 @@ export default function TodaysEvent(): React.ReactElement {
                 </APIFallbackComponent>
               </ul>
             ) : (
-              <div>
+              <div className="flex-center flex-1">
                 <EmptyStateScreen
                   smaller
                   title="No events today"

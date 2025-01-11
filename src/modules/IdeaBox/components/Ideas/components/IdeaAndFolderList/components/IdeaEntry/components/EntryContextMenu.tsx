@@ -53,12 +53,10 @@ function EntryContextMenu({
       method: 'POST',
       successInfo: entry.archived ? 'unarchive' : 'archive',
       failureInfo: entry.archived ? 'unarchive' : 'archive',
-      callback: res => {
+      callback: () => {
         setEntries(prev =>
           typeof prev !== 'string'
-            ? prev.map(idea =>
-                idea.id === entry.id ? (res.data as IIdeaBoxEntry) : idea
-              )
+            ? prev.filter(idea => idea.id !== entry.id)
             : prev
         )
       }
