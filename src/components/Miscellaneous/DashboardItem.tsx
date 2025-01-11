@@ -23,8 +23,8 @@ function DashboardItem({
       ref={ref}
       className={`${className} flex size-full flex-col gap-4 rounded-lg p-6 shadow-custom ${componentBg}`}
     >
-      <div className="flex-between flex">
-        <h2 className="mb-2 flex items-center gap-2 text-xl font-semibold">
+      <div className="flex-between mb-2 flex">
+        <h2 className="flex items-center gap-2 text-xl font-semibold">
           <Icon icon={icon} className="text-2xl" />
           <span className="ml-2">{title}</span>
         </h2>
