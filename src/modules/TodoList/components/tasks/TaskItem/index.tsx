@@ -124,8 +124,10 @@ function TaskItem({
         </div>
         <button
           onClick={() => {
-            setModifyTaskWindowOpenType('update')
-            setSelectedTask(entry)
+            if (!isOuter) {
+              setModifyTaskWindowOpenType('update')
+              setSelectedTask(entry)
+            }
           }}
           className="absolute left-0 top-0 size-full"
         />

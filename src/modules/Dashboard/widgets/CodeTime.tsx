@@ -115,6 +115,7 @@ export default function CodeTime(): React.ReactElement {
               moment(data[data.length - 1].date)
             ).map(date => {
               const day = data.find(d => d.date === date.format('YYYY-MM-DD'))
+              console.log(date, day)
               return day ? day.duration / 3600000 : 0
             }),
             backgroundColor: (context: ScriptableContext<'line'>) => {

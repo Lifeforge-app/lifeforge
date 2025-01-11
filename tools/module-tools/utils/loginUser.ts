@@ -19,7 +19,7 @@ async function loginUser(
         message: t('moduleTools.auth.prompts.username'),
         validate: value => {
           if (!value) {
-            return t('moduleTools.auth.empty.username')
+            return t('moduleTools.auth.inputErrors.empty.username')
           }
           return true
         }
@@ -27,7 +27,7 @@ async function loginUser(
       {
         onCancel: () => {
           console.log(
-            chalk.red(`✖ ${t('moduleTools.auth.authenticationCancelled')}`)
+            chalk.red(`✖ ${t('moduleTools.auth.messages.auth.cancelled')}`)
           )
           process.exit(0)
         }
@@ -49,7 +49,7 @@ async function loginUser(
         message: t('moduleTools.auth.prompts.password'),
         validate: value => {
           if (!value) {
-            return t('moduleTools.auth.empty.password')
+            return t('moduleTools.auth.inputErrors.empty.password')
           }
           return true
         }
@@ -57,7 +57,7 @@ async function loginUser(
       {
         onCancel: () => {
           console.log(
-            chalk.red(`✖ ${t('moduleTools.auth.authenticationCancelled')}`)
+            chalk.red(`✖ ${t('moduleTools.auth.messages.auth.cancelled')}`)
           )
           process.exit(0)
         }
@@ -71,7 +71,7 @@ async function loginUser(
     password = passwordPrompt.password
   }
 
-  const spinner = ora(t('moduleTools.auth.validatingCredentials')).start()
+  const spinner = ora(t('moduleTools.auth.messages.auth.validating')).start()
 
   const login = await fetch(`${process.env.VITE_API_HOST}/user/auth/login`, {
     method: 'POST',
@@ -87,11 +87,11 @@ async function loginUser(
     .finally(() => spinner.stop())
 
   if (login.state === 'error') {
-    console.error(chalk.red(`✖ ${t('moduleTools.auth.authenticationFailed')}`))
+    console.error(chalk.red(`✖ ${t('moduleTools.auth.messages.auth.failed')}`))
     return [false, null]
   }
 
-  console.log(chalk.green(`✔ ${t('moduleTools.auth.authenticationSuccess')}`))
+  console.log(chalk.green(`✔ ${t('moduleTools.auth.messages.auth.success')}`))
   await new Promise(resolve => setTimeout(resolve, 1000))
 
   process.stdout.moveCursor(0, -1)

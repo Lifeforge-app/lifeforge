@@ -27,6 +27,7 @@ export default function AssetsBalance(): React.ReactElement {
             setShowBalance(!showBalance)
           }}
           icon={!showBalance ? 'tabler:eye-off' : 'tabler:eye'}
+          className="!p-2"
         />
       }
     >
