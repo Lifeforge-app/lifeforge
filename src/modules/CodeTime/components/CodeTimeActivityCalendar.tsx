@@ -52,8 +52,8 @@ function CodeTimeActivityCalendar(): React.ReactElement {
               Array.isArray(activities) ? (
                 <ActivityCalendar
                   data={activities}
-                  blockSize={14}
-                  blockMargin={6}
+                  blockSize={15}
+                  blockMargin={5}
                   labels={{
                     totalCount: `${
                       Math.floor(
