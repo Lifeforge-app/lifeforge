@@ -31,6 +31,7 @@ function Modal({
   onClose,
   submitButtonLabel,
   submitButtonIcon,
+  submitButtonIconAtEnd,
   onSubmit,
   loading = false,
   actionButtonIcon,
@@ -67,6 +68,7 @@ function Modal({
   onClose: () => void
   submitButtonLabel?: string
   submitButtonIcon?: string
+  submitButtonIconAtEnd?: boolean
   onSubmit: () => Promise<void>
   loading?: boolean
   actionButtonIcon?: string
@@ -339,6 +341,7 @@ function Modal({
                   onSubmitButtonClick().catch(console.error)
                 }}
                 icon={submitButtonIcon ?? ''}
+                iconAtEnd={submitButtonIconAtEnd}
               >
                 {submitButtonLabel}
               </Button>

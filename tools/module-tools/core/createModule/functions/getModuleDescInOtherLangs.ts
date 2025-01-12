@@ -106,9 +106,7 @@ async function getModuleDescInOtherLangs({
 
       result[
         `moduleDesc${key.replace('-', '').toUpperCase()}` as keyof typeof result
-      ] = response.moduleDesc
-        .replace("(Type 'r' and press enter to get a new suggestion)", '')
-        .trim()
+      ] = response.moduleDesc.split('(Type').shift().trim()
       break
     }
   }

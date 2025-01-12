@@ -4,10 +4,10 @@ import prompts from 'prompts'
 
 async function getModuleNameInOtherLangs({
   login,
-  moduleID
+  moduleName
 }: {
   login: any
-  moduleID: string
+  moduleName: string
 }): Promise<{
   moduleNameZHCN: string
   moduleNameZHTW: string
@@ -16,7 +16,7 @@ async function getModuleNameInOtherLangs({
   const spinner = ora('Fetching translation suggestions...').start()
 
   const translationSuggestions = await fetch(
-    `${process.env.VITE_API_HOST}/locales/ai-generate`,
+    `${process.env.VITE_API_HOST}/locales/ai-generate/module-name`,
     {
       method: 'POST',
       headers: {
@@ -24,7 +24,7 @@ async function getModuleNameInOtherLangs({
         Authorization: `Bearer ${login.token}`
       },
       body: JSON.stringify({
-        key: `modules.${moduleID[0].toLowerCase() + moduleID.slice(1)}`
+        name: moduleName
       })
     }
   )
