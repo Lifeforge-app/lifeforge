@@ -33,24 +33,24 @@ function ModuleHeader({
     <header className="flex-between flex w-full min-w-0 gap-8">
       <div className="flex w-full min-w-0 items-center gap-4">
         {icon !== undefined && (
-          <div className="flex size-16 shrink-0 items-center justify-center rounded-lg bg-custom-500/20">
-            <Icon icon={icon} className="size-8 text-custom-500" />
+          <div className="flex size-14 shrink-0 items-center justify-center rounded-lg bg-custom-500/20 sm:size-16">
+            <Icon icon={icon} className="size-6 text-custom-500 sm:size-8" />
           </div>
         )}
         <div className="w-full min-w-0 space-y-1">
-          <h1 className="flex w-full min-w-0 items-end gap-3 whitespace-nowrap text-3xl font-semibold md:text-4xl">
+          <h1 className="flex w-full min-w-0 items-end gap-3 whitespace-nowrap text-2xl font-semibold sm:text-3xl md:text-4xl">
             <span className="block truncate">
               {needTranslate
                 ? t(`modules.${toCamelCase(title?.toString() ?? '')}`)
                 : title}
             </span>
-            <span className="min-w-0 text-base font-medium text-bg-500">
+            <span className="min-w-0 text-sm font-medium text-bg-500 sm:text-base">
               {totalItems !== undefined
                 ? `(${totalItems.toLocaleString()})`
                 : ''}
             </span>
           </h1>
-          <div className="w-full min-w-0 truncate whitespace-nowrap text-bg-500">
+          <div className="w-full min-w-0 truncate whitespace-nowrap text-sm text-bg-500 sm:text-base">
             {needTranslate
               ? t(
                   `modules.descriptions.${toCamelCase(title?.toString() ?? '')}`
