@@ -42,7 +42,7 @@ async function createModule(
 
   const moduleNameInOtherLangs = await getModuleNameInOtherLangs({
     login,
-    moduleID
+    moduleName: moduleNameEN.moduleName
   })
 
   if (!moduleNameInOtherLangs) {

@@ -138,12 +138,25 @@
           "achievements-id": "achievements/:id"
         },
         "togglable": true
-      },
+      }
+    ]
+  },
+  {
+    "title": "Health & Fitness",
+    "items": [
       {
         "name": "Workout",
         "icon": "tabler:barbell",
         "routes": {
           "workout": "workout"
+        },
+        "togglable": true
+      },
+      {
+        "name": "Nutritions Tracker",
+        "icon": "tabler:leaf",
+        "routes": {
+          "nutritions-tracker": "nutritions-tracker"
         },
         "togglable": true
       }
@@ -281,22 +294,6 @@
     ]
   },
   {
-    "title": "References",
-    "items": [
-      {
-        "name": "CFOP Algorithms",
-        "icon": "tabler:cube",
-        "routes": {
-          "cfop-algorithms": "cfop-algorithms",
-          "cfop-algorithms-f2l": "cfop-algorithms/f2l",
-          "cfop-algorithms-oll": "cfop-algorithms/oll",
-          "cfop-algorithms-pll": "cfop-algorithms/pll"
-        },
-        "togglable": true
-      }
-    ]
-  },
-  {
     "title": "External Management",
     "items": [
       {
@@ -389,10 +386,29 @@
         "togglable": true
       },
       {
-        "name": "Minecraft Server List",
+        "name": "CFOP Algorithms",
         "icon": "tabler:cube",
         "routes": {
+          "cfop-algorithms": "cfop-algorithms",
+          "cfop-algorithms-f2l": "cfop-algorithms/f2l",
+          "cfop-algorithms-oll": "cfop-algorithms/oll",
+          "cfop-algorithms-pll": "cfop-algorithms/pll"
+        },
+        "togglable": true
+      },
+      {
+        "name": "Minecraft Server List",
+        "icon": "tabler:server",
+        "routes": {
           "minecraft-server-list": "minecraft-server-list"
+        },
+        "togglable": true
+      },
+      {
+        "name": "OpenAI API Pricing",
+        "icon": "tabler:brand-openai",
+        "routes": {
+          "openai-api-pricing": "openai-api-pricing"
         },
         "togglable": true
       }
