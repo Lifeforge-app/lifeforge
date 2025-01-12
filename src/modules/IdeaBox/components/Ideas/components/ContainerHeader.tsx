@@ -81,7 +81,7 @@ function ContainerHeader(): React.ReactElement {
               typeof pathDetails !== 'string'
                 ? 'text-2xl sm:text-3xl'
                 : 'text-2xl'
-            } font-semibold `}
+            } font-semibold text-bg-100`}
           >
             {(() => {
               switch (pathDetails) {

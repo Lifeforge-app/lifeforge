@@ -104,7 +104,7 @@ function OpenaiApiPricing(): React.ReactElement {
                                       >
                                         <td className="px-2">{model}</td>
                                         <td className="p-2">
-                                          {items.map((item: any) => (
+                                          {(items as any[]).map((item: any) => (
                                             <div
                                               key={JSON.stringify(item)}
                                               className="flex"

@@ -20,15 +20,15 @@ function CodeTimeStatistics(): React.ReactElement {
 
       <APIFallbackComponent data={stats}>
         {stats => (
-          <div className="flex-between grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-4">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-4">
             {Object.entries(stats).map(([key, value], index) => (
               <div
                 key={key}
-                className={`flex-between flex w-full gap-2 rounded-lg p-6 shadow-custom sm:flex-col sm:items-start ${componentBg}`}
+                className={`flex-between flex w-full flex-col gap-2 rounded-lg p-3 shadow-custom sm:items-start sm:p-6 ${componentBg}`}
               >
-                <div className="flex flex-row items-center gap-2 sm:flex-col sm:items-start">
+                <div className="flex w-full flex-row items-center gap-2 sm:flex-col sm:items-start">
                   <div
-                    className={`flex rounded-lg p-4 shadow-custom ${componentBgLighter}`}
+                    className={`flex rounded-lg p-2 shadow-custom sm:p-4 ${componentBgLighter}`}
                   >
                     <Icon
                       icon={
@@ -40,7 +40,7 @@ function CodeTimeStatistics(): React.ReactElement {
                           'Current streak': 'tabler:flame'
                         }[key]!
                       }
-                      className={`text-3xl ${
+                      className={`text-2xl sm:text-3xl ${
                         index === 3
                           ? 'text-orange-300'
                           : 'text-bg-500 dark:text-bg-50'
@@ -51,7 +51,7 @@ function CodeTimeStatistics(): React.ReactElement {
                     {key.replace('Average', 'Avg.')}
                   </div>
                 </div>
-                <div className="whitespace-nowrap text-4xl font-semibold">
+                <div className="mt-2 whitespace-nowrap text-4xl font-semibold">
                   {index < 3 ? (
                     <HoursAndMinutesFromSeconds seconds={value} />
                   ) : (

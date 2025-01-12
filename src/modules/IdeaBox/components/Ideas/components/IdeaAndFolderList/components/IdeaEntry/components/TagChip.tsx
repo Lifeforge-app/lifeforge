@@ -18,7 +18,7 @@ function TagChip({ text }: { text: string }): React.ReactElement {
   )
   return (
     <div
-      className={`flex items-center rounded-full px-3 py-1 text-sm ${
+      className={`flex items-center rounded-full px-3 py-1 text-sm shadow-sm ${
         active
           ? metadata !== undefined && metadata.color !== ''
             ? isLightColor(metadata.color)
