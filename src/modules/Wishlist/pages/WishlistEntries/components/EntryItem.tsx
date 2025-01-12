@@ -15,7 +15,7 @@ function EntryItem({
 
   return (
     <li
-      className={`${componentBg} flex items-center justify-between gap-4 rounded-md p-4`}
+      className={`${componentBg} flex flex-col justify-between gap-4 rounded-md p-4 sm:flex-row sm:items-center`}
     >
       <div className="flex items-center gap-4">
         <img
