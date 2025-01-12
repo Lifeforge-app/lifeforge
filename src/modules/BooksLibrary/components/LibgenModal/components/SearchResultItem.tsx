@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
+import useThemeColors from '@hooks/useThemeColor'
 import AddToLibraryButton from './AddToLibraryButton'
 
 function SearchResultItem({
@@ -13,8 +14,12 @@ function SearchResultItem({
   setViewDetailsFor: (id: string) => void
   setAddToLibraryFor: (id: string) => void
 }): React.ReactElement {
+  const { componentBgWithHover } = useThemeColors()
+
   return (
-    <li className="flex flex-col gap-6 rounded-md bg-bg-800/50 p-6 shadow-custom md:flex-row">
+    <li
+      className={`flex flex-col gap-6 rounded-md p-6 md:flex-row ${componentBgWithHover}`}
+    >
       <div className="flex-center relative inline-flex h-min min-h-80 w-56 shrink-0 flex-col overflow-hidden rounded-md bg-bg-800">
         <Icon
           icon="tabler:book-2"
