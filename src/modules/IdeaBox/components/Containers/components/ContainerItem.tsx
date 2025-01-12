@@ -27,7 +27,7 @@ function ContainerItem({
     <div
       className={`group relative flex flex-col items-center justify-start gap-6 overflow-hidden rounded-lg shadow-custom ${componentBgWithHover}`}
     >
-      <div className="flex-center aspect-video w-full bg-bg-800">
+      <div className="flex-center aspect-video w-full bg-bg-200 dark:bg-bg-800">
         {container.cover !== '' ? (
           <img
             className="aspect-video size-full object-cover"
@@ -37,7 +37,10 @@ function ContainerItem({
             }?thumb=0x200`}
           />
         ) : (
-          <Icon icon="tabler:bulb" className="size-24 text-bg-700" />
+          <Icon
+            icon="tabler:bulb"
+            className="size-24 text-bg-300 dark:text-bg-700"
+          />
         )}
       </div>
       <div className="flex flex-col items-center justify-start gap-6 p-8 pt-0">

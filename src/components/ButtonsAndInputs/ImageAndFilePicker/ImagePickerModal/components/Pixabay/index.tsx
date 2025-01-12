@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
-import React, { useReducer, useState } from 'react'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
@@ -7,51 +7,27 @@ import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import ErrorScreen from '@components/Screens/ErrorScreen'
 import LoadingScreen from '@components/Screens/LoadingScreen'
 import {
-  type PixabaySearchFilterAction,
   type IPixabaySearchFilter,
   type IPixabaySearchResult
 } from '@interfaces/pixabay_interfaces'
 import APIRequest from '@utils/fetchData'
-import SearchFilterModal from './components/SearchFilterModal'
 import SearchResults from './components/SearchResults'
-
-const initialFilter: IPixabaySearchFilter = {
-  imageType: 'all',
-  category: '',
-  colors: '',
-  isEditorsChoice: false
-}
-
-function reducer(
-  state: IPixabaySearchFilter,
-  action: PixabaySearchFilterAction
-): typeof initialFilter {
-  switch (action.type) {
-    case 'SET_IMAGE_TYPE':
-      return { ...state, imageType: action.payload }
-    case 'SET_CATEGORY':
-      return { ...state, category: action.payload }
-    case 'SET_COLORS':
-      return { ...state, colors: action.payload }
-    case 'SET_IS_EDITORS_CHOICE':
-      return { ...state, isEditorsChoice: action.payload }
-    default:
-      return state
-  }
-}
 
 function Pixabay({
   file,
   setFile,
-  setPreview
+  setPreview,
+  filters,
+  setIsSearchFilterModalOpen
 }: {
   file: string | File | null
   setFile: React.Dispatch<React.SetStateAction<string | File | null>>
   setPreview: React.Dispatch<React.SetStateAction<string | null>>
+  filters: IPixabaySearchFilter
+  setIsSearchFilterModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   const [query, setQuery] = useState('')
-  const [isSearchFilterModalOpen, setIsSearchFilterModalOpen] = useState(false)
-  const [filters, updateFilters] = useReducer(reducer, initialFilter)
+
   const [results, setResults] = useState<'error' | IPixabaySearchResult | null>(
     null
   )
@@ -177,14 +153,6 @@ function Pixabay({
           }
         })()}
       </div>
-      <SearchFilterModal
-        isOpen={isSearchFilterModalOpen}
-        onClose={() => {
-          setIsSearchFilterModalOpen(false)
-        }}
-        filters={filters}
-        updateFilters={updateFilters}
-      />
     </>
   )
 }
