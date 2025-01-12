@@ -1,9 +1,7 @@
-import chalk from 'chalk'
-import ora from 'ora'
-import prompts from 'prompts'
-import cancelOperation from './functions/cancelOperation'
 import confirmDeletionStep from './functions/confirmDeletionStep'
 import confirmModuleName from './functions/confirmModuleName'
+import deleteModuleFunc from './functions/deleteModuleFunc'
+import finalConfirmation from './functions/finalConfirmation'
 import printDisclaimer from './functions/printDisclaimer'
 import requestOTP from './functions/requestOTP'
 import selectModule from './functions/selectModule'
@@ -24,18 +22,9 @@ async function deleteModule(
   await validateOTPCode(t, login, OTPId)
 
   await confirmDeletionStep(t)
-  const finalConfirmation = await prompts({
-    type: 'confirm',
-    name: 'value',
-    message: t('moduleTools.features.delete.prompts.finalConfirmation')
-      .split(':')
-      .map((e, i) => (i === 0 ? chalk.red.bold(e) : e))
-      .join(chalk.red.bold(':'))
-  })
+  await finalConfirmation(t)
 
-  if (finalConfirmation.value !== true) {
-    cancelOperation(t)
-  }
+  await deleteModuleFunc(module)
 }
 
 export default deleteModule

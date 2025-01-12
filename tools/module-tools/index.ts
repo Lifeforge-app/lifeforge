@@ -9,7 +9,7 @@ dotenv.config({
   path: '.env.development.local'
 })
 
-const COMMANDS = ['list', 'create', 'delete', 'update', 'reorder', 'help']
+const COMMANDS = ['list', 'create', 'delete']
 
 function parseArgs(): Record<string, string> {
   const args = process.argv.slice(3)
