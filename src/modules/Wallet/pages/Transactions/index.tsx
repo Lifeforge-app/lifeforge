@@ -17,6 +17,7 @@ import SearchBar from './components/SearchBar'
 import Sidebar from './components/Sidebar'
 import ManageCategoriesModal from './modals/ManageCategoriesModal'
 import ModifyTransactionsModal from './modals/ModifyTransactionsModal'
+import UploadReceiptModal from './modals/UploadReceiptModal'
 import ListView from './views/ListView'
 import ReceiptModal from './views/ListView/components/ReceiptModal'
 import TableView from './views/TableView'
@@ -35,6 +36,8 @@ function Transactions(): React.ReactElement {
   const [modifyTransactionsModalOpenType, setModifyModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
+  const [isUploadReceiptModaLOpen, setIsUploadReceiptModalOpen] =
+    useState(false)
   const [visibleColumn, setVisibleColumn] = useState([
     'Date',
     'Type',
@@ -128,6 +131,7 @@ function Transactions(): React.ReactElement {
         <div className="flex h-full min-w-0 flex-1 flex-col xl:ml-8">
           <Header
             setModifyModalOpenType={setModifyModalOpenType}
+            setUploadReceiptModalOpen={setIsUploadReceiptModalOpen}
             setSidebarOpen={setSidebarOpen}
           />
           <SearchBar setView={setView} view={view} />
@@ -220,6 +224,12 @@ function Transactions(): React.ReactElement {
         isOpen={receiptModalOpen}
         setOpen={setReceiptModalOpen}
         receiptSrc={receiptToView}
+      />
+      <UploadReceiptModal
+        open={isUploadReceiptModaLOpen}
+        setOpen={setIsUploadReceiptModalOpen}
+        setExistedData={setSelectedData}
+        setModifyModalOpenType={setModifyModalOpenType}
       />
     </ModuleWrapper>
   )

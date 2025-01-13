@@ -1,16 +1,20 @@
+import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import Button from '@components/ButtonsAndInputs/Button'
+import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import HeaderFilter from '@components/Miscellaneous/HeaderFilter'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function Header({
   setModifyModalOpenType,
+  setUploadReceiptModalOpen,
   setSidebarOpen
 }: {
   setModifyModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
+  setUploadReceiptModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   const {
@@ -126,15 +130,36 @@ function Header({
       </div>
       <div className="flex items-center gap-6">
         {typeof transactions !== 'string' && transactions.length > 0 && (
-          <Button
-            className="hidden md:flex"
-            onClick={() => {
-              setModifyModalOpenType('create')
-            }}
-            icon="tabler:plus"
-          >
-            Add Transaction
-          </Button>
+          <Menu as="div" className="relative z-50 hidden md:block">
+            <Button
+              onClick={() => {}}
+              icon="tabler:plus"
+              className="hidden md:flex"
+              as={MenuButton}
+            >
+              Add Transaction
+            </Button>
+            <MenuItems
+              transition
+              anchor="bottom end"
+              className="mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+            >
+              <MenuItem
+                onClick={() => {
+                  setModifyModalOpenType('create')
+                }}
+                icon="tabler:plus"
+                text="Add Manually"
+              />
+              <MenuItem
+                onClick={() => {
+                  setUploadReceiptModalOpen(true)
+                }}
+                icon="tabler:scan"
+                text="Scan Receipt"
+              />
+            </MenuItems>
+          </Menu>
         )}
         <Button
           icon="tabler:menu"

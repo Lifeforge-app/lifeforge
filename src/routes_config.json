@@ -169,6 +169,7 @@
         "name": "Wallet",
         "icon": "tabler:currency-dollar",
         "provider": "wallet-provider",
+        "hasAI": true,
         "subsection": [
           [
             "Dashboard",
