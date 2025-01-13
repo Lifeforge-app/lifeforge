@@ -33,21 +33,22 @@ function ModalHeader({
   const innerIcon = useDebounce(icon, 100)
 
   return (
-    <div className={`flex-between mb-4 flex ${className}`}>
-      <div className="flex w-full min-w-0 items-center gap-4">
-        <h1 className="flex w-full min-w-0 items-center gap-3 text-2xl font-semibold">
-          <Icon icon={innerIcon} className="size-7" />
-          <span className="min-w-0 truncate">
-            {needTranslate
-              ? t(`modals.header.${toCamelCase(innerTitle)}`)
-              : innerTitle}
-          </span>
-          {hasAI && (
-            <Icon icon="mage:stars-c" className="size-5 text-yellow-500" />
-          )}
-        </h1>
+    <div className={`flex-between mb-4 flex gap-4 ${className}`}>
+      <h1 className="flex w-full min-w-0 items-center gap-3 text-2xl font-semibold">
+        <Icon icon={innerIcon} className="size-7 shrink-0" />
+        <span className="min-w-0 truncate">
+          {needTranslate
+            ? t(`modals.header.${toCamelCase(innerTitle)}`)
+            : innerTitle}
+        </span>
+        {hasAI && (
+          <Icon
+            icon="mage:stars-c"
+            className="size-5 shrink-0 text-yellow-500"
+          />
+        )}
         {appendTitle}
-      </div>
+      </h1>
       <div className="flex items-center gap-2">
         {actionButtonIcon !== undefined && (
           <button

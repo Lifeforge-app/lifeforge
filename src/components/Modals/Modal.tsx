@@ -19,7 +19,6 @@ import ModalHeader from './ModalHeader'
 import ModalWrapper from './ModalWrapper'
 
 function Modal({
-  affectHeader,
   modalRef,
   fields,
   data,
@@ -38,7 +37,6 @@ function Modal({
   actionButtonIsRed,
   onActionButtonClick
 }: {
-  affectHeader?: boolean
   modalRef?: React.RefObject<HTMLDivElement | null>
   fields: IFieldProps[]
   data: Record<
@@ -90,12 +88,7 @@ function Modal({
 
   return (
     <>
-      <ModalWrapper
-        affectHeader={affectHeader}
-        minWidth="50vw"
-        modalRef={modalRef}
-        isOpen={isOpen}
-      >
+      <ModalWrapper minWidth="50vw" modalRef={modalRef} isOpen={isOpen}>
         <ModalHeader
           title={title}
           icon={icon}
@@ -395,7 +388,6 @@ function Modal({
           acceptedMimeTypes={{
             images: ['image/png', 'image/jpeg', 'image/webp']
           }}
-          affectHeader={false}
           enableUrl
           enablePixaBay
         />

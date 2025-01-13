@@ -21,12 +21,7 @@ function IconPickerModal({
   } | null>(null)
 
   return (
-    <ModalWrapper
-      affectHeader={false}
-      isOpen={isOpen}
-      minWidth="80vw"
-      minHeight="80vh"
-    >
+    <ModalWrapper isOpen={isOpen} minWidth="80vw" minHeight="80vh">
       {currentIconSet !== null ? (
         <div className="flex-between mb-8 flex w-full">
           <button

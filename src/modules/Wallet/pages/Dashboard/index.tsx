@@ -1,3 +1,4 @@
+import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import {
   ArcElement,
   BarElement,
@@ -50,15 +51,36 @@ function WalletDashboard(): React.ReactElement {
         icon="tabler:wallet"
         title="Wallet"
         actionButton={
-          <Button
-            className="hidden md:flex"
-            onClick={() => {
-              navigate('/wallet/transactions#new')
-            }}
-            icon="tabler:plus"
-          >
-            Add Transaction
-          </Button>
+          <Menu as="div" className="relative z-50 hidden md:block">
+            <Button
+              onClick={() => {}}
+              icon="tabler:plus"
+              className="hidden md:flex"
+              as={MenuButton}
+            >
+              Add Transaction
+            </Button>
+            <MenuItems
+              transition
+              anchor="bottom end"
+              className="mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+            >
+              <MenuItem
+                onClick={() => {
+                  navigate('/wallet/transactions#new')
+                }}
+                icon="tabler:plus"
+                text="Add Manually"
+              />
+              <MenuItem
+                onClick={() => {
+                  navigate('/wallet/transactions#scan')
+                }}
+                icon="tabler:scan"
+                text="Scan Receipt"
+              />
+            </MenuItems>
+          </Menu>
         }
         hamburgerMenuItems={
           <>
@@ -90,12 +112,29 @@ function WalletDashboard(): React.ReactElement {
         <TransactionsCard />
         <ExpensesBreakdownCard />
       </div>
-      <FAB
-        onClick={() => {
-          navigate('/wallet/transactions#new')
-        }}
-        hideWhen="md"
-      />
+      <Menu>
+        <FAB as={MenuButton} hideWhen="md" />
+        <MenuItems
+          transition
+          anchor="bottom end"
+          className="w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+        >
+          <MenuItem
+            onClick={() => {
+              navigate('/wallet/transactions#new')
+            }}
+            icon="tabler:plus"
+            text="Add Manually"
+          />
+          <MenuItem
+            onClick={() => {
+              navigate('/wallet/transactions#scan')
+            }}
+            icon="tabler:scan"
+            text="Scan Receipt"
+          />
+        </MenuItems>
+      </Menu>
     </ModuleWrapper>
   )
 }

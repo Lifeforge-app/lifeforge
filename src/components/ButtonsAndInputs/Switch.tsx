@@ -18,14 +18,14 @@ function Switch({
       onChange={onChange}
       className={`${
         checked ? 'bg-custom-500' : darkerComponentBgWithHover
-      } relative inline-flex h-6 w-11 items-center rounded-full`}
+      } relative inline-flex h-6 w-11 shrink-0 items-center rounded-full`}
     >
       <span
         className={`${
           checked
             ? `translate-x-6 ${isLightColor(theme) ? 'bg-bg-800' : 'bg-bg-100'}`
             : 'translate-x-1 bg-bg-50 dark:bg-bg-500'
-        } inline-block size-4 rounded-full transition`}
+        } inline-block size-4 shrink-0 rounded-full transition`}
       />
     </HeadlessSwitch>
   )

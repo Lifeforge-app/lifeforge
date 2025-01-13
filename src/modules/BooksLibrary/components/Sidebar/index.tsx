@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
 import SidebarItem from '@components/Sidebar/components/SidebarItem'
 import SidebarWrapper from '@components/Sidebar/components/SidebarWrapper'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
-import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import SidebarSection from './components/SidebarSection'
 
 function Sidebar(): React.ReactElement {
-  const { setSubSidebarExpanded } = useGlobalStateContext()
   const {
     miscellaneous: {
       searchParams,
@@ -16,10 +14,6 @@ function Sidebar(): React.ReactElement {
       setSidebarOpen
     }
   } = useBooksLibraryContext()
-
-  useEffect(() => {
-    setSubSidebarExpanded(sidebarOpen)
-  }, [sidebarOpen])
 
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>

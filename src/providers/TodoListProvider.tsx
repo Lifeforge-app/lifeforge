@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import useFetch from '@hooks/useFetch'
 import useHashParams from '@hooks/useHashParams'
-import { useGlobalStateContext } from './GlobalStateProvider'
 import {
   type ITodoListEntry,
   type ITodoListList,
@@ -128,11 +127,6 @@ export function TodoListProvider({
   const [deleteTagConfirmationModalOpen, setDeleteTagConfirmationModalOpen] =
     useState(false)
   const [selectedTag, setSelectedTag] = useState<ITodoListTag | null>(null)
-  const { setSubSidebarExpanded } = useGlobalStateContext()
-
-  useEffect(() => {
-    setSubSidebarExpanded(modifyTaskWindowOpenType !== null)
-  }, [modifyTaskWindowOpenType, setSubSidebarExpanded])
 
   return (
     <TodoListContext

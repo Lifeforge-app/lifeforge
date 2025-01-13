@@ -23,7 +23,6 @@ import {
 } from '@interfaces/photos_interfaces'
 import IntervalManager from '@utils/intervalManager'
 import { useAuthContext } from './AuthProvider'
-import { useGlobalStateContext } from './GlobalStateProvider'
 
 const intervalManager = IntervalManager.getInstance()
 
@@ -103,7 +102,6 @@ interface IPhotosData {
 export const PhotosContext = createContext<IPhotosData | undefined>(undefined)
 
 export default function PhotosProvider(): React.ReactElement {
-  const { setSubSidebarExpanded } = useGlobalStateContext()
   const { userData } = useAuthContext()
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -278,10 +276,6 @@ export default function PhotosProvider(): React.ReactElement {
       refreshPhotoDimensions()
     }
   }, [hidePhotosInAlbum, isBounded])
-
-  useEffect(() => {
-    setSubSidebarExpanded(sidebarOpen)
-  }, [sidebarOpen])
 
   return (
     <PhotosContext

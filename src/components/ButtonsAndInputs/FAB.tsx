@@ -2,22 +2,25 @@ import React from 'react'
 import Button from './Button'
 
 function FAB({
-  onClick: onclick,
+  onClick,
   icon = 'tabler:plus',
   text = '',
   hideWhen = 'sm',
-  alwaysShow = false
+  alwaysShow = false,
+  as
 }: {
-  onClick: () => void
+  onClick?: () => void
   icon?: string
   hideWhen?: 'sm' | 'md' | 'lg' | 'xl'
   alwaysShow?: boolean
   text?: string
+  as?: React.ElementType
 }): React.ReactElement {
   return (
     <Button
       icon={icon}
-      onClick={onclick}
+      onClick={onClick}
+      as={as ?? 'button'}
       className={`fixed bottom-6 right-6 z-10 shadow-lg ${
         alwaysShow
           ? ''
