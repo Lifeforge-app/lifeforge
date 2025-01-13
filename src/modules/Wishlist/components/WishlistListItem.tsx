@@ -57,7 +57,7 @@ function WishlistListItem({
               : Math.round((list.bought_count / list.item_count) * 100)}
             %
           </p>
-          <p>total {numberToMoney(list.total_amount)}</p>
+          <p>total RM{numberToMoney(list.total_amount)}</p>
         </div>
       </div>
       <HamburgerMenu className="absolute right-4 top-4">

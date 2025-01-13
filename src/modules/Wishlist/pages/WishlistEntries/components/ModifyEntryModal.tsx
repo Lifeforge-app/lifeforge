@@ -24,7 +24,7 @@ function ModifyEntryModal({
   setEntries: React.Dispatch<
     React.SetStateAction<IWishlistEntry[] | 'loading' | 'error'>
   >
-  existedData: IWishlistEntry | null
+  existedData: Partial<IWishlistEntry> | null
   collectionId: string
   lists: IWishlistList[] | 'loading' | 'error'
 }): React.ReactElement {
@@ -118,8 +118,7 @@ function ModifyEntryModal({
       list.trim().length === 0 ||
       url.trim().length === 0 ||
       name.trim().length === 0 ||
-      price.trim().length === 0 ||
-      image === null
+      price.trim().length === 0
     ) {
       toast.error(t('input.error.fieldEmpty'))
       return
@@ -131,6 +130,10 @@ function ModifyEntryModal({
     formData.append('name', name)
     formData.append('price', price)
     formData.append('file', image.image instanceof File ? image.image : '')
+    formData.append(
+      'image',
+      image.image instanceof File ? '' : image.image ?? ''
+    )
     formData.append(
       'imageRemoved',
       existedData?.image !== '' &&
@@ -160,31 +163,43 @@ function ModifyEntryModal({
   }
 
   useEffect(() => {
-    if (openType === 'update' && existedData !== null) {
+    const newData: Record<string, any> = {
+      list: '',
+      url: '',
+      name: '',
+      price: 0,
+      image: {
+        image: null,
+        preview: null
+      }
+    }
+    if (existedData !== null) {
+      for (const key in newData) {
+        if (key in existedData) {
+          newData[key] = existedData[key as keyof typeof existedData]
+        }
+      }
+
       setData({
-        ...existedData,
-        price: existedData.price.toString(),
+        ...newData,
+        price: existedData.price?.toString() ?? '',
         image: {
-          image: null,
+          image:
+            existedData.image?.startsWith('https://') === true
+              ? existedData.image
+              : null,
           preview:
-            existedData.image !== ''
-              ? `${import.meta.env.VITE_API_HOST}/media/${collectionId}/${
-                  existedData.id
-                }/${existedData.image}`
+            existedData.image !== '' && existedData.image !== undefined
+              ? existedData.image.startsWith('https://')
+                ? existedData.image
+                : `${import.meta.env.VITE_API_HOST}/media/${collectionId}/${
+                    existedData.id
+                  }/${existedData.image}`
               : null
         }
       })
     } else {
-      setData({
-        list: '',
-        name: '',
-        icon: '',
-        color: '',
-        cover: {
-          image: null,
-          preview: null
-        }
-      })
+      setData(newData)
     }
   }, [openType, existedData])
 
@@ -199,7 +214,7 @@ function ModifyEntryModal({
           create: 'Create ',
           update: 'Update '
         }[openType!]
-      } container`}
+      } entry`}
       icon={
         {
           create: 'tabler:plus',

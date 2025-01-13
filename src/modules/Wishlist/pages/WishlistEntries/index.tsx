@@ -31,7 +31,7 @@ function WishlistEntries(): React.ReactElement {
     `wishlist/lists/${id}`,
     valid === true
   )
-  const [entries, refreshEntries, setEntries] = useFetch<IWishlistEntry[]>(
+  const [entries, , setEntries] = useFetch<IWishlistEntry[]>(
     `wishlist/entries/${id}?bought=${activeTab === 'bought'}`,
     valid === true
   )
@@ -40,7 +40,8 @@ function WishlistEntries(): React.ReactElement {
     valid === true
   )
   const [isFromOtherAppsModalOpen, setFromOtherAppsModalOpen] = useState(false)
-  const [existedData, setExistedData] = useState<IWishlistEntry | null>(null)
+  const [existedData, setExistedData] =
+    useState<Partial<IWishlistEntry> | null>(null)
   const [modifyEntryModalOpenType, setModifyEntryModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
@@ -139,7 +140,12 @@ function WishlistEntries(): React.ReactElement {
               className="mt-2 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
             >
               <MenuItem
-                onClick={() => {}}
+                onClick={() => {
+                  setModifyEntryModalOpenType('create')
+                  setExistedData({
+                    list: id as string
+                  })
+                }}
                 icon="tabler:plus"
                 text="Add Manually"
               />
@@ -159,12 +165,26 @@ function WishlistEntries(): React.ReactElement {
           {
             id: 'wishlist',
             name: 'Wishlist',
-            icon: 'tabler:heart'
+            icon: 'tabler:heart',
+            amount:
+              typeof entries === 'string' ||
+              typeof wishlistListDetails === 'string'
+                ? 0
+                : activeTab === 'wishlist'
+                ? entries.length
+                : wishlistListDetails.item_count - entries.length
           },
           {
             id: 'bought',
             name: 'Bought',
-            icon: 'tabler:check'
+            icon: 'tabler:check',
+            amount:
+              typeof entries === 'string' ||
+              typeof wishlistListDetails === 'string'
+                ? 0
+                : activeTab === 'wishlist'
+                ? wishlistListDetails.item_count - entries.length
+                : entries.length
           }
         ]}
         active={activeTab}
@@ -214,7 +234,8 @@ function WishlistEntries(): React.ReactElement {
         onClose={() => {
           setFromOtherAppsModalOpen(false)
         }}
-        onCreate={refreshEntries}
+        setExistedData={setExistedData}
+        setModifyEntryModalOpenType={setModifyEntryModalOpenType}
       />
       <DeleteConfirmationModal
         isOpen={deleteEntryConfirmationModalOpen}
