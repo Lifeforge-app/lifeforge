@@ -302,6 +302,7 @@ function Modal({
                         }}
                         setImagePickerModalOpen={() => {
                           setImagePickerModalOpen(field.id)
+                          field.onFileRemoved?.()
                         }}
                         onImageRemoved={() => {
                           setData({

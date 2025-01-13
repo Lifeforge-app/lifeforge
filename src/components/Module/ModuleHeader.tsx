@@ -36,10 +36,15 @@ function ModuleHeader({
     <header className="flex-between z-[9980] flex w-full min-w-0 gap-8">
       <div className="flex w-full min-w-0 items-center gap-2">
         {!sidebarExpanded && (
-          <Button variant="no-bg" onClick={toggleSidebar} icon="tabler:menu" />
+          <Button
+            variant="no-bg"
+            className="flex sm:hidden"
+            onClick={toggleSidebar}
+            icon="tabler:menu"
+          />
         )}
         {icon !== undefined && (
-          <div className="hidden sm:flex size-14 shrink-0 items-center justify-center rounded-lg bg-custom-500/20 sm:size-16">
+          <div className="hidden size-14 shrink-0 items-center justify-center rounded-lg bg-custom-500/20 sm:flex sm:size-16">
             <Icon icon={icon} className="size-6 text-custom-500 sm:size-8" />
           </div>
         )}
