@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
 import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
@@ -127,6 +127,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
         updateValue={setVideoURLInput}
         placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
         className="mb-8"
+        darker
       />
       {URL_REGEX.test(videoURL) && (
         <APIFallbackComponent data={videoInfo}>

@@ -1,7 +1,7 @@
-import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React, { useEffect, useReducer, useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
+import Tabs from '@components/Miscellaneous/Tabs'
 import ModalHeader from '@components/Modals/ModalHeader'
 import ModalWrapper from '@components/Modals/ModalWrapper'
 import {
@@ -12,12 +12,6 @@ import ImageURL from './components/ImageURL'
 import LocalUpload from './components/LocalUpload'
 import Pixabay from './components/Pixabay'
 import SearchFilterModal from './components/Pixabay/components/SearchFilterModal'
-
-const MODES = [
-  ['Local', 'tabler:upload'],
-  ['URL', 'tabler:link'],
-  ['Pixabay', 'simple-icons:pixabay']
-]
 
 const initialFilter: IPixabaySearchFilter = {
   imageType: 'all',
@@ -83,32 +77,35 @@ function ImagePickerModal({
           onClose={onClose}
         />
         {(enablePixaBay || enableUrl) && (
-          <div className="mb-6 flex items-center">
-            {MODES.filter(
-              ([name]) =>
-                (name.toLowerCase() === 'pixabay' && enablePixaBay) ||
-                (name.toLowerCase() === 'url' && enableUrl) ||
-                name.toLowerCase() === 'local'
-            ).map(([name, icon], index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  setMode(name.toLowerCase() as 'local' | 'url' | 'pixabay')
-                  setFile(null)
-                }}
-                className={`flex w-full min-w-0 cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all ${
-                  mode === name.toLowerCase()
-                    ? 'border-custom-500 font-medium text-custom-500'
-                    : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
-                }`}
-              >
-                <Icon icon={icon} className="size-5 shrink-0" />
-                <span className="truncate sm:block">
-                  {t(`imageUpload.${name.toLowerCase()}`)}
-                </span>
-              </button>
-            ))}
-          </div>
+          <Tabs
+            items={[
+              {
+                name: t('imageUpload.pixabay'),
+                icon: 'tabler:upload',
+                id: 'local'
+              },
+              {
+                name: t('imageUpload.url'),
+                icon: 'tabler:link',
+                id: 'url'
+              },
+              {
+                name: t('imageUpload.pixabay'),
+                icon: 'simple-icons:pixabay',
+                id: 'pixabay'
+              }
+            ]}
+            enabled={(['local', 'url', 'pixabay'] as const).filter(
+              name =>
+                (name === 'pixabay' && enablePixaBay) ||
+                (name === 'url' && enableUrl)
+            )}
+            active={mode}
+            onNavClick={(id: 'local' | 'url' | 'pixabay') => {
+              setMode(id)
+              setFile(null)
+            }}
+          />
         )}
         <div className="flex h-full min-h-0 flex-1 flex-col overflow-auto">
           {(() => {
