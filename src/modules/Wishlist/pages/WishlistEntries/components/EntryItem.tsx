@@ -53,7 +53,7 @@ function EntryItem({
 
   return (
     <li
-      className={`${componentBg} flex flex-col justify-between gap-4 rounded-md p-4 pr-8 md:flex-row md:items-center`}
+      className={`${componentBg} relative flex flex-col justify-between gap-4 rounded-md p-4 sm:pr-8 md:flex-row md:items-center`}
     >
       <div className="flex-between gap-8">
         <div className="flex w-full min-w-0 flex-col gap-4 sm:flex-row sm:items-center">
@@ -113,7 +113,7 @@ function EntryItem({
           }}
           className="!flex sm:!hidden md:!flex"
         />
-        <HamburgerMenu>
+        <HamburgerMenu className="absolute right-4 top-4 sm:static">
           <MenuItem icon="tabler:pencil" text="Edit" onClick={onEdit} />
           <MenuItem
             icon="tabler:trash"
