@@ -7,6 +7,7 @@ interface IWishlistList extends BasePBCollection {
   color: string
   item_count: number
   total_amount: number
+  bought_count: number
 }
 
 interface IWishlistEntry extends BasePBCollection {
@@ -15,6 +16,8 @@ interface IWishlistEntry extends BasePBCollection {
   price: number
   image: string
   list: IWishlistList
+  bought: boolean
+  bought_at: string
 }
 
 export type { IWishlistList, IWishlistEntry }

@@ -16,6 +16,7 @@ function TagChip({ text }: { text: string }): React.ReactElement {
     () => selectedTags.includes(text),
     [selectedTags, text]
   )
+
   return (
     <div
       className={`flex items-center rounded-full px-3 py-1 text-sm shadow-sm ${
@@ -33,6 +34,7 @@ function TagChip({ text }: { text: string }): React.ReactElement {
     >
       {metadata !== undefined && (
         <Icon
+          key={metadata.icon}
           icon={metadata.icon}
           className="mr-2 size-3 shrink-0"
           style={{

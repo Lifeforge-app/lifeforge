@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import FAB from '@components/ButtonsAndInputs/FAB'
+import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import ModuleHeader from '@components/Module/ModuleHeader'
 import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
@@ -10,10 +11,13 @@ import ModifyWishlistListModal from './components/ModifyWishlistModal'
 import WishlistListItem from './components/WishlistListItem'
 
 function Wishlist(): React.ReactElement {
-  const [lists, refreshLists] = useFetch<IWishlistList[]>('wishlist/lists')
+  const [lists, refreshLists, setLists] =
+    useFetch<IWishlistList[]>('wishlist/lists')
   const [existedData, setExistedData] = useState<IWishlistList | null>(null)
   const [modifyWishlistListModalOpenType, setModifyWishlistListModalOpenType] =
     useState<'create' | 'update' | null>(null)
+  const [deleteConfirmationModalOpen, setDeleteConfirmationModalOpen] =
+    useState(false)
 
   return (
     <ModuleWrapper>
@@ -35,15 +39,19 @@ function Wishlist(): React.ReactElement {
       <APIFallbackComponent data={lists}>
         {lists => {
           return (
-            <div className="mt-6 space-y-4">
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]">
               {lists.map(list => (
                 <WishlistListItem
                   key={list.id}
                   list={list}
-                  setExistedData={setExistedData}
-                  setModifyWishlistListModalOpenType={
-                    setModifyWishlistListModalOpenType
-                  }
+                  onEdit={() => {
+                    setExistedData(list)
+                    setModifyWishlistListModalOpenType('update')
+                  }}
+                  onDelete={() => {
+                    setExistedData(list)
+                    setDeleteConfirmationModalOpen(true)
+                  }}
                 />
               ))}
             </div>
@@ -55,6 +63,22 @@ function Wishlist(): React.ReactElement {
         setOpenType={setModifyWishlistListModalOpenType}
         updateWishlistList={refreshLists}
         existedData={existedData}
+      />
+      <DeleteConfirmationModal
+        isOpen={deleteConfirmationModalOpen}
+        onClose={() => {
+          setDeleteConfirmationModalOpen(false)
+        }}
+        apiEndpoint="wishlist/lists"
+        data={existedData}
+        itemName="wishlist"
+        nameKey="name"
+        updateDataLists={() => {
+          setLists(prev => {
+            if (typeof prev === 'string') return prev
+            return prev.filter(list => list.id !== existedData?.id)
+          })
+        }}
       />
       <FAB
         icon="tabler:plus"

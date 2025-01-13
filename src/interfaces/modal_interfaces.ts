@@ -41,6 +41,7 @@ interface IIconInputFieldProps {
 interface IImageAndFileInputFieldProps {
   label: string
   type: 'file'
+  onFileRemoved?: () => void
 }
 
 type IFieldProps = (
