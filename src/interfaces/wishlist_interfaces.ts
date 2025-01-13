@@ -15,7 +15,7 @@ interface IWishlistEntry extends BasePBCollection {
   url: string
   price: number
   image: string
-  list: IWishlistList
+  list: string
   bought: boolean
   bought_at: string
 }

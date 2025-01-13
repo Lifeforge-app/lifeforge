@@ -12,6 +12,7 @@ function Tabs<T extends string>({
     id: T
     name: string
     icon: string
+    amount?: number
   }>
   enabled: T[]
   active: T
@@ -36,6 +37,9 @@ function Tabs<T extends string>({
           >
             <Icon icon={icon} className="size-5 shrink-0" />
             <span className="truncate sm:block">{name}</span>
+            <span className="hidden text-sm sm:block">
+              ({items.find(item => item.name === name)?.amount})
+            </span>
           </button>
         ))}
     </div>

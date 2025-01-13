@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react'
+import Button from '@components/ButtonsAndInputs/Button'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { initLocale } from '../i18n'
 
@@ -77,11 +78,28 @@ export default function APIOnlineStatusProvider({
           icon="tabler:wifi-off"
           title="API is Offline"
           description="The API is currently offline. Please try again later. If you are the developer, please check the API status."
-          ctaContent="Refresh"
-          ctaIcon="tabler:refresh"
-          onCTAClick={() => {
-            window.location.reload()
-          }}
+          customCTAButton={
+            <Button
+              icon="tabler:refresh"
+              onClick={() => {
+                setIsOnline('loading')
+                checkAPIStatus()
+                  .then(status => {
+                    if (status !== false) {
+                      initLocale()
+                    }
+                    setEnvironment(status === false ? null : status)
+                    setIsOnline(status !== false)
+                  })
+                  .catch(() => {
+                    setIsOnline(false)
+                  })
+              }}
+              className="bg-black text-white"
+            >
+              Retry
+            </Button>
+          }
         />
       )}
     </div>
