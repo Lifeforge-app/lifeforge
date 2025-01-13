@@ -12,6 +12,7 @@ function EmptyStateScreen({
   description,
   icon,
   ctaContent,
+  ctaIcon,
   customCTAButton,
   smaller = false
 }: {
@@ -21,6 +22,7 @@ function EmptyStateScreen({
   description?: string
   icon?: string
   ctaContent?: string
+  ctaIcon?: string
   customCTAButton?: React.ReactElement
   smaller?: boolean
 }): React.ReactElement {
@@ -48,7 +50,7 @@ function EmptyStateScreen({
         {name ? t(`emptyState.${name}.title`) : title}
       </h2>
       <p
-        className={`-mt-2 text-center text-bg-500  ${
+        className={`-mt-2 px-8 text-center text-bg-500  ${
           smaller ? 'text-base' : 'text-lg'
         }`}
       >
@@ -60,7 +62,7 @@ function EmptyStateScreen({
             onClick={() => {
               onCTAClick('create')
             }}
-            icon="tabler:plus"
+            icon={ctaIcon ?? 'tabler:plus'}
             className="mt-6"
           >
             {ctaContent}
