@@ -5,7 +5,6 @@ import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
 import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import Header from './Header'
 import ModifyTaskWindow from './ModifyTaskWindow'
@@ -40,7 +39,6 @@ function TodoListContainer(): React.ReactElement {
     deleteTagConfirmationModalOpen,
     setDeleteTagConfirmationModalOpen
   } = useTodoListContext()
-  const { setSubSidebarExpanded } = useGlobalStateContext()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -52,10 +50,6 @@ function TodoListContainer(): React.ReactElement {
       setModifyTaskWindowOpenType('create')
     }
   }, [hash])
-
-  useEffect(() => {
-    setSubSidebarExpanded(sidebarOpen)
-  }, [sidebarOpen])
 
   useEffect(() => {
     const status = searchParams.get('status')

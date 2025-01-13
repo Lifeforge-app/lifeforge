@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Outlet } from 'react-router'
 import useFetch from '@hooks/useFetch'
 import useHashParams from '@hooks/useHashParams'
@@ -10,7 +10,6 @@ import {
   type IProjectsMTechnology,
   type IProjectsMVisibility
 } from '@interfaces/projects_m_interfaces'
-import { useGlobalStateContext } from './GlobalStateProvider'
 
 type ModifyModalOpenType = 'create' | 'update' | null
 
@@ -78,7 +77,6 @@ export const ProjectsMContext = React.createContext<IProjectsMData | undefined>(
 )
 
 export default function ProjectsMProvider(): React.ReactElement {
-  const { setSubSidebarExpanded } = useGlobalStateContext()
   const [searchParams, setSearchParams] = useHashParams()
   const [searchQuery, setSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -97,10 +95,6 @@ export default function ProjectsMProvider(): React.ReactElement {
   const technologiesState = useProjectsMCommonState<IProjectsMTechnology>(
     'projects-m/technologies'
   )
-
-  useEffect(() => {
-    setSubSidebarExpanded(sidebarOpen)
-  }, [sidebarOpen])
 
   const deleteModalConfigs = Object.entries({
     entry: entriesState,

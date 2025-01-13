@@ -10,7 +10,7 @@ import ModalWrapper from '@components/Modals/ModalWrapper'
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 import APIRequest from '@utils/fetchData'
 
-function UploadReceiptModal({
+function ScanReceiptModal({
   open,
   setOpen,
   setExistedData,
@@ -73,8 +73,8 @@ function UploadReceiptModal({
     <>
       <ModalWrapper isOpen={open} minWidth="50vw">
         <ModalHeader
-          title="Upload Receipt"
-          icon="tabler:upload"
+          title="Scan Receipt"
+          icon="tabler:scan"
           onClose={() => {
             setOpen(false)
           }}
@@ -93,10 +93,12 @@ function UploadReceiptModal({
             setPreview(null)
           }}
         />
-        <div className="flex-between mt-4">
-          <div className="flex-center gap-2">
-            <Icon icon="tabler:file-check" className="size-5" />
-            <span>Keep receipt after scan</span>
+        <div className="flex-between mt-4 gap-4">
+          <div className="flex w-full min-w-0 items-center gap-2">
+            <Icon icon="tabler:file-check" className="size-5 shrink-0" />
+            <span className="w-full min-w-0 truncate">
+              Keep receipt after scan
+            </span>
           </div>
           <Switch
             checked={keepReceiptAfterScan}
@@ -118,7 +120,6 @@ function UploadReceiptModal({
         </Button>
       </ModalWrapper>
       <ImagePickerModal
-        affectHeader={false}
         acceptedMimeTypes={{
           images: ['image/jpeg', 'image/png', 'image/jpg'],
           files: ['application/pdf']
@@ -136,4 +137,4 @@ function UploadReceiptModal({
   )
 }
 
-export default UploadReceiptModal
+export default ScanReceiptModal

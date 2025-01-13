@@ -7,8 +7,8 @@ import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
 import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
 import ModalHeader from '@components/Modals/ModalHeader'
+import ModalWrapper from '@components/Modals/ModalWrapper'
 import { type INotesEntry } from '@interfaces/notes_interfaces'
 import APIRequest from '@utils/fetchData'
 
@@ -106,7 +106,6 @@ function ModifyFolderModal({
           value={folderName}
           updateValue={setFolderName}
           darker
-          className="w-[40vw]"
           onKeyDown={e => {
             if (e.key === 'Enter') {
               onSubmitButtonClick().catch(console.error)

@@ -96,7 +96,6 @@ function BgImageSelector(): React.ReactElement {
         )}
       </ConfigColumn>
       <ImagePickerModal
-        affectHeader
         isOpen={imageSelectorModalOpen}
         onClose={() => {
           setImageSelectorModalOpen(false)

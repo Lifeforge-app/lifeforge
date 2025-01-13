@@ -50,8 +50,7 @@ function ImagePickerModal({
   enablePixaBay = false,
   enableUrl = false,
   acceptedMimeTypes,
-  onSelect,
-  affectHeader = false
+  onSelect
 }: {
   isOpen: boolean
   onClose: () => void
@@ -59,7 +58,6 @@ function ImagePickerModal({
   enableUrl?: boolean
   acceptedMimeTypes: Record<string, string[]>
   onSelect: (file: string | File, preview: string | null) => Promise<void>
-  affectHeader?: boolean
 }): React.ReactElement {
   const [file, setFile] = useState<File | string | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
@@ -78,12 +76,7 @@ function ImagePickerModal({
 
   return (
     <>
-      <ModalWrapper
-        isOpen={isOpen}
-        minWidth="70vw"
-        className="overflow-hidden"
-        affectHeader={affectHeader}
-      >
+      <ModalWrapper isOpen={isOpen} minWidth="70vw" className="overflow-hidden">
         <ModalHeader
           icon="tabler:photo"
           title="Image Selector"

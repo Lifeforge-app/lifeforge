@@ -184,7 +184,6 @@ function ModifyEventModal({
         }}
       />
       <DeleteConfirmationModal
-        affectHeader={false}
         apiEndpoint="calendar/event"
         isOpen={isDeleteConfirmationModalOpen}
         data={existedData}

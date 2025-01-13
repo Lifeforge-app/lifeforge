@@ -79,7 +79,7 @@ function NotesCategory(): React.ReactElement {
           <APIFallbackComponent data={subjectsData}>
             {subjectsData =>
               subjectsData.length > 0 ? (
-                <div className="flex-center mb-8 grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-4 py-8">
+                <div className="mb-8 grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-4 py-8">
                   {subjectsData.map(subject => (
                     <SubjectItem
                       key={subject.id}

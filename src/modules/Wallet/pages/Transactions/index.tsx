@@ -1,3 +1,4 @@
+import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
@@ -10,14 +11,13 @@ import ModuleWrapper from '@components/Module/ModuleWrapper'
 import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
-import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { useWalletContext } from '@providers/WalletProvider'
 import Header from './components/Header'
 import SearchBar from './components/SearchBar'
 import Sidebar from './components/Sidebar'
 import ManageCategoriesModal from './modals/ManageCategoriesModal'
 import ModifyTransactionsModal from './modals/ModifyTransactionsModal'
-import UploadReceiptModal from './modals/UploadReceiptModal'
+import ScanReceiptModal from './modals/ScanReceiptModal'
 import ListView from './views/ListView'
 import ReceiptModal from './views/ListView/components/ReceiptModal'
 import TableView from './views/TableView'
@@ -29,8 +29,7 @@ function Transactions(): React.ReactElement {
     refreshTransactions,
     refreshAssets,
     refreshCategories,
-    filteredTransactions,
-    searchParams
+    filteredTransactions
   } = useWalletContext()
 
   const [modifyTransactionsModalOpenType, setModifyModalOpenType] = useState<
@@ -53,7 +52,6 @@ function Transactions(): React.ReactElement {
     deleteTransactionsConfirmationOpen,
     setDeleteTransactionsConfirmationOpen
   ] = useState(false)
-  const { setSubSidebarExpanded, subSidebarExpanded } = useGlobalStateContext()
   const [isManageCategoriesModalOpen, setManageCategoriesModalOpen] = useState<
     boolean | 'new'
   >(false)
@@ -72,16 +70,11 @@ function Transactions(): React.ReactElement {
       setSelectedData(null)
       setModifyModalOpenType('create')
     }
-  }, [hash])
 
-  useEffect(() => {
-    console.log(subSidebarExpanded)
-    if (sidebarOpen) {
-      setSubSidebarExpanded(true)
-    } else {
-      setSubSidebarExpanded(false)
+    if (hash === '#scan') {
+      setIsUploadReceiptModalOpen(true)
     }
-  }, [sidebarOpen, setSubSidebarExpanded, searchParams])
+  }, [hash])
 
   return (
     <ModuleWrapper>
@@ -181,13 +174,30 @@ function Transactions(): React.ReactElement {
               }
             </APIFallbackComponent>
             {transactions.length > 0 && (
-              <FAB
-                onClick={() => {
-                  setSelectedData(null)
-                  setModifyModalOpenType('create')
-                }}
-                hideWhen="md"
-              />
+              <Menu>
+                <FAB as={MenuButton} hideWhen="md" />
+                <MenuItems
+                  transition
+                  anchor="bottom end"
+                  className="w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+                >
+                  <MenuItem
+                    onClick={() => {
+                      setSelectedData(null)
+                      setModifyModalOpenType('create')
+                    }}
+                    icon="tabler:plus"
+                    text="Add Manually"
+                  />
+                  <MenuItem
+                    onClick={() => {
+                      setIsUploadReceiptModalOpen(true)
+                    }}
+                    icon="tabler:scan"
+                    text="Scan Receipt"
+                  />
+                </MenuItems>
+              </Menu>
             )}
           </div>
         </div>
@@ -225,7 +235,7 @@ function Transactions(): React.ReactElement {
         setOpen={setReceiptModalOpen}
         receiptSrc={receiptToView}
       />
-      <UploadReceiptModal
+      <ScanReceiptModal
         open={isUploadReceiptModaLOpen}
         setOpen={setIsUploadReceiptModalOpen}
         setExistedData={setSelectedData}
