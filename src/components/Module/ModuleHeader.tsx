@@ -37,7 +37,7 @@ function ModuleHeader({
             <Icon icon={icon} className="size-6 text-custom-500 sm:size-8" />
           </div>
         )}
-        <div className="w-full min-w-0 space-y-1">
+        <div className="w-full min-w-0 sm:space-y-1">
           <h1 className="flex w-full min-w-0 items-end gap-3 whitespace-nowrap text-2xl font-semibold sm:text-3xl md:text-4xl">
             <span className="block truncate">
               {needTranslate

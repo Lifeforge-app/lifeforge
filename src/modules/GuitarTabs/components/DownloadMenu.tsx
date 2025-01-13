@@ -19,7 +19,7 @@ function DownloadMenu({
               entry.id
             }/${entry.pdf}`,
             entry.pdf
-          )
+          ).catch(console.error)
         }}
         text="PDF"
         icon="tabler:file-text"
@@ -33,7 +33,7 @@ function DownloadMenu({
                 entry.id
               }/${entry.audio}`,
               entry.audio
-            )
+            ).catch(console.error)
           }}
           text="Audio"
           icon="tabler:music"
@@ -48,7 +48,7 @@ function DownloadMenu({
                 entry.id
               }/${entry.musescore}`,
               entry.musescore
-            )
+            ).catch(console.error)
           }}
           text="Musescore"
           icon="simple-icons:musescore"
