@@ -27,7 +27,7 @@ interface IWalletTransaction extends BasePBCollection {
   category: string
   asset: string
   ledger: string
-  receipt: string
+  receipt: string | File
 }
 
 interface IWalletIncomeExpenses {
@@ -37,10 +37,18 @@ interface IWalletIncomeExpenses {
   monthlyExpenses: number
 }
 
+interface IWalletReceiptScanResult {
+  date: string
+  particulars: string
+  type: 'income' | 'expenses'
+  amount: number
+}
+
 export type {
   IWalletAsset,
   IWalletCategory,
   IWalletIncomeExpenses,
   IWalletLedger,
-  IWalletTransaction
+  IWalletTransaction,
+  IWalletReceiptScanResult
 }

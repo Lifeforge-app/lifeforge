@@ -30,7 +30,7 @@ function ImageAndFileInput({
 
   return (
     <>
-      <div className="mt-4 w-full rounded-md bg-bg-200/30 p-6 shadow-custom dark:bg-bg-800/50">
+      <div className="w-full rounded-md bg-bg-200/30 p-6 shadow-custom dark:bg-bg-800/50">
         <div className="flex items-center gap-4 text-bg-500">
           <Icon icon={icon} className="size-6" />
           <span className="font-medium">{t(`input.${toCamelCase(name)}`)}</span>

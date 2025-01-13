@@ -27,13 +27,13 @@ function WishlistListItem({
     >
       <div className="flex w-full min-w-0 items-center">
         <div
-          className="rounded-md p-4"
+          className="rounded-md p-3 sm:p-4"
           style={{
             backgroundColor: list.color + '20',
             color: list.color
           }}
         >
-          <Icon icon={list.icon} className="size-8" />
+          <Icon icon={list.icon} className="size-6 sm:size-8" />
         </div>
         <div className="ml-4 w-full min-w-0">
           <h2 className="truncate text-xl font-semibold">{list.name}</h2>

@@ -45,13 +45,14 @@ function Overview({
         <div className="flex items-center justify-between bg-bg-900 p-3 print:!bg-black/[3%]">
           <p className="text-xl">Expenses</p>
           <p className="text-lg">
-            RM{' '}
+            RM (
             {numberToMoney(
               filteredTransactions.reduce((acc, curr) => {
                 if (curr.type === 'expenses') return acc + curr.amount
                 return acc
               }, 0)
             )}
+            )
           </p>
         </div>
         <div className="flex items-center justify-between">
@@ -400,12 +401,18 @@ function Overview({
                             if (typeof transactions === 'string') {
                               return <></>
                             }
+
+                            const lastMonth = moment()
+                              .year(year)
+                              .month(month - 1)
+
                             const lastMonthAmount = transactions
                               .filter(
                                 transaction =>
                                   moment(transaction.date).month() ===
-                                    month - 1 &&
-                                  moment(transaction.date).year() === year &&
+                                    lastMonth.month() &&
+                                  moment(transaction.date).year() ===
+                                    lastMonth.year() &&
                                   transaction.category === category.id
                               )
                               .reduce((acc, curr) => acc + curr.amount, 0)
@@ -478,12 +485,18 @@ function Overview({
                         if (typeof transactions === 'string') {
                           return <></>
                         }
+
+                        const lastMonth = moment()
+                          .year(year)
+                          .month(month - 1)
                         const lastMonthAmount = transactions
                           .filter(
                             transaction =>
                               transaction.type === type &&
-                              moment(transaction.date).month() === month - 1 &&
-                              moment(transaction.date).year() === year
+                              moment(transaction.date).month() ===
+                                lastMonth.month() &&
+                              moment(transaction.date).year() ===
+                                lastMonth.year()
                           )
                           .reduce((acc, curr) => acc + curr.amount, 0)
 

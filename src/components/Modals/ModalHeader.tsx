@@ -9,6 +9,7 @@ function ModalHeader({
   title,
   needTranslate = true,
   icon,
+  hasAI = false,
   onClose,
   actionButtonIcon,
   actionButtonIsRed = false,
@@ -19,6 +20,7 @@ function ModalHeader({
   title: string
   needTranslate?: boolean
   icon: string
+  hasAI?: boolean
   onClose: () => void
   actionButtonIcon?: string
   actionButtonIsRed?: boolean
@@ -35,11 +37,14 @@ function ModalHeader({
       <div className="flex w-full min-w-0 items-center gap-4">
         <h1 className="flex w-full min-w-0 items-center gap-3 text-2xl font-semibold">
           <Icon icon={innerIcon} className="size-7" />
-          <span className="w-full min-w-0 truncate">
+          <span className="min-w-0 truncate">
             {needTranslate
               ? t(`modals.header.${toCamelCase(innerTitle)}`)
               : innerTitle}
           </span>
+          {hasAI && (
+            <Icon icon="mage:stars-c" className="size-5 text-yellow-500" />
+          )}
         </h1>
         {appendTitle}
       </div>

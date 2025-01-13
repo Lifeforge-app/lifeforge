@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
+import { parse } from 'file-type-mime'
 import { t } from 'i18next'
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
@@ -58,19 +59,36 @@ function ModifyTransactionsModal({
 
   const ref = useRef<HTMLInputElement>(null)
 
+  async function getImagePreview(file: File): Promise<void> {
+    const mime = parse(await file.arrayBuffer())
+    if (mime?.mime.includes('image')) {
+      const reader = new FileReader()
+      reader.onload = () => {
+        setImagePreviewUrl(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    } else {
+      setImagePreviewUrl(null)
+    }
+  }
+
   useEffect(() => {
     if (openType) {
-      if (openType === 'update') {
-        if (existedData) {
-          setParticular(existedData.particulars)
-          setTransactionType(existedData.type)
-          setTransactionDate(existedData.date)
-          setAmount(`${existedData.amount}`)
-          setCategory(existedData.category)
-          setLocation(existedData.location)
-          setTransactionAsset(existedData.asset)
-          setLedger(existedData.ledger)
-          setReceipt(null)
+      if (existedData) {
+        setParticular(existedData.particulars)
+        setTransactionType(existedData.type)
+        setTransactionDate(moment(existedData.date).format('YYYY-MM-DD'))
+        setAmount(`${existedData.amount}`)
+        setCategory(existedData.category || '')
+        setLocation(existedData.location || '')
+        setTransactionAsset(existedData.asset || '')
+        setLedger(existedData.ledger || '')
+        setReceipt(
+          existedData.receipt instanceof File ? existedData.receipt : null
+        )
+        if (existedData.receipt instanceof File) {
+          getImagePreview(existedData.receipt).catch(console.error)
+        } else {
           setImagePreviewUrl(
             existedData.receipt
               ? `${import.meta.env.VITE_API_HOST}/media/${
