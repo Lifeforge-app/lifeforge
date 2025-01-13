@@ -48,7 +48,7 @@ const generateColorClass = (isRed: boolean, variant: string): string => {
       return 'hover:bg-bg-200/50 dark:hover:bg-bg-800/50 text-bg-500 hover:text-bg-800 dark:hover:text-bg-50 disabled:text-bg-200 disabled:dark:text-bg-600 disabled:!bg-transparent disabled:dark:!bg-transparent disabled:hover:!bg-transparent disabled:dark:hover:!bg-transparent disabled:hover:text-bg-200 disabled:dark:hover:text-bg-600'
     case 'secondary':
     default:
-      return 'bg-bg-300 shadow-custom text-bg-500 dark:text-bg-50 dark:bg-bg-500 hover:bg-bg-400/50 dark:hover:bg-bg-500/80 text-bg-50 dark:text-bg-800 disabled:bg-bg-200 disabled:hover:bg-bg-200 dark:disabled:bg-bg-900 dark:disabled:hover:bg-bg-900 dark:disabled:text-bg-600'
+      return 'bg-bg-300 shadow-custom text-bg-500 dark:text-bg-50 dark:bg-bg-600 hover:bg-bg-400/50 dark:hover:bg-bg-500/80 text-bg-50 dark:text-bg-800 disabled:bg-bg-200 disabled:hover:bg-bg-200 dark:disabled:bg-bg-900 dark:disabled:hover:bg-bg-900 dark:disabled:text-bg-600'
   }
 }
 

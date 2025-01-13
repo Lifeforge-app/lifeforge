@@ -2,6 +2,8 @@ import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import Button from '@components/ButtonsAndInputs/Button'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { toCamelCase } from '@utils/strings'
 
 interface ModuleHeaderProps {
@@ -28,12 +30,16 @@ function ModuleHeader({
   needTranslate = true
 }: ModuleHeaderProps): React.ReactElement {
   const { t } = useTranslation()
+  const { toggleSidebar, sidebarExpanded } = useGlobalStateContext()
 
   return (
-    <header className="flex-between flex w-full min-w-0 gap-8">
-      <div className="flex w-full min-w-0 items-center gap-4">
+    <header className="flex-between z-[9980] flex w-full min-w-0 gap-8">
+      <div className="flex w-full min-w-0 items-center gap-2">
+        {!sidebarExpanded && (
+          <Button variant="no-bg" onClick={toggleSidebar} icon="tabler:menu" />
+        )}
         {icon !== undefined && (
-          <div className="flex size-14 shrink-0 items-center justify-center rounded-lg bg-custom-500/20 sm:size-16">
+          <div className="hidden sm:flex size-14 shrink-0 items-center justify-center rounded-lg bg-custom-500/20 sm:size-16">
             <Icon icon={icon} className="size-6 text-custom-500 sm:size-8" />
           </div>
         )}

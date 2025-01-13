@@ -30,9 +30,26 @@ function EntryItem({
           <p className="text-2xl">RM {numberToMoney(entry.price)}</p>
         </div>
       </div>
-      <Button icon="tabler:check" variant="secondary" onClick={() => {}}>
-        Mark as bought
-      </Button>
+      <div className="flex flex-col items-center gap-2 sm:flex-row">
+        <Button
+          as="a"
+          href={entry.url}
+          target="_blank"
+          variant="secondary"
+          className="w-full sm:w-auto"
+          icon="tabler:link"
+        >
+          Visit Website
+        </Button>
+        <Button
+          icon="tabler:check"
+          variant="primary"
+          onClick={() => {}}
+          className="w-full sm:w-auto"
+        >
+          Mark as bought
+        </Button>
+      </div>
     </li>
   )
 }
