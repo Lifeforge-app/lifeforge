@@ -77,6 +77,11 @@ export default function APIOnlineStatusProvider({
           icon="tabler:wifi-off"
           title="API is Offline"
           description="The API is currently offline. Please try again later. If you are the developer, please check the API status."
+          ctaContent="Refresh"
+          ctaIcon="tabler:refresh"
+          onCTAClick={() => {
+            window.location.reload()
+          }}
         />
       )}
     </div>
