@@ -8,6 +8,7 @@ import React from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Button from '@components/ButtonsAndInputs/Button'
+import FAB from '@components/ButtonsAndInputs/FAB'
 import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import useFetch from '@hooks/useFetch'
@@ -318,14 +319,12 @@ function DirectoryHeader({
           </button>
         </div>
       </div>
-      <Menu as="div" className="absolute bottom-8 right-8 z-50 md:hidden">
-        <Button onClick={() => {}} as={Menu.Button} icon="tabler:plus">
-          new
-        </Button>
+      <Menu>
+        <FAB as={MenuButton} hideWhen="md" />
         <MenuItems
           transition
           anchor="bottom end"
-          className="mt-6 w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+          className="w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
         >
           <MenuItem
             onClick={() => {

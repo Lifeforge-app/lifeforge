@@ -17,7 +17,6 @@ function PhotosMainGallery(): React.ReactElement {
     setPhotoDimensions,
     hidePhotosInAlbum,
     setReady,
-    sidebarOpen,
     setSidebarOpen,
     refreshPhotos,
     imagePreviewModalOpenFor,
@@ -45,11 +44,9 @@ function PhotosMainGallery(): React.ReactElement {
 
   return showGallery ? (
     <section
-      className={`absolute flex transition-all ${
-        sidebarOpen
-          ? 'top-0 h-full'
-          : 'top-24 h-[calc(100%-6rem)] sm:top-32 sm:h-[calc(100%-8rem)]'
-      } min-h-0 w-full flex-1 flex-col pl-4 sm:pl-12`}
+      className={
+        'absolute top-0 flex size-full min-h-0 flex-1 flex-col pl-4 pt-8 transition-all sm:pl-12'
+      }
     >
       <ModuleHeader
         icon="tabler:camera"

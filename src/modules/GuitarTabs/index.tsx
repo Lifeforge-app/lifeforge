@@ -18,7 +18,6 @@ import {
   type IGuitarTabsEntry,
   type IGuitarTabsSidebarData
 } from '@interfaces/guitar_tabs_interfaces'
-import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import GuitarWorldModal from './components/GuitarWorldModal'
 import Header from './components/Header'
 import ModifyEntryModal from './components/ModifyEntryModal'
@@ -36,7 +35,6 @@ const SORT_TYPE = [
 
 function GuitarTabs(): React.ReactElement {
   const { componentBgWithHover } = useThemeColors()
-  const { setSubSidebarExpanded } = useGlobalStateContext()
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [page, setPage] = useState<number>(1)
   const [searchQuery, setSearchQuery] = useState<string>('')
@@ -76,10 +74,6 @@ function GuitarTabs(): React.ReactElement {
   useEffect(() => {
     setPage(1)
   }, [searchParams])
-
-  useEffect(() => {
-    setSubSidebarExpanded(sidebarOpen)
-  }, [setSubSidebarExpanded, sidebarOpen])
 
   return (
     <ModuleWrapper>

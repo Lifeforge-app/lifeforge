@@ -15,8 +15,7 @@ function DeleteConfirmationModal({
   apiEndpoint,
   customText,
   nameKey,
-  customCallback,
-  affectHeader = false
+  customCallback
 }: {
   itemName?: string
   isOpen: boolean
@@ -27,7 +26,6 @@ function DeleteConfirmationModal({
   customText?: string
   nameKey?: string
   customCallback?: () => Promise<void>
-  affectHeader?: boolean
 }): React.ReactElement {
   const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
@@ -61,7 +59,7 @@ function DeleteConfirmationModal({
   }
 
   return (
-    <ModalWrapper isOpen={isOpen} affectHeader={affectHeader}>
+    <ModalWrapper isOpen={isOpen}>
       <h1 className="text-2xl font-semibold">
         {t('modals.deleteConfirmation.title', {
           itemName: nameKey ? data?.[nameKey] : `the ${itemName}`

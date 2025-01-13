@@ -28,7 +28,7 @@ function Notes(): React.ReactElement {
           return <ErrorScreen message="Failed to fetch data from server." />
         } else {
           return (
-            <div className="flex-center grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-4 py-8">
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-4 py-8">
               {data.map(workspace => (
                 <Link
                   to={`/notes/${workspace.id}`}

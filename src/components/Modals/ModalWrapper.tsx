@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 
 function ModalWrapper({
   isOpen,
@@ -7,7 +6,6 @@ function ModalWrapper({
   minWidth,
   minHeight,
   className,
-  affectHeader: affectSidebar = true,
   modalRef
 }: {
   isOpen: boolean
@@ -15,18 +13,10 @@ function ModalWrapper({
   minWidth?: string
   minHeight?: string
   className?: string
-  affectHeader?: boolean
   modalRef?: React.RefObject<HTMLDivElement | null>
 }): React.ReactElement {
-  const { setSubSidebarExpanded } = useGlobalStateContext()
   const [innerIsOpen, setInnerIsOpen] = useState(false)
   const [firstTime, setFirstTime] = useState(true)
-
-  useEffect(() => {
-    if (affectSidebar) {
-      setSubSidebarExpanded(isOpen)
-    }
-  }, [isOpen, setSubSidebarExpanded])
 
   useEffect(() => {
     if (!isOpen && !firstTime) {
