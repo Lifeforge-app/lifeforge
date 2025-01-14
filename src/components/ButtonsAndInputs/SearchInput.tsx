@@ -36,7 +36,7 @@ function SearchInput({
 
   return (
     <search
-      className={`flex min-h-14 w-full cursor-text items-center gap-4 rounded-lg px-4 transition-all ${componentBgWithHover} ${
+      className={`flex min-h-14 w-full cursor-text items-center gap-4 rounded-lg px-4 shadow-custom transition-all ${componentBgWithHover} ${
         lighter
           ? 'dark:bg-bg-800/50 dark:hover:bg-bg-800'
           : 'dark:bg-bg-900 dark:hover:bg-bg-800/50'
