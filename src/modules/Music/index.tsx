@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useDebounce } from '@uidotdev/usehooks'
-import React from 'react'
+import React, { useEffect } from 'react'
 import SearchInput from '@components/ButtonsAndInputs/SearchInput'
 import Scrollbar from '@components/Miscellaneous/Scrollbar'
 import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
@@ -23,10 +23,28 @@ function Music(): React.ReactElement {
     refreshMusics,
     currentMusic,
     existedData,
+    togglePlay,
     isDeleteMusicConfirmationModalOpen,
     setIsDeleteMusicConfirmationModalOpen
   } = useMusicContext()
   const debouncedSearchQuery = useDebounce(searchQuery, 500)
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent): void => {
+      if (e.code === 'Space' && (e.target as HTMLElement).tagName !== 'INPUT') {
+        e.preventDefault()
+        if (currentMusic !== null) {
+          togglePlay(currentMusic).catch(console.error)
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyPress)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress)
+    }
+  })
 
   return (
     <ModuleWrapper>
