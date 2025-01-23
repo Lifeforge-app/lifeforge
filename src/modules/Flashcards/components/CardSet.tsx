@@ -131,7 +131,7 @@ function CardSet(): React.ReactElement {
             </button>
             <HamburgerMenu largerPadding className="relative">
               <MenuItem
-                icon="tabler:edit"
+                icon="tabler:pencil"
                 text="Edit Cards"
                 onClick={() => {
                   setEditCardModalOpen(true)

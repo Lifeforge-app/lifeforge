@@ -13,7 +13,8 @@ export default async function APIRequest({
   successInfo,
   failureInfo,
   onFailure,
-  isJSON = true
+  isJSON = true,
+  timeout = 30000
 }: {
   endpoint: string
   method: string
@@ -24,9 +25,11 @@ export default async function APIRequest({
   failureInfo?: string | null | false
   onFailure?: () => void
   isJSON?: boolean
+  timeout?: number
 }): Promise<any> {
   await fetch(`${import.meta.env.VITE_API_HOST}/${endpoint}`, {
     method,
+    signal: AbortSignal.timeout(timeout),
     headers: {
       Authorization: cookieParse(document.cookie).token
         ? `Bearer ${cookieParse(document.cookie).token}`

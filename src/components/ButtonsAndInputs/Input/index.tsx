@@ -37,6 +37,7 @@ interface IInputProps {
   onActionButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   ref?: React.RefObject<HTMLInputElement | null>
+  required?: boolean
 }
 
 function Input({
@@ -56,6 +57,7 @@ function Input({
   onKeyDown = () => {},
   placeholder,
   ref,
+  required,
   updateValue,
   value
 }: IInputProps): React.ReactElement {
@@ -73,6 +75,7 @@ function Input({
       <InputIcon icon={icon} active={String(value).length > 0} />
       <div className="flex w-full items-center gap-2">
         <InputLabel
+          required={required === true}
           label={needTranslate ? t(`input.${toCamelCase(name)}`) : name}
           active={String(value).length > 0}
         />

@@ -4,6 +4,7 @@ import CurrencyInput from 'react-currency-input-field'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
 import InputIcon from './Input/components/InputIcon'
+import InputLabel from './Input/components/InputLabel'
 import InputWrapper from './Input/components/InputWrapper'
 
 function CurrencyInputComponent({
@@ -13,7 +14,8 @@ function CurrencyInputComponent({
   value,
   updateValue,
   darker = false,
-  className = ''
+  className = '',
+  required
 }: {
   reference?: React.RefObject<HTMLInputElement | null>
   name: string
@@ -23,6 +25,7 @@ function CurrencyInputComponent({
   updateValue: (value: string | undefined) => void
   darker?: boolean
   className?: string
+  required?: boolean
 }): React.ReactElement {
   const { t } = useTranslation()
 
@@ -30,15 +33,11 @@ function CurrencyInputComponent({
     <InputWrapper darker={darker} className={className}>
       <InputIcon icon={icon} active={!!value} />
       <div className="flex w-full items-center gap-2">
-        <span
-          className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 transition-all group-focus-within:!text-custom-500 ${
-            !value
-              ? 'top-1/2 -translate-y-1/2 group-focus-within:top-6 group-focus-within:text-[14px]'
-              : 'top-6 -translate-y-1/2 text-[14px]'
-          }`}
-        >
-          {t(`input.${toCamelCase(name)}`)}
-        </span>
+        <InputLabel
+          label={t(`input.${toCamelCase(name)}`)}
+          active={!!value}
+          required={required === true}
+        />
         <CurrencyInput
           name={name}
           placeholder={placeholder}

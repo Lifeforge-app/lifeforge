@@ -14,18 +14,24 @@ function InputWrapper({
   inputRef?: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>
   children: React.ReactNode
 }): React.ReactElement {
-  const { componentBgWithHover, darkerComponentBgWithHover } = useThemeColors()
+  const { componentBgWithHover, componentBgLighterWithHover } = useThemeColors()
 
   return (
     <div
       className={`group relative flex shrink-0 items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 pl-6 shadow-custom transition-all focus-within:!border-custom-500 hover:bg-bg-200 ${
-        darker ? darkerComponentBgWithHover : componentBgWithHover
+        darker ? componentBgLighterWithHover : componentBgWithHover
       } ${className} ${
         disabled ? '!pointer-events-none opacity-50' : 'cursor-text'
       }`}
-      onClick={() => {
+      onClick={e => {
         if (inputRef?.current !== undefined && inputRef.current !== null) {
           inputRef.current.focus()
+          if ((e.target as HTMLElement).tagName !== 'INPUT') {
+            inputRef.current.setSelectionRange(
+              inputRef.current.value.length,
+              inputRef.current.value.length
+            )
+          }
         }
       }}
     >

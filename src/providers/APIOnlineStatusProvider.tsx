@@ -95,7 +95,8 @@ export default function APIOnlineStatusProvider({
                     setIsOnline(false)
                   })
               }}
-              className="bg-black text-white"
+              needTranslate={false}
+              className="!bg-black !text-white"
             >
               Retry
             </Button>
