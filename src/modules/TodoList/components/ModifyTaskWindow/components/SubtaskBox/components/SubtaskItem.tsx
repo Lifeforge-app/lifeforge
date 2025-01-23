@@ -146,7 +146,7 @@ function SubtaskItem({
       </div>
       <HamburgerMenu className="relative">
         <MenuItem
-          icon="tabler:edit"
+          icon="tabler:pencil"
           text="Edit"
           onClick={() => {
             setIsEditing(true)

@@ -14,7 +14,7 @@ function ListboxOrComboboxOption({
   type = 'listbox',
   matchedSubstrings
 }: {
-  value: string | number | Record<string, any>
+  value: string | number | Record<string, any> | null
   text: string
   icon?: string
   color?: string
@@ -33,7 +33,7 @@ function ListboxOrComboboxOption({
         <>
           <div
             className={`flex items-center ${
-              color !== undefined ? 'gap-4' : 'gap-2'
+              color !== undefined ? 'gap-3' : 'gap-2'
             } ${selected ? 'font-semibold text-bg-800 dark:text-bg-100' : ''}`}
           >
             {icon !== undefined ? (
@@ -53,7 +53,7 @@ function ListboxOrComboboxOption({
             ) : (
               color !== undefined && (
                 <span
-                  className="block h-6 w-1 rounded-full border border-bg-200 dark:border-bg-700"
+                  className="block size-4 rounded-full border border-bg-200 dark:border-bg-700"
                   style={{ backgroundColor: color }}
                 />
               )

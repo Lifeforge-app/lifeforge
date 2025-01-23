@@ -81,7 +81,7 @@ function _SidebarItem({
           hasHamburgerMenu ? (
             <>
               <MenuItem
-                icon="tabler:edit"
+                icon="tabler:pencil"
                 onClick={e => {
                   e.stopPropagation()
                   setExistedData(item as any)

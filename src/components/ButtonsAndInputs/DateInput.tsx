@@ -23,6 +23,7 @@ interface DateInputProps {
   darker?: boolean
   modalRef?: React.RefObject<HTMLElement | null>
   index?: number
+  required?: boolean
 }
 
 const DateInput: React.FC<DateInputProps> = ({
@@ -34,7 +35,8 @@ const DateInput: React.FC<DateInputProps> = ({
   className = '',
   darker = false,
   modalRef,
-  index = 0
+  index = 0,
+  required
 }) => {
   const { t } = useTranslation()
   const { language } = usePersonalizationContext()
@@ -73,7 +75,11 @@ const DateInput: React.FC<DateInputProps> = ({
     >
       <InputIcon icon={icon} active={date !== ''} />
       <div ref={ref} className="flex w-full items-center gap-2">
-        <InputLabel label={t(`input.${toCamelCase(name)}`)} active />
+        <InputLabel
+          required={required === true}
+          label={t(`input.${toCamelCase(name)}`)}
+          active
+        />
         <DatePicker
           onCalendarOpen={updateCalendarLocation}
           portalContainer={

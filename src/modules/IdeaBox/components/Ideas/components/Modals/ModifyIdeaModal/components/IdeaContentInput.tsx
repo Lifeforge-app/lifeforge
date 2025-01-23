@@ -34,6 +34,7 @@ function IdeaContentInput({
       />
       <div className="flex w-full items-center gap-2">
         <InputLabel
+          required
           label={
             innerTypeOfModifyIdea === 'text'
               ? t('input.ideaContent')

@@ -138,6 +138,28 @@
           "achievements-id": "achievements/:id"
         },
         "togglable": true
+      },
+      {
+        "name": "Virtual Wardrobe",
+        "icon": "tabler:shirt",
+        "subsection": [
+          [
+            "Virtual Wardrobe Clothes",
+            "tabler:shirt",
+            "clothes"
+          ],
+          [
+            "Virtual Wardrobe Outfits",
+            "tabler:layout",
+            "outfits"
+          ]
+        ],
+        "routes": {
+          "virtual-wardrobe": "virtual-wardrobe",
+          "virtual-wardrobe-clothes": "virtual-wardrobe/clothes",
+          "virtual-wardrobe-outfits": "virtual-wardrobe/outfits"
+        },
+        "togglable": true
       }
     ]
   },

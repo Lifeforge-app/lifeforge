@@ -19,7 +19,6 @@ function Sidebar(): React.ReactElement {
   const { userData, getAvatarURL, logout } = useAuthContext()
   const { sidebarExpanded, toggleSidebar } = useGlobalStateContext()
   const [searchQuery, setSearchQuery] = useState('')
-  const debouncedSearchQuery = useDebounce(searchQuery, 300)
 
   return (
     <>
@@ -35,7 +34,7 @@ function Sidebar(): React.ReactElement {
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
         />
-        <SidebarItems query={debouncedSearchQuery} />
+        <SidebarItems query={searchQuery} />
         {!sidebarExpanded && (
           <SidebarItem
             active={false}

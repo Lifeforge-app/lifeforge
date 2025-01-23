@@ -134,6 +134,9 @@ const OpenaiApiPricing = lazy(
 const NutritionsTracker = lazy(
   async () => await import('./modules/NutritionsTracker')
 )
+const VirtualWardrobeClothes = lazy(
+  async () => await import('./modules/VirtualWardrobe/pages/Clothes')
+)
 
 export const COMPONENTS = {
   dashboard: {
@@ -246,6 +249,9 @@ export const COMPONENTS = {
     }
   },
   'changi-airport': {
+    'changi-airport': () => {
+      return <Navigate to="/changi-airport/changi-flight-status" />
+    },
     'flight-status': ChangiFlightStatus
   },
   airports: {
@@ -294,5 +300,9 @@ export const COMPONENTS = {
   },
   'nutritions-tracker': {
     'nutritions-tracker': NutritionsTracker
+  },
+  'virtual-wardrobe': {
+    'virtual-wardrobe': () => <Navigate to="/virtual-wardrobe/clothes" />,
+    'virtual-wardrobe-clothes': VirtualWardrobeClothes
   }
 }

@@ -95,7 +95,7 @@ function GuitarTabs(): React.ReactElement {
           setSearchParams={setSearchParams}
         />
         <div className="flex w-full flex-col lg:ml-8">
-          <div className="flex-between flex w-full">
+          <header className="flex-between flex w-full">
             <div className="flex min-w-0 items-end">
               <h1 className="truncate text-3xl font-semibold sm:text-4xl">
                 {`${searchParams.get('starred') === 'true' ? 'Starred ' : ''} ${
@@ -135,7 +135,7 @@ function GuitarTabs(): React.ReactElement {
             >
               <Icon icon="tabler:menu" className="text-2xl" />
             </button>
-          </div>
+          </header>
           <div className="flex gap-2">
             <Listbox
               as="div"

@@ -49,7 +49,7 @@ function ModuleHeader({
           </div>
         )}
         <div className="w-full min-w-0 sm:space-y-1">
-          <h1 className="flex w-full min-w-0 items-end gap-3 whitespace-nowrap text-2xl font-semibold sm:text-3xl md:text-4xl">
+          <h1 className="flex w-full min-w-0 items-end gap-3 whitespace-nowrap text-2xl font-semibold sm:text-3xl">
             <span className="block truncate">
               {needTranslate
                 ? t(`modules.${toCamelCase(title?.toString() ?? '')}`)

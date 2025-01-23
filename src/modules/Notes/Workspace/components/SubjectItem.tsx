@@ -46,7 +46,7 @@ function SubjectItem({
             setExistedData(subject)
             setModifySubjectModalOpenType('update')
           }}
-          icon="tabler:edit"
+          icon="tabler:pencil"
           text="Edit"
         />
         <MenuItem

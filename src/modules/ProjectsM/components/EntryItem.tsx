@@ -85,7 +85,7 @@ function EntryItem({ entry }: { entry: IProjectsMEntry }): React.ReactElement {
           <HamburgerMenu className="relative">
             <MenuItem
               text="Edit"
-              icon="tabler:edit"
+              icon="tabler:pencil"
               onClick={() => {
                 setExistedData(entry)
                 setModifyDataModalOpenType('update')
