@@ -92,7 +92,7 @@ function ContainerItem({
             setExistedData(container)
             setCreateContainerModalOpen('update')
           }}
-          icon="tabler:edit"
+          icon="tabler:pencil"
           text="Edit"
         />
         <MenuItem

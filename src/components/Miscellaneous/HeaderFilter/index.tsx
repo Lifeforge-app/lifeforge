@@ -18,7 +18,7 @@ function HeaderFilter({
       data:
         | Array<{
             id: string
-            icon: string
+            icon?: string
             name: string
             color?: string
           }>

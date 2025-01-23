@@ -57,8 +57,12 @@ function SidebarItemSubsection({
             <div className="flex size-7 items-center justify-center">
               <Icon icon={subsectionIcon} className="size-6" />
             </div>
-            {sidebarExpanded &&
-              t(`modules.subsections.${toCamelCase(subsectionName)}`)}
+
+            {sidebarExpanded && (
+              <span className="w-full truncate pr-4">
+                {t(`modules.subsections.${toCamelCase(subsectionName)}`)}{' '}
+              </span>
+            )}
           </Link>
         ))}
       </ul>

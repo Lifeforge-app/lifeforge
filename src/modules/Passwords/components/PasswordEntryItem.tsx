@@ -247,7 +247,7 @@ function PasswordEntryITem({
                     )
                   })
               }}
-              icon="tabler:edit"
+              icon="tabler:pencil"
               text="Edit"
             />
             <MenuItem

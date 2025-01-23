@@ -43,7 +43,7 @@ function CategoryListItem({
       hamburgerMenuItems={
         <>
           <MenuItem
-            icon="tabler:edit"
+            icon="tabler:pencil"
             onClick={e => {
               e.stopPropagation()
               setSelectedData(item)

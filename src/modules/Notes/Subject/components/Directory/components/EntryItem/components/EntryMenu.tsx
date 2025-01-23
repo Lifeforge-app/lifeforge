@@ -19,7 +19,7 @@ function EntryMenu({
   return (
     <HamburgerMenu className="relative">
       <MenuItem
-        icon="tabler:edit"
+        icon="tabler:pencil"
         onClick={() => {
           setModifyFolderModalOpenType('update')
           setExistedData(entry)

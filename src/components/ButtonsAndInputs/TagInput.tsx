@@ -24,6 +24,7 @@ interface ITagInputProps {
     icon: string
     color: string
   }>
+  required?: boolean
 }
 
 function TagInput({
@@ -37,7 +38,8 @@ function TagInput({
   disabled = false,
   className = '',
   darker,
-  existedTags
+  existedTags,
+  required
 }: ITagInputProps): React.ReactElement {
   const { t } = useTranslation()
   const [currentTag, setCurrentTag] = useState<string>('')
@@ -74,6 +76,7 @@ function TagInput({
       <InputIcon icon={icon} active={String(value).length > 0} />
       <div className="flex w-full items-center gap-2">
         <InputLabel
+          required={required === true}
           label={needTranslate ? t(`input.${toCamelCase(name)}`) : name}
           active={String(value).length > 0}
         />
