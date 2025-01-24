@@ -1,7 +1,7 @@
 import { t } from 'i18next'
 import React from 'react'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
-import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
+import { SidebarTitle } from '@components/layouts/sidebar'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import TaskPriorityListItem from './TaskPriorityListItem'
 

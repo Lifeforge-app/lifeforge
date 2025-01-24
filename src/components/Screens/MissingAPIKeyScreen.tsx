@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 
 function MissingAPIKeyScreen({
   requiredAPIKeys

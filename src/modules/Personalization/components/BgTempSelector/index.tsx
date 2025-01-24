@@ -1,10 +1,9 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Button from '@components/ButtonsAndInputs/Button'
-import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
-import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
-import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
+import { Button } from '@components/buttons'
+import { ColorInput , ColorPickerModal } from '@components/inputs'
+import ConfigColumn from '@components/utilities/ConfigColumn'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import DefaultBgTempSelector from './components/DefaultBgTempSelector'
 

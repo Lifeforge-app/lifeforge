@@ -1,6 +1,6 @@
 import moment from 'moment'
 import React, { useState } from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 import { fetchChallenge } from '../../../utils/fetchChallenge'

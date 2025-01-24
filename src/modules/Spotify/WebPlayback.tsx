@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable @typescript-eslint/naming-convention */
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
+import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import { useSpotifyContext } from '@providers/SpotifyProvider'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
 
 function WebPlayback(): React.ReactElement {
   const { player, isPaused, isActive, currentTrack } = useSpotifyContext()
@@ -37,12 +35,12 @@ function WebPlayback(): React.ReactElement {
 
   return isActive ? (
     <>
-      <div className="flex h-full w-full flex-col flex-between py-12">
+      <div className="flex-between flex size-full flex-col py-12">
         <div className="flex-center flex-1 flex-col ">
           {currentTrack.album.images[0].url && (
             <img
               src={currentTrack.album.images[0].url}
-              className="aspect-square h-64 w-64 rounded-lg sm:h-80 sm:w-80"
+              className="aspect-square size-64 rounded-lg sm:size-80"
               alt=""
             />
           )}
@@ -80,7 +78,7 @@ function WebPlayback(): React.ReactElement {
                 )}`.padStart(2, '0')}`}
               </p>
             </div>
-            <div className="flex w-full flex-between sm:hidden">
+            <div className="flex-between flex w-full sm:hidden">
               <p className="text-sm text-bg-500">
                 {`${Math.floor(Number(position) / 60000)}:${`${Math.floor(
                   (Number(position) % 60000) / 1000

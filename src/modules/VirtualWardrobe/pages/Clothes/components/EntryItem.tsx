@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react/dist/iconify.js'
 import moment from 'moment'
 import React, { useState } from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import { Button } from '@components/buttons'
+import HamburgerMenu from '@components/buttons/HamburgerMenu'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
 import VW_COLORS from '@constants/virtual_wardrobe_colors'
 import useThemeColors from '@hooks/useThemeColor'

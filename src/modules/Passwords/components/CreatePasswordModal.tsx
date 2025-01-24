@@ -2,14 +2,10 @@ import { t } from 'i18next'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
-import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import IconInput from '@components/ButtonsAndInputs/IconPicker/IconInput'
-import IconSelector from '@components/ButtonsAndInputs/IconPicker/IconPickerModal'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import ModalHeader from '@components/Modals/ModalHeader'
+import { CreateOrModifyButton } from '@components/buttons'
+import { ColorInput , ColorPickerModal , IconInput , IconPickerModal , TextInput } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IPasswordEntry } from '@interfaces/password_interfaces'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
@@ -140,7 +136,7 @@ function CreatePasswordModal({
           className="flex w-full flex-col"
         >
           <input type="password" className="hidden" />
-          <Input
+          <TextInput
             name="Service Name"
             icon="tabler:lock"
             value={name}
@@ -160,7 +156,7 @@ function CreatePasswordModal({
             setColorPickerOpen={setColorPickerOpen}
             updateColor={setColor}
           />
-          <Input
+          <TextInput
             name="Website"
             icon="tabler:link"
             value={website}
@@ -170,7 +166,7 @@ function CreatePasswordModal({
             className="mt-6"
             noAutoComplete
           />
-          <Input
+          <TextInput
             name="Username / Email"
             icon="tabler:user"
             value={username}
@@ -180,7 +176,7 @@ function CreatePasswordModal({
             className="mt-6"
             noAutoComplete
           />
-          <Input
+          <TextInput
             name="Password"
             icon="tabler:key"
             value={password}
@@ -201,7 +197,7 @@ function CreatePasswordModal({
           />
         </form>
       </ModalWrapper>
-      <IconSelector
+      <IconPickerModal
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}
         setSelectedIcon={setIcon}

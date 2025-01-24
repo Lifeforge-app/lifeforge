@@ -1,5 +1,5 @@
 import React from 'react'
-import Pagination from '@components/Miscellaneous/Pagination'
+import Pagination from '@components/utilities/Pagination'
 import { type IGuitarTabsGuitarWorldScores } from '@interfaces/guitar_tabs_interfaces'
 import ScoreItem from './ScoreItem'
 

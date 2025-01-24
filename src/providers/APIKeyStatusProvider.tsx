@@ -1,7 +1,7 @@
 import React from 'react'
-import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
-import MissingAPIKeyScreen from '@components/Screens/MissingAPIKeyScreen'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import MissingAPIKeyScreen from '@components/screens/MissingAPIKeyScreen'
 import useFetch from '@hooks/useFetch'
 
 function APIKeyStatusProvider({

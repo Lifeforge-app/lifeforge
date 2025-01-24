@@ -2,7 +2,7 @@ import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import copy from 'copy-to-clipboard'
 import React, { useState } from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
 import APIRequest from '@utils/fetchData'
 

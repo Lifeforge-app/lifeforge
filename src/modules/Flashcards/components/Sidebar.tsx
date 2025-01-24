@@ -1,12 +1,7 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-
 import { Icon } from '@iconify/react'
 import React from 'react'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
-import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
-import SidebarItem from '@components/Sidebar/components/SidebarItem'
-import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
-import SidebarWrapper from '@components/Sidebar/components/SidebarWrapper'
+import { SidebarDivider , SidebarItem , SidebarTitle , SidebarWrapper } from '@components/layouts/sidebar'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IFlashcardTag } from '@interfaces/flashcard_interfaces'
 

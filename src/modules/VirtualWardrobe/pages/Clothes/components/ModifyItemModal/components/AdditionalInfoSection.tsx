@@ -1,9 +1,6 @@
 import React from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
-import CurrencyInputComponent from '@components/ButtonsAndInputs/CurrencyInput'
-import Input from '@components/ButtonsAndInputs/Input'
-import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
-import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
+import { Button } from '@components/buttons'
+import { CurrencyInput , TextInput , ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
 import VW_COLORS from '@constants/virtual_wardrobe_colors'
 
 function AdditionalInfoSection({
@@ -38,7 +35,7 @@ function AdditionalInfoSection({
   return (
     <>
       <div className="mt-6 space-y-4">
-        <Input
+        <TextInput
           icon="tabler:dimensions"
           name="Size"
           value={size}
@@ -79,7 +76,7 @@ function AdditionalInfoSection({
             />
           ))}
         </ListboxOrComboboxInput>
-        <CurrencyInputComponent
+        <CurrencyInput
           icon="tabler:currency-dollar"
           name="Price"
           placeholder='e.g. "100.00"'

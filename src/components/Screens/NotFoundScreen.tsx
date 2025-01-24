@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import Button from '../ButtonsAndInputs/Button'
+import Button from '../buttons/Button'
 
 function NotFoundScreen(): React.ReactElement {
   const { t } = useTranslation()

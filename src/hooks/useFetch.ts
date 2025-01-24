@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/member-delimiter-style */
 import { cookieParse } from 'pocketbase'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

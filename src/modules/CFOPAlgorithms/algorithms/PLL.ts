@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/member-delimiter-style */
-
 interface AlgSet {
   name: string
   alg: string[]

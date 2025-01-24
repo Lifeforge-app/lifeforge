@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import Input from '@components/ButtonsAndInputs/Input'
-import Switch from '@components/ButtonsAndInputs/Switch'
+import { Button , Switch } from '@components/buttons'
+import { TextInput } from '@components/inputs'
 import useThemeColors from '@hooks/useThemeColor'
 import {
   type IModuleConfigInput,
@@ -153,7 +151,7 @@ function ModuleItem({
                 switch (type) {
                   case 'input':
                     return (
-                      <Input
+                      <TextInput
                         key={key}
                         icon={property.icon}
                         name={property.name}

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import moment from 'moment'
 import React from 'react'
 import { usePhotosContext } from '@providers/PhotosProvider'

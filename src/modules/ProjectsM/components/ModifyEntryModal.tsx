@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
-import Modal from '@components/Modals/Modal'
-import ErrorScreen from '@components/Screens/ErrorScreen'
-import LoadingScreen from '@components/Screens/LoadingScreen'
+import Modal from '@components/modals/Modal'
+import ErrorScreen from '@components/screens/ErrorScreen'
+import LoadingScreen from '@components/screens/LoadingScreen'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import {
   type IProjectsMCategory,

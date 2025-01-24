@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
+import HamburgerMenu from '@components/buttons/HamburgerMenu'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+import ConfigColumn from '@components/utilities/ConfigColumn'
 import { type APIKeyEntry } from '@interfaces/api_keys_interfaces'
 
 function EntryItem({

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React from 'react'
 import ErrorScreen from './ErrorScreen'
 import LoadingScreen from './LoadingScreen'

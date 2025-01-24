@@ -1,8 +1,6 @@
 import { t } from 'i18next'
 import React, { useRef } from 'react'
-import InputIcon from '@components/ButtonsAndInputs/Input/components/InputIcon'
-import InputLabel from '@components/ButtonsAndInputs/Input/components/InputLabel'
-import InputWrapper from '@components/ButtonsAndInputs/Input/components/InputWrapper'
+import { InputIcon , InputLabel , InputWrapper } from '@components/inputs'
 
 function IdeaContentInput({
   innerTypeOfModifyIdea,

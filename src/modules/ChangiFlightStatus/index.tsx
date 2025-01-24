@@ -2,13 +2,11 @@ import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
-import ListboxOrComboboxOptions from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOptions'
-import SearchInput from '@components/ButtonsAndInputs/SearchInput'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
-import ModuleHeader from '@components/Module/ModuleHeader'
-import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import { ListboxOrComboboxOption , ListboxOrComboboxOptions , SearchInput } from '@components/inputs'
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import Scrollbar from '@components/utilities/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 
@@ -241,14 +239,14 @@ function ChangiFlightStatus(): React.ReactElement {
               <Icon
                 icon={
                   SEARCH_TYPE.find(
-                    ([_, __, value]) => value === searchParams.get('type')
+                    ([, , value]) => value === searchParams.get('type')
                   )?.[1] ?? 'tabler:plane-departure'
                 }
                 className="size-6"
               />
               <span className="whitespace-nowrap font-medium">
                 {SEARCH_TYPE.find(
-                  ([_, __, value]) => value === searchParams.get('type')
+                  ([, , value]) => value === searchParams.get('type')
                 )?.[0] ?? 'Departure'}
               </span>
             </div>

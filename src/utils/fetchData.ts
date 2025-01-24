@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { t } from 'i18next'
 import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'

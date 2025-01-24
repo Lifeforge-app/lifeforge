@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/member-delimiter-style */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import moment from 'moment'
 import React from 'react'
 

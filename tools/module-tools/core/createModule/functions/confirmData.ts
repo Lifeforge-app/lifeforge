@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import chalk from 'chalk'
 import prompts from 'prompts'
 import table from 'table'

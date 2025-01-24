@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import DashboardItem from '@components/Miscellaneous/DashboardItem'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import DashboardItem from '@components/utilities/DashboardItem'
+import Scrollbar from '@components/utilities/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import { type IDiskUsage } from '@interfaces/server_status_interfaces'
 

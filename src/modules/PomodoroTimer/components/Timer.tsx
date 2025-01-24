@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 
 export default function Timer(): React.ReactElement {
   // TODO: Implement UI to change time distribution

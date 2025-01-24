@@ -1,9 +1,9 @@
 /* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
 import ReactDOM from 'react-dom/client'
-import './i18n'
+import './core/i18n'
 import { BrowserRouter } from 'react-router-dom'
-import App from './App'
+import App from './core/App'
 import 'react-date-picker/dist/DatePicker.css'
 import 'react-calendar/dist/Calendar.css'
 import 'react-tooltip/dist/react-tooltip.css'

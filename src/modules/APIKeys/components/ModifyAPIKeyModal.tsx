@@ -1,12 +1,10 @@
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import IconInput from '@components/ButtonsAndInputs/IconPicker/IconInput'
-import IconPickerModal from '@components/ButtonsAndInputs/IconPicker/IconPickerModal'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalHeader from '@components/Modals/ModalHeader'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import { CreateOrModifyButton } from '@components/buttons'
+import { IconInput , IconPickerModal , TextInput } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { type APIKeyEntry } from '@interfaces/api_keys_interfaces'
 import { decrypt, encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
@@ -121,7 +119,7 @@ function ModifyAPIKeyModal({
           title={`${openType === 'create' ? 'Create' : 'Update'} API Key`}
           onClose={onClose}
         />
-        <Input
+        <TextInput
           darker
           icon="tabler:id"
           name="Key ID"
@@ -129,7 +127,7 @@ function ModifyAPIKeyModal({
           value={id}
           updateValue={setId}
         />
-        <Input
+        <TextInput
           darker
           icon="tabler:key"
           name="Key Name"
@@ -138,7 +136,7 @@ function ModifyAPIKeyModal({
           updateValue={setName}
           className="mt-4"
         />
-        <Input
+        <TextInput
           darker
           icon="tabler:info-circle"
           name="Key Description"
@@ -153,7 +151,7 @@ function ModifyAPIKeyModal({
           setIconSelectorOpen={setIconSelectorOpen}
           name="Key Icon"
         />
-        <Input
+        <TextInput
           darker
           icon="tabler:key"
           name="API Key"

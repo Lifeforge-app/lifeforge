@@ -2,8 +2,8 @@ import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import Input from '@components/ButtonsAndInputs/Input'
+import { Button } from '@components/buttons'
+import { TextInput } from '@components/inputs'
 import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
@@ -84,7 +84,7 @@ function LockedScreen({
       <p className="mb-8 text-center text-lg text-bg-500">
         {t(`${toCamelCase(module)}.passwordRequired`)}
       </p>
-      <Input
+      <TextInput
         isPassword
         icon="tabler:lock"
         name="Master Password"

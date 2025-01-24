@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import moment from 'moment'
@@ -8,12 +6,12 @@ import React, { useEffect, useState } from 'react'
 import PhotoAlbum from 'react-photo-album'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import GoBackButton from '@components/ButtonsAndInputs/GoBackButton.tsx'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu/index.tsx'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem.tsx'
-import Scrollbar from '@components/Miscellaneous/Scrollbar.tsx'
-import ModuleWrapper from '@components/Module/ModuleWrapper.tsx'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback.tsx'
+import GoBackButton from '@components/buttons/GoBackButton.tsx'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem.tsx'
+import HamburgerMenu from '@components/buttons/HamburgerMenu/index.tsx'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper.tsx'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback.tsx'
+import Scrollbar from '@components/utilities/Scrollbar.tsx'
 import useFetch from '@hooks/useFetch'
 import {
   type IPhotosEntry,
@@ -258,7 +256,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                     }))}
                     renderPhoto={({
                       photo,
-                      imageProps: { src, alt, style, ...restImageProps }
+                      imageProps: { style, ...restImageProps }
                     }) => (
                       <ImageObject
                         beingDisplayedInAlbum

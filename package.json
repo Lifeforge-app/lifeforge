@@ -70,6 +70,10 @@
     "use-resize-observer": "^9.1.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@stylistic/eslint-plugin": "^2.13.0",
+    "@stylistic/eslint-plugin-jsx": "^2.13.0",
+    "@stylistic/eslint-plugin-ts": "^2.13.0",
     "@tailwindcss/typography": "^0.5.16",
     "@types/crypto-js": "^4.2.2",
     "@types/javascript-color-gradient": "^2.4.2",
@@ -106,6 +110,7 @@
     "eslint-plugin-react-refresh": "^0.4.18",
     "eslint-plugin-tailwindcss": "^3.18.0",
     "figlet": "^1.8.0",
+    "globals": "^15.14.0",
     "mrm": "^4.1.22",
     "ora": "^8.1.1",
     "parent-require": "^1.0.0",

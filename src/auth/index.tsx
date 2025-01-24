@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
 import React, { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'

@@ -1,16 +1,12 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import DateInput from '@components/ButtonsAndInputs/DateInput'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import Input from '@components/ButtonsAndInputs/Input'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
+import { Button , CreateOrModifyButton } from '@components/buttons'
+import HamburgerMenu from '@components/buttons/HamburgerMenu'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+import { DateInput , TextInput } from '@components/inputs'
+import Scrollbar from '@components/utilities/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
@@ -187,7 +183,7 @@ function ModifyTaskWindow(): React.ReactElement {
             </HamburgerMenu>
           </div>
           <div className="space-y-4">
-            <Input
+            <TextInput
               name="Summary"
               value={summary}
               placeholder="An urgent task"

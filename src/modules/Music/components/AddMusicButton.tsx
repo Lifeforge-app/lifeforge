@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { cookieParse } from 'pocketbase'
 import React from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import { Button } from '@components/buttons'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { useMusicContext } from '@providers/MusicProvider'
 import IntervalManager from '@utils/intervalManager'
 

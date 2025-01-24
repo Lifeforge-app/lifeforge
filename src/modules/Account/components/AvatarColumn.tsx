@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Button from '@components/ButtonsAndInputs/Button'
-import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
-import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
+import { Button } from '@components/buttons'
+import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
+import ConfigColumn from '@components/utilities/ConfigColumn'
 import { useAuthContext } from '@providers/AuthProvider'
 import APIRequest from '@utils/fetchData'
 

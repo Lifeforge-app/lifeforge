@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import listModules from './functions/listModules'
 import summarizeModules from './functions/summarizeModule'
 import { getVisibleLength } from '../../utils/strings'

@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { Icon } from '@iconify/react'
 import type { Identifier, XYCoord } from 'dnd-core'
 import React, { useEffect, useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import HamburgerMenu from '@components/buttons/HamburgerMenu'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
 
 function SubtaskItem({
@@ -110,7 +108,7 @@ function SubtaskItem({
         opacity
       }}
       data-handler-id={handlerId}
-      className="flex cursor-move flex-between gap-2 rounded-md bg-bg-100 p-3 shadow-custom dark:bg-bg-800"
+      className="flex-between flex cursor-move gap-2 rounded-md bg-bg-100 p-3 shadow-custom dark:bg-bg-800"
     >
       <div className="flex items-center gap-2">
         <Icon icon="tabler:menu" className="size-5 shrink-0 text-bg-500" />

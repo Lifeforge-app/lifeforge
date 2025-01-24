@@ -1,6 +1,6 @@
 import { t } from 'i18next'
 import React from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 
 function AddToLibraryButton({
