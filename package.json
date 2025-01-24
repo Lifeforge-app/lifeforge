@@ -9,8 +9,7 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "module-tools": "bun run ./tools/module-tools/index.ts",
-    "prepare": "husky"
+    "module-tools": "bun run ./tools/module-tools/index.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
@@ -28,7 +27,6 @@
     "daisyui": "^4.12.23",
     "file-type-mime": "^0.4.5",
     "get-stream": "^9.0.1",
-    "husky": "^9.1.7",
     "i18next": "^23.16.8",
     "i18next-http-backend": "^2.7.3",
     "immutability-helper": "^3.1.1",
@@ -123,11 +121,5 @@
   "overrides": {
     "@types/react": "npm:types-react@rc",
     "@types/react-dom": "npm:types-react-dom@rc"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write",
-      "eslint --max-warnings 0 ./src/*"
-    ]
   }
 }
