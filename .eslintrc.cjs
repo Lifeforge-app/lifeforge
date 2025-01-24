@@ -1,96 +1,96 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    es2021: true
   },
   extends: [
-    "standard-with-typescript",
-    "plugin:react/recommended",
-    "plugin:import/recommended",
-    "plugin:import/typescript",
-    "plugin:tailwindcss/recommended",
+    'standard-with-typescript',
+    'plugin:react/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'plugin:tailwindcss/recommended'
   ],
   overrides: [
     {
       env: {
-        node: true,
+        node: true
       },
-      files: [".eslintrc.{js,cjs}"],
+      files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
-        sourceType: "script",
-      },
-    },
+        sourceType: 'script'
+      }
+    }
   ],
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module'
   },
-  plugins: ["react", "import", "tailwindcss"],
+  plugins: ['react', 'import', 'tailwindcss'],
   rules: {
-    "multiline-ternary": "off",
-    "@typescript-eslint/indent": "off",
-    "@typescript-eslint/space-before-function-paren": "off",
-    "import/order": [
+    'multiline-ternary': 'off',
+    '@typescript-eslint/indent': 'off',
+    '@typescript-eslint/space-before-function-paren': 'off',
+    'import/order': [
       1,
       {
         groups: [
-          "external",
-          "builtin",
-          "internal",
-          "sibling",
-          "parent",
-          "index",
+          'external',
+          'builtin',
+          'internal',
+          'sibling',
+          'parent',
+          'index'
         ],
         pathGroups: [
           {
-            pattern: "typedec",
-            group: "internal",
+            pattern: 'typedec',
+            group: 'internal'
           },
           {
-            pattern: "providers",
-            group: "internal",
+            pattern: 'providers',
+            group: 'internal'
           },
           {
-            pattern: "components",
-            group: "internal",
+            pattern: 'components',
+            group: 'internal'
           },
           {
-            pattern: "sidebar",
-            group: "internal",
+            pattern: 'sidebar',
+            group: 'internal'
           },
           {
-            pattern: "hooks",
-            group: "internal",
-          },
+            pattern: 'hooks',
+            group: 'internal'
+          }
         ],
-        pathGroupsExcludedImportTypes: ["internal"],
+        pathGroupsExcludedImportTypes: ['internal'],
         alphabetize: {
-          order: "asc",
-          caseInsensitive: true,
-        },
-      },
-    ],
+          order: 'asc',
+          caseInsensitive: true
+        }
+      }
+    ]
   },
   settings: {
-    "import/resolver": {
+    'import/resolver': {
       node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx", ".d.ts"],
-        moduleDirectory: ["node_modules", "src/"],
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts'],
+        moduleDirectory: ['node_modules', 'src/']
       },
       alias: {
-        extensions: [".js", ".jsx", ".ts", ".tsx", ".d.ts"],
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts'],
         map: [
-          ["@components", "./src/components/"],
-          ["@providers", "./src/providers/"],
-          ["@hooks", "./src/hooks/"],
-          ["@interfaces", "./src/interfaces/"],
-          ["@utils", "./src/utils/"],
-          ["@constants", "./src/constants/"],
-        ],
-      },
+          ['@components', './src/components/'],
+          ['@providers', './src/providers/'],
+          ['@hooks', './src/hooks/'],
+          ['@interfaces', './src/interfaces/'],
+          ['@utils', './src/utils/'],
+          ['@constants', './src/constants/']
+        ]
+      }
     },
     react: {
-      version: "detect",
-    },
-  },
-};
+      version: 'detect'
+    }
+  }
+}
