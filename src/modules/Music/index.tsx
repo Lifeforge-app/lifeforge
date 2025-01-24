@@ -27,7 +27,7 @@ function Music(): React.ReactElement {
     isDeleteMusicConfirmationModalOpen,
     setIsDeleteMusicConfirmationModalOpen
   } = useMusicContext()
-  const debouncedSearchQuery = useDebounce(searchQuery, 500)
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent): void => {

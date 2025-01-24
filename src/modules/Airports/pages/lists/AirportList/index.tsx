@@ -27,7 +27,7 @@ const AIRPORT_TYPES = {
 function AirportsList(): React.ReactElement {
   const { regionID } = useParams()
   const [searchQuery, setSearchQuery] = useState('')
-  const debouncedSearchQuery = useDebounce(searchQuery, 500)
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
   const [airportsData] = useFetch<{
     data: Array<{
       id: string
