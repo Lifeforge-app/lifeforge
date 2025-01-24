@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-
 import React from 'react'
-import SidebarWrapper from '@components/Sidebar/components/SidebarWrapper'
+import { SidebarWrapper } from '@components/layouts/sidebar'
 
 function Sidebar({
   sidebarOpen,

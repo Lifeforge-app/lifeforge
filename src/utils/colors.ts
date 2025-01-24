@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
+/* eslint-disable prefer-const */
 import Gradient from 'javascript-color-gradient'
 
 export function isLightColor(color: string): boolean {

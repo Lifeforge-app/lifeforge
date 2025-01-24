@@ -1,5 +1,5 @@
 import React from 'react'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
+import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import { SPICINESS_COLOR } from '@constants/todo_subtasks_generation_spiciness'
 import SpicinessHeader from './components/SpicinessHeader'
 import SpicinessSlider from './components/SpicinessSlider'

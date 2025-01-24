@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React from 'react'
 import useThemeColors from '@hooks/useThemeColor'
 import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'

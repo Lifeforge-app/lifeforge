@@ -1,8 +1,7 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
-import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
-import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import { ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 
 export interface ILocationAutoComplete {

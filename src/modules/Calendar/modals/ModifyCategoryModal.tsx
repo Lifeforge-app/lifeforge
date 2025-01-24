@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
 import React, { useEffect, useReducer, useRef } from 'react'
 import { toast } from 'react-toastify'
-import Modal from '@components/Modals/Modal'
+import Modal from '@components/modals/Modal'
 import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import APIRequest from '@utils/fetchData'

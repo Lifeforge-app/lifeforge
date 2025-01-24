@@ -1,10 +1,10 @@
 import { t } from 'i18next'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import ModalHeader from '@components/Modals/ModalHeader'
+import { CreateOrModifyButton } from '@components/buttons'
+import { TextInput } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { useMusicContext } from '@providers/MusicProvider'
 import APIRequest from '@utils/fetchData'
 
@@ -84,7 +84,7 @@ function ModifyMusicModal(): React.ReactElement {
           setOpen(false)
         }}
       />
-      <Input
+      <TextInput
         icon="tabler:music"
         ref={ref}
         name="Music name"
@@ -100,7 +100,7 @@ function ModifyMusicModal(): React.ReactElement {
         }}
         autoFocus
       />
-      <Input
+      <TextInput
         icon="tabler:user"
         name="Author"
         value={musicAuthor}

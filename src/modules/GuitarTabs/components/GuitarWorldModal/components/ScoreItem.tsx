@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 import { type IGuitarTabsGuitarWorldScoreEntry } from '@interfaces/guitar_tabs_interfaces'
 import APIRequest from '@utils/fetchData'
 

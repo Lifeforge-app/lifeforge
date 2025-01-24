@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   Listbox,
   ListboxButton,
@@ -8,15 +7,15 @@ import {
 import { Icon } from '@iconify/react'
 import React, { type JSX, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import SearchInput from '@components/ButtonsAndInputs/SearchInput'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
-import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
-import ModuleHeader from '@components/Module/ModuleHeader'
-import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import { Button } from '@components/buttons'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+import { SearchInput } from '@components/inputs'
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+import Scrollbar from '@components/utilities/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import {
   DNSRecordType,

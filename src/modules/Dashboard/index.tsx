@@ -13,9 +13,9 @@ import {
 } from 'chart.js'
 import React, { useRef, useState } from 'react'
 
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import ModuleHeader from '@components/Module/ModuleHeader'
-import ModuleWrapper from '@components/Module/ModuleWrapper'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import DashboardGrid from './components/DashboardGrid'
 import ManageWidgetsModal from './components/ManageWidgetsModal'
 

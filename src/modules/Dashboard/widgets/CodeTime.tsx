@@ -1,13 +1,11 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Icon } from '@iconify/react'
 import { type ChartOptions, type ScriptableContext } from 'chart.js'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { Bar, Line } from 'react-chartjs-2'
-import DashboardItem from '@components/Miscellaneous/DashboardItem'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import LoadingScreen from '@components/Screens/LoadingScreen'
+import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+import LoadingScreen from '@components/screens/LoadingScreen'
+import DashboardItem from '@components/utilities/DashboardItem'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import { getDatesBetween } from '@utils/date'

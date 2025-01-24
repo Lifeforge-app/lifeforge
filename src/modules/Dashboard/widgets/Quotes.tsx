@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import { isLightColor } from '@utils/colors'

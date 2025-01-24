@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { cookieParse } from 'pocketbase'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

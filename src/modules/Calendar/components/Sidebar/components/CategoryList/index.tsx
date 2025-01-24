@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
-import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
+import { SidebarTitle } from '@components/layouts/sidebar'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
 import CategoryListItem from './components/CategoryListItem'
 

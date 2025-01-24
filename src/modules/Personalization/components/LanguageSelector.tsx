@@ -1,4 +1,3 @@
-/* eslint-disable tailwindcss/no-custom-classname */
 import {
   Listbox,
   ListboxButton,
@@ -8,7 +7,7 @@ import {
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
+import ConfigColumn from '@components/utilities/ConfigColumn'
 import useThemeColors from '@hooks/useThemeColor'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 

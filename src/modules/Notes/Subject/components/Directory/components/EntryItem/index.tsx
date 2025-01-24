@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import { Icon } from '@iconify/react'
 import React from 'react'
 import FILE_ICONS from '@constants/file_icons'

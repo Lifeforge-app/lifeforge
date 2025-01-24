@@ -1,11 +1,10 @@
 import moment from 'moment'
 import React, { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import DateInput from '@components/ButtonsAndInputs/DateInput'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalHeader from '@components/Modals/ModalHeader'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import { Button } from '@components/buttons'
+import { DateInput , TextInput } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { useAuthContext } from '@providers/AuthProvider'
 import APIRequest from '@utils/fetchData'
 
@@ -71,7 +70,7 @@ function ModifyModal({
         icon="tabler:pencil"
       />
       {type !== 'date' ? (
-        <Input
+        <TextInput
           icon={icon}
           name={title}
           placeholder={`Enter new ${title}`}

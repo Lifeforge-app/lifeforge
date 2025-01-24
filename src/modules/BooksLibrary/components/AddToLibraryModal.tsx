@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
-import Modal from '@components/Modals/Modal'
+import Modal from '@components/modals/Modal'
 import useFetch from '@hooks/useFetch'
 import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
 import { type IFieldProps } from '@interfaces/modal_interfaces'

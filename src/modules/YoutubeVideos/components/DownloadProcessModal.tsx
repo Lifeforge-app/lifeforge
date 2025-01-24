@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import ModalHeader from '@components/Modals/ModalHeader'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
 import VideoInfo from '../../Music/modals/YoutubeDownloaderModal/components/VideoInfo'
 

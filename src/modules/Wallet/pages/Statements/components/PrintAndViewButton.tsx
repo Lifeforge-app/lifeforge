@@ -1,6 +1,6 @@
 import React from 'react'
 import { useReactToPrint } from 'react-to-print'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 
 function PrintAndViewButton({
   contentRef,

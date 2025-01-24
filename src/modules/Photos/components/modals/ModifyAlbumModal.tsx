@@ -1,10 +1,10 @@
 import { t } from 'i18next'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import ModalHeader from '@components/Modals/ModalHeader'
+import { CreateOrModifyButton } from '@components/buttons'
+import { TextInput } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
 import APIRequest from '@utils/fetchData'
 import { usePhotosContext } from '../../../../providers/PhotosProvider'
@@ -106,7 +106,7 @@ function ModifyAlbumModal({
         }}
         icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
       />
-      <Input
+      <TextInput
         icon="tabler:photo"
         ref={ref}
         name="Album name"

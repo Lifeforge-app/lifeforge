@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 // import * as webauthn from '@passwordless-id/webauthn'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import Input from '@components/ButtonsAndInputs/Input'
+import { TextInput } from '@components/inputs'
 import { AUTH_ERROR_MESSAGES } from '@constants/auth'
 import { useAuthContext } from '@providers/AuthProvider'
 import AuthSignInButton from './AuthSignInButtons'
@@ -67,7 +66,7 @@ function AuthForm(): React.ReactElement {
           }
         ] as const
       ).map((input, index) => (
-        <Input
+        <TextInput
           key={index}
           {...input}
           needTranslate={false}

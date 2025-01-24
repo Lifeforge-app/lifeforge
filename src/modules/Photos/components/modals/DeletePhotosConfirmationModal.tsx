@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-
 import React, { useState } from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import { Button } from '@components/buttons'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import {
   type IPhotoAlbumEntryItem,
   type IPhotosEntry,
@@ -53,9 +51,11 @@ function DeletePhotosConfirmationModal({
       successInfo: 'delete',
       failureInfo: 'delete',
       callback: () => {
-        customSetIsOpen
-          ? customSetIsOpen(false)
-          : setDeletePhotosConfirmationModalOpen(false)
+        if (customSetIsOpen) {
+          customSetIsOpen(false)
+        } else {
+          setDeletePhotosConfirmationModalOpen(false)
+        }
         setSelectedPhotos([])
 
         if (isInAlbumGallery) {
@@ -77,9 +77,11 @@ function DeletePhotosConfirmationModal({
         }
       },
       onFailure: () => {
-        customSetIsOpen
-          ? customSetIsOpen(false)
-          : setDeletePhotosConfirmationModalOpen(false)
+        if (customSetIsOpen) {
+          customSetIsOpen(false)
+        } else {
+          setDeletePhotosConfirmationModalOpen(false)
+        }
       },
       finalCallback: () => {
         setLoading(false)
@@ -102,9 +104,11 @@ function DeletePhotosConfirmationModal({
       <div className="mt-6 flex w-full flex-col-reverse justify-around gap-2 sm:flex-row">
         <Button
           onClick={() => {
-            customSetIsOpen
-              ? customSetIsOpen(false)
-              : setDeletePhotosConfirmationModalOpen(false)
+            if (customSetIsOpen) {
+              customSetIsOpen(false)
+            } else {
+              setDeletePhotosConfirmationModalOpen(false)
+            }
           }}
           variant="secondary"
           icon=""

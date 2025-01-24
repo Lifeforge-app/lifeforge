@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import DashboardItem from '@components/Miscellaneous/DashboardItem'
+import DashboardItem from '@components/utilities/DashboardItem'
 import { type IWalletIncomeExpenses } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'

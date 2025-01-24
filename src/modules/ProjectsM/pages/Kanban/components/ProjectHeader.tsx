@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useNavigate } from 'react-router'
-import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import { GoBackButton } from '@components/buttons'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { type IProjectsMEntry } from '@interfaces/projects_m_interfaces'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 
@@ -23,7 +23,7 @@ function ProjectHeader({
           navigate('/projects-m')
         }}
       />
-      <div className="flex flex-between">
+      <div className="flex-between flex">
         <h1 className="flex items-center gap-4 text-3xl font-semibold dark:text-bg-50">
           <div
             className="rounded-lg p-3"

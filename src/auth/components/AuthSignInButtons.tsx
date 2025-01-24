@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
+import Button from '@components/buttons/Button'
 import { useAuthContext } from '@providers/AuthProvider'
 
 function AuthSignInButton({

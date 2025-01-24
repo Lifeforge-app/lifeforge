@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import HamburgerMenu from '@components/buttons/HamburgerMenu'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 

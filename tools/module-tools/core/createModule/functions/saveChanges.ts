@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import fs from 'fs'
 import saveTranslation from './saveTranslations'
 

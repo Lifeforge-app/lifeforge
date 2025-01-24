@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import OtpInput from 'react-otp-input'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 

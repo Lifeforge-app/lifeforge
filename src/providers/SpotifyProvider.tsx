@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useAuthContext } from './AuthProvider'
 
@@ -122,7 +120,7 @@ export default function SpotifyProvider({
           setPaused(state.paused)
 
           player.getCurrentState().then((state: any) => {
-            !state ? setActive(false) : setActive(true)
+            setActive(!!state)
           })
         })
 

@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-
 import React, { useState } from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import { Button } from '@components/buttons'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import APIRequest from '@utils/fetchData'
 
 function EmptyTrashConfirmationModal({

@@ -1,6 +1,6 @@
 import moment from 'moment'
 import React from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 import { type IMailInboxEntry } from '@interfaces/mail_inbox_interfaces'
 
 function EntryItem({ mail }: { mail: IMailInboxEntry }): React.ReactElement {

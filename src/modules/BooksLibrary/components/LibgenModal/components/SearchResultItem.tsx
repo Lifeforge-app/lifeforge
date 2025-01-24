@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 import useThemeColors from '@hooks/useThemeColor'
 import AddToLibraryButton from './AddToLibraryButton'
 

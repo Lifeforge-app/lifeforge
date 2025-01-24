@@ -1,16 +1,11 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/no-misused-promises */
-
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
 import React from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import FAB from '@components/ButtonsAndInputs/FAB'
-import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import { Button , FAB , GoBackButton } from '@components/buttons'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import useFetch from '@hooks/useFetch'
 import { type INotesEntry, type INotesPath } from '@interfaces/notes_interfaces'
 

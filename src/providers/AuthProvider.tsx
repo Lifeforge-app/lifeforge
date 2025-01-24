@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable @typescript-eslint/member-delimiter-style */
 import { t } from 'i18next'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
@@ -209,7 +207,7 @@ export default function AuthProvider({
         navigate('/auth')
         toast.error('Invalid login attempt')
       })
-    } catch (error) {
+    } catch {
       navigate('/auth')
       toast.error('Invalid login attempt')
     }

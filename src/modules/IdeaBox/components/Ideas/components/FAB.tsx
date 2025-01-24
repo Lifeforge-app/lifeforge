@@ -2,7 +2,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 
 function FAB(): React.ReactElement {

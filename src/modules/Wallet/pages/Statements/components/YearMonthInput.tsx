@@ -1,8 +1,7 @@
 import { t } from 'i18next'
 import moment from 'moment'
 import React, { useEffect, useMemo } from 'react'
-import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
-import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
+import { ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function YearMonthInput({

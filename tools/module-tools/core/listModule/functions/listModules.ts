@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import chalk from 'chalk'
 import { table, type SpanningCellConfig } from 'table'
 import { toCamelCase } from '@utils/strings'

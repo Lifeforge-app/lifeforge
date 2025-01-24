@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import { Button } from '@components/buttons'
+import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 
 function Photos({
   setStep,

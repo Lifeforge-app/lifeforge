@@ -2,8 +2,7 @@ import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useNavigate, useParams } from 'react-router'
-import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
-import ListboxOrComboboxOptions from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOptions'
+import { ListboxOrComboboxOption , ListboxOrComboboxOptions } from '@components/inputs'
 import useThemeColors from '@hooks/useThemeColor'
 
 const CONTINENTS = {

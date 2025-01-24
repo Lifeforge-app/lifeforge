@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import { Button } from '@components/buttons'
+import ModalWrapper from '@components/modals/ModalWrapper'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import APIRequest from '@utils/fetchData'

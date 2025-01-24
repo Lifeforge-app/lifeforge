@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import APIRequest from '@utils/fetchData'
 import ModalWrapper from './ModalWrapper'
-import Button from '../ButtonsAndInputs/Button'
+import Button from '../buttons/Button'
 
 function DeleteConfirmationModal({
   itemName,

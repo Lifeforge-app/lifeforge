@@ -1,7 +1,7 @@
 import moment from 'moment'
 import React from 'react'
-import DateInput from '@components/ButtonsAndInputs/DateInput'
-import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
+import { DateInput } from '@components/inputs'
+import { SidebarTitle } from '@components/layouts/sidebar'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function DateRangeSelector(): React.ReactElement {

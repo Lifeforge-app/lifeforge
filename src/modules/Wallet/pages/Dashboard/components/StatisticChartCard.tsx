@@ -2,9 +2,9 @@ import moment from 'moment'
 import React, { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-import DashboardItem from '@components/Miscellaneous/DashboardItem'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+import DashboardItem from '@components/utilities/DashboardItem'
 import { useWalletContext } from '@providers/WalletProvider'
 
 const options = {

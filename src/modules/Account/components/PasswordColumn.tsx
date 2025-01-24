@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
+import { Button } from '@components/buttons'
+import ConfigColumn from '@components/utilities/ConfigColumn'
 import APIRequest from '@utils/fetchData'
 
 function PasswordColumn(): React.ReactElement {

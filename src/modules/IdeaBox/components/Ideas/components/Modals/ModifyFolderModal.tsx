@@ -1,19 +1,12 @@
-/* eslint-disable @typescript-eslint/member-delimiter-style */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
-import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import IconInput from '@components/ButtonsAndInputs/IconPicker/IconInput'
-import IconSelector from '@components/ButtonsAndInputs/IconPicker/IconPickerModal'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalHeader from '@components/Modals/ModalHeader'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import { CreateOrModifyButton } from '@components/buttons'
+import { IconInput, IconPickerModal , TextInput , ColorInput , ColorPickerModal } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import APIRequest from '@utils/fetchData'
 
@@ -118,7 +111,7 @@ function ModifyFolderModal(): React.ReactElement {
             setOpenType(null)
           }}
         />
-        <Input
+        <TextInput
           name="Folder name"
           icon="tabler:cube"
           value={folderName}
@@ -152,7 +145,7 @@ function ModifyFolderModal(): React.ReactElement {
         color={folderColor}
         setColor={setFolderColor}
       />
-      <IconSelector
+      <IconPickerModal
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}
         setSelectedIcon={setFolderIcon}

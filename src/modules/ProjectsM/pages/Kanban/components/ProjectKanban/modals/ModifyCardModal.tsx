@@ -1,6 +1,6 @@
 import React from 'react'
-import ModalHeader from '@components/Modals/ModalHeader'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 
 function ModifyCardModal({
   openType,

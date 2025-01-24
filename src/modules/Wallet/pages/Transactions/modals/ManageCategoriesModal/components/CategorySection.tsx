@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import HamburgerMenu from '@components/buttons/HamburgerMenu'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { type IWalletCategory } from '@interfaces/wallet_interfaces'
 
 interface CategorySectionProps {
