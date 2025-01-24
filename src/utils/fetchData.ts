@@ -45,8 +45,8 @@ export default async function APIRequest({
             throw new Error("Couldn't perform API request")
           })
           throw new Error(data.message)
-        } catch (err) {
-          throw new Error("Couldn't perform API request")
+        } catch (err: any) {
+          throw new Error(err.message)
         }
       }
 
@@ -72,9 +72,9 @@ export default async function APIRequest({
     .catch(err => {
       if (failureInfo) {
         toast.error(
-          t('fetch.failure', {
+          `${t('fetch.failure', {
             action: t(`fetch.action.${toCamelCase(failureInfo ?? '')}`)
-          })
+          })} Reason: ${err.message}`
         )
       }
 

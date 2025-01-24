@@ -40,7 +40,7 @@ function BooksLibrary(): React.ReactElement {
       setLibgenModalOpen
     }
   } = useBooksLibraryContext()
-  const debouncedSearchQuery = useDebounce(searchQuery, 500)
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
   const [filteredEntries, setFilteredEntries] = useState(entries)
   const [view, setView] = useState<'list' | 'grid'>('list')
 

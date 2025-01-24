@@ -32,7 +32,7 @@ function PhotosAlbumList(): React.ReactElement {
   const [updateAlbumTagsModalOpen, setUpdateAlbumTagsModalOpen] =
     useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const debouncedSearchQuery = useDebounce(searchQuery, 300)
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
   const [filteredAlbumList, setFilteredAlbumList] = useState<
     IPhotosAlbum[] | 'loading' | 'error'
   >(albumList)
