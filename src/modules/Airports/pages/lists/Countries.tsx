@@ -28,7 +28,7 @@ function Countries(): React.ReactElement {
   const { componentBgWithHover } = useThemeColors()
   const { continentID } = useParams()
   const [searchQuery, setSearchQuery] = useState('')
-  const debouncedSearchQuery = useDebounce(searchQuery, 500)
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
   const [countriesData] = useFetch<Record<string, [string, number]>>(
     `airports/countries/${continentID}`
   )

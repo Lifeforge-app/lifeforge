@@ -14,7 +14,7 @@ function QuickActions(): React.ReactElement {
   const searchInputRef = useRef<HTMLInputElement>(null)
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const debouncedSearchQuery = useDebounce(searchQuery, 300)
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
   const [filteredActions, setFilteredActions] = useState(QUICK_ACTIONS)
 
   useEffect(() => {

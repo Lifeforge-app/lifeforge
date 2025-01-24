@@ -23,7 +23,7 @@ function IdeaBox(): React.ReactElement {
   const [existedData, setExistedData] = useState<IIdeaBoxContainer | null>(null)
   const [filteredList, setFilteredList] = useState<IIdeaBoxContainer[]>([])
   const [searchQuery, setSearchQuery] = useState('')
-  const debouncedSearchQuery = useDebounce(searchQuery, 300)
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
   useEffect(() => {
     if (Array.isArray(data)) {

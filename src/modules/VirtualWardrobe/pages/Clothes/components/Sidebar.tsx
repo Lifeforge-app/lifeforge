@@ -51,8 +51,9 @@ function Sidebar({
             />
             <SidebarDivider />
             <SidebarTitle name="Categories" />
-            {Object.entries(sidebarData.categories).map(
-              ([category, number]) => (
+            {Object.entries(sidebarData.categories)
+              .sort((a, b) => b[1] - a[1])
+              .map(([category, number]) => (
                 <SidebarItem
                   key={category}
                   name={category}
@@ -79,8 +80,7 @@ function Sidebar({
                     setOpen(false)
                   }}
                 />
-              )
-            )}
+              ))}
             <SidebarDivider />
             {VW_CATEGORIES.findIndex(
               e => e.name === searchParams.get('category')
@@ -100,6 +100,7 @@ function Sidebar({
                       .filter(([subcategory]) =>
                         allSubcategories.includes(subcategory)
                       )
+                      .sort((a, b) => b[1] - a[1])
                       .map(([subcategory, number]) => (
                         <SidebarItem
                           key={subcategory}
@@ -157,29 +158,31 @@ function Sidebar({
               ))}
             <SidebarDivider />
             <SidebarTitle name="Sizes" />
-            {Object.entries(sidebarData.sizes).map(([size, number]) => (
-              <SidebarItem
-                key={size}
-                name={size}
-                number={number}
-                needTranslate={false}
-                active={searchParams.get('size') === size}
-                onClick={() => {
-                  setSearchParams({
-                    ...Object.fromEntries(searchParams.entries()),
-                    size
-                  })
-                  setOpen(false)
-                }}
-                onCancelButtonClick={() => {
-                  setSearchParams({
-                    ...Object.fromEntries(searchParams.entries()),
-                    size: ''
-                  })
-                  setOpen(false)
-                }}
-              />
-            ))}
+            {Object.entries(sidebarData.sizes)
+              .sort((a, b) => b[1] - a[1])
+              .map(([size, number]) => (
+                <SidebarItem
+                  key={size}
+                  name={size}
+                  number={number}
+                  needTranslate={false}
+                  active={searchParams.get('size') === size}
+                  onClick={() => {
+                    setSearchParams({
+                      ...Object.fromEntries(searchParams.entries()),
+                      size
+                    })
+                    setOpen(false)
+                  }}
+                  onCancelButtonClick={() => {
+                    setSearchParams({
+                      ...Object.fromEntries(searchParams.entries()),
+                      size: ''
+                    })
+                    setOpen(false)
+                  }}
+                />
+              ))}
             <SidebarDivider />
             <SidebarTitle name="Colors" />
             {Object.entries(sidebarData.colors)

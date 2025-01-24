@@ -56,7 +56,7 @@ export default function WalletProvider(): React.ReactElement {
     IWalletTransaction[]
   >([])
   const [searchQuery, setSearchQuery] = useState('')
-  const debouncedSearchQuery = useDebounce(searchQuery, 500)
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
 
   useEffect(() => {
     if (typeof transactions === 'string') return

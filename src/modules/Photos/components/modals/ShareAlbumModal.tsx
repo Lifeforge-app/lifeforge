@@ -1,9 +1,9 @@
 import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import copy from 'copy-to-clipboard'
 import React, { useState } from 'react'
 import Button from '@components/ButtonsAndInputs/Button'
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
-import { Clipboard } from '@utils/clipboard'
 import APIRequest from '@utils/fetchData'
 
 function ShareAlbumModal({
@@ -104,7 +104,7 @@ function ShareAlbumModal({
           <Button
             icon={isCopied ? 'tabler:check' : 'tabler:copy'}
             onClick={() => {
-              Clipboard.copy(
+              copy(
                 `${
                   import.meta.env.VITE_PUBLIC_PORTAL_URL
                 }/photos/album/${albumId}`

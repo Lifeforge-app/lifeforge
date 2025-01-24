@@ -27,7 +27,7 @@ function Regions(): React.ReactElement {
   const { componentBgWithHover } = useThemeColors()
   const { countryID, continentID } = useParams()
   const [searchQuery, setSearchQuery] = useState('')
-  const debouncedSearchQuery = useDebounce(searchQuery, 500)
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
   const [regionsData] = useFetch<{
     breadcrumbs: string[]
     data: Record<string, [string, number]>

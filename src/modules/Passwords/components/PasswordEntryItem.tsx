@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
+import copy from 'copy-to-clipboard'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -8,7 +9,6 @@ import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
 import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IPasswordEntry } from '@interfaces/password_interfaces'
-import { Clipboard } from '@utils/clipboard'
 import { decrypt, encrypt } from '@utils/encryption'
 
 function PasswordEntryITem({
@@ -95,13 +95,13 @@ function PasswordEntryITem({
   function copyPassword(): void {
     setCopyLoading(true)
     if (decryptedPassword !== null) {
-      Clipboard.copy(decryptedPassword)
+      copy(decryptedPassword)
       toast.success('Password copied!')
       setCopyLoading(false)
     } else {
       getDecryptedPassword()
         .then(password => {
-          Clipboard.copy(password)
+          copy(password)
           toast.success('Password copied!')
           setCopyLoading(false)
         })

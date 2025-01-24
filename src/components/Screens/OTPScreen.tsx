@@ -61,6 +61,11 @@ function OTPScreen({
   }
 
   async function verityOTP(): Promise<void> {
+    if (otp.length !== 6) {
+      toast.error(t('fetch.otp.verify.invalid'))
+      return
+    }
+
     setVerifyOtpLoading(true)
     const challenge = await fetchChallenge()
 
@@ -125,6 +130,14 @@ function OTPScreen({
             renderInput={props => (
               <input
                 {...props}
+                inputMode="numeric"
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    verityOTP().catch(err => {
+                      console.error(err)
+                    })
+                  }
+                }}
                 className="mx-2 !size-12 rounded-md border-[1.5px] border-bg-200 bg-bg-50 text-lg !text-bg-800 shadow-custom dark:border-bg-800 dark:bg-bg-900 dark:text-bg-50 md:!size-16 md:text-2xl"
               />
             )}

@@ -38,7 +38,7 @@ function GuitarTabs(): React.ReactElement {
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [page, setPage] = useState<number>(1)
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const debouncedSearchQuery = useDebounce(searchQuery, 500)
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
   const [searchParams, setSearchParams] = useHashParams()
 
   const [entries, refreshEntries] = useFetch<{

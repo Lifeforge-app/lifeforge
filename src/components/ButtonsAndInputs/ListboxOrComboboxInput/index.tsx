@@ -1,6 +1,6 @@
 import { ComboboxInput, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React, { memo, useRef } from 'react'
+import React, { memo } from 'react'
 import ComboboxInputWrapper from './components/ComboboxInputWrapper'
 import ListboxInputWrapper from './components/ListboxInputWrapper'
 import ListboxOrComboboxOptions from './components/ListboxOrComboboxOptions'
