@@ -1,6 +1,6 @@
 import React from 'react'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import HamburgerMenu from '@components/buttons/HamburgerMenu'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
 

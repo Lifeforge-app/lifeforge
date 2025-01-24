@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useMemo } from 'react'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 

@@ -1,8 +1,6 @@
-/* eslint-disable react/jsx-no-undef */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
 import React from 'react'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'

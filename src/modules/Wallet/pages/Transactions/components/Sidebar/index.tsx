@@ -1,7 +1,5 @@
 import React from 'react'
-import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
-import SidebarItem from '@components/Sidebar/components/SidebarItem'
-import SidebarWrapper from '@components/Sidebar/components/SidebarWrapper'
+import { SidebarDivider , SidebarItem , SidebarWrapper } from '@components/layouts/sidebar'
 import { useWalletContext } from '@providers/WalletProvider'
 import AssetsSection from './components/AssetsSection'
 import CategoriesSection from './components/CategoriesSection'

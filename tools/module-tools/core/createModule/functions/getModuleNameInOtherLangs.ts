@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import ora from 'ora'
 import prompts from 'prompts'
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
-import Modal from '@components/Modals/Modal'
+import Modal from '@components/modals/Modal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import APIRequest from '@utils/fetchData'
@@ -22,7 +22,7 @@ function ModifyBookModal(): React.ReactElement {
     (state, newState) => ({
       ...state,
       ...Object.fromEntries(
-        Object.entries(newState).filter(([key, _]) => key in state)
+        Object.entries(newState).filter(([key]) => key in state)
       )
     }),
     {

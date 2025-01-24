@@ -1,8 +1,8 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import HamburgerSelectorWrapper from '@components/ButtonsAndInputs/HamburgerMenu/HamburgerSelectorWrapper'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
+import HamburgerSelectorWrapper from '@components/buttons/HamburgerMenu/components/HamburgerSelectorWrapper'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+import { SidebarDivider } from '@components/layouts/sidebar'
 import { toCamelCase } from '@utils/strings'
 
 function ColumnVisibilityToggle({

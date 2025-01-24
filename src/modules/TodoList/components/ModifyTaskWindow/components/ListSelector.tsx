@@ -1,7 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
-import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
+import { ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
 import { useTodoListContext } from '@providers/TodoListProvider'
 
 function ListSelector({

@@ -1,8 +1,8 @@
 import moment from 'moment'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import DashboardItem from '@components/Miscellaneous/DashboardItem'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import DashboardItem from '@components/utilities/DashboardItem'
 import useFetch from '@hooks/useFetch'
 import {
   type ICalendarCategory,

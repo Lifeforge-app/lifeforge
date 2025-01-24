@@ -1,6 +1,6 @@
 import React from 'react'
-import SearchInput from '@components/ButtonsAndInputs/SearchInput'
-import ViewModeSelector from '@components/Miscellaneous/ViewModeSelector'
+import { SearchInput } from '@components/inputs'
+import ViewModeSelector from '@components/utilities/ViewModeSelector'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function SearchBar({

@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/member-delimiter-style */
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import DateInput from '@components/ButtonsAndInputs/DateInput'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalHeader from '@components/Modals/ModalHeader'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import { DateInput , TextInput } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
@@ -153,7 +151,7 @@ function ModifyJournalEntryModal({
         hasMargin={false}
         darker
       />
-      <Input
+      <TextInput
         name="Journal Title"
         value={title}
         updateValue={setTitle}

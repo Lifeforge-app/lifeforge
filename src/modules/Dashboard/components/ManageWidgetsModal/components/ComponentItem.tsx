@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import Switch from '@components/ButtonsAndInputs/Switch'
+import { Switch } from '@components/buttons'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 function ComponentListItem({

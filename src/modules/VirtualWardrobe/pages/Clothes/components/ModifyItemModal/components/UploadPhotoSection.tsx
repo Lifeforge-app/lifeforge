@@ -1,6 +1,6 @@
 import React from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
-import ImageAndFileInput from '@components/ButtonsAndInputs/ImageAndFilePicker/ImageAndFileInput'
+import { Button } from '@components/buttons'
+import { ImageAndFileInput } from '@components/inputs'
 
 function UploadPhotoSection({
   step,

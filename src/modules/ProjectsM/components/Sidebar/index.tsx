@@ -1,9 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
-import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
-import SidebarItem from '@components/Sidebar/components/SidebarItem'
-import SidebarWrapper from '@components/Sidebar/components/SidebarWrapper'
+import { SidebarDivider , SidebarItem , SidebarWrapper } from '@components/layouts/sidebar'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import SidebarSection from './components/SidebarSection'
 

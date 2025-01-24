@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
-import Input from '@components/ButtonsAndInputs/Input'
+import { Button } from '@components/buttons'
+import { TextInput } from '@components/inputs'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 import { fetchChallenge } from '../../../utils/fetchChallenge'
@@ -83,7 +83,7 @@ function Mood({
         ) : (
           <>
             <div className="w-full flex-1">
-              <Input
+              <TextInput
                 darker
                 value={mood.text}
                 icon="tabler:mood-neutral"
@@ -93,7 +93,7 @@ function Mood({
                 }}
                 placeholder="How do you feel?"
               />
-              <Input
+              <TextInput
                 darker
                 value={mood.emoji}
                 icon="uil:icons"

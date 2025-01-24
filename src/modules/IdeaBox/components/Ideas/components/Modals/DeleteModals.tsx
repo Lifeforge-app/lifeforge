@@ -1,5 +1,5 @@
 import React from 'react'
-import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
+import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 
 function DeleteModals(): React.ReactElement {

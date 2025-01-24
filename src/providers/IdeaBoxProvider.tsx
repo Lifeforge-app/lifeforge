@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/member-delimiter-style */
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
-import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
-import ModuleHeader from '@components/Module/ModuleHeader'
-import ModuleWrapper from '@components/Module/ModuleWrapper'
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
+import Scrollbar from '@components/utilities/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import useHashParams from '@hooks/useHashParams'
 import {

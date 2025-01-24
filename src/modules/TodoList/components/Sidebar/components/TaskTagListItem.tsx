@@ -1,6 +1,6 @@
 import React from 'react'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import SidebarItem from '@components/Sidebar/components/SidebarItem'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+import { SidebarItem } from '@components/layouts/sidebar'
 import { type ITodoListTag } from '@interfaces/todo_list_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
 

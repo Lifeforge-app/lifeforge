@@ -1,15 +1,12 @@
-/* eslint-disable react/jsx-no-undef */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
 import moment from 'moment'
 import React, { useEffect, useReducer, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
-import Modal from '@components/Modals/Modal'
-import ErrorScreen from '@components/Screens/ErrorScreen'
-import LoadingScreen from '@components/Screens/LoadingScreen'
+import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
+import Modal from '@components/modals/Modal'
+import ErrorScreen from '@components/screens/ErrorScreen'
+import LoadingScreen from '@components/screens/LoadingScreen'
 import {
   type ICalendarCategory,
   type ICalendarEvent

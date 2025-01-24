@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { type INotesEntry } from '@interfaces/notes_interfaces'

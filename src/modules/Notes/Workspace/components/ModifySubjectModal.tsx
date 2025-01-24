@@ -1,16 +1,12 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import IconInput from '@components/ButtonsAndInputs/IconPicker/IconInput'
-import IconSelector from '@components/ButtonsAndInputs/IconPicker/IconPickerModal'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import ModalHeader from '@components/Modals/ModalHeader'
+import { CreateOrModifyButton } from '@components/buttons'
+import { IconInput , IconPickerModal , TextInput } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { type INotesSubject } from '@interfaces/notes_interfaces'
 import APIRequest from '@utils/fetchData'
 
@@ -106,7 +102,7 @@ function ModifySubjectModal({
             setOpenType(null)
           }}
         />
-        <Input
+        <TextInput
           name="Subject name"
           icon="tabler:book"
           value={subjectName}
@@ -115,7 +111,7 @@ function ModifySubjectModal({
           className="w-[40vw]"
           placeholder="My Subject"
         />
-        <Input
+        <TextInput
           name="Subject description"
           icon="tabler:file-text"
           value={subjectDescription}
@@ -138,7 +134,7 @@ function ModifySubjectModal({
           type={innerOpenType}
         />
       </ModalWrapper>
-      <IconSelector
+      <IconPickerModal
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}
         setSelectedIcon={setSubjectIcon}

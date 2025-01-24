@@ -2,12 +2,12 @@ import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
-import ModuleHeader from '@components/Module/ModuleHeader'
-import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+import Scrollbar from '@components/utilities/Scrollbar'
 import {
   type IPhotoAlbumTag,
   type IPhotosAlbum

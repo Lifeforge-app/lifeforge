@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
+import Scrollbar from '@components/utilities/Scrollbar'
 import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import EntryItem from './components/EntryItem'

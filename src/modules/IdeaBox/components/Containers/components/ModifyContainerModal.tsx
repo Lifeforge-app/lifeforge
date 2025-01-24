@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import { t } from 'i18next'
 import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
-import Modal from '@components/Modals/Modal'
+import Modal from '@components/modals/Modal'
 import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import APIRequest from '@utils/fetchData'

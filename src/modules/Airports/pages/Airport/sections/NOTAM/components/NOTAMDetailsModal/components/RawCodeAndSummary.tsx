@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import Markdown from 'react-markdown'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 import APIRequest from '@utils/fetchData'
 
 function RawCodeAndSummary({

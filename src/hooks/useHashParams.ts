@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 

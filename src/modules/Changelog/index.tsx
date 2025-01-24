@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/no-throw-literal */
-
 import React, { useEffect, useState } from 'react'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import SearchInput from '@components/ButtonsAndInputs/SearchInput'
-import ModuleHeader from '@components/Module/ModuleHeader'
-import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+import { SearchInput } from '@components/inputs'
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IChangeLogVersion } from '@interfaces/changelog_interfaces'
 import LogItem from './components/LogItem'

@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React, { useState } from 'react'
 import PhotoAlbum from 'react-photo-album'
-import Button from '@components/ButtonsAndInputs/Button'
-import ModuleHeader from '@components/Module/ModuleHeader'
-import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import { Button } from '@components/buttons'
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IPhotoAlbumEntryItem } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '@providers/PhotosProvider'
@@ -64,7 +63,7 @@ function PhotosTrash(): React.ReactElement {
                     }))}
                     renderPhoto={({
                       photo,
-                      imageProps: { src, alt, style, ...restImageProps }
+                      imageProps: { style, ...restImageProps }
                     }) => (
                       <ImageObject
                         // TODO

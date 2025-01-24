@@ -1,24 +1,20 @@
-/* eslint-disable @typescript-eslint/member-delimiter-style */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import DnDContainer from '@components/ButtonsAndInputs/ImageAndFilePicker/ImagePickerModal/components/LocalUpload/components/DnDContainer'
-import PreviewContainer from '@components/ButtonsAndInputs/ImageAndFilePicker/ImagePickerModal/components/LocalUpload/components/PreviewContainer'
-import Input from '@components/ButtonsAndInputs/Input'
-import TagInput from '@components/ButtonsAndInputs/TagInput'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import { Button } from '@components/buttons'
+import { TextInput , TagsInput } from '@components/inputs'
+import DnDContainer from '@components/inputs/ImageAndFileInput/ImagePickerModal/components/LocalUpload/components/DnDContainer'
+import PreviewContainer from '@components/inputs/ImageAndFileInput/ImagePickerModal/components/LocalUpload/components/PreviewContainer'
+import ModalWrapper from '@components/modals/ModalWrapper'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import APIRequest from '@utils/fetchData'
 import IdeaContentInput from './components/IdeaContentInput'
 import ModalHeader from './components/ModalHeader'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
 
 function ModifyIdeaModal(): React.ReactElement {
   const {
@@ -282,7 +278,7 @@ function ModifyIdeaModal(): React.ReactElement {
       />
       <div className="space-y-4">
         {innerTypeOfModifyIdea !== 'text' && (
-          <Input
+          <TextInput
             name="Idea title"
             icon="tabler:bulb"
             value={ideaTitle}
@@ -327,7 +323,7 @@ function ModifyIdeaModal(): React.ReactElement {
                   <div className="mt-6 text-center font-medium uppercase tracking-widest text-bg-500">
                     {t('imageUpload.orPasteLink')}
                   </div>
-                  <Input
+                  <TextInput
                     icon="tabler:link"
                     name="Image link"
                     placeholder="https://example.com/image.jpg"
@@ -342,7 +338,7 @@ function ModifyIdeaModal(): React.ReactElement {
         )}
         <APIFallbackComponent data={tags}>
           {tags => (
-            <TagInput
+            <TagsInput
               name="Idea tags"
               icon="tabler:tag"
               value={ideaTags}

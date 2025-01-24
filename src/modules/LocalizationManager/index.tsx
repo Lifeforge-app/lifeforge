@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { cookieParse } from 'pocketbase'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
-import ModuleWrapper from '@components/Module/ModuleWrapper'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 
 function LocalizationManager(): React.ReactElement {
   const { t } = useTranslation()

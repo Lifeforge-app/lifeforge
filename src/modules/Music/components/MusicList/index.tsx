@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/member-delimiter-style */
 import React from 'react'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { useMusicContext } from '@providers/MusicProvider'
 import MusicListItem from './components/MusicListItem'
 

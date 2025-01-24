@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-dynamic-delete */
 import React from 'react'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import ModalHeader from '@components/Modals/ModalHeader'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import DASHBOARD_WIDGETS from '@constants/dashboard_widgets'
 import ComponentListItem from './components/ComponentItem'
 

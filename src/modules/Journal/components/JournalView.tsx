@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/member-delimiter-style */
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useState } from 'react'
 import Markdown from 'react-markdown'
 import Zoom from 'react-medium-image-zoom'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 import CustomZoomContent from '../../IdeaBox/components/Ideas/components/IdeaAndFolderList/components/IdeaEntry/components/CustomZoomContent'
 
 function JournalView({

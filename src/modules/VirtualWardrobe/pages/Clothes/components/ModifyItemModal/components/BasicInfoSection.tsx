@@ -1,9 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useState } from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
-import Input from '@components/ButtonsAndInputs/Input'
-import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
-import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
+import { Button } from '@components/buttons'
+import { TextInput , ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
 import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
 import APIRequest from '@utils/fetchData'
 
@@ -75,7 +73,7 @@ function BasicInfoSection({
   return (
     <>
       <div className="mt-6 space-y-4">
-        <Input
+        <TextInput
           icon="tabler:shirt"
           name="Item Name"
           value={name}
@@ -157,7 +155,7 @@ function BasicInfoSection({
             )}
           </ListboxOrComboboxInput>
         )}
-        <Input
+        <TextInput
           icon="tabler:settings-2"
           name="Brand"
           value={brand}

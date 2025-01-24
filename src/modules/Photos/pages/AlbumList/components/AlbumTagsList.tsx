@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
 
 function AlbumTagsList({

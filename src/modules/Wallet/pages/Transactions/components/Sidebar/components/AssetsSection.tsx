@@ -1,8 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
-import SidebarItem from '@components/Sidebar/components/SidebarItem'
-import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
+import { SidebarItem , SidebarTitle } from '@components/layouts/sidebar'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function AssetsSection({

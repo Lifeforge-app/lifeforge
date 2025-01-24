@@ -3,7 +3,7 @@ import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 

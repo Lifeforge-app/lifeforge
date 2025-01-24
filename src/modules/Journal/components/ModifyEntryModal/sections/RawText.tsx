@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 
 function RawText({
   openType,

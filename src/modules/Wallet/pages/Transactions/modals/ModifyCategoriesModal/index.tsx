@@ -1,16 +1,11 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
-import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import IconInput from '@components/ButtonsAndInputs/IconPicker/IconInput'
-import IconSelector from '@components/ButtonsAndInputs/IconPicker/IconPickerModal'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalHeader from '@components/Modals/ModalHeader'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import { CreateOrModifyButton } from '@components/buttons'
+import { ColorInput , ColorPickerModal , IconInput , IconPickerModal , TextInput } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWalletCategory } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 import APIRequest from '@utils/fetchData'
@@ -157,7 +152,7 @@ function ModifyCategoriesModal({
           </>
         )}
 
-        <Input
+        <TextInput
           icon="tabler:pencil"
           placeholder="My Categories"
           value={categoryName}
@@ -185,7 +180,7 @@ function ModifyCategoriesModal({
           type={openType === 'update' ? 'update' : 'create'}
         />
       </ModalWrapper>
-      <IconSelector
+      <IconPickerModal
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}
         setSelectedIcon={setCategoryIcon}

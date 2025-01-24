@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/member-delimiter-style */
 import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
+import ConfigColumn from '@components/utilities/ConfigColumn'
 import useThemeColors from '@hooks/useThemeColor'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import FontFamilyItem from './components/FontFamilyItem'

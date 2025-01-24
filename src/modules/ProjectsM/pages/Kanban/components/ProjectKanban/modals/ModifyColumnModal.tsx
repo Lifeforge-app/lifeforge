@@ -1,16 +1,11 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
-import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import IconInput from '@components/ButtonsAndInputs/IconPicker/IconInput'
-import IconSelector from '@components/ButtonsAndInputs/IconPicker/IconPickerModal'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalHeader from '@components/Modals/ModalHeader'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import { CreateOrModifyButton } from '@components/buttons'
+import { ColorInput, IconPickerModal , ColorPickerModal , IconInput , TextInput } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IProjectsMKanbanColumn } from '@interfaces/projects_m_interfaces'
 import APIRequest from '@utils/fetchData'
 
@@ -97,7 +92,7 @@ function ModifyColumnModal({
             setOpenType(null)
           }}
         />
-        <Input
+        <TextInput
           icon="tabler:book"
           placeholder="My Columns"
           value={columnName}
@@ -125,7 +120,7 @@ function ModifyColumnModal({
           type={openType}
         />
       </ModalWrapper>
-      <IconSelector
+      <IconPickerModal
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}
         setSelectedIcon={setColumnIcon}

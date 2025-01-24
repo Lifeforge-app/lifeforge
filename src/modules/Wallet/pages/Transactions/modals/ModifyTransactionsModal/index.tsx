@@ -1,18 +1,12 @@
-/* eslint-disable @typescript-eslint/prefer-optional-chain */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { parse } from 'file-type-mime'
 import { t } from 'i18next'
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import CurrencyInputComponent from '@components/ButtonsAndInputs/CurrencyInput'
-import DateInput from '@components/ButtonsAndInputs/DateInput'
-import ImageAndFileInput from '@components/ButtonsAndInputs/ImageAndFilePicker/ImageAndFileInput'
-import ImagePickerModal from '@components/ButtonsAndInputs/ImageAndFilePicker/ImagePickerModal'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalHeader from '@components/Modals/ModalHeader'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import { CreateOrModifyButton } from '@components/buttons'
+import { CurrencyInput , DateInput , ImageAndFileInput , ImagePickerModal , TextInput } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 import APIRequest from '@utils/fetchData'
@@ -216,7 +210,7 @@ function ModifyTransactionsModal({
             darker
           />
           {transactionType !== 'transfer' && (
-            <Input
+            <TextInput
               icon="tabler:file-text"
               placeholder="My Transactions"
               value={particular}
@@ -226,7 +220,7 @@ function ModifyTransactionsModal({
               updateValue={setParticular}
             />
           )}
-          <CurrencyInputComponent
+          <CurrencyInput
             icon="tabler:currency-dollar"
             name="Amount"
             value={amount}

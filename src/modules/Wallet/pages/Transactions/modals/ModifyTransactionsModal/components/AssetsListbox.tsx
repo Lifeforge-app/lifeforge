@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
-import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
+import { ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
 
 interface Asset {
   id: string

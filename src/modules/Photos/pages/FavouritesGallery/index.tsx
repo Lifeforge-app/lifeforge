@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import { Icon } from '@iconify/react'
 import React, { useEffect } from 'react'
 import PhotoAlbum from 'react-photo-album'
 import { useNavigate } from 'react-router'
-import GoBackButton from '@components/ButtonsAndInputs/GoBackButton.tsx'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu/index.tsx'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem.tsx'
-import ModuleWrapper from '@components/Module/ModuleWrapper.tsx'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback.tsx'
+import GoBackButton from '@components/buttons/GoBackButton.tsx'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem.tsx'
+import HamburgerMenu from '@components/buttons/HamburgerMenu/index.tsx'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper.tsx'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback.tsx'
 import useFetch from '@hooks/useFetch.ts'
 import { type IPhotoAlbumEntryItem } from '@interfaces/photos_interfaces.ts'
 import { usePhotosContext } from '../../../../providers/PhotosProvider.tsx'
@@ -103,7 +101,7 @@ function PhotosFavouritesGallery(): React.ReactElement {
                   }))}
                   renderPhoto={({
                     photo,
-                    imageProps: { src, alt, style, ...restImageProps }
+                    imageProps: { style, ...restImageProps }
                   }) => (
                     <ImageObject
                       // TODO

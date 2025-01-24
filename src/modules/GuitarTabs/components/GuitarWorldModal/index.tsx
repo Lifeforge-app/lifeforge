@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalHeader from '@components/Modals/ModalHeader'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import { Button } from '@components/buttons'
+import { TextInput } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { type IGuitarTabsGuitarWorldScores } from '@interfaces/guitar_tabs_interfaces'
 import APIRequest from '@utils/fetchData'
 import ScoreList from './components/ScoreList'
@@ -67,7 +67,7 @@ function GuitarWorldModal({
       />
       {!showData ? (
         <>
-          <Input
+          <TextInput
             icon="tabler:cookie"
             value={cookie}
             updateValue={setCookie}

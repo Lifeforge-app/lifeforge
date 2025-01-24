@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/member-delimiter-style */
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import { GoBackButton } from '@components/buttons'
+import HamburgerMenu from '@components/buttons/HamburgerMenu'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import {
   type IIdeaBoxContainer,
   type IIdeaBoxFolder

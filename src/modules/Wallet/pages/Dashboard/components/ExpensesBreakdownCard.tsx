@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Icon } from '@iconify/react'
 import React, { useMemo, useState } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import DashboardItem from '@components/Miscellaneous/DashboardItem'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import DashboardItem from '@components/utilities/DashboardItem'
+import Scrollbar from '@components/utilities/Scrollbar'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
 

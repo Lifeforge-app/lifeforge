@@ -1,9 +1,9 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import Button from '@components/ButtonsAndInputs/Button'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import HeaderFilter from '@components/Miscellaneous/HeaderFilter'
+import { Button } from '@components/buttons'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+import HeaderFilter from '@components/utilities/HeaderFilter'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function Header({

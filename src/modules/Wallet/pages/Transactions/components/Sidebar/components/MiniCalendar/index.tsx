@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/indent */
 import moment from 'moment'
 import React, { useState } from 'react'
-import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
+import { SidebarTitle } from '@components/layouts/sidebar'
 import MiniCalendarContent from './components/MiniCalendarContent'
 import MiniCalendarHeader from './components/MiniCalendarHeader'
 

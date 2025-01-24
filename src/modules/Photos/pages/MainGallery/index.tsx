@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
-import ModuleHeader from '@components/Module/ModuleHeader'
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import GalleryContainer from './Gallery/GalleryContainer'

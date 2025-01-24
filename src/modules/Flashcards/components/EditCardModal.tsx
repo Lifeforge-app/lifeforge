@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import { CreateOrModifyButton } from '@components/buttons'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IFlashcardCard } from '@interfaces/flashcard_interfaces'
 import APIRequest from '@utils/fetchData'
 
@@ -114,7 +114,7 @@ function EditCardModal({
 
   return (
     <ModalWrapper isOpen={isOpen}>
-      <div className="mb-8 flex flex-between ">
+      <div className="flex-between mb-8 flex ">
         <h1 className="flex items-center gap-3 text-2xl font-semibold">
           <Icon icon="tabler:pencil" className="size-7" />
           Edit Cards

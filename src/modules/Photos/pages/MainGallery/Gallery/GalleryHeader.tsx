@@ -1,14 +1,10 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-
-/* eslint-disable react/jsx-no-undef */
 import { t } from 'i18next'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import { Button } from '@components/buttons'
+import HamburgerMenu from '@components/buttons/HamburgerMenu'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { usePhotosContext } from '@providers/PhotosProvider'
 
 function GalleryHeader(): React.ReactElement {

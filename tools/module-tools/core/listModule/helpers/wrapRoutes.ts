@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 function wrapRoutes(
   routes: Record<string, string>,
   maxLineLength = 40

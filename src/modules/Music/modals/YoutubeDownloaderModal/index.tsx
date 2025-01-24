@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalHeader from '@components/Modals/ModalHeader'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import { Button } from '@components/buttons'
+import { TextInput } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
 import { useMusicContext } from '@providers/MusicProvider'
@@ -120,7 +119,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
           refreshMusics()
         }}
       />
-      <Input
+      <TextInput
         name="Video URL"
         icon="tabler:link"
         value={videoURLinput}

@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
+import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'

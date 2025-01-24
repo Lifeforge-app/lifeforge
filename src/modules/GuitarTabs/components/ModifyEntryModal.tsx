@@ -1,13 +1,10 @@
 import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React, { useEffect, useReducer, useState } from 'react'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import Input from '@components/ButtonsAndInputs/Input'
-import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
-import ListboxNullOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxNullOption'
-import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
-import ModalHeader from '@components/Modals/ModalHeader'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import { CreateOrModifyButton } from '@components/buttons'
+import { TextInput , ListboxOrComboboxInput , ListboxNullOption , ListboxOrComboboxOption } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
 import APIRequest from '@utils/fetchData'
 
@@ -86,7 +83,7 @@ function ModifyEntryModal({
         onClose={onClose}
         title="Modify Guitar Tab"
       />
-      <Input
+      <TextInput
         darker
         icon="tabler:music"
         name="Music Name"
@@ -96,7 +93,7 @@ function ModifyEntryModal({
           setData({ name: value })
         }}
       />
-      <Input
+      <TextInput
         darker
         icon="tabler:user"
         name="Author"

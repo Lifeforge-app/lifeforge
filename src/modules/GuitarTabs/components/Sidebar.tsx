@@ -1,10 +1,7 @@
 import { t } from 'i18next'
 import React from 'react'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
-import SidebarDivider from '@components/Sidebar/components/SidebarDivider'
-import SidebarItem from '@components/Sidebar/components/SidebarItem'
-import SidebarTitle from '@components/Sidebar/components/SidebarTitle'
-import SidebarWrapper from '@components/Sidebar/components/SidebarWrapper'
+import { SidebarDivider , SidebarItem , SidebarTitle , SidebarWrapper } from '@components/layouts/sidebar'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { type IGuitarTabsSidebarData } from '@interfaces/guitar_tabs_interfaces'
 
 function Sidebar({

@@ -1,5 +1,5 @@
 import React from 'react'
-import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
+import ConfigColumn from '@components/utilities/ConfigColumn'
 
 function AdjustmentColumn({
   icon,

@@ -1,19 +1,8 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
-import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
-import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import DateInput from '@components/ButtonsAndInputs/DateInput'
-import IconInput from '@components/ButtonsAndInputs/IconPicker/IconInput'
-import IconPickerModal from '@components/ButtonsAndInputs/IconPicker/IconPickerModal'
-import ImageAndFileInput from '@components/ButtonsAndInputs/ImageAndFilePicker/ImageAndFileInput'
-import ImagePickerModal from '@components/ButtonsAndInputs/ImageAndFilePicker/ImagePickerModal'
-import Input from '@components/ButtonsAndInputs/Input'
-import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
-import ListboxNullOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxNullOption'
-import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
-import LoadingScreen from '@components/Screens/LoadingScreen'
+import { Button , CreateOrModifyButton } from '@components/buttons'
+import { DateInput , IconInput , IconPickerModal , ImageAndFileInput , ImagePickerModal , TextInput , ListboxOrComboboxInput , ListboxNullOption , ListboxOrComboboxOption , ColorInput , ColorPickerModal } from '@components/inputs'
+import LoadingScreen from '@components/screens/LoadingScreen'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import ModalHeader from './ModalHeader'
 import ModalWrapper from './ModalWrapper'
@@ -106,7 +95,7 @@ function Modal({
                 switch (field.type) {
                   case 'text':
                     return (
-                      <Input
+                      <TextInput
                         key={field.id}
                         name={field.label}
                         icon={field.icon}

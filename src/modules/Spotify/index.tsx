@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-
 import React from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
-import ModuleHeader from '@components/Module/ModuleHeader'
-import ModuleWrapper from '@components/Module/ModuleWrapper'
+import { Button } from '@components/buttons'
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import { useAuthContext } from '@providers/AuthProvider'
 import WebPlayback from './WebPlayback'
 

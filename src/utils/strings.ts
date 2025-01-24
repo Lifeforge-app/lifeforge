@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 export function titleToPath(title: string): string {
   return title
     .toLowerCase()

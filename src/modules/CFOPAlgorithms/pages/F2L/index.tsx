@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
-import ModuleWrapper from '@components/Module/ModuleWrapper'
+import { GoBackButton } from '@components/buttons'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import useThemeColors from '@hooks/useThemeColor'
 import Cube from './Cube'
 

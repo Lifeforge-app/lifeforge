@@ -2,15 +2,13 @@ import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
-import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
-import ListboxOrComboboxOptions from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOptions'
-import SearchInput from '@components/ButtonsAndInputs/SearchInput'
-import Scrollbar from '@components/Miscellaneous/Scrollbar'
-import ViewModeSelector from '@components/Miscellaneous/ViewModeSelector'
-import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
-import ModuleWrapper from '@components/Module/ModuleWrapper'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
+import { ListboxOrComboboxOption , ListboxOrComboboxOptions , SearchInput } from '@components/inputs'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+import Scrollbar from '@components/utilities/Scrollbar'
+import ViewModeSelector from '@components/utilities/ViewModeSelector'
 import useFetch from '@hooks/useFetch'
 import useHashParams from '@hooks/useHashParams'
 import useThemeColors from '@hooks/useThemeColor'
@@ -24,7 +22,7 @@ import ModifyEntryModal from './components/ModifyEntryModal'
 import Sidebar from './components/Sidebar'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
-import Pagination from '../../components/Miscellaneous/Pagination'
+import Pagination from '../../components/utilities/Pagination'
 
 const SORT_TYPE = [
   ['Newest', 'tabler:clock', 'newest'],
@@ -153,14 +151,14 @@ function GuitarTabs(): React.ReactElement {
                   <Icon
                     icon={
                       SORT_TYPE.find(
-                        ([_, __, value]) => value === searchParams.get('sort')
+                        ([, , value]) => value === searchParams.get('sort')
                       )?.[1] ?? 'tabler:clock'
                     }
                     className="size-6"
                   />
                   <span className="whitespace-nowrap font-medium">
                     {SORT_TYPE.find(
-                      ([_, __, value]) => value === searchParams.get('sort')
+                      ([, , value]) => value === searchParams.get('sort')
                     )?.[0] ?? 'Newest'}
                   </span>
                 </div>

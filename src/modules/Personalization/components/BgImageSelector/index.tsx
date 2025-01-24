@@ -1,13 +1,13 @@
 import { t } from 'i18next'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import ConfigColumn from '@components/Miscellaneous/ConfigColumn'
-import DeleteConfirmationModal from '@components/Modals/DeleteConfirmationModal'
+import { Button } from '@components/buttons'
+import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
+import ConfigColumn from '@components/utilities/ConfigColumn'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import APIRequest from '@utils/fetchData'
 import AdjustBgImageModal from './components/AdjustBgImageModal'
-import ImagePickerModal from '../../../../components/ButtonsAndInputs/ImageAndFilePicker/ImagePickerModal'
+import ImagePickerModal from '../../../../components/inputs/ImageAndFileInput/ImagePickerModal'
 
 function BgImageSelector(): React.ReactElement {
   const { bgImage, setBgImage, setBackdropFilters } =

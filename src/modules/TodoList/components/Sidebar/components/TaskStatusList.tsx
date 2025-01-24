@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import React from 'react'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
-import SidebarItem from '@components/Sidebar/components/SidebarItem'
+import { SidebarItem } from '@components/layouts/sidebar'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { useTodoListContext } from '@providers/TodoListProvider'
 
 function TaskStatusList({

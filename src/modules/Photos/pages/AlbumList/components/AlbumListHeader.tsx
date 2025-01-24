@@ -1,8 +1,8 @@
 import React from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import SearchInput from '@components/ButtonsAndInputs/SearchInput'
+import { Button } from '@components/buttons'
+import HamburgerMenu from '@components/buttons/HamburgerMenu'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+import { SearchInput } from '@components/inputs'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import AlbumTagsList from './AlbumTagsList'
 

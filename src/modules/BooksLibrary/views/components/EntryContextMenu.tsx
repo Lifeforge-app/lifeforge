@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import forceDown from '@utils/forceDown'

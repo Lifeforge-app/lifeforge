@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
 import copy from 'copy-to-clipboard'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import { Button } from '@components/buttons'
+import HamburgerMenu from '@components/buttons/HamburgerMenu'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IPasswordEntry } from '@interfaces/password_interfaces'
 import { decrypt, encrypt } from '@utils/encryption'
@@ -197,17 +196,19 @@ function PasswordEntryITem({
             className="hidden !p-2 sm:flex"
             iconClassName="size-6"
             onClick={() => {
-              decryptedPassword === null
-                ? (() => {
-                    setLoading(true)
-                    getDecryptedPassword()
-                      .then(setDecryptedPassword)
-                      .catch(() => {})
-                      .finally(() => {
-                        setLoading(false)
-                      })
-                  })()
-                : setDecryptedPassword(null)
+              if (decryptedPassword === null) {
+                ;(() => {
+                  setLoading(true)
+                  getDecryptedPassword()
+                    .then(setDecryptedPassword)
+                    .catch(() => {})
+                    .finally(() => {
+                      setLoading(false)
+                    })
+                })()
+              } else {
+                setDecryptedPassword(null)
+              }
             }}
             loading={loading}
             icon={

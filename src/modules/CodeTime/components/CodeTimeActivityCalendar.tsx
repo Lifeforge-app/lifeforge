@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 import { Tooltip } from 'react-tooltip'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'

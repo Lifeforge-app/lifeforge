@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useRef, useState } from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 import { fetchChallenge } from '../../../utils/fetchChallenge'

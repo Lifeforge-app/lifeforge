@@ -1,15 +1,10 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import ColorInput from '@components/ButtonsAndInputs/ColorPicker/ColorInput'
-import ColorPickerModal from '@components/ButtonsAndInputs/ColorPicker/ColorPickerModal'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import IconInput from '@components/ButtonsAndInputs/IconPicker/IconInput'
-import IconSelector from '@components/ButtonsAndInputs/IconPicker/IconPickerModal'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import ModalHeader from '@components/Modals/ModalHeader'
+import { CreateOrModifyButton } from '@components/buttons'
+import { ColorInput , ColorPickerModal , IconInput , IconPickerModal , TextInput } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWalletLedger } from '@interfaces/wallet_interfaces'
 import APIRequest from '@utils/fetchData'
 
@@ -93,7 +88,7 @@ function ModifyLedgersModal({
             setOpenType(null)
           }}
         />
-        <Input
+        <TextInput
           icon="tabler:book"
           placeholder="My Ledgers"
           value={ledgerName}
@@ -121,7 +116,7 @@ function ModifyLedgersModal({
           type={openType}
         />
       </ModalWrapper>
-      <IconSelector
+      <IconPickerModal
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}
         setSelectedIcon={setLedgerIcon}

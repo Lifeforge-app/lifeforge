@@ -1,8 +1,8 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import React from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
-import HeaderFilter from '@components/Miscellaneous/HeaderFilter'
+import { Button } from '@components/buttons'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+import HeaderFilter from '@components/utilities/HeaderFilter'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 
 function Header({ itemCount }: { itemCount: number }): React.ReactElement {

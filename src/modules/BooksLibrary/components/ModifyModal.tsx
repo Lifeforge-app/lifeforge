@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { t } from 'i18next'
 import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
-import Modal from '@components/Modals/Modal'
+import Modal from '@components/modals/Modal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import APIRequest from '@utils/fetchData'

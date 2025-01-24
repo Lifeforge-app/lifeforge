@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
-
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Outlet } from 'react-router'
 import useFetch from '@hooks/useFetch'

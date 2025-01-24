@@ -1,6 +1,6 @@
 import React from 'react'
-import HamburgerMenu from '@components/ButtonsAndInputs/HamburgerMenu'
-import MenuItem from '@components/ButtonsAndInputs/HamburgerMenu/MenuItem'
+import HamburgerMenu from '@components/buttons/HamburgerMenu'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
 import forceDown from '@utils/forceDown'
 

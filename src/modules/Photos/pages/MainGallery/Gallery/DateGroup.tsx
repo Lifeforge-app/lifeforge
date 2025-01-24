@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
@@ -141,7 +140,7 @@ function DateGroup({
             }))}
             renderPhoto={({
               photo,
-              imageProps: { src, alt, style, ...restImageProps }
+              imageProps: { style, ...restImageProps }
             }) => (
               <ImageObject
                 beingDisplayedInAlbum={false}

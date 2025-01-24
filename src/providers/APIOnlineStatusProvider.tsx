@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
-import EmptyStateScreen from '@components/Screens/EmptyStateScreen'
-import { initLocale } from '../i18n'
+import { Button } from '@components/buttons'
+import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+import { initLocale } from '../core/i18n'
 
 async function checkAPIStatus(): Promise<'production' | 'development' | false> {
   const controller = new AbortController()

@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import Input from '@components/ButtonsAndInputs/Input'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import { TextInput } from '@components/inputs'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import {
   type IYoutubePlaylistEntry,
@@ -152,7 +151,7 @@ function PlaylistSection({
 
   return (
     <>
-      <Input
+      <TextInput
         icon="tabler:link"
         name="Playlist URL"
         value={playlistUrl}

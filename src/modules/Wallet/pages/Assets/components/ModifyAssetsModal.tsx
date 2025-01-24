@@ -1,14 +1,10 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import CreateOrModifyButton from '@components/ButtonsAndInputs/CreateOrModifyButton'
-import CurrencyInputComponent from '@components/ButtonsAndInputs/CurrencyInput'
-import IconInput from '@components/ButtonsAndInputs/IconPicker/IconInput'
-import IconSelector from '@components/ButtonsAndInputs/IconPicker/IconPickerModal'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
-import ModalHeader from '@components/Modals/ModalHeader'
+import { CreateOrModifyButton } from '@components/buttons'
+import { CurrencyInput , IconInput , IconPickerModal , TextInput } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWalletAsset } from '@interfaces/wallet_interfaces'
 import APIRequest from '@utils/fetchData'
 
@@ -95,7 +91,7 @@ function ModifyAssetsModal({
             setOpenType(null)
           }}
         />
-        <Input
+        <TextInput
           icon="tabler:wallet"
           placeholder="My assets"
           value={assetName}
@@ -109,7 +105,7 @@ function ModifyAssetsModal({
           name="Asset icon"
           setIconSelectorOpen={setIconSelectorOpen}
         />
-        <CurrencyInputComponent
+        <CurrencyInput
           name="Initial Balance"
           placeholder="0.00"
           icon="tabler:currency-dollar"
@@ -126,7 +122,7 @@ function ModifyAssetsModal({
           type={openType}
         />
       </ModalWrapper>
-      <IconSelector
+      <IconPickerModal
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}
         setSelectedIcon={setAssetIcon}

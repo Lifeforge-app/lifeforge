@@ -2,9 +2,9 @@ import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React, { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import Button from '@components/ButtonsAndInputs/Button'
-import Input from '@components/ButtonsAndInputs/Input'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import { Button } from '@components/buttons'
+import { TextInput } from '@components/inputs'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { useAuthContext } from '@providers/AuthProvider'
 import APIRequest from '@utils/fetchData'
 
@@ -76,7 +76,7 @@ function CreatePasswordScreen({
         <p className="mb-8 w-1/2 text-center text-lg text-bg-500">
           A master password is required to encrypt and decrypt your data.
         </p>
-        <Input
+        <TextInput
           key="newPassword"
           ref={inputRef}
           isPassword
@@ -106,7 +106,7 @@ function CreatePasswordScreen({
           }}
           darker
         />
-        <Input
+        <TextInput
           key="confirmPassword"
           ref={inputRef2}
           isPassword

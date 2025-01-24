@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useMemo } from 'react'
 import { useParams } from 'react-router'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import { isLightColor } from '@utils/colors'
 

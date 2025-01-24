@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import moment from 'moment'
 import React, { useState } from 'react'
 import {

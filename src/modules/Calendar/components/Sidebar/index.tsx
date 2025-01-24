@@ -1,5 +1,5 @@
 import React from 'react'
-import SidebarWrapper from '@components/Sidebar/components/SidebarWrapper'
+import { SidebarWrapper } from '@components/layouts/sidebar'
 import {
   type ICalendarCategory,
   type ICalendarEvent

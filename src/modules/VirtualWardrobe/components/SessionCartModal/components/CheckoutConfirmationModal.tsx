@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import { Button } from '@components/buttons'
+import ModalWrapper from '@components/modals/ModalWrapper'
 
 function CheckoutConfirmationModal({
   isOpen,

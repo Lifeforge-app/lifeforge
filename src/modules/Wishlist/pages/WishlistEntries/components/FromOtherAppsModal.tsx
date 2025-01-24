@@ -1,12 +1,10 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import Button from '@components/ButtonsAndInputs/Button'
-import Input from '@components/ButtonsAndInputs/Input'
-import ListboxOrComboboxInput from '@components/ButtonsAndInputs/ListboxOrComboboxInput'
-import ListboxOrComboboxOption from '@components/ButtonsAndInputs/ListboxOrComboboxInput/components/ListboxOrComboboxOption'
-import ModalHeader from '@components/Modals/ModalHeader'
-import ModalWrapper from '@components/Modals/ModalWrapper'
+import { Button } from '@components/buttons'
+import { TextInput , ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
+import ModalHeader from '@components/modals/ModalHeader'
+import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWishlistEntry } from '@interfaces/wishlist_interfaces'
 import APIRequest from '@utils/fetchData'
 
@@ -141,7 +139,7 @@ function FromOtherAppsModal({
             />
           ))}
         </ListboxOrComboboxInput>
-        <Input
+        <TextInput
           icon="tabler:link"
           name="Product URL"
           value={url}

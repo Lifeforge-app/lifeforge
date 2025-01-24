@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 class IntervalManager {
   private static instance: IntervalManager
   private readonly intervals: Set<NodeJS.Timeout>

@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import { Icon } from '@iconify/react'
 import React from 'react'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 import TypeSelector from './components/TypeSelector'
 
 function ModalHeader({

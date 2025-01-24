@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import GoBackButton from '@components/ButtonsAndInputs/GoBackButton'
-import APIFallbackComponent from '@components/Screens/APIComponentWithFallback'
+import { GoBackButton } from '@components/buttons'
+import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import AddToLibraryButton from './AddToLibraryButton'
 

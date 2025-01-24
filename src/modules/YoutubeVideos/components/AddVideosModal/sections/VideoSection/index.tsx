@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import Input from '@components/ButtonsAndInputs/Input'
+import { TextInput } from '@components/inputs'
 import useFetch from '@hooks/useFetch'
 import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
 import IntervalManager from '@utils/intervalManager'
@@ -115,7 +114,7 @@ function VideoSection({
 
   return (
     <>
-      <Input
+      <TextInput
         icon="tabler:link"
         name="Video URL"
         placeholder="https://www.youtube.com/watch?v=..."

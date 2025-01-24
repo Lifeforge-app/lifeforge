@@ -1,6 +1,6 @@
 import React from 'react'
 import { type NavigateAction, type View } from 'react-big-calendar'
-import Button from '@components/ButtonsAndInputs/Button'
+import { Button } from '@components/buttons'
 import useThemeColors from '@hooks/useThemeColor'
 import ChangeViewButton from './components/ChangeViewButton'
 import NavigationButton from './components/NavigationButton'
