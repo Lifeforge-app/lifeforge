@@ -4,7 +4,13 @@ import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
-import { CurrencyInput , DateInput , ImageAndFileInput , ImagePickerModal , TextInput } from '@components/inputs'
+import {
+  CurrencyInput,
+  DateInput,
+  ImageAndFileInput,
+  ImagePickerModal,
+  TextInput
+} from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
@@ -91,6 +97,8 @@ function ModifyTransactionsModal({
               : null
           )
         }
+        setFromAsset(null)
+        setToAsset(null)
       } else {
         setParticular('')
         setTransactionType('income')

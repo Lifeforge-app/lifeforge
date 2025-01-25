@@ -1,6 +1,6 @@
 import type BasePBCollection from './pocketbase_interfaces'
 
-interface APIKeyEntry extends BasePBCollection {
+interface IAPIKeyEntry extends BasePBCollection {
   keyId: string
   name: string
   description: string
@@ -8,4 +8,4 @@ interface APIKeyEntry extends BasePBCollection {
   key: string
 }
 
-export type { APIKeyEntry }
+export type { IAPIKeyEntry as IAPIKeyEntry }

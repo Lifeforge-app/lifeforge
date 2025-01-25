@@ -2,6 +2,7 @@ import { t } from 'i18next'
 import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
 import Modal from '@components/modals/Modal'
+import { type Loadable } from '@interfaces/common'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import {
   type IWishlistList,
@@ -19,12 +20,10 @@ function ModifyEntryModal({
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  setEntries: React.Dispatch<
-    React.SetStateAction<IWishlistEntry[] | 'loading' | 'error'>
-  >
+  setEntries: React.Dispatch<React.SetStateAction<Loadable<IWishlistEntry[]>>>
   existedData: Partial<IWishlistEntry> | null
   collectionId: string
-  lists: IWishlistList[] | 'loading' | 'error'
+  lists: Loadable<IWishlistList[]>
 }): React.ReactElement {
   const [data, setData] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -186,14 +185,16 @@ function ModifyEntryModal({
             existedData.image?.startsWith('https://') === true
               ? existedData.image
               : null,
-          preview:
-            existedData.image !== '' && existedData.image !== undefined
-              ? existedData.image.startsWith('https://')
-                ? existedData.image
-                : `${import.meta.env.VITE_API_HOST}/media/${collectionId}/${
-                    existedData.id
-                  }/${existedData.image}`
-              : null
+          preview: (() => {
+            if (['', null, undefined].includes(existedData.image)) return null
+
+            if (existedData.image?.startsWith('https://'))
+              return existedData.image
+
+            return `${import.meta.env.VITE_API_HOST}/media/${collectionId}/${
+              existedData.id
+            }/${existedData.image}`
+          })()
         }
       })
     } else {

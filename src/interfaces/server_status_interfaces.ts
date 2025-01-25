@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-hardcoded-ip */
 interface IDiskUsage {
   name: string
   size: string

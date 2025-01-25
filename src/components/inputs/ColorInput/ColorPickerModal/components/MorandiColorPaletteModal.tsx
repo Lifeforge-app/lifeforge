@@ -24,9 +24,9 @@ function MorandiColorPaletteModal({
         title="Morandi Color Palette"
         onClose={onClose}
       />
-      <ul className="grid w-full grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] gap-4 p-4 pt-0">
+      <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] gap-4 p-4 pt-0">
         {MORANDI_COLORS.sort(sortFn).map((morandiColor, index) => (
-          <li
+          <button
             key={index}
             className={`flex-center aspect-square size-full cursor-pointer rounded-md shadow-custom ${
               color === morandiColor
@@ -47,9 +47,9 @@ function MorandiColorPaletteModal({
                 }`}
               />
             )}
-          </li>
+          </button>
         ))}
-      </ul>
+      </div>
     </ModalWrapper>
   )
 }

@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-control-regex */
 /* eslint-disable no-control-regex */
 function toCamelCase(str: string): string {
   const camelCase = str

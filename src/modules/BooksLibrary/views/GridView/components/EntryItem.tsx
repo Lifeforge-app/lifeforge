@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
 import React from 'react'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
@@ -32,6 +33,7 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }): React.ReactElement {
       </HamburgerMenu>
       <div className="flex-center aspect-[9/12] w-full overflow-hidden rounded-lg bg-bg-200/70 shadow-custom dark:bg-bg-800/50">
         <img
+          alt=""
           src={`${import.meta.env.VITE_API_HOST}/media/${item.collectionId}/${
             item.id
           }/${item.thumbnail}`}

@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Outlet } from 'react-router'
 import useFetch from '@hooks/useFetch'
 import useHashParams from '@hooks/useHashParams'
+import { type Loadable } from '@interfaces/common'
 import {
   type IWalletAsset,
   type IWalletCategory,
@@ -13,12 +14,12 @@ import {
 } from '@interfaces/wallet_interfaces'
 
 interface IWalletData {
-  transactions: IWalletTransaction[] | 'loading' | 'error'
+  transactions: Loadable<IWalletTransaction[]>
   filteredTransactions: IWalletTransaction[]
-  ledgers: IWalletLedger[] | 'loading' | 'error'
-  assets: IWalletAsset[] | 'loading' | 'error'
-  categories: IWalletCategory[] | 'loading' | 'error'
-  incomeExpenses: IWalletIncomeExpenses | 'loading' | 'error'
+  ledgers: Loadable<IWalletLedger[]>
+  assets: Loadable<IWalletAsset[]>
+  categories: Loadable<IWalletCategory[]>
+  incomeExpenses: Loadable<IWalletIncomeExpenses>
   refreshTransactions: () => void
   refreshAssets: () => void
   refreshLedgers: () => void

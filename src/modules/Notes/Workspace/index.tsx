@@ -60,19 +60,24 @@ function NotesCategory(): React.ReactElement {
             title={
               <>
                 Notes -{' '}
-                {titleData === 'loading' ? (
-                  <span className="loader"></span>
-                ) : titleData === 'error' ? (
-                  <span className="flex items-center gap-2 text-red-500">
-                    <Icon
-                      icon="tabler:alert-triangle"
-                      className="mt-1 size-8 stroke-red-500 stroke-[2px]"
-                    />
-                    Failed to fetch data
-                  </span>
-                ) : (
-                  titleData.name
-                )}
+                {(() => {
+                  switch (titleData) {
+                    case 'loading':
+                      return <span className="loader"></span>
+                    case 'error':
+                      return (
+                        <span className="flex items-center gap-2 text-red-500">
+                          <Icon
+                            icon="tabler:alert-triangle"
+                            className="mt-1 size-8 stroke-red-500 stroke-[2px]"
+                          />
+                          Failed to fetch data
+                        </span>
+                      )
+                    default:
+                      return titleData.name
+                  }
+                })()}
               </>
             }
           />

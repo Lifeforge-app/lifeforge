@@ -157,13 +157,17 @@ function ModifyItemModal({
               >
                 <div className="flex items-center whitespace-nowrap after:mx-2 after:content-['/'] sm:after:hidden ">
                   <span
-                    className={`mr-3 flex size-6 items-center justify-center rounded-full font-medium lg:size-10 ${
-                      index + 1 === step
-                        ? 'border-2 border-custom-500'
-                        : index + 1 < step
-                        ? 'bg-custom-500 text-bg-900'
-                        : 'bg-bg-500 text-bg-900'
-                    }`}
+                    className={`mr-3 flex size-6 items-center justify-center rounded-full font-medium lg:size-10 ${(() => {
+                      if (index + 1 === step) {
+                        return 'border-2 border-custom-500'
+                      }
+
+                      if (index + 1 < step) {
+                        return 'bg-custom-500 text-bg-900'
+                      }
+
+                      return 'bg-bg-500 text-bg-900'
+                    })()}`}
                   >
                     {openType === 'update' && index === 0 ? (
                       <Icon icon="tabler:lock" className="size-5" />

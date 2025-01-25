@@ -17,6 +17,7 @@ import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import Scrollbar from '@components/utilities/Scrollbar'
 import useFetch from '@hooks/useFetch'
+import { type Loadable } from '@interfaces/common'
 import {
   DNSRecordType,
   type IDNSRecordEntry
@@ -36,9 +37,8 @@ function DNSRecords(): JSX.Element {
   const [sortBy, setSortBy] = useState('Name')
   const [deleteLoading, setDeleteLoading] = useState<number>(-1)
   const [isSelecting, setIsSelecting] = useState(false)
-  const [filteredRecords, setFilteredRecords] = useState<
-    IDNSRecordEntry[] | 'loading' | 'error'
-  >('loading')
+  const [filteredRecords, setFilteredRecords] =
+    useState<Loadable<IDNSRecordEntry[]>>('loading')
   const [bulkDeleteLoading, setBulkDeleteLoading] = useState(false)
   const [deleteConfirmationModalOpen, setDeleteConfirmationModalOpen] =
     useState<boolean | number>(false)

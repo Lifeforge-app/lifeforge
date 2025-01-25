@@ -44,12 +44,12 @@ function SearchResults({
             fullResURL: image.imageURL
           }))}
           renderPhoto={({ photo, imageProps: { src, alt, style } }) => (
-            <div
+            <button
               onClick={() => {
                 setFile(photo.fullResURL)
                 setPreview(photo.src)
               }}
-              className={`relative isolate overflow-hidden rounded-md bg-bg-200 outline outline-2 transition-all dark:bg-bg-800/50 ${
+              className={`relative isolate block overflow-hidden rounded-md bg-bg-200 outline outline-2 transition-all dark:bg-bg-800/50 ${
                 photo.fullResURL === file
                   ? 'outline-custom-500'
                   : 'outline-transparent hover:outline-bg-500'
@@ -57,7 +57,7 @@ function SearchResults({
               style={style}
             >
               <img src={src} alt={alt} className="size-full object-cover" />
-            </div>
+            </button>
           )}
         />
       </div>

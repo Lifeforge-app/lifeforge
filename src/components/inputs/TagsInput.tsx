@@ -118,7 +118,6 @@ function TagsInput({
               updateValue={setCurrentTag}
               placeholder={placeholder}
               onKeyDown={handleKeyDown}
-              autoFocus={false}
               noAutoComplete
               onBlur={addTag}
               className="!my-0 !w-auto flex-1 py-0 !pl-0"

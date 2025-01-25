@@ -1,6 +1,12 @@
+/* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { SidebarDivider , SidebarItem , SidebarTitle , SidebarWrapper } from '@components/layouts/sidebar'
+import {
+  SidebarDivider,
+  SidebarItem,
+  SidebarTitle,
+  SidebarWrapper
+} from '@components/layouts/sidebar'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { type IFlashcardTag } from '@interfaces/flashcard_interfaces'

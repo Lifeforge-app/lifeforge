@@ -36,11 +36,8 @@ function TypeSelector({
             }
             className="mr-2 size-5"
           />
-          {innerTypeOfModifyIdea === 'text'
-            ? 'Text'
-            : innerTypeOfModifyIdea === 'image'
-            ? 'Image'
-            : 'Link'}
+          {innerTypeOfModifyIdea[0].toUpperCase() +
+            innerTypeOfModifyIdea.slice(1)}
         </div>
         <Icon
           icon="tabler:chevron-down"
@@ -64,13 +61,15 @@ function TypeSelector({
                 onClick={() => {
                   setInnerTypeOfModifyIdea(type as 'text' | 'image' | 'link')
                 }}
-                className={`group flex w-full items-center rounded-md p-4 text-base ${
-                  type === innerTypeOfModifyIdea
-                    ? ''
-                    : active
+                className={`group flex w-full items-center rounded-md p-4 text-base ${(() => {
+                  if (type === innerTypeOfModifyIdea) {
+                    return ''
+                  }
+
+                  return active
                     ? 'bg-bg-200/50 text-bg-800 dark:bg-bg-800 dark:text-bg-50'
                     : 'text-bg-500 hover:bg-bg-100 dark:text-bg-500 dark:hover:bg-bg-800'
-                }`}
+                })()}`}
               >
                 <Icon icon={icon} className="mr-3 size-5" aria-hidden="true" />
                 {name}

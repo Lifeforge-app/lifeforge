@@ -130,10 +130,34 @@ function Transactions(): React.ReactElement {
           <SearchBar setView={setView} view={view} />
           <div className="mt-6 size-full">
             <APIFallbackComponent data={transactions}>
-              {transactions =>
-                transactions.length > 0 ? (
-                  filteredTransactions.length > 0 ? (
-                    view === 'table' ? (
+              {transactions => {
+                if (transactions.length === 0) {
+                  return (
+                    <EmptyStateScreen
+                      title={t('emptyState.wallet.transactions.title')}
+                      description={t(
+                        'emptyState.wallet.transactions.description'
+                      )}
+                      ctaContent="Add Transaction"
+                      onCTAClick={setModifyModalOpenType}
+                      icon="tabler:wallet-off"
+                    />
+                  )
+                }
+
+                if (filteredTransactions.length === 0) {
+                  return (
+                    <EmptyStateScreen
+                      title="Oops! No Transaction found."
+                      description="No transactions found with the selected filters."
+                      icon="tabler:filter-off"
+                    />
+                  )
+                }
+
+                switch (view) {
+                  case 'table':
+                    return (
                       <TableView
                         visibleColumn={visibleColumn}
                         setDeleteTransactionsConfirmationOpen={
@@ -142,7 +166,9 @@ function Transactions(): React.ReactElement {
                         setModifyModalOpenType={setModifyModalOpenType}
                         setSelectedData={setSelectedData}
                       />
-                    ) : (
+                    )
+                  case 'list':
+                    return (
                       <ListView
                         setDeleteTransactionsConfirmationOpen={
                           setDeleteTransactionsConfirmationOpen
@@ -153,25 +179,8 @@ function Transactions(): React.ReactElement {
                         setReceiptToView={setReceiptToView}
                       />
                     )
-                  ) : (
-                    <EmptyStateScreen
-                      title="Oops! No Transaction found."
-                      description="No transactions found with the selected filters."
-                      icon="tabler:filter-off"
-                    />
-                  )
-                ) : (
-                  <EmptyStateScreen
-                    title={t('emptyState.wallet.transactions.title')}
-                    description={t(
-                      'emptyState.wallet.transactions.description'
-                    )}
-                    ctaContent="Add Transaction"
-                    onCTAClick={setModifyModalOpenType}
-                    icon="tabler:wallet-off"
-                  />
-                )
-              }
+                }
+              }}
             </APIFallbackComponent>
             {transactions.length > 0 && (
               <Menu>

@@ -13,12 +13,15 @@ async function validateOTPCode(
     name: 'otp',
     message: t('moduleTools.auth.prompts.OTP'),
     format: value => value.trim(),
-    validate: value =>
-      value !== undefined && value !== '' && /^\d{6}$/.test(value)
-        ? true
-        : value === undefined || value === ''
-        ? t('moduleTools.auth.inputErrors.empty.OTP')
-        : t('moduleTools.auth.inputErrors.invalid.OTP')
+    validate: value => {
+      if (value !== undefined && value !== '' && /^\d{6}$/.test(value)) {
+        return true
+      } else if (value === undefined || value === '') {
+        return t('moduleTools.auth.inputErrors.empty.OTP')
+      } else {
+        return t('moduleTools.auth.inputErrors.invalid.OTP')
+      }
+    }
   })
 
   const spinner2 = ora(t('moduleTools.auth.messages.OTP.validating')).start()

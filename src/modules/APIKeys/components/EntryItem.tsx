@@ -4,7 +4,7 @@ import React from 'react'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import ConfigColumn from '@components/utilities/ConfigColumn'
-import { type APIKeyEntry } from '@interfaces/api_keys_interfaces'
+import { type IAPIKeyEntry } from '@interfaces/api_keys_interfaces'
 
 function EntryItem({
   entry,
@@ -13,9 +13,9 @@ function EntryItem({
   setModifyAPIKeyModalOpenType,
   setDeleteConfirmationModalOpen
 }: {
-  entry: APIKeyEntry
+  entry: IAPIKeyEntry
   hasDivider: boolean
-  setExistingData: React.Dispatch<React.SetStateAction<APIKeyEntry | null>>
+  setExistingData: React.Dispatch<React.SetStateAction<IAPIKeyEntry | null>>
   setModifyAPIKeyModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >

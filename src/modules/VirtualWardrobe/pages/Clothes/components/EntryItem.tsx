@@ -50,6 +50,7 @@ function EntryItem<T extends boolean = false>({
       } rounded-md ${isCartItem ? componentBgLighter : componentBg} p-4`}
     >
       <img
+        alt=""
         src={`${import.meta.env.VITE_API_HOST}/media/${
           entry.front_image
         }?thumb=512x0`}

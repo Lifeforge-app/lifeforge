@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-nested-conditional */
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
@@ -8,6 +9,7 @@ import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import Scrollbar from '@components/utilities/Scrollbar'
+import { type Loadable } from '@interfaces/common'
 import {
   type IPhotoAlbumTag,
   type IPhotosAlbum
@@ -33,9 +35,8 @@ function PhotosAlbumList(): React.ReactElement {
     useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
-  const [filteredAlbumList, setFilteredAlbumList] = useState<
-    IPhotosAlbum[] | 'loading' | 'error'
-  >(albumList)
+  const [filteredAlbumList, setFilteredAlbumList] =
+    useState<Loadable<IPhotosAlbum[]>>(albumList)
   const [searchParams] = useSearchParams()
   const [existedTagData, setExistedTagData] = useState<IPhotoAlbumTag | null>(
     null

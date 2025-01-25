@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import { TextInput } from '@components/inputs'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
+import { type Loadable } from '@interfaces/common'
 import {
   type IYoutubePlaylistEntry,
   type IYoutubePlaylistVideoEntry,
@@ -23,7 +24,7 @@ function PlaylistSection({
   isOpen,
   setIsVideoDownloading
 }: {
-  videos: IYoutubeVideosStorageEntry[] | 'loading' | 'error'
+  videos: Loadable<IYoutubeVideosStorageEntry[]>
   isOpen: boolean
   setIsVideoDownloading: (value: boolean) => void
 }): React.ReactElement {

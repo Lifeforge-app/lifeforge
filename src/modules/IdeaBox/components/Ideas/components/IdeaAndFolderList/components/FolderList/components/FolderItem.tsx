@@ -105,7 +105,14 @@ function FolderItem({
       } ${isDragging ? 'cursor-move' : ''} font-medium transition-all`}
       style={{
         backgroundColor:
-          folder.color + (!isOver ? (canDrop ? '50' : '20') : ''),
+          folder.color +
+          (() => {
+            if (isOver) {
+              return ''
+            }
+
+            return canDrop ? '50' : '20'
+          })(),
         color: !isOver ? folder.color : '',
         opacity
       }}

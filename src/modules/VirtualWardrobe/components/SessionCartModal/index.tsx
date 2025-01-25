@@ -4,6 +4,7 @@ import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+import { Loadable } from '@interfaces/common'
 import { type IVirtualWardrobeEntry } from '@interfaces/virtual_wardrobe_interfaces'
 import APIRequest from '@utils/fetchData'
 import CheckoutConfirmationModal from './components/CheckoutConfirmationModal'
@@ -18,9 +19,9 @@ function SessionCartModal({
 }: {
   isOpen: boolean
   onClose: () => void
-  cartItems: IVirtualWardrobeEntry[] | 'loading' | 'error'
+  cartItems: Loadable<IVirtualWardrobeEntry[]>
   setCartItems: React.Dispatch<
-    React.SetStateAction<IVirtualWardrobeEntry[] | 'loading' | 'error'>
+    React.SetStateAction<Loadable<IVirtualWardrobeEntry[]>>
   >
   refreshEntries: () => void
 }): React.ReactElement {

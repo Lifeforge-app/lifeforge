@@ -1,4 +1,5 @@
 import React from 'react'
+import { type Loadable } from '@interfaces/common'
 import {
   type IYoutubePlaylistEntry,
   type IYoutubePlaylistVideoEntry,
@@ -19,7 +20,7 @@ function PlaylistDetails({
   downloadVideo: (metadata: IYoutubePlaylistVideoEntry) => void
   downloadingVideos: React.RefObject<Set<string>>
   downloadedVideos: Set<string>
-  videos: IYoutubeVideosStorageEntry[] | 'loading' | 'error'
+  videos: Loadable<IYoutubeVideosStorageEntry[]>
   processes: Record<
     string,
     {
@@ -37,15 +38,21 @@ function PlaylistDetails({
             key={video.id}
             video={video}
             downloadVideo={downloadVideo}
-            status={
-              (typeof videos !== 'string' &&
-                videos.find(v => v.youtube_id === video.id) !== undefined) ||
-              downloadedVideos.has(video.id)
-                ? 'completed'
-                : downloadingVideos.current.has(video.id)
-                ? 'in_progress'
-                : processes[video.id]?.status ?? null
-            }
+            status={(() => {
+              if (
+                (typeof videos !== 'string' &&
+                  videos.find(v => v.youtube_id === video.id) !== undefined) ||
+                downloadedVideos.has(video.id)
+              ) {
+                return 'completed'
+              }
+
+              if (downloadingVideos.current.has(video.id)) {
+                return 'in_progress'
+              }
+
+              return processes[video.id]?.status ?? null
+            })()}
             progress={processes[video.id]?.progress ?? 0}
           />
         ))}

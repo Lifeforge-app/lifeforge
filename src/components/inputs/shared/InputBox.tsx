@@ -9,7 +9,6 @@ function InputBox({
   placeholder,
   inputRef,
   reference,
-  autoFocus = false,
   disabled = false,
   noAutoComplete = false,
   onKeyDown = () => {},
@@ -69,7 +68,6 @@ function InputBox({
           isPassword && showPassword !== true ? { fontFamily: 'Arial' } : {}
         }
         className={`mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider caret-custom-500 placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500 ${className}`}
-        autoFocus={autoFocus}
         inputMode={inputMode}
         onBlur={onBlur}
       />

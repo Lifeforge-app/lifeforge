@@ -4,6 +4,7 @@ import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
+import { type Loadable } from '@interfaces/common'
 import CategoryList from './components/CategoryList'
 import MiniCalendar from './components/MiniCalendar'
 
@@ -21,7 +22,7 @@ function Sidebar({
   setDeleteCategoryConfirmationModalOpen
 }: {
   events: ICalendarEvent[]
-  categories: ICalendarCategory[] | 'loading' | 'error'
+  categories: Loadable<ICalendarCategory[]>
   refreshCategories: () => void
   sidebarOpen: boolean
   setSidebarOpen: (value: boolean) => void

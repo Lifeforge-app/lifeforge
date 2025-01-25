@@ -26,7 +26,7 @@ function EntryText({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
   )
 
   return (
-    <div
+    <button
       onClick={() => {
         setExpanded(prev => !prev)
       }}
@@ -81,7 +81,7 @@ function EntryText({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
         )}
       </div>
       <EntryContextMenu entry={entry} />
-    </div>
+    </button>
   )
 }
 

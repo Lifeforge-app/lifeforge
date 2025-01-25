@@ -12,6 +12,71 @@ interface MiniCalendarDateItemProps {
   setNextToSelect: React.Dispatch<React.SetStateAction<'start' | 'end'>>
 }
 
+const getDayClassName = ({
+  index,
+  firstDay,
+  lastDate,
+  searchParams,
+  isFirstAndLastDay,
+  isBetweenFirstAndLastDay
+}: {
+  index: number
+  firstDay: number
+  lastDate: number
+  searchParams: URLSearchParams
+  isFirstAndLastDay: string
+  isBetweenFirstAndLastDay: boolean
+}) => {
+  if (firstDay > index || index - firstDay + 1 > lastDate) {
+    return 'pointer-events-none text-bg-300 dark:text-bg-600'
+  }
+
+  if (
+    firstDay <= index &&
+    index - firstDay + 1 <= lastDate &&
+    (searchParams.get('start_date') !== null ||
+      searchParams.get('end_date') !== null)
+  ) {
+    if (isFirstAndLastDay !== '') {
+      const isSingleDate = moment(searchParams.get('start_date')).isSame(
+        moment(searchParams.get('end_date') ?? moment().format('YYYY-MM-DD')),
+        'day'
+      )
+
+      const borderClassName =
+        isFirstAndLastDay === 'first'
+          ? 'after:rounded-l-md after:border-y after:border-l'
+          : 'after:rounded-r-md after:border-y after:border-r'
+
+      return `font-semibold after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:h-12 after:w-full after:-translate-x-1/2 after:-translate-y-1/2 after:border-custom-500 after:content-[''] ${
+        isSingleDate ? 'after:rounded-md after:border' : borderClassName
+      }`
+    }
+
+    if (isBetweenFirstAndLastDay) {
+      return "after:absolute after:left-1/2 after:top-1/2 after:z-[-2] after:h-12 after:w-full after:-translate-x-1/2 after:-translate-y-1/2 after:border-y after:border-custom-500 after:content-['']"
+    }
+  }
+
+  return 'cursor-pointer'
+}
+
+const getTransactionClassName = (transactionCount: number): string => {
+  let opacityClass = ''
+
+  if (transactionCount >= 7) {
+    opacityClass = 'opacity-70'
+  } else if (transactionCount >= 5) {
+    opacityClass = 'opacity-50'
+  } else if (transactionCount >= 3) {
+    opacityClass = 'opacity-30'
+  } else if (transactionCount >= 1) {
+    opacityClass = 'opacity-10'
+  }
+
+  return `absolute left-1/2 top-1/2 z-[-1] flex size-10 -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-md ${opacityClass}`
+}
+
 function MiniCalendarDateItem({
   index,
   actualIndex,
@@ -75,25 +140,22 @@ function MiniCalendarDateItem({
   }, [transactions, date, actualIndex])
 
   const isFirstAndLastDay = useMemo(() => {
-    return searchParams.get('start_date') !== null &&
-      moment(searchParams.get('start_date')).isSame(
-        moment(
-          `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
-          'YYYY-M-DD'
-        ),
-        'day'
-      )
-      ? 'first'
-      : searchParams.get('end_date') !== null &&
-        moment(searchParams.get('end_date')).isSame(
-          moment(
-            `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
-            'YYYY-M-DD'
-          ),
-          'day'
-        )
-      ? 'last'
-      : ''
+    const startDateParam = searchParams.get('start_date')
+    const endDateParam = searchParams.get('end_date')
+    const formattedDate = moment(
+      `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
+      'YYYY-M-DD'
+    )
+
+    if (startDateParam && moment(startDateParam).isSame(formattedDate, 'day')) {
+      return 'first'
+    }
+
+    if (endDateParam && moment(endDateParam).isSame(formattedDate, 'day')) {
+      return 'last'
+    }
+
+    return ''
   }, [searchParams, date, actualIndex])
 
   const isBetweenFirstAndLastDay = useMemo(() => {
@@ -127,7 +189,7 @@ function MiniCalendarDateItem({
   }, [searchParams, date, actualIndex])
 
   return (
-    <div
+    <button
       key={index}
       onClick={() => {
         const target = `${date.getFullYear()}-${
@@ -169,51 +231,19 @@ function MiniCalendarDateItem({
         setNextToSelect(nextToSelect === 'start' ? 'end' : 'start')
         setSearchParams(searchParams)
       }}
-      className={`flex-center relative isolate aspect-square w-full flex-col gap-1 text-sm ${
-        firstDay > index || index - firstDay + 1 > lastDate
-          ? 'pointer-events-none text-bg-300 dark:text-bg-600'
-          : 'cursor-pointer'
-      } ${
-        firstDay <= index &&
-        index - firstDay + 1 <= lastDate &&
-        (searchParams.get('start_date') !== null ||
-        searchParams.get('end_date') !== null
-          ? isFirstAndLastDay !== ''
-            ? `font-semibold after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:h-12 after:w-full after:-translate-x-1/2 after:-translate-y-1/2 after:border-custom-500 after:content-[''] ${
-                moment(searchParams.get('start_date')).isSame(
-                  moment(
-                    searchParams.get('end_date') ??
-                      moment().format('YYYY-MM-DD')
-                  ),
-                  'day'
-                )
-                  ? 'after:rounded-md after:border'
-                  : isFirstAndLastDay === 'first'
-                  ? 'after:rounded-l-md after:border-y after:border-l'
-                  : 'after:rounded-r-md after:border-y after:border-r'
-              }`
-            : isBetweenFirstAndLastDay
-            ? "after:absolute after:left-1/2 after:top-1/2 after:z-[-2] after:h-12 after:w-full after:-translate-x-1/2 after:-translate-y-1/2 after:border-y after:border-custom-500 after:content-['']"
-            : ''
-          : '')
-      }`}
+      className={getDayClassName({
+        index,
+        firstDay,
+        lastDate,
+        searchParams,
+        isFirstAndLastDay,
+        isBetweenFirstAndLastDay
+      })}
     >
       <span>{actualIndex}</span>
       {!(firstDay > index || index - firstDay + 1 > lastDate) &&
         transactionCount.total > 0 && (
-          <div
-            className={`absolute left-1/2 top-1/2 z-[-1] flex size-10 -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-md  ${
-              transactionCount.count >= 7
-                ? 'opacity-70'
-                : transactionCount.count >= 5
-                ? 'opacity-50'
-                : transactionCount.count >= 3
-                ? 'opacity-30'
-                : transactionCount.count >= 1
-                ? 'opacity-10'
-                : ''
-            }`}
-          >
+          <div className={getTransactionClassName(transactionCount.count)}>
             {(
               [
                 ['income', 'bg-green-500'],
@@ -233,7 +263,7 @@ function MiniCalendarDateItem({
             ))}
           </div>
         )}
-    </div>
+    </button>
   )
 }
 

@@ -3,6 +3,10 @@ import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
 import { toCamelCase } from './strings'
 
+function getRequestBody(body: any, isJSON: boolean): any {
+  return isJSON ? JSON.stringify(body) : body
+}
+
 export default async function APIRequest({
   endpoint,
   method,
@@ -35,7 +39,7 @@ export default async function APIRequest({
         : '',
       ...(isJSON ? { 'Content-Type': 'application/json' } : {})
     },
-    body: body !== undefined ? (isJSON ? JSON.stringify(body) : body) : null
+    body: body !== undefined ? getRequestBody(body, isJSON) : null
   })
     .then(async res => {
       if (!res.ok) {
