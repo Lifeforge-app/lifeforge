@@ -2,7 +2,11 @@ import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
-import { ListboxOrComboboxOption , ListboxOrComboboxOptions , SearchInput } from '@components/inputs'
+import {
+  ListboxOrComboboxOption,
+  ListboxOrComboboxOptions,
+  SearchInput
+} from '@components/inputs'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
@@ -72,6 +76,58 @@ function GuitarTabs(): React.ReactElement {
   useEffect(() => {
     setPage(1)
   }, [searchParams])
+
+  const renderContent = (entries: {
+    totalItems: number
+    totalPages: number
+    page: number
+    items: IGuitarTabsEntry[]
+  }) => {
+    if (entries.totalItems === 0) {
+      if (debouncedSearchQuery.trim() === '') {
+        return (
+          <EmptyStateScreen
+            title="Oops! No guitar tabs found!"
+            description="Try uploading some guitar tabs to get started!"
+            icon="tabler:music-off"
+          />
+        )
+      }
+
+      return (
+        <EmptyStateScreen
+          title="No results found!"
+          description="Try searching for something else!"
+          icon="tabler:search-off"
+        />
+      )
+    }
+
+    switch (view) {
+      case 'grid':
+        return (
+          <GridView
+            entries={entries.items}
+            refreshEntries={() => {
+              refreshEntries()
+              refreshSidebarData()
+            }}
+            setExistingEntry={setExistingEntry}
+            setModifyEntryModalOpen={setModifyEntryModalOpen}
+            setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
+          />
+        )
+      case 'list':
+        return (
+          <ListView
+            entries={entries.items}
+            setExistingEntry={setExistingEntry}
+            setModifyEntryModalOpen={setModifyEntryModalOpen}
+            setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
+          />
+        )
+    }
+  }
 
   return (
     <ModuleWrapper>
@@ -202,43 +258,7 @@ function GuitarTabs(): React.ReactElement {
                   totalPages={entries.totalPages}
                   className="mb-4"
                 />
-                {entries.totalItems > 0 ? (
-                  view === 'grid' ? (
-                    <GridView
-                      entries={entries.items}
-                      refreshEntries={() => {
-                        refreshEntries()
-                        refreshSidebarData()
-                      }}
-                      setExistingEntry={setExistingEntry}
-                      setModifyEntryModalOpen={setModifyEntryModalOpen}
-                      setDeleteConfirmationModalOpen={
-                        setDeleteConfirmationModalOpen
-                      }
-                    />
-                  ) : (
-                    <ListView
-                      entries={entries.items}
-                      setExistingEntry={setExistingEntry}
-                      setModifyEntryModalOpen={setModifyEntryModalOpen}
-                      setDeleteConfirmationModalOpen={
-                        setDeleteConfirmationModalOpen
-                      }
-                    />
-                  )
-                ) : debouncedSearchQuery.trim() === '' ? (
-                  <EmptyStateScreen
-                    title="Oops! No guitar tabs found!"
-                    description="Try uploading some guitar tabs to get started!"
-                    icon="tabler:music-off"
-                  />
-                ) : (
-                  <EmptyStateScreen
-                    title="No results found!"
-                    description="Try searching for something else!"
-                    icon="tabler:search-off"
-                  />
-                )}
+                {renderContent(entries)}
                 <Pagination
                   currentPage={entries.page}
                   onPageChange={setPage}

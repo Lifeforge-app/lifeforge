@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from '@components/buttons'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import { Loadable } from '@interfaces/common'
 import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
 import VideoInfo from '../../../../../../Music/modals/YoutubeDownloaderModal/components/VideoInfo'
 
@@ -10,7 +11,7 @@ function VideoDetails({
   loading,
   progress
 }: {
-  videoInfo: IYoutubeVideoInfo | 'loading' | 'error'
+  videoInfo: Loadable<IYoutubeVideoInfo>
   downloadVideo: () => void
   loading: boolean
   progress: number

@@ -136,20 +136,15 @@ export default function AuthProvider({
 
           return 'success: ' + data.userData.name
         } else {
-          switch (data.message) {
-            case 'Invalid credentials':
-              return AUTH_ERROR_MESSAGES.INVALID_CREDENTIALS
-            default:
-              return AUTH_ERROR_MESSAGES.UNKNOWN_ERROR
+          if (data.message === 'Invalid credentials') {
+            return AUTH_ERROR_MESSAGES.INVALID_CREDENTIALS
           }
+
+          return AUTH_ERROR_MESSAGES.UNKNOWN_ERROR
         }
       })
-      .catch(err => {
-        if (err) {
-          return AUTH_ERROR_MESSAGES.UNKNOWN_ERROR
-        } else {
-          return AUTH_ERROR_MESSAGES.UNKNOWN_ERROR
-        }
+      .catch(() => {
+        return AUTH_ERROR_MESSAGES.UNKNOWN_ERROR
       })
 
     return await res

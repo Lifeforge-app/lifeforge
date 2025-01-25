@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'

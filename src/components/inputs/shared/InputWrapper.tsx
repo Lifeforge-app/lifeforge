@@ -18,6 +18,16 @@ function InputWrapper({
 
   return (
     <div
+      role="button"
+      tabIndex={0}
+      onKeyDown={e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          if (inputRef?.current !== undefined && inputRef.current !== null) {
+            inputRef.current.focus()
+          }
+        }
+      }}
       className={`group relative flex shrink-0 items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 pl-6 shadow-custom transition-all focus-within:!border-custom-500 hover:bg-bg-200 ${
         darker ? componentBgLighterWithHover : componentBgWithHover
       } ${className} ${

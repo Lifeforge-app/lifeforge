@@ -57,8 +57,10 @@ const Personalization = lazy(
   async () => await import('../modules/Personalization')
 )
 const ServerStatus = lazy(async () => await import('../modules/ServerStatus'))
-const Spotify = lazy(async () => await import('../modules/Spotify'))
 const Modules = lazy(async () => await import('../modules/Modules'))
+const PasswordsProvider = lazy(
+  async () => await import('../providers/PasswordsProvider')
+)
 const Passwords = lazy(async () => await import('../modules/Passwords'))
 const Journal = lazy(async () => await import('../modules/Journal'))
 const Music = lazy(async () => await import('../modules/Music'))
@@ -171,9 +173,6 @@ export const COMPONENTS = {
   calendar: {
     calendar: Calendar
   },
-  spotify: {
-    spotify: Spotify
-  },
   'code-time': {
     'code-time': CodeTime
   },
@@ -197,6 +196,7 @@ export const COMPONENTS = {
     'books-library': BooksLibrary
   },
   passwords: {
+    'passwords-provider': PasswordsProvider,
     passwords: Passwords
   },
   journal: {

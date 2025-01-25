@@ -5,6 +5,59 @@ import { type IYoutubePlaylistVideoEntry } from '@interfaces/youtube_video_stora
 import { shortenBigNumber } from '@utils/strings'
 import IconButton from '../../../../../../Music/components/Bottombar/components/IconButton'
 
+function ProgressOrButton({
+  status,
+  progress,
+  video,
+  downloadVideo
+}: {
+  status: 'completed' | 'failed' | 'in_progress' | null
+  progress: number
+  video: IYoutubePlaylistVideoEntry
+  downloadVideo: (metadata: IYoutubePlaylistVideoEntry) => void
+}): React.ReactElement {
+  switch (status) {
+    case 'in_progress':
+      return (
+        <div className="flex flex-col items-end gap-2">
+          <p className="text-bg-500">{progress}%</p>
+          <div className="h-1 w-24 rounded-md bg-bg-500">
+            <div
+              className="h-full rounded-md bg-custom-500 transition-all"
+              style={{
+                width: `${progress}%`
+              }}
+            />
+          </div>
+        </div>
+      )
+    case 'completed':
+      return (
+        <p className="flex items-center gap-2 text-green-500">
+          <Icon icon="tabler:check" className="size-5" />
+          Downloaded
+        </p>
+      )
+    case 'failed':
+      return (
+        <p className="flex items-center gap-2 text-red-500">
+          <Icon icon="tabler:alert-circle" className="size-5" />
+          Failed
+        </p>
+      )
+    default:
+      return (
+        <IconButton
+          icon="tabler:download"
+          onClick={() => {
+            downloadVideo(video)
+          }}
+          className="text-bg-500 hover:bg-bg-800/50 hover:text-bg-800 dark:hover:text-bg-50"
+        />
+      )
+  }
+}
+
 function PlaylistVideoEntry({
   video,
   downloadVideo,
@@ -21,6 +74,7 @@ function PlaylistVideoEntry({
       <div className="flex space-x-2">
         <div className="relative h-28 shrink-0 overflow-hidden rounded-md border border-bg-800">
           <img
+            alt=""
             src={video.thumbnail}
             referrerPolicy="no-referrer"
             className="aspect-video size-full object-cover"
@@ -39,41 +93,12 @@ function PlaylistVideoEntry({
           </p>
         </div>
       </div>
-      {status === 'in_progress' ? (
-        <div className="flex flex-col items-end gap-2">
-          <p className="text-bg-500">{progress}%</p>
-          <div className="h-1 w-24 rounded-md bg-bg-500">
-            <div
-              className="h-full rounded-md bg-custom-500 transition-all"
-              style={{
-                width: `${progress}%`
-              }}
-            />
-          </div>
-        </div>
-      ) : status !== null ? (
-        <p
-          className={`flex items-center gap-2 ${
-            status === 'completed' ? 'text-green-500' : 'text-red-500'
-          }`}
-        >
-          <Icon
-            icon={
-              status === 'completed' ? 'tabler:check' : 'tabler:alert-circle'
-            }
-            className="size-5"
-          />
-          {status === 'completed' ? 'Downloaded' : 'Failed'}
-        </p>
-      ) : (
-        <IconButton
-          icon="tabler:download"
-          onClick={() => {
-            downloadVideo(video)
-          }}
-          className="text-bg-500 hover:bg-bg-800/50 hover:text-bg-800 dark:hover:text-bg-50"
-        />
-      )}
+      <ProgressOrButton
+        status={status}
+        progress={progress}
+        video={video}
+        downloadVideo={downloadVideo}
+      />
     </div>
   )
 }

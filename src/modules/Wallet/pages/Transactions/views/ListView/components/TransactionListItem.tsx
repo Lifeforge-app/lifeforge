@@ -77,9 +77,9 @@ function TransactionListItem({
             )}
             {transaction.location !== '' && (
               <>
-                <a data-tooltip-id={`tooltip-location-${transaction.id}`}>
+                <span data-tooltip-id={`tooltip-location-${transaction.id}`}>
                   <Icon icon="tabler:map-pin" className="size-5 text-bg-500" />
-                </a>
+                </span>
                 <Tooltip
                   id={`tooltip-location-${transaction.id}`}
                   className="z-[9999] !rounded-md bg-bg-50 !p-4 !text-base text-bg-800 shadow-custom dark:bg-bg-800 dark:text-bg-50"

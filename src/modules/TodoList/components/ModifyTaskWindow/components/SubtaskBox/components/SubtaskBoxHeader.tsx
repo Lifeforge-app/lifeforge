@@ -1,7 +1,9 @@
+/* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { type Loadable } from '@interfaces/common'
 import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
 import APIRequest from '@utils/fetchData'
 import SpicinessSelector from './SpicinessSelector'
@@ -16,9 +18,7 @@ function SubtaskBoxHeader({
 }: {
   spiciness: number
   setSpiciness: (spiciness: number) => void
-  setSubtasks: React.Dispatch<
-    React.SetStateAction<ITodoSubtask[] | 'loading' | 'error'>
-  >
+  setSubtasks: React.Dispatch<React.SetStateAction<Loadable<ITodoSubtask[]>>>
   setNewTask: React.Dispatch<React.SetStateAction<string>>
   summary: string
   notes: string

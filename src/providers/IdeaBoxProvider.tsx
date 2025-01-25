@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import useFetch from '@hooks/useFetch'
+import { type Loadable } from '@interfaces/common'
 import {
   type IIdeaBoxEntry,
   type IIdeaBoxFolder,
@@ -13,22 +14,16 @@ import APIRequest from '@utils/fetchData'
 
 interface IIdeaBoxData {
   valid: boolean | 'loading' | 'error'
-  entries: IIdeaBoxEntry[] | 'loading' | 'error'
-  folders: IIdeaBoxFolder[] | 'loading' | 'error'
-  tags: IIdeaBoxTag[] | 'loading' | 'error'
-  searchResults: IIdeaBoxEntry[] | 'loading' | 'error'
+  entries: Loadable<IIdeaBoxEntry[]>
+  folders: Loadable<IIdeaBoxFolder[]>
+  tags: Loadable<IIdeaBoxTag[]>
+  searchResults: Loadable<IIdeaBoxEntry[]>
 
-  setEntries: React.Dispatch<
-    React.SetStateAction<IIdeaBoxEntry[] | 'loading' | 'error'>
-  >
-  setFolders: React.Dispatch<
-    React.SetStateAction<IIdeaBoxFolder[] | 'loading' | 'error'>
-  >
-  setTags: React.Dispatch<
-    React.SetStateAction<IIdeaBoxTag[] | 'loading' | 'error'>
-  >
+  setEntries: React.Dispatch<React.SetStateAction<Loadable<IIdeaBoxEntry[]>>>
+  setFolders: React.Dispatch<React.SetStateAction<Loadable<IIdeaBoxFolder[]>>>
+  setTags: React.Dispatch<React.SetStateAction<Loadable<IIdeaBoxTag[]>>>
   setSearchResults: React.Dispatch<
-    React.SetStateAction<IIdeaBoxEntry[] | 'loading' | 'error'>
+    React.SetStateAction<Loadable<IIdeaBoxEntry[]>>
   >
 
   refreshEntries: () => void
@@ -111,18 +106,12 @@ export default function IdeaBoxProvider({
 
   const [valid] = useFetch<boolean>(`idea-box/valid/${id}/${path}`)
 
-  const [searchResults, setSearchResults] = useState<
-    IIdeaBoxEntry[] | 'loading' | 'error'
-  >([])
-  const [entries, setEntries] = useState<IIdeaBoxEntry[] | 'loading' | 'error'>(
-    'loading'
+  const [searchResults, setSearchResults] = useState<Loadable<IIdeaBoxEntry[]>>(
+    []
   )
-  const [folders, setFolders] = useState<
-    IIdeaBoxFolder[] | 'loading' | 'error'
-  >('loading')
-  const [tags, setTags] = useState<IIdeaBoxTag[] | 'loading' | 'error'>(
-    'loading'
-  )
+  const [entries, setEntries] = useState<Loadable<IIdeaBoxEntry[]>>('loading')
+  const [folders, setFolders] = useState<Loadable<IIdeaBoxFolder[]>>('loading')
+  const [tags, setTags] = useState<Loadable<IIdeaBoxTag[]>>('loading')
 
   const [modifyIdeaModalOpenType, setModifyIdeaModalOpenType] = useState<
     null | 'create' | 'update' | 'paste'

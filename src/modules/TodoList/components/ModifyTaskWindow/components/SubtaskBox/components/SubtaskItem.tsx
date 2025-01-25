@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+import { type Loadable } from '@interfaces/common'
 import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
 
 function SubtaskItem({
@@ -16,9 +17,7 @@ function SubtaskItem({
 }: {
   subtask: ITodoSubtask
   subtasks: ITodoSubtask[]
-  setSubtasks: React.Dispatch<
-    React.SetStateAction<ITodoSubtask[] | 'loading' | 'error'>
-  >
+  setSubtasks: React.Dispatch<React.SetStateAction<Loadable<ITodoSubtask[]>>>
   moveTask: (from: number, to: number) => void
   newTask: string
   setNewTask: React.Dispatch<React.SetStateAction<string>>

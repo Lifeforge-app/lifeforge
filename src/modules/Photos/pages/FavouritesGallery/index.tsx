@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
 import React, { useEffect } from 'react'
 import PhotoAlbum from 'react-photo-album'

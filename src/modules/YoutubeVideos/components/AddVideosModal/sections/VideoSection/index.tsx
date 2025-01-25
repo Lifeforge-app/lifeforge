@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/empty-string-repetition */
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'

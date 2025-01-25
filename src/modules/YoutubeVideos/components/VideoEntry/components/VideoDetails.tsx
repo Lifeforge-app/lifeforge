@@ -17,6 +17,7 @@ function VideoDetails({
         {video.channel !== undefined && (
           <p className="flex items-center gap-2">
             <img
+              alt=""
               src={`${import.meta.env.VITE_API_HOST}/media/${
                 video.channel.thumbnail
               }`}

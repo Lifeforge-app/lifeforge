@@ -24,15 +24,17 @@ function LinkItem({
   return (
     <Link
       to={to}
-      className={`transition-all ${
-        isHighlighted
-          ? 'font-bold text-custom-500 hover:text-custom-600'
-          : `text-bg-500 ${
-              to !== ''
-                ? 'hover:text-bg-600 dark:hover:text-bg-50'
-                : 'pointer-events-none'
-            }`
-      }`}
+      className={`transition-all ${(() => {
+        if (isHighlighted) {
+          return 'font-bold text-custom-500 hover:text-custom-600'
+        }
+
+        return `text-bg-500 ${
+          to !== ''
+            ? 'hover:text-bg-600 dark:hover:text-bg-50'
+            : 'pointer-events-none'
+        }`
+      })()}`}
     >
       {children}
     </Link>

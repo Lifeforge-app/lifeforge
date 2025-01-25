@@ -1,8 +1,10 @@
+/* eslint-disable sonarjs/no-nested-functions */
 import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import copy from 'copy-to-clipboard'
 import React, { useState } from 'react'
 import { Button } from '@components/buttons'
+import { type Loadable } from '@interfaces/common'
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
 import APIRequest from '@utils/fetchData'
 
@@ -14,12 +16,8 @@ function ShareAlbumModal({
 }: {
   albumId: string
   publicity: boolean
-  setAlbumData: React.Dispatch<
-    React.SetStateAction<IPhotosAlbum | 'loading' | 'error'>
-  >
-  setAlbumList: React.Dispatch<
-    React.SetStateAction<IPhotosAlbum[] | 'loading' | 'error'>
-  >
+  setAlbumData: React.Dispatch<React.SetStateAction<Loadable<IPhotosAlbum>>>
+  setAlbumList: React.Dispatch<React.SetStateAction<Loadable<IPhotosAlbum[]>>>
 }): React.ReactElement {
   const [isCopied, setIsCopied] = useState(false)
 

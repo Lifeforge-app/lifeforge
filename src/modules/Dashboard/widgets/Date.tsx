@@ -5,7 +5,7 @@ import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { isLightColor } from '@utils/colors'
 import { arabicToChinese } from '@utils/strings'
 
-export default function Date(): React.ReactElement {
+export default function DateWidget(): React.ReactElement {
   const { language } = usePersonalizationContext()
   const { theme } = useThemeColors()
   const ref = useRef<HTMLDivElement>(null)
@@ -39,16 +39,24 @@ export default function Date(): React.ReactElement {
             .locale(language)
             .format(language.startsWith('zh') ? 'YYYY[年] MMMM' : 'MMMM YYYY')}
           ,{' '}
-          {language.startsWith('zh')
-            ? `第${arabicToChinese(
-                `${moment().week()}`,
-                language.endsWith('-CN') ? 'simplified' : 'traditional'
-              )}${language.endsWith('-CN') ? '周' : '週'}`
-            : language === 'ms'
-            ? moment().week() < 4
-              ? `Minggu ${['pertama', 'kedua', 'ketiga'][moment().week() - 1]}`
-              : `Minggu ke-${moment().week()}`
-            : `Week ${moment().week()}`}
+          {(() => {
+            switch (language) {
+              case 'zh-CN':
+              case 'zh-TW':
+                return `第${arabicToChinese(
+                  `${moment().week()}`,
+                  language.endsWith('-CN') ? 'simplified' : 'traditional'
+                )}${language.endsWith('-CN') ? '周' : '週'}`
+              case 'ms':
+                return moment().week() < 4
+                  ? `Minggu ${
+                      ['pertama', 'kedua', 'ketiga'][moment().week() - 1]
+                    }`
+                  : `Minggu ke-${moment().week()}`
+              default:
+                return `Week ${moment().week()}`
+            }
+          })()}
         </span>
       </div>
     </div>

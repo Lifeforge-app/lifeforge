@@ -1,9 +1,13 @@
 import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
-import { ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
+import {
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption
+} from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
+import { type Loadable } from '@interfaces/common'
 import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
 import PlaylistSection from './sections/PlaylistSection'
 import VideoSection from './sections/VideoSection'
@@ -28,7 +32,7 @@ function AddVideosModal({
 }: {
   isOpen: boolean
   onClose: (isVideoDownloading: boolean) => void
-  videos: IYoutubeVideosStorageEntry[] | 'loading' | 'error'
+  videos: Loadable<IYoutubeVideosStorageEntry[]>
 }): React.ReactElement {
   const [selectedResourceType, setSelectedResourceType] = useState<
     'video' | 'playlist'

@@ -77,62 +77,74 @@ function Photos({
     input.click()
   }
 
+  const renderContent = () => {
+    if (openType === 'update' && originalPhotosLength > 0) {
+      return (
+        <div className="flex-center size-full flex-col gap-4">
+          <Icon icon="tabler:lock" className="size-28" />
+          <h2 className="text-4xl font-semibold">Photos are locked</h2>
+          <p className="text-center text-lg text-bg-500">
+            You can&apos;t upload photos in update mode.
+          </p>
+        </div>
+      )
+    }
+
+    if (photos.length === 0) {
+      return (
+        <EmptyStateScreen
+          icon="tabler:photo-off"
+          title="No photos uploaded"
+          description="Upload some photos to make your journal entry more memorable!"
+          ctaContent="Upload Photos"
+          onCTAClick={onUploadClick}
+        />
+      )
+    }
+
+    return (
+      <>
+        <div className="flex flex-wrap gap-2">
+          {photos.map(photo => (
+            <div
+              key={photo.preview}
+              className="relative max-h-[300px] min-h-32 grow overflow-hidden rounded-lg"
+            >
+              <img
+                src={photo.preview}
+                alt=""
+                className="size-full max-h-[300px] min-h-32 object-cover"
+              />
+              <button
+                onClick={() => {
+                  setPhotos(photos.filter(p => p.preview !== photo.preview))
+                }}
+                className="flex-center absolute left-0 top-0 size-full bg-red-900/50 opacity-0 transition-opacity duration-200 hover:opacity-100"
+              >
+                <Icon icon="tabler:trash" className="size-6 text-red-500" />
+              </button>
+            </div>
+          ))}
+        </div>
+        {photos.length < 50 && (
+          <Button
+            onClick={onUploadClick}
+            className="mt-4 w-full"
+            disabled={photos.length >= 50}
+            icon="tabler:plus"
+            variant="secondary"
+          >
+            upload photos
+          </Button>
+        )}
+      </>
+    )
+  }
+
   return (
     <>
       <div className="mt-4 flex w-full flex-1 shrink-0 flex-col rounded-lg bg-bg-200/50 p-6 shadow-custom transition-all focus-within:ring-1 focus-within:ring-bg-500 dark:bg-bg-800/50">
-        {openType === 'update' && originalPhotosLength > 0 ? (
-          <div className="flex-center size-full flex-col gap-4">
-            <Icon icon="tabler:lock" className="size-28" />
-            <h2 className="text-4xl font-semibold">Photos are locked</h2>
-            <p className="text-center text-lg text-bg-500">
-              You can&apos;t upload photos in update mode.
-            </p>
-          </div>
-        ) : photos.length > 0 ? (
-          <>
-            <div className="flex flex-wrap gap-2">
-              {photos.map(photo => (
-                <div
-                  key={photo.preview}
-                  className="relative max-h-[300px] min-h-32 grow overflow-hidden rounded-lg"
-                >
-                  <img
-                    src={photo.preview}
-                    alt=""
-                    className="size-full max-h-[300px] min-h-32 object-cover"
-                  />
-                  <button
-                    onClick={() => {
-                      setPhotos(photos.filter(p => p.preview !== photo.preview))
-                    }}
-                    className="flex-center absolute left-0 top-0 size-full bg-red-900/50 opacity-0 transition-opacity duration-200 hover:opacity-100"
-                  >
-                    <Icon icon="tabler:trash" className="size-6 text-red-500" />
-                  </button>
-                </div>
-              ))}
-            </div>
-            {photos.length < 50 && (
-              <Button
-                onClick={onUploadClick}
-                className="mt-4 w-full"
-                disabled={photos.length >= 50}
-                icon="tabler:plus"
-                variant="secondary"
-              >
-                upload photos
-              </Button>
-            )}
-          </>
-        ) : (
-          <EmptyStateScreen
-            icon="tabler:photo-off"
-            title="No photos uploaded"
-            description="Upload some photos to make your journal entry more memorable!"
-            ctaContent="Upload Photos"
-            onCTAClick={onUploadClick}
-          />
-        )}
+        {renderContent()}
       </div>
       <div className="flex-between mt-6 flex">
         <Button

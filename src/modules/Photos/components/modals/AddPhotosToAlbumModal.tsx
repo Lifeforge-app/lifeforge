@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'

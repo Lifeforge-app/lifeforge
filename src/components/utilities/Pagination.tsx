@@ -18,11 +18,17 @@ function Pagination({
     const pagesToShow = 5
 
     const startPage = Math.max(
-      currentPage > totalPages - pagesToShow
-        ? totalPages - pagesToShow + 1
-        : currentPage < pagesToShow
-        ? 1
-        : currentPage - Math.floor(pagesToShow / 2),
+      (() => {
+        if (currentPage > totalPages - pagesToShow) {
+          return totalPages - pagesToShow + 1
+        }
+
+        if (currentPage < pagesToShow) {
+          return 1
+        }
+
+        return currentPage - Math.floor(pagesToShow / 2)
+      })(),
       1
     )
     const endPage = Math.min(totalPages, startPage + pagesToShow - 1)

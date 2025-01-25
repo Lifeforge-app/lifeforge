@@ -3,26 +3,27 @@ import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
-import { ColorInput , ColorPickerModal , IconInput , IconPickerModal , TextInput } from '@components/inputs'
+import {
+  ColorInput,
+  ColorPickerModal,
+  IconInput,
+  IconPickerModal,
+  TextInput
+} from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
-import { type IPasswordEntry } from '@interfaces/password_interfaces'
+import { usePasswordContext } from '@providers/PasswordsProvider'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 
-function CreatePasswordModal({
-  openType,
-  onClose,
-  refreshPasswordList,
-  masterPassword,
-  existedData
-}: {
-  openType: 'create' | 'update' | null
-  onClose: () => void
-  refreshPasswordList: () => void
-  masterPassword: string
-  existedData: IPasswordEntry | null
-}): React.ReactElement {
+function CreatePasswordModal(): React.ReactElement {
+  const {
+    masterPassword,
+    modifyPasswordModalOpenType: openType,
+    existedData,
+    setModifyPasswordModalOpenType,
+    refreshPasswordList
+  } = usePasswordContext()
   const [name, setName] = useState('')
   const [icon, setIcon] = useState('')
   const [color, setColor] = useState('')
@@ -88,7 +89,7 @@ function CreatePasswordModal({
       },
       finalCallback: () => {
         setLoading(false)
-        onClose()
+        setModifyPasswordModalOpenType(null)
       }
     })
   }
@@ -127,7 +128,9 @@ function CreatePasswordModal({
               update: 'tabler:pencil'
             }[openType as 'create' | 'update']
           }
-          onClose={onClose}
+          onClose={() => {
+            setModifyPasswordModalOpenType(null)
+          }}
         />
         <form
           onSubmit={e => {

@@ -1,7 +1,11 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { ListboxOrComboboxInput , ListboxNullOption , ListboxOrComboboxOption } from '@components/inputs'
+import {
+  ListboxOrComboboxInput,
+  ListboxNullOption,
+  ListboxOrComboboxOption
+} from '@components/inputs'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function LedgerSelector({

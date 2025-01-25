@@ -26,16 +26,6 @@
         "togglable": true
       },
       {
-        "name": "Projects (K)",
-        "icon": "tabler:clipboard",
-        "routes": {
-          "projects-k": "projects-k",
-          "projects-k-id": "projects-k/:id"
-        },
-        "togglable": true,
-        "deprecated": true
-      },
-      {
         "name": "Idea Box",
         "icon": "tabler:bulb",
         "routes": {
@@ -63,15 +53,6 @@
           "calendar": "calendar"
         },
         "togglable": true
-      },
-      {
-        "name": "Spotify",
-        "icon": "tabler:brand-spotify",
-        "routes": {
-          "spotify": "spotify"
-        },
-        "togglable": true,
-        "deprecated": true
       },
       {
         "name": "Code Time",
@@ -361,8 +342,9 @@
       {
         "name": "Passwords",
         "icon": "tabler:key",
+        "provider": "passwords-provider",
         "routes": {
-          "passwords": "passwords"
+          "passwords": ""
         },
         "togglable": true
       }

@@ -2,7 +2,11 @@ import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { ListboxOrComboboxOption , ListboxOrComboboxOptions , SearchInput } from '@components/inputs'
+import {
+  ListboxOrComboboxOption,
+  ListboxOrComboboxOptions,
+  SearchInput
+} from '@components/inputs'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
@@ -304,11 +308,7 @@ function ChangiFlightStatus(): React.ReactElement {
               <tbody>
                 {flights.getFlights.flights.map(flight => (
                   <tr
-                    key={
-                      flight.flight_number +
-                      flight.scheduled_time +
-                      Math.random()
-                    }
+                    key={flight.flight_number + flight.scheduled_time}
                     className="border-b border-bg-200 dark:border-bg-800"
                   >
                     <td className="whitespace-nowrap p-2 text-center">

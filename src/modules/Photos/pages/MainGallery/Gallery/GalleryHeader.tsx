@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-nested-functions */
+/* eslint-disable sonarjs/no-nested-conditional */
 import { t } from 'i18next'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'

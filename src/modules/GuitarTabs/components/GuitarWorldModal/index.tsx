@@ -5,6 +5,7 @@ import { TextInput } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import { Loadable } from '@interfaces/common'
 import { type IGuitarTabsGuitarWorldScores } from '@interfaces/guitar_tabs_interfaces'
 import APIRequest from '@utils/fetchData'
 import ScoreList from './components/ScoreList'
@@ -20,9 +21,8 @@ function GuitarWorldModal({
   const [proceedLoading, setProceedLoading] = useState(false)
   const [showData, setShowData] = useState(false)
   const [page, setPage] = useState(1)
-  const [data, setData] = useState<
-    'loading' | 'error' | IGuitarTabsGuitarWorldScores
-  >('loading')
+  const [data, setData] =
+    useState<Loadable<IGuitarTabsGuitarWorldScores>>('loading')
 
   async function fetchData(page: number): Promise<void> {
     if (cookie.trim() === '') {

@@ -38,6 +38,52 @@ export enum Kind {
   WebfontsWebfont = 'webfonts#webfont'
 }
 
+const GOOGLE_FONTS_API_URL =
+  'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyACIfnP46cNm8nP9HaMafF0hwI9X0hyyg4'
+
+const fetchFonts = async () => {
+  try {
+    const response = await fetch(GOOGLE_FONTS_API_URL)
+    const data = await response.json()
+    return data.items || []
+  } catch (error) {
+    console.error('Error fetching Google Fonts:', error)
+    return []
+  }
+}
+
+const addFontsToStylesheet = (fonts: IFontFamily[]) => {
+  const sheet = window.document.styleSheets[0]
+
+  fonts.forEach(font => {
+    Object.entries(font.files).forEach(([variant, url]) => {
+      if (!['regular', '500'].includes(variant) || variant.includes('italic')) {
+        return
+      }
+
+      const fontFaceRule = `
+        @font-face {
+          font-family: '${font.family}';
+          src: url('${url}');
+          ${
+            !['regular', 'italic'].includes(variant)
+              ? `font-weight: ${variant};`
+              : ''
+          }
+          font-style: ${variant.includes('italic') ? 'italic' : 'normal'};
+          font-display: swap;
+        }
+      `
+
+      try {
+        sheet.insertRule(fontFaceRule, sheet.cssRules.length)
+      } catch (err) {
+        console.error('Failed to insert font rule:', fontFaceRule, err)
+      }
+    })
+  })
+}
+
 function FontFamilySelector(): React.ReactElement {
   const { componentBgWithHover } = useThemeColors()
   const { fontFamily, setFontFamily } = usePersonalizationContext()
@@ -45,49 +91,14 @@ function FontFamilySelector(): React.ReactElement {
   const { t } = useTranslation()
 
   useEffect(() => {
-    fetch(
-      'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyACIfnP46cNm8nP9HaMafF0hwI9X0hyyg4'
-    )
-      .then(async res => await res.json())
-      .then(data => {
-        setAllFonts(data.items)
+    const loadFonts = async () => {
+      const fonts = await fetchFonts()
+      setAllFonts(fonts)
+      addFontsToStylesheet(fonts)
+    }
 
-        const sheet = window.document.styleSheets[0]
-
-        data.items.forEach((font: IFontFamily) => {
-          Object.entries(font.files).forEach(([variant, url]) => {
-            if (
-              !['regular', '500'].includes(variant) ||
-              variant.includes('italic')
-            ) {
-              return
-            }
-
-            const fontFace = `@font-face {
-                font-family: '${font.family}';
-                src: url('${url}');
-                ${
-                  !['regular', 'italic'].includes(variant)
-                    ? `font-weight: ${variant}`
-                    : ''
-                }
-                font-style: ${variant.includes('italic') ? 'italic' : 'normal'};
-                font-display: swap;
-            }`
-
-            try {
-              sheet.insertRule(fontFace, sheet.cssRules.length)
-            } catch (err) {
-              console.error(fontFace)
-              console.error(err)
-            }
-          })
-        })
-      })
-      .catch(err => {
-        console.error(err)
-      })
-  }, [])
+    loadFonts()
+  }, [setAllFonts])
 
   return (
     <ConfigColumn

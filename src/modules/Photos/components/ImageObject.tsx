@@ -38,6 +38,16 @@ function ImageObject({
 
   return (
     <div
+      role="button"
+      tabIndex={0}
+      onKeyDown={e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          if (selectedPhotosLength > 0) {
+            toggleSelected(e as any)
+          }
+        }
+      }}
       onClick={e => {
         if (selectedPhotosLength > 0) {
           toggleSelected(e)

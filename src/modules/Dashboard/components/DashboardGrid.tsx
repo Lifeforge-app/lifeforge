@@ -11,7 +11,7 @@ import AssetsBalance from '../widgets/AssetsBalance'
 import Bookshelf from '../widgets/Bookshelf'
 import Clock from '../widgets/Clock'
 import CodeTime from '../widgets/CodeTime'
-import Date from '../widgets/Date'
+import DateWidget from '../widgets/Date'
 import ExpensesBreakdown from '../widgets/ExpensesBreakdown'
 import FlashCards from '../widgets/FlashCards'
 import IdeaBox from '../widgets/IdexBox'
@@ -32,7 +32,7 @@ import TodoList from '../widgets/TodoList'
 const RGL: any = ResponsiveGridLayout as any
 
 const COMPONENTS = {
-  date: Date,
+  date: DateWidget,
   clock: Clock,
   quotes: Quotes,
   ideaBox: IdeaBox,

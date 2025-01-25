@@ -1,8 +1,14 @@
 import React from 'react'
-import { SidebarDivider , SidebarItem , SidebarTitle , SidebarWrapper } from '@components/layouts/sidebar'
+import {
+  SidebarDivider,
+  SidebarItem,
+  SidebarTitle,
+  SidebarWrapper
+} from '@components/layouts/sidebar'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
 import VW_COLORS from '@constants/virtual_wardrobe_colors'
+import { Loadable } from '@interfaces/common'
 import { type IVirtualWardrobeSidebarData } from '@interfaces/virtual_wardrobe_interfaces'
 
 function Sidebar({
@@ -16,7 +22,7 @@ function Sidebar({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   searchParams: URLSearchParams
   setSearchParams: (params: Record<string, string> | URLSearchParams) => void
-  sidebarData: 'loading' | 'error' | IVirtualWardrobeSidebarData
+  sidebarData: Loadable<IVirtualWardrobeSidebarData>
 }): React.ReactElement {
   return (
     <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>

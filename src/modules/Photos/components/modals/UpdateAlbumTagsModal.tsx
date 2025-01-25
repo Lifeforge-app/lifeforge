@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { Button } from '@components/buttons'

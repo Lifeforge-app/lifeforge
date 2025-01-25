@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import copy from 'copy-to-clipboard'
-import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
@@ -8,33 +7,22 @@ import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IPasswordEntry } from '@interfaces/password_interfaces'
-import { decrypt, encrypt } from '@utils/encryption'
+import { usePasswordContext } from '@providers/PasswordsProvider'
+import { getDecryptedPassword } from '../utils/getDecryptedPassword'
 
 function PasswordEntryITem({
   password,
-  masterPassword,
-  setSelectedPassword,
-  setIsDeletePasswordConfirmationModalOpen,
-  setCreatePasswordModalOpenType,
-  setExistedData,
-  setPasswordList
+  pinPassword
 }: {
   password: IPasswordEntry
-  masterPassword: string
-  setSelectedPassword: React.Dispatch<
-    React.SetStateAction<IPasswordEntry | null>
-  >
-  setIsDeletePasswordConfirmationModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >
-  setCreatePasswordModalOpenType: React.Dispatch<
-    React.SetStateAction<'create' | 'update' | null>
-  >
-  setExistedData: React.Dispatch<React.SetStateAction<IPasswordEntry | null>>
-  setPasswordList: React.Dispatch<
-    React.SetStateAction<IPasswordEntry[] | 'loading' | 'error'>
-  >
+  pinPassword: (id: string) => Promise<void>
 }): React.ReactElement {
+  const {
+    masterPassword,
+    setIsDeletePasswordConfirmationModalOpen,
+    setExistedData,
+    setModifyPasswordModalOpenType
+  } = usePasswordContext()
   const { componentBg } = useThemeColors()
   const [decryptedPassword, setDecryptedPassword] = useState<string | null>(
     null
@@ -42,104 +30,18 @@ function PasswordEntryITem({
   const [loading, setLoading] = useState(false)
   const [copyLoading, setCopyLoading] = useState(false)
 
-  async function getDecryptedPassword(): Promise<string> {
-    const challenge = await fetch(
-      `${import.meta.env.VITE_API_HOST}/passwords/password/challenge`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        }
-      }
-    ).then(async res => {
-      const data = await res.json()
-      if (res.ok && data.state === 'success') {
-        return data.data
-      } else {
-        throw new Error(data.message)
-      }
-    })
-
-    const encryptedMaster = encrypt(masterPassword, challenge)
-
-    const decrypted = await fetch(
-      `${import.meta.env.VITE_API_HOST}/passwords/password/decrypt/${
-        password.id
-      }`,
-      {
-        method: 'POST',
-        body: JSON.stringify({ master: encryptedMaster }),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        }
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (res.ok && data.state === 'success') {
-          return decrypt(data.data, challenge)
-        } else {
-          throw new Error(data.message)
-        }
-      })
-      .catch(err => {
-        toast.error('Couldn’t fetch the password. Please try again.')
-        console.error(err)
-      })
-
-    return decrypted ?? ''
-  }
-
-  function copyPassword(): void {
+  async function copyPassword(): Promise<void> {
     setCopyLoading(true)
     if (decryptedPassword !== null) {
       copy(decryptedPassword)
       toast.success('Password copied!')
       setCopyLoading(false)
     } else {
-      getDecryptedPassword()
-        .then(password => {
-          copy(password)
-          toast.success('Password copied!')
-          setCopyLoading(false)
-        })
-        .catch(() => {})
+      const decrypted = await getDecryptedPassword(masterPassword, password.id)
+      copy(decrypted)
+      toast.success('Password copied!')
+      setCopyLoading(false)
     }
-  }
-
-  async function pinPassword(): Promise<void> {
-    await fetch(
-      `${import.meta.env.VITE_API_HOST}/passwords/password/pin/${password.id}`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        }
-      }
-    )
-      .then(async res => {
-        const data = await res.json()
-        if (res.ok && data.state === 'success') {
-          setPasswordList(prev => {
-            if (prev === 'loading' || prev === 'error') return prev
-            return prev
-              .map(p =>
-                p.id === password.id ? { ...p, pinned: !p.pinned } : p
-              )
-              .sort(a => (a.pinned ? -1 : 1))
-          })
-          toast.info(
-            `Password ${password.pinned ? 'unpinned' : 'pinned'} successfully`
-          )
-        } else {
-          throw new Error(data.message)
-        }
-      })
-      .catch(err => {
-        toast.error('Couldn’t pin the password. Please try again.')
-        console.error(err)
-      })
   }
 
   return (
@@ -199,7 +101,7 @@ function PasswordEntryITem({
               if (decryptedPassword === null) {
                 ;(() => {
                   setLoading(true)
-                  getDecryptedPassword()
+                  getDecryptedPassword(masterPassword, password.id)
                     .then(setDecryptedPassword)
                     .catch(() => {})
                     .finally(() => {
@@ -211,13 +113,15 @@ function PasswordEntryITem({
               }
             }}
             loading={loading}
-            icon={
-              loading
-                ? 'svg-spinners:180-ring'
-                : decryptedPassword === null
+            icon={(() => {
+              if (loading) {
+                return 'svg-spinners:180-ring'
+              }
+
+              return decryptedPassword === null
                 ? 'tabler:eye'
                 : 'tabler:eye-off'
-            }
+            })()}
           />
           <Button
             onClick={copyPassword}
@@ -229,18 +133,18 @@ function PasswordEntryITem({
           <HamburgerMenu className="relative">
             <MenuItem
               onClick={() => {
-                pinPassword().catch(() => {})
+                pinPassword(password.id)
               }}
               icon={password.pinned ? 'tabler:pin-filled' : 'tabler:pin'}
               text={password.pinned ? 'Unpin' : 'Pin'}
             />
             <MenuItem
               onClick={() => {
-                getDecryptedPassword()
+                getDecryptedPassword(masterPassword, password.id)
                   .then(decrypted => {
-                    setCreatePasswordModalOpenType('update')
                     password.decrypted = decrypted
                     setExistedData(password)
+                    setModifyPasswordModalOpenType('update')
                   })
                   .catch(() => {
                     toast.error(
@@ -253,8 +157,8 @@ function PasswordEntryITem({
             />
             <MenuItem
               onClick={() => {
-                setSelectedPassword(password)
                 setIsDeletePasswordConfirmationModalOpen(true)
+                setExistedData(password)
               }}
               icon="tabler:trash"
               text="Delete"

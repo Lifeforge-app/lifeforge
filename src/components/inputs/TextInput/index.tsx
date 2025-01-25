@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState } from 'react'
+import React, { memo, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
 import Button from '../../buttons/Button'
@@ -64,6 +64,12 @@ function TextInput({
   const [showPassword, setShowPassword] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
+  useEffect(() => {
+    if (autoFocus && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [autoFocus])
+
   return (
     <InputWrapper
       darker={darker}
@@ -87,7 +93,6 @@ function TextInput({
           placeholder={placeholder}
           inputRef={inputRef}
           reference={ref}
-          autoFocus={autoFocus}
           disabled={disabled}
           noAutoComplete={noAutoComplete}
           onKeyDown={onKeyDown}

@@ -2,10 +2,10 @@ import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
-import { IconInput , IconPickerModal , TextInput } from '@components/inputs'
+import { IconInput, IconPickerModal, TextInput } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
-import { type APIKeyEntry } from '@interfaces/api_keys_interfaces'
+import { type IAPIKeyEntry } from '@interfaces/api_keys_interfaces'
 import { decrypt, encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 import { fetchChallenge } from '../utils/fetchChallenge'
@@ -18,7 +18,7 @@ function ModifyAPIKeyModal({
 }: {
   openType: 'create' | 'update' | null
   onClose: () => void
-  existingData: APIKeyEntry | null
+  existingData: IAPIKeyEntry | null
   masterPassword: string
 }): React.ReactElement {
   const [id, setId] = useState('')

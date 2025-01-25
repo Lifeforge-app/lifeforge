@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { Button } from '@components/buttons'
@@ -53,13 +54,13 @@ export default function EntryItem({
             addToFavourites().catch(console.error)
           }}
           variant="no-bg"
-          icon={
-            addToFavouritesLoading
-              ? 'svg-spinners:180-ring'
-              : item.is_favourite
-              ? 'tabler:heart-filled'
-              : 'tabler:heart'
-          }
+          icon={(() => {
+            if (addToFavouritesLoading) {
+              return 'svg-spinners:180-ring'
+            }
+
+            return item.is_favourite ? 'tabler:heart-filled' : 'tabler:heart'
+          })()}
           className={`!p-2 ${item.is_favourite ? '!text-red-500' : ''}`}
         />
         <HamburgerMenu>
@@ -78,6 +79,7 @@ export default function EntryItem({
         className={`flex-center aspect-[10/12] h-min w-24 rounded-lg p-2 ${componentBgLighter}`}
       >
         <img
+          alt=""
           src={`${import.meta.env.VITE_API_HOST}/media/${item.collectionId}/${
             item.id
           }/${item.thumbnail}`}

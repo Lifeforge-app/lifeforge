@@ -3,6 +3,7 @@ import React from 'react'
 import { SidebarTitle } from '@components/layouts/sidebar'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
+import { type Loadable } from '@interfaces/common'
 import CategoryListItem from './components/CategoryListItem'
 
 function CategoryList({
@@ -13,7 +14,7 @@ function CategoryList({
   setSearchParams,
   setDeleteCategoryConfirmationModalOpen
 }: {
-  categories: ICalendarCategory[] | 'loading' | 'error'
+  categories: Loadable<ICalendarCategory[]>
   refreshCategories: () => void
   modifyCategoryModalOpenType: 'create' | 'update' | null
   setModifyCategoryModalOpenType: React.Dispatch<

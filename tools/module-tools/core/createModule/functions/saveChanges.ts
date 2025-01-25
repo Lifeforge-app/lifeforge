@@ -115,11 +115,7 @@ async function saveChanges({
     login
   })
 
-  if (!isModuleDescSaved) {
-    return false
-  }
-
-  return true
+  return isModuleDescSaved
 }
 
 export default saveChanges

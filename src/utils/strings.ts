@@ -40,6 +40,24 @@ export function convertToDashCase(str: string): string {
   }
 }
 
+export function formatBytes(bytes: number, decimals = 2): string {
+  if (!+bytes) return '0 Bytes'
+
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+}
+
+export function camelCaseToTitleCase(text: string): string {
+  return text
+    ?.replace(/([A-Z])/g, ' $1')
+    .replace(/^./, str => str.toUpperCase())
+}
+
 export function shortenBigNumber(num: number): string {
   if (num < 1e3) return num.toString()
   if (num >= 1e3 && num < 1e6) return (num / 1e3).toFixed(1) + 'K'
@@ -49,9 +67,20 @@ export function shortenBigNumber(num: number): string {
   return num.toString()
 }
 
-export function numberToMoney(number: number): string {
-  return number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+export function numberToMoney(
+  number: number,
+  currency: string = 'MYR'
+): string {
+  return Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency,
+    currencyDisplay: 'code'
+  })
+    .format(number)
+    .replace(currency, '')
+    .trim()
 }
+
 export function arabicToTraditionalFormalChinese(number: number): string {
   // Define the mappings for digits and units in traditional formal Chinese
   const digits = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
@@ -109,59 +138,55 @@ export function arabicToChinese(
   number: string,
   format: 'simplified' | 'traditional' = 'traditional'
 ): string {
-  // Define the mappings for digits and units in traditional and simplified Chinese
-  const traditionalDigits = [
-    '零',
-    '壹',
-    '贰',
-    '叁',
-    '肆',
-    '伍',
-    '陆',
-    '柒',
-    '捌',
-    '玖'
-  ]
-  const traditionalUnits = ['', '拾', '佰', '仟', '萬', '拾', '佰', '仟', '億']
-  const simplifiedDigits = [
-    '零',
-    '一',
-    '二',
-    '三',
-    '四',
-    '五',
-    '六',
-    '七',
-    '八',
-    '九'
-  ]
-  const simplifiedUnits = ['', '十', '百', '千', '万', '十', '百', '千', '亿']
-
-  // Choose the correct mappings based on the format parameter
-  const digits = format === 'simplified' ? simplifiedDigits : traditionalDigits
-  const units = format === 'simplified' ? simplifiedUnits : traditionalUnits
-
-  // Special case for 20 to 29 in simplified Chinese
+  const digits = getDigitMapping(format)
+  const units = getUnitMapping(format)
   const specialTwenty = '廿'
 
-  // Convert the number to a string to iterate through it
-  const numStr = number.toString()
+  let chineseNumber = convertNumberToChinese(
+    number,
+    digits,
+    units,
+    format,
+    specialTwenty
+  )
 
-  // Initialize the result list
-  const result = []
+  // Handle special cases for tens
+  chineseNumber = removeLeadingOne(chineseNumber, digits[1], units[1])
+  chineseNumber = removeTrailingZero(chineseNumber)
 
-  // Get the length of the number
+  return chineseNumber
+}
+
+// Helper to get digit mappings based on format
+function getDigitMapping(format: 'simplified' | 'traditional'): string[] {
+  return format === 'simplified'
+    ? ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九']
+    : ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
+}
+
+// Helper to get unit mappings based on format
+function getUnitMapping(format: 'simplified' | 'traditional'): string[] {
+  return format === 'simplified'
+    ? ['', '十', '百', '千', '万', '十', '百', '千', '亿']
+    : ['', '拾', '佰', '仟', '萬', '拾', '佰', '仟', '億']
+}
+
+// Helper function to convert number to Chinese format
+function convertNumberToChinese(
+  numStr: string,
+  digits: string[],
+  units: string[],
+  format: 'simplified' | 'traditional',
+  specialTwenty: string
+): string {
+  const result: string[] = []
   const length = numStr.length
 
   for (let i = 0; i < length; i++) {
-    // Convert the digit to its corresponding Chinese character
     const digit = parseInt(numStr.charAt(i))
     const chineseDigit = digits[digit]
-
-    // Determine the position in the number
     const unitIndex = length - i - 1
 
-    // Handle special case for 20 to 29 in simplified Chinese
     if (
       format === 'simplified' &&
       unitIndex === 1 &&
@@ -174,29 +199,35 @@ export function arabicToChinese(
       (unitIndex % 4 === 0 && chineseDigit === '零')
     ) {
       result.push(chineseDigit)
-      if (unitIndex > 0) {
-        result.push(units[unitIndex])
-      }
-    } else if (chineseDigit === '零') {
-      // Avoid adding multiple consecutive '零'
-      if (result.length === 0 || result[result.length - 1] !== '零') {
-        result.push('零')
-      }
+      if (unitIndex > 0) result.push(units[unitIndex])
+    } else if (
+      chineseDigit === '零' &&
+      (result.length === 0 || result[result.length - 1] !== '零')
+    ) {
+      result.push('零')
     }
   }
 
-  // Join the result list into a string
-  let chineseNumber = result.join('')
+  return result.join('')
+}
 
-  // Handle special cases for tens
-  if (chineseNumber.startsWith(digits[1] + units[1])) {
-    chineseNumber = chineseNumber.substring(1)
+// Remove leading 'one' for tens place
+function removeLeadingOne(
+  chineseNumber: string,
+  one: string,
+  ten: string
+): string {
+  if (chineseNumber.startsWith(one + ten)) {
+    return chineseNumber.substring(1)
   }
-  if (chineseNumber.endsWith('零')) {
-    chineseNumber = chineseNumber.slice(0, -1)
-  }
-
   return chineseNumber
+}
+
+// Remove trailing zero
+function removeTrailingZero(chineseNumber: string): string {
+  return chineseNumber.endsWith('零')
+    ? chineseNumber.slice(0, -1)
+    : chineseNumber
 }
 
 export function toTitleCase(str: string): string {

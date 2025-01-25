@@ -1,6 +1,8 @@
 import pluginJs from '@eslint/js'
 import importPlugin from 'eslint-plugin-import'
+import jsxA11y from 'eslint-plugin-jsx-a11y'
 import pluginReact from 'eslint-plugin-react'
+import sonarjs from 'eslint-plugin-sonarjs'
 import tailwind from 'eslint-plugin-tailwindcss'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
@@ -91,5 +93,17 @@ export default [
         version: 'detect'
       }
     }
-  }
+  },
+  {
+    files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
+    ...jsxA11y.flatConfigs.recommended,
+    languageOptions: {
+      ...jsxA11y.flatConfigs.recommended.languageOptions,
+      globals: {
+        ...globals.serviceworker,
+        ...globals.browser
+      }
+    }
+  },
+  sonarjs.configs.recommended
 ]

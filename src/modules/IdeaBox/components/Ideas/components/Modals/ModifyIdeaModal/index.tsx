@@ -5,7 +5,7 @@ import { useDropzone } from 'react-dropzone'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
-import { TextInput , TagsInput } from '@components/inputs'
+import { TextInput, TagsInput } from '@components/inputs'
 import DnDContainer from '@components/inputs/ImageAndFileInput/ImagePickerModal/components/LocalUpload/components/DnDContainer'
 import PreviewContainer from '@components/inputs/ImageAndFileInput/ImagePickerModal/components/LocalUpload/components/PreviewContainer'
 import ModalWrapper from '@components/modals/ModalWrapper'
@@ -265,13 +265,15 @@ function ModifyIdeaModal(): React.ReactElement {
   return (
     <ModalWrapper isOpen={openType !== null} minWidth="60vw">
       <ModalHeader
-        innerOpenType={
-          innerOpenType !== null
-            ? innerOpenType === 'update'
-              ? 'update'
-              : 'create'
-            : null
-        }
+        innerOpenType={(() => {
+          switch (innerOpenType) {
+            case null:
+            case 'update':
+              return innerOpenType
+            default:
+              return 'create'
+          }
+        })()}
         setOpenType={setOpenType}
         innerTypeOfModifyIdea={innerTypeOfModifyIdea}
         setInnerTypeOfModifyIdea={setInnerTypeOfModifyIdea}

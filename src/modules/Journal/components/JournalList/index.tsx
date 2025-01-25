@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import { SearchInput } from '@components/inputs'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+import { type Loadable } from '@interfaces/common'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
@@ -31,7 +32,7 @@ function JournalList({
   >
   setExistedData: React.Dispatch<React.SetStateAction<IJournalEntry | null>>
   fetchData: () => Promise<void>
-  entries: IJournalEntry[] | 'loading' | 'error'
+  entries: Loadable<IJournalEntry[]>
 }): React.ReactElement {
   const [searchQuery, setSearchQuery] = useState('')
   const [editLoading, setEditLoading] = useState(false)

@@ -4,6 +4,7 @@ import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
+import { type Loadable } from '@interfaces/common'
 import MiniCalendarContent from './components/MiniCalendarContent'
 import MiniCalendarHeader from './components/MiniCalendarHeader'
 
@@ -12,7 +13,7 @@ function MiniCalendar({
   categories
 }: {
   events: ICalendarEvent[]
-  categories: ICalendarCategory[] | 'loading' | 'error'
+  categories: Loadable<ICalendarCategory[]>
 }): React.ReactElement {
   const [currentMonth, setCurrentMonth] = useState(moment().month())
   const [currentYear, setCurrentYear] = useState(moment().year())

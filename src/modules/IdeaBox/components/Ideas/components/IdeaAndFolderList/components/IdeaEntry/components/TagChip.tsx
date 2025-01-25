@@ -17,17 +17,21 @@ function TagChip({ text }: { text: string }): React.ReactElement {
     [selectedTags, text]
   )
 
+  const tagColor = useMemo(() => {
+    if (!active) {
+      return 'bg-bg-200 text-bg-500 dark:bg-bg-700/50 dark:text-bg-300'
+    }
+
+    if (metadata === undefined || metadata.color === '') {
+      return 'bg-custom-500/30 text-custom-500'
+    }
+
+    return isLightColor(metadata.color) ? 'text-bg-800' : 'text-bg-100'
+  }, [active, metadata])
+
   return (
     <div
-      className={`flex items-center rounded-full px-3 py-1 text-sm shadow-sm ${
-        active
-          ? metadata !== undefined && metadata.color !== ''
-            ? isLightColor(metadata.color)
-              ? 'text-bg-800'
-              : 'text-bg-100'
-            : 'bg-custom-500/30 text-custom-500'
-          : 'bg-bg-200 text-bg-500 dark:bg-bg-700/50 dark:text-bg-300'
-      }`}
+      className={`flex items-center rounded-full px-3 py-1 text-sm shadow-sm ${tagColor}`}
       style={{
         backgroundColor: metadata !== undefined && active ? metadata.color : ''
       }}

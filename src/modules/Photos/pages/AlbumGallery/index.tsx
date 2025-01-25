@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-nested-functions */
+/* eslint-disable sonarjs/no-nested-conditional */
 import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import moment from 'moment'

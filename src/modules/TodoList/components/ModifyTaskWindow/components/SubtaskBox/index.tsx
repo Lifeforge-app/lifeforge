@@ -1,6 +1,7 @@
 import update from 'immutability-helper'
 import React, { useCallback, useState } from 'react'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import { type Loadable } from '@interfaces/common'
 import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
 import SubtaskBoxHeader from './components/SubtaskBoxHeader'
 import SubtaskItem from './components/SubtaskItem'
@@ -13,16 +14,14 @@ function SubtaskBox({
 }: {
   summary: string
   notes: string
-  subtasks: ITodoSubtask[] | 'loading' | 'error'
-  setSubtasks: React.Dispatch<
-    React.SetStateAction<ITodoSubtask[] | 'loading' | 'error'>
-  >
+  subtasks: Loadable<ITodoSubtask[]>
+  setSubtasks: React.Dispatch<React.SetStateAction<Loadable<ITodoSubtask[]>>>
 }): React.ReactElement {
   const [spiciness, setSpiciness] = useState(0)
   const [newTask, setNewTask] = useState('')
 
   const moveTask = useCallback((dragIndex: number, hoverIndex: number) => {
-    setSubtasks((prevCards: ITodoSubtask[] | 'loading' | 'error') => {
+    setSubtasks((prevCards: Loadable<ITodoSubtask[]>) => {
       if (typeof prevCards === 'string') return prevCards
       return update(prevCards, {
         $splice: [

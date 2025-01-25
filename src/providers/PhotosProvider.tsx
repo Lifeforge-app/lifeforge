@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-nested-functions */
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
 import React, {
@@ -9,6 +10,7 @@ import React, {
 } from 'react'
 import { Outlet } from 'react-router'
 import useFetch from '@hooks/useFetch'
+import { type Loadable } from '@interfaces/common'
 import {
   type IPhotoAlbumEntryItem,
   type IPhotosEntry,
@@ -34,13 +36,9 @@ interface IPhotosData {
   modifyAlbumModalOpenType: 'create' | 'rename' | false
 
   // Data
-  photos:
-    | IPhotosEntryDimensionsAll
-    | IPhotosEntryDimensionsPagination
-    | 'loading'
-    | 'error'
-  albumList: IPhotosAlbum[] | 'loading' | 'error'
-  albumTagList: IPhotoAlbumTag[] | 'loading' | 'error'
+  photos: Loadable<IPhotosEntryDimensionsAll | IPhotosEntryDimensionsPagination>
+  albumList: Loadable<IPhotosAlbum[]>
+  albumTagList: Loadable<IPhotoAlbumTag[]>
   eachDayDimensions: Record<string, { inTimeline: number; inGallery: number }>
   selectedPhotos: string[]
   sidebarOpen: boolean
@@ -55,11 +53,9 @@ interface IPhotosData {
       | 'error'
     >
   >
-  setAlbumList: React.Dispatch<
-    React.SetStateAction<IPhotosAlbum[] | 'loading' | 'error'>
-  >
+  setAlbumList: React.Dispatch<React.SetStateAction<Loadable<IPhotosAlbum[]>>>
   setAlbumTagList: React.Dispatch<
-    React.SetStateAction<IPhotoAlbumTag[] | 'loading' | 'error'>
+    React.SetStateAction<Loadable<IPhotoAlbumTag[]>>
   >
   setHidePhotosInAlbum: React.Dispatch<React.SetStateAction<boolean>>
   setSelectedPhotos: React.Dispatch<React.SetStateAction<string[]>>

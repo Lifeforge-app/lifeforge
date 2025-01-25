@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import useFetch from '@hooks/useFetch'
 import useHashParams from '@hooks/useHashParams'
+import { Loadable } from '@interfaces/common'
 import {
   type ITodoListEntry,
   type ITodoListList,
@@ -12,11 +13,11 @@ import {
 interface ITodoListData {
   // Data
   searchParams: URLSearchParams
-  priorities: ITodoPriority[] | 'loading' | 'error'
-  lists: ITodoListList[] | 'loading' | 'error'
-  tags: ITodoListTag[] | 'loading' | 'error'
-  entries: ITodoListEntry[] | 'loading' | 'error'
-  statusCounter: ITodoListStatusCounter | 'loading' | 'error'
+  priorities: Loadable<ITodoPriority[]>
+  lists: Loadable<ITodoListList[]>
+  tags: Loadable<ITodoListTag[]>
+  entries: Loadable<ITodoListEntry[]>
+  statusCounter: Loadable<ITodoListStatusCounter>
   selectedTask: ITodoListEntry | null
   selectedPriority: ITodoPriority | null
   selectedList: ITodoListList | null
@@ -71,9 +72,7 @@ interface ITodoListData {
     React.SetStateAction<ITodoPriority | null>
   >
   setSelectedTag: React.Dispatch<React.SetStateAction<ITodoListTag | null>>
-  setEntries: React.Dispatch<
-    React.SetStateAction<ITodoListEntry[] | 'loading' | 'error'>
-  >
+  setEntries: React.Dispatch<React.SetStateAction<Loadable<ITodoListEntry[]>>>
 }
 
 export const TodoListContext = React.createContext<ITodoListData | undefined>(

@@ -3,6 +3,7 @@ import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
+import { type Loadable } from '@interfaces/common'
 
 export default function EventItem({
   event,
@@ -11,14 +12,14 @@ export default function EventItem({
   setExistedData
 }: {
   event: ICalendarEvent
-  categories: ICalendarCategory[] | 'loading' | 'error'
+  categories: Loadable<ICalendarCategory[]>
   setModifyEventModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedData: React.Dispatch<React.SetStateAction<ICalendarEvent | null>>
 }): React.ReactElement {
   return (
-    <div
+    <button
       onClick={() => {
         setModifyEventModalOpenType('update')
         setExistedData(event)
@@ -39,6 +40,6 @@ export default function EventItem({
         />
       )}
       <span className="truncate">{event.title}</span>
-    </div>
+    </button>
   )
 }

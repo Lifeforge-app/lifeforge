@@ -31,11 +31,17 @@ function OrdinaryColumn({
       >
         <div className="flex-between w-full">
           <span className="whitespace-nowrap text-bg-500">
-            {userData[id] === ''
-              ? t('accountSettings.empty')
-              : type === 'date'
-              ? moment(userData[id]).format('DD MMM YYYY')
-              : userData[id]}
+            {(() => {
+              if (userData[id] === '') {
+                return t('accountSettings.empty')
+              }
+
+              if (type === 'date') {
+                return moment(userData[id]).format('DD MMM YYYY')
+              }
+
+              return userData[id]
+            })()}
           </span>
           <Button
             onClick={() => {

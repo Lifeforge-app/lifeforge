@@ -1,7 +1,13 @@
 import { t } from 'i18next'
 import React from 'react'
-import { SidebarDivider , SidebarItem , SidebarTitle , SidebarWrapper } from '@components/layouts/sidebar'
+import {
+  SidebarDivider,
+  SidebarItem,
+  SidebarTitle,
+  SidebarWrapper
+} from '@components/layouts/sidebar'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import { type Loadable } from '@interfaces/common'
 import { type IGuitarTabsSidebarData } from '@interfaces/guitar_tabs_interfaces'
 
 function Sidebar({
@@ -11,7 +17,7 @@ function Sidebar({
   searchParams,
   setSearchParams
 }: {
-  sidebarData: IGuitarTabsSidebarData | 'loading' | 'error'
+  sidebarData: Loadable<IGuitarTabsSidebarData>
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   searchParams: URLSearchParams

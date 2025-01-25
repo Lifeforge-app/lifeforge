@@ -1,4 +1,5 @@
 import React from 'react'
+import { Loadable } from '@interfaces/common'
 import ErrorScreen from './ErrorScreen'
 import LoadingScreen from './LoadingScreen'
 
@@ -7,8 +8,8 @@ function APIFallbackComponent<T>({
   children,
   showLoading = true
 }: {
-  data: 'loading' | 'error' | T
-  children: (data: T) => React.ReactElement
+  data: Loadable<T>
+  children: (data: T) => React.ReactElement | false
   showLoading?: boolean
 }): React.ReactElement {
   switch (data) {
