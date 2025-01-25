@@ -1,10 +1,12 @@
+/* eslint-disable sonarjs/no-useless-react-setstate */
 import { Icon } from '@iconify/react/dist/iconify.js'
 import moment from 'moment'
 import React, { useState } from 'react'
-import { Button , Checkbox } from '@components/buttons'
+import { Button, Checkbox } from '@components/buttons'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import useThemeColors from '@hooks/useThemeColor'
+import { type Loadable } from '@interfaces/common'
 import { type IWishlistEntry } from '@interfaces/wishlist_interfaces'
 import APIRequest from '@utils/fetchData'
 import { numberToMoney } from '@utils/strings'
@@ -18,34 +20,33 @@ function EntryItem({
 }: {
   entry: IWishlistEntry
   collectionId: string
-  setEntries: React.Dispatch<
-    React.SetStateAction<IWishlistEntry[] | 'loading' | 'error'>
-  >
-  onEdit: () => void
-  onDelete: () => void
+  setEntries: React.Dispatch<React.SetStateAction<Loadable<IWishlistEntry[]>>>
+  onEdit: (entry: IWishlistEntry) => void
+  onDelete: (entry: IWishlistEntry) => void
 }): React.ReactElement {
   const { componentBg, componentBgLighter } = useThemeColors()
   const [bought, setBought] = useState(entry.bought)
 
-  async function markAsCompleted(id: string): Promise<void> {
+  const toggleBought = () =>
+    setEntries(prev => {
+      if (typeof prev === 'string') {
+        return prev
+      }
+      return prev.filter(e => e.id !== entry.id)
+    })
+
+  async function markAsCompleted(): Promise<void> {
     setBought(!bought)
 
     await APIRequest({
-      endpoint: `wishlist/entries/bought/${id}`,
+      endpoint: `wishlist/entries/bought/${entry.id}`,
       method: 'PATCH',
       failureInfo: 'update',
       onFailure: () => {
         setBought(bought)
       },
       callback() {
-        setTimeout(() => {
-          setEntries(prev => {
-            if (typeof prev === 'string') {
-              return prev
-            }
-            return prev.filter(e => e.id !== id)
-          })
-        }, 500)
+        setTimeout(toggleBought, 500)
       }
     })
   }
@@ -88,7 +89,7 @@ function EntryItem({
         <Checkbox
           checked={bought}
           onChange={() => {
-            markAsCompleted(entry.id).catch(console.error)
+            markAsCompleted().catch(console.error)
           }}
           className="!hidden sm:!flex md:!hidden"
         />
@@ -108,16 +109,24 @@ function EntryItem({
         <Checkbox
           checked={bought}
           onChange={() => {
-            markAsCompleted(entry.id).catch(console.error)
+            markAsCompleted().catch(console.error)
           }}
           className="!flex sm:!hidden md:!flex"
         />
         <HamburgerMenu className="absolute right-4 top-4 sm:static">
-          <MenuItem icon="tabler:pencil" text="Edit" onClick={onEdit} />
+          <MenuItem
+            icon="tabler:pencil"
+            text="Edit"
+            onClick={() => {
+              onEdit(entry)
+            }}
+          />
           <MenuItem
             icon="tabler:trash"
             text="Delete"
-            onClick={onDelete}
+            onClick={() => {
+              onDelete(entry)
+            }}
             isRed
           />
         </HamburgerMenu>

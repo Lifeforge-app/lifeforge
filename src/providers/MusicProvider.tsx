@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/pseudo-random */
 import { cookieParse } from 'pocketbase'
 import React, {
   createContext,
@@ -8,6 +9,7 @@ import React, {
 } from 'react'
 import { toast } from 'react-toastify'
 import useFetch from '@hooks/useFetch'
+import { type Loadable } from '@interfaces/common'
 import { type IMusicEntry } from '@interfaces/music_interfaces'
 import { useAuthContext } from './AuthProvider'
 
@@ -29,11 +31,9 @@ interface IMusicContext {
   nextMusic: () => void
 
   // Music list related
-  musics: IMusicEntry[] | 'loading' | 'error'
+  musics: Loadable<IMusicEntry[]>
   refreshMusics: () => void
-  setMusics: React.Dispatch<
-    React.SetStateAction<IMusicEntry[] | 'loading' | 'error'>
-  >
+  setMusics: React.Dispatch<React.SetStateAction<Loadable<IMusicEntry[]>>>
   toggleFavourite: (music: IMusicEntry) => Promise<void>
 
   // Search related
@@ -106,8 +106,8 @@ export function MusicProvider({
 
   async function toggleFavourite(targetMusic: IMusicEntry): Promise<void> {
     const toggleFavouriteInMusics = (
-      prevMusics: IMusicEntry[] | 'loading' | 'error'
-    ): IMusicEntry[] | 'loading' | 'error' => {
+      prevMusics: Loadable<IMusicEntry[]>
+    ): Loadable<IMusicEntry[]> => {
       if (typeof prevMusics !== 'string') {
         return prevMusics.map(music =>
           music.id === targetMusic.id

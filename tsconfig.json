@@ -30,6 +30,6 @@
       "@constants/*": ["./src/constants/*"]
     }
   },
-  "include": ["src", "tools"],
+  "include": ["src", "tools", "public/Spotify"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

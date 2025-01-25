@@ -15,7 +15,7 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
   )
 
   return typeof data !== 'string' ? (
-    <div
+    <button
       onClick={() => {
         const a = document.createElement('a')
         a.href = entry.content
@@ -53,7 +53,7 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
           {data.ogDescription}
         </p>
       )}
-    </div>
+    </button>
   ) : (
     <a
       target="_blank"

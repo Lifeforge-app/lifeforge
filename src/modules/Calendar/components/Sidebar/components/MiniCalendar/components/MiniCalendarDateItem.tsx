@@ -4,6 +4,7 @@ import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
+import { type Loadable } from '@interfaces/common'
 
 interface MiniCalendarDateItemProps {
   index: number
@@ -12,7 +13,7 @@ interface MiniCalendarDateItemProps {
   lastDate: number
   date: Date
   events: ICalendarEvent[]
-  categories: ICalendarCategory[] | 'loading' | 'error'
+  categories: Loadable<ICalendarCategory[]>
 }
 
 function MiniCalendarDateItem({

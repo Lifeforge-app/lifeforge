@@ -98,7 +98,6 @@ function ModifyMusicModal(): React.ReactElement {
             onSubmitButtonClick().catch(console.error)
           }
         }}
-        autoFocus
       />
       <TextInput
         icon="tabler:user"

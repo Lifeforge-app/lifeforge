@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { Button } from '@components/buttons'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+import LoadingScreen from '@components/screens/LoadingScreen'
 import { initLocale } from '../core/i18n'
 
 async function checkAPIStatus(): Promise<'production' | 'development' | false> {
@@ -60,50 +61,52 @@ export default function APIOnlineStatusProvider({
       })
   }, [])
 
+  if (isOnline === 'loading') {
+    return <LoadingScreen />
+  }
+
+  if (isOnline === false) {
+    return (
+      <EmptyStateScreen
+        icon="tabler:wifi-off"
+        title="API is Offline"
+        description="The API is currently offline. Please try again later. If you are the developer, please check the API status."
+        customCTAButton={
+          <Button
+            icon="tabler:refresh"
+            onClick={() => {
+              setIsOnline('loading')
+              checkAPIStatus()
+                .then(status => {
+                  if (status !== false) {
+                    initLocale()
+                  }
+                  setEnvironment(status === false ? null : status)
+                  setIsOnline(status !== false)
+                })
+                .catch(() => {
+                  setIsOnline(false)
+                })
+            }}
+            needTranslate={false}
+            className="!bg-black !text-white"
+          >
+            Retry
+          </Button>
+        }
+      />
+    )
+  }
+
   return (
-    <div className="flex-center h-dvh w-full">
-      {isOnline === 'loading' ? (
-        <span className="loader"></span>
-      ) : isOnline ? (
-        <APIOnlineStatusContext
-          value={{
-            isOnline,
-            environment
-          }}
-        >
-          {children}
-        </APIOnlineStatusContext>
-      ) : (
-        <EmptyStateScreen
-          icon="tabler:wifi-off"
-          title="API is Offline"
-          description="The API is currently offline. Please try again later. If you are the developer, please check the API status."
-          customCTAButton={
-            <Button
-              icon="tabler:refresh"
-              onClick={() => {
-                setIsOnline('loading')
-                checkAPIStatus()
-                  .then(status => {
-                    if (status !== false) {
-                      initLocale()
-                    }
-                    setEnvironment(status === false ? null : status)
-                    setIsOnline(status !== false)
-                  })
-                  .catch(() => {
-                    setIsOnline(false)
-                  })
-              }}
-              needTranslate={false}
-              className="!bg-black !text-white"
-            >
-              Retry
-            </Button>
-          }
-        />
-      )}
-    </div>
+    <APIOnlineStatusContext
+      value={{
+        isOnline,
+        environment
+      }}
+    >
+      {children}
+    </APIOnlineStatusContext>
   )
 }
 

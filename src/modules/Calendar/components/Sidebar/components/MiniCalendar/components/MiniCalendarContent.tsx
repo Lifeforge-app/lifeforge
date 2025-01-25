@@ -4,6 +4,7 @@ import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
+import { type Loadable } from '@interfaces/common'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import MiniCalendarDateItem from './MiniCalendarDateItem'
 
@@ -16,7 +17,7 @@ function MiniCalendarContent({
   currentMonth: number
   currentYear: number
   events: ICalendarEvent[]
-  categories: ICalendarCategory[] | 'loading' | 'error'
+  categories: Loadable<ICalendarCategory[]>
 }): React.ReactElement {
   const { language } = usePersonalizationContext()
 
@@ -59,12 +60,17 @@ function MiniCalendarContent({
             const lastDateOfPrevMonth =
               moment(date).subtract(1, 'month').endOf('month').date() - 1
 
-            const actualIndex =
-              firstDay > index
-                ? lastDateOfPrevMonth - firstDay + index + 2
-                : index - firstDay + 1 > lastDate
-                ? index - lastDate - firstDay + 1
-                : index - firstDay + 1
+            const actualIndex = (() => {
+              if (firstDay > index) {
+                return lastDateOfPrevMonth - firstDay + index + 2
+              }
+
+              if (index - firstDay + 1 > lastDate) {
+                return index - lastDate - firstDay + 1
+              }
+
+              return index - firstDay + 1
+            })()
 
             return (
               <MiniCalendarDateItem

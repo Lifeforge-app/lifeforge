@@ -56,13 +56,15 @@ function SidebarItemContent({
           ))}
         {number !== undefined && (
           <span
-            className={`pr-2 text-sm ${
-              isMenuOpen || (onCancelButtonClick !== undefined && active)
-                ? 'hidden'
-                : hamburgerMenuItems !== undefined
+            className={`pr-2 text-sm ${(() => {
+              if (isMenuOpen || (onCancelButtonClick !== undefined && active)) {
+                return 'hidden'
+              }
+
+              return hamburgerMenuItems !== undefined
                 ? 'group-hover:hidden'
                 : 'block'
-            }`}
+            })()}`}
           >
             {number.toLocaleString()}
           </span>

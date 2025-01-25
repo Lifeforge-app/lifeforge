@@ -6,6 +6,7 @@ import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
+import { type Loadable } from '@interfaces/common'
 import APIRequest from '@utils/fetchData'
 import CalendarHeader from './components/CalendarHeader'
 import EventItem from './components/EventItem'
@@ -15,10 +16,8 @@ const DnDCalendar: any = withDragAndDrop(Calendar)
 
 interface CalendarComponentProps {
   events: ICalendarEvent[]
-  setRawEvents: React.Dispatch<
-    React.SetStateAction<ICalendarEvent[] | 'loading' | 'error'>
-  >
-  categories: ICalendarCategory[] | 'loading' | 'error'
+  setRawEvents: React.Dispatch<React.SetStateAction<Loadable<ICalendarEvent[]>>>
+  categories: Loadable<ICalendarCategory[]>
   setModifyEventModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >

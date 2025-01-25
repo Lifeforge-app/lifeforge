@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-nested-functions */
 import { t } from 'i18next'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -119,7 +120,6 @@ function ModifyAlbumModal({
             onSubmitButtonClick().catch(console.error)
           }
         }}
-        autoFocus
       />
       <CreateOrModifyButton
         type={openType as 'create' | 'rename'}

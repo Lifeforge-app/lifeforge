@@ -1,5 +1,5 @@
 import { t } from 'i18next'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Button } from '@components/buttons'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 
@@ -14,6 +14,36 @@ function AddToLibraryButton({
     entries: { data: entries },
     miscellaneous: { processes }
   } = useBooksLibraryContext()
+
+  const icon = useMemo(() => {
+    if (Object.keys(processes).includes(md5)) {
+      return 'svg-spinners:180-ring'
+    }
+
+    if (
+      typeof entries !== 'string' &&
+      entries.some(entry => entry.md5 === md5)
+    ) {
+      return 'tabler:check'
+    }
+
+    return 'tabler:plus'
+  }, [entries, md5, processes])
+
+  const text = useMemo(() => {
+    if (Object.keys(processes).includes(md5)) {
+      return `${t('button.downloading')} (${processes[md5].percentage})`
+    }
+
+    if (
+      typeof entries !== 'string' &&
+      entries.some(entry => entry.md5 === md5)
+    ) {
+      return t('button.alreadyInLibrary')
+    }
+
+    return t('button.addToLibrary')
+  }, [entries, md5, processes])
 
   return (
     <Button
@@ -33,22 +63,10 @@ function AddToLibraryButton({
       onClick={() => {
         setAddToLibraryFor(md5)
       }}
-      icon={
-        Object.keys(processes).includes(md5)
-          ? 'svg-spinners:180-ring'
-          : typeof entries !== 'string' &&
-            entries.some(entry => entry.md5 === md5)
-          ? 'tabler:check'
-          : 'tabler:plus'
-      }
+      icon={icon}
       className="w-full xl:w-1/2"
     >
-      {Object.keys(processes).includes(md5)
-        ? `${t('button.downloading')} (${processes[md5].percentage})`
-        : typeof entries !== 'string' &&
-          entries.some(entry => entry.md5 === md5)
-        ? t('button.alreadyInLibrary')
-        : t('button.addToLibrary')}
+      {text}
     </Button>
   )
 }

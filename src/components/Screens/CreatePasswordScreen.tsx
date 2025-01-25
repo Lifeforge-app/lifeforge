@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import React, { useRef, useState } from 'react'

@@ -1,5 +1,6 @@
 import React from 'react'
 import useThemeColors from '@hooks/useThemeColor'
+import { type Loadable } from '@interfaces/common'
 import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import APIRequest from '@utils/fetchData'
@@ -21,9 +22,7 @@ function TaskItem({
   lighter?: boolean
   isOuter?: boolean
   entries?: ITodoListEntry[]
-  setEntries?: React.Dispatch<
-    React.SetStateAction<ITodoListEntry[] | 'loading' | 'error'>
-  >
+  setEntries?: React.Dispatch<React.SetStateAction<Loadable<ITodoListEntry[]>>>
   refreshEntries?: () => void
 }): React.ReactElement {
   const { componentBgWithHover } = useThemeColors()

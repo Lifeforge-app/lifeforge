@@ -153,7 +153,6 @@ function EditCardModal({
                       newCards[index].type = 'update'
                       setInnerCards(newCards)
                     }}
-                    autoFocus
                   />
                 ) : (
                   <button

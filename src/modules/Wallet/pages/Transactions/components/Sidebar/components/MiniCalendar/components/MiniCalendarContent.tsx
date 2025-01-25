@@ -52,12 +52,16 @@ function MiniCalendarContent({
             const lastDateOfPrevMonth =
               moment(date).subtract(1, 'month').endOf('month').date() - 1
 
-            const actualIndex =
-              firstDay > index
-                ? lastDateOfPrevMonth - firstDay + index + 2
-                : index - firstDay + 1 > lastDate
-                ? index - lastDate - firstDay + 1
-                : index - firstDay + 1
+            const actualIndex = (() => {
+              if (firstDay > index) {
+                return lastDateOfPrevMonth - firstDay + index + 2
+              }
+              if (index - firstDay + 1 > lastDate) {
+                return index - lastDate - firstDay + 1
+              }
+
+              return index - firstDay + 1
+            })()
 
             return (
               <MiniCalendarDateItem

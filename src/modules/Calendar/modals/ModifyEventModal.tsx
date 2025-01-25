@@ -11,6 +11,7 @@ import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
+import { type Loadable } from '@interfaces/common'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import APIRequest from '@utils/fetchData'
 
@@ -19,7 +20,7 @@ interface ModifyEventModalProps {
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   updateEventList: () => void
   existedData: ICalendarEvent | null
-  categories: ICalendarCategory[] | 'loading' | 'error'
+  categories: Loadable<ICalendarCategory[]>
 }
 
 function ModifyEventModal({

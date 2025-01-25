@@ -20,6 +20,31 @@ function IconPickerModal({
     search?: string
   } | null>(null)
 
+  function renderContent() {
+    if (currentIconSet === null) {
+      return <IconSetList setCurrentIconSet={setCurrentIconSet} />
+    }
+
+    if (currentIconSet.search !== undefined) {
+      return (
+        <Search
+          searchTerm={currentIconSet.search}
+          setCurrentIconSetProp={setCurrentIconSet}
+          setSelectedIcon={setSelectedIcon}
+          setOpen={setOpen}
+        />
+      )
+    }
+
+    return (
+      <IconSet
+        iconSet={currentIconSet.iconSet ?? ''}
+        setSelectedIcon={setSelectedIcon}
+        setOpen={setOpen}
+      />
+    )
+  }
+
   return (
     <ModalWrapper isOpen={isOpen} minWidth="80vw" minHeight="80vh">
       {currentIconSet !== null ? (
@@ -67,24 +92,7 @@ function IconPickerModal({
           }
         />
       )}
-      {currentIconSet !== null ? (
-        currentIconSet.search !== undefined ? (
-          <Search
-            searchTerm={currentIconSet.search}
-            setCurrentIconSetProp={setCurrentIconSet}
-            setSelectedIcon={setSelectedIcon}
-            setOpen={setOpen}
-          />
-        ) : (
-          <IconSet
-            iconSet={currentIconSet.iconSet ?? ''}
-            setSelectedIcon={setSelectedIcon}
-            setOpen={setOpen}
-          />
-        )
-      ) : (
-        <IconSetList setCurrentIconSet={setCurrentIconSet} />
-      )}
+      {renderContent()}
     </ModalWrapper>
   )
 }

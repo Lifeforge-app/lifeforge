@@ -7,6 +7,47 @@ import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
 import VideoInfo from '../../Music/modals/YoutubeDownloaderModal/components/VideoInfo'
 
+function ProgressIndicator({
+  status,
+  progress
+}: {
+  status: 'completed' | 'failed' | 'in_progress' | null
+  progress: number
+}): React.ReactElement {
+  switch (status) {
+    case 'in_progress':
+      return (
+        <div className="flex items-center justify-end gap-2">
+          <p className="text-bg-500">{progress}%</p>
+          <div className="h-1 w-48 rounded-md bg-bg-500">
+            <div
+              className="h-full rounded-md bg-custom-500 transition-all"
+              style={{
+                width: `${progress}%`
+              }}
+            />
+          </div>
+        </div>
+      )
+    case 'completed':
+      return (
+        <p className="flex items-center gap-2 text-green-500">
+          <Icon icon="tabler:check" className="size-5" />
+          Downloaded
+        </p>
+      )
+    case 'failed':
+      return (
+        <p className="flex items-center gap-2 text-red-500">
+          <Icon icon="tabler:alert-circle" className="size-5" />
+          Failed
+        </p>
+      )
+    default:
+      return <></>
+  }
+}
+
 function DownloadProcessModal({
   isOpen,
   onClose,
@@ -52,39 +93,7 @@ function DownloadProcessModal({
                     <div className="flex items-center gap-4">
                       <VideoInfo videoInfo={metadata} />
                     </div>
-                    {status === 'in_progress' ? (
-                      <div className="flex items-center justify-end gap-2">
-                        <p className="text-bg-500">{progress}%</p>
-                        <div className="h-1 w-48 rounded-md bg-bg-500">
-                          <div
-                            className="h-full rounded-md bg-custom-500 transition-all"
-                            style={{
-                              width: `${progress}%`
-                            }}
-                          />
-                        </div>
-                      </div>
-                    ) : status !== null ? (
-                      <p
-                        className={`flex items-center gap-2 ${
-                          status === 'completed'
-                            ? 'text-green-500'
-                            : 'text-red-500'
-                        }`}
-                      >
-                        <Icon
-                          icon={
-                            status === 'completed'
-                              ? 'tabler:check'
-                              : 'tabler:alert-circle'
-                          }
-                          className="size-5"
-                        />
-                        {status === 'completed' ? 'Downloaded' : 'Failed'}
-                      </p>
-                    ) : (
-                      <></>
-                    )}
+                    <ProgressIndicator status={status} progress={progress} />
                   </div>
                 )
               )}

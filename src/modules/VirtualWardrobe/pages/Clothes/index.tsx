@@ -184,8 +184,31 @@ function VirtualWardrobeClothes(): React.ReactElement {
             />
           </div>
           <APIFallbackComponent data={entries}>
-            {entries =>
-              entries.length !== 0 ? (
+            {entries => {
+              if (entries.length === 0) {
+                if (
+                  debouncedSearchQuery.trim() === '' &&
+                  searchParams.toString() === ''
+                ) {
+                  return (
+                    <EmptyStateScreen
+                      icon="tabler:shirt-off"
+                      title="No clothes yet"
+                      description="No clothes have been added to your wardrobe yet. Click the button below to add your first item."
+                    />
+                  )
+                }
+
+                return (
+                  <EmptyStateScreen
+                    icon="tabler:search-off"
+                    title="No results found"
+                    description="No clothes were found matching your search criteria."
+                  />
+                )
+              }
+
+              return (
                 <Scrollbar className="mt-6 pb-16">
                   <ul className="mb-8 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
                     {entries.map(entry => (
@@ -207,21 +230,8 @@ function VirtualWardrobeClothes(): React.ReactElement {
                     ))}
                   </ul>
                 </Scrollbar>
-              ) : debouncedSearchQuery.trim() === '' &&
-                searchParams.toString() === '' ? (
-                <EmptyStateScreen
-                  icon="tabler:shirt-off"
-                  title="No clothes yet"
-                  description="No clothes have been added to your wardrobe yet. Click the button below to add your first item."
-                />
-              ) : (
-                <EmptyStateScreen
-                  icon="tabler:search-off"
-                  title="No results found"
-                  description="No clothes were found matching your search criteria."
-                />
               )
-            }
+            }}
           </APIFallbackComponent>
         </div>
       </div>

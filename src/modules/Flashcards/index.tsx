@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'

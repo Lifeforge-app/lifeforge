@@ -42,7 +42,7 @@ function SidebarItemOnClickElement({
               setSubsectionExpanded(true)
             }
           }}
-          to={`./${prefix !== '' ? `${prefix}/` : ''}${titleToPath(name)}`}
+          to={`./${prefix !== '' ? prefix + '/' : ''}${titleToPath(name)}`}
           className="absolute left-0 top-0 size-full rounded-lg"
         />
       )}

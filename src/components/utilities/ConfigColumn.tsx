@@ -48,7 +48,7 @@ function ConfigColumn({
             <h3 className="flex w-full items-center gap-2 text-xl font-medium leading-normal md:w-auto">
               {title}
               {tooltip !== undefined && (
-                <a
+                <span
                   data-tooltip-id={`tooltip-${toDashCase(
                     title?.toString() ?? ''
                   )}`}
@@ -57,7 +57,7 @@ function ConfigColumn({
                     icon="tabler:info-circle"
                     className="size-5 text-bg-500"
                   />
-                </a>
+                </span>
               )}
             </h3>
             <p className="text-bg-500">{desc}</p>

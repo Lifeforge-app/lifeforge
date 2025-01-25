@@ -120,27 +120,38 @@ function BooksLibrary(): React.ReactElement {
             />
           </div>
           <APIFallbackComponent data={filteredEntries}>
-            {filteredEntries =>
-              filteredEntries.length > 0 ? (
-                view === 'grid' ? (
-                  <GridView books={filteredEntries} />
-                ) : (
-                  <ListView books={filteredEntries} />
+            {filteredEntries => {
+              if (filteredEntries.length === 0) {
+                if (entries.length === 0) {
+                  return (
+                    <EmptyStateScreen
+                      icon="tabler:books-off"
+                      title={t('emptyState.booksLibrary.empty.title')}
+                      description={t(
+                        'emptyState.booksLibrary.empty.description'
+                      )}
+                    />
+                  )
+                }
+
+                return (
+                  <EmptyStateScreen
+                    icon="tabler:search-off"
+                    title={t('emptyState.booksLibrary.results.title')}
+                    description={t(
+                      'emptyState.booksLibrary.results.description'
+                    )}
+                  />
                 )
-              ) : entries.length === 0 ? (
-                <EmptyStateScreen
-                  icon="tabler:books-off"
-                  title={t('emptyState.booksLibrary.empty.title')}
-                  description={t('emptyState.booksLibrary.empty.description')}
-                />
-              ) : (
-                <EmptyStateScreen
-                  icon="tabler:search-off"
-                  title={t('emptyState.booksLibrary.results.title')}
-                  description={t('emptyState.booksLibrary.results.description')}
-                />
-              )
-            }
+              }
+
+              switch (view) {
+                case 'grid':
+                  return <GridView books={filteredEntries} />
+                case 'list':
+                  return <ListView books={filteredEntries} />
+              }
+            }}
           </APIFallbackComponent>
         </div>
       </div>

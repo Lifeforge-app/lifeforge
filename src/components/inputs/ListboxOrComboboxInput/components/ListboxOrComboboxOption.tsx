@@ -23,6 +23,21 @@ function ListboxOrComboboxOption({
   const Element =
     type === 'listbox' ? HeadlessListboxOption : HeadlessComboboxOption
 
+  const getCharClassNames = (
+    matchedSubstrings: Array<{ length: number; offset: number }> | undefined,
+    index: number
+  ) => {
+    if (
+      matchedSubstrings === undefined ||
+      !matchedSubstrings.some(
+        ({ offset, length }) => index >= offset && index < offset + length
+      )
+    )
+      return ''
+
+    return 'font-medium text-bg-800 dark:text-bg-100'
+  }
+
   return (
     <Element
       className="flex-between relative flex cursor-pointer select-none p-4 transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
@@ -61,16 +76,7 @@ function ListboxOrComboboxOption({
               {text.split('').map((char, index) => (
                 <span
                   key={index}
-                  className={
-                    matchedSubstrings !== undefined
-                      ? matchedSubstrings.some(
-                          ({ offset, length }) =>
-                            index >= offset && index < offset + length
-                        )
-                        ? 'font-medium text-bg-800 dark:text-bg-100'
-                        : ''
-                      : ''
-                  }
+                  className={getCharClassNames(matchedSubstrings, index)}
                 >
                   {char}
                 </span>

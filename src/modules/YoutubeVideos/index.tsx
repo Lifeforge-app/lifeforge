@@ -7,6 +7,7 @@ import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import Scrollbar from '@components/utilities/Scrollbar'
 import useFetch from '@hooks/useFetch'
+import { type Loadable } from '@interfaces/common'
 import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
 import AddVideosModal from './components/AddVideosModal'
 import Header from './components/Header'
@@ -25,9 +26,8 @@ function YoutubeVideos(): React.ReactElement {
   const [needsProgressCheck, setNeedsProgressCheck] = useState(true)
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query, 500)
-  const [filteredVideos, setFilteredVideos] = useState<
-    IYoutubeVideosStorageEntry[] | 'loading' | 'error'
-  >('loading')
+  const [filteredVideos, setFilteredVideos] =
+    useState<Loadable<IYoutubeVideosStorageEntry[]>>('loading')
 
   useEffect(() => {
     if (typeof videos === 'string') {

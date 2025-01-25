@@ -2,6 +2,7 @@ import { cookieParse } from 'pocketbase'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { type Loadable } from '@interfaces/common'
 
 function useFetch<T>(
   endpoint: string,
@@ -11,12 +12,12 @@ function useFetch<T>(
   changeStateWhenLoading: boolean = true,
   showError: boolean = true
 ): [
-  data: T | 'loading' | 'error',
+  data: Loadable<T>,
   refresh: () => void,
-  setData: React.Dispatch<React.SetStateAction<T | 'loading' | 'error'>>
+  setData: React.Dispatch<React.SetStateAction<Loadable<T>>>
 ] {
   const { t } = useTranslation()
-  const [data, setData] = useState<T | 'loading' | 'error'>('loading')
+  const [data, setData] = useState<Loadable<T>>('loading')
 
   function fetchData(): void {
     if (changeStateWhenLoading) {
