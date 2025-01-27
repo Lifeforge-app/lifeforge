@@ -14,11 +14,11 @@ function SearchResultItem({
   setViewDetailsFor: (id: string) => void
   setAddToLibraryFor: (id: string) => void
 }): React.ReactElement {
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgLighterWithHover } = useThemeColors()
 
   return (
     <li
-      className={`flex flex-col gap-6 rounded-md p-6 md:flex-row ${componentBgWithHover}`}
+      className={`flex flex-col gap-6 rounded-md p-6 md:flex-row ${componentBgLighterWithHover}`}
     >
       <div className="flex-center relative inline-flex h-min min-h-80 w-56 shrink-0 flex-col overflow-hidden rounded-md bg-bg-200 dark:bg-bg-800">
         <Icon

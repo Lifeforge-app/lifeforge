@@ -75,7 +75,6 @@ function Pixabay({
           searchQuery={query}
           setSearchQuery={setQuery}
           stuffToSearch="pixabay"
-          lighter
           hasTopMargin={false}
           onFilterIconClick={() => {
             setIsSearchFilterModalOpen(true)

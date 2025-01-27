@@ -1,10 +1,12 @@
 import { t } from 'i18next'
 import { cookieParse } from 'pocketbase'
 
-export async function fetchChallenge(): Promise<string> {
+export async function fetchChallenge(
+  type: 'master' | 'password'
+): Promise<string> {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_HOST}/passwords/master/challenge`,
+      `${import.meta.env.VITE_API_HOST}/passwords/${type}/challenge`,
       {
         method: 'GET',
         headers: {
