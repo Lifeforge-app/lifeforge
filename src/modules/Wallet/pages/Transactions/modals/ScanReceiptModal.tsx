@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { Button , Switch } from '@components/buttons'
-import { ImageAndFileInput , ImagePickerModal } from '@components/inputs'
+import { Button, Switch } from '@components/buttons'
+import { ImageAndFileInput, ImagePickerModal } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
@@ -75,6 +75,7 @@ function ScanReceiptModal({
           icon="tabler:scan"
           onClose={() => {
             setOpen(false)
+            setExistedData(null)
           }}
           hasAI
         />

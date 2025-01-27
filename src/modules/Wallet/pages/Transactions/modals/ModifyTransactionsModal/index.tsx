@@ -185,6 +185,7 @@ function ModifyTransactionsModal({
           title={openType === 'create' ? 'Add Transaction' : 'Edit Transaction'}
           onClose={() => {
             setOpenType(null)
+            setExistedData(null)
           }}
           className="!mb-4"
         />

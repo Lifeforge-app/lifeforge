@@ -714,3 +714,11 @@ button[class^='react-calendar__navigation'] {
     page-break-inside: avoid;
   }
 }
+
+.mail-content a {
+  @apply text-custom-500 hover:text-custom-600;
+}
+
+.mail-content strong {
+  @apply font-semibold;
+}
