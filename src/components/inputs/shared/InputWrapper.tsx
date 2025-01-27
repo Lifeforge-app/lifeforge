@@ -21,7 +21,7 @@ function InputWrapper({
       role="button"
       tabIndex={0}
       onKeyDown={e => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key === 'Enter') {
           e.preventDefault()
           if (inputRef?.current !== undefined && inputRef.current !== null) {
             inputRef.current.focus()

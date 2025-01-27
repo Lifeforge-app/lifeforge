@@ -97,7 +97,6 @@ function LibgenModal(): React.ReactElement {
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
                 stuffToSearch="among millions of books"
-                lighter
                 hasTopMargin={false}
                 onKeyUp={e => {
                   if (e.key === 'Enter') {

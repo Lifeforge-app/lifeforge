@@ -75,7 +75,6 @@ function IconSet({
         {iconData.title}
       </h1>
       <SearchInput
-        lighter
         hasTopMargin={false}
         searchQuery={searchTerm}
         setSearchQuery={setSearchTerm}

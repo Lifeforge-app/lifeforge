@@ -56,7 +56,9 @@ function Passwords(): React.ReactElement {
         <OTPScreen
           verificationEndpoint="passwords/master/otp"
           callback={() => setOtpSuccess(true)}
-          fetchChallenge={fetchChallenge}
+          fetchChallenge={() => {
+            return fetchChallenge('master')
+          }}
         />
       )
     }
@@ -67,7 +69,9 @@ function Passwords(): React.ReactElement {
           module="vault"
           endpoint="passwords/master/verify"
           setMasterPassword={setMasterPassword}
-          fetchChallenge={fetchChallenge}
+          fetchChallenge={() => {
+            return fetchChallenge('master')
+          }}
         />
       )
     }

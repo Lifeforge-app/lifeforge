@@ -231,14 +231,14 @@ function MiniCalendarDateItem({
         setNextToSelect(nextToSelect === 'start' ? 'end' : 'start')
         setSearchParams(searchParams)
       }}
-      className={getDayClassName({
+      className={`relative h-10 ${getDayClassName({
         index,
         firstDay,
         lastDate,
         searchParams,
         isFirstAndLastDay,
         isBetweenFirstAndLastDay
-      })}
+      })}`}
     >
       <span>{actualIndex}</span>
       {!(firstDay > index || index - firstDay + 1 > lastDate) &&

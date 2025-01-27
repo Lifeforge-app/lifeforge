@@ -10,7 +10,6 @@ function SearchInput({
   stuffToSearch,
   onKeyUp,
   customIcon,
-  lighter = false,
   hasTopMargin = true,
   onFilterIconClick,
   filterAmount,
@@ -23,7 +22,6 @@ function SearchInput({
   stuffToSearch: string
   onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   customIcon?: string
-  lighter?: boolean
   hasTopMargin?: boolean
   onFilterIconClick?: () => void
   filterAmount?: number
@@ -32,15 +30,13 @@ function SearchInput({
   className?: string
 }): React.ReactElement {
   const { t } = useTranslation()
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgLighterWithHover } = useThemeColors()
 
   return (
     <search
-      className={`flex min-h-14 w-full cursor-text items-center gap-4 rounded-lg px-4 shadow-custom transition-all ${componentBgWithHover} ${
-        lighter
-          ? 'dark:!bg-bg-800/50 dark:hover:!bg-bg-800'
-          : 'dark:!bg-bg-900 dark:hover:!bg-bg-800/50'
-      } ${hasTopMargin ? 'mt-4' : ''} ${className}`}
+      className={`flex min-h-14 w-full cursor-text items-center gap-4 rounded-lg px-4 shadow-custom transition-all ${componentBgLighterWithHover} ${
+        hasTopMargin ? 'mt-4' : ''
+      } ${className}`}
       onClick={e => {
         e.currentTarget.querySelector('input')?.focus()
       }}
