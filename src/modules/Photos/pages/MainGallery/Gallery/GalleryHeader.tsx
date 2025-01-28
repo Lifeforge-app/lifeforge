@@ -182,7 +182,7 @@ function GalleryHeader(): React.ReactElement {
         )}
         <HamburgerMenu
           largerPadding
-          className="relative z-[9989] hidden md:block"
+          className="relative z-9989 hidden md:block"
           customWidth="w-72"
         >
           <MenuItem

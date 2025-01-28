@@ -1,5 +1,6 @@
 import moment from 'moment'
 import React, { useMemo } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useWalletContext } from '@providers/WalletProvider'
 
 interface MiniCalendarDateItemProps {
@@ -86,7 +87,8 @@ function MiniCalendarDateItem({
   nextToSelect,
   setNextToSelect
 }: MiniCalendarDateItemProps): React.ReactElement {
-  const { transactions, searchParams, setSearchParams } = useWalletContext()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const { transactions } = useWalletContext()
 
   const transactionCount = useMemo<{
     income: number

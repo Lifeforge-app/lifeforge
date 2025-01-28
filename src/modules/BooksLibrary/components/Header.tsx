@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import React from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Button } from '@components/buttons'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import HeaderFilter from '@components/utilities/HeaderFilter'
@@ -10,14 +11,9 @@ function Header({ itemCount }: { itemCount: number }): React.ReactElement {
     categories: { data: categories },
     languages: { data: languages },
     fileTypes: { data: fileTypes },
-    miscellaneous: {
-      searchParams,
-      setSearchParams,
-      setSidebarOpen,
-      searchQuery,
-      setLibgenModalOpen
-    }
+    miscellaneous: { setSidebarOpen, searchQuery, setLibgenModalOpen }
   } = useBooksLibraryContext()
+  const [searchParams] = useSearchParams()
 
   return (
     <div>
@@ -43,7 +39,7 @@ function Header({ itemCount }: { itemCount: number }): React.ReactElement {
             <MenuItems
               transition
               anchor="bottom end"
-              className="mt-2 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+              className="mt-2 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
             >
               <MenuItem
                 onClick={() => {}}
@@ -70,8 +66,6 @@ function Header({ itemCount }: { itemCount: number }): React.ReactElement {
         </div>
       </div>
       <HeaderFilter
-        searchParams={searchParams}
-        setSearchParams={setSearchParams}
         items={{
           category: {
             data: categories,

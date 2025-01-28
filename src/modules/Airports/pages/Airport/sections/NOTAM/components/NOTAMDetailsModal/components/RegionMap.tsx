@@ -24,7 +24,7 @@ function RegionMap({
       <MapContainer
         center={data.qualification.coordinates[0]}
         zoom={10}
-        className="!h-96 w-full"
+        className="h-96! w-full"
       >
         <TileLayer
           url="https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"

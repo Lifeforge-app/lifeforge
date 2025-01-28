@@ -110,7 +110,7 @@ function CodeTimeActivityCalendar(): React.ReactElement {
             }
           </APIFallbackComponent>
         </div>
-        <Tooltip id="react-tooltip" className="z-[9999]" />
+        <Tooltip id="react-tooltip" className="z-9999" />
         {firstYear && (
           <div className="space-y-2">
             {Array(new Date().getFullYear() - firstYear + 1)

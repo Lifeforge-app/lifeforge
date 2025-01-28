@@ -6,7 +6,6 @@ import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndConte
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import Scrollbar from '@components/utilities/Scrollbar'
 import useFetch from '@hooks/useFetch'
-import useHashParams from '@hooks/useHashParams'
 import {
   type ICalendarCategory,
   type ICalendarEvent
@@ -17,7 +16,6 @@ import ModifyCategoryModal from './modals/ModifyCategoryModal'
 import ModifyEventModal from './modals/ModifyEventModal'
 
 function CalendarModule(): React.ReactElement {
-  const [searchParams, setSearchParams] = useHashParams()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [rawEvents, refreshRawEvents, setRawEvents] =
     useFetch<ICalendarEvent[]>('calendar/event')
@@ -64,8 +62,6 @@ function CalendarModule(): React.ReactElement {
             modifyCategoryModalOpenType={modifyCategoryOpenType}
             setModifyCategoryModalOpenType={setModifyCategoryOpenType}
             setExistedData={setExistedCategoryData}
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
             setDeleteCategoryConfirmationModalOpen={
               setDeleteCategoryConfirmationModalOpen
             }
@@ -80,7 +76,6 @@ function CalendarModule(): React.ReactElement {
                   setModifyEventModalOpenType={setModifyEventModalOpenType}
                   setExistedData={setExistedData}
                   refreshRawEvents={refreshRawEvents}
-                  searchParams={searchParams}
                 />
               </div>
             </Scrollbar>

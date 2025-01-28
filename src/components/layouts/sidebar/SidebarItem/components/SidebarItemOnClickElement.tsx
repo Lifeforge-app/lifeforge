@@ -1,14 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
-import { titleToPath } from '@utils/strings'
 
 function SidebarItemOnClickElement({
   onClick,
   setSubsectionExpanded,
-  isMainSidebarItem,
-  prefix,
-  name
+  isMainSidebarItem
 }: {
   onClick?: () => void
   setSubsectionExpanded: (value: boolean) => void
@@ -24,12 +21,7 @@ function SidebarItemOnClickElement({
     <>
       {onClick !== undefined ? (
         <button
-          onClick={() => {
-            onClick()
-            if (window.innerWidth < 1024) {
-              toggleSidebar()
-            }
-          }}
+          onClick={() => {}}
           className="absolute left-0 top-0 size-full rounded-lg"
         />
       ) : (
@@ -42,7 +34,7 @@ function SidebarItemOnClickElement({
               setSubsectionExpanded(true)
             }
           }}
-          to={`./${prefix !== '' ? prefix + '/' : ''}${titleToPath(name)}`}
+          to={''}
           className="absolute left-0 top-0 size-full rounded-lg"
         />
       )}

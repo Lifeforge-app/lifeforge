@@ -27,4 +27,10 @@ interface IMailInboxEntry extends BasePBCollection {
   unsubscribeUrl: string
 }
 
-export type { IMailInboxEntry }
+interface IMailInboxLabel extends BasePBCollection {
+  name: string
+  amount: number
+  parent: string
+}
+
+export type { IMailInboxEntry, IMailInboxLabel }

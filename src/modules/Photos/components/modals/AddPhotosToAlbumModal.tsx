@@ -131,7 +131,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                           {selectedAlbum === album.id ? (
                             <Icon
                               icon="tabler:check"
-                              className="size-6 text-bg-800 dark:!text-custom-500"
+                              className="size-6 text-bg-800 dark:text-custom-500!"
                             />
                           ) : (
                             <span className="text-sm text-bg-500">

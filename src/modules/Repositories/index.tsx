@@ -72,7 +72,7 @@ function Repositories(): React.ReactElement {
                   >
                     <div className="flex-between flex gap-4">
                       <div>
-                        <h2 className="text-lg font-semibold text-bg-800 dark:!text-bg-50">
+                        <h2 className="text-lg font-semibold text-bg-800 dark:text-bg-50!">
                           {repo.name}
                         </h2>
                         <p className="mt-1 text-sm text-bg-500">
@@ -81,7 +81,7 @@ function Repositories(): React.ReactElement {
                       </div>
                       {repo.language !== '' && (
                         <span
-                          className="relative isolate mb-1 block w-min whitespace-nowrap rounded-full px-3 py-1 text-xs shadow-sm"
+                          className="relative isolate mb-1 block w-min whitespace-nowrap rounded-full px-3 py-1 text-xs shadow-xs"
                           style={{
                             backgroundColor: `${
                               LANGUAGE_COLORS[

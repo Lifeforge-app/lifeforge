@@ -89,7 +89,7 @@ export default function APIOnlineStatusProvider({
                 })
             }}
             needTranslate={false}
-            className="!bg-black !text-white"
+            className="bg-black! text-white!"
           >
             Retry
           </Button>

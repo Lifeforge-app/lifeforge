@@ -1,17 +1,12 @@
 import React, { useMemo } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import useThemeColors from '@hooks/useThemeColor'
 import { rgbToHex } from '@utils/colors'
 import FilterChip from './components/HeaderFilterChip'
 
 function HeaderFilter({
-  searchParams,
-  setSearchParams,
   items
 }: {
-  searchParams: URLSearchParams
-  setSearchParams: (
-    searchParams: Record<string, string> | URLSearchParams
-  ) => void
   items: Record<
     string,
     {
@@ -28,6 +23,7 @@ function HeaderFilter({
     }
   >
 }): React.ReactElement {
+  const [searchParams, setSearchParams] = useSearchParams()
   const { theme } = useThemeColors()
   const themeColorHex = useMemo(() => {
     if (theme.startsWith('#')) {

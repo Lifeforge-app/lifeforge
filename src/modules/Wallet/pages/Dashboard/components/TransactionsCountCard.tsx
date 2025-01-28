@@ -105,7 +105,7 @@ function TransactionsCountCard(): React.ReactElement {
               ).map(([type, color]) => (
                 <Link
                   key={type}
-                  to={`/wallet/transactions#type=${type}`}
+                  to={`/wallet/transactions?type=${type}`}
                   className={`flex-between flex flex-col gap-4 rounded-md p-4 transition-all sm:flex-row ${componentBgLighterWithHover}`}
                 >
                   <div className="flex w-full items-center gap-4">

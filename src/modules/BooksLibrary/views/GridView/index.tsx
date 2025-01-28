@@ -30,7 +30,7 @@ function GridView({
               {value.downloaded}/{value.total}, {value.speed}/s, ETA:{' '}
               {value.ETA}s
             </div>
-            <div className="flex-center aspect-[9/12] w-full rounded-lg bg-bg-200 p-2 dark:bg-bg-800">
+            <div className="flex-center aspect-9/12 w-full rounded-lg bg-bg-200 p-2 dark:bg-bg-800">
               <Icon icon="tabler:clock" className="size-16 text-bg-500" />
             </div>
             <div className="mt-4 flex items-center gap-1 text-sm font-medium text-bg-500">

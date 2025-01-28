@@ -39,7 +39,7 @@ function DefaultBgTempSelector({
         <span className="shrink-0 text-sm font-medium text-bg-500">
           {t('personalization.bgTempSelector.cool')}
         </span>
-        <span className="mt-px h-0.5 w-full bg-gradient-to-r from-blue-500 to-red-500"></span>
+        <span className="mt-px h-0.5 w-full bg-linear-to-r from-blue-500 to-red-500"></span>
         <span className="shrink-0 text-sm font-medium text-bg-500">
           {t('personalization.bgTempSelector.warm')}
         </span>

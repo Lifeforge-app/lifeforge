@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSearchParams } from 'react-router-dom'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { SidebarItem } from '@components/layouts/sidebar'
 import { type ITodoListList } from '@interfaces/todo_list_interfaces'
@@ -11,9 +12,8 @@ function TaskListListItem({
   item: ITodoListList
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
+  const [searchParams, setSearchParams] = useSearchParams()
   const {
-    searchParams,
-    setSearchParams,
     setSelectedList: setSelectedData,
     setModifyListModalOpenType: setModifyModalOpenType,
     setDeleteListConfirmationModalOpen: setDeleteConfirmationModalOpen

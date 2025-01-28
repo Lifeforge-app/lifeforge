@@ -10,19 +10,13 @@ function CategoryList({
   categories,
   setModifyCategoryModalOpenType,
   setExistedData,
-  searchParams,
-  setSearchParams,
   setDeleteCategoryConfirmationModalOpen
 }: {
   categories: Loadable<ICalendarCategory[]>
-  refreshCategories: () => void
-  modifyCategoryModalOpenType: 'create' | 'update' | null
   setModifyCategoryModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedData: React.Dispatch<React.SetStateAction<ICalendarCategory | null>>
-  searchParams: URLSearchParams
-  setSearchParams: (params: Record<string, string> | URLSearchParams) => void
   setDeleteCategoryConfirmationModalOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
@@ -50,8 +44,6 @@ function CategoryList({
                     item={item}
                     setModifyModalOpenType={setModifyCategoryModalOpenType}
                     setSelectedData={setExistedData}
-                    searchParams={searchParams}
-                    setSearchParams={setSearchParams}
                     setDeleteConfirmationModalOpen={
                       setDeleteCategoryConfirmationModalOpen
                     }

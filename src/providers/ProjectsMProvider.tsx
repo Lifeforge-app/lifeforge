@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
 import useFetch from '@hooks/useFetch'
-import useHashParams from '@hooks/useHashParams'
 import {
   type IProjectsMCategory,
   type IProjectsMEntry,
@@ -52,8 +51,6 @@ interface IProjectsMData {
   visibilities: IProjectsMCommon<IProjectsMVisibility>
   technologies: IProjectsMCommon<IProjectsMTechnology>
   miscellaneous: {
-    searchParams: URLSearchParams
-    setSearchParams: (params: Record<string, string> | URLSearchParams) => void
     searchQuery: string
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
     sidebarOpen: boolean
@@ -76,7 +73,6 @@ export const ProjectsMContext = React.createContext<IProjectsMData | undefined>(
 )
 
 export default function ProjectsMProvider(): React.ReactElement {
-  const [searchParams, setSearchParams] = useHashParams()
   const [searchQuery, setSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -112,25 +108,35 @@ export default function ProjectsMProvider(): React.ReactElement {
     updateDataList: state.refreshData
   }))
 
+  const value = useMemo(
+    () => ({
+      entries: entriesState,
+      categories: categoriesState,
+      statuses: statusesState,
+      visibilities: visibilitiesState,
+      technologies: technologiesState,
+      miscellaneous: {
+        searchQuery,
+        setSearchQuery,
+        sidebarOpen,
+        setSidebarOpen,
+        deleteModalConfigs
+      }
+    }),
+    [
+      entriesState,
+      categoriesState,
+      statusesState,
+      visibilitiesState,
+      technologiesState,
+      searchQuery,
+      sidebarOpen,
+      deleteModalConfigs
+    ]
+  )
+
   return (
-    <ProjectsMContext
-      value={{
-        entries: entriesState,
-        categories: categoriesState,
-        statuses: statusesState,
-        visibilities: visibilitiesState,
-        technologies: technologiesState,
-        miscellaneous: {
-          searchParams,
-          setSearchParams,
-          searchQuery,
-          setSearchQuery,
-          sidebarOpen,
-          setSidebarOpen,
-          deleteModalConfigs
-        }
-      }}
-    >
+    <ProjectsMContext value={value}>
       <Outlet />
     </ProjectsMContext>
   )

@@ -186,7 +186,7 @@ function ImagePreviewModal({
                   onClick={() => {
                     setDeletePhotosConfirmationModalOpen(true)
                   }}
-                  className="!p-2"
+                  className="p-2!"
                 />
                 <HamburgerMenu lighter className="relative" customWidth="w-56">
                   {beingDisplayedInAlbum && (

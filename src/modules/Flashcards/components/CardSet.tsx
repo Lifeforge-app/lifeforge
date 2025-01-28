@@ -176,8 +176,8 @@ function CardSet(): React.ReactElement {
                       </div>
                     </div>
                   </div>
-                  <div className="card h-full bg-custom-700 text-bg-800 !opacity-100 shadow"></div>
-                  <div className="card h-full bg-custom-900 text-bg-800 !opacity-100 shadow-sm"></div>
+                  <div className="card h-full bg-custom-700 text-bg-800 opacity-100! shadow-sm"></div>
+                  <div className="card h-full bg-custom-900 text-bg-800 opacity-100! shadow-xs"></div>
                 </div>
                 <button
                   onClick={gotoNextCard}

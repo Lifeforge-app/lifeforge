@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSearchParams } from 'react-router-dom'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { SidebarItem } from '@components/layouts/sidebar'
 import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
@@ -7,8 +8,6 @@ function CategoryListItem({
   item,
   setSelectedData,
   setModifyModalOpenType,
-  searchParams,
-  setSearchParams,
   setDeleteConfirmationModalOpen
 }: {
   item: ICalendarCategory
@@ -18,10 +17,10 @@ function CategoryListItem({
   setModifyModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
-  searchParams: URLSearchParams
-  setSearchParams: (params: Record<string, string> | URLSearchParams) => void
   setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
+  const [searchParams, setSearchParams] = useSearchParams()
+
   return (
     <SidebarItem
       active={searchParams.get('category') === item.id}

@@ -54,7 +54,7 @@ function AddVideosModal({
         onClose={() => {
           onClose(isVideoDownloading)
         }}
-        className="!mb-4"
+        className="mb-4!"
       />
       <ListboxOrComboboxInput
         type="listbox"

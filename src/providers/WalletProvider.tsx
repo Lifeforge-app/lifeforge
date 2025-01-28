@@ -1,9 +1,9 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import moment from 'moment'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
+import { useSearchParams } from 'react-router-dom'
 import useFetch from '@hooks/useFetch'
-import useHashParams from '@hooks/useHashParams'
 import { type Loadable } from '@interfaces/common'
 import {
   type IWalletAsset,
@@ -29,8 +29,6 @@ interface IWalletData {
   toggleAmountVisibility: React.Dispatch<React.SetStateAction<boolean>>
   searchQuery: string
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
-  searchParams: URLSearchParams
-  setSearchParams: (params: Record<string, string> | URLSearchParams) => void
 }
 
 export const WalletContext = React.createContext<IWalletData | undefined>(
@@ -38,7 +36,7 @@ export const WalletContext = React.createContext<IWalletData | undefined>(
 )
 
 export default function WalletProvider(): React.ReactElement {
-  const [searchParams, setSearchParams] = useHashParams()
+  const [searchParams] = useSearchParams()
   const [isAmountHidden, toggleAmountVisibility] = useState(true)
   const [transactions, refreshTransactions] = useFetch<IWalletTransaction[]>(
     'wallet/transactions'
@@ -101,28 +99,38 @@ export default function WalletProvider(): React.ReactElement {
     )
   }, [searchParams, transactions, debouncedSearchQuery])
 
+  const value = useMemo(
+    () => ({
+      transactions,
+      filteredTransactions,
+      ledgers,
+      assets,
+      categories,
+      incomeExpenses,
+      refreshTransactions,
+      refreshAssets,
+      refreshLedgers,
+      refreshCategories,
+      refreshIncomeExpenses,
+      isAmountHidden,
+      toggleAmountVisibility,
+      searchQuery,
+      setSearchQuery
+    }),
+    [
+      transactions,
+      filteredTransactions,
+      ledgers,
+      assets,
+      categories,
+      incomeExpenses,
+      isAmountHidden,
+      searchQuery
+    ]
+  )
+
   return (
-    <WalletContext
-      value={{
-        transactions,
-        filteredTransactions,
-        ledgers,
-        assets,
-        categories,
-        incomeExpenses,
-        refreshTransactions,
-        refreshAssets,
-        refreshLedgers,
-        refreshCategories,
-        refreshIncomeExpenses,
-        isAmountHidden,
-        toggleAmountVisibility,
-        searchQuery,
-        setSearchQuery,
-        searchParams,
-        setSearchParams
-      }}
-    >
+    <WalletContext value={value}>
       <Outlet />
     </WalletContext>
   )

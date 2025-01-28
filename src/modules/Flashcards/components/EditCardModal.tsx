@@ -145,7 +145,7 @@ function EditCardModal({
                 {currentlyEditingIndex === index ? (
                   <input
                     type="text"
-                    className="w-full rounded-sm border border-bg-700 bg-transparent p-2"
+                    className="w-full rounded-xs border border-bg-700 bg-transparent p-2"
                     value={card.question}
                     onChange={e => {
                       const newCards = [...innerCards]
@@ -169,7 +169,7 @@ function EditCardModal({
                 {currentlyEditingIndex === index ? (
                   <input
                     type="text"
-                    className="w-full rounded-sm border border-bg-700 bg-transparent p-2"
+                    className="w-full rounded-xs border border-bg-700 bg-transparent p-2"
                     value={card.answer}
                     onChange={e => {
                       const newCards = [...innerCards]

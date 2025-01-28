@@ -45,7 +45,7 @@ function PreviewContainer({
               onRemove?.()
             }}
             variant="no-bg"
-            className="!p-2"
+            className="p-2!"
             icon="tabler:x"
           />
         </div>

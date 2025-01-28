@@ -62,7 +62,7 @@ const SidebarEventBanner = (): React.ReactElement => {
   const themeColor = theme ?? '#000000'
   const textColor = isLightColor(themeColor) ? 'text-bg-800' : 'text-bg-50'
   const bgColor =
-    eventType === 'christmas' ? 'bg-[#f14e63] !text-bg-100' : 'bg-custom-500'
+    eventType === 'christmas' ? 'bg-[#f14e63] text-bg-100!' : 'bg-custom-500'
 
   return (
     <div

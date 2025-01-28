@@ -28,7 +28,7 @@ export default function TodaysEvent(): React.ReactElement {
           icon="tabler:chevron-right"
           as={Link}
           to="/calendar"
-          className="!p-2"
+          className="p-2!"
         />
       }
     >

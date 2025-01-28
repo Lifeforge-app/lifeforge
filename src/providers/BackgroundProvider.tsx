@@ -30,13 +30,13 @@ function BackgroundProvider({
         <div
           className="absolute left-0 top-0 z-[-1] size-full"
           style={{
-            backgroundColor: `rgb(var(--color-bg-${
+            backgroundColor: `color-mix(in oklab, var(--color-bg-${
               (theme === 'system' &&
                 window.matchMedia('(prefers-color-scheme: dark)').matches) ||
               theme === 'dark'
                 ? '950'
                 : '50'
-            }) / ${overlayOpacity}%)`,
+            }) ${overlayOpacity}%, transparent)`,
             backdropFilter:
               bgImage !== ''
                 ? `brightness(${brightness}%) blur(${BG_BLURS[blur]}) contrast(${contrast}%) saturate(${saturation}%)`

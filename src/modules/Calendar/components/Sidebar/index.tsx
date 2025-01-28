@@ -11,14 +11,10 @@ import MiniCalendar from './components/MiniCalendar'
 function Sidebar({
   events,
   categories,
-  refreshCategories,
   sidebarOpen,
   setSidebarOpen,
-  modifyCategoryModalOpenType,
   setModifyCategoryModalOpenType,
   setExistedData,
-  searchParams,
-  setSearchParams,
   setDeleteCategoryConfirmationModalOpen
 }: {
   events: ICalendarEvent[]
@@ -31,8 +27,6 @@ function Sidebar({
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedData: React.Dispatch<React.SetStateAction<ICalendarCategory | null>>
-  searchParams: URLSearchParams
-  setSearchParams: (params: Record<string, string> | URLSearchParams) => void
   setDeleteCategoryConfirmationModalOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
@@ -42,12 +36,8 @@ function Sidebar({
       <MiniCalendar events={events} categories={categories} />
       <CategoryList
         categories={categories}
-        refreshCategories={refreshCategories}
-        modifyCategoryModalOpenType={modifyCategoryModalOpenType}
         setModifyCategoryModalOpenType={setModifyCategoryModalOpenType}
         setExistedData={setExistedData}
-        searchParams={searchParams}
-        setSearchParams={setSearchParams}
         setDeleteCategoryConfirmationModalOpen={
           setDeleteCategoryConfirmationModalOpen
         }

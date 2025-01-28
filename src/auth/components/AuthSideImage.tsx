@@ -11,7 +11,7 @@ function AuthSideImage(): React.ReactElement {
         alt="Login"
         className="h-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-br from-custom-500 to-custom-600 opacity-30" />
+      <div className="absolute inset-0 bg-linear-to-br from-custom-500 to-custom-600 opacity-30" />
       <div className="absolute inset-0 bg-bg-900/50" />
       <p className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col text-center text-5xl font-semibold tracking-wide text-bg-50">
         <span className="mb-4 text-2xl text-custom-400">

@@ -16,7 +16,7 @@ function IconSetEntry({
       onClick={() => {
         setCurrentIconSet({ iconSet: iconSet.prefix })
       }}
-      className="flex w-full grow flex-col overflow-hidden rounded-md bg-bg-50 shadow-custom transition-all hover:!bg-white/70 dark:bg-bg-800 dark:hover:bg-bg-700/50"
+      className="flex w-full grow flex-col overflow-hidden rounded-md bg-bg-50 shadow-custom transition-all hover:bg-white/70! dark:bg-bg-800 dark:hover:bg-bg-700/50"
     >
       <div className="flex w-full shrink-0 flex-col font-medium">
         <div className="flex-center size-full gap-5 px-4 py-6 ">

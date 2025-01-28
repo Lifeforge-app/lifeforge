@@ -1,5 +1,5 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -292,54 +292,73 @@ export default function IdeaBoxProvider({
     }
   }, [modifyIdeaModalOpenType])
 
-  return (
-    <IdeaBoxContext
-      value={{
-        valid,
-        entries,
-        folders,
-        tags,
-        searchResults,
-        setEntries,
-        setFolders,
-        setTags,
-        setSearchResults,
-        refreshEntries: refreshData,
-        refreshFolders,
-        refreshTags,
-        refreshSearchResults,
-        searchQuery,
-        debouncedSearchQuery,
-        setSearchQuery,
-        selectedTags,
-        setSelectedTags,
-        viewArchived,
-        setViewArchived,
-        typeOfModifyIdea,
-        setTypeOfModifyIdea,
-        modifyIdeaModalOpenType,
-        setModifyIdeaModalOpenType,
-        modifyFolderModalOpenType,
-        setModifyFolderModalOpenType,
-        modifyTagModalOpenType,
-        setModifyTagModalOpenType,
-        pastedData,
-        setPastedData,
-        existedEntry,
-        setExistedEntry,
-        existedTag,
-        setExistedTag,
-        existedFolder,
-        setExistedFolder,
-        deleteIdeaConfirmationModalOpen,
-        setDeleteIdeaConfirmationModalOpen,
-        deleteFolderConfirmationModalOpen,
-        setDeleteFolderConfirmationModalOpen
-      }}
-    >
-      {children}
-    </IdeaBoxContext>
+  const value = useMemo(
+    () => ({
+      valid,
+      entries,
+      folders,
+      tags,
+      searchResults,
+      setEntries,
+      setFolders,
+      setTags,
+      setSearchResults,
+      refreshEntries: refreshData,
+      refreshFolders,
+      refreshTags,
+      refreshSearchResults,
+      searchQuery,
+      debouncedSearchQuery,
+      setSearchQuery,
+      selectedTags,
+      setSelectedTags,
+      viewArchived,
+      setViewArchived,
+      typeOfModifyIdea,
+      setTypeOfModifyIdea,
+      modifyIdeaModalOpenType,
+      setModifyIdeaModalOpenType,
+      modifyFolderModalOpenType,
+      setModifyFolderModalOpenType,
+      modifyTagModalOpenType,
+      setModifyTagModalOpenType,
+      pastedData,
+      setPastedData,
+      existedEntry,
+      setExistedEntry,
+      existedTag,
+      setExistedTag,
+      existedFolder,
+      setExistedFolder,
+      deleteIdeaConfirmationModalOpen,
+      setDeleteIdeaConfirmationModalOpen,
+      deleteFolderConfirmationModalOpen,
+      setDeleteFolderConfirmationModalOpen
+    }),
+    [
+      valid,
+      entries,
+      folders,
+      tags,
+      searchResults,
+      searchQuery,
+      debouncedSearchQuery,
+      selectedTags,
+      viewArchived,
+      typeOfModifyIdea,
+      modifyIdeaModalOpenType,
+      modifyFolderModalOpenType,
+      modifyTagModalOpenType,
+      pastedData,
+      existedEntry,
+      existedTag,
+      existedFolder,
+      deleteIdeaConfirmationModalOpen,
+      deleteFolderConfirmationModalOpen
+    ]
   )
+
+  return <IdeaBoxContext value={value}>{children}</IdeaBoxContext>
 }
 
 export function useIdeaBoxContext(): IIdeaBoxData {

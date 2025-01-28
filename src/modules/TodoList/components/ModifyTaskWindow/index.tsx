@@ -135,9 +135,9 @@ function ModifyTaskWindow(): React.ReactElement {
   return (
     <div
       ref={ref}
-      className={`fixed left-0 top-0 h-dvh w-full bg-bg-900/20 backdrop-blur-sm transition-all ${
+      className={`fixed left-0 top-0 h-dvh w-full bg-bg-900/20 backdrop-blur-xs transition-all ${
         innerOpenType !== null
-          ? 'z-[9990] opacity-100 [transition:z-index_0.1s_linear_0.1s,opacity_0.1s_linear_0.2s]'
+          ? 'z-9990 opacity-100 [transition:z-index_0.1s_linear_0.1s,opacity_0.1s_linear_0.2s]'
           : 'z-0 opacity-0 [transition:z-index_0.1s_linear_0.2s,opacity_0.1s_linear_0.1s]'
       }`}
     >

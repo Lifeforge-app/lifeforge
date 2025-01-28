@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import useFetch from '@hooks/useFetch'
-import useHashParams from '@hooks/useHashParams'
 import { Loadable } from '@interfaces/common'
 import {
   type ITodoListEntry,
@@ -12,7 +12,6 @@ import {
 
 interface ITodoListData {
   // Data
-  searchParams: URLSearchParams
   priorities: Loadable<ITodoPriority[]>
   lists: Loadable<ITodoListList[]>
   tags: Loadable<ITodoListTag[]>
@@ -41,7 +40,6 @@ interface ITodoListData {
   refreshStatusCounter: () => void
 
   // Setters
-  setSearchParams: (params: Record<string, string> | URLSearchParams) => void
   setModifyTaskWindowOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
@@ -84,7 +82,7 @@ export function TodoListProvider({
 }: {
   children: React.ReactNode
 }): React.ReactElement {
-  const [searchParams, setSearchParams] = useHashParams()
+  const [searchParams] = useSearchParams()
   const [statusCounter, refreshStatusCounter] =
     useFetch<ITodoListStatusCounter>('todo-list/entries/status-counter')
   const [priorities, refreshPriorities] = useFetch<ITodoPriority[]>(
@@ -127,58 +125,66 @@ export function TodoListProvider({
     useState(false)
   const [selectedTag, setSelectedTag] = useState<ITodoListTag | null>(null)
 
-  return (
-    <TodoListContext
-      value={{
-        // Data
-        searchParams,
-        priorities,
-        lists,
-        tags: tagsList,
-        entries,
-        statusCounter,
-        selectedTask,
-        selectedPriority,
-        selectedList,
-        selectedTag,
-
-        // Modals
-        modifyTaskWindowOpenType,
-        modifyPriorityModalOpenType,
-        modifyListModalOpenType,
-        modifyTagModalOpenType,
-        deleteTaskConfirmationModalOpen,
-        deletePriorityConfirmationModalOpen,
-        deleteListConfirmationModalOpen,
-        deleteTagConfirmationModalOpen,
-
-        // Refresh Functions
-        refreshLists,
-        refreshPriorities,
-        refreshTagsList,
-        refreshEntries,
-        refreshStatusCounter,
-
-        // Setters
-        setSearchParams,
-        setModifyTaskWindowOpenType,
-        setModifyPriorityModalOpenType,
-        setModifyListModalOpenType,
-        setModifyTagModalOpenType,
-        setDeleteTaskConfirmationModalOpen,
-        setDeletePriorityConfirmationModalOpen,
-        setDeleteListConfirmationModalOpen,
-        setDeleteTagConfirmationModalOpen,
-        setSelectedTask,
-        setSelectedList,
-        setSelectedPriority,
-        setSelectedTag,
-        setEntries
-      }}
-    >
-      {children}
-    </TodoListContext>
+  const value = useMemo(
+    () => ({
+      priorities,
+      lists,
+      tags: tagsList,
+      entries,
+      statusCounter,
+      selectedTask,
+      selectedPriority,
+      selectedList,
+      selectedTag,
+      modifyTaskWindowOpenType,
+      modifyPriorityModalOpenType,
+      modifyListModalOpenType,
+      modifyTagModalOpenType,
+      deleteTaskConfirmationModalOpen,
+      deletePriorityConfirmationModalOpen,
+      deleteListConfirmationModalOpen,
+      deleteTagConfirmationModalOpen,
+      refreshLists,
+      refreshPriorities,
+      refreshTagsList,
+      refreshEntries,
+      refreshStatusCounter,
+      setModifyTaskWindowOpenType,
+      setModifyPriorityModalOpenType,
+      setModifyListModalOpenType,
+      setModifyTagModalOpenType,
+      setDeleteTaskConfirmationModalOpen,
+      setDeletePriorityConfirmationModalOpen,
+      setDeleteListConfirmationModalOpen,
+      setDeleteTagConfirmationModalOpen,
+      setSelectedTask,
+      setSelectedList,
+      setSelectedPriority,
+      setSelectedTag,
+      setEntries
+    }),
+    [
+      priorities,
+      lists,
+      tagsList,
+      entries,
+      statusCounter,
+      selectedTask,
+      selectedPriority,
+      selectedList,
+      selectedTag,
+      modifyTaskWindowOpenType,
+      modifyPriorityModalOpenType,
+      modifyListModalOpenType,
+      modifyTagModalOpenType,
+      deleteTaskConfirmationModalOpen,
+      deletePriorityConfirmationModalOpen,
+      deleteListConfirmationModalOpen,
+      deleteTagConfirmationModalOpen
+    ]
   )
+
+  return <TodoListContext value={value}>{children}</TodoListContext>
 }
 
 export function useTodoListContext(): ITodoListData {

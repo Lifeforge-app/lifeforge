@@ -1,5 +1,11 @@
 import { cookieParse } from 'pocketbase'
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { getColorPalette, hexToRgb } from '@utils/colors'
@@ -109,7 +115,7 @@ export default function PersonalizationProvider({
     Object.entries(colorPalette).forEach(([key, value]) => {
       document.body.style.setProperty(
         `--color-${type === 'bg' ? 'bg' : 'custom'}-${key}`,
-        hexToRgb(value).join(' ')
+        `rgb(${hexToRgb(value).join(' ')})`
       )
     })
   }
@@ -473,28 +479,40 @@ export default function PersonalizationProvider({
       })
   }
 
+  const value = useMemo(
+    () => ({
+      fontFamily,
+      theme,
+      themeColor,
+      bgTemp,
+      bgImage,
+      backdropFilters,
+      language,
+      dashboardLayout,
+      setFontFamily: changeFontFamily,
+      setTheme: changeTheme,
+      setThemeColor: changeThemeColor,
+      setBgTemp: changeBgTemp,
+      setBgImage,
+      setBackdropFilters: changeBackdropFilters,
+      setLanguage: changeLanguage,
+      setDashboardLayoutWithoutPost: setDashboardLayout,
+      setDashboardLayout: changeDashboardLayout
+    }),
+    [
+      fontFamily,
+      theme,
+      themeColor,
+      bgTemp,
+      bgImage,
+      backdropFilters,
+      language,
+      dashboardLayout
+    ]
+  )
+
   return (
-    <PersonalizationContext
-      value={{
-        fontFamily,
-        theme,
-        themeColor,
-        bgTemp,
-        bgImage,
-        backdropFilters,
-        language,
-        dashboardLayout,
-        setFontFamily: changeFontFamily,
-        setTheme: changeTheme,
-        setThemeColor: changeThemeColor,
-        setBgTemp: changeBgTemp,
-        setBgImage,
-        setBackdropFilters: changeBackdropFilters,
-        setLanguage: changeLanguage,
-        setDashboardLayoutWithoutPost: setDashboardLayout,
-        setDashboardLayout: changeDashboardLayout
-      }}
-    >
+    <PersonalizationContext value={value}>
       <meta
         name="theme-color"
         content={

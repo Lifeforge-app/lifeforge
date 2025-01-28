@@ -1,6 +1,10 @@
 import React from 'react'
-import { SidebarDivider , SidebarItem , SidebarWrapper } from '@components/layouts/sidebar'
-import { useWalletContext } from '@providers/WalletProvider'
+import { useSearchParams } from 'react-router-dom'
+import {
+  SidebarDivider,
+  SidebarItem,
+  SidebarWrapper
+} from '@components/layouts/sidebar'
 import AssetsSection from './components/AssetsSection'
 import CategoriesSection from './components/CategoriesSection'
 import DateRangeSelector from './components/DateRangeSelector'
@@ -19,7 +23,7 @@ function Sidebar({
     React.SetStateAction<boolean | 'new'>
   >
 }): React.ReactElement {
-  const { searchParams, setSearchParams } = useWalletContext()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>

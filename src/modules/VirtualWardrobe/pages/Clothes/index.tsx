@@ -1,5 +1,6 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
 import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
@@ -10,7 +11,6 @@ import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import Scrollbar from '@components/utilities/Scrollbar'
 import useFetch from '@hooks/useFetch'
-import useHashParams from '@hooks/useHashParams'
 import {
   type IVirtualWardrobeSidebarData,
   type IVirtualWardrobeEntry
@@ -23,7 +23,7 @@ import Sidebar from './components/Sidebar'
 import SessionCartModal from '../../components/SessionCartModal'
 
 function VirtualWardrobeClothes(): React.ReactElement {
-  const [searchParams, setSearchParams] = useHashParams()
+  const [searchParams] = useSearchParams()
   const [searchQuery, setSearchQuery] = useState<string>('')
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
 
@@ -105,16 +105,12 @@ function VirtualWardrobeClothes(): React.ReactElement {
         <Sidebar
           isOpen={sidebarOpen}
           setOpen={setSidebarOpen}
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
           sidebarData={sidebarData}
         />
         <ContentWrapperWithSidebar>
           <Header
             entries={entries}
             sidebarData={sidebarData}
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
             setSidebarOpen={setSidebarOpen}
           />
           <div className="flex gap-2">

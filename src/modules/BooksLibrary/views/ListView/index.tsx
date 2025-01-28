@@ -30,7 +30,7 @@ function ListView({
               {value.downloaded}/{value.total}, {value.speed}/s, ETA:{' '}
               {value.ETA}s
             </div>
-            <div className="flex-center aspect-[9/12] w-20 rounded-lg bg-bg-200 p-2 dark:bg-bg-800">
+            <div className="flex-center aspect-9/12 w-20 rounded-lg bg-bg-200 p-2 dark:bg-bg-800">
               <Icon icon="tabler:clock" className="size-8 text-bg-500" />
             </div>
             <div className="flex min-w-0 flex-1 flex-col">

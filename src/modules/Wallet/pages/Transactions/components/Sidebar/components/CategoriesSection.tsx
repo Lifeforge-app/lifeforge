@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { SidebarItem , SidebarTitle } from '@components/layouts/sidebar'
+import { useSearchParams } from 'react-router-dom'
+import { SidebarItem, SidebarTitle } from '@components/layouts/sidebar'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { useWalletContext } from '@providers/WalletProvider'
 
@@ -13,8 +14,8 @@ function CategoriesSection({
   >
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
-  const { categories, filteredTransactions, searchParams, setSearchParams } =
-    useWalletContext()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const { categories, filteredTransactions } = useWalletContext()
 
   return (
     <>

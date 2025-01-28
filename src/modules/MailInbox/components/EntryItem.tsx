@@ -74,7 +74,7 @@ function EntryItem({
           onClick={e => {
             e.stopPropagation()
           }}
-          className="!p-2"
+          className="p-2!"
         />
         <HamburgerMenu>
           <MenuItem

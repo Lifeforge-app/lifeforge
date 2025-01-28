@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { SidebarItem } from '@components/layouts/sidebar'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { useTodoListContext } from '@providers/TodoListProvider'
@@ -8,7 +9,8 @@ function TaskStatusList({
 }: {
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
-  const { statusCounter, searchParams, setSearchParams } = useTodoListContext()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const { statusCounter } = useTodoListContext()
 
   return (
     <APIFallbackComponent data={statusCounter}>

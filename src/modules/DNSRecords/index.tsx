@@ -199,7 +199,7 @@ function DNSRecords(): JSX.Element {
           <ListboxOptions
             transition
             anchor="bottom end"
-            className="w-96 rounded-md bg-bg-100 text-bg-800 shadow-lg outline-none transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800 dark:text-bg-50"
+            className="w-96 rounded-md bg-bg-100 text-bg-800 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800 dark:text-bg-50"
           >
             <Scrollbar autoHeight autoHeightMax={300}>
               {FILTER_TYPE.map(type => (
@@ -210,7 +210,7 @@ function DNSRecords(): JSX.Element {
                     `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
                       active
                         ? 'hover:bg-bg-100 dark:hover:bg-bg-700/50'
-                        : '!bg-transparent'
+                        : 'bg-transparent!'
                     }`
                   }
                 >

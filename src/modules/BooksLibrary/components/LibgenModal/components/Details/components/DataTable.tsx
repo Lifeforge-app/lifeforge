@@ -97,7 +97,7 @@ function DataTable({ data }: { data: BookDetailProps }): React.ReactElement {
             return (
               <tr
                 key={key}
-                className="border-b border-bg-300 even:bg-bg-300/40 dark:border-bg-700 even:dark:bg-bg-800/30"
+                className="border-b border-bg-300 even:bg-bg-300/40 dark:border-bg-700 dark:even:bg-bg-800/30"
               >
                 <td className="px-5 py-4 text-bg-500">
                   {key.split('|')[key.split('|').length - 1]}

@@ -26,7 +26,7 @@ function NOTAMDetailsModal({
   )
 
   return (
-    <ModalWrapper isOpen={isOpen} className="h-full md:!min-w-[40vw]">
+    <ModalWrapper isOpen={isOpen} className="h-full md:min-w-[40vw]!">
       <ModalHeader
         icon="uil:exclamation-octagon"
         title="NOTAM Details"

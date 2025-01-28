@@ -131,7 +131,7 @@ function ModifyJournalEntryModal({
     <ModalWrapper
       modalRef={ref}
       isOpen={openType !== null}
-      className="h-max md:!min-w-[40vw]"
+      className="h-max md:min-w-[40vw]!"
     >
       <ModalHeader
         icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
@@ -173,7 +173,7 @@ function ModifyJournalEntryModal({
               key={index}
               className={`step ${
                 step >= index + 1
-                  ? 'step-primary before:bg-custom-500 after:!bg-custom-500 after:text-bg-50 dark:after:text-bg-800'
+                  ? 'step-primary before:bg-custom-500 after:bg-custom-500! after:text-bg-50 dark:after:text-bg-800'
                   : 'text-bg-500 before:bg-bg-200 after:bg-bg-200 dark:before:bg-bg-800 dark:after:bg-bg-800'
               } before:font-medium`}
             >
