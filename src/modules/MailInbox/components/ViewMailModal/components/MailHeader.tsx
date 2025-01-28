@@ -12,7 +12,7 @@ function MailHeader({ mail }: { mail: IMailInboxEntry }): React.ReactElement {
       <div className="flex-between gap-8">
         <div className="flex items-center gap-2">
           <div
-            className={`flex-center size-10 items-center rounded-full ${componentBgLighter} border border-bg-200 !bg-bg-50`}
+            className={`flex-center size-10 items-center rounded-full ${componentBgLighter} border border-bg-200 !bg-bg-50 dark:border-bg-700`}
           >
             <Icon icon="tabler:user" className="size-5 text-bg-500" />
           </div>

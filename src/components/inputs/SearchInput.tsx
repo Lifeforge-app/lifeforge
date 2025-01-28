@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import useThemeColors from '@hooks/useThemeColor'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { toCamelCase } from '@utils/strings'
 
 function SearchInput({
@@ -30,11 +30,18 @@ function SearchInput({
   className?: string
 }): React.ReactElement {
   const { t } = useTranslation()
-  const { componentBgLighterWithHover } = useThemeColors()
+  const { bgImage } = usePersonalizationContext()
+  const componentBgLighterWithHover = useMemo(() => {
+    if (bgImage !== '') {
+      return 'bg-bg-50 dark:bg-bg-800/50 hover:bg-bg-200/50 dark:hover:bg-bg-700/50 transition-all'
+    }
+    return 'bg-bg-50 dark:bg-bg-800/50 dark:hover:bg-bg-800/80 hover:bg-bg-200/50 transition-all'
+  }, [bgImage])
 
   return (
     <search
-      className={`flex min-h-14 w-full cursor-text items-center gap-4 rounded-lg px-4 shadow-custom transition-all ${componentBgLighterWithHover} ${
+      className={`flex min-h-14 w-full cursor-text items-center gap-4 rounded-lg !bg-bg-50 px-4 shadow-custom transition-all
+        ${componentBgLighterWithHover} ${
         hasTopMargin ? 'mt-4' : ''
       } ${className}`}
       onClick={e => {

@@ -7,7 +7,7 @@ function MailContent({ mail }: { mail: IMailInboxEntry }): React.ReactElement {
     () =>
       DOMPurify.sanitize(
         (() => {
-          if (mail.html) {
+          if (mail.html !== 'false') {
             return mail.html
           }
 
@@ -23,7 +23,7 @@ function MailContent({ mail }: { mail: IMailInboxEntry }): React.ReactElement {
 
   return (
     <div
-      className="mail-content w-full rounded-md bg-white p-4 text-bg-900"
+      className="mail-content w-full"
       dangerouslySetInnerHTML={{
         __html: content
       }}

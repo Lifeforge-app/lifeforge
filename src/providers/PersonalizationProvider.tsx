@@ -307,7 +307,6 @@ export default function PersonalizationProvider({
         Authorization: `Bearer ${cookieParse(document.cookie).token}`
       },
       body: JSON.stringify({
-        id: userData.id,
         data: {
           fontFamily: font
         }
@@ -333,7 +332,6 @@ export default function PersonalizationProvider({
         Authorization: `Bearer ${cookieParse(document.cookie).token}`
       },
       body: JSON.stringify({
-        id: userData.id,
         data: {
           theme: color
         }
@@ -359,7 +357,6 @@ export default function PersonalizationProvider({
         Authorization: `Bearer ${cookieParse(document.cookie).token}`
       },
       body: JSON.stringify({
-        id: userData.id,
         data: {
           color: color.replace('theme-', '')
         }
@@ -385,7 +382,6 @@ export default function PersonalizationProvider({
         Authorization: `Bearer ${cookieParse(document.cookie).token}`
       },
       body: JSON.stringify({
-        id: userData.id,
         data: {
           bgTemp: color.replace('bg-', '')
         }
@@ -411,7 +407,6 @@ export default function PersonalizationProvider({
         Authorization: `Bearer ${cookieParse(document.cookie).token}`
       },
       body: JSON.stringify({
-        id: userData.id,
         data: {
           backdropFilters: filters
         }
@@ -437,7 +432,6 @@ export default function PersonalizationProvider({
         Authorization: `Bearer ${cookieParse(document.cookie).token}`
       },
       body: JSON.stringify({
-        id: userData.id,
         data: {
           language
         }
@@ -463,7 +457,6 @@ export default function PersonalizationProvider({
         Authorization: `Bearer ${cookieParse(document.cookie).token}`
       },
       body: JSON.stringify({
-        id: userData.id,
         data: {
           dashboardLayout: layout
         }
