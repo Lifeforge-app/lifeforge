@@ -6,12 +6,14 @@ import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import Scrollbar from '@components/utilities/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IFlashcardDeck } from '@interfaces/flashcard_interfaces'
 import Sidebar from './components/Sidebar'
+import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
 
 export default function Flashcards(): React.ReactElement {
   const { componentBgWithHover } = useThemeColors()
@@ -22,9 +24,9 @@ export default function Flashcards(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:cards" title="Flashcards" />
-      <div className="mt-6 flex min-h-0 w-full flex-1">
+      <SidebarAndContentWrapper>
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <div className="flex h-full flex-1 flex-col lg:ml-8">
+        <ContentWrapperWithSidebar>
           <div className="flex-between flex">
             <h1 className="text-3xl font-semibold  md:text-4xl">
               All Decks <span className="text-base text-bg-500">(10)</span>
@@ -123,8 +125,8 @@ export default function Flashcards(): React.ReactElement {
                   </button>
                 </Link>
               ))} */}
-        </div>
-      </div>
+        </ContentWrapperWithSidebar>
+      </SidebarAndContentWrapper>
     </ModuleWrapper>
   )
 }
