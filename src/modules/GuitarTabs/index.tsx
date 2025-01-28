@@ -7,6 +7,7 @@ import {
   ListboxOrComboboxOptions,
   SearchInput
 } from '@components/inputs'
+import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
@@ -27,6 +28,7 @@ import Sidebar from './components/Sidebar'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
 import Pagination from '../../components/utilities/Pagination'
+import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
 
 const SORT_TYPE = [
   ['Newest', 'tabler:clock', 'newest'],
@@ -140,7 +142,7 @@ function GuitarTabs(): React.ReactElement {
         view={view}
         setView={setView}
       />
-      <div className="mt-6 flex min-h-0 w-full flex-1">
+      <SidebarAndContentWrapper>
         <Sidebar
           sidebarData={sidebarData}
           isOpen={sidebarOpen}
@@ -148,7 +150,7 @@ function GuitarTabs(): React.ReactElement {
           searchParams={searchParams}
           setSearchParams={setSearchParams}
         />
-        <div className="flex w-full flex-col lg:ml-8">
+        <ContentWrapperWithSidebar>
           <header className="flex-between flex w-full">
             <div className="flex min-w-0 items-end">
               <h1 className="truncate text-3xl font-semibold sm:text-4xl">
@@ -268,8 +270,8 @@ function GuitarTabs(): React.ReactElement {
               </Scrollbar>
             )}
           </APIFallbackComponent>
-        </div>
-      </div>
+        </ContentWrapperWithSidebar>
+      </SidebarAndContentWrapper>
       <ModifyEntryModal
         isOpen={modifyEntryModalOpen}
         onClose={() => {

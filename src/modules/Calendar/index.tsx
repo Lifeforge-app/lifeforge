@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import Scrollbar from '@components/utilities/Scrollbar'
 import useFetch from '@hooks/useFetch'
@@ -52,7 +54,7 @@ function CalendarModule(): React.ReactElement {
     <>
       <ModuleWrapper>
         <ModuleHeader title="Calendar" icon="tabler:calendar" />
-        <div className="mt-6 flex min-h-0 w-full flex-1">
+        <SidebarAndContentWrapper>
           <Sidebar
             events={events}
             categories={categories}
@@ -68,7 +70,7 @@ function CalendarModule(): React.ReactElement {
               setDeleteCategoryConfirmationModalOpen
             }
           />
-          <div className="flex size-full flex-col xl:ml-8">
+          <ContentWrapperWithSidebar>
             <Scrollbar>
               <div className="mb-8 size-full pr-4">
                 <CalendarComponent
@@ -82,8 +84,8 @@ function CalendarModule(): React.ReactElement {
                 />
               </div>
             </Scrollbar>
-          </div>
-        </div>
+          </ContentWrapperWithSidebar>
+        </SidebarAndContentWrapper>
       </ModuleWrapper>
       <ModifyEventModal
         openType={modifyEventModalOpenType}

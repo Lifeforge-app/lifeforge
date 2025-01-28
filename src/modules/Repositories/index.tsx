@@ -3,8 +3,10 @@ import moment from 'moment'
 import React, { useState } from 'react'
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
+import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import LANGUAGE_COLORS from '@constants/language_colors'
 import useFetch from '@hooks/useFetch'
@@ -33,9 +35,9 @@ function Repositories(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader title="Repositories" />
-      <div className="mt-6 flex min-h-0 w-full flex-1">
+      <SidebarAndContentWrapper>
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <div className="flex h-full flex-1 flex-col lg:m-8">
+        <ContentWrapperWithSidebar>
           <div className="flex-between flex">
             <h1 className="text-3xl font-semibold  md:text-4xl">
               All Repositories{' '}
@@ -117,8 +119,8 @@ function Repositories(): React.ReactElement {
               </ul>
             )}
           </APIFallbackComponent>
-        </div>
-      </div>
+        </ContentWrapperWithSidebar>
+      </SidebarAndContentWrapper>
     </ModuleWrapper>
   )
 }
