@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSearchParams } from 'react-router-dom'
 import {
   SidebarDivider,
   SidebarItem,
@@ -14,16 +15,14 @@ import { type IVirtualWardrobeSidebarData } from '@interfaces/virtual_wardrobe_i
 function Sidebar({
   isOpen,
   setOpen,
-  searchParams,
-  setSearchParams,
   sidebarData
 }: {
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  searchParams: URLSearchParams
-  setSearchParams: (params: Record<string, string> | URLSearchParams) => void
   sidebarData: Loadable<IVirtualWardrobeSidebarData>
 }): React.ReactElement {
+  const [searchParams, setSearchParams] = useSearchParams()
+
   return (
     <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
       <APIFallbackComponent data={sidebarData}>

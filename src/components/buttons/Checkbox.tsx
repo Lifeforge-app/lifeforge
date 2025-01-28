@@ -16,7 +16,7 @@ function Checkbox({
       className={`flex-center group relative z-50 size-5 shrink-0 rounded-full ring-2 ring-offset-2 ring-offset-bg-50 transition-all dark:ring-offset-bg-900 ${
         checked
           ? 'ring-custom-500'
-          : 'ring-bg-200 hover:!ring-bg-600 dark:ring-bg-500 dark:hover:!ring-bg-300'
+          : 'ring-bg-200 hover:ring-bg-600! dark:ring-bg-500 dark:hover:ring-bg-300!'
       } ${className}`}
     >
       <Icon

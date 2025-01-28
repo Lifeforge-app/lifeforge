@@ -57,7 +57,7 @@ function ColorPickerModal({
 
   return (
     <>
-      <ModalWrapper isOpen={isOpen} className="sm:!min-w-[28rem]">
+      <ModalWrapper isOpen={isOpen} className="sm:min-w-[28rem]!">
         <ModalHeader
           title="Pick a color"
           icon="tabler:color-picker"
@@ -67,7 +67,7 @@ function ColorPickerModal({
           color={innerColor}
           onChange={handleColorChange}
           disableAlpha
-          className="!w-full"
+          className="w-full!"
         />
         <style
           dangerouslySetInnerHTML={{
@@ -99,7 +99,7 @@ function ColorPickerModal({
           onClick={() => {
             setTailwindCSSColorsModalOpen(true)
           }}
-          className="mb-2 !bg-teal-500 hover:!bg-teal-600"
+          className="mb-2 bg-teal-500! hover:bg-teal-600!"
         >
           Tailwind CSS Color Palette
         </Button>

@@ -1,6 +1,7 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router-dom'
 import { Button } from '@components/buttons'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import HeaderFilter from '@components/utilities/HeaderFilter'
@@ -25,7 +26,7 @@ function Header({
     searchQuery,
     filteredTransactions
   } = useWalletContext()
-  const { searchParams, setSearchParams } = useWalletContext()
+  const [searchParams, setSearchParams] = useSearchParams()
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -88,8 +89,6 @@ function Header({
           </span>
         </h1>
         <HeaderFilter
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
           items={{
             type: {
               data: [
@@ -142,7 +141,7 @@ function Header({
             <MenuItems
               transition
               anchor="bottom end"
-              className="mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+              className="mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
             >
               <MenuItem
                 onClick={() => {

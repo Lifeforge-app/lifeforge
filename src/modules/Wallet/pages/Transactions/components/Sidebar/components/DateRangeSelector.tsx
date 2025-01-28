@@ -1,11 +1,11 @@
 import moment from 'moment'
 import React from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { DateInput } from '@components/inputs'
 import { SidebarTitle } from '@components/layouts/sidebar'
-import { useWalletContext } from '@providers/WalletProvider'
 
 function DateRangeSelector(): React.ReactElement {
-  const { searchParams, setSearchParams } = useWalletContext()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const handleDateChange = (
     date: string,

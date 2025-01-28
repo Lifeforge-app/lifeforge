@@ -43,7 +43,7 @@ function SidebarHeader({
             setSearchQuery={setSearchQuery}
             stuffToSearch="modules"
             hasTopMargin={false}
-            className="mb-4 !bg-bg-200/70"
+            className="mb-4"
           />
         </div>
       )}

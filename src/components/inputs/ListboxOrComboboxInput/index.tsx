@@ -72,7 +72,7 @@ function ListboxOrComboboxInput(
                 (value !== null && value.length !== 0) || customActive === true
               }
             />
-            <div className="relative mb-3 mt-10 flex min-h-[1.2rem] w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-none">
+            <div className="relative mb-3 mt-10 flex min-h-[1.2rem] w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-hidden">
               {((value !== null && value.length !== 0) ||
                 props.customActive === true) &&
                 props.buttonContent}
@@ -112,7 +112,7 @@ function ListboxOrComboboxInput(
               onChange={(e: any) => {
                 props.setQuery(e.target.value)
               }}
-              className="relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg !bg-transparent px-5 text-left focus:outline-none"
+              className="relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg bg-transparent! px-5 text-left focus:outline-hidden"
             />
           </div>
           <ListboxOrComboboxOptions type="combobox">

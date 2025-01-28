@@ -30,7 +30,7 @@ function AdjustBgImageModal({
     {
       icon: 'tabler:blur',
       title: 'Blur',
-      desc: 'Adjust the blur of the background image',
+      desc: 'Adjust the blur-sm of the background image',
       value: Object.keys(BG_BLURS).indexOf(bgBlur),
       setValue: (value: number) => {
         setBgBlur(Object.keys(BG_BLURS)[value] as keyof typeof BG_BLURS)

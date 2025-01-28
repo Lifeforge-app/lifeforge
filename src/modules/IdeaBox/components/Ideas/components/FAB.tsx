@@ -20,7 +20,7 @@ function FAB(): React.ReactElement {
     <>
       <Menu
         as="div"
-        className="group fixed bottom-6 right-6 z-[9990] sm:bottom-12 sm:right-12"
+        className="group fixed bottom-6 right-6 z-9990 sm:bottom-12 sm:right-12"
       >
         {({ open }) => (
           <>
@@ -33,8 +33,8 @@ function FAB(): React.ReactElement {
             <MenuItems
               transition
               anchor="top end"
-              className="z-[9999] mb-4 rounded-lg outline-none transition duration-100
-              ease-out [--anchor-gap:1rem] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0
+              className="z-9999 mb-4 rounded-lg outline-hidden transition duration-100
+              ease-out [--anchor-gap:1rem] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0
               "
             >
               {[
@@ -49,7 +49,7 @@ function FAB(): React.ReactElement {
                       'group flex w-full items-center justify-end gap-4 whitespace-nowrap rounded-md py-2 pr-2'
                     }
                   >
-                    <span className="text-bg-50 transition-all group-data-[focus]:text-bg-200">
+                    <span className="text-bg-50 transition-all group-data-focus:text-bg-200">
                       {t(`ideaBox.entryType.${name.toLowerCase()}`)}
                     </span>
                     <button
@@ -65,7 +65,7 @@ function FAB(): React.ReactElement {
                           setModifyIdeaModalOpenType('create')
                         }
                       }}
-                      className="rounded-full bg-bg-200 p-3 transition-all group-data-[focus]:bg-bg-300"
+                      className="rounded-full bg-bg-200 p-3 transition-all group-data-focus:bg-bg-300"
                     >
                       <Icon icon={icon} className="size-5" />
                     </button>
@@ -79,7 +79,7 @@ function FAB(): React.ReactElement {
               }`}
             >
               <div
-                className={`size-full bg-bg-900/50 backdrop-blur-sm transition-opacity ${
+                className={`size-full bg-bg-900/50 backdrop-blur-xs transition-opacity ${
                   open ? 'opacity-100' : 'opacity-0'
                 }`}
               />

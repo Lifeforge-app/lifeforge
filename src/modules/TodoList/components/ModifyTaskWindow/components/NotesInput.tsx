@@ -18,11 +18,11 @@ function NotesInput({
           e.currentTarget.querySelector('textarea input') as HTMLInputElement
         )?.focus()
       }}
-      className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 transition-all focus-within:!border-custom-500 hover:bg-bg-200 dark:bg-bg-800/50 dark:hover:bg-bg-800/50"
+      className="group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 border-bg-500 bg-bg-200/50 transition-all focus-within:border-custom-500! hover:bg-bg-200 dark:bg-bg-800/50 dark:hover:bg-bg-800/50"
     >
       <Icon
         icon="tabler:file-text"
-        className="ml-6 size-6 shrink-0 text-bg-500 group-focus-within:!text-custom-500"
+        className="ml-6 size-6 shrink-0 text-bg-500 group-focus-within:text-custom-500!"
       />
       <div className="flex w-full items-center gap-2">
         <span
@@ -43,7 +43,7 @@ function NotesInput({
             updateNotes(e)
           }}
           placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-          className="mt-4 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
+          className="mt-4 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-hidden placeholder:text-transparent focus:outline-hidden focus:placeholder:text-bg-500"
         />
       </div>
     </div>

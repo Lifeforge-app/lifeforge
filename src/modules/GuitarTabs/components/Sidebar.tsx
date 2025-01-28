@@ -1,5 +1,6 @@
 import { t } from 'i18next'
 import React from 'react'
+import { useSearchParams } from 'react-router-dom'
 import {
   SidebarDivider,
   SidebarItem,
@@ -13,16 +14,14 @@ import { type IGuitarTabsSidebarData } from '@interfaces/guitar_tabs_interfaces'
 function Sidebar({
   sidebarData,
   isOpen,
-  setOpen,
-  searchParams,
-  setSearchParams
+  setOpen
 }: {
   sidebarData: Loadable<IGuitarTabsSidebarData>
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  searchParams: URLSearchParams
-  setSearchParams: (params: Record<string, string> | URLSearchParams) => void
 }): React.ReactElement {
+  const [searchParams, setSearchParams] = useSearchParams()
+
   return (
     <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
       <APIFallbackComponent data={sidebarData}>

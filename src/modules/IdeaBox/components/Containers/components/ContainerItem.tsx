@@ -85,7 +85,7 @@ function ContainerItem({
       />
       <HamburgerMenu
         lighter
-        className="absolute right-4 top-4 overscroll-contain opacity-0 transition-all group-hover:opacity-100 data-[open]:opacity-100"
+        className="absolute right-4 top-4 overscroll-contain opacity-0 transition-all group-hover:opacity-100 data-open:opacity-100"
       >
         <MenuItem
           onClick={() => {

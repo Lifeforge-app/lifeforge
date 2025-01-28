@@ -36,7 +36,7 @@ function TransactionsCard(): React.ReactElement {
                 <Scrollbar>
                   {transactions.length > 0 ? (
                     <>
-                      <table className="hidden w-full !text-base lg:table">
+                      <table className="hidden w-full text-base! lg:table">
                         <thead>
                           <tr className="border-b-2 border-bg-200 text-center text-base text-bg-500 dark:border-bg-800">
                             {[
@@ -71,7 +71,7 @@ function TransactionsCard(): React.ReactElement {
                                 </td>
                                 <td className="py-4 text-center">
                                   <Link
-                                    to={`/wallet/transactions#type=${transaction.type}`}
+                                    to={`/wallet/transactions?type=${transaction.type}`}
                                     className={`rounded-full px-3 py-1 text-sm ${
                                       {
                                         income:
@@ -91,7 +91,7 @@ function TransactionsCard(): React.ReactElement {
                                 <td className="py-2 text-center">
                                   {transaction.category !== '' ? (
                                     <Link
-                                      to={`/wallet/transactions#category=${transaction.category}`}
+                                      to={`/wallet/transactions?category=${transaction.category}`}
                                       className="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm"
                                       style={{
                                         backgroundColor:

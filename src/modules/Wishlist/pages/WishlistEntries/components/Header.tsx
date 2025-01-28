@@ -75,7 +75,7 @@ function Header({
                     <div className="w-full min-w-0">
                       <div className="flex items-end gap-2 text-2xl font-medium sm:text-3xl">
                         <span>{wishlistListDetails.name}</span>
-                        <div className="!text-lg text-bg-500">
+                        <div className="text-lg! text-bg-500">
                           ({wishlistListDetails.item_count} items)
                         </div>
                       </div>
@@ -100,7 +100,7 @@ function Header({
           <MenuItems
             transition
             anchor="bottom end"
-            className="mt-2 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+            className="mt-2 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
           >
             <MenuItem
               onClick={() => {

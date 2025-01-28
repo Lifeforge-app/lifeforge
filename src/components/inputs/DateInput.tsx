@@ -92,23 +92,23 @@ const DateInput: React.FC<DateInputProps> = ({
           calendarIcon={null}
           calendarProps={{
             className:
-              'bg-bg-200 dark:bg-bg-800 absolute z-[9999] outline-none border-none rounded-lg p-4',
+              'bg-bg-200 dark:bg-bg-800 absolute z-9999 outline-hidden border-none rounded-lg p-4',
             tileClassName:
-              'hover:bg-bg-300 dark:hover:bg-bg-700/50 rounded-md disabled:text-bg-500 disabled:bg-transparent disabled:cursor-not-allowed disabled:hover:!bg-transparent disabled:dark:hover:!bg-transparent',
+              'hover:bg-bg-300 dark:hover:bg-bg-700/50 rounded-md disabled:text-bg-500 disabled:bg-transparent disabled:cursor-not-allowed disabled:hover:bg-transparent! dark:disabled:hover:bg-transparent!',
             locale: language,
             prevLabel: <Icon icon="tabler:chevron-left" />,
             nextLabel: <Icon icon="tabler:chevron-right" />,
             prev2Label: <Icon icon="tabler:chevrons-left" />,
             next2Label: <Icon icon="tabler:chevrons-right" />
           }}
-          className="mt-6 h-10 w-full rounded-lg border-none bg-transparent px-4 tracking-wider outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
+          className="mt-6 h-10 w-full rounded-lg border-none bg-transparent px-4 tracking-wider outline-hidden placeholder:text-transparent focus:outline-hidden focus:placeholder:text-bg-500"
         />
         {date !== '' && (
           <button
             onClick={() => {
               setDate('')
             }}
-            className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-300 hover:text-bg-800 focus:outline-none dark:hover:bg-bg-700/70 dark:hover:text-bg-200"
+            className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-300 hover:text-bg-800 focus:outline-hidden dark:hover:bg-bg-700/70 dark:hover:text-bg-200"
             aria-label="Clear date"
           >
             <Icon icon="tabler:x" className="size-6" />

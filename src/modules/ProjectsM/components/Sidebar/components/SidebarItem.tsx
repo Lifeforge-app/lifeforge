@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { SidebarItem } from '@components/layouts/sidebar'
 import {
@@ -20,8 +21,9 @@ function _SidebarItem({
     | IProjectsMStatus
   stuff: 'categories' | 'visibilities' | 'technologies' | 'statuses'
 }): React.ReactElement {
+  const [searchParams, setSearchParams] = useSearchParams()
   const {
-    miscellaneous: { searchParams, setSearchParams, setSidebarOpen },
+    miscellaneous: { setSidebarOpen },
     ...projectMContext
   } = useProjectsMContext()
 

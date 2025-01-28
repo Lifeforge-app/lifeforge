@@ -126,7 +126,7 @@ function FontFamilySelector(): React.ReactElement {
       >
         <div className="relative mt-1 w-full md:w-64">
           <ListboxButton
-            className={`flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left shadow-custom outline-none transition-all focus:outline-none ${componentBgWithHover}`}
+            className={`flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left shadow-custom outline-hidden transition-all focus:outline-hidden ${componentBgWithHover}`}
           >
             <span
               style={{
@@ -143,7 +143,7 @@ function FontFamilySelector(): React.ReactElement {
           <ListboxOptions
             transition
             anchor="bottom end"
-            className="h-72 w-80 divide-y divide-bg-200 rounded-md bg-bg-100 py-1 text-base text-bg-800 shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50"
+            className="h-72 w-80 divide-y divide-bg-200 rounded-md bg-bg-100 py-1 text-base text-bg-800 shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50"
           >
             {allFonts.map(({ family }) => (
               <FontFamilyItem key={family} family={family} />

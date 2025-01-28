@@ -137,7 +137,7 @@ function OTPScreen({
                     })
                   }
                 }}
-                className="mx-2 !size-12 rounded-md border-[1.5px] border-bg-200 bg-bg-50 text-lg !text-bg-800 shadow-custom dark:border-bg-800 dark:bg-bg-900 dark:text-bg-50 md:!size-16 md:text-2xl"
+                className="mx-2 size-12! rounded-md border-[1.5px] border-bg-200 bg-bg-50 text-lg text-bg-800! shadow-custom dark:border-bg-800 dark:bg-bg-900 dark:text-bg-50 md:size-16! md:text-2xl"
               />
             )}
           />

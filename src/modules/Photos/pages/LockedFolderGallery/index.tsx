@@ -211,7 +211,7 @@ function LockedFolderGallery(): React.ReactElement {
                       src={src}
                       alt={alt}
                       style={style}
-                      className="!object-cover"
+                      className="object-cover!"
                     />
                   )}
                 />

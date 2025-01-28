@@ -86,14 +86,14 @@ function ImageObject({
               </button>
             </div>
             {!selected && (
-              <div className="pointer-events-none absolute top-0 h-12 w-full bg-gradient-to-t from-transparent to-black/50 opacity-0 transition-all group-hover/image:opacity-100" />
+              <div className="pointer-events-none absolute top-0 h-12 w-full bg-linear-to-t from-transparent to-black/50 opacity-0 transition-all group-hover/image:opacity-100" />
             )}
             <button
               onClick={toggleSelected}
               className={`group/select-button flex-center absolute left-2.5 top-2.5 size-6 rounded-full transition-all  ${
                 selected
                   ? 'flex bg-custom-500 opacity-100'
-                  : 'hidden bg-bg-200 opacity-50 hover:!bg-bg-100 hover:!opacity-100 group-hover/image:flex'
+                  : 'hidden bg-bg-200 opacity-50 hover:bg-bg-100! hover:opacity-100! group-hover/image:flex'
               }`}
             >
               <Icon

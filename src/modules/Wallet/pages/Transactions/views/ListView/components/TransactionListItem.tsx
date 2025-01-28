@@ -82,8 +82,8 @@ function TransactionListItem({
                 </span>
                 <Tooltip
                   id={`tooltip-location-${transaction.id}`}
-                  className="z-[9999] !rounded-md bg-bg-50 !p-4 !text-base text-bg-800 shadow-custom dark:bg-bg-800 dark:text-bg-50"
-                  classNameArrow="!size-6"
+                  className="z-9999 rounded-md! bg-bg-50 p-4! text-base! text-bg-800 shadow-custom dark:bg-bg-800 dark:text-bg-50"
+                  classNameArrow="size-6!"
                   place="top-start"
                   positionStrategy="fixed"
                   opacity={1}

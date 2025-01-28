@@ -135,7 +135,7 @@ function EntryItem<T extends boolean = false>({
           >
             Add to Cart
           </Button>
-          <HamburgerMenu className="absolute right-4 top-4 hidden group-hover:block data-[open]:block">
+          <HamburgerMenu className="absolute right-4 top-4 hidden group-hover:block data-open:block">
             <MenuItem icon="tabler:pencil" onClick={onUpdate!} text="Edit" />
             <MenuItem
               icon="tabler:trash"

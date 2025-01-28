@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { ListResult } from 'pocketbase'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
 import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
@@ -13,7 +14,7 @@ import Scrollbar from '@components/utilities/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import { IMailInboxEntry } from '@interfaces/mail_inbox_interfaces'
 import EntryItem from './components/EntryItem'
-import Sidebar from './components/SIdebar'
+import Sidebar from './components/Sidebar'
 import ViewMailModal from './components/ViewMailModal'
 
 function MailInbox(): React.ReactElement {
@@ -21,9 +22,16 @@ function MailInbox(): React.ReactElement {
   const [mails, , setMails] = useFetch<ListResult<IMailInboxEntry>>(
     `mail-inbox/entries?page=${page}`
   )
+  const [searchParams, setSearchParams] = useSearchParams()
   const [viewMailFor, setViewMailFor] = useState<string | null>(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+
+  useEffect(() => {
+    if (!searchParams.has('label')) {
+      setSearchParams({ label: 'inbox' })
+    }
+  }, [searchParams])
 
   return (
     <ModuleWrapper>

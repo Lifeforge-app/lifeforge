@@ -33,7 +33,7 @@ function ModuleHeader({
   const { toggleSidebar, sidebarExpanded } = useGlobalStateContext()
 
   return (
-    <header className="flex-between z-[9980] flex w-full min-w-0 gap-8">
+    <header className="flex-between z-9980 flex w-full min-w-0 gap-8">
       <div className="flex w-full min-w-0 items-center gap-2">
         {!sidebarExpanded && (
           <Button
@@ -81,7 +81,7 @@ function ModuleHeader({
               <MenuItems
                 transition
                 anchor="bottom end"
-                className="w-96 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+                className="w-96 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
               >
                 <div className="flex items-center gap-2 p-4 text-bg-800 dark:border-bg-700 dark:text-bg-200">
                   <Icon icon="tabler:question-circle" className="size-6" />
@@ -106,7 +106,7 @@ function ModuleHeader({
             <MenuItems
               transition
               anchor="bottom end"
-              className="mt-2 min-w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+              className="mt-2 min-w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
             >
               {hamburgerMenuItems}
             </MenuItems>

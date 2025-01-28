@@ -17,7 +17,7 @@ const InputLabel: React.FC<InputLabelProps> = ({
     if (!active) {
       return `top-1/2 -translate-y-1/2 ${
         isListbox
-          ? 'group-focus-within:top-5 group-focus-within:text-[14px] group-data-[open]:top-5 group-data-[open]:text-[14px]'
+          ? 'group-focus-within:top-5 group-focus-within:text-[14px] group-data-open:top-5 group-data-open:text-[14px]'
           : 'group-focus-within:top-5 group-focus-within:text-[14px]'
       }`
     }
@@ -27,8 +27,8 @@ const InputLabel: React.FC<InputLabelProps> = ({
   const labelColorClasses = useMemo(
     () =>
       isListbox
-        ? 'group-data-[open]:!text-custom-500'
-        : 'group-focus-within:!text-custom-500',
+        ? 'group-data-open:text-custom-500!'
+        : 'group-focus-within:text-custom-500!',
     [isListbox]
   )
 

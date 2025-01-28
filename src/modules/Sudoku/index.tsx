@@ -38,7 +38,7 @@ function Sudoku(): React.ReactElement {
             >
               Refresh
             </Button>
-            <div className="flex-center !my-24">
+            <div className="flex-center my-24!">
               <div
                 ref={boardRef}
                 className="grid h-[297mm] w-[210mm] grid-cols-2 place-content-center place-items-center font-['Rubik']"

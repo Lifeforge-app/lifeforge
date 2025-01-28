@@ -1,16 +1,17 @@
 import React from 'react'
-import { SidebarDivider , SidebarItem , SidebarWrapper } from '@components/layouts/sidebar'
+import { useSearchParams } from 'react-router-dom'
+import {
+  SidebarDivider,
+  SidebarItem,
+  SidebarWrapper
+} from '@components/layouts/sidebar'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import SidebarSection from './components/SidebarSection'
 
 function Sidebar(): React.ReactElement {
+  const [searchParams, setSearchParams] = useSearchParams()
   const {
-    miscellaneous: {
-      searchParams,
-      setSearchParams,
-      sidebarOpen,
-      setSidebarOpen
-    }
+    miscellaneous: { sidebarOpen, setSidebarOpen }
   } = useBooksLibraryContext()
 
   return (

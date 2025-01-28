@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
+import { useSearchParams } from 'react-router-dom'
 import { FAB } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
@@ -15,9 +16,8 @@ import ModifyPriorityModal from '../modals/ModifyPriorityModal'
 import ModifyTagModal from '../modals/ModifyTagModal'
 
 function TodoListContainer(): React.ReactElement {
+  const [searchParams, setSearchParams] = useSearchParams()
   const {
-    searchParams,
-    setSearchParams,
     entries,
     refreshPriorities,
     refreshLists,
