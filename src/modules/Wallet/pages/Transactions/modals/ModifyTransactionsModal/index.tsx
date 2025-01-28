@@ -187,7 +187,7 @@ function ModifyTransactionsModal({
             setOpenType(null)
             setExistedData(null)
           }}
-          className="!mb-4"
+          className="mb-4!"
         />
         <div className="space-y-4">
           <TransactionTypeSelector

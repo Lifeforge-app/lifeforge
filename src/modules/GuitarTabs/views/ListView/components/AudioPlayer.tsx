@@ -29,7 +29,7 @@ function AudioPlayer({ url }: { url: string }): React.ReactElement {
           setIsPlaying(prev => !prev)
         }}
         variant="no-bg"
-        className="!p-2"
+        className="p-2!"
       />
     </div>
   )

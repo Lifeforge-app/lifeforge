@@ -2,6 +2,7 @@ import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import {
   ListboxOrComboboxOption,
   ListboxOrComboboxOptions,
@@ -9,13 +10,13 @@ import {
 } from '@components/inputs'
 import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import Scrollbar from '@components/utilities/Scrollbar'
 import ViewModeSelector from '@components/utilities/ViewModeSelector'
 import useFetch from '@hooks/useFetch'
-import useHashParams from '@hooks/useHashParams'
 import useThemeColors from '@hooks/useThemeColor'
 import {
   type IGuitarTabsEntry,
@@ -28,7 +29,6 @@ import Sidebar from './components/Sidebar'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
 import Pagination from '../../components/utilities/Pagination'
-import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
 
 const SORT_TYPE = [
   ['Newest', 'tabler:clock', 'newest'],
@@ -43,7 +43,7 @@ function GuitarTabs(): React.ReactElement {
   const [page, setPage] = useState<number>(1)
   const [searchQuery, setSearchQuery] = useState<string>('')
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
-  const [searchParams, setSearchParams] = useHashParams()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const [entries, refreshEntries] = useFetch<{
     totalItems: number
@@ -137,8 +137,6 @@ function GuitarTabs(): React.ReactElement {
         refreshEntries={refreshEntries}
         totalItems={typeof entries !== 'string' ? entries.totalItems : 0}
         setGuitarWorldModalOpen={setGuitarWorldModalOpen}
-        searchParams={searchParams}
-        setSearchParams={setSearchParams}
         view={view}
         setView={setView}
       />
@@ -147,8 +145,6 @@ function GuitarTabs(): React.ReactElement {
           sidebarData={sidebarData}
           isOpen={sidebarOpen}
           setOpen={setSidebarOpen}
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
         />
         <ContentWrapperWithSidebar>
           <header className="flex-between flex w-full">

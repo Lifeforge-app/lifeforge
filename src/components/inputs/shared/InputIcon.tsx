@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
+import React, { memo } from 'react'
 
 function InputIcon({
   icon,
@@ -17,11 +17,11 @@ function InputIcon({
         active ? '' : 'text-bg-500'
       } transition-all ${
         isListbox === true
-          ? 'group-data-[open]:!text-custom-500'
-          : 'group-focus-within:!text-custom-500'
+          ? 'group-data-open:text-custom-500!'
+          : 'group-focus-within:text-custom-500!'
       }`}
     />
   )
 }
 
-export default InputIcon
+export default memo(InputIcon)

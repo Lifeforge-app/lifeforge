@@ -18,8 +18,8 @@ function Providers({
   return (
     <APIOnlineStatusProvider>
       <GlobalStateProvider>
-        <DndProvider backend={HTML5Backend}>
-          <AuthProvider>
+        <AuthProvider>
+          <DndProvider backend={HTML5Backend}>
             <PersonalizationProvider>
               <BackgroundProvider>
                 <MusicProvider>
@@ -27,8 +27,8 @@ function Providers({
                 </MusicProvider>
               </BackgroundProvider>
             </PersonalizationProvider>
-          </AuthProvider>
-        </DndProvider>
+          </DndProvider>
+        </AuthProvider>
       </GlobalStateProvider>
     </APIOnlineStatusProvider>
   )

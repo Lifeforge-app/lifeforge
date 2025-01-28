@@ -63,29 +63,42 @@ export default function PasswordsProvider(): React.ReactElement {
     )
   }, [debouncedQuery, passwordList])
 
+  const value = useMemo(
+    () => ({
+      passwordList,
+      filteredPasswordList,
+      refreshPasswordList,
+      setPasswordList,
+
+      otpSuccess,
+      masterPassword,
+      modifyPasswordModalOpenType,
+      query,
+      isDeletePasswordConfirmationModalOpen,
+      existedData,
+
+      setOtpSuccess,
+      setMasterPassword,
+      setModifyPasswordModalOpenType,
+      setQuery,
+      setIsDeletePasswordConfirmationModalOpen,
+      setExistedData
+    }),
+    [
+      passwordList,
+      filteredPasswordList,
+
+      otpSuccess,
+      masterPassword,
+      modifyPasswordModalOpenType,
+      query,
+      isDeletePasswordConfirmationModalOpen,
+      existedData
+    ]
+  )
+
   return (
-    <PasswordsContext
-      value={{
-        passwordList,
-        filteredPasswordList,
-        refreshPasswordList,
-        setPasswordList,
-
-        otpSuccess,
-        masterPassword,
-        modifyPasswordModalOpenType: modifyPasswordModalOpenType,
-        query,
-        isDeletePasswordConfirmationModalOpen,
-        existedData,
-
-        setOtpSuccess,
-        setMasterPassword,
-        setModifyPasswordModalOpenType,
-        setQuery,
-        setIsDeletePasswordConfirmationModalOpen,
-        setExistedData
-      }}
-    >
+    <PasswordsContext value={value}>
       <Outlet />
     </PasswordsContext>
   )

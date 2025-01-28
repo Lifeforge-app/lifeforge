@@ -77,7 +77,7 @@ function ModifyEntryModal({
   }
 
   return (
-    <ModalWrapper isOpen={isOpen} className="md:!min-w-[30vw]">
+    <ModalWrapper isOpen={isOpen} className="md:min-w-[30vw]!">
       <ModalHeader
         icon="tabler:pencil"
         onClose={onClose}

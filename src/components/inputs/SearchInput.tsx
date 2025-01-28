@@ -40,7 +40,7 @@ function SearchInput({
 
   return (
     <search
-      className={`flex min-h-14 w-full cursor-text items-center gap-4 rounded-lg !bg-bg-50 px-4 shadow-custom transition-all
+      className={`flex min-h-14 w-full cursor-text items-center gap-4 rounded-lg px-4 shadow-custom transition-all
         ${componentBgLighterWithHover} ${
         hasTopMargin ? 'mt-4' : ''
       } ${className}`}

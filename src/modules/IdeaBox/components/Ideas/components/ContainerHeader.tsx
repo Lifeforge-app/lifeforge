@@ -74,7 +74,7 @@ function ContainerHeader(): React.ReactElement {
         className="relative isolate flex h-56 w-full items-end justify-between rounded-lg bg-bg-900 bg-cover bg-center bg-no-repeat p-6 sm:h-72"
       >
         <div className="absolute inset-0 rounded-lg bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,0.7)_80%)]"></div>
-        <div className="flex-between relative z-[9999] flex w-full">
+        <div className="flex-between relative z-9999 flex w-full">
           <h1
             className={`flex items-center gap-4 ${
               typeof pathDetails !== 'string'

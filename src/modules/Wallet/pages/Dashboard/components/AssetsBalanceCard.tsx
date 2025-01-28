@@ -38,7 +38,7 @@ function AssetsBalanceCard(): React.ReactElement {
                 {assets.map(asset => (
                   <Link
                     key={asset.id}
-                    to={`/wallet/transactions#asset=${asset.id}`}
+                    to={`/wallet/transactions?asset=${asset.id}`}
                     className={`flex-between flex w-full min-w-0 flex-1 flex-col gap-4 rounded-lg p-6 shadow-custom transition-all [@media(min-width:400px)]:flex-row ${componentBgLighterWithHover}`}
                   >
                     <div className="flex w-full min-w-0 items-center gap-4">

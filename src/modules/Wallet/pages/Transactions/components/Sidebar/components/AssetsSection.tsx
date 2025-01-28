@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { SidebarItem , SidebarTitle } from '@components/layouts/sidebar'
+import { useSearchParams } from 'react-router-dom'
+import { SidebarItem, SidebarTitle } from '@components/layouts/sidebar'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { useWalletContext } from '@providers/WalletProvider'
 
@@ -9,8 +10,8 @@ function AssetsSection({
 }: {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
-  const { assets, filteredTransactions, searchParams, setSearchParams } =
-    useWalletContext()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const { assets, filteredTransactions } = useWalletContext()
   const navigate = useNavigate()
 
   return (

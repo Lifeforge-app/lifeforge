@@ -2,6 +2,7 @@ import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Button } from '@components/buttons'
 import HamburgerSelectorWrapper from '@components/buttons/HamburgerMenu/components/HamburgerSelectorWrapper'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
@@ -22,6 +23,7 @@ import GridView from './views/GridView'
 import ListView from './views/ListView'
 
 function BooksLibrary(): React.ReactElement {
+  const [searchParams] = useSearchParams()
   const {
     entries: {
       data: entries,
@@ -33,7 +35,6 @@ function BooksLibrary(): React.ReactElement {
     },
     fileTypes: { data: fileTypes, refreshData: refreshFileTypes },
     miscellaneous: {
-      searchParams,
       deleteModalConfigs,
       searchQuery,
       setSearchQuery,
@@ -195,7 +196,7 @@ function BooksLibrary(): React.ReactElement {
         <MenuItems
           transition
           anchor="top end"
-          className="overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out [--anchor-gap:6px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+          className="overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:6px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
         >
           <MenuItem
             onClick={() => {}}

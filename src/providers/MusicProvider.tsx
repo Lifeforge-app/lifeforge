@@ -5,6 +5,7 @@ import React, {
   type ReactNode,
   useContext,
   useEffect,
+  useMemo,
   useState
 } from 'react'
 import { toast } from 'react-toastify'
@@ -241,61 +242,77 @@ export function MusicProvider({
     }
   }, [audio, musics, currentMusic, isShuffle, isRepeat])
 
-  return (
-    <MusicContext
-      value={{
-        // Audio related
-        audio,
-        isPlaying,
-        setIsPlaying,
-        currentMusic,
-        setCurrentMusic,
-        currentDuration,
-        setCurrentDuration,
-        volume,
-        setVolume,
-        togglePlay,
-        playMusic,
-        stopMusic,
-        lastMusic,
-        nextMusic,
+  const value = useMemo(
+    () => ({
+      // Audio related
+      audio,
+      isPlaying,
+      setIsPlaying,
+      currentMusic,
+      setCurrentMusic,
+      currentDuration,
+      setCurrentDuration,
+      volume,
+      setVolume,
+      togglePlay,
+      playMusic,
+      stopMusic,
+      lastMusic,
+      nextMusic,
 
-        // Music list related
-        musics,
-        refreshMusics,
-        setMusics,
-        toggleFavourite,
+      // Music list related
+      musics,
+      refreshMusics,
+      setMusics,
+      toggleFavourite,
 
-        // Search related
-        searchQuery,
-        setSearchQuery,
+      // Search related
+      searchQuery,
+      setSearchQuery,
 
-        // Loading state
-        loading,
-        setLoading,
+      // Loading state
+      loading,
+      setLoading,
 
-        // Modal states
-        isYoutubeDownloaderOpen,
-        setIsYoutubeDownloaderOpen,
-        isDeleteMusicConfirmationModalOpen,
-        setIsDeleteMusicConfirmationModalOpen,
-        isModifyMusicModalOpen,
-        setIsModifyMusicModalOpen,
+      // Modal states
+      isYoutubeDownloaderOpen,
+      setIsYoutubeDownloaderOpen,
+      isDeleteMusicConfirmationModalOpen,
+      setIsDeleteMusicConfirmationModalOpen,
+      isModifyMusicModalOpen,
+      setIsModifyMusicModalOpen,
 
-        // Music data
-        existedData,
-        setExistedData,
+      // Music data
+      existedData,
+      setExistedData,
 
-        // Playback options
-        isShuffle,
-        setIsShuffle,
-        isRepeat,
-        setIsRepeat
-      }}
-    >
-      {children}
-    </MusicContext>
+      // Playback options
+      isShuffle,
+      setIsShuffle,
+      isRepeat,
+      setIsRepeat
+    }),
+    [
+      audio,
+      isPlaying,
+      currentMusic,
+      currentDuration,
+      volume,
+      musics,
+      refreshMusics,
+      setMusics,
+      searchQuery,
+      loading,
+      isYoutubeDownloaderOpen,
+      isDeleteMusicConfirmationModalOpen,
+      isModifyMusicModalOpen,
+      existedData,
+      isShuffle,
+      isRepeat
+    ]
   )
+
+  return <MusicContext value={value}>{children}</MusicContext>
 }
 
 export function useMusicContext(): IMusicContext {

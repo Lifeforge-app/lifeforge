@@ -79,7 +79,7 @@ export default function Timer(): React.ReactElement {
           }}
           role="progressbar"
         >
-          <div className="z-[9999] mt-12 flex flex-col items-center gap-4 text-bg-800 dark:text-bg-50 ">
+          <div className="z-9999 mt-12 flex flex-col items-center gap-4 text-bg-800 dark:text-bg-50 ">
             <span className="text-7xl font-medium tracking-widest">
               {moment.utc(timeLeft * 1000).format('mm:ss')}
             </span>

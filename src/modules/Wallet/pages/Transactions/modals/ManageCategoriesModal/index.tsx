@@ -35,7 +35,7 @@ function ManageCategoriesModal({
 
   return (
     <>
-      <ModalWrapper isOpen={isOpen !== false} className="sm:!min-w-[40rem]">
+      <ModalWrapper isOpen={isOpen !== false} className="sm:min-w-[40rem]!">
         <ModalHeader
           title="Manage Categories"
           icon="tabler:apps"

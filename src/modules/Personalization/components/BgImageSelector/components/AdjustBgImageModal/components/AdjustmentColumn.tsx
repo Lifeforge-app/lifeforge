@@ -34,7 +34,7 @@ function AdjustmentColumn({
           min={0}
           max={max}
           value={value}
-          className="!range range-primary w-full bg-bg-200 dark:bg-bg-800"
+          className="range range-primary w-full bg-bg-200 dark:bg-bg-800"
           onChange={e => {
             setValue(parseInt(e.target.value, 10))
           }}

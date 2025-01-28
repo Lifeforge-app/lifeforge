@@ -113,7 +113,7 @@ function TimelineScrollbar(): React.ReactElement {
                     .map(([year, date]) => (
                       <span
                         key={year}
-                        className="flex-center pointer-events-none absolute z-[5] hidden h-4 w-full -translate-y-4 bg-bg-100 text-sm text-bg-500 dark:bg-bg-950 sm:flex"
+                        className="flex-center pointer-events-none absolute z-5 hidden h-4 w-full -translate-y-4 bg-bg-100 text-sm text-bg-500 dark:bg-bg-950 sm:flex"
                         style={{
                           top: `${eachDayDimensions[date as any]?.inTimeline}px`
                         }}
@@ -148,7 +148,7 @@ function TimelineScrollbar(): React.ReactElement {
           <div
             ref={timelineDateDisplayRef}
             className={`pointer-events-none absolute right-14 z-10 hidden rounded-t-md border-b-2 border-custom-500 bg-bg-200 p-2 text-sm shadow-md dark:bg-bg-800 sm:right-3 sm:block ${
-              isDraggingRef.current ? '!hidden' : ''
+              isDraggingRef.current ? 'hidden!' : ''
             }`}
             style={{
               top: '-36px'

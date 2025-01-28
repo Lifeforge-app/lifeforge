@@ -12,14 +12,10 @@ import {
 function Header({
   entries,
   sidebarData,
-  searchParams,
-  setSearchParams,
   setSidebarOpen
 }: {
   entries: Loadable<IVirtualWardrobeEntry[]>
   sidebarData: Loadable<IVirtualWardrobeSidebarData>
-  searchParams: URLSearchParams
-  setSearchParams: (params: URLSearchParams | Record<string, string>) => void
   setSidebarOpen: (open: boolean) => void
 }): React.ReactElement {
   return (
@@ -35,8 +31,6 @@ function Header({
         </div>
         {typeof sidebarData !== 'string' && (
           <HeaderFilter
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
             items={{
               category: {
                 data: Object.keys(sidebarData.categories).map(cat => ({

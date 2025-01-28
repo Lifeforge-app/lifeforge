@@ -4,7 +4,7 @@ import jsxA11y from 'eslint-plugin-jsx-a11y'
 import pluginReact from 'eslint-plugin-react'
 import reactCompiler from 'eslint-plugin-react-compiler'
 import sonarjs from 'eslint-plugin-sonarjs'
-import tailwind from 'eslint-plugin-tailwindcss'
+// import tailwind from 'eslint-plugin-tailwindcss'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
@@ -21,7 +21,7 @@ export default [
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   importPlugin.flatConfigs.recommended,
-  ...tailwind.configs['flat/recommended'],
+  // ...tailwind.configs['flat/recommended'],
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 'off'

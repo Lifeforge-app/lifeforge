@@ -35,7 +35,7 @@ function IdeaList({ data }: { data: IIdeaBoxEntry[] }): React.ReactElement {
         }
       ]}
       gap="0.5rem"
-      className="mb-8 shrink-0 !overflow-x-visible"
+      className="mb-8 shrink-0 overflow-x-visible!"
     >
       {data
         .filter(item => {

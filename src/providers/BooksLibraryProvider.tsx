@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Outlet } from 'react-router'
 import useFetch from '@hooks/useFetch'
-import useHashParams from '@hooks/useHashParams'
 import {
   type IBooksLibraryLanguage,
   type IBooksLibraryCategory,
@@ -53,8 +52,6 @@ interface IBooksLibraryData {
   languages: IBooksLibraryCommon<IBooksLibraryLanguage>
   fileTypes: IBooksLibraryCommon<IBooksLibraryFileType>
   miscellaneous: {
-    searchParams: URLSearchParams
-    setSearchParams: (params: Record<string, string> | URLSearchParams) => void
     processes: Record<
       string,
       {
@@ -90,7 +87,6 @@ export const BooksLibraryContext = React.createContext<
 >(undefined)
 
 export default function BooksLibraryProvider(): React.ReactElement {
-  const [searchParams, setSearchParams] = useHashParams()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [libgenModalOpen, setLibgenModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -184,27 +180,38 @@ export default function BooksLibraryProvider(): React.ReactElement {
     }
   }, [isFirstTime])
 
+  const value = useMemo(
+    () => ({
+      entries: entriesState,
+      categories: categoriesState,
+      languages: languagesState,
+      fileTypes: fileTypesState,
+      miscellaneous: {
+        processes,
+        searchQuery,
+        setSearchQuery,
+        sidebarOpen,
+        setSidebarOpen,
+        libgenModalOpen,
+        setLibgenModalOpen,
+        deleteModalConfigs
+      }
+    }),
+    [
+      entriesState,
+      categoriesState,
+      languagesState,
+      fileTypesState,
+      processes,
+      searchQuery,
+      sidebarOpen,
+      libgenModalOpen,
+      deleteModalConfigs
+    ]
+  )
+
   return (
-    <BooksLibraryContext
-      value={{
-        entries: entriesState,
-        categories: categoriesState,
-        languages: languagesState,
-        fileTypes: fileTypesState,
-        miscellaneous: {
-          searchParams,
-          setSearchParams,
-          processes,
-          searchQuery,
-          setSearchQuery,
-          sidebarOpen,
-          setSidebarOpen,
-          libgenModalOpen,
-          setLibgenModalOpen,
-          deleteModalConfigs
-        }
-      }}
-    >
+    <BooksLibraryContext value={value}>
       <Outlet />
     </BooksLibraryContext>
   )

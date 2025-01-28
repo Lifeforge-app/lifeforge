@@ -23,7 +23,7 @@ function TypeSelector({
       <MenuButton
         className={`flex-between inline-flex w-full rounded-md border-2 border-bg-300 sm:w-auto ${
           inline ? 'p-2 px-4' : 'p-4 px-6'
-        } text-lg font-semibold tracking-wide text-bg-800 shadow-sm outline-none hover:bg-bg-100 focus:outline-none dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200`}
+        } text-lg font-semibold tracking-wide text-bg-800 shadow-sm outline-hidden hover:bg-bg-100 focus:outline-hidden dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200`}
       >
         <div className="flex-center">
           <Icon
@@ -48,7 +48,7 @@ function TypeSelector({
       <MenuItems
         transition
         anchor="bottom start"
-        className="z-[9999] mt-2 w-[var(--button-width)] overflow-hidden rounded-lg bg-bg-100 text-bg-50 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+        className="z-9999 mt-2 w-[var(--button-width)] overflow-hidden rounded-lg bg-bg-100 text-bg-50 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
       >
         {[
           ['text', 'tabler:article', 'Text'],

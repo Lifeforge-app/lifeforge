@@ -91,7 +91,7 @@ function EntryItem({
           onChange={() => {
             markAsCompleted().catch(console.error)
           }}
-          className="!hidden sm:!flex md:!hidden"
+          className="hidden! sm:flex! md:hidden!"
         />
       </div>
       <div className="flex-between gap-4">
@@ -100,7 +100,7 @@ function EntryItem({
           href={entry.url}
           target="_blank"
           variant="no-bg"
-          className="w-auto !px-0 sm:!px-4"
+          className="w-auto px-0! sm:px-4!"
           icon="iconamoon:arrow-top-right-1"
           iconAtEnd
         >
@@ -111,7 +111,7 @@ function EntryItem({
           onChange={() => {
             markAsCompleted().catch(console.error)
           }}
-          className="!flex sm:!hidden md:!flex"
+          className="flex! sm:hidden! md:flex!"
         />
         <HamburgerMenu className="absolute right-4 top-4 sm:static">
           <MenuItem

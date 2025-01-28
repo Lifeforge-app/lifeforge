@@ -107,7 +107,7 @@ function DateGroup({
                 className={`group/checkbox flex-center rounded-full border-2  p-0.5 transition-all ${
                   isSelectedAll
                     ? 'border-custom-500 bg-custom-500'
-                    : 'border-bg-500 hover:!border-custom-500'
+                    : 'border-bg-500 hover:border-custom-500!'
                 }`}
               >
                 <Icon
@@ -115,7 +115,7 @@ function DateGroup({
                   className={`size-4 !stroke-[1px]  transition-all  ${
                     isSelectedAll
                       ? 'stroke-bg-100 text-bg-50 dark:stroke-bg-900 dark:text-bg-800'
-                      : 'stroke-bg-500 text-bg-500 group-hover/checkbox:!stroke-custom-500 group-hover/checkbox:!text-custom-500'
+                      : 'stroke-bg-500 text-bg-500 group-hover/checkbox:stroke-custom-500! group-hover/checkbox:text-custom-500!'
                   }`}
                 />
               </button>

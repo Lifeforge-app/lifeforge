@@ -32,7 +32,7 @@ function SpicinessSlider({
       </div>
       <div className="flex-between mt-2 flex w-full gap-2">
         <span className="text-sm text-bg-500">Mild</span>
-        <span className="h-0.5 w-full rounded-full bg-gradient-to-r from-lime-500 to-red-500" />
+        <span className="h-0.5 w-full rounded-full bg-linear-to-r from-lime-500 to-red-500" />
         <span className="text-sm text-bg-500">Spicy</span>
       </div>
     </>

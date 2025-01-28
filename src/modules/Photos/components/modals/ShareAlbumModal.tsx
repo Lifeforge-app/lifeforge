@@ -96,7 +96,7 @@ function ShareAlbumModal({
               value={`${
                 import.meta.env.VITE_PUBLIC_PORTAL_URL
               }/photos/album/${albumId}`}
-              className="w-full bg-transparent focus:outline-none"
+              className="w-full bg-transparent focus:outline-hidden"
             />
           </div>
           <Button

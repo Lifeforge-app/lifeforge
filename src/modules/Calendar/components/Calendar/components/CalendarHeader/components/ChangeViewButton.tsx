@@ -21,7 +21,7 @@ function ChangeViewButton({
       }}
       className={`w-full whitespace-nowrap rounded-md p-2 px-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800 ${
         view.toLowerCase() === currentView
-          ? 'bg-bg-200/50 font-medium text-bg-800 shadow-sm dark:bg-bg-800 dark:text-bg-200'
+          ? 'bg-bg-200/50 font-medium text-bg-800 shadow-xs dark:bg-bg-800 dark:text-bg-200'
           : 'text-bg-500'
       }`}
     >

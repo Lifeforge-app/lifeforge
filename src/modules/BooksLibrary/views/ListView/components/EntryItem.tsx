@@ -61,7 +61,7 @@ export default function EntryItem({
 
             return item.is_favourite ? 'tabler:heart-filled' : 'tabler:heart'
           })()}
-          className={`!p-2 ${item.is_favourite ? '!text-red-500' : ''}`}
+          className={`p-2! ${item.is_favourite ? 'text-red-500!' : ''}`}
         />
         <HamburgerMenu>
           <EntryContextMenu item={item} />
@@ -76,7 +76,7 @@ export default function EntryItem({
         className="absolute inset-0 z-10 size-full rounded-lg"
       />
       <div
-        className={`flex-center aspect-[10/12] h-min w-24 rounded-lg p-2 ${componentBgLighter}`}
+        className={`flex-center aspect-10/12 h-min w-24 rounded-lg p-2 ${componentBgLighter}`}
       >
         <img
           alt=""

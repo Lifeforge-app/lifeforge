@@ -95,7 +95,7 @@ function PasswordEntryITem({
           </p>
           <Button
             variant="no-bg"
-            className="hidden !p-2 sm:flex"
+            className="hidden p-2! sm:flex"
             iconClassName="size-6"
             onClick={() => {
               if (decryptedPassword === null) {
@@ -127,7 +127,7 @@ function PasswordEntryITem({
             onClick={copyPassword}
             loading={copyLoading}
             icon="tabler:copy"
-            className="hidden !p-2 sm:flex"
+            className="hidden p-2! sm:flex"
             variant="no-bg"
           />
           <HamburgerMenu className="relative">

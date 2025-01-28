@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { SidebarItem } from '@components/layouts/sidebar'
 import {
@@ -25,9 +26,10 @@ function _SidebarItem({
   fallbackIcon?: string
   hasHamburgerMenu?: boolean
 }): React.ReactElement {
+  const [searchParams, setSearchParams] = useSearchParams()
   const {
     entries: { data: entries },
-    miscellaneous: { searchParams, setSearchParams, setSidebarOpen },
+    miscellaneous: { setSidebarOpen },
     ...booksLibraryContext
   } = useBooksLibraryContext()
 

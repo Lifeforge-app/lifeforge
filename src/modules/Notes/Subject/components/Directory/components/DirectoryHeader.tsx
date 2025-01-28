@@ -198,7 +198,7 @@ function DirectoryHeader({
           )
         }}
       />
-      <div className="flex-between relative z-[100] flex w-full gap-4 sm:gap-12">
+      <div className="flex-between relative z-100 flex w-full gap-4 sm:gap-12">
         <div
           className={`flex min-w-0 flex-1 items-center gap-4 ${
             typeof currentPath !== 'string'
@@ -286,7 +286,7 @@ function DirectoryHeader({
             <MenuItems
               transition
               anchor="bottom end"
-              className="mt-2 w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+              className="mt-2 w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
             >
               <MenuItem
                 onClick={() => {
@@ -319,7 +319,7 @@ function DirectoryHeader({
         <MenuItems
           transition
           anchor="bottom end"
-          className="w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out [--anchor-gap:8px] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+          className="w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
         >
           <MenuItem
             onClick={() => {

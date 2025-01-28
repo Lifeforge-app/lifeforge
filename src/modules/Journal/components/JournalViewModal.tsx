@@ -57,7 +57,7 @@ function JournalViewModal({
   }, [id, isOpen])
 
   return (
-    <ModalWrapper isOpen={isOpen} className="md:!min-w-[60rem]">
+    <ModalWrapper isOpen={isOpen} className="md:min-w-[60rem]!">
       <ModalHeader
         icon="tabler:eye"
         title="View Journal Entry"

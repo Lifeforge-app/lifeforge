@@ -55,7 +55,7 @@ function IdeaContentInput({
               updateIdeaContent(e as React.ChangeEvent<HTMLTextAreaElement>)
             }}
             placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, lorem euismod."
-            className="mt-6 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-none placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
+            className="mt-6 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-hidden placeholder:text-transparent focus:outline-hidden focus:placeholder:text-bg-500"
           />
         ) : (
           <input
@@ -63,7 +63,7 @@ function IdeaContentInput({
             value={ideaLink}
             onChange={updateIdeaLink}
             placeholder="https://example.com"
-            className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-none focus:placeholder:text-bg-500"
+            className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-hidden focus:placeholder:text-bg-500"
           />
         )}
       </div>

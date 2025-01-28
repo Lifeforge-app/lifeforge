@@ -2,8 +2,9 @@ import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { t } from 'i18next'
 import { cookieParse } from 'pocketbase'
 import React, { useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { type Id, toast } from 'react-toastify'
-import { Button , FAB } from '@components/buttons'
+import { Button, FAB } from '@components/buttons'
 import HamburgerSelectorWrapper from '@components/buttons/HamburgerMenu/components/HamburgerSelectorWrapper'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
@@ -25,19 +26,16 @@ function Header({
   refreshEntries,
   totalItems,
   setGuitarWorldModalOpen,
-  searchParams,
-  setSearchParams,
   view,
   setView
 }: {
   refreshEntries: () => void
   totalItems: number
   setGuitarWorldModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-  searchParams: URLSearchParams
-  setSearchParams: (params: Record<string, string> | URLSearchParams) => void
   view: 'grid' | 'list'
   setView: React.Dispatch<React.SetStateAction<'grid' | 'list'>>
 }): React.ReactElement {
+  const [searchParams, setSearchParams] = useSearchParams()
   const toastId = useRef<Id>(null)
   const { theme } = useThemeColors()
 
@@ -183,7 +181,7 @@ function Header({
             <MenuItems
               transition
               anchor="bottom end"
-              className="mt-2 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-none transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-bg-800"
+              className="mt-2 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
             >
               <MenuItem
                 onClick={uploadFiles}

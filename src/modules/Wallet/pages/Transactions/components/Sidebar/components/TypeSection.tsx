@@ -1,7 +1,8 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router-dom'
 import colors from 'tailwindcss/colors'
-import { SidebarItem , SidebarTitle } from '@components/layouts/sidebar'
+import { SidebarItem, SidebarTitle } from '@components/layouts/sidebar'
 import useThemeColors from '@hooks/useThemeColor'
 import { useWalletContext } from '@providers/WalletProvider'
 import { toCamelCase } from '@utils/strings'
@@ -11,9 +12,9 @@ function TypeSection({
 }: {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
+  const [searchParams, setSearchParams] = useSearchParams()
   const { t } = useTranslation()
-  const { filteredTransactions, searchParams, setSearchParams } =
-    useWalletContext()
+  const { filteredTransactions } = useWalletContext()
   const { bgTemp } = useThemeColors()
 
   return (

@@ -42,7 +42,7 @@ function Overview({
             )}
           </p>
         </div>
-        <div className="flex items-center justify-between bg-bg-900 p-3 print:!bg-black/[3%]">
+        <div className="flex items-center justify-between bg-bg-900 p-3 print:bg-black/[3%]!">
           <p className="text-xl">Expenses</p>
           <p className="text-lg">
             RM (
@@ -125,7 +125,7 @@ function Overview({
                   .map(asset => (
                     <tr
                       key={asset.id}
-                      className="even:bg-zinc-800/30 even:print:bg-black/[3%]"
+                      className="even:bg-zinc-800/30 print:even:bg-black/[3%]"
                     >
                       <td className="p-3 text-lg">
                         <div className="flex items-center gap-2">
@@ -224,7 +224,7 @@ function Overview({
                       })()}
                     </tr>
                   ))}
-                <tr className="even:bg-zinc-800/30 even:print:bg-black/[3%]">
+                <tr className="even:bg-zinc-800/30 print:even:bg-black/[3%]">
                   <td className="p-3 text-lg">
                     <div className="flex items-center gap-2 text-xl font-semibold">
                       <span>Total Assets</span>
@@ -381,7 +381,7 @@ function Overview({
                       .map(category => (
                         <tr
                           key={category.id}
-                          className="even:bg-zinc-800/30 even:print:bg-black/[3%]"
+                          className="even:bg-zinc-800/30 print:even:bg-black/[3%]"
                         >
                           <td className="p-3 text-lg">
                             <div className="flex items-center gap-2">
@@ -473,7 +473,7 @@ function Overview({
                           })()}
                         </tr>
                       ))}
-                    <tr className="even:bg-zinc-800/30 even:print:bg-black/[3%]">
+                    <tr className="even:bg-zinc-800/30 print:even:bg-black/[3%]">
                       <td className="p-3 text-lg">
                         <div className="flex items-center gap-2 text-xl font-semibold">
                           <span>

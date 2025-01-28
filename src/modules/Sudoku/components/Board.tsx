@@ -12,7 +12,7 @@ function Board({ data }: { data: SudokuBoard }): React.ReactElement {
               key={j}
               className={`${
                 ![2, 5, 8].includes(j) &&
-                'border-r border-zinc-500 print:!border-zinc-400'
+                'border-r border-zinc-500 print:border-zinc-400!'
               } grid size-full grid-rows-9`}
             >
               {Array(9)
@@ -22,7 +22,7 @@ function Board({ data }: { data: SudokuBoard }): React.ReactElement {
                     key={k}
                     className={`${
                       ![2, 5, 8].includes(k) &&
-                      'border-b border-zinc-500 print:!border-zinc-400'
+                      'border-b border-zinc-500 print:border-zinc-400!'
                     } size-full`}
                   >
                     {data.mission[k * 9 + j] !== '0' && (
@@ -40,7 +40,7 @@ function Board({ data }: { data: SudokuBoard }): React.ReactElement {
             .map((_, j) => (
               <div
                 key={j}
-                className="h-full w-[2px] bg-zinc-100 print:!bg-black"
+                className="h-full w-[2px] bg-zinc-100 print:bg-black!"
               />
             ))}
         </div>
@@ -50,7 +50,7 @@ function Board({ data }: { data: SudokuBoard }): React.ReactElement {
             .map((_, j) => (
               <div
                 key={j}
-                className="h-[2px] w-full bg-zinc-100 print:!bg-black"
+                className="h-[2px] w-full bg-zinc-100 print:bg-black!"
               />
             ))}
         </div>

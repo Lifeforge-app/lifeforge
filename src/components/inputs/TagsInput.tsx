@@ -104,7 +104,7 @@ function TagsInput({
                     onClick={() => {
                       removeTag(index)
                     }}
-                    className="!m-0 !h-4 !w-4 !p-0"
+                    className="m-0! h-4! w-4! p-0!"
                     iconClassName="size-3"
                   />
                 )}
@@ -120,7 +120,7 @@ function TagsInput({
               onKeyDown={handleKeyDown}
               noAutoComplete
               onBlur={addTag}
-              className="!my-0 !w-auto flex-1 py-0 !pl-0"
+              className="my-0! w-auto! flex-1 py-0 pl-0!"
             />
           )}
         </div>

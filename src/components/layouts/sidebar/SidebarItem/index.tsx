@@ -1,11 +1,11 @@
 import React, { useMemo, useState } from 'react'
-import { useLocation } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { titleToPath } from '@utils/strings'
 import SidebarCancelButton from './components/SidebarCancelButton'
+import SidebarCollapseButton from './components/SidebarCollapseButton'
 import SidebarItemContent from './components/SidebarItemContent'
 import SidebarItemIcon from './components/SidebarItemIcon'
-import SidebarItemOnClickElement from './components/SidebarItemOnClickElement'
 import SidebarItemSubsection from './components/SidebarItemSubsection'
 import SidebarItemSubsectionExpandIcon from './components/SidebarItemSubsectionExpandIcon'
 import SidebarItemWrapper from './components/SidebarItemWrapper'
@@ -34,6 +34,10 @@ interface MainSidebarItemProps {
   number?: never
   onCancelButtonClick?: never
   hamburgerMenuItems?: never
+
+  isCollapsed?: never
+  onCollapseButtonClick?: never
+  showCollapseSpacer?: never
 }
 
 interface SubSidebarItemProps {
@@ -50,6 +54,10 @@ interface SubSidebarItemProps {
   number?: number
   onCancelButtonClick?: () => void
   hamburgerMenuItems?: React.ReactElement
+
+  isCollapsed?: boolean
+  onCollapseButtonClick?: () => void
+  showCollapseSpacer?: boolean
 }
 
 interface SidebarItemBaseProps {
@@ -75,9 +83,14 @@ function SidebarItem({
   number,
   needTranslate = true,
   onCancelButtonClick,
-  hamburgerMenuItems
+  hamburgerMenuItems,
+
+  isCollapsed,
+  onCollapseButtonClick,
+  showCollapseSpacer
 }: SidebarItemProps): React.ReactElement {
   const location = useLocation()
+  const navigate = useNavigate()
   const { sidebarExpanded, toggleSidebar } = isMainSidebarItem
     ? useGlobalStateContext()
     : { sidebarExpanded: true, toggleSidebar: () => {} }
@@ -88,6 +101,7 @@ function SidebarItem({
           location.pathname.slice(1).startsWith(titleToPath(name))
       )
     : [false, () => {}]
+
   const isLocationMatched = useMemo(
     () =>
       location.pathname
@@ -98,7 +112,37 @@ function SidebarItem({
 
   return (
     <>
-      <SidebarItemWrapper active={autoActive ? isLocationMatched : active}>
+      <SidebarItemWrapper
+        onClick={() => {
+          if (window.innerWidth < 1024) {
+            toggleSidebar()
+          }
+          if (onClick !== undefined) {
+            onClick()
+            return
+          }
+
+          if (isMainSidebarItem) {
+            setSubsectionExpanded(true)
+            navigate(
+              `./${prefix !== '' ? prefix + '/' : ''}${titleToPath(name)}`
+            )
+          }
+        }}
+        active={autoActive ? isLocationMatched : active}
+      >
+        {onCollapseButtonClick && (
+          <>
+            <SidebarCollapseButton
+              onClick={onCollapseButtonClick}
+              isCollapsed={isCollapsed === true}
+            />
+          </>
+        )}
+        {showCollapseSpacer && !onCollapseButtonClick && (
+          <div className="w-8 shrink-0"></div>
+        )}
+
         {sideStripColor !== undefined && (
           <span
             className="block h-8 w-1 shrink-0 rounded-full"
@@ -121,13 +165,6 @@ function SidebarItem({
           active={autoActive ? isLocationMatched : active}
           onCancelButtonClick={onCancelButtonClick}
           needTranslate={needTranslate}
-        />
-        <SidebarItemOnClickElement
-          onClick={onClick}
-          setSubsectionExpanded={setSubsectionExpanded}
-          isMainSidebarItem={isMainSidebarItem}
-          prefix={prefix}
-          name={name}
         />
         {sidebarExpanded && subsection !== undefined && (
           <SidebarItemSubsectionExpandIcon
