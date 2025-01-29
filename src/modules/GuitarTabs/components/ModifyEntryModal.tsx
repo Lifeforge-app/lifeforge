@@ -1,8 +1,14 @@
 import { Icon } from '@iconify/react'
-import { t } from 'i18next'
+
 import React, { useEffect, useReducer, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { CreateOrModifyButton } from '@components/buttons'
-import { TextInput , ListboxOrComboboxInput , ListboxNullOption , ListboxOrComboboxOption } from '@components/inputs'
+import {
+  TextInput,
+  ListboxOrComboboxInput,
+  ListboxNullOption,
+  ListboxOrComboboxOption
+} from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
@@ -30,6 +36,8 @@ function ModifyEntryModal({
   existingItem: IGuitarTabsEntry | null
   refreshEntries: () => void
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   function reducer(state: IState, action: Partial<IState>): IState {
     return { ...state, ...action }
   }

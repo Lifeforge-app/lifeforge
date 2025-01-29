@@ -1,10 +1,11 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import { t } from 'i18next'
+
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
-import { IconInput , IconPickerModal , TextInput } from '@components/inputs'
+import { IconInput, IconPickerModal, TextInput } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type INotesSubject } from '@interfaces/notes_interfaces'
@@ -21,8 +22,8 @@ function ModifySubjectModal({
   updateSubjectList: () => void
   existedData: INotesSubject | null
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { workspace } = useParams<{ workspace: string }>()
-
   const [loading, setLoading] = useState(false)
   const [subjectName, setSubjectName] = useState('')
   const [subjectDescription, setSubjectDescription] = useState('')

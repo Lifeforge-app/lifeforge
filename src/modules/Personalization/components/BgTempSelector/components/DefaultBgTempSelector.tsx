@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
-import { t } from 'i18next'
+
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 const COLORS = ['bg-slate', 'bg-gray', 'bg-zinc', 'bg-neutral', 'bg-stone']
 
@@ -11,6 +12,8 @@ function DefaultBgTempSelector({
   bgTemp: string
   setBgTemp: (value: string) => void
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <div className="flex w-full flex-col items-center gap-2 xl:w-auto">
       <div className="flex items-center gap-4">

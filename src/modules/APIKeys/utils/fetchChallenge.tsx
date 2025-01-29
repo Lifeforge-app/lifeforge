@@ -1,10 +1,12 @@
-import { t } from 'i18next'
 import { cookieParse } from 'pocketbase'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 export async function fetchChallenge(
   setLoading?: React.Dispatch<React.SetStateAction<boolean>>
 ): Promise<string> {
+  const { t } = useTranslation()
+
   return await fetch(
     `${import.meta.env.VITE_API_HOST}/api-keys/auth/challenge`,
     {

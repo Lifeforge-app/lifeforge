@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
-import { t } from 'i18next'
+
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import OtpInput from 'react-otp-input'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
@@ -16,6 +17,7 @@ function OTPScreen({
   callback: () => void
   fetchChallenge: () => Promise<string>
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [otp, setOtp] = useState('')
   const [otpSent, setOtpSent] = useState(false)
   const [otpId, setOtpId] = useState(localStorage.getItem('otpId') ?? '')

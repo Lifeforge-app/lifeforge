@@ -1,6 +1,7 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import { t } from 'i18next'
+
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { SearchInput } from '@components/inputs'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
@@ -13,6 +14,7 @@ import Containers from './components/Containers'
 import ModifyContainerModal from './components/Containers/components/ModifyContainerModal'
 
 function IdeaBox(): React.ReactElement {
+  const { t } = useTranslation()
   const [data, , setData] = useFetch<IIdeaBoxContainer[]>('idea-box/containers')
   const [modifyContainerModalOpenType, setModifyContainerModalOpenType] =
     useState<'create' | 'update' | null>(null)

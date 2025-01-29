@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/no-nested-functions */
-import { t } from 'i18next'
+
 import React, { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
 import { TextInput } from '@components/inputs'
@@ -21,6 +22,7 @@ function ModifyAlbumTagsModal({
   targetTag?: IPhotoAlbumTag
   refreshTagData?: () => void
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { setAlbumTagList } = usePhotosContext()
   const [tagName, setTagName] = useState('')
   const [loading, setLoading] = useState(false)

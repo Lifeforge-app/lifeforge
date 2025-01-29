@@ -1,9 +1,15 @@
-import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
-import { ColorInput, IconPickerModal , ColorPickerModal , IconInput , TextInput } from '@components/inputs'
+import {
+  ColorInput,
+  IconPickerModal,
+  ColorPickerModal,
+  IconInput,
+  TextInput
+} from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IProjectsMKanbanColumn } from '@interfaces/projects_m_interfaces'
@@ -24,6 +30,7 @@ function ModifyColumnModal({
   >
   refreshColumns: () => void
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { id } = useParams()
   const [columnName, setColumnName] = useState('')
   const [columnIcon, setColumnIcon] = useState('')

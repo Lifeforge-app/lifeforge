@@ -1,7 +1,8 @@
 import { parse } from 'file-type-mime'
-import { t } from 'i18next'
+
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
 import {
@@ -36,6 +37,7 @@ function ModifyTransactionsModal({
     React.SetStateAction<IWalletTransaction | null>
   >
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { refreshAssets, refreshTransactions } = useWalletContext()
   const [particular, setParticular] = useState('')
   const [transactionType, setTransactionType] = useState<

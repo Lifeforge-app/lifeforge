@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react'
-import { t } from 'i18next'
+
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import {
   type IPhotoAlbumEntryItem,
@@ -20,6 +21,7 @@ function BottomBar({
     | IPhotoAlbumEntryItem[]
   inAlbumGallery?: boolean
 }): React.ReactElement {
+  const { t } = useTranslation()
   const {
     selectedPhotos,
     setSelectedPhotos,

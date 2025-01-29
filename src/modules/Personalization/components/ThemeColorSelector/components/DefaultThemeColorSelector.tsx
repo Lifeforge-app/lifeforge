@@ -1,4 +1,3 @@
-/* eslint-disable tailwindcss/no-custom-classname */
 import {
   Listbox,
   ListboxButton,
@@ -6,8 +5,9 @@ import {
   ListboxOptions
 } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { t } from 'i18next'
+
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import useThemeColors from '@hooks/useThemeColor'
 import { toCamelCase } from '@utils/strings'
 
@@ -41,6 +41,7 @@ function DefaultThemeColorSelector({
   setThemeColor: (color: string) => void
   customThemeColor: string
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { componentBgWithHover } = useThemeColors()
 
   return (

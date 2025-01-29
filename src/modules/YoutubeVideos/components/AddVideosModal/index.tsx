@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
-import { t } from 'i18next'
+
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
@@ -34,6 +35,7 @@ function AddVideosModal({
   onClose: (isVideoDownloading: boolean) => void
   videos: Loadable<IYoutubeVideosStorageEntry[]>
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [selectedResourceType, setSelectedResourceType] = useState<
     'video' | 'playlist'
   >('video')

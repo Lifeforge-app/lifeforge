@@ -1,7 +1,7 @@
-import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
-import { Button , FAB } from '@components/buttons'
+import { Button, FAB } from '@components/buttons'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
@@ -13,6 +13,7 @@ import LedgerItem from './components/LedgerItem'
 import ModifyLedgersModal from './components/ModifyLedgersModal'
 
 function Ledgers(): React.ReactElement {
+  const { t } = useTranslation()
   const { ledgers, refreshLedgers } = useWalletContext()
   const [modifyLedgersModalOpenType, setModifyModalOpenType] = useState<
     'create' | 'update' | null

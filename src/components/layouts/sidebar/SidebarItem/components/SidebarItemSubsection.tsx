@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
-import { t } from 'i18next'
+
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 import { titleToPath, toCamelCase } from '@utils/strings'
 
@@ -17,6 +18,7 @@ function SidebarItemSubsection({
   toggleSidebar: () => void
   subsectionExpanded: boolean
 }): React.ReactElement {
+  const { t } = useTranslation()
   const location = useLocation()
 
   return (

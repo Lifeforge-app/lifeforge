@@ -1,9 +1,10 @@
-import { t } from 'i18next'
 import { cookieParse } from 'pocketbase'
+import { useTranslation } from 'react-i18next'
 
 export async function fetchChallenge(
   type: 'master' | 'password'
 ): Promise<string> {
+  const { t } = useTranslation()
   try {
     const response = await fetch(
       `${import.meta.env.VITE_API_HOST}/passwords/${type}/challenge`,

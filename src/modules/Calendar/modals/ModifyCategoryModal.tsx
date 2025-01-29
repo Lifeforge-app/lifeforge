@@ -1,6 +1,7 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import { t } from 'i18next'
+
 import React, { useEffect, useReducer, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import Modal from '@components/modals/Modal'
 import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
@@ -20,6 +21,7 @@ function ModifyCategoryModal({
   existedData,
   refreshCategories
 }: ModifyCategoryModalProps): React.ReactElement {
+  const { t } = useTranslation()
   const modalRef = useRef<HTMLDivElement>(null)
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
   const [data, setData] = useReducer(

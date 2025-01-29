@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { SidebarTitle } from '@components/layouts/sidebar'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
@@ -10,6 +10,7 @@ function SidebarSection({
 }: {
   stuff: 'categories' | 'technologies' | 'visibilities' | 'statuses'
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { data, setExistedData, setModifyDataModalOpenType } =
     useProjectsMContext()[stuff]
 

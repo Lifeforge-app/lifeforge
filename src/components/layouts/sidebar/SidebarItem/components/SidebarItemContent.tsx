@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
-import { t } from 'i18next'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import { toCamelCase } from '@utils/strings'
 
@@ -25,6 +25,7 @@ function SidebarItemContent({
   onCancelButtonClick?: () => void
   needTranslate?: boolean
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (

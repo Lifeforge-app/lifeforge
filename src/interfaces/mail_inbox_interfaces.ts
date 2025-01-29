@@ -29,7 +29,7 @@ interface IMailInboxEntry extends BasePBCollection {
 
 interface IMailInboxLabel extends BasePBCollection {
   name: string
-  amount: number
+  count: number
   parent: string
 }
 

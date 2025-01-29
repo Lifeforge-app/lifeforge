@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React, { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
 import { TextInput } from '@components/inputs'
@@ -9,6 +9,7 @@ import { useMusicContext } from '@providers/MusicProvider'
 import APIRequest from '@utils/fetchData'
 
 function ModifyMusicModal(): React.ReactElement {
+  const { t } = useTranslation()
   const {
     isModifyMusicModalOpen: isOpen,
     setIsModifyMusicModalOpen: setOpen,

@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React, { Suspense, useCallback, useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import LoadingScreen from '@components/screens/LoadingScreen'
@@ -17,6 +17,7 @@ import Auth from '../auth'
 const ROUTES = _ROUTES as IRoutes[]
 
 function AppRouter(): React.ReactElement {
+  const { t } = useTranslation()
   const { auth, authLoading, userData } = useAuthContext()
   const { theme } = usePersonalizationContext()
   const location = useLocation()

@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React, { useEffect, useReducer } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import COLOR from 'tailwindcss/colors'
 import Modal from '@components/modals/Modal'
@@ -27,6 +27,7 @@ function ModifyAchievementModal({
   existedData: IAchievementEntry | null
   currentDifficulty: string
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [data, setData] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {

@@ -1,7 +1,8 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { t } from 'i18next'
+
 import { cookieParse } from 'pocketbase'
 import React, { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { type Id, toast } from 'react-toastify'
 import { Button, FAB } from '@components/buttons'
@@ -35,6 +36,7 @@ function Header({
   view: 'grid' | 'list'
   setView: React.Dispatch<React.SetStateAction<'grid' | 'list'>>
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const toastId = useRef<Id>(null)
   const { theme } = useThemeColors()

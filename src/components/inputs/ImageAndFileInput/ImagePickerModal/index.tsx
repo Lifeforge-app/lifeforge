@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React, { useEffect, useReducer, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@components/buttons'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
@@ -53,6 +53,7 @@ function ImagePickerModal({
   acceptedMimeTypes: Record<string, string[]>
   onSelect: (file: string | File, preview: string | null) => Promise<void>
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [file, setFile] = useState<File | string | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
   const [mode, setMode] = useState<'local' | 'url' | 'pixabay'>('local')

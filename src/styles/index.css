@@ -65,7 +65,7 @@ layer(base);
 
 :root {
   interpolate-size: allow-keywords;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 * {
@@ -78,7 +78,8 @@ layer(base);
   @apply select-none;
 }
 
-input {
+input,
+textarea {
   @apply border-hidden;
 }
 

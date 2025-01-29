@@ -1,10 +1,11 @@
 /* eslint-disable sonarjs/no-nested-functions */
 /* eslint-disable sonarjs/no-nested-conditional */
 import { Icon } from '@iconify/react'
-import { t } from 'i18next'
+
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import PhotoAlbum from 'react-photo-album'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -30,6 +31,7 @@ import RemovePhotosFromAlbumConfirmationModal from '../../components/modals/Remo
 import ShareAlbumModal from '../../components/modals/ShareAlbumModal.tsx'
 
 function PhotosAlbumGallery(): React.ReactElement {
+  const { t } = useTranslation()
   const { id } = useParams<{
     id: string
   }>()

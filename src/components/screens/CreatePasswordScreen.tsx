@@ -1,7 +1,8 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
-import { t } from 'i18next'
+
 import React, { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { TextInput } from '@components/inputs'
@@ -16,6 +17,7 @@ function CreatePasswordScreen({
   endpoint: string
   keyInUserData: string
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { setUserData, userData } = useAuthContext()
   const [newPassword, setNewPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')

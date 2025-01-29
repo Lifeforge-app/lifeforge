@@ -1,7 +1,8 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import { t } from 'i18next'
+
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
@@ -17,6 +18,7 @@ import IdeaContentInput from './components/IdeaContentInput'
 import ModalHeader from './components/ModalHeader'
 
 function ModifyIdeaModal(): React.ReactElement {
+  const { t } = useTranslation()
   const {
     modifyIdeaModalOpenType: openType,
     setModifyIdeaModalOpenType: setOpenType,

@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@components/buttons'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 
@@ -10,6 +10,7 @@ function AddToLibraryButton({
   md5: string
   setAddToLibraryFor: (id: string) => void
 }): React.ReactElement {
+  const { t } = useTranslation()
   const {
     entries: { data: entries },
     miscellaneous: { processes }

@@ -1,6 +1,6 @@
-import { t } from 'i18next'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
 import {
@@ -17,6 +17,7 @@ import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 
 function CreatePasswordModal(): React.ReactElement {
+  const { t } = useTranslation()
   const {
     masterPassword,
     modifyPasswordModalOpenType: openType,

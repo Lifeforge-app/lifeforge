@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
@@ -10,6 +10,7 @@ import AdjustBgImageModal from './components/AdjustBgImageModal'
 import ImagePickerModal from '../../../../components/inputs/ImageAndFileInput/ImagePickerModal'
 
 function BgImageSelector(): React.ReactElement {
+  const { t } = useTranslation()
   const { bgImage, setBgImage, setBackdropFilters } =
     usePersonalizationContext()
   const [imageSelectorModalOpen, setImageSelectorModalOpen] = useState(false)

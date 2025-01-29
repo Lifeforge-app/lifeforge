@@ -1,4 +1,3 @@
-import { t } from 'i18next'
 import React, {
   createContext,
   useCallback,
@@ -7,6 +6,7 @@ import React, {
   useMemo,
   useState
 } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import APIRequest from '@utils/fetchData'
@@ -42,6 +42,7 @@ export default function AuthProvider({
 }: {
   children: React.ReactNode
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [auth, _setAuth] = useState(false)
   const [userData, _setUserData] = useState<any>(null)
   const [quota, setQuota] = useState(5)

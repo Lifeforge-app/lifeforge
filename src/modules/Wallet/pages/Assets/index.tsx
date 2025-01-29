@@ -1,7 +1,7 @@
-import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
-import { Button , FAB } from '@components/buttons'
+import { Button, FAB } from '@components/buttons'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
@@ -14,6 +14,7 @@ import AssetItem from './components/AssetItem'
 import ModifyAssetsModal from './components/ModifyAssetsModal'
 
 function Assets(): React.ReactElement {
+  const { t } = useTranslation()
   const { assets, refreshAssets, isAmountHidden, toggleAmountVisibility } =
     useWalletContext()
   const [modifyAssetsModalOpenType, setModifyModalOpenType] = useState<

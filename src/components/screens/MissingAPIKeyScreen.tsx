@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
-import { t } from 'i18next'
+
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Button } from '@components/buttons'
 
@@ -9,6 +10,8 @@ function MissingAPIKeyScreen({
 }: {
   requiredAPIKeys: string[]
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <div className="flex-center size-full flex-1 flex-col gap-4">
       <Icon icon="tabler:key-off" className="size-28" />
