@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
@@ -16,6 +16,7 @@ import Pagination from '../../../../components/utilities/Pagination'
 import AddToLibraryModal from '../AddToLibraryModal'
 
 function LibgenModal(): React.ReactElement {
+  const { t } = useTranslation()
   const {
     miscellaneous: { libgenModalOpen: isOpen, setLibgenModalOpen: setOpen }
   } = useBooksLibraryContext()

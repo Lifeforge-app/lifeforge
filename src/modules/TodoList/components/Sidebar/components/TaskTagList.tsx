@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { SidebarTitle } from '@components/layouts/sidebar'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { useTodoListContext } from '@providers/TodoListProvider'
@@ -10,6 +10,7 @@ function TaskTagList({
 }: {
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
+  const { t } = useTranslation()
   const {
     tags,
     setModifyTagModalOpenType: setModifyModalOpenType,

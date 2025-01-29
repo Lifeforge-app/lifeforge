@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React, { useEffect, useReducer } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import Modal from '@components/modals/Modal'
 import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
@@ -17,6 +17,8 @@ function ModifyContainerModal({
   setContainerList: React.Dispatch<React.SetStateAction<IIdeaBoxContainer[]>>
   existedData: IIdeaBoxContainer | null
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   const [data, setData] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {

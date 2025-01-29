@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { ListResult } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
@@ -18,6 +19,7 @@ import Sidebar from './components/Sidebar'
 import ViewMailModal from './components/ViewMailModal'
 
 function MailInbox(): React.ReactElement {
+  const { t } = useTranslation()
   const [page, setPage] = useState(1)
   const [mails, , setMails] = useFetch<ListResult<IMailInboxEntry>>(
     `mail-inbox/entries?page=${page}`
@@ -50,12 +52,33 @@ function MailInbox(): React.ReactElement {
         }
       />
       <SidebarAndContentWrapper>
-        <Sidebar isOpen={sidebarOpen} setOpen={setSidebarOpen} />
+        <Sidebar
+          isOpen={sidebarOpen}
+          setOpen={setSidebarOpen}
+          allMailsCount={typeof mails === 'string' ? 0 : mails.totalItems}
+        />
         <ContentWrapperWithSidebar>
           <header className="flex-between flex w-full">
             <div className="flex min-w-0 items-end">
               <h1 className="truncate text-3xl font-semibold sm:text-4xl">
-                Inbox
+                {(() => {
+                  switch (searchParams.get('label')) {
+                    case 'inbox':
+                      return t('sidebar.mailInbox.inbox')
+                    case 'starred':
+                      return t('sidebar.mailInbox.starred')
+                    case 'sent':
+                      return t('sidebar.mailInbox.sent')
+                    case 'draft':
+                      return t('sidebar.mailInbox.draft')
+                    case 'trash':
+                      return t('sidebar.mailInbox.trash')
+                    case 'all-mails':
+                      return t('sidebar.mailInbox.allMails')
+                    default:
+                      return t('sidebar.mailInbox.filtered')
+                  }
+                })()}
               </h1>
               <span className="ml-2 mr-8 text-base text-bg-500">(187)</span>
             </div>

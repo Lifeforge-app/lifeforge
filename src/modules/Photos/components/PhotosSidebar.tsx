@@ -1,13 +1,20 @@
 import { Icon } from '@iconify/react'
-import { t } from 'i18next'
+
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { SidebarDivider , SidebarItem , SidebarTitle , SidebarWrapper } from '@components/layouts/sidebar'
+import {
+  SidebarDivider,
+  SidebarItem,
+  SidebarTitle,
+  SidebarWrapper
+} from '@components/layouts/sidebar'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import { usePhotosContext } from '@providers/PhotosProvider'
 
 function PhotosSidebar(): React.ReactElement {
+  const { t } = useTranslation()
   const {
     photos,
     albumList,

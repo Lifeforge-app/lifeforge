@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
 import { IconInput, IconPickerModal, TextInput } from '@components/inputs'
@@ -21,6 +21,7 @@ function ModifyAPIKeyModal({
   existingData: IAPIKeyEntry | null
   masterPassword: string
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [id, setId] = useState('')
   const [name, setName] = useState('')
   const [icon, setIcon] = useState('')

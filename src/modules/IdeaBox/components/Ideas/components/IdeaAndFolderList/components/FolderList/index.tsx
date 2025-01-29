@@ -1,12 +1,15 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { t } from 'i18next'
+
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { type IIdeaBoxFolder } from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import FolderItem from './components/FolderItem'
 
 function FolderList(): React.ReactElement {
+  const { t } = useTranslation()
   const { folders } = useIdeaBoxContext()
+
   return (
     <>
       <h2 className="mb-2 flex items-center gap-2 text-lg font-medium text-bg-500">

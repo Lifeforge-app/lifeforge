@@ -1,7 +1,8 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
-import { t } from 'i18next'
+
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@components/buttons'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
@@ -10,6 +11,7 @@ import { usePhotosContext } from '@providers/PhotosProvider'
 import APIRequest from '@utils/fetchData'
 
 function AddPhotosToAlbumModal(): React.ReactElement {
+  const { t } = useTranslation()
   const {
     photos,
     albumList,

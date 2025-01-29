@@ -65,7 +65,7 @@ function FAB(): React.ReactElement {
                           setModifyIdeaModalOpenType('create')
                         }
                       }}
-                      className="rounded-full bg-bg-200 p-3 transition-all group-data-focus:bg-bg-300"
+                      className="rounded-full bg-bg-100 text-bg-800 p-3 transition-all group-data-focus:bg-bg-200"
                     >
                       <Icon icon={icon} className="size-5" />
                     </button>

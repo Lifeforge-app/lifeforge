@@ -1,8 +1,13 @@
-import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
-import { CurrencyInput , IconInput , IconPickerModal , TextInput } from '@components/inputs'
+import {
+  CurrencyInput,
+  IconInput,
+  IconPickerModal,
+  TextInput
+} from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWalletAsset } from '@interfaces/wallet_interfaces'
@@ -21,6 +26,7 @@ function ModifyAssetsModal({
   setExistedData: React.Dispatch<React.SetStateAction<IWalletAsset | null>>
   refreshAssets: () => void
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [assetName, setAssetName] = useState('')
   const [assetIcon, setAssetIcon] = useState('')
   const [assetStartingBalance, setAssetStartingBalance] = useState<string>('')

@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
-import { t } from 'i18next'
+
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
@@ -15,6 +16,7 @@ import Timer from './components/Timer'
 import TaskItem from '../TodoList/components/tasks/TaskItem'
 
 export default function PomodoroTimer(): React.ReactElement {
+  const { t } = useTranslation()
   const { componentBg } = useThemeColors()
   const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry[]>(
     'todo-list/entries?status=today'

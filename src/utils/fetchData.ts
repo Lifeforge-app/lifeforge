@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import { cookieParse } from 'pocketbase'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { toCamelCase } from './strings'
 
@@ -30,6 +30,8 @@ export default async function APIRequest({
   isJSON?: boolean
   timeout?: number
 }): Promise<any> {
+  const { t } = useTranslation()
+
   await fetch(`${import.meta.env.VITE_API_HOST}/${endpoint}`, {
     method,
     signal: AbortSignal.timeout(timeout),

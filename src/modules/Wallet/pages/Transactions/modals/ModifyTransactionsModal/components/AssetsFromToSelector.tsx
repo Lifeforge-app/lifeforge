@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useWalletContext } from '@providers/WalletProvider'
 import AssetListbox from './AssetsListbox'
 
@@ -14,6 +14,7 @@ function AssetsFromToSelector({
   toAsset: string | null
   setToAsset: React.Dispatch<React.SetStateAction<string | null>>
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { assets } = useWalletContext()
 
   if (assets === 'loading') {

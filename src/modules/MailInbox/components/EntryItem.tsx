@@ -24,7 +24,7 @@ function EntryItem({
           onView(mail.id)
         }
       }}
-      className="flex-between flex w-full gap-12 border-b border-bg-200 p-4 text-left transition-all hover:bg-bg-200/50 dark:border-bg-800/50 dark:hover:bg-bg-800/50"
+      className="flex-between cursor-pointer flex w-full gap-12 border-b border-bg-200 p-4 text-left transition-all hover:bg-bg-200/50 dark:border-bg-800/50 dark:hover:bg-bg-800/50"
     >
       <div className="w-full min-w-0">
         <span className="block text-sm text-bg-500">
