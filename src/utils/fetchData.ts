@@ -1,6 +1,5 @@
 import { t } from 'i18next'
 import { cookieParse } from 'pocketbase'
-import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { toCamelCase } from './strings'
 
