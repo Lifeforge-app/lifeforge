@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { SidebarItem } from '@components/layouts/sidebar'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import useFetch from '@hooks/useFetch'
 import { Loadable } from '@interfaces/common'
 import { IMailInboxLabel } from '@interfaces/mail_inbox_interfaces'
 
@@ -98,7 +97,7 @@ function LabelChildList({
         onCollapseButtonClick={
           label.children.length > 0 ? () => setCollapsed(!collapsed) : undefined
         }
-        number={87}
+        number={label.label.count}
         showCollapseSpacer={level > 0}
         isCollapsed={collapsed}
         hamburgerMenuItems={
@@ -122,7 +121,7 @@ function LabelChildList({
           setSearchParams(newParams)
         }}
       />
-      <div className={`overflow-hidden ${collapsed ? 'h-0' : `h-auto`}`}>
+      <div className={`overflow-hidden ${collapsed ? 'h-0' : 'h-auto'}`}>
         {label.children.length > 0 && (
           <LabelList
             key={label.label.id}
@@ -151,8 +150,11 @@ function LabelList({
   )
 }
 
-function MasterLabelList(): React.ReactElement {
-  const [labels] = useFetch<IMailInboxLabel[]>('mail-inbox/labels')
+function MasterLabelList({
+  labels
+}: {
+  labels: Loadable<IMailInboxLabel[]>
+}): React.ReactElement {
   const [labelList, setLabelList] =
     useState<Loadable<ILabelListStructure[]>>('loading')
 
@@ -160,7 +162,21 @@ function MasterLabelList(): React.ReactElement {
     if (typeof labels === 'string') {
       setLabelList(labels)
     } else {
-      setLabelList(constructLabelListRecursively(labels))
+      setLabelList(
+        constructLabelListRecursively(
+          labels.filter(
+            e =>
+              ![
+                'INBOX',
+                'Trash',
+                'Unwanted',
+                'Sent',
+                'Important',
+                'Starred'
+              ].includes(e.name)
+          )
+        )
+      )
     }
   }, [labels])
 

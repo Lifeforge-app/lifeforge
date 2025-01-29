@@ -1,8 +1,14 @@
-import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
-import { ColorInput , ColorPickerModal , IconInput , IconPickerModal , TextInput } from '@components/inputs'
+import {
+  ColorInput,
+  ColorPickerModal,
+  IconInput,
+  IconPickerModal,
+  TextInput
+} from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWalletLedger } from '@interfaces/wallet_interfaces'
@@ -21,6 +27,7 @@ function ModifyLedgersModal({
   setExistedData: React.Dispatch<React.SetStateAction<IWalletLedger | null>>
   refreshLedgers: () => void
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [ledgerName, setLedgerName] = useState('')
   const [ledgerIcon, setLedgerIcon] = useState('')
   const [ledgerColor, setLedgerColor] = useState<string>('#FFFFFF')

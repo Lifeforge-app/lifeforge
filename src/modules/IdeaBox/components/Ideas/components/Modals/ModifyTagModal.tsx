@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React, { useEffect, useReducer } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import Modal from '@components/modals/Modal'
@@ -9,6 +9,7 @@ import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import APIRequest from '@utils/fetchData'
 
 function ModifyTagModal(): React.ReactElement {
+  const { t } = useTranslation()
   const {
     modifyTagModalOpenType: openType,
     setModifyTagModalOpenType: setOpenType,

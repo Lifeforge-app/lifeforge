@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import {
   SidebarDivider,
@@ -20,6 +20,7 @@ function Sidebar({
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
+  const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (

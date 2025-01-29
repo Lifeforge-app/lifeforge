@@ -1,7 +1,8 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import { t } from 'i18next'
+
 import moment from 'moment'
 import React, { useEffect, useReducer, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import Modal from '@components/modals/Modal'
@@ -30,10 +31,7 @@ function ModifyEventModal({
   existedData,
   categories
 }: ModifyEventModalProps): React.ReactElement {
-  if (categories === 'loading') return <LoadingScreen />
-  if (categories === 'error') {
-    return <ErrorScreen message="Failed to fetch data" />
-  }
+  const { t } = useTranslation()
 
   const [data, setData] = useReducer(
     (state, _newState) => {
@@ -83,12 +81,15 @@ function ModifyEventModal({
       label: 'Category',
       icon: 'tabler:list',
       type: 'listbox',
-      options: categories.map(({ name, color, icon, id }) => ({
-        value: id,
-        text: name,
-        icon,
-        color
-      })),
+      options:
+        typeof categories === 'string'
+          ? []
+          : categories.map(({ name, color, icon, id }) => ({
+              value: id,
+              text: name,
+              icon,
+              color
+            })),
       nullOption: 'tabler:apps-off'
     }
   ]
@@ -149,6 +150,11 @@ function ModifyEventModal({
       }
     }
   }, [innerOpenType, existedData])
+
+  if (categories === 'loading') return <LoadingScreen />
+  if (categories === 'error') {
+    return <ErrorScreen message="Failed to fetch data" />
+  }
 
   return (
     <>

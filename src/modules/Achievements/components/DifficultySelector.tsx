@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 function DifficultySelector({
   selectedDifficulty,
@@ -8,6 +8,8 @@ function DifficultySelector({
   selectedDifficulty: string
   setSelectedDifficulty: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <div className="mt-6 flex items-center">
       {[

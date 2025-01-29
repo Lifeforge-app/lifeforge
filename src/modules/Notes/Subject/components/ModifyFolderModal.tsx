@@ -1,6 +1,7 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import { t } from 'i18next'
+
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
@@ -21,6 +22,7 @@ function ModifyFolderModal({
   updateNotesEntries: () => void
   existedData: INotesEntry | null
 }): React.ReactElement {
+  const { t } = useTranslation()
   const {
     workspace,
     subject,

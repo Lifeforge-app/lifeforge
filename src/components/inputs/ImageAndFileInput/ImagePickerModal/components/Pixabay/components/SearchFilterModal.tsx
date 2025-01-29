@@ -1,9 +1,13 @@
 import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { t } from 'i18next'
+
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@components/buttons'
-import { ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
+import {
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption
+} from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import {
@@ -71,6 +75,8 @@ function SearchFilterModal({
   filters: IPixabaySearchFilter
   updateFilters: React.ActionDispatch<[action: PixabaySearchFilterAction]>
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <ModalWrapper isOpen={isOpen} minWidth="30vw">
       <ModalHeader

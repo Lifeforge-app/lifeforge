@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { t } from 'i18next'
+
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@components/buttons'
 
 function DnDContainer({
@@ -12,6 +13,8 @@ function DnDContainer({
   getInputProps: any
   isDragActive: boolean
 }): React.ReactElement {
+  const { t } = useTranslation()
+
   return (
     <div
       className="flex-center size-full min-h-96 flex-1 flex-col rounded-lg border-[3px] border-dashed border-bg-500 py-12"

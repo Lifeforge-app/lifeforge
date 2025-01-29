@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
@@ -18,6 +18,7 @@ function NotesSubject(): React.ReactElement {
     '*': path,
     workspace
   } = useParams<{ subject: string; '*': string; workspace: string }>()
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const [valid] = useFetch<boolean>(

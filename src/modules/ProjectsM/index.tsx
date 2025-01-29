@@ -1,6 +1,6 @@
-import { t } from 'i18next'
 import React from 'react'
-import { Button , FAB } from '@components/buttons'
+import { useTranslation } from 'react-i18next'
+import { Button, FAB } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
@@ -15,6 +15,7 @@ import ModifyModal from './components/ModifyModal'
 import Sidebar from './components/Sidebar'
 
 function ProjectsM(): React.ReactElement {
+  const { t } = useTranslation()
   const {
     miscellaneous: {
       deleteModalConfigs,

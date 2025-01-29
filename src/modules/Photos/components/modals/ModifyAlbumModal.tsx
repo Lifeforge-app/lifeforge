@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/no-nested-functions */
-import { t } from 'i18next'
+
 import React, { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
 import { TextInput } from '@components/inputs'
@@ -17,6 +18,7 @@ function ModifyAlbumModal({
   targetAlbum?: IPhotosAlbum
   refreshAlbumData?: () => void
 }): React.ReactElement {
+  const { t } = useTranslation()
   const {
     modifyAlbumModalOpenType: openType,
     setModifyAlbumModalOpenType: setOpenType,

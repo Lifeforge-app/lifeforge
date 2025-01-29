@@ -1,5 +1,5 @@
-import { t } from 'i18next'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import LoadingScreen from '@components/screens/LoadingScreen'
@@ -86,6 +86,7 @@ const ROUTES = _ROUTES as IRoutes[]
 // ]
 
 function Modules(): React.ReactElement {
+  const { t } = useTranslation()
   const { userData, setUserData } = useAuthContext()
 
   async function toggleModule(moduleName: string): Promise<void> {

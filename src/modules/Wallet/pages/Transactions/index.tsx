@@ -1,6 +1,7 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { t } from 'i18next'
+
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 import { FAB } from '@components/buttons'
 import HamburgerSelectorWrapper from '@components/buttons/HamburgerMenu/components/HamburgerSelectorWrapper'
@@ -24,6 +25,7 @@ import TableView from './views/TableView'
 import ColumnVisibilityToggle from './views/TableView/components/ColumnVisibilityToggle'
 
 function Transactions(): React.ReactElement {
+  const { t } = useTranslation()
   const {
     transactions,
     refreshTransactions,
