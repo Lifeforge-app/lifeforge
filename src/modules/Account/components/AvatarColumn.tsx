@@ -8,7 +8,7 @@ import { useAuthContext } from '@providers/AuthProvider'
 import APIRequest from '@utils/fetchData'
 
 function AvatarColumn(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.accountSettings')
   const [loading, setLoading] = useState(false)
   const { getAvatarURL, userData, setUserData } = useAuthContext()
   const [deleteAvatarConfirmationModal, setDeleteAvatarConfirmationModal] =
@@ -48,8 +48,8 @@ function AvatarColumn(): React.ReactElement {
   return (
     <>
       <ConfigColumn
-        title={t('accountSettings.title.profilePicture')}
-        desc={t('accountSettings.desc.profilePicture')}
+        title={t('settings.title.profilePicture')}
+        desc={t('settings.desc.profilePicture')}
         icon="tabler:camera"
       >
         <div className="mr-4 flex size-12 items-center justify-center overflow-hidden rounded-full bg-bg-100 dark:bg-bg-800">

@@ -12,7 +12,7 @@ function DefaultBgTempSelector({
   bgTemp: string
   setBgTemp: (value: string) => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.personalization')
 
   return (
     <div className="flex w-full flex-col items-center gap-2 xl:w-auto">
@@ -40,11 +40,11 @@ function DefaultBgTempSelector({
       </div>
       <div className="flex-between flex w-full gap-2">
         <span className="shrink-0 text-sm font-medium text-bg-500">
-          {t('personalization.bgTempSelector.cool')}
+          {t('bgTempSelector.cool')}
         </span>
         <span className="mt-px h-0.5 w-full bg-linear-to-r from-blue-500 to-red-500"></span>
         <span className="shrink-0 text-sm font-medium text-bg-500">
-          {t('personalization.bgTempSelector.warm')}
+          {t('bgTempSelector.warm')}
         </span>
       </div>
     </div>

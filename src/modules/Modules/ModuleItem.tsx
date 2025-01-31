@@ -3,7 +3,7 @@ import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { Button , Switch } from '@components/buttons'
+import { Button, Switch } from '@components/buttons'
 import { TextInput } from '@components/inputs'
 import useThemeColors from '@hooks/useThemeColor'
 import {
@@ -26,7 +26,7 @@ function ModuleItem({
 }): React.ReactElement {
   const { componentBg, componentBgLighter } = useThemeColors()
   const [expandConfig, setExpandConfig] = useState(false)
-  const { t } = useTranslation()
+  const { t } = useTranslation(`modules.${toCamelCase(module.name)}`)
   const [saveLoading, setButtonLoading] = useState(false)
 
   function toggleExpandConfig(): void {
@@ -91,7 +91,7 @@ function ModuleItem({
           </div>
           <div>
             <h3 className="flex flex-wrap items-center gap-2 text-xl font-medium">
-              <span>{t(`modules.${toCamelCase(module.name)}`)}</span>
+              <span>{t('title')}</span>
               <span>
                 {module.deprecated && (
                   <span className="text-sm text-red-500">
@@ -100,13 +100,7 @@ function ModuleItem({
                 )}
               </span>
             </h3>
-            <p className="text-bg-500">
-              {t(
-                `modules.descriptions.${toCamelCase(
-                  module.name?.toString() ?? ''
-                )}`
-              )}
-            </p>
+            <p className="text-bg-500">{t('description')}</p>
           </div>
         </div>
         <div className="flex items-center gap-4">

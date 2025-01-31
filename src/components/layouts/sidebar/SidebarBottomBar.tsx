@@ -1,12 +1,12 @@
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import useThemeColors from '@hooks/useThemeColor'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { useAuthContext } from '@providers/AuthProvider'
-import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import React from 'react'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+import useThemeColors from '@hooks/useThemeColor'
+import { useAuthContext } from '@providers/AuthProvider'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 
 function SidebarBottomBar(): React.ReactElement {
   const navigate = useNavigate()
@@ -68,6 +68,7 @@ function SidebarBottomBar(): React.ReactElement {
               }}
               icon="tabler:user-cog"
               text="Account settings"
+              namespace="common.sidebar"
             />
             <MenuItem
               isRed
@@ -77,6 +78,7 @@ function SidebarBottomBar(): React.ReactElement {
               }}
               icon="tabler:logout"
               text="Sign out"
+              namespace="common.sidebar"
             />
           </div>
         </MenuItems>

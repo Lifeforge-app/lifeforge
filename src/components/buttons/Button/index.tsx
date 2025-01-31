@@ -16,6 +16,8 @@ interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'no-bg'
   isRed?: boolean
   namespace?: string
+  tKey?: string
+  tProps?: Record<string, unknown>
 }
 
 type ButtonComponentProps<C extends React.ElementType = 'button'> = {
@@ -45,11 +47,9 @@ function Button<C extends React.ElementType = 'button'>({
   children,
   icon,
   onClick,
-  namespace,
   ...props
 }: ButtonComponentProps<C>): React.ReactElement {
   const Component = as || 'button'
-  const { t } = useTranslation(namespace)
   const finalProps = React.useMemo(
     () => ({ ...defaultProps, ...props }),
     [props]
@@ -61,6 +61,7 @@ function Button<C extends React.ElementType = 'button'>({
     finalProps.variant,
     finalProps.className
   )
+  const { t } = useTranslation(finalProps.namespace)
 
   const memoizedOnClick = React.useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -79,10 +80,17 @@ function Button<C extends React.ElementType = 'button'>({
     >
       {!finalProps.iconAtEnd &&
         renderIcon(icon, finalProps.loading, finalProps.iconClassName)}
-      {t([
-        toCamelCase(children as string),
-        `buttons.${toCamelCase(children as string)}`
-      ])}
+      {children && typeof children === 'string'
+        ? t(
+            [
+              `common.buttons:${toCamelCase(children as string)}`,
+              `buttons.${toCamelCase(children as string)}`,
+              `${finalProps.tKey}.buttons.${toCamelCase(children as string)}`,
+              children
+            ],
+            finalProps.tProps
+          )
+        : children}
       {finalProps.iconAtEnd &&
         renderIcon(icon, finalProps.loading, finalProps.iconClassName)}
     </Component>

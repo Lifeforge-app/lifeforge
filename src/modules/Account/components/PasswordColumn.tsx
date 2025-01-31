@@ -6,7 +6,7 @@ import ConfigColumn from '@components/utilities/ConfigColumn'
 import APIRequest from '@utils/fetchData'
 
 function PasswordColumn(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.accountSettings')
   const [loading, setLoading] = useState(false)
 
   async function onPasswordChange(): Promise<void> {
@@ -28,8 +28,8 @@ function PasswordColumn(): React.ReactElement {
 
   return (
     <ConfigColumn
-      title={t('accountSettings.title.password')}
-      desc={t('accountSettings.desc.password')}
+      title={t('settings.title.password')}
+      desc={t('settings.desc.password')}
       icon="tabler:key"
       hasDivider={false}
     >
@@ -41,6 +41,7 @@ function PasswordColumn(): React.ReactElement {
         variant="secondary"
         className="w-full whitespace-nowrap md:w-auto"
         icon="tabler:key"
+        namespace="modules.accountSettings"
       >
         change password
       </Button>

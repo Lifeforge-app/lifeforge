@@ -6,12 +6,12 @@ import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 function ThemeSelector(): React.ReactElement {
   const { theme, setTheme } = usePersonalizationContext()
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.personalization')
 
   return (
     <ConfigColumn
-      title={t('personalization.themeSelector.title')}
-      desc={t('personalization.themeSelector.desc')}
+      title={t('themeSelector.title')}
+      desc={t('themeSelector.desc')}
       icon="tabler:palette"
       vertical
     >
@@ -19,17 +19,17 @@ function ThemeSelector(): React.ReactElement {
         {[
           {
             id: 'system',
-            name: t('personalization.themeSelector.theme.system'),
+            name: t('themeSelector.theme.system'),
             Image: '/assets/mockup/system.png'
           },
           {
             id: 'light',
-            name: t('personalization.themeSelector.theme.light'),
+            name: t('themeSelector.theme.light'),
             Image: '/assets/mockup/light.png'
           },
           {
             id: 'dark',
-            name: t('personalization.themeSelector.theme.dark'),
+            name: t('themeSelector.theme.dark'),
             Image: '/assets/mockup/dark.png'
           }
         ].map(({ id, name, Image }) => (

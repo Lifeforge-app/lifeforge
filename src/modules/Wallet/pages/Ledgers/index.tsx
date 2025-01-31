@@ -13,7 +13,7 @@ import LedgerItem from './components/LedgerItem'
 import ModifyLedgersModal from './components/ModifyLedgersModal'
 
 function Ledgers(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
   const { ledgers, refreshLedgers } = useWalletContext()
   const [modifyLedgersModalOpenType, setModifyModalOpenType] = useState<
     'create' | 'update' | null
@@ -44,8 +44,11 @@ function Ledgers(): React.ReactElement {
                 setModifyModalOpenType('create')
               }}
               icon="tabler:plus"
+              tProps={{
+                item: t('items.ledger')
+              }}
             >
-              Add Ledger
+              New
             </Button>
           )
         }
@@ -68,9 +71,12 @@ function Ledgers(): React.ReactElement {
             </div>
           ) : (
             <EmptyStateScreen
-              title={t('emptyState.wallet.ledger.title')}
-              description={t('emptyState.wallet.ledger.description')}
-              ctaContent="Add Ledger"
+              name="ledger"
+              namespace="modules.wallet"
+              ctaContent="new"
+              ctaTProps={{
+                item: t('items.ledger')
+              }}
               onCTAClick={setModifyModalOpenType}
               icon="tabler:wallet-off"
             />

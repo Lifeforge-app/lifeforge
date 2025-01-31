@@ -19,21 +19,21 @@ function OrdinaryColumn({
   type?: string
 }): React.ReactElement {
   const { userData } = useAuthContext()
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.accountSettings')
   const [modifyModalOpen, setModifyModalOpen] = useState(false)
 
   return (
     <>
       <ConfigColumn
-        title={t(`accountSettings.title.${toCamelCase(title)}`)}
-        desc={t(`accountSettings.desc.${toCamelCase(title)}`)}
+        title={t(`settings.title.${toCamelCase(title)}`)}
+        desc={t(`settings.desc.${toCamelCase(title)}`)}
         icon={icon}
       >
         <div className="flex-between w-full">
           <span className="whitespace-nowrap text-bg-500">
             {(() => {
               if (userData[id] === '') {
-                return t('accountSettings.empty')
+                return t('settings.empty')
               }
 
               if (type === 'date') {

@@ -41,12 +41,12 @@ const LANGUAGES: Array<{
 function LanguageSelector(): React.ReactElement {
   const { componentBgWithHover } = useThemeColors()
   const { language, setLanguage } = usePersonalizationContext()
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.personalization')
 
   return (
     <ConfigColumn
-      title={t('personalization.languageSelector.title')}
-      desc={t('personalization.languageSelector.desc')}
+      title={t('languageSelector.title')}
+      desc={t('languageSelector.desc')}
       icon="tabler:language"
     >
       <Listbox

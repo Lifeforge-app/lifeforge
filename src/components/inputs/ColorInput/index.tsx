@@ -11,7 +11,8 @@ function ColorInput({
   updateColor,
   setColorPickerOpen,
   hasTopMargin = true,
-  className
+  className,
+  namespace
 }: {
   name: string
   color: string
@@ -19,8 +20,9 @@ function ColorInput({
   setColorPickerOpen: React.Dispatch<React.SetStateAction<boolean>>
   hasTopMargin?: boolean
   className?: string
+  namespace: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation(namespace)
   const ref = useRef<HTMLInputElement | null>(null)
 
   const handleColorPickerOpen = useCallback(() => {
@@ -42,7 +44,7 @@ function ColorInput({
               : 'top-6 -translate-y-1/2 text-[14px]'
           }`}
         >
-          {t(`input.${toCamelCase(name)}`)}
+          {t(`inputs.${toCamelCase(name)}`)}
         </span>
         <div className="mr-4 mt-6 flex w-full items-center gap-2 pl-4">
           <div

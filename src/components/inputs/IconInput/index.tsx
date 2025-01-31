@@ -9,14 +9,16 @@ function IconInput({
   name,
   icon,
   setIcon,
-  setIconSelectorOpen
+  setIconSelectorOpen,
+  namespace
 }: {
   name: string
   icon: string
   setIcon: (icon: string) => void
   setIconSelectorOpen: React.Dispatch<React.SetStateAction<boolean>>
+  namespace?: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation(namespace)
   const ref = useRef<HTMLInputElement | null>(null)
 
   function updateIcon(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -35,7 +37,7 @@ function IconInput({
                 : 'top-6 -translate-y-1/2 text-[14px]'
             }`}
           >
-            {t(`input.${toCamelCase(name)}`)}
+            {t(`inputs.${toCamelCase(name)}`)}
           </span>
           <div className="mr-12 mt-6 flex w-full items-center gap-2 pl-4">
             <Icon

@@ -14,12 +14,12 @@ function BgTempSelector(): React.ReactElement {
   )
   const [colorPickerModalOpen, setColorPickerModalOpen] =
     useState<boolean>(false)
-  const { t } = useTranslation()
+  const { t } = useTranslation(['modules.personalization', 'common.buttons'])
 
   return (
     <ConfigColumn
-      title={t('personalization.bgTempSelector.title')}
-      desc={t('personalization.bgTempSelector.desc')}
+      title={t('bgTempSelector.title')}
+      desc={t('bgTempSelector.desc')}
       icon="tabler:temperature"
       noDefaultBreakpoints
       className="[@media(min-width:1170px)]:flex-row"
@@ -38,7 +38,7 @@ function BgTempSelector(): React.ReactElement {
         >
           <Icon icon="tabler:palette" className="size-6 text-bg-500" />
           <span className="font-medium text-bg-500 md:hidden">
-            {t('personalization.bgTempSelector.customBgTemp')}
+            {t('bgTempSelector.customBgTemp')}
           </span>
         </button>
         {bgTemp.startsWith('#') && (
@@ -46,6 +46,7 @@ function BgTempSelector(): React.ReactElement {
             <ColorInput
               className="w-full lg:w-min"
               name="Color Hex"
+              namespace="modules.personalization"
               color={customBgTemp}
               updateColor={setCustomBgTemp}
               setColorPickerOpen={setColorPickerModalOpen}
@@ -53,15 +54,24 @@ function BgTempSelector(): React.ReactElement {
             />
             {bgTemp !== customBgTemp &&
               customBgTemp.match(/^#[0-9A-F]{6}$/i) !== null && (
-                <Button
-                  className="w-full lg:w-auto"
-                  icon="uil:save"
-                  onClick={() => {
-                    setBgTemp(customBgTemp)
-                  }}
-                >
-                  <span className="inline lg:hidden">{t('buttons.save')}</span>
-                </Button>
+                <>
+                  <Button
+                    className="w-full hidden lg:flex"
+                    icon="uil:save"
+                    onClick={() => {
+                      setBgTemp(customBgTemp)
+                    }}
+                  ></Button>
+                  <Button
+                    className="w-full lg:hidden"
+                    icon="uil:save"
+                    onClick={() => {
+                      setBgTemp(customBgTemp)
+                    }}
+                  >
+                    save
+                  </Button>
+                </>
               )}
             <ColorPickerModal
               color={customBgTemp}
