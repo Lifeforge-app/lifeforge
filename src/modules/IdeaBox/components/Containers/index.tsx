@@ -45,7 +45,7 @@ function Container({
           className="size-8 text-bg-500 dark:text-bg-50"
         />
         <div className="text-xl font-semibold text-bg-500 dark:text-bg-50">
-          {t('button.createContainer')}
+          {t('buttons.createContainer')}
         </div>
       </button>
     </div>

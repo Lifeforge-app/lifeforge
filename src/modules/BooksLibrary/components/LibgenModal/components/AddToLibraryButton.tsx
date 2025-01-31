@@ -33,22 +33,21 @@ function AddToLibraryButton({
 
   const text = useMemo(() => {
     if (Object.keys(processes).includes(md5)) {
-      return `${t('button.downloading')} (${processes[md5].percentage})`
+      return `${t('buttons.downloading')} (${processes[md5].percentage})`
     }
 
     if (
       typeof entries !== 'string' &&
       entries.some(entry => entry.md5 === md5)
     ) {
-      return t('button.alreadyInLibrary')
+      return t('buttons.alreadyInLibrary')
     }
 
-    return t('button.addToLibrary')
+    return t('buttons.addToLibrary')
   }, [entries, md5, processes])
 
   return (
     <Button
-      needTranslate={false}
       disabled={
         Object.keys(processes).includes(md5) ||
         (typeof entries !== 'string' &&

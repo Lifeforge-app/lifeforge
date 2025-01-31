@@ -25,7 +25,6 @@ function TaskListListItem({
       name={item.name}
       sideStripColor={item.color}
       active={searchParams.get('list') === item.id}
-      needTranslate={false}
       number={item.amount}
       onClick={() => {
         setSearchParams({

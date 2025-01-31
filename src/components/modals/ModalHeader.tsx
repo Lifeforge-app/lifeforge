@@ -15,7 +15,8 @@ function ModalHeader({
   actionButtonIsRed = false,
   onActionButtonClick,
   className = '',
-  appendTitle
+  appendTitle,
+  namespace = 'common.modals'
 }: {
   title: string
   needTranslate?: boolean
@@ -27,8 +28,9 @@ function ModalHeader({
   onActionButtonClick?: () => void
   className?: string
   appendTitle?: React.ReactElement
+  namespace?: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation(namespace)
   const innerTitle = useDebounce(title, 100)
   const innerIcon = useDebounce(icon, 100)
 
@@ -38,7 +40,12 @@ function ModalHeader({
         <Icon icon={innerIcon} className="size-7 shrink-0" />
         <span className="min-w-0 truncate">
           {needTranslate
-            ? t(`modals.header.${toCamelCase(innerTitle)}`)
+            ? t([
+                `${toCamelCase(innerTitle)}`,
+                `${toCamelCase(innerTitle)}.title`,
+                `modals.${toCamelCase(innerTitle)}`,
+                `modals.${toCamelCase(innerTitle)}.title`
+              ])
             : innerTitle}
         </span>
         {hasAI && (

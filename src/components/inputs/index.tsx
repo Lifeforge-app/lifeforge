@@ -7,6 +7,7 @@ export { default as DateInput } from './DateInput'
 export { default as CurrencyInput } from './CurrencyInput'
 export { default as SearchInput } from './SearchInput'
 export { default as TagsInput } from './TagsInput'
+export { default as LocationInput } from './LocationInput'
 
 export { default as ListboxOrComboboxOption } from './ListboxOrComboboxInput/components/ListboxOrComboboxOption'
 export { default as ListboxOrComboboxOptions } from './ListboxOrComboboxInput/components/ListboxOrComboboxOptions'

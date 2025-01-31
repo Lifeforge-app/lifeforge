@@ -1,7 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toCamelCase } from '@utils/strings'
 import InputBox from './shared/InputBox'
 import InputIcon from './shared/InputIcon'
 import InputLabel from './shared/InputLabel'
@@ -14,7 +12,6 @@ interface ITagsInputProps {
   placeholder: string
   value: string[]
   updateValue: (tags: string[]) => void
-  needTranslate?: boolean
   maxTags?: number
   disabled?: boolean
   className?: string
@@ -33,7 +30,6 @@ function TagsInput({
   placeholder,
   value,
   updateValue,
-  needTranslate = true,
   maxTags = 100,
   disabled = false,
   className = '',
@@ -41,7 +37,6 @@ function TagsInput({
   existedTags,
   required
 }: ITagsInputProps): React.ReactElement {
-  const { t } = useTranslation()
   const [currentTag, setCurrentTag] = useState<string>('')
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -77,7 +72,7 @@ function TagsInput({
       <div className="flex w-full items-center gap-2">
         <InputLabel
           required={required === true}
-          label={needTranslate ? t(`input.${toCamelCase(name)}`) : name}
+          label={name}
           active={String(value).length > 0}
         />
         <div className="mb-4 ml-[14px] mt-12 flex flex-wrap items-center gap-2">

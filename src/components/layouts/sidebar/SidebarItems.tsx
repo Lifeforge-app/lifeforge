@@ -1,4 +1,5 @@
 import React, { Fragment, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import Scrollbar from '@components/utilities/Scrollbar'
 import { type IRoutes } from '@interfaces/routes_interfaces'
@@ -48,11 +49,7 @@ function SidebarItems({ query }: { query: string }): React.ReactElement {
             )
 
             return (
-              <Fragment
-                key={`section-${item.title}-${Math.random()
-                  .toString(36)
-                  .substring(7)}`}
-              >
+              <Fragment key={`section-${item.title}`}>
                 {item.title !== '' &&
                   filteredModules.length > 0 &&
                   sidebarExpanded && <SidebarTitle name={item.title} />}

@@ -27,13 +27,7 @@ function CreateOrModifyButton({
           : 'svg-spinners:180-ring'
       }
     >
-      {!loading &&
-        type !== null &&
-        {
-          create: 'CREATE',
-          update: 'UPDATE',
-          rename: 'RENAME'
-        }[type]}
+      {!loading && type !== null && type}
     </Button>
   )
 }

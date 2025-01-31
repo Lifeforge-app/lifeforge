@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Button, Switch } from '@components/buttons'
 import { ImageAndFileInput, ImagePickerModal } from '@components/inputs'
@@ -23,6 +24,7 @@ function ScanReceiptModal({
     React.SetStateAction<'create' | 'update' | null>
   >
 }): React.ReactElement {
+  const { t } = useTranslation('modules.wallet')
   const [file, setFile] = useState<File | string | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
   const [imagePickerModalOpen, setImagePickerModalOpen] = useState(false)
@@ -71,7 +73,8 @@ function ScanReceiptModal({
     <>
       <ModalWrapper isOpen={open} minWidth="50vw">
         <ModalHeader
-          title="Scan Receipt"
+          title="receipts.scan"
+          namespace="modules.wallet"
           icon="tabler:scan"
           onClose={() => {
             setOpen(false)
@@ -91,12 +94,13 @@ function ScanReceiptModal({
             setFile(null)
             setPreview(null)
           }}
+          namespace="modules.wallet"
         />
         <div className="flex-between mt-4 gap-4">
           <div className="flex w-full min-w-0 items-center gap-2">
             <Icon icon="tabler:file-check" className="size-5 shrink-0" />
             <span className="w-full min-w-0 truncate">
-              Keep receipt after scan
+              {t('receipts.keepAfterScan')}
             </span>
           </div>
           <Switch

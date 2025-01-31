@@ -13,7 +13,7 @@ function initLocale(): void {
         escapeValue: false
       },
       backend: {
-        loadPath: `${import.meta.env.VITE_API_HOST}/locales/{{lng}}`
+        loadPath: `${import.meta.env.VITE_API_HOST}/locales/{{lng}}/{{ns}}`
       }
     })
     .catch(() => {

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import {
   SidebarDivider,
@@ -23,13 +24,14 @@ function Sidebar({
     React.SetStateAction<boolean | 'new'>
   >
 }): React.ReactElement {
+  const { t } = useTranslation('modules.wallet')
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
       <SidebarItem
         icon="tabler:list"
-        name="All Transactions"
+        name={t('sidebar.allTransactions')}
         active={searchParams.entries().next().done === true}
         onClick={() => {
           setSearchParams(new URLSearchParams())

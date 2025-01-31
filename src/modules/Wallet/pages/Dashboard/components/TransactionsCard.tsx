@@ -12,13 +12,14 @@ import { numberToMoney } from '@utils/strings'
 
 function TransactionsCard(): React.ReactElement {
   const { transactions, categories } = useWalletContext()
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
 
   return (
     <DashboardItem
       className="col-span-2 row-span-3"
       icon="tabler:list"
-      title={t('dashboard.widgets.recentTransactions.title')}
+      namespace="modules.wallet"
+      title="Recent Transactions"
       componentBesideTitle={
         <Link
           to="/wallet/transactions"

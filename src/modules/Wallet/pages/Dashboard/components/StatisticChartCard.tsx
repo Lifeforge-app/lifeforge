@@ -66,13 +66,14 @@ function StatisticChardCard(): React.ReactElement {
         .map(amount => (amount === 0 ? 0.1 : amount))
     })
   }, [transactions])
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
 
   return (
     <DashboardItem
       className="col-span-2 row-span-2"
       icon="tabler:chart-dots"
-      title={t('dashboard.widgets.statistics')}
+      namespace="modules.wallet"
+      title="Statistics"
       componentBesideTitle={
         <div className="hidden items-center gap-8 sm:flex">
           {['income', 'expenses'].map(type => (
@@ -82,13 +83,13 @@ function StatisticChardCard(): React.ReactElement {
                   type === 'income' ? 'bg-green-500' : 'bg-red-500'
                 }`}
               ></span>
-              <span className="text-sm">{t(`dashboard.widgets.${type}`)}</span>
+              <span className="text-sm">{t(`transactionTypes.${type}`)}</span>
             </div>
           ))}
         </div>
       }
     >
-      <div className="flex-center mt-6 size-full min-h-0 flex-1">
+      <div className="flex-center size-full min-h-0 flex-1">
         <APIFallbackComponent data={transactions}>
           {transactions =>
             transactions.length === 0 ? (

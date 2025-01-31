@@ -19,7 +19,8 @@ function AssetsBalanceCard(): React.ReactElement {
   return (
     <DashboardItem
       icon="tabler:wallet"
-      title={t('dashboard.widgets.assetsBalance.title')}
+      namespace="modules.wallet"
+      title="Assets Balance"
       className="col-span-1 row-span-2 min-h-96 xl:min-h-0"
       componentBesideTitle={
         <Link
@@ -34,7 +35,7 @@ function AssetsBalanceCard(): React.ReactElement {
         {assets =>
           assets.length > 0 ? (
             <Scrollbar>
-              <ul className="flex flex-col gap-2 py-2">
+              <ul className="flex flex-col gap-2 pb-2">
                 {assets.map(asset => (
                   <Link
                     key={asset.id}

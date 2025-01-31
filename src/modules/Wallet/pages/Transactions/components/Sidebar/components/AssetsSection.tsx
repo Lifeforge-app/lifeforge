@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import { SidebarItem, SidebarTitle } from '@components/layouts/sidebar'
@@ -10,6 +11,7 @@ function AssetsSection({
 }: {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
+  const { t } = useTranslation('modules.wallet')
   const [searchParams, setSearchParams] = useSearchParams()
   const { assets, filteredTransactions } = useWalletContext()
   const navigate = useNavigate()
@@ -17,7 +19,7 @@ function AssetsSection({
   return (
     <>
       <SidebarTitle
-        name="Assets"
+        name={t('sidebar.assets')}
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           navigate('/wallet/assets#new')
@@ -29,7 +31,7 @@ function AssetsSection({
             {[
               {
                 icon: 'tabler:coin',
-                name: 'All',
+                name: t('sidebar.allAssets'),
                 color: 'white',
                 id: null,
                 type: 'all'
@@ -41,7 +43,6 @@ function AssetsSection({
                   key={id}
                   name={name}
                   icon={icon}
-                  needTranslate={false}
                   active={
                     searchParams.get('asset') === id ||
                     (searchParams.get('asset') === null && index === 0)

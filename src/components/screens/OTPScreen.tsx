@@ -163,9 +163,8 @@ function OTPScreen({
             className="w-full md:w-3/4 xl:w-1/2"
             variant="secondary"
             icon="tabler:refresh"
-            needTranslate={false}
           >
-            {t('button.resendOtp')} {otpCooldown > 0 && `(${otpCooldown}s)`}
+            {t('buttons.resendOtp')} {otpCooldown > 0 && `(${otpCooldown}s)`}
           </Button>
         </>
       ) : (

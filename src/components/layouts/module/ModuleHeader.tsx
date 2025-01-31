@@ -15,7 +15,6 @@ interface ModuleHeaderProps {
   hamburgerMenuClassName?: string
   actionButton?: React.ReactNode
   customElement?: React.ReactNode
-  needTranslate?: boolean
 }
 
 function ModuleHeader({
@@ -26,10 +25,11 @@ function ModuleHeader({
   hamburgerMenuItems,
   hamburgerMenuClassName,
   actionButton,
-  customElement,
-  needTranslate = true
+  customElement
 }: ModuleHeaderProps): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation(
+    `modules.${toCamelCase(title?.toString() ?? '')}`
+  )
   const { toggleSidebar, sidebarExpanded } = useGlobalStateContext()
 
   return (
@@ -50,11 +50,7 @@ function ModuleHeader({
         )}
         <div className="w-full min-w-0 sm:space-y-1">
           <h1 className="flex w-full min-w-0 items-end gap-3 whitespace-nowrap text-2xl font-semibold sm:text-3xl">
-            <span className="block truncate">
-              {needTranslate
-                ? t(`modules.${toCamelCase(title?.toString() ?? '')}`)
-                : title}
-            </span>
+            <span className="block truncate">{t('title')}</span>
             <span className="min-w-0 text-sm font-medium text-bg-500 sm:text-base">
               {totalItems !== undefined
                 ? `(${totalItems.toLocaleString()})`
@@ -62,11 +58,7 @@ function ModuleHeader({
             </span>
           </h1>
           <div className="w-full min-w-0 truncate whitespace-nowrap text-sm text-bg-500 sm:text-base">
-            {needTranslate
-              ? t(
-                  `modules.descriptions.${toCamelCase(title?.toString() ?? '')}`
-                )
-              : ''}
+            {t('description')}
           </div>
         </div>
       </div>

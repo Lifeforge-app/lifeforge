@@ -1,7 +1,11 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { ListboxOrComboboxInput , ListboxNullOption , ListboxOrComboboxOption } from '@components/inputs'
+import {
+  ListboxOrComboboxInput,
+  ListboxNullOption,
+  ListboxOrComboboxOption
+} from '@components/inputs'
 import { useWalletContext } from '@providers/WalletProvider'
 
 function AssetsSelector({
@@ -11,7 +15,6 @@ function AssetsSelector({
   transactionAsset: string | null
   setTransactionAsset: React.Dispatch<React.SetStateAction<string | null>>
 }): React.ReactElement {
-  const { t } = useTranslation()
   const { assets } = useWalletContext()
 
   if (assets === 'loading') {
@@ -25,7 +28,8 @@ function AssetsSelector({
   return (
     <ListboxOrComboboxInput
       type="listbox"
-      name={t('input.asset')}
+      name="Asset"
+      namespace="modules.wallet"
       icon="tabler:wallet"
       value={transactionAsset}
       setValue={setTransactionAsset}

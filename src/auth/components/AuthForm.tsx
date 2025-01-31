@@ -11,7 +11,7 @@ function AuthForm(): React.ReactElement {
   const [emailOrUsername, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  const { t } = useTranslation()
+  const { t } = useTranslation('common.auth')
 
   const {
     authenticate,
@@ -36,7 +36,7 @@ function AuthForm(): React.ReactElement {
             dismissQuota()
           }
         } else {
-          toast.success(t('auth.welcome') + res.split(' ').slice(1).join(' '))
+          toast.success(t('welcome') + res.split(' ').slice(1).join(' '))
         }
         setLoading(false)
       })
@@ -50,15 +50,15 @@ function AuthForm(): React.ReactElement {
       {(
         [
           {
-            name: t('auth.emailOrUsername'),
-            placeholder: 'someone@somemail.com',
+            name: t('inputs.emailOrUsername.label'),
+            placeholder: t('common.auth:inputs.emailOrUsername.placeholder'),
             icon: 'tabler:user',
             value: emailOrUsername,
             updateValue: setEmail,
             inputMode: 'email'
           },
           {
-            name: t('auth.password'),
+            name: t('inputs.password.label'),
             placeholder: '••••••••••••••••',
             icon: 'tabler:key',
             value: password,
@@ -69,7 +69,6 @@ function AuthForm(): React.ReactElement {
         <TextInput
           key={index}
           {...input}
-          needTranslate={false}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
             if (e.key === 'Enter') {
               signIn()
@@ -77,6 +76,7 @@ function AuthForm(): React.ReactElement {
           }}
           isPassword={input.name === 'Password'}
           darker
+          namespace={false}
         />
       ))}
       <AuthSignInButton

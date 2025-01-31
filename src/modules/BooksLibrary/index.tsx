@@ -91,7 +91,6 @@ function BooksLibrary(): React.ReactElement {
                   setView(type as 'grid' | 'list')
                 }}
                 isToggled={view === type}
-                needTranslate={false}
               />
             ))}
           </HamburgerSelectorWrapper>

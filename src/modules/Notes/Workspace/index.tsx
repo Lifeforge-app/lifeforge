@@ -55,7 +55,6 @@ function NotesCategory(): React.ReactElement {
             }}
           />
           <ModuleHeader
-            needTranslate={false}
             icon={typeof titleData === 'string' ? '' : titleData.icon}
             title={
               <>

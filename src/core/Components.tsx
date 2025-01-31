@@ -122,7 +122,7 @@ const Wishlist = lazy(async () => await import('../modules/Wishlist'))
 const WishlistEntries = lazy(
   async () => await import('../modules/Wishlist/pages/WishlistEntries')
 )
-const Budget = lazy(async () => await import('../modules/Budget'))
+const Budgets = lazy(async () => await import('../modules/Budget'))
 const Workout = lazy(async () => await import('../modules/Workout'))
 const _3dModels = lazy(async () => await import('../modules/3dModels'))
 const Sudoku = lazy(async () => await import('../modules/Sudoku'))
@@ -279,8 +279,8 @@ export const COMPONENTS = {
     wishlist: Wishlist,
     'wishlist-entries': WishlistEntries
   },
-  budget: {
-    budget: Budget
+  budgets: {
+    budgets: Budgets
   },
   workout: {
     workout: Workout

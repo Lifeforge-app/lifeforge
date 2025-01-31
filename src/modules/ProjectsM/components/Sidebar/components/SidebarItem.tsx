@@ -47,7 +47,6 @@ function _SidebarItem({
         }
         icon={item.icon}
         name={item.name}
-        needTranslate={false}
         number={Math.floor(Math.random() * 100)}
         onClick={() => {
           setSearchParams({

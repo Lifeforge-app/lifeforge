@@ -1,5 +1,4 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { useWalletContext } from '@providers/WalletProvider'
 import AssetListbox from './AssetsListbox'
 
@@ -14,7 +13,6 @@ function AssetsFromToSelector({
   toAsset: string | null
   setToAsset: React.Dispatch<React.SetStateAction<string | null>>
 }): React.ReactElement {
-  const { t } = useTranslation()
   const { assets } = useWalletContext()
 
   if (assets === 'loading') {
@@ -31,14 +29,14 @@ function AssetsFromToSelector({
         assets={assets}
         selectedAsset={fromAsset}
         onAssetChange={setFromAsset}
-        label={t('input.fromAsset')}
+        label="From Asset"
         iconName="tabler:step-out"
       />
       <AssetListbox
         assets={assets}
         selectedAsset={toAsset}
         onAssetChange={setToAsset}
-        label={t('input.toAsset')}
+        label="To Asset"
         iconName="tabler:step-into"
       />
     </>

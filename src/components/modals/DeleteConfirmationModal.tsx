@@ -25,7 +25,7 @@ function DeleteConfirmationModal({
   nameKey?: string
   customCallback?: () => Promise<void>
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common.modals')
   const [loading, setLoading] = useState(false)
 
   async function deleteData(): Promise<void> {
@@ -59,12 +59,12 @@ function DeleteConfirmationModal({
   return (
     <ModalWrapper isOpen={isOpen}>
       <h1 className="text-2xl font-semibold">
-        {t('modals.deleteConfirmation.title', {
+        {t('deleteConfirmation.title', {
           itemName: nameKey ? data?.[nameKey] : `the ${itemName}`
         })}
       </h1>
       <p className="mt-2 text-bg-500">
-        {customText ?? t('modals.deleteConfirmation.desc', { itemName })}
+        {customText ?? t('deleteConfirmation.desc', { itemName })}
       </p>
       <div className="mt-6 flex w-full flex-col-reverse justify-around gap-2 sm:flex-row">
         <Button

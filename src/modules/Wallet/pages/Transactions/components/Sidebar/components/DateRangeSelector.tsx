@@ -1,10 +1,12 @@
 import moment from 'moment'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { DateInput } from '@components/inputs'
 import { SidebarTitle } from '@components/layouts/sidebar'
 
 function DateRangeSelector(): React.ReactElement {
+  const { t } = useTranslation('modules.wallet')
   const [searchParams, setSearchParams] = useSearchParams()
 
   const handleDateChange = (
@@ -43,7 +45,7 @@ function DateRangeSelector(): React.ReactElement {
 
   return (
     <>
-      <SidebarTitle name="Date Range" />
+      <SidebarTitle name={t('sidebar.dateRange')} />
       <div className="px-4">
         {dateInputsConfig.map(({ type, icon, name }, idx) => (
           <DateInput
@@ -60,6 +62,7 @@ function DateRangeSelector(): React.ReactElement {
             setDate={date => {
               handleDateChange(date, type)
             }}
+            namespace="modules.wallet"
             name={name}
             className={`w-full ${idx === 1 && 'mt-4'}`}
             hasMargin={false}

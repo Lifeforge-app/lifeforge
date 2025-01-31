@@ -1,6 +1,9 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
+import {
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption
+} from '@components/inputs'
 
 interface Asset {
   id: string
@@ -30,6 +33,7 @@ function AssetListbox({
       icon={iconName}
       value={selectedAsset}
       setValue={onAssetChange}
+      namespace="modules.wallet"
       buttonContent={
         <>
           <Icon

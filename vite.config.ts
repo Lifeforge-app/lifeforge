@@ -17,8 +17,8 @@ export default defineConfig({
         plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]]
       }
     }),
+    // mkcert()
     ,
-    mkcert()
   ],
   resolve: {
     alias: {

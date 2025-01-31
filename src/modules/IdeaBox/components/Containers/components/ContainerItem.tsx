@@ -32,7 +32,7 @@ function ContainerItem({
           <img
             className="aspect-video size-full object-cover"
             alt=""
-            src={`${import.meta.env.VITE_API_HOST}/media/${
+            src={`${import.meta.env.VITE_API_HOST}/media${
               container.cover
             }?thumb=0x200`}
           />

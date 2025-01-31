@@ -1,6 +1,8 @@
 import { ComboboxInput, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import React, { memo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toCamelCase } from '@utils/strings'
 import ComboboxInputWrapper from './components/ComboboxInputWrapper'
 import ListboxInputWrapper from './components/ListboxInputWrapper'
 import ListboxOrComboboxOptions from './components/ListboxOrComboboxOptions'
@@ -16,6 +18,7 @@ interface IGeneralProps {
   children: React.ReactNode
   customActive?: boolean
   required?: boolean
+  namespace: string
 }
 
 interface IListboxProps extends IGeneralProps {
@@ -43,8 +46,10 @@ function ListboxOrComboboxInput(
     type,
     children,
     required,
-    customActive
+    customActive,
+    namespace
   } = props
+  const { t } = useTranslation(namespace)
 
   switch (type) {
     case 'listbox':
@@ -65,7 +70,7 @@ function ListboxOrComboboxInput(
               }
             />
             <InputLabel
-              label={name}
+              label={t(`inputs.${toCamelCase(name)}`)}
               required={required === true}
               isListbox
               active={
@@ -100,7 +105,7 @@ function ListboxOrComboboxInput(
               }
             />
             <InputLabel
-              label={name}
+              label={t(`inputs.${toCamelCase(name)}`)}
               required={required === true}
               isListbox
               active={
@@ -123,4 +128,4 @@ function ListboxOrComboboxInput(
   }
 }
 
-export default memo(ListboxOrComboboxInput)
+export default ListboxOrComboboxInput

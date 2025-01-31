@@ -27,7 +27,6 @@ function CategoryListItem({
       sideStripColor={item.color}
       icon={item.icon}
       name={item.name}
-      needTranslate={false}
       number={item.amount}
       onClick={() => {
         setSearchParams({

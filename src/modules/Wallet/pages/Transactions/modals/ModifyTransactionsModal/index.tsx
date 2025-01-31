@@ -10,7 +10,8 @@ import {
   DateInput,
   ImageAndFileInput,
   ImagePickerModal,
-  TextInput
+  TextInput,
+  LocationInput
 } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
@@ -21,7 +22,6 @@ import AssetsFromToSelector from './components/AssetsFromToSelector'
 import AssetsSelector from './components/AssetsSelector'
 import CategorySelector from './components/CategorySelector'
 import LedgerSelector from './components/LedgerSelector'
-import LocationSelector from './components/LocationSelector'
 import TransactionTypeSelector from './components/TransactionTypeSelector'
 
 function ModifyTransactionsModal({
@@ -37,7 +37,7 @@ function ModifyTransactionsModal({
     React.SetStateAction<IWalletTransaction | null>
   >
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
   const { refreshAssets, refreshTransactions } = useWalletContext()
   const [particular, setParticular] = useState('')
   const [transactionType, setTransactionType] = useState<
@@ -184,12 +184,13 @@ function ModifyTransactionsModal({
       <ModalWrapper modalRef={ref} isOpen={openType !== null} minWidth="40vw">
         <ModalHeader
           icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-          title={openType === 'create' ? 'Add Transaction' : 'Edit Transaction'}
+          title={`transactions.${openType || ''}`}
           onClose={() => {
             setOpenType(null)
             setExistedData(null)
           }}
           className="mb-4!"
+          namespace="modules.wallet"
         />
         <div className="space-y-4">
           <TransactionTypeSelector
@@ -219,6 +220,7 @@ function ModifyTransactionsModal({
             setDate={setTransactionDate}
             icon="tabler:calendar"
             darker
+            namespace="modules.wallet"
           />
           {transactionType !== 'transfer' && (
             <TextInput
@@ -229,6 +231,7 @@ function ModifyTransactionsModal({
               name="Particulars"
               className="mt-4"
               updateValue={setParticular}
+              namespace="modules.wallet"
             />
           )}
           <CurrencyInput
@@ -239,10 +242,15 @@ function ModifyTransactionsModal({
             placeholder="0.00"
             darker
             className="mt-4"
+            namespace="modules.wallet"
           />
           {transactionType !== 'transfer' && (
             <>
-              <LocationSelector location={location} setLocation={setLocation} />
+              <LocationInput
+                location={location}
+                setLocation={setLocation}
+                namespace="modules.wallet"
+              />
               <CategorySelector
                 transactionType={transactionType}
                 category={category}
@@ -262,7 +270,8 @@ function ModifyTransactionsModal({
             onImageRemoved={() => {
               if (openType === 'update') setToRemoveReceipt(true)
             }}
-            reminderText={t('wallet.receiptUploadInfo')}
+            reminderText={t('receiptUploadInfo')}
+            namespace="modules.wallet"
           />
         </div>
         <CreateOrModifyButton

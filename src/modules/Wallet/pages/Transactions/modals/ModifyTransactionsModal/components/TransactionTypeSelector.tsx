@@ -1,7 +1,11 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
+import {
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption
+} from '@components/inputs'
+import { toCamelCase } from '@utils/strings'
 
 const TRANSACTION_TYPES = [
   { name: 'Income', color: '#10B981', id: 'income', icon: 'tabler:login-2' },
@@ -21,12 +25,13 @@ function TransactionTypeSelector({
   transactionType: string
   setTransactionType: (type: 'income' | 'expenses' | 'transfer') => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
 
   return (
     <ListboxOrComboboxInput
       type="listbox"
-      name={t('input.transactionType')}
+      namespace="modules.wallet"
+      name="Transaction Type"
       icon="tabler:list"
       value={transactionType}
       setValue={setTransactionType}
@@ -43,14 +48,22 @@ function TransactionTypeSelector({
             className="size-5"
           />
           <span className="-mt-px block truncate">
-            {TRANSACTION_TYPES.find(l => l.id === transactionType)?.name ??
-              'None'}
+            {t(
+              `transactionTypes.${toCamelCase(
+                TRANSACTION_TYPES.find(l => l.id === transactionType)?.name
+              )}`
+            ) ?? 'None'}
           </span>
         </>
       }
     >
       {TRANSACTION_TYPES.map(({ name, color, id }, i) => (
-        <ListboxOrComboboxOption key={i} text={name} color={color} value={id} />
+        <ListboxOrComboboxOption
+          key={i}
+          text={t(`transactionTypes.${toCamelCase(name)}`)}
+          color={color}
+          value={id}
+        />
       ))}
     </ListboxOrComboboxInput>
   )

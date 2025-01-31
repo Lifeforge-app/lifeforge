@@ -1,6 +1,8 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import useThemeColors from '@hooks/useThemeColor'
+import { toCamelCase } from '@utils/strings'
 
 function DashboardItem({
   ref,
@@ -8,7 +10,8 @@ function DashboardItem({
   icon,
   title,
   children,
-  componentBesideTitle
+  componentBesideTitle,
+  namespace = 'modules.dashboard'
 }: {
   ref?: React.Ref<any>
   className?: string
@@ -16,8 +19,11 @@ function DashboardItem({
   title: string
   children?: React.ReactNode
   componentBesideTitle?: React.ReactNode
+  namespace?: string
 }): React.ReactElement {
+  const { t } = useTranslation(namespace)
   const { componentBg } = useThemeColors()
+
   return (
     <div
       ref={ref}
@@ -26,7 +32,9 @@ function DashboardItem({
       <div className="flex-between mb-2 flex">
         <h2 className="flex items-center gap-2 text-xl font-semibold">
           <Icon icon={icon} className="text-2xl" />
-          <span className="ml-2">{title}</span>
+          <span className="ml-2">
+            {t(`widgets.${toCamelCase(title)}.title`)}
+          </span>
         </h2>
         {componentBesideTitle}
       </div>

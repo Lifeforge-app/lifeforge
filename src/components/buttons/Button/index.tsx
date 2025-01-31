@@ -15,7 +15,7 @@ interface ButtonProps {
   className?: string
   variant?: 'primary' | 'secondary' | 'no-bg'
   isRed?: boolean
-  needTranslate?: boolean
+  namespace?: string
 }
 
 type ButtonComponentProps<C extends React.ElementType = 'button'> = {
@@ -30,7 +30,7 @@ const defaultProps = {
   className: '',
   variant: 'primary',
   isRed: false,
-  needTranslate: true
+  namespace: 'common.buttons'
 }
 
 const renderIcon = (icon: string, loading: boolean, iconClassName?: string) => (
@@ -45,10 +45,11 @@ function Button<C extends React.ElementType = 'button'>({
   children,
   icon,
   onClick,
+  namespace,
   ...props
 }: ButtonComponentProps<C>): React.ReactElement {
-  const { t } = useTranslation()
   const Component = as || 'button'
+  const { t } = useTranslation(namespace)
   const finalProps = React.useMemo(
     () => ({ ...defaultProps, ...props }),
     [props]
@@ -68,13 +69,6 @@ function Button<C extends React.ElementType = 'button'>({
     [onClick]
   )
 
-  const getTranslatedChildren = () => {
-    if (typeof children === 'string' && finalProps.needTranslate) {
-      return t(`button.${toCamelCase(children)}`)
-    }
-    return children
-  }
-
   return (
     <Component
       {...props}
@@ -85,7 +79,10 @@ function Button<C extends React.ElementType = 'button'>({
     >
       {!finalProps.iconAtEnd &&
         renderIcon(icon, finalProps.loading, finalProps.iconClassName)}
-      {children && getTranslatedChildren()}
+      {t([
+        toCamelCase(children as string),
+        `buttons.${toCamelCase(children as string)}`
+      ])}
       {finalProps.iconAtEnd &&
         renderIcon(icon, finalProps.loading, finalProps.iconClassName)}
     </Component>
