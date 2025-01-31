@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
@@ -22,6 +23,7 @@ function LedgerItem({
     React.SetStateAction<boolean>
   >
 }): React.ReactElement {
+  const { t } = useTranslation('modules.wallet')
   const { componentBgWithHover } = useThemeColors()
   const navigate = useNavigate()
   const { transactions } = useWalletContext()
@@ -56,7 +58,7 @@ function LedgerItem({
               transactions.filter(
                 transaction => transaction.ledger === ledger.id
               ).length}{' '}
-            transactions
+            {t('transactionCount')}
           </p>
         </div>
       </div>

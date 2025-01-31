@@ -21,7 +21,7 @@ function ModifyAPIKeyModal({
   existingData: IAPIKeyEntry | null
   masterPassword: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.apiKeys')
   const [id, setId] = useState('')
   const [name, setName] = useState('')
   const [icon, setIcon] = useState('')
@@ -117,8 +117,9 @@ function ModifyAPIKeyModal({
       <ModalWrapper isOpen={openType !== null} minWidth="40vw">
         <ModalHeader
           icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-          title={`${openType === 'create' ? 'Create' : 'Update'} API Key`}
+          title={`apiKey.${openType}`}
           onClose={onClose}
+          namespace="modules.apiKeys"
         />
         <TextInput
           darker
@@ -127,6 +128,7 @@ function ModifyAPIKeyModal({
           placeholder="IdOfTheAPIKey"
           value={id}
           updateValue={setId}
+          namespace="modules.apiKeys"
         />
         <TextInput
           darker
@@ -136,6 +138,7 @@ function ModifyAPIKeyModal({
           value={name}
           updateValue={setName}
           className="mt-4"
+          namespace="modules.apiKeys"
         />
         <TextInput
           darker
@@ -145,22 +148,25 @@ function ModifyAPIKeyModal({
           value={description}
           updateValue={setDescription}
           className="mt-4"
+          namespace="modules.apiKeys"
         />
         <IconInput
           icon={icon}
           setIcon={setIcon}
           setIconSelectorOpen={setIconSelectorOpen}
           name="Key Icon"
+          namespace="modules.apiKeys"
         />
         <TextInput
           darker
           icon="tabler:key"
           name="API Key"
-          placeholder="API Key"
+          placeholder="••••••••••••••••"
           value={key}
           isPassword
           updateValue={setKey}
           className="mt-4"
+          namespace="modules.apiKeys"
         />
         <CreateOrModifyButton
           loading={loading}

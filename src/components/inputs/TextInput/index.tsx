@@ -37,6 +37,7 @@ interface IInputProps {
   ref?: React.RefObject<HTMLInputElement | null>
   required?: boolean
   namespace: string | false
+  tKey?: string
 }
 
 function TextInput({
@@ -58,7 +59,8 @@ function TextInput({
   required,
   updateValue,
   value,
-  namespace
+  namespace,
+  tKey
 }: IInputProps): React.ReactElement {
   const { t } = useTranslation(namespace ? namespace : undefined)
   const [showPassword, setShowPassword] = useState(false)
@@ -81,7 +83,16 @@ function TextInput({
       <div className="flex w-full items-center gap-2">
         <InputLabel
           required={required === true}
-          label={namespace !== false ? t(`inputs.${toCamelCase(name)}`) : name}
+          label={
+            namespace !== false
+              ? t([
+                  `inputs.${toCamelCase(name)}.label`,
+                  `inputs.${toCamelCase(name)}`,
+                  `${tKey}.inputs.${toCamelCase(name)}.label`,
+                  `${tKey}.inputs.${toCamelCase(name)}`
+                ])
+              : name
+          }
           active={String(value).length > 0}
         />
         <InputBox

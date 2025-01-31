@@ -26,7 +26,7 @@ function LockedScreen({
   const [masterPassWordInputContent, setMasterPassWordInputContent] =
     useState<string>('')
   const [loading, setLoading] = useState(false)
-  const { t } = useTranslation()
+  const { t } = useTranslation('common.vault')
 
   async function onSubmit(): Promise<void> {
     if (masterPassWordInputContent.trim() === '') {
@@ -78,17 +78,17 @@ function LockedScreen({
   return (
     <div className="flex-center size-full flex-1 flex-col gap-4">
       <Icon icon="tabler:lock-access" className="size-28" />
-      <h2 className="text-4xl font-semibold">
-        {t(`${toCamelCase(module)}.lockedMessage`)}
-      </h2>
+      <h2 className="text-4xl font-semibold">{t(`vault.lockedMessage`)}</h2>
       <p className="mb-8 text-center text-lg text-bg-500">
-        {t(`${toCamelCase(module)}.passwordRequired`)}
+        {t(`vault.passwordRequired`)}
       </p>
       <TextInput
         isPassword
         icon="tabler:lock"
         name="Master Password"
-        placeholder="Enter your master password"
+        namespace="common.vault"
+        tKey="vault"
+        placeholder={t('vault.inputs.masterPassword.placeholder')}
         value={masterPassWordInputContent}
         updateValue={setMasterPassWordInputContent}
         noAutoComplete
@@ -107,6 +107,8 @@ function LockedScreen({
         loading={loading}
         className="w-full md:w-3/4 xl:w-1/2"
         icon="tabler:lock"
+        namespace="common.vault"
+        tKey="vault"
       >
         Unlock
       </Button>

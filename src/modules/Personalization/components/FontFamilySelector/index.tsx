@@ -88,7 +88,7 @@ function FontFamilySelector(): React.ReactElement {
   const { componentBgWithHover } = useThemeColors()
   const { fontFamily, setFontFamily } = usePersonalizationContext()
   const [allFonts, setAllFonts] = useState<IFontFamily[]>([])
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.personalization')
 
   useEffect(() => {
     const loadFonts = async () => {
@@ -102,17 +102,17 @@ function FontFamilySelector(): React.ReactElement {
 
   return (
     <ConfigColumn
-      title={t('personalization.fontFamily.title')}
-      desc={t('personalization.fontFamily.desc')}
+      title={t('fontFamily.title')}
+      desc={t('fontFamily.desc')}
       icon="uil:font"
       tooltip={
         <>
-          <h3 className="mb-2 flex items-center gap-2 text-xl font-medium">
-            <Icon icon="simple-icons:googlefonts" className="size-6" />
-            {t('personalization.fontFamily.tooltipTitle')}
+          <h3 className="mb-2 flex items-center gap-2 text-lg font-medium">
+            <Icon icon="simple-icons:googlefonts" className="size-5" />
+            {t('fontFamily.tooltipTitle')}
           </h3>
-          <p className="relative z-40 text-bg-500">
-            {t('personalization.fontFamily.tooltip')}
+          <p className="relative z-40 text-sm text-bg-500">
+            {t('fontFamily.tooltip')}
           </p>
         </>
       }

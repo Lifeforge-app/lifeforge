@@ -17,7 +17,7 @@ function OTPScreen({
   callback: () => void
   fetchChallenge: () => Promise<string>
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common.vault')
   const [otp, setOtp] = useState('')
   const [otpSent, setOtpSent] = useState(false)
   const [otpId, setOtpId] = useState(localStorage.getItem('otpId') ?? '')
@@ -34,7 +34,7 @@ function OTPScreen({
 
   function requestOTP(): void {
     if (otpCooldown > 0) {
-      toast.error(t('fetch.otp.cooldown'))
+      toast.error(t('otp.messages.cooldown'))
       return
     }
 
@@ -48,10 +48,10 @@ function OTPScreen({
         setOtpCooldown(60)
         const coolDown = new Date().getTime() + 60000
         localStorage.setItem('otpCooldown', coolDown.toString())
-        toast.success(t('fetch.otp.success'))
+        toast.success(t('otp.messages.success'))
       },
       onFailure: () => {
-        toast.error(t('fetch.otp.failed'))
+        toast.error(t('otp.messages.failed'))
       },
       finalCallback: () => {
         setSendOtpLoading(false)
@@ -63,7 +63,7 @@ function OTPScreen({
 
   async function verityOTP(): Promise<void> {
     if (otp.length !== 6) {
-      toast.error(t('fetch.otp.verify.invalid'))
+      toast.error(t('otp.messages.invalid'))
       return
     }
 
@@ -81,13 +81,13 @@ function OTPScreen({
         if (data.state === 'success' && data.data === true) {
           callback()
           localStorage.removeItem('otpCooldown')
-          toast.success(t('fetch.otp.verify.success'))
+          toast.success(t('otp.messages.verify.success'))
         } else {
-          toast.error(t('fetch.otp.verify.failed'))
+          toast.error(t('otp.messages.verify.failed'))
         }
       },
       onFailure: () => {
-        toast.error(t('fetch.otp.verify.failed'))
+        toast.error(t('otp.messages.verify.failed'))
       },
       finalCallback: () => {
         setVerifyOtpLoading(false)
@@ -116,10 +116,10 @@ function OTPScreen({
     <div className="flex-center size-full flex-1 flex-col gap-4">
       <Icon icon="tabler:shield-lock" className="size-28" />
       <h2 className="text-center text-4xl font-semibold">
-        {t('fetch.otp.required.title')}
+        {t('otp.messages.required.title')}
       </h2>
       <p className="mb-8 text-center text-lg text-bg-500">
-        {t('fetch.otp.required.desc')}
+        {t('otp.messages.required.desc')}
       </p>
       {otpSent ? (
         <>
@@ -153,8 +153,10 @@ function OTPScreen({
             className="mt-6 w-full md:w-3/4 xl:w-1/2"
             icon="tabler:arrow-right"
             iconAtEnd
+            namespace="common.vault"
+            tKey="otp"
           >
-            Verify OTP
+            verify
           </Button>
           <Button
             onClick={requestOTP}
@@ -164,7 +166,7 @@ function OTPScreen({
             variant="secondary"
             icon="tabler:refresh"
           >
-            {t('buttons.resendOtp')} {otpCooldown > 0 && `(${otpCooldown}s)`}
+            {t('otp.buttons.resend')} {otpCooldown > 0 && `(${otpCooldown}s)`}
           </Button>
         </>
       ) : (
@@ -173,8 +175,10 @@ function OTPScreen({
           loading={sendOtpLoading}
           className="w-full md:w-3/4 xl:w-1/2"
           icon="tabler:mail"
+          namespace="common.vault"
+          tKey="otp"
         >
-          Request OTP
+          Request
         </Button>
       )}
     </div>

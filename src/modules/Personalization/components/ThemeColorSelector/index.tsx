@@ -13,12 +13,12 @@ function ThemeColorSelector(): React.ReactElement {
   )
   const [colorPickerModalOpen, setColorPickerModalOpen] =
     useState<boolean>(false)
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.personalization')
 
   return (
     <ConfigColumn
-      title={t('personalization.themeColorSelector.title')}
-      desc={t('personalization.themeColorSelector.desc')}
+      title={t('themeColorSelector.title')}
+      desc={t('themeColorSelector.desc')}
       icon="tabler:palette"
       wrapWhen="lg"
     >
@@ -33,6 +33,7 @@ function ThemeColorSelector(): React.ReactElement {
             <ColorInput
               className="md:w-min"
               name="Color Hex"
+              namespace="modules.personalization"
               color={customThemeColor}
               updateColor={setCustomThemeColor}
               setColorPickerOpen={setColorPickerModalOpen}
