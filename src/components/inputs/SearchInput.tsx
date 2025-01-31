@@ -29,7 +29,7 @@ function SearchInput({
   onSideButtonClick?: () => void
   className?: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common.misc')
   const { bgImage } = usePersonalizationContext()
   const componentBgLighterWithHover = useMemo(() => {
     if (bgImage !== '') {
@@ -59,7 +59,7 @@ function SearchInput({
         onChange={e => {
           setSearchQuery(e.target.value)
         }}
-        placeholder={t(`search.${toCamelCase(stuffToSearch)}`)}
+        placeholder={t(`search`, { item: toCamelCase(stuffToSearch) })}
         className="w-full bg-transparent placeholder:text-bg-500"
       />
       {onFilterIconClick !== undefined && (

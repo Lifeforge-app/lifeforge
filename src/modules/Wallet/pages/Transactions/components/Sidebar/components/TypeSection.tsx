@@ -13,13 +13,13 @@ function TypeSection({
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
   const { filteredTransactions } = useWalletContext()
   const { bgTemp } = useThemeColors()
 
   return (
     <>
-      <SidebarTitle name="Type" />
+      <SidebarTitle name={t('sidebar.transactionTypes')} />
       {[
         ['tabler:arrow-bar-both', 'All Types'],
         ['tabler:login-2', 'Income'],
@@ -41,8 +41,11 @@ function TypeSection({
               Transfer: colors.blue[500]
             }[name]
           }
-          name={t(`sidebar.wallet.${toCamelCase(name)}`)}
-          needTranslate={false}
+          name={t(
+            name.includes('All')
+              ? `sidebar.${toCamelCase(name)}`
+              : `transactionTypes.${toCamelCase(name)}`
+          )}
           number={
             typeof filteredTransactions !== 'string'
               ? filteredTransactions.filter(

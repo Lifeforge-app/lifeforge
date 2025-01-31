@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import { SidebarItem, SidebarTitle } from '@components/layouts/sidebar'
@@ -10,6 +11,7 @@ function LedgerSection({
 }: {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
+  const { t } = useTranslation('modules.wallet')
   const [searchParams, setSearchParams] = useSearchParams()
   const { ledgers, filteredTransactions } = useWalletContext()
   const navigate = useNavigate()
@@ -17,7 +19,7 @@ function LedgerSection({
   return (
     <>
       <SidebarTitle
-        name="Ledgers"
+        name={t('sidebar.ledgers')}
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           navigate('/wallet/ledgers#new')
@@ -29,7 +31,7 @@ function LedgerSection({
             {[
               {
                 icon: 'tabler:book',
-                name: 'All',
+                name: t('sidebar.allLedgers'),
                 color: 'white',
                 id: null
               }
@@ -40,7 +42,6 @@ function LedgerSection({
                   key={id}
                   name={name}
                   icon={icon}
-                  needTranslate={false}
                   sideStripColor={color}
                   active={
                     searchParams.get('ledger') === id ||

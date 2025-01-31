@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { SidebarItem, SidebarTitle } from '@components/layouts/sidebar'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
@@ -14,13 +15,14 @@ function CategoriesSection({
   >
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
+  const { t } = useTranslation('modules.wallet')
   const [searchParams, setSearchParams] = useSearchParams()
   const { categories, filteredTransactions } = useWalletContext()
 
   return (
     <>
       <SidebarTitle
-        name="categories"
+        name={t('sidebar.categories')}
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           setManageCategoriesModalOpen('new')
@@ -32,7 +34,7 @@ function CategoriesSection({
             {[
               {
                 icon: 'tabler:tag',
-                name: 'All',
+                name: t('sidebar.allCategories'),
                 color: 'white',
                 id: null,
                 type: 'all'
@@ -95,7 +97,6 @@ function CategoriesSection({
                     })
                     setSidebarOpen(false)
                   }}
-                  needTranslate={false}
                   number={
                     typeof filteredTransactions !== 'string'
                       ? filteredTransactions.filter(

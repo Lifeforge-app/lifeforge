@@ -88,7 +88,6 @@ export default function APIOnlineStatusProvider({
                   setIsOnline(false)
                 })
             }}
-            needTranslate={false}
             className="bg-black! text-white!"
           >
             Retry

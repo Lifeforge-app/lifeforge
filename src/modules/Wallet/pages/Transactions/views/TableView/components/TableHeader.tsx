@@ -7,7 +7,7 @@ function TableHeader({
 }: {
   visibleColumn: string[]
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
 
   return (
     <thead>

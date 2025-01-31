@@ -1,6 +1,5 @@
 import moment from 'moment'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import DashboardItem from '@components/utilities/DashboardItem'
 import useFetch from '@hooks/useFetch'
@@ -12,8 +11,6 @@ import MiniCalendarContent from '../../Calendar/components/Sidebar/components/Mi
 import MiniCalendarHeader from '../../Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'
 
 export default function MiniCalendar(): React.ReactElement {
-  const { t } = useTranslation()
-
   const [currentMonth, setCurrentMonth] = useState(moment().month())
   const [currentYear, setCurrentYear] = useState(moment().year())
 
@@ -21,10 +18,7 @@ export default function MiniCalendar(): React.ReactElement {
   const [categories] = useFetch<ICalendarCategory[]>('calendar/category')
 
   return (
-    <DashboardItem
-      icon="tabler:calendar"
-      title={t('dashboard.widgets.miniCalendar.title')}
-    >
+    <DashboardItem icon="tabler:calendar" title="mini Calendar">
       <APIFallbackComponent data={events}>
         {events => (
           <div className="size-full">

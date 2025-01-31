@@ -226,7 +226,6 @@ function Header({
                       searchParams.get('sort') === id ||
                       (id === 'newest' && !searchParams.has('sort'))
                     }
-                    needTranslate={false}
                   />
                 ))}
               </HamburgerSelectorWrapper>
@@ -241,7 +240,6 @@ function Header({
                       setView(type as 'grid' | 'list')
                     }}
                     isToggled={view === type}
-                    needTranslate={false}
                   />
                 ))}
               </HamburgerSelectorWrapper>

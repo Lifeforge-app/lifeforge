@@ -28,7 +28,6 @@ interface MainSidebarItemProps {
   prefix?: string
 
   sideStripColor?: never
-  needTranslate?: never
   onClick?: never
 
   number?: never
@@ -49,7 +48,6 @@ interface SubSidebarItemProps {
 
   onClick: () => void
   sideStripColor?: string
-  needTranslate?: boolean
 
   number?: number
   onCancelButtonClick?: () => void
@@ -81,7 +79,6 @@ function SidebarItem({
   active = false,
   prefix = '',
   number,
-  needTranslate = true,
   onCancelButtonClick,
   hamburgerMenuItems,
 
@@ -91,6 +88,7 @@ function SidebarItem({
 }: SidebarItemProps): React.ReactElement {
   const location = useLocation()
   const navigate = useNavigate()
+
   const { sidebarExpanded, toggleSidebar } = isMainSidebarItem
     ? useGlobalStateContext()
     : { sidebarExpanded: true, toggleSidebar: () => {} }
@@ -164,7 +162,6 @@ function SidebarItem({
           hamburgerMenuItems={hamburgerMenuItems}
           active={autoActive ? isLocationMatched : active}
           onCancelButtonClick={onCancelButtonClick}
-          needTranslate={needTranslate}
         />
         {sidebarExpanded && subsection !== undefined && (
           <SidebarItemSubsectionExpandIcon

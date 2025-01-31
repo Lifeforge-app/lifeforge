@@ -98,7 +98,6 @@ function Sidebar({
                   name={author !== '' ? author : t('guitarTabs.unknownAuthor')}
                   number={count}
                   autoActive={false}
-                  needTranslate={false}
                   active={searchParams.get('author') === author}
                   onClick={() => {
                     setSearchParams({

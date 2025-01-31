@@ -17,7 +17,7 @@ import Auth from '../auth'
 const ROUTES = _ROUTES as IRoutes[]
 
 function AppRouter(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common.misc')
   const { auth, authLoading, userData } = useAuthContext()
   const { theme } = usePersonalizationContext()
   const location = useLocation()
@@ -64,7 +64,9 @@ function AppRouter(): React.ReactElement {
               Comp !== undefined ? (
                 <Suspense
                   fallback={
-                    <LoadingScreen customMessage={t('modules.loadingModule')} />
+                    <LoadingScreen
+                      customMessage={t('common.misc:loadingModule')}
+                    />
                   }
                 >
                   <APIKeyStatusProvider APIKeys={APIKeys}>

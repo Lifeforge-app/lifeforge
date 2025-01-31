@@ -52,12 +52,13 @@ function ExpensesBreakdownCard(): React.ReactElement {
       )
   }, [categories, thisMonthsTransactions])
 
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
 
   return (
     <DashboardItem
       icon="tabler:chart-donut-3"
-      title={t('dashboard.widgets.expensesBreakdown.title')}
+      title="Expenses Breakdown"
+      namespace="modules.wallet"
       className="col-span-1 row-span-3"
       componentBesideTitle={
         <Link
@@ -99,7 +100,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                         ))}
                     </div>
                     <div className="mt-2 w-1/2 text-center text-sm text-bg-500 sm:text-base">
-                      {t('wallet.dashboard.expensesBreakdown.desc')}
+                      {t('widgets.expensesBreakdown.thisMonthsSpending')}
                     </div>
                   </div>
                   <Doughnut
@@ -175,7 +176,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                                         transaction.category === category.id
                                     ).length
                                   }{' '}
-                                  {t('wallet.transactionCount')}
+                                  {t('transactionCount')}
                                 </div>
                               </div>
                             </div>

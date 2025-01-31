@@ -13,7 +13,7 @@ function DnDContainer({
   getInputProps: any
   isDragActive: boolean
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common.misc')
 
   return (
     <div
@@ -26,7 +26,7 @@ function DnDContainer({
         {isDragActive ? t('dnd.dropHere') : t('dnd.dragAndDropToUpload')}
       </div>
       <div className="mt-4 text-center text-lg font-semibold uppercase tracking-widest text-bg-500">
-        {t('auth.or')}
+        {t('or')}
       </div>
       <Button
         as="label"
@@ -34,7 +34,7 @@ function DnDContainer({
         className="mt-4 cursor-pointer"
         variant="secondary"
       >
-        upload from local
+        upload
       </Button>
     </div>
   )

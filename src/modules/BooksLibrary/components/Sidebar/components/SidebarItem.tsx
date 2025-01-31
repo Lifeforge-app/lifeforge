@@ -50,7 +50,6 @@ function _SidebarItem({
         active={searchParams.get(singleStuff) === item.id}
         icon={item.icon ?? fallbackIcon}
         name={item.name}
-        needTranslate={false}
         number={
           item.count ??
           (typeof entries !== 'string'

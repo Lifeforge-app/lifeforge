@@ -9,17 +9,13 @@ import { useMusicContext } from '@providers/MusicProvider'
 import ControlButtons from '../../Music/components/Bottombar/components/ControlButtons'
 
 export default function MusicPlayer(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.dashboard')
   const { currentMusic, isPlaying } = useMusicContext()
   const navigate = useNavigate()
   const ref = useRef<HTMLDivElement>(null)
 
   return (
-    <DashboardItem
-      ref={ref}
-      icon="tabler:music"
-      title={t('dashboard.widgets.musicPlayer.title')}
-    >
+    <DashboardItem ref={ref} icon="tabler:music" title="Music Player">
       <div className="flex min-h-0 flex-1 flex-col">
         {currentMusic !== null ? (
           <>

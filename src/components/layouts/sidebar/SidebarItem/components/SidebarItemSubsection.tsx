@@ -18,7 +18,7 @@ function SidebarItemSubsection({
   toggleSidebar: () => void
   subsectionExpanded: boolean
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common.sidebar')
   const location = useLocation()
 
   return (
@@ -62,7 +62,11 @@ function SidebarItemSubsection({
 
             {sidebarExpanded && (
               <span className="w-full truncate pr-4">
-                {t(`modules.subsections.${toCamelCase(subsectionName)}`)}{' '}
+                {t(
+                  `modules.${toCamelCase(name)}.subsections.${toCamelCase(
+                    subsectionName
+                  )}`
+                )}{' '}
               </span>
             )}
           </Link>

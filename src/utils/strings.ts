@@ -71,14 +71,16 @@ export function numberToMoney(
   number: number,
   currency: string = 'MYR'
 ): string {
-  return Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
-    currencyDisplay: 'code'
-  })
-    .format(number)
-    .replace(currency, '')
-    .trim()
+  return parseFloat(number.toFixed(2)) !== 0
+    ? Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency,
+        currencyDisplay: 'code'
+      })
+        .format(number)
+        .replace(currency, '')
+        .trim()
+    : '0.00'
 }
 
 export function arabicToTraditionalFormalChinese(number: number): string {

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
+import SidebarBottomBar from './SidebarBottomBar'
 import SidebarEventBanner from './SidebarEventBanner'
 import SidebarHeader from './SidebarHeader'
 import SidebarItem from './SidebarItem'
 import SidebarItems from './SidebarItems'
-import SidebarBottomBar from './SidebarBottomBar'
 
 function Sidebar(): React.ReactElement {
   const { sidebarExpanded, toggleSidebar } = useGlobalStateContext()

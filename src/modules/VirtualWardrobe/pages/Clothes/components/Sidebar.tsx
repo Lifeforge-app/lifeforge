@@ -63,7 +63,6 @@ function Sidebar({
                   icon={
                     VW_CATEGORIES.find(cat => cat.name === category)?.icon ?? ''
                   }
-                  needTranslate={false}
                   active={searchParams.get('category') === category}
                   onClick={() => {
                     setSearchParams({
@@ -108,7 +107,6 @@ function Sidebar({
                           key={subcategory}
                           name={subcategory}
                           number={number}
-                          needTranslate={false}
                           active={
                             searchParams.get('subcategory') === subcategory
                           }
@@ -140,7 +138,6 @@ function Sidebar({
                   key={brand}
                   name={brand === '' ? 'Unknown' : brand}
                   number={number}
-                  needTranslate={false}
                   active={searchParams.get('brand') === brand}
                   onClick={() => {
                     setSearchParams({
@@ -167,7 +164,6 @@ function Sidebar({
                   key={size}
                   name={size}
                   number={number}
-                  needTranslate={false}
                   active={searchParams.get('size') === size}
                   onClick={() => {
                     setSearchParams({
@@ -194,7 +190,6 @@ function Sidebar({
                   key={color}
                   name={color}
                   number={number}
-                  needTranslate={false}
                   active={searchParams.get('color') === color}
                   sideStripColor={VW_COLORS.find(c => c.name === color)?.hex}
                   onClick={() => {

@@ -1,6 +1,5 @@
 import moment from 'moment'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Button } from '@components/buttons'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
@@ -16,12 +15,11 @@ import {
 export default function TodaysEvent(): React.ReactElement {
   const [rawEvents] = useFetch<ICalendarEvent[]>('calendar/event')
   const [categories] = useFetch<ICalendarCategory[]>('calendar/category')
-  const { t } = useTranslation()
 
   return (
     <DashboardItem
       icon="tabler:calendar"
-      title={t('dashboard.widgets.todaysEvent.title')}
+      title="Todays Event"
       componentBesideTitle={
         <Button
           variant="no-bg"
