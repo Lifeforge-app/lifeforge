@@ -44,7 +44,11 @@ function ModalHeader({
                 `${toCamelCase(innerTitle)}`,
                 `${toCamelCase(innerTitle)}.title`,
                 `modals.${toCamelCase(innerTitle)}`,
-                `modals.${toCamelCase(innerTitle)}.title`
+                `modals.${toCamelCase(innerTitle)}.title`,
+                `${innerTitle}`,
+                `${innerTitle}.title`,
+                `modals.${innerTitle}`,
+                `modals.${innerTitle}.title`
               ])
             : innerTitle}
         </span>

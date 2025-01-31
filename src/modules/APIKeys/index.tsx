@@ -19,7 +19,7 @@ import ModifyAPIKeyModal from './components/ModifyAPIKeyModal'
 import { fetchChallenge } from './utils/fetchChallenge'
 
 function APIKeys(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.apiKeys')
   const { userData } = useAuthContext()
   const [otpSuccess, setOtpSuccess] = useState(false)
   const [masterPassword, setMasterPassword] = useState<string>('')
@@ -153,8 +153,11 @@ function APIKeys(): React.ReactElement {
                 onClick={() => {
                   setModifyAPIKeyModalOpenType('create')
                 }}
+                tProps={{
+                  item: t('items.apiKey')
+                }}
               >
-                add API key
+                new
               </Button>
             )
           }

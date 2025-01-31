@@ -10,7 +10,7 @@ import AdjustBgImageModal from './components/AdjustBgImageModal'
 import ImagePickerModal from '../../../../components/inputs/ImageAndFileInput/ImagePickerModal'
 
 function BgImageSelector(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.personalization')
   const { bgImage, setBgImage, setBackdropFilters } =
     usePersonalizationContext()
   const [imageSelectorModalOpen, setImageSelectorModalOpen] = useState(false)
@@ -56,8 +56,8 @@ function BgImageSelector(): React.ReactElement {
   return (
     <>
       <ConfigColumn
-        title={t('personalization.bgImageSelector.title')}
-        desc={t('personalization.bgImageSelector.desc')}
+        title={t('bgImageSelector.title')}
+        desc={t('bgImageSelector.desc')}
         icon="tabler:photo"
       >
         {bgImage !== '' ? (

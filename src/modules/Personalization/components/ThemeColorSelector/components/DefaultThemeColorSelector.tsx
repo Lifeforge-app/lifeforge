@@ -41,7 +41,7 @@ function DefaultThemeColorSelector({
   setThemeColor: (color: string) => void
   customThemeColor: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.personalization')
   const { componentBgWithHover } = useThemeColors()
 
   return (
@@ -66,7 +66,7 @@ function DefaultThemeColorSelector({
           />
           <span className="-mt-px block truncate">
             {t(
-              `personalization.themeColorSelector.colors.${
+              `themeColorSelector.colors.${
                 !themeColor.startsWith('#')
                   ? toCamelCase(
                       themeColor
@@ -106,7 +106,7 @@ function DefaultThemeColorSelector({
                         className={`theme-${color} inline-block size-4 rounded-full bg-custom-500`}
                       />
                       {t(
-                        `personalization.themeColorSelector.colors.${toCamelCase(
+                        `themeColorSelector.colors.${toCamelCase(
                           color
                             .split('-')
                             .map(e => e[0].toUpperCase() + e.slice(1))
@@ -135,7 +135,7 @@ function DefaultThemeColorSelector({
                 <div>
                   <span className="flex items-center gap-2">
                     <span className="inline-block size-4 rounded-full border-2 border-bg-500" />
-                    {t('personalization.themeColorSelector.colors.custom')}
+                    {t('themeColorSelector.colors.custom')}
                   </span>
                 </div>
                 {selected && (

@@ -10,21 +10,25 @@ function EmptyStateScreen({
   description,
   icon,
   ctaContent,
+  ctaTProps,
   ctaIcon,
   customCTAButton,
-  smaller = false
+  smaller = false,
+  namespace
 }: {
   onCTAClick?: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  name?: string
+  name: string | false
   title?: string
   description?: string
   icon?: string
   ctaContent?: string
+  ctaTProps?: Record<string, unknown>
   ctaIcon?: string
   customCTAButton?: React.ReactElement
   smaller?: boolean
+  namespace?: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation(namespace)
 
   return (
     <div
@@ -45,14 +49,14 @@ function EmptyStateScreen({
           smaller ? 'text-3xl' : 'text-4xl'
         } font-semibold text-bg-500`}
       >
-        {name ? t(`emptyState.${name}.title`) : title}
+        {name ? t(`empty.${name}.title`) : title}
       </h2>
       <p
         className={`-mt-2 px-8 text-center text-bg-500  ${
           smaller ? 'text-base' : 'text-lg'
         }`}
       >
-        {name ? t(`emptyState.${name}.description`) : description}
+        {name ? t(`empty.${name}.description`) : description}
       </p>
       {customCTAButton ??
         (ctaContent && onCTAClick && (
@@ -62,6 +66,7 @@ function EmptyStateScreen({
             }}
             icon={ctaIcon ?? 'tabler:plus'}
             className="mt-6"
+            tProps={ctaTProps}
           >
             {ctaContent}
           </Button>
