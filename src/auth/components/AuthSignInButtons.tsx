@@ -15,7 +15,7 @@ function AuthSignInButton({
   signIn: () => void
 }): React.ReactElement {
   const { auth } = useAuthContext()
-  const { t } = useTranslation()
+  const { t } = useTranslation('common.auth')
   const [searchParams] = useSearchParams()
 
   async function signInWithProvider(providerName: string): Promise<void> {
@@ -53,13 +53,14 @@ function AuthSignInButton({
         onClick={signIn}
         icon="tabler:arrow-right"
         className="w-full"
+        namespace="common.auth"
       >
-        sign in
+        Sign In
       </Button>
       <div className="flex items-center gap-3">
         <div className="h-[2px] w-full bg-bg-500"></div>
         <div className="shrink-0 font-medium text-bg-500">
-          {t('auth.orSignInWith')}
+          {t('orSignInWith')}
         </div>
         <div className="h-[2px] w-full bg-bg-500"></div>
       </div>
@@ -77,7 +78,6 @@ function AuthSignInButton({
           icon="uil:github"
           variant="secondary"
           className="w-full"
-          needTranslate={false}
         >
           Github
         </Button>
@@ -94,7 +94,6 @@ function AuthSignInButton({
           icon="uil:google"
           variant="secondary"
           className="w-full"
-          needTranslate={false}
         >
           Google
         </Button>

@@ -12,10 +12,7 @@ export default function StorageStatus(): React.ReactElement {
   const [diskUsage] = useFetch<IDiskUsage[]>('server/disks')
 
   return (
-    <DashboardItem
-      icon="tabler:server"
-      title={t('dashboard.widgets.storageStatus.title')}
-    >
+    <DashboardItem icon="tabler:server" title="Storage Status">
       <Scrollbar>
         <APIFallbackComponent data={diskUsage}>
           {diskUsage => (

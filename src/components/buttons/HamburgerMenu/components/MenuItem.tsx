@@ -26,7 +26,7 @@ function MenuItem({
   isToggled,
   disabled,
   preventDefault = false,
-  needTranslate = true
+  namespace = 'common.buttons'
 }: {
   icon?: string
   text: string
@@ -35,9 +35,9 @@ function MenuItem({
   isToggled?: boolean
   disabled?: boolean
   preventDefault?: boolean
-  needTranslate?: boolean
+  namespace?: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation(namespace)
 
   return (
     <HeadlessMenuItem>
@@ -61,7 +61,7 @@ function MenuItem({
               <Icon icon={icon} className="size-5 shrink-0" />
             )}
             <span className="w-full truncate whitespace-nowrap">
-              {needTranslate ? t(`button.${toCamelCase(text)}`) : text}
+              {t([toCamelCase(text), `buttons.${toCamelCase(text)}`])}
             </span>
             {isToggled === true && (
               <Icon

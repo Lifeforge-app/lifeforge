@@ -33,7 +33,7 @@ function ListView({
           {({ height, width }: { height: number; width: number }) => (
             <L
               width={width}
-              height={height - 36}
+              height={height}
               rowCount={transactions.length}
               rowHeight={80}
               rowRenderer={({

@@ -13,8 +13,9 @@ import {
   Tooltip
 } from 'chart.js'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
-import { Button , FAB } from '@components/buttons'
+import { Button, FAB } from '@components/buttons'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
@@ -41,6 +42,7 @@ ChartJS.register(
 
 function WalletDashboard(): React.ReactElement {
   const navigate = useNavigate()
+  const { t } = useTranslation(['common.buttons', 'modules.wallet'])
   const { incomeExpenses, isAmountHidden, toggleAmountVisibility } =
     useWalletContext()
 
@@ -57,7 +59,9 @@ function WalletDashboard(): React.ReactElement {
               className="hidden md:flex"
               as={MenuButton}
             >
-              Add Transaction
+              {t('common.buttons:new', {
+                item: t('modules.wallet:items.transaction')
+              })}
             </Button>
             <MenuItems
               transition
@@ -124,6 +128,7 @@ function WalletDashboard(): React.ReactElement {
             }}
             icon="tabler:plus"
             text="Add Manually"
+            namespace="modules.wallet"
           />
           <MenuItem
             onClick={() => {
@@ -131,6 +136,7 @@ function WalletDashboard(): React.ReactElement {
             }}
             icon="tabler:scan"
             text="Scan Receipt"
+            namespace="modules.wallet"
           />
         </MenuItems>
       </Menu>

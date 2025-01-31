@@ -220,10 +220,10 @@
         "hasAI": true
       },
       {
-        "name": "Budget",
+        "name": "Budgets",
         "icon": "tabler:calculator",
         "routes": {
-          "budget": "budget"
+          "budgets": "budgets"
         },
         "togglable": true
       }

@@ -25,7 +25,7 @@ import TableView from './views/TableView'
 import ColumnVisibilityToggle from './views/TableView/components/ColumnVisibilityToggle'
 
 function Transactions(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation(['common.buttons', 'modules.wallet'])
   const {
     transactions,
     refreshTransactions,
@@ -103,7 +103,6 @@ function Transactions(): React.ReactElement {
                       setView(type as 'list' | 'table')
                     }}
                     isToggled={view === type}
-                    needTranslate={false}
                   />
                 ))}
               </HamburgerSelectorWrapper>
@@ -140,7 +139,9 @@ function Transactions(): React.ReactElement {
                       description={t(
                         'emptyState.wallet.transactions.description'
                       )}
-                      ctaContent="Add Transaction"
+                      ctaContent={t('common.buttons:new', {
+                        item: t('modules.wallet:items.transaction')
+                      })}
                       onCTAClick={setModifyModalOpenType}
                       icon="tabler:wallet-off"
                     />
@@ -199,6 +200,7 @@ function Transactions(): React.ReactElement {
                     }}
                     icon="tabler:plus"
                     text="Add Manually"
+                    namespace="modules.wallet"
                   />
                   <MenuItem
                     onClick={() => {
@@ -206,6 +208,7 @@ function Transactions(): React.ReactElement {
                     }}
                     icon="tabler:scan"
                     text="Scan Receipt"
+                    namespace="modules.wallet"
                   />
                 </MenuItems>
               </Menu>

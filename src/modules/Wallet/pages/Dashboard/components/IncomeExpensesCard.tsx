@@ -18,12 +18,12 @@ function IncomeExpenseCard({
 }): React.ReactElement {
   const isIncome = title.toLowerCase() === 'income'
   const { isAmountHidden } = useWalletContext()
-  const { t } = useTranslation()
 
   return (
     <DashboardItem
       icon={icon}
-      title={t(`dashboard.widgets.${isIncome ? 'income' : 'expenses'}`)}
+      namespace="modules.wallet"
+      title={isIncome ? 'income' : 'expenses'}
       className="col-span-1 row-span-1"
     >
       {typeof data !== 'string' && (

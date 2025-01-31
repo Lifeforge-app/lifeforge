@@ -55,10 +55,11 @@ function AssetItem({
         }}
         icon="tabler:eye"
         className="mt-2 w-full"
+        namespace="modules.wallet"
       >
         View Transactions
       </Button>
-      <HamburgerMenu className="absolute right-4 top-0">
+      <HamburgerMenu className="absolute right-4 top-4">
         <MenuItem
           icon="tabler:pencil"
           text="Edit"

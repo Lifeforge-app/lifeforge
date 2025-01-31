@@ -12,7 +12,7 @@ import { numberToMoney } from '@utils/strings'
 function TransactionsCountCard(): React.ReactElement {
   const { componentBgLighterWithHover } = useThemeColors()
   const { transactions, isAmountHidden } = useWalletContext()
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
 
   const amounts = useMemo<{
     income: {
@@ -81,7 +81,8 @@ function TransactionsCountCard(): React.ReactElement {
   return (
     <DashboardItem
       icon="tabler:arrows-exchange"
-      title={t('dashboard.widgets.transactionsCount')}
+      namespace="modules.wallet"
+      title="Transactions Count"
       className="col-span-1 row-span-1 min-h-96 xl:min-h-0"
       componentBesideTitle={
         <Link
@@ -94,7 +95,7 @@ function TransactionsCountCard(): React.ReactElement {
     >
       <APIFallbackComponent data={transactions}>
         {transactions => (
-          <Scrollbar className="mt-4">
+          <Scrollbar>
             <ul className="space-y-2">
               {(
                 [
@@ -114,10 +115,10 @@ function TransactionsCountCard(): React.ReactElement {
                     ></div>
                     <div className="flex flex-col">
                       <div className="font-semibold ">
-                        {t(`sidebar.wallet.${type}`)}
+                        {t(`transactionTypes.${type}`)}
                       </div>
                       <div className="text-sm text-bg-500">
-                        {amounts[type].count} {t('wallet.transactionCount')}
+                        {amounts[type].count} {t('transactionCount')}
                       </div>
                     </div>
                   </div>

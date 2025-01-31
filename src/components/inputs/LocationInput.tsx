@@ -1,6 +1,9 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
-import { ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
+import {
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption
+} from '@components/inputs'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 
@@ -32,19 +35,19 @@ export interface Prediction {
   types: string[]
 }
 
-function LocationSelector({
+function LocationInput({
   location,
-  setLocation
+  setLocation,
+  namespace
 }: {
   location: string | null
   setLocation: React.Dispatch<React.SetStateAction<string | null>>
+  namespace: string
 }): React.ReactElement {
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query, 500)
   const [data, , setData] = useFetch<any>(
-    `wallet/locations?q=${debouncedQuery}&key=${
-      import.meta.env.VITE_GOOGLE_API_KEY
-    }`,
+    `/locations?q=${debouncedQuery}&key=${import.meta.env.VITE_GOOGLE_API_KEY}`,
     debouncedQuery.trim() !== ''
   )
 
@@ -64,6 +67,7 @@ function LocationSelector({
       setQuery={setQuery}
       displayValue={(value: string) => value}
       customActive={Boolean(location)}
+      namespace={namespace}
     >
       {query.trim() !== '' && (
         <APIFallbackComponent data={data}>
@@ -86,4 +90,4 @@ function LocationSelector({
   )
 }
 
-export default LocationSelector
+export default LocationInput

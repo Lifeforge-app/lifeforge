@@ -24,7 +24,6 @@ function TaskPriorityListItem({
       name={item.name}
       sideStripColor={item.color}
       active={searchParams.get('priority') === item.id}
-      needTranslate={false}
       number={item.amount}
       onClick={() => {
         setSearchParams({

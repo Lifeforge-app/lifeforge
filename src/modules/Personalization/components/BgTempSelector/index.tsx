@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@components/buttons'
-import { ColorInput , ColorPickerModal } from '@components/inputs'
+import { ColorInput, ColorPickerModal } from '@components/inputs'
 import ConfigColumn from '@components/utilities/ConfigColumn'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import DefaultBgTempSelector from './components/DefaultBgTempSelector'
@@ -60,7 +60,7 @@ function BgTempSelector(): React.ReactElement {
                     setBgTemp(customBgTemp)
                   }}
                 >
-                  <span className="inline lg:hidden">{t('button.save')}</span>
+                  <span className="inline lg:hidden">{t('buttons.save')}</span>
                 </Button>
               )}
             <ColorPickerModal

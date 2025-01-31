@@ -14,7 +14,9 @@ function Switch({
 
   const getStateClassName = () => {
     if (checked) {
-      return `translate-x-6 ${isLightColor(theme) ? 'bg-bg-800' : 'bg-bg-100'}`
+      return `translate-x-6 ${
+        isLightColor(theme) ? 'bg-bg-100 dark:bg-bg-800' : 'bg-bg-100'
+      }`
     }
 
     return 'translate-x-1 bg-bg-50 dark:bg-bg-500'

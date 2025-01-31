@@ -18,10 +18,7 @@ export default function TodoList(): React.ReactElement {
   const navigate = useNavigate()
 
   return (
-    <DashboardItem
-      icon="tabler:clipboard-list"
-      title={t('dashboard.widgets.todoList.title')}
-    >
+    <DashboardItem icon="tabler:clipboard-list" title="Todo List">
       <TodoListProvider>
         <Scrollbar>
           <APIFallbackComponent data={entries}>

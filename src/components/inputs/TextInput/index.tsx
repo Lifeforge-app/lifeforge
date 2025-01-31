@@ -31,12 +31,12 @@ interface IInputProps {
   darker?: boolean
   disabled?: boolean
   isPassword?: boolean
-  needTranslate?: boolean
   noAutoComplete?: boolean
   onActionButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   ref?: React.RefObject<HTMLInputElement | null>
   required?: boolean
+  namespace: string | false
 }
 
 function TextInput({
@@ -50,7 +50,6 @@ function TextInput({
   inputMode = 'text',
   isPassword = false,
   name,
-  needTranslate = true,
   noAutoComplete = true,
   onActionButtonClick = () => {},
   onKeyDown = () => {},
@@ -58,9 +57,10 @@ function TextInput({
   ref,
   required,
   updateValue,
-  value
+  value,
+  namespace
 }: IInputProps): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation(namespace ? namespace : undefined)
   const [showPassword, setShowPassword] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -81,7 +81,7 @@ function TextInput({
       <div className="flex w-full items-center gap-2">
         <InputLabel
           required={required === true}
-          label={needTranslate ? t(`input.${toCamelCase(name)}`) : name}
+          label={namespace !== false ? t(`inputs.${toCamelCase(name)}`) : name}
           active={String(value).length > 0}
         />
         <InputBox

@@ -80,7 +80,6 @@ function AddPhotosToAlbumModal(): React.ReactElement {
           <>
             <ModalHeader
               icon="tabler:photo-plus"
-              needTranslate={false}
               title={t('modals.header.addPhotosToAlbum', {
                 amount: selectedPhotos.length
               })}

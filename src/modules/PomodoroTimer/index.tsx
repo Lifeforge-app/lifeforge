@@ -31,9 +31,7 @@ export default function PomodoroTimer(): React.ReactElement {
           <aside className={`mb-16 w-2/6 rounded-lg p-6 ${componentBg}`}>
             <h1 className="mb-8 flex items-center gap-2 text-xl font-semibold">
               <Icon icon="tabler:clipboard-list" className="text-2xl" />
-              <span className="ml-2">
-                {t('dashboard.widgets.todoList.title')}
-              </span>
+              <span className="ml-2">"todoList"</span>
             </h1>
             <Scrollbar>
               <APIFallbackComponent data={entries}>

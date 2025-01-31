@@ -14,7 +14,8 @@ function CurrencyInputComponent({
   updateValue,
   darker = false,
   className = '',
-  required
+  required,
+  namespace
 }: {
   reference?: React.RefObject<HTMLInputElement | null>
   name: string
@@ -25,15 +26,16 @@ function CurrencyInputComponent({
   darker?: boolean
   className?: string
   required?: boolean
+  namespace: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation(namespace)
 
   return (
     <InputWrapper darker={darker} className={className}>
       <InputIcon icon={icon} active={!!value} />
       <div className="flex w-full items-center gap-2">
         <InputLabel
-          label={t(`input.${toCamelCase(name)}`)}
+          label={t(`inputs.${toCamelCase(name)}`)}
           active={!!value}
           required={required === true}
         />

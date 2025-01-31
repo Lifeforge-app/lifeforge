@@ -12,7 +12,6 @@ function DownloadMenu({
   return (
     <HamburgerMenu className="relative shrink-0" customIcon="tabler:download">
       <MenuItem
-        needTranslate={false}
         onClick={() => {
           forceDown(
             `${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
@@ -26,7 +25,6 @@ function DownloadMenu({
       />
       {entry.audio !== '' && (
         <MenuItem
-          needTranslate={false}
           onClick={() => {
             forceDown(
               `${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
@@ -41,7 +39,6 @@ function DownloadMenu({
       )}
       {entry.musescore !== '' && (
         <MenuItem
-          needTranslate={false}
           onClick={() => {
             forceDown(
               `${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${

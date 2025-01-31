@@ -1,7 +1,5 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { toCamelCase } from '@utils/strings'
 
 interface PropsWithActionButton {
   actionButtonIcon: string | undefined
@@ -22,8 +20,6 @@ function SidebarTitle({
   actionButtonIcon,
   actionButtonOnClick
 }: SidebarItemProps): React.ReactElement {
-  const { t } = useTranslation()
-
   return (
     <li
       className={`flex-between flex gap-4 ${
@@ -31,7 +27,7 @@ function SidebarTitle({
       } pl-8 pr-5 pt-2 transition-all`}
     >
       <h3 className="whitespace-nowrap text-sm font-semibold uppercase tracking-widest text-bg-600">
-        {t(`modules.title.${toCamelCase(name)}`)}
+        {name}
       </h3>
       {actionButtonIcon !== undefined && (
         <button

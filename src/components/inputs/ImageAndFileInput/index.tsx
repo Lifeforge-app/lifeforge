@@ -15,7 +15,8 @@ function ImageAndFileInput({
   setImage,
   setImagePickerModalOpen,
   onImageRemoved,
-  required
+  required,
+  namespace
 }: {
   icon: string
   name: string
@@ -27,8 +28,9 @@ function ImageAndFileInput({
   setImagePickerModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   onImageRemoved?: () => void
   required?: boolean
+  namespace: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation([namespace, 'common.buttons'])
 
   return (
     <>
@@ -36,7 +38,7 @@ function ImageAndFileInput({
         <div className="flex items-center gap-4 text-bg-500">
           <Icon icon={icon} className="size-6" />
           <span className="font-medium">
-            {t(`input.${toCamelCase(name)}`)}{' '}
+            {t(`${namespace}:inputs.${toCamelCase(name)}`)}{' '}
             {required === true && <span className="text-red-500">*</span>}
           </span>
         </div>
@@ -60,7 +62,7 @@ function ImageAndFileInput({
             isRed
             icon="tabler:x"
           >
-            Remove File
+            Remove
           </Button>
         )}
         {image !== null && preview === null && (
@@ -87,7 +89,7 @@ function ImageAndFileInput({
               icon="tabler:upload"
               variant="secondary"
             >
-              Upload File
+              {t('common.buttons:upload')}
             </Button>
             <p className="text-xs text-bg-500">{reminderText}</p>
           </div>

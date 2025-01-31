@@ -27,7 +27,7 @@ function Header({
     filteredTransactions
   } = useWalletContext()
   const [searchParams, setSearchParams] = useSearchParams()
-  const { t } = useTranslation()
+  const { t } = useTranslation(['common.buttons', 'modules.wallet'])
 
   useEffect(() => {
     const params = searchParams.get('type')
@@ -80,7 +80,7 @@ function Header({
       <div>
         <h1 className="text-3xl font-semibold lg:text-4xl">
           {t(
-            `wallet.header.${
+            `modules.wallet:header.${
               searchParams.size === 0 && searchQuery === '' ? 'all' : 'filtered'
             }Transactions`
           )}{' '}
@@ -136,7 +136,9 @@ function Header({
               className="hidden md:flex"
               as={MenuButton}
             >
-              Add Transaction
+              {t('common.buttons:new', {
+                item: t('modules.wallet:items.transaction')
+              })}
             </Button>
             <MenuItems
               transition
@@ -149,6 +151,7 @@ function Header({
                 }}
                 icon="tabler:plus"
                 text="Add Manually"
+                namespace="modules.wallet"
               />
               <MenuItem
                 onClick={() => {
@@ -156,6 +159,7 @@ function Header({
                 }}
                 icon="tabler:scan"
                 text="Scan Receipt"
+                namespace="modules.wallet"
               />
             </MenuItems>
           </Menu>

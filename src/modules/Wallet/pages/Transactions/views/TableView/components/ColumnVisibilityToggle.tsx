@@ -42,7 +42,6 @@ function ColumnVisibilityToggle({
               }
             }}
             isToggled={visibleColumn.includes(column)}
-            needTranslate={false}
           />
         ))}
       </HamburgerSelectorWrapper>

@@ -29,10 +29,11 @@ function LedgerSelector({
   return (
     <ListboxOrComboboxInput
       type="listbox"
-      name={t('input.ledger')}
+      name="Ledger"
       icon="tabler:book"
       value={ledger}
       setValue={setLedger}
+      namespace="modules.wallet"
       buttonContent={
         <>
           <Icon

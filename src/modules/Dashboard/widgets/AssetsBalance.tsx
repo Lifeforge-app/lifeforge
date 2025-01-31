@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Button } from '@components/buttons'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
@@ -11,7 +10,6 @@ import { type IWalletAsset } from '@interfaces/wallet_interfaces'
 import { numberToMoney } from '@utils/strings'
 
 export default function AssetsBalance(): React.ReactElement {
-  const { t } = useTranslation()
   const { componentBgLighterWithHover } = useThemeColors()
   const [assets] = useFetch<IWalletAsset[]>('wallet/assets')
   const [showBalance, setShowBalance] = useState(false)
@@ -19,7 +17,7 @@ export default function AssetsBalance(): React.ReactElement {
   return (
     <DashboardItem
       icon="tabler:wallet"
-      title={t('dashboard.widgets.assetsBalance.title')}
+      title="Assets Balance"
       componentBesideTitle={
         <Button
           variant="no-bg"
