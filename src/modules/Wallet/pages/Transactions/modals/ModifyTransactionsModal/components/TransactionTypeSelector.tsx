@@ -50,7 +50,8 @@ function TransactionTypeSelector({
           <span className="-mt-px block truncate">
             {t(
               `transactionTypes.${toCamelCase(
-                TRANSACTION_TYPES.find(l => l.id === transactionType)?.name
+                TRANSACTION_TYPES.find(l => l.id === transactionType)?.name ??
+                  ''
               )}`
             ) ?? 'None'}
           </span>

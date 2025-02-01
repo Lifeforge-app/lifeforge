@@ -58,8 +58,8 @@ function Gallery(): React.ReactElement {
               <div className="flex-center size-full flex-1">
                 <EmptyStateScreen
                   icon="tabler:photo-off"
-                  title="Hmm... Seems a bit empty here"
-                  description="You don't have any photos yet. Why not upload some?"
+                  name="photosInAlbum"
+                  namespace="modules.photos"
                 />
               </div>
             )}

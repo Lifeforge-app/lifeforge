@@ -94,12 +94,14 @@ function ModifyColumnModal({
       <ModalWrapper isOpen={openType !== null} className="sm:min-w-[30rem]">
         <ModalHeader
           icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
-          title={openType === 'update' ? 'Edit Column' : 'Add Column'}
+          title={`column.${openType}`}
+          namespace="modules.projectsM"
           onClose={() => {
             setOpenType(null)
           }}
         />
         <TextInput
+          namespace="modules.projectsM"
           icon="tabler:book"
           placeholder="My Columns"
           value={columnName}
@@ -108,12 +110,14 @@ function ModifyColumnModal({
           updateValue={setColumnName}
         />
         <IconInput
+          namespace="modules.projectsM"
           icon={columnIcon}
           setIcon={setColumnIcon}
           name="Column icon"
           setIconSelectorOpen={setIconSelectorOpen}
         />
         <ColorInput
+          namespace="modules.projectsM"
           color={columnColor}
           name="Column color"
           setColorPickerOpen={setColorPickerOpen}

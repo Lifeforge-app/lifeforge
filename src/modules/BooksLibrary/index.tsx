@@ -2,7 +2,6 @@ import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useDebounce } from '@uidotdev/usehooks'
 
 import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { Button } from '@components/buttons'
 import HamburgerSelectorWrapper from '@components/buttons/HamburgerMenu/components/HamburgerSelectorWrapper'
@@ -24,7 +23,6 @@ import GridView from './views/GridView'
 import ListView from './views/ListView'
 
 function BooksLibrary(): React.ReactElement {
-  const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const {
     entries: {
@@ -129,10 +127,8 @@ function BooksLibrary(): React.ReactElement {
                   return (
                     <EmptyStateScreen
                       icon="tabler:books-off"
-                      title={t('emptyState.booksLibrary.empty.title')}
-                      description={t(
-                        'emptyState.booksLibrary.empty.description'
-                      )}
+                      namespace="modules.booksLibrary"
+                      name="book"
                     />
                   )
                 }
@@ -140,10 +136,8 @@ function BooksLibrary(): React.ReactElement {
                 return (
                   <EmptyStateScreen
                     icon="tabler:search-off"
-                    title={t('emptyState.booksLibrary.results.title')}
-                    description={t(
-                      'emptyState.booksLibrary.results.description'
-                    )}
+                    namespace="modules.booksLibrary"
+                    name="result"
                   />
                 )
               }

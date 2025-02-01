@@ -25,7 +25,7 @@ import TableView from './views/TableView'
 import ColumnVisibilityToggle from './views/TableView/components/ColumnVisibilityToggle'
 
 function Transactions(): React.ReactElement {
-  const { t } = useTranslation(['common.buttons', 'modules.wallet'])
+  const { t } = useTranslation('modules.wallet')
   const {
     transactions,
     refreshTransactions,
@@ -91,6 +91,7 @@ function Transactions(): React.ReactElement {
               onClick={() => {
                 setManageCategoriesModalOpen(true)
               }}
+              namespace="modules.wallet"
             />
             <div className="block md:hidden">
               <HamburgerSelectorWrapper icon="tabler:eye" title="View as">
@@ -135,13 +136,12 @@ function Transactions(): React.ReactElement {
                 if (transactions.length === 0) {
                   return (
                     <EmptyStateScreen
-                      title={t('emptyState.wallet.transactions.title')}
-                      description={t(
-                        'emptyState.wallet.transactions.description'
-                      )}
-                      ctaContent={t('common.buttons:new', {
-                        item: t('modules.wallet:items.transaction')
-                      })}
+                      name="transactions"
+                      namespace="modules.wallet"
+                      ctaContent="new"
+                      ctaTProps={{
+                        item: t('items.transaction')
+                      }}
                       onCTAClick={setModifyModalOpenType}
                       icon="tabler:wallet-off"
                     />
@@ -151,8 +151,8 @@ function Transactions(): React.ReactElement {
                 if (filteredTransactions.length === 0) {
                   return (
                     <EmptyStateScreen
-                      title="Oops! No Transaction found."
-                      description="No transactions found with the selected filters."
+                      name="results"
+                      namespace="modules.wallet"
                       icon="tabler:filter-off"
                     />
                   )

@@ -23,7 +23,7 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
         a.rel = 'noreferrer noopener'
         a.click()
       }}
-      className={`w-full cursor-pointer space-y-2 rounded-md p-2 ${componentBgLighterWithHover}`}
+      className={`w-full text-left cursor-pointer space-y-2 rounded-md p-2 ${componentBgLighterWithHover}`}
     >
       {data.ogImage !== undefined && (
         <img

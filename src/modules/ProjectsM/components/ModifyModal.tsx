@@ -5,6 +5,7 @@ import Modal from '@components/modals/Modal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import APIRequest from '@utils/fetchData'
+import { toCamelCase } from '@utils/strings'
 
 function ModifyModal({
   stuff
@@ -106,12 +107,11 @@ function ModifyModal({
 
   return (
     <Modal
+      namespace="modules.projectsM"
       isOpen={openType !== null}
       data={data}
       setData={setData}
-      title={
-        openType === 'update' ? `Edit ${singleStuff}` : `Add ${singleStuff}`
-      }
+      title={`${toCamelCase(singleStuff)}.${openType}`}
       fields={FIELDS}
       icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
       openType={openType}

@@ -109,6 +109,7 @@ function ModifyAlbumTagsModal({
         icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
       />
       <TextInput
+        namespace="modules.photos"
         icon="tabler:photo"
         ref={ref}
         name="Tag name"

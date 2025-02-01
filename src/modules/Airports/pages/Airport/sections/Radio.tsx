@@ -33,8 +33,8 @@ function Radio(): React.ReactElement {
             <div className="my-8">
               <EmptyStateScreen
                 icon="tabler:radio-off"
-                title="No radios found"
-                description="There are no radios found for this airport."
+                namespace="modules.airports"
+                name="radio"
               />
             </div>
           )}

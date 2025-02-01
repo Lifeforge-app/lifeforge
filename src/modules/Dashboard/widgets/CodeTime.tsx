@@ -168,8 +168,10 @@ const CodeTime = (): React.ReactElement => {
       return (
         <EmptyStateScreen
           icon="tabler:database-off"
-          title="No Data"
-          description="No data available for this chart"
+          namespace="modules.dashboard"
+          tKey="widgets.codeTime"
+          name="data"
+          smaller
         />
       )
 

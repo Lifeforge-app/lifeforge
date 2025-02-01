@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import {
   ListboxOrComboboxInput,
   ListboxNullOption,
@@ -15,7 +14,6 @@ function LedgerSelector({
   ledger: string | null
   setLedger: React.Dispatch<React.SetStateAction<string | null>>
 }): React.ReactElement {
-  const { t } = useTranslation()
   const { ledgers } = useWalletContext()
 
   if (ledgers === 'loading') {

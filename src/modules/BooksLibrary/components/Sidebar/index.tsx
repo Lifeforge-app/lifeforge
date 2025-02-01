@@ -19,6 +19,7 @@ function Sidebar(): React.ReactElement {
       <SidebarItem
         icon="tabler:list"
         name="All books"
+        namespace="modules.booksLibrary"
         active={Array.from(searchParams.keys()).length === 0}
         onClick={() => {
           setSearchParams({})
@@ -28,6 +29,7 @@ function Sidebar(): React.ReactElement {
       <SidebarItem
         icon="tabler:heart"
         name="Favourite"
+        namespace="modules.booksLibrary"
         active={searchParams.get('favourite') === 'true'}
         onClick={() => {
           searchParams.set('favourite', 'true')

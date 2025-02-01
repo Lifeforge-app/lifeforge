@@ -189,6 +189,7 @@ function AddToLibraryModal({
 
   return (
     <Modal
+      namespace="modules.booksLibrary"
       isOpen={isOpen}
       title="Add to library"
       icon="majesticons:book-plus-line"

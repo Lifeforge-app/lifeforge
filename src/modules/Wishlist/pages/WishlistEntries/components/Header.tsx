@@ -1,6 +1,7 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import { GoBackButton, Button } from '@components/buttons'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
@@ -18,6 +19,7 @@ function Header({
   setExistedData: (value: Partial<IWishlistEntry> | null) => void
   setFromOtherAppsModalOpen: (value: boolean) => void
 }): React.ReactElement {
+  const { t } = useTranslation('modules.wishlist')
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
 
@@ -94,8 +96,9 @@ function Header({
             icon="tabler:plus"
             className="hidden md:flex"
             as={MenuButton}
+            tProps={{ item: t('items.entry') }}
           >
-            New Item
+            new
           </Button>
           <MenuItems
             transition
@@ -110,6 +113,7 @@ function Header({
                 })
               }}
               icon="tabler:plus"
+              namespace="modules.wishlist"
               text="Add Manually"
             />
             <MenuItem
@@ -117,6 +121,7 @@ function Header({
                 setFromOtherAppsModalOpen(true)
               }}
               icon="tabler:apps"
+              namespace="modules.wishlist"
               text="From Other Apps"
             />
           </MenuItems>

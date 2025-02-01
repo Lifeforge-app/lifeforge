@@ -68,7 +68,6 @@ function Passwords(): React.ReactElement {
     if (masterPassword === '') {
       return (
         <LockedScreen
-          module="vault"
           endpoint="passwords/master/verify"
           setMasterPassword={setMasterPassword}
           fetchChallenge={() => {

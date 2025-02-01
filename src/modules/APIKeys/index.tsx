@@ -82,7 +82,6 @@ function APIKeys(): React.ReactElement {
     if (masterPassword === '') {
       return (
         <LockedScreen
-          module="API Keys"
           endpoint="api-keys/auth/verify"
           setMasterPassword={setMasterPassword}
           fetchChallenge={fetchChallenge}

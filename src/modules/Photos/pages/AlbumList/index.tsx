@@ -116,15 +116,15 @@ function PhotosAlbumList(): React.ReactElement {
                       </ul>
                     ) : (
                       <EmptyStateScreen
-                        description="Oops, seems like nothing matches your search."
-                        title="No albums found"
+                        name="albumResults"
+                        namespace="modules.photos"
                         icon="tabler:photo-off"
                       />
                     )
                   ) : (
                     <EmptyStateScreen
-                      description="Consider creating an album to organize your photos."
-                      title="Hmm... Seems a bit empty here."
+                      name="albums"
+                      namespace="modules.photos"
                       icon="tabler:photo-off"
                     />
                   )

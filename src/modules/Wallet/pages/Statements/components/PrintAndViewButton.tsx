@@ -31,8 +31,9 @@ function PrintAndViewButton({
         }}
         icon="tabler:eye"
         variant="secondary"
+        namespace="modules.wallet"
       >
-        {showStatement ? 'Hide' : 'Show'} Statement
+        {showStatement ? 'Hide Statement' : 'Show Statement'}
       </Button>
     </>
   )

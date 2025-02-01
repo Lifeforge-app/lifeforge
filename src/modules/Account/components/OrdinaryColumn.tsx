@@ -29,7 +29,7 @@ function OrdinaryColumn({
         desc={t(`settings.desc.${toCamelCase(title)}`)}
         icon={icon}
       >
-        <div className="flex-between w-full">
+        <div className="flex-between gap-4 w-full">
           <span className="whitespace-nowrap text-bg-500">
             {(() => {
               if (userData[id] === '') {

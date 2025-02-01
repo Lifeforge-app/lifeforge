@@ -136,8 +136,8 @@ function VirtualWardrobeClothes(): React.ReactElement {
                   return (
                     <EmptyStateScreen
                       icon="tabler:shirt-off"
-                      title="No clothes yet"
-                      description="No clothes have been added to your wardrobe yet. Click the button below to add your first item."
+                      namespace="modules.virtualWardrobe"
+                      name="clothes"
                     />
                   )
                 }
@@ -145,8 +145,8 @@ function VirtualWardrobeClothes(): React.ReactElement {
                 return (
                   <EmptyStateScreen
                     icon="tabler:search-off"
-                    title="No results found"
-                    description="No clothes were found matching your search criteria."
+                    namespace="modules.virtualWardrobe"
+                    name="results"
                   />
                 )
               }

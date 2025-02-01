@@ -10,7 +10,7 @@ function TaskPriorityList({
 }: {
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.todoList')
   const {
     setModifyPriorityModalOpenType: setModifyModalOpenType,
     setSelectedPriority: setSelectedData,
@@ -41,9 +41,7 @@ function TaskPriorityList({
               ))}
             </>
           ) : (
-            <p className="text-center text-bg-500">
-              {t('emptyState.priority')}
-            </p>
+            <p className="text-center text-bg-500">{t('empty.priorities')}</p>
           )
         }
       </APIFallbackComponent>

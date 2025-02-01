@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
 import { SearchInput } from '@components/inputs'
+import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import ChipSelector from '../components/ChipSelector'
 import IconEntry from '../components/IconEntry'
 
@@ -79,55 +80,73 @@ function IconSet({
         searchQuery={searchTerm}
         setSearchQuery={setSearchTerm}
         stuffToSearch="icon"
-        namespace="misc.iconPicker"
+        tKey="iconPicker"
+        namespace="common.misc"
       />
       <ChipSelector
         options={Object.keys(iconData.categories ?? {})}
         value={currentTag}
         setValue={setCurrentTag}
       />
-      <div className="min-h-0 flex-1">
-        <AS className="mt-6">
-          {({ width, height }: { width: number; height: number }) => {
-            const itemsPerRow = Math.floor(width / 160) || 1
+      <div className="min-h-0 flex-1 flex flex-col">
+        {filteredIconList.length ? (
+          <AS className="mt-6">
+            {({ width, height }: { width: number; height: number }) => {
+              const itemsPerRow = Math.floor(width / 160) || 1
 
-            return (
-              <L
-                width={width}
-                height={height - 12}
-                rowHeight={120}
-                rowCount={Math.ceil(filteredIconList.length / itemsPerRow)}
-                itemsPerRow={Math.floor(width / filteredIconList.length) || 1}
-                rowRenderer={({
-                  index,
-                  key,
-                  style
-                }: {
-                  index: number
-                  key: string
-                  style: React.CSSProperties
-                }) => {
-                  const fromIndex = index * itemsPerRow
-                  const toIndex = fromIndex + itemsPerRow
+              return (
+                <L
+                  width={width}
+                  height={height - 12}
+                  rowHeight={120}
+                  rowCount={Math.ceil(filteredIconList.length / itemsPerRow)}
+                  itemsPerRow={Math.floor(width / filteredIconList.length) || 1}
+                  rowRenderer={({
+                    index,
+                    key,
+                    style
+                  }: {
+                    index: number
+                    key: string
+                    style: React.CSSProperties
+                  }) => {
+                    const fromIndex = index * itemsPerRow
+                    const toIndex = fromIndex + itemsPerRow
 
-                  return (
-                    <div key={key} style={style} className="flex w-full gap-4">
-                      {filteredIconList.slice(fromIndex, toIndex).map(icon => (
-                        <IconEntry
-                          key={icon}
-                          icon={icon}
-                          iconSet={iconSet}
-                          setSelectedIcon={setSelectedIcon}
-                          setOpen={setOpen}
-                        />
-                      ))}
-                    </div>
-                  )
-                }}
-              />
-            )
-          }}
-        </AS>
+                    return (
+                      <div
+                        key={key}
+                        style={style}
+                        className="flex w-full gap-4"
+                      >
+                        {filteredIconList
+                          .slice(fromIndex, toIndex)
+                          .map(icon => (
+                            <IconEntry
+                              key={icon}
+                              icon={icon}
+                              iconSet={iconSet}
+                              setSelectedIcon={setSelectedIcon}
+                              setOpen={setOpen}
+                            />
+                          ))}
+                      </div>
+                    )
+                  }}
+                />
+              )
+            }}
+          </AS>
+        ) : (
+          <div className="flex-1 flex-center">
+            <EmptyStateScreen
+              name="icon"
+              namespace="common.misc"
+              tKey="iconPicker"
+              icon="tabler:icons-off"
+            />
+          </div>
+        )}
       </div>
     </div>
   ) : (

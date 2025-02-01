@@ -252,8 +252,8 @@ function DNSRecords(): JSX.Element {
             records.length === 0 ? (
               <EmptyStateScreen
                 icon="tabler:search-off"
-                title="No DNS records found"
-                description="There is no DNS record related to your search query."
+                namespace="modules.dnsRecords"
+                name="dnsRecords"
               />
             ) : (
               <table className="mb-8">

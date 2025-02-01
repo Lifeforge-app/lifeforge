@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { Button } from '@components/buttons'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
@@ -7,6 +8,7 @@ import HeaderFilter from '@components/utilities/HeaderFilter'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 
 function Header({ itemCount }: { itemCount: number }): React.ReactElement {
+  const { t } = useTranslation('modules.booksLibrary')
   const {
     categories: { data: categories },
     languages: { data: languages },
@@ -33,8 +35,11 @@ function Header({ itemCount }: { itemCount: number }): React.ReactElement {
               icon="tabler:plus"
               className="hidden sm:flex"
               as={MenuButton}
+              tProps={{
+                item: t('items.book')
+              }}
             >
-              add Book
+              new
             </Button>
             <MenuItems
               transition
@@ -44,6 +49,7 @@ function Header({ itemCount }: { itemCount: number }): React.ReactElement {
               <MenuItem
                 onClick={() => {}}
                 icon="tabler:upload"
+                namespace="modules.booksLibrary"
                 text="Upload from device"
               />
               <MenuItem
@@ -51,6 +57,7 @@ function Header({ itemCount }: { itemCount: number }): React.ReactElement {
                   setLibgenModalOpen(true)
                 }}
                 icon="tabler:books"
+                namespace="modules.booksLibrary"
                 text="Download from Libgen"
               />
             </MenuItems>

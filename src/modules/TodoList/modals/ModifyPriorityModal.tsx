@@ -72,17 +72,13 @@ function ModifyPriorityModal(): React.ReactElement {
 
   return (
     <Modal
+      namespace="modules.todoList"
       isOpen={openType !== null}
       openType={openType}
       onClose={() => {
         setOpenType(null)
       }}
-      title={`${
-        {
-          create: 'Create ',
-          update: 'Update '
-        }[openType!]
-      }priority`}
+      title={`priority.${openType}`}
       icon={
         {
           create: 'tabler:plus',

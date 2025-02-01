@@ -82,7 +82,6 @@ function Journal(): React.ReactElement {
     if (masterPassword === '') {
       return (
         <LockedScreen
-          module="journal"
           endpoint="journal/auth/verify"
           setMasterPassword={setMasterPassword}
           fetchChallenge={fetchChallenge}

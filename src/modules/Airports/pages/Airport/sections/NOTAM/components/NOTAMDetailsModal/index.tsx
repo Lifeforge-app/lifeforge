@@ -56,8 +56,8 @@ function NOTAMDetailsModal({
             </Scrollbar>
           ) : (
             <EmptyStateScreen
-              title="No data found"
-              description="The NOTAM data could not be found"
+              namespace="modules.airports"
+              name="NOTAM"
               icon="tabler:file-text"
             />
           )

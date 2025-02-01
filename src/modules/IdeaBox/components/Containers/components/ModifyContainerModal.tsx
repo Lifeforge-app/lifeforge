@@ -163,16 +163,12 @@ function ModifyContainerModal({
 
   return (
     <Modal
+      namespace="modules.ideaBox"
       isOpen={openType !== null}
       fields={FIELDS}
       data={data}
       setData={setData}
-      title={`${
-        {
-          create: 'Create ',
-          update: 'Update '
-        }[openType!]
-      } container`}
+      title={`container.${openType}`}
       icon={
         {
           create: 'tabler:plus',

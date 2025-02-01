@@ -97,6 +97,7 @@ function ModifyLedgersModal({
         />
         <TextInput
           icon="tabler:book"
+          namespace="modules.wallet"
           placeholder="My Ledgers"
           value={ledgerName}
           darker
@@ -105,12 +106,14 @@ function ModifyLedgersModal({
         />
         <IconInput
           icon={ledgerIcon}
+          namespace="modules.wallet"
           setIcon={setLedgerIcon}
           name="Ledger icon"
           setIconSelectorOpen={setIconSelectorOpen}
         />
         <ColorInput
           color={ledgerColor}
+          namespace="modules.wallet"
           name="Ledger color"
           setColorPickerOpen={setColorPickerOpen}
           updateColor={setLedgerColor}

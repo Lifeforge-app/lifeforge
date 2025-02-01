@@ -179,8 +179,9 @@ function ModifyEntryModal(): React.ReactElement {
 
   return (
     <Modal
+      namespace="modules.projectsM"
       isOpen={openType !== null}
-      title={openType === 'update' ? 'Edit Project' : 'Add Project'}
+      title={`project.${openType}`}
       icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
       openType={openType}
       onClose={() => {

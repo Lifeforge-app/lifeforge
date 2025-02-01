@@ -5,11 +5,13 @@ import React from 'react'
 function ListboxNullOption({
   icon,
   value = '',
-  hasBgColor = false
+  hasBgColor = false,
+  text = 'None'
 }: {
   icon: string
   value?: any
   hasBgColor?: boolean
+  text?: string
 }): React.ReactElement {
   return (
     <ListboxOption
@@ -33,7 +35,7 @@ function ListboxNullOption({
             >
               <Icon icon={icon} className="size-5" />
             </span>
-            <span>None</span>
+            <span>{text}</span>
           </div>
           {selected && (
             <Icon

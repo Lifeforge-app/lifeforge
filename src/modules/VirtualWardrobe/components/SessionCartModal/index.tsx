@@ -73,9 +73,9 @@ function SessionCartModal({
           {cartItems =>
             cartItems.length === 0 ? (
               <EmptyStateScreen
-                title="Session Cart is empty"
+                name="sessionCart"
+                namespace="modules.virtualWardrobe"
                 smaller
-                description="Add items to the cart by clicking the 'Add to Cart' button on the item"
                 icon="tabler:icons-off"
               />
             ) : (
