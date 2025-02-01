@@ -25,7 +25,7 @@ function ManageTagsModal({
   existedData: IPhotoAlbumTag | null
   setExistedData: React.Dispatch<React.SetStateAction<IPhotoAlbumTag | null>>
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.photos')
   const { albumTagList, refreshAlbumTagList } = usePhotosContext()
   const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
     useState(false)

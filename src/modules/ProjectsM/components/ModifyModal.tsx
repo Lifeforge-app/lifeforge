@@ -12,7 +12,7 @@ function ModifyModal({
 }: {
   stuff: 'categories' | 'technologies' | 'visibilities' | 'statuses'
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.projectsM')
   const {
     modifyDataModalOpenType: openType,
     setModifyDataModalOpenType: setOpenType,

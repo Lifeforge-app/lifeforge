@@ -31,7 +31,7 @@ import RemovePhotosFromAlbumConfirmationModal from '../../components/modals/Remo
 import ShareAlbumModal from '../../components/modals/ShareAlbumModal.tsx'
 
 function PhotosAlbumGallery(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.photos')
   const { id } = useParams<{
     id: string
   }>()

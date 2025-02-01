@@ -18,7 +18,7 @@ import IdeaContentInput from './components/IdeaContentInput'
 import ModalHeader from './components/ModalHeader'
 
 function ModifyIdeaModal(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.ideaBox')
   const {
     modifyIdeaModalOpenType: openType,
     setModifyIdeaModalOpenType: setOpenType,

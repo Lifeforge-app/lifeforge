@@ -22,7 +22,7 @@ function ModifyAlbumTagsModal({
   targetTag?: IPhotoAlbumTag
   refreshTagData?: () => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.photos')
   const { setAlbumTagList } = usePhotosContext()
   const [tagName, setTagName] = useState('')
   const [loading, setLoading] = useState(false)

@@ -21,7 +21,7 @@ function ModifyCategoryModal({
   existedData,
   refreshCategories
 }: ModifyCategoryModalProps): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.calendar')
   const modalRef = useRef<HTMLDivElement>(null)
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
   const [data, setData] = useReducer(

@@ -26,7 +26,7 @@ function ModifyJournalEntryModal({
   existedData: IJournalEntry | null
   masterPassword: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.journal')
   const [step, setStep] = useState<number>(1)
   const [date, setDate] = useState<string>(new Date().toISOString())
   const [title, setTitle] = useState<string>('')

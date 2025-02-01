@@ -27,7 +27,7 @@ function ModifyLedgersModal({
   setExistedData: React.Dispatch<React.SetStateAction<IWalletLedger | null>>
   refreshLedgers: () => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
   const [ledgerName, setLedgerName] = useState('')
   const [ledgerIcon, setLedgerIcon] = useState('')
   const [ledgerColor, setLedgerColor] = useState<string>('#FFFFFF')

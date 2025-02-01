@@ -42,7 +42,7 @@ export default function AuthProvider({
 }: {
   children: React.ReactNode
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common.auth')
   const [auth, _setAuth] = useState(false)
   const [userData, _setUserData] = useState<any>(null)
   const [quota, setQuota] = useState(5)

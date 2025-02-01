@@ -8,7 +8,6 @@ import BackgroundProvider from '@providers/BackgroundProvider'
 import GlobalStateProvider from '@providers/GlobalStateProvider'
 import { MusicProvider } from '@providers/MusicProvider'
 import PersonalizationProvider from '@providers/PersonalizationProvider'
-import SpotifyProvider from '@providers/SpotifyProvider'
 
 function Providers({
   children
@@ -22,9 +21,7 @@ function Providers({
           <DndProvider backend={HTML5Backend}>
             <PersonalizationProvider>
               <BackgroundProvider>
-                <MusicProvider>
-                  <SpotifyProvider>{children}</SpotifyProvider>
-                </MusicProvider>
+                <MusicProvider>{children}</MusicProvider>
               </BackgroundProvider>
             </PersonalizationProvider>
           </DndProvider>

@@ -18,7 +18,7 @@ function NotesSubject(): React.ReactElement {
     '*': path,
     workspace
   } = useParams<{ subject: string; '*': string; workspace: string }>()
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.notes')
   const navigate = useNavigate()
 
   const [valid] = useFetch<boolean>(

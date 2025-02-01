@@ -17,6 +17,7 @@ function ManageWidgetsModal({
     <ModalWrapper isOpen={isOpen} minWidth="40vw">
       <ModalHeader
         title="Manage Widgets"
+        namespace="modules.dashboard"
         onClose={onClose}
         icon="tabler:apps"
       />

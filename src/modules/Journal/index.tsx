@@ -19,7 +19,7 @@ import CreatePasswordScreen from '../../components/screens/CreatePasswordScreen'
 import LockedScreen from '../../components/screens/LockedScreen'
 
 function Journal(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.journal')
   const { userData } = useAuthContext()
   const [masterPassword, setMasterPassword] = useState<string>('')
   const [entries, setEntries] = useState<Loadable<IJournalEntry[]>>('loading')

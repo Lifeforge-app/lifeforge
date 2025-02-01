@@ -17,7 +17,7 @@ import EmptyTrashConfirmationModal from '../../components/modals/EmptyTrashConfi
 import PhotosSidebar from '../../components/PhotosSidebar'
 
 function PhotosTrash(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.photos')
   const { selectedPhotos, setSelectedPhotos } = usePhotosContext()
   const [photos, refreshPhotos] =
     useFetch<IPhotoAlbumEntryItem[]>('photos/trash/list')

@@ -11,7 +11,7 @@ import { usePhotosContext } from '@providers/PhotosProvider'
 import APIRequest from '@utils/fetchData'
 
 function AddPhotosToAlbumModal(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.photos')
   const {
     photos,
     albumList,

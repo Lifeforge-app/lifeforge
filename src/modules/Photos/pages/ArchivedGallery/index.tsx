@@ -39,7 +39,7 @@ function PhotosAlbumGallery(): React.ReactElement {
     setAlbumList
   } = usePhotosContext()
   const navigate = useNavigate()
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.photos')
   const [valid] = useFetch<boolean>(`photos/album/valid/${id}`)
   const [albumData, refreshAlbumData, setAlbumData] = useFetch<IPhotosAlbum>(
     `photos/album/get/${id}`,

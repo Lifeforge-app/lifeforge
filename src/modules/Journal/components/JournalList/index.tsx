@@ -36,7 +36,7 @@ function JournalList({
 }): React.ReactElement {
   const [searchQuery, setSearchQuery] = useState('')
   const [editLoading, setEditLoading] = useState(false)
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.journal')
 
   useEffect(() => {
     if (masterPassword !== '') {

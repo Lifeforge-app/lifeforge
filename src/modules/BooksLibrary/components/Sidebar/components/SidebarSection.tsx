@@ -16,7 +16,7 @@ function SidebarSection({
   hasActionButton?: boolean
   hasHamburgerMenu?: boolean
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.booksLibrary')
   const { data, setExistedData, setModifyDataModalOpenType } =
     useBooksLibraryContext()[stuff]
 

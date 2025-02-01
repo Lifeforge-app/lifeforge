@@ -31,7 +31,7 @@ function ModifyEventModal({
   existedData,
   categories
 }: ModifyEventModalProps): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.calendar')
 
   const [data, setData] = useReducer(
     (state, _newState) => {

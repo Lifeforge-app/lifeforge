@@ -12,7 +12,7 @@ function ModifyModal({
 }: {
   stuff: 'categories' | 'languages'
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.booksLibrary')
   const {
     modifyDataModalOpenType: openType,
     setModifyDataModalOpenType: setOpenType,

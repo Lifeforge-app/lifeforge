@@ -17,7 +17,7 @@ function ModifyContainerModal({
   setContainerList: React.Dispatch<React.SetStateAction<IIdeaBoxContainer[]>>
   existedData: IIdeaBoxContainer | null
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.ideaBox')
 
   const [data, setData] = useReducer(
     (state, newState) => ({ ...state, ...newState }),

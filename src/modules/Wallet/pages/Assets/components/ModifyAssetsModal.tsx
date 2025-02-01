@@ -26,7 +26,7 @@ function ModifyAssetsModal({
   setExistedData: React.Dispatch<React.SetStateAction<IWalletAsset | null>>
   refreshAssets: () => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
   const [assetName, setAssetName] = useState('')
   const [assetIcon, setAssetIcon] = useState('')
   const [assetStartingBalance, setAssetStartingBalance] = useState<string>('')

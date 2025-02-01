@@ -21,7 +21,7 @@ function BottomBar({
     | IPhotoAlbumEntryItem[]
   inAlbumGallery?: boolean
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.photos')
   const {
     selectedPhotos,
     setSelectedPhotos,

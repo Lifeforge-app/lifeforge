@@ -20,7 +20,7 @@ function Summarize({
   summarizedText: string
   masterPassword: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.journal')
   const [loading, setLoading] = useState(false)
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
