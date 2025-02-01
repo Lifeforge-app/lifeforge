@@ -9,7 +9,7 @@ import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import APIRequest from '@utils/fetchData'
 
 function ModifyTagModal(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.ideaBox')
   const {
     modifyTagModalOpenType: openType,
     setModifyTagModalOpenType: setOpenType,

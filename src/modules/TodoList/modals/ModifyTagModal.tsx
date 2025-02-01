@@ -7,7 +7,7 @@ import { useTodoListContext } from '@providers/TodoListProvider'
 import APIRequest from '@utils/fetchData'
 
 function ModifyTagModal(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.todoList')
   const {
     modifyTagModalOpenType: openType,
     setModifyTagModalOpenType: setOpenType,

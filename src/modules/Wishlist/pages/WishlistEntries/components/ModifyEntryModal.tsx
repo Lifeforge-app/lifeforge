@@ -25,7 +25,7 @@ function ModifyEntryModal({
   collectionId: string
   lists: Loadable<IWishlistList[]>
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wishlist')
   const [data, setData] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {

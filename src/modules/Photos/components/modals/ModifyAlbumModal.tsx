@@ -18,7 +18,7 @@ function ModifyAlbumModal({
   targetAlbum?: IPhotosAlbum
   refreshAlbumData?: () => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.photos')
   const {
     modifyAlbumModalOpenType: openType,
     setModifyAlbumModalOpenType: setOpenType,

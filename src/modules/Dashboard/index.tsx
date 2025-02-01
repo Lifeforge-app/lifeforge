@@ -53,10 +53,12 @@ function Dashboard(): React.ReactElement {
                 onClick={() => {
                   setCanLayoutChange(!canLayoutChange)
                 }}
+                namespace="modules.dashboard"
               />
               <MenuItem
                 icon="tabler:apps"
                 text="Manage Widgets"
+                namespace="modules.dashboard"
                 onClick={() => {
                   setManageWidgetsModalOpen(true)
                 }}

@@ -30,7 +30,7 @@ function ModifyColumnModal({
   >
   refreshColumns: () => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.projectsM')
   const { id } = useParams()
   const [columnName, setColumnName] = useState('')
   const [columnIcon, setColumnIcon] = useState('')

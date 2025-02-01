@@ -60,14 +60,8 @@ const DASHBOARD_WIDGETS: Record<
     minW: 2,
     minH: 4
   },
-  expensesBreakdown: {
-    icon: 'tabler:chart-bar'
-  },
   incomeExpenses: {
     icon: 'tabler:exchange'
-  },
-  recentTransactions: {
-    icon: 'tabler:file-text'
   },
   assetsBalance: {
     icon: 'tabler:coin'

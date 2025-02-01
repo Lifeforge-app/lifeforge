@@ -9,7 +9,7 @@ import { useMusicContext } from '@providers/MusicProvider'
 import APIRequest from '@utils/fetchData'
 
 function ModifyMusicModal(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.music')
   const {
     isModifyMusicModalOpen: isOpen,
     setIsModifyMusicModalOpen: setOpen,

@@ -18,7 +18,7 @@ import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import APIRequest from '@utils/fetchData'
 
 function ModifyFolderModal(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.ideaBox')
   const {
     modifyFolderModalOpenType: openType,
     setModifyFolderModalOpenType: setOpenType,
