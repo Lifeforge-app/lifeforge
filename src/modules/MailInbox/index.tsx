@@ -19,7 +19,7 @@ import Sidebar from './components/Sidebar'
 import ViewMailModal from './components/ViewMailModal'
 
 function MailInbox(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.mailInbox')
   const [page, setPage] = useState(1)
   const [mails, , setMails] = useFetch<ListResult<IMailInboxEntry>>(
     `mail-inbox/entries?page=${page}`
@@ -46,6 +46,7 @@ function MailInbox(): React.ReactElement {
             onClick={() => {
               console.log('Compose mail')
             }}
+            namespace="modules.mailInbox"
           >
             Compose
           </Button>
@@ -64,19 +65,19 @@ function MailInbox(): React.ReactElement {
                 {(() => {
                   switch (searchParams.get('label')) {
                     case 'inbox':
-                      return t('sidebar.mailInbox.inbox')
+                      return t('headers.inbox')
                     case 'starred':
-                      return t('sidebar.mailInbox.starred')
+                      return t('headers.starred')
                     case 'sent':
-                      return t('sidebar.mailInbox.sent')
+                      return t('headers.sent')
                     case 'draft':
-                      return t('sidebar.mailInbox.draft')
+                      return t('headers.draft')
                     case 'trash':
-                      return t('sidebar.mailInbox.trash')
+                      return t('headers.trash')
                     case 'all-mails':
-                      return t('sidebar.mailInbox.allMails')
+                      return t('headers.allMails')
                     default:
-                      return t('sidebar.mailInbox.filtered')
+                      return t('headers.filteredMails')
                   }
                 })()}
               </h1>
@@ -95,7 +96,8 @@ function MailInbox(): React.ReactElement {
           <SearchInput
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            stuffToSearch="mails"
+            stuffToSearch="mail"
+            namespace="modules.mailInbox"
           />
           <div className="mt-6 flex-1">
             <APIFallbackComponent data={mails}>

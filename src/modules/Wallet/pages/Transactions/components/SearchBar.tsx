@@ -17,7 +17,8 @@ function SearchBar({
       <SearchInput
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        stuffToSearch="transactions"
+        stuffToSearch="transaction"
+        namespace="modules.wallet"
       />
       <ViewModeSelector
         className="hidden md:flex"

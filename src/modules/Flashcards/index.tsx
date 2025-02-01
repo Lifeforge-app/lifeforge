@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
+import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
@@ -13,7 +14,6 @@ import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IFlashcardDeck } from '@interfaces/flashcard_interfaces'
 import Sidebar from './components/Sidebar'
-import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
 
 export default function Flashcards(): React.ReactElement {
   const { componentBgWithHover } = useThemeColors()
@@ -46,7 +46,8 @@ export default function Flashcards(): React.ReactElement {
           <SearchInput
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            stuffToSearch="tasks"
+            stuffToSearch="set"
+            namespace="modules.flashcards"
           />
           <APIFallbackComponent data={decks}>
             {decks => (

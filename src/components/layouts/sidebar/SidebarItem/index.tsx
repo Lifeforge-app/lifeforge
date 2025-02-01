@@ -37,6 +37,8 @@ interface MainSidebarItemProps {
   isCollapsed?: never
   onCollapseButtonClick?: never
   showCollapseSpacer?: never
+  namespace?: never
+  needTranslate?: never
 }
 
 interface SubSidebarItemProps {
@@ -56,6 +58,8 @@ interface SubSidebarItemProps {
   isCollapsed?: boolean
   onCollapseButtonClick?: () => void
   showCollapseSpacer?: boolean
+  namespace?: string
+  needTranslate?: boolean
 }
 
 interface SidebarItemBaseProps {
@@ -84,7 +88,9 @@ function SidebarItem({
 
   isCollapsed,
   onCollapseButtonClick,
-  showCollapseSpacer
+  showCollapseSpacer,
+  namespace,
+  needTranslate = true
 }: SidebarItemProps): React.ReactElement {
   const location = useLocation()
   const navigate = useNavigate()
@@ -162,6 +168,8 @@ function SidebarItem({
           hamburgerMenuItems={hamburgerMenuItems}
           active={autoActive ? isLocationMatched : active}
           onCancelButtonClick={onCancelButtonClick}
+          namespace={namespace}
+          needTranslate={needTranslate}
         />
         {sidebarExpanded && subsection !== undefined && (
           <SidebarItemSubsectionExpandIcon

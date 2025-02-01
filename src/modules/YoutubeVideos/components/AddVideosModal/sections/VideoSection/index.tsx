@@ -123,6 +123,7 @@ function VideoSection({
         updateValue={setVideoUrl}
         darker
         className="my-4"
+        namespace="modules.youtubeVideos"
       />
       {URL_REGEX.test(debouncedVideoUrl) && (
         <VideoDetails

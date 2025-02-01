@@ -78,7 +78,8 @@ function IconSet({
         hasTopMargin={false}
         searchQuery={searchTerm}
         setSearchQuery={setSearchTerm}
-        stuffToSearch="icons"
+        stuffToSearch="icon"
+        namespace="misc.iconPicker"
       />
       <ChipSelector
         options={Object.keys(iconData.categories ?? {})}

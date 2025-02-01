@@ -1,5 +1,4 @@
 import React, { Fragment, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import Scrollbar from '@components/utilities/Scrollbar'
 import { type IRoutes } from '@interfaces/routes_interfaces'
@@ -75,9 +74,9 @@ function SidebarItems({ query }: { query: string }): React.ReactElement {
           <div className="flex flex-1 items-center p-6">
             <EmptyStateScreen
               smaller
-              title="No modules found"
-              description="No modules found with the current search query."
+              name="modules"
               icon="tabler:search-off"
+              namespace="common.sidebar"
             />
           </div>
         )}

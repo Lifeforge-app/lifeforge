@@ -269,9 +269,10 @@ function ChangiFlightStatus(): React.ReactElement {
         </Listbox>
         <SearchInput
           hasTopMargin={false}
-          stuffToSearch="flights"
+          stuffToSearch="flight"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
+          namespace="modules.changiAirport"
         />
       </div>
       <Scrollbar className="mt-6 w-full flex-1">

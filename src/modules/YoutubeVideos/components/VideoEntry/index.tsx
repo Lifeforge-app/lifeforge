@@ -38,6 +38,7 @@ function VideoEntry({
           }}
           text="Watch on Youtube"
           icon="tabler:brand-youtube"
+          namespace="modules.youtubeVideos"
         />
         <MenuItem
           onClick={() => {

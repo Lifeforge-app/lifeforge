@@ -15,7 +15,8 @@ function SearchInput({
   filterAmount,
   sideButtonIcon,
   onSideButtonClick,
-  className
+  className,
+  namespace
 }: {
   searchQuery: string
   setSearchQuery: (query: string) => void
@@ -28,8 +29,9 @@ function SearchInput({
   sideButtonIcon?: string
   onSideButtonClick?: () => void
   className?: string
+  namespace: string
 }): React.ReactElement {
-  const { t } = useTranslation('common.misc')
+  const { t } = useTranslation(['common.misc', namespace])
   const { bgImage } = usePersonalizationContext()
   const componentBgLighterWithHover = useMemo(() => {
     if (bgImage !== '') {
@@ -59,7 +61,12 @@ function SearchInput({
         onChange={e => {
           setSearchQuery(e.target.value)
         }}
-        placeholder={t(`search`, { item: toCamelCase(stuffToSearch) })}
+        placeholder={t(`search`, {
+          item: t([
+            `${namespace}:items.${toCamelCase(stuffToSearch)}`,
+            stuffToSearch
+          ])
+        })}
         className="w-full bg-transparent placeholder:text-bg-500"
       />
       {onFilterIconClick !== undefined && (

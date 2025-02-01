@@ -13,7 +13,7 @@ import EntryItem from './components/EntryItem'
 import ModifyAchievementModal from './ModifyAchievementModal'
 
 function Achievements(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.achievements')
   const [selectedDifficulty, setSelectedDifficulty] = React.useState('easy')
   const [entries, refreshEntries] = useFetch<IAchievementEntry[]>(
     'achievements/entries/' + selectedDifficulty
@@ -39,8 +39,11 @@ function Achievements(): React.ReactElement {
               setModifyAchievementModalOpenType('create')
             }}
             className="ml-4 hidden md:flex"
+            tProps={{
+              item: t('items.achievement')
+            }}
           >
-            Add Achievement
+            new
           </Button>
         }
       />

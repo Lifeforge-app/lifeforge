@@ -27,7 +27,7 @@ function ModifyAchievementModal({
   existedData: IAchievementEntry | null
   currentDifficulty: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.achievements')
   const [data, setData] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -58,7 +58,7 @@ function ModifyAchievementModal({
       icon: 'tabler:list',
       type: 'listbox',
       options: difficulties.map(([name, color]) => ({
-        text: name[0].toUpperCase() + name.slice(1),
+        text: t(`difficulties.${name}`),
         value: name,
         color: COLOR[color as keyof typeof COLOR][500]
       }))
@@ -109,12 +109,7 @@ function ModifyAchievementModal({
   return (
     <Modal
       isOpen={openType !== null}
-      title={`${
-        {
-          create: 'Create ',
-          update: 'Update '
-        }[openType!]
-      } achievement`}
+      title={`achievement.${openType}`}
       icon={
         {
           create: 'tabler:plus',
@@ -129,6 +124,7 @@ function ModifyAchievementModal({
         setOpenType(null)
       }}
       onSubmit={onSubmitButtonClick}
+      namespace="modules.achievements"
     />
   )
 }

@@ -14,7 +14,7 @@ import Containers from './components/Containers'
 import ModifyContainerModal from './components/Containers/components/ModifyContainerModal'
 
 function IdeaBox(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.ideaBox')
   const [data, , setData] = useFetch<IIdeaBoxContainer[]>('idea-box/containers')
   const [modifyContainerModalOpenType, setModifyContainerModalOpenType] =
     useState<'create' | 'update' | null>(null)
@@ -50,7 +50,8 @@ function IdeaBox(): React.ReactElement {
         <SearchInput
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          stuffToSearch="idea containers"
+          stuffToSearch="container"
+          namespace="modules.ideaBox"
         />
         <APIFallbackComponent data={data}>
           {data =>

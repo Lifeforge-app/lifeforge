@@ -11,7 +11,7 @@ function ChangeViewButton({
   currentView: string
   onView: (view: 'month' | 'week' | 'day' | 'agenda' | 'work_week') => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.calendar')
 
   return (
     <button
@@ -25,7 +25,7 @@ function ChangeViewButton({
           : 'text-bg-500'
       }`}
     >
-      {t(`calendar.view.${toCamelCase(view)}`)}
+      {t(`view.${toCamelCase(view)}`)}
     </button>
   )
 }

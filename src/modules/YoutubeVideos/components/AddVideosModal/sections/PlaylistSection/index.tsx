@@ -161,6 +161,7 @@ function PlaylistSection({
         darker
         className="mt-4"
         disabled={downloadingVideos.current.size > 0}
+        namespace="modules.youtubeVideos"
       />
       <div className="mt-6">
         {URL_REGEX.test(playlistUrl) && (

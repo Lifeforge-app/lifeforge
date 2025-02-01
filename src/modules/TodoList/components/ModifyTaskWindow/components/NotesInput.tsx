@@ -9,7 +9,7 @@ function NotesInput({
   notes: string
   updateNotes: (e: React.FormEvent<HTMLTextAreaElement>) => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.todoList')
 
   return (
     <div
@@ -33,7 +33,7 @@ function NotesInput({
           }
           `}
         >
-          {t('input.notes')}
+          {t('inputs.notes')}
         </span>
         <textarea
           value={notes}

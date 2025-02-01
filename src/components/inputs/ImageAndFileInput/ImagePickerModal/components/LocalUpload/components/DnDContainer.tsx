@@ -26,7 +26,7 @@ function DnDContainer({
         {isDragActive ? t('dnd.dropHere') : t('dnd.dragAndDropToUpload')}
       </div>
       <div className="mt-4 text-center text-lg font-semibold uppercase tracking-widest text-bg-500">
-        {t('or')}
+        {t('dnd.or')}
       </div>
       <Button
         as="label"

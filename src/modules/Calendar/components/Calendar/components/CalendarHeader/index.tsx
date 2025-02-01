@@ -1,5 +1,6 @@
 import React from 'react'
 import { type NavigateAction, type View } from 'react-big-calendar'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@components/buttons'
 import useThemeColors from '@hooks/useThemeColor'
 import ChangeViewButton from './components/ChangeViewButton'
@@ -22,6 +23,7 @@ function CalendarHeader({
   onView,
   setModifyEventModalOpenType
 }: CalendarHeaderProps): React.ReactElement {
+  const { t } = useTranslation('modules.calendar')
   const { componentBg } = useThemeColors()
 
   return (
@@ -57,8 +59,9 @@ function CalendarHeader({
           onClick={() => {
             setModifyEventModalOpenType('create')
           }}
+          tProps={{ item: t('items.event') }}
         >
-          Add Event
+          new
         </Button>
       </div>
     </div>

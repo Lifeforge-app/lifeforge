@@ -88,7 +88,8 @@ function JournalList({
         <SearchInput
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          stuffToSearch="daily journal entries"
+          stuffToSearch="entry"
+          namespace="modules.journal"
         />
         <APIFallbackComponent data={entries}>
           {entries =>

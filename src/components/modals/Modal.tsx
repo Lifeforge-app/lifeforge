@@ -1,7 +1,19 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
-import { Button , CreateOrModifyButton } from '@components/buttons'
-import { DateInput , IconInput , IconPickerModal , ImageAndFileInput , ImagePickerModal , TextInput , ListboxOrComboboxInput , ListboxNullOption , ListboxOrComboboxOption , ColorInput , ColorPickerModal } from '@components/inputs'
+import { Button, CreateOrModifyButton } from '@components/buttons'
+import {
+  DateInput,
+  IconInput,
+  IconPickerModal,
+  ImageAndFileInput,
+  ImagePickerModal,
+  TextInput,
+  ListboxOrComboboxInput,
+  ListboxNullOption,
+  ListboxOrComboboxOption,
+  ColorInput,
+  ColorPickerModal
+} from '@components/inputs'
 import LoadingScreen from '@components/screens/LoadingScreen'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import ModalHeader from './ModalHeader'
@@ -24,7 +36,8 @@ function Modal({
   loading = false,
   actionButtonIcon,
   actionButtonIsRed,
-  onActionButtonClick
+  onActionButtonClick,
+  namespace
 }: {
   modalRef?: React.RefObject<HTMLDivElement | null>
   fields: IFieldProps[]
@@ -61,6 +74,7 @@ function Modal({
   actionButtonIcon?: string
   actionButtonIsRed?: boolean
   onActionButtonClick?: () => void
+  namespace: string
 }): React.ReactElement {
   const [colorPickerOpen, setColorPickerOpen] = useState<string | null>(null)
   const [iconSelectorOpen, setIconSelectorOpen] = useState<string | null>(null)
@@ -85,6 +99,7 @@ function Modal({
           actionButtonIcon={actionButtonIcon}
           actionButtonIsRed={actionButtonIsRed}
           onActionButtonClick={onActionButtonClick}
+          namespace={namespace}
         />
         {!loading ? (
           <>
@@ -106,6 +121,7 @@ function Modal({
                         darker
                         placeholder={field.placeholder}
                         disabled={field.disabled}
+                        namespace={namespace}
                       />
                     )
                   case 'date':
@@ -121,6 +137,7 @@ function Modal({
                         name={field.label}
                         icon={field.icon}
                         darker
+                        namespace={namespace}
                       />
                     )
                   case 'listbox':
@@ -192,6 +209,17 @@ function Modal({
                                 }}
                                 className="size-5"
                               />
+                              {field.options[0].icon === undefined &&
+                                field.options[0].color !== undefined && (
+                                  <span
+                                    className="size-2 rounded-full"
+                                    style={{
+                                      backgroundColor: field.options.find(
+                                        l => l.value === selectedData
+                                      )?.color
+                                    }}
+                                  />
+                                )}
                               <span className="-mt-px block truncate">
                                 {field.options.find(
                                   l => l.value === selectedData
@@ -200,6 +228,7 @@ function Modal({
                             </>
                           )
                         }
+                        namespace={namespace}
                       >
                         {field.nullOption !== undefined && (
                           <ListboxNullOption
@@ -230,6 +259,7 @@ function Modal({
                         setColorPickerOpen={() => {
                           setColorPickerOpen(field.id)
                         }}
+                        namespace={namespace}
                       />
                     )
                   case 'icon':
@@ -301,6 +331,7 @@ function Modal({
                             }
                           })
                         }}
+                        namespace={namespace}
                       />
                     )
                   default:

@@ -110,34 +110,64 @@ function Pagination({
 
   return (
     <div className={`flex-between flex gap-2 ${className}`}>
-      <Button
-        disabled={currentPage === 1}
-        onClick={() => {
-          if (currentPage > 1) {
-            onPageChange(currentPage - 1)
-          }
-        }}
-        icon="uil:angle-left"
-        variant="no-bg"
-        className="w-auto sm:w-32"
-      >
-        <span className="hidden sm:inline">Previous</span>
-      </Button>
+      {currentPage !== 1 ? (
+        <>
+          <Button
+            disabled={currentPage === 1}
+            onClick={() => {
+              if (currentPage > 1) {
+                onPageChange(currentPage - 1)
+              }
+            }}
+            icon="uil:angle-left"
+            variant="no-bg"
+            className="hidden sm:flex w-32"
+          >
+            Previous
+          </Button>
+          <Button
+            onClick={() => {
+              if (currentPage > 1) {
+                onPageChange(1)
+              }
+            }}
+            icon="uil:angle-left"
+            variant="no-bg"
+            className="sm:hidden"
+          />
+        </>
+      ) : (
+        <span className="w-32"></span>
+      )}
       <div className="flex items-center gap-2">{renderPageNumbers()}</div>
       {currentPage < totalPages ? (
-        <Button
-          onClick={() => {
-            if (currentPage < totalPages) {
-              onPageChange(currentPage + 1)
-            }
-          }}
-          icon="uil:angle-right"
-          variant="no-bg"
-          iconAtEnd
-          className="w-auto sm:w-32"
-        >
-          <span className="hidden sm:inline">Next</span>
-        </Button>
+        <>
+          <Button
+            onClick={() => {
+              if (currentPage < totalPages) {
+                onPageChange(totalPages)
+              }
+            }}
+            icon="uil:angle-right"
+            variant="no-bg"
+            className="sm:hidden"
+            iconAtEnd
+          />
+          <Button
+            disabled={currentPage === totalPages}
+            onClick={() => {
+              if (currentPage < totalPages) {
+                onPageChange(currentPage + 1)
+              }
+            }}
+            icon="uil:angle-right"
+            variant="no-bg"
+            className="hidden sm:flex w-32"
+            iconAtEnd
+          >
+            Next
+          </Button>
+        </>
       ) : (
         <span className="w-32"></span>
       )}

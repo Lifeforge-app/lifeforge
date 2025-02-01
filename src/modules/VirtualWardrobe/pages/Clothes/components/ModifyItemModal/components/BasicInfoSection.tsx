@@ -1,7 +1,11 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useState } from 'react'
 import { Button } from '@components/buttons'
-import { TextInput , ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
+import {
+  TextInput,
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption
+} from '@components/inputs'
 import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
 import APIRequest from '@utils/fetchData'
 
@@ -86,6 +90,7 @@ function BasicInfoSection({
           onActionButtonClick={() => {
             onVision().catch(console.error)
           }}
+          namespace="modules.virtualWardrobe"
         />
         <ListboxOrComboboxInput
           type="listbox"
@@ -111,6 +116,7 @@ function BasicInfoSection({
               </span>
             </>
           }
+          namespace="modules.virtualWardrobe"
         >
           <ListboxOrComboboxOption
             type="listbox"
@@ -130,7 +136,7 @@ function BasicInfoSection({
         {category !== null && (
           <ListboxOrComboboxInput
             type="listbox"
-            name="Sub Category"
+            name="Subcategory"
             value={subCategory}
             setValue={setSubCategory}
             icon="tabler:tag"
@@ -142,6 +148,7 @@ function BasicInfoSection({
                 </span>
               </>
             }
+            namespace="modules.virtualWardrobe"
           >
             <ListboxOrComboboxOption type="listbox" text="None" value={null} />
             {VW_CATEGORIES.find(l => l.name === category)?.subcategories?.map(
@@ -162,6 +169,7 @@ function BasicInfoSection({
           updateValue={setBrand}
           darker
           placeholder='e.g. "Nike"'
+          namespace="modules.virtualWardrobe"
         />
       </div>
       <div className="mt-6 flex items-center justify-between">

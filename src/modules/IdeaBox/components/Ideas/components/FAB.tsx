@@ -6,7 +6,7 @@ import { Button } from '@components/buttons'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 
 function FAB(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.ideaBox')
   const {
     setTypeOfModifyIdea,
     setModifyIdeaModalOpenType,
@@ -50,7 +50,7 @@ function FAB(): React.ReactElement {
                     }
                   >
                     <span className="text-bg-50 transition-all group-data-focus:text-bg-200">
-                      {t(`ideaBox.entryType.${name.toLowerCase()}`)}
+                      {t(`entryType.${name.toLowerCase()}`)}
                     </span>
                     <button
                       onClick={() => {

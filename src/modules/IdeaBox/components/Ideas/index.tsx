@@ -28,7 +28,8 @@ function IdeasInsideProvider(): React.ReactElement {
               <SearchInput
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
-                stuffToSearch={path === '' ? 'ideas' : 'ideas in folder'}
+                stuffToSearch={path === '' ? 'idea' : 'ideaInFolder'}
+                namespace="modules.ideaBox"
               />
             )}
             <TagsSelector />
