@@ -73,7 +73,8 @@ function TodoListContainer(): React.ReactElement {
           <SearchInput
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            stuffToSearch="tasks"
+            stuffToSearch="task"
+            namespace="modules.todoList"
           />
           <APIFallbackComponent data={entries}>
             {entries =>

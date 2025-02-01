@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
@@ -10,6 +11,7 @@ function CodeTimeTopEntries({
 }: {
   type: 'languages' | 'projects'
 }): React.ReactElement {
+  const { t } = useTranslation('modules.codeTime')
   const { componentBg } = useThemeColors()
   const [lastFor, setLastFor] = useState<'24 hours' | '7 days' | '30 days'>(
     '24 hours'
@@ -31,14 +33,11 @@ function CodeTimeTopEntries({
             }
             className="mt-0.5 shrink-0 text-3xl"
           />
-          <span className="ml-2">
-            {type[0].toUpperCase()}
-            {type.slice(1)}
-          </span>
+          <span className="ml-2">{t(`headers.${type}`)}</span>
         </h1>
         <div className="flex shrink-0 flex-col gap-2 sm:flex-row sm:items-center">
           <p className="ml-2 shrink-0 font-medium tracking-wider sm:ml-0">
-            in the last
+            {t('labels.inThePast')}
           </p>
           <div className="flex shrink-0 gap-2 rounded-lg p-2">
             {['24 hours', '7 days', '30 days'].map((last, index) => (

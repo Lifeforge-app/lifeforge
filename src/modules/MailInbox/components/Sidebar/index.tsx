@@ -62,6 +62,7 @@ function Sidebar({
                 key={index}
                 icon={item.icon}
                 name={item.name}
+                namespace="modules.mailInbox"
                 active={searchParams.get('label') === toDashCase(item.name)}
                 onClick={() => {
                   setSearchParams({ label: toDashCase(item.name) })
@@ -83,6 +84,7 @@ function Sidebar({
               name="Labels"
               actionButtonIcon="tabler:plus"
               actionButtonOnClick={() => {}}
+              namespace="modules.mailInbox"
             />
             <LabelList labels={labels} />
           </>

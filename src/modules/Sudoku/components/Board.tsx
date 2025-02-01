@@ -4,7 +4,7 @@ import { type SudokuBoard } from '@interfaces/sudoku_interfaces'
 function Board({ data }: { data: SudokuBoard }): React.ReactElement {
   return (
     <div className="aspect-square size-full p-4">
-      <div className="relative grid size-full grid-cols-9 border-[3px] border-zinc-100 print:border-black">
+      <div className="relative grid size-full grid-cols-9 border-[3px] border-zinc-800 dark:border-zinc-100 print:border-black">
         {Array(9)
           .fill(0)
           .map((_, j) => (
@@ -40,7 +40,7 @@ function Board({ data }: { data: SudokuBoard }): React.ReactElement {
             .map((_, j) => (
               <div
                 key={j}
-                className="h-full w-[2px] bg-zinc-100 print:bg-black!"
+                className="h-full w-[2px] bg-zinc-800 dark:bg-zinc-100 print:bg-black!"
               />
             ))}
         </div>
@@ -50,7 +50,7 @@ function Board({ data }: { data: SudokuBoard }): React.ReactElement {
             .map((_, j) => (
               <div
                 key={j}
-                className="h-[2px] w-full bg-zinc-100 print:bg-black!"
+                className="h-[2px] w-full bg-zinc-800 dark:bg-zinc-100 print:bg-black!"
               />
             ))}
         </div>

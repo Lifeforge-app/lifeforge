@@ -78,7 +78,7 @@ function ModifyEventModal({
     },
     {
       id: 'category',
-      label: 'Category',
+      label: 'Event Category',
       icon: 'tabler:list',
       type: 'listbox',
       options:
@@ -165,13 +165,9 @@ function ModifyEventModal({
         onClose={() => {
           setOpenType(null)
         }}
+        namespace="modules.calendar"
         onSubmit={onSubmitButtonClick}
-        title={`${
-          {
-            create: 'Create ',
-            update: 'Update '
-          }[innerOpenType!]
-        } event`}
+        title={`event.${innerOpenType}`}
         icon={
           {
             create: 'tabler:plus',

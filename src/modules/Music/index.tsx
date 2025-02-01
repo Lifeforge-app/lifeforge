@@ -57,7 +57,8 @@ function Music(): React.ReactElement {
         <SearchInput
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          stuffToSearch="musics"
+          stuffToSearch="music"
+          namespace="modules.music"
         />
         <div className="relative flex size-full min-w-0 flex-col divide-y-2 divide-bg-200/50 dark:divide-bg-900">
           <Scrollbar>

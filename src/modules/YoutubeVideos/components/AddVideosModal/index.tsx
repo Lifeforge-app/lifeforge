@@ -15,12 +15,10 @@ import VideoSection from './sections/VideoSection'
 
 const RESOURCE_TYPES = [
   {
-    label: 'Video',
     value: 'video',
     icon: 'tabler:video'
   },
   {
-    label: 'Playlist',
     value: 'playlist',
     icon: 'tabler:list'
   }
@@ -35,7 +33,7 @@ function AddVideosModal({
   onClose: (isVideoDownloading: boolean) => void
   videos: Loadable<IYoutubeVideosStorageEntry[]>
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.youtubeVideos')
   const [selectedResourceType, setSelectedResourceType] = useState<
     'video' | 'playlist'
   >('video')
@@ -51,7 +49,8 @@ function AddVideosModal({
   return (
     <ModalWrapper isOpen={isOpen} minWidth="50vw">
       <ModalHeader
-        title="Add Videos"
+        title="videos.create"
+        namespace="modules.youtubeVideos"
         icon="tabler:plus"
         onClose={() => {
           onClose(isVideoDownloading)
@@ -61,7 +60,8 @@ function AddVideosModal({
       <ListboxOrComboboxInput
         type="listbox"
         icon="tabler:category"
-        name={t('input.resourceType')}
+        namespace="modules.youtubeVideos"
+        name="Resource Type"
         value={selectedResourceType}
         setValue={setSelectedResourceType}
         buttonContent={
@@ -74,16 +74,20 @@ function AddVideosModal({
               className="size-5"
             />
             <span className="-mt-px block truncate">
-              {RESOURCE_TYPES.find(l => l.value === selectedResourceType)
-                ?.label ?? 'None'}
+              {t(
+                `items.${
+                  RESOURCE_TYPES.find(l => l.value === selectedResourceType)
+                    ?.value
+                }`
+              ) ?? ''}
             </span>
           </>
         }
       >
-        {RESOURCE_TYPES.map(({ value, label, icon }) => (
+        {RESOURCE_TYPES.map(({ value, icon }) => (
           <ListboxOrComboboxOption
             key={value}
-            text={label}
+            text={t(`items.${value}`)}
             icon={icon}
             value={value}
           />

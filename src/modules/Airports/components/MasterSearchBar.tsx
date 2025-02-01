@@ -55,7 +55,8 @@ function MasterSearchBar(): React.ReactElement {
   return (
     <div className="relative z-50">
       <SearchInput
-        stuffToSearch="all airports"
+        stuffToSearch="allAirport"
+        namespace="modules.airports"
         searchQuery={masterSearchQuery}
         setSearchQuery={setMasterSearchQuery}
         onKeyUp={e => {

@@ -71,10 +71,11 @@ function AirportsList(): React.ReactElement {
       <div className="mt-4 flex items-center gap-2">
         <ContinentSelector />
         <SearchInput
-          stuffToSearch="airports"
+          stuffToSearch="airport"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           hasTopMargin={false}
+          namespace="modules.airports"
         />
       </div>
       <APIFallbackComponent data={filteredData}>

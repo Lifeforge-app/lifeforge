@@ -1,6 +1,8 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
+import {
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption
+} from '@components/inputs'
 import { useTodoListContext } from '@providers/TodoListProvider'
 
 function TagsSelector({
@@ -10,15 +12,15 @@ function TagsSelector({
   tags: string[]
   setTags: (tags: string[]) => void
 }): React.ReactElement {
-  const { t } = useTranslation()
   const { tags: tagsList } = useTodoListContext()
 
   if (typeof tagsList === 'string') return <></>
 
   return (
     <ListboxOrComboboxInput
+      namespace="modules.todoList"
       type="listbox"
-      name={t('input.tags')}
+      name="tags"
       icon="tabler:tags"
       value={tags}
       setValue={setTags}

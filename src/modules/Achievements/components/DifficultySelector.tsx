@@ -8,7 +8,7 @@ function DifficultySelector({
   selectedDifficulty: string
   setSelectedDifficulty: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.achievements')
 
   return (
     <div className="mt-6 flex items-center">
@@ -29,7 +29,7 @@ function DifficultySelector({
               : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
           }`}
         >
-          {t(`achievements.difficulties.${achievement[0]}`)}
+          {t(`difficulties.${achievement[0]}`)}
         </button>
       ))}
     </div>

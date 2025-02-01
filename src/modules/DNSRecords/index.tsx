@@ -179,9 +179,10 @@ function DNSRecords(): JSX.Element {
       />
       <div className="flex items-center gap-2">
         <SearchInput
-          stuffToSearch="DNS records"
+          stuffToSearch="dnsRecord"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
+          namespace="modules.dnsRecords"
         />
         <Listbox
           value={selectedFilter}

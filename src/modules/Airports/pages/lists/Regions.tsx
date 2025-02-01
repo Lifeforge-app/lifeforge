@@ -77,7 +77,8 @@ function Regions(): React.ReactElement {
       <div className="mt-4 flex items-center gap-2">
         <ContinentSelector />
         <SearchInput
-          stuffToSearch="regions"
+          stuffToSearch="region"
+          namespace="modules.airports"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           hasTopMargin={false}

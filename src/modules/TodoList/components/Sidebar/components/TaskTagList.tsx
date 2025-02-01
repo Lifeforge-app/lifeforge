@@ -21,6 +21,7 @@ function TaskTagList({
     <>
       <SidebarTitle
         name="Tags"
+        namespace="modules.todoList"
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           setModifyModalOpenType('create')

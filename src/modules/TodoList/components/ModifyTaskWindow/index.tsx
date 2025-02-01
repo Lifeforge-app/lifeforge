@@ -2,10 +2,10 @@ import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import { Button , CreateOrModifyButton } from '@components/buttons'
+import { Button, CreateOrModifyButton } from '@components/buttons'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { DateInput , TextInput } from '@components/inputs'
+import { DateInput, TextInput } from '@components/inputs'
 import Scrollbar from '@components/utilities/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
@@ -192,6 +192,7 @@ function ModifyTaskWindow(): React.ReactElement {
               updateValue={setSummary}
               className="w-full"
               ref={summaryInputRef}
+              namespace="modules.todoList"
             />
             <SubtaskBox
               summary={summary}
@@ -206,6 +207,7 @@ function ModifyTaskWindow(): React.ReactElement {
               setDate={setDueDate}
               name="Due date"
               icon="tabler:calendar"
+              namespace="modules.todoList"
             />
             <PrioritySelector priority={priority} setPriority={setPriority} />
             <ListSelector list={list} setList={setList} />

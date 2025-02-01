@@ -27,6 +27,7 @@ function CategoryList({
         <div className="mt-4">
           <SidebarTitle
             name="Categories"
+            namespace="modules.calendar"
             actionButtonIcon="tabler:plus"
             actionButtonOnClick={() => {
               setModifyCategoryModalOpenType('create')

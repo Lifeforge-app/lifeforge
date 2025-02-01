@@ -36,7 +36,7 @@ function Header({
   view: 'grid' | 'list'
   setView: React.Dispatch<React.SetStateAction<'grid' | 'list'>>
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.guitarTabs')
   const [searchParams, setSearchParams] = useSearchParams()
   const toastId = useRef<Id>(null)
   const { theme } = useThemeColors()
@@ -177,8 +177,9 @@ function Header({
               icon="tabler:plus"
               className="hidden md:flex"
               as={MenuButton}
+              tProps={{ item: t('items.score') }}
             >
-              Add Score
+              new
             </Button>
             <MenuItems
               transition
@@ -188,7 +189,8 @@ function Header({
               <MenuItem
                 onClick={uploadFiles}
                 icon="tabler:upload"
-                text="Upload from device"
+                text="Upload from local"
+                namespace="modules.guitarTabs"
               />
               <MenuItem
                 onClick={() => {
@@ -196,6 +198,7 @@ function Header({
                 }}
                 icon="mingcute:guitar-line"
                 text="Download from Guitar World"
+                namespace="modules.guitarTabs"
               />
             </MenuItems>
           </Menu>
@@ -206,6 +209,7 @@ function Header({
               text="Download All"
               icon="tabler:download"
               onClick={downloadAll}
+              namespace="modules.guitarTabs"
             />
             <div className="block md:hidden">
               <SidebarDivider noMargin />

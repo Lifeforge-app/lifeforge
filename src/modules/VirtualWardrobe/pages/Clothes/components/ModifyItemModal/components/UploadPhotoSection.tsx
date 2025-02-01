@@ -31,6 +31,7 @@ function UploadPhotoSection({
     <>
       <div className="mt-6 flex gap-4">
         <ImageAndFileInput
+          namespace="modules.virtualWardrobe"
           icon="tabler:shirt-sport"
           image={frontImage}
           name="Front Image"
@@ -47,6 +48,7 @@ function UploadPhotoSection({
           required
         />
         <ImageAndFileInput
+          namespace="modules.virtualWardrobe"
           icon="tabler:shirt"
           image={backImage}
           name="Back Image"

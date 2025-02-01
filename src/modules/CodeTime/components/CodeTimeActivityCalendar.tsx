@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
+import { useTranslation } from 'react-i18next'
 import { Tooltip } from 'react-tooltip'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
@@ -8,6 +9,7 @@ import useThemeColors from '@hooks/useThemeColor'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 function CodeTimeActivityCalendar(): React.ReactElement {
+  const { t } = useTranslation('modules.codeTime')
   const { theme } = usePersonalizationContext()
   const { theme: themeColor } = useThemeColors()
   const [year, setYear] = useState(new Date().getFullYear())
@@ -37,7 +39,7 @@ function CodeTimeActivityCalendar(): React.ReactElement {
     <div className="space-y-8">
       <h1 className="flex items-center gap-2 text-2xl font-semibold">
         <Icon icon="tabler:activity" className="text-3xl" />
-        <span className="ml-2">Activities Calendar</span>
+        <span className="ml-2">{t('headers.activitiesCalendar')}</span>
       </h1>
       <div className="flex w-full items-center justify-between gap-6 overflow-x-auto">
         <div

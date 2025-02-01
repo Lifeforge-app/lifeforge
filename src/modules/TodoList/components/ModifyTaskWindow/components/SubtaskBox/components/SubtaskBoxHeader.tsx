@@ -23,7 +23,7 @@ function SubtaskBoxHeader({
   summary: string
   notes: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.todoList')
   const [AIGenerateLoading, setAIGenerateLoading] = useState(false)
   async function AIGenerateSubtask(): Promise<void> {
     if (summary === '') {
@@ -61,7 +61,7 @@ function SubtaskBoxHeader({
     <div className="flex-between flex w-full gap-6">
       <div className="flex items-center gap-5 text-bg-500">
         <Icon icon="icon-park-outline:right-branch" className="size-6" />
-        <h2 className="font-medium">{t('input.subtasks')}</h2>
+        <h2 className="font-medium">{t('inputs.subtasks')}</h2>
       </div>
       <div className="flex items-center gap-2">
         <button

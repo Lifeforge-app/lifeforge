@@ -60,7 +60,8 @@ function Countries(): React.ReactElement {
       <div className="mt-4 flex items-center gap-2">
         <ContinentSelector />
         <SearchInput
-          stuffToSearch="countries"
+          stuffToSearch="country"
+          namespace="modules.airports"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           hasTopMargin={false}

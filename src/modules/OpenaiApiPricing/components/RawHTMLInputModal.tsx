@@ -14,7 +14,7 @@ function RawHTMLInputModal({
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   refreshData: () => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.openaiApiPricing')
   const [data, setData] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -26,7 +26,7 @@ function RawHTMLInputModal({
       id: 'raw',
       label: 'raw html',
       icon: 'tabler:code',
-      placeholder: t('input.rawHtmlFromOpenAi'),
+      placeholder: t('inputs.rawHtml.placeholder'),
       type: 'text'
     }
   ]
@@ -63,7 +63,8 @@ function RawHTMLInputModal({
       fields={FIELDS}
       data={data}
       setData={setData}
-      title="Input Raw HTML"
+      title="inputRawHtml"
+      namespace="modules.openaiApiPricing"
       icon={'tabler:code'}
       submitButtonIcon="tabler:arrow-right"
       submitButtonLabel="Submit"

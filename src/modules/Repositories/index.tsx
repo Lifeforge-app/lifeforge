@@ -60,7 +60,8 @@ function Repositories(): React.ReactElement {
           <SearchInput
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            stuffToSearch="tasks"
+            stuffToSearch="repository"
+            namespace="modules.repositories"
           />
           <APIFallbackComponent data={repos}>
             {repos => (

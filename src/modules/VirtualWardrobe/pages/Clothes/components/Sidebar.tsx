@@ -31,6 +31,7 @@ function Sidebar({
             <SidebarItem
               icon="tabler:list"
               name="All Clothes"
+              namespace="modules.virtualWardrobe"
               number={sidebarData.total}
               active={Array.from(searchParams.keys()).length === 0}
               onClick={() => {
@@ -41,6 +42,7 @@ function Sidebar({
             <SidebarItem
               icon="tabler:heart"
               name="Favourites"
+              namespace="modules.virtualWardrobe"
               number={sidebarData.favourites}
               active={searchParams.get('favourite') === 'true'}
               onClick={() => {
@@ -52,7 +54,10 @@ function Sidebar({
               }}
             />
             <SidebarDivider />
-            <SidebarTitle name="Categories" />
+            <SidebarTitle
+              name="Categories"
+              namespace="modules.virtualWardrobe"
+            />
             {Object.entries(sidebarData.categories)
               .sort((a, b) => b[1] - a[1])
               .map(([category, number]) => (
@@ -96,7 +101,10 @@ function Sidebar({
                 }
                 return (
                   <>
-                    <SidebarTitle name="Subcategories" />
+                    <SidebarTitle
+                      name="Subcategories"
+                      namespace="modules.virtualWardrobe"
+                    />
                     {Object.entries(sidebarData.subcategories)
                       .filter(([subcategory]) =>
                         allSubcategories.includes(subcategory)
@@ -130,7 +138,7 @@ function Sidebar({
                   </>
                 )
               })()}
-            <SidebarTitle name="Brands" />
+            <SidebarTitle name="Brands" namespace="modules.virtualWardrobe" />
             {Object.entries(sidebarData.brands)
               .sort((a, b) => a[0].localeCompare(b[0]))
               .map(([brand, number]) => (
@@ -156,7 +164,7 @@ function Sidebar({
                 />
               ))}
             <SidebarDivider />
-            <SidebarTitle name="Sizes" />
+            <SidebarTitle name="Sizes" namespace="modules.virtualWardrobe" />
             {Object.entries(sidebarData.sizes)
               .sort((a, b) => b[1] - a[1])
               .map(([size, number]) => (
@@ -182,7 +190,7 @@ function Sidebar({
                 />
               ))}
             <SidebarDivider />
-            <SidebarTitle name="Colors" />
+            <SidebarTitle name="Colors" namespace="modules.virtualWardrobe" />
             {Object.entries(sidebarData.colors)
               .sort((a, b) => b[1] - a[1])
               .map(([color, number]) => (

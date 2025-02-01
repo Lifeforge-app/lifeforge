@@ -41,7 +41,8 @@ function SidebarHeader({
           <SearchInput
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            stuffToSearch="modules"
+            stuffToSearch="module"
+            namespace="common.sidebar"
             hasTopMargin={false}
             className="mb-4"
           />

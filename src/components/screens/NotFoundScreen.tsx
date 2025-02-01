@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Button from '../buttons/Button'
 
 function NotFoundScreen(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common.misc')
 
   return (
     <div className="flex-center w-full flex-col gap-6">
@@ -13,7 +13,7 @@ function NotFoundScreen(): React.ReactElement {
       <p className="text-xl text-bg-500">{t('notFound.description')}</p>
       <div className="flex-center mt-6 gap-4">
         <Button icon="tabler:arrow-left" as={Link} to="/">
-          go back home
+          {t('buttons.goBack')}
         </Button>
         <Button
           icon="tabler:bug"
@@ -23,7 +23,7 @@ function NotFoundScreen(): React.ReactElement {
           target="_blank"
           rel="noopener noreferrer"
         >
-          report bug
+          {t('buttons.reportBug')}
         </Button>
       </div>
     </div>

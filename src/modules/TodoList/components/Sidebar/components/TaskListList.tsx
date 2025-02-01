@@ -21,6 +21,7 @@ function TaskListList({
     <>
       <SidebarTitle
         name="lists"
+        namespace="modules.todoList"
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           setModifyModalOpenType('create')

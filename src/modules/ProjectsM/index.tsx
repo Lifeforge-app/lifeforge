@@ -60,7 +60,8 @@ function ProjectsM(): React.ReactElement {
           <SearchInput
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            stuffToSearch="projects"
+            stuffToSearch="project"
+            namespace="modules.projectsM"
           />
           <div className="mt-6 flex flex-1 flex-col">
             <APIFallbackComponent data={entries}>

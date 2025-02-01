@@ -17,7 +17,7 @@ import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 
 function CreatePasswordModal(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.passwords')
   const {
     masterPassword,
     modifyPasswordModalOpenType: openType,
@@ -117,12 +117,7 @@ function CreatePasswordModal(): React.ReactElement {
     <>
       <ModalWrapper isOpen={openType !== null}>
         <ModalHeader
-          title={
-            {
-              create: 'Create Password',
-              update: 'Update Password'
-            }[openType as 'create' | 'update']
-          }
+          title={`password.${openType}`}
           icon={
             {
               create: 'tabler:plus',
@@ -132,6 +127,7 @@ function CreatePasswordModal(): React.ReactElement {
           onClose={() => {
             setModifyPasswordModalOpenType(null)
           }}
+          namespace="modules.passwords"
         />
         <form
           onSubmit={e => {
@@ -147,18 +143,21 @@ function CreatePasswordModal(): React.ReactElement {
             updateValue={setName}
             darker
             placeholder="Google"
+            namespace="modules.passwords"
           />
           <IconInput
             icon={icon}
             setIcon={setIcon}
             name="Service Icon"
             setIconSelectorOpen={setIconSelectorOpen}
+            namespace="modules.passwords"
           />
           <ColorInput
             color={color}
             name="Service Color"
             setColorPickerOpen={setColorPickerOpen}
             updateColor={setColor}
+            namespace="modules.passwords"
           />
           <TextInput
             name="Website"
@@ -169,9 +168,10 @@ function CreatePasswordModal(): React.ReactElement {
             placeholder="https://google.com"
             className="mt-6"
             noAutoComplete
+            namespace="modules.passwords"
           />
           <TextInput
-            name="Username / Email"
+            name="Username or Email"
             icon="tabler:user"
             value={username}
             updateValue={setUsername}
@@ -179,6 +179,7 @@ function CreatePasswordModal(): React.ReactElement {
             placeholder="johndoe1234@gmail.com"
             className="mt-6"
             noAutoComplete
+            namespace="modules.passwords"
           />
           <TextInput
             name="Password"
@@ -190,6 +191,7 @@ function CreatePasswordModal(): React.ReactElement {
             placeholder="Your password"
             className="mt-6"
             noAutoComplete
+            namespace="modules.passwords"
           />
           <CreateOrModifyButton
             onClick={() => {

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button, FAB } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
@@ -39,6 +40,7 @@ function ModalsSection() {
 }
 
 function Passwords(): React.ReactElement {
+  const { t } = useTranslation('modules.passwords')
   const { userData } = useAuthContext()
   const {
     masterPassword,
@@ -88,9 +90,10 @@ function Passwords(): React.ReactElement {
     return (
       <>
         <SearchInput
-          stuffToSearch="passwords"
+          stuffToSearch="password"
           searchQuery={query}
           setSearchQuery={setQuery}
+          namespace="modules.passwords"
         />
         <PasswordList />
         {masterPassword !== '' && (
@@ -119,8 +122,9 @@ function Passwords(): React.ReactElement {
               }}
               icon="tabler:plus"
               className="hidden lg:flex "
+              tProps={{ item: t('items.password') }}
             >
-              new password
+              new
             </Button>
           )
         }

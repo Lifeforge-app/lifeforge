@@ -55,7 +55,8 @@ function AlbumListHeader({
         <SearchInput
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          stuffToSearch="albums"
+          stuffToSearch="album"
+          namespace="modules.photos"
         />
         <AlbumTagsList
           setModifyAlbumTagModalOpenType={setModifyAlbumTagModalOpenType}
