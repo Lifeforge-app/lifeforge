@@ -9,6 +9,16 @@ function initLocale(): void {
     .init({
       lng: 'en',
       fallbackLng: 'en',
+      cache: {
+        enabled: true
+      },
+      fallbackNS: 'common',
+      initImmediate: true,
+      maxRetries: 2,
+      preload: ['en'],
+      react: {
+        useSuspense: false
+      },
       interpolation: {
         escapeValue: false
       },
