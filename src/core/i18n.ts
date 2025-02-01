@@ -12,15 +12,19 @@ function initLocale(): void {
       cache: {
         enabled: true
       },
-      fallbackNS: 'common',
       initImmediate: true,
-      maxRetries: 2,
-      preload: ['en'],
+      maxRetries: 1,
       react: {
-        useSuspense: false
+        useSuspense: true,
+        bindI18n: 'languageChanged loaded'
       },
+      cleanCode: true,
+      debug: true,
       interpolation: {
         escapeValue: false
+      },
+      returnedObjectHandler: (key, value, options) => {
+        return JSON.stringify({ key, value, options })
       },
       backend: {
         loadPath: `${import.meta.env.VITE_API_HOST}/locales/{{lng}}/{{ns}}`

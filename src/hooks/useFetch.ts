@@ -1,6 +1,5 @@
 import { cookieParse } from 'pocketbase'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { type Loadable } from '@interfaces/common'
 
@@ -16,7 +15,6 @@ function useFetch<T>(
   refresh: () => void,
   setData: React.Dispatch<React.SetStateAction<Loadable<T>>>
 ] {
-  const { t } = useTranslation()
   const [data, setData] = useState<Loadable<T>>('loading')
 
   function fetchData(): void {
@@ -45,7 +43,7 @@ function useFetch<T>(
       .catch(err => {
         setData('error')
         if (showError) {
-          toast.error(t('fetch.fetchError') + ' ' + err)
+          toast.error('fetch.fetchError' + ' ' + err)
         }
         console.error(err)
       })

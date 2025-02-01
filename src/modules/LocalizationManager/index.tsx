@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 
 function LocalizationManager(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.localizationManager')
   const navigate = useNavigate()
 
   useEffect(() => {

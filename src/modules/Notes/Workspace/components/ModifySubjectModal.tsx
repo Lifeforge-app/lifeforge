@@ -22,7 +22,7 @@ function ModifySubjectModal({
   updateSubjectList: () => void
   existedData: INotesSubject | null
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.notes')
   const { workspace } = useParams<{ workspace: string }>()
   const [loading, setLoading] = useState(false)
   const [subjectName, setSubjectName] = useState('')

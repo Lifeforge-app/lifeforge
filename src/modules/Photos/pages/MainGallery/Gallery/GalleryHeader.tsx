@@ -11,7 +11,7 @@ import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { usePhotosContext } from '@providers/PhotosProvider'
 
 function GalleryHeader(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.photos')
   const {
     refreshPhotos,
     hidePhotosInAlbum,

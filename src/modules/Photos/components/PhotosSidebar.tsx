@@ -14,7 +14,7 @@ import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import { usePhotosContext } from '@providers/PhotosProvider'
 
 function PhotosSidebar(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.photos')
   const {
     photos,
     albumList,

@@ -22,7 +22,7 @@ function ModifyFolderModal({
   updateNotesEntries: () => void
   existedData: INotesEntry | null
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.notes')
   const {
     workspace,
     subject,

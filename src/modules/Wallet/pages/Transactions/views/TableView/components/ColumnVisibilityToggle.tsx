@@ -12,7 +12,7 @@ function ColumnVisibilityToggle({
   visibleColumn: string[]
   setVisibleColumn: React.Dispatch<React.SetStateAction<string[]>>
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
   return (
     <>
       <SidebarDivider noMargin />

@@ -10,7 +10,7 @@ function MissingAPIKeyScreen({
 }: {
   requiredAPIKeys: string[]
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.apiKeys')
 
   return (
     <div className="flex-center size-full flex-1 flex-col gap-4">
