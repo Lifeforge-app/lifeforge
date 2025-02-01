@@ -7,15 +7,12 @@ import { TextInput } from '@components/inputs'
 import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
-import { toCamelCase } from '@utils/strings'
 
 function LockedScreen({
-  module,
   endpoint,
   setMasterPassword,
   fetchChallenge
 }: {
-  module: string
   endpoint: string
   setMasterPassword: React.Dispatch<React.SetStateAction<string>>
   fetchChallenge: (
@@ -88,7 +85,7 @@ function LockedScreen({
         name="Master Password"
         namespace="common.vault"
         tKey="vault"
-        placeholder={t('vault.inputs.masterPassword.placeholder')}
+        placeholder={'••••••••••••••••'}
         value={masterPassWordInputContent}
         updateValue={setMasterPassWordInputContent}
         noAutoComplete

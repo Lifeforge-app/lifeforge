@@ -114,6 +114,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
     <ModalWrapper isOpen={isOpen} minWidth="40vw">
       <ModalHeader
         title="Download from YouTube"
+        namespace="modules.music"
         icon="tabler:brand-youtube"
         onClose={() => {
           setIsYoutubeDownloaderOpen(false)
@@ -121,6 +122,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
         }}
       />
       <TextInput
+        namespace="modules.music"
         name="Video URL"
         icon="tabler:link"
         value={videoURLinput}

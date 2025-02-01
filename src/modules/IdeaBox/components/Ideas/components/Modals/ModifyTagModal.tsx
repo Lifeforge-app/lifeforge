@@ -108,16 +108,12 @@ function ModifyTagModal(): React.ReactElement {
 
   return (
     <Modal
+      namespace="modules.ideaBox"
       isOpen={openType !== null}
       fields={FIELDS}
       data={data}
       setData={setData}
-      title={`${
-        {
-          create: 'Create ',
-          update: 'Update '
-        }[openType!]
-      } tag`}
+      title={`tag.${openType}`}
       icon={
         {
           create: 'tabler:plus',

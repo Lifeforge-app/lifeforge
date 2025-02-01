@@ -214,10 +214,8 @@ function TransactionsCard(): React.ReactElement {
                     </>
                   ) : (
                     <EmptyStateScreen
-                      title={t('emptyState.wallet.transactions.title')}
-                      description={t(
-                        'emptyState.wallet.transactions.description'
-                      )}
+                      name="transactions"
+                      namespace="modules.wallet"
                     />
                   )}
                 </Scrollbar>

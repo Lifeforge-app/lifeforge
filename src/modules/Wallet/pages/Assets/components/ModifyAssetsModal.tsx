@@ -92,12 +92,14 @@ function ModifyAssetsModal({
       <ModalWrapper isOpen={openType !== null} className="sm:min-w-[30rem]">
         <ModalHeader
           icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-          title={openType === 'create' ? 'Add Asset' : 'Edit Asset'}
+          title={`assets.${openType}`}
+          namespace="modules.wallet"
           onClose={() => {
             setOpenType(null)
           }}
         />
         <TextInput
+          namespace="modules.wallet"
           icon="tabler:wallet"
           placeholder="My assets"
           value={assetName}
@@ -106,12 +108,14 @@ function ModifyAssetsModal({
           updateValue={setAssetName}
         />
         <IconInput
+          namespace="modules.wallet"
           icon={assetIcon}
           setIcon={setAssetIcon}
           name="Asset icon"
           setIconSelectorOpen={setIconSelectorOpen}
         />
         <CurrencyInput
+          namespace="modules.wallet"
           name="Initial Balance"
           placeholder="0.00"
           icon="tabler:currency-dollar"

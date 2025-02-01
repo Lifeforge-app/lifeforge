@@ -10,7 +10,7 @@ function SidebarSection({
 }: {
   stuff: 'categories' | 'technologies' | 'visibilities' | 'statuses'
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.projectsM')
   const { data, setExistedData, setModifyDataModalOpenType } =
     useProjectsMContext()[stuff]
 
@@ -18,6 +18,7 @@ function SidebarSection({
     <>
       <SidebarTitle
         name={stuff}
+        namespace="modules.projectsM"
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           setExistedData(null)
@@ -33,9 +34,7 @@ function SidebarSection({
               ))}
             </>
           ) : (
-            <p className="text-center text-bg-500">
-              {t(`emptyState.${stuff}`)}
-            </p>
+            <p className="text-center text-bg-500">{t(`empty.${stuff}`)}</p>
           )
         }
       </APIFallbackComponent>

@@ -23,6 +23,7 @@ function SidebarSection({
   return (
     <>
       <SidebarTitle
+        namespace="modules.booksLibrary"
         name={stuff}
         {...(hasActionButton
           ? {

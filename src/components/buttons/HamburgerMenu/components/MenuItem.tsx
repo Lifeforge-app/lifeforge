@@ -15,7 +15,7 @@ function getActiveClass(active?: boolean, isRed?: boolean): string {
 }
 
 function getToggleIconClass(isRed?: boolean): string {
-  return isRed === true ? 'text-red-600' : 'text-bg-50'
+  return isRed === true ? 'text-red-600' : 'text-bg-800 dark:text-bg-50'
 }
 
 function MenuItem({
@@ -35,9 +35,9 @@ function MenuItem({
   isToggled?: boolean
   disabled?: boolean
   preventDefault?: boolean
-  namespace?: string
+  namespace?: string | false
 }): React.ReactElement {
-  const { t } = useTranslation(namespace)
+  const { t } = useTranslation(namespace ? namespace : 'common.buttons')
 
   return (
     <HeadlessMenuItem>
@@ -61,7 +61,9 @@ function MenuItem({
               <Icon icon={icon} className="size-5 shrink-0" />
             )}
             <span className="w-full truncate whitespace-nowrap">
-              {t([toCamelCase(text), `buttons.${toCamelCase(text)}`])}
+              {namespace !== false
+                ? t([toCamelCase(text), `buttons.${toCamelCase(text)}`])
+                : text}
             </span>
             {isToggled === true && (
               <Icon

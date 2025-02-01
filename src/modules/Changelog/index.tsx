@@ -55,13 +55,14 @@ function Changelog(): React.ReactElement {
         }
       />
       <SearchInput
+        namespace="modules.changelog"
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        stuffToSearch="features"
+        stuffToSearch="feature"
       />
       <APIFallbackComponent data={data}>
         {() => (
-          <ul className="relative isolate my-8 space-y-4">
+          <ul className="relative flex-1 isolate my-8 space-y-4">
             {filteredData.length > 0 ? (
               filteredData.map(entry => (
                 <LogItem key={entry.version} entry={entry} />
@@ -69,8 +70,8 @@ function Changelog(): React.ReactElement {
             ) : (
               <div className="flex-center size-full">
                 <EmptyStateScreen
-                  title="Oops, no results found"
-                  description="Your search query did not match any results."
+                  name="result"
+                  namespace="modules.changelog"
                   icon="tabler:search-off"
                 />
               </div>

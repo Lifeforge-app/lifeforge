@@ -86,6 +86,7 @@ function ModifyMusicModal(): React.ReactElement {
         }}
       />
       <TextInput
+        namespace="modules.music"
         icon="tabler:music"
         ref={ref}
         name="Music name"
@@ -101,6 +102,7 @@ function ModifyMusicModal(): React.ReactElement {
         }}
       />
       <TextInput
+        namespace="modules.music"
         icon="tabler:user"
         name="Author"
         value={musicAuthor}

@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
+import { GoBackButton } from '@components/buttons'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import IconSet from './pages/IconSet'
@@ -49,16 +50,7 @@ function IconPickerModal({
     <ModalWrapper isOpen={isOpen} minWidth="80vw" minHeight="80vh">
       {currentIconSet !== null ? (
         <div className="flex-between mb-8 flex w-full">
-          <button
-            onClick={() => {
-              setCurrentIconSet(null)
-            }}
-            type="button"
-            className="flex items-center gap-2 text-lg"
-          >
-            <Icon icon="uil:arrow-left" className="size-7" />
-            Go Back
-          </button>
+          <GoBackButton onClick={() => setCurrentIconSet(null)} />
           <button
             onClick={() => {
               setCurrentIconSet(null)

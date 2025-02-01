@@ -3,7 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
-import { ColorInput , ColorPickerModal , IconInput , IconPickerModal , TextInput } from '@components/inputs'
+import {
+  ColorInput,
+  ColorPickerModal,
+  IconInput,
+  IconPickerModal,
+  TextInput
+} from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWalletCategory } from '@interfaces/wallet_interfaces'
@@ -24,7 +30,7 @@ function ModifyCategoriesModal({
   existedData: IWalletCategory | null
   setExistedData: React.Dispatch<React.SetStateAction<IWalletCategory | null>>
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
   const { refreshCategories } = useWalletContext()
   const [categoryType, setCategoryType] = useState<'income' | 'expenses'>(
     'income'
@@ -94,7 +100,8 @@ function ModifyCategoriesModal({
       <ModalWrapper isOpen={openType !== null} className="sm:min-w-[30rem]">
         <ModalHeader
           icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
-          title={openType === 'update' ? 'Edit Category' : 'Add Category'}
+          title={`categories.${openType === 'update' ? 'update' : 'create'}`}
+          namespace="modules.wallet"
           onClose={() => {
             setOpenType(null)
           }}
@@ -106,7 +113,7 @@ function ModifyCategoriesModal({
         >
           <span className="flex items-center gap-2 font-medium text-bg-500">
             <Icon icon="tabler:apps" className="size-6" />
-            {t('input.categoryType')}
+            {t('inputs.categoryType')}
           </span>
           {openType === 'update' && (
             <div
@@ -126,7 +133,7 @@ function ModifyCategoriesModal({
                 }
                 className="size-5"
               />
-              <span>{t(`dashboard.widgets.${categoryType}`)}</span>
+              <span>{t(`transactionTypes.${categoryType}`)}</span>
             </div>
           )}
         </div>
@@ -159,18 +166,21 @@ function ModifyCategoriesModal({
           darker
           name="Category name"
           updateValue={setCategoryName}
+          namespace="modules.wallet"
         />
         <IconInput
           icon={categoryIcon}
           setIcon={setCategoryIcon}
           name="Category icon"
           setIconSelectorOpen={setIconSelectorOpen}
+          namespace="modules.wallet"
         />
         <ColorInput
           color={categoryColor}
           name="Category color"
           setColorPickerOpen={setColorPickerOpen}
           updateColor={setCategoryColor}
+          namespace="modules.wallet"
         />
         <CreateOrModifyButton
           loading={isLoading}

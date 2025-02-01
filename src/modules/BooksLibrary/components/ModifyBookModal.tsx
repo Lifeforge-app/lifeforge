@@ -174,6 +174,7 @@ function ModifyBookModal(): React.ReactElement {
 
   return (
     <Modal
+      namespace="modules.booksLibrary"
       isOpen={modifyDataModalOpenType !== null}
       onClose={() => {
         setModifyDataModalOpenType(null)

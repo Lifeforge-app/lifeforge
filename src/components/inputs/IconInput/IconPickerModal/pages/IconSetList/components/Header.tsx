@@ -49,7 +49,8 @@ function Header({
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           stuffToSearch="icon"
-          namespace="misc.iconPicker"
+          tKey="iconPicker"
+          namespace="common.misc"
           onKeyUp={e => {
             if (e.key === 'Enter' && searchQuery !== '') {
               setCurrentIconSet({ search: searchQuery })
@@ -86,8 +87,9 @@ function Header({
             hasTopMargin={false}
             searchQuery={iconFilterTerm}
             setSearchQuery={setIconFilterTerm}
-            stuffToSearch="iconSet"
-            namespace="misc.iconPicker"
+            stuffToSearch="Icon Set"
+            namespace="common.misc"
+            tKey="iconPicker"
             customIcon="tabler:filter"
           />
         </div>

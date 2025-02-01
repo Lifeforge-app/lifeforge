@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import DashboardItem from '@components/utilities/DashboardItem'
 import Scrollbar from '@components/utilities/Scrollbar'
@@ -8,7 +7,6 @@ import useFetch from '@hooks/useFetch'
 import { type IDiskUsage } from '@interfaces/server_status_interfaces'
 
 export default function StorageStatus(): React.ReactElement {
-  const { t } = useTranslation()
   const [diskUsage] = useFetch<IDiskUsage[]>('server/disks')
 
   return (

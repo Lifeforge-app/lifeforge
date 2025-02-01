@@ -15,7 +15,7 @@ import ModifyModal from './components/ModifyModal'
 import Sidebar from './components/Sidebar'
 
 function ProjectsM(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.projectsM')
   const {
     miscellaneous: {
       deleteModalConfigs,
@@ -44,8 +44,11 @@ function ProjectsM(): React.ReactElement {
                 }}
                 className="hidden sm:flex"
                 icon="tabler:plus"
+                tProps={{
+                  item: t('items.project')
+                }}
               >
-                new project
+                new
               </Button>
               <Button
                 onClick={() => {
@@ -66,7 +69,7 @@ function ProjectsM(): React.ReactElement {
           <div className="mt-6 flex flex-1 flex-col">
             <APIFallbackComponent data={entries}>
               {entries =>
-                entries.length > 0 ? (
+                entries.length === 0 ? (
                   <Scrollbar>
                     <ul className="mb-8 flex flex-col">
                       {entries.map(entry => (
@@ -76,10 +79,9 @@ function ProjectsM(): React.ReactElement {
                   </Scrollbar>
                 ) : (
                   <EmptyStateScreen
-                    title={t('emptyState.projects.title')}
-                    description={t('emptyState.projects.description')}
+                    name="projects"
+                    namespace="modules.projectsM"
                     icon="tabler:clipboard-off"
-                    ctaContent="New Project"
                   />
                 )
               }

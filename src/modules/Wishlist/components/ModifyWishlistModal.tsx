@@ -105,16 +105,12 @@ function ModifyWishlistListModal({
 
   return (
     <Modal
+      namespace="modules.wishlist"
       isOpen={openType !== null}
       fields={FIELDS}
       data={data}
       setData={setData}
-      title={`${
-        {
-          create: 'Create ',
-          update: 'Update '
-        }[openType!]
-      } wishlist`}
+      title={`wishlist.${openType}`}
       icon={
         {
           create: 'tabler:plus',

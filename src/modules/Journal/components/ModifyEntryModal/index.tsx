@@ -2,7 +2,7 @@ import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { DateInput , TextInput } from '@components/inputs'
+import { DateInput, TextInput } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
@@ -143,6 +143,7 @@ function ModifyJournalEntryModal({
         onClose={onClose}
       />
       <DateInput
+        namespace="modules.journal"
         modalRef={ref}
         date={date}
         setDate={setDate}
@@ -152,6 +153,7 @@ function ModifyJournalEntryModal({
         darker
       />
       <TextInput
+        namespace="modules.journal"
         name="Journal Title"
         value={title}
         updateValue={setTitle}

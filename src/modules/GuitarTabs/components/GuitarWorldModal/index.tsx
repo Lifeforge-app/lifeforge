@@ -61,6 +61,7 @@ function GuitarWorldModal({
   return (
     <ModalWrapper isOpen={isOpen} minWidth="50vw">
       <ModalHeader
+        namespace="modules.guitarTabs"
         onClose={onClose}
         title="Guitar World"
         icon="mingcute:guitar-line"
@@ -68,6 +69,7 @@ function GuitarWorldModal({
       {!showData ? (
         <>
           <TextInput
+            namespace="modules.guitarTabs"
             icon="tabler:cookie"
             value={cookie}
             updateValue={setCookie}

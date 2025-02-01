@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import {
   ListboxOrComboboxInput,
   ListboxNullOption,
@@ -17,7 +16,6 @@ function CategorySelector({
   setCategory: React.Dispatch<React.SetStateAction<string | null>>
   transactionType: string
 }): React.ReactElement {
-  const { t } = useTranslation()
   const { categories } = useWalletContext()
 
   if (categories === 'loading') {

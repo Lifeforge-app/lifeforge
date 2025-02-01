@@ -107,8 +107,8 @@ function AirportsList(): React.ReactElement {
                   ))
               ) : (
                 <EmptyStateScreen
-                  title="Oops! No airports found"
-                  description="Try searching for something else"
+                  name="airports"
+                  namespace="modules.airports"
                   icon="tabler:plane-off"
                 />
               )}

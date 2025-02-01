@@ -94,9 +94,9 @@ function Weather(): React.ReactElement {
         ) : (
           <div className="my-8 w-full">
             <EmptyStateScreen
-              title="No METAR data found"
-              description="Try searching for something else"
               icon="tabler:cloud-off"
+              namespace="modules.airports"
+              name="METAR"
             />
           </div>
         )

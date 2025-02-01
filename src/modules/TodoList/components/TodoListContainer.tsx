@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import { FAB } from '@components/buttons'
@@ -16,6 +17,7 @@ import ModifyPriorityModal from '../modals/ModifyPriorityModal'
 import ModifyTagModal from '../modals/ModifyTagModal'
 
 function TodoListContainer(): React.ReactElement {
+  const { t } = useTranslation('modules.todoList')
   const [searchParams, setSearchParams] = useSearchParams()
   const {
     entries,
@@ -82,10 +84,13 @@ function TodoListContainer(): React.ReactElement {
                 <TaskList />
               ) : (
                 <EmptyStateScreen
-                  title="No tasks found"
-                  description="You can create a new task by clicking the button below."
+                  name="tasks"
+                  namespace="modules.todoList"
                   icon="tabler:article-off"
-                  ctaContent="new task"
+                  ctaContent="new"
+                  ctaTProps={{
+                    item: t('items.task')
+                  }}
                   onCTAClick={setModifyTaskWindowOpenType}
                 />
               )

@@ -1,5 +1,6 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FAB } from '@components/buttons'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
@@ -14,6 +15,7 @@ import Header from './components/Header'
 import VideoList from './components/VideoList'
 
 function YoutubeVideos(): React.ReactElement {
+  const { t } = useTranslation('modules.youtubeVideos')
   const [isAddVideosModalOpen, setIsAddVideosModalOpen] = useState(false)
   const [videos, refreshVideos, setVideos] = useFetch<
     IYoutubeVideosStorageEntry[]
@@ -61,10 +63,13 @@ function YoutubeVideos(): React.ReactElement {
           {videos =>
             videos.length === 0 ? (
               <EmptyStateScreen
-                title="No videos available"
-                description="There are no videos available at the moment. Consider adding some!"
+                name="videos"
+                namespace="modules.youtubeVideos"
                 icon="tabler:movie-off"
-                ctaContent="Add Video"
+                ctaContent="new"
+                ctaTProps={{
+                  item: t('items.video')
+                }}
                 onCTAClick={() => {
                   refreshVideos()
                   setIsAddVideosModalOpen(true)
@@ -75,8 +80,8 @@ function YoutubeVideos(): React.ReactElement {
                 {videos =>
                   videos.length === 0 ? (
                     <EmptyStateScreen
-                      title="No results found"
-                      description="No videos found with the given search query."
+                      name="results"
+                      namespace="modules.youtubeVideos"
                       icon="tabler:search-off"
                     />
                   ) : (

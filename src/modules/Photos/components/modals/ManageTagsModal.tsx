@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
@@ -24,6 +25,7 @@ function ManageTagsModal({
   existedData: IPhotoAlbumTag | null
   setExistedData: React.Dispatch<React.SetStateAction<IPhotoAlbumTag | null>>
 }): React.ReactElement {
+  const { t } = useTranslation()
   const { albumTagList, refreshAlbumTagList } = usePhotosContext()
   const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
     useState(false)
@@ -46,10 +48,13 @@ function ManageTagsModal({
           {albumTagList =>
             albumTagList.length === 0 ? (
               <EmptyStateScreen
+                namespace="modules.photos"
+                name="tags"
                 icon="tabler:tag-off"
-                title="No tags found"
-                description="Create a tag to organize your albums."
-                ctaContent="new tag"
+                ctaContent="new"
+                ctaTProps={{
+                  item: t('items.tag')
+                }}
                 onCTAClick={() => {
                   setModifyAlbumModalOpenType('create')
                 }}

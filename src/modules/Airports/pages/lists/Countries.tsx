@@ -104,8 +104,8 @@ function Countries(): React.ReactElement {
                   ))
               ) : (
                 <EmptyStateScreen
-                  title="Oops! No countries found"
-                  description="Try searching for something else"
+                  namespace="modules.airports"
+                  name="countries"
                   icon="tabler:globe-off"
                 />
               )}

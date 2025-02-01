@@ -85,6 +85,7 @@ function Mood({
             <div className="w-full flex-1">
               <TextInput
                 darker
+                namespace="modules.journal"
                 value={mood.text}
                 icon="tabler:mood-neutral"
                 name="Mood of the day"
@@ -95,6 +96,7 @@ function Mood({
               />
               <TextInput
                 darker
+                namespace="modules.journal"
                 value={mood.emoji}
                 icon="uil:icons"
                 name="Emoji"

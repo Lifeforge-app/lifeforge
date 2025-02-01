@@ -71,10 +71,11 @@ function Achievements(): React.ReactElement {
             </div>
           ) : (
             <EmptyStateScreen
-              title={t('emptyState.achievements.title')}
-              description={t('emptyState.achievements.description')}
+              name="achievement"
               icon="tabler:award-off"
-              ctaContent="Add achievement"
+              namespace="modules.achievements"
+              ctaContent="new"
+              ctaTProps={{ item: t('items.achievement') }}
               onCTAClick={() => {
                 setExistedData(null)
                 setModifyAchievementModalOpenType('create')

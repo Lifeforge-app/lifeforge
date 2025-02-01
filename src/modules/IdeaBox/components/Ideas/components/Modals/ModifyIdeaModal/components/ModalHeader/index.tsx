@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@components/buttons'
 import TypeSelector from './components/TypeSelector'
 
@@ -18,6 +19,8 @@ function ModalHeader({
     React.SetStateAction<'text' | 'image' | 'link'>
   >
 }): React.ReactElement {
+  const { t } = useTranslation('modules.ideaBox')
+
   return (
     <>
       <div className="flex-between flex w-full gap-4 sm:mb-6">
@@ -34,17 +37,11 @@ function ModalHeader({
             className="size-7"
           />
           <span className="w-full min-w-0 items-center gap-3 truncate sm:flex">
-            {
-              {
-                create: 'New ',
-                update: 'Update ',
-                paste: 'New '
-              }[innerOpenType!]
-            }{' '}
+            {t(
+              `modals.idea.${innerOpenType === 'update' ? 'update' : 'create'}`
+            )}{' '}
             {innerOpenType === 'update' ? (
-              innerTypeOfModifyIdea[0].toUpperCase() +
-              innerTypeOfModifyIdea.slice(1) +
-              ' '
+              t(`entryType.${innerTypeOfModifyIdea}`) + ' '
             ) : (
               <TypeSelector
                 inline
@@ -52,7 +49,7 @@ function ModalHeader({
                 setInnerTypeOfModifyIdea={setInnerTypeOfModifyIdea}
               />
             )}
-            Idea
+            {t('items.idea')}
           </span>
         </h1>
         <Button

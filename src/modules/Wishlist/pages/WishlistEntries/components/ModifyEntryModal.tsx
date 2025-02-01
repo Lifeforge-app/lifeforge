@@ -43,7 +43,7 @@ function ModifyEntryModal({
   const FIELDS: IFieldProps[] = [
     {
       id: 'list',
-      label: 'Wishlist',
+      label: 'Wishlist Name',
       icon: 'tabler:list',
       type: 'listbox',
       options:
@@ -205,16 +205,12 @@ function ModifyEntryModal({
 
   return (
     <Modal
+      namespace="modules.wishlist"
       isOpen={openType !== null}
       fields={FIELDS}
       data={data}
       setData={setData}
-      title={`${
-        {
-          create: 'Create ',
-          update: 'Update '
-        }[openType!]
-      } entry`}
+      title={`entry.${openType ?? ''}`}
       icon={
         {
           create: 'tabler:plus',

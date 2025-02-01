@@ -2,7 +2,11 @@ import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { Button } from '@components/buttons'
-import { TextInput , ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
+import {
+  TextInput,
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption
+} from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWishlistEntry } from '@interfaces/wishlist_interfaces'
@@ -101,11 +105,13 @@ function FromOtherAppsModal({
     <ModalWrapper isOpen={isOpen} minWidth="50vw">
       <ModalHeader
         title="Import from other apps"
+        namespace="modules.wishlist"
         icon="tabler:apps"
         onClose={onClose}
       />
       <div className="space-y-4">
         <ListboxOrComboboxInput
+          namespace="modules.wishlist"
           type="listbox"
           icon="tabler:apps"
           value={provider}
@@ -141,6 +147,7 @@ function FromOtherAppsModal({
         </ListboxOrComboboxInput>
         <TextInput
           icon="tabler:link"
+          namespace="modules.wishlist"
           name="Product URL"
           value={url}
           updateValue={setUrl}

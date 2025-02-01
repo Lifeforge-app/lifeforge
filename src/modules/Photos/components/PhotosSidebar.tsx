@@ -127,8 +127,8 @@ function PhotosSidebar(): React.ReactElement {
               <div className="mx-4">
                 <EmptyStateScreen
                   icon="tabler:books-off"
-                  title="No albums yet"
-                  description="Create an album to organize your photos."
+                  name="albums"
+                  namespace="modules.photos"
                   smaller
                 />
               </div>

@@ -16,10 +16,10 @@ import {
 } from '@interfaces/pixabay_interfaces'
 
 const IMAGE_TYPES = [
-  { name: 'All', id: 'all', icon: 'tabler:category' },
-  { name: 'Photo', id: 'photo', icon: 'tabler:photo' },
-  { name: 'Illustration', id: 'illustration', icon: 'tabler:brush' },
-  { name: 'Vector', id: 'vector', icon: 'tabler:vector' }
+  { id: 'all', icon: 'tabler:category' },
+  { id: 'photo', icon: 'tabler:photo' },
+  { id: 'illustration', icon: 'tabler:brush' },
+  { id: 'vector', icon: 'tabler:vector' }
 ]
 
 const CATEGORIES = [
@@ -75,7 +75,7 @@ function SearchFilterModal({
   filters: IPixabaySearchFilter
   updateFilters: React.ActionDispatch<[action: PixabaySearchFilterAction]>
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common.misc')
 
   return (
     <ModalWrapper isOpen={isOpen} minWidth="30vw">
@@ -86,8 +86,10 @@ function SearchFilterModal({
       />
       <div className="space-y-4">
         <ListboxOrComboboxInput
+          namespace="common.misc"
+          tKey="imageUpload"
           type="listbox"
-          name={t('input.imageType')}
+          name="image type"
           icon="tabler:list"
           value={filters.imageType}
           setValue={value => {
@@ -102,16 +104,19 @@ function SearchFilterModal({
                 className="size-5"
               />
               <span className="-mt-px block truncate">
-                {IMAGE_TYPES.find(l => l.id === filters.imageType)?.name ??
-                  'None'}
+                {t(
+                  `imageUpload.imageType.${
+                    IMAGE_TYPES.find(l => l.id === filters.imageType)?.id
+                  }`
+                )}
               </span>
             </>
           }
         >
-          {IMAGE_TYPES.map(({ name, icon, id }, i) => (
+          {IMAGE_TYPES.map(({ icon, id }, i) => (
             <ListboxOrComboboxOption
               key={i}
-              text={name}
+              text={t(`imageUpload.imageType.${id}`)}
               icon={icon}
               value={id}
             />
@@ -119,7 +124,9 @@ function SearchFilterModal({
         </ListboxOrComboboxInput>
         <ListboxOrComboboxInput
           type="listbox"
-          name={t('input.category')}
+          namespace="common.misc"
+          tKey="imageUpload"
+          name="image Category"
           icon="tabler:category"
           value={filters.category}
           setValue={value => {
@@ -151,7 +158,9 @@ function SearchFilterModal({
         </ListboxOrComboboxInput>
         <ListboxOrComboboxInput
           type="listbox"
-          name={t('input.imageColors')}
+          namespace="common.misc"
+          tKey="imageUpload"
+          name="Image Color"
           icon="tabler:color-swatch"
           value={filters.colors}
           setValue={value => {
@@ -184,7 +193,9 @@ function SearchFilterModal({
         <div className="flex items-center justify-between py-2">
           <div className="flex items-center gap-2">
             <Icon icon="tabler:user-star" className="size-6" />
-            <span className="text-lg">{t('input.editorsChoice')}</span>
+            <span className="text-lg">
+              {t('imageUpload.inputs.editorsChoice')}
+            </span>
           </div>
           <Switch
             checked={filters.isEditorsChoice}

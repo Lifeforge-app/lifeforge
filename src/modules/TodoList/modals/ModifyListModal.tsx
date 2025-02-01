@@ -83,17 +83,13 @@ function ModifyListModal(): React.ReactElement {
 
   return (
     <Modal
+      namespace="modules.todoList"
       isOpen={openType !== null}
       openType={openType}
       onClose={() => {
         setOpenType(null)
       }}
-      title={`${
-        {
-          create: 'Create ',
-          update: 'Update '
-        }[openType!]
-      }list`}
+      title={`list.${openType}`}
       icon={`${
         {
           create: 'tabler:plus',

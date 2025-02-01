@@ -104,6 +104,7 @@ function ModifySubjectModal({
           }}
         />
         <TextInput
+          namespace="modules.notes"
           name="Subject name"
           icon="tabler:book"
           value={subjectName}
@@ -113,6 +114,7 @@ function ModifySubjectModal({
           placeholder="My Subject"
         />
         <TextInput
+          namespace="modules.notes"
           name="Subject description"
           icon="tabler:file-text"
           value={subjectDescription}
@@ -122,6 +124,7 @@ function ModifySubjectModal({
           placeholder="The best subject in the world"
         />
         <IconInput
+          namespace="modules.notes"
           name="Subject icon"
           icon={subjectIcon}
           setIconSelectorOpen={setIconSelectorOpen}

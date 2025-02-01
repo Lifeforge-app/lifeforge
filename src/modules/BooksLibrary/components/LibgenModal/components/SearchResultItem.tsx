@@ -84,6 +84,7 @@ function SearchResultItem({
             variant="secondary"
             icon="tabler:eye"
             className="w-full lg:w-1/2"
+            namespace="modules.booksLibrary"
           >
             View Details
           </Button>

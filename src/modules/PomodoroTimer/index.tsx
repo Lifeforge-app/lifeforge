@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -16,12 +15,13 @@ import Timer from './components/Timer'
 import TaskItem from '../TodoList/components/tasks/TaskItem'
 
 export default function PomodoroTimer(): React.ReactElement {
-  const { t } = useTranslation()
   const { componentBg } = useThemeColors()
+  const { t } = useTranslation('modules.todoList')
   const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry[]>(
     'todo-list/entries?status=today'
   )
   const navigate = useNavigate()
+
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:clock-bolt" title="Pomodoro Timer" />
@@ -31,7 +31,7 @@ export default function PomodoroTimer(): React.ReactElement {
           <aside className={`mb-16 w-2/6 rounded-lg p-6 ${componentBg}`}>
             <h1 className="mb-8 flex items-center gap-2 text-xl font-semibold">
               <Icon icon="tabler:clipboard-list" className="text-2xl" />
-              <span className="ml-2">"todoList"</span>
+              <span className="ml-2">{t('title')}</span>
             </h1>
             <Scrollbar>
               <APIFallbackComponent data={entries}>
@@ -52,10 +52,13 @@ export default function PomodoroTimer(): React.ReactElement {
                         ))
                       ) : (
                         <EmptyStateScreen
-                          title="No tasks for today"
-                          description="Head to the Todo List module to create a new task."
+                          name="todaysTask"
+                          namespace="modules.todoList"
                           icon="tabler:calendar-smile"
-                          ctaContent="new task"
+                          ctaContent="new"
+                          ctaTProps={{
+                            item: t('items.task')
+                          }}
                           onCTAClick={() => {
                             navigate('/todo-list#new')
                           }}

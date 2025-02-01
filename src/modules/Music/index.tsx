@@ -72,20 +72,12 @@ function Music(): React.ReactElement {
                   <MusicList debouncedSearchQuery={debouncedSearchQuery} />
                 ) : (
                   <EmptyStateScreen
-                    title={
-                      musics.length > 0
-                        ? 'Oops! Nothing found here.'
-                        : '"Oops! Nothing to see here."'
-                    }
+                    namespace="modules.music"
+                    name={musics.length > 0 ? 'result' : 'music'}
                     icon={
                       musics.length > 0
                         ? 'tabler:search-off'
                         : 'tabler:music-off'
-                    }
-                    description={
-                      musics.length > 0
-                        ? "The search query that you entered doesn't seem to yield any result."
-                        : 'Add the music by either downloading it or putting it into your NAS folder'
                     }
                     customCTAButton={
                       musics.length > 0 ? <AddMusicButton /> : undefined

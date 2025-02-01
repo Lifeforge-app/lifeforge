@@ -1,12 +1,14 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import { IPasswordEntry } from '@interfaces/password_interfaces'
 import { usePasswordContext } from '@providers/PasswordsProvider'
 import APIRequest from '@utils/fetchData'
-import PasswordEntryITem from './PasswordEntryItem'
+import PasswordEntryItem from './PasswordEntryItem'
 
 function PasswordList(): React.ReactElement {
+  const { t } = useTranslation('modules.passwords')
   const {
     setModifyPasswordModalOpenType,
     setExistedData,
@@ -44,10 +46,11 @@ function PasswordList(): React.ReactElement {
       {filteredPasswordList =>
         filteredPasswordList.length === 0 ? (
           <EmptyStateScreen
-            description="No passwords are found in your vault yet."
-            title="Hmm... Seems a bit empty here."
+            name="password"
+            namespace="modules.passwords"
             icon="tabler:key-off"
-            ctaContent="new password"
+            ctaContent="new"
+            ctaTProps={{ item: t('items.password') }}
             onCTAClick={() => {
               setModifyPasswordModalOpenType('create')
               setExistedData(null)
@@ -56,7 +59,7 @@ function PasswordList(): React.ReactElement {
         ) : (
           <div className="my-8 flex w-full flex-col gap-4">
             {filteredPasswordList.map(password => (
-              <PasswordEntryITem
+              <PasswordEntryItem
                 key={password.id}
                 password={password}
                 pinPassword={pinPassword}

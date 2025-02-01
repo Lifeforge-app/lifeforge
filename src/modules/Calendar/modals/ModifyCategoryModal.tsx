@@ -101,14 +101,10 @@ function ModifyCategoryModal({
 
   return (
     <Modal
+      namespace="modules.calendar"
       isOpen={openType !== null}
       modalRef={modalRef}
-      title={`${
-        {
-          create: 'Create ',
-          update: 'Update '
-        }[innerOpenType!]
-      }category`}
+      title={`category.${innerOpenType}`}
       icon={
         {
           create: 'tabler:plus',

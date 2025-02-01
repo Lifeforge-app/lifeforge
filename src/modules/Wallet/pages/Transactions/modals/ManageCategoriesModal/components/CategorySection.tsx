@@ -24,7 +24,7 @@ function CategorySection({
   setExistedData,
   setDeleteCategoriesConfirmationOpen
 }: CategorySectionProps): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
   const filteredCategories = categories.filter(
     category => category.type === type
   )
@@ -34,7 +34,7 @@ function CategorySection({
       <div className="flex-between flex gap-4">
         <h2 className="flex items-center gap-2 text-lg font-medium text-bg-500">
           <Icon icon={iconName} className="size-6" />
-          {t('dashboard.widgets.' + type)}
+          {t('transactionTypes.' + type)}
         </h2>
         <button
           onClick={() => {

@@ -10,7 +10,7 @@ function TaskTagList({
 }: {
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.todoList')
   const {
     tags,
     setModifyTagModalOpenType: setModifyModalOpenType,
@@ -41,7 +41,7 @@ function TaskTagList({
               ))}
             </>
           ) : (
-            <p className="text-center text-bg-500">{t('emptyState.tags')}</p>
+            <p className="text-center text-bg-500">{t('empty.tags')}</p>
           )
         }
       </APIFallbackComponent>

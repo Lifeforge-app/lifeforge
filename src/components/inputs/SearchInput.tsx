@@ -16,7 +16,8 @@ function SearchInput({
   sideButtonIcon,
   onSideButtonClick,
   className,
-  namespace
+  namespace,
+  tKey = ''
 }: {
   searchQuery: string
   setSearchQuery: (query: string) => void
@@ -30,6 +31,7 @@ function SearchInput({
   onSideButtonClick?: () => void
   className?: string
   namespace: string
+  tKey?: string
 }): React.ReactElement {
   const { t } = useTranslation(['common.misc', namespace])
   const { bgImage } = usePersonalizationContext()
@@ -37,7 +39,7 @@ function SearchInput({
     if (bgImage !== '') {
       return 'bg-bg-50 dark:bg-bg-800/50 hover:bg-bg-200/50 dark:hover:bg-bg-700/50 transition-all'
     }
-    return 'bg-bg-50 dark:bg-bg-800/50 dark:hover:bg-bg-800/80 hover:bg-bg-200/50 transition-all'
+    return 'bg-bg-50 dark:bg-bg-800/50 dark:hover:bg-bg-800/80 hover:bg-bg-50/50 transition-all'
   }, [bgImage])
 
   return (
@@ -63,7 +65,9 @@ function SearchInput({
         }}
         placeholder={t(`search`, {
           item: t([
-            `${namespace}:items.${toCamelCase(stuffToSearch)}`,
+            `${namespace}:${[tKey, 'items', toCamelCase(stuffToSearch)]
+              .filter(e => e)
+              .join('.')}`,
             stuffToSearch
           ])
         })}

@@ -14,7 +14,7 @@ import AssetItem from './components/AssetItem'
 import ModifyAssetsModal from './components/ModifyAssetsModal'
 
 function Assets(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
   const { assets, refreshAssets, isAmountHidden, toggleAmountVisibility } =
     useWalletContext()
   const [modifyAssetsModalOpenType, setModifyModalOpenType] = useState<
@@ -46,8 +46,11 @@ function Assets(): React.ReactElement {
                 setModifyModalOpenType('create')
               }}
               icon="tabler:plus"
+              tProps={{
+                item: t('items.asset')
+              }}
             >
-              Add Asset
+              new
             </Button>
           )
         }
@@ -82,9 +85,12 @@ function Assets(): React.ReactElement {
             </div>
           ) : (
             <EmptyStateScreen
-              title={t('emptyState.wallet.assets.title')}
-              description={t('emptyState.wallet.assets.description')}
-              ctaContent="Add Asset"
+              name="assets"
+              namespace="modules.wallet"
+              ctaContent="new"
+              ctaTProps={{
+                item: t('items.asset')
+              }}
               onCTAClick={setModifyModalOpenType}
               icon="tabler:wallet-off"
             />

@@ -15,7 +15,7 @@ function IdeaContentInput({
   updateIdeaContent: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
   updateIdeaLink: (e: React.ChangeEvent<HTMLInputElement>) => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.ideaBox')
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null)
 
   return (
@@ -36,8 +36,8 @@ function IdeaContentInput({
           required
           label={
             innerTypeOfModifyIdea === 'text'
-              ? t('input.ideaContent')
-              : t('input.ideaLink')
+              ? t('inputs.ideaContent')
+              : t('inputs.ideaLink')
           }
           active={
             {

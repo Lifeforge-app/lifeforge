@@ -10,7 +10,7 @@ function TaskListList({
 }: {
   setSidebarOpen: (value: boolean) => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.todoList')
   const {
     setModifyListModalOpenType: setModifyModalOpenType,
     setSelectedPriority: setSelectedData,
@@ -41,7 +41,7 @@ function TaskListList({
               ))}
             </>
           ) : (
-            <p className="text-center text-bg-500">{t('emptyState.lists')}</p>
+            <p className="text-center text-bg-500">{t('empty.lists')}</p>
           )
         }
       </APIFallbackComponent>

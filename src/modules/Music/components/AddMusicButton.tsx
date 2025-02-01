@@ -1,6 +1,7 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { cookieParse } from 'pocketbase'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
@@ -10,6 +11,7 @@ import IntervalManager from '@utils/intervalManager'
 const intervalManager = IntervalManager.getInstance()
 
 function AddMusicButton(): React.ReactElement {
+  const { t } = useTranslation('modules.music')
   const { loading, setIsYoutubeDownloaderOpen, setLoading, refreshMusics } =
     useMusicContext()
 
@@ -78,8 +80,13 @@ function AddMusicButton(): React.ReactElement {
 
   return (
     <Menu as="div" className="relative z-50 hidden md:block">
-      <Button onClick={() => {}} as={MenuButton} icon="tabler:plus">
-        add music
+      <Button
+        onClick={() => {}}
+        as={MenuButton}
+        icon="tabler:plus"
+        tProps={{ item: t('items.music') }}
+      >
+        new
       </Button>
       <MenuItems
         transition
@@ -90,6 +97,7 @@ function AddMusicButton(): React.ReactElement {
           onClick={importMusic}
           icon={loading ? 'svg-spinners:180-ring' : 'uil:import'}
           text="Import from NAS"
+          namespace="modules.music"
         />
         <div className="w-full border-b border-bg-300 dark:border-bg-700" />
         <MenuItem
@@ -98,6 +106,7 @@ function AddMusicButton(): React.ReactElement {
           }}
           icon="tabler:brand-youtube"
           text="Download from YouTube"
+          namespace="modules.music"
         />
       </MenuItems>
     </Menu>

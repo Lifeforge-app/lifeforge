@@ -67,6 +67,8 @@ function NotesSubject(): React.ReactElement {
                   />
                 ) : (
                   <EmptyStateScreen
+                    name="note"
+                    namespace="modules.notes"
                     ctaContent="upload"
                     icon="tabler:file-off"
                     title={t('emptyState.notes.title')}

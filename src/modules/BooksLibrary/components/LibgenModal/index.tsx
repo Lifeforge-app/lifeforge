@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
@@ -16,7 +15,6 @@ import Pagination from '../../../../components/utilities/Pagination'
 import AddToLibraryModal from '../AddToLibraryModal'
 
 function LibgenModal(): React.ReactElement {
-  const { t } = useTranslation()
   const {
     miscellaneous: { libgenModalOpen: isOpen, setLibgenModalOpen: setOpen }
   } = useBooksLibraryContext()
@@ -78,6 +76,7 @@ function LibgenModal(): React.ReactElement {
       <ModalWrapper isOpen={isOpen} minWidth="70vw" minHeight="80vh">
         <ModalHeader
           icon="tabler:books"
+          namespace="modules.booksLibrary"
           title="Library Genesis"
           onClose={() => {
             setOpen(false)
@@ -97,7 +96,7 @@ function LibgenModal(): React.ReactElement {
               <SearchInput
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
-                stuffToSearch="libgenBook"
+                stuffToSearch="Libgen Book"
                 namespace="modules.booksLibrary"
                 hasTopMargin={false}
                 onKeyUp={e => {
@@ -129,12 +128,8 @@ function LibgenModal(): React.ReactElement {
                     return (
                       <EmptyStateScreen
                         icon="tabler:books-off"
-                        title={t(
-                          'emptyState.booksLibrary.libgen.results.title'
-                        )}
-                        description={t(
-                          'emptyState.booksLibrary.libgen.results.description'
-                        )}
+                        namespace="modules.booksLibrary"
+                        name="libgenResult"
                       />
                     )
                   }
@@ -144,7 +139,7 @@ function LibgenModal(): React.ReactElement {
                       <div className="mb-4 space-y-1">
                         <p className="text-lg font-medium text-bg-500">
                           Search results for{' '}
-                          <span className="text-bg-100">
+                          <span className="text-bg-900 dark:text-bg-100">
                             &quot;{data.query}&quot;
                           </span>
                         </p>
@@ -184,13 +179,9 @@ function LibgenModal(): React.ReactElement {
 
                 return (
                   <EmptyStateScreen
-                    icon="tabler:search-off"
-                    title={t(
-                      'emptyState.booksLibrary.libgen.searchQuery.title'
-                    )}
-                    description={t(
-                      'emptyState.booksLibrary.libgen.searchQuery.description'
-                    )}
+                    icon="tabler:book"
+                    namespace="modules.booksLibrary"
+                    name="libgen"
                   />
                 )
               })()}

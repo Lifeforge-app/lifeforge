@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Button, CreateOrModifyButton } from '@components/buttons'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
@@ -18,6 +19,7 @@ import SubtaskBox from './components/SubtaskBox'
 import TagsSelector from './components/TagsSelector'
 
 function ModifyTaskWindow(): React.ReactElement {
+  const { t } = useTranslation('modules.todoList')
   const {
     modifyTaskWindowOpenType: openType,
     setModifyTaskWindowOpenType: setOpenType,
@@ -162,13 +164,7 @@ function ModifyTaskWindow(): React.ReactElement {
                 }
                 className="size-7"
               />
-              {
-                {
-                  create: 'Create ',
-                  update: 'Modify '
-                }[innerOpenType ?? 'create']
-              }{' '}
-              task
+              {t(`modals.tasks.${innerOpenType ?? 'create'}`)}
             </h1>
             <HamburgerMenu largerPadding className="relative">
               <MenuItem

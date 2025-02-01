@@ -100,6 +100,7 @@ function ModifyFolderModal({
           }}
         />
         <TextInput
+          namespace="modules.notes"
           name="Folder Name"
           placeholder="My lovely folder"
           icon="tabler:folder"

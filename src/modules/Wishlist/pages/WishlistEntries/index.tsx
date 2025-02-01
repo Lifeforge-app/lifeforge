@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
@@ -21,6 +22,7 @@ import Header from './components/Header'
 import ModifyEntryModal from './components/ModifyEntryModal'
 
 function WishlistEntries(): React.ReactElement {
+  const { t } = useTranslation('modules.wishlist')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
   const [lists] = useFetch<IWishlistList[]>('wishlist/lists')
@@ -78,7 +80,7 @@ function WishlistEntries(): React.ReactElement {
         items={[
           {
             id: 'wishlist',
-            name: 'Wishlist',
+            name: t('tabs.wishlist'),
             icon: 'tabler:heart',
             amount: (() => {
               if (
@@ -95,7 +97,7 @@ function WishlistEntries(): React.ReactElement {
           },
           {
             id: 'bought',
-            name: 'Bought',
+            name: t('tabs.bought'),
             icon: 'tabler:check',
             amount: (() => {
               if (
@@ -123,10 +125,13 @@ function WishlistEntries(): React.ReactElement {
               if (entries.length === 0) {
                 return (
                   <EmptyStateScreen
-                    title="No entries"
-                    description="Add items to your wishlist"
+                    name="entries"
+                    namespace="modules.wishlist"
                     icon="tabler:shopping-cart-off"
-                    ctaContent="New Item"
+                    ctaContent="new"
+                    ctaTProps={{
+                      item: t('items.entry')
+                    }}
                   />
                 )
               }
@@ -192,8 +197,14 @@ function WishlistEntries(): React.ReactElement {
           anchor="top end"
           className="overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
         >
-          <MenuItem onClick={() => {}} icon="tabler:plus" text="Add Manually" />
           <MenuItem
+            namespace="modules.wishlist"
+            onClick={() => {}}
+            icon="tabler:plus"
+            text="Add Manually"
+          />
+          <MenuItem
+            namespace="modules.wishlist"
             onClick={() => {
               setFromOtherAppsModalOpen(true)
             }}

@@ -10,6 +10,7 @@ export function toCamelCase(str: string): string {
 
   return str
     .toLowerCase()
+    .replace(/[()]/g, '')
     .replace(/\s{2,}/g, ' ')
     .replace(/\s(.)/g, $1 => $1.toUpperCase())
     .replace(/\s/g, '')

@@ -113,8 +113,8 @@ function Regions(): React.ReactElement {
                   ))
               ) : (
                 <EmptyStateScreen
-                  title="Oops! No regions found"
-                  description="Try searching for something else"
+                  namespace="modules.airports"
+                  name="regions"
                   icon="tabler:globe-off"
                 />
               )}

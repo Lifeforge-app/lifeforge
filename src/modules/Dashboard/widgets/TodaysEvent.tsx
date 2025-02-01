@@ -95,8 +95,9 @@ export default function TodaysEvent(): React.ReactElement {
               <div className="flex-center flex-1">
                 <EmptyStateScreen
                   smaller
-                  title="No events today"
-                  description="You have no events scheduled for today."
+                  namespace="modules.dashboard"
+                  tKey="widgets.todaysEvent"
+                  name="event"
                   icon="tabler:calendar-off"
                 />
               </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
@@ -16,6 +17,7 @@ function ManageCategoriesModal({
   isOpen: boolean | 'new'
   onClose: () => void
 }): React.ReactElement {
+  const { t } = useTranslation('modules.wallet')
   const { categories, refreshCategories } = useWalletContext()
   const [modifyCategoriesModalOpenType, setModifyCategoriesModalOpenType] =
     useState<'income' | 'expenses' | 'update' | null>(null)
@@ -37,7 +39,8 @@ function ManageCategoriesModal({
     <>
       <ModalWrapper isOpen={isOpen !== false} className="sm:min-w-[40rem]!">
         <ModalHeader
-          title="Manage Categories"
+          title="categories.manage"
+          namespace="modules.wallet"
           icon="tabler:apps"
           onClose={onClose}
         />
@@ -66,9 +69,12 @@ function ManageCategoriesModal({
             ) : (
               <EmptyStateScreen
                 icon="tabler:apps-off"
-                title="Oops, no categories found"
-                description="Create a new category to get started"
-                ctaContent="Create Category"
+                namespace="modules.wallet"
+                name="categories"
+                ctaContent="new"
+                ctaTProps={{
+                  item: t('items.category')
+                }}
                 onCTAClick={() => {
                   setModifyCategoriesModalOpenType('income')
                 }}

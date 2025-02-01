@@ -169,7 +169,7 @@ function ModifyItemModal({
                       }
 
                       if (index + 1 < step) {
-                        return 'bg-custom-500 text-bg-900'
+                        return 'bg-custom-500 text-bg-100 dark:text-bg-900'
                       }
 
                       return 'bg-bg-500 text-bg-100 dark:text-bg-900'

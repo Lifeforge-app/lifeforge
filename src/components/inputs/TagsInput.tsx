@@ -1,5 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toCamelCase } from '@utils/strings'
 import InputBox from './shared/InputBox'
 import InputIcon from './shared/InputIcon'
 import InputLabel from './shared/InputLabel'
@@ -22,6 +24,8 @@ interface ITagsInputProps {
     color: string
   }>
   required?: boolean
+  namespace: string
+  tKey?: string
 }
 
 function TagsInput({
@@ -35,8 +39,11 @@ function TagsInput({
   className = '',
   darker,
   existedTags,
-  required
+  required,
+  namespace,
+  tKey = ''
 }: ITagsInputProps): React.ReactElement {
+  const { t } = useTranslation(namespace)
   const [currentTag, setCurrentTag] = useState<string>('')
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -72,7 +79,12 @@ function TagsInput({
       <div className="flex w-full items-center gap-2">
         <InputLabel
           required={required === true}
-          label={name}
+          label={t([
+            [tKey, 'inputs', toCamelCase(name)].filter(e => e).join('.'),
+            [tKey, 'inputs', toCamelCase(name), 'label']
+              .filter(e => e)
+              .join('.')
+          ])}
           active={String(value).length > 0}
         />
         <div className="mb-4 ml-[14px] mt-12 flex flex-wrap items-center gap-2">

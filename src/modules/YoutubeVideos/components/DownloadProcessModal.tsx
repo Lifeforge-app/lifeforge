@@ -78,8 +78,8 @@ function DownloadProcessModal({
         {processes =>
           Object.keys(processes).length === 0 ? (
             <EmptyStateScreen
-              title="No download process"
-              description="There are no download process at the moment."
+              name="downloadProcesses"
+              namespace="modules.youtubeVideos"
               icon="tabler:download-off"
             />
           ) : (

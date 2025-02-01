@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { GoBackButton } from '@components/buttons'
@@ -18,6 +19,7 @@ import ModifySubjectModal from './components/ModifySubjectModal'
 import SubjectItem from './components/SubjectItem'
 
 function NotesCategory(): React.ReactElement {
+  const { t } = useTranslation('modules.notes')
   const { workspace } = useParams<{ workspace: string }>()
   const [valid] = useFetch<boolean>(`notes/workspace/valid/${workspace}`)
   const [titleData] = useFetch<INotesWorkspace>(
@@ -106,10 +108,13 @@ function NotesCategory(): React.ReactElement {
                 </div>
               ) : (
                 <EmptyStateScreen
-                  title="A bit empty here. "
-                  description="Create a new subject to start storing your notes."
                   icon="tabler:folder-off"
-                  ctaContent="Create subject"
+                  namespace="modules.notes"
+                  name="subject"
+                  ctaContent="new"
+                  ctaTProps={{
+                    item: t('items.subject')
+                  }}
                   onCTAClick={setModifySubjectModalOpenType}
                 />
               )

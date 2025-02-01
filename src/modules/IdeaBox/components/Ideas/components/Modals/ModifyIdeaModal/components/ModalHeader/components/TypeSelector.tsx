@@ -1,6 +1,8 @@
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react'
+import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 
 function TypeSelector({
   inline = false,
@@ -13,6 +15,8 @@ function TypeSelector({
     React.SetStateAction<'text' | 'image' | 'link'>
   >
 }): React.ReactElement {
+  const { t } = useTranslation('modules.ideaBox')
+
   return (
     <Menu
       as="div"
@@ -23,7 +27,7 @@ function TypeSelector({
       <MenuButton
         className={`flex-between inline-flex w-full rounded-md border-2 border-bg-300 sm:w-auto ${
           inline ? 'p-2 px-4' : 'p-4 px-6'
-        } text-lg font-semibold tracking-wide text-bg-800 shadow-sm outline-hidden hover:bg-bg-100 focus:outline-hidden dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200`}
+        } text-lg font-semibold tracking-wide text-bg-800 outline-hidden hover:bg-bg-100 focus:outline-hidden dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200`}
       >
         <div className="flex-center">
           <Icon
@@ -36,8 +40,7 @@ function TypeSelector({
             }
             className="mr-2 size-5"
           />
-          {innerTypeOfModifyIdea[0].toUpperCase() +
-            innerTypeOfModifyIdea.slice(1)}
+          {t(`entryType.${innerTypeOfModifyIdea}`)}
         </div>
         <Icon
           icon="tabler:chevron-down"
@@ -48,41 +51,23 @@ function TypeSelector({
       <MenuItems
         transition
         anchor="bottom start"
-        className="z-9999 mt-2 w-[var(--button-width)] overflow-hidden rounded-lg bg-bg-100 text-bg-50 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
+        className="z-9999 mt-2 overflow-hidden rounded-lg bg-bg-100 text-bg-800 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
       >
         {[
-          ['text', 'tabler:article', 'Text'],
-          ...[['image', 'tabler:photo', 'Image']],
-          ['link', 'tabler:link', 'Link']
-        ].map(([type, icon, name]) => (
-          <MenuItem key={type}>
-            {({ active }) => (
-              <button
-                onClick={() => {
-                  setInnerTypeOfModifyIdea(type as 'text' | 'image' | 'link')
-                }}
-                className={`group flex w-full items-center rounded-md p-4 text-base ${(() => {
-                  if (type === innerTypeOfModifyIdea) {
-                    return ''
-                  }
-
-                  return active
-                    ? 'bg-bg-200/50 text-bg-800 dark:bg-bg-800 dark:text-bg-50'
-                    : 'text-bg-500 hover:bg-bg-100 dark:text-bg-500 dark:hover:bg-bg-800'
-                })()}`}
-              >
-                <Icon icon={icon} className="mr-3 size-5" aria-hidden="true" />
-                {name}
-                {innerTypeOfModifyIdea === type && (
-                  <Icon
-                    icon="tabler:check"
-                    className="ml-auto size-5"
-                    aria-hidden="true"
-                  />
-                )}
-              </button>
-            )}
-          </MenuItem>
+          ['text', 'tabler:article'],
+          ...[['image', 'tabler:photo']],
+          ['link', 'tabler:link']
+        ].map(([type, icon]) => (
+          <MenuItem
+            key={type}
+            icon={icon}
+            onClick={() =>
+              setInnerTypeOfModifyIdea(type as 'text' | 'image' | 'link')
+            }
+            isToggled={innerTypeOfModifyIdea === type}
+            namespace={false}
+            text={t(`entryType.${type}`)}
+          />
         ))}
       </MenuItems>
     </Menu>

@@ -14,7 +14,8 @@ function EmptyStateScreen({
   ctaIcon,
   customCTAButton,
   smaller = false,
-  namespace
+  namespace,
+  tKey = ''
 }: {
   onCTAClick?: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   name: string | false
@@ -26,9 +27,10 @@ function EmptyStateScreen({
   ctaIcon?: string
   customCTAButton?: React.ReactElement
   smaller?: boolean
-  namespace?: string
+  namespace: string | false
+  tKey?: string
 }): React.ReactElement {
-  const { t } = useTranslation(namespace)
+  const { t } = useTranslation(namespace ? namespace : undefined)
 
   return (
     <div
@@ -45,18 +47,22 @@ function EmptyStateScreen({
         />
       )}
       <h2
-        className={`text-center ${
+        className={`text-center px-6 ${
           smaller ? 'text-3xl' : 'text-4xl'
         } font-semibold text-bg-500`}
       >
-        {name ? t(`empty.${name}.title`) : title}
+        {name
+          ? t([tKey, 'empty', name, 'title'].filter(e => e).join('.'))
+          : title}
       </h2>
       <p
-        className={`-mt-2 px-8 text-center text-bg-500  ${
+        className={`-mt-2 px-6 text-center text-bg-500  ${
           smaller ? 'text-base' : 'text-lg'
         }`}
       >
-        {name ? t(`empty.${name}.description`) : description}
+        {name
+          ? t([tKey, 'empty', name, 'description'].filter(e => e).join('.'))
+          : description}
       </p>
       {customCTAButton ??
         (ctaContent && onCTAClick && (

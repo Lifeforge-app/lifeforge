@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import React, { useRef } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { Button } from '@components/buttons'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
@@ -9,7 +8,6 @@ import { useMusicContext } from '@providers/MusicProvider'
 import ControlButtons from '../../Music/components/Bottombar/components/ControlButtons'
 
 export default function MusicPlayer(): React.ReactElement {
-  const { t } = useTranslation('modules.dashboard')
   const { currentMusic, isPlaying } = useMusicContext()
   const navigate = useNavigate()
   const ref = useRef<HTMLDivElement>(null)
@@ -45,7 +43,9 @@ export default function MusicPlayer(): React.ReactElement {
         ) : (
           <EmptyStateScreen
             smaller
-            title={t('dashboard.widgets.musicPlayer.noMusicPlaying')}
+            namespace="modules.dashboard"
+            tKey="widgets.musicPlayer"
+            name="music"
             icon="tabler:disc-off"
             customCTAButton={
               <Button
@@ -54,6 +54,7 @@ export default function MusicPlayer(): React.ReactElement {
                 }}
                 icon="tabler:music"
                 className="mt-4"
+                namespace="modules.music"
               >
                 select music
               </Button>

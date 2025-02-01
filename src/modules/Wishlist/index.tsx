@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
-import { Button , FAB } from '@components/buttons'
+import { useTranslation } from 'react-i18next'
+import { Button, FAB } from '@components/buttons'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IWishlistList } from '@interfaces/wishlist_interfaces'
 import ModifyWishlistListModal from './components/ModifyWishlistModal'
 import WishlistListItem from './components/WishlistListItem'
 
 function Wishlist(): React.ReactElement {
+  const { t } = useTranslation('modules.wishlist')
   const [lists, refreshLists, setLists] =
     useFetch<IWishlistList[]>('wishlist/lists')
   const [existedData, setExistedData] = useState<IWishlistList | null>(null)
@@ -30,14 +33,15 @@ function Wishlist(): React.ReactElement {
             onClick={() => {
               setModifyWishlistListModalOpenType('create')
             }}
+            tProps={{ item: t('items.wishlist') }}
           >
-            New Wishlist
+            New
           </Button>
         }
       />
       <APIFallbackComponent data={lists}>
-        {lists => {
-          return (
+        {lists =>
+          lists.length ? (
             <div className="mb-14 mt-6 grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]">
               {lists.map(list => (
                 <WishlistListItem
@@ -54,8 +58,14 @@ function Wishlist(): React.ReactElement {
                 />
               ))}
             </div>
+          ) : (
+            <EmptyStateScreen
+              name="wishlists"
+              namespace="modules.wishlist"
+              icon="tabler:box-off"
+            />
           )
-        }}
+        }
       </APIFallbackComponent>
       <ModifyWishlistListModal
         openType={modifyWishlistListModalOpenType}

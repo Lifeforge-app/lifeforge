@@ -66,11 +66,14 @@ function IdeaBox(): React.ReactElement {
               />
             ) : (
               <EmptyStateScreen
-                onCTAClick={setModifyContainerModalOpenType}
-                title={t('emptyState.ideaBox.title')}
-                description={t('emptyState.ideaBox.description')}
+                namespace="modules.ideaBox"
+                name="container"
                 icon="tabler:cube-off"
-                ctaContent="Create container"
+                ctaContent="new"
+                ctaTProps={{
+                  item: t('items.container')
+                }}
+                onCTAClick={setModifyContainerModalOpenType}
               />
             )
           }

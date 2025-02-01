@@ -10,7 +10,7 @@ function AddToLibraryButton({
   md5: string
   setAddToLibraryFor: (id: string) => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.booksLibrary')
   const {
     entries: { data: entries },
     miscellaneous: { processes }
@@ -65,6 +65,7 @@ function AddToLibraryButton({
       }}
       icon={icon}
       className="w-full xl:w-1/2"
+      namespace="modules.booksLibrary"
     >
       {text}
     </Button>
