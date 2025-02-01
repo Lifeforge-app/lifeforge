@@ -49,8 +49,8 @@ function OpenaiApiPricing(): React.ReactElement {
           <div className="mt-6 flex-1">
             {JSON.stringify(data) === '{}' ? (
               <EmptyStateScreen
-                title="No data available"
-                description="Please input raw HTML to get pricing information"
+                namespace="modules.openaiApiPricing"
+                name="data"
                 icon="tabler:article-off"
               />
             ) : (

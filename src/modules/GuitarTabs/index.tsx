@@ -91,18 +91,18 @@ function GuitarTabs(): React.ReactElement {
       if (debouncedSearchQuery.trim() === '') {
         return (
           <EmptyStateScreen
-            title="Oops! No guitar tabs found!"
-            description="Try uploading some guitar tabs to get started!"
             icon="tabler:music-off"
+            namespace="modules.guitarTabs"
+            name="score"
           />
         )
       }
 
       return (
         <EmptyStateScreen
-          title="No results found!"
-          description="Try searching for something else!"
           icon="tabler:search-off"
+          namespace="modules.guitarTabs"
+          name="result"
         />
       )
     }

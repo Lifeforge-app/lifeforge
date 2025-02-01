@@ -194,8 +194,8 @@ function Airport(): React.ReactElement {
                         return (
                           <div className="mb-8 mt-6 w-full">
                             <EmptyStateScreen
-                              title="Section not found"
-                              description="The section you are looking for does not exist."
+                              name="section"
+                              namespace="modules.airports"
                               icon="tabler:alert-triangle"
                             />
                           </div>
@@ -221,8 +221,8 @@ function Airport(): React.ReactElement {
                     default:
                       return (
                         <EmptyStateScreen
-                          title="Section not found"
-                          description="The section you are looking for does not exist."
+                          namespace="modules.airports"
+                          name="section"
                           icon="tabler:alert-triangle"
                         />
                       )

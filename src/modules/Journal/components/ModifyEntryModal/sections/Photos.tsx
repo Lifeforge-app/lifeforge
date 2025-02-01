@@ -94,9 +94,9 @@ function Photos({
       return (
         <EmptyStateScreen
           icon="tabler:photo-off"
-          title="No photos uploaded"
-          description="Upload some photos to make your journal entry more memorable!"
+          name="photos"
           ctaContent="Upload Photos"
+          namespace="modules.journal"
           onCTAClick={onUploadClick}
         />
       )

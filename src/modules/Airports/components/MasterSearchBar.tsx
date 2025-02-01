@@ -55,7 +55,7 @@ function MasterSearchBar(): React.ReactElement {
   return (
     <div className="relative z-50">
       <SearchInput
-        stuffToSearch="allAirport"
+        stuffToSearch="All Airport"
         namespace="modules.airports"
         searchQuery={masterSearchQuery}
         setSearchQuery={setMasterSearchQuery}
@@ -113,9 +113,10 @@ function MasterSearchBar(): React.ReactElement {
                   ) : (
                     <div className="py-6">
                       <EmptyStateScreen
-                        title="No results found"
-                        description="Try searching for something else"
+                        name="airports"
+                        namespace="modules.airports"
                         icon="tabler:search-off"
+                        smaller
                       />
                     </div>
                   )}

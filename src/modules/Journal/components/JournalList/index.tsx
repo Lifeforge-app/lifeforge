@@ -113,10 +113,13 @@ function JournalList({
             ) : (
               <div className="mt-6 flex-1">
                 <EmptyStateScreen
-                  title={t('emptyState.journal.title')}
-                  description={t('emptyState.journal.description')}
                   icon="tabler:book-off"
-                  ctaContent="new entry"
+                  namespace="modules.journal"
+                  name="entry"
+                  ctaContent="new"
+                  ctaTProps={{
+                    item: t('items.entry')
+                  }}
                   onCTAClick={() => {
                     setModifyEntryModalOpenType('create')
                     setExistedData(null)

@@ -14,7 +14,7 @@ function AssetsBalanceCard(): React.ReactElement {
   const { componentBgLighterWithHover } = useThemeColors()
   const navigate = useNavigate()
   const { assets, isAmountHidden } = useWalletContext()
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
 
   return (
     <DashboardItem
@@ -35,7 +35,7 @@ function AssetsBalanceCard(): React.ReactElement {
         {assets =>
           assets.length > 0 ? (
             <Scrollbar>
-              <ul className="flex flex-col gap-2 pb-2">
+              <ul className="flex flex-col gap-3 pb-2">
                 {assets.map(asset => (
                   <Link
                     key={asset.id}
@@ -76,12 +76,17 @@ function AssetsBalanceCard(): React.ReactElement {
             </Scrollbar>
           ) : (
             <EmptyStateScreen
-              title={t('emptyState.wallet.assets.title')}
-              description={t('emptyState.wallet.assets.description')}
-              ctaContent="Add Asset"
+              name="assets"
+              namespace="modules.wallet"
+              ctaContent="new"
+              ctaTProps={{
+                item: t('items.asset')
+              }}
+              icon="tabler:wallet-off"
               onCTAClick={() => {
                 navigate('/wallet/assets')
               }}
+              smaller
             />
           )
         }

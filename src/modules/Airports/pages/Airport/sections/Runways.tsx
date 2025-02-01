@@ -27,8 +27,8 @@ function Runways({ code }: { code: string }): React.ReactElement {
           ) : (
             <EmptyStateScreen
               icon="tabler:road-off"
-              title="No runways found"
-              description="There are no runways found for this airport."
+              namespace="modules.airports"
+              name="runway"
             />
           )
         }

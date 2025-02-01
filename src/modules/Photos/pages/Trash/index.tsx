@@ -51,7 +51,11 @@ function PhotosTrash(): React.ReactElement {
             <APIFallbackComponent data={photos}>
               {photos =>
                 photos.length === 0 ? (
-                  <EmptyStateScreen name="trash" icon="tabler:trash-off" />
+                  <EmptyStateScreen
+                    namespace="modules.photos"
+                    name="trash"
+                    icon="tabler:trash-off"
+                  />
                 ) : (
                   <PhotoAlbum
                     layout="rows"

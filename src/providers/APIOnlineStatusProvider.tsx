@@ -70,6 +70,7 @@ export default function APIOnlineStatusProvider({
       <EmptyStateScreen
         icon="tabler:wifi-off"
         name={false}
+        namespace={false}
         title="API is Offline"
         description="The API is currently offline. Please try again later. If you are the developer, please check the API status."
         customCTAButton={

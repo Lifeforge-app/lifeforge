@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
@@ -7,6 +8,7 @@ import FolderList from './components/FolderList'
 import IdeaList from './components/IdeaList'
 
 function IdeaAndFolderList(): React.ReactElement {
+  const { t } = useTranslation('modules.ideaBox')
   const { '*': path } = useParams<{ '*': string }>()
   const {
     entries,
@@ -33,15 +35,16 @@ function IdeaAndFolderList(): React.ReactElement {
                         {!viewArchived ? (
                           <EmptyStateScreen
                             onCTAClick={setModifyIdeaModalOpenType as any}
-                            title="No ideas yet"
-                            description="Hmm... Seems a bit empty here. Consider adding some innovative ideas."
                             icon="tabler:bulb-off"
-                            ctaContent="new idea"
+                            ctaContent="new"
+                            namespace="modules.ideaBox"
+                            name="idea"
+                            ctaTProps={{ item: t('items.idea') }}
                           />
                         ) : (
                           <EmptyStateScreen
-                            title="No archived ideas"
-                            description="You don't have any archived ideas yet."
+                            namespace="modules.ideaBox"
+                            name="archived"
                             icon="tabler:archive-off"
                           />
                         )}
@@ -64,9 +67,9 @@ function IdeaAndFolderList(): React.ReactElement {
               {searchResults.length === 0 ? (
                 <div className="mt-6">
                   <EmptyStateScreen
-                    title="No results"
-                    description="No ideas found for your search query."
                     icon="tabler:search"
+                    namespace="modules.ideaBox"
+                    name="result"
                   />
                 </div>
               ) : (

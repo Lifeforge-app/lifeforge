@@ -126,8 +126,9 @@ function Pixabay({
                 <div className="flex-center mb-6 size-full flex-1">
                   <EmptyStateScreen
                     icon="simple-icons:pixabay"
-                    title="Powered by Pixabay"
-                    description="Search for images on Pixabay"
+                    namespace="common.misc"
+                    tKey="imageUpload"
+                    name="pixabay"
                   />
                 </div>
               )
@@ -135,8 +136,9 @@ function Pixabay({
               return results.total === 0 ? (
                 <EmptyStateScreen
                   icon="tabler:photo-off"
-                  title="No results found"
-                  description="Try searching with different keywords filters"
+                  namespace="common.misc"
+                  tKey="imageUpload"
+                  name="result"
                 />
               ) : (
                 <SearchResults

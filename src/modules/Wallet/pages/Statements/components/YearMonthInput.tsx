@@ -1,6 +1,5 @@
 import moment from 'moment'
 import React, { useEffect, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
@@ -18,7 +17,6 @@ function YearMonthInput({
   year: number | null
   setYear: (value: number | null) => void
 }): React.ReactElement {
-  const { t } = useTranslation()
   const { transactions } = useWalletContext()
 
   const yearsOptions = useMemo(() => {
@@ -56,8 +54,9 @@ function YearMonthInput({
   return (
     <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row">
       <ListboxOrComboboxInput
+        namespace="modules.wallet"
         type="listbox"
-        name={t('input.month')}
+        name="Month"
         icon="tabler:calendar-month"
         value={month}
         setValue={setMonth}
@@ -79,8 +78,9 @@ function YearMonthInput({
         ))}
       </ListboxOrComboboxInput>
       <ListboxOrComboboxInput
+        namespace="modules.wallet"
         type="listbox"
-        name={t('input.year')}
+        name="Year"
         icon="tabler:calendar"
         value={year}
         setValue={setYear}

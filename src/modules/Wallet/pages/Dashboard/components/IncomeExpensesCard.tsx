@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import DashboardItem from '@components/utilities/DashboardItem'
 import { type Loadable } from '@interfaces/common'
 import { type IWalletIncomeExpenses } from '@interfaces/wallet_interfaces'

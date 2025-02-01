@@ -209,7 +209,8 @@ function Modal({
                                 }}
                                 className="size-5"
                               />
-                              {field.options[0].icon === undefined &&
+                              {field.options.length &&
+                                field.options[0].icon === undefined &&
                                 field.options[0].color !== undefined && (
                                   <span
                                     className="size-2 rounded-full"
@@ -265,6 +266,7 @@ function Modal({
                   case 'icon':
                     return (
                       <IconInput
+                        namespace={namespace}
                         key={field.id}
                         name={field.label}
                         icon={selectedData as string}

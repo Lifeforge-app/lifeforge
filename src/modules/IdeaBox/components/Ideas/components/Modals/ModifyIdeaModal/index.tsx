@@ -283,6 +283,7 @@ function ModifyIdeaModal(): React.ReactElement {
       <div className="space-y-4">
         {innerTypeOfModifyIdea !== 'text' && (
           <TextInput
+            namespace="modules.ideaBox"
             name="Idea title"
             icon="tabler:bulb"
             value={ideaTitle}
@@ -328,6 +329,7 @@ function ModifyIdeaModal(): React.ReactElement {
                     {t('imageUpload.orPasteLink')}
                   </div>
                   <TextInput
+                    namespace="modules.ideaBox"
                     icon="tabler:link"
                     name="Image link"
                     placeholder="https://example.com/image.jpg"
@@ -343,6 +345,7 @@ function ModifyIdeaModal(): React.ReactElement {
         <APIFallbackComponent data={tags}>
           {tags => (
             <TagsInput
+              namespace="modules.ideaBox"
               name="Idea tags"
               icon="tabler:tag"
               value={ideaTags}

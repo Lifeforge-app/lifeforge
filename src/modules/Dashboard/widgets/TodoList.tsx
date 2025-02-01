@@ -11,7 +11,7 @@ import { TodoListProvider } from '@providers/TodoListProvider'
 import TaskItem from '../../TodoList/components/tasks/TaskItem'
 
 export default function TodoList(): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.todoList')
   const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry[]>(
     'todo-list/entries?status=today'
   )
@@ -40,10 +40,14 @@ export default function TodoList(): React.ReactElement {
                   ) : (
                     <EmptyStateScreen
                       smaller
-                      title={t('emptyState.todoList.todaysTask.title')}
-                      description={t('emptyState.todoList.todaysTask.desc')}
+                      namespace="modules.dashboard"
+                      tKey="widgets.todoList"
+                      name="today"
                       icon="tabler:calendar-smile"
-                      ctaContent="new task"
+                      ctaContent="new"
+                      ctaTProps={{
+                        item: t('items.task')
+                      }}
                       onCTAClick={() => {
                         navigate('/todo-list#new')
                       }}

@@ -146,6 +146,7 @@ function ModuleItem({
                   case 'input':
                     return (
                       <TextInput
+                        namespace="modules.modules"
                         key={key}
                         icon={property.icon}
                         name={property.name}

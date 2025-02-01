@@ -15,7 +15,7 @@ function CategoryToggleButton({
   label: string
   activeBgColor: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.wallet')
 
   return (
     <button
@@ -29,7 +29,7 @@ function CategoryToggleButton({
       }}
     >
       <Icon icon={iconName} className="size-6" />
-      {t(`dashboard.widgets.${label.toLowerCase()}`)}
+      {t(`transactionTypes.${label.toLowerCase()}`)}
     </button>
   )
 }

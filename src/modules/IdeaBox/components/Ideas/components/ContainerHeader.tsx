@@ -59,6 +59,7 @@ function ContainerHeader(): React.ReactElement {
             onClick={() => {
               setViewArchived(!viewArchived)
             }}
+            namespace="modules.ideaBox"
           />
         </HamburgerMenu>
       </div>

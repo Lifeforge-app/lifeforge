@@ -85,8 +85,8 @@ function NOTAM({
           <div className="my-8 w-full">
             <EmptyStateScreen
               icon="tabler:exclamation-mark-off"
-              title="No NOTAMs"
-              description="There are no NOTAMs available for this airport."
+              name="NOTAM"
+              namespace="modules.airports"
             />
           </div>
         )

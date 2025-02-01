@@ -21,8 +21,8 @@ interface IState {
 }
 
 const TYPES = [
-  { name: 'Fingerstyle', id: 'fingerstyle', icon: 'mingcute:guitar-line' },
-  { name: 'Singalong', id: 'singalong', icon: 'mdi:guitar-pick-outline' }
+  { id: 'fingerstyle', icon: 'mingcute:guitar-line' },
+  { id: 'singalong', icon: 'mdi:guitar-pick-outline' }
 ]
 
 function ModifyEntryModal({
@@ -36,7 +36,7 @@ function ModifyEntryModal({
   existingItem: IGuitarTabsEntry | null
   refreshEntries: () => void
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.guitarTabs')
 
   function reducer(state: IState, action: Partial<IState>): IState {
     return { ...state, ...action }
@@ -89,9 +89,11 @@ function ModifyEntryModal({
       <ModalHeader
         icon="tabler:pencil"
         onClose={onClose}
-        title="Modify Guitar Tab"
+        title="guitarTabs.update"
+        namespace="modules.guitarTabs"
       />
       <TextInput
+        namespace="modules.guitarTabs"
         darker
         icon="tabler:music"
         name="Music Name"
@@ -102,6 +104,7 @@ function ModifyEntryModal({
         }}
       />
       <TextInput
+        namespace="modules.guitarTabs"
         darker
         icon="tabler:user"
         name="Author"
@@ -113,8 +116,9 @@ function ModifyEntryModal({
         className="mt-4"
       />
       <ListboxOrComboboxInput
+        namespace="modules.guitarTabs"
         type="listbox"
-        name={t('input.scoreType')}
+        name="Score Type"
         icon="tabler:category"
         value={data.type}
         setValue={value => {
@@ -135,17 +139,20 @@ function ModifyEntryModal({
             />
             <span className="-mt-px block truncate">
               {data.type !== ''
-                ? data.type[0].toUpperCase() + data.type.slice(1)
-                : 'None'}
+                ? t(`scoreTypes.${data.type}`)
+                : t('scoreTypes.uncategorized')}
             </span>
           </>
         }
       >
-        <ListboxNullOption icon="tabler:music-off" />
-        {TYPES.map(({ name, id, icon }) => (
+        <ListboxNullOption
+          text={t('scoreTypes.uncategorized')}
+          icon="tabler:music-off"
+        />
+        {TYPES.map(({ id, icon }) => (
           <ListboxOrComboboxOption
             key={id}
-            text={name}
+            text={t(`scoreTypes.${id}`)}
             icon={icon}
             value={id}
           />

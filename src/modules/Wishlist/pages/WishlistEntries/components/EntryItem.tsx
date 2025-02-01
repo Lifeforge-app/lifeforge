@@ -103,6 +103,7 @@ function EntryItem({
           className="w-auto px-0! sm:px-4!"
           icon="iconamoon:arrow-top-right-1"
           iconAtEnd
+          namespace="modules.wishlist"
         >
           Visit Website
         </Button>

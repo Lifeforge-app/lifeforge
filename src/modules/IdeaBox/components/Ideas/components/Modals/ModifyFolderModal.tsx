@@ -109,17 +109,14 @@ function ModifyFolderModal(): React.ReactElement {
               update: 'tabler:pencil'
             }[innerOpenType!]
           }
-          title={`${
-            {
-              create: 'Create',
-              update: 'Update'
-            }[innerOpenType!]
-          } folder`}
+          namespace="modules.ideaBox"
+          title={`folder.${innerOpenType}`}
           onClose={() => {
             setOpenType(null)
           }}
         />
         <TextInput
+          namespace="modules.ideaBox"
           name="Folder name"
           icon="tabler:cube"
           value={folderName}
@@ -128,12 +125,14 @@ function ModifyFolderModal(): React.ReactElement {
           placeholder="My folder"
         />
         <ColorInput
+          namespace="modules.ideaBox"
           name="Folder color"
           color={folderColor}
           updateColor={setFolderColor}
           setColorPickerOpen={setColorPickerOpen}
         />
         <IconInput
+          namespace="modules.ideaBox"
           name="Folder icon"
           icon={folderIcon}
           setIcon={setFolderIcon}

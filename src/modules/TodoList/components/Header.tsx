@@ -1,4 +1,3 @@
-import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
@@ -20,7 +19,7 @@ function Header({
     setSelectedTask,
     setModifyTaskWindowOpenType
   } = useTodoListContext()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
 
   if (
     typeof entries === 'string' ||

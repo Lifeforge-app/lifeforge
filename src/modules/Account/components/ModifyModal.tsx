@@ -2,11 +2,12 @@ import moment from 'moment'
 import React, { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
-import { DateInput , TextInput } from '@components/inputs'
+import { DateInput, TextInput } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { useAuthContext } from '@providers/AuthProvider'
 import APIRequest from '@utils/fetchData'
+import { toCamelCase } from '@utils/strings'
 
 function ModifyModal({
   type,
@@ -65,12 +66,14 @@ function ModifyModal({
   return (
     <ModalWrapper modalRef={modalRef} isOpen={isOpen} minWidth="30rem">
       <ModalHeader
-        title={`Update ${title}`}
+        title={`${toCamelCase(title)}.update`}
+        namespace="modules.accountSettings"
         onClose={onClose}
         icon="tabler:pencil"
       />
       {type !== 'date' ? (
         <TextInput
+          namespace="modules.accountSettings"
           icon={icon}
           name={title}
           placeholder={`Enter new ${title}`}
@@ -84,6 +87,7 @@ function ModifyModal({
         />
       ) : (
         <DateInput
+          namespace="modules.accountSettings"
           modalRef={modalRef}
           icon={icon}
           name={title}

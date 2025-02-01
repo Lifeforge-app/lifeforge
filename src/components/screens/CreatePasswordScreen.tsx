@@ -17,7 +17,7 @@ function CreatePasswordScreen({
   endpoint: string
   keyInUserData: string
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common.vault')
   const { setUserData, userData } = useAuthContext()
   const [newPassword, setNewPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
@@ -75,17 +75,21 @@ function CreatePasswordScreen({
     <>
       <div className="flex-center size-full flex-1 flex-col gap-4">
         <Icon icon="tabler:lock-plus" className="size-28" />
-        <h2 className="text-4xl font-semibold">Create your master password</h2>
+        <h2 className="text-4xl font-semibold">
+          {t('vault.createPassword.title')}
+        </h2>
         <p className="mb-8 w-1/2 text-center text-lg text-bg-500">
-          A master password is required to encrypt and decrypt your data.
+          {t('vault.createPassword.desc')}
         </p>
         <TextInput
           key="newPassword"
+          namespace="common.vault"
+          tKey="vault"
           ref={inputRef}
           isPassword
           icon="tabler:lock"
           name="New Password"
-          placeholder="Enter your preferred master password"
+          placeholder="••••••••••••••••"
           value={newPassword}
           updateValue={setNewPassword}
           noAutoComplete
@@ -111,11 +115,13 @@ function CreatePasswordScreen({
         />
         <TextInput
           key="confirmPassword"
+          namespace="common.vault"
+          tKey="vault"
           ref={inputRef2}
           isPassword
           icon="tabler:lock-check"
           name="Confirm Password"
-          placeholder="Enter the password again"
+          placeholder="••••••••••••••••"
           value={confirmPassword}
           updateValue={setConfirmPassword}
           noAutoComplete

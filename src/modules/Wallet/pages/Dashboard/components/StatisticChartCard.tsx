@@ -94,8 +94,8 @@ function StatisticChardCard(): React.ReactElement {
           {transactions =>
             transactions.length === 0 ? (
               <EmptyStateScreen
-                title={t('emptyState.wallet.transactions.title')}
-                description={t('emptyState.wallet.transactions.description')}
+                name="transactions"
+                namespace="modules.wallet"
               />
             ) : (
               <Bar

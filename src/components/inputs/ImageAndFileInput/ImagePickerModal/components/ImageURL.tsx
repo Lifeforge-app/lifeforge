@@ -23,6 +23,8 @@ function ImageURL({
           setPreview(value)
         }}
         darker
+        namespace="common.misc"
+        tKey="imageUpload"
       />
 
       <div className="relative isolate mt-4 flex min-h-0 flex-1 flex-col overflow-hidden rounded-md bg-bg-200 dark:bg-bg-800/50">
