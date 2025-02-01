@@ -21,6 +21,7 @@ function TaskPriorityList({
     <>
       <SidebarTitle
         name="priorities"
+        namespace="modules.todoList"
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           setModifyModalOpenType('create')

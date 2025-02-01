@@ -27,9 +27,10 @@ function ModuleHeader({
   actionButton,
   customElement
 }: ModuleHeaderProps): React.ReactElement {
-  const { t } = useTranslation(
-    `modules.${toCamelCase(title?.toString() ?? '')}`
-  )
+  const { t } = useTranslation([
+    `modules.${toCamelCase(title?.toString() ?? '')}`,
+    'common.misc'
+  ])
   const { toggleSidebar, sidebarExpanded } = useGlobalStateContext()
 
   return (
@@ -78,7 +79,7 @@ function ModuleHeader({
                 <div className="flex items-center gap-2 p-4 text-bg-800 dark:border-bg-700 dark:text-bg-200">
                   <Icon icon="tabler:question-circle" className="size-6" />
                   <h2 className="text-lg font-semibold">
-                    {t('modules.tipsAndTricks')}
+                    {t('common.misc:tipsAndTricks')}
                   </h2>
                 </div>
                 <div className="p-4 pt-0 text-bg-500">{tips}</div>

@@ -1,6 +1,8 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
+import {
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption
+} from '@components/inputs'
 import { useTodoListContext } from '@providers/TodoListProvider'
 
 function ListSelector({
@@ -10,15 +12,15 @@ function ListSelector({
   list: string | null
   setList: (list: string) => void
 }): React.ReactElement {
-  const { t } = useTranslation()
   const { lists } = useTodoListContext()
 
   if (typeof lists === 'string') return <></>
 
   return (
     <ListboxOrComboboxInput
+      namespace="modules.todoList"
       type="listbox"
-      name={t('input.lists')}
+      name="list"
       icon="tabler:list"
       value={list}
       setValue={setList}

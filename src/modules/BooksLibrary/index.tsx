@@ -109,7 +109,8 @@ function BooksLibrary(): React.ReactElement {
             <SearchInput
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
-              stuffToSearch="books"
+              stuffToSearch="book"
+              namespace="modules.booksLibrary"
             />
             <ViewModeSelector
               className="hidden md:flex"

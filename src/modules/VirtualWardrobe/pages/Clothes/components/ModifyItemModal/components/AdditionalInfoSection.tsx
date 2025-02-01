@@ -1,6 +1,11 @@
 import React from 'react'
 import { Button } from '@components/buttons'
-import { CurrencyInput , TextInput , ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
+import {
+  CurrencyInput,
+  TextInput,
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption
+} from '@components/inputs'
 import VW_COLORS from '@constants/virtual_wardrobe_colors'
 
 function AdditionalInfoSection({
@@ -43,6 +48,7 @@ function AdditionalInfoSection({
           darker
           placeholder='e.g. "M", "10"'
           required
+          namespace="modules.virtualWardrobe"
         />
         <ListboxOrComboboxInput
           icon="tabler:palette"
@@ -66,6 +72,7 @@ function AdditionalInfoSection({
               ))}
             </div>
           }
+          namespace="modules.virtualWardrobe"
         >
           {VW_COLORS.map(color => (
             <ListboxOrComboboxOption
@@ -85,6 +92,7 @@ function AdditionalInfoSection({
             setPrice(value ?? '')
           }}
           darker
+          namespace="modules.virtualWardrobe"
         />
         <div className="mt-4 size-full rounded-lg bg-bg-200/70 p-6 shadow-custom transition-all focus-within:ring-1 focus-within:ring-bg-300 dark:bg-bg-800/50 dark:focus-within:ring-bg-500">
           <textarea

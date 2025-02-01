@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@components/buttons'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { SearchInput } from '@components/inputs'
@@ -26,6 +27,7 @@ function Header({
   setNeedsProgressCheck: (value: boolean) => void
   isAddVideosModalOpen: boolean
 }): React.ReactElement {
+  const { t } = useTranslation('modules.youtubeVideos')
   const [isDownloadProcessModalOpen, setIsDownloadProcessModalOpen] =
     useState(false)
   const [processes, setProcesses] = useState<
@@ -100,8 +102,9 @@ function Header({
               setIsAddVideosModalOpen(true)
             }}
             className="hidden whitespace-nowrap md:flex"
+            tProps={{ item: t('items.video') }}
           >
-            Add Video
+            new
           </Button>
         }
         hamburgerMenuItems={
@@ -137,7 +140,8 @@ function Header({
       <SearchInput
         searchQuery={query}
         setSearchQuery={setQuery}
-        stuffToSearch="videos"
+        stuffToSearch="video"
+        namespace="modules.youtubeVideos"
       />
       <DownloadProcessModal
         isOpen={isDownloadProcessModalOpen}

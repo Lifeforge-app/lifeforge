@@ -20,7 +20,7 @@ function Sidebar({
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation('modules.guitarTabs')
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (
@@ -37,6 +37,7 @@ function Sidebar({
                 setSearchParams({})
                 setOpen(false)
               }}
+              namespace="modules.guitarTabs"
             />
             <SidebarItem
               icon="tabler:star-filled"
@@ -50,9 +51,10 @@ function Sidebar({
                 })
                 setOpen(false)
               }}
+              namespace="modules.guitarTabs"
             />
             <SidebarDivider />
-            <SidebarTitle name="categories" />
+            <SidebarTitle name="categories" namespace="modules.guitarTabs" />
             {[
               ['singalong', 'mdi:guitar-pick-outline', 'Sing Along'],
               ['fingerstyle', 'mingcute:guitar-line', 'Finger Style'],
@@ -62,6 +64,7 @@ function Sidebar({
                 key={category}
                 icon={icon}
                 name={name}
+                namespace="modules.guitarTabs"
                 number={
                   sidebarData.categories[
                     category as keyof typeof sidebarData.categories
@@ -85,7 +88,7 @@ function Sidebar({
               />
             ))}
             <SidebarDivider />
-            <SidebarTitle name="authors" />
+            <SidebarTitle name="authors" namespace="modules.guitarTabs" />
             {Object.entries(sidebarData.authors)
               .sort((a, b) => {
                 if (a[1] === b[1]) return a[0].localeCompare(b[0])
@@ -95,7 +98,7 @@ function Sidebar({
                 <SidebarItem
                   key={author}
                   icon="tabler:user"
-                  name={author !== '' ? author : t('guitarTabs.unknownAuthor')}
+                  name={author !== '' ? author : t('unknownAuthor')}
                   number={count}
                   autoActive={false}
                   active={searchParams.get('author') === author}

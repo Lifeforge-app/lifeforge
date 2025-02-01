@@ -93,6 +93,7 @@ function LabelChildList({
       <SidebarItem
         icon="tabler:tag"
         name={label.label.name}
+        needTranslate={false}
         onCollapseButtonClick={
           label.children.length > 0 ? () => setCollapsed(!collapsed) : undefined
         }

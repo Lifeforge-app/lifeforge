@@ -19,7 +19,7 @@ function Container({
     React.SetStateAction<boolean>
   >
 }): React.ReactElement {
-  const { t } = useTranslation()
+  const { t } = useTranslation(['modules.ideaBox', 'common.buttons'])
 
   return (
     <div className="mt-6 grid w-full grid-cols-[repeat(auto-fill,minmax(18rem,1fr))] gap-6 px-3 pb-12">
@@ -45,7 +45,7 @@ function Container({
           className="size-8 text-bg-500 dark:text-bg-50"
         />
         <div className="text-xl font-semibold text-bg-500 dark:text-bg-50">
-          {t('buttons.createContainer')}
+          {t('common.buttons:new', { item: t('items.container') })}
         </div>
       </button>
     </div>

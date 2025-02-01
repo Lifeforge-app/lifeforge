@@ -1,5 +1,6 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
@@ -23,6 +24,7 @@ import Sidebar from './components/Sidebar'
 import SessionCartModal from '../../components/SessionCartModal'
 
 function VirtualWardrobeClothes(): React.ReactElement {
+  const { t } = useTranslation('modules.virtualWardrobe')
   const [searchParams] = useSearchParams()
   const [searchQuery, setSearchQuery] = useState<string>('')
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
@@ -95,8 +97,11 @@ function VirtualWardrobeClothes(): React.ReactElement {
               onClick={() => {
                 setModifyItemModalOpenType('create')
               }}
+              tProps={{
+                item: t('items.clothes')
+              }}
             >
-              Add Item
+              new
             </Button>
           </>
         }
@@ -118,6 +123,7 @@ function VirtualWardrobeClothes(): React.ReactElement {
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
               stuffToSearch="clothes"
+              namespace="modules.virtualWardrobe"
             />
           </div>
           <APIFallbackComponent data={entries}>

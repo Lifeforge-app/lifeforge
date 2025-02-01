@@ -27,6 +27,7 @@ function TaskStatusList({
               key={name}
               icon={icon}
               name={name}
+              namespace="modules.todoList"
               active={
                 searchParams.get('status') === name.toLowerCase() ||
                 (name === 'All' && !searchParams.get('status'))

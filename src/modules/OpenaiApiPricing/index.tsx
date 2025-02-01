@@ -38,6 +38,7 @@ function OpenaiApiPricing(): React.ReactElement {
             }}
             icon="tabler:code"
             className="hidden md:flex"
+            namespace="modules.openaiApiPricing"
           >
             Input Raw HTML
           </Button>

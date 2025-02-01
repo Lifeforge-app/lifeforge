@@ -1,7 +1,9 @@
 // PriorityListbox.tsx
 import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { ListboxOrComboboxInput , ListboxOrComboboxOption } from '@components/inputs'
+import {
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption
+} from '@components/inputs'
 import { useTodoListContext } from '@providers/TodoListProvider'
 
 function PrioritySelector({
@@ -11,15 +13,15 @@ function PrioritySelector({
   priority: string | null
   setPriority: React.Dispatch<React.SetStateAction<string | null>>
 }): React.ReactElement {
-  const { t } = useTranslation()
   const { priorities } = useTodoListContext()
 
   if (typeof priorities === 'string') return <></>
 
   return (
     <ListboxOrComboboxInput
+      namespace="modules.todoList"
       type="listbox"
-      name={t('input.priority')}
+      name="priority"
       icon="tabler:alert-triangle"
       value={priority}
       setValue={setPriority}

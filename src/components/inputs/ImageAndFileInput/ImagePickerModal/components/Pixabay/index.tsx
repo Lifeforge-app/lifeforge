@@ -74,7 +74,8 @@ function Pixabay({
         <SearchInput
           searchQuery={query}
           setSearchQuery={setQuery}
-          stuffToSearch="pixabay"
+          stuffToSearch="imageUpload.items.pixabay"
+          namespace="common.misc"
           hasTopMargin={false}
           onFilterIconClick={() => {
             setIsSearchFilterModalOpen(true)

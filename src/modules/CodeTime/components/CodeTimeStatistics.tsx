@@ -1,19 +1,22 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
+import { toCamelCase } from '@utils/strings'
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
 function CodeTimeStatistics(): React.ReactElement {
+  const { t } = useTranslation('modules.codeTime')
   const { componentBg, componentBgLighter } = useThemeColors()
   const [stats] = useFetch<Record<string, number>>('code-time/statistics')
 
   return (
-    <div className="flex w-full flex-col gap-6">
+    <div className="flex w-full flex-col gap-4">
       <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
         <Icon icon="tabler:chart-bar" className="text-3xl" />
-        <span className="ml-2">Statistics</span>
+        <span className="ml-2">{t('headers.statistics')}</span>
       </h1>
 
       <APIFallbackComponent data={stats}>
@@ -46,7 +49,7 @@ function CodeTimeStatistics(): React.ReactElement {
                     />
                   </div>
                   <div className="whitespace-nowrap text-lg text-bg-500">
-                    {key.replace('Average', 'Avg.')}
+                    {t(`statisticType.${toCamelCase(key)}`)}
                   </div>
                 </div>
                 <div className="mt-2 whitespace-nowrap text-4xl font-semibold">

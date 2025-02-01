@@ -77,7 +77,7 @@ function ListboxOrComboboxInput(
                 (value !== null && value.length !== 0) || customActive === true
               }
             />
-            <div className="relative mb-3 mt-10 flex min-h-[1.2rem] w-full items-center gap-2 rounded-lg pl-5 pr-10 text-left focus:outline-hidden">
+            <div className="relative mb-3 mt-10 flex min-h-[1.2rem] w-full items-center gap-2 rounded-lg pl-3 pr-10 text-left focus:outline-hidden">
               {((value !== null && value.length !== 0) ||
                 props.customActive === true) &&
                 props.buttonContent}

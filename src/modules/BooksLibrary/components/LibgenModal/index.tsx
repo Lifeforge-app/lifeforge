@@ -97,7 +97,8 @@ function LibgenModal(): React.ReactElement {
               <SearchInput
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
-                stuffToSearch="among millions of books"
+                stuffToSearch="libgenBook"
+                namespace="modules.booksLibrary"
                 hasTopMargin={false}
                 onKeyUp={e => {
                   if (e.key === 'Enter') {

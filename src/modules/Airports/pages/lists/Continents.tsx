@@ -35,7 +35,8 @@ function Continents(): React.ReactElement {
       <div className="mt-4 flex items-center gap-2">
         <ContinentSelector />
         <SearchInput
-          stuffToSearch="continents"
+          stuffToSearch="continent"
+          namespace="modules.airports"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           hasTopMargin={false}

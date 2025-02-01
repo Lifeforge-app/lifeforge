@@ -12,7 +12,9 @@ function SidebarItemContent({
   number,
   hamburgerMenuItems,
   active,
-  onCancelButtonClick
+  onCancelButtonClick,
+  namespace,
+  needTranslate
 }: {
   name: string
   sidebarExpanded: boolean
@@ -22,8 +24,10 @@ function SidebarItemContent({
   hamburgerMenuItems?: React.ReactElement
   active: boolean
   onCancelButtonClick?: () => void
+  namespace?: string
+  needTranslate?: boolean
 }): React.ReactElement {
-  const { t } = useTranslation('common.sidebar')
+  const { t } = useTranslation([namespace, 'common.sidebar'])
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
@@ -33,14 +37,18 @@ function SidebarItemContent({
           (isMainSidebarItem ? (
             <span className="flex-between flex w-full gap-2 truncate">
               <span className="min-w-0 max-w-48 truncate">
-                {t(`modules.${toCamelCase(name)}.title`)}
+                {t(`common.sidebar:modules.${toCamelCase(name)}.title`)}
               </span>
               {hasAI && (
                 <Icon icon="mage:stars-c" className="size-4 text-custom-500" />
               )}
             </span>
           ) : (
-            <span className="block w-full min-w-0 truncate">{name}</span>
+            <span className="block w-full min-w-0 truncate">
+              {needTranslate
+                ? t([`${namespace}:sidebar.${toCamelCase(name)}`, name])
+                : name}
+            </span>
           ))}
         {number !== undefined && (
           <span

@@ -2,6 +2,7 @@ import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import {
   ListboxOrComboboxOption,
@@ -31,13 +32,14 @@ import ListView from './views/ListView'
 import Pagination from '../../components/utilities/Pagination'
 
 const SORT_TYPE = [
-  ['Newest', 'tabler:clock', 'newest'],
-  ['Oldest', 'tabler:clock', 'oldest'],
-  ['Author', 'tabler:at', 'author'],
-  ['Title', 'tabler:abc', 'name']
+  ['tabler:clock', 'newest'],
+  ['tabler:clock', 'oldest'],
+  ['tabler:at', 'author'],
+  ['tabler:abc', 'name']
 ]
 
 function GuitarTabs(): React.ReactElement {
+  const { t } = useTranslation('modules.guitarTabs')
   const { componentBgWithHover } = useThemeColors()
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [page, setPage] = useState<number>(1)
@@ -150,25 +152,21 @@ function GuitarTabs(): React.ReactElement {
           <header className="flex-between flex w-full">
             <div className="flex min-w-0 items-end">
               <h1 className="truncate text-3xl font-semibold sm:text-4xl">
-                {`${searchParams.get('starred') === 'true' ? 'Starred ' : ''} ${
+                {`${
+                  searchParams.get('starred') === 'true'
+                    ? t('headers.starred')
+                    : ''
+                } ${
                   searchParams.get('category') !== null
-                    ? {
-                        fingerstyle: 'Fingerstyle',
-                        singalong: 'Singalong',
-                        uncategorized: 'Uncategorized'
-                      }[
-                        searchParams.get('category') as
-                          | 'fingerstyle'
-                          | 'singalong'
-                      ]
+                    ? t(`headers.${searchParams.get('category')}`)
                     : ''
                 } ${
                   searchParams.get('category') === null &&
                   searchParams.get('author') === null &&
                   searchParams.get('starred') === null
-                    ? 'All'
+                    ? t('headers.all')
                     : ''
-                } Guitar Tabs ${
+                } ${t('items.score')} ${
                   searchParams.get('author') !== null
                     ? `by ${searchParams.get('author')}`
                     : ''
@@ -211,9 +209,13 @@ function GuitarTabs(): React.ReactElement {
                     className="size-6"
                   />
                   <span className="whitespace-nowrap font-medium">
-                    {SORT_TYPE.find(
-                      ([, , value]) => value === searchParams.get('sort')
-                    )?.[0] ?? 'Newest'}
+                    {t(
+                      `sortTypes.${
+                        SORT_TYPE.find(
+                          ([, , value]) => value === searchParams.get('sort')
+                        )?.[1] ?? 'newest'
+                      }`
+                    )}
                   </span>
                 </div>
                 <Icon
@@ -222,12 +224,12 @@ function GuitarTabs(): React.ReactElement {
                 />
               </ListboxButton>
               <ListboxOrComboboxOptions>
-                {SORT_TYPE.map(([name, icon, value]) => (
+                {SORT_TYPE.map(([icon, value]) => (
                   <ListboxOrComboboxOption
                     key={value}
                     value={value}
                     icon={icon}
-                    text={name}
+                    text={t(`sortTypes.${value}`)}
                   />
                 ))}
               </ListboxOrComboboxOptions>
@@ -235,7 +237,8 @@ function GuitarTabs(): React.ReactElement {
             <SearchInput
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
-              stuffToSearch="guitar tabs"
+              stuffToSearch="score"
+              namespace="modules.guitarTabs"
             />
             <ViewModeSelector
               className="hidden md:flex"

@@ -1,11 +1,13 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { ImagePickerModal } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IVirtualWardrobeEntry } from '@interfaces/virtual_wardrobe_interfaces'
 import APIRequest from '@utils/fetchData'
+import { toCamelCase } from '@utils/strings'
 import AdditionalInfoSection from './components/AdditionalInfoSection'
 import BasicInfoSection from './components/BasicInfoSection'
 import UploadPhotoSection from './components/UploadPhotoSection'
@@ -21,6 +23,7 @@ function ModifyItemModal({
   refreshEntries: () => void
   existedData: IVirtualWardrobeEntry | null
 }): React.ReactElement {
+  const { t } = useTranslation('modules.virtualWardrobe')
   const [step, setStep] = useState<number>(1)
   const [name, setName] = useState<string>('')
   const [category, setCategory] = useState<string | null>(null)
@@ -137,12 +140,13 @@ function ModifyItemModal({
     <>
       <ModalWrapper isOpen={openType !== null} minWidth="50vw">
         <ModalHeader
-          title={openType === 'create' ? 'Add Item' : 'Update Item'}
+          title={`item.${openType}`}
+          namespace="modules.virtualWardrobe"
           onClose={onClose}
           icon="tabler:plus"
         />
         <ol className="flex w-full items-center text-sm font-medium text-bg-500 sm:text-base">
-          {['Upload Photos', 'Basic Information', 'Appearance & Details'].map(
+          {['Upload Photos', 'Basic Info', 'Appearance And Details'].map(
             (text, index) => (
               <li
                 key={index}
@@ -151,7 +155,9 @@ function ModifyItemModal({
                 } ${
                   index !== 2 &&
                   `after:mx-4 after:hidden after:h-0.5 after:w-full ${
-                    index + 1 < step ? 'after:bg-custom-500' : 'after:bg-bg-700'
+                    index + 1 < step
+                      ? 'after:bg-custom-500'
+                      : 'after:bg-bg-300 dark:after:bg-bg-700'
                   } sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-4`
                 }`}
               >
@@ -166,7 +172,7 @@ function ModifyItemModal({
                         return 'bg-custom-500 text-bg-900'
                       }
 
-                      return 'bg-bg-500 text-bg-900'
+                      return 'bg-bg-500 text-bg-100 dark:text-bg-900'
                     })()}`}
                   >
                     {openType === 'update' && index === 0 ? (
@@ -175,7 +181,7 @@ function ModifyItemModal({
                       index + 1
                     )}
                   </span>{' '}
-                  {text}
+                  {t(`steps.${toCamelCase(text)}`)}
                 </div>
               </li>
             )
