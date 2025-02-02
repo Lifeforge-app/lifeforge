@@ -11,7 +11,7 @@ function Clouds({ data }: { data: IAirportMETARData }): React.ReactElement {
   return (
     <WidgetWrapper className="col-span-4">
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
-        <Icon icon="tabler:cloud" className="text-2xl" />
+        <Icon className="text-2xl" icon="tabler:cloud" />
         <span className="ml-2">Clouds</span>
       </h1>
       <ul className="space-y-2">

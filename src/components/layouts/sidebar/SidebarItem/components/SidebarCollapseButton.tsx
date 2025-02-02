@@ -10,15 +10,15 @@ function SidebarCollapseButton({
 }): React.ReactElement {
   return (
     <Button
+      className="p-2!"
+      icon="tabler:chevron-down"
+      iconClassName={`transition ${isCollapsed ? 'rotate-180' : ''}`}
+      variant="no-bg"
       onClick={e => {
         e.preventDefault()
         e.stopPropagation()
         onClick()
       }}
-      variant="no-bg"
-      className="p-2!"
-      iconClassName={`transition ${isCollapsed ? 'rotate-180' : ''}`}
-      icon="tabler:chevron-down"
     />
   )
 }

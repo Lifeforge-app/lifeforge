@@ -73,6 +73,7 @@ function MiniCalendarDateItem({
                 {eventsOnTheDay.slice(0, 3).map(event => (
                   <div
                     key={event.id}
+                    className={'size-1 rounded-full'}
                     style={{
                       backgroundColor:
                         typeof categories !== 'string'
@@ -81,7 +82,6 @@ function MiniCalendarDateItem({
                             )?.color
                           : ''
                     }}
-                    className={'size-1 rounded-full'}
                   />
                 ))}
               </div>

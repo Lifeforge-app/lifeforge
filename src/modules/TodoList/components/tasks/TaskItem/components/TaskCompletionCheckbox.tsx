@@ -14,17 +14,17 @@ function TaskCompletionCheckbox({
 }): React.ReactElement {
   return (
     <button
-      onClick={() => {
-        toggleTaskCompletion(entry.id)
-      }}
       className={`flex-center relative z-50 size-5 rounded-full ring-2 ring-offset-2 ring-offset-bg-50 transition-all hover:border-custom-500 dark:ring-offset-bg-900 ${
         entry.done ? 'ring-custom-500' : 'ring-bg-200 dark:ring-bg-500'
       }`}
+      onClick={() => {
+        toggleTaskCompletion(entry.id)
+      }}
     >
       {entry.done && (
         <Icon
-          icon="uil:check"
           className="size-4 stroke-custom-500 stroke-1 text-custom-500"
+          icon="uil:check"
         />
       )}
     </button>

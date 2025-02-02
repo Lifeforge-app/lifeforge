@@ -17,13 +17,13 @@ function SidebarSection({
   return (
     <>
       <SidebarTitle
-        name={stuff}
-        namespace="modules.projectsM"
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           setExistedData(null)
           setModifyDataModalOpenType('create')
         }}
+        name={stuff}
+        namespace="modules.projectsM"
       />
       <APIFallbackComponent data={data}>
         {data =>

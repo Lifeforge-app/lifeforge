@@ -56,18 +56,18 @@ function ExpensesBreakdownCard(): React.ReactElement {
 
   return (
     <DashboardItem
-      icon="tabler:chart-donut-3"
-      title="Expenses Breakdown"
-      namespace="modules.wallet"
       className="col-span-1 row-span-3"
       componentBesideTitle={
         <Link
-          to="/wallet/transactions?type=expenses"
           className="flex items-center gap-2 rounded-lg p-2 font-medium text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50"
+          to="/wallet/transactions?type=expenses"
         >
-          <Icon icon="tabler:chevron-right" className="text-xl" />
+          <Icon className="text-xl" icon="tabler:chevron-right" />
         </Link>
       }
+      icon="tabler:chart-donut-3"
+      namespace="modules.wallet"
+      title="Expenses Breakdown"
     >
       <APIFallbackComponent data={transactions}>
         {() => (
@@ -90,8 +90,8 @@ function ExpensesBreakdownCard(): React.ReactElement {
                               .map((_, i) => (
                                 <Icon
                                   key={i}
-                                  icon="uil:asterisk"
                                   className="-mx-0.5 size-6 sm:size-8"
+                                  icon="uil:asterisk"
                                 />
                               ))}
                           </span>
@@ -104,6 +104,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                     </div>
                   </div>
                   <Doughnut
+                    className="relative aspect-square w-full min-w-0"
                     data={{
                       labels: categories
                         .filter(category => category.type === 'expenses')
@@ -123,7 +124,6 @@ function ExpensesBreakdownCard(): React.ReactElement {
                       ]
                     }}
                     options={options2}
-                    className="relative aspect-square w-full min-w-0"
                   />
                 </div>
                 <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
@@ -152,8 +152,8 @@ function ExpensesBreakdownCard(): React.ReactElement {
                         .map(category => (
                           <Link
                             key={category.id}
-                            to={`/wallet/transactions?type=expenses&category=${category.id}`}
                             className="flex-between flex gap-4 rounded-md p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50"
+                            to={`/wallet/transactions?type=expenses&category=${category.id}`}
                           >
                             <div className="flex items-center gap-4">
                               <div
@@ -163,7 +163,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                                   color: category.color
                                 }}
                               >
-                                <Icon icon={category.icon} className="size-6" />
+                                <Icon className="size-6" icon={category.icon} />
                               </div>
                               <div className="flex flex-col">
                                 <div className="font-semibold ">
@@ -194,8 +194,8 @@ function ExpensesBreakdownCard(): React.ReactElement {
                                       .map((_, i) => (
                                         <Icon
                                           key={i}
-                                          icon="uil:asterisk"
                                           className="-mx-0.5 size-4"
+                                          icon="uil:asterisk"
                                         />
                                       ))}
                                   </span>

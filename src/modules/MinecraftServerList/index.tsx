@@ -5,7 +5,7 @@ import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 function MinecraftServerList(): React.ReactElement {
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Minecraft Server List" icon="tabler:cube" />
+      <ModuleHeader icon="tabler:cube" title="Minecraft Server List" />
     </ModuleWrapper>
   )
 }

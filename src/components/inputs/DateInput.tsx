@@ -73,24 +73,14 @@ const DateInput: React.FC<DateInputProps> = ({
       className={`${className} ${hasMargin ? 'mt-4' : ''}`}
       darker={darker}
     >
-      <InputIcon icon={icon} active={date !== ''} />
+      <InputIcon active={date !== ''} icon={icon} />
       <div ref={ref} className="flex w-full items-center gap-2">
         <InputLabel
-          required={required === true}
-          label={t(`inputs.${toCamelCase(name)}`)}
           active
+          label={t(`inputs.${toCamelCase(name)}`)}
+          required={required === true}
         />
         <DatePicker
-          onCalendarOpen={updateCalendarLocation}
-          portalContainer={
-            modalRef?.current ?? (document.querySelector('#app') as HTMLElement)
-          }
-          value={date}
-          onChange={(newDate: Value) => {
-            setDate(newDate?.toString() ?? '')
-          }}
-          format="dd-MM-y"
-          clearIcon={null}
           calendarIcon={null}
           calendarProps={{
             className:
@@ -104,16 +94,26 @@ const DateInput: React.FC<DateInputProps> = ({
             next2Label: <Icon icon="tabler:chevrons-right" />
           }}
           className="mt-6 h-10 w-full rounded-lg border-none bg-transparent px-4 tracking-wider outline-hidden placeholder:text-transparent focus:outline-hidden focus:placeholder:text-bg-500"
+          clearIcon={null}
+          format="dd-MM-y"
+          portalContainer={
+            modalRef?.current ?? (document.querySelector('#app') as HTMLElement)
+          }
+          value={date}
+          onCalendarOpen={updateCalendarLocation}
+          onChange={(newDate: Value) => {
+            setDate(newDate?.toString() ?? '')
+          }}
         />
         {date !== '' && (
           <button
+            aria-label="Clear date"
+            className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-300 hover:text-bg-800 focus:outline-hidden dark:hover:bg-bg-700/70 dark:hover:text-bg-200"
             onClick={() => {
               setDate('')
             }}
-            className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-300 hover:text-bg-800 focus:outline-hidden dark:hover:bg-bg-700/70 dark:hover:text-bg-200"
-            aria-label="Clear date"
           >
-            <Icon icon="tabler:x" className="size-6" />
+            <Icon className="size-6" icon="tabler:x" />
           </button>
         )}
       </div>

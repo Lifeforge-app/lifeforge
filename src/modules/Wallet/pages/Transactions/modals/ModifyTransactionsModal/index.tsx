@@ -181,108 +181,112 @@ function ModifyTransactionsModal({
 
   return (
     <>
-      <ModalWrapper modalRef={ref} isOpen={openType !== null} minWidth="40vw">
+      <ModalWrapper isOpen={openType !== null} minWidth="40vw" modalRef={ref}>
         <ModalHeader
+          className="mb-4!"
           icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
+          namespace="modules.wallet"
           title={`transactions.${openType || ''}`}
           onClose={() => {
             setOpenType(null)
             setExistedData(null)
           }}
-          className="mb-4!"
-          namespace="modules.wallet"
         />
         <div className="space-y-4">
           <TransactionTypeSelector
-            transactionType={transactionType}
             setTransactionType={(type: 'income' | 'expenses' | 'transfer') => {
               setTransactionType(type)
               setCategory(null)
             }}
+            transactionType={transactionType}
           />
           {transactionType === 'income' || transactionType === 'expenses' ? (
             <AssetsSelector
-              transactionAsset={transactionAsset}
               setTransactionAsset={setTransactionAsset}
+              transactionAsset={transactionAsset}
             />
           ) : (
             <AssetsFromToSelector
               fromAsset={fromAsset}
               setFromAsset={setFromAsset}
-              toAsset={toAsset}
               setToAsset={setToAsset}
+              toAsset={toAsset}
             />
           )}
           <DateInput
+            darker
+            date={transactionDate}
+            icon="tabler:calendar"
             modalRef={ref}
             name="Date"
-            date={transactionDate}
-            setDate={setTransactionDate}
-            icon="tabler:calendar"
-            darker
             namespace="modules.wallet"
+            setDate={setTransactionDate}
           />
           {transactionType !== 'transfer' && (
             <TextInput
-              icon="tabler:file-text"
-              placeholder="My Transactions"
-              value={particular}
               darker
-              name="Particulars"
               className="mt-4"
-              updateValue={setParticular}
+              icon="tabler:file-text"
+              name="Particulars"
               namespace="modules.wallet"
+              placeholder="My Transactions"
+              updateValue={setParticular}
+              value={particular}
             />
           )}
           <CurrencyInput
-            icon="tabler:currency-dollar"
-            name="Amount"
-            value={amount}
-            updateValue={setAmount}
-            placeholder="0.00"
             darker
             className="mt-4"
+            icon="tabler:currency-dollar"
+            name="Amount"
             namespace="modules.wallet"
+            placeholder="0.00"
+            updateValue={setAmount}
+            value={amount}
           />
           {transactionType !== 'transfer' && (
             <>
               <LocationInput
                 location={location}
-                setLocation={setLocation}
                 namespace="modules.wallet"
+                setLocation={setLocation}
               />
               <CategorySelector
-                transactionType={transactionType}
                 category={category}
                 setCategory={setCategory}
+                transactionType={transactionType}
               />
               <LedgerSelector ledger={ledger} setLedger={setLedger} />
             </>
           )}
           <ImageAndFileInput
             icon="tabler:receipt"
-            name="Receipt"
             image={receipt}
-            setImage={setReceipt}
+            name="Receipt"
+            namespace="modules.wallet"
             preview={imagePreviewUrl}
-            setPreview={setImagePreviewUrl}
+            reminderText={t('receiptUploadInfo')}
+            setImage={setReceipt}
             setImagePickerModalOpen={setIsImagePickerModalOpen}
+            setPreview={setImagePreviewUrl}
             onImageRemoved={() => {
               if (openType === 'update') setToRemoveReceipt(true)
             }}
-            reminderText={t('receiptUploadInfo')}
-            namespace="modules.wallet"
           />
         </div>
         <CreateOrModifyButton
           loading={loading}
+          type={openType === 'update' ? 'update' : 'create'}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-          type={openType === 'update' ? 'update' : 'create'}
         />
       </ModalWrapper>
       <ImagePickerModal
+        acceptedMimeTypes={{
+          images: ['image/jpeg', 'image/png'],
+          documents: ['application/pdf']
+        }}
         isOpen={isImagePickerModalOpen}
         onClose={() => {
           setIsImagePickerModalOpen(false)
@@ -292,10 +296,6 @@ function ModifyTransactionsModal({
 
           setReceipt(file)
           setImagePreviewUrl(preview)
-        }}
-        acceptedMimeTypes={{
-          images: ['image/jpeg', 'image/png'],
-          documents: ['application/pdf']
         }}
       />
     </>

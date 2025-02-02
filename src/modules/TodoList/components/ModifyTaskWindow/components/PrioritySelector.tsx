@@ -19,12 +19,6 @@ function PrioritySelector({
 
   return (
     <ListboxOrComboboxInput
-      namespace="modules.todoList"
-      type="listbox"
-      name="priority"
-      icon="tabler:alert-triangle"
-      value={priority}
-      setValue={setPriority}
       buttonContent={
         <>
           <span
@@ -39,15 +33,21 @@ function PrioritySelector({
           </span>
         </>
       }
+      icon="tabler:alert-triangle"
+      name="priority"
+      namespace="modules.todoList"
+      setValue={setPriority}
+      type="listbox"
+      value={priority}
     >
       <ListboxOrComboboxOption
         key={'none'}
-        value=""
-        text="None"
         color="lightgray"
+        text="None"
+        value=""
       />
       {priorities.map(({ name, color, id }, i) => (
-        <ListboxOrComboboxOption key={i} value={id} text={name} color={color} />
+        <ListboxOrComboboxOption key={i} color={color} text={name} value={id} />
       ))}
     </ListboxOrComboboxInput>
   )

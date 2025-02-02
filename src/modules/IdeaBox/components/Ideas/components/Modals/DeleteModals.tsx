@@ -19,13 +19,10 @@ function DeleteModals(): React.ReactElement {
   return (
     <>
       <DeleteConfirmationModal
-        isOpen={deleteIdeaConfirmationModalOpen}
-        onClose={() => {
-          setDeleteIdeaConfirmationModalOpen(false)
-        }}
         apiEndpoint="idea-box/ideas"
-        itemName="idea"
         data={existedEntry}
+        isOpen={deleteIdeaConfirmationModalOpen}
+        itemName="idea"
         updateDataLists={() => {
           setEntries(prevData =>
             typeof prevData !== 'string'
@@ -39,21 +36,24 @@ function DeleteModals(): React.ReactElement {
           )
           refreshTags()
         }}
+        onClose={() => {
+          setDeleteIdeaConfirmationModalOpen(false)
+        }}
       />
       <DeleteConfirmationModal
-        isOpen={deleteFolderConfirmationModalOpen}
-        onClose={() => {
-          setDeleteFolderConfirmationModalOpen(false)
-        }}
         apiEndpoint="idea-box/folders"
-        itemName="folder"
         data={existedFolder}
+        isOpen={deleteFolderConfirmationModalOpen}
+        itemName="folder"
         updateDataLists={() => {
           setFolders(prevData =>
             typeof prevData !== 'string'
               ? prevData.filter(folder => folder.id !== existedFolder?.id)
               : prevData
           )
+        }}
+        onClose={() => {
+          setDeleteFolderConfirmationModalOpen(false)
         }}
       />
     </>

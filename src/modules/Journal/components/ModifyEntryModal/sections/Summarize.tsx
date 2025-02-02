@@ -97,8 +97,8 @@ function Summarize({
         {loading ? (
           <div className="flex size-full flex-col items-center justify-center gap-2">
             <Icon
-              icon="svg-spinners:3-dots-scale"
               className="size-8 text-bg-500"
+              icon="svg-spinners:3-dots-scale"
             />
             <p className="text-bg-500">Summarizing...</p>
           </div>
@@ -108,21 +108,21 @@ function Summarize({
               <textarea
                 ref={textAreaRef}
                 className="size-full flex-1 resize-none bg-transparent caret-custom-500 placeholder:text-bg-500"
+                placeholder="A short and sweet summary of your dairy entry..."
                 value={summarizedText}
                 onChange={e => {
                   setSummarizedText(e.target.value)
                   updateTextAreaHeight()
                 }}
-                placeholder="A short and sweet summary of your dairy entry..."
               />
             </div>
             <Button
+              className="mt-4 w-full shrink-0"
+              icon="tabler:refresh"
+              variant="secondary"
               onClick={() => {
                 fetchSummarizedText().catch(console.error)
               }}
-              icon="tabler:refresh"
-              className="mt-4 w-full shrink-0"
-              variant="secondary"
             >
               Regenerate
             </Button>
@@ -131,21 +131,21 @@ function Summarize({
       </div>
       <div className="flex-between mt-6 flex">
         <Button
+          icon="tabler:arrow-left"
+          variant="no-bg"
           onClick={() => {
             setStep(2)
           }}
-          icon="tabler:arrow-left"
-          variant="no-bg"
         >
           Previous
         </Button>
         <Button
+          iconAtEnd
+          disabled={summarizedText?.trim() === ''}
+          icon="tabler:arrow-right"
           onClick={() => {
             setStep(4)
           }}
-          icon="tabler:arrow-right"
-          iconAtEnd
-          disabled={summarizedText?.trim() === ''}
         >
           Next
         </Button>

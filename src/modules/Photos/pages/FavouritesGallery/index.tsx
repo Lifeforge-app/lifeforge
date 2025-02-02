@@ -40,7 +40,7 @@ function PhotosFavouritesGallery(): React.ReactElement {
               <h1 className="flex items-center gap-4 text-2xl font-semibold">
                 <>
                   <div className="flex-center size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
-                    <Icon icon="tabler:star-filled" className="size-7" />
+                    <Icon className="size-7" icon="tabler:star-filled" />
                   </div>
                   <span className="space-y-1">
                     Favourites
@@ -50,8 +50,8 @@ function PhotosFavouritesGallery(): React.ReactElement {
                           return (
                             <span className="text-sm text-bg-500">
                               <Icon
-                                icon="svg-spinners:180-ring"
                                 className="size-5"
+                                icon="svg-spinners:180-ring"
                               />
                             </span>
                           )
@@ -72,7 +72,7 @@ function PhotosFavouritesGallery(): React.ReactElement {
               </h1>
               <div className="flex-center gap-2">
                 <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50">
-                  <Icon icon="tabler:share" className="text-2xl" />
+                  <Icon className="text-2xl" icon="tabler:share" />
                 </button>
                 <HamburgerMenu largerPadding className="relative">
                   <MenuItem
@@ -91,7 +91,6 @@ function PhotosFavouritesGallery(): React.ReactElement {
               {photos => (
                 <PhotoAlbum
                   layout="rows"
-                  spacing={8}
                   photos={photos.map(image => ({
                     src: `${import.meta.env.VITE_API_HOST}/media/${
                       image.collectionId
@@ -106,16 +105,17 @@ function PhotosFavouritesGallery(): React.ReactElement {
                   }) => (
                     <ImageObject
                       // TODO
-                      setImagePreviewOpenFor={() => {}}
                       beingDisplayedInAlbum
-                      photo={photo}
                       details={photos.find(image => image.id === photo.key)!}
+                      photo={photo}
+                      setImagePreviewOpenFor={() => {}}
                       style={style}
                       {...restImageProps}
                       selected={
                         selectedPhotos.find(image => image === photo.key) !==
                         undefined
                       }
+                      selectedPhotosLength={selectedPhotos.length}
                       toggleSelected={(
                         e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>
                       ) => {
@@ -158,15 +158,15 @@ function PhotosFavouritesGallery(): React.ReactElement {
                           }
                         }
                       }}
-                      selectedPhotosLength={selectedPhotos.length}
                     />
                   )}
+                  spacing={8}
                 />
               )}
             </APIFallbackComponent>
           </div>
         </ModuleWrapper>
-        <BottomBar photos={photos as IPhotoAlbumEntryItem[]} inAlbumGallery />
+        <BottomBar inAlbumGallery photos={photos as IPhotoAlbumEntryItem[]} />
       </div>
     </>
   )

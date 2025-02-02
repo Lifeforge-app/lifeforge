@@ -17,20 +17,20 @@ function Sidebar(): React.ReactElement {
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
       <SidebarItem
+        active={Array.from(searchParams.keys()).length === 0}
         icon="tabler:list"
         name="All books"
         namespace="modules.booksLibrary"
-        active={Array.from(searchParams.keys()).length === 0}
         onClick={() => {
           setSearchParams({})
           setSidebarOpen(false)
         }}
       />
       <SidebarItem
+        active={searchParams.get('favourite') === 'true'}
         icon="tabler:heart"
         name="Favourite"
         namespace="modules.booksLibrary"
-        active={searchParams.get('favourite') === 'true'}
         onClick={() => {
           searchParams.set('favourite', 'true')
           setSearchParams(searchParams)
@@ -44,9 +44,9 @@ function Sidebar(): React.ReactElement {
       <SidebarDivider />
       <SidebarSection
         fallbackIcon="tabler:file-text"
-        stuff="fileTypes"
         hasActionButton={false}
         hasHamburgerMenu={false}
+        stuff="fileTypes"
       />
     </SidebarWrapper>
   )

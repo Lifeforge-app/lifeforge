@@ -75,8 +75,6 @@ function VirtualWardrobeClothes(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
-        title="Virtual Wardrobe"
-        icon="tabler:shirt"
         actionButton={
           <>
             {typeof sessionCartItems !== 'string' && (
@@ -94,17 +92,19 @@ function VirtualWardrobeClothes(): React.ReactElement {
             )}
             <Button
               icon="tabler:plus"
-              onClick={() => {
-                setModifyItemModalOpenType('create')
-              }}
               tProps={{
                 item: t('items.clothes')
+              }}
+              onClick={() => {
+                setModifyItemModalOpenType('create')
               }}
             >
               new
             </Button>
           </>
         }
+        icon="tabler:shirt"
+        title="Virtual Wardrobe"
       />
       <div className="mt-6 flex min-h-0 w-full flex-1">
         <Sidebar
@@ -115,15 +115,15 @@ function VirtualWardrobeClothes(): React.ReactElement {
         <ContentWrapperWithSidebar>
           <Header
             entries={entries}
-            sidebarData={sidebarData}
             setSidebarOpen={setSidebarOpen}
+            sidebarData={sidebarData}
           />
           <div className="flex gap-2">
             <SearchInput
+              namespace="modules.virtualWardrobe"
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
               stuffToSearch="clothes"
-              namespace="modules.virtualWardrobe"
             />
           </div>
           <APIFallbackComponent data={entries}>
@@ -136,8 +136,8 @@ function VirtualWardrobeClothes(): React.ReactElement {
                   return (
                     <EmptyStateScreen
                       icon="tabler:shirt-off"
-                      namespace="modules.virtualWardrobe"
                       name="clothes"
+                      namespace="modules.virtualWardrobe"
                     />
                   )
                 }
@@ -145,8 +145,8 @@ function VirtualWardrobeClothes(): React.ReactElement {
                 return (
                   <EmptyStateScreen
                     icon="tabler:search-off"
-                    namespace="modules.virtualWardrobe"
                     name="results"
+                    namespace="modules.virtualWardrobe"
                   />
                 )
               }
@@ -158,16 +158,16 @@ function VirtualWardrobeClothes(): React.ReactElement {
                       <EntryItem
                         key={entry.id}
                         entry={entry}
-                        onUpdate={() => {
-                          setExistedData(entry)
-                          setModifyItemModalOpenType('update')
+                        onAddToCart={async () => {
+                          await handleAddToCart(entry)
                         }}
                         onDelete={() => {
                           setExistedData(entry)
                           setDeleteItemConfirmModalOpen(true)
                         }}
-                        onAddToCart={async () => {
-                          await handleAddToCart(entry)
+                        onUpdate={() => {
+                          setExistedData(entry)
+                          setModifyItemModalOpenType('update')
                         }}
                       />
                     ))}
@@ -179,34 +179,33 @@ function VirtualWardrobeClothes(): React.ReactElement {
         </ContentWrapperWithSidebar>
       </div>
       <ModifyItemModal
+        existedData={existedData}
         openType={modifyItemModalOpenType}
-        onClose={() => {
-          setModifyItemModalOpenType(null)
-          setExistedData(null)
-        }}
         refreshEntries={() => {
           refreshEntries()
           refreshSidebarData()
         }}
-        existedData={existedData}
+        onClose={() => {
+          setModifyItemModalOpenType(null)
+          setExistedData(null)
+        }}
       />
       <SessionCartModal
+        cartItems={sessionCartItems}
         isOpen={sessionCartModalOpen}
+        refreshEntries={refreshEntries}
+        setCartItems={setSessionCartItems}
         onClose={() => {
           setSessionCartModalOpen(false)
         }}
-        cartItems={sessionCartItems}
-        setCartItems={setSessionCartItems}
-        refreshEntries={refreshEntries}
       />
 
       <DeleteConfirmationModal
         apiEndpoint="virtual-wardrobe/entries"
         data={existedData}
         isOpen={deleteItemConfirmModalOpen}
-        onClose={() => {
-          setDeleteItemConfirmModalOpen(false)
-        }}
+        itemName="item"
+        nameKey="name"
         updateDataLists={() => {
           setEntries(prev => {
             if (typeof prev === 'string') return prev
@@ -214,8 +213,9 @@ function VirtualWardrobeClothes(): React.ReactElement {
           })
           refreshSidebarData()
         }}
-        itemName="item"
-        nameKey="name"
+        onClose={() => {
+          setDeleteItemConfirmModalOpen(false)
+        }}
       />
     </ModuleWrapper>
   )

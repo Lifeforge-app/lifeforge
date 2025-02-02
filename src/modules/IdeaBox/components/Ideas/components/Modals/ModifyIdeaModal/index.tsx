@@ -276,27 +276,27 @@ function ModifyIdeaModal(): React.ReactElement {
               return 'create'
           }
         })()}
-        setOpenType={setOpenType}
         innerTypeOfModifyIdea={innerTypeOfModifyIdea}
         setInnerTypeOfModifyIdea={setInnerTypeOfModifyIdea}
+        setOpenType={setOpenType}
       />
       <div className="space-y-4">
         {innerTypeOfModifyIdea !== 'text' && (
           <TextInput
-            namespace="modules.ideaBox"
-            name="Idea title"
-            icon="tabler:bulb"
-            value={ideaTitle}
-            updateValue={setIdeaTitle}
             darker
+            icon="tabler:bulb"
+            name="Idea title"
+            namespace="modules.ideaBox"
             placeholder="Mind blowing idea"
+            updateValue={setIdeaTitle}
+            value={ideaTitle}
           />
         )}
         {innerTypeOfModifyIdea !== 'image' ? (
           <IdeaContentInput
-            innerTypeOfModifyIdea={innerTypeOfModifyIdea}
             ideaContent={ideaContent}
             ideaLink={ideaLink}
+            innerTypeOfModifyIdea={innerTypeOfModifyIdea}
             updateIdeaContent={updateIdeaContent}
             updateIdeaLink={updateIdeaLink}
           />
@@ -307,10 +307,10 @@ function ModifyIdeaModal(): React.ReactElement {
                 <>
                   <PreviewContainer
                     file={ideaImage}
+                    fileName={debouncedImageLink.split('/').pop() ?? undefined}
                     preview={preview as string}
                     setFile={setIdeaImage}
                     setPreview={setPreview}
-                    fileName={debouncedImageLink.split('/').pop() ?? undefined}
                     onRemove={() => {
                       setImageLink('')
                     }}
@@ -318,8 +318,8 @@ function ModifyIdeaModal(): React.ReactElement {
                 </>
               ) : (
                 <DnDContainer
-                  getRootProps={getRootProps}
                   getInputProps={getInputProps}
+                  getRootProps={getRootProps}
                   isDragActive={isDragActive}
                 />
               )}
@@ -329,13 +329,13 @@ function ModifyIdeaModal(): React.ReactElement {
                     {t('imageUpload.orPasteLink')}
                   </div>
                   <TextInput
-                    namespace="modules.ideaBox"
+                    darker
                     icon="tabler:link"
                     name="Image link"
+                    namespace="modules.ideaBox"
                     placeholder="https://example.com/image.jpg"
-                    value={imageLink}
                     updateValue={setImageLink}
-                    darker
+                    value={imageLink}
                   />
                 </>
               )}
@@ -345,25 +345,21 @@ function ModifyIdeaModal(): React.ReactElement {
         <APIFallbackComponent data={tags}>
           {tags => (
             <TagsInput
-              namespace="modules.ideaBox"
-              name="Idea tags"
-              icon="tabler:tag"
-              value={ideaTags}
-              updateValue={setIdeaTags}
-              placeholder='Tag your idea with "awesome", "cool", etc.'
+              darker
               className="mt-6"
               existedTags={tags}
-              darker
+              icon="tabler:tag"
+              name="Idea tags"
+              namespace="modules.ideaBox"
+              placeholder='Tag your idea with "awesome", "cool", etc.'
+              updateValue={setIdeaTags}
+              value={ideaTags}
             />
           )}
         </APIFallbackComponent>
       </div>
       <Button
         className="mt-6"
-        loading={loading}
-        onClick={() => {
-          onSubmitButtonClick().catch(console.error)
-        }}
         icon={
           !loading
             ? {
@@ -373,6 +369,10 @@ function ModifyIdeaModal(): React.ReactElement {
               }[innerOpenType!]
             : 'svg-spinners:180-ring'
         }
+        loading={loading}
+        onClick={() => {
+          onSubmitButtonClick().catch(console.error)
+        }}
       >
         {!loading &&
           {

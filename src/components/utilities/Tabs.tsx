@@ -26,16 +26,16 @@ function Tabs<T extends string>({
         .map(({ name, icon, id }) => (
           <button
             key={id}
-            onClick={() => {
-              onNavClick(id)
-            }}
             className={`flex w-full min-w-0 cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all ${
               active === id
                 ? 'border-custom-500 font-medium text-custom-500'
                 : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
             } ${className}`}
+            onClick={() => {
+              onNavClick(id)
+            }}
           >
-            <Icon icon={icon} className="size-5 shrink-0" />
+            <Icon className="size-5 shrink-0" icon={icon} />
             <span className="truncate sm:block">{name}</span>
             {items.find(item => item.name === name)?.amount !== undefined && (
               <span className="hidden text-sm sm:block">

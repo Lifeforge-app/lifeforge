@@ -31,7 +31,7 @@ function DashboardItem({
     >
       <div className="flex-between mb-2 flex">
         <h2 className="flex items-center gap-2 text-xl font-semibold">
-          <Icon icon={icon} className="text-2xl" />
+          <Icon className="text-2xl" icon={icon} />
           <span className="ml-2">
             {t(`widgets.${toCamelCase(title)}.title`)}
           </span>

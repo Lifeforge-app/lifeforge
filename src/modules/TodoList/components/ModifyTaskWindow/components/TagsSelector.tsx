@@ -18,12 +18,6 @@ function TagsSelector({
 
   return (
     <ListboxOrComboboxInput
-      namespace="modules.todoList"
-      type="listbox"
-      name="tags"
-      icon="tabler:tags"
-      value={tags}
-      setValue={setTags}
       multiple
       buttonContent={
         <span className="-mt-px block truncate">
@@ -34,6 +28,12 @@ function TagsSelector({
             : 'None'}
         </span>
       }
+      icon="tabler:tags"
+      name="tags"
+      namespace="modules.todoList"
+      setValue={setTags}
+      type="listbox"
+      value={tags}
     >
       {tagsList.map(({ name, id }, i) => (
         <ListboxOrComboboxOption

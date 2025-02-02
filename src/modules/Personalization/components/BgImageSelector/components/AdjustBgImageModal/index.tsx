@@ -97,7 +97,7 @@ function AdjustBgImageModal({
   }, [isOpen])
 
   return (
-    <ModalWrapper isOpen={isOpen} minWidth="40vw" minHeight="90vh">
+    <ModalWrapper isOpen={isOpen} minHeight="90vh" minWidth="40vw">
       <ModalHeader
         icon="tabler:adjustments"
         title="Adjust Background Image"
@@ -105,8 +105,8 @@ function AdjustBgImageModal({
       />
       <div className="flex h-full min-h-0 flex-1 flex-col overflow-hidden">
         <ResultShowcase
-          bgBrightness={bgBrightness}
           bgBlur={bgBlur}
+          bgBrightness={bgBrightness}
           bgContrast={bgContrast}
           bgSaturation={bgSaturation}
           overlayOpacity={overlayOpacity}
@@ -120,7 +120,7 @@ function AdjustBgImageModal({
               needDivider={index !== ADJUSTMENTS_COLUMNS.length - 1}
             />
           ))}
-          <Button onClick={onSaveChanges} className="mt-8" icon="tabler:check">
+          <Button className="mt-8" icon="tabler:check" onClick={onSaveChanges}>
             Save Changes
           </Button>
         </Scrollbar>

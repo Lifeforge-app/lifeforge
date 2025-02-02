@@ -31,14 +31,14 @@ function PlayStateIndicator({
 
   return (
     <button
+      className={`rounded-lg p-4 transition-all ${stateClassName}`}
       onClick={() => {
         togglePlay(music).catch(err => {
           toast.error(`Failed to play music. Error: ${err}`)
         })
       }}
-      className={`rounded-lg p-4 transition-all ${stateClassName}`}
     >
-      <Icon icon={stateIcon} className="text-xl" />
+      <Icon className="text-xl" icon={stateIcon} />
     </button>
   )
 }

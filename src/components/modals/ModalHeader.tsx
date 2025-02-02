@@ -37,7 +37,7 @@ function ModalHeader({
   return (
     <div className={`flex-between mb-4 flex gap-4 ${className}`}>
       <h1 className="flex w-full min-w-0 items-center gap-3 text-2xl font-semibold">
-        <Icon icon={innerIcon} className="size-7 shrink-0" />
+        <Icon className="size-7 shrink-0" icon={innerIcon} />
         <span className="min-w-0 truncate">
           {needTranslate
             ? t([
@@ -54,8 +54,8 @@ function ModalHeader({
         </span>
         {hasAI && (
           <Icon
-            icon="mage:stars-c"
             className="size-5 shrink-0 text-yellow-500"
+            icon="mage:stars-c"
           />
         )}
         {appendTitle}
@@ -63,23 +63,23 @@ function ModalHeader({
       <div className="flex items-center gap-2">
         {actionButtonIcon !== undefined && (
           <button
-            onClick={onActionButtonClick}
             className={`rounded-md p-2 transition-all hover:bg-bg-100 ${
               actionButtonIsRed
                 ? 'text-red-500 hover:text-red-600'
                 : 'text-bg-500 hover:text-bg-200'
             } dark:hover:bg-bg-800`}
+            onClick={onActionButtonClick}
           >
-            <Icon icon={actionButtonIcon} className="size-6" />
+            <Icon className="size-6" icon={actionButtonIcon} />
           </button>
         )}
         <Button
+          icon="tabler:x"
+          iconClassName="size-6"
           variant="no-bg"
           onClick={() => {
             onClose()
           }}
-          iconClassName="size-6"
-          icon="tabler:x"
         />
       </div>
     </div>

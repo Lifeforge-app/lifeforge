@@ -22,8 +22,8 @@ function VideoInfo({
       <div className="relative w-64 shrink-0 overflow-hidden rounded-md border border-bg-800">
         <img
           alt=""
-          src={videoInfo.thumbnail}
           className="size-full object-cover"
+          src={videoInfo.thumbnail}
         />
         <p className="absolute bottom-2 right-2 rounded-md bg-bg-900/70 px-1.5 py-0.5 text-bg-50">
           {moment

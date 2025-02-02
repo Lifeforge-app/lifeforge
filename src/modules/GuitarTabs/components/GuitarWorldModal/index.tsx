@@ -61,30 +61,30 @@ function GuitarWorldModal({
   return (
     <ModalWrapper isOpen={isOpen} minWidth="50vw">
       <ModalHeader
-        namespace="modules.guitarTabs"
-        onClose={onClose}
-        title="Guitar World"
         icon="mingcute:guitar-line"
+        namespace="modules.guitarTabs"
+        title="Guitar World"
+        onClose={onClose}
       />
       {!showData ? (
         <>
           <TextInput
-            namespace="modules.guitarTabs"
-            icon="tabler:cookie"
-            value={cookie}
-            updateValue={setCookie}
-            name="cookie"
-            placeholder="Cookie from Guitar World"
             darker
+            icon="tabler:cookie"
+            name="cookie"
+            namespace="modules.guitarTabs"
+            placeholder="Cookie from Guitar World"
+            updateValue={setCookie}
+            value={cookie}
           />
           <Button
-            loading={proceedLoading}
-            icon="tabler:arrow-right"
             iconAtEnd
+            className="mt-4"
+            icon="tabler:arrow-right"
+            loading={proceedLoading}
             onClick={() => {
               fetchData(page).catch(console.error)
             }}
-            className="mt-4"
           >
             Proceed
           </Button>
@@ -93,13 +93,13 @@ function GuitarWorldModal({
         <APIFallbackComponent data={data}>
           {data => (
             <ScoreList
+              cookie={cookie}
               data={data}
               page={page}
               setPage={(page: number) => {
                 setPage(page)
                 fetchData(page).catch(console.error)
               }}
-              cookie={cookie}
             />
           )}
         </APIFallbackComponent>

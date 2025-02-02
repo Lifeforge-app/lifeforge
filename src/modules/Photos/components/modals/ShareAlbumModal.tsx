@@ -65,18 +65,18 @@ function ShareAlbumModal({
     <div className="bg-bg-900 p-4">
       <div className="flex-between flex gap-4">
         <div>
-          <label htmlFor="isPublic" className="text-bg-500">
+          <label className="text-bg-500" htmlFor="isPublic">
             Open to public
           </label>
         </div>
         <Switch
           checked={publicity}
-          onClick={() => {
-            changePublicity().catch(console.error)
-          }}
           className={`${
             publicity ? 'bg-custom-500' : 'bg-bg-300 dark:bg-bg-700/50'
           } relative inline-flex h-6 w-11 items-center rounded-full`}
+          onClick={() => {
+            changePublicity().catch(console.error)
+          }}
         >
           <span
             className={`${
@@ -90,16 +90,17 @@ function ShareAlbumModal({
       {publicity && (
         <>
           <div className="mt-4 flex gap-2 rounded-md bg-bg-700/50 p-3 text-bg-800 shadow-md dark:text-bg-50">
-            <Icon icon="tabler:link" className="size-6" />
+            <Icon className="size-6" icon="tabler:link" />
             <input
+              className="w-full bg-transparent focus:outline-hidden"
               type="text"
               value={`${
                 import.meta.env.VITE_PUBLIC_PORTAL_URL
               }/photos/album/${albumId}`}
-              className="w-full bg-transparent focus:outline-hidden"
             />
           </div>
           <Button
+            className="mt-2 w-full"
             icon={isCopied ? 'tabler:check' : 'tabler:copy'}
             onClick={() => {
               copy(
@@ -113,7 +114,6 @@ function ShareAlbumModal({
                 setIsCopied(false)
               }, 2000)
             }}
-            className="mt-2 w-full"
           >
             {isCopied ? 'Copied' : 'Copy link'}
           </Button>

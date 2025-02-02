@@ -84,7 +84,7 @@ function DefaultThemeColorSelector({
               themeColor.startsWith('#') ? 'pr-4' : 'pr-2'
             }`}
           >
-            <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
+            <Icon className="size-5 text-bg-500" icon="tabler:chevron-down" />
           </span>
         </ListboxButton>
         <ListboxOptions
@@ -117,8 +117,8 @@ function DefaultThemeColorSelector({
                   </div>
                   {selected && (
                     <Icon
-                      icon="tabler:check"
                       className="block text-lg text-custom-500"
+                      icon="tabler:check"
                     />
                   )}
                 </>
@@ -140,8 +140,8 @@ function DefaultThemeColorSelector({
                 </div>
                 {selected && (
                   <Icon
-                    icon="tabler:check"
                     className="block text-lg text-custom-500"
+                    icon="tabler:check"
                   />
                 )}
               </>

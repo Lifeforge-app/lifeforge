@@ -71,21 +71,21 @@ function TagsInput({
   return (
     <InputWrapper
       className={`${className}`}
-      disabled={disabled}
       darker={darker}
+      disabled={disabled}
       inputRef={inputRef}
     >
-      <InputIcon icon={icon} active={String(value).length > 0} />
+      <InputIcon active={String(value).length > 0} icon={icon} />
       <div className="flex w-full items-center gap-2">
         <InputLabel
-          required={required === true}
+          active={String(value).length > 0}
           label={t([
             [tKey, 'inputs', toCamelCase(name)].filter(e => e).join('.'),
             [tKey, 'inputs', toCamelCase(name), 'label']
               .filter(e => e)
               .join('.')
           ])}
-          active={String(value).length > 0}
+          required={required === true}
         />
         <div className="mb-4 ml-[14px] mt-12 flex flex-wrap items-center gap-2">
           {value.map((tag, index) => {
@@ -98,21 +98,21 @@ function TagsInput({
               >
                 {existedTag !== undefined && (
                   <Icon
-                    icon={existedTag.icon}
                     className="mr-2 size-3"
+                    icon={existedTag.icon}
                     style={{ color: existedTag.color }}
                   />
                 )}
                 <span className="mr-2 text-sm">{tag}</span>
                 {!disabled && (
                   <Button
-                    variant="no-bg"
+                    className="m-0! h-4! w-4! p-0!"
                     icon="tabler:x"
+                    iconClassName="size-3"
+                    variant="no-bg"
                     onClick={() => {
                       removeTag(index)
                     }}
-                    className="m-0! h-4! w-4! p-0!"
-                    iconClassName="size-3"
                   />
                 )}
               </div>
@@ -120,14 +120,14 @@ function TagsInput({
           })}
           {!disabled && (
             <InputBox
-              inputRef={inputRef}
-              value={currentTag}
-              updateValue={setCurrentTag}
-              placeholder={placeholder}
-              onKeyDown={handleKeyDown}
               noAutoComplete
-              onBlur={addTag}
               className="my-0! w-auto! flex-1 py-0 pl-0!"
+              inputRef={inputRef}
+              placeholder={placeholder}
+              updateValue={setCurrentTag}
+              value={currentTag}
+              onBlur={addTag}
+              onKeyDown={handleKeyDown}
             />
           )}
         </div>

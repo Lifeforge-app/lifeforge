@@ -14,9 +14,7 @@ function CreateOrModifyButton({
 }): React.ReactElement {
   return (
     <Button
-      loading={loading}
       className={`mt-6 ${className}`}
-      onClick={onClick}
       icon={
         !loading && type !== null
           ? {
@@ -26,6 +24,8 @@ function CreateOrModifyButton({
             }[type]
           : 'svg-spinners:180-ring'
       }
+      loading={loading}
+      onClick={onClick}
     >
       {!loading && type !== null && type}
     </Button>

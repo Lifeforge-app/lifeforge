@@ -50,11 +50,11 @@ function Continents(): React.ReactElement {
       <div className="mt-4 flex items-center gap-2">
         <ContinentSelector />
         <SearchInput
-          stuffToSearch="continent"
+          hasTopMargin={false}
           namespace="modules.airports"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          hasTopMargin={false}
+          stuffToSearch="continent"
         />
       </div>
       <APIFallbackComponent data={filteredData}>
@@ -65,8 +65,8 @@ function Continents(): React.ReactElement {
                 {Object.entries(data).map(([id, amount]) => (
                   <Link
                     key={id}
-                    to={`/airports/${id}`}
                     className={`flex-between flex w-full rounded-lg p-4 px-6 shadow-custom transition-all ${componentBgWithHover}`}
+                    to={`/airports/${id}`}
                   >
                     <div>
                       <p className="text-left text-xl font-medium">
@@ -77,8 +77,8 @@ function Continents(): React.ReactElement {
                       </p>
                     </div>
                     <Icon
-                      icon="tabler:chevron-right"
                       className="size-5 text-bg-500"
+                      icon="tabler:chevron-right"
                     />
                   </Link>
                 ))}
@@ -86,9 +86,9 @@ function Continents(): React.ReactElement {
             </Scrollbar>
           ) : (
             <EmptyStateScreen
+              icon="tabler:search-off"
               name="continents"
               namespace="modules.airports"
-              icon="tabler:search-off"
             />
           )
         }

@@ -21,7 +21,6 @@ function MusicList({
         <AS>
           {({ height, width }: { height: number; width: number }) => (
             <L
-              width={width}
               height={height}
               rowCount={
                 musics.filter(music =>
@@ -52,6 +51,7 @@ function MusicList({
                   </div>
                 )
               }}
+              width={width}
             />
           )}
         </AS>

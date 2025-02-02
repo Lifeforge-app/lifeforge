@@ -26,13 +26,13 @@ function CategoryList({
       <section className="flex w-full min-w-0 flex-1 flex-col">
         <div className="mt-4">
           <SidebarTitle
-            name="Categories"
-            namespace="modules.calendar"
             actionButtonIcon="tabler:plus"
             actionButtonOnClick={() => {
               setModifyCategoryModalOpenType('create')
               setExistedData(null)
             }}
+            name="Categories"
+            namespace="modules.calendar"
           />
         </div>
         <APIFallbackComponent data={categories}>
@@ -43,17 +43,17 @@ function CategoryList({
                   <CategoryListItem
                     key={item.id}
                     item={item}
-                    setModifyModalOpenType={setModifyCategoryModalOpenType}
-                    setSelectedData={setExistedData}
                     setDeleteConfirmationModalOpen={
                       setDeleteCategoryConfirmationModalOpen
                     }
+                    setModifyModalOpenType={setModifyCategoryModalOpenType}
+                    setSelectedData={setExistedData}
                   />
                 ))}
               </ul>
             ) : (
               <div className="flex h-full flex-col items-center justify-center gap-4 px-2">
-                <Icon icon="tabler:article-off" className="size-12" />
+                <Icon className="size-12" icon="tabler:article-off" />
                 <p className="text-lg font-medium">
                   Oops, no categories found.
                 </p>

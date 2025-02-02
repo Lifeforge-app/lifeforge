@@ -51,31 +51,31 @@ function CalendarModule(): React.ReactElement {
   return (
     <>
       <ModuleWrapper>
-        <ModuleHeader title="Calendar" icon="tabler:calendar" />
+        <ModuleHeader icon="tabler:calendar" title="Calendar" />
         <SidebarAndContentWrapper>
           <Sidebar
-            events={events}
             categories={categories}
-            refreshCategories={refreshCategories}
-            sidebarOpen={sidebarOpen}
-            setSidebarOpen={setSidebarOpen}
+            events={events}
             modifyCategoryModalOpenType={modifyCategoryOpenType}
-            setModifyCategoryModalOpenType={setModifyCategoryOpenType}
-            setExistedData={setExistedCategoryData}
+            refreshCategories={refreshCategories}
             setDeleteCategoryConfirmationModalOpen={
               setDeleteCategoryConfirmationModalOpen
             }
+            setExistedData={setExistedCategoryData}
+            setModifyCategoryModalOpenType={setModifyCategoryOpenType}
+            setSidebarOpen={setSidebarOpen}
+            sidebarOpen={sidebarOpen}
           />
           <ContentWrapperWithSidebar>
             <Scrollbar>
               <div className="mb-8 size-full pr-4">
                 <CalendarComponent
-                  events={events}
-                  setRawEvents={setRawEvents}
                   categories={categories}
-                  setModifyEventModalOpenType={setModifyEventModalOpenType}
-                  setExistedData={setExistedData}
+                  events={events}
                   refreshRawEvents={refreshRawEvents}
+                  setExistedData={setExistedData}
+                  setModifyEventModalOpenType={setModifyEventModalOpenType}
+                  setRawEvents={setRawEvents}
                 />
               </div>
             </Scrollbar>
@@ -83,28 +83,25 @@ function CalendarModule(): React.ReactElement {
         </SidebarAndContentWrapper>
       </ModuleWrapper>
       <ModifyEventModal
+        categories={categories}
+        existedData={existedData}
         openType={modifyEventModalOpenType}
         setOpenType={setModifyEventModalOpenType}
-        existedData={existedData}
         updateEventList={() => {
           refreshRawEvents()
           refreshCategories()
         }}
-        categories={categories}
       />
       <ModifyCategoryModal
-        openType={modifyCategoryOpenType}
-        setOpenType={setModifyCategoryOpenType}
         existedData={existedCategoryData}
+        openType={modifyCategoryOpenType}
         refreshCategories={refreshCategories}
+        setOpenType={setModifyCategoryOpenType}
       />
       <DeleteConfirmationModal
         apiEndpoint="calendar/category"
-        isOpen={deleteCategoryConfirmationModalOpen}
-        onClose={() => {
-          setDeleteCategoryConfirmationModalOpen(false)
-        }}
         data={existedCategoryData}
+        isOpen={deleteCategoryConfirmationModalOpen}
         itemName="category"
         nameKey="name"
         updateDataLists={() => {
@@ -115,6 +112,9 @@ function CalendarModule(): React.ReactElement {
               category => category.id !== existedCategoryData?.id
             )
           )
+        }}
+        onClose={() => {
+          setDeleteCategoryConfirmationModalOpen(false)
         }}
       />
     </>

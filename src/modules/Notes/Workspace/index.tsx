@@ -69,8 +69,8 @@ function NotesCategory(): React.ReactElement {
                       return (
                         <span className="flex items-center gap-2 text-red-500">
                           <Icon
-                            icon="tabler:alert-triangle"
                             className="mt-1 size-8 stroke-red-500 stroke-[2px]"
+                            icon="tabler:alert-triangle"
                           />
                           Failed to fetch data
                         </span>
@@ -89,52 +89,52 @@ function NotesCategory(): React.ReactElement {
                   {subjectsData.map(subject => (
                     <SubjectItem
                       key={subject.id}
-                      subject={subject}
-                      setModifySubjectModalOpenType={
-                        setModifySubjectModalOpenType
-                      }
                       setDeleteSubjectConfirmationModalOpen={
                         setDeleteSubjectConfirmationModalOpen
                       }
                       setExistedData={setExistedData}
+                      setModifySubjectModalOpenType={
+                        setModifySubjectModalOpenType
+                      }
+                      subject={subject}
                     />
                   ))}
                   <CreateSubjectButton
+                    setExistedData={setExistedData}
                     setModifySubjectModalOpenType={
                       setModifySubjectModalOpenType
                     }
-                    setExistedData={setExistedData}
                   />
                 </div>
               ) : (
                 <EmptyStateScreen
-                  icon="tabler:folder-off"
-                  namespace="modules.notes"
-                  name="subject"
                   ctaContent="new"
                   ctaTProps={{
                     item: t('items.subject')
                   }}
+                  icon="tabler:folder-off"
+                  name="subject"
+                  namespace="modules.notes"
                   onCTAClick={setModifySubjectModalOpenType}
                 />
               )
             }
           </APIFallbackComponent>
           <DeleteConfirmationModal
+            apiEndpoint="notes/subject"
+            data={existedData}
             isOpen={deleteSubjectConfirmationModalOpen}
+            itemName="subject"
+            nameKey="title"
+            updateDataLists={refreshSubjectData}
             onClose={() => {
               setDeleteSubjectConfirmationModalOpen(false)
             }}
-            apiEndpoint="notes/subject"
-            itemName="subject"
-            data={existedData}
-            updateDataLists={refreshSubjectData}
-            nameKey="title"
           />
           <ModifySubjectModal
+            existedData={existedData}
             openType={modifySubjectModalOpenType}
             setOpenType={setModifySubjectModalOpenType}
-            existedData={existedData}
             updateSubjectList={refreshSubjectData}
           />
         </ModuleWrapper>

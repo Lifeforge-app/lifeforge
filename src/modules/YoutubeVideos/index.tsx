@@ -49,27 +49,27 @@ function YoutubeVideos(): React.ReactElement {
   return (
     <ModuleWrapper>
       <Header
-        videosLength={videos.length}
+        isAddVideosModalOpen={isAddVideosModalOpen}
+        needsProgressCheck={needsProgressCheck}
+        query={query}
         refreshVideos={refreshVideos}
         setIsAddVideosModalOpen={setIsAddVideosModalOpen}
-        query={query}
-        setQuery={setQuery}
-        needsProgressCheck={needsProgressCheck}
         setNeedsProgressCheck={setNeedsProgressCheck}
-        isAddVideosModalOpen={isAddVideosModalOpen}
+        setQuery={setQuery}
+        videosLength={videos.length}
       />
       <Scrollbar className="mt-6">
         <APIFallbackComponent data={videos}>
           {videos =>
             videos.length === 0 ? (
               <EmptyStateScreen
-                name="videos"
-                namespace="modules.youtubeVideos"
-                icon="tabler:movie-off"
                 ctaContent="new"
                 ctaTProps={{
                   item: t('items.video')
                 }}
+                icon="tabler:movie-off"
+                name="videos"
+                namespace="modules.youtubeVideos"
                 onCTAClick={() => {
                   refreshVideos()
                   setIsAddVideosModalOpen(true)
@@ -80,15 +80,15 @@ function YoutubeVideos(): React.ReactElement {
                 {videos =>
                   videos.length === 0 ? (
                     <EmptyStateScreen
+                      icon="tabler:search-off"
                       name="results"
                       namespace="modules.youtubeVideos"
-                      icon="tabler:search-off"
                     />
                   ) : (
                     <VideoList
-                      videos={videos}
-                      setVideoToDelete={setVideoToDelete}
                       setIsConfirmDeleteModalOpen={setIsConfirmDeleteModalOpen}
+                      setVideoToDelete={setVideoToDelete}
+                      videos={videos}
                     />
                   )
                 }
@@ -99,6 +99,7 @@ function YoutubeVideos(): React.ReactElement {
       </Scrollbar>
       <AddVideosModal
         isOpen={isAddVideosModalOpen}
+        videos={videos}
         onClose={(isVideoDownloading: boolean) => {
           setIsAddVideosModalOpen(false)
           if (isVideoDownloading) {
@@ -106,13 +107,9 @@ function YoutubeVideos(): React.ReactElement {
           }
           refreshVideos()
         }}
-        videos={videos}
       />
       <DeleteConfirmationModal
-        isOpen={isConfirmDeleteModalOpen}
-        onClose={() => {
-          setIsConfirmDeleteModalOpen(false)
-        }}
+        apiEndpoint="youtube-videos/video"
         customCallback={async () => {
           setVideos(prevVideos => {
             if (typeof prevVideos === 'string') return prevVideos
@@ -122,17 +119,20 @@ function YoutubeVideos(): React.ReactElement {
           })
           setVideoToDelete(undefined)
         }}
-        apiEndpoint="youtube-videos/video"
+        data={videoToDelete}
+        isOpen={isConfirmDeleteModalOpen}
         itemName="video"
         nameKey="title"
-        data={videoToDelete}
+        onClose={() => {
+          setIsConfirmDeleteModalOpen(false)
+        }}
       />
       <FAB
+        hideWhen="md"
         onClick={() => {
           refreshVideos()
           setIsAddVideosModalOpen(true)
         }}
-        hideWhen="md"
       />
     </ModuleWrapper>
   )

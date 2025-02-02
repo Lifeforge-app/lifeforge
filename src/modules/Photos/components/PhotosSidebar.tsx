@@ -28,19 +28,19 @@ function PhotosSidebar(): React.ReactElement {
 
   return (
     <SidebarWrapper
+      customHeight="xl:h-[calc(100%-2rem)]"
       isOpen={sidebarOpen}
       setOpen={setSidebarOpen}
-      customHeight="xl:h-[calc(100%-2rem)]"
     >
       <SidebarItem
         active={location.pathname === '/photos'}
         icon="tabler:photo"
         name="All Photos"
+        number={typeof photos !== 'string' ? photos.totalItems : 0}
         onClick={() => {
           navigate('/photos')
           setSidebarOpen(false)
         }}
-        number={typeof photos !== 'string' ? photos.totalItems : 0}
       />
       <SidebarItem
         active={location.pathname === '/photos/favourites'}
@@ -53,11 +53,11 @@ function PhotosSidebar(): React.ReactElement {
       />
       <SidebarDivider />
       <SidebarTitle
-        name="albums"
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           setCreateAlbumModalOpen('create')
         }}
+        name="albums"
       />
       <APIFallbackComponent data={albumList}>
         {albumList => (
@@ -71,25 +71,25 @@ function PhotosSidebar(): React.ReactElement {
                       className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
                     >
                       <Link
+                        className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 hover:bg-bg-100 dark:hover:bg-bg-800"
                         to={`/photos/album/${album.id}`}
                         onClick={() => {
                           setSidebarOpen(false)
                         }}
-                        className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 hover:bg-bg-100 dark:hover:bg-bg-800"
                       >
                         <div className="flex-center size-10 shrink-0 rounded-md bg-bg-200/50 shadow-xs dark:bg-bg-700/50">
                           {album.cover !== '' ? (
                             <img
+                              alt=""
+                              className="size-full rounded-md object-cover"
                               src={`${import.meta.env.VITE_API_HOST}/media/${
                                 album.cover
                               }?thumb=0x300`}
-                              alt=""
-                              className="size-full rounded-md object-cover"
                             />
                           ) : (
                             <Icon
-                              icon="tabler:library-photo"
                               className="size-5 text-bg-300"
+                              icon="tabler:library-photo"
                             />
                           )}
                         </div>
@@ -105,16 +105,16 @@ function PhotosSidebar(): React.ReactElement {
                 ))}
                 <li className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all">
                   <Link
+                    className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800"
                     to="/photos/album"
                     onClick={() => {
                       setSidebarOpen(false)
                     }}
-                    className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800"
                   >
                     <div className="flex-center size-10 shrink-0">
                       <Icon
-                        icon="tabler:arrow-right"
                         className="size-6 text-bg-500"
+                        icon="tabler:arrow-right"
                       />
                     </div>
                     <div className="w-full text-bg-500">
@@ -126,10 +126,10 @@ function PhotosSidebar(): React.ReactElement {
             ) : (
               <div className="mx-4">
                 <EmptyStateScreen
+                  smaller
                   icon="tabler:books-off"
                   name="albums"
                   namespace="modules.photos"
-                  smaller
                 />
               </div>
             )}
@@ -139,20 +139,20 @@ function PhotosSidebar(): React.ReactElement {
       <SidebarDivider />
       <SidebarItem
         autoActive
-        onClick={() => {}}
         icon="tabler:archive"
         name="Archive"
+        onClick={() => {}}
       />
       <SidebarItem
         autoActive
-        onClick={() => {}}
         icon="tabler:lock"
         name="Locked Folder"
+        onClick={() => {}}
       />
       <SidebarItem
+        active={location.pathname === '/photos/trash'}
         icon="tabler:trash"
         name="Trash"
-        active={location.pathname === '/photos/trash'}
         onClick={() => {
           navigate('/photos/trash')
           setSidebarOpen(false)

@@ -18,18 +18,18 @@ function ScoreList({
     <>
       <Pagination
         currentPage={page}
-        onPageChange={setPage}
         totalPages={Math.ceil(data.totalItems / data.perPage)}
+        onPageChange={setPage}
       />
       <ul className="my-4 divide-y divide-bg-200 dark:divide-bg-800/50">
         {data.data.map(entry => (
-          <ScoreItem key={entry.id} entry={entry} cookie={cookie} />
+          <ScoreItem key={entry.id} cookie={cookie} entry={entry} />
         ))}
       </ul>
       <Pagination
         currentPage={page}
-        onPageChange={setPage}
         totalPages={Math.ceil(data.totalItems / data.perPage)}
+        onPageChange={setPage}
       />
     </>
   )

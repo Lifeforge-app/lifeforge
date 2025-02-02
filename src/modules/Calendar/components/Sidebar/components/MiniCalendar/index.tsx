@@ -23,15 +23,15 @@ function MiniCalendar({
       <div className="size-full">
         <MiniCalendarHeader
           currentMonth={currentMonth}
-          setCurrentMonth={setCurrentMonth}
           currentYear={currentYear}
+          setCurrentMonth={setCurrentMonth}
           setCurrentYear={setCurrentYear}
         />
         <MiniCalendarContent
+          categories={categories}
           currentMonth={currentMonth}
           currentYear={currentYear}
           events={events}
-          categories={categories}
         />
       </div>
     </section>

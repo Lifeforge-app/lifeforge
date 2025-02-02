@@ -18,19 +18,19 @@ function DurationSlider(): React.ReactElement {
           .format(+currentDuration >= 3600 ? 'H:mm:ss' : 'm:ss')}
       </span>
       <input
-        type="range"
-        onChange={e => {
-          audio.currentTime = +e.target.value
-          setCurrentDuration(+e.target.value)
-        }}
+        className="main h-1 w-full cursor-pointer overflow-hidden rounded-full bg-bg-200 dark:bg-bg-700"
+        max={currentMusic.duration}
         style={{
           backgroundSize: `${
             (+currentDuration / +currentMusic.duration) * 100
           }% 100%`
         }}
-        className="main h-1 w-full cursor-pointer overflow-hidden rounded-full bg-bg-200 dark:bg-bg-700"
+        type="range"
         value={currentDuration}
-        max={currentMusic.duration}
+        onChange={e => {
+          audio.currentTime = +e.target.value
+          setCurrentDuration(+e.target.value)
+        }}
       ></input>
       <span className="-mt-0.5 text-bg-500">
         {moment

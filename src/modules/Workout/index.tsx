@@ -5,7 +5,7 @@ import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 function Workout(): React.ReactElement {
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Workout" icon="tabler:barbell" />
+      <ModuleHeader icon="tabler:barbell" title="Workout" />
     </ModuleWrapper>
   )
 }

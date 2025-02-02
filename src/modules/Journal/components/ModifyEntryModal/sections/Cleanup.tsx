@@ -76,8 +76,8 @@ function Cleanup({
         {loading ? (
           <div className="flex size-full flex-col items-center justify-center gap-2">
             <Icon
-              icon="svg-spinners:3-dots-scale"
               className="size-8 text-bg-500"
+              icon="svg-spinners:3-dots-scale"
             />
             <p className="text-bg-500">Cleaning up...</p>
           </div>
@@ -87,21 +87,21 @@ function Cleanup({
               <textarea
                 ref={textAreaRef}
                 className="size-full flex-1 resize-none bg-transparent caret-custom-500 placeholder:text-bg-500"
+                placeholder="A well punctuated and spell-checked version of your text..."
                 value={cleanedUpText}
                 onChange={e => {
                   setCleanedUpText(e.target.value)
                   updateTextAreaHeight()
                 }}
-                placeholder="A well punctuated and spell-checked version of your text..."
               />
             </div>
             <Button
+              className="mt-4 w-full shrink-0"
+              icon="tabler:refresh"
+              variant="secondary"
               onClick={() => {
                 fetchSummarizedText().catch(console.error)
               }}
-              icon="tabler:refresh"
-              className="mt-4 w-full shrink-0"
-              variant="secondary"
             >
               Regenerate
             </Button>
@@ -110,21 +110,21 @@ function Cleanup({
       </div>
       <div className="flex-between mt-6 flex">
         <Button
+          icon="tabler:arrow-left"
+          variant="no-bg"
           onClick={() => {
             setStep(1)
           }}
-          icon="tabler:arrow-left"
-          variant="no-bg"
         >
           Previous
         </Button>
         <Button
+          iconAtEnd
+          disabled={cleanedUpText.trim() === ''}
+          icon="tabler:arrow-right"
           onClick={() => {
             setStep(3)
           }}
-          icon="tabler:arrow-right"
-          iconAtEnd
-          disabled={cleanedUpText.trim() === ''}
         >
           Next
         </Button>

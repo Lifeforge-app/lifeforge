@@ -48,11 +48,14 @@ function AddToLibraryButton({
 
   return (
     <Button
+      className="w-full xl:w-1/2"
       disabled={
         Object.keys(processes).includes(md5) ||
         (typeof entries !== 'string' &&
           entries.some(entry => entry.md5 === md5))
       }
+      icon={icon}
+      namespace="modules.booksLibrary"
       variant={
         Object.keys(processes).includes(md5) ||
         (typeof entries !== 'string' &&
@@ -63,9 +66,6 @@ function AddToLibraryButton({
       onClick={() => {
         setAddToLibraryFor(md5)
       }}
-      icon={icon}
-      className="w-full xl:w-1/2"
-      namespace="modules.booksLibrary"
     >
       {text}
     </Button>

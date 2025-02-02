@@ -56,56 +56,56 @@ function BgImageSelector(): React.ReactElement {
   return (
     <>
       <ConfigColumn
-        title={t('bgImageSelector.title')}
         desc={t('bgImageSelector.desc')}
         icon="tabler:photo"
+        title={t('bgImageSelector.title')}
       >
         {bgImage !== '' ? (
           <>
             <Button
+              className="w-1/2 md:w-auto"
+              icon="tabler:adjustments"
+              variant="no-bg"
               onClick={() => {
                 setAdjustBgImageModalOpen(true)
               }}
-              icon="tabler:adjustments"
-              variant="no-bg"
-              className="w-1/2 md:w-auto"
             >
               adjust
             </Button>
             <Button
+              isRed
+              className="w-1/2 md:w-auto"
+              icon="tabler:trash"
+              variant="no-bg"
               onClick={() => {
                 setDeleteBgImageConfirmationModalOpen(true)
               }}
-              icon="tabler:trash"
-              variant="no-bg"
-              isRed
-              className="w-1/2 md:w-auto"
             >
               remove
             </Button>
           </>
         ) : (
           <Button
+            className="w-full md:w-auto"
+            icon="tabler:photo-hexagon"
             onClick={() => {
               setImageSelectorModalOpen(true)
             }}
-            className="w-full md:w-auto"
-            icon="tabler:photo-hexagon"
           >
             select
           </Button>
         )}
       </ConfigColumn>
       <ImagePickerModal
+        enablePixaBay
+        enableUrl
+        acceptedMimeTypes={{
+          'image/*': ['png', 'jpg', 'jpeg', 'gif', 'webp']
+        }}
         isOpen={imageSelectorModalOpen}
         onClose={() => {
           setImageSelectorModalOpen(false)
         }}
-        acceptedMimeTypes={{
-          'image/*': ['png', 'jpg', 'jpeg', 'gif', 'webp']
-        }}
-        enablePixaBay
-        enableUrl
         onSelect={onSubmit}
       />
       <AdjustBgImageModal
@@ -115,13 +115,7 @@ function BgImageSelector(): React.ReactElement {
         }}
       />
       <DeleteConfirmationModal
-        isOpen={deleteBgImageConfirmationModalOpen}
-        onClose={() => {
-          setDeleteBgImageConfirmationModalOpen(false)
-        }}
         apiEndpoint="user/personalization/bg-image"
-        customText="Deleting the background image will revert the system appearance to plain colors. Are you sure you want to proceed?"
-        itemName="background image"
         customCallback={async () => {
           setBgImage('')
           setBackdropFilters({
@@ -131,6 +125,12 @@ function BgImageSelector(): React.ReactElement {
             saturation: 100,
             overlayOpacity: 50
           })
+        }}
+        customText="Deleting the background image will revert the system appearance to plain colors. Are you sure you want to proceed?"
+        isOpen={deleteBgImageConfirmationModalOpen}
+        itemName="background image"
+        onClose={() => {
+          setDeleteBgImageConfirmationModalOpen(false)
         }}
       />
     </>

@@ -21,9 +21,9 @@ function CFOPF2L(): React.ReactElement {
         <div className="flex-between flex">
           <h1 className="flex items-center gap-4 text-2xl font-semibold sm:text-3xl">
             <img
-              src="/assets/cfop/landing-oll.webp"
               alt="OLL"
               className="size-16"
+              src="/assets/cfop/landing-oll.webp"
             />
             Orientation of the Last Layer
           </h1>

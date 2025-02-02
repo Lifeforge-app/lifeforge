@@ -86,10 +86,10 @@ function JournalList({
     <>
       <div className="mb-8 mt-6 flex min-h-0 w-full flex-1 flex-col">
         <SearchInput
+          namespace="modules.journal"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           stuffToSearch="entry"
-          namespace="modules.journal"
         />
         <APIFallbackComponent data={entries}>
           {entries =>
@@ -98,28 +98,28 @@ function JournalList({
                 {entries.map(entry => (
                   <JournalListItem
                     key={entry.id}
-                    entry={entry}
                     editLoading={editLoading}
-                    updateEntry={updateEntry}
+                    entry={entry}
                     setCurrentViewingJournal={setCurrentViewingJournal}
-                    setJournalViewModalOpen={setJournalViewModalOpen}
                     setDeleteJournalConfirmationModalOpen={
                       setDeleteJournalConfirmationModalOpen
                     }
                     setExistedData={setExistedData}
+                    setJournalViewModalOpen={setJournalViewModalOpen}
+                    updateEntry={updateEntry}
                   />
                 ))}
               </div>
             ) : (
               <div className="mt-6 flex-1">
                 <EmptyStateScreen
-                  icon="tabler:book-off"
-                  namespace="modules.journal"
-                  name="entry"
                   ctaContent="new"
                   ctaTProps={{
                     item: t('items.entry')
                   }}
+                  icon="tabler:book-off"
+                  name="entry"
+                  namespace="modules.journal"
                   onCTAClick={() => {
                     setModifyEntryModalOpenType('create')
                     setExistedData(null)

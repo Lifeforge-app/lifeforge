@@ -18,7 +18,7 @@ function Visibility({ data }: { data: IAirportMETARData }): React.ReactElement {
   return (
     <WidgetWrapper>
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
-        <Icon icon="tabler:eye" className="text-2xl" />
+        <Icon className="text-2xl" icon="tabler:eye" />
         <span className="ml-2">Visibility</span>
       </h1>
       <div

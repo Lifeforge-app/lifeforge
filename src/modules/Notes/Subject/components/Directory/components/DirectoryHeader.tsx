@@ -162,7 +162,7 @@ function DirectoryHeader({
         if (toastId.current === undefined) {
           toastId.current = toast(
             <span className="flex items-center gap-2">
-              <Icon icon="tabler:upload" className="size-5" />
+              <Icon className="size-5" icon="tabler:upload" />
               <span>Uploading folders...</span>
             </span>,
             { progress }
@@ -219,8 +219,8 @@ function DirectoryHeader({
                 return (
                   <>
                     <Icon
-                      icon="tabler:alert-triangle"
                       className="mt-0.5 size-7 text-red-500"
+                      icon="tabler:alert-triangle"
                     />
                     Failed to fetch data from server.
                   </>
@@ -230,8 +230,8 @@ function DirectoryHeader({
                   <>
                     <div className="relative rounded-lg p-3">
                       <Icon
-                        icon={currentPath.icon}
                         className="text-2xl text-custom-500 sm:text-3xl"
+                        icon={currentPath.icon}
                       />
                       <div className="absolute left-0 top-0 size-full rounded-lg bg-custom-500 opacity-20" />
                     </div>
@@ -240,24 +240,24 @@ function DirectoryHeader({
                         {currentPath.path.map((path, index) => (
                           <>
                             <Link
-                              to={`/notes/${currentPath.path
-                                .slice(0, index + 1)
-                                .map(path => path.id)
-                                .join('/')}`}
                               key={index}
                               className={`${
                                 index === currentPath.path.length - 1
                                   ? 'text-custom-500'
                                   : ''
                               } whitespace-nowrap`}
+                              to={`/notes/${currentPath.path
+                                .slice(0, index + 1)
+                                .map(path => path.id)
+                                .join('/')}`}
                             >
                               {path.name.slice(0, 20) +
                                 (path.name.length > 20 ? '...' : '')}
                             </Link>
                             {index !== currentPath.path.length - 1 && (
                               <Icon
-                                icon="tabler:chevron-right"
                                 className="size-4 shrink-0 text-bg-500"
+                                icon="tabler:chevron-right"
                               />
                             )}
                           </>
@@ -274,13 +274,13 @@ function DirectoryHeader({
         </div>
         <div className="flex items-center gap-4">
           <button className="hidden rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/50 dark:hover:text-bg-100 md:block">
-            <Icon icon="tabler:search" className="text-2xl" />
+            <Icon className="text-2xl" icon="tabler:search" />
           </button>
           <button className="hidden rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/50 dark:hover:text-bg-100 md:block">
-            <Icon icon="tabler:filter" className="text-2xl" />
+            <Icon className="text-2xl" icon="tabler:filter" />
           </button>
           <Menu as="div" className="relative z-50 hidden md:block">
-            <Button onClick={() => {}} as={MenuButton} icon="tabler:plus">
+            <Button as={MenuButton} icon="tabler:plus" onClick={() => {}}>
               new
             </Button>
             <MenuItems
@@ -289,28 +289,28 @@ function DirectoryHeader({
               className="mt-2 w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
             >
               <MenuItem
+                icon="tabler:folder-plus"
+                text="New Folder"
                 onClick={() => {
                   setModifyFolderModalOpenType('create')
                   setExistedData(null)
                 }}
-                icon="tabler:folder-plus"
-                text="New Folder"
               />
               <div className="w-full border-b border-bg-300 dark:border-bg-700" />
               <MenuItem
-                onClick={uploadFiles}
                 icon="ci:file-upload"
                 text="File upload"
+                onClick={uploadFiles}
               />
               <MenuItem
-                onClick={uploadFolders}
                 icon="ci:folder-upload"
                 text="Folder upload"
+                onClick={uploadFolders}
               />
             </MenuItems>
           </Menu>
           <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
-            <Icon icon="tabler:dots-vertical" className="text-xl sm:text-2xl" />
+            <Icon className="text-xl sm:text-2xl" icon="tabler:dots-vertical" />
           </button>
         </div>
       </div>
@@ -322,23 +322,23 @@ function DirectoryHeader({
           className="w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
         >
           <MenuItem
+            icon="tabler:folder-plus"
+            text="New Folder"
             onClick={() => {
               setModifyFolderModalOpenType('create')
               setExistedData(null)
             }}
-            icon="tabler:folder-plus"
-            text="New Folder"
           />
           <div className="w-full border-b border-bg-300 dark:border-bg-700" />
           <MenuItem
-            onClick={uploadFiles}
             icon="ci:file-upload"
             text="File upload"
+            onClick={uploadFiles}
           />
           <MenuItem
-            onClick={uploadFolders}
             icon="ci:folder-upload"
             text="Folder upload"
+            onClick={uploadFolders}
           />
         </MenuItems>
       </Menu>

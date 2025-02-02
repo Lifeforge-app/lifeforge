@@ -48,10 +48,10 @@ function IdeaBox(): React.ReactElement {
       <ModuleHeader icon="tabler:bulb" title="Idea Box" />
       <div className="mt-6 flex min-h-0 w-full flex-1 flex-col">
         <SearchInput
+          namespace="modules.ideaBox"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           stuffToSearch="container"
-          namespace="modules.ideaBox"
         />
         <APIFallbackComponent data={data}>
           {data =>
@@ -59,20 +59,20 @@ function IdeaBox(): React.ReactElement {
               <Containers
                 filteredList={filteredList}
                 setCreateContainerModalOpen={setModifyContainerModalOpenType}
-                setExistedData={setExistedData}
                 setDeleteContainerConfirmationModalOpen={
                   setDeleteContainerConfirmationModalOpen
                 }
+                setExistedData={setExistedData}
               />
             ) : (
               <EmptyStateScreen
-                namespace="modules.ideaBox"
-                name="container"
-                icon="tabler:cube-off"
                 ctaContent="new"
                 ctaTProps={{
                   item: t('items.container')
                 }}
+                icon="tabler:cube-off"
+                name="container"
+                namespace="modules.ideaBox"
                 onCTAClick={setModifyContainerModalOpenType}
               />
             )
@@ -80,21 +80,17 @@ function IdeaBox(): React.ReactElement {
         </APIFallbackComponent>
       </div>
       <ModifyContainerModal
+        existedData={existedData}
         openType={modifyContainerModalOpenType}
-        setOpenType={setModifyContainerModalOpenType}
         setContainerList={
           setData as React.Dispatch<React.SetStateAction<IIdeaBoxContainer[]>>
         }
-        existedData={existedData}
+        setOpenType={setModifyContainerModalOpenType}
       />
       <DeleteConfirmationModal
-        isOpen={deleteContainerConfirmationModalOpen}
-        onClose={() => {
-          setExistedData(null)
-          setDeleteContainerConfirmationModalOpen(false)
-        }}
-        data={existedData}
         apiEndpoint="idea-box/containers"
+        data={existedData}
+        isOpen={deleteContainerConfirmationModalOpen}
         itemName="container"
         updateDataLists={() => {
           setData(prev =>
@@ -102,6 +98,10 @@ function IdeaBox(): React.ReactElement {
               ? prev.filter(container => container.id !== existedData?.id)
               : prev
           )
+        }}
+        onClose={() => {
+          setExistedData(null)
+          setDeleteContainerConfirmationModalOpen(false)
         }}
       />
     </ModuleWrapper>

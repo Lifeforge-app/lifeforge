@@ -56,12 +56,12 @@ function SidebarItems({ query }: { query: string }): React.ReactElement {
                   <SidebarItem
                     key={titleToPath(subItem.name)}
                     autoActive
-                    name={subItem.name}
-                    showAIIcon={subItem.hasAI === true}
-                    icon={subItem.icon ?? ''}
-                    subsection={subItem.subsection}
-                    prefix={item.prefix}
                     isMainSidebarItem
+                    icon={subItem.icon ?? ''}
+                    name={subItem.name}
+                    prefix={item.prefix}
+                    showAIIcon={subItem.hasAI === true}
+                    subsection={subItem.subsection}
                   />
                 ))}
                 {index !== ROUTES.length - 1 && filteredModules.length > 0 && (
@@ -74,8 +74,8 @@ function SidebarItems({ query }: { query: string }): React.ReactElement {
           <div className="flex flex-1 items-center p-6">
             <EmptyStateScreen
               smaller
-              name="modules"
               icon="tabler:search-off"
+              name="modules"
               namespace="common.sidebar"
             />
           </div>

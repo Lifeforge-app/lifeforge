@@ -20,13 +20,13 @@ function TaskListList({
   return (
     <>
       <SidebarTitle
-        name="lists"
-        namespace="modules.todoList"
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           setModifyModalOpenType('create')
           setSelectedData(null)
         }}
+        name="lists"
+        namespace="modules.todoList"
       />
       <APIFallbackComponent data={lists}>
         {lists =>

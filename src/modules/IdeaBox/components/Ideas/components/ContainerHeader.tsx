@@ -55,15 +55,16 @@ function ContainerHeader(): React.ReactElement {
         <HamburgerMenu largerPadding className="relative">
           <MenuItem
             icon={viewArchived ? 'tabler:archive-off' : 'tabler:archive'}
+            namespace="modules.ideaBox"
             text={viewArchived ? 'View Active' : 'View Archived'}
             onClick={() => {
               setViewArchived(!viewArchived)
             }}
-            namespace="modules.ideaBox"
           />
         </HamburgerMenu>
       </div>
       <div
+        className="relative isolate flex h-56 w-full items-end justify-between rounded-lg bg-bg-900 bg-cover bg-center bg-no-repeat p-6 sm:h-72"
         style={{
           backgroundImage:
             typeof pathDetails !== 'string'
@@ -72,7 +73,6 @@ function ContainerHeader(): React.ReactElement {
                 })`
               : ''
         }}
-        className="relative isolate flex h-56 w-full items-end justify-between rounded-lg bg-bg-900 bg-cover bg-center bg-no-repeat p-6 sm:h-72"
       >
         <div className="absolute inset-0 rounded-lg bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,0.7)_80%)]"></div>
         <div className="flex-between relative z-9999 flex w-full">
@@ -96,8 +96,8 @@ function ContainerHeader(): React.ReactElement {
                   return (
                     <>
                       <Icon
-                        icon="tabler:alert-triangle"
                         className="mt-0.5 size-7 text-red-500"
+                        icon="tabler:alert-triangle"
                       />
                       Failed to fetch data from server.
                     </>
@@ -106,8 +106,8 @@ function ContainerHeader(): React.ReactElement {
                   return (
                     <div className="flex flex-wrap items-center gap-3">
                       <Link
-                        to={`/idea-box/${id}`}
                         className="flex items-center gap-3"
+                        to={`/idea-box/${id}`}
                       >
                         <div
                           className="rounded-lg p-3"
@@ -116,8 +116,8 @@ function ContainerHeader(): React.ReactElement {
                           }}
                         >
                           <Icon
-                            icon={pathDetails.container.icon}
                             className="text-2xl sm:text-3xl"
+                            icon={pathDetails.container.icon}
                             style={{
                               color: pathDetails.container.color
                             }}
@@ -128,28 +128,28 @@ function ContainerHeader(): React.ReactElement {
                       </Link>
                       {pathDetails.path.length > 0 && (
                         <Icon
-                          icon="tabler:chevron-right"
                           className="size-5 text-gray-500"
+                          icon="tabler:chevron-right"
                         />
                       )}
                       {pathDetails.path.map((folder, index) => (
                         <>
                           <Link
                             key={folder.id}
-                            to={`/idea-box/${id}/${path
-                              ?.split('/')
-                              .slice(0, index + 1)
-                              .join('/')
-                              .replace('//', '/')}`}
                             className="relative flex items-center gap-2 rounded-lg p-3 text-base before:absolute before:left-0 before:top-0 before:size-full before:rounded-md before:transition-all hover:before:bg-white/5"
                             style={{
                               backgroundColor: folder.color + '20',
                               color: folder.color
                             }}
+                            to={`/idea-box/${id}/${path
+                              ?.split('/')
+                              .slice(0, index + 1)
+                              .join('/')
+                              .replace('//', '/')}`}
                           >
                             <Icon
-                              icon={folder.icon}
                               className="shrink-0 text-xl"
+                              icon={folder.icon}
                             />
                             <span className="hidden md:block">
                               {folder.name}
@@ -157,8 +157,8 @@ function ContainerHeader(): React.ReactElement {
                           </Link>
                           {index !== pathDetails.path.length - 1 && (
                             <Icon
-                              icon="tabler:chevron-right"
                               className="size-5 text-gray-500"
+                              icon="tabler:chevron-right"
                             />
                           )}
                         </>

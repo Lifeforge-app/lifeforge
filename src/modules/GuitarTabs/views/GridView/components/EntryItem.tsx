@@ -36,26 +36,26 @@ function EntryItem({
   return (
     <a
       key={entry.id}
+      className={`block rounded-lg p-4 shadow-custom transition-all ${componentBgWithHover}`}
       href={`${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
         entry.id
       }/${entry.pdf}`}
-      target="_blank"
-      className={`block rounded-lg p-4 shadow-custom transition-all ${componentBgWithHover}`}
       rel="noreferrer"
+      target="_blank"
     >
       <div className="relative">
         <div className="flex-center relative aspect-[1/1.4142] w-full overflow-hidden rounded-md bg-bg-100 dark:bg-bg-800">
           <Icon
-            icon="mingcute:guitar-line"
             className="absolute left-1/2 top-1/2 size-16 -translate-x-1/2 -translate-y-1/2 text-bg-300 dark:text-bg-700"
+            icon="mingcute:guitar-line"
           />
           <img
             key={entry.id}
+            alt=""
+            className="relative h-full object-cover object-top"
             src={`${import.meta.env.VITE_API_HOST}/media/${
               entry.collectionId
             }/${entry.id}/${entry.thumbnail}?thumb=500x0`}
-            alt=""
-            className="relative h-full object-cover object-top"
           />
         </div>
         <div className="absolute bottom-0 right-0 rounded-br-md rounded-tl-md bg-bg-500/80 p-1 px-2">
@@ -66,24 +66,24 @@ function EntryItem({
           customTailwindColor="bg-bg-100 hover:bg-bg-200 shadow-custom dark:bg-bg-500/50 dark:hover:bg-bg-500/70"
         >
           <MenuItem
+            icon={entry.isFavourite ? 'tabler:star-off' : 'tabler:star'}
+            text={entry.isFavourite ? 'Unfavourite' : 'Favourite'}
             onClick={() => {
               favouriteTab().catch(console.error)
             }}
-            text={entry.isFavourite ? 'Unfavourite' : 'Favourite'}
-            icon={entry.isFavourite ? 'tabler:star-off' : 'tabler:star'}
           />
           <MenuItem
+            icon="tabler:pencil"
+            text="Edit"
             onClick={() => {
               setExistingEntry(entry)
               setModifyEntryModalOpen(true)
             }}
-            text="Edit"
-            icon="tabler:pencil"
           />
           <MenuItem
-            text="Delete"
-            icon="tabler:trash"
             isRed
+            icon="tabler:trash"
+            text="Delete"
             onClick={() => {
               setExistingEntry(entry)
               setDeleteConfirmationModalOpen(true)
@@ -97,19 +97,19 @@ function EntryItem({
             <h3 className="truncate text-lg font-medium">{entry.name}</h3>
             {entry.type !== '' && (
               <Icon
+                className="size-5 shrink-0 text-bg-500"
                 icon={
                   {
                     fingerstyle: 'mingcute:guitar-line',
                     singalong: 'mdi:guitar-pick-outline'
                   }[entry.type]
                 }
-                className="size-5 shrink-0 text-bg-500"
               />
             )}
             {entry.isFavourite && (
               <Icon
-                icon="tabler:star-filled"
                 className="size-4 shrink-0 text-yellow-500"
+                icon="tabler:star-filled"
               />
             )}
           </div>

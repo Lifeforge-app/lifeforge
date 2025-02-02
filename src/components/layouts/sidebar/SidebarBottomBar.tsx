@@ -30,12 +30,12 @@ function SidebarBottomBar(): React.ReactElement {
             <div className="flex size-9 items-center justify-center overflow-hidden rounded-full bg-bg-100 dark:bg-bg-800">
               {userData.avatar !== '' ? (
                 <img
-                  src={getAvatarURL()}
                   alt=""
                   className="size-full object-cover"
+                  src={getAvatarURL()}
                 />
               ) : (
-                <Icon icon="tabler:user" className="text-xl text-bg-500" />
+                <Icon className="text-xl text-bg-500" icon="tabler:user" />
               )}
             </div>
             <div
@@ -50,10 +50,10 @@ function SidebarBottomBar(): React.ReactElement {
             </div>
           </div>
           <Icon
-            icon="ph:caret-up-down-bold"
             className={`size-5 shrink-0 stroke-[2px] text-bg-500 ${
               sidebarExpanded ? 'flex' : 'hidden'
             }`}
+            icon="ph:caret-up-down-bold"
           />
         </MenuButton>
         <MenuItems
@@ -63,22 +63,22 @@ function SidebarBottomBar(): React.ReactElement {
         >
           <div className="py-1">
             <MenuItem
+              icon="tabler:user-cog"
+              namespace="common.sidebar"
+              text="Account settings"
               onClick={() => {
                 navigate('/account')
               }}
-              icon="tabler:user-cog"
-              text="Account settings"
-              namespace="common.sidebar"
             />
             <MenuItem
               isRed
+              icon="tabler:logout"
+              namespace="common.sidebar"
+              text="Sign out"
               onClick={() => {
                 logout()
                 toast.warning('Logged out successfully!')
               }}
-              icon="tabler:logout"
-              text="Sign out"
-              namespace="common.sidebar"
             />
           </div>
         </MenuItems>

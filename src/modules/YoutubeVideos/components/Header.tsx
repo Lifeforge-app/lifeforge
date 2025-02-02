@@ -91,37 +91,27 @@ function Header({
   return (
     <>
       <ModuleHeader
-        icon="tabler:brand-youtube"
-        title="Youtube Videos"
-        totalItems={videosLength}
         actionButton={
           <Button
+            className="hidden whitespace-nowrap md:flex"
             icon="tabler:plus"
+            tProps={{ item: t('items.video') }}
             onClick={() => {
               refreshVideos()
               setIsAddVideosModalOpen(true)
             }}
-            className="hidden whitespace-nowrap md:flex"
-            tProps={{ item: t('items.video') }}
           >
             new
           </Button>
-        }
-        hamburgerMenuItems={
-          <MenuItem
-            icon="tabler:refresh"
-            text="Refresh"
-            onClick={refreshVideos}
-          />
         }
         customElement={
           Object.entries(processes).some(
             ([, { status }]) => status === 'in_progress'
           ) && (
             <Button
+              className="p-5"
               icon="tabler:download"
               variant="no-bg"
-              className="p-5"
               onClick={() => {
                 setIsDownloadProcessModalOpen(true)
               }}
@@ -136,20 +126,30 @@ function Header({
             </Button>
           )
         }
+        hamburgerMenuItems={
+          <MenuItem
+            icon="tabler:refresh"
+            text="Refresh"
+            onClick={refreshVideos}
+          />
+        }
+        icon="tabler:brand-youtube"
+        title="Youtube Videos"
+        totalItems={videosLength}
       />
       <SearchInput
+        namespace="modules.youtubeVideos"
         searchQuery={query}
         setSearchQuery={setQuery}
         stuffToSearch="video"
-        namespace="modules.youtubeVideos"
       />
       <DownloadProcessModal
         isOpen={isDownloadProcessModalOpen}
+        processes={processes}
         onClose={() => {
           setIsDownloadProcessModalOpen(false)
           refreshVideos()
         }}
-        processes={processes}
       />
     </>
   )

@@ -43,15 +43,15 @@ function ContinentSelector(): React.ReactElement {
               : CONTINENTS[continentID as keyof typeof CONTINENTS]}
           </span>
         </div>
-        <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
+        <Icon className="size-5 text-bg-500" icon="tabler:chevron-down" />
       </ListboxButton>
       <ListboxOrComboboxOptions lighter>
-        <ListboxOrComboboxOption value="all" text="All Continents" />
+        <ListboxOrComboboxOption text="All Continents" value="all" />
         {Object.keys(CONTINENTS).map(continent => (
           <ListboxOrComboboxOption
             key={continent}
-            value={continent}
             text={CONTINENTS[continent as keyof typeof CONTINENTS]}
+            value={continent}
           />
         ))}
       </ListboxOrComboboxOptions>

@@ -73,19 +73,20 @@ function ScanReceiptModal({
     <>
       <ModalWrapper isOpen={open} minWidth="50vw">
         <ModalHeader
-          title="receipts.scan"
-          namespace="modules.wallet"
+          hasAI
           icon="tabler:scan"
+          namespace="modules.wallet"
+          title="receipts.scan"
           onClose={() => {
             setOpen(false)
             setExistedData(null)
           }}
-          hasAI
         />
         <ImageAndFileInput
           icon="tabler:receipt"
           image={file}
           name="receipt"
+          namespace="modules.wallet"
           preview={preview}
           setImage={setFile}
           setImagePickerModalOpen={setImagePickerModalOpen}
@@ -94,11 +95,10 @@ function ScanReceiptModal({
             setFile(null)
             setPreview(null)
           }}
-          namespace="modules.wallet"
         />
         <div className="flex-between mt-4 gap-4">
           <div className="flex w-full min-w-0 items-center gap-2">
-            <Icon icon="tabler:file-check" className="size-5 shrink-0" />
+            <Icon className="size-5 shrink-0" icon="tabler:file-check" />
             <span className="w-full min-w-0 truncate">
               {t('receipts.keepAfterScan')}
             </span>
@@ -111,13 +111,13 @@ function ScanReceiptModal({
           />
         </div>
         <Button
-          onClick={() => {
-            onSubmit().catch(console.error)
-          }}
+          iconAtEnd
           className="mt-6"
           icon="tabler:arrow-right"
           loading={loading}
-          iconAtEnd
+          onClick={() => {
+            onSubmit().catch(console.error)
+          }}
         >
           proceed
         </Button>

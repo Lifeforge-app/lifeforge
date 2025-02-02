@@ -19,9 +19,9 @@ function CFOPPLL(): React.ReactElement {
         <div className="flex-between flex">
           <h1 className="flex items-center gap-4 text-2xl font-semibold sm:text-3xl">
             <img
-              src="/assets/cfop/landing-pll.webp"
               alt="PLL"
               className="size-16"
+              src="/assets/cfop/landing-pll.webp"
             />
             Permutation of the Last Layer
           </h1>

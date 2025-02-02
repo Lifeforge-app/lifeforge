@@ -33,6 +33,7 @@ function ColumnVisibilityToggle({
         ].map(column => (
           <MenuItem
             key={column}
+            isToggled={visibleColumn.includes(column)}
             text={t(`table.${toCamelCase(column)}`)}
             onClick={() => {
               if (visibleColumn.includes(column)) {
@@ -41,7 +42,6 @@ function ColumnVisibilityToggle({
                 setVisibleColumn([...visibleColumn, column])
               }
             }}
-            isToggled={visibleColumn.includes(column)}
           />
         ))}
       </HamburgerSelectorWrapper>

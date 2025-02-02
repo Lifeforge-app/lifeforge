@@ -51,12 +51,12 @@ function EntryItem<T extends boolean = false>({
     >
       <img
         alt=""
-        src={`${import.meta.env.VITE_API_HOST}/media/${
-          entry.front_image
-        }?thumb=512x0`}
         className={`aspect-square h-64 object-contain ${
           isCartItem ? 'h-32' : 'h-64'
         }`}
+        src={`${import.meta.env.VITE_API_HOST}/media/${
+          entry.front_image
+        }?thumb=512x0`}
       />
       <div className="flex w-full flex-1 flex-col">
         <div
@@ -67,11 +67,11 @@ function EntryItem<T extends boolean = false>({
           <div className="space-y-1">
             <p className="flex items-center gap-1 text-sm text-zinc-500">
               <Icon
+                className="size-4"
                 icon={
                   VW_CATEGORIES.find(cat => cat.name === entry.category)
                     ?.icon ?? ''
                 }
-                className="size-4"
               />
               {entry.subcategory}
             </p>
@@ -120,10 +120,10 @@ function EntryItem<T extends boolean = false>({
       {!isCartItem ? (
         <>
           <Button
+            className="mt-4"
+            icon="tabler:plus"
             loading={addToCartLoading}
             variant="no-bg"
-            icon="tabler:plus"
-            className="mt-4"
             onClick={() => {
               setAddToCartLoading(true)
               onAddToCart!()
@@ -136,22 +136,22 @@ function EntryItem<T extends boolean = false>({
             Add to Cart
           </Button>
           <HamburgerMenu className="absolute right-4 top-4 hidden group-hover:block data-open:block">
-            <MenuItem icon="tabler:pencil" onClick={onUpdate!} text="Edit" />
+            <MenuItem icon="tabler:pencil" text="Edit" onClick={onUpdate!} />
             <MenuItem
-              icon="tabler:trash"
-              onClick={onDelete!}
               isRed
+              icon="tabler:trash"
               text="Delete"
+              onClick={onDelete!}
             />
           </HamburgerMenu>
         </>
       ) : (
         <Button
-          variant="no-bg"
           isRed
-          icon="tabler:trash"
           className="mt-4"
+          icon="tabler:trash"
           loading={removeFromCartLoading}
+          variant="no-bg"
           onClick={() => {
             setRemoveFromCartLoading(true)
             onRemoveFromCart!()

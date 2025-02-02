@@ -26,7 +26,7 @@ function NOTAMDetailsModal({
   )
 
   return (
-    <ModalWrapper isOpen={isOpen} className="h-full md:min-w-[40vw]!">
+    <ModalWrapper className="h-full md:min-w-[40vw]!" isOpen={isOpen}>
       <ModalHeader
         icon="uil:exclamation-octagon"
         title="NOTAM Details"
@@ -45,9 +45,9 @@ function NOTAMDetailsModal({
                   <PropsTable data={NOTAMData} />
                 )}
                 <RawCodeAndSummary
-                  raw={NOTAMData.raw}
                   id={selectedNOTAMData.id}
                   isOpen={isOpen}
+                  raw={NOTAMData.raw}
                 />
                 {NOTAMData.qualification?.coordinates !== undefined && (
                   <RegionMap data={NOTAMData} />
@@ -56,9 +56,9 @@ function NOTAMDetailsModal({
             </Scrollbar>
           ) : (
             <EmptyStateScreen
-              namespace="modules.airports"
-              name="NOTAM"
               icon="tabler:file-text"
+              name="NOTAM"
+              namespace="modules.airports"
             />
           )
         }

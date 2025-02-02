@@ -40,7 +40,7 @@ function SidebarItemContent({
                 {t(`common.sidebar:modules.${toCamelCase(name)}.title`)}
               </span>
               {hasAI && (
-                <Icon icon="mage:stars-c" className="size-4 text-custom-500" />
+                <Icon className="size-4 text-custom-500" icon="mage:stars-c" />
               )}
             </span>
           ) : (
@@ -69,13 +69,13 @@ function SidebarItemContent({
       {!active && hamburgerMenuItems !== undefined && (
         <HamburgerMenu
           smallerPadding
+          className={`relative overscroll-contain ${
+            !isMenuOpen ? 'hidden group-hover:block' : ''
+          }`}
           onButtonClick={e => {
             e.stopPropagation()
             setIsMenuOpen(true)
           }}
-          className={`relative overscroll-contain ${
-            !isMenuOpen ? 'hidden group-hover:block' : ''
-          }`}
           onClose={() => {
             setIsMenuOpen(false)
           }}

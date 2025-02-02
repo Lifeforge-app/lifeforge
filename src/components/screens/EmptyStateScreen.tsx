@@ -40,10 +40,10 @@ function EmptyStateScreen({
     >
       {icon !== undefined && (
         <Icon
-          icon={icon}
           className={`${
             smaller ? 'size-24' : 'size-32'
           } shrink-0 text-bg-300 dark:text-bg-500`}
+          icon={icon}
         />
       )}
       <h2
@@ -67,12 +67,12 @@ function EmptyStateScreen({
       {customCTAButton ??
         (ctaContent && onCTAClick && (
           <Button
+            className="mt-6"
+            icon={ctaIcon ?? 'tabler:plus'}
+            tProps={ctaTProps}
             onClick={() => {
               onCTAClick('create')
             }}
-            icon={ctaIcon ?? 'tabler:plus'}
-            className="mt-6"
-            tProps={ctaTProps}
           >
             {ctaContent}
           </Button>

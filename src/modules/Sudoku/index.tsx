@@ -15,26 +15,26 @@ function Sudoku(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Sudoku" icon="uil:table" />
+      <ModuleHeader icon="uil:table" title="Sudoku" />
       <APIFallbackComponent data={data}>
         {data => (
           <div className="mt-6 space-y-2">
             <Button
+              className="w-full"
+              icon="uil:print"
               onClick={() => {
                 reactToPrintFn()
               }}
-              icon="uil:print"
-              className="w-full"
             >
               Print
             </Button>
             <Button
+              className="w-full"
+              icon="uil:sync"
+              variant="secondary"
               onClick={() => {
                 refreshData()
               }}
-              icon="uil:sync"
-              variant="secondary"
-              className="w-full"
             >
               Refresh
             </Button>

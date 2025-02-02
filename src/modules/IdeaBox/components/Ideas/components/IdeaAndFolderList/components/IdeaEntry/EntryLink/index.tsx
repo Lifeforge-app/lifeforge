@@ -40,8 +40,8 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
     >
       {entry.pinned && (
         <Icon
-          icon="tabler:pin"
           className="absolute -left-2 -top-2 z-50 size-5 -rotate-90 text-red-500 drop-shadow-md"
+          icon="tabler:pin"
         />
       )}
       <div className="space-y-2">
@@ -60,13 +60,13 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
           <span className="mt-3 flex items-center gap-2 text-sm">
             In
             <span
+              className="inline-flex items-center gap-2 rounded-full px-3 py-1 pl-2"
               style={{
                 color: entry.folder.color,
                 backgroundColor: entry.folder.color + '30'
               }}
-              className="inline-flex items-center gap-2 rounded-full px-3 py-1 pl-2"
             >
-              <Icon icon={entry.folder.icon} className="size-4" />
+              <Icon className="size-4" icon={entry.folder.icon} />
               {entry.folder.name}
             </span>
           </span>

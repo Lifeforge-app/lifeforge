@@ -59,15 +59,15 @@ function LocationInput({
 
   return (
     <ListboxOrComboboxInput
-      type="combobox"
+      customActive={Boolean(location)}
+      displayValue={(value: string) => value}
       icon="tabler:map-pin"
       name="Location"
-      value={location}
-      setValue={setLocation}
-      setQuery={setQuery}
-      displayValue={(value: string) => value}
-      customActive={Boolean(location)}
       namespace={namespace}
+      setQuery={setQuery}
+      setValue={setLocation}
+      type="combobox"
+      value={location}
     >
       {query.trim() !== '' && (
         <APIFallbackComponent data={data}>
@@ -75,11 +75,11 @@ function LocationInput({
             <>
               {data.predictions.map((prediction: Prediction) => (
                 <ListboxOrComboboxOption
-                  type="combobox"
                   key={prediction.place_id}
-                  value={prediction.description}
-                  text={prediction.description}
                   matchedSubstrings={prediction.matched_substrings}
+                  text={prediction.description}
+                  type="combobox"
+                  value={prediction.description}
                 />
               ))}
             </>

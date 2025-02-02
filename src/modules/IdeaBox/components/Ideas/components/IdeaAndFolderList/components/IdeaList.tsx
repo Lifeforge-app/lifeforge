@@ -12,6 +12,8 @@ function IdeaList({ data }: { data: IIdeaBoxEntry[] }): React.ReactElement {
 
   return (
     <Column
+      className="mb-8 shrink-0 overflow-x-visible!"
+      gap="0.5rem"
       queries={[
         {
           columns: 1,
@@ -34,8 +36,6 @@ function IdeaList({ data }: { data: IIdeaBoxEntry[] }): React.ReactElement {
           query: 'min-width: 1536px'
         }
       ]}
-      gap="0.5rem"
-      className="mb-8 shrink-0 overflow-x-visible!"
     >
       {data
         .filter(item => {

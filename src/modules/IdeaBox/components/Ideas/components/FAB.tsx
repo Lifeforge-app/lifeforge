@@ -53,6 +53,7 @@ function FAB(): React.ReactElement {
                       {t(`entryType.${name.toLowerCase()}`)}
                     </span>
                     <button
+                      className="rounded-full bg-bg-100 text-bg-800 p-3 transition-all group-data-focus:bg-bg-200"
                       onClick={() => {
                         if (name === 'Folder') {
                           setExistedFolder(null)
@@ -65,9 +66,8 @@ function FAB(): React.ReactElement {
                           setModifyIdeaModalOpenType('create')
                         }
                       }}
-                      className="rounded-full bg-bg-100 text-bg-800 p-3 transition-all group-data-focus:bg-bg-200"
                     >
-                      <Icon icon={icon} className="size-5" />
+                      <Icon className="size-5" icon={icon} />
                     </button>
                   </div>
                 </MenuItem>

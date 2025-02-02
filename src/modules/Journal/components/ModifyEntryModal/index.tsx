@@ -129,9 +129,9 @@ function ModifyJournalEntryModal({
 
   return (
     <ModalWrapper
-      modalRef={ref}
-      isOpen={openType !== null}
       className="h-max md:min-w-[40vw]!"
+      isOpen={openType !== null}
+      modalRef={ref}
     >
       <ModalHeader
         icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
@@ -143,27 +143,27 @@ function ModifyJournalEntryModal({
         onClose={onClose}
       />
       <DateInput
-        namespace="modules.journal"
-        modalRef={ref}
-        date={date}
-        setDate={setDate}
-        icon="tabler:calendar"
-        name="Date"
-        hasMargin={false}
         darker
+        date={date}
+        hasMargin={false}
+        icon="tabler:calendar"
+        modalRef={ref}
+        name="Date"
+        namespace="modules.journal"
+        setDate={setDate}
       />
       <TextInput
-        namespace="modules.journal"
-        name="Journal Title"
-        value={title}
-        updateValue={setTitle}
         darker
-        icon="tabler:file-text"
-        className="mt-4"
-        placeholder="A Beautiful Day"
         actionButtonIcon={
           titleGenerationLoading ? 'svg-spinners:180-ring' : 'mage:stars-c'
         }
+        className="mt-4"
+        icon="tabler:file-text"
+        name="Journal Title"
+        namespace="modules.journal"
+        placeholder="A Beautiful Day"
+        updateValue={setTitle}
+        value={title}
         onActionButtonClick={() => {
           generateTitle().catch(console.error)
         }}
@@ -208,35 +208,36 @@ function ModifyJournalEntryModal({
             return (
               <RawText
                 openType={openType}
-                setStep={setStep}
                 rawText={rawText}
                 setRawText={setRawText}
+                setStep={setStep}
               />
             )
           case 2:
             return (
               <Cleanup
-                setStep={setStep}
-                rawText={rawText}
                 cleanedUpText={cleanedUpText}
-                setCleanedUpText={setCleanedUpText}
                 masterPassword={masterPassword}
+                rawText={rawText}
+                setCleanedUpText={setCleanedUpText}
+                setStep={setStep}
               />
             )
           case 3:
             return (
               <Summarize
-                setStep={setStep}
                 cleanedUpText={cleanedUpText}
-                summarizedText={summarizedText}
-                setSummarizedText={setSummarizedText}
                 masterPassword={masterPassword}
+                setStep={setStep}
+                setSummarizedText={setSummarizedText}
+                summarizedText={summarizedText}
               />
             )
           case 4:
             return (
               <Photos
-                setStep={setStep}
+                openType={openType}
+                originalPhotosLength={originalPhotosLength}
                 photos={
                   photos as Array<{
                     file: File
@@ -253,35 +254,34 @@ function ModifyJournalEntryModal({
                     >
                   >
                 }
-                openType={openType}
-                originalPhotosLength={originalPhotosLength}
+                setStep={setStep}
               />
             )
           case 5:
             return (
               <Mood
-                setStep={setStep}
                 cleanedUpText={cleanedUpText}
+                masterPassword={masterPassword}
                 mood={mood}
                 setMood={setMood}
-                masterPassword={masterPassword}
+                setStep={setStep}
               />
             )
           case 6:
             return (
               <Review
-                id={existedData?.id ?? ''}
-                date={date}
-                title={title}
-                setStep={setStep}
                 cleanedUpText={cleanedUpText}
-                summarizedText={summarizedText}
-                photos={photos.every(p => typeof p === 'string') ? [] : photos}
-                mood={mood}
-                rawText={rawText}
+                date={date}
+                id={existedData?.id ?? ''}
                 masterPassword={masterPassword}
-                onClose={onClose}
+                mood={mood}
                 openType={openType}
+                photos={photos.every(p => typeof p === 'string') ? [] : photos}
+                rawText={rawText}
+                setStep={setStep}
+                summarizedText={summarizedText}
+                title={title}
+                onClose={onClose}
               />
             )
         }

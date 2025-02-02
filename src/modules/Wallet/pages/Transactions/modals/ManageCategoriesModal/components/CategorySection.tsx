@@ -33,16 +33,16 @@ function CategorySection({
     <>
       <div className="flex-between flex gap-4">
         <h2 className="flex items-center gap-2 text-lg font-medium text-bg-500">
-          <Icon icon={iconName} className="size-6" />
+          <Icon className="size-6" icon={iconName} />
           {t('transactionTypes.' + type)}
         </h2>
         <button
+          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50"
           onClick={() => {
             setModifyCategoriesModalOpenType(type)
           }}
-          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50"
         >
-          <Icon icon="tabler:plus" className="size-5" />
+          <Icon className="size-5" icon="tabler:plus" />
         </button>
       </div>
       <ul className="mb-4 flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
@@ -51,14 +51,14 @@ function CategorySection({
             <li key={category.id} className="flex-between flex gap-4 px-2 py-4">
               <div className="flex items-center gap-4">
                 <div
+                  className="rounded-md p-2"
                   style={{
                     backgroundColor: category.color + '20'
                   }}
-                  className="rounded-md p-2"
                 >
                   <Icon
-                    icon={category.icon}
                     className="size-6"
+                    icon={category.icon}
                     style={{
                       color: category.color
                     }}
@@ -76,13 +76,13 @@ function CategorySection({
                   }}
                 />
                 <MenuItem
+                  isRed
                   icon="tabler:trash"
                   text="Delete"
                   onClick={() => {
                     setExistedData(category)
                     setDeleteCategoriesConfirmationOpen(true)
                   }}
-                  isRed
                 />
               </HamburgerMenu>
             </li>

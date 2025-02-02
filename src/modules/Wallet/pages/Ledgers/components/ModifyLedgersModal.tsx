@@ -87,43 +87,44 @@ function ModifyLedgersModal({
 
   return (
     <>
-      <ModalWrapper isOpen={openType !== null} className="sm:min-w-[30rem]">
+      <ModalWrapper className="sm:min-w-[30rem]" isOpen={openType !== null}>
         <ModalHeader
           icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
-          title={openType === 'update' ? 'Edit Ledger' : 'Add Ledger'}
+          namespace="modules.wallet"
+          title={`ledger.${openType}`}
           onClose={() => {
             setOpenType(null)
           }}
         />
         <TextInput
+          darker
           icon="tabler:book"
+          name="Ledger name"
           namespace="modules.wallet"
           placeholder="My Ledgers"
-          value={ledgerName}
-          darker
-          name="Ledger name"
           updateValue={setLedgerName}
+          value={ledgerName}
         />
         <IconInput
           icon={ledgerIcon}
+          name="Ledger icon"
           namespace="modules.wallet"
           setIcon={setLedgerIcon}
-          name="Ledger icon"
           setIconSelectorOpen={setIconSelectorOpen}
         />
         <ColorInput
           color={ledgerColor}
-          namespace="modules.wallet"
           name="Ledger color"
+          namespace="modules.wallet"
           setColorPickerOpen={setColorPickerOpen}
           updateColor={setLedgerColor}
         />
         <CreateOrModifyButton
           loading={isLoading}
+          type={openType}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-          type={openType}
         />
       </ModalWrapper>
       <IconPickerModal

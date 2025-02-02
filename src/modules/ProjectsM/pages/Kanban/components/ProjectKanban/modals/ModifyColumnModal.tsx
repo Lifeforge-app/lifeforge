@@ -91,44 +91,44 @@ function ModifyColumnModal({
 
   return (
     <>
-      <ModalWrapper isOpen={openType !== null} className="sm:min-w-[30rem]">
+      <ModalWrapper className="sm:min-w-[30rem]" isOpen={openType !== null}>
         <ModalHeader
           icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
-          title={`column.${openType}`}
           namespace="modules.projectsM"
+          title={`column.${openType}`}
           onClose={() => {
             setOpenType(null)
           }}
         />
         <TextInput
-          namespace="modules.projectsM"
-          icon="tabler:book"
-          placeholder="My Columns"
-          value={columnName}
           darker
+          icon="tabler:book"
           name="Column name"
+          namespace="modules.projectsM"
+          placeholder="My Columns"
           updateValue={setColumnName}
+          value={columnName}
         />
         <IconInput
-          namespace="modules.projectsM"
           icon={columnIcon}
-          setIcon={setColumnIcon}
           name="Column icon"
+          namespace="modules.projectsM"
+          setIcon={setColumnIcon}
           setIconSelectorOpen={setIconSelectorOpen}
         />
         <ColorInput
-          namespace="modules.projectsM"
           color={columnColor}
           name="Column color"
+          namespace="modules.projectsM"
           setColorPickerOpen={setColorPickerOpen}
           updateColor={setColumnColor}
         />
         <CreateOrModifyButton
           loading={isLoading}
+          type={openType}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-          type={openType}
         />
       </ModalWrapper>
       <IconPickerModal

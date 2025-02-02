@@ -25,12 +25,16 @@ function TaskStatusList({
           ].map(([icon, name]) => (
             <SidebarItem
               key={name}
-              icon={icon}
-              name={name}
-              namespace="modules.todoList"
               active={
                 searchParams.get('status') === name.toLowerCase() ||
                 (name === 'All' && !searchParams.get('status'))
+              }
+              autoActive={false}
+              icon={icon}
+              name={name}
+              namespace="modules.todoList"
+              number={
+                statusCounter[name.toLowerCase() as keyof typeof statusCounter]
               }
               onClick={() => {
                 if (name === 'All') {
@@ -45,10 +49,6 @@ function TaskStatusList({
                 })
                 setSidebarOpen(false)
               }}
-              autoActive={false}
-              number={
-                statusCounter[name.toLowerCase() as keyof typeof statusCounter]
-              }
             />
           ))}
         </>

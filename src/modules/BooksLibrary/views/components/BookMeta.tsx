@@ -35,21 +35,21 @@ function BookMeta({
                 {langs.map((lang, i) => (
                   <div key={lang.id}>
                     <div className="flex items-center gap-1">
-                      <Icon icon={lang.icon} className="size-4" />
+                      <Icon className="size-4" icon={lang.icon} />
                       {lang.name}
                     </div>
                     {i !== langs.length - 1 && (
                       <Icon
                         key={`separator-${lang.id}`}
-                        icon="tabler:circle-filled"
                         className={`size-1 ${isGridView && 'hidden sm:block'}`}
+                        icon="tabler:circle-filled"
                       />
                     )}
                   </div>
                 ))}
                 <Icon
-                  icon="tabler:circle-filled"
                   className={`size-1 ${isGridView && 'hidden sm:block'}`}
+                  icon="tabler:circle-filled"
                 />
               </>
             )
@@ -58,12 +58,12 @@ function BookMeta({
       {item.year_published !== 0 && (
         <>
           <p className="flex shrink-0 items-center whitespace-nowrap text-bg-500">
-            <Icon icon="tabler:clock" className="mr-1 size-4" />
+            <Icon className="mr-1 size-4" icon="tabler:clock" />
             {item.year_published}
           </p>
           <Icon
-            icon="tabler:circle-filled"
             className={`size-1 ${isGridView && 'hidden sm:block'}`}
+            icon="tabler:circle-filled"
           />
         </>
       )}
@@ -74,27 +74,27 @@ function BookMeta({
               isGridView ? 'w-full sm:w-auto' : 'w-auto'
             }`}
           >
-            <Icon icon="tabler:user" className="mr-1 size-4 shrink-0" />
+            <Icon className="mr-1 size-4 shrink-0" icon="tabler:user" />
             <span className="w-full min-w-0 max-w-44 truncate">
               {item.publisher}
             </span>
           </p>
           <Icon
-            icon="tabler:circle-filled"
             className={`size-1 ${isGridView && 'hidden sm:block'}`}
+            icon="tabler:circle-filled"
           />
         </>
       )}
       <p className="flex shrink-0 items-center whitespace-nowrap text-bg-500">
-        <Icon icon="tabler:dimensions" className="mr-1 size-4" />
+        <Icon className="mr-1 size-4" icon="tabler:dimensions" />
         {cleanFileSize(item.size)}
       </p>
       <Icon
-        icon="tabler:circle-filled"
         className={`size-1 ${isGridView && 'hidden sm:block'}`}
+        icon="tabler:circle-filled"
       />
       <p className="flex shrink-0 items-center whitespace-nowrap text-bg-500">
-        <Icon icon="tabler:file-text" className="mr-1 size-4" />
+        <Icon className="mr-1 size-4" icon="tabler:file-text" />
         {item.extension}
       </p>
     </div>

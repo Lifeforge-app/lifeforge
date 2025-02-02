@@ -107,8 +107,8 @@ function CardSet(): React.ReactElement {
                   return (
                     <>
                       <Icon
-                        icon="tabler:alert-triangle"
                         className="mt-0.5 size-7 text-red-500"
+                        icon="tabler:alert-triangle"
                       />
                       Failed to fetch data from server.
                     </>
@@ -127,7 +127,7 @@ function CardSet(): React.ReactElement {
           </h1>
           <div className="flex-center gap-2">
             <button className="rounded-md p-4 text-bg-500 transition-all hover:bg-bg-800 hover:text-bg-50">
-              <Icon icon="tabler:border-corners" className="text-xl" />
+              <Icon className="text-xl" icon="tabler:border-corners" />
             </button>
             <HamburgerMenu largerPadding className="relative">
               <MenuItem
@@ -147,10 +147,10 @@ function CardSet(): React.ReactElement {
             <>
               <div className="flex-center h-1/2 w-3/5 gap-4">
                 <button
-                  onClick={gotoLastCard}
                   className="flex-center h-full shrink-0 p-4"
+                  onClick={gotoLastCard}
                 >
-                  <Icon icon="tabler:chevron-left" className="text-3xl" />
+                  <Icon className="text-3xl" icon="tabler:chevron-left" />
                 </button>
                 <div className="stack size-full">
                   <div className="card h-full bg-custom-500 text-bg-800 shadow-md">
@@ -158,14 +158,14 @@ function CardSet(): React.ReactElement {
                       <div className="flex-between card-title flex">
                         <h2 className="text-custom-800">#{currentIndex + 1}</h2>
                         <button
+                          className="rounded-md bg-custom-500/20 p-2 text-custom-800"
                           onClick={() => {
                             setIsShowingAnswer(!isShowingAnswer)
                           }}
-                          className="rounded-md bg-custom-500/20 p-2 text-custom-800"
                         >
                           <Icon
-                            icon={`tabler:bulb${isShowingAnswer ? '-off' : ''}`}
                             className="size-7"
+                            icon={`tabler:bulb${isShowingAnswer ? '-off' : ''}`}
                           />
                         </button>
                       </div>
@@ -180,29 +180,29 @@ function CardSet(): React.ReactElement {
                   <div className="card h-full bg-custom-900 text-bg-800 opacity-100! shadow-xs"></div>
                 </div>
                 <button
-                  onClick={gotoNextCard}
                   className="flex-center h-full shrink-0 p-4"
+                  onClick={gotoNextCard}
                 >
-                  <Icon icon="tabler:chevron-right" className="text-3xl" />
+                  <Icon className="text-3xl" icon="tabler:chevron-right" />
                 </button>
               </div>
               <Button
+                className="mt-12 w-1/2"
+                icon="tabler:dice"
                 variant="secondary"
                 onClick={pickRandomCard}
-                icon="tabler:dice"
-                className="mt-12 w-1/2"
               >
                 Pick Random Card
               </Button>
               <EditCardModal
+                cards={cards}
                 deck={id}
                 isOpen={editCardModalOpen}
-                cards={cards}
+                refreshCards={refreshCards}
+                refreshContainerDetails={refreshContainerDetails}
                 onClose={() => {
                   setEditCardModalOpen(false)
                 }}
-                refreshCards={refreshCards}
-                refreshContainerDetails={refreshContainerDetails}
               />
             </>
           )}

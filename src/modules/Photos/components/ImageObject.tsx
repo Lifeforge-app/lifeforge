@@ -38,8 +38,17 @@ function ImageObject({
 
   return (
     <div
+      className={`group/image relative size-full min-w-20 overflow-hidden ${
+        selected ? 'bg-custom-500/20' : componentBg
+      } transition-all ${selectedPhotosLength > 0 ? 'cursor-pointer' : ''}`}
       role="button"
+      style={style}
       tabIndex={0}
+      onClick={e => {
+        if (selectedPhotosLength > 0) {
+          toggleSelected(e)
+        }
+      }}
       onKeyDown={e => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault()
@@ -48,15 +57,6 @@ function ImageObject({
           }
         }
       }}
-      onClick={e => {
-        if (selectedPhotosLength > 0) {
-          toggleSelected(e)
-        }
-      }}
-      style={style}
-      className={`group/image relative size-full min-w-20 overflow-hidden ${
-        selected ? 'bg-custom-500/20' : componentBg
-      } transition-all ${selectedPhotosLength > 0 ? 'cursor-pointer' : ''}`}
     >
       {(ready || beingDisplayedInAlbum) &&
         photo.src.endsWith('/undefined?thumb=0x300') === false && (
@@ -76,12 +76,12 @@ function ImageObject({
               >
                 <LLI
                   alt=""
-                  src={photo.src}
-                  delayTime={300}
+                  className="size-full object-cover"
                   delayMethod="debounce"
+                  delayTime={300}
+                  src={photo.src}
                   threshold={50}
                   useIntersectionObserver={false}
-                  className="size-full object-cover"
                 />
               </button>
             </div>
@@ -89,30 +89,30 @@ function ImageObject({
               <div className="pointer-events-none absolute top-0 h-12 w-full bg-linear-to-t from-transparent to-black/50 opacity-0 transition-all group-hover/image:opacity-100" />
             )}
             <button
-              onClick={toggleSelected}
               className={`group/select-button flex-center absolute left-2.5 top-2.5 size-6 rounded-full transition-all  ${
                 selected
                   ? 'flex bg-custom-500 opacity-100'
                   : 'hidden bg-bg-200 opacity-50 hover:bg-bg-100! hover:opacity-100! group-hover/image:flex'
               }`}
+              onClick={toggleSelected}
             >
               <Icon
-                icon="tabler:check"
                 className={`stroke-bg-900 stroke-[2px] text-bg-800 transition-all ${
                   !selected &&
                   'group-hover/select-button:stroke-bg-900 group-hover/select-button:text-bg-800'
                 }`}
+                icon="tabler:check"
               />
             </button>
             <div className="absolute right-2 top-2 flex items-center gap-2 text-bg-200 opacity-50">
               {details.has_raw && (
-                <Icon icon="tabler:letter-r" className="size-5" />
+                <Icon className="size-5" icon="tabler:letter-r" />
               )}
               {!beingDisplayedInAlbum && details.is_in_album && (
-                <Icon icon="tabler:library-photo" className="size-5" />
+                <Icon className="size-5" icon="tabler:library-photo" />
               )}
               {details.is_favourite && (
-                <Icon icon="tabler:star" className="size-5" />
+                <Icon className="size-5" icon="tabler:star" />
               )}
             </div>
           </>

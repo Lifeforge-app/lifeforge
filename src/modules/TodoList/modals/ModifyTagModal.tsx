@@ -61,17 +61,17 @@ function ModifyTagModal(): React.ReactElement {
 
   return (
     <Modal
-      namespace="modules.todoList"
+      data={data}
+      fields={FIELDS}
+      icon="tabler:tag"
       isOpen={openType !== null}
+      namespace="modules.todoList"
       openType={openType}
+      setData={setData}
+      title={`tag.${openType}`}
       onClose={() => {
         setOpenType(null)
       }}
-      title={`tag.${openType}`}
-      icon="tabler:tag"
-      data={data}
-      setData={setData}
-      fields={FIELDS}
       onSubmit={onSubmitButtonClick}
     />
   )

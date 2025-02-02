@@ -113,23 +113,23 @@ function YoutubeDownloaderModal(): React.ReactElement {
   return (
     <ModalWrapper isOpen={isOpen} minWidth="40vw">
       <ModalHeader
-        title="Download from YouTube"
-        namespace="modules.music"
         icon="tabler:brand-youtube"
+        namespace="modules.music"
+        title="Download from YouTube"
         onClose={() => {
           setIsYoutubeDownloaderOpen(false)
           refreshMusics()
         }}
       />
       <TextInput
-        namespace="modules.music"
-        name="Video URL"
-        icon="tabler:link"
-        value={videoURLinput}
-        updateValue={setVideoURLInput}
-        placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-        className="mb-8"
         darker
+        className="mb-8"
+        icon="tabler:link"
+        name="Video URL"
+        namespace="modules.music"
+        placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        updateValue={setVideoURLInput}
+        value={videoURLinput}
       />
       {URL_REGEX.test(videoURL) && (
         <APIFallbackComponent data={videoInfo}>
@@ -139,10 +139,10 @@ function YoutubeDownloaderModal(): React.ReactElement {
                 <VideoInfo videoInfo={videoInfo} />
               </div>
               <Button
+                className="mt-6"
+                icon={loading ? 'svg-spinners:180-ring' : 'tabler:download'}
                 loading={loading}
                 onClick={downloadVideo}
-                icon={loading ? 'svg-spinners:180-ring' : 'tabler:download'}
-                className="mt-6"
               >
                 {loading ? 'Downloading' : 'Download'}
               </Button>

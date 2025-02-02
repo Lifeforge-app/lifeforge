@@ -29,22 +29,22 @@ function Sidebar({
         {sidebarData => (
           <>
             <SidebarItem
+              active={Array.from(searchParams.keys()).length === 0}
               icon="tabler:list"
               name="All Clothes"
               namespace="modules.virtualWardrobe"
               number={sidebarData.total}
-              active={Array.from(searchParams.keys()).length === 0}
               onClick={() => {
                 setSearchParams({})
                 setOpen(false)
               }}
             />
             <SidebarItem
+              active={searchParams.get('favourite') === 'true'}
               icon="tabler:heart"
               name="Favourites"
               namespace="modules.virtualWardrobe"
               number={sidebarData.favourites}
-              active={searchParams.get('favourite') === 'true'}
               onClick={() => {
                 setSearchParams({
                   ...Object.fromEntries(searchParams.entries()),
@@ -63,24 +63,24 @@ function Sidebar({
               .map(([category, number]) => (
                 <SidebarItem
                   key={category}
-                  name={category}
-                  number={number}
+                  active={searchParams.get('category') === category}
                   icon={
                     VW_CATEGORIES.find(cat => cat.name === category)?.icon ?? ''
                   }
-                  active={searchParams.get('category') === category}
-                  onClick={() => {
-                    setSearchParams({
-                      ...Object.fromEntries(searchParams.entries()),
-                      category,
-                      subcategory: ''
-                    })
-                    setOpen(false)
-                  }}
+                  name={category}
+                  number={number}
                   onCancelButtonClick={() => {
                     setSearchParams({
                       ...Object.fromEntries(searchParams.entries()),
                       category: '',
+                      subcategory: ''
+                    })
+                    setOpen(false)
+                  }}
+                  onClick={() => {
+                    setSearchParams({
+                      ...Object.fromEntries(searchParams.entries()),
+                      category,
                       subcategory: ''
                     })
                     setOpen(false)
@@ -113,22 +113,22 @@ function Sidebar({
                       .map(([subcategory, number]) => (
                         <SidebarItem
                           key={subcategory}
-                          name={subcategory}
-                          number={number}
                           active={
                             searchParams.get('subcategory') === subcategory
                           }
-                          onClick={() => {
-                            setSearchParams({
-                              ...Object.fromEntries(searchParams.entries()),
-                              subcategory
-                            })
-                            setOpen(false)
-                          }}
+                          name={subcategory}
+                          number={number}
                           onCancelButtonClick={() => {
                             setSearchParams({
                               ...Object.fromEntries(searchParams.entries()),
                               subcategory: ''
+                            })
+                            setOpen(false)
+                          }}
+                          onClick={() => {
+                            setSearchParams({
+                              ...Object.fromEntries(searchParams.entries()),
+                              subcategory
                             })
                             setOpen(false)
                           }}
@@ -144,20 +144,20 @@ function Sidebar({
               .map(([brand, number]) => (
                 <SidebarItem
                   key={brand}
+                  active={searchParams.get('brand') === brand}
                   name={brand === '' ? 'Unknown' : brand}
                   number={number}
-                  active={searchParams.get('brand') === brand}
-                  onClick={() => {
-                    setSearchParams({
-                      ...Object.fromEntries(searchParams.entries()),
-                      brand: brand === '' ? 'unknown' : brand
-                    })
-                    setOpen(false)
-                  }}
                   onCancelButtonClick={() => {
                     setSearchParams({
                       ...Object.fromEntries(searchParams.entries()),
                       brand: ''
+                    })
+                    setOpen(false)
+                  }}
+                  onClick={() => {
+                    setSearchParams({
+                      ...Object.fromEntries(searchParams.entries()),
+                      brand: brand === '' ? 'unknown' : brand
                     })
                     setOpen(false)
                   }}
@@ -170,20 +170,20 @@ function Sidebar({
               .map(([size, number]) => (
                 <SidebarItem
                   key={size}
+                  active={searchParams.get('size') === size}
                   name={size}
                   number={number}
-                  active={searchParams.get('size') === size}
-                  onClick={() => {
-                    setSearchParams({
-                      ...Object.fromEntries(searchParams.entries()),
-                      size
-                    })
-                    setOpen(false)
-                  }}
                   onCancelButtonClick={() => {
                     setSearchParams({
                       ...Object.fromEntries(searchParams.entries()),
                       size: ''
+                    })
+                    setOpen(false)
+                  }}
+                  onClick={() => {
+                    setSearchParams({
+                      ...Object.fromEntries(searchParams.entries()),
+                      size
                     })
                     setOpen(false)
                   }}
@@ -196,21 +196,21 @@ function Sidebar({
               .map(([color, number]) => (
                 <SidebarItem
                   key={color}
+                  active={searchParams.get('color') === color}
                   name={color}
                   number={number}
-                  active={searchParams.get('color') === color}
                   sideStripColor={VW_COLORS.find(c => c.name === color)?.hex}
-                  onClick={() => {
-                    setSearchParams({
-                      ...Object.fromEntries(searchParams.entries()),
-                      color
-                    })
-                    setOpen(false)
-                  }}
                   onCancelButtonClick={() => {
                     setSearchParams({
                       ...Object.fromEntries(searchParams.entries()),
                       color: ''
+                    })
+                    setOpen(false)
+                  }}
+                  onClick={() => {
+                    setSearchParams({
+                      ...Object.fromEntries(searchParams.entries()),
+                      color
                     })
                     setOpen(false)
                   }}

@@ -78,50 +78,50 @@ function BasicInfoSection({
     <>
       <div className="mt-6 space-y-4">
         <TextInput
-          icon="tabler:shirt"
-          name="Item Name"
-          value={name}
-          updateValue={setName}
           darker
-          placeholder='e.g. "Blue Shirt"'
           required
           actionButtonIcon={canVision ? 'mage:stars-c' : undefined}
           actionButtonLoading={visionLoading}
+          icon="tabler:shirt"
+          name="Item Name"
+          namespace="modules.virtualWardrobe"
+          placeholder='e.g. "Blue Shirt"'
+          updateValue={setName}
+          value={name}
           onActionButtonClick={() => {
             onVision().catch(console.error)
           }}
-          namespace="modules.virtualWardrobe"
         />
         <ListboxOrComboboxInput
-          type="listbox"
-          name="Category"
-          value={category}
-          setValue={(value: string | null) => {
-            setCategory(value)
-            setSubCategory(null)
-          }}
-          icon="tabler:category"
           required
           buttonContent={
             <>
               <Icon
+                className="size-5"
                 icon={
                   VW_CATEGORIES.find(l => l.name === category)?.icon ??
                   'tabler:apps-off'
                 }
-                className="size-5"
               />
               <span className="-mt-px block truncate">
                 {VW_CATEGORIES.find(l => l.name === category)?.name ?? 'None'}
               </span>
             </>
           }
+          icon="tabler:category"
+          name="Category"
           namespace="modules.virtualWardrobe"
+          setValue={(value: string | null) => {
+            setCategory(value)
+            setSubCategory(null)
+          }}
+          type="listbox"
+          value={category}
         >
           <ListboxOrComboboxOption
-            type="listbox"
             icon="tabler:apps-off"
             text="None"
+            type="listbox"
             value={null}
           />
           {VW_CATEGORIES.map((category, i) => (
@@ -135,11 +135,6 @@ function BasicInfoSection({
         </ListboxOrComboboxInput>
         {category !== null && (
           <ListboxOrComboboxInput
-            type="listbox"
-            name="Subcategory"
-            value={subCategory}
-            setValue={setSubCategory}
-            icon="tabler:tag"
             required
             buttonContent={
               <>
@@ -148,9 +143,14 @@ function BasicInfoSection({
                 </span>
               </>
             }
+            icon="tabler:tag"
+            name="Subcategory"
             namespace="modules.virtualWardrobe"
+            setValue={setSubCategory}
+            type="listbox"
+            value={subCategory}
           >
-            <ListboxOrComboboxOption type="listbox" text="None" value={null} />
+            <ListboxOrComboboxOption text="None" type="listbox" value={null} />
             {VW_CATEGORIES.find(l => l.name === category)?.subcategories?.map(
               (subCategory, i) => (
                 <ListboxOrComboboxOption
@@ -163,20 +163,20 @@ function BasicInfoSection({
           </ListboxOrComboboxInput>
         )}
         <TextInput
+          darker
           icon="tabler:settings-2"
           name="Brand"
-          value={brand}
-          updateValue={setBrand}
-          darker
-          placeholder='e.g. "Nike"'
           namespace="modules.virtualWardrobe"
+          placeholder='e.g. "Nike"'
+          updateValue={setBrand}
+          value={brand}
         />
       </div>
       <div className="mt-6 flex items-center justify-between">
         {canGoBack && (
           <Button
-            variant="secondary"
             icon="tabler:arrow-left"
+            variant="secondary"
             onClick={() => {
               setStep(step - 1)
             }}
@@ -185,13 +185,13 @@ function BasicInfoSection({
           </Button>
         )}
         <Button
+          iconAtEnd
           className={!canGoBack ? 'w-full' : ''}
+          disabled={name === '' || category === null || subCategory === null}
+          icon="tabler:arrow-right"
           onClick={() => {
             setStep(step + 1)
           }}
-          disabled={name === '' || category === null || subCategory === null}
-          icon="tabler:arrow-right"
-          iconAtEnd
         >
           Next
         </Button>

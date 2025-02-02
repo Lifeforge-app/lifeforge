@@ -25,9 +25,9 @@ function OrdinaryColumn({
   return (
     <>
       <ConfigColumn
-        title={t(`settings.title.${toCamelCase(title)}`)}
         desc={t(`settings.desc.${toCamelCase(title)}`)}
         icon={icon}
+        title={t(`settings.title.${toCamelCase(title)}`)}
       >
         <div className="flex-between gap-4 w-full">
           <span className="whitespace-nowrap text-bg-500">
@@ -44,20 +44,20 @@ function OrdinaryColumn({
             })()}
           </span>
           <Button
+            icon="tabler:pencil"
+            variant="no-bg"
             onClick={() => {
               setModifyModalOpen(true)
             }}
-            variant="no-bg"
-            icon="tabler:pencil"
           />
         </div>
       </ConfigColumn>
       <ModifyModal
-        type={type}
-        title={title}
-        id={id}
         icon={icon}
+        id={id}
         isOpen={modifyModalOpen}
+        title={title}
+        type={type}
         onClose={() => {
           setModifyModalOpen(false)
         }}

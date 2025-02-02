@@ -53,16 +53,11 @@ function SearchInput({
       }}
     >
       <Icon
-        icon={customIcon ?? 'tabler:search'}
         className="size-5 shrink-0 text-bg-500"
+        icon={customIcon ?? 'tabler:search'}
       />
       <input
-        type="text"
-        onKeyUp={onKeyUp}
-        value={searchQuery}
-        onChange={e => {
-          setSearchQuery(e.target.value)
-        }}
+        className="w-full bg-transparent placeholder:text-bg-500"
         placeholder={t(`search`, {
           item: t([
             `${namespace}:${[tKey, 'items', toCamelCase(stuffToSearch)]
@@ -71,18 +66,23 @@ function SearchInput({
             stuffToSearch
           ])
         })}
-        className="w-full bg-transparent placeholder:text-bg-500"
+        type="text"
+        value={searchQuery}
+        onChange={e => {
+          setSearchQuery(e.target.value)
+        }}
+        onKeyUp={onKeyUp}
       />
       {onFilterIconClick !== undefined && (
         <button
-          onClick={onFilterIconClick}
           className={`flex items-center gap-1 rounded-lg p-2 ${
             filterAmount !== undefined && filterAmount > 0
               ? 'text-bg-900 dark:text-bg-100'
               : 'text-bg-500 hover:text-bg-900 dark:hover:text-bg-100'
           } transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50`}
+          onClick={onFilterIconClick}
         >
-          <Icon icon="tabler:filter" className="text-xl" />
+          <Icon className="text-xl" icon="tabler:filter" />
           {filterAmount !== undefined && filterAmount > 0 && (
             <span className="-mt-0.5">({filterAmount})</span>
           )}
@@ -90,10 +90,10 @@ function SearchInput({
       )}
       {sideButtonIcon !== undefined && onSideButtonClick !== undefined && (
         <button
-          onClick={onSideButtonClick}
           className="flex items-center gap-1 rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200 hover:text-bg-900 dark:hover:bg-bg-700/50 dark:hover:text-bg-100"
+          onClick={onSideButtonClick}
         >
-          <Icon icon={sideButtonIcon} className="text-xl" />
+          <Icon className="text-xl" icon={sideButtonIcon} />
         </button>
       )}
     </search>

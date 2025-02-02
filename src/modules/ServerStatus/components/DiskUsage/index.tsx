@@ -11,7 +11,7 @@ function DiskUsage(): React.ReactElement {
   return (
     <div className="mt-16 flex w-full flex-col gap-6">
       <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
-        <Icon icon="tabler:chart-pie" className="text-3xl" />
+        <Icon className="text-3xl" icon="tabler:chart-pie" />
         <span className="ml-2">Disks Usage</span>
       </h1>
       <APIFallbackComponent data={diskUsage}>

@@ -117,89 +117,89 @@ function CreatePasswordModal(): React.ReactElement {
     <>
       <ModalWrapper isOpen={openType !== null}>
         <ModalHeader
-          title={`password.${openType}`}
           icon={
             {
               create: 'tabler:plus',
               update: 'tabler:pencil'
             }[openType as 'create' | 'update']
           }
+          namespace="modules.passwords"
+          title={`password.${openType}`}
           onClose={() => {
             setModifyPasswordModalOpenType(null)
           }}
-          namespace="modules.passwords"
         />
         <form
+          className="flex w-full flex-col"
           onSubmit={e => {
             e.preventDefault()
           }}
-          className="flex w-full flex-col"
         >
-          <input type="password" className="hidden" />
+          <input className="hidden" type="password" />
           <TextInput
-            name="Service Name"
-            icon="tabler:lock"
-            value={name}
-            updateValue={setName}
             darker
-            placeholder="Google"
+            icon="tabler:lock"
+            name="Service Name"
             namespace="modules.passwords"
+            placeholder="Google"
+            updateValue={setName}
+            value={name}
           />
           <IconInput
             icon={icon}
-            setIcon={setIcon}
             name="Service Icon"
-            setIconSelectorOpen={setIconSelectorOpen}
             namespace="modules.passwords"
+            setIcon={setIcon}
+            setIconSelectorOpen={setIconSelectorOpen}
           />
           <ColorInput
             color={color}
             name="Service Color"
+            namespace="modules.passwords"
             setColorPickerOpen={setColorPickerOpen}
             updateColor={setColor}
-            namespace="modules.passwords"
           />
           <TextInput
-            name="Website"
+            darker
+            noAutoComplete
+            className="mt-6"
             icon="tabler:link"
-            value={website}
-            updateValue={setWebsite}
-            darker
+            name="Website"
+            namespace="modules.passwords"
             placeholder="https://google.com"
-            className="mt-6"
-            noAutoComplete
-            namespace="modules.passwords"
+            updateValue={setWebsite}
+            value={website}
           />
           <TextInput
-            name="Username or Email"
+            darker
+            noAutoComplete
+            className="mt-6"
             icon="tabler:user"
-            value={username}
-            updateValue={setUsername}
-            darker
-            placeholder="johndoe1234@gmail.com"
-            className="mt-6"
-            noAutoComplete
+            name="Username or Email"
             namespace="modules.passwords"
+            placeholder="johndoe1234@gmail.com"
+            updateValue={setUsername}
+            value={username}
           />
           <TextInput
-            name="Password"
-            icon="tabler:key"
-            value={password}
-            updateValue={setPassword}
-            isPassword
             darker
-            placeholder="Your password"
-            className="mt-6"
+            isPassword
             noAutoComplete
+            className="mt-6"
+            icon="tabler:key"
+            name="Password"
             namespace="modules.passwords"
+            placeholder="Your password"
+            updateValue={setPassword}
+            value={password}
           />
           <CreateOrModifyButton
+            className="mt-6"
+            loading={loading}
+            type={openType}
             onClick={() => {
               onSubmit().catch(console.error)
             }}
-            loading={loading}
-            className="mt-6"
-            type={openType}
           />
         </form>
       </ModalWrapper>
@@ -211,8 +211,8 @@ function CreatePasswordModal(): React.ReactElement {
       <ColorPickerModal
         color={color}
         isOpen={colorPickerOpen}
-        setOpen={setColorPickerOpen}
         setColor={setColor}
+        setOpen={setColorPickerOpen}
       />
     </>
   )

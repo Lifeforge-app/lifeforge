@@ -24,12 +24,12 @@ function HamburgerButton({ tag }: { tag: IIdeaBoxTag }): React.ReactElement {
 
   return (
     <button
+      className={`hidden aspect-square h-full items-center justify-center rounded-full text-xs transition-all group-hover:flex ${hamburgerIconColor}`}
       onClick={e => {
         e.stopPropagation()
         setExistedTag(tag)
         setModifyTagModalOpenType('update')
       }}
-      className={`hidden aspect-square h-full items-center justify-center rounded-full text-xs transition-all group-hover:flex ${hamburgerIconColor}`}
     >
       <Icon icon="tabler:dots-vertical" />
     </button>

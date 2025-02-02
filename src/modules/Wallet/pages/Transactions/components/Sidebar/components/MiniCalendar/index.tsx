@@ -16,8 +16,8 @@ function MiniCalendar(): React.ReactElement {
       <div className="w-full px-8">
         <MiniCalendarHeader
           currentMonth={currentMonth}
-          setCurrentMonth={setCurrentMonth}
           currentYear={currentYear}
+          setCurrentMonth={setCurrentMonth}
           setCurrentYear={setCurrentYear}
         />
         <MiniCalendarContent

@@ -72,14 +72,6 @@ function Pixabay({
     <>
       <div className="flex w-full min-w-0 flex-col items-center gap-2 sm:flex-row">
         <SearchInput
-          searchQuery={query}
-          setSearchQuery={setQuery}
-          stuffToSearch="imageUpload.items.pixabay"
-          namespace="common.misc"
-          hasTopMargin={false}
-          onFilterIconClick={() => {
-            setIsSearchFilterModalOpen(true)
-          }}
           filterAmount={
             [
               filters.imageType !== 'all',
@@ -88,6 +80,14 @@ function Pixabay({
               filters.isEditorsChoice
             ].filter(e => e).length
           }
+          hasTopMargin={false}
+          namespace="common.misc"
+          searchQuery={query}
+          setSearchQuery={setQuery}
+          stuffToSearch="imageUpload.items.pixabay"
+          onFilterIconClick={() => {
+            setIsSearchFilterModalOpen(true)
+          }}
           onKeyUp={e => {
             if (e.key === 'Enter') {
               setPage(1)
@@ -96,14 +96,14 @@ function Pixabay({
           }}
         />
         <Button
+          iconAtEnd
+          className="w-full sm:w-auto"
+          icon="tabler:arrow-right"
           loading={loading}
           onClick={() => {
             setPage(1)
             onSearch(1).catch(console.error)
           }}
-          icon="tabler:arrow-right"
-          iconAtEnd
-          className="w-full sm:w-auto"
         >
           Search
         </Button>
@@ -126,9 +126,9 @@ function Pixabay({
                 <div className="flex-center mb-6 size-full flex-1">
                   <EmptyStateScreen
                     icon="simple-icons:pixabay"
+                    name="pixabay"
                     namespace="common.misc"
                     tKey="imageUpload"
-                    name="pixabay"
                   />
                 </div>
               )
@@ -136,18 +136,18 @@ function Pixabay({
               return results.total === 0 ? (
                 <EmptyStateScreen
                   icon="tabler:photo-off"
+                  name="result"
                   namespace="common.misc"
                   tKey="imageUpload"
-                  name="result"
                 />
               ) : (
                 <SearchResults
-                  results={results}
                   file={file}
-                  setFile={setFile}
-                  setPreview={setPreview}
                   page={page}
+                  results={results}
+                  setFile={setFile}
                   setPage={setPage}
+                  setPreview={setPreview}
                   onSearch={onSearch}
                 />
               )

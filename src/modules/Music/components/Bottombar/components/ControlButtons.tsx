@@ -30,51 +30,51 @@ export default function ControlButtons({
     <div className={`flex-center gap-2 ${!isWidget ? 'xl:w-1/3' : ''}`}>
       {(isFull || !isWidget) && (
         <IconButton
-          onClick={() => {
-            setIsShuffle(!isShuffle)
-            if (isShuffle) setIsRepeat(false)
-          }}
           className={
             isShuffle
               ? 'text-custom-500 hover:text-custom-600'
               : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
           }
           icon="uil:shuffle"
+          onClick={() => {
+            setIsShuffle(!isShuffle)
+            if (isShuffle) setIsRepeat(false)
+          }}
         />
       )}
       <IconButton
-        onClick={lastMusic}
         className="text-bg-500 hover:text-bg-800 dark:hover:text-bg-50"
         icon="tabler:skip-back"
+        onClick={lastMusic}
       />
       <IconButton
+        className="mx-2 rounded-full bg-bg-500 p-4 text-white shadow-custom hover:bg-custom-500! dark:bg-bg-100 dark:text-bg-800"
+        icon={
+          isPlaying ? 'tabler:player-pause-filled' : 'tabler:player-play-filled'
+        }
         onClick={() => {
           togglePlay(currentMusic).catch(err => {
             toast.error(`Failed to play music. Error: ${err}`)
           })
         }}
-        className="mx-2 rounded-full bg-bg-500 p-4 text-white shadow-custom hover:bg-custom-500! dark:bg-bg-100 dark:text-bg-800"
-        icon={
-          isPlaying ? 'tabler:player-pause-filled' : 'tabler:player-play-filled'
-        }
       />
       <IconButton
-        onClick={nextMusic}
         className="text-bg-500 hover:text-bg-800 dark:hover:text-bg-50"
         icon="tabler:skip-forward"
+        onClick={nextMusic}
       />
       {(isFull || !isWidget) && (
         <IconButton
-          onClick={() => {
-            setIsRepeat(!isRepeat)
-            if (isRepeat) setIsShuffle(false)
-          }}
           className={
             isRepeat
               ? 'text-custom-500 hover:text-custom-600'
               : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
           }
           icon="uil:repeat"
+          onClick={() => {
+            setIsRepeat(!isRepeat)
+            if (isRepeat) setIsShuffle(false)
+          }}
         />
       )}
     </div>

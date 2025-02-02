@@ -24,22 +24,22 @@ function EntryItem({
   return (
     <ConfigColumn
       key={entry.id}
+      desc={entry.description}
+      hasDivider={hasDivider}
+      icon={entry.icon}
       title={
         <>
           {entry.name}
           <span className="text-sm text-bg-500">({entry.keyId})</span>
         </>
       }
-      desc={entry.description}
-      icon={entry.icon}
-      hasDivider={hasDivider}
     >
       <div>
         <code className="flex items-center justify-end gap-1 text-lg">
           {Array(12)
             .fill(0)
             .map((_, i) => (
-              <Icon key={i} icon="tabler:circle-filled" className="size-1" />
+              <Icon key={i} className="size-1" icon="tabler:circle-filled" />
             ))}
           <span className="ml-0.5">{entry.key}</span>
         </code>
@@ -49,21 +49,21 @@ function EntryItem({
       </div>
       <HamburgerMenu className="relative ml-2">
         <MenuItem
+          icon="tabler:pencil"
+          text="edit"
           onClick={() => {
             setExistingData(entry)
             setModifyAPIKeyModalOpenType('update')
           }}
-          text="edit"
-          icon="tabler:pencil"
         />
         <MenuItem
+          isRed
+          icon="tabler:trash"
+          text="delete"
           onClick={() => {
             setDeleteConfirmationModalOpen(true)
             setExistingData(entry)
           }}
-          text="delete"
-          icon="tabler:trash"
-          isRed
         />
       </HamburgerMenu>
     </ConfigColumn>

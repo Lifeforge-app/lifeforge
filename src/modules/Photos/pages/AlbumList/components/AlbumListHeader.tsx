@@ -33,18 +33,18 @@ function AlbumListHeader({
           </h1>
           <div className="flex items-center gap-2">
             <Button
+              className="hidden sm:flex"
+              icon="tabler:plus"
               onClick={() => {
                 setModifyAlbumModalOpenType('create')
               }}
-              icon="tabler:plus"
-              className="hidden sm:flex"
             >
               create
             </Button>
             <HamburgerMenu largerPadding>
               <MenuItem
-                text="Manage Tags"
                 icon="tabler:tags"
+                text="Manage Tags"
                 onClick={() => {
                   setManageTagsModalOpen(true)
                 }}
@@ -53,10 +53,10 @@ function AlbumListHeader({
           </div>
         </div>
         <SearchInput
+          namespace="modules.photos"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           stuffToSearch="album"
-          namespace="modules.photos"
         />
         <AlbumTagsList
           setModifyAlbumTagModalOpenType={setModifyAlbumTagModalOpenType}

@@ -62,7 +62,7 @@ function ListboxOrComboboxOption({
                     : {}
                 }
               >
-                <Icon icon={icon} className="size-5" />
+                <Icon className="size-5" icon={icon} />
               </span>
             ) : (
               color !== undefined && (
@@ -85,8 +85,8 @@ function ListboxOrComboboxOption({
           </div>
           {selected && (
             <Icon
-              icon="tabler:check"
               className="block text-lg text-custom-500"
+              icon="tabler:check"
             />
           )}
         </>

@@ -89,14 +89,14 @@ function ModifyModal({
 
   return (
     <Modal
-      namespace="modules.booksLibrary"
-      isOpen={openType !== null}
       data={data}
-      setData={setData}
-      title={`${toCamelCase(singleStuff)}.${openType}`}
       fields={FIELDS}
       icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
+      isOpen={openType !== null}
+      namespace="modules.booksLibrary"
       openType={openType}
+      setData={setData}
+      title={`${toCamelCase(singleStuff)}.${openType}`}
       onClose={() => {
         setOpenType(null)
       }}

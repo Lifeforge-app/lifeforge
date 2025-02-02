@@ -39,20 +39,20 @@ function Pagination({
           <>
             <button
               key={1}
-              onClick={() => {
-                onPageChange(1)
-              }}
               className={`hidden rounded-md px-3 py-2 lg:block  ${
                 currentPage === 1
                   ? 'font-semibold text-custom-500'
                   : 'text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800'
               }`}
+              onClick={() => {
+                onPageChange(1)
+              }}
             >
               {1}
             </button>
             <Icon
-              icon="uil:ellipsis-h"
               className="hidden text-bg-500 lg:block"
+              icon="uil:ellipsis-h"
             />
           </>
         )
@@ -63,14 +63,14 @@ function Pagination({
       pageNumbers.push(
         <button
           key={i}
-          onClick={() => {
-            onPageChange(i)
-          }}
           className={`rounded-md px-5 py-3  ${
             currentPage === i
               ? 'font-semibold lg:text-custom-500'
               : 'hidden text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800 lg:block'
           }`}
+          onClick={() => {
+            onPageChange(i)
+          }}
         >
           <span className="inline lg:hidden">Page </span>
           {i}
@@ -84,20 +84,20 @@ function Pagination({
         <>
           {endPage < totalPages - 1 && (
             <Icon
-              icon="uil:ellipsis-h"
               className="hidden text-bg-500 lg:block"
+              icon="uil:ellipsis-h"
             />
           )}
           <button
             key={totalPages}
-            onClick={() => {
-              onPageChange(totalPages)
-            }}
             className={`hidden rounded-md px-5 py-3 lg:block  ${
               currentPage === totalPages
                 ? 'font-semibold text-custom-500'
                 : 'text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800'
             }`}
+            onClick={() => {
+              onPageChange(totalPages)
+            }}
           >
             {totalPages}
           </button>
@@ -113,27 +113,27 @@ function Pagination({
       {currentPage !== 1 ? (
         <>
           <Button
+            className="hidden sm:flex w-32"
             disabled={currentPage === 1}
+            icon="uil:angle-left"
+            variant="no-bg"
             onClick={() => {
               if (currentPage > 1) {
                 onPageChange(currentPage - 1)
               }
             }}
-            icon="uil:angle-left"
-            variant="no-bg"
-            className="hidden sm:flex w-32"
           >
             Previous
           </Button>
           <Button
+            className="sm:hidden"
+            icon="uil:angle-left"
+            variant="no-bg"
             onClick={() => {
               if (currentPage > 1) {
                 onPageChange(1)
               }
             }}
-            icon="uil:angle-left"
-            variant="no-bg"
-            className="sm:hidden"
           />
         </>
       ) : (
@@ -143,27 +143,27 @@ function Pagination({
       {currentPage < totalPages ? (
         <>
           <Button
+            iconAtEnd
+            className="sm:hidden"
+            icon="uil:angle-right"
+            variant="no-bg"
             onClick={() => {
               if (currentPage < totalPages) {
                 onPageChange(totalPages)
               }
             }}
-            icon="uil:angle-right"
-            variant="no-bg"
-            className="sm:hidden"
-            iconAtEnd
           />
           <Button
+            iconAtEnd
+            className="hidden sm:flex w-32"
             disabled={currentPage === totalPages}
+            icon="uil:angle-right"
+            variant="no-bg"
             onClick={() => {
               if (currentPage < totalPages) {
                 onPageChange(currentPage + 1)
               }
             }}
-            icon="uil:angle-right"
-            variant="no-bg"
-            className="hidden sm:flex w-32"
-            iconAtEnd
           >
             Next
           </Button>

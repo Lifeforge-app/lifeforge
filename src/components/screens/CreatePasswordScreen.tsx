@@ -74,7 +74,7 @@ function CreatePasswordScreen({
   return (
     <>
       <div className="flex-center size-full flex-1 flex-col gap-4">
-        <Icon icon="tabler:lock-plus" className="size-28" />
+        <Icon className="size-28" icon="tabler:lock-plus" />
         <h2 className="text-4xl font-semibold">
           {t('vault.createPassword.title')}
         </h2>
@@ -83,18 +83,19 @@ function CreatePasswordScreen({
         </p>
         <TextInput
           key="newPassword"
-          namespace="common.vault"
-          tKey="vault"
           ref={inputRef}
+          darker
           isPassword
+          noAutoComplete
+          actionButtonIcon="tabler:dice"
+          className="w-1/2"
           icon="tabler:lock"
           name="New Password"
+          namespace="common.vault"
           placeholder="••••••••••••••••"
-          value={newPassword}
+          tKey="vault"
           updateValue={setNewPassword}
-          noAutoComplete
-          className="w-1/2"
-          actionButtonIcon="tabler:dice"
+          value={newPassword}
           onActionButtonClick={() => {
             const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
             const lowerCase = 'abcdefghijklmnopqrstuvwxyz'
@@ -111,33 +112,32 @@ function CreatePasswordScreen({
 
             toast.success('Random password generated successfully')
           }}
-          darker
         />
         <TextInput
           key="confirmPassword"
-          namespace="common.vault"
-          tKey="vault"
           ref={inputRef2}
+          darker
           isPassword
-          icon="tabler:lock-check"
-          name="Confirm Password"
-          placeholder="••••••••••••••••"
-          value={confirmPassword}
-          updateValue={setConfirmPassword}
           noAutoComplete
           className="w-1/2"
+          icon="tabler:lock-check"
+          name="Confirm Password"
+          namespace="common.vault"
+          placeholder="••••••••••••••••"
+          tKey="vault"
+          updateValue={setConfirmPassword}
+          value={confirmPassword}
           onKeyDown={e => {
             if (e.key === 'Enter') {
               confirmAction()
             }
           }}
-          darker
         />
         <Button
+          className="w-1/2"
+          icon="tabler:check"
           loading={loading}
           onClick={confirmAction}
-          icon="tabler:check"
-          className="w-1/2"
         >
           Submit
         </Button>
@@ -154,22 +154,22 @@ function CreatePasswordScreen({
         </p>
         <div className="mt-6 flex w-full justify-around gap-2">
           <Button
+            className="w-full"
+            icon=""
+            variant="secondary"
             onClick={() => {
               setConfirmationModalOpen(false)
             }}
-            variant="secondary"
-            icon=""
-            className="w-full"
           >
             Cancel
           </Button>
           <Button
+            className="w-full"
+            icon="tabler:check"
             loading={loading}
             onClick={() => {
               onSubmit().catch(console.error)
             }}
-            icon="tabler:check"
-            className="w-full"
           >
             {!loading ? 'Confirm' : ''}
           </Button>

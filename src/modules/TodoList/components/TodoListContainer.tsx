@@ -73,10 +73,10 @@ function TodoListContainer(): React.ReactElement {
         <div className="relative z-10 flex h-full flex-1 flex-col xl:ml-8">
           <Header setSidebarOpen={setSidebarOpen} />
           <SearchInput
+            namespace="modules.todoList"
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             stuffToSearch="task"
-            namespace="modules.todoList"
           />
           <APIFallbackComponent data={entries}>
             {entries =>
@@ -84,13 +84,13 @@ function TodoListContainer(): React.ReactElement {
                 <TaskList />
               ) : (
                 <EmptyStateScreen
-                  name="tasks"
-                  namespace="modules.todoList"
-                  icon="tabler:article-off"
                   ctaContent="new"
                   ctaTProps={{
                     item: t('items.task')
                   }}
+                  icon="tabler:article-off"
+                  name="tasks"
+                  namespace="modules.todoList"
                   onCTAClick={setModifyTaskWindowOpenType}
                 />
               )
@@ -101,7 +101,11 @@ function TodoListContainer(): React.ReactElement {
       <ModifyTaskWindow />
       <DeleteConfirmationModal
         apiEndpoint="todo-list/entries"
+        data={selectedTask}
         isOpen={deleteTaskConfirmationModalOpen}
+        itemName="task"
+        nameKey="summary"
+        updateDataLists={refreshEntries}
         onClose={() => {
           setDeleteTaskConfirmationModalOpen(false)
           refreshPriorities()
@@ -109,10 +113,6 @@ function TodoListContainer(): React.ReactElement {
           refreshTagsList()
           refreshStatusCounter()
         }}
-        data={selectedTask}
-        itemName="task"
-        updateDataLists={refreshEntries}
-        nameKey="summary"
       />
       {entries.length > 0 && (
         <FAB
@@ -125,38 +125,38 @@ function TodoListContainer(): React.ReactElement {
       <ModifyPriorityModal />
       <DeleteConfirmationModal
         apiEndpoint="todo-list/priorities"
+        customText="Are you sure you want to delete this priority? The tasks with this priority will not be deleted."
         data={selectedPriority}
         isOpen={deletePriorityConfirmationModalOpen}
         itemName="priority"
+        updateDataLists={refreshPriorities}
         onClose={() => {
           setDeletePriorityConfirmationModalOpen(false)
         }}
-        updateDataLists={refreshPriorities}
-        customText="Are you sure you want to delete this priority? The tasks with this priority will not be deleted."
       />
       <ModifyListModal />
       <DeleteConfirmationModal
         apiEndpoint="todo-list/lists"
+        customText="Are you sure you want to delete this list? The tasks inside this list will not be deleted."
         data={selectedList}
         isOpen={deleteListConfirmationModalOpen}
         itemName="list"
+        updateDataLists={refreshLists}
         onClose={() => {
           setDeleteListConfirmationModalOpen(false)
         }}
-        updateDataLists={refreshLists}
-        customText="Are you sure you want to delete this list? The tasks inside this list will not be deleted."
       />
       <ModifyTagModal />
       <DeleteConfirmationModal
         apiEndpoint="todo-list/tags"
+        customText="Are you sure you want to delete this tag? The tasks with this tag will not be deleted."
         data={selectedTag}
         isOpen={deleteTagConfirmationModalOpen}
         itemName="tag"
+        updateDataLists={refreshTagsList}
         onClose={() => {
           setDeleteTagConfirmationModalOpen(false)
         }}
-        updateDataLists={refreshTagsList}
-        customText="Are you sure you want to delete this tag? The tasks with this tag will not be deleted."
       />
     </>
   )

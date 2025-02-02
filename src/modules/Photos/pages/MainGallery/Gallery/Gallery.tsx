@@ -25,6 +25,9 @@ function Gallery(): React.ReactElement {
                 <DateGroup
                   key={date}
                   date={date}
+                  isSelectedAll={photos.every(photo =>
+                    selectedPhotos.includes(photo.id)
+                  )}
                   photosDimensions={photos}
                   selectedPhotos={selectedPhotos}
                   setSelectedPhotos={setSelectedPhotos}
@@ -49,9 +52,6 @@ function Gallery(): React.ReactElement {
                     _selected = [..._selected, ..._photos]
                     setSelectedPhotos(_selected)
                   }}
-                  isSelectedAll={photos.every(photo =>
-                    selectedPhotos.includes(photo.id)
-                  )}
                 />
               ))
             ) : (

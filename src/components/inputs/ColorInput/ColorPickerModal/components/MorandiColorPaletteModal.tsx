@@ -41,10 +41,10 @@ function MorandiColorPaletteModal({
           >
             {color === morandiColor && (
               <Icon
-                icon="tabler:check"
                 className={`size-8 ${
                   isLightColor(morandiColor) ? 'text-bg-800' : 'text-bg-50'
                 }`}
+                icon="tabler:check"
               />
             )}
           </button>

@@ -16,12 +16,12 @@ function ReceiptColumn({
         <Zoom zoomMargin={100}>
           <img
             alt=""
-            src={`${
-              import.meta.env.VITE_API_HOST
-            }/media/${collectionId}/${id}/${receipt}`}
             className={
               'mx-auto size-12 rounded-lg bg-bg-200 object-cover dark:bg-bg-800'
             }
+            src={`${
+              import.meta.env.VITE_API_HOST
+            }/media/${collectionId}/${id}/${receipt}`}
           />
         </Zoom>
       ) : (

@@ -109,7 +109,7 @@ function ComponentListItem({
               : 'bg-bg-200 text-bg-400 dark:bg-bg-700/50 dark:text-bg-500'
           }`}
         >
-          <Icon icon={icon} className="size-6" />
+          <Icon className="size-6" icon={icon} />
         </div>
         <div className="flex flex-col">
           <div className="font-semibold">{t(`widgets.${id}.title`)}</div>

@@ -49,10 +49,10 @@ function Details({
                         .map((author, i, arr) => (
                           <span key={i}>
                             <a
+                              className="text-custom-500 hover:text-custom-600"
                               href={`/search?req=${encodeURIComponent(
                                 author.trim()
                               )}&column=author`}
-                              className="text-custom-500 hover:text-custom-600"
                             >
                               {author.trim()}
                             </a>

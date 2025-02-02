@@ -25,29 +25,29 @@ export default function Flashcards(): React.ReactElement {
     <ModuleWrapper>
       <ModuleHeader icon="tabler:cards" title="Flashcards" />
       <SidebarAndContentWrapper>
-        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <Sidebar setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
         <ContentWrapperWithSidebar>
           <div className="flex-between flex">
             <h1 className="text-3xl font-semibold  md:text-4xl">
               All Decks <span className="text-base text-bg-500">(10)</span>
             </h1>
             <div className="flex items-center gap-6">
-              <Button onClick={() => {}} icon="tabler:plus">
+              <Button icon="tabler:plus" onClick={() => {}}>
                 new deck
               </Button>
               <button
-                onClick={() => {}}
                 className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
+                onClick={() => {}}
               >
-                <Icon icon="tabler:menu" className="text-2xl" />
+                <Icon className="text-2xl" icon="tabler:menu" />
               </button>
             </div>
           </div>
           <SearchInput
+            namespace="modules.flashcards"
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             stuffToSearch="set"
-            namespace="modules.flashcards"
           />
           <APIFallbackComponent data={decks}>
             {decks => (
@@ -55,9 +55,9 @@ export default function Flashcards(): React.ReactElement {
                 <div className="mt-6 grid w-full grid-cols-3 gap-6 px-4 pb-16">
                   {decks.map(deck => (
                     <Link
-                      to={`/flashcards/${deck.id}`}
                       key={deck.id}
                       className={`group relative flex flex-col justify-start gap-6 rounded-lg p-8 shadow-custom ${componentBgWithHover}`}
+                      to={`/flashcards/${deck.id}`}
                     >
                       <div className="space-y-2">
                         {deck.tag !== '' && (
@@ -79,20 +79,20 @@ export default function Flashcards(): React.ReactElement {
                       <div className="mt-auto space-y-2">
                         <progress
                           className="progress h-2 w-full rounded-lg bg-bg-200 dark:bg-bg-700"
-                          value={Math.floor(Math.random() * 100)}
                           max="100"
+                          value={Math.floor(Math.random() * 100)}
                         ></progress>
                         <p className="text-sm font-medium text-bg-500">
                           {Math.floor(Math.random() * 100)}% complete
                         </p>
                       </div>
                       <button className="absolute right-4 top-4 hidden rounded-md p-2 text-bg-500 hover:bg-bg-700/30 hover:text-bg-50 group-hover:flex">
-                        <Icon icon="tabler:dots-vertical" className="size-5" />
+                        <Icon className="size-5" icon="tabler:dots-vertical" />
                       </button>
                     </Link>
                   ))}
                   <div className="flex-center relative h-full flex-col gap-4 rounded-lg border-2 border-dashed border-bg-500 p-12">
-                    <Icon icon="tabler:plus" className="size-8 text-bg-500" />
+                    <Icon className="size-8 text-bg-500" icon="tabler:plus" />
                     <div className="text-xl font-semibold text-bg-500">
                       Create new set
                     </div>

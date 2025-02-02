@@ -48,12 +48,12 @@ function AuthSignInButton({
   return (
     <div className="mt-6 space-y-6">
       <Button
-        loading={loading || auth}
         iconAtEnd
-        onClick={signIn}
-        icon="tabler:arrow-right"
         className="w-full"
+        icon="tabler:arrow-right"
+        loading={loading || auth}
         namespace="common.auth"
+        onClick={signIn}
       >
         Sign In
       </Button>
@@ -66,34 +66,34 @@ function AuthSignInButton({
       </div>
       <div className="flex w-full gap-4">
         <Button
-          onClick={() => {
-            signInWithProvider('github').catch(console.error)
-          }}
+          className="w-full"
+          icon="uil:github"
           loading={
             loading ||
             auth ||
             (searchParams.get('code') !== null &&
               searchParams.get('state') !== null)
           }
-          icon="uil:github"
           variant="secondary"
-          className="w-full"
+          onClick={() => {
+            signInWithProvider('github').catch(console.error)
+          }}
         >
           Github
         </Button>
         <Button
-          onClick={() => {
-            signInWithProvider('google').catch(console.error)
-          }}
+          className="w-full"
+          icon="uil:google"
           loading={
             loading ||
             auth ||
             (searchParams.get('code') !== null &&
               searchParams.get('state') !== null)
           }
-          icon="uil:google"
           variant="secondary"
-          className="w-full"
+          onClick={() => {
+            signInWithProvider('google').catch(console.error)
+          }}
         >
           Google
         </Button>

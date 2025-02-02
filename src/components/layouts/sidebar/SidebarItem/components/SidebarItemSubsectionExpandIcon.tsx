@@ -11,14 +11,14 @@ function SidebarItemSubsectionExpandIcon({
   return (
     <div className="flex-between relative flex">
       <button
-        onClick={toggleSubsection}
         className="rounded-full p-1 hover:bg-bg-100 dark:hover:bg-bg-700/50"
+        onClick={toggleSubsection}
       >
         <Icon
-          icon="tabler:chevron-right"
           className={`stroke-[2px] text-bg-500 transition-all ${
             subsectionExpanded ? 'rotate-90' : ''
           }`}
+          icon="tabler:chevron-right"
         />
       </button>
     </div>

@@ -26,34 +26,34 @@ function LedgerSelector({
 
   return (
     <ListboxOrComboboxInput
-      type="listbox"
-      name="Ledger"
-      icon="tabler:book"
-      value={ledger}
-      setValue={setLedger}
-      namespace="modules.wallet"
       buttonContent={
         <>
           <Icon
+            className="size-5"
             icon={ledgers.find(l => l.id === ledger)?.icon ?? 'tabler:book-off'}
             style={{
               color: ledgers.find(l => l.id === ledger)?.color
             }}
-            className="size-5"
           />
           <span className="-mt-px block truncate">
             {ledgers.find(l => l.id === ledger)?.name ?? 'None'}
           </span>
         </>
       }
+      icon="tabler:book"
+      name="Ledger"
+      namespace="modules.wallet"
+      setValue={setLedger}
+      type="listbox"
+      value={ledger}
     >
-      <ListboxNullOption icon="tabler:book-off" value={null} hasBgColor />
+      <ListboxNullOption hasBgColor icon="tabler:book-off" value={null} />
       {ledgers.map(({ name, color, id, icon }) => (
         <ListboxOrComboboxOption
           key={id}
-          text={name}
-          icon={icon}
           color={color}
+          icon={icon}
+          text={name}
           value={id}
         />
       ))}

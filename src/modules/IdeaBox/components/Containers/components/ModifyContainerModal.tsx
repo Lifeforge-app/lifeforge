@@ -163,19 +163,19 @@ function ModifyContainerModal({
 
   return (
     <Modal
-      namespace="modules.ideaBox"
-      isOpen={openType !== null}
-      fields={FIELDS}
       data={data}
-      setData={setData}
-      title={`container.${openType}`}
+      fields={FIELDS}
       icon={
         {
           create: 'tabler:plus',
           update: 'tabler:pencil'
         }[openType!]
       }
+      isOpen={openType !== null}
+      namespace="modules.ideaBox"
       openType={openType}
+      setData={setData}
+      title={`container.${openType}`}
       onClose={() => {
         setOpenType(null)
       }}

@@ -29,21 +29,22 @@ function Sidebar({
         {sidebarData => (
           <>
             <SidebarItem
+              active={Array.from(searchParams.keys()).length === 0}
               icon="tabler:list"
               name="All scores"
+              namespace="modules.guitarTabs"
               number={sidebarData.total}
-              active={Array.from(searchParams.keys()).length === 0}
               onClick={() => {
                 setSearchParams({})
                 setOpen(false)
               }}
-              namespace="modules.guitarTabs"
             />
             <SidebarItem
+              active={searchParams.get('starred') === 'true'}
               icon="tabler:star-filled"
               name="Starred"
+              namespace="modules.guitarTabs"
               number={sidebarData.favourites}
-              active={searchParams.get('starred') === 'true'}
               onClick={() => {
                 setSearchParams({
                   ...Object.fromEntries(searchParams.entries()),
@@ -51,7 +52,6 @@ function Sidebar({
                 })
                 setOpen(false)
               }}
-              namespace="modules.guitarTabs"
             />
             <SidebarDivider />
             <SidebarTitle name="categories" namespace="modules.guitarTabs" />
@@ -62,6 +62,7 @@ function Sidebar({
             ].map(([category, icon, name]) => (
               <SidebarItem
                 key={category}
+                active={searchParams.get('category') === category}
                 icon={icon}
                 name={name}
                 namespace="modules.guitarTabs"
@@ -70,18 +71,17 @@ function Sidebar({
                     category as keyof typeof sidebarData.categories
                   ]
                 }
-                active={searchParams.get('category') === category}
-                onClick={() => {
-                  setSearchParams({
-                    ...Object.fromEntries(searchParams.entries()),
-                    category
-                  })
-                  setOpen(false)
-                }}
                 onCancelButtonClick={() => {
                   setSearchParams({
                     ...Object.fromEntries(searchParams.entries()),
                     category: ''
+                  })
+                  setOpen(false)
+                }}
+                onClick={() => {
+                  setSearchParams({
+                    ...Object.fromEntries(searchParams.entries()),
+                    category
                   })
                   setOpen(false)
                 }}
@@ -97,22 +97,22 @@ function Sidebar({
               .map(([author, count]) => (
                 <SidebarItem
                   key={author}
+                  active={searchParams.get('author') === author}
+                  autoActive={false}
                   icon="tabler:user"
                   name={author !== '' ? author : t('unknownAuthor')}
                   number={count}
-                  autoActive={false}
-                  active={searchParams.get('author') === author}
-                  onClick={() => {
-                    setSearchParams({
-                      ...Object.fromEntries(searchParams.entries()),
-                      author
-                    })
-                    setOpen(false)
-                  }}
                   onCancelButtonClick={() => {
                     setSearchParams({
                       ...Object.fromEntries(searchParams.entries()),
                       author: ''
+                    })
+                    setOpen(false)
+                  }}
+                  onClick={() => {
+                    setSearchParams({
+                      ...Object.fromEntries(searchParams.entries()),
+                      author
                     })
                     setOpen(false)
                   }}

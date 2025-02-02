@@ -39,8 +39,8 @@ function TagChip({ text }: { text: string }): React.ReactElement {
       {metadata !== undefined && (
         <Icon
           key={metadata.icon}
-          icon={metadata.icon}
           className="mr-2 size-3 shrink-0"
+          icon={metadata.icon}
           style={{
             color: !active ? metadata.color : ''
           }}

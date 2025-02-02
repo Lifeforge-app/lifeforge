@@ -74,15 +74,15 @@ function TextInput({
 
   return (
     <InputWrapper
-      darker={darker}
       className={className}
+      darker={darker}
       disabled={disabled}
       inputRef={inputRef}
     >
-      <InputIcon icon={icon} active={String(value).length > 0} />
+      <InputIcon active={String(value).length > 0} icon={icon} />
       <div className="flex w-full items-center gap-2">
         <InputLabel
-          required={required === true}
+          active={String(value).length > 0}
           label={
             namespace !== false
               ? t([
@@ -93,44 +93,44 @@ function TextInput({
                 ])
               : name
           }
-          active={String(value).length > 0}
+          required={required === true}
         />
         <InputBox
-          value={value}
-          updateValue={updateValue}
-          isPassword={isPassword}
-          inputMode={inputMode}
-          showPassword={showPassword}
-          placeholder={placeholder}
-          inputRef={inputRef}
-          reference={ref}
           disabled={disabled}
+          inputMode={inputMode}
+          inputRef={inputRef}
+          isPassword={isPassword}
           noAutoComplete={noAutoComplete}
+          placeholder={placeholder}
+          reference={ref}
+          showPassword={showPassword}
+          updateValue={updateValue}
+          value={value}
           onKeyDown={onKeyDown}
         />
         {isPassword && (
           <Button
-            variant="no-bg"
             className="mr-2"
             icon={showPassword ? 'tabler:eye' : 'tabler:eye-off'}
+            variant="no-bg"
             onMouseDown={() => {
               setShowPassword(true)
             }}
             onMouseUp={() => {
               setShowPassword(false)
             }}
-            onTouchStart={() => {
-              setShowPassword(true)
-            }}
             onTouchEnd={() => {
               setShowPassword(false)
+            }}
+            onTouchStart={() => {
+              setShowPassword(true)
             }}
           />
         )}
         {actionButtonIcon && (
           <InputActionButton
-            actionButtonLoading={actionButtonLoading}
             actionButtonIcon={actionButtonIcon}
+            actionButtonLoading={actionButtonLoading}
             onActionButtonClick={onActionButtonClick}
           />
         )}

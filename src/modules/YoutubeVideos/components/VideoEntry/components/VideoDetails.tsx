@@ -18,28 +18,28 @@ function VideoDetails({
           <p className="flex items-center gap-2">
             <img
               alt=""
+              className="size-6 rounded-full"
+              referrerPolicy="no-referrer"
               src={`${import.meta.env.VITE_API_HOST}/media/${
                 video.channel.thumbnail
               }`}
-              referrerPolicy="no-referrer"
-              className="size-6 rounded-full"
             />
             {video.channel.name}
           </p>
         )}
         {video.upload_date !== '' && (
           <>
-            <Icon icon="tabler:circle-filled" className="size-1" />
+            <Icon className="size-1" icon="tabler:circle-filled" />
             <p className="flex shrink-0 items-center gap-1 whitespace-nowrap text-bg-500">
-              <Icon icon="tabler:clock" className="mr-1 size-5" />
+              <Icon className="mr-1 size-5" icon="tabler:clock" />
               {moment(video.upload_date).fromNow()}
             </p>
           </>
         )}
 
-        <Icon icon="tabler:circle-filled" className="size-1" />
+        <Icon className="size-1" icon="tabler:circle-filled" />
         <p className="flex shrink-0 items-center gap-1 whitespace-nowrap text-bg-500">
-          <Icon icon="tabler:ruler" className="mr-1 size-5" />
+          <Icon className="mr-1 size-5" icon="tabler:ruler" />
           {(() => {
             const res = `${video.width}x${video.height}`
 
@@ -50,9 +50,9 @@ function VideoDetails({
             return res
           })()}
         </p>
-        <Icon icon="tabler:circle-filled" className="size-1" />
+        <Icon className="size-1" icon="tabler:circle-filled" />
         <p className="flex shrink-0 items-center gap-1 whitespace-nowrap text-bg-500">
-          <Icon icon="tabler:file" className="mr-1 size-5" />
+          <Icon className="mr-1 size-5" icon="tabler:file" />
           {cleanFileSize(video.filesize)}
         </p>
       </div>

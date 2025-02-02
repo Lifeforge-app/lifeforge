@@ -39,13 +39,13 @@ function ModalWrapper({
       }`}
     >
       <div
+        className={`absolute ${
+          isOpen ? 'right-1/2' : 'right-[-100dvw]'
+        } ${className} top-1/2 flex max-h-[calc(100dvh-8rem)] w-full max-w-[calc(100vw-4rem)] -translate-y-1/2 translate-x-1/2 flex-col overflow-auto rounded-xl bg-bg-100 p-6 shadow-2xl transition-all duration-500 dark:bg-bg-900 sm:max-w-[calc(100vw-8rem)] lg:w-auto`}
         style={{
           minWidth: minWidth ?? '0',
           minHeight: minHeight ?? '0'
         }}
-        className={`absolute ${
-          isOpen ? 'right-1/2' : 'right-[-100dvw]'
-        } ${className} top-1/2 flex max-h-[calc(100dvh-8rem)] w-full max-w-[calc(100vw-4rem)] -translate-y-1/2 translate-x-1/2 flex-col overflow-auto rounded-xl bg-bg-100 p-6 shadow-2xl transition-all duration-500 dark:bg-bg-900 sm:max-w-[calc(100vw-8rem)] lg:w-auto`}
       >
         {innerIsOpen && children}
       </div>

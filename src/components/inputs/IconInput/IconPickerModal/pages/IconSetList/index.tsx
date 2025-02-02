@@ -37,12 +37,12 @@ export default function IconSetList({
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col">
       <Header
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        setCurrentIconSet={setCurrentIconSet}
-        selectedCategory={selectedCategory}
         iconFilterTerm={iconFilterTerm}
+        searchQuery={searchQuery}
+        selectedCategory={selectedCategory}
+        setCurrentIconSet={setCurrentIconSet}
         setIconFilterTerm={setIconFilterTerm}
+        setSearchQuery={setSearchQuery}
         setSelectedCategory={setSelectedCategory}
       />
       <Scrollbar autoHeight autoHeightMax="60vh">
@@ -64,8 +64,8 @@ export default function IconSetList({
                   <CategoryEntry
                     key={category}
                     category={category}
-                    iconSets={iconSets}
                     iconFilterTerm={iconFilterTerm}
+                    iconSets={iconSets}
                     setCurrentIconSet={setCurrentIconSet}
                   />
                 )

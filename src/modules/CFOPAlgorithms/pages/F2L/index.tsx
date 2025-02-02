@@ -174,9 +174,9 @@ function CFOPF2L(): React.ReactElement {
         <div className="flex-between flex">
           <h1 className="flex items-center gap-4 text-2xl font-semibold sm:text-3xl">
             <img
-              src="/assets/cfop/landing-f2l.webp"
               alt="F2L"
               className="size-16"
+              src="/assets/cfop/landing-f2l.webp"
             />
             First Two Layers
           </h1>

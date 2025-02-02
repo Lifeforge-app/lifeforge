@@ -43,7 +43,7 @@ function InputBox({
   return (
     <>
       {isPassword && (
-        <input type="password" hidden value="" onChange={() => {}} />
+        <input hidden type="password" value="" onChange={() => {}} />
       )}
       <input
         ref={ref => {
@@ -55,21 +55,21 @@ function InputBox({
           }
           innerRef.current = ref
         }}
-        disabled={disabled}
-        value={value}
-        onChange={e => {
-          updateValue(e.target.value)
-        }}
-        placeholder={placeholder}
-        onKeyDown={onKeyDown}
-        type={isPassword && showPassword !== true ? 'password' : 'text'}
         autoComplete={noAutoComplete ? 'false' : 'true'}
+        className={`mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider caret-custom-500 placeholder:text-transparent focus:outline-hidden focus:placeholder:text-bg-500 ${className}`}
+        disabled={disabled}
+        inputMode={inputMode}
+        placeholder={placeholder}
         style={
           isPassword && showPassword !== true ? { fontFamily: 'Arial' } : {}
         }
-        className={`mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider caret-custom-500 placeholder:text-transparent focus:outline-hidden focus:placeholder:text-bg-500 ${className}`}
-        inputMode={inputMode}
+        type={isPassword && showPassword !== true ? 'password' : 'text'}
+        value={value}
         onBlur={onBlur}
+        onChange={e => {
+          updateValue(e.target.value)
+        }}
+        onKeyDown={onKeyDown}
       />
     </>
   )

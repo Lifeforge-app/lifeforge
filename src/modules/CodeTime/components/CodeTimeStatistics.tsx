@@ -15,7 +15,7 @@ function CodeTimeStatistics(): React.ReactElement {
   return (
     <div className="flex w-full flex-col gap-4">
       <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
-        <Icon icon="tabler:chart-bar" className="text-3xl" />
+        <Icon className="text-3xl" icon="tabler:chart-bar" />
         <span className="ml-2">{t('headers.statistics')}</span>
       </h1>
 
@@ -32,6 +32,11 @@ function CodeTimeStatistics(): React.ReactElement {
                     className={`flex rounded-lg p-2 shadow-custom sm:p-4 ${componentBgLighter}`}
                   >
                     <Icon
+                      className={`text-2xl sm:text-3xl ${
+                        index === 3
+                          ? 'text-orange-300'
+                          : 'text-bg-500 dark:text-bg-50'
+                      }`}
                       icon={
                         {
                           'Most time spent': 'tabler:coffee',
@@ -41,11 +46,6 @@ function CodeTimeStatistics(): React.ReactElement {
                           'Current streak': 'tabler:flame'
                         }[key]!
                       }
-                      className={`text-2xl sm:text-3xl ${
-                        index === 3
-                          ? 'text-orange-300'
-                          : 'text-bg-500 dark:text-bg-50'
-                      }`}
                     />
                   </div>
                   <div className="whitespace-nowrap text-lg text-bg-500">

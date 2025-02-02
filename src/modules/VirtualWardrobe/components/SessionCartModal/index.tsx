@@ -73,18 +73,18 @@ function SessionCartModal({
           {cartItems =>
             cartItems.length === 0 ? (
               <EmptyStateScreen
-                name="sessionCart"
-                namespace="modules.virtualWardrobe"
                 smaller
                 icon="tabler:icons-off"
+                name="sessionCart"
+                namespace="modules.virtualWardrobe"
               />
             ) : (
               <>
                 <ul className="space-y-4">
                   {cartItems.map(entry => (
                     <EntryItem
-                      isCartItem
                       key={entry.id}
+                      isCartItem
                       entry={entry}
                       onRemoveFromCart={async () => {
                         await handleRemoveFromCart(entry.id)
@@ -94,9 +94,9 @@ function SessionCartModal({
                 </ul>
 
                 <Button
-                  icon="tabler:arrow-right"
                   iconAtEnd
                   className="mt-6 w-full"
+                  icon="tabler:arrow-right"
                   onClick={() => {
                     setCheckoutConfirmationModalOpen(true)
                   }}

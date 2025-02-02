@@ -52,7 +52,7 @@ function SystemStatus(): React.ReactElement {
   return (
     <div className="mt-16 flex w-full flex-col gap-6">
       <h1 className="mb-2 flex items-center gap-2 text-2xl font-semibold">
-        <Icon icon="tabler:device-desktop-analytics" className="text-3xl" />
+        <Icon className="text-3xl" icon="tabler:device-desktop-analytics" />
         <span className="ml-2">System Status</span>
       </h1>
       <div className="grid gap-6 lg:grid-cols-3">
@@ -89,12 +89,12 @@ function SystemStatus(): React.ReactElement {
           <APIFallbackComponent key={index} data={data}>
             {data => (
               <SystemStatusCard
-                icon={icon}
-                title={title}
-                value={data[valueKey as keyof typeof data]}
-                unit={unit}
                 colorThresholds={{ high: 80, medium: 60 }}
                 description={description(data as any)}
+                icon={icon}
+                title={title}
+                unit={unit}
+                value={data[valueKey as keyof typeof data]}
               />
             )}
           </APIFallbackComponent>

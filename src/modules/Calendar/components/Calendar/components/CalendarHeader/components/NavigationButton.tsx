@@ -10,14 +10,14 @@ function NavigationButton({
 }): React.ReactElement {
   return (
     <button
+      className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-900"
       onClick={() => {
         onNavigate(direction)
       }}
-      className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-900"
     >
       <Icon
-        icon={`uil:angle-${direction === 'PREV' ? 'left' : 'right'}`}
         className="size-6"
+        icon={`uil:angle-${direction === 'PREV' ? 'left' : 'right'}`}
       />
     </button>
   )

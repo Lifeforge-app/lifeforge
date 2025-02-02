@@ -26,6 +26,7 @@ function EntryItem({
       className="flex-between relative mt-0 flex min-w-0 gap-4 p-6"
     >
       <Icon
+        className="pointer-events-auto z-50 size-7 shrink-0 text-bg-500"
         icon={
           {
             file:
@@ -35,7 +36,6 @@ function EntryItem({
             folder: 'tabler:folder'
           }[entry.type]
         }
-        className="pointer-events-auto z-50 size-7 shrink-0 text-bg-500"
       />
       <div className="flex-between flex w-full min-w-0 gap-8">
         <EntryName name={entry.name} />
@@ -43,11 +43,11 @@ function EntryItem({
         <EntryButton entry={entry} />
         <EntryMenu
           entry={entry}
-          setModifyFolderModalOpenType={setModifyFolderModalOpenType}
-          setExistedData={setExistedData}
           setDeleteFolderConfirmationModalOpen={
             setDeleteFolderConfirmationModalOpen
           }
+          setExistedData={setExistedData}
+          setModifyFolderModalOpenType={setModifyFolderModalOpenType}
         />
       </div>
     </li>

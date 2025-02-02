@@ -14,7 +14,9 @@ function AudioPlayer({ url }: { url: string }): React.ReactElement {
   return (
     <div className="flex items-center gap-4">
       <Button
+        className="p-2!"
         icon={isPlaying ? 'tabler:pause' : 'tabler:play'}
+        variant="no-bg"
         onClick={e => {
           e.preventDefault()
           e.stopPropagation()
@@ -28,8 +30,6 @@ function AudioPlayer({ url }: { url: string }): React.ReactElement {
 
           setIsPlaying(prev => !prev)
         }}
-        variant="no-bg"
-        className="p-2!"
       />
     </div>
   )

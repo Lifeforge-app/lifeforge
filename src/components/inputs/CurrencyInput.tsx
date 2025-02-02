@@ -31,23 +31,23 @@ function CurrencyInputComponent({
   const { t } = useTranslation(namespace)
 
   return (
-    <InputWrapper darker={darker} className={className}>
-      <InputIcon icon={icon} active={!!value} />
+    <InputWrapper className={className} darker={darker}>
+      <InputIcon active={!!value} icon={icon} />
       <div className="flex w-full items-center gap-2">
         <InputLabel
-          label={t(`inputs.${toCamelCase(name)}`)}
           active={!!value}
+          label={t(`inputs.${toCamelCase(name)}`)}
           required={required === true}
         />
         <CurrencyInput
-          name={name}
-          placeholder={placeholder}
-          decimalsLimit={2}
-          value={value}
-          onValueChange={updateValue}
           className={
             'mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider placeholder:text-transparent focus:outline-hidden focus:placeholder:text-bg-500'
           }
+          decimalsLimit={2}
+          name={name}
+          placeholder={placeholder}
+          value={value}
+          onValueChange={updateValue}
         />
       </div>
     </InputWrapper>

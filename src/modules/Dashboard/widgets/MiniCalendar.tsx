@@ -25,16 +25,16 @@ export default function MiniCalendar(): React.ReactElement {
             <div className="px-2">
               <MiniCalendarHeader
                 currentMonth={currentMonth}
-                setCurrentMonth={setCurrentMonth}
                 currentYear={currentYear}
+                setCurrentMonth={setCurrentMonth}
                 setCurrentYear={setCurrentYear}
               />
             </div>
             <MiniCalendarContent
+              categories={categories}
               currentMonth={currentMonth}
               currentYear={currentYear}
               events={events}
-              categories={categories}
             />
           </div>
         )}

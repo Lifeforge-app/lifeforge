@@ -75,6 +75,9 @@ export default function WalletProvider(): React.ReactElement {
             debouncedSearchQuery === '' ||
             transaction.particulars
               .toLowerCase()
+              .includes(debouncedSearchQuery.toLowerCase()) ||
+            transaction.location
+              .toLowerCase()
               .includes(debouncedSearchQuery.toLowerCase())
           )
         })

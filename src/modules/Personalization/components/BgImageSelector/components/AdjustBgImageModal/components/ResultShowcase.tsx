@@ -43,7 +43,7 @@ function ResultShowcase({
           className={`flex size-full flex-col gap-4 rounded-lg p-4 shadow-custom ${componentBg}`}
         >
           <h1 className="flex items-center gap-2 text-2xl font-semibold">
-            <Icon icon="tabler:box" className="size-8 shrink-0" />
+            <Icon className="size-8 shrink-0" icon="tabler:box" />
             Lorem ipsum dolor sit amet
           </h1>
           <p className="text-bg-500">
@@ -54,7 +54,7 @@ function ResultShowcase({
               className={`flex w-full flex-col sm:flex-row ${componentBgLighter} items-start gap-4 rounded-lg p-4 sm:items-center`}
             >
               <span className="block rounded-md bg-custom-500/20 p-4 text-custom-500">
-                <Icon icon="tabler:box" className="size-8" />
+                <Icon className="size-8" icon="tabler:box" />
               </span>
               <div className="flex flex-col">
                 <h2 className="text-lg font-semibold">Lorem ipsum dolor</h2>

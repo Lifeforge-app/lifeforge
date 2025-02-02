@@ -24,7 +24,18 @@ export default [
   // ...tailwind.configs['flat/recommended'],
   {
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off'
+      '@typescript-eslint/no-explicit-any': 'off',
+      'react/jsx-sort-props': [
+        'error',
+        {
+          callbacksLast: true,
+          shorthandFirst: true,
+          shorthandLast: false,
+          ignoreCase: true,
+          noSortAlphabetically: false,
+          reservedFirst: true
+        }
+      ]
     }
   },
   {

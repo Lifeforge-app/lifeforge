@@ -54,13 +54,6 @@ function YearMonthInput({
   return (
     <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row">
       <ListboxOrComboboxInput
-        namespace="modules.wallet"
-        type="listbox"
-        name="Month"
-        icon="tabler:calendar-month"
-        value={month}
-        setValue={setMonth}
-        className="w-full sm:w-1/2"
         buttonContent={
           <>
             <span className="-mt-px block truncate">
@@ -68,6 +61,13 @@ function YearMonthInput({
             </span>
           </>
         }
+        className="w-full sm:w-1/2"
+        icon="tabler:calendar-month"
+        name="Month"
+        namespace="modules.wallet"
+        setValue={setMonth}
+        type="listbox"
+        value={month}
       >
         {monthsOptions.map(mon => (
           <ListboxOrComboboxOption
@@ -78,18 +78,18 @@ function YearMonthInput({
         ))}
       </ListboxOrComboboxInput>
       <ListboxOrComboboxInput
-        namespace="modules.wallet"
-        type="listbox"
-        name="Year"
-        icon="tabler:calendar"
-        value={year}
-        setValue={setYear}
-        className="w-full sm:w-1/2"
         buttonContent={
           <>
             <span className="-mt-px block truncate">{year ?? 'None'}</span>
           </>
         }
+        className="w-full sm:w-1/2"
+        icon="tabler:calendar"
+        name="Year"
+        namespace="modules.wallet"
+        setValue={setYear}
+        type="listbox"
+        value={year}
       >
         {yearsOptions.map(yr => (
           <ListboxOrComboboxOption key={yr} text={yr.toString()} value={yr} />

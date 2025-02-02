@@ -18,19 +18,19 @@ function SidebarItemWrapper({
       }`}
     >
       <div
-        onClick={onClick}
-        role="button"
-        tabIndex={0}
-        onKeyDown={e => {
-          if (e.key === 'Enter') {
-            onClick?.()
-          }
-        }}
         className={`flex-between cursor-pointer text-left group relative flex h-14 w-full gap-4 whitespace-nowrap rounded-lg pl-4 pr-3 transition-all duration-100 ${
           active
             ? 'bg-bg-200/50 shadow-custom dark:bg-bg-800'
             : 'hover:bg-bg-200/30 dark:hover:bg-bg-800/30'
         }`}
+        role="button"
+        tabIndex={0}
+        onClick={onClick}
+        onKeyDown={e => {
+          if (e.key === 'Enter') {
+            onClick?.()
+          }
+        }}
       >
         {children}
       </div>

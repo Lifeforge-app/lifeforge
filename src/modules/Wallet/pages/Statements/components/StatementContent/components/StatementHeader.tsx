@@ -13,8 +13,8 @@ function StatementHeader({
     <>
       <h1 className="mb-8 hidden items-center gap-2 text-4xl font-medium print:flex">
         <Icon
-          icon="tabler:hammer"
           className="size-12 text-custom-500 print:text-lime-600"
+          icon="tabler:hammer"
         />
         Lifeforge
         <span className="text-custom-500 print:text-lime-600">.</span>

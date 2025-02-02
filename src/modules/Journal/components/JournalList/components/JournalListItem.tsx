@@ -29,17 +29,17 @@ function JournalListItem({
 
   return (
     <button
+      className={`w-full rounded-lg p-6 text-left shadow-custom ${componentBgWithHover}`}
       onClick={() => {
         setCurrentViewingJournal(entry.id)
         setJournalViewModalOpen(true)
       }}
-      className={`w-full rounded-lg p-6 text-left shadow-custom ${componentBgWithHover}`}
     >
       <div className="flex-between flex">
         <div className="flex flex-col gap-2">
           <span className="flex items-center gap-2 text-sm font-medium text-bg-500">
             {moment(entry.date).format('MMMM Do, YYYY')}
-            <Icon icon="tabler:circle-filled" className="size-1.5" />
+            <Icon className="size-1.5" icon="tabler:circle-filled" />
             {entry.wordCount?.toLocaleString()} words
           </span>
           <h2 className="text-2xl font-semibold">
@@ -51,7 +51,7 @@ function JournalListItem({
             <span
               className={`flex items-center gap-2 whitespace-nowrap rounded-full px-3 py-1 text-base font-medium text-bg-400 shadow-custom ${componentBgLighter}`}
             >
-              <Icon icon="tabler:photo" className="size-5" />
+              <Icon className="size-5" icon="tabler:photo" />
               {entry.photos.length} photos
             </span>
           )}
@@ -62,21 +62,21 @@ function JournalListItem({
           </span>
           <HamburgerMenu className="relative">
             <MenuItem
+              disabled={editLoading}
+              icon={editLoading ? 'svg-spinners:180-ring' : 'tabler:pencil'}
+              text="Edit"
               onClick={() => {
                 updateEntry(entry.id).catch(console.error)
               }}
-              icon={editLoading ? 'svg-spinners:180-ring' : 'tabler:pencil'}
-              text="Edit"
-              disabled={editLoading}
             />
             <MenuItem
+              isRed
+              icon="tabler:trash"
+              text="Delete"
               onClick={() => {
                 setDeleteJournalConfirmationModalOpen(true)
                 setExistedData(entry)
               }}
-              isRed
-              text="Delete"
-              icon="tabler:trash"
             />
           </HamburgerMenu>
         </div>

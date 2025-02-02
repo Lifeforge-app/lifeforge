@@ -18,11 +18,11 @@ function BgTempSelector(): React.ReactElement {
 
   return (
     <ConfigColumn
-      title={t('bgTempSelector.title')}
-      desc={t('bgTempSelector.desc')}
-      icon="tabler:temperature"
       noDefaultBreakpoints
       className="[@media(min-width:1170px)]:flex-row"
+      desc={t('bgTempSelector.desc')}
+      icon="tabler:temperature"
+      title={t('bgTempSelector.title')}
     >
       <div className="flex w-full min-w-0 flex-col items-center gap-4 lg:flex-row">
         <DefaultBgTempSelector bgTemp={bgTemp} setBgTemp={setBgTemp} />
@@ -36,7 +36,7 @@ function BgTempSelector(): React.ReactElement {
             setBgTemp(customBgTemp)
           }}
         >
-          <Icon icon="tabler:palette" className="size-6 text-bg-500" />
+          <Icon className="size-6 text-bg-500" icon="tabler:palette" />
           <span className="font-medium text-bg-500 md:hidden">
             {t('bgTempSelector.customBgTemp')}
           </span>
@@ -45,12 +45,12 @@ function BgTempSelector(): React.ReactElement {
           <>
             <ColorInput
               className="w-full lg:w-min"
+              color={customBgTemp}
+              hasTopMargin={false}
               name="Color Hex"
               namespace="modules.personalization"
-              color={customBgTemp}
-              updateColor={setCustomBgTemp}
               setColorPickerOpen={setColorPickerModalOpen}
-              hasTopMargin={false}
+              updateColor={setCustomBgTemp}
             />
             {bgTemp !== customBgTemp &&
               customBgTemp.match(/^#[0-9A-F]{6}$/i) !== null && (
@@ -75,8 +75,8 @@ function BgTempSelector(): React.ReactElement {
               )}
             <ColorPickerModal
               color={customBgTemp}
-              setColor={setCustomBgTemp}
               isOpen={colorPickerModalOpen}
+              setColor={setCustomBgTemp}
               setOpen={setColorPickerModalOpen}
             />
           </>

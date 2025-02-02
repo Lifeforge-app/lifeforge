@@ -27,8 +27,8 @@ function IconInput({
 
   return (
     <>
-      <InputWrapper inputRef={ref} darker className="mt-4">
-        <InputIcon icon="tabler:icons" active={!!icon} />
+      <InputWrapper darker className="mt-4" inputRef={ref}>
+        <InputIcon active={!!icon} icon="tabler:icons" />
         <div className="flex w-full items-center gap-2">
           <span
             className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 transition-all group-focus-within:!text-custom-500 ${
@@ -49,19 +49,19 @@ function IconInput({
             />
             <input
               ref={ref}
+              className="h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-hidden focus:placeholder:text-bg-500"
+              placeholder="tabler:cube"
               value={icon}
               onChange={updateIcon}
-              placeholder="tabler:cube"
-              className="h-8 w-full rounded-lg bg-transparent p-6 pl-0 tracking-wide placeholder:text-transparent focus:outline-hidden focus:placeholder:text-bg-500"
             />
           </div>
           <button
+            className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-300 hover:text-bg-800 focus:outline-hidden dark:hover:bg-bg-700/70 dark:hover:text-bg-200"
             onClick={() => {
               setIconSelectorOpen(true)
             }}
-            className="mr-4 shrink-0 rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-300 hover:text-bg-800 focus:outline-hidden dark:hover:bg-bg-700/70 dark:hover:text-bg-200"
           >
-            <Icon icon="tabler:chevron-down" className="size-5" />
+            <Icon className="size-5" icon="tabler:chevron-down" />
           </button>
         </div>
       </InputWrapper>

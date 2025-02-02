@@ -32,7 +32,7 @@ function ProjectHeader({
               color: projectData.color
             }}
           >
-            <Icon icon="tabler:hammer" className="text-3xl" />
+            <Icon className="text-3xl" icon="tabler:hammer" />
           </div>
           {projectData.name}
           <APIFallbackComponent data={statuses}>
@@ -47,13 +47,13 @@ function ProjectHeader({
                 }}
               >
                 <Icon
+                  className="text-lg"
                   icon={
                     statuses.find(e => e.id === projectData.status)?.icon ?? ''
                   }
-                  className="text-lg"
                 />
                 {statuses.find(e => e.id === projectData.status)?.name}
-                <Icon icon="tabler:chevron-down" className="ml-1" />
+                <Icon className="ml-1" icon="tabler:chevron-down" />
               </div>
             )}
           </APIFallbackComponent>
@@ -72,7 +72,7 @@ function ProjectHeader({
                   : 'text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-700/50'
               }`}
             >
-              <Icon icon={icon} className="text-2xl" />
+              <Icon className="text-2xl" icon={icon} />
             </button>
           ))}
         </div>

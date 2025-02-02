@@ -31,6 +31,14 @@ function AlbumTagsList({
                 .map(tag => (
                   <button
                     key={tag.id}
+                    className={`whitespace-nowrap rounded-full px-3 py-1 text-sm tracking-wider shadow-custom ${
+                      searchParams
+                        .getAll('tags')?.[0]
+                        ?.split(',')
+                        .includes(tag.id)
+                        ? 'bg-custom-500/20 text-custom-500 hover:bg-custom-500/40'
+                        : 'bg-bg-900 text-bg-500 hover:bg-bg-800'
+                    }`}
                     onClick={() => {
                       const existingTags =
                         searchParams.get('tags')?.split(',') ?? []
@@ -45,38 +53,30 @@ function AlbumTagsList({
                         tags: existingTags.filter(e => e).join(',')
                       })
                     }}
-                    className={`whitespace-nowrap rounded-full px-3 py-1 text-sm tracking-wider shadow-custom ${
-                      searchParams
-                        .getAll('tags')?.[0]
-                        ?.split(',')
-                        .includes(tag.id)
-                        ? 'bg-custom-500/20 text-custom-500 hover:bg-custom-500/40'
-                        : 'bg-bg-900 text-bg-500 hover:bg-bg-800'
-                    }`}
                   >
                     {tag.name} ({tag.count})
                   </button>
                 ))}
               <button
+                className="flex items-center rounded-full bg-bg-900 px-3 py-1 text-sm tracking-wider text-bg-500 shadow-custom transition-all hover:bg-bg-300 dark:hover:bg-bg-700/50"
                 onClick={() => {
                   setModifyAlbumTagModalOpenType('create')
                 }}
-                className="flex items-center rounded-full bg-bg-900 px-3 py-1 text-sm tracking-wider text-bg-500 shadow-custom transition-all hover:bg-bg-300 dark:hover:bg-bg-700/50"
               >
-                <Icon icon="tabler:plus" className="size-4" />
+                <Icon className="size-4" icon="tabler:plus" />
               </button>
             </div>
             <button
+              className="ml-2 mt-0.5 rounded-full p-1 text-sm text-bg-500 transition-all hover:bg-bg-900"
               onClick={() => {
                 setTagsCollapsed(!tagsCollapsed)
               }}
-              className="ml-2 mt-0.5 rounded-full p-1 text-sm text-bg-500 transition-all hover:bg-bg-900"
             >
               <Icon
+                className="size-4"
                 icon={
                   tagsCollapsed ? 'tabler:chevron-down' : 'tabler:chevron-up'
                 }
-                className="size-4"
               />
             </button>
           </div>

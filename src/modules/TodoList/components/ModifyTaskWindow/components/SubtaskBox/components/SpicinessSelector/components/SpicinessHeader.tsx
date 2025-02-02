@@ -14,7 +14,7 @@ function SpicinessHeader({
     <>
       <div className="flex-between flex w-full gap-2">
         <div className="flex items-center gap-2">
-          <Icon icon="icon-park-outline:chili" className="size-5" />
+          <Icon className="size-5" icon="icon-park-outline:chili" />
           <span className="font-medium">Spiciness</span>
         </div>
         <div className="flex items-center gap-2">

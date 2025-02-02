@@ -60,28 +60,28 @@ function ProjectKanban(): React.ReactElement {
                 >
                   <div className="flex-between flex">
                     <h3 className="flex items-center gap-4">
-                      <Icon icon={column.icon} className="text-2xl" />
+                      <Icon className="text-2xl" icon={column.icon} />
                       <span className="text-xl font-semibold ">
                         {column.name}
                       </span>
                     </h3>
                     <HamburgerMenu className="relative">
                       <MenuItem
+                        icon="tabler:pencil"
+                        text="Edit"
                         onClick={() => {
                           setModifyColumnModalOpenType('update')
                           setExistedData(column)
                         }}
-                        text="Edit"
-                        icon="tabler:pencil"
                       />
                       <MenuItem
+                        isRed
+                        icon="tabler:trash"
+                        text="Delete"
                         onClick={() => {
                           setDeleteColumnConfirmationModalOpen(true)
                           setExistedData(column)
                         }}
-                        text="Delete"
-                        icon="tabler:trash"
-                        isRed
                       />
                     </HamburgerMenu>
                   </div>
@@ -105,13 +105,13 @@ function ProjectKanban(): React.ReactElement {
                 </div>
               ))}
               <button
+                className="flex h-min max-h-full w-72 shrink-0 flex-col items-center gap-2 rounded-lg border-2 border-dashed border-bg-400 p-8 text-bg-500 transition-all  hover:border-bg-800 hover:bg-bg-200 dark:border-bg-500 dark:hover:border-bg-100 dark:hover:bg-bg-800/20 dark:hover:text-bg-50"
                 onClick={() => {
                   setModifyColumnModalOpenType('create')
                   setExistedData(null)
                 }}
-                className="flex h-min max-h-full w-72 shrink-0 flex-col items-center gap-2 rounded-lg border-2 border-dashed border-bg-400 p-8 text-bg-500 transition-all  hover:border-bg-800 hover:bg-bg-200 dark:border-bg-500 dark:hover:border-bg-100 dark:hover:bg-bg-800/20 dark:hover:text-bg-50"
               >
-                <Icon icon="tabler:plus" className="text-4xl" />
+                <Icon className="text-4xl" icon="tabler:plus" />
                 <span className="text-xl font-semibold">Add a column</span>
               </button>
             </div>
@@ -119,26 +119,26 @@ function ProjectKanban(): React.ReactElement {
         )}
       </APIFallbackComponent>
       <ModifyColumnsModal
-        openType={modifyColumnModalOpenType}
-        setOpenType={setModifyColumnModalOpenType}
         existedData={existedData}
-        setExistedData={setExistedData}
+        openType={modifyColumnModalOpenType}
         refreshColumns={refreshColumns}
+        setExistedData={setExistedData}
+        setOpenType={setModifyColumnModalOpenType}
       />
       <ModifyCardModal
         openType={modifyCardModalOpenType}
         setOpenType={setModifyCardModalOpenType}
       />
       <DeleteConfirmationModal
+        apiEndpoint="projects-m/kanban/column"
+        data={existedData}
         isOpen={deleteColumnConfirmationModalOpen}
+        itemName="column"
+        nameKey="name"
+        updateDataLists={refreshColumns}
         onClose={() => {
           setDeleteColumnConfirmationModalOpen(false)
         }}
-        apiEndpoint="projects-m/kanban/column"
-        itemName="column"
-        data={existedData}
-        nameKey="name"
-        updateDataLists={refreshColumns}
       />
     </>
   )

@@ -71,9 +71,6 @@ function StatisticChardCard(): React.ReactElement {
   return (
     <DashboardItem
       className="col-span-2 row-span-2"
-      icon="tabler:chart-dots"
-      namespace="modules.wallet"
-      title="Statistics"
       componentBesideTitle={
         <div className="hidden items-center gap-8 sm:flex">
           {['income', 'expenses'].map(type => (
@@ -88,6 +85,9 @@ function StatisticChardCard(): React.ReactElement {
           ))}
         </div>
       }
+      icon="tabler:chart-dots"
+      namespace="modules.wallet"
+      title="Statistics"
     >
       <div className="flex-center size-full min-h-0 flex-1">
         <APIFallbackComponent data={transactions}>
@@ -99,6 +99,7 @@ function StatisticChardCard(): React.ReactElement {
               />
             ) : (
               <Bar
+                className="w-full"
                 data={{
                   labels: dates,
                   datasets: [
@@ -119,7 +120,6 @@ function StatisticChardCard(): React.ReactElement {
                   ]
                 }}
                 options={options as any}
-                className="w-full"
               />
             )
           }

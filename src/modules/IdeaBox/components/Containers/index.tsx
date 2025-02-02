@@ -28,21 +28,21 @@ function Container({
           key={container.id}
           container={container}
           setCreateContainerModalOpen={setCreateContainerModalOpen}
-          setExistedData={setExistedData}
           setDeleteContainerConfirmationModalOpen={
             setDeleteContainerConfirmationModalOpen
           }
+          setExistedData={setExistedData}
         />
       ))}
       <button
+        className="flex-center relative h-full flex-col gap-6 rounded-lg border-2 border-dashed border-bg-400 p-8 hover:bg-bg-200 dark:border-bg-700 dark:hover:bg-bg-800/20"
         onClick={() => {
           setCreateContainerModalOpen('create')
         }}
-        className="flex-center relative h-full flex-col gap-6 rounded-lg border-2 border-dashed border-bg-400 p-8 hover:bg-bg-200 dark:border-bg-700 dark:hover:bg-bg-800/20"
       >
         <Icon
-          icon="tabler:cube-plus"
           className="size-8 text-bg-500 dark:text-bg-50"
+          icon="tabler:cube-plus"
         />
         <div className="text-xl font-semibold text-bg-500 dark:text-bg-50">
           {t('common.buttons:new', { item: t('items.container') })}

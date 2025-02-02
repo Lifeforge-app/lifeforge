@@ -83,30 +83,30 @@ function ModifyFolderModal({
     <>
       <ModalWrapper isOpen={openType !== null}>
         <ModalHeader
-          title={`${
-            {
-              create: 'Create ',
-              update: 'Rename '
-            }[innerOpenType!]
-          } folder`}
           icon={
             {
               create: 'tabler:plus',
               update: 'tabler:pencil'
             }[innerOpenType!]
           }
+          title={`${
+            {
+              create: 'Create ',
+              update: 'Rename '
+            }[innerOpenType!]
+          } folder`}
           onClose={() => {
             setOpenType(null)
           }}
         />
         <TextInput
-          namespace="modules.notes"
-          name="Folder Name"
-          placeholder="My lovely folder"
-          icon="tabler:folder"
-          value={folderName}
-          updateValue={setFolderName}
           darker
+          icon="tabler:folder"
+          name="Folder Name"
+          namespace="modules.notes"
+          placeholder="My lovely folder"
+          updateValue={setFolderName}
+          value={folderName}
           onKeyDown={e => {
             if (e.key === 'Enter') {
               onSubmitButtonClick().catch(console.error)
@@ -115,10 +115,10 @@ function ModifyFolderModal({
         />
         <CreateOrModifyButton
           loading={loading}
+          type={innerOpenType}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-          type={innerOpenType}
         />
       </ModalWrapper>
     </>

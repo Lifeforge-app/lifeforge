@@ -16,20 +16,20 @@ function ManageWidgetsModal({
   return (
     <ModalWrapper isOpen={isOpen} minWidth="40vw">
       <ModalHeader
-        title="Manage Widgets"
-        namespace="modules.dashboard"
-        onClose={onClose}
         icon="tabler:apps"
+        namespace="modules.dashboard"
+        title="Manage Widgets"
+        onClose={onClose}
       />
       <ul className="space-y-2 overflow-y-auto">
         {Object.entries(DASHBOARD_WIDGETS).map(
           ([key, { icon, minW, minH }]) => (
             <ComponentListItem
               key={key}
-              id={key}
               icon={icon}
-              minW={minW}
+              id={key}
               minH={minH}
+              minW={minW}
               setReady={setReady}
             />
           )

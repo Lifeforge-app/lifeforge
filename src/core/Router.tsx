@@ -59,7 +59,6 @@ function AppRouter(): React.ReactElement {
         return (
           <Route
             key={`${name}-${index}`}
-            path={(!isNested ? '/' : '') + path}
             element={
               Comp !== undefined ? (
                 <Suspense
@@ -77,6 +76,7 @@ function AppRouter(): React.ReactElement {
                 <></>
               )
             }
+            path={(!isNested ? '/' : '') + path}
           />
         )
       })
@@ -98,7 +98,7 @@ function AppRouter(): React.ReactElement {
   return (
     <>
       <Routes>
-        <Route path="/" element={<MainApplication />}>
+        <Route element={<MainApplication />} path="/">
           {userData !== null ? (
             ROUTES.flatMap(e => e.items)
               .filter(
@@ -121,8 +121,8 @@ function AppRouter(): React.ReactElement {
                       return (
                         <Route
                           key={item.name}
-                          path={'/' + titleToPath(item.name)}
                           element={<Provider />}
+                          path={'/' + titleToPath(item.name)}
                         >
                           {renderRoutes(
                             item.routes,
@@ -141,21 +141,21 @@ function AppRouter(): React.ReactElement {
                     )
               )
           ) : (
-            <Route path="*" element={<NotFoundScreen />} />
+            <Route element={<NotFoundScreen />} path="*" />
           )}
         </Route>
-        <Route path="auth" element={<Auth />} />
-        <Route path="*" element={<NotFoundScreen />} />
+        <Route element={<Auth />} path="auth" />
+        <Route element={<NotFoundScreen />} path="*" />
       </Routes>
       <ToastContainer
-        position="bottom-center"
+        closeOnClick
+        draggable
+        pauseOnFocusLoss
+        pauseOnHover
         autoClose={3000}
         newestOnTop={false}
-        closeOnClick
+        position="bottom-center"
         rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
         theme={theme}
       />
     </>

@@ -14,7 +14,7 @@ function MailHeader({ mail }: { mail: IMailInboxEntry }): React.ReactElement {
           <div
             className={`flex-center size-10 items-center rounded-full ${componentBgLighter} border border-bg-200 bg-bg-50! dark:border-bg-700`}
           >
-            <Icon icon="tabler:user" className="size-5 text-bg-500" />
+            <Icon className="size-5 text-bg-500" icon="tabler:user" />
           </div>
           <div>
             <p className="text-base font-medium">

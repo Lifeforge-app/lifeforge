@@ -13,7 +13,7 @@ function FolderList(): React.ReactElement {
   return (
     <>
       <h2 className="mb-2 flex items-center gap-2 text-lg font-medium text-bg-500">
-        <Icon icon="tabler:folder" className="size-6" />
+        <Icon className="size-6" icon="tabler:folder" />
         {t('entryType.folder')}
       </h2>
       <div className="mt-2 grid gap-2 md:grid-cols-2 lg:grid-cols-3">

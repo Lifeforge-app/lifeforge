@@ -11,10 +11,10 @@ function GoBackButton({
 
   return (
     <Button
-      onClick={onClick}
+      className="mb-2 w-min px-0 py-2 pl-2 hover:bg-transparent! dark:hover:bg-transparent!"
       icon="tabler:chevron-left"
       variant="no-bg"
-      className="mb-2 w-min px-0 py-2 pl-2 hover:bg-transparent! dark:hover:bg-transparent!"
+      onClick={onClick}
     >
       {t('buttons.goBack')}
     </Button>

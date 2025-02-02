@@ -91,15 +91,15 @@ function Modal({
 
   return (
     <>
-      <ModalWrapper minWidth="50vw" modalRef={modalRef} isOpen={isOpen}>
+      <ModalWrapper isOpen={isOpen} minWidth="50vw" modalRef={modalRef}>
         <ModalHeader
-          title={title}
-          icon={icon}
-          onClose={onClose}
           actionButtonIcon={actionButtonIcon}
           actionButtonIsRed={actionButtonIsRed}
-          onActionButtonClick={onActionButtonClick}
+          icon={icon}
           namespace={namespace}
+          title={title}
+          onActionButtonClick={onActionButtonClick}
+          onClose={onClose}
         />
         {!loading ? (
           <>
@@ -112,46 +112,38 @@ function Modal({
                     return (
                       <TextInput
                         key={field.id}
-                        name={field.label}
+                        darker
+                        disabled={field.disabled}
                         icon={field.icon}
-                        value={selectedData as string}
+                        name={field.label}
+                        namespace={namespace}
+                        placeholder={field.placeholder}
                         updateValue={value => {
                           setData({ [field.id]: value })
                         }}
-                        darker
-                        placeholder={field.placeholder}
-                        disabled={field.disabled}
-                        namespace={namespace}
+                        value={selectedData as string}
                       />
                     )
                   case 'date':
                     return (
                       <DateInput
                         key={field.id}
-                        modalRef={field.modalRef}
-                        index={field.index}
+                        darker
                         date={selectedData as string}
+                        icon={field.icon}
+                        index={field.index}
+                        modalRef={field.modalRef}
+                        name={field.label}
+                        namespace={namespace}
                         setDate={(date: string) => {
                           setData({ [field.id]: date })
                         }}
-                        name={field.label}
-                        icon={field.icon}
-                        darker
-                        namespace={namespace}
                       />
                     )
                   case 'listbox':
                     return (
                       <ListboxOrComboboxInput
-                        type="listbox"
                         key={field.id}
-                        name={field.label}
-                        icon={field.icon}
-                        value={selectedData}
-                        setValue={(value: string | string[]) => {
-                          setData({ [field.id]: value })
-                        }}
-                        multiple={field.multiple}
                         buttonContent={
                           field.multiple === true &&
                           Array.isArray(selectedData) ? (
@@ -161,12 +153,12 @@ function Modal({
                                   <>
                                     <Icon
                                       key={item}
+                                      className="size-5"
                                       icon={
                                         field.options.find(
                                           l => l.value === item
                                         )?.icon ?? ''
                                       }
-                                      className="size-5"
                                     />
                                     <span className="-mt-px block truncate">
                                       {field.options.find(l => l.value === item)
@@ -174,8 +166,8 @@ function Modal({
                                     </span>
                                     {i !== selectedData.length - 1 && (
                                       <Icon
-                                        icon="tabler:circle-filled"
                                         className="size-1"
+                                        icon="tabler:circle-filled"
                                       />
                                     )}
                                   </>
@@ -184,8 +176,8 @@ function Modal({
                                 <>
                                   {field.nullOption !== undefined && (
                                     <Icon
-                                      icon={field.nullOption}
                                       className="size-5"
+                                      icon={field.nullOption}
                                     />
                                   )}
                                   None
@@ -195,6 +187,7 @@ function Modal({
                           ) : (
                             <>
                               <Icon
+                                className="size-5"
                                 icon={
                                   field.options.find(
                                     l => l.value === selectedData
@@ -207,7 +200,6 @@ function Modal({
                                     l => l.value === selectedData
                                   )?.color
                                 }}
-                                className="size-5"
                               />
                               {field.options.length &&
                                 field.options[0].icon === undefined &&
@@ -229,21 +221,29 @@ function Modal({
                             </>
                           )
                         }
+                        icon={field.icon}
+                        multiple={field.multiple}
+                        name={field.label}
                         namespace={namespace}
+                        setValue={(value: string | string[]) => {
+                          setData({ [field.id]: value })
+                        }}
+                        type="listbox"
+                        value={selectedData}
                       >
                         {field.nullOption !== undefined && (
                           <ListboxNullOption
-                            icon={field.nullOption}
                             hasBgColor={field.options[0]?.color !== undefined}
+                            icon={field.nullOption}
                           />
                         )}
                         {field.options.map(({ text, color, icon, value }) => (
                           <ListboxOrComboboxOption
                             key={value}
-                            value={value}
-                            text={text}
-                            icon={icon}
                             color={color}
+                            icon={icon}
+                            text={text}
+                            value={value}
                           />
                         ))}
                       </ListboxOrComboboxInput>
@@ -252,24 +252,24 @@ function Modal({
                     return (
                       <ColorInput
                         key={field.id}
-                        name={field.label}
                         color={selectedData as string}
-                        updateColor={value => {
-                          setData({ [field.id]: value })
-                        }}
+                        name={field.label}
+                        namespace={namespace}
                         setColorPickerOpen={() => {
                           setColorPickerOpen(field.id)
                         }}
-                        namespace={namespace}
+                        updateColor={value => {
+                          setData({ [field.id]: value })
+                        }}
                       />
                     )
                   case 'icon':
                     return (
                       <IconInput
-                        namespace={namespace}
                         key={field.id}
-                        name={field.label}
                         icon={selectedData as string}
+                        name={field.label}
+                        namespace={namespace}
                         setIcon={value => {
                           setData({ [field.id]: value })
                         }}
@@ -282,15 +282,6 @@ function Modal({
                     return (
                       <ImageAndFileInput
                         icon="tabler:file"
-                        name={field.label}
-                        preview={
-                          (
-                            selectedData as {
-                              image: string | File | null
-                              preview: string | null
-                            }
-                          ).preview
-                        }
                         image={
                           (
                             selectedData as {
@@ -299,17 +290,16 @@ function Modal({
                             }
                           ).image
                         }
-                        setPreview={value => {
-                          setData({
-                            [field.id]: {
-                              ...(selectedData as {
-                                image: string | File | null
-                                preview: string | null
-                              }),
-                              preview: value
+                        name={field.label}
+                        namespace={namespace}
+                        preview={
+                          (
+                            selectedData as {
+                              image: string | File | null
+                              preview: string | null
                             }
-                          })
-                        }}
+                          ).preview
+                        }
                         setImage={value => {
                           setData({
                             [field.id]: {
@@ -325,6 +315,17 @@ function Modal({
                           setImagePickerModalOpen(field.id)
                           field.onFileRemoved?.()
                         }}
+                        setPreview={value => {
+                          setData({
+                            [field.id]: {
+                              ...(selectedData as {
+                                image: string | File | null
+                                preview: string | null
+                              }),
+                              preview: value
+                            }
+                          })
+                        }}
                         onImageRemoved={() => {
                           setData({
                             [field.id]: {
@@ -333,7 +334,6 @@ function Modal({
                             }
                           })
                         }}
-                        namespace={namespace}
                       />
                     )
                   default:
@@ -344,20 +344,20 @@ function Modal({
             {['create', 'update'].includes(openType ?? '') ? (
               <CreateOrModifyButton
                 loading={submitLoading}
+                type={openType as 'create' | 'update'}
                 onClick={() => {
                   onSubmitButtonClick().catch(console.error)
                 }}
-                type={openType as 'create' | 'update'}
               />
             ) : (
               <Button
-                loading={submitLoading}
                 className="mt-4"
+                icon={submitButtonIcon ?? ''}
+                iconAtEnd={submitButtonIconAtEnd}
+                loading={submitLoading}
                 onClick={() => {
                   onSubmitButtonClick().catch(console.error)
                 }}
-                icon={submitButtonIcon ?? ''}
-                iconAtEnd={submitButtonIconAtEnd}
               >
                 {submitButtonLabel}
               </Button>
@@ -369,15 +369,15 @@ function Modal({
       </ModalWrapper>
       {fields.some(f => f.type === 'color') && (
         <ColorPickerModal
-          isOpen={colorPickerOpen !== null}
-          setOpen={() => {
-            setColorPickerOpen(null)
-          }}
           color={(data[colorPickerOpen ?? ''] as string) ?? '#FFFFFF'}
+          isOpen={colorPickerOpen !== null}
           setColor={value => {
             setData({
               [colorPickerOpen ?? '']: value
             })
+          }}
+          setOpen={() => {
+            setColorPickerOpen(null)
           }}
         />
       )}
@@ -396,6 +396,11 @@ function Modal({
       )}
       {fields.some(f => f.type === 'file') && (
         <ImagePickerModal
+          enablePixaBay
+          enableUrl
+          acceptedMimeTypes={{
+            images: ['image/png', 'image/jpeg', 'image/webp']
+          }}
           isOpen={imagePickerModalOpen !== null}
           onClose={() => {
             setImagePickerModalOpen(null)
@@ -408,11 +413,6 @@ function Modal({
               }
             })
           }}
-          acceptedMimeTypes={{
-            images: ['image/png', 'image/jpeg', 'image/webp']
-          }}
-          enableUrl
-          enablePixaBay
         />
       )}
     </>

@@ -103,21 +103,21 @@ function ModifyAlbumModal({
   return (
     <ModalWrapper isOpen={openType !== false} minWidth="40rem">
       <ModalHeader
+        icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
         title={`${openType === 'create' ? 'Create' : 'Rename'} album`}
         onClose={() => {
           setOpenType(false)
         }}
-        icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
       />
       <TextInput
-        namespace="modules.photos"
-        icon="tabler:photo"
         ref={ref}
-        name="Album name"
-        value={albumName}
-        updateValue={setAlbumName}
         darker
+        icon="tabler:photo"
+        name="Album name"
+        namespace="modules.photos"
         placeholder="My lovely album"
+        updateValue={setAlbumName}
+        value={albumName}
         onKeyDown={e => {
           if (e.key === 'Enter') {
             onSubmitButtonClick().catch(console.error)
@@ -125,8 +125,8 @@ function ModifyAlbumModal({
         }}
       />
       <CreateOrModifyButton
-        type={openType as 'create' | 'rename'}
         loading={loading}
+        type={openType as 'create' | 'rename'}
         onClick={() => {
           onSubmitButtonClick().catch(console.error)
         }}

@@ -5,7 +5,7 @@ import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 function NutritionsTracker(): React.ReactElement {
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Nutritions Tracker" icon="tabler:leaf" />
+      <ModuleHeader icon="tabler:leaf" title="Nutritions Tracker" />
     </ModuleWrapper>
   )
 }

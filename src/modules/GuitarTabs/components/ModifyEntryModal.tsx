@@ -85,48 +85,41 @@ function ModifyEntryModal({
   }
 
   return (
-    <ModalWrapper isOpen={isOpen} className="md:min-w-[30vw]!">
+    <ModalWrapper className="md:min-w-[30vw]!" isOpen={isOpen}>
       <ModalHeader
         icon="tabler:pencil"
-        onClose={onClose}
-        title="guitarTabs.update"
         namespace="modules.guitarTabs"
+        title="guitarTabs.update"
+        onClose={onClose}
       />
       <TextInput
-        namespace="modules.guitarTabs"
         darker
         icon="tabler:music"
         name="Music Name"
+        namespace="modules.guitarTabs"
         placeholder="A cool tab"
-        value={data.name}
         updateValue={value => {
           setData({ name: value })
         }}
+        value={data.name}
       />
       <TextInput
-        namespace="modules.guitarTabs"
         darker
+        className="mt-4"
         icon="tabler:user"
         name="Author"
+        namespace="modules.guitarTabs"
         placeholder="John Doe"
-        value={data.author}
         updateValue={value => {
           setData({ author: value })
         }}
-        className="mt-4"
+        value={data.author}
       />
       <ListboxOrComboboxInput
-        namespace="modules.guitarTabs"
-        type="listbox"
-        name="Score Type"
-        icon="tabler:category"
-        value={data.type}
-        setValue={value => {
-          setData({ type: value })
-        }}
         buttonContent={
           <>
             <Icon
+              className="size-5"
               icon={
                 data.type !== ''
                   ? {
@@ -135,7 +128,6 @@ function ModifyEntryModal({
                     }[data.type]
                   : 'tabler:music-off'
               }
-              className="size-5"
             />
             <span className="-mt-px block truncate">
               {data.type !== ''
@@ -144,23 +136,31 @@ function ModifyEntryModal({
             </span>
           </>
         }
+        icon="tabler:category"
+        name="Score Type"
+        namespace="modules.guitarTabs"
+        setValue={value => {
+          setData({ type: value })
+        }}
+        type="listbox"
+        value={data.type}
       >
         <ListboxNullOption
-          text={t('scoreTypes.uncategorized')}
           icon="tabler:music-off"
+          text={t('scoreTypes.uncategorized')}
         />
         {TYPES.map(({ id, icon }) => (
           <ListboxOrComboboxOption
             key={id}
-            text={t(`scoreTypes.${id}`)}
             icon={icon}
+            text={t(`scoreTypes.${id}`)}
             value={id}
           />
         ))}
       </ListboxOrComboboxInput>
       <CreateOrModifyButton
-        type="update"
         loading={loading}
+        type="update"
         onClick={() => {
           onSubmit().catch(console.error)
         }}

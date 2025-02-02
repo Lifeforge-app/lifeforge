@@ -47,8 +47,8 @@ function CalendarHeader({
           {['Month', 'Week', 'Day', 'Agenda'].map(view => (
             <ChangeViewButton
               key={view}
-              view={view}
               currentView={currentView}
+              view={view}
               onView={onView}
             />
           ))}
@@ -56,10 +56,10 @@ function CalendarHeader({
         <Button
           className="hidden whitespace-nowrap lg:flex"
           icon="tabler:plus"
+          tProps={{ item: t('items.event') }}
           onClick={() => {
             setModifyEventModalOpenType('create')
           }}
-          tProps={{ item: t('items.event') }}
         >
           new
         </Button>

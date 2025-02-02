@@ -92,8 +92,8 @@ function GuitarTabs(): React.ReactElement {
         return (
           <EmptyStateScreen
             icon="tabler:music-off"
-            namespace="modules.guitarTabs"
             name="score"
+            namespace="modules.guitarTabs"
           />
         )
       }
@@ -101,8 +101,8 @@ function GuitarTabs(): React.ReactElement {
       return (
         <EmptyStateScreen
           icon="tabler:search-off"
-          namespace="modules.guitarTabs"
           name="result"
+          namespace="modules.guitarTabs"
         />
       )
     }
@@ -116,18 +116,18 @@ function GuitarTabs(): React.ReactElement {
               refreshEntries()
               refreshSidebarData()
             }}
+            setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
             setExistingEntry={setExistingEntry}
             setModifyEntryModalOpen={setModifyEntryModalOpen}
-            setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
           />
         )
       case 'list':
         return (
           <ListView
             entries={entries.items}
+            setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
             setExistingEntry={setExistingEntry}
             setModifyEntryModalOpen={setModifyEntryModalOpen}
-            setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
           />
         )
     }
@@ -137,16 +137,16 @@ function GuitarTabs(): React.ReactElement {
     <ModuleWrapper>
       <Header
         refreshEntries={refreshEntries}
-        totalItems={typeof entries !== 'string' ? entries.totalItems : 0}
         setGuitarWorldModalOpen={setGuitarWorldModalOpen}
-        view={view}
         setView={setView}
+        totalItems={typeof entries !== 'string' ? entries.totalItems : 0}
+        view={view}
       />
       <SidebarAndContentWrapper>
         <Sidebar
-          sidebarData={sidebarData}
           isOpen={sidebarOpen}
           setOpen={setSidebarOpen}
+          sidebarData={sidebarData}
         />
         <ContentWrapperWithSidebar>
           <header className="flex-between flex w-full">
@@ -178,12 +178,12 @@ function GuitarTabs(): React.ReactElement {
             </div>
 
             <button
+              className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
               onClick={() => {
                 setSidebarOpen(true)
               }}
-              className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
             >
-              <Icon icon="tabler:menu" className="text-2xl" />
+              <Icon className="text-2xl" icon="tabler:menu" />
             </button>
           </header>
           <div className="flex gap-2">
@@ -201,12 +201,12 @@ function GuitarTabs(): React.ReactElement {
               >
                 <div className="flex items-center gap-2">
                   <Icon
+                    className="size-6"
                     icon={
                       SORT_TYPE.find(
                         ([, , value]) => value === searchParams.get('sort')
                       )?.[1] ?? 'tabler:clock'
                     }
-                    className="size-6"
                   />
                   <span className="whitespace-nowrap font-medium">
                     {t(
@@ -219,52 +219,52 @@ function GuitarTabs(): React.ReactElement {
                   </span>
                 </div>
                 <Icon
-                  icon="tabler:chevron-down"
                   className="size-5 text-bg-500"
+                  icon="tabler:chevron-down"
                 />
               </ListboxButton>
               <ListboxOrComboboxOptions>
                 {SORT_TYPE.map(([icon, value]) => (
                   <ListboxOrComboboxOption
                     key={value}
-                    value={value}
                     icon={icon}
                     text={t(`sortTypes.${value}`)}
+                    value={value}
                   />
                 ))}
               </ListboxOrComboboxOptions>
             </Listbox>
             <SearchInput
+              namespace="modules.guitarTabs"
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
               stuffToSearch="score"
-              namespace="modules.guitarTabs"
             />
             <ViewModeSelector
               className="hidden md:flex"
-              viewMode={view}
-              setViewMode={setView}
               options={[
                 { value: 'list', icon: 'uil:list-ul' },
                 { value: 'grid', icon: 'uil:apps' }
               ]}
+              setViewMode={setView}
+              viewMode={view}
             />
           </div>
           <APIFallbackComponent data={entries}>
             {entries => (
               <Scrollbar className="mt-6 pb-16">
                 <Pagination
-                  currentPage={entries.page}
-                  onPageChange={setPage}
-                  totalPages={entries.totalPages}
                   className="mb-4"
+                  currentPage={entries.page}
+                  totalPages={entries.totalPages}
+                  onPageChange={setPage}
                 />
                 {renderContent(entries)}
                 <Pagination
-                  currentPage={entries.page}
-                  onPageChange={setPage}
-                  totalPages={entries.totalPages}
                   className="mt-4 pb-12"
+                  currentPage={entries.page}
+                  totalPages={entries.totalPages}
+                  onPageChange={setPage}
                 />
               </Scrollbar>
             )}
@@ -272,29 +272,29 @@ function GuitarTabs(): React.ReactElement {
         </ContentWrapperWithSidebar>
       </SidebarAndContentWrapper>
       <ModifyEntryModal
-        isOpen={modifyEntryModalOpen}
-        onClose={() => {
-          setModifyEntryModalOpen(false)
-          setExistingEntry(null)
-        }}
         existingItem={existingEntry}
+        isOpen={modifyEntryModalOpen}
         refreshEntries={() => {
           refreshEntries()
           refreshSidebarData()
         }}
+        onClose={() => {
+          setModifyEntryModalOpen(false)
+          setExistingEntry(null)
+        }}
       />
       <DeleteConfirmationModal
-        isOpen={deleteConfirmationModalOpen}
-        onClose={() => {
-          setDeleteConfirmationModalOpen(false)
-        }}
         apiEndpoint="guitar-tabs/entries"
         data={existingEntry}
-        nameKey="title"
+        isOpen={deleteConfirmationModalOpen}
         itemName="guitar tab"
+        nameKey="title"
         updateDataLists={() => {
           refreshEntries()
           refreshSidebarData()
+        }}
+        onClose={() => {
+          setDeleteConfirmationModalOpen(false)
         }}
       />
       <GuitarWorldModal

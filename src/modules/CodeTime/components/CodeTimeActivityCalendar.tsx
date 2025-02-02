@@ -38,7 +38,7 @@ function CodeTimeActivityCalendar(): React.ReactElement {
   return (
     <div className="space-y-8">
       <h1 className="flex items-center gap-2 text-2xl font-semibold">
-        <Icon icon="tabler:activity" className="text-3xl" />
+        <Icon className="text-3xl" icon="tabler:activity" />
         <span className="ml-2">{t('headers.activitiesCalendar')}</span>
       </h1>
       <div className="flex w-full items-center justify-between gap-6 overflow-x-auto">
@@ -51,9 +51,9 @@ function CodeTimeActivityCalendar(): React.ReactElement {
             {() =>
               Array.isArray(activities) ? (
                 <ActivityCalendar
-                  data={activities}
-                  blockSize={15}
                   blockMargin={5}
+                  blockSize={15}
+                  data={activities}
                   labels={{
                     totalCount: `${
                       Math.floor(
@@ -112,7 +112,7 @@ function CodeTimeActivityCalendar(): React.ReactElement {
             }
           </APIFallbackComponent>
         </div>
-        <Tooltip id="react-tooltip" className="z-9999" />
+        <Tooltip className="z-9999" id="react-tooltip" />
         {firstYear && (
           <div className="space-y-2">
             {Array(new Date().getFullYear() - firstYear + 1)
@@ -120,14 +120,14 @@ function CodeTimeActivityCalendar(): React.ReactElement {
               .map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => {
-                    setYear(firstYear + index)
-                  }}
                   className={`flex items-start gap-2 rounded-lg p-4 px-8 font-medium sm:px-12 ${
                     year === firstYear + index
                       ? 'bg-bg-200 font-semibold text-bg-800 dark:bg-bg-700/50 dark:text-bg-50'
                       : 'text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-700/50'
                   }`}
+                  onClick={() => {
+                    setYear(firstYear + index)
+                  }}
                 >
                   <span>{firstYear + index}</span>
                 </button>

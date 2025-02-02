@@ -37,8 +37,8 @@ const defaultProps = {
 
 const renderIcon = (icon: string, loading: boolean, iconClassName?: string) => (
   <Icon
-    icon={loading ? 'svg-spinners:180-ring' : icon}
     className={`shrink-0 text-xl ${iconClassName}`}
+    icon={loading ? 'svg-spinners:180-ring' : icon}
   />
 )
 
@@ -73,10 +73,10 @@ function Button<C extends React.ElementType = 'button'>({
   return (
     <Component
       {...props}
+      className={finalClassName}
+      disabled={finalProps.loading || finalProps.disabled}
       type="button"
       onClick={memoizedOnClick}
-      disabled={finalProps.loading || finalProps.disabled}
-      className={finalClassName}
     >
       {!finalProps.iconAtEnd &&
         renderIcon(icon, finalProps.loading, finalProps.iconClassName)}

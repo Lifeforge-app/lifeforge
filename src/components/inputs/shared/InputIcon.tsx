@@ -12,7 +12,6 @@ function InputIcon({
 }): React.ReactElement {
   return (
     <Icon
-      icon={icon}
       className={`size-6 shrink-0 ${
         active ? '' : 'text-bg-500'
       } transition-all ${
@@ -20,6 +19,7 @@ function InputIcon({
           ? 'group-data-open:text-custom-500!'
           : 'group-focus-within:text-custom-500!'
       }`}
+      icon={icon}
     />
   )
 }

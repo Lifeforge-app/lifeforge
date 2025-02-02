@@ -31,8 +31,8 @@ function IconPickerModal({
         <Search
           searchTerm={currentIconSet.search}
           setCurrentIconSetProp={setCurrentIconSet}
-          setSelectedIcon={setSelectedIcon}
           setOpen={setOpen}
+          setSelectedIcon={setSelectedIcon}
         />
       )
     }
@@ -40,48 +40,48 @@ function IconPickerModal({
     return (
       <IconSet
         iconSet={currentIconSet.iconSet ?? ''}
-        setSelectedIcon={setSelectedIcon}
         setOpen={setOpen}
+        setSelectedIcon={setSelectedIcon}
       />
     )
   }
 
   return (
-    <ModalWrapper isOpen={isOpen} minWidth="80vw" minHeight="80vh">
+    <ModalWrapper isOpen={isOpen} minHeight="80vh" minWidth="80vw">
       {currentIconSet !== null ? (
         <div className="flex-between mb-8 flex w-full">
           <GoBackButton onClick={() => setCurrentIconSet(null)} />
           <button
+            className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50"
             onClick={() => {
               setCurrentIconSet(null)
               setSelectedIcon('')
               setOpen(false)
             }}
-            className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50"
           >
-            <Icon icon="tabler:x" className="size-6" />
+            <Icon className="size-6" icon="tabler:x" />
           </button>
         </div>
       ) : (
         <ModalHeader
-          title="Select an Icon"
-          icon="tabler:icons"
-          onClose={() => {
-            setOpen(false)
-          }}
           appendTitle={
             <p className="shrink-0 text-right text-sm sm:text-base">
               powered by&nbsp;
               <a
-                target="_blank"
-                href="https://iconify.thecodeblog.net"
                 className="underline"
+                href="https://iconify.thecodeblog.net"
                 rel="noreferrer"
+                target="_blank"
               >
                 Iconify
               </a>
             </p>
           }
+          icon="tabler:icons"
+          title="Select an Icon"
+          onClose={() => {
+            setOpen(false)
+          }}
         />
       )}
       {renderContent()}

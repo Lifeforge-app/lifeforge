@@ -87,30 +87,30 @@ function ScoreItem({
             {entry.category}
           </span>
           <p className="mt-2 flex items-center text-sm text-bg-500">
-            <Icon icon="tabler:user" className="mr-1 size-4" />
+            <Icon className="mr-1 size-4" icon="tabler:user" />
             {entry.mainArtist}
           </p>
           <p className="mt-2 flex items-center text-sm text-bg-500">
-            <Icon icon="tabler:upload" className="mr-1 size-4" />
+            <Icon className="mr-1 size-4" icon="tabler:upload" />
             {entry.uploader}
           </p>
         </div>
       </div>
       <div className="flex items-center gap-2">
         <Button
+          className="shrink-0"
           icon={isAudioPlaying === true ? 'tabler:pause' : 'tabler:play'}
           loading={isAudioPlaying === 'loading'}
           variant="no-bg"
-          className="shrink-0"
           onClick={() => {
             toggleMusicPlay().catch(console.error)
           }}
         />
         <Button
-          icon="tabler:download"
-          variant="no-bg"
-          loading={isDownloading}
           className="shrink-0"
+          icon="tabler:download"
+          loading={isDownloading}
+          variant="no-bg"
           onClick={() => {
             downloadScore().catch(console.error)
           }}

@@ -131,16 +131,16 @@ function PhotosAlbumGallery(): React.ReactElement {
                     <div className="flex-center size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                       {albumData.cover !== '' ? (
                         <img
+                          alt=""
+                          className="size-full rounded-md object-cover"
                           src={`${import.meta.env.VITE_API_HOST}/media/${
                             albumData.cover
                           }?thumb=0x300`}
-                          alt=""
-                          className="size-full rounded-md object-cover"
                         />
                       ) : (
                         <Icon
-                          icon="tabler:library-photo"
                           className="size-8 text-bg-500 dark:text-bg-500"
+                          icon="tabler:library-photo"
                         />
                       )}
                     </div>
@@ -148,10 +148,10 @@ function PhotosAlbumGallery(): React.ReactElement {
                       <div className="flex items-center gap-2">
                         <span className="truncate">{albumData.name}</span>
                         <Icon
+                          className="size-5 shrink-0 text-bg-500"
                           icon={
                             albumData.is_public ? 'tabler:world' : 'tabler:lock'
                           }
-                          className="size-5 shrink-0 text-bg-500"
                         />
                       </div>
                       {(() => {
@@ -160,8 +160,8 @@ function PhotosAlbumGallery(): React.ReactElement {
                             return (
                               <span className="text-sm text-bg-500">
                                 <Icon
-                                  icon="svg-spinners:180-ring"
                                   className="size-5"
+                                  icon="svg-spinners:180-ring"
                                 />
                               </span>
                             )
@@ -193,8 +193,8 @@ function PhotosAlbumGallery(): React.ReactElement {
                                           ).format('DD MMM YYYY')}`
                                     }`}
                                 <Icon
-                                  icon="tabler:circle-filled"
                                   className="size-1"
+                                  icon="tabler:circle-filled"
                                 />
                                 {photos.length.toLocaleString()} photos
                               </span>
@@ -226,12 +226,12 @@ function PhotosAlbumGallery(): React.ReactElement {
                         }}
                       />
                       <MenuItem
+                        disabled={isDownloadLoading}
                         icon={
                           isDownloadLoading
                             ? 'svg-spinners:180-ring'
                             : 'tabler:download'
                         }
-                        disabled={isDownloadLoading}
                         text="Download"
                         onClick={() => {
                           requestBulkDownload().catch(console.error)
@@ -249,7 +249,6 @@ function PhotosAlbumGallery(): React.ReactElement {
                 {photos => (
                   <PhotoAlbum
                     layout="rows"
-                    spacing={8}
                     photos={photos.map(image => ({
                       src: `${import.meta.env.VITE_API_HOST}/media/${
                         image.collectionId
@@ -264,14 +263,16 @@ function PhotosAlbumGallery(): React.ReactElement {
                     }) => (
                       <ImageObject
                         beingDisplayedInAlbum
-                        photo={photo}
                         details={photos.find(image => image.id === photo.key)!}
+                        photo={photo}
                         style={style}
                         {...restImageProps}
                         selected={
                           selectedPhotos.find(image => image === photo.key) !==
                           undefined
                         }
+                        selectedPhotosLength={selectedPhotos.length}
+                        setImagePreviewOpenFor={setImagePreviewOpenFor}
                         toggleSelected={(
                           e: React.MouseEvent<
                             HTMLDivElement | HTMLButtonElement
@@ -319,32 +320,31 @@ function PhotosAlbumGallery(): React.ReactElement {
                             }
                           }
                         }}
-                        selectedPhotosLength={selectedPhotos.length}
-                        setImagePreviewOpenFor={setImagePreviewOpenFor}
                       />
                     )}
+                    spacing={8}
                   />
                 )}
               </APIFallbackComponent>
             </div>
           </Scrollbar>
         </ModuleWrapper>
-        <BottomBar photos={photos as IPhotoAlbumEntryItem[]} inAlbumGallery />
+        <BottomBar inAlbumGallery photos={photos as IPhotoAlbumEntryItem[]} />
       </div>
       <ImagePreviewModal
-        isOpen={imagePreviewModalOpenFor !== null}
-        onClose={() => {
-          setImagePreviewOpenFor(null)
-        }}
+        beingDisplayedInAlbum
         data={imagePreviewModalOpenFor}
+        isOpen={imagePreviewModalOpenFor !== null}
+        refreshAlbumData={refreshAlbumData}
+        refreshPhotos={refreshPhotos}
         setPhotos={
           setPhotos as React.Dispatch<
             React.SetStateAction<IPhotoAlbumEntryItem[]>
           >
         }
-        beingDisplayedInAlbum
-        refreshAlbumData={refreshAlbumData}
-        refreshPhotos={refreshPhotos}
+        onClose={() => {
+          setImagePreviewOpenFor(null)
+        }}
         onNextPhoto={() => {
           if (photos === 'loading' || photos === 'error') {
             return
@@ -375,11 +375,11 @@ function PhotosAlbumGallery(): React.ReactElement {
         }}
       />
       <DeletePhotosConfirmationModal
+        isInAlbumGallery={true}
         setPhotos={(photos: any) => {
           setPhotos(photos)
           refreshAlbumData()
         }}
-        isInAlbumGallery={true}
       />
 
       {typeof albumData !== 'string' && (
@@ -389,8 +389,8 @@ function PhotosAlbumGallery(): React.ReactElement {
             refreshPhotos={refreshPhotos}
           />
           <ModifyAlbumModal
-            targetAlbum={albumData}
             refreshAlbumData={refreshAlbumData}
+            targetAlbum={albumData}
           />
         </>
       )}

@@ -131,10 +131,10 @@ function Modules(): React.ReactElement {
                       .map((route, index) => (
                         <ModuleItem
                           key={index}
-                          module={route}
                           enabled={userData.enabledModules.includes(
                             titleToPath(route.name)
                           )}
+                          module={route}
                           toggleModule={() => {
                             toggleModule(route.name).catch(console.error)
                           }}

@@ -57,23 +57,23 @@ function RemovePhotosFromAlbumConfirmationModal({
       </p>
       <div className="mt-6 flex w-full justify-around gap-2">
         <Button
+          className="w-full"
+          icon=""
+          variant="secondary"
           onClick={() => {
             setRemovePhotosFromAlbumConfirmationModalOpen(false)
           }}
-          variant="secondary"
-          icon=""
-          className="w-full"
         >
           Cancel
         </Button>
         <Button
+          isRed
+          className="w-full"
+          icon="tabler:layout-grid-remove"
           loading={loading}
           onClick={() => {
             deleteData().catch(console.error)
           }}
-          isRed
-          className="w-full"
-          icon="tabler:layout-grid-remove"
         >
           remove
         </Button>

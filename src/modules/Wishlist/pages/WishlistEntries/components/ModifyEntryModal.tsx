@@ -205,19 +205,19 @@ function ModifyEntryModal({
 
   return (
     <Modal
-      namespace="modules.wishlist"
-      isOpen={openType !== null}
-      fields={FIELDS}
       data={data}
-      setData={setData}
-      title={`entry.${openType ?? ''}`}
+      fields={FIELDS}
       icon={
         {
           create: 'tabler:plus',
           update: 'tabler:pencil'
         }[openType!]
       }
+      isOpen={openType !== null}
+      namespace="modules.wishlist"
       openType={openType}
+      setData={setData}
+      title={`entry.${openType ?? ''}`}
       onClose={() => {
         setOpenType(null)
       }}

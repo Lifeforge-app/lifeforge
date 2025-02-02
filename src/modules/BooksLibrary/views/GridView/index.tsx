@@ -31,7 +31,7 @@ function GridView({
               {value.ETA}s
             </div>
             <div className="flex-center aspect-9/12 w-full rounded-lg bg-bg-200 p-2 dark:bg-bg-800">
-              <Icon icon="tabler:clock" className="size-16 text-bg-500" />
+              <Icon className="size-16 text-bg-500" icon="tabler:clock" />
             </div>
             <div className="mt-4 flex items-center gap-1 text-sm font-medium text-bg-500">
               {typeof categories !== 'string' &&
@@ -43,8 +43,8 @@ function GridView({
                   return category !== undefined ? (
                     <>
                       <Icon
-                        icon={category.icon}
                         className="size-4 text-bg-500"
+                        icon={category.icon}
                       />{' '}
                       {category.name}
                     </>

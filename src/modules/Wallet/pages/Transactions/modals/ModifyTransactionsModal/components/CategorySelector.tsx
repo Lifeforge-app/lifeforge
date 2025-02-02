@@ -28,38 +28,38 @@ function CategorySelector({
 
   return (
     <ListboxOrComboboxInput
-      type="listbox"
-      name="Category"
-      icon="tabler:apps"
-      value={category}
-      setValue={setCategory}
-      namespace="modules.wallet"
       buttonContent={
         <>
           <Icon
+            className="size-5"
             icon={
               categories.find(l => l.id === category)?.icon ?? 'tabler:apps-off'
             }
             style={{
               color: categories.find(l => l.id === category)?.color
             }}
-            className="size-5"
           />
           <span className="-mt-px block truncate">
             {categories.find(l => l.id === category)?.name ?? 'None'}
           </span>
         </>
       }
+      icon="tabler:apps"
+      name="Category"
+      namespace="modules.wallet"
+      setValue={setCategory}
+      type="listbox"
+      value={category}
     >
-      <ListboxNullOption icon="tabler:apps-off" hasBgColor value={null} />
+      <ListboxNullOption hasBgColor icon="tabler:apps-off" value={null} />
       {categories
         .filter(e => e.type === transactionType)
         .map(({ name, color, id, icon }, i) => (
           <ListboxOrComboboxOption
             key={i}
-            text={name}
-            icon={icon}
             color={color}
+            icon={icon}
+            text={name}
             value={id}
           />
         ))}

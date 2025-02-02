@@ -12,13 +12,13 @@ function EntryCreationDate({
   return (
     <div className="z-50 hidden w-1/5 shrink-0 items-center md:flex">
       <div
-        data-tooltip-id={`date-tooltip-${id}`}
-        data-tooltip-content={moment(date).format('MMMM Do YYYY, h:mm:ss a')}
         className="z-50 shrink-0 text-bg-500 dark:text-bg-500"
+        data-tooltip-content={moment(date).format('MMMM Do YYYY, h:mm:ss a')}
+        data-tooltip-id={`date-tooltip-${id}`}
       >
         {moment(date).fromNow()}
       </div>
-      <Tooltip id={`date-tooltip-${id}`} className="z-50" />
+      <Tooltip className="z-50" id={`date-tooltip-${id}`} />
     </div>
   )
 }

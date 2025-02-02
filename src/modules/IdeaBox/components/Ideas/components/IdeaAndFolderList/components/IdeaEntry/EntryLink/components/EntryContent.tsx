@@ -16,6 +16,7 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
 
   return typeof data !== 'string' ? (
     <button
+      className={`w-full text-left cursor-pointer space-y-2 rounded-md p-2 ${componentBgLighterWithHover}`}
       onClick={() => {
         const a = document.createElement('a')
         a.href = entry.content
@@ -23,10 +24,11 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
         a.rel = 'noreferrer noopener'
         a.click()
       }}
-      className={`w-full text-left cursor-pointer space-y-2 rounded-md p-2 ${componentBgLighterWithHover}`}
     >
       {data.ogImage !== undefined && (
         <img
+          alt=""
+          className="w-full rounded-md border-0 object-contain"
           src={(() => {
             const url: string = data.ogImage?.[0].url
 
@@ -38,8 +40,6 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
 
             return url
           })()}
-          alt=""
-          className="w-full rounded-md border-0 object-contain"
         />
       )}
       <p className="text-xs font-medium text-custom-500">
@@ -56,10 +56,10 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
     </button>
   ) : (
     <a
-      target="_blank"
-      rel="noreferrer"
-      href={entry.content}
       className="break-all text-custom-500 underline underline-offset-2"
+      href={entry.content}
+      rel="noreferrer"
+      target="_blank"
     >
       {entry.content}
     </a>

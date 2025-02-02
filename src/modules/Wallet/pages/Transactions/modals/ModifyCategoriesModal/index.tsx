@@ -97,11 +97,11 @@ function ModifyCategoriesModal({
 
   return (
     <>
-      <ModalWrapper isOpen={openType !== null} className="sm:min-w-[30rem]">
+      <ModalWrapper className="sm:min-w-[30rem]" isOpen={openType !== null}>
         <ModalHeader
           icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
-          title={`categories.${openType === 'update' ? 'update' : 'create'}`}
           namespace="modules.wallet"
+          title={`categories.${openType === 'update' ? 'update' : 'create'}`}
           onClose={() => {
             setOpenType(null)
           }}
@@ -112,7 +112,7 @@ function ModifyCategoriesModal({
           }`}
         >
           <span className="flex items-center gap-2 font-medium text-bg-500">
-            <Icon icon="tabler:apps" className="size-6" />
+            <Icon className="size-6" icon="tabler:apps" />
             {t('inputs.categoryType')}
           </span>
           {openType === 'update' && (
@@ -126,12 +126,12 @@ function ModifyCategoriesModal({
               rounded-md p-2`}
             >
               <Icon
+                className="size-5"
                 icon={
                   categoryType === 'expenses'
                     ? 'tabler:logout'
                     : 'tabler:login-2'
                 }
-                className="size-5"
               />
               <span>{t(`transactionTypes.${categoryType}`)}</span>
             </div>
@@ -148,11 +148,11 @@ function ModifyCategoriesModal({
               ).map(([label, bgColor, icon]) => (
                 <CategoryToggleButton
                   key={label}
+                  activeBgColor={bgColor}
                   categoryType={categoryType}
-                  setCategoryType={setCategoryType}
                   iconName={icon}
                   label={label}
-                  activeBgColor={bgColor}
+                  setCategoryType={setCategoryType}
                 />
               ))}
             </div>
@@ -160,34 +160,34 @@ function ModifyCategoriesModal({
         )}
 
         <TextInput
-          icon="tabler:pencil"
-          placeholder="My Categories"
-          value={categoryName}
           darker
+          icon="tabler:pencil"
           name="Category name"
-          updateValue={setCategoryName}
           namespace="modules.wallet"
+          placeholder="My Categories"
+          updateValue={setCategoryName}
+          value={categoryName}
         />
         <IconInput
           icon={categoryIcon}
-          setIcon={setCategoryIcon}
           name="Category icon"
-          setIconSelectorOpen={setIconSelectorOpen}
           namespace="modules.wallet"
+          setIcon={setCategoryIcon}
+          setIconSelectorOpen={setIconSelectorOpen}
         />
         <ColorInput
           color={categoryColor}
           name="Category color"
+          namespace="modules.wallet"
           setColorPickerOpen={setColorPickerOpen}
           updateColor={setCategoryColor}
-          namespace="modules.wallet"
         />
         <CreateOrModifyButton
           loading={isLoading}
+          type={openType === 'update' ? 'update' : 'create'}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-          type={openType === 'update' ? 'update' : 'create'}
         />
       </ModalWrapper>
       <IconPickerModal

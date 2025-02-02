@@ -27,8 +27,8 @@ function Runways({ code }: { code: string }): React.ReactElement {
           ) : (
             <EmptyStateScreen
               icon="tabler:road-off"
-              namespace="modules.airports"
               name="runway"
+              namespace="modules.airports"
             />
           )
         }

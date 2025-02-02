@@ -117,6 +117,7 @@ function SidebarItem({
   return (
     <>
       <SidebarItemWrapper
+        active={autoActive ? isLocationMatched : active}
         onClick={() => {
           if (window.innerWidth < 1024) {
             toggleSidebar()
@@ -133,13 +134,12 @@ function SidebarItem({
             )
           }
         }}
-        active={autoActive ? isLocationMatched : active}
       >
         {onCollapseButtonClick && (
           <>
             <SidebarCollapseButton
-              onClick={onCollapseButtonClick}
               isCollapsed={isCollapsed === true}
+              onClick={onCollapseButtonClick}
             />
           </>
         )}
@@ -160,16 +160,16 @@ function SidebarItem({
           icon={icon}
         />
         <SidebarItemContent
-          name={name}
-          sidebarExpanded={sidebarExpanded}
-          isMainSidebarItem={isMainSidebarItem}
-          hasAI={showAIIcon}
-          number={number}
-          hamburgerMenuItems={hamburgerMenuItems}
           active={autoActive ? isLocationMatched : active}
-          onCancelButtonClick={onCancelButtonClick}
+          hamburgerMenuItems={hamburgerMenuItems}
+          hasAI={showAIIcon}
+          isMainSidebarItem={isMainSidebarItem}
+          name={name}
           namespace={namespace}
           needTranslate={needTranslate}
+          number={number}
+          sidebarExpanded={sidebarExpanded}
+          onCancelButtonClick={onCancelButtonClick}
         />
         {sidebarExpanded && subsection !== undefined && (
           <SidebarItemSubsectionExpandIcon
@@ -185,11 +185,11 @@ function SidebarItem({
       </SidebarItemWrapper>
       {subsection !== undefined && (
         <SidebarItemSubsection
-          subsection={subsection}
           name={name}
           sidebarExpanded={sidebarExpanded}
-          toggleSidebar={toggleSidebar}
+          subsection={subsection}
           subsectionExpanded={subsectionExpanded}
+          toggleSidebar={toggleSidebar}
         />
       )}
     </>

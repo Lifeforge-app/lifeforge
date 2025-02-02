@@ -13,25 +13,25 @@ function Statements(): React.ReactElement {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Financial Statements" icon="tabler:file-text" />
+      <ModuleHeader icon="tabler:file-text" title="Financial Statements" />
       <YearMonthInput
         month={month}
         setMonth={setMonth}
-        year={year}
         setYear={setYear}
+        year={year}
       />
       {year !== null && month !== null && (
         <>
           <PrintAndViewButton
             contentRef={contentRef}
-            showStatement={showStatement}
             setShowStatement={setShowStatement}
+            showStatement={showStatement}
           />
           <StatementContent
             contentRef={contentRef}
             month={month}
-            year={year}
             showStatement={showStatement}
+            year={year}
           />
         </>
       )}

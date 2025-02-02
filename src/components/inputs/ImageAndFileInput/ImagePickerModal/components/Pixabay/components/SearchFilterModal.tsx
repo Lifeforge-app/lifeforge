@@ -86,22 +86,13 @@ function SearchFilterModal({
       />
       <div className="space-y-4">
         <ListboxOrComboboxInput
-          namespace="common.misc"
-          tKey="imageUpload"
-          type="listbox"
-          name="image type"
-          icon="tabler:list"
-          value={filters.imageType}
-          setValue={value => {
-            updateFilters({ type: 'SET_IMAGE_TYPE', payload: value })
-          }}
           buttonContent={
             <>
               <Icon
+                className="size-5"
                 icon={
                   IMAGE_TYPES.find(l => l.id === filters.imageType)?.icon ?? ''
                 }
-                className="size-5"
               />
               <span className="-mt-px block truncate">
                 {t(
@@ -112,33 +103,33 @@ function SearchFilterModal({
               </span>
             </>
           }
+          icon="tabler:list"
+          name="image type"
+          namespace="common.misc"
+          setValue={value => {
+            updateFilters({ type: 'SET_IMAGE_TYPE', payload: value })
+          }}
+          tKey="imageUpload"
+          type="listbox"
+          value={filters.imageType}
         >
           {IMAGE_TYPES.map(({ icon, id }, i) => (
             <ListboxOrComboboxOption
               key={i}
-              text={t(`imageUpload.imageType.${id}`)}
               icon={icon}
+              text={t(`imageUpload.imageType.${id}`)}
               value={id}
             />
           ))}
         </ListboxOrComboboxInput>
         <ListboxOrComboboxInput
-          type="listbox"
-          namespace="common.misc"
-          tKey="imageUpload"
-          name="image Category"
-          icon="tabler:category"
-          value={filters.category}
-          setValue={value => {
-            updateFilters({ type: 'SET_CATEGORY', payload: value })
-          }}
           buttonContent={
             <>
               <Icon
+                className="size-5"
                 icon={
                   CATEGORIES.find(l => l.id === filters.category)?.icon ?? ''
                 }
-                className="size-5"
               />
               <span className="-mt-px block truncate">
                 {CATEGORIES.find(l => l.id === filters.category)?.name ??
@@ -146,26 +137,26 @@ function SearchFilterModal({
               </span>
             </>
           }
+          icon="tabler:category"
+          name="image Category"
+          namespace="common.misc"
+          setValue={value => {
+            updateFilters({ type: 'SET_CATEGORY', payload: value })
+          }}
+          tKey="imageUpload"
+          type="listbox"
+          value={filters.category}
         >
           {CATEGORIES.map(({ name, icon, id }, i) => (
             <ListboxOrComboboxOption
               key={i}
-              text={name}
               icon={icon}
+              text={name}
               value={id}
             />
           ))}
         </ListboxOrComboboxInput>
         <ListboxOrComboboxInput
-          type="listbox"
-          namespace="common.misc"
-          tKey="imageUpload"
-          name="Image Color"
-          icon="tabler:color-swatch"
-          value={filters.colors}
-          setValue={value => {
-            updateFilters({ type: 'SET_COLORS', payload: value })
-          }}
           buttonContent={
             <>
               <div
@@ -180,36 +171,45 @@ function SearchFilterModal({
               </span>
             </>
           }
+          icon="tabler:color-swatch"
+          name="Image Color"
+          namespace="common.misc"
+          setValue={value => {
+            updateFilters({ type: 'SET_COLORS', payload: value })
+          }}
+          tKey="imageUpload"
+          type="listbox"
+          value={filters.colors}
         >
           {COLORS.map(({ name, color, id }, i) => (
             <ListboxOrComboboxOption
               key={i}
-              text={name}
               color={color}
+              text={name}
               value={id}
             />
           ))}
         </ListboxOrComboboxInput>
         <div className="flex items-center justify-between py-2">
           <div className="flex items-center gap-2">
-            <Icon icon="tabler:user-star" className="size-6" />
+            <Icon className="size-6" icon="tabler:user-star" />
             <span className="text-lg">
               {t('imageUpload.inputs.editorsChoice')}
             </span>
           </div>
           <Switch
             checked={filters.isEditorsChoice}
+            className={`${
+              filters.isEditorsChoice
+                ? 'bg-custom-500'
+                : 'bg-bg-300 dark:bg-bg-800'
+            } relative inline-flex h-6 w-11 items-center rounded-full`}
             onChange={() => {
               updateFilters({
                 type: 'SET_IS_EDITORS_CHOICE',
                 payload: !filters.isEditorsChoice
               })
             }}
-            className={`${
-              filters.isEditorsChoice
-                ? 'bg-custom-500'
-                : 'bg-bg-300 dark:bg-bg-800'
-            } relative inline-flex h-6 w-11 items-center rounded-full`}
           >
             <span
               className={`${
@@ -221,7 +221,7 @@ function SearchFilterModal({
           </Switch>
         </div>
       </div>
-      <Button onClick={onClose} icon="tabler:check" className="mt-6">
+      <Button className="mt-6" icon="tabler:check" onClick={onClose}>
         Apply Filters
       </Button>
     </ModalWrapper>

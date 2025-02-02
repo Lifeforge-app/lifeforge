@@ -121,13 +121,13 @@ function TaskItem({
           </div>
         </div>
         <button
+          className="absolute left-0 top-0 size-full"
           onClick={() => {
             if (!isOuter) {
               setModifyTaskWindowOpenType('update')
               setSelectedTask(entry)
             }
           }}
-          className="absolute left-0 top-0 size-full"
         />
         <TaskCompletionCheckbox
           entry={entry}
@@ -139,7 +139,7 @@ function TaskItem({
       {entry.subtasks.length > 0 && (
         <ul className="space-y-4 pl-4">
           {entry.subtasks.map(subtask => (
-            <SubtaskItem entry={subtask} parentId={entry.id} key={subtask.id} />
+            <SubtaskItem key={subtask.id} entry={subtask} parentId={entry.id} />
           ))}
         </ul>
       )}

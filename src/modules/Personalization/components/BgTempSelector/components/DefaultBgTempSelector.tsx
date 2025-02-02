@@ -31,8 +31,8 @@ function DefaultBgTempSelector({
           >
             {bgTemp === color && (
               <Icon
-                icon="tabler:check"
                 className="size-4 text-bg-50 dark:text-bg-800"
+                icon="tabler:check"
               />
             )}
           </button>

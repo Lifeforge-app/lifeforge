@@ -131,7 +131,7 @@ function BottomBar({
             setSelectedPhotos([])
           }}
         >
-          <Icon icon="tabler:x" className="size-5 text-bg-500" />
+          <Icon className="size-5 text-bg-500" icon="tabler:x" />
         </button>
         <p className="text-lg text-bg-500">
           {selectedPhotos.length.toLocaleString()} selected
@@ -139,17 +139,18 @@ function BottomBar({
       </div>
       <div className="flex items-center gap-4">
         <button className="rounded-md p-2 text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30">
-          <Icon icon="tabler:share" className="size-5" />
+          <Icon className="size-5" icon="tabler:share" />
         </button>
         <button
+          className="rounded-md p-2 text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30"
           onClick={() => {
             addToFavourites().catch(() => {})
           }}
-          className="rounded-md p-2 text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30"
         >
-          <Icon icon="tabler:star" className="size-5" />
+          <Icon className="size-5" icon="tabler:star" />
         </button>
         <button
+          className="rounded-md p-2 text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30"
           onClick={() => {
             if (inAlbumGallery) {
               setRemovePhotosFromAlbumConfirmationModalOpen(true)
@@ -171,34 +172,33 @@ function BottomBar({
               setAddPhotosToAlbumModalOpen(true)
             }
           }}
-          className="rounded-md p-2 text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30"
         >
           <Icon
-            icon={inAlbumGallery ? 'tabler:layout-grid-remove' : 'tabler:plus'}
             className="size-5"
+            icon={inAlbumGallery ? 'tabler:layout-grid-remove' : 'tabler:plus'}
           />
         </button>
         <button
+          className="rounded-md p-2 text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30"
           disabled={isDownloadLoading}
           onClick={() => {
             requestBulkDownload().catch(() => {})
           }}
-          className="rounded-md p-2 text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30"
         >
           <Icon
+            className="size-5"
             icon={
               isDownloadLoading ? 'svg-spinners:180-ring' : 'tabler:download'
             }
-            className="size-5"
           />
         </button>
         <button
+          className="rounded-md p-2 text-red-500 hover:bg-red-200/50 hover:text-red-600"
           onClick={() => {
             setDeletePhotosConfirmationModalOpen(true)
           }}
-          className="rounded-md p-2 text-red-500 hover:bg-red-200/50 hover:text-red-600"
         >
-          <Icon icon="tabler:trash" className="size-5" />
+          <Icon className="size-5" icon="tabler:trash" />
         </button>
       </div>
     </div>

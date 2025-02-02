@@ -17,27 +17,27 @@ function ThemeColorSelector(): React.ReactElement {
 
   return (
     <ConfigColumn
-      title={t('themeColorSelector.title')}
       desc={t('themeColorSelector.desc')}
       icon="tabler:palette"
+      title={t('themeColorSelector.title')}
       wrapWhen="lg"
     >
       <div className="flex w-full flex-col items-center gap-4 md:flex-row">
         <DefaultThemeColorSelector
-          themeColor={themeColor}
-          setThemeColor={setThemeColor}
           customThemeColor={customThemeColor}
+          setThemeColor={setThemeColor}
+          themeColor={themeColor}
         />
         {themeColor.startsWith('#') && (
           <>
             <ColorInput
               className="md:w-min"
+              color={customThemeColor}
+              hasTopMargin={false}
               name="Color Hex"
               namespace="modules.personalization"
-              color={customThemeColor}
-              updateColor={setCustomThemeColor}
               setColorPickerOpen={setColorPickerModalOpen}
-              hasTopMargin={false}
+              updateColor={setCustomThemeColor}
             />
             {themeColor !== customThemeColor &&
               customThemeColor.match(/^#[0-9A-F]{6}$/i) !== null && (
@@ -53,8 +53,8 @@ function ThemeColorSelector(): React.ReactElement {
               )}
             <ColorPickerModal
               color={customThemeColor}
-              setColor={setCustomThemeColor}
               isOpen={colorPickerModalOpen}
+              setColor={setCustomThemeColor}
               setOpen={setColorPickerModalOpen}
             />
           </>

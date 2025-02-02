@@ -50,9 +50,9 @@ function NotesSubject(): React.ReactElement {
         <>
           <ModuleWrapper className="mb-28 flex size-full min-h-0 flex-1 flex-col px-8 md:px-12">
             <DirectoryHeader
-              updateNotesEntries={refreshNotesEntries}
-              setModifyFolderModalOpenType={setModifyFolderModalOpenType}
               setExistedData={setExistedData}
+              setModifyFolderModalOpenType={setModifyFolderModalOpenType}
+              updateNotesEntries={refreshNotesEntries}
             />
             <APIFallbackComponent data={notesEntries}>
               {notesEntries =>
@@ -62,37 +62,37 @@ function NotesSubject(): React.ReactElement {
                     setDeleteFolderConfirmationModalOpen={
                       setDeleteFolderConfirmationModalOpen
                     }
-                    setModifyFolderModalOpenType={setModifyFolderModalOpenType}
                     setExistedData={setExistedData}
+                    setModifyFolderModalOpenType={setModifyFolderModalOpenType}
                   />
                 ) : (
                   <EmptyStateScreen
+                    ctaContent="upload"
+                    description={t('emptyState.notes.description')}
+                    icon="tabler:file-off"
                     name="note"
                     namespace="modules.notes"
-                    ctaContent="upload"
-                    icon="tabler:file-off"
                     title={t('emptyState.notes.title')}
-                    description={t('emptyState.notes.description')}
                   />
                 )
               }
             </APIFallbackComponent>
             <ModifyFolderModal
+              existedData={existedData}
               openType={modifyFolderModalOpenType}
               setOpenType={setModifyFolderModalOpenType}
-              existedData={existedData}
               updateNotesEntries={refreshNotesEntries}
             />
             <DeleteConfirmationModal
+              apiEndpoint="notes/entries/delete"
+              data={existedData}
               isOpen={deleteFolderConfirmationModalOpen}
+              itemName="folder"
+              updateDataLists={refreshNotesEntries}
               onClose={() => {
                 setExistedData(null)
                 setDeleteFolderConfirmationModalOpen(false)
               }}
-              apiEndpoint="notes/entries/delete"
-              itemName="folder"
-              data={existedData}
-              updateDataLists={refreshNotesEntries}
             />
           </ModuleWrapper>
         </>

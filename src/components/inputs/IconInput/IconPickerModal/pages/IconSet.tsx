@@ -77,16 +77,16 @@ function IconSet({
       </h1>
       <SearchInput
         hasTopMargin={false}
+        namespace="common.misc"
         searchQuery={searchTerm}
         setSearchQuery={setSearchTerm}
         stuffToSearch="icon"
         tKey="iconPicker"
-        namespace="common.misc"
       />
       <ChipSelector
         options={Object.keys(iconData.categories ?? {})}
-        value={currentTag}
         setValue={setCurrentTag}
+        value={currentTag}
       />
       <div className="min-h-0 flex-1 flex flex-col">
         {filteredIconList.length ? (
@@ -96,11 +96,10 @@ function IconSet({
 
               return (
                 <L
-                  width={width}
                   height={height - 12}
-                  rowHeight={120}
-                  rowCount={Math.ceil(filteredIconList.length / itemsPerRow)}
                   itemsPerRow={Math.floor(width / filteredIconList.length) || 1}
+                  rowCount={Math.ceil(filteredIconList.length / itemsPerRow)}
+                  rowHeight={120}
                   rowRenderer={({
                     index,
                     key,
@@ -116,8 +115,8 @@ function IconSet({
                     return (
                       <div
                         key={key}
-                        style={style}
                         className="flex w-full gap-4"
+                        style={style}
                       >
                         {filteredIconList
                           .slice(fromIndex, toIndex)
@@ -126,13 +125,14 @@ function IconSet({
                               key={icon}
                               icon={icon}
                               iconSet={iconSet}
-                              setSelectedIcon={setSelectedIcon}
                               setOpen={setOpen}
+                              setSelectedIcon={setSelectedIcon}
                             />
                           ))}
                       </div>
                     )
                   }}
+                  width={width}
                 />
               )
             }}
@@ -140,10 +140,10 @@ function IconSet({
         ) : (
           <div className="flex-1 flex-center">
             <EmptyStateScreen
+              icon="tabler:icons-off"
               name="icon"
               namespace="common.misc"
               tKey="iconPicker"
-              icon="tabler:icons-off"
             />
           </div>
         )}

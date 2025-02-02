@@ -28,20 +28,20 @@ function PasswordColumn(): React.ReactElement {
 
   return (
     <ConfigColumn
-      title={t('settings.title.password')}
       desc={t('settings.desc.password')}
-      icon="tabler:key"
       hasDivider={false}
+      icon="tabler:key"
+      title={t('settings.title.password')}
     >
       <Button
+        className="w-full whitespace-nowrap md:w-auto"
+        icon="tabler:key"
+        loading={loading}
+        namespace="modules.accountSettings"
+        variant="secondary"
         onClick={() => {
           onPasswordChange().catch(console.error)
         }}
-        loading={loading}
-        variant="secondary"
-        className="w-full whitespace-nowrap md:w-auto"
-        icon="tabler:key"
-        namespace="modules.accountSettings"
       >
         change password
       </Button>

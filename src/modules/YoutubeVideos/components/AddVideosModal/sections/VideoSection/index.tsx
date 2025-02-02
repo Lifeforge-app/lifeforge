@@ -116,21 +116,21 @@ function VideoSection({
   return (
     <>
       <TextInput
-        icon="tabler:link"
-        name="Video URL"
-        placeholder="https://www.youtube.com/watch?v=..."
-        value={videoUrl}
-        updateValue={setVideoUrl}
         darker
         className="my-4"
+        icon="tabler:link"
+        name="Video URL"
         namespace="modules.youtubeVideos"
+        placeholder="https://www.youtube.com/watch?v=..."
+        updateValue={setVideoUrl}
+        value={videoUrl}
       />
       {URL_REGEX.test(debouncedVideoUrl) && (
         <VideoDetails
-          videoInfo={videoInfo}
           downloadVideo={downloadVideo}
           loading={loading}
           progress={progress}
+          videoInfo={videoInfo}
         />
       )}
     </>

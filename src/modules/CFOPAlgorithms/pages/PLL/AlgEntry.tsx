@@ -95,7 +95,7 @@ function AlgEntry({
     >
       <div className="flex items-center gap-8">
         <div className="rounded-md bg-bg-200/70 p-2 dark:bg-bg-800/50">
-          <div className="relative flex flex-col gap-0.5" ref={containerRef}>
+          <div ref={containerRef} className="relative flex flex-col gap-0.5">
             <div className="flex gap-0.5">
               <div className="size-5"></div>
               {cube.back[0].reverse().map((col, i) => (

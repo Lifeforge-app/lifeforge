@@ -18,17 +18,17 @@ export default function TodaysEvent(): React.ReactElement {
 
   return (
     <DashboardItem
-      icon="tabler:calendar"
-      title="Todays Event"
       componentBesideTitle={
         <Button
-          variant="no-bg"
-          icon="tabler:chevron-right"
           as={Link}
-          to="/calendar"
           className="p-2!"
+          icon="tabler:chevron-right"
+          to="/calendar"
+          variant="no-bg"
         />
       }
+      icon="tabler:calendar"
+      title="Todays Event"
     >
       <Scrollbar>
         <APIFallbackComponent
@@ -95,10 +95,10 @@ export default function TodaysEvent(): React.ReactElement {
               <div className="flex-center flex-1">
                 <EmptyStateScreen
                   smaller
+                  icon="tabler:calendar-off"
+                  name="event"
                   namespace="modules.dashboard"
                   tKey="widgets.todaysEvent"
-                  name="event"
-                  icon="tabler:calendar-off"
                 />
               </div>
             )

@@ -7,9 +7,9 @@ function AuthSideImage(): React.ReactElement {
   return (
     <section className="relative hidden h-full w-1/2 lg:flex">
       <img
-        src="/assets/login.jpg"
         alt="Login"
         className="h-full object-cover"
+        src="/assets/login.jpg"
       />
       <div className="absolute inset-0 bg-linear-to-br from-custom-500 to-custom-600 opacity-30" />
       <div className="absolute inset-0 bg-bg-900/50" />

@@ -59,16 +59,16 @@ function RawHTMLInputModal({
 
   return (
     <Modal
-      isOpen={isOpen}
-      fields={FIELDS}
+      submitButtonIconAtEnd
       data={data}
-      setData={setData}
-      title="inputRawHtml"
-      namespace="modules.openaiApiPricing"
+      fields={FIELDS}
       icon={'tabler:code'}
+      isOpen={isOpen}
+      namespace="modules.openaiApiPricing"
+      setData={setData}
       submitButtonIcon="tabler:arrow-right"
       submitButtonLabel="Submit"
-      submitButtonIconAtEnd
+      title="inputRawHtml"
       onClose={() => {
         setIsOpen(false)
       }}

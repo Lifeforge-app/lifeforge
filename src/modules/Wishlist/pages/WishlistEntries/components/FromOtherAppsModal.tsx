@@ -104,22 +104,17 @@ function FromOtherAppsModal({
   return (
     <ModalWrapper isOpen={isOpen} minWidth="50vw">
       <ModalHeader
-        title="Import from other apps"
-        namespace="modules.wishlist"
         icon="tabler:apps"
+        namespace="modules.wishlist"
+        title="Import from other apps"
         onClose={onClose}
       />
       <div className="space-y-4">
         <ListboxOrComboboxInput
-          namespace="modules.wishlist"
-          type="listbox"
-          icon="tabler:apps"
-          value={provider}
-          setValue={setProvider}
-          name="Provider"
           buttonContent={
             <>
               <Icon
+                className="size-5"
                 icon={
                   PROVIDERS.find(l => l.id === provider)?.icon ??
                   'tabler:apps-off'
@@ -127,45 +122,50 @@ function FromOtherAppsModal({
                 style={{
                   color: PROVIDERS.find(l => l.id === provider)?.color
                 }}
-                className="size-5"
               />
               <span className="-mt-px block truncate">
                 {PROVIDERS.find(l => l.id === provider)?.name ?? 'None'}
               </span>
             </>
           }
+          icon="tabler:apps"
+          name="Provider"
+          namespace="modules.wishlist"
+          setValue={setProvider}
+          type="listbox"
+          value={provider}
         >
           {PROVIDERS.map(({ name, color, id, icon }, i) => (
             <ListboxOrComboboxOption
               key={i}
-              text={name}
-              icon={icon}
               color={color}
+              icon={icon}
+              text={name}
               value={id}
             />
           ))}
         </ListboxOrComboboxInput>
         <TextInput
-          icon="tabler:link"
-          namespace="modules.wishlist"
-          name="Product URL"
-          value={url}
-          updateValue={setUrl}
           darker
+          icon="tabler:link"
+          name="Product URL"
+          namespace="modules.wishlist"
           placeholder={
             provider === 'shopee'
               ? 'https://my.shp.ee/....'
               : 'https://s.lazada.com.my/....'
           }
+          updateValue={setUrl}
+          value={url}
         />
         <Button
+          iconAtEnd
+          className="w-full"
+          icon="tabler:arrow-right"
+          loading={loading === 'loading'}
           onClick={() => {
             fetchData().catch(console.error)
           }}
-          icon="tabler:arrow-right"
-          loading={loading === 'loading'}
-          iconAtEnd
-          className="w-full"
         >
           Import
         </Button>

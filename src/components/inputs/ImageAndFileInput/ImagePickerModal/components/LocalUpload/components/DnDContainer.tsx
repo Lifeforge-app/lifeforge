@@ -21,7 +21,7 @@ function DnDContainer({
       {...getRootProps()}
     >
       <input {...getInputProps()} />
-      <Icon icon="tabler:drag-drop" className="size-20 text-bg-500" />
+      <Icon className="size-20 text-bg-500" icon="tabler:drag-drop" />
       <div className="mt-4 text-center text-2xl font-medium text-bg-500">
         {isDragActive ? t('dnd.dropHere') : t('dnd.dragAndDropToUpload')}
       </div>
@@ -30,8 +30,8 @@ function DnDContainer({
       </div>
       <Button
         as="label"
-        icon="tabler:upload"
         className="mt-4 cursor-pointer"
+        icon="tabler:upload"
         variant="secondary"
       >
         upload

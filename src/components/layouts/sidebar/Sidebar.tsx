@@ -28,9 +28,9 @@ function Sidebar(): React.ReactElement {
         {!sidebarExpanded && (
           <SidebarItem
             active={false}
+            icon="tabler:layout-sidebar-left-expand"
             name=""
             onClick={toggleSidebar}
-            icon="tabler:layout-sidebar-left-expand"
           />
         )}
         <SidebarBottomBar />

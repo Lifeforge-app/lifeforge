@@ -34,9 +34,9 @@ function ActionColumn({
           />
         )}
         <MenuItem
+          isRed
           icon="tabler:trash"
           text="Delete"
-          isRed
           onClick={() => {
             setSelectedData(transaction)
             setDeleteTransactionsConfirmationOpen(true)

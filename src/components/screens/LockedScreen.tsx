@@ -74,38 +74,38 @@ function LockedScreen({
 
   return (
     <div className="flex-center size-full flex-1 flex-col gap-4">
-      <Icon icon="tabler:lock-access" className="size-28" />
+      <Icon className="size-28" icon="tabler:lock-access" />
       <h2 className="text-4xl font-semibold">{t(`vault.lockedMessage`)}</h2>
       <p className="mb-8 text-center text-lg text-bg-500">
         {t(`vault.passwordRequired`)}
       </p>
       <TextInput
+        darker
         isPassword
+        noAutoComplete
+        className="w-full md:w-3/4 xl:w-1/2"
         icon="tabler:lock"
         name="Master Password"
         namespace="common.vault"
-        tKey="vault"
         placeholder={'••••••••••••••••'}
-        value={masterPassWordInputContent}
+        tKey="vault"
         updateValue={setMasterPassWordInputContent}
-        noAutoComplete
-        className="w-full md:w-3/4 xl:w-1/2"
+        value={masterPassWordInputContent}
         onKeyDown={e => {
           if (e.key === 'Enter') {
             onSubmit().catch(console.error)
           }
         }}
-        darker
       />
       <Button
+        className="w-full md:w-3/4 xl:w-1/2"
+        icon="tabler:lock"
+        loading={loading}
+        namespace="common.vault"
+        tKey="vault"
         onClick={() => {
           onSubmit().catch(console.error)
         }}
-        loading={loading}
-        className="w-full md:w-3/4 xl:w-1/2"
-        icon="tabler:lock"
-        namespace="common.vault"
-        tKey="vault"
       >
         Unlock
       </Button>

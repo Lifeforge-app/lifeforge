@@ -60,8 +60,8 @@ function Airport(): React.ReactElement {
               <div className="mb-8 flex items-center gap-2">
                 <div className="overflow-hidden rounded-md">
                   <Icon
-                    icon={`flag:${countryID?.toLowerCase()}-1x1`}
                     className="size-12"
+                    icon={`flag:${countryID?.toLowerCase()}-1x1`}
                   />
                 </div>
                 <h1 className="flex flex-col text-3xl font-semibold">
@@ -75,16 +75,16 @@ function Airport(): React.ReactElement {
                 <div className="flex gap-12">
                   <APIProvider apiKey={import.meta.env.VITE_GOOGLE_API_KEY}>
                     <Map
-                      style={{ width: '100%', height: '24rem' }}
+                      className="h-96 w-full overflow-hidden rounded-lg shadow-lg"
                       defaultCenter={{
                         lat: parseFloat(airportData.data.latitude),
                         lng: parseFloat(airportData.data.longitude)
                       }}
                       defaultZoom={13}
-                      gestureHandling={'greedy'}
                       disableDefaultUI={true}
+                      gestureHandling={'greedy'}
                       mapTypeId="satellite"
-                      className="h-96 w-full overflow-hidden rounded-lg shadow-lg"
+                      style={{ width: '100%', height: '24rem' }}
                     >
                       <Marker
                         position={{
@@ -139,6 +139,10 @@ function Airport(): React.ReactElement {
                     {(airportData.data.website ||
                       airportData.data.wikipedia) && (
                       <Button
+                        iconAtEnd
+                        className="mt-4 w-full"
+                        icon="tabler:arrow-right"
+                        variant="primary"
                         onClick={() => {
                           window.open(
                             airportData.data.website ||
@@ -146,10 +150,6 @@ function Airport(): React.ReactElement {
                             '_blank'
                           )
                         }}
-                        className="mt-4 w-full"
-                        variant="primary"
-                        iconAtEnd
-                        icon="tabler:arrow-right"
                       >
                         Go to{' '}
                         {airportData.data.website ? 'Website' : 'Wikipedia'}
@@ -171,16 +171,16 @@ function Airport(): React.ReactElement {
                   ].map(([name, icon], index) => (
                     <button
                       key={index}
-                      onClick={() => {
-                        setSearchParams({ section: name.toLowerCase() })
-                      }}
                       className={`flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all ${
                         section === name.toLowerCase()
                           ? 'border-custom-500 font-medium text-custom-500'
                           : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
                       }`}
+                      onClick={() => {
+                        setSearchParams({ section: name.toLowerCase() })
+                      }}
                     >
-                      <Icon icon={icon} className="size-5" />
+                      <Icon className="size-5" icon={icon} />
                       {name}
                     </button>
                   ))}
@@ -194,9 +194,9 @@ function Airport(): React.ReactElement {
                         return (
                           <div className="mb-8 mt-6 w-full">
                             <EmptyStateScreen
+                              icon="tabler:alert-triangle"
                               name="section"
                               namespace="modules.airports"
-                              icon="tabler:alert-triangle"
                             />
                           </div>
                         )
@@ -221,9 +221,9 @@ function Airport(): React.ReactElement {
                     default:
                       return (
                         <EmptyStateScreen
-                          namespace="modules.airports"
-                          name="section"
                           icon="tabler:alert-triangle"
+                          name="section"
+                          namespace="modules.airports"
                         />
                       )
                   }

@@ -102,13 +102,14 @@ function FontFamilySelector(): React.ReactElement {
 
   return (
     <ConfigColumn
-      title={t('fontFamily.title')}
       desc={t('fontFamily.desc')}
+      hasDivider={false}
       icon="uil:font"
+      title={t('fontFamily.title')}
       tooltip={
         <>
           <h3 className="mb-2 flex items-center gap-2 text-lg font-medium">
-            <Icon icon="simple-icons:googlefonts" className="size-5" />
+            <Icon className="size-5" icon="simple-icons:googlefonts" />
             {t('fontFamily.tooltipTitle')}
           </h3>
           <p className="relative z-40 text-sm text-bg-500">
@@ -116,7 +117,6 @@ function FontFamilySelector(): React.ReactElement {
           </p>
         </>
       }
-      hasDivider={false}
     >
       <Listbox
         value={fontFamily}
@@ -129,15 +129,15 @@ function FontFamilySelector(): React.ReactElement {
             className={`flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left shadow-custom outline-hidden transition-all focus:outline-hidden ${componentBgWithHover}`}
           >
             <span
+              className="-mt-px block truncate"
               style={{
                 fontFamily
               }}
-              className="-mt-px block truncate"
             >
               {fontFamily}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
+              <Icon className="size-5 text-bg-500" icon="tabler:chevron-down" />
             </span>
           </ListboxButton>
           <ListboxOptions

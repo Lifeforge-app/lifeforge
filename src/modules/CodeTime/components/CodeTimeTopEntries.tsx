@@ -25,13 +25,13 @@ function CodeTimeTopEntries({
       <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center lg:gap-8">
         <h1 className="mb-2 flex shrink gap-2 text-2xl font-semibold">
           <Icon
+            className="mt-0.5 shrink-0 text-3xl"
             icon={
               {
                 languages: 'tabler:code',
                 projects: 'tabler:clipboard'
               }[type]
             }
-            className="mt-0.5 shrink-0 text-3xl"
           />
           <span className="ml-2">{t(`headers.${type}`)}</span>
         </h1>
@@ -43,14 +43,14 @@ function CodeTimeTopEntries({
             {['24 hours', '7 days', '30 days'].map((last, index) => (
               <button
                 key={index}
-                onClick={() => {
-                  setLastFor(last as '24 hours' | '7 days' | '30 days')
-                }}
                 className={`rounded-md p-4 px-6 tracking-wide ${
                   lastFor === last
                     ? 'bg-bg-200 font-semibold text-bg-800 dark:bg-bg-700/50 dark:text-bg-50'
                     : 'text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-700/50'
                 }`}
+                onClick={() => {
+                  setLastFor(last as '24 hours' | '7 days' | '30 days')
+                }}
               >
                 {last}
               </button>
@@ -67,6 +67,7 @@ function CodeTimeTopEntries({
                   .slice(0, 5)
                   .map(([key, value], index) => (
                     <div
+                      key={key}
                       className={`h-6 border ${
                         index === 0 ? 'rounded-l-lg' : ''
                       } ${
@@ -82,7 +83,6 @@ function CodeTimeTopEntries({
                           'bg-emerald-500/20 border-emerald-500'
                         ][index]
                       }`}
-                      key={key}
                       style={{
                         width: `${Math.round(
                           (value /

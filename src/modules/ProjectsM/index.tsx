@@ -38,33 +38,33 @@ function ProjectsM(): React.ReactElement {
             </h1>
             <div className="flex items-center gap-6">
               <Button
-                onClick={() => {
-                  setModifyDataModalOpenType('create')
-                  setExistedData(null)
-                }}
                 className="hidden sm:flex"
                 icon="tabler:plus"
                 tProps={{
                   item: t('items.project')
                 }}
+                onClick={() => {
+                  setModifyDataModalOpenType('create')
+                  setExistedData(null)
+                }}
               >
                 new
               </Button>
               <Button
+                className="xl:hidden"
+                icon="tabler:menu"
+                variant="no-bg"
                 onClick={() => {
                   setSidebarOpen(true)
                 }}
-                variant="no-bg"
-                icon="tabler:menu"
-                className="xl:hidden"
               />
             </div>
           </div>
           <SearchInput
+            namespace="modules.projectsM"
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             stuffToSearch="project"
-            namespace="modules.projectsM"
           />
           <div className="mt-6 flex flex-1 flex-col">
             <APIFallbackComponent data={entries}>
@@ -79,9 +79,9 @@ function ProjectsM(): React.ReactElement {
                   </Scrollbar>
                 ) : (
                   <EmptyStateScreen
+                    icon="tabler:clipboard-off"
                     name="projects"
                     namespace="modules.projectsM"
-                    icon="tabler:clipboard-off"
                   />
                 )
               }
@@ -90,11 +90,11 @@ function ProjectsM(): React.ReactElement {
         </div>
       </div>
       <FAB
+        hideWhen="sm"
         onClick={() => {
           setModifyDataModalOpenType('create')
           setExistedData(null)
         }}
-        hideWhen="sm"
       />
       <ModifyEntryModal />
       {(
@@ -106,15 +106,15 @@ function ProjectsM(): React.ReactElement {
         <DeleteConfirmationModal
           key={index}
           apiEndpoint={config.apiEndpoint}
-          isOpen={config.isOpen}
           data={config.data}
+          isOpen={config.isOpen}
           itemName={config.itemName}
           nameKey={config.nameKey}
+          updateDataLists={config.updateDataList}
           onClose={() => {
             config.setOpen(false)
             config.setData(null)
           }}
-          updateDataLists={config.updateDataList}
         />
       ))}
     </ModuleWrapper>

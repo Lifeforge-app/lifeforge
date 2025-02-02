@@ -66,13 +66,13 @@ function Overview({
 
             return (
               <p
+                className={`p-3 text-lg font-medium ${
+                  netIncome < 0 && 'text-rose-600'
+                }`}
                 style={{
                   borderTop: '2px solid',
                   borderBottom: '6px double'
                 }}
-                className={`p-3 text-lg font-medium ${
-                  netIncome < 0 && 'text-rose-600'
-                }`}
               >
                 RM{' '}
                 {netIncome >= 0
@@ -129,7 +129,7 @@ function Overview({
                     >
                       <td className="p-3 text-lg">
                         <div className="flex items-center gap-2">
-                          <Icon icon={asset.icon} className="size-6 shrink-0" />
+                          <Icon className="size-6 shrink-0" icon={asset.icon} />
                           <span className="whitespace-nowrap">
                             {asset.name}
                           </span>
@@ -276,32 +276,32 @@ function Overview({
                     return (
                       <>
                         <td
+                          className="whitespace-nowrap p-3 text-right text-lg font-medium"
                           style={{
                             borderTop: '2px solid',
                             borderBottom: '6px double'
                           }}
-                          className="whitespace-nowrap p-3 text-right text-lg font-medium"
                         >
                           {numberToMoney(lastMonthAmount)}
                         </td>
                         <td
+                          className="whitespace-nowrap p-3 text-right text-lg font-medium"
                           style={{
                             borderTop: '2px solid',
                             borderBottom: '6px double'
                           }}
-                          className="whitespace-nowrap p-3 text-right text-lg font-medium"
                         >
                           {numberToMoney(thatMonthAmount)}
                         </td>
                         <td
-                          style={{
-                            borderTop: '2px solid',
-                            borderBottom: '6px double'
-                          }}
                           className={`whitespace-nowrap p-3 text-right text-lg font-medium ${
                             thatMonthAmount - lastMonthAmount < 0 &&
                             'text-rose-600'
                           }`}
+                          style={{
+                            borderTop: '2px solid',
+                            borderBottom: '6px double'
+                          }}
                         >
                           {thatMonthAmount - lastMonthAmount < 0
                             ? `(${numberToMoney(
@@ -310,14 +310,14 @@ function Overview({
                             : numberToMoney(thatMonthAmount - lastMonthAmount)}
                         </td>
                         <td
-                          style={{
-                            borderTop: '2px solid',
-                            borderBottom: '6px double'
-                          }}
                           className={`whitespace-nowrap p-3 text-right text-lg font-medium ${
                             thatMonthAmount - lastMonthAmount < 0 &&
                             'text-rose-600'
                           }`}
+                          style={{
+                            borderTop: '2px solid',
+                            borderBottom: '6px double'
+                          }}
                         >
                           {lastMonthAmount === 0
                             ? '-'
@@ -386,8 +386,8 @@ function Overview({
                           <td className="p-3 text-lg">
                             <div className="flex items-center gap-2">
                               <Icon
-                                icon={category.icon}
                                 className="size-6 shrink-0"
+                                icon={category.icon}
                                 style={{
                                   color: category.color
                                 }}
@@ -512,34 +512,34 @@ function Overview({
                         return (
                           <>
                             <td
+                              className="whitespace-nowrap p-3 text-right text-lg font-medium"
                               style={{
                                 borderTop: '2px solid',
                                 borderBottom: '6px double'
                               }}
-                              className="whitespace-nowrap p-3 text-right text-lg font-medium"
                             >
                               {numberToMoney(lastMonthAmount)}
                             </td>
                             <td
+                              className="whitespace-nowrap p-3 text-right text-lg font-medium"
                               style={{
                                 borderTop: '2px solid',
                                 borderBottom: '6px double'
                               }}
-                              className="whitespace-nowrap p-3 text-right text-lg font-medium"
                             >
                               {numberToMoney(thatMonthAmount)}
                             </td>
                             <td
-                              style={{
-                                borderTop: '2px solid',
-                                borderBottom: '6px double'
-                              }}
                               className={`whitespace-nowrap p-3 text-right text-lg font-medium ${
                                 (type === 'income'
                                   ? thatMonthAmount - lastMonthAmount
                                   : lastMonthAmount - thatMonthAmount) < 0 &&
                                 'text-rose-600'
                               }`}
+                              style={{
+                                borderTop: '2px solid',
+                                borderBottom: '6px double'
+                              }}
                             >
                               {thatMonthAmount - lastMonthAmount < 0
                                 ? `(${numberToMoney(
@@ -550,16 +550,16 @@ function Overview({
                                   )}
                             </td>
                             <td
-                              style={{
-                                borderTop: '2px solid',
-                                borderBottom: '6px double'
-                              }}
                               className={`whitespace-nowrap p-3 text-right text-lg font-medium ${
                                 (type === 'income'
                                   ? thatMonthAmount - lastMonthAmount
                                   : lastMonthAmount - thatMonthAmount) < 0 &&
                                 'text-rose-600'
                               }`}
+                              style={{
+                                borderTop: '2px solid',
+                                borderBottom: '6px double'
+                              }}
                             >
                               {lastMonthAmount === 0
                                 ? '-'

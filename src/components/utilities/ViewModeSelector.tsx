@@ -22,16 +22,16 @@ function ViewModeSelector<T extends string>({
       {options.map(({ value, icon }) => (
         <button
           key={value}
-          onClick={() => {
-            setViewMode(value)
-          }}
           className={`flex items-center gap-2 rounded-md p-2 transition-all ${
             value === viewMode
               ? componentBgLighter
               : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
           }`}
+          onClick={() => {
+            setViewMode(value)
+          }}
         >
-          <Icon icon={icon} className="size-6" />
+          <Icon className="size-6" icon={icon} />
         </button>
       ))}
     </div>

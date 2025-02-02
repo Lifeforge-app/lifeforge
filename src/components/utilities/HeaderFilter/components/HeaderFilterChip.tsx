@@ -25,10 +25,10 @@ function FilterChip({
         color !== undefined ? { backgroundColor: color + '20', color } : {}
       }
     >
-      <Icon icon={icon} className="size-4" />
+      <Icon className="size-4" icon={icon} />
       {text}
       <button onClick={onRemove}>
-        <Icon icon="tabler:x" className="size-4" />
+        <Icon className="size-4" icon="tabler:x" />
       </button>
     </span>
   )

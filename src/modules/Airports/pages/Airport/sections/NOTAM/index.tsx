@@ -68,14 +68,14 @@ function NOTAM({
             ))}
             {hasNextPage && (
               <Button
+                iconAtEnd
+                className="w-full"
+                icon="tabler:arrow-down"
                 loading={loading}
+                variant="secondary"
                 onClick={() => {
                   fetchNextPage().catch(console.error)
                 }}
-                className="w-full"
-                variant="secondary"
-                iconAtEnd
-                icon="tabler:arrow-down"
               >
                 {!loading ? 'Load more' : ''}
               </Button>

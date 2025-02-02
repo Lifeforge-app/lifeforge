@@ -108,23 +108,23 @@ function ModifyAchievementModal({
 
   return (
     <Modal
-      isOpen={openType !== null}
-      title={`achievement.${openType}`}
+      data={data}
+      fields={FIELDS}
       icon={
         {
           create: 'tabler:plus',
           update: 'tabler:pencil'
         }[openType!]
       }
-      data={data}
-      setData={setData}
-      fields={FIELDS}
+      isOpen={openType !== null}
+      namespace="modules.achievements"
       openType={openType}
+      setData={setData}
+      title={`achievement.${openType}`}
       onClose={() => {
         setOpenType(null)
       }}
       onSubmit={onSubmitButtonClick}
-      namespace="modules.achievements"
     />
   )
 }

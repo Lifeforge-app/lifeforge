@@ -73,7 +73,7 @@ function LibgenModal(): React.ReactElement {
 
   return (
     <>
-      <ModalWrapper isOpen={isOpen} minWidth="70vw" minHeight="80vh">
+      <ModalWrapper isOpen={isOpen} minHeight="80vh" minWidth="70vw">
         <ModalHeader
           icon="tabler:books"
           namespace="modules.booksLibrary"
@@ -85,20 +85,20 @@ function LibgenModal(): React.ReactElement {
         {viewDetailsFor !== null ? (
           <Details
             id={viewDetailsFor}
+            setAddToLibraryFor={setAddToLibraryFor}
             onClose={() => {
               setViewDetailsFor(null)
             }}
-            setAddToLibraryFor={setAddToLibraryFor}
           />
         ) : (
           <>
             <div className="flex flex-col items-center gap-2 sm:flex-row">
               <SearchInput
+                hasTopMargin={false}
+                namespace="modules.booksLibrary"
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
                 stuffToSearch="Libgen Book"
-                namespace="modules.booksLibrary"
-                hasTopMargin={false}
                 onKeyUp={e => {
                   if (e.key === 'Enter') {
                     searchBooks().catch(console.error)
@@ -106,13 +106,13 @@ function LibgenModal(): React.ReactElement {
                 }}
               />
               <Button
+                iconAtEnd
+                className="w-full sm:w-auto"
+                icon="tabler:arrow-right"
+                loading={loading}
                 onClick={() => {
                   searchBooks().catch(console.error)
                 }}
-                icon="tabler:arrow-right"
-                iconAtEnd
-                loading={loading}
-                className="w-full sm:w-auto"
               >
                 search
               </Button>
@@ -128,8 +128,8 @@ function LibgenModal(): React.ReactElement {
                     return (
                       <EmptyStateScreen
                         icon="tabler:books-off"
-                        namespace="modules.booksLibrary"
                         name="libgenResult"
+                        namespace="modules.booksLibrary"
                       />
                     )
                   }
@@ -148,30 +148,30 @@ function LibgenModal(): React.ReactElement {
                         </p>
                       </div>
                       <Pagination
+                        className="mb-4"
                         currentPage={data.page}
                         totalPages={totalPages}
                         onPageChange={page => {
                           fetchBookResults(page).catch(console.error)
                         }}
-                        className="mb-4"
                       />
                       <ul className="space-y-4">
                         {data.data.map((book: any) => (
                           <SearchResultItem
                             key={book.id}
                             book={book}
-                            setViewDetailsFor={setViewDetailsFor}
                             setAddToLibraryFor={setAddToLibraryFor}
+                            setViewDetailsFor={setViewDetailsFor}
                           />
                         ))}
                       </ul>
                       <Pagination
+                        className="mt-4"
                         currentPage={data.page}
                         totalPages={totalPages}
                         onPageChange={page => {
                           fetchBookResults(page).catch(console.error)
                         }}
-                        className="mt-4"
                       />
                     </>
                   )
@@ -180,8 +180,8 @@ function LibgenModal(): React.ReactElement {
                 return (
                   <EmptyStateScreen
                     icon="tabler:book"
-                    namespace="modules.booksLibrary"
                     name="libgen"
+                    namespace="modules.booksLibrary"
                   />
                 )
               })()}
@@ -191,10 +191,10 @@ function LibgenModal(): React.ReactElement {
       </ModalWrapper>
       <AddToLibraryModal
         isOpen={addToLibraryFor !== null}
+        md5={addToLibraryFor}
         onClose={() => {
           setAddToLibraryFor(null)
         }}
-        md5={addToLibraryFor}
       />
     </>
   )

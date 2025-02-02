@@ -75,8 +75,8 @@ function Mood({
         {loading ? (
           <div className="flex size-full flex-col items-center justify-center gap-2">
             <Icon
-              icon="svg-spinners:3-dots-scale"
               className="size-8 text-bg-500"
+              icon="svg-spinners:3-dots-scale"
             />
             <p className="text-bg-500">Predicting mood...</p>
           </div>
@@ -85,35 +85,35 @@ function Mood({
             <div className="w-full flex-1">
               <TextInput
                 darker
-                namespace="modules.journal"
-                value={mood.text}
                 icon="tabler:mood-neutral"
                 name="Mood of the day"
+                namespace="modules.journal"
+                placeholder="How do you feel?"
                 updateValue={value => {
                   setMood({ ...mood, text: value })
                 }}
-                placeholder="How do you feel?"
+                value={mood.text}
               />
               <TextInput
                 darker
-                namespace="modules.journal"
-                value={mood.emoji}
+                className="mt-4"
                 icon="uil:icons"
                 name="Emoji"
+                namespace="modules.journal"
+                placeholder="Emoji"
                 updateValue={value => {
                   setMood({ ...mood, emoji: value })
                 }}
-                placeholder="Emoji"
-                className="mt-4"
+                value={mood.emoji}
               />
             </div>
             <Button
+              className="mt-4 w-full shrink-0"
+              icon="tabler:refresh"
+              variant="secondary"
               onClick={() => {
                 fetchSummarizedText().catch(console.error)
               }}
-              icon="tabler:refresh"
-              className="mt-4 w-full shrink-0"
-              variant="secondary"
             >
               Regenerate
             </Button>
@@ -122,21 +122,21 @@ function Mood({
       </div>
       <div className="flex-between mt-6 flex">
         <Button
+          icon="tabler:arrow-left"
+          variant="no-bg"
           onClick={() => {
             setStep(4)
           }}
-          icon="tabler:arrow-left"
-          variant="no-bg"
         >
           Previous
         </Button>
         <Button
+          iconAtEnd
+          disabled={mood.text.trim() === ''}
+          icon="tabler:arrow-right"
           onClick={() => {
             setStep(6)
           }}
-          icon="tabler:arrow-right"
-          iconAtEnd
-          disabled={mood.text.trim() === ''}
         >
           Next
         </Button>

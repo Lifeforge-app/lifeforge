@@ -44,6 +44,10 @@ function MenuItem({
       {function ({ active }) {
         return (
           <button
+            className={`${getActiveClass(
+              active,
+              isRed
+            )} flex w-full items-center gap-4 p-4 text-left transition-all`}
             disabled={disabled}
             onClick={e => {
               if (preventDefault) {
@@ -52,13 +56,9 @@ function MenuItem({
               e.stopPropagation()
               onClick(e)
             }}
-            className={`${getActiveClass(
-              active,
-              isRed
-            )} flex w-full items-center gap-4 p-4 text-left transition-all`}
           >
             {icon !== undefined && (
-              <Icon icon={icon} className="size-5 shrink-0" />
+              <Icon className="size-5 shrink-0" icon={icon} />
             )}
             <span className="w-full truncate whitespace-nowrap">
               {namespace !== false
@@ -67,8 +67,8 @@ function MenuItem({
             </span>
             {isToggled === true && (
               <Icon
-                icon="tabler:check"
                 className={`${getToggleIconClass(isRed)} ml-4 size-5 shrink-0`}
+                icon="tabler:check"
               />
             )}
           </button>

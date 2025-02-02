@@ -26,8 +26,8 @@ function EntryItem({ entry }: { entry: IProjectsMEntry }): React.ReactElement {
       className={`m-4 mt-0 flex items-center gap-4 rounded-lg ${componentBgWithHover} shadow-custom transition-all`}
     >
       <Link
-        to={`/projects-m/${entry.id}`}
         className="flex-between flex w-full gap-4 p-6"
+        to={`/projects-m/${entry.id}`}
       >
         <div className="flex items-center gap-4">
           <div
@@ -46,7 +46,7 @@ function EntryItem({ entry }: { entry: IProjectsMEntry }): React.ReactElement {
               color: entry.color
             }}
           >
-            <Icon icon={entry.icon} className="size-full" />
+            <Icon className="size-full" icon={entry.icon} />
           </div>
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-2 font-semibold">
@@ -54,11 +54,11 @@ function EntryItem({ entry }: { entry: IProjectsMEntry }): React.ReactElement {
 
               {typeof visibilities !== 'string' && (
                 <Icon
+                  className="size-4"
                   icon={
                     visibilities.find(l => l.id === entry.visibility)?.icon ??
                     'tabler:eye'
                   }
-                  className="size-4"
                 />
               )}
             </div>
@@ -76,29 +76,29 @@ function EntryItem({ entry }: { entry: IProjectsMEntry }): React.ReactElement {
                 return (
                   <Icon
                     key={technology?.id}
-                    icon={technology?.icon ?? 'tabler:code'}
                     className="size-6"
+                    icon={technology?.icon ?? 'tabler:code'}
                   />
                 )
               })}
           </div>
           <HamburgerMenu className="relative">
             <MenuItem
-              text="Edit"
               icon="tabler:pencil"
+              text="Edit"
               onClick={() => {
                 setExistedData(entry)
                 setModifyDataModalOpenType('update')
               }}
             />
             <MenuItem
-              text="Delete"
+              isRed
               icon="tabler:trash"
+              text="Delete"
               onClick={() => {
                 setExistedData(entry)
                 setDeleteDataConfirmationOpen(true)
               }}
-              isRed
             />
           </HamburgerMenu>
         </div>

@@ -13,7 +13,7 @@ function HamburgerSelectorWrapper({
   return (
     <>
       <span className="flex items-center gap-4 p-4 text-bg-500">
-        <Icon icon={icon} className="size-5" />
+        <Icon className="size-5" icon={icon} />
         {title}
       </span>
       <div className="p-4 pt-0">

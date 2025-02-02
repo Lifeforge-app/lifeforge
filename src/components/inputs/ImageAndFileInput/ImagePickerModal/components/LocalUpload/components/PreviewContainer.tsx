@@ -24,29 +24,29 @@ function PreviewContainer({
             <p className="w-full truncate">{fileName ?? file?.name}</p>
             <Button
               icon="tabler:x"
+              variant="no-bg"
               onClick={() => {
                 setPreview(null)
                 setFile(null)
                 onRemove?.()
               }}
-              variant="no-bg"
             />
           </div>
-          <img src={preview} alt="" className="m-auto max-h-96 rounded-md" />
+          <img alt="" className="m-auto max-h-96 rounded-md" src={preview} />
         </div>
       )}
       {file !== null && preview === null && (
         <div className="mb-6 flex w-full items-center justify-between gap-8">
           <p className="w-full truncate">{file.name}</p>
           <Button
+            className="p-2!"
+            icon="tabler:x"
+            variant="no-bg"
             onClick={() => {
               setPreview(null)
               setFile(null)
               onRemove?.()
             }}
-            variant="no-bg"
-            className="p-2!"
-            icon="tabler:x"
           />
         </div>
       )}

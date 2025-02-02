@@ -23,7 +23,6 @@ function LinkItem({
 }): React.ReactElement {
   return (
     <Link
-      to={to}
       className={`transition-all ${(() => {
         if (isHighlighted) {
           return 'font-bold text-custom-500 hover:text-custom-600'
@@ -35,6 +34,7 @@ function LinkItem({
             : 'pointer-events-none'
         }`
       })()}`}
+      to={to}
     >
       {children}
     </Link>
@@ -42,7 +42,7 @@ function LinkItem({
 }
 
 function ChevronIcon(): React.ReactElement {
-  return <Icon icon="tabler:chevron-right" className="size-5 text-bg-500" />
+  return <Icon className="size-5 text-bg-500" icon="tabler:chevron-right" />
 }
 
 function Breadcrumbs({
@@ -107,7 +107,7 @@ function Breadcrumbs({
           item.show && (
             <React.Fragment key={index}>
               {index > 0 && <ChevronIcon />}
-              <LinkItem to={item.to} isHighlighted={item.isHighlighted}>
+              <LinkItem isHighlighted={item.isHighlighted} to={item.to}>
                 {item.label}
               </LinkItem>
             </React.Fragment>

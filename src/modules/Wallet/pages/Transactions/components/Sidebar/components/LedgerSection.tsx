@@ -19,11 +19,11 @@ function LedgerSection({
   return (
     <>
       <SidebarTitle
-        name={t('sidebar.ledgers')}
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           navigate('/wallet/ledgers#new')
         }}
+        name={t('sidebar.ledgers')}
       />
       <APIFallbackComponent data={ledgers}>
         {ledgers => (
@@ -40,13 +40,12 @@ function LedgerSection({
               .map(({ icon, name, color, id }, index) => (
                 <SidebarItem
                   key={id}
-                  name={name}
-                  icon={icon}
-                  sideStripColor={color}
                   active={
                     searchParams.get('ledger') === id ||
                     (searchParams.get('ledger') === null && index === 0)
                   }
+                  icon={icon}
+                  name={name}
                   number={
                     typeof filteredTransactions !== 'string'
                       ? filteredTransactions.filter(
@@ -54,6 +53,16 @@ function LedgerSection({
                             transaction.ledger === id || id === null
                         ).length
                       : 0
+                  }
+                  sideStripColor={color}
+                  onCancelButtonClick={
+                    name !== 'All'
+                      ? () => {
+                          searchParams.delete('ledger')
+                          setSearchParams(searchParams)
+                          setSidebarOpen(false)
+                        }
+                      : undefined
                   }
                   onClick={() => {
                     if (name === 'All') {
@@ -67,15 +76,6 @@ function LedgerSection({
                     })
                     setSidebarOpen(false)
                   }}
-                  onCancelButtonClick={
-                    name !== 'All'
-                      ? () => {
-                          searchParams.delete('ledger')
-                          setSearchParams(searchParams)
-                          setSidebarOpen(false)
-                        }
-                      : undefined
-                  }
                 />
               ))}
           </>

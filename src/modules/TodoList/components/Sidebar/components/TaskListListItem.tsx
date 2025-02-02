@@ -21,11 +21,39 @@ function TaskListListItem({
 
   return (
     <SidebarItem
+      active={searchParams.get('list') === item.id}
+      hamburgerMenuItems={
+        <>
+          <MenuItem
+            icon="tabler:pencil"
+            text="Edit"
+            onClick={e => {
+              e.stopPropagation()
+              setSelectedData(item)
+              setModifyModalOpenType('update')
+            }}
+          />
+          <MenuItem
+            isRed
+            icon="tabler:trash"
+            text="Delete"
+            onClick={e => {
+              e.stopPropagation()
+              setSelectedData(item)
+              setDeleteConfirmationModalOpen(true)
+            }}
+          />
+        </>
+      }
       icon={item.icon}
       name={item.name}
-      sideStripColor={item.color}
-      active={searchParams.get('list') === item.id}
       number={item.amount}
+      sideStripColor={item.color}
+      onCancelButtonClick={() => {
+        searchParams.delete('list')
+        setSearchParams(searchParams)
+        setSidebarOpen(false)
+      }}
       onClick={() => {
         setSearchParams({
           ...Object.fromEntries(searchParams.entries()),
@@ -33,34 +61,6 @@ function TaskListListItem({
         })
         setSidebarOpen(false)
       }}
-      onCancelButtonClick={() => {
-        searchParams.delete('list')
-        setSearchParams(searchParams)
-        setSidebarOpen(false)
-      }}
-      hamburgerMenuItems={
-        <>
-          <MenuItem
-            icon="tabler:pencil"
-            onClick={e => {
-              e.stopPropagation()
-              setSelectedData(item)
-              setModifyModalOpenType('update')
-            }}
-            text="Edit"
-          />
-          <MenuItem
-            isRed
-            icon="tabler:trash"
-            onClick={e => {
-              e.stopPropagation()
-              setSelectedData(item)
-              setDeleteConfirmationModalOpen(true)
-            }}
-            text="Delete"
-          />
-        </>
-      }
     />
   )
 }

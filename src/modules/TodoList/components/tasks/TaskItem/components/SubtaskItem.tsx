@@ -50,10 +50,10 @@ function SubtaskItem({
     <div className="flex-between flex rounded-md bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
       {entry.title}
       <TaskCompletionCheckbox
+        entry={entry}
         toggleTaskCompletion={() => {
           toggleSubTaskCompletion().catch(console.error)
         }}
-        entry={entry}
       />
     </div>
   )

@@ -85,8 +85,8 @@ function ModuleItem({
         <div className="flex items-center gap-4">
           <div className={`rounded-lg p-3 ${componentBgLighter}`}>
             <Icon
-              icon={module.icon}
               className="text-2xl text-custom-500 dark:text-bg-50"
+              icon={module.icon}
             />
           </div>
           <div>
@@ -111,14 +111,14 @@ function ModuleItem({
             }}
           />
           <button
-            onClick={toggleExpandConfig}
             className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800/50"
+            onClick={toggleExpandConfig}
           >
             <Icon
+              className="text-xl"
               icon={
                 expandConfig ? 'tabler:chevron-down' : 'tabler:chevron-right'
               }
-              className="text-xl"
             />
           </button>
         </div>
@@ -131,8 +131,8 @@ function ModuleItem({
             : 'max-h-0 overflow-hidden py-0'
         }`}
       >
-        <input type="text" hidden />
-        <input type="password" hidden />
+        <input hidden type="text" />
+        <input hidden type="password" />
 
         {module.config &&
           Object.entries(module.config).map(
@@ -146,27 +146,27 @@ function ModuleItem({
                   case 'input':
                     return (
                       <TextInput
-                        namespace="modules.modules"
                         key={key}
-                        icon={property.icon}
-                        name={property.name}
-                        placeholder={property.placeholder}
-                        value={''}
-                        updateValue={() => {}}
                         darker
-                        isPassword={property.isPassword}
                         noAutoComplete
+                        icon={property.icon}
+                        isPassword={property.isPassword}
+                        name={property.name}
+                        namespace="modules.modules"
+                        placeholder={property.placeholder}
+                        updateValue={() => {}}
+                        value={''}
                       />
                     )
                   case 'select':
                     return (
                       <div key={key} className="space-y-2">
-                        <label htmlFor={key} className="text-sm text-bg-500">
+                        <label className="text-sm text-bg-500" htmlFor={key}>
                           {property.name}
                         </label>
                         <select
-                          id={key}
                           className="rounded-lg bg-bg-100 p-2 dark:bg-bg-800"
+                          id={key}
                         >
                           {property.options.map(option => (
                             <option key={option.value} value={option.value}>
@@ -180,7 +180,7 @@ function ModuleItem({
                     return (
                       <div key={key} className="flex-between flex gap-4">
                         <div>
-                          <label htmlFor={key} className="text-lg font-medium">
+                          <label className="text-lg font-medium" htmlFor={key}>
                             {property.name}
                           </label>
                           <p className="text-bg-500">{property.description}</p>
@@ -200,10 +200,10 @@ function ModuleItem({
           )}
         {originalModuleConfig !== JSON.stringify(userData.moduleConfigs) && (
           <Button
-            loading={saveLoading}
-            onClick={saveConfig}
             className="mt-6"
             icon={!saveLoading ? 'uil:save' : 'svg-spinners:180-ring'}
+            loading={saveLoading}
+            onClick={saveConfig}
           >
             {!saveLoading ? 'Save' : ''}
           </Button>

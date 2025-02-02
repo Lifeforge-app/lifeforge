@@ -45,10 +45,10 @@ function TransactionListItem({
           }}
         />
         <Icon
+          className="size-8 text-bg-500"
           icon={
             assets.find(asset => asset.id === transaction.asset)?.icon ?? ''
           }
-          className="size-8 text-bg-500"
         />
         <div className="flex w-full min-w-0 flex-col-reverse sm:flex-col">
           <div className="flex w-full min-w-0 items-center gap-2">
@@ -72,21 +72,21 @@ function TransactionListItem({
                   setReceiptModalOpen(true)
                 }}
               >
-                <Icon icon="tabler:file-text" className="size-5 text-bg-500" />
+                <Icon className="size-5 text-bg-500" icon="tabler:file-text" />
               </button>
             )}
             {transaction.location !== '' && (
               <>
                 <span data-tooltip-id={`tooltip-location-${transaction.id}`}>
-                  <Icon icon="tabler:map-pin" className="size-5 text-bg-500" />
+                  <Icon className="size-5 text-bg-500" icon="tabler:map-pin" />
                 </span>
                 <Tooltip
-                  id={`tooltip-location-${transaction.id}`}
                   className="z-9999 rounded-md! bg-bg-50 p-4! text-base! text-bg-800 shadow-custom dark:bg-bg-800 dark:text-bg-50"
                   classNameArrow="size-6!"
+                  id={`tooltip-location-${transaction.id}`}
+                  opacity={1}
                   place="top-start"
                   positionStrategy="fixed"
-                  opacity={1}
                 >
                   <div className="relative z-10 max-w-sm">
                     {transaction.location}
@@ -102,16 +102,9 @@ function TransactionListItem({
             <span className="hidden sm:block">
               {moment(transaction.date).format('MMM DD, YYYY')}
             </span>
-            <Icon icon="tabler:circle-filled" className="size-1" />
+            <Icon className="size-1" icon="tabler:circle-filled" />
             <div className="flex items-center gap-1">
               <Icon
-                icon={
-                  {
-                    income: 'tabler:login-2',
-                    expenses: 'tabler:logout',
-                    transfer: 'tabler:transfer'
-                  }[transaction.type as 'income' | 'expenses' | 'transfer']
-                }
                 className={`size-4 ${
                   {
                     income: 'text-green-500',
@@ -119,6 +112,13 @@ function TransactionListItem({
                     transfer: 'text-blue-500'
                   }[transaction.type as 'income' | 'expenses' | 'transfer']
                 }`}
+                icon={
+                  {
+                    income: 'tabler:login-2',
+                    expenses: 'tabler:logout',
+                    transfer: 'tabler:transfer'
+                  }[transaction.type as 'income' | 'expenses' | 'transfer']
+                }
               />
               <span className="hidden md:block">
                 {transaction.type[0].toUpperCase() + transaction.type.slice(1)}
@@ -126,9 +126,10 @@ function TransactionListItem({
             </div>
             {transaction.ledger !== '' && (
               <>
-                <Icon icon="tabler:circle-filled" className="size-1" />
+                <Icon className="size-1" icon="tabler:circle-filled" />
                 <div className="flex items-center gap-1">
                   <Icon
+                    className="size-4"
                     icon={
                       ledgers.find(ledger => ledger.id === transaction.ledger)
                         ?.icon ?? ''
@@ -138,7 +139,6 @@ function TransactionListItem({
                         ledgers.find(ledger => ledger.id === transaction.ledger)
                           ?.color ?? 'white'
                     }}
-                    className="size-4"
                   />
                   <span className="hidden md:block">
                     {ledgers.find(ledger => ledger.id === transaction.ledger)
@@ -174,9 +174,9 @@ function TransactionListItem({
             />
           )}
           <MenuItem
+            isRed
             icon="tabler:trash"
             text="Delete"
-            isRed
             onClick={() => {
               setSelectedData(transaction)
               setDeleteTransactionsConfirmationOpen(true)

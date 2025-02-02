@@ -71,15 +71,15 @@ const SidebarEventBanner = (): React.ReactElement => {
       <div className="flex w-full min-w-0 items-center gap-3">
         {eventType === 'christmas' && (
           <Icon
-            icon="mingcute:christmas-hat-line"
             className="shrink-0 text-2xl"
+            icon="mingcute:christmas-hat-line"
           />
         )}
         <p className="line-clamp-2 w-full whitespace-normal">
           {getEventMessage(eventType, userData.name, userData.dateOfBirth)}
         </p>
       </div>
-      <Icon icon={getEventIcon(eventType)} className="text-2xl" />
+      <Icon className="text-2xl" icon={getEventIcon(eventType)} />
     </div>
   )
 }

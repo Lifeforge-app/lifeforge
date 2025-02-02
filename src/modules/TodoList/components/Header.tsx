@@ -67,23 +67,23 @@ function Header({
       </div>
       <div className="flex items-center gap-6">
         <Button
+          className="hidden sm:flex"
+          icon="tabler:plus"
+          tProps={{ item: t('items.task') }}
           onClick={() => {
             setSelectedTask(null)
             setModifyTaskWindowOpenType('create')
           }}
-          className="hidden sm:flex"
-          icon="tabler:plus"
-          tProps={{ item: t('items.task') }}
         >
           new
         </Button>
         <Button
+          className="xl:hidden"
+          icon="tabler:menu"
+          variant="no-bg"
           onClick={() => {
             setSidebarOpen(true)
           }}
-          icon="tabler:menu"
-          variant="no-bg"
-          className="xl:hidden"
         />
       </div>
     </div>

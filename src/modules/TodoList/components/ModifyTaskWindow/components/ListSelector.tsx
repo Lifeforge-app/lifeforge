@@ -18,12 +18,6 @@ function ListSelector({
 
   return (
     <ListboxOrComboboxInput
-      namespace="modules.todoList"
-      type="listbox"
-      name="list"
-      icon="tabler:list"
-      value={list}
-      setValue={setList}
       buttonContent={
         <>
           <span
@@ -38,14 +32,20 @@ function ListSelector({
           </span>
         </>
       }
+      icon="tabler:list"
+      name="list"
+      namespace="modules.todoList"
+      setValue={setList}
+      type="listbox"
+      value={list}
     >
-      <ListboxOrComboboxOption text="None" value="" color="lightgray" />
+      <ListboxOrComboboxOption color="lightgray" text="None" value="" />
       {lists.map(({ name, color, id }) => (
         <ListboxOrComboboxOption
           key={id}
+          color={color}
           text={name}
           value={id}
-          color={color}
         />
       ))}
     </ListboxOrComboboxInput>

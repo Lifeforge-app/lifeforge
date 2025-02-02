@@ -34,18 +34,18 @@ function IdeaAndFolderList(): React.ReactElement {
                       <div className="mt-6">
                         {!viewArchived ? (
                           <EmptyStateScreen
-                            onCTAClick={setModifyIdeaModalOpenType as any}
-                            icon="tabler:bulb-off"
                             ctaContent="new"
-                            namespace="modules.ideaBox"
-                            name="idea"
                             ctaTProps={{ item: t('items.idea') }}
+                            icon="tabler:bulb-off"
+                            name="idea"
+                            namespace="modules.ideaBox"
+                            onCTAClick={setModifyIdeaModalOpenType as any}
                           />
                         ) : (
                           <EmptyStateScreen
-                            namespace="modules.ideaBox"
-                            name="archived"
                             icon="tabler:archive-off"
+                            name="archived"
+                            namespace="modules.ideaBox"
                           />
                         )}
                       </div>
@@ -68,8 +68,8 @@ function IdeaAndFolderList(): React.ReactElement {
                 <div className="mt-6">
                   <EmptyStateScreen
                     icon="tabler:search"
-                    namespace="modules.ideaBox"
                     name="result"
+                    namespace="modules.ideaBox"
                   />
                 </div>
               ) : (

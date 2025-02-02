@@ -116,14 +116,14 @@ function EditCardModal({
     <ModalWrapper isOpen={isOpen}>
       <div className="flex-between mb-8 flex ">
         <h1 className="flex items-center gap-3 text-2xl font-semibold">
-          <Icon icon="tabler:pencil" className="size-7" />
+          <Icon className="size-7" icon="tabler:pencil" />
           Edit Cards
         </h1>
         <button
-          onClick={onClose}
           className="hover: rounded-md p-2 text-bg-500 transition-all hover:bg-bg-100 dark:hover:bg-bg-800"
+          onClick={onClose}
         >
-          <Icon icon="tabler:x" className="size-6" />
+          <Icon className="size-6" icon="tabler:x" />
         </button>
       </div>
       <table className="w-[50vw]">
@@ -144,8 +144,8 @@ function EditCardModal({
               <td className="px-2 py-4 pr-4 ">
                 {currentlyEditingIndex === index ? (
                   <input
-                    type="text"
                     className="w-full rounded-xs border border-bg-700 bg-transparent p-2"
+                    type="text"
                     value={card.question}
                     onChange={e => {
                       const newCards = [...innerCards]
@@ -156,10 +156,10 @@ function EditCardModal({
                   />
                 ) : (
                   <button
+                    className="w-full p-2 text-left"
                     onClick={() => {
                       setCurrentlyEditingIndex(index)
                     }}
-                    className="w-full p-2 text-left"
                   >
                     {card.question}
                   </button>
@@ -168,8 +168,8 @@ function EditCardModal({
               <td className="pr-6 ">
                 {currentlyEditingIndex === index ? (
                   <input
-                    type="text"
                     className="w-full rounded-xs border border-bg-700 bg-transparent p-2"
+                    type="text"
                     value={card.answer}
                     onChange={e => {
                       const newCards = [...innerCards]
@@ -180,10 +180,10 @@ function EditCardModal({
                   />
                 ) : (
                   <button
+                    className="w-full p-2 text-left"
                     onClick={() => {
                       setCurrentlyEditingIndex(index)
                     }}
-                    className="w-full p-2 text-left"
                   >
                     {card.answer}
                   </button>
@@ -198,7 +198,7 @@ function EditCardModal({
                     setInnerCards(innerCards.filter((_, i) => i !== index))
                   }}
                 >
-                  <Icon icon="tabler:trash" className="text-xl text-red-500" />
+                  <Icon className="text-xl text-red-500" icon="tabler:trash" />
                 </button>
               </td>
             </tr>
@@ -206,6 +206,7 @@ function EditCardModal({
         </tbody>
       </table>
       <button
+        className="flex-center mt-4 hidden w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-50 shadow-custom transition-all hover:bg-bg-800/50 dark:text-bg-50 sm:flex"
         onClick={e => {
           setInnerCards([
             ...innerCards,
@@ -220,26 +221,25 @@ function EditCardModal({
             behavior: 'smooth'
           })
         }}
-        className="flex-center mt-4 hidden w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-50 shadow-custom transition-all hover:bg-bg-800/50 dark:text-bg-50 sm:flex"
       >
-        <Icon icon="tabler:plus" className="text-xl" />
+        <Icon className="text-xl" icon="tabler:plus" />
         new card
       </button>
 
       <div className="mt-12 flex flex-1 flex-col-reverse items-end gap-2 sm:flex-row">
         <button
+          className="flex-center h-16 w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-50 shadow-custom transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
           disabled={loading}
           onClick={onClose}
-          className="flex-center h-16 w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-50 shadow-custom transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
         >
           cancel
         </button>
         <CreateOrModifyButton
           loading={loading}
+          type={'update'}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-          type={'update'}
         />
       </div>
     </ModalWrapper>

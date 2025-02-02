@@ -17,22 +17,22 @@ function Sidebar(): React.ReactElement {
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
       <SidebarItem
+        active={searchParams.entries().next().done === true}
+        icon="tabler:list"
+        name="All Projects"
+        namespace="modules.projectsM"
         onClick={() => {
           navigate('/projects-m')
         }}
-        active={searchParams.entries().next().done === true}
-        icon="tabler:list"
-        namespace="modules.projectsM"
-        name="All Projects"
       />
       <SidebarItem
+        active={searchParams.get('starred') === 'true'}
         icon="tabler:star-filled"
         name="Starred"
         namespace="modules.projectsM"
         onClick={() => {
           navigate('/projects-m?starred=true')
         }}
-        active={searchParams.get('starred') === 'true'}
       />
       {(
         ['categories', 'statuses', 'visibilities', 'technologies'] as const

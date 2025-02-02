@@ -33,14 +33,6 @@ function TypeSection({
             (searchParams.get('type') === null && name === 'All Types')
           }
           icon={icon}
-          sideStripColor={
-            {
-              'All Types': bgTemp[100],
-              Income: colors.green[500],
-              Expenses: colors.red[500],
-              Transfer: colors.blue[500]
-            }[name]
-          }
           name={t(
             name.includes('All')
               ? `sidebar.${toCamelCase(name)}`
@@ -54,6 +46,22 @@ function TypeSection({
                     name === 'All Types'
                 ).length
               : 0
+          }
+          sideStripColor={
+            {
+              'All Types': bgTemp[100],
+              Income: colors.green[500],
+              Expenses: colors.red[500],
+              Transfer: colors.blue[500]
+            }[name]
+          }
+          onCancelButtonClick={
+            name !== 'All Types'
+              ? () => {
+                  searchParams.delete('type')
+                  setSearchParams(searchParams)
+                }
+              : undefined
           }
           onClick={() => {
             if (name === 'All Types') {
@@ -69,14 +77,6 @@ function TypeSection({
             })
             setSidebarOpen(false)
           }}
-          onCancelButtonClick={
-            name !== 'All Types'
-              ? () => {
-                  searchParams.delete('type')
-                  setSearchParams(searchParams)
-                }
-              : undefined
-          }
         />
       ))}
     </>

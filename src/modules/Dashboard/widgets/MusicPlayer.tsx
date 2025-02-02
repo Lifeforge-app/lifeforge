@@ -20,10 +20,10 @@ export default function MusicPlayer(): React.ReactElement {
             <div className="relative flex h-full min-h-0 flex-1 flex-col">
               <div className="absolute left-1/2 top-1/2 flex aspect-square h-full flex-1 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-md bg-bg-100 shadow-custom dark:bg-bg-800">
                 <Icon
-                  icon="tabler:disc"
                   className={`aspect-square h-full w-1/2 ${
                     isPlaying ? 'animate-spin text-custom-500' : 'text-bg-500'
                   }`}
+                  icon="tabler:disc"
                 />
               </div>
             </div>
@@ -43,22 +43,22 @@ export default function MusicPlayer(): React.ReactElement {
         ) : (
           <EmptyStateScreen
             smaller
-            namespace="modules.dashboard"
-            tKey="widgets.musicPlayer"
-            name="music"
-            icon="tabler:disc-off"
             customCTAButton={
               <Button
+                className="mt-4"
+                icon="tabler:music"
+                namespace="modules.music"
                 onClick={() => {
                   navigate('/music')
                 }}
-                icon="tabler:music"
-                className="mt-4"
-                namespace="modules.music"
               >
                 select music
               </Button>
             }
+            icon="tabler:disc-off"
+            name="music"
+            namespace="modules.dashboard"
+            tKey="widgets.musicPlayer"
           />
         )}
       </div>
