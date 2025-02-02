@@ -61,23 +61,23 @@ export default function Timer(): React.ReactElement {
       <div className="flex-center relative flex-col">
         <div
           className="radial-progress absolute text-bg-200 dark:text-bg-800"
+          role="progressbar"
           style={{
             // @ts-expect-error - Cannot fix lah this one ;-;
             '--value': '100',
             '--size': '28rem',
             '--thickness': '20px'
           }}
-          role="progressbar"
         ></div>
         <div
           className="flex-center radial-progress text-custom-500"
+          role="progressbar"
           style={{
             // @ts-expect-error - Cannot fix lah this one ;-;
             '--value': `${(timeLeft / timeDistribution[currentSection]) * 100}`,
             '--size': '28rem',
             '--thickness': '20px'
           }}
-          role="progressbar"
         >
           <div className="z-9999 mt-12 flex flex-col items-center gap-4 text-bg-800 dark:text-bg-50 ">
             <span className="text-7xl font-medium tracking-widest">
@@ -92,12 +92,12 @@ export default function Timer(): React.ReactElement {
               </span>
             ) : (
               <button
+                className="rounded-lg p-4 text-bg-800 hover:bg-bg-50 dark:bg-bg-900 dark:text-bg-50"
                 onClick={() => {
                   setIsRunning(true)
                 }}
-                className="rounded-lg p-4 text-bg-800 hover:bg-bg-50 dark:bg-bg-900 dark:text-bg-50"
               >
-                <Icon icon="tabler:play" className="size-8 shrink-0" />
+                <Icon className="size-8 shrink-0" icon="tabler:play" />
               </button>
             )}
           </div>
@@ -105,15 +105,15 @@ export default function Timer(): React.ReactElement {
       </div>
       {isRunning && (
         <div className="flex items-center gap-6">
-          <Button onClick={() => {}} icon="tabler:pause">
+          <Button icon="tabler:pause" onClick={() => {}}>
             pause session
           </Button>
           <Button
+            icon="tabler:square"
+            variant="secondary"
             onClick={() => {
               setIsRunning(false)
             }}
-            icon="tabler:square"
-            variant="secondary"
           >
             end session
           </Button>

@@ -114,7 +114,7 @@ function OTPScreen({
 
   return (
     <div className="flex-center size-full flex-1 flex-col gap-4">
-      <Icon icon="tabler:shield-lock" className="size-28" />
+      <Icon className="size-28" icon="tabler:shield-lock" />
       <h2 className="text-center text-4xl font-semibold">
         {t('otp.messages.required.title')}
       </h2>
@@ -125,12 +125,11 @@ function OTPScreen({
         <>
           <OtpInput
             shouldAutoFocus
-            value={otp}
-            onChange={setOtp}
             numInputs={6}
             renderInput={props => (
               <input
                 {...props}
+                className="mx-2 size-12! rounded-md border-[1.5px] border-bg-200 bg-bg-50 text-lg text-bg-800! shadow-custom dark:border-bg-800 dark:bg-bg-900 dark:text-bg-50 md:size-16! md:text-2xl"
                 inputMode="numeric"
                 onKeyDown={e => {
                   if (e.key === 'Enter') {
@@ -139,44 +138,45 @@ function OTPScreen({
                     })
                   }
                 }}
-                className="mx-2 size-12! rounded-md border-[1.5px] border-bg-200 bg-bg-50 text-lg text-bg-800! shadow-custom dark:border-bg-800 dark:bg-bg-900 dark:text-bg-50 md:size-16! md:text-2xl"
               />
             )}
+            value={otp}
+            onChange={setOtp}
           />
           <Button
+            iconAtEnd
+            className="mt-6 w-full md:w-3/4 xl:w-1/2"
+            icon="tabler:arrow-right"
+            loading={verifyOtpLoading}
+            namespace="common.vault"
+            tKey="otp"
             onClick={() => {
               verityOTP().catch(err => {
                 console.error(err)
               })
             }}
-            loading={verifyOtpLoading}
-            className="mt-6 w-full md:w-3/4 xl:w-1/2"
-            icon="tabler:arrow-right"
-            iconAtEnd
-            namespace="common.vault"
-            tKey="otp"
           >
             verify
           </Button>
           <Button
-            onClick={requestOTP}
-            loading={sendOtpLoading}
-            disabled={otpCooldown > 0}
             className="w-full md:w-3/4 xl:w-1/2"
-            variant="secondary"
+            disabled={otpCooldown > 0}
             icon="tabler:refresh"
+            loading={sendOtpLoading}
+            variant="secondary"
+            onClick={requestOTP}
           >
             {t('otp.buttons.resend')} {otpCooldown > 0 && `(${otpCooldown}s)`}
           </Button>
         </>
       ) : (
         <Button
-          onClick={requestOTP}
-          loading={sendOtpLoading}
           className="w-full md:w-3/4 xl:w-1/2"
           icon="tabler:mail"
+          loading={sendOtpLoading}
           namespace="common.vault"
           tKey="otp"
+          onClick={requestOTP}
         >
           Request
         </Button>

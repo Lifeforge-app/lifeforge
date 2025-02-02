@@ -60,13 +60,10 @@ function Sidebar({
             {sidebarItems.map((item, index) => (
               <SidebarItem
                 key={index}
+                active={searchParams.get('label') === toDashCase(item.name)}
                 icon={item.icon}
                 name={item.name}
                 namespace="modules.mailInbox"
-                active={searchParams.get('label') === toDashCase(item.name)}
-                onClick={() => {
-                  setSearchParams({ label: toDashCase(item.name) })
-                }}
                 number={item.count}
                 onCancelButtonClick={
                   item.name !== 'Inbox'
@@ -77,13 +74,16 @@ function Sidebar({
                       }
                     : undefined
                 }
+                onClick={() => {
+                  setSearchParams({ label: toDashCase(item.name) })
+                }}
               />
             ))}
             <SidebarDivider />
             <SidebarTitle
-              name="Labels"
               actionButtonIcon="tabler:plus"
               actionButtonOnClick={() => {}}
+              name="Labels"
               namespace="modules.mailInbox"
             />
             <LabelList labels={labels} />

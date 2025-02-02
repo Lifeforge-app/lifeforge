@@ -130,7 +130,7 @@ function LockedFolderGallery(): React.ReactElement {
               <h1 className="flex items-center gap-4 text-2xl font-semibold">
                 <>
                   <div className="flex-center size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
-                    <Icon icon="tabler:lock" className="size-7" />
+                    <Icon className="size-7" icon="tabler:lock" />
                   </div>
                   <span className="space-y-1">
                     Locked Folder
@@ -140,8 +140,8 @@ function LockedFolderGallery(): React.ReactElement {
                           return (
                             <span className="text-sm text-bg-500">
                               <Icon
-                                icon="svg-spinners:180-ring"
                                 className="size-5"
+                                icon="svg-spinners:180-ring"
                               />
                             </span>
                           )
@@ -163,11 +163,11 @@ function LockedFolderGallery(): React.ReactElement {
               <div className="flex-center gap-2">
                 {showImportButton && (
                   <Button
+                    icon="tabler:upload"
+                    loading={fileImportLoading}
                     onClick={() => {
                       importFiles().catch(() => {})
                     }}
-                    loading={fileImportLoading}
-                    icon="tabler:upload"
                   >
                     {!fileImportLoading ? (
                       <>Import</>
@@ -197,7 +197,6 @@ function LockedFolderGallery(): React.ReactElement {
               {photos => (
                 <PhotoAlbum
                   layout="rows"
-                  spacing={8}
                   photos={photos.map(image => ({
                     src: `${import.meta.env.VITE_API_HOST}/media/${
                       image.collectionId
@@ -208,18 +207,19 @@ function LockedFolderGallery(): React.ReactElement {
                   }))}
                   renderPhoto={({ imageProps: { src, alt, style } }) => (
                     <LLI
-                      src={src}
                       alt={alt}
-                      style={style}
                       className="object-cover!"
+                      src={src}
+                      style={style}
                     />
                   )}
+                  spacing={8}
                 />
               )}
             </APIFallbackComponent>
           </div>
         </ModuleWrapper>
-        <BottomBar photos={photos as IPhotoAlbumEntryItem[]} inAlbumGallery />
+        <BottomBar inAlbumGallery photos={photos as IPhotoAlbumEntryItem[]} />
       </div>
     </>
   )

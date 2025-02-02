@@ -159,12 +159,12 @@ function Transactions({
                             {typeof assets !== 'string' && (
                               <div className="flex items-center gap-2">
                                 <Icon
+                                  className="size-6 shrink-0"
                                   icon={
                                     assets.find(
                                       asset => asset.id === transaction.asset
                                     )?.icon ?? 'tabler:coin'
                                   }
-                                  className="size-6 shrink-0"
                                 />
                                 <span>
                                   {
@@ -181,13 +181,13 @@ function Transactions({
                               {typeof categories !== 'string' && (
                                 <div className="flex items-center gap-2">
                                   <Icon
+                                    className="size-6 shrink-0"
                                     icon={
                                       categories.find(
                                         category =>
                                           category.id === transaction.category
                                       )?.icon ?? 'tabler:coin'
                                     }
-                                    className="size-6 shrink-0"
                                     style={{
                                       color: categories.find(
                                         category =>
@@ -216,8 +216,8 @@ function Transactions({
                       ))}
                     <tr className="even:bg-zinc-800/30 print:even:bg-black/[3%]">
                       <td
-                        colSpan={type !== 'transfer' ? 4 : 3}
                         className="whitespace-nowrap p-3 text-left text-xl font-semibold"
+                        colSpan={type !== 'transfer' ? 4 : 3}
                       >
                         Total {type.charAt(0).toUpperCase() + type.slice(1)}
                       </td>

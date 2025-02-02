@@ -14,15 +14,16 @@ function ReceiptModal({
   return (
     <ModalWrapper isOpen={isOpen}>
       <ModalHeader
-        title="View Receipt"
         icon="tabler:receipt"
+        namespace="modules.wallet"
+        title="receipts.view"
         onClose={() => {
           setOpen(false)
         }}
       />
-      <div className="flex w-full justify-center sm:w-96">
+      <div className="flex w-full justify-center sm:min-w-96">
         {receiptSrc !== '' && (
-          <img key={receiptSrc} src={receiptSrc} alt="receipt" />
+          <img key={receiptSrc} alt="receipt" src={receiptSrc} />
         )}
       </div>
     </ModalWrapper>

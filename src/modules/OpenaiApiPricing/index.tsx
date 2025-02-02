@@ -29,29 +29,29 @@ function OpenaiApiPricing(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
-        title="OpenAI API Pricing"
-        icon="tabler:brand-openai"
         actionButton={
           <Button
+            className="hidden md:flex"
+            icon="tabler:code"
+            namespace="modules.openaiApiPricing"
             onClick={() => {
               setIsInputRawHTMLModalOpen(true)
             }}
-            icon="tabler:code"
-            className="hidden md:flex"
-            namespace="modules.openaiApiPricing"
           >
             Input Raw HTML
           </Button>
         }
+        icon="tabler:brand-openai"
+        title="OpenAI API Pricing"
       />
       <APIFallbackComponent data={data}>
         {data => (
           <div className="mt-6 flex-1">
             {JSON.stringify(data) === '{}' ? (
               <EmptyStateScreen
-                namespace="modules.openaiApiPricing"
-                name="data"
                 icon="tabler:article-off"
+                name="data"
+                namespace="modules.openaiApiPricing"
               />
             ) : (
               <Scrollbar>
@@ -257,8 +257,8 @@ function OpenaiApiPricing(): React.ReactElement {
       </APIFallbackComponent>
       <RawHTMLInputModal
         isOpen={isInputRawHTMLModalOpen}
-        setIsOpen={setIsInputRawHTMLModalOpen}
         refreshData={refreshData}
+        setIsOpen={setIsInputRawHTMLModalOpen}
       />
     </ModuleWrapper>
   )

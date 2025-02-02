@@ -131,10 +131,10 @@ function Header({
         {typeof transactions !== 'string' && transactions.length > 0 && (
           <Menu as="div" className="relative z-50 hidden md:block">
             <Button
-              onClick={() => {}}
-              icon="tabler:plus"
-              className="hidden md:flex"
               as={MenuButton}
+              className="hidden md:flex"
+              icon="tabler:plus"
+              onClick={() => {}}
             >
               {t('common.buttons:new', {
                 item: t('modules.wallet:items.transaction')
@@ -146,31 +146,31 @@ function Header({
               className="mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
             >
               <MenuItem
+                icon="tabler:plus"
+                namespace="modules.wallet"
+                text="Add Manually"
                 onClick={() => {
                   setModifyModalOpenType('create')
                 }}
-                icon="tabler:plus"
-                text="Add Manually"
-                namespace="modules.wallet"
               />
               <MenuItem
+                icon="tabler:scan"
+                namespace="modules.wallet"
+                text="Scan Receipt"
                 onClick={() => {
                   setUploadReceiptModalOpen(true)
                 }}
-                icon="tabler:scan"
-                text="Scan Receipt"
-                namespace="modules.wallet"
               />
             </MenuItems>
           </Menu>
         )}
         <Button
+          className="xl:hidden"
           icon="tabler:menu"
+          variant="no-bg"
           onClick={() => {
             setSidebarOpen(true)
           }}
-          variant="no-bg"
-          className="xl:hidden"
         />
       </div>
     </div>

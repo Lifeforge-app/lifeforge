@@ -32,10 +32,10 @@ function VideoDetails({
             </div>
           )}
           <Button
+            className="mt-4"
+            icon={loading ? 'svg-spinners:180-ring' : 'tabler:download'}
             loading={loading}
             onClick={downloadVideo}
-            icon={loading ? 'svg-spinners:180-ring' : 'tabler:download'}
-            className="mt-4"
           >
             {loading ? 'Downloading' : 'Download'}
           </Button>

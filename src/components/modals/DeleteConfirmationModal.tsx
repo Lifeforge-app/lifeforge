@@ -68,21 +68,21 @@ function DeleteConfirmationModal({
       </p>
       <div className="mt-6 flex w-full flex-col-reverse justify-around gap-2 sm:flex-row">
         <Button
-          onClick={onClose}
+          className="w-full"
           icon=""
           variant="secondary"
-          className="w-full"
+          onClick={onClose}
         >
           Cancel
         </Button>
         <Button
+          isRed
+          className="w-full"
+          icon="tabler:trash"
           loading={loading}
           onClick={() => {
             deleteData().catch(console.error)
           }}
-          icon="tabler:trash"
-          className="w-full"
-          isRed
         >
           Delete
         </Button>

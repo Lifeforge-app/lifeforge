@@ -24,43 +24,43 @@ function CategoryListItem({
   return (
     <SidebarItem
       active={searchParams.get('category') === item.id}
-      sideStripColor={item.color}
+      hamburgerMenuItems={
+        <>
+          <MenuItem
+            icon="tabler:pencil"
+            text="Edit"
+            onClick={e => {
+              e.stopPropagation()
+              setSelectedData(item)
+              setModifyModalOpenType('update')
+            }}
+          />
+          <MenuItem
+            isRed
+            icon="tabler:trash"
+            text="Delete"
+            onClick={e => {
+              e.stopPropagation()
+              setSelectedData(item)
+              setDeleteConfirmationModalOpen(true)
+            }}
+          />
+        </>
+      }
       icon={item.icon}
       name={item.name}
       number={item.amount}
+      sideStripColor={item.color}
+      onCancelButtonClick={() => {
+        searchParams.delete('category')
+        setSearchParams(searchParams)
+      }}
       onClick={() => {
         setSearchParams({
           ...Object.fromEntries(searchParams.entries()),
           category: item.id
         })
       }}
-      onCancelButtonClick={() => {
-        searchParams.delete('category')
-        setSearchParams(searchParams)
-      }}
-      hamburgerMenuItems={
-        <>
-          <MenuItem
-            icon="tabler:pencil"
-            onClick={e => {
-              e.stopPropagation()
-              setSelectedData(item)
-              setModifyModalOpenType('update')
-            }}
-            text="Edit"
-          />
-          <MenuItem
-            isRed
-            icon="tabler:trash"
-            onClick={e => {
-              e.stopPropagation()
-              setSelectedData(item)
-              setDeleteConfirmationModalOpen(true)
-            }}
-            text="Delete"
-          />
-        </>
-      }
     />
   )
 }

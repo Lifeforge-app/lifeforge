@@ -20,34 +20,34 @@ function VideoEntry({
   return (
     <a
       key={video.id}
+      className={`relative flex w-full items-center justify-between gap-8 rounded-md p-4 shadow-custom transition-all ${componentBgWithHover}`}
       href={`${import.meta.env.VITE_API_HOST}/youtube-videos/video/stream/${
         video.youtube_id
       }`}
-      target="_blank"
       rel="noreferrer"
-      className={`relative flex w-full items-center justify-between gap-8 rounded-md p-4 shadow-custom transition-all ${componentBgWithHover}`}
+      target="_blank"
     >
       <div className="flex flex-col items-start md:flex-row">
-        <VideoThumbnail id={video.youtube_id} duration={video.duration} />
+        <VideoThumbnail duration={video.duration} id={video.youtube_id} />
         <VideoDetails video={video} />
       </div>
       <HamburgerMenu className="absolute right-4 top-4">
         <MenuItem
+          icon="tabler:brand-youtube"
+          namespace="modules.youtubeVideos"
+          text="Watch on Youtube"
           onClick={() => {
             window.open(`https://www.youtube.com/watch?v=${video.youtube_id}`)
           }}
-          text="Watch on Youtube"
-          icon="tabler:brand-youtube"
-          namespace="modules.youtubeVideos"
         />
         <MenuItem
+          isRed
+          icon="tabler:trash"
+          text="Delete"
           onClick={() => {
             setVideoToDelete(video)
             setIsConfirmDeleteModalOpen(true)
           }}
-          text="Delete"
-          icon="tabler:trash"
-          isRed
         />
       </HamburgerMenu>
     </a>

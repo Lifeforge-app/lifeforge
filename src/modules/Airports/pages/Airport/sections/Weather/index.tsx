@@ -95,8 +95,8 @@ function Weather(): React.ReactElement {
           <div className="my-8 w-full">
             <EmptyStateScreen
               icon="tabler:cloud-off"
-              namespace="modules.airports"
               name="METAR"
+              namespace="modules.airports"
             />
           </div>
         )

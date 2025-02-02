@@ -20,7 +20,7 @@ function SidebarHeader({
         }`}
       >
         <h1 className="ml-1 flex shrink-0 items-center gap-2 whitespace-nowrap text-xl font-semibold">
-          <Icon icon="tabler:hammer" className="text-3xl text-custom-500" />
+          <Icon className="text-3xl text-custom-500" icon="tabler:hammer" />
           {sidebarExpanded && (
             <div>
               LifeForge<span className="text-2xl text-custom-500">.</span>
@@ -29,22 +29,22 @@ function SidebarHeader({
         </h1>
         {sidebarExpanded && (
           <button
-            onClick={toggleSidebar}
             className="p-6 text-bg-500 transition-all hover:text-bg-800 dark:hover:text-bg-50"
+            onClick={toggleSidebar}
           >
-            <Icon icon="tabler:menu" className="text-2xl" />
+            <Icon className="text-2xl" icon="tabler:menu" />
           </button>
         )}
       </div>
       {sidebarExpanded && (
         <div className="px-4">
           <SearchInput
+            className="mb-4"
+            hasTopMargin={false}
+            namespace="common.sidebar"
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             stuffToSearch="module"
-            namespace="common.sidebar"
-            hasTopMargin={false}
-            className="mb-4"
           />
         </div>
       )}

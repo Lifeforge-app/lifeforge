@@ -57,7 +57,7 @@ function JournalViewModal({
   }, [id, isOpen])
 
   return (
-    <ModalWrapper isOpen={isOpen} className="md:min-w-[60rem]!">
+    <ModalWrapper className="md:min-w-[60rem]!" isOpen={isOpen}>
       <ModalHeader
         icon="tabler:eye"
         title="View Journal Entry"
@@ -66,10 +66,9 @@ function JournalViewModal({
       <APIFallbackComponent data={entry}>
         {entry => (
           <JournalView
-            date={entry.date}
-            title={entry.title}
-            mood={entry.mood}
             cleanedUpText={entry.content}
+            date={entry.date}
+            mood={entry.mood}
             photos={entry.photos.map(
               photo =>
                 `${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
@@ -78,6 +77,7 @@ function JournalViewModal({
             )}
             rawText={entry.raw}
             summarizedText={entry.summary}
+            title={entry.title}
           />
         )}
       </APIFallbackComponent>

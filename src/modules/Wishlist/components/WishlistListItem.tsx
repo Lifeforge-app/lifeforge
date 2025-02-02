@@ -20,8 +20,8 @@ function WishlistListItem({
 
   return (
     <Link
-      to={`/wishlist/${list.id}`}
       className={`group relative flex w-full flex-col gap-6 rounded-md p-4 ${componentBgWithHover}`}
+      to={`/wishlist/${list.id}`}
     >
       <div
         className="w-min rounded-md p-4"
@@ -30,7 +30,7 @@ function WishlistListItem({
           color: list.color
         }}
       >
-        <Icon icon={list.icon} className="size-8" />
+        <Icon className="size-8" icon={list.icon} />
       </div>
       <div className="w-full min-w-0 flex-1 space-y-2">
         <h2 className="truncate text-2xl font-semibold">{list.name}</h2>
@@ -43,12 +43,12 @@ function WishlistListItem({
         </div>
         <progress
           className="progress h-2 w-full rounded-lg bg-bg-200 dark:bg-bg-700"
+          max="100"
           value={
             list.bought_count !== 0
               ? (list.bought_count / list.item_count) * 100
               : 0
           }
-          max="100"
         ></progress>
         <div className="flex-between text-sm text-bg-500">
           <p>
@@ -62,7 +62,7 @@ function WishlistListItem({
       </div>
       <HamburgerMenu className="absolute right-4 top-4">
         <MenuItem icon="tabler:pencil" text="Edit" onClick={onEdit} />
-        <MenuItem icon="tabler:trash" text="Delete" onClick={onDelete} isRed />
+        <MenuItem isRed icon="tabler:trash" text="Delete" onClick={onDelete} />
       </HamburgerMenu>
     </Link>
   )

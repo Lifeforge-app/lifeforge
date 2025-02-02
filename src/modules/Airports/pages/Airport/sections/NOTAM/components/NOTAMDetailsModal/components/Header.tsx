@@ -11,7 +11,7 @@ function Header({
   return (
     <div className="flex-between flex w-full">
       <h1 className="flex items-center gap-2 text-2xl font-semibold">
-        <Icon icon="tabler:file-text" className="size-7" />
+        <Icon className="size-7" icon="tabler:file-text" />
         {data.header?.id ?? selectedNOTAMData.title[1]}
       </h1>
       <span

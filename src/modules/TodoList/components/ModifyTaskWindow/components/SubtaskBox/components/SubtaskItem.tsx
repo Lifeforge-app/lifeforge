@@ -103,19 +103,19 @@ function SubtaskItem({
   return (
     <div
       ref={ref}
+      className="flex-between flex cursor-move gap-2 rounded-md bg-bg-100 p-3 shadow-custom dark:bg-bg-800"
+      data-handler-id={handlerId}
       style={{
         opacity
       }}
-      data-handler-id={handlerId}
-      className="flex-between flex cursor-move gap-2 rounded-md bg-bg-100 p-3 shadow-custom dark:bg-bg-800"
     >
       <div className="flex items-center gap-2">
-        <Icon icon="tabler:menu" className="size-5 shrink-0 text-bg-500" />
+        <Icon className="size-5 shrink-0 text-bg-500" icon="tabler:menu" />
         {isEditing ? (
           <input
             ref={editInputRef}
-            type="text"
             className="bg-transparent"
+            type="text"
             value={subtask.title}
             onBlur={e => {
               setIsEditing(false)
@@ -153,9 +153,9 @@ function SubtaskItem({
           }}
         />
         <MenuItem
+          isRed
           icon="tabler:trash"
           text="Delete"
-          isRed
           onClick={() => {
             setSubtasks(subtasks.filter(task => task.id !== subtask.id))
           }}

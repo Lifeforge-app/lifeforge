@@ -27,27 +27,27 @@ function Auth(): React.ReactElement {
         </div>
         <div className="mt-8 flex flex-col items-center justify-center gap-2">
           <div className="flex items-center gap-2 text-bg-500">
-            <Icon icon="tabler:creative-commons" className="size-6" />
-            <Icon icon="tabler:creative-commons-by" className="size-6" />
-            <Icon icon="tabler:creative-commons-nc" className="size-6" />
-            <Icon icon="tabler:creative-commons-sa" className="size-6" />
+            <Icon className="size-6" icon="tabler:creative-commons" />
+            <Icon className="size-6" icon="tabler:creative-commons-by" />
+            <Icon className="size-6" icon="tabler:creative-commons-nc" />
+            <Icon className="size-6" icon="tabler:creative-commons-sa" />
           </div>
           <p className="text-center text-sm text-bg-500">
             A project by{' '}
             <a
               className="text-custom-500 underline"
-              target="_blank"
               href="https://thecodeblog.net"
               rel="noreferrer"
+              target="_blank"
             >
               Melvin Chia
             </a>{' '}
             licensed under{' '}
             <a
               className="text-custom-500 underline"
-              target="_blank"
               href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
               rel="noreferrer"
+              target="_blank"
             >
               CC BY-NC-SA 4.0
             </a>

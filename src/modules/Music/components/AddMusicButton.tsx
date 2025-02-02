@@ -81,10 +81,10 @@ function AddMusicButton(): React.ReactElement {
   return (
     <Menu as="div" className="relative z-50 hidden md:block">
       <Button
-        onClick={() => {}}
         as={MenuButton}
         icon="tabler:plus"
         tProps={{ item: t('items.music') }}
+        onClick={() => {}}
       >
         new
       </Button>
@@ -94,19 +94,19 @@ function AddMusicButton(): React.ReactElement {
         className="mt-2 w-64 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
       >
         <MenuItem
-          onClick={importMusic}
           icon={loading ? 'svg-spinners:180-ring' : 'uil:import'}
-          text="Import from NAS"
           namespace="modules.music"
+          text="Import from NAS"
+          onClick={importMusic}
         />
         <div className="w-full border-b border-bg-300 dark:border-bg-700" />
         <MenuItem
+          icon="tabler:brand-youtube"
+          namespace="modules.music"
+          text="Download from YouTube"
           onClick={() => {
             setIsYoutubeDownloaderOpen(true)
           }}
-          icon="tabler:brand-youtube"
-          text="Download from YouTube"
-          namespace="modules.music"
         />
       </MenuItems>
     </Menu>

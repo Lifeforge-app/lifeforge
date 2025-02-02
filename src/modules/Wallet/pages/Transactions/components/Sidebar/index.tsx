@@ -30,9 +30,9 @@ function Sidebar({
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
       <SidebarItem
+        active={searchParams.entries().next().done === true}
         icon="tabler:list"
         name={t('sidebar.allTransactions')}
-        active={searchParams.entries().next().done === true}
         onClick={() => {
           setSearchParams(new URLSearchParams())
           setSidebarOpen(false)

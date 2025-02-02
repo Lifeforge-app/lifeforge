@@ -79,16 +79,16 @@ function AddPhotosToAlbumModal(): React.ReactElement {
         {() => (
           <>
             <ModalHeader
+              actionButtonIcon="tabler:plus"
               icon="tabler:photo-plus"
               title={t('modals.header.addPhotosToAlbum', {
                 amount: selectedPhotos.length
               })}
-              onClose={() => {
-                setOpen(false)
-              }}
-              actionButtonIcon="tabler:plus"
               onActionButtonClick={() => {
                 setModifyAlbumModalOpenType('create')
+              }}
+              onClose={() => {
+                setOpen(false)
               }}
             />
             <ul className="relative w-full">
@@ -101,28 +101,28 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                         className="relative flex items-center gap-6 font-medium text-bg-500 transition-all"
                       >
                         <button
-                          onClick={() => {
-                            selectAlbum(album.id)
-                          }}
                           className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all ${
                             selectedAlbum === album.id
                               ? 'bg-bg-300 dark:bg-bg-800'
                               : 'hover:bg-bg-200 dark:hover:bg-bg-800/50'
                           }`}
+                          onClick={() => {
+                            selectAlbum(album.id)
+                          }}
                         >
                           <div className="flex-center size-10 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
                             {album.cover !== '' ? (
                               <img
+                                alt=""
+                                className="size-full rounded-md object-cover"
                                 src={`${import.meta.env.VITE_API_HOST}/media/${
                                   album.cover
                                 }?thumb=0x300`}
-                                alt=""
-                                className="size-full rounded-md object-cover"
                               />
                             ) : (
                               <Icon
-                                icon="tabler:library-photo"
                                 className="size-5 text-bg-500 dark:text-bg-500"
+                                icon="tabler:library-photo"
                               />
                             )}
                           </div>
@@ -131,8 +131,8 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                           </div>
                           {selectedAlbum === album.id ? (
                             <Icon
-                              icon="tabler:check"
                               className="size-6 text-bg-800 dark:text-custom-500!"
+                              icon="tabler:check"
                             />
                           ) : (
                             <span className="text-sm text-bg-500">
@@ -150,13 +150,13 @@ function AddPhotosToAlbumModal(): React.ReactElement {
               )}
             </ul>
             <Button
+              className="mt-6"
+              disabled={selectedAlbum === '' || loading}
+              icon="tabler:photo-plus"
+              loading={loading}
               onClick={() => {
                 onSubmitButtonClick().catch(console.error)
               }}
-              disabled={selectedAlbum === '' || loading}
-              loading={loading}
-              className="mt-6"
-              icon="tabler:photo-plus"
             >
               {!loading ? 'Add to album' : ''}
             </Button>

@@ -57,17 +57,17 @@ function ColorPickerModal({
 
   return (
     <>
-      <ModalWrapper isOpen={isOpen} className="sm:min-w-[28rem]!">
+      <ModalWrapper className="sm:min-w-[28rem]!" isOpen={isOpen}>
         <ModalHeader
-          title="Pick a color"
           icon="tabler:color-picker"
+          title="Pick a color"
           onClose={handleClose}
         />
         <Colorful
-          color={innerColor}
-          onChange={handleColorChange}
           disableAlpha
           className="w-full!"
+          color={innerColor}
+          onChange={handleColorChange}
         />
         <style
           dangerouslySetInnerHTML={{
@@ -78,50 +78,50 @@ function ColorPickerModal({
           }}
         />
         <EditableInput
+          className="mt-4 border-0 p-4 text-2xl font-semibold"
           label="Hex"
           value={innerColor}
           onChange={handleInputChange}
-          className="mt-4 border-0 p-4 text-2xl font-semibold"
         />
         <Button
-          variant="secondary"
+          className="mb-2"
           icon="tabler:flower"
+          variant="secondary"
           onClick={() => {
             setMorandiColorPaletteModalOpen(true)
           }}
-          className="mb-2"
         >
           Morandi Color Palette
         </Button>
         <Button
-          variant="primary"
+          className="mb-2 bg-teal-500! hover:bg-teal-600!"
           icon="tabler:brand-tailwind"
+          variant="primary"
           onClick={() => {
             setTailwindCSSColorsModalOpen(true)
           }}
-          className="mb-2 bg-teal-500! hover:bg-teal-600!"
         >
           Tailwind CSS Color Palette
         </Button>
-        <Button onClick={confirmColor} icon="tabler:check">
+        <Button icon="tabler:check" onClick={confirmColor}>
           Select
         </Button>
       </ModalWrapper>
       <MorandiColorPaletteModal
+        color={innerColor}
         isOpen={morandiColorPaletteModalOpen}
+        setColor={setInnerColor}
         onClose={() => {
           setMorandiColorPaletteModalOpen(false)
         }}
-        color={innerColor}
-        setColor={setInnerColor}
       />
       <TailwindCSSColorsModal
+        color={innerColor}
         isOpen={tailwindCSSColorsModalOpen}
+        setColor={setInnerColor}
         onClose={() => {
           setTailwindCSSColorsModalOpen(false)
         }}
-        color={innerColor}
-        setColor={setInnerColor}
       />
     </>
   )

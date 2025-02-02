@@ -140,10 +140,10 @@ function ModifyItemModal({
     <>
       <ModalWrapper isOpen={openType !== null} minWidth="50vw">
         <ModalHeader
-          title={`item.${openType}`}
-          namespace="modules.virtualWardrobe"
-          onClose={onClose}
           icon="tabler:plus"
+          namespace="modules.virtualWardrobe"
+          title={`item.${openType}`}
+          onClose={onClose}
         />
         <ol className="flex w-full items-center text-sm font-medium text-bg-500 sm:text-base">
           {['Upload Photos', 'Basic Info', 'Appearance And Details'].map(
@@ -176,7 +176,7 @@ function ModifyItemModal({
                     })()}`}
                   >
                     {openType === 'update' && index === 0 ? (
-                      <Icon icon="tabler:lock" className="size-5" />
+                      <Icon className="size-5" icon="tabler:lock" />
                     ) : (
                       index + 1
                     )}
@@ -192,55 +192,55 @@ function ModifyItemModal({
             case 1:
               return (
                 <UploadPhotoSection
-                  step={step}
-                  setStep={setStep}
-                  frontImage={frontImage}
-                  setFrontImage={setFrontImage}
                   backImage={backImage}
-                  setBackImage={setBackImage}
-                  frontPreview={frontPreview}
-                  setFrontPreview={setFrontPreview}
                   backPreview={backPreview}
+                  frontImage={frontImage}
+                  frontPreview={frontPreview}
+                  setBackImage={setBackImage}
                   setBackPreview={setBackPreview}
+                  setFrontImage={setFrontImage}
+                  setFrontPreview={setFrontPreview}
                   setOpenImagePickerFor={setOpenImagePickerFor}
+                  setStep={setStep}
+                  step={step}
                 />
               )
             case 2:
               return (
                 <BasicInfoSection
-                  canVision={openType === 'create'}
-                  frontImage={frontImage}
                   backImage={backImage}
-                  step={step}
-                  setStep={setStep}
-                  name={name}
-                  setName={setName}
-                  category={category}
-                  setCategory={setCategory}
-                  subCategory={subCategory}
-                  setSubCategory={setSubCategory}
                   brand={brand}
-                  setBrand={setBrand}
-                  setColors={setColors}
                   canGoBack={openType === 'create'}
+                  canVision={openType === 'create'}
+                  category={category}
+                  frontImage={frontImage}
+                  name={name}
+                  setBrand={setBrand}
+                  setCategory={setCategory}
+                  setColors={setColors}
+                  setName={setName}
+                  setStep={setStep}
+                  setSubCategory={setSubCategory}
+                  step={step}
+                  subCategory={subCategory}
                 />
               )
             case 3:
               return (
                 <AdditionalInfoSection
-                  step={step}
+                  colors={colors}
+                  notes={notes}
+                  openType={openType}
+                  price={price}
+                  setColors={setColors}
+                  setNotes={setNotes}
+                  setPrice={setPrice}
+                  setSize={setSize}
                   setStep={setStep}
                   size={size}
-                  setSize={setSize}
-                  colors={colors}
-                  setColors={setColors}
-                  price={price}
-                  setPrice={setPrice}
-                  notes={notes}
-                  setNotes={setNotes}
+                  step={step}
                   submitButtonLoading={submitButtonLoading}
                   onSubmitButtonClick={onSubmit}
-                  openType={openType}
                 />
               )
             default:

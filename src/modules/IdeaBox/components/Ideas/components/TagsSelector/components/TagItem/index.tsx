@@ -31,34 +31,34 @@ function TagItem({
 
   return (
     <div
-      role="button"
-      tabIndex={0}
       key={tag.id}
+      className={`group inline-flex cursor-pointer items-center gap-2 rounded-full px-3 py-1 transition-all ${tagColor}`}
+      role="button"
+      style={{
+        backgroundColor: selectedTags.includes(tag.name) ? tag.color : ''
+      }}
+      tabIndex={0}
+      onClick={() => {
+        onSelect(tag.name)
+      }}
       onKeyDown={e => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault()
           onSelect(tag.name)
         }
       }}
-      onClick={() => {
-        onSelect(tag.name)
-      }}
-      className={`group inline-flex cursor-pointer items-center gap-2 rounded-full px-3 py-1 transition-all ${tagColor}`}
-      style={{
-        backgroundColor: selectedTags.includes(tag.name) ? tag.color : ''
-      }}
     >
       {tag.icon !== '' && (
         <Icon
-          icon={tag.icon}
           className="size-3 shrink-0"
+          icon={tag.icon}
           style={{
             color: !selectedTags.includes(tag.name) ? tag.color : ''
           }}
         />
       )}
       <span className="shrink-0 text-sm">{tag.name}</span>
-      <ItemCount tag={tag} count={countHashMap.get(tag.name) ?? 0} />
+      <ItemCount count={countHashMap.get(tag.name) ?? 0} tag={tag} />
       <HamburgerButton tag={tag} />
     </div>
   )

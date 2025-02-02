@@ -31,10 +31,11 @@ function UploadPhotoSection({
     <>
       <div className="mt-6 flex gap-4">
         <ImageAndFileInput
-          namespace="modules.virtualWardrobe"
+          required
           icon="tabler:shirt-sport"
           image={frontImage}
           name="Front Image"
+          namespace="modules.virtualWardrobe"
           preview={frontPreview}
           setImage={setFrontImage as (value: File | null | string) => void}
           setImagePickerModalOpen={() => {
@@ -45,13 +46,13 @@ function UploadPhotoSection({
             setFrontImage(null)
             setFrontPreview(null)
           }}
-          required
         />
         <ImageAndFileInput
-          namespace="modules.virtualWardrobe"
+          required
           icon="tabler:shirt"
           image={backImage}
           name="Back Image"
+          namespace="modules.virtualWardrobe"
           preview={backPreview}
           setImage={setBackImage as (value: File | null | string) => void}
           setImagePickerModalOpen={() => {
@@ -62,18 +63,17 @@ function UploadPhotoSection({
             setBackImage(null)
             setBackPreview(null)
           }}
-          required
         />
       </div>
       <div className="mt-6 flex justify-between">
         <Button
+          iconAtEnd
           className="mt-6 w-full"
+          disabled={frontImage === null || backImage === null}
+          icon="tabler:arrow-right"
           onClick={() => {
             setStep(step + 1)
           }}
-          disabled={frontImage === null || backImage === null}
-          icon="tabler:arrow-right"
-          iconAtEnd
         >
           Next
         </Button>

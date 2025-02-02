@@ -10,10 +10,10 @@ function ThemeSelector(): React.ReactElement {
 
   return (
     <ConfigColumn
-      title={t('themeSelector.title')}
+      vertical
       desc={t('themeSelector.desc')}
       icon="tabler:palette"
-      vertical
+      title={t('themeSelector.title')}
     >
       <div className="mt-4 flex w-full flex-col gap-8 px-2 md:flex-row">
         {[
@@ -35,24 +35,24 @@ function ThemeSelector(): React.ReactElement {
         ].map(({ id, name, Image }) => (
           <div key={id} className="flex flex-col items-center gap-2">
             <button
-              type="button"
-              onClick={() => {
-                setTheme(id as 'system' | 'light' | 'dark')
-              }}
               className={`flex-1 rounded-lg border-2 lg:rounded-xl  ${
                 theme === id
                   ? 'border-custom-500'
                   : 'border-bg-200 hover:border-bg-500 dark:border-bg-700 dark:hover:border-bg-500'
               }`}
+              type="button"
+              onClick={() => {
+                setTheme(id as 'system' | 'light' | 'dark')
+              }}
             >
               <div className="relative rounded-lg p-2 lg:rounded-2xl">
                 {theme === id && (
                   <Icon
-                    icon="tabler:circle-check-filled"
                     className="absolute bottom-2 right-2.5 block size-6 text-xl text-custom-500"
+                    icon="tabler:circle-check-filled"
                   />
                 )}
-                <img src={Image} alt={id} className="w-full rounded-lg" />
+                <img alt={id} className="w-full rounded-lg" src={Image} />
               </div>
             </button>
             <p

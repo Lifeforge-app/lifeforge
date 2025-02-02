@@ -26,11 +26,11 @@ function Directory({
           <EntryItem
             key={entry.id}
             entry={entry}
-            setModifyFolderModalOpenType={setModifyFolderModalOpenType}
-            setExistedData={setExistedData}
             setDeleteFolderConfirmationModalOpen={
               setDeleteFolderConfirmationModalOpen
             }
+            setExistedData={setExistedData}
+            setModifyFolderModalOpenType={setModifyFolderModalOpenType}
           />
         ))}
     </ul>

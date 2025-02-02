@@ -15,7 +15,7 @@ function MailAttachments({
   return (
     <div className="mt-6">
       <h3 className="flex items-center gap-2">
-        <Icon icon="tabler:paperclip" className="size-5" />
+        <Icon className="size-5" icon="tabler:paperclip" />
         <span className="text-lg font-medium">Attachments</span>
         <span className="text-sm text-bg-500">
           ({mail.attachments?.length})
@@ -41,14 +41,15 @@ function MailAttachments({
                 attachment.file.split('.').pop()?.toLowerCase() || ''
               ) ? (
                 <img
+                  alt={attachment.name}
+                  className="size-full object-contain object-center"
                   src={`${import.meta.env.VITE_API_HOST}/media/${
                     attachment.file
                   }`}
-                  alt={attachment.name}
-                  className="size-full object-contain object-center"
                 />
               ) : (
                 <Icon
+                  className="size-12 text-bg-300 dark:text-bg-700"
                   icon={(() => {
                     const ext = attachment.file.split('.').pop()?.toLowerCase()
 
@@ -61,7 +62,6 @@ function MailAttachments({
                       'tabler:file'
                     )
                   })()}
-                  className="size-12 text-bg-300 dark:text-bg-700"
                 />
               )}
             </div>

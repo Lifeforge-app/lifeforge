@@ -38,25 +38,25 @@ function MailInbox(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
-        icon="tabler:mail"
-        title="Mail Inbox"
         actionButton={
           <Button
             icon="tabler:pencil"
+            namespace="modules.mailInbox"
             onClick={() => {
               console.log('Compose mail')
             }}
-            namespace="modules.mailInbox"
           >
             Compose
           </Button>
         }
+        icon="tabler:mail"
+        title="Mail Inbox"
       />
       <SidebarAndContentWrapper>
         <Sidebar
+          allMailsCount={typeof mails === 'string' ? 0 : mails.totalItems}
           isOpen={sidebarOpen}
           setOpen={setSidebarOpen}
-          allMailsCount={typeof mails === 'string' ? 0 : mails.totalItems}
         />
         <ContentWrapperWithSidebar>
           <header className="flex-between flex w-full">
@@ -85,27 +85,27 @@ function MailInbox(): React.ReactElement {
             </div>
 
             <button
+              className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
               onClick={() => {
                 setSidebarOpen(true)
               }}
-              className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
             >
-              <Icon icon="tabler:menu" className="text-2xl" />
+              <Icon className="text-2xl" icon="tabler:menu" />
             </button>
           </header>
           <SearchInput
+            namespace="modules.mailInbox"
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             stuffToSearch="mail"
-            namespace="modules.mailInbox"
           />
           <div className="mt-6 flex-1">
             <APIFallbackComponent data={mails}>
               {mails => (
                 <Scrollbar>
                   <Pagination
-                    totalPages={mails.totalPages}
                     currentPage={page}
+                    totalPages={mails.totalPages}
                     onPageChange={setPage}
                   />
                   <div className="my-4">
@@ -120,10 +120,10 @@ function MailInbox(): React.ReactElement {
                     ))}
                   </div>
                   <Pagination
-                    totalPages={mails.totalPages}
-                    currentPage={page}
-                    onPageChange={setPage}
                     className="mb-6"
+                    currentPage={page}
+                    totalPages={mails.totalPages}
+                    onPageChange={setPage}
                   />
                 </Scrollbar>
               )}

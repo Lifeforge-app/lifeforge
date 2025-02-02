@@ -31,7 +31,7 @@ function ListView({
               {value.ETA}s
             </div>
             <div className="flex-center aspect-9/12 w-20 rounded-lg bg-bg-200 p-2 dark:bg-bg-800">
-              <Icon icon="tabler:clock" className="size-8 text-bg-500" />
+              <Icon className="size-8 text-bg-500" icon="tabler:clock" />
             </div>
             <div className="flex min-w-0 flex-1 flex-col">
               <div className="flex items-center gap-1 text-sm font-medium text-bg-500">
@@ -44,8 +44,8 @@ function ListView({
                     return category !== undefined ? (
                       <>
                         <Icon
-                          icon={category.icon}
                           className="size-4 text-bg-500"
+                          icon={category.icon}
                         />{' '}
                         {category.name}
                       </>

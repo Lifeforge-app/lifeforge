@@ -20,11 +20,11 @@ function GridView({
       {entries.map(entry => (
         <EntryItem
           key={entry.id}
-          refreshEntries={refreshEntries}
           entry={entry}
+          refreshEntries={refreshEntries}
+          setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
           setExistingEntry={setExistingEntry}
           setModifyEntryModalOpen={setModifyEntryModalOpen}
-          setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
         />
       ))}
     </div>

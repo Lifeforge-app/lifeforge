@@ -14,17 +14,17 @@ function CategoryColumn({
     <td className="p-2 text-center">
       {category !== '' ? (
         <Link
-          to={`/wallet/transactions?category=${category}`}
           className="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm"
           style={{
             backgroundColor:
               categories.find(c => c.id === category)?.color + '20',
             color: categories.find(c => c.id === category)?.color
           }}
+          to={`/wallet/transactions?category=${category}`}
         >
           <Icon
-            icon={categories.find(c => c.id === category)?.icon ?? ''}
             className="size-4"
+            icon={categories.find(c => c.id === category)?.icon ?? ''}
           />
           {categories.find(c => c.id === category)?.name}
         </Link>

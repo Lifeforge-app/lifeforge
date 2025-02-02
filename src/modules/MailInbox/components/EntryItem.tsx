@@ -16,6 +16,7 @@ function EntryItem({
   return (
     <div
       key={mail.id}
+      className="flex-between cursor-pointer flex w-full gap-12 border-b border-bg-200 p-4 text-left transition-all hover:bg-bg-200/50 dark:border-bg-800/50 dark:hover:bg-bg-800/50"
       role="button"
       tabIndex={0}
       onClick={() => onView(mail.id)}
@@ -24,7 +25,6 @@ function EntryItem({
           onView(mail.id)
         }
       }}
-      className="flex-between cursor-pointer flex w-full gap-12 border-b border-bg-200 p-4 text-left transition-all hover:bg-bg-200/50 dark:border-bg-800/50 dark:hover:bg-bg-800/50"
     >
       <div className="w-full min-w-0">
         <span className="block text-sm text-bg-500">
@@ -63,26 +63,26 @@ function EntryItem({
       </div>
       <div className="flex shrink-0 items-center gap-2">
         {mail.attachments?.length > 0 && (
-          <Icon icon="tabler:paperclip" className="size-4 text-bg-500" />
+          <Icon className="size-4 text-bg-500" icon="tabler:paperclip" />
         )}
         <span className="mr-2 text-sm text-bg-500">
           {moment(mail.date).fromNow()}
         </span>
         <Button
-          variant="no-bg"
+          className="p-2!"
           icon="tabler:star"
+          variant="no-bg"
           onClick={e => {
             e.stopPropagation()
           }}
-          className="p-2!"
         />
         <HamburgerMenu>
           <MenuItem
             icon="tabler:archive"
+            text="Archive"
             onClick={e => {
               e.stopPropagation()
             }}
-            text="Archive"
           />
         </HamburgerMenu>
       </div>

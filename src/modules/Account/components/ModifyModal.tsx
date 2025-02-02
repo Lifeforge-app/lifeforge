@@ -64,18 +64,18 @@ function ModifyModal({
   }
 
   return (
-    <ModalWrapper modalRef={modalRef} isOpen={isOpen} minWidth="30rem">
+    <ModalWrapper isOpen={isOpen} minWidth="30rem" modalRef={modalRef}>
       <ModalHeader
-        title={`${toCamelCase(title)}.update`}
-        namespace="modules.accountSettings"
-        onClose={onClose}
         icon="tabler:pencil"
+        namespace="modules.accountSettings"
+        title={`${toCamelCase(title)}.update`}
+        onClose={onClose}
       />
       {type !== 'date' ? (
         <TextInput
-          namespace="modules.accountSettings"
           icon={icon}
           name={title}
+          namespace="modules.accountSettings"
           placeholder={`Enter new ${title}`}
           updateValue={setValue}
           value={value}
@@ -87,22 +87,22 @@ function ModifyModal({
         />
       ) : (
         <DateInput
-          namespace="modules.accountSettings"
-          modalRef={modalRef}
-          icon={icon}
-          name={title}
-          date={value}
-          setDate={setValue}
           darker
+          date={value}
+          icon={icon}
+          modalRef={modalRef}
+          name={title}
+          namespace="modules.accountSettings"
+          setDate={setValue}
         />
       )}
       <Button
+        className="mt-6"
+        icon="tabler:pencil"
+        loading={loading}
         onClick={() => {
           onSubmit().catch(console.error)
         }}
-        loading={loading}
-        icon="tabler:pencil"
-        className="mt-6"
       >
         Update
       </Button>

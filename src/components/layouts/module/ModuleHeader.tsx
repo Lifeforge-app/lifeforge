@@ -38,15 +38,15 @@ function ModuleHeader({
       <div className="flex w-full min-w-0 items-center gap-2">
         {!sidebarExpanded && (
           <Button
-            variant="no-bg"
             className="flex sm:hidden"
-            onClick={toggleSidebar}
             icon="tabler:menu"
+            variant="no-bg"
+            onClick={toggleSidebar}
           />
         )}
         {icon !== undefined && (
           <div className="hidden size-14 shrink-0 items-center justify-center rounded-lg bg-custom-500/20 sm:flex sm:size-16">
-            <Icon icon={icon} className="size-6 text-custom-500 sm:size-8" />
+            <Icon className="size-6 text-custom-500 sm:size-8" icon={icon} />
           </div>
         )}
         <div className="w-full min-w-0 sm:space-y-1">
@@ -69,7 +69,7 @@ function ModuleHeader({
           <div className="relative hidden md:block">
             <Menu as="div" className="relative z-50">
               <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-50">
-                <Icon icon="tabler:question-circle" className="size-5" />
+                <Icon className="size-5" icon="tabler:question-circle" />
               </MenuButton>
               <MenuItems
                 transition
@@ -77,7 +77,7 @@ function ModuleHeader({
                 className="w-96 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
               >
                 <div className="flex items-center gap-2 p-4 text-bg-800 dark:border-bg-700 dark:text-bg-200">
-                  <Icon icon="tabler:question-circle" className="size-6" />
+                  <Icon className="size-6" icon="tabler:question-circle" />
                   <h2 className="text-lg font-semibold">
                     {t('common.misc:tipsAndTricks')}
                   </h2>
@@ -94,7 +94,7 @@ function ModuleHeader({
             className={`relative z-50 overscroll-contain ${hamburgerMenuClassName}`}
           >
             <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-50">
-              <Icon icon="tabler:dots-vertical" className="size-5" />
+              <Icon className="size-5" icon="tabler:dots-vertical" />
             </MenuButton>
             <MenuItems
               transition

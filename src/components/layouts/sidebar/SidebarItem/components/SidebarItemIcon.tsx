@@ -14,8 +14,8 @@ function SidebarItemIcon({
         <>
           {typeof icon === 'string' ? (
             <Icon
-              icon={icon}
               className={`size-6 shrink-0 ${active ? 'text-custom-500' : ''}`}
+              icon={icon}
             />
           ) : (
             icon

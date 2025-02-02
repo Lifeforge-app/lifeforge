@@ -66,11 +66,11 @@ function MiniCalendarContent({
             return (
               <MiniCalendarDateItem
                 key={index}
-                index={index}
                 actualIndex={actualIndex}
-                firstDay={firstDay}
-                lastDate={lastDate}
                 date={date}
+                firstDay={firstDay}
+                index={index}
+                lastDate={lastDate}
                 nextToSelect={nextToSelect}
                 setNextToSelect={setNextToSelect}
               />

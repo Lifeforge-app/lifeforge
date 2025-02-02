@@ -11,17 +11,17 @@ function ThumbnailAndHashes({
     <aside className="flex-center top-0 h-full flex-col md:sticky">
       {data.image !== '../img/blank.png' ? (
         <img
+          alt=""
+          className="size-full max-w-64 object-contain"
+          referrerPolicy="no-referrer"
           src={`${import.meta.env.VITE_API_HOST}/books-library/libgen${
             data.image
           }`}
-          className="size-full max-w-64 object-contain"
-          referrerPolicy="no-referrer"
-          alt=""
         />
       ) : (
         <Icon
-          icon="iconamoon:file-document-light"
           className="h-full w-64 text-bg-400 dark:text-bg-600"
+          icon="iconamoon:file-document-light"
         />
       )}
       <h2 className="mb-2 mt-4 hidden w-full text-left font-medium md:block">

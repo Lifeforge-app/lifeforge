@@ -61,11 +61,11 @@ function APIKeys(): React.ReactElement {
     if (!otpSuccess) {
       return (
         <OTPScreen
-          verificationEndpoint="api-keys/auth/otp"
           callback={() => {
             setOtpSuccess(true)
           }}
           fetchChallenge={fetchChallenge}
+          verificationEndpoint="api-keys/auth/otp"
         />
       )
     }
@@ -83,8 +83,8 @@ function APIKeys(): React.ReactElement {
       return (
         <LockedScreen
           endpoint="api-keys/auth/verify"
-          setMasterPassword={setMasterPassword}
           fetchChallenge={fetchChallenge}
+          setMasterPassword={setMasterPassword}
         />
       )
     }
@@ -100,11 +100,11 @@ function APIKeys(): React.ReactElement {
                     key={entry.id}
                     entry={entry}
                     hasDivider={idx !== entries.length - 1}
-                    setExistingData={setExistingData}
-                    setModifyAPIKeyModalOpenType={setModifyAPIKeyModalOpenType}
                     setDeleteConfirmationModalOpen={
                       setDeleteConfirmationModalOpen
                     }
+                    setExistingData={setExistingData}
+                    setModifyAPIKeyModalOpenType={setModifyAPIKeyModalOpenType}
                   />
                 ))}
               </>
@@ -112,25 +112,25 @@ function APIKeys(): React.ReactElement {
           </APIFallbackComponent>
         </div>
         <ModifyAPIKeyModal
-          openType={modifyAPIKeyModalOpenType}
-          masterPassword={masterPassword}
           existingData={existingData}
+          masterPassword={masterPassword}
+          openType={modifyAPIKeyModalOpenType}
           onClose={() => {
             setModifyAPIKeyModalOpenType(null)
             fetchData().catch(console.error)
           }}
         />
         <DeleteConfirmationModal
-          isOpen={deleteConfirmationModalOpen}
-          onClose={() => {
-            setDeleteConfirmationModalOpen(false)
-          }}
           apiEndpoint="api-keys"
           data={existingData}
+          isOpen={deleteConfirmationModalOpen}
           itemName="API Key"
           nameKey="name"
           updateDataLists={() => {
             fetchData().catch(console.error)
+          }}
+          onClose={() => {
+            setDeleteConfirmationModalOpen(false)
           }}
         />
       </>
@@ -141,25 +141,25 @@ function APIKeys(): React.ReactElement {
     <ModuleWrapper>
       <div className="flex-between flex">
         <ModuleHeader
-          icon="tabler:password"
-          title="API Keys"
           actionButton={
             otpSuccess &&
             masterPassword !== '' && (
               <Button
-                icon="tabler:plus"
                 className="hidden lg:flex"
-                onClick={() => {
-                  setModifyAPIKeyModalOpenType('create')
-                }}
+                icon="tabler:plus"
                 tProps={{
                   item: t('items.apiKey')
+                }}
+                onClick={() => {
+                  setModifyAPIKeyModalOpenType('create')
                 }}
               >
                 new
               </Button>
             )
           }
+          icon="tabler:password"
+          title="API Keys"
         />
       </div>
       {renderContent()}

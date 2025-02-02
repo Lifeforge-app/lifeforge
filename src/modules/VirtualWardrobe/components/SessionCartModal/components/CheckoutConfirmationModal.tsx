@@ -33,14 +33,17 @@ function CheckoutConfirmationModal({
       </div>
       <div className="mt-6 flex w-full flex-col-reverse justify-around gap-2 sm:flex-row">
         <Button
-          onClick={onClose}
+          className="w-full"
           icon=""
           variant="secondary"
-          className="w-full"
+          onClick={onClose}
         >
           Cancel
         </Button>
         <Button
+          iconAtEnd
+          className="w-full"
+          icon="tabler:arrow-right"
           loading={loading}
           onClick={() => {
             setLoading(true)
@@ -51,9 +54,6 @@ function CheckoutConfirmationModal({
                 onClose()
               })
           }}
-          icon="tabler:arrow-right"
-          iconAtEnd
-          className="w-full"
         >
           Checkout
         </Button>

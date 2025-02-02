@@ -26,14 +26,14 @@ function ModalsSection() {
       <CreatePasswordModal />
       <DeleteConfirmationModal
         apiEndpoint="passwords/password"
+        customText={`Are you sure you want to delete the password for ${existedData?.name}? This action is irreversible.`}
         data={existedData}
         isOpen={isDeletePasswordConfirmationModalOpen}
         itemName="password"
+        updateDataLists={refreshPasswordList}
         onClose={() => {
           setIsDeletePasswordConfirmationModalOpen(false)
         }}
-        updateDataLists={refreshPasswordList}
-        customText={`Are you sure you want to delete the password for ${existedData?.name}? This action is irreversible.`}
       />
     </>
   )
@@ -56,11 +56,11 @@ function Passwords(): React.ReactElement {
     if (!otpSuccess) {
       return (
         <OTPScreen
-          verificationEndpoint="passwords/master/otp"
           callback={() => setOtpSuccess(true)}
           fetchChallenge={() => {
             return fetchChallenge('master')
           }}
+          verificationEndpoint="passwords/master/otp"
         />
       )
     }
@@ -69,10 +69,10 @@ function Passwords(): React.ReactElement {
       return (
         <LockedScreen
           endpoint="passwords/master/verify"
-          setMasterPassword={setMasterPassword}
           fetchChallenge={() => {
             return fetchChallenge('master')
           }}
+          setMasterPassword={setMasterPassword}
         />
       )
     }
@@ -89,18 +89,18 @@ function Passwords(): React.ReactElement {
     return (
       <>
         <SearchInput
-          stuffToSearch="password"
+          namespace="modules.passwords"
           searchQuery={query}
           setSearchQuery={setQuery}
-          namespace="modules.passwords"
+          stuffToSearch="password"
         />
         <PasswordList />
         {masterPassword !== '' && (
           <FAB
+            hideWhen="lg"
             onClick={() => {
               setModifyPasswordModalOpenType('create')
             }}
-            hideWhen="lg"
           />
         )}
       </>
@@ -110,23 +110,23 @@ function Passwords(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
-        icon="tabler:key"
-        title="Passwords"
         actionButton={
           otpSuccess &&
           masterPassword !== '' && (
             <Button
+              className="hidden lg:flex "
+              icon="tabler:plus"
+              tProps={{ item: t('items.password') }}
               onClick={() => {
                 setModifyPasswordModalOpenType('create')
               }}
-              icon="tabler:plus"
-              className="hidden lg:flex "
-              tProps={{ item: t('items.password') }}
             >
               new
             </Button>
           )
         }
+        icon="tabler:key"
+        title="Passwords"
       />
       {renderContent()}
       <ModalsSection />

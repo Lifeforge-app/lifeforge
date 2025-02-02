@@ -81,53 +81,53 @@ function Transactions(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
-        icon="tabler:arrows-exchange"
-        title="Transactions"
         hamburgerMenuItems={
           <>
             <MenuItem
               icon="tabler:apps"
+              namespace="modules.wallet"
               text="Manage Categories"
               onClick={() => {
                 setManageCategoriesModalOpen(true)
               }}
-              namespace="modules.wallet"
             />
             <div className="block md:hidden">
               <HamburgerSelectorWrapper icon="tabler:eye" title="View as">
                 {['list', 'table'].map(type => (
                   <MenuItem
                     key={type}
-                    text={type.charAt(0).toUpperCase() + type.slice(1)}
                     icon={type === 'list' ? 'uil:apps' : 'uil:list-ul'}
+                    isToggled={view === type}
+                    text={type.charAt(0).toUpperCase() + type.slice(1)}
                     onClick={() => {
                       setView(type as 'list' | 'table')
                     }}
-                    isToggled={view === type}
                   />
                 ))}
               </HamburgerSelectorWrapper>
             </div>
             {view === 'table' && (
               <ColumnVisibilityToggle
-                visibleColumn={visibleColumn}
                 setVisibleColumn={setVisibleColumn}
+                visibleColumn={visibleColumn}
               />
             )}
           </>
         }
+        icon="tabler:arrows-exchange"
+        title="Transactions"
       />
       <div className="mt-6 flex min-h-0 w-full min-w-0 flex-1">
         <Sidebar
-          sidebarOpen={sidebarOpen}
-          setSidebarOpen={setSidebarOpen}
           setManageCategoriesModalOpen={setManageCategoriesModalOpen}
+          setSidebarOpen={setSidebarOpen}
+          sidebarOpen={sidebarOpen}
         />
         <div className="flex h-full min-w-0 flex-1 flex-col xl:ml-8">
           <Header
             setModifyModalOpenType={setModifyModalOpenType}
-            setUploadReceiptModalOpen={setIsUploadReceiptModalOpen}
             setSidebarOpen={setSidebarOpen}
+            setUploadReceiptModalOpen={setIsUploadReceiptModalOpen}
           />
           <SearchBar setView={setView} view={view} />
           <div className="mt-6 size-full">
@@ -136,14 +136,14 @@ function Transactions(): React.ReactElement {
                 if (transactions.length === 0) {
                   return (
                     <EmptyStateScreen
-                      name="transactions"
-                      namespace="modules.wallet"
                       ctaContent="new"
                       ctaTProps={{
                         item: t('items.transaction')
                       }}
-                      onCTAClick={setModifyModalOpenType}
                       icon="tabler:wallet-off"
+                      name="transactions"
+                      namespace="modules.wallet"
+                      onCTAClick={setModifyModalOpenType}
                     />
                   )
                 }
@@ -151,9 +151,9 @@ function Transactions(): React.ReactElement {
                 if (filteredTransactions.length === 0) {
                   return (
                     <EmptyStateScreen
+                      icon="tabler:filter-off"
                       name="results"
                       namespace="modules.wallet"
-                      icon="tabler:filter-off"
                     />
                   )
                 }
@@ -162,12 +162,12 @@ function Transactions(): React.ReactElement {
                   case 'table':
                     return (
                       <TableView
-                        visibleColumn={visibleColumn}
                         setDeleteTransactionsConfirmationOpen={
                           setDeleteTransactionsConfirmationOpen
                         }
                         setModifyModalOpenType={setModifyModalOpenType}
                         setSelectedData={setSelectedData}
+                        visibleColumn={visibleColumn}
                       />
                     )
                   case 'list':
@@ -177,9 +177,9 @@ function Transactions(): React.ReactElement {
                           setDeleteTransactionsConfirmationOpen
                         }
                         setModifyModalOpenType={setModifyModalOpenType}
-                        setSelectedData={setSelectedData}
                         setReceiptModalOpen={setReceiptModalOpen}
                         setReceiptToView={setReceiptToView}
+                        setSelectedData={setSelectedData}
                       />
                     )
                 }
@@ -194,21 +194,21 @@ function Transactions(): React.ReactElement {
                   className="w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
                 >
                   <MenuItem
+                    icon="tabler:plus"
+                    namespace="modules.wallet"
+                    text="Add Manually"
                     onClick={() => {
                       setSelectedData(null)
                       setModifyModalOpenType('create')
                     }}
-                    icon="tabler:plus"
-                    text="Add Manually"
-                    namespace="modules.wallet"
                   />
                   <MenuItem
+                    icon="tabler:scan"
+                    namespace="modules.wallet"
+                    text="Scan Receipt"
                     onClick={() => {
                       setIsUploadReceiptModalOpen(true)
                     }}
-                    icon="tabler:scan"
-                    text="Scan Receipt"
-                    namespace="modules.wallet"
                   />
                 </MenuItems>
               </Menu>
@@ -218,22 +218,22 @@ function Transactions(): React.ReactElement {
       </div>
       <ModifyTransactionsModal
         existedData={selectedData}
-        setExistedData={setSelectedData}
         openType={modifyTransactionsModalOpenType}
+        setExistedData={setSelectedData}
         setOpenType={setModifyModalOpenType}
       />
       <DeleteConfirmationModal
         apiEndpoint="wallet/transactions"
-        isOpen={deleteTransactionsConfirmationOpen}
         data={selectedData}
+        isOpen={deleteTransactionsConfirmationOpen}
         itemName="transaction"
-        onClose={() => {
-          setDeleteTransactionsConfirmationOpen(false)
-          setSelectedData(null)
-        }}
         updateDataLists={() => {
           refreshTransactions()
           refreshAssets()
+        }}
+        onClose={() => {
+          setDeleteTransactionsConfirmationOpen(false)
+          setSelectedData(null)
         }}
       />
       <ManageCategoriesModal
@@ -246,14 +246,14 @@ function Transactions(): React.ReactElement {
       />
       <ReceiptModal
         isOpen={receiptModalOpen}
-        setOpen={setReceiptModalOpen}
         receiptSrc={receiptToView}
+        setOpen={setReceiptModalOpen}
       />
       <ScanReceiptModal
         open={isUploadReceiptModaLOpen}
-        setOpen={setIsUploadReceiptModalOpen}
         setExistedData={setSelectedData}
         setModifyModalOpenType={setModifyModalOpenType}
+        setOpen={setIsUploadReceiptModalOpen}
       />
     </ModuleWrapper>
   )

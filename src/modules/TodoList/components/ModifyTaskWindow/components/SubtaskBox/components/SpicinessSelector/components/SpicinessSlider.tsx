@@ -17,9 +17,6 @@ function SpicinessSlider({
         {SPICINESS_NAME.map((_, index) => (
           <button
             key={index}
-            onClick={() => {
-              setSpiciness(index)
-            }}
             className={`size-4 rounded-full ${
               SPICINESS_COLOR[index][spiciness === index ? 1 : 2]
             } ${
@@ -27,6 +24,9 @@ function SpicinessSlider({
                 ? `ring-2 ring-offset-2 ring-offset-bg-50 dark:ring-offset-bg-800 ${SPICINESS_COLOR[index][3]}`
                 : ''
             }`}
+            onClick={() => {
+              setSpiciness(index)
+            }}
           ></button>
         ))}
       </div>

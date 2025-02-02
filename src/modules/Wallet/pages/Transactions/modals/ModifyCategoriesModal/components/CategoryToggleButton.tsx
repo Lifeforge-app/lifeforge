@@ -28,7 +28,7 @@ function CategoryToggleButton({
         setCategoryType(label.toLowerCase() as 'income' | 'expenses')
       }}
     >
-      <Icon icon={iconName} className="size-6" />
+      <Icon className="size-6" icon={iconName} />
       {t(`transactionTypes.${label.toLowerCase()}`)}
     </button>
   )

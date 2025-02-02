@@ -26,12 +26,12 @@ function TableView({
       <table className="mb-16 w-max min-w-full">
         <TableHeader visibleColumn={visibleColumn} />
         <TableBody
-          visibleColumn={visibleColumn}
-          setModifyModalOpenType={setModifyModalOpenType}
-          setSelectedData={setSelectedData}
           setDeleteTransactionsConfirmationOpen={
             setDeleteTransactionsConfirmationOpen
           }
+          setModifyModalOpenType={setModifyModalOpenType}
+          setSelectedData={setSelectedData}
+          visibleColumn={visibleColumn}
         />
       </table>
     </Scrollbar>

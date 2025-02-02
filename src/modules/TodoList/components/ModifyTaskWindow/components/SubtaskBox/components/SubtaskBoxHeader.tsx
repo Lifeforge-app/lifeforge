@@ -60,25 +60,26 @@ function SubtaskBoxHeader({
   return (
     <div className="flex-between flex w-full gap-6">
       <div className="flex items-center gap-5 text-bg-500">
-        <Icon icon="icon-park-outline:right-branch" className="size-6" />
+        <Icon className="size-6" icon="icon-park-outline:right-branch" />
         <h2 className="font-medium">{t('inputs.subtasks')}</h2>
       </div>
       <div className="flex items-center gap-2">
         <button
+          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-custom-500! dark:hover:bg-bg-800 dark:hover:text-custom-500!"
           onClick={() => {
             AIGenerateSubtask().catch(console.error)
           }}
-          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-custom-500! dark:hover:bg-bg-800 dark:hover:text-custom-500!"
         >
           <Icon
+            className="text-2xl"
             icon={
               AIGenerateLoading ? 'svg-spinners:3-dots-scale' : 'mage:stars-c'
             }
-            className="text-2xl"
           />
         </button>
-        <SpicinessSelector spiciness={spiciness} setSpiciness={setSpiciness} />
+        <SpicinessSelector setSpiciness={setSpiciness} spiciness={spiciness} />
         <button
+          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50"
           onClick={() => {
             setSubtasks(prev => {
               if (typeof prev === 'string') return prev
@@ -91,9 +92,8 @@ function SubtaskBoxHeader({
               })
             })
           }}
-          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50"
         >
-          <Icon icon="tabler:plus" className="text-2xl" />
+          <Icon className="text-2xl" icon="tabler:plus" />
         </button>
       </div>
     </div>

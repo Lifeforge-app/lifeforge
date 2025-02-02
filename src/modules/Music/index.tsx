@@ -48,17 +48,17 @@ function Music(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
-        title="Music"
         actionButton={<AddMusicButton />}
-        totalItems={musics.length}
         icon="tabler:music"
+        title="Music"
+        totalItems={musics.length}
       />
       <div className="music relative mt-4 flex size-full min-h-0 min-w-0 flex-col sm:mt-0">
         <SearchInput
+          namespace="modules.music"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           stuffToSearch="music"
-          namespace="modules.music"
         />
         <div className="relative flex size-full min-w-0 flex-col divide-y-2 divide-bg-200/50 dark:divide-bg-900">
           <Scrollbar>
@@ -72,16 +72,16 @@ function Music(): React.ReactElement {
                   <MusicList debouncedSearchQuery={debouncedSearchQuery} />
                 ) : (
                   <EmptyStateScreen
-                    namespace="modules.music"
-                    name={musics.length > 0 ? 'result' : 'music'}
+                    customCTAButton={
+                      musics.length > 0 ? <AddMusicButton /> : undefined
+                    }
                     icon={
                       musics.length > 0
                         ? 'tabler:search-off'
                         : 'tabler:music-off'
                     }
-                    customCTAButton={
-                      musics.length > 0 ? <AddMusicButton /> : undefined
-                    }
+                    name={musics.length > 0 ? 'result' : 'music'}
+                    namespace="modules.music"
                   />
                 )
               }
@@ -96,11 +96,11 @@ function Music(): React.ReactElement {
         data={existedData}
         isOpen={isDeleteMusicConfirmationModalOpen}
         itemName="music"
+        nameKey="name"
+        updateDataLists={refreshMusics}
         onClose={() => {
           setIsDeleteMusicConfirmationModalOpen(false)
         }}
-        updateDataLists={refreshMusics}
-        nameKey="name"
       />
       <ModifyMusicModal />
     </ModuleWrapper>

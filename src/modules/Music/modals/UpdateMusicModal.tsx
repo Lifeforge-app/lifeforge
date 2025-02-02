@@ -79,22 +79,22 @@ function ModifyMusicModal(): React.ReactElement {
   return (
     <ModalWrapper isOpen={isOpen}>
       <ModalHeader
-        title={t('music.updateMusic')}
         icon="tabler:pencil"
+        title={t('music.updateMusic')}
         onClose={() => {
           setOpen(false)
         }}
       />
       <TextInput
-        namespace="modules.music"
-        icon="tabler:music"
         ref={ref}
-        name="Music name"
-        value={musicName}
-        updateValue={setMusicName}
         darker
-        placeholder="My lovely music"
         className="w-[40rem]"
+        icon="tabler:music"
+        name="Music name"
+        namespace="modules.music"
+        placeholder="My lovely music"
+        updateValue={setMusicName}
+        value={musicName}
         onKeyDown={e => {
           if (e.key === 'Enter') {
             onSubmitButtonClick().catch(console.error)
@@ -102,14 +102,14 @@ function ModifyMusicModal(): React.ReactElement {
         }}
       />
       <TextInput
-        namespace="modules.music"
+        darker
+        className="mt-6 w-[40rem]"
         icon="tabler:user"
         name="Author"
-        value={musicAuthor}
-        updateValue={setMusicAuthor}
-        darker
+        namespace="modules.music"
         placeholder="John Doe"
-        className="mt-6 w-[40rem]"
+        updateValue={setMusicAuthor}
+        value={musicAuthor}
         onKeyDown={e => {
           if (e.key === 'Enter') {
             onSubmitButtonClick().catch(console.error)
@@ -117,8 +117,8 @@ function ModifyMusicModal(): React.ReactElement {
         }}
       />
       <CreateOrModifyButton
-        type="rename"
         loading={loading}
+        type="rename"
         onClick={() => {
           onSubmitButtonClick().catch(console.error)
         }}

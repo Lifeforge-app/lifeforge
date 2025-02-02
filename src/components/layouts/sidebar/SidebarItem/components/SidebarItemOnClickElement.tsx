@@ -21,11 +21,13 @@ function SidebarItemOnClickElement({
     <>
       {onClick !== undefined ? (
         <button
-          onClick={() => {}}
           className="absolute left-0 top-0 size-full rounded-lg"
+          onClick={() => {}}
         />
       ) : (
         <Link
+          className="absolute left-0 top-0 size-full rounded-lg"
+          to={''}
           onClick={() => {
             if (window.innerWidth < 1024) {
               toggleSidebar()
@@ -34,8 +36,6 @@ function SidebarItemOnClickElement({
               setSubsectionExpanded(true)
             }
           }}
-          to={''}
-          className="absolute left-0 top-0 size-full rounded-lg"
         />
       )}
     </>

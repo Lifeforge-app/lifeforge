@@ -48,39 +48,39 @@ function AvatarColumn(): React.ReactElement {
   return (
     <>
       <ConfigColumn
-        title={t('settings.title.profilePicture')}
         desc={t('settings.desc.profilePicture')}
         icon="tabler:camera"
+        title={t('settings.title.profilePicture')}
       >
         <div className="mr-4 flex size-12 items-center justify-center overflow-hidden rounded-full bg-bg-100 dark:bg-bg-800">
           {userData.avatar !== '' ? (
             <img
-              src={getAvatarURL()}
               alt=""
               className="size-full object-cover"
+              src={getAvatarURL()}
             />
           ) : (
-            <Icon icon="tabler:user" className="text-2xl text-bg-500" />
+            <Icon className="text-2xl text-bg-500" icon="tabler:user" />
           )}
         </div>
         <div className="flex items-center">
           <Button
+            icon="tabler:upload"
+            loading={loading}
+            variant="no-bg"
             onClick={() => {
               changeAvatar()
             }}
-            loading={loading}
-            variant="no-bg"
-            icon="tabler:upload"
           >
             upload
           </Button>
           <Button
+            isRed
+            icon="tabler:trash"
+            variant="no-bg"
             onClick={() => {
               setDeleteAvatarConfirmationModal(true)
             }}
-            variant="no-bg"
-            icon="tabler:trash"
-            isRed
           >
             remove
           </Button>
@@ -88,16 +88,16 @@ function AvatarColumn(): React.ReactElement {
       </ConfigColumn>
       <DeleteConfirmationModal
         apiEndpoint="/user/settings/avatar"
+        customText="Are you sure you want to remove your profile picture?"
         data={{}}
+        isOpen={deleteAvatarConfirmationModal}
         itemName="avatar"
         updateDataLists={() => {
           setUserData({ ...userData, avatar: '' })
         }}
-        isOpen={deleteAvatarConfirmationModal}
         onClose={() => {
           setDeleteAvatarConfirmationModal(false)
         }}
-        customText="Are you sure you want to remove your profile picture?"
       />
     </>
   )

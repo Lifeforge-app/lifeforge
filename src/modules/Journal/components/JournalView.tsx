@@ -46,9 +46,9 @@ function JournalView({
       <Markdown className="prose max-w-full!">{cleanedUpText}</Markdown>
 
       <Button
-        icon={viewRaw ? 'tabler:chevron-up' : 'tabler:chevron-down'}
-        className="mt-6"
         iconAtEnd
+        className="mt-6"
+        icon={viewRaw ? 'tabler:chevron-up' : 'tabler:chevron-down'}
         variant="no-bg"
         onClick={() => {
           setViewRaw(!viewRaw)
@@ -61,7 +61,7 @@ function JournalView({
         <>
           <hr className="my-6 border-bg-500" />
           <h3 className="flex items-center gap-2 text-2xl font-semibold">
-            <Icon icon="tabler:photo" className="size-6" />
+            <Icon className="size-6" icon="tabler:photo" />
             <span>
               Photos{' '}
               <span className="text-sm text-bg-500">({photos.length})</span>
@@ -74,20 +74,20 @@ function JournalView({
                 className="relative max-h-[300px] min-h-32 grow overflow-hidden rounded-lg"
               >
                 <Zoom
-                  zoomMargin={40}
                   ZoomContent={CustomZoomContent}
                   zoomImg={{
                     src: typeof photo === 'string' ? photo : photo.preview
                   }}
+                  zoomMargin={40}
                 >
                   <img
+                    alt={''}
+                    className="size-full max-h-[300px] min-h-32 object-cover"
                     src={
                       typeof photo === 'string'
                         ? photo + '&thumb=0x300'
                         : photo.preview
                     }
-                    alt={''}
-                    className="size-full max-h-[300px] min-h-32 object-cover"
                   />
                 </Zoom>
               </div>

@@ -5,7 +5,7 @@ import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 function _3dModels(): React.ReactElement {
   return (
     <ModuleWrapper>
-      <ModuleHeader title="3D Models" icon="tabler:cube" />
+      <ModuleHeader icon="tabler:cube" title="3D Models" />
     </ModuleWrapper>
   )
 }

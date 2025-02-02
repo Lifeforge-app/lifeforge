@@ -71,11 +71,11 @@ function AirportsList(): React.ReactElement {
       <div className="mt-4 flex items-center gap-2">
         <ContinentSelector />
         <SearchInput
-          stuffToSearch="airport"
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
           hasTopMargin={false}
           namespace="modules.airports"
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          stuffToSearch="airport"
         />
       </div>
       <APIFallbackComponent data={filteredData}>
@@ -99,17 +99,17 @@ function AirportsList(): React.ReactElement {
                   .map(({ name, location, type, id }) => (
                     <EntryItem
                       key={id}
-                      name={name}
-                      location={location}
-                      type={type}
                       id={id}
+                      location={location}
+                      name={name}
+                      type={type}
                     />
                   ))
               ) : (
                 <EmptyStateScreen
+                  icon="tabler:plane-off"
                   name="airports"
                   namespace="modules.airports"
-                  icon="tabler:plane-off"
                 />
               )}
             </div>

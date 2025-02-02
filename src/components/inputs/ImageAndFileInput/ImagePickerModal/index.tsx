@@ -71,7 +71,7 @@ function ImagePickerModal({
 
   return (
     <>
-      <ModalWrapper isOpen={isOpen} minWidth="70vw" className="overflow-hidden">
+      <ModalWrapper className="overflow-hidden" isOpen={isOpen} minWidth="70vw">
         <ModalHeader
           icon="tabler:photo"
           title="Image Selector"
@@ -79,6 +79,12 @@ function ImagePickerModal({
         />
         {(enablePixaBay || enableUrl) && (
           <Tabs
+            active={mode}
+            enabled={(['local', 'url', 'pixabay'] as const).filter(
+              name =>
+                (name === 'pixabay' && enablePixaBay) ||
+                (name === 'url' && enableUrl)
+            )}
             items={[
               {
                 name: t('imageUpload.pixabay'),
@@ -96,12 +102,6 @@ function ImagePickerModal({
                 id: 'pixabay'
               }
             ]}
-            enabled={(['local', 'url', 'pixabay'] as const).filter(
-              name =>
-                (name === 'pixabay' && enablePixaBay) ||
-                (name === 'url' && enableUrl)
-            )}
-            active={mode}
             onNavClick={(id: 'local' | 'url' | 'pixabay') => {
               setMode(id)
               setFile(null)
@@ -114,35 +114,38 @@ function ImagePickerModal({
               case 'local':
                 return (
                   <LocalUpload
-                    setFile={setFile}
+                    acceptedMimeTypes={acceptedMimeTypes}
                     file={file}
                     preview={preview}
+                    setFile={setFile}
                     setPreview={setPreview}
-                    acceptedMimeTypes={acceptedMimeTypes}
                   />
                 )
               case 'url':
                 return (
                   <ImageURL
-                    setFile={setFile}
                     file={file}
+                    setFile={setFile}
                     setPreview={setPreview}
                   />
                 )
               case 'pixabay':
                 return (
                   <Pixabay
-                    setFile={setFile}
                     file={file}
-                    setPreview={setPreview}
                     filters={filters}
+                    setFile={setFile}
                     setIsSearchFilterModalOpen={setIsSearchFilterModalOpen}
+                    setPreview={setPreview}
                   />
                 )
             }
           })()}
         </div>
         <Button
+          className="mt-4"
+          disabled={file === null}
+          icon="tabler:check"
           loading={loading}
           onClick={() => {
             setLoading(true)
@@ -153,20 +156,17 @@ function ImagePickerModal({
                 onClose()
               })
           }}
-          disabled={file === null}
-          className="mt-4"
-          icon="tabler:check"
         >
           select
         </Button>
       </ModalWrapper>
       <SearchFilterModal
+        filters={filters}
         isOpen={isSearchFilterModalOpen}
+        updateFilters={updateFilters}
         onClose={() => {
           setIsSearchFilterModalOpen(false)
         }}
-        filters={filters}
-        updateFilters={updateFilters}
       />
     </>
   )

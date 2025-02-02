@@ -16,7 +16,7 @@ function RawMETARData({
     <WidgetWrapper className="col-span-3">
       <div className="flex-between flex">
         <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
-          <Icon icon="tabler:code" className="text-2xl" />
+          <Icon className="text-2xl" icon="tabler:code" />
           <span className="ml-2">Raw METAR Data</span>
         </h1>
         <span className="text-bg-500">

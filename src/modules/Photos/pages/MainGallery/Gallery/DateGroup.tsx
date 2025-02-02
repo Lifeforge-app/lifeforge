@@ -85,14 +85,14 @@ function DateGroup({
 
   return (
     <div
+      key={date}
       ref={el => {
         ref(el)
 
         thisRef.current = el
       }}
-      id={date}
-      key={date}
       className="group"
+      id={date}
     >
       {(!ready || isOnScreen) && (
         <>
@@ -103,20 +103,20 @@ function DateGroup({
               }`}
             >
               <button
-                onClick={toggleSelectAll}
                 className={`group/checkbox flex-center rounded-full border-2  p-0.5 transition-all ${
                   isSelectedAll
                     ? 'border-custom-500 bg-custom-500'
                     : 'border-bg-500 hover:border-custom-500!'
                 }`}
+                onClick={toggleSelectAll}
               >
                 <Icon
-                  icon="uil:check"
                   className={`size-4 !stroke-[1px]  transition-all  ${
                     isSelectedAll
                       ? 'stroke-bg-100 text-bg-50 dark:stroke-bg-900 dark:text-bg-800'
                       : 'stroke-bg-500 text-bg-500 group-hover/checkbox:stroke-custom-500! group-hover/checkbox:text-custom-500!'
                   }`}
+                  icon="uil:check"
                 />
               </button>
             </div>
@@ -127,7 +127,6 @@ function DateGroup({
           </h2>
           <PhotoAlbum
             layout="rows"
-            spacing={8}
             photos={photosDimensions.map(image => ({
               src: `${import.meta.env.VITE_API_HOST}/media/${
                 typeof allPhotos !== 'string' ? allPhotos.collectionId : ''
@@ -144,7 +143,6 @@ function DateGroup({
             }) => (
               <ImageObject
                 beingDisplayedInAlbum={false}
-                photo={photo}
                 details={
                   photos?.find(image => image.id === photo.key) ?? {
                     id: photo.key ?? '',
@@ -155,12 +153,15 @@ function DateGroup({
                     is_favourite: false
                   }
                 }
+                photo={photo}
                 style={style}
                 {...restImageProps}
                 selected={
                   selectedPhotos.find(image => image === photo.key) !==
                   undefined
                 }
+                selectedPhotosLength={selectedPhotos.length}
+                setImagePreviewOpenFor={setImagePreviewModalOpenFor}
                 toggleSelected={(
                   e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>
                 ): void => {
@@ -202,10 +203,9 @@ function DateGroup({
                     }
                   }
                 }}
-                selectedPhotosLength={selectedPhotos.length}
-                setImagePreviewOpenFor={setImagePreviewModalOpenFor}
               />
             )}
+            spacing={8}
           />
         </>
       )}

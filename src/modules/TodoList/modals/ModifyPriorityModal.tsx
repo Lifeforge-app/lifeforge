@@ -72,22 +72,22 @@ function ModifyPriorityModal(): React.ReactElement {
 
   return (
     <Modal
-      namespace="modules.todoList"
-      isOpen={openType !== null}
-      openType={openType}
-      onClose={() => {
-        setOpenType(null)
-      }}
-      title={`priority.${openType}`}
+      data={data}
+      fields={FIELDS}
       icon={
         {
           create: 'tabler:plus',
           update: 'tabler:pencil'
         }[openType!]
       }
-      fields={FIELDS}
-      data={data}
+      isOpen={openType !== null}
+      namespace="modules.todoList"
+      openType={openType}
       setData={setData}
+      title={`priority.${openType}`}
+      onClose={() => {
+        setOpenType(null)
+      }}
       onSubmit={onSubmitButtonClick}
     />
   )

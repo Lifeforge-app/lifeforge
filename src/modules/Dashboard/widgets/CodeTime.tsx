@@ -88,16 +88,16 @@ const ViewSelector = ({
       {views.map(viewType => (
         <button
           key={viewType}
-          onClick={() => setView(viewType as 'bar' | 'line')}
           className={`flex items-center gap-2 rounded-md p-2 px-4 transition-all ${
             viewType === view
               ? 'bg-bg-200/50 dark:bg-bg-700/50'
               : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
           }`}
+          onClick={() => setView(viewType as 'bar' | 'line')}
         >
           <Icon
-            icon={viewType === 'bar' ? 'tabler:chart-bar' : 'tabler:chart-line'}
             className="size-6"
+            icon={viewType === 'bar' ? 'tabler:chart-bar' : 'tabler:chart-line'}
           />
           {viewType[0].toUpperCase() + viewType.slice(1)}
         </button>
@@ -167,11 +167,11 @@ const CodeTime = (): React.ReactElement => {
     if (chartData === 'No data')
       return (
         <EmptyStateScreen
+          smaller
           icon="tabler:database-off"
+          name="data"
           namespace="modules.dashboard"
           tKey="widgets.codeTime"
-          name="data"
-          smaller
         />
       )
 
@@ -187,9 +187,9 @@ const CodeTime = (): React.ReactElement => {
 
   return (
     <DashboardItem
+      componentBesideTitle={<ViewSelector setView={setView} view={view} />}
       icon="tabler:chart-line"
       title="Code Time"
-      componentBesideTitle={<ViewSelector view={view} setView={setView} />}
     >
       <div className="flex-center size-full min-h-0 flex-1">
         {renderContent()}

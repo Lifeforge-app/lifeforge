@@ -34,15 +34,15 @@ function PhotosTrash(): React.ReactElement {
         <div className="flex h-full flex-1 flex-col">
           <div className="flex-between flex">
             <h1 className="flex items-center gap-4 text-3xl font-semibold">
-              <Icon icon="tabler:trash" className="size-8 shrink-0" />
+              <Icon className="size-8 shrink-0" icon="tabler:trash" />
               {t('sidebar.photos.trash')}
             </h1>
             <Button
+              isRed
               icon={'tabler:trash'}
               onClick={() => {
                 setIsEmptyTrashConfirmationModalOpen(true)
               }}
-              isRed
             >
               Empty trash
             </Button>
@@ -52,14 +52,13 @@ function PhotosTrash(): React.ReactElement {
               {photos =>
                 photos.length === 0 ? (
                   <EmptyStateScreen
-                    namespace="modules.photos"
-                    name="trash"
                     icon="tabler:trash-off"
+                    name="trash"
+                    namespace="modules.photos"
                   />
                 ) : (
                   <PhotoAlbum
                     layout="rows"
-                    spacing={8}
                     photos={photos.map(image => ({
                       src: `${import.meta.env.VITE_API_HOST}/media/${
                         image.collectionId
@@ -74,16 +73,17 @@ function PhotosTrash(): React.ReactElement {
                     }) => (
                       <ImageObject
                         // TODO
-                        setImagePreviewOpenFor={() => {}}
                         beingDisplayedInAlbum
-                        photo={photo}
-                        style={style}
                         details={photos.find(image => image.id === photo.key)!}
+                        photo={photo}
+                        setImagePreviewOpenFor={() => {}}
+                        style={style}
                         {...restImageProps}
                         selected={
                           selectedPhotos.find(image => image === photo.key) !==
                           undefined
                         }
+                        selectedPhotosLength={selectedPhotos.length}
                         toggleSelected={(
                           e: React.MouseEvent<
                             HTMLDivElement | HTMLButtonElement
@@ -131,9 +131,9 @@ function PhotosTrash(): React.ReactElement {
                             }
                           }
                         }}
-                        selectedPhotosLength={selectedPhotos.length}
                       />
                     )}
+                    spacing={8}
                   />
                 )
               }
@@ -143,8 +143,8 @@ function PhotosTrash(): React.ReactElement {
       </div>
       <EmptyTrashConfirmationModal
         isOpen={isEmptyTrashConfirmationModalOpen}
-        setOpen={setIsEmptyTrashConfirmationModalOpen}
         refreshPhotos={refreshPhotos}
+        setOpen={setIsEmptyTrashConfirmationModalOpen}
       />
     </ModuleWrapper>
   )

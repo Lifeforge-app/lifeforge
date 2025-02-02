@@ -12,16 +12,16 @@ function NOTAMListItem({
 }): React.ReactElement {
   return (
     <button
+      className="w-full space-y-4 rounded-lg bg-bg-50 p-4 text-left shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50"
       onClick={() => {
         setSelectedNOTAMData(data)
         setViewDetailsModalOpen(true)
       }}
-      className="w-full space-y-4 rounded-lg bg-bg-50 p-4 text-left shadow-custom transition-all hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50"
     >
       <div className="flex-between flex">
         <h3 className="flex items-center gap-1 text-xl font-semibold">
           {data.title[0]}
-          <Icon icon="tabler:chevron-right" className="size-5 text-bg-500" />
+          <Icon className="size-5 text-bg-500" icon="tabler:chevron-right" />
           {data.title[1]}
         </h3>
         <span
@@ -45,15 +45,15 @@ function NOTAMListItem({
       </div>
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-1">
-          <Icon icon="tabler:location" className="size-5" />
+          <Icon className="size-5" icon="tabler:location" />
           <p>{data.distance}</p>
         </div>
         <div className="flex items-center gap-1">
-          <Icon icon="tabler:clock" className="size-5" />
+          <Icon className="size-5" icon="tabler:clock" />
           <p>{data.time}</p>
         </div>
         <div className="flex items-center gap-1">
-          <Icon icon="tabler:calendar" className="size-5" />
+          <Icon className="size-5" icon="tabler:calendar" />
           <p>{data.duration}</p>
         </div>
       </div>

@@ -28,11 +28,11 @@ export default function TodoList(): React.ReactElement {
                   {entries.length > 0 ? (
                     entries.map(entry => (
                       <TaskItem
-                        entry={entry}
                         key={entry.id}
-                        lighter
                         isOuter
+                        lighter
                         entries={entries}
+                        entry={entry}
                         refreshEntries={refreshEntries}
                         setEntries={setEntries}
                       />
@@ -40,14 +40,14 @@ export default function TodoList(): React.ReactElement {
                   ) : (
                     <EmptyStateScreen
                       smaller
-                      namespace="modules.dashboard"
-                      tKey="widgets.todoList"
-                      name="today"
-                      icon="tabler:calendar-smile"
                       ctaContent="new"
                       ctaTProps={{
                         item: t('items.task')
                       }}
+                      icon="tabler:calendar-smile"
+                      name="today"
+                      namespace="modules.dashboard"
+                      tKey="widgets.todoList"
                       onCTAClick={() => {
                         navigate('/todo-list#new')
                       }}

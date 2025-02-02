@@ -146,13 +146,6 @@ function DNSRecords(): JSX.Element {
   return (
     <ModuleWrapper>
       <ModuleHeader
-        icon="tabler:cloud"
-        title="DNS Records"
-        totalItems={
-          typeof filteredRecords === 'string'
-            ? undefined
-            : filteredRecords.length
-        }
         actionButton={
           <Button
             icon="tabler:plus"
@@ -167,35 +160,42 @@ function DNSRecords(): JSX.Element {
           <>
             <MenuItem
               icon="tabler:select"
+              isToggled={isSelecting}
               text="Select"
               onClick={() => {
                 setIsSelecting(!isSelecting)
                 setSelectedEntries([])
               }}
-              isToggled={isSelecting}
             />
           </>
+        }
+        icon="tabler:cloud"
+        title="DNS Records"
+        totalItems={
+          typeof filteredRecords === 'string'
+            ? undefined
+            : filteredRecords.length
         }
       />
       <div className="flex items-center gap-2">
         <SearchInput
-          stuffToSearch="dnsRecord"
+          namespace="modules.dnsRecords"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          namespace="modules.dnsRecords"
+          stuffToSearch="dnsRecord"
         />
         <Listbox
-          value={selectedFilter}
-          onChange={setSelectedFilter}
           as="div"
           className="relative"
+          value={selectedFilter}
+          onChange={setSelectedFilter}
         >
           <ListboxButton className="flex-between relative mt-6 flex w-40 gap-4 whitespace-nowrap rounded-lg bg-bg-50 p-4 text-left shadow-custom dark:bg-bg-900">
             <div className="flex items-center gap-4">
-              <Icon icon="tabler:filter" className="size-5 text-bg-500" />
+              <Icon className="size-5 text-bg-500" icon="tabler:filter" />
               {selectedFilter}
             </div>
-            <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
+            <Icon className="size-5 text-bg-500" icon="tabler:chevron-down" />
           </ListboxButton>
           <ListboxOptions
             transition
@@ -206,7 +206,6 @@ function DNSRecords(): JSX.Element {
               {FILTER_TYPE.map(type => (
                 <ListboxOption
                   key={type}
-                  value={type}
                   className={({ active }) =>
                     `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
                       active
@@ -214,14 +213,15 @@ function DNSRecords(): JSX.Element {
                         : 'bg-transparent!'
                     }`
                   }
+                  value={type}
                 >
                   {({ selected }) => (
                     <>
                       {type}
                       {selected && (
                         <Icon
-                          icon="tabler:check"
                           className="size-5 text-white group-hover:text-white/50"
+                          icon="tabler:check"
                         />
                       )}
                     </>
@@ -233,14 +233,14 @@ function DNSRecords(): JSX.Element {
         </Listbox>
         {selectedEntries.length > 0 && (
           <Button
+            isRed
+            className="mt-2 whitespace-nowrap"
             disabled={selectedEntries.length === 0 || bulkDeleteLoading}
+            icon="tabler:trash"
             loading={bulkDeleteLoading}
             onClick={() => {
               setDeleteConfirmationModalOpen(true)
             }}
-            icon="tabler:trash"
-            isRed
-            className="mt-2 whitespace-nowrap"
           >
             Bulk Delete
           </Button>
@@ -252,8 +252,8 @@ function DNSRecords(): JSX.Element {
             records.length === 0 ? (
               <EmptyStateScreen
                 icon="tabler:search-off"
-                namespace="modules.dnsRecords"
                 name="dnsRecords"
+                namespace="modules.dnsRecords"
               />
             ) : (
               <table className="mb-8">
@@ -266,9 +266,6 @@ function DNSRecords(): JSX.Element {
                         } flex items-center justify-center overflow-hidden transition-all`}
                       >
                         <button
-                          onClick={() => {
-                            toggleSelected('all')
-                          }}
                           className={`size-5 rounded-full border-[1.5px] ${
                             records.every(record =>
                               selectedEntries.includes(record.line_index)
@@ -276,13 +273,16 @@ function DNSRecords(): JSX.Element {
                               ? 'border-custom-500'
                               : 'border-bg-300 dark:border-bg-700'
                           }`}
+                          onClick={() => {
+                            toggleSelected('all')
+                          }}
                         >
                           {records.every(record =>
                             selectedEntries.includes(record.line_index)
                           ) && (
                             <Icon
-                              icon="uil:check"
                               className="mr-[2px] mt-px size-4 text-custom-500"
+                              icon="uil:check"
                             />
                           )}
                         </button>
@@ -291,25 +291,25 @@ function DNSRecords(): JSX.Element {
                     {['Name', 'TTL', 'Type', 'Data'].map(header => (
                       <th
                         key={header}
-                        scope="col"
                         className="relative p-4 pr-16"
+                        scope="col"
                       >
                         {header}
                         <IconButton
-                          icon="tabler:transfer-vertical"
-                          onClick={() => {
-                            setSortBy(header)
-                          }}
                           className={`absolute right-4 top-1/2 -translate-y-1/2 !p-2 hover:bg-bg-800/50 ${
                             sortBy === header
                               ? 'text-bg-800 dark:text-bg-50'
                               : 'text-bg-500'
                           }`}
+                          icon="tabler:transfer-vertical"
+                          onClick={() => {
+                            setSortBy(header)
+                          }}
                         />
                       </th>
                     ))}
 
-                    <th scope="col" className="p-4">
+                    <th className="p-4" scope="col">
                       Actions
                     </th>
                   </tr>
@@ -318,15 +318,15 @@ function DNSRecords(): JSX.Element {
                   {records.map(record => (
                     <tr
                       key={record.line_index}
-                      onClick={() => {
-                        if (!isSelecting) return
-                        toggleSelected(record.line_index)
-                      }}
                       className={`${
                         isSelecting
                           ? 'cursor-pointer hover:bg-bg-200 dark:hover:bg-bg-900/50'
                           : ''
                       }`}
+                      onClick={() => {
+                        if (!isSelecting) return
+                        toggleSelected(record.line_index)
+                      }}
                     >
                       <td className="pl-4 pr-0">
                         <div
@@ -335,19 +335,19 @@ function DNSRecords(): JSX.Element {
                           } flex items-center justify-center overflow-hidden transition-all`}
                         >
                           <button
-                            onClick={() => {
-                              toggleSelected(record.line_index)
-                            }}
                             className={`size-5 rounded-full border-[1.5px] ${
                               selectedEntries.includes(record.line_index)
                                 ? 'border-custom-500'
                                 : 'border-bg-300 dark:border-bg-700'
                             }`}
+                            onClick={() => {
+                              toggleSelected(record.line_index)
+                            }}
                           >
                             {selectedEntries.includes(record.line_index) && (
                               <Icon
-                                icon="uil:check"
                                 className="mr-[2px] mt-px size-4 text-custom-500"
+                                icon="uil:check"
                               />
                             )}
                           </button>
@@ -366,12 +366,12 @@ function DNSRecords(): JSX.Element {
 
                           return (
                             <a
-                              href={`http://${link}`}
-                              target="_blank"
-                              rel="noreferrer"
                               className={
                                 isSelecting ? 'pointer-events-none' : ''
                               }
+                              href={`http://${link}`}
+                              rel="noreferrer"
+                              target="_blank"
                             >
                               {link}.
                             </a>
@@ -390,22 +390,22 @@ function DNSRecords(): JSX.Element {
                       <td className="p-4 text-center">
                         <div className="flex w-full items-center justify-center gap-2">
                           <button className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/20 hover:text-bg-800 dark:hover:bg-bg-800/50 dark:hover:text-bg-50">
-                            <Icon icon="tabler:pencil" className="size-6" />
+                            <Icon className="size-6" icon="tabler:pencil" />
                           </button>
                           <button
+                            className="rounded-md p-2 text-red-500 transition-all hover:bg-red-500/20 hover:text-red-600 disabled:text-bg-500 disabled:hover:bg-transparent disabled:hover:text-bg-500"
+                            disabled={deleteLoading !== -1}
                             onClick={() => {
                               setDeleteConfirmationModalOpen(record.line_index)
                             }}
-                            className="rounded-md p-2 text-red-500 transition-all hover:bg-red-500/20 hover:text-red-600 disabled:text-bg-500 disabled:hover:bg-transparent disabled:hover:text-bg-500"
-                            disabled={deleteLoading !== -1}
                           >
                             <Icon
+                              className="size-6"
                               icon={
                                 deleteLoading === record.line_index
                                   ? 'svg-spinners:180-ring'
                                   : 'tabler:trash'
                               }
-                              className="size-6"
                             />
                           </button>
                         </div>
@@ -419,10 +419,6 @@ function DNSRecords(): JSX.Element {
         </APIFallbackComponent>
       </Scrollbar>
       <DeleteConfirmationModal
-        isOpen={deleteConfirmationModalOpen !== false}
-        onClose={() => {
-          setDeleteConfirmationModalOpen(false)
-        }}
         customCallback={async () => {
           await removeRecord(
             typeof deleteConfirmationModalOpen === 'number'
@@ -430,8 +426,12 @@ function DNSRecords(): JSX.Element {
               : selectedEntries
           ).catch(console.error)
         }}
-        itemName="DNS record"
         customText="Are you sure you want to delete the selected record(s)?"
+        isOpen={deleteConfirmationModalOpen !== false}
+        itemName="DNS record"
+        onClose={() => {
+          setDeleteConfirmationModalOpen(false)
+        }}
       />
     </ModuleWrapper>
   )

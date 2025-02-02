@@ -27,17 +27,17 @@ function AssetsFromToSelector({
     <>
       <AssetListbox
         assets={assets}
+        iconName="tabler:step-out"
+        label="From Asset"
         selectedAsset={fromAsset}
         onAssetChange={setFromAsset}
-        label="From Asset"
-        iconName="tabler:step-out"
       />
       <AssetListbox
         assets={assets}
+        iconName="tabler:step-into"
+        label="To Asset"
         selectedAsset={toAsset}
         onAssetChange={setToAsset}
-        label="To Asset"
-        iconName="tabler:step-into"
       />
     </>
   )

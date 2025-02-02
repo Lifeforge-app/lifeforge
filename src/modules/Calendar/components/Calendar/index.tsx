@@ -96,24 +96,7 @@ function CalendarComponent({
 
   return (
     <DnDCalendar
-      localizer={localizer}
-      draggableAccessor={() => {
-        return true
-      }}
-      onEventDrop={(e: any) => {
-        updateEvent(e).catch(console.error)
-      }}
-      onEventResize={(e: any) => {
-        updateEvent(e).catch(console.error)
-      }}
-      onSelectSlot={handleSelectSlot}
       selectable
-      events={events.filter(event => {
-        if (searchParams.has('category')) {
-          return event.category === searchParams.get('category')
-        }
-        return true
-      })}
       components={{
         toolbar: (props: any) => {
           return (
@@ -130,14 +113,31 @@ function CalendarComponent({
         }) => {
           return (
             <EventItem
-              event={event as ICalendarEvent}
               categories={categories}
-              setModifyEventModalOpenType={setModifyEventModalOpenType}
+              event={event as ICalendarEvent}
               setExistedData={setExistedData}
+              setModifyEventModalOpenType={setModifyEventModalOpenType}
             />
           )
         }
       }}
+      draggableAccessor={() => {
+        return true
+      }}
+      events={events.filter(event => {
+        if (searchParams.has('category')) {
+          return event.category === searchParams.get('category')
+        }
+        return true
+      })}
+      localizer={localizer}
+      onEventDrop={(e: any) => {
+        updateEvent(e).catch(console.error)
+      }}
+      onEventResize={(e: any) => {
+        updateEvent(e).catch(console.error)
+      }}
+      onSelectSlot={handleSelectSlot}
     />
   )
 }

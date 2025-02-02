@@ -50,8 +50,8 @@ function PasswordEntryITem({
     >
       {password.pinned && (
         <Icon
-          icon="tabler:pin-filled"
           className="absolute left-0 top-0 size-6 -translate-x-1/2 -translate-y-1/2 -rotate-90 text-custom-500"
+          icon="tabler:pin-filled"
         />
       )}
       <div className="flex w-full items-center gap-4">
@@ -61,8 +61,8 @@ function PasswordEntryITem({
             style={{ backgroundColor: password.color + '50' }}
           >
             <Icon
-              icon={password.icon}
               className="size-6"
+              icon={password.icon}
               style={{
                 color: password.color
               }}
@@ -94,9 +94,19 @@ function PasswordEntryITem({
             )}
           </p>
           <Button
-            variant="no-bg"
             className="hidden p-2! sm:flex"
+            icon={(() => {
+              if (loading) {
+                return 'svg-spinners:180-ring'
+              }
+
+              return decryptedPassword === null
+                ? 'tabler:eye'
+                : 'tabler:eye-off'
+            })()}
             iconClassName="size-6"
+            loading={loading}
+            variant="no-bg"
             onClick={() => {
               if (decryptedPassword === null) {
                 ;(() => {
@@ -112,33 +122,25 @@ function PasswordEntryITem({
                 setDecryptedPassword(null)
               }
             }}
-            loading={loading}
-            icon={(() => {
-              if (loading) {
-                return 'svg-spinners:180-ring'
-              }
-
-              return decryptedPassword === null
-                ? 'tabler:eye'
-                : 'tabler:eye-off'
-            })()}
           />
           <Button
-            onClick={copyPassword}
-            loading={copyLoading}
-            icon="tabler:copy"
             className="hidden p-2! sm:flex"
+            icon="tabler:copy"
+            loading={copyLoading}
             variant="no-bg"
+            onClick={copyPassword}
           />
           <HamburgerMenu className="relative">
             <MenuItem
+              icon={password.pinned ? 'tabler:pin-filled' : 'tabler:pin'}
+              text={password.pinned ? 'Unpin' : 'Pin'}
               onClick={() => {
                 pinPassword(password.id)
               }}
-              icon={password.pinned ? 'tabler:pin-filled' : 'tabler:pin'}
-              text={password.pinned ? 'Unpin' : 'Pin'}
             />
             <MenuItem
+              icon="tabler:pencil"
+              text="Edit"
               onClick={() => {
                 getDecryptedPassword(masterPassword, password.id)
                   .then(decrypted => {
@@ -152,17 +154,15 @@ function PasswordEntryITem({
                     )
                   })
               }}
-              icon="tabler:pencil"
-              text="Edit"
             />
             <MenuItem
+              isRed
+              icon="tabler:trash"
+              text="Delete"
               onClick={() => {
                 setIsDeletePasswordConfirmationModalOpen(true)
                 setExistedData(password)
               }}
-              icon="tabler:trash"
-              text="Delete"
-              isRed
             />
           </HamburgerMenu>
         </div>
@@ -173,11 +173,11 @@ function PasswordEntryITem({
         </p>
       )}
       <Button
-        onClick={copyPassword}
-        loading={copyLoading}
-        icon="tabler:copy"
         className="w-full sm:hidden"
+        icon="tabler:copy"
+        loading={copyLoading}
         variant="secondary"
+        onClick={copyPassword}
       >
         Copy
       </Button>

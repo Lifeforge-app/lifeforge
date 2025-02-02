@@ -167,17 +167,14 @@ function Header({
   return (
     <>
       <ModuleHeader
-        title="Guitar Tabs"
-        icon="mingcute:guitar-line"
-        totalItems={totalItems}
         actionButton={
           <Menu as="div" className="relative z-50 hidden md:block">
             <Button
-              onClick={() => {}}
-              icon="tabler:plus"
-              className="hidden md:flex"
               as={MenuButton}
+              className="hidden md:flex"
+              icon="tabler:plus"
               tProps={{ item: t('items.score') }}
+              onClick={() => {}}
             >
               new
             </Button>
@@ -187,18 +184,18 @@ function Header({
               className="mt-2 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
             >
               <MenuItem
-                onClick={uploadFiles}
                 icon="tabler:upload"
-                text="Upload from local"
                 namespace="modules.guitarTabs"
+                text="Upload from local"
+                onClick={uploadFiles}
               />
               <MenuItem
+                icon="mingcute:guitar-line"
+                namespace="modules.guitarTabs"
+                text="Download from Guitar World"
                 onClick={() => {
                   setGuitarWorldModalOpen(true)
                 }}
-                icon="mingcute:guitar-line"
-                text="Download from Guitar World"
-                namespace="modules.guitarTabs"
               />
             </MenuItems>
           </Menu>
@@ -206,10 +203,10 @@ function Header({
         hamburgerMenuItems={
           <>
             <MenuItem
-              text="Download All"
               icon="tabler:download"
-              onClick={downloadAll}
               namespace="modules.guitarTabs"
+              text="Download All"
+              onClick={downloadAll}
             />
             <div className="block md:hidden">
               <SidebarDivider noMargin />
@@ -221,15 +218,15 @@ function Header({
                   <MenuItem
                     key={id}
                     icon={icon}
+                    isToggled={
+                      searchParams.get('sort') === id ||
+                      (id === 'newest' && !searchParams.has('sort'))
+                    }
                     text={t(`sortType.${id}`)}
                     onClick={() => {
                       searchParams.set('sort', id)
                       setSearchParams(searchParams)
                     }}
-                    isToggled={
-                      searchParams.get('sort') === id ||
-                      (id === 'newest' && !searchParams.has('sort'))
-                    }
                   />
                 ))}
               </HamburgerSelectorWrapper>
@@ -238,21 +235,24 @@ function Header({
                 {['grid', 'list'].map(type => (
                   <MenuItem
                     key={type}
-                    text={type.charAt(0).toUpperCase() + type.slice(1)}
                     icon={type === 'grid' ? 'uil:apps' : 'uil:list-ul'}
+                    isToggled={view === type}
+                    text={type.charAt(0).toUpperCase() + type.slice(1)}
                     onClick={() => {
                       setView(type as 'grid' | 'list')
                     }}
-                    isToggled={view === type}
                   />
                 ))}
               </HamburgerSelectorWrapper>
             </div>
           </>
         }
+        icon="mingcute:guitar-line"
         tips="If you want to append audio and Musescore files to your guitar tabs, make sure to name them the same as the PDF file and upload them together."
+        title="Guitar Tabs"
+        totalItems={totalItems}
       />
-      <FAB onClick={uploadFiles} icon="tabler:plus" />
+      <FAB icon="tabler:plus" onClick={uploadFiles} />
     </>
   )
 }

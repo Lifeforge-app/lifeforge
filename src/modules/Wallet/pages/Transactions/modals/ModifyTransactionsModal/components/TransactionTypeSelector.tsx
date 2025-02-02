@@ -29,15 +29,10 @@ function TransactionTypeSelector({
 
   return (
     <ListboxOrComboboxInput
-      type="listbox"
-      namespace="modules.wallet"
-      name="Transaction Type"
-      icon="tabler:list"
-      value={transactionType}
-      setValue={setTransactionType}
       buttonContent={
         <>
           <Icon
+            className="size-5"
             icon={
               TRANSACTION_TYPES.find(l => l.id === transactionType)?.icon ?? ''
             }
@@ -45,7 +40,6 @@ function TransactionTypeSelector({
               color: TRANSACTION_TYPES.find(l => l.id === transactionType)
                 ?.color
             }}
-            className="size-5"
           />
           <span className="-mt-px block truncate">
             {t(
@@ -57,12 +51,18 @@ function TransactionTypeSelector({
           </span>
         </>
       }
+      icon="tabler:list"
+      name="Transaction Type"
+      namespace="modules.wallet"
+      setValue={setTransactionType}
+      type="listbox"
+      value={transactionType}
     >
       {TRANSACTION_TYPES.map(({ name, color, id }, i) => (
         <ListboxOrComboboxOption
           key={i}
-          text={t(`transactionTypes.${toCamelCase(name)}`)}
           color={color}
+          text={t(`transactionTypes.${toCamelCase(name)}`)}
           value={id}
         />
       ))}

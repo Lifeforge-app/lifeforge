@@ -33,14 +33,14 @@ function Sidebar({
 }): React.ReactElement {
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
-      <MiniCalendar events={events} categories={categories} />
+      <MiniCalendar categories={categories} events={events} />
       <CategoryList
         categories={categories}
-        setModifyCategoryModalOpenType={setModifyCategoryModalOpenType}
-        setExistedData={setExistedData}
         setDeleteCategoryConfirmationModalOpen={
           setDeleteCategoryConfirmationModalOpen
         }
+        setExistedData={setExistedData}
+        setModifyCategoryModalOpenType={setModifyCategoryModalOpenType}
       />
     </SidebarWrapper>
   )

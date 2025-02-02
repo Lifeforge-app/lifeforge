@@ -30,7 +30,7 @@ export default function PomodoroTimer(): React.ReactElement {
         <TodoListProvider>
           <aside className={`mb-16 w-2/6 rounded-lg p-6 ${componentBg}`}>
             <h1 className="mb-8 flex items-center gap-2 text-xl font-semibold">
-              <Icon icon="tabler:clipboard-list" className="text-2xl" />
+              <Icon className="text-2xl" icon="tabler:clipboard-list" />
               <span className="ml-2">{t('title')}</span>
             </h1>
             <Scrollbar>
@@ -41,24 +41,24 @@ export default function PomodoroTimer(): React.ReactElement {
                       {entries.length > 0 ? (
                         entries.map(entry => (
                           <TaskItem
-                            entry={entry}
                             key={entry.id}
-                            lighter
                             isOuter
+                            lighter
                             entries={entries}
+                            entry={entry}
                             refreshEntries={refreshEntries}
                             setEntries={setEntries}
                           />
                         ))
                       ) : (
                         <EmptyStateScreen
-                          name="todaysTask"
-                          namespace="modules.todoList"
-                          icon="tabler:calendar-smile"
                           ctaContent="new"
                           ctaTProps={{
                             item: t('items.task')
                           }}
+                          icon="tabler:calendar-smile"
+                          name="todaysTask"
+                          namespace="modules.todoList"
                           onCTAClick={() => {
                             navigate('/todo-list#new')
                           }}

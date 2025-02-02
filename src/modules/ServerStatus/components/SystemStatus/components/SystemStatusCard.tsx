@@ -33,7 +33,7 @@ export function SystemStatusCard({
     <div className={`space-y-4 rounded-lg p-6 shadow-custom ${componentBg}`}>
       <div className="flex-between flex">
         <div className="flex items-center gap-2">
-          <Icon icon={icon} className="text-2xl text-bg-500" />
+          <Icon className="text-2xl text-bg-500" icon={icon} />
           <h2 className="text-xl text-bg-500">{title}</h2>
         </div>
         <p className="shrink-0 rounded-md border border-bg-400 px-4 py-2 text-lg text-bg-500">

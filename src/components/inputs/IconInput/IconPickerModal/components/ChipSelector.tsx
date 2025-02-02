@@ -28,25 +28,25 @@ function ChipSelector({
           .map(option => (
             <Chip
               key={option}
+              selected={value === option}
+              text={option}
               onClick={() => {
                 setValue(value === option ? null : option)
                 setExpanded(false)
               }}
-              selected={value === option}
-              text={option}
             />
           ))}
       </div>
       <button
+        className="flex-center h-8 grow gap-2 whitespace-nowrap rounded-full px-2 text-sm text-bg-500 transition-all duration-100 hover:text-bg-800 dark:hover:text-bg-100 md:grow-0"
         type="button"
         onClick={() => {
           setExpanded(!expanded)
         }}
-        className="flex-center h-8 grow gap-2 whitespace-nowrap rounded-full px-2 text-sm text-bg-500 transition-all duration-100 hover:text-bg-800 dark:hover:text-bg-100 md:grow-0"
       >
         <Icon
-          icon="uil:angle-up"
           className={`size-6 transition-all ${expanded ? 'rotate-180' : ''}`}
+          icon="uil:angle-up"
         />
       </button>
     </div>

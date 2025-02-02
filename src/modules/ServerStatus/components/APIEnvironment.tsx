@@ -8,7 +8,7 @@ function APIEnvironment(): React.ReactElement {
   return (
     <div className="mt-16 flex w-full items-center justify-between gap-6">
       <h1 className="flex items-center gap-2 text-2xl font-semibold">
-        <Icon icon="tabler:plug-connected" className="text-3xl" />
+        <Icon className="text-3xl" icon="tabler:plug-connected" />
         <span className="ml-2">API Environment</span>
       </h1>
       <span
@@ -24,13 +24,13 @@ function APIEnvironment(): React.ReactElement {
         })()}`}
       >
         <Icon
+          className="text-2xl"
           icon={
             {
               production: 'tabler:briefcase',
               development: 'tabler:traffic-cone'
             }[environment!]
           }
-          className="text-2xl"
         />
         {environment}
       </span>

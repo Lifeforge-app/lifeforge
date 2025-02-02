@@ -87,55 +87,55 @@ function ModifySubjectModal({
     <>
       <ModalWrapper isOpen={openType !== null}>
         <ModalHeader
-          title={`${
-            {
-              create: 'Create ',
-              update: 'Update '
-            }[innerOpenType!]
-          }subject`}
           icon={`${
             {
               create: 'tabler:plus',
               update: 'tabler:pencil'
             }[innerOpenType!]
           }`}
+          title={`${
+            {
+              create: 'Create ',
+              update: 'Update '
+            }[innerOpenType!]
+          }subject`}
           onClose={() => {
             setOpenType(null)
           }}
         />
         <TextInput
-          namespace="modules.notes"
-          name="Subject name"
-          icon="tabler:book"
-          value={subjectName}
-          updateValue={setSubjectName}
           darker
           className="w-[40vw]"
+          icon="tabler:book"
+          name="Subject name"
+          namespace="modules.notes"
           placeholder="My Subject"
+          updateValue={setSubjectName}
+          value={subjectName}
         />
         <TextInput
-          namespace="modules.notes"
-          name="Subject description"
-          icon="tabler:file-text"
-          value={subjectDescription}
-          updateValue={setSubjectDescription}
           darker
           className="mt-6 w-[40vw]"
+          icon="tabler:file-text"
+          name="Subject description"
+          namespace="modules.notes"
           placeholder="The best subject in the world"
+          updateValue={setSubjectDescription}
+          value={subjectDescription}
         />
         <IconInput
-          namespace="modules.notes"
-          name="Subject icon"
           icon={subjectIcon}
-          setIconSelectorOpen={setIconSelectorOpen}
+          name="Subject icon"
+          namespace="modules.notes"
           setIcon={setSubjectIcon}
+          setIconSelectorOpen={setIconSelectorOpen}
         />
         <CreateOrModifyButton
           loading={loading}
+          type={innerOpenType}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-          type={innerOpenType}
         />
       </ModalWrapper>
       <IconPickerModal

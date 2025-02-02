@@ -11,8 +11,8 @@ function DataTable({ data }: { data: BookDetailProps }): React.ReactElement {
       if (Object.entries(value).length === 1) {
         return (
           <a
-            href={Object.entries(value)[0][1] as string}
             className="break-all text-custom-500 hover:text-custom-600"
+            href={Object.entries(value)[0][1] as string}
           >
             {Object.entries(value)[0][0]}
           </a>
@@ -24,8 +24,8 @@ function DataTable({ data }: { data: BookDetailProps }): React.ReactElement {
           {Object.entries(value).map(([k, v]) => (
             <li key={k}>
               <a
-                href={v as string}
                 className="break-all text-custom-500 hover:text-custom-600"
+                href={v as string}
               >
                 {k}
               </a>
@@ -42,10 +42,10 @@ function DataTable({ data }: { data: BookDetailProps }): React.ReactElement {
             <li key={i} className="py-2">
               {Array.isArray(v) ? (
                 <a
-                  href={v[1]}
                   className="break-all text-custom-500 hover:text-custom-600"
-                  target="_blank"
+                  href={v[1]}
                   rel="noopener noreferrer"
+                  target="_blank"
                 >
                   {v[0]}
                 </a>

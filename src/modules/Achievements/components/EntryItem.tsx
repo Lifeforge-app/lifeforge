@@ -44,20 +44,20 @@ function EntryItem({
       <HamburgerMenu className="relative">
         <MenuItem
           icon="tabler:pencil"
+          text="Edit"
           onClick={() => {
             setExistedData(entry)
             setModifyAchievementModalOpenType('update')
           }}
-          text="Edit"
         />
         <MenuItem
+          isRed
           icon="tabler:trash"
+          text="Delete"
           onClick={() => {
             setExistedData(entry)
             setDeleteAchievementConfirmationModalOpen(true)
           }}
-          text="Delete"
-          isRed
         />
       </HamburgerMenu>
     </div>

@@ -49,23 +49,23 @@ function DateRangeSelector(): React.ReactElement {
       <div className="px-4">
         {dateInputsConfig.map(({ type, icon, name }, idx) => (
           <DateInput
-            index={idx}
             key={type}
             darker
-            icon={icon}
+            className={`w-full ${idx === 1 && 'mt-4'}`}
             date={
               searchParams.get(type) !== null &&
               moment(searchParams.get(type)).isValid()
                 ? moment(searchParams.get(type)).format('YYYY-MM-DD')
                 : ''
             }
+            hasMargin={false}
+            icon={icon}
+            index={idx}
+            name={name}
+            namespace="modules.wallet"
             setDate={date => {
               handleDateChange(date, type)
             }}
-            namespace="modules.wallet"
-            name={name}
-            className={`w-full ${idx === 1 && 'mt-4'}`}
-            hasMargin={false}
           />
         ))}
       </div>

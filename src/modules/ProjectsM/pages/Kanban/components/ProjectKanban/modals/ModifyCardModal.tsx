@@ -10,7 +10,7 @@ function ModifyCardModal({
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
 }): React.ReactElement {
   return (
-    <ModalWrapper isOpen={openType !== null} minWidth="60vw" minHeight="70vh">
+    <ModalWrapper isOpen={openType !== null} minHeight="70vh" minWidth="60vw">
       <ModalHeader
         icon="tabler:cards"
         title={openType === 'create' ? 'Create Card' : 'Update Card'}

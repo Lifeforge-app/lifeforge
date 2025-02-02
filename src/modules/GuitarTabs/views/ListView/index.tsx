@@ -19,9 +19,9 @@ function ListView({
         <EntryItem
           key={entry.id}
           entry={entry}
+          setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
           setExistingEntry={setExistingEntry}
           setModifyEntryModalOpen={setModifyEntryModalOpen}
-          setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
         />
       ))}
     </ul>

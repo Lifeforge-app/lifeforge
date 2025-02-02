@@ -67,7 +67,21 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
   return (
     <Menu as="div" className={className}>
       <MenuButton
+        className={`rounded-md transition-all ${getPaddingClass(
+          largerPadding,
+          smallerPadding
+        )} ${
+          (style.color === undefined && customTailwindColor) ??
+          getColorClass(lighter)
+        }`}
         style={style}
+        onClick={e => {
+          e.stopPropagation()
+          setIsOpen(!isOpen)
+          if (onButtonClick !== undefined) {
+            onButtonClick(e)
+          }
+        }}
         onMouseEnter={e => {
           if (customHoverColor !== undefined) {
             e.currentTarget.style.backgroundColor = customHoverColor
@@ -78,38 +92,24 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
             e.currentTarget.style.backgroundColor = ''
           }
         }}
-        onClick={e => {
-          e.stopPropagation()
-          setIsOpen(!isOpen)
-          if (onButtonClick !== undefined) {
-            onButtonClick(e)
-          }
-        }}
-        className={`rounded-md transition-all ${getPaddingClass(
-          largerPadding,
-          smallerPadding
-        )} ${
-          (style.color === undefined && customTailwindColor) ??
-          getColorClass(lighter)
-        }`}
       >
         <Icon
-          icon={customIcon ?? 'tabler:dots-vertical'}
           className={largerIcon === true ? 'size-6' : 'size-5'}
+          icon={customIcon ?? 'tabler:dots-vertical'}
         />
       </MenuButton>
       <Transition
+        afterLeave={() => {
+          if (onClose !== undefined) {
+            onClose()
+          }
+        }}
         enter="transition-opacity duration-200"
         enterFrom="opacity-0"
         enterTo="opacity-100"
         leave="transition-opacity duration-150"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
-        afterLeave={() => {
-          if (onClose !== undefined) {
-            onClose()
-          }
-        }}
       >
         <TransitionChild>
           <MenuItems

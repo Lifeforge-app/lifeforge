@@ -514,7 +514,6 @@ export default function PersonalizationProvider({
   return (
     <PersonalizationContext value={value}>
       <meta
-        name="theme-color"
         content={
           themeColor.startsWith('#')
             ? themeColor
@@ -522,6 +521,7 @@ export default function PersonalizationProvider({
                 themeColor.replace('theme-', '') as keyof typeof THEME_COLOR_HEX
               ]
         }
+        name="theme-color"
       />
       {children}
     </PersonalizationContext>

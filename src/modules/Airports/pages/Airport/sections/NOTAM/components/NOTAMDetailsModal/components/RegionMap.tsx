@@ -23,14 +23,14 @@ function RegionMap({
     <div className="mt-6 h-96 overflow-hidden rounded-md">
       <MapContainer
         center={data.qualification.coordinates[0]}
-        zoom={10}
         className="h-96! w-full"
+        zoom={10}
       >
         <TileLayer
-          url="https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
           attribution='&copy; <a href="https://www.google.com/maps">Google Maps</a>'
           maxZoom={20}
           subdomains={['mt1', 'mt2', 'mt3']}
+          url="https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
         />
         {data.content.area?.filter(e => e[0] !== 0 && e[1] !== 0)?.length >
         3 ? (
@@ -45,8 +45,8 @@ function RegionMap({
             />
             <CircleMarker
               center={data.qualification.coordinates[0]}
-              radius={2}
               fillOpacity={1}
+              radius={2}
             />
           </>
         )}

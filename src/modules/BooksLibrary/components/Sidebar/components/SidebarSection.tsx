@@ -23,8 +23,8 @@ function SidebarSection({
   return (
     <>
       <SidebarTitle
-        namespace="modules.booksLibrary"
         name={stuff}
+        namespace="modules.booksLibrary"
         {...(hasActionButton
           ? {
               actionButtonIcon: 'tabler:plus',
@@ -42,10 +42,10 @@ function SidebarSection({
               {data.map(item => (
                 <SidebarItem
                   key={item.id}
-                  item={item}
-                  stuff={stuff}
                   fallbackIcon={fallbackIcon}
                   hasHamburgerMenu={hasHamburgerMenu}
+                  item={item}
+                  stuff={stuff}
                 />
               ))}
             </>

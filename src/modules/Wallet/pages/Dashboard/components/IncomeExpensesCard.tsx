@@ -20,10 +20,10 @@ function IncomeExpenseCard({
 
   return (
     <DashboardItem
+      className="col-span-1 row-span-1"
       icon={icon}
       namespace="modules.wallet"
       title={isIncome ? 'income' : 'expenses'}
-      className="col-span-1 row-span-1"
     >
       {typeof data !== 'string' && (
         <>
@@ -39,8 +39,8 @@ function IncomeExpenseCard({
                     .map((_, i) => (
                       <Icon
                         key={i}
-                        icon="uil:asterisk"
                         className="-mx-0.5 size-6 xl:size-8"
+                        icon="uil:asterisk"
                       />
                     ))}
                 </span>
@@ -64,8 +64,8 @@ function IncomeExpenseCard({
                       .map((_, i) => (
                         <Icon
                           key={i}
-                          icon="uil:asterisk"
                           className="-mx-0.5 size-4"
+                          icon="uil:asterisk"
                         />
                       ))}
                   </span>

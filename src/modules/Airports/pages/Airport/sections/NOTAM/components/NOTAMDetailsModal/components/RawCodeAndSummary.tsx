@@ -47,11 +47,11 @@ function RawCodeAndSummary({
       {summary === null ? (
         <Button
           className="mt-4 w-full"
+          icon="mage:stars-c"
+          loading={summarizeButtonLoading}
           onClick={() => {
             summarizeWithAI().catch(console.error)
           }}
-          loading={summarizeButtonLoading}
-          icon="mage:stars-c"
         >
           Summarize with AI
         </Button>
@@ -60,7 +60,7 @@ function RawCodeAndSummary({
           <Markdown className="prose">{summary}</Markdown>
           <div className="mt-4 rounded-md border-l-4 border-yellow-500 bg-yellow-500/20 p-4 text-yellow-500">
             <h2 className="flex items-center gap-2 text-xl font-medium">
-              <Icon icon="tabler:alert-triangle" className="size-5" />
+              <Icon className="size-5" icon="tabler:alert-triangle" />
               Warning
             </h2>
             <p className="mt-2">

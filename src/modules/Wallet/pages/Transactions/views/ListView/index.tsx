@@ -32,7 +32,6 @@ function ListView({
         <AS>
           {({ height, width }: { height: number; width: number }) => (
             <L
-              width={width}
               height={height}
               rowCount={transactions.length}
               rowHeight={80}
@@ -50,18 +49,19 @@ function ListView({
                 return (
                   <div key={key} style={style}>
                     <TransactionListItem
-                      transaction={transaction}
-                      setModifyModalOpenType={setModifyModalOpenType}
                       setDeleteTransactionsConfirmationOpen={
                         setDeleteTransactionsConfirmationOpen
                       }
+                      setModifyModalOpenType={setModifyModalOpenType}
                       setReceiptModalOpen={setReceiptModalOpen}
                       setReceiptToView={setReceiptToView}
                       setSelectedData={setSelectedData}
+                      transaction={transaction}
                     />
                   </div>
                 )
               }}
+              width={width}
             />
           )}
         </AS>

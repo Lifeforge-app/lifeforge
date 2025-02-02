@@ -43,7 +43,7 @@ function ConfigColumn({
         } ${className}`}
       >
         <div className="flex shrink items-center gap-4">
-          <Icon icon={icon} className="size-6 shrink-0 text-bg-500" />
+          <Icon className="size-6 shrink-0 text-bg-500" icon={icon} />
           <div>
             <h3 className="flex w-full items-center gap-2 text-xl font-medium leading-normal md:w-auto">
               {title}
@@ -54,8 +54,8 @@ function ConfigColumn({
                   )}`}
                 >
                   <Icon
-                    icon="tabler:info-circle"
                     className="size-5 text-bg-500"
+                    icon="tabler:info-circle"
                   />
                 </span>
               )}
@@ -68,12 +68,12 @@ function ConfigColumn({
         </div>
         {tooltip !== undefined && (
           <Tooltip
-            id={`tooltip-${toDashCase(title?.toString() ?? '')}`}
             className="z-9999 rounded-md! bg-bg-50 p-4! text-base! text-bg-800 shadow-custom dark:bg-bg-900 dark:text-bg-50"
             classNameArrow="size-6!"
+            id={`tooltip-${toDashCase(title?.toString() ?? '')}`}
+            opacity={1}
             place="top-start"
             positionStrategy="fixed"
-            opacity={1}
           >
             {tooltip}
           </Tooltip>

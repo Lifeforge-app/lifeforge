@@ -28,29 +28,29 @@ function AssetListbox({
 }: AssetListboxProps): React.ReactElement {
   return (
     <ListboxOrComboboxInput
-      type="listbox"
-      name={label}
-      icon={iconName}
-      value={selectedAsset}
-      setValue={onAssetChange}
-      namespace="modules.wallet"
       buttonContent={
         <>
           <Icon
+            className="size-5"
             icon={
               assets.find(l => l.id === selectedAsset)?.icon ??
               'tabler:wallet-off'
             }
-            className="size-5"
           />
           <span className="-mt-px block truncate">
             {assets.find(l => l.id === selectedAsset)?.name ?? 'None'}
           </span>
         </>
       }
+      icon={iconName}
+      name={label}
+      namespace="modules.wallet"
+      setValue={onAssetChange}
+      type="listbox"
+      value={selectedAsset}
     >
       {assets.map(({ name, id, icon }, i) => (
-        <ListboxOrComboboxOption key={i} text={name} icon={icon} value={id} />
+        <ListboxOrComboboxOption key={i} icon={icon} text={name} value={id} />
       ))}
     </ListboxOrComboboxInput>
   )

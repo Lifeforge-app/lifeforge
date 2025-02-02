@@ -20,6 +20,29 @@ function TimelineScrollbar(): React.ReactElement {
       {typeof photos !== 'string' && photos.totalItems !== 0 && (
         <>
           <div
+            className="group peer absolute right-0 top-0 h-full w-0 sm:w-16"
+            onClick={e => {
+              if (galleryWrapperRef.current !== null) {
+                const galleryContainerHeight =
+                  galleryWrapperRef.current.scrollHeight
+
+                const { top, height } = (
+                  e.target as HTMLDivElement
+                ).getBoundingClientRect()
+                const mousePositionInGalleryContainer =
+                  ((e.clientY - top) / height) * galleryContainerHeight
+
+                galleryWrapperRef.current.scrollTo({
+                  top: Math.round(mousePositionInGalleryContainer)
+                })
+              }
+            }}
+            onMouseDown={() => {
+              isDraggingRef.current = true
+            }}
+            onMouseLeave={() => {
+              isDraggingRef.current = false
+            }}
             onMouseMove={e => {
               if (galleryWrapperRef.current !== null) {
                 const rect = (
@@ -64,15 +87,6 @@ function TimelineScrollbar(): React.ReactElement {
                 }
               }
             }}
-            onMouseLeave={() => {
-              isDraggingRef.current = false
-            }}
-            onMouseDown={() => {
-              isDraggingRef.current = true
-            }}
-            onMouseUp={() => {
-              isDraggingRef.current = false
-            }}
             onMouseOut={() => {
               if (
                 galleryWrapperRef.current !== null &&
@@ -86,23 +100,9 @@ function TimelineScrollbar(): React.ReactElement {
                 )}px`
               }
             }}
-            onClick={e => {
-              if (galleryWrapperRef.current !== null) {
-                const galleryContainerHeight =
-                  galleryWrapperRef.current.scrollHeight
-
-                const { top, height } = (
-                  e.target as HTMLDivElement
-                ).getBoundingClientRect()
-                const mousePositionInGalleryContainer =
-                  ((e.clientY - top) / height) * galleryContainerHeight
-
-                galleryWrapperRef.current.scrollTo({
-                  top: Math.round(mousePositionInGalleryContainer)
-                })
-              }
+            onMouseUp={() => {
+              isDraggingRef.current = false
             }}
-            className="group peer absolute right-0 top-0 h-full w-0 sm:w-16"
           >
             {JSON.stringify(eachDayDimensions) !== '{}' && (
               <>

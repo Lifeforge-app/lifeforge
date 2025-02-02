@@ -71,12 +71,15 @@ function WishlistEntries(): React.ReactElement {
   return (
     <ModuleWrapper>
       <Header
-        wishlistListDetails={wishlistListDetails}
-        setModifyEntryModalOpenType={setModifyEntryModalOpenType}
         setExistedData={setExistedData}
         setFromOtherAppsModalOpen={setFromOtherAppsModalOpen}
+        setModifyEntryModalOpenType={setModifyEntryModalOpenType}
+        wishlistListDetails={wishlistListDetails}
       />
       <Tabs
+        active={activeTab}
+        className="mt-6"
+        enabled={['wishlist', 'bought']}
         items={[
           {
             id: 'wishlist',
@@ -113,10 +116,7 @@ function WishlistEntries(): React.ReactElement {
             })()
           }
         ]}
-        active={activeTab}
-        enabled={['wishlist', 'bought']}
         onNavClick={setActiveTab}
-        className="mt-6"
       />
       <APIFallbackComponent data={collectionId}>
         {collectionId => (
@@ -125,13 +125,13 @@ function WishlistEntries(): React.ReactElement {
               if (entries.length === 0) {
                 return (
                   <EmptyStateScreen
-                    name="entries"
-                    namespace="modules.wishlist"
-                    icon="tabler:shopping-cart-off"
                     ctaContent="new"
                     ctaTProps={{
                       item: t('items.entry')
                     }}
+                    icon="tabler:shopping-cart-off"
+                    name="entries"
+                    namespace="modules.wishlist"
                   />
                 )
               }
@@ -142,11 +142,11 @@ function WishlistEntries(): React.ReactElement {
                     {entries.map(entry => (
                       <EntryItem
                         key={entry.id}
-                        entry={entry}
                         collectionId={collectionId}
+                        entry={entry}
                         setEntries={setEntries}
-                        onEdit={handleEdit}
                         onDelete={handleDelete}
+                        onEdit={handleEdit}
                       />
                     ))}
                   </ul>
@@ -158,19 +158,16 @@ function WishlistEntries(): React.ReactElement {
       </APIFallbackComponent>
       <FromOtherAppsModal
         isOpen={isFromOtherAppsModalOpen}
+        setExistedData={setExistedData}
+        setModifyEntryModalOpenType={setModifyEntryModalOpenType}
         onClose={() => {
           setFromOtherAppsModalOpen(false)
         }}
-        setExistedData={setExistedData}
-        setModifyEntryModalOpenType={setModifyEntryModalOpenType}
       />
       <DeleteConfirmationModal
-        isOpen={deleteEntryConfirmationModalOpen}
-        onClose={() => {
-          setDeleteEntryConfirmationModalOpen(false)
-        }}
         apiEndpoint="wishlist/entries"
         data={existedData}
+        isOpen={deleteEntryConfirmationModalOpen}
         itemName="entry"
         nameKey="name"
         updateDataLists={() => {
@@ -181,35 +178,38 @@ function WishlistEntries(): React.ReactElement {
             return prev.filter(e => e.id !== existedData?.id)
           })
         }}
+        onClose={() => {
+          setDeleteEntryConfirmationModalOpen(false)
+        }}
       />
       <ModifyEntryModal
-        openType={modifyEntryModalOpenType}
+        collectionId={collectionId}
         existedData={existedData}
+        lists={lists}
+        openType={modifyEntryModalOpenType}
         setEntries={setEntries}
         setOpenType={setModifyEntryModalOpenType}
-        collectionId={collectionId}
-        lists={lists}
       />
       <Menu as="div" className="absolute bottom-6 right-6 z-50 block md:hidden">
-        <Button onClick={() => {}} icon="tabler:plus" as={MenuButton} />
+        <Button as={MenuButton} icon="tabler:plus" onClick={() => {}} />
         <MenuItems
           transition
           anchor="top end"
           className="overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
         >
           <MenuItem
-            namespace="modules.wishlist"
-            onClick={() => {}}
             icon="tabler:plus"
+            namespace="modules.wishlist"
             text="Add Manually"
+            onClick={() => {}}
           />
           <MenuItem
+            icon="tabler:apps"
             namespace="modules.wishlist"
+            text="From Other Apps"
             onClick={() => {
               setFromOtherAppsModalOpen(true)
             }}
-            icon="tabler:apps"
-            text="From Other Apps"
           />
         </MenuItems>
       </Menu>
