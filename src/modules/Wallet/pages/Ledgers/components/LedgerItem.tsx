@@ -30,11 +30,11 @@ function LedgerItem({
 
   return (
     <button
+      className={`flex-between relative flex w-full gap-4 rounded-lg p-4 shadow-custom transition-all ${componentBgWithHover}`}
       type="button"
       onClick={() => {
         navigate(`/wallet/transactions?ledger=${ledger.id}`)
       }}
-      className={`flex-between relative flex w-full gap-4 rounded-lg p-4 shadow-custom transition-all ${componentBgWithHover}`}
     >
       <div className="flex items-center gap-3">
         <span
@@ -44,11 +44,11 @@ function LedgerItem({
           }}
         >
           <Icon
+            className="size-8"
             icon={ledger.icon}
             style={{
               color: ledger.color
             }}
-            className="size-8"
           />
         </span>
         <div>
@@ -72,9 +72,9 @@ function LedgerItem({
           }}
         />
         <MenuItem
+          isRed
           icon="tabler:trash"
           text="Delete"
-          isRed
           onClick={() => {
             setSelectedData(ledger)
             setDeleteLedgersConfirmationOpen(true)

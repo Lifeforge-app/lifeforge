@@ -42,12 +42,40 @@ function _SidebarItem({
     <>
       <SidebarItem
         active={searchParams.get(singleStuff) === item.id}
-        sideStripColor={
-          stuff === 'statuses' ? (item as IProjectsMStatus).color : undefined
+        hamburgerMenuItems={
+          <>
+            <MenuItem
+              icon="tabler:pencil"
+              text="Edit"
+              onClick={e => {
+                e.stopPropagation()
+                setExistedData(item as any)
+                setModifyDataModalOpenType('update')
+              }}
+            />
+            <MenuItem
+              isRed
+              icon="tabler:trash"
+              text="Delete"
+              onClick={e => {
+                e.stopPropagation()
+                setExistedData(item as any)
+                setDeleteDataConfirmationOpen(true)
+              }}
+            />
+          </>
         }
         icon={item.icon}
         name={item.name}
         number={Math.floor(Math.random() * 100)}
+        sideStripColor={
+          stuff === 'statuses' ? (item as IProjectsMStatus).color : undefined
+        }
+        onCancelButtonClick={() => {
+          searchParams.delete(singleStuff)
+          setSearchParams(searchParams)
+          setSidebarOpen(false)
+        }}
         onClick={() => {
           setSearchParams({
             ...Object.fromEntries(searchParams.entries()),
@@ -55,34 +83,6 @@ function _SidebarItem({
           })
           setSidebarOpen(false)
         }}
-        onCancelButtonClick={() => {
-          searchParams.delete(singleStuff)
-          setSearchParams(searchParams)
-          setSidebarOpen(false)
-        }}
-        hamburgerMenuItems={
-          <>
-            <MenuItem
-              icon="tabler:pencil"
-              onClick={e => {
-                e.stopPropagation()
-                setExistedData(item as any)
-                setModifyDataModalOpenType('update')
-              }}
-              text="Edit"
-            />
-            <MenuItem
-              isRed
-              icon="tabler:trash"
-              onClick={e => {
-                e.stopPropagation()
-                setExistedData(item as any)
-                setDeleteDataConfirmationOpen(true)
-              }}
-              text="Delete"
-            />
-          </>
-        }
       />
     </>
   )

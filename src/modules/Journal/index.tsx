@@ -61,11 +61,11 @@ function Journal(): React.ReactElement {
     if (!otpSuccess) {
       return (
         <OTPScreen
-          verificationEndpoint="journal/auth/otp"
           callback={() => {
             setOtpSuccess(true)
           }}
           fetchChallenge={fetchChallenge}
+          verificationEndpoint="journal/auth/otp"
         />
       )
     }
@@ -83,8 +83,8 @@ function Journal(): React.ReactElement {
       return (
         <LockedScreen
           endpoint="journal/auth/verify"
-          setMasterPassword={setMasterPassword}
           fetchChallenge={fetchChallenge}
+          setMasterPassword={setMasterPassword}
         />
       )
     }
@@ -92,47 +92,47 @@ function Journal(): React.ReactElement {
     return (
       <>
         <JournalList
-          setJournalViewModalOpen={setJournalViewModalOpen}
-          setCurrentViewingJournal={setCurrentViewingJournal}
+          entries={entries}
+          fetchData={fetchData}
           masterPassword={masterPassword}
-          setModifyEntryModalOpenType={setModifyEntryModalOpenType}
+          setCurrentViewingJournal={setCurrentViewingJournal}
           setDeleteJournalConfirmationModalOpen={
             setDeleteJournalConfirmationModalOpen
           }
           setExistedData={setExistedData}
-          fetchData={fetchData}
-          entries={entries}
+          setJournalViewModalOpen={setJournalViewModalOpen}
+          setModifyEntryModalOpenType={setModifyEntryModalOpenType}
         />
         <JournalViewModal
           id={currentViewingJournal}
           isOpen={journalViewModalOpen}
+          masterPassword={masterPassword}
           onClose={() => {
             setJournalViewModalOpen(false)
             setCurrentViewingJournal(null)
           }}
-          masterPassword={masterPassword}
         />
         <ModifyJournalEntryModal
+          existedData={existedData}
+          masterPassword={masterPassword}
           openType={modifyEntryModalOpenType}
           onClose={() => {
             setModifyEntryModalOpenType(null)
             setExistedData(null)
             fetchData().catch(console.error)
           }}
-          existedData={existedData}
-          masterPassword={masterPassword}
         />
         <DeleteConfirmationModal
           apiEndpoint="journal/entries/delete"
           data={existedData}
           isOpen={deleteJournalConfirmationModalOpen}
-          onClose={() => {
-            setDeleteJournalConfirmationModalOpen(false)
-          }}
           itemName="journal entry"
           updateDataLists={() => {
             setExistedData(null)
             fetchData().catch(console.error)
+          }}
+          onClose={() => {
+            setDeleteJournalConfirmationModalOpen(false)
           }}
         />
       </>
@@ -145,12 +145,12 @@ function Journal(): React.ReactElement {
         <ModuleHeader icon="tabler:book" title="Journal" />
         {masterPassword !== '' && (
           <Button
+            className="hidden lg:flex "
+            icon="tabler:plus"
             onClick={() => {
               setExistedData(null)
               setModifyEntryModalOpenType('create')
             }}
-            icon="tabler:plus"
-            className="hidden lg:flex "
           >
             new entry
           </Button>

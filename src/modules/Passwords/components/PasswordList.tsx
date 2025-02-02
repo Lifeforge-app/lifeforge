@@ -46,11 +46,11 @@ function PasswordList(): React.ReactElement {
       {filteredPasswordList =>
         filteredPasswordList.length === 0 ? (
           <EmptyStateScreen
-            name="password"
-            namespace="modules.passwords"
-            icon="tabler:key-off"
             ctaContent="new"
             ctaTProps={{ item: t('items.password') }}
+            icon="tabler:key-off"
+            name="password"
+            namespace="modules.passwords"
             onCTAClick={() => {
               setModifyPasswordModalOpenType('create')
               setExistedData(null)

@@ -33,8 +33,8 @@ function Radio(): React.ReactElement {
             <div className="my-8">
               <EmptyStateScreen
                 icon="tabler:radio-off"
-                namespace="modules.airports"
                 name="radio"
+                namespace="modules.airports"
               />
             </div>
           )}

@@ -11,7 +11,7 @@ function FlightCategory({
   return (
     <WidgetWrapper>
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
-        <Icon icon="tabler:plane" className="text-2xl" />
+        <Icon className="text-2xl" icon="tabler:plane" />
         <span className="ml-2">Flight Category</span>
       </h1>
       <div className="flex w-full flex-1 flex-col items-center justify-center">

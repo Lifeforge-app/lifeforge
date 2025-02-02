@@ -127,12 +127,12 @@ function ImagePreviewModal({
   return (
     <>
       <ModalWrapper
-        isOpen={isOpen}
-        minWidth="90%"
-        minHeight="90vh"
         className="h-full"
+        isOpen={isOpen}
+        minHeight="90vh"
+        minWidth="90%"
       >
-        <ModalHeader title="Image Preview" onClose={onClose} icon="uil:image" />
+        <ModalHeader icon="uil:image" title="Image Preview" onClose={onClose} />
         {isOpen && data !== null && (
           <>
             <header className="flex-between mb-6 flex w-full gap-2">
@@ -147,7 +147,7 @@ function ImagePreviewModal({
                   case 'error':
                     return (
                       <div className="flex items-center gap-2 text-lg text-red-500">
-                        <Icon icon="tabler:alert-triangle" className="size-5" />
+                        <Icon className="size-5" icon="tabler:alert-triangle" />
                         Failed to load image name
                       </div>
                     )
@@ -159,41 +159,41 @@ function ImagePreviewModal({
                 <HamburgerMenu
                   lighter
                   className="relative"
-                  customWidth="w-56"
                   customIcon="tabler:download"
+                  customWidth="w-56"
                 >
                   {data.has_raw && (
                     <MenuItem
                       icon="tabler:download"
+                      text="Download RAW"
                       onClick={() => {
                         requestDownload(true).catch(console.error)
                       }}
-                      text="Download RAW"
                     />
                   )}
                   <MenuItem
                     icon="tabler:download"
+                    text="Download JPEG"
                     onClick={() => {
                       requestDownload(false).catch(console.error)
                     }}
-                    text="Download JPEG"
                   />
                 </HamburgerMenu>
                 <Button
-                  icon="tabler:trash"
                   isRed
+                  className="p-2!"
+                  icon="tabler:trash"
                   variant="no-bg"
                   onClick={() => {
                     setDeletePhotosConfirmationModalOpen(true)
                   }}
-                  className="p-2!"
                 />
                 <HamburgerMenu lighter className="relative" customWidth="w-56">
                   {beingDisplayedInAlbum && (
                     <MenuItem
                       icon="tabler:album"
-                      onClick={setAsCover}
                       text="Set as album cover"
+                      onClick={setAsCover}
                     />
                   )}
                 </HamburgerMenu>
@@ -202,15 +202,17 @@ function ImagePreviewModal({
             <div className="flex-between flex h-full flex-1 overflow-y-hidden">
               {onPreviousPhoto !== undefined && (
                 <Button
-                  onClick={onPreviousPhoto}
-                  icon="tabler:chevron-left"
                   className="h-full"
+                  icon="tabler:chevron-left"
                   variant="no-bg"
+                  onClick={onPreviousPhoto}
                 />
               )}
               <div className="flex-center size-full min-h-0 min-w-0">
                 <img
                   key={data.id}
+                  alt=""
+                  className="h-full object-contain"
                   src={`${import.meta.env.VITE_API_HOST}/media/${
                     data.collectionId
                   }/${
@@ -218,16 +220,14 @@ function ImagePreviewModal({
                       ? (data as IPhotoAlbumEntryItem).photoId
                       : data.id
                   }/${data.image}`}
-                  alt=""
-                  className="h-full object-contain"
                 />
               </div>
               {onNextPhoto !== undefined && (
                 <Button
-                  onClick={onNextPhoto}
-                  icon="tabler:chevron-right"
                   className="h-full"
+                  icon="tabler:chevron-right"
                   variant="no-bg"
+                  onClick={onNextPhoto}
                 />
               )}
             </div>
@@ -235,6 +235,10 @@ function ImagePreviewModal({
         )}
       </ModalWrapper>
       <DeletePhotosConfirmationModal
+        customIsOpen={deleteConfirmationModalOpen}
+        customPhotoToBeDeleted={data ?? undefined}
+        customSetIsOpen={setDeletePhotosConfirmationModalOpen}
+        isInAlbumGallery={beingDisplayedInAlbum}
         setPhotos={(photos: any) => {
           if (setPhotos !== undefined) {
             setPhotos(photos)
@@ -248,10 +252,6 @@ function ImagePreviewModal({
             onClose()
           }
         }}
-        isInAlbumGallery={beingDisplayedInAlbum}
-        customIsOpen={deleteConfirmationModalOpen}
-        customSetIsOpen={setDeletePhotosConfirmationModalOpen}
-        customPhotoToBeDeleted={data ?? undefined}
       />
     </>
   )

@@ -58,28 +58,28 @@ function ListboxOrComboboxInput(
     case undefined:
       return (
         <ListboxInputWrapper
+          className={props.className}
+          multiple={props.multiple}
           value={value}
           onChange={setValue}
-          multiple={props.multiple}
-          className={props.className}
         >
           <ListboxButton className="group flex w-full items-center">
             <InputIcon
               isListbox
-              icon={icon}
               active={
                 (value !== null && value.length !== 0) || customActive === true
               }
+              icon={icon}
             />
             <InputLabel
-              label={t(
-                [tKey, 'inputs', toCamelCase(name)].filter(e => e).join('.')
-              )}
-              required={required === true}
               isListbox
               active={
                 (value !== null && value.length !== 0) || customActive === true
               }
+              label={t(
+                [tKey, 'inputs', toCamelCase(name)].filter(e => e).join('.')
+              )}
+              required={required === true}
             />
             <div className="relative mb-3 mt-10 flex min-h-[1.2rem] w-full items-center gap-2 rounded-lg pl-3 pr-10 text-left focus:outline-hidden">
               {((value !== null && value.length !== 0) ||
@@ -87,7 +87,7 @@ function ListboxOrComboboxInput(
                 props.buttonContent}
             </div>
             <span className="pointer-events-none absolute inset-y-0 right-0 mr-2 mt-1 flex items-center pr-4">
-              <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
+              <Icon className="size-5 text-bg-500" icon="tabler:chevron-down" />
             </span>
           </ListboxButton>
           <ListboxOrComboboxOptions>{children}</ListboxOrComboboxOptions>
@@ -96,32 +96,32 @@ function ListboxOrComboboxInput(
     case 'combobox':
       return (
         <ComboboxInputWrapper
+          setQuery={props.setQuery}
           value={value}
           onChange={setValue}
-          setQuery={props.setQuery}
         >
           <div className="group flex w-full items-center">
             <InputIcon
               isListbox
-              icon={icon}
               active={
                 (value !== null && value.length !== 0) || customActive === true
               }
+              icon={icon}
             />
             <InputLabel
-              label={t(`inputs.${toCamelCase(name)}`)}
-              required={required === true}
               isListbox
               active={
                 (value !== null && value.length !== 0) || customActive === true
               }
+              label={t(`inputs.${toCamelCase(name)}`)}
+              required={required === true}
             />
             <ComboboxInput
+              className="relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg bg-transparent! px-5 text-left focus:outline-hidden"
               displayValue={props.displayValue}
               onChange={(e: any) => {
                 props.setQuery(e.target.value)
               }}
-              className="relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg bg-transparent! px-5 text-left focus:outline-hidden"
             />
           </div>
           <ListboxOrComboboxOptions type="combobox">

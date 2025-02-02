@@ -92,12 +92,12 @@ function TableBody({
           })()}
 
           <ActionColumn
-            transaction={transaction}
-            setSelectedData={setSelectedData}
-            setModifyModalOpenType={setModifyModalOpenType}
             setDeleteTransactionsConfirmationOpen={
               setDeleteTransactionsConfirmationOpen
             }
+            setModifyModalOpenType={setModifyModalOpenType}
+            setSelectedData={setSelectedData}
+            transaction={transaction}
           />
         </tr>
       ))}

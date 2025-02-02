@@ -98,15 +98,14 @@ function DashboardGrid({
   return Object.values(enabledWidgets).every(e => e.length === 0) ? (
     <div className="flex h-full flex-1 items-center justify-center">
       <EmptyStateScreen
-        namespace="modules.dashboard"
-        name="widget"
         icon="tabler:apps-off"
+        name="widget"
+        namespace="modules.dashboard"
       />
     </div>
   ) : (
     <RGL
       className={`pt-6 ${canLayoutChange ? 'pb-64' : ''}`}
-      layouts={enabledWidgets}
       cols={
         {
           lg: 8,
@@ -116,12 +115,13 @@ function DashboardGrid({
           xxs: 4
         } as any
       }
-      onLayoutChange={onLayoutChange}
+      isDraggable={canLayoutChange}
+      isDroppable={canLayoutChange}
+      isResizable={canLayoutChange}
+      layouts={enabledWidgets}
       rowHeight={100}
       width={width}
-      isDraggable={canLayoutChange}
-      isResizable={canLayoutChange}
-      isDroppable={canLayoutChange}
+      onLayoutChange={onLayoutChange}
     >
       {[
         ...new Set(
@@ -137,8 +137,8 @@ function DashboardGrid({
           })()}
           {canLayoutChange && (
             <Icon
-              icon="clarity:drag-handle-corner-line"
               className="absolute bottom-0 right-0 text-2xl"
+              icon="clarity:drag-handle-corner-line"
             />
           )}
         </div>

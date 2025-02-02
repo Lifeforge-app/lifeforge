@@ -34,22 +34,22 @@ function EntryItem({
 
   return (
     <Link
-      to={`/airports/${continentID}/${countryID}/${regionID}/${id}`}
       className={`flex-between flex w-full rounded-lg p-4 px-6 shadow-custom transition-all ${componentBgWithHover}`}
+      to={`/airports/${continentID}/${countryID}/${regionID}/${id}`}
     >
       <div className="flex items-center gap-4">
         <Icon
-          icon={AIRPORT_TYPES[type as keyof typeof AIRPORT_TYPES]?.[1]}
           className={`size-7 ${
             AIRPORT_TYPES[type as keyof typeof AIRPORT_TYPES]?.[0]
           }`}
+          icon={AIRPORT_TYPES[type as keyof typeof AIRPORT_TYPES]?.[1]}
         />
         <div>
           <p className="text-left text-xl font-medium">{name}</p>
           <p className="text-left text-bg-500">{location}</p>
         </div>
       </div>
-      <Icon icon="tabler:chevron-right" className="size-5 text-bg-500" />
+      <Icon className="size-5 text-bg-500" icon="tabler:chevron-right" />
     </Link>
   )
 }

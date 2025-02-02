@@ -87,6 +87,11 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
             ].map(([name, icon], index) => (
               <button
                 key={index}
+                className={`flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all ${
+                  location.hash.replace('#', '') === name.toLowerCase()
+                    ? 'border-custom-500 font-medium text-custom-500'
+                    : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
+                }`}
                 onClick={() => {
                   navigate(
                     location.pathname +
@@ -94,37 +99,32 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
                       `#${name.toLowerCase()}`
                   )
                 }}
-                className={`flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all ${
-                  location.hash.replace('#', '') === name.toLowerCase()
-                    ? 'border-custom-500 font-medium text-custom-500'
-                    : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
-                }`}
               >
-                <Icon icon={icon} className="size-5" />
+                <Icon className="size-5" icon={icon} />
                 {name}
               </button>
             ))}
           </div>
           <Button
+            className="mt-6"
+            icon="tabler:arrow-up"
+            loading={previousPageLoading}
+            variant="no-bg"
             onClick={() => {
               fetchPreviousPage().catch(console.error)
             }}
-            loading={previousPageLoading}
-            variant="no-bg"
-            icon="tabler:arrow-up"
-            className="mt-6"
           >
             Previous Flights
           </Button>
           <FlightsTable data={data} />
           <Button
+            className="mb-8"
+            icon="tabler:arrow-down"
+            loading={nextPageLoading}
+            variant="no-bg"
             onClick={() => {
               fetchNextPage().catch(console.error)
             }}
-            loading={nextPageLoading}
-            variant="no-bg"
-            icon="tabler:arrow-down"
-            className="mb-8"
           >
             Next Flights
           </Button>

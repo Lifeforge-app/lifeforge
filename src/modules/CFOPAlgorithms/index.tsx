@@ -18,13 +18,13 @@ function CFOPAlgorithms(): React.ReactElement {
         }).map(([key, value]) => (
           <Link
             key={key}
-            to={`/cfop-algorithms/${key.toLowerCase()}`}
             className={`flex flex-col items-center justify-center rounded-md p-4 shadow-custom transition-all ${componentBgWithHover}`}
+            to={`/cfop-algorithms/${key.toLowerCase()}`}
           >
             <img
-              src={`/assets/cfop/landing-${key.toLowerCase()}.webp`}
               alt={key}
               className="mb-8 size-48"
+              src={`/assets/cfop/landing-${key.toLowerCase()}.webp`}
             />
             <h2 className="text-center text-5xl font-semibold tracking-wider">
               {key}

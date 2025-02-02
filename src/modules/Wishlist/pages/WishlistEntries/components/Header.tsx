@@ -51,8 +51,8 @@ function Header({
                 return (
                   <>
                     <Icon
-                      icon="tabler:alert-triangle"
                       className="mt-0.5 size-7 text-red-500"
+                      icon="tabler:alert-triangle"
                     />
                     Failed to fetch data from server.
                   </>
@@ -67,8 +67,8 @@ function Header({
                       }}
                     >
                       <Icon
-                        icon={wishlistListDetails.icon}
                         className="text-2xl sm:text-3xl"
+                        icon={wishlistListDetails.icon}
                         style={{
                           color: wishlistListDetails.color
                         }}
@@ -92,11 +92,11 @@ function Header({
         </h1>
         <Menu as="div" className="relative z-50 hidden md:block">
           <Button
-            onClick={() => {}}
-            icon="tabler:plus"
-            className="hidden md:flex"
             as={MenuButton}
+            className="hidden md:flex"
+            icon="tabler:plus"
             tProps={{ item: t('items.entry') }}
+            onClick={() => {}}
           >
             new
           </Button>
@@ -106,23 +106,23 @@ function Header({
             className="mt-2 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
           >
             <MenuItem
+              icon="tabler:plus"
+              namespace="modules.wishlist"
+              text="Add Manually"
               onClick={() => {
                 setModifyEntryModalOpenType('create')
                 setExistedData({
                   list: id as string
                 })
               }}
-              icon="tabler:plus"
-              namespace="modules.wishlist"
-              text="Add Manually"
             />
             <MenuItem
-              onClick={() => {
-                setFromOtherAppsModalOpen(true)
-              }}
               icon="tabler:apps"
               namespace="modules.wishlist"
               text="From Other Apps"
+              onClick={() => {
+                setFromOtherAppsModalOpen(true)
+              }}
             />
           </MenuItems>
         </Menu>

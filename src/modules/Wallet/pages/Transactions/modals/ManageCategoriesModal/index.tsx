@@ -37,11 +37,11 @@ function ManageCategoriesModal({
 
   return (
     <>
-      <ModalWrapper isOpen={isOpen !== false} className="sm:min-w-[40rem]!">
+      <ModalWrapper className="sm:min-w-[40rem]!" isOpen={isOpen !== false}>
         <ModalHeader
-          title="categories.manage"
-          namespace="modules.wallet"
           icon="tabler:apps"
+          namespace="modules.wallet"
+          title="categories.manage"
           onClose={onClose}
         />
         <APIFallbackComponent data={categories}>
@@ -52,29 +52,29 @@ function ManageCategoriesModal({
                   <CategorySection
                     key={type}
                     categories={categories}
-                    type={type as 'income' | 'expenses'}
                     iconName={
                       type === 'income' ? 'tabler:login-2' : 'tabler:logout'
                     }
-                    setModifyCategoriesModalOpenType={
-                      setModifyCategoriesModalOpenType
-                    }
-                    setExistedData={setExistedData}
                     setDeleteCategoriesConfirmationOpen={
                       setDeleteCategoriesConfirmationOpen
                     }
+                    setExistedData={setExistedData}
+                    setModifyCategoriesModalOpenType={
+                      setModifyCategoriesModalOpenType
+                    }
+                    type={type as 'income' | 'expenses'}
                   />
                 ))}
               </>
             ) : (
               <EmptyStateScreen
-                icon="tabler:apps-off"
-                namespace="modules.wallet"
-                name="categories"
                 ctaContent="new"
                 ctaTProps={{
                   item: t('items.category')
                 }}
+                icon="tabler:apps-off"
+                name="categories"
+                namespace="modules.wallet"
                 onCTAClick={() => {
                   setModifyCategoriesModalOpenType('income')
                 }}
@@ -85,20 +85,20 @@ function ManageCategoriesModal({
       </ModalWrapper>
       <ModifyCategoriesModal
         existedData={existedData}
-        setExistedData={setExistedData}
         openType={modifyCategoriesModalOpenType}
+        setExistedData={setExistedData}
         setOpenType={setModifyCategoriesModalOpenType}
       />
       <DeleteConfirmationModal
+        apiEndpoint="wallet/category"
+        data={existedData}
         isOpen={deleteCategoriesConfirmationOpen}
+        itemName="category"
+        nameKey="name"
+        updateDataLists={refreshCategories}
         onClose={() => {
           setDeleteCategoriesConfirmationOpen(false)
         }}
-        apiEndpoint="wallet/category"
-        data={existedData}
-        updateDataLists={refreshCategories}
-        nameKey="name"
-        itemName="category"
       />
     </>
   )

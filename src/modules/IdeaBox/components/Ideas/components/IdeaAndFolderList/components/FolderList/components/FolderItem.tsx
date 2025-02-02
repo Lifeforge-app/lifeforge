@@ -94,12 +94,11 @@ function FolderItem({
 
   return (
     <Link
-      to={`/idea-box/${id}/${path}/${folder.id}`.replace('//', '/')}
+      key={folder.id}
       ref={stuff => {
         dragRef(stuff)
         drop(stuff)
       }}
-      key={folder.id}
       className={`flex-between relative isolate flex rounded-md p-4 shadow-custom backdrop-blur-xs before:absolute before:left-0 before:top-0 before:size-full before:rounded-md before:transition-all hover:before:bg-white/5 ${
         isOver ? 'text-bg-50 dark:text-bg-800' : ''
       } ${isDragging ? 'cursor-move' : ''} font-medium transition-all`}
@@ -116,44 +115,45 @@ function FolderItem({
         color: !isOver ? folder.color : '',
         opacity
       }}
+      to={`/idea-box/${id}/${path}/${folder.id}`.replace('//', '/')}
     >
       <div className="flex">
-        <Icon icon={folder.icon} className="mr-2 size-5 shrink-0" />
+        <Icon className="mr-2 size-5 shrink-0" icon={folder.icon} />
         {folder.name}
       </div>
       <HamburgerMenu
+        smallerPadding
         className="relative"
         customHoverColor={folder.color + '20'}
-        smallerPadding
         style={{
           color: !isOver ? folder.color : ''
         }}
       >
         {folder.parent !== '' && (
           <MenuItem
+            icon="tabler:folder-minus"
+            text="Remove from folder"
             onClick={() => {
               removeFromFolder().catch(console.error)
             }}
-            icon="tabler:folder-minus"
-            text="Remove from folder"
           />
         )}
         <MenuItem
+          icon="tabler:pencil"
+          text="Edit"
           onClick={() => {
             setModifyFolderModalOpenType('update')
             setExistedFolder(folder)
           }}
-          icon="tabler:pencil"
-          text="Edit"
         ></MenuItem>
         <MenuItem
+          isRed
+          icon="tabler:trash"
+          text="Delete"
           onClick={() => {
             setExistedFolder(folder)
             setDeleteFolderConfirmationModalOpen(true)
           }}
-          icon="tabler:trash"
-          text="Delete"
-          isRed
         ></MenuItem>
       </HamburgerMenu>
     </Link>

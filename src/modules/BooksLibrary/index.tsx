@@ -76,24 +76,24 @@ function BooksLibrary(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
-        title="Books Library"
-        icon="tabler:books"
+        hamburgerMenuClassName="block md:hidden"
         hamburgerMenuItems={
-          <HamburgerSelectorWrapper title="View as" icon="tabler:eye">
+          <HamburgerSelectorWrapper icon="tabler:eye" title="View as">
             {['grid', 'list'].map(type => (
               <MenuItem
                 key={type}
-                text={type.charAt(0).toUpperCase() + type.slice(1)}
                 icon={type === 'grid' ? 'uil:apps' : 'uil:list-ul'}
+                isToggled={view === type}
+                text={type.charAt(0).toUpperCase() + type.slice(1)}
                 onClick={() => {
                   setView(type as 'grid' | 'list')
                 }}
-                isToggled={view === type}
               />
             ))}
           </HamburgerSelectorWrapper>
         }
-        hamburgerMenuClassName="block md:hidden"
+        icon="tabler:books"
+        title="Books Library"
       />
       <div className="mt-6 flex min-h-0 w-full min-w-0 flex-1">
         <Sidebar />
@@ -105,19 +105,19 @@ function BooksLibrary(): React.ReactElement {
           />
           <div className="flex items-center gap-2">
             <SearchInput
+              namespace="modules.booksLibrary"
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
               stuffToSearch="book"
-              namespace="modules.booksLibrary"
             />
             <ViewModeSelector
               className="hidden md:flex"
-              viewMode={view}
-              setViewMode={setView}
               options={[
                 { value: 'list', icon: 'uil:list-ul' },
                 { value: 'grid', icon: 'uil:apps' }
               ]}
+              setViewMode={setView}
+              viewMode={view}
             />
           </div>
           <APIFallbackComponent data={filteredEntries}>
@@ -127,8 +127,8 @@ function BooksLibrary(): React.ReactElement {
                   return (
                     <EmptyStateScreen
                       icon="tabler:books-off"
-                      namespace="modules.booksLibrary"
                       name="book"
+                      namespace="modules.booksLibrary"
                     />
                   )
                 }
@@ -136,8 +136,8 @@ function BooksLibrary(): React.ReactElement {
                 return (
                   <EmptyStateScreen
                     icon="tabler:search-off"
-                    namespace="modules.booksLibrary"
                     name="result"
+                    namespace="modules.booksLibrary"
                   />
                 )
               }
@@ -161,15 +161,15 @@ function BooksLibrary(): React.ReactElement {
         <DeleteConfirmationModal
           key={`delete-confirmation-modal-${config.apiEndpoint}`}
           apiEndpoint={config.apiEndpoint}
-          isOpen={config.isOpen}
           data={config.data}
+          isOpen={config.isOpen}
           itemName={config.itemName}
           nameKey={config.nameKey}
+          updateDataLists={config.updateDataList}
           onClose={() => {
             config.setOpen(false)
             config.setData(null)
           }}
-          updateDataLists={config.updateDataList}
         />
       ))}
       <DeleteConfirmationModal
@@ -178,33 +178,33 @@ function BooksLibrary(): React.ReactElement {
         isOpen={deleteBookConfirmationModalOpen}
         itemName="book"
         nameKey="title"
-        onClose={() => {
-          setDeleteBookConfirmationModalOpen(false)
-          setExistedBookData(null)
-        }}
         updateDataLists={() => {
           refreshEntries()
           refreshFileTypes()
         }}
+        onClose={() => {
+          setDeleteBookConfirmationModalOpen(false)
+          setExistedBookData(null)
+        }}
       />
       <Menu as="div" className="fixed bottom-6 right-6 z-50 block md:hidden">
-        <Button onClick={() => {}} icon="tabler:plus" as={MenuButton}></Button>
+        <Button as={MenuButton} icon="tabler:plus" onClick={() => {}}></Button>
         <MenuItems
           transition
           anchor="top end"
           className="overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:6px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
         >
           <MenuItem
-            onClick={() => {}}
             icon="tabler:upload"
             text="Upload from device"
+            onClick={() => {}}
           />
           <MenuItem
+            icon="tabler:books"
+            text="Download from Libgen"
             onClick={() => {
               setLibgenModalOpen(true)
             }}
-            icon="tabler:books"
-            text="Download from Libgen"
           />
         </MenuItems>
       </Menu>

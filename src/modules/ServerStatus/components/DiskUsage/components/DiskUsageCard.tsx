@@ -13,7 +13,7 @@ function DiskUsageCard({ disk }: { disk: IDiskUsage }): React.ReactElement {
     >
       <div className="flex-between flex w-full min-w-0">
         <div className="flex min-w-0 flex-1 items-center gap-2">
-          <Icon icon="streamline:hard-disk" className="text-2xl text-bg-500" />
+          <Icon className="text-2xl text-bg-500" icon="streamline:hard-disk" />
           <h2 className="mr-8 min-w-0 truncate text-xl text-bg-500">
             {disk.name}
           </h2>

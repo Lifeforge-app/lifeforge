@@ -26,30 +26,30 @@ function AssetsSelector({
 
   return (
     <ListboxOrComboboxInput
-      type="listbox"
-      name="Asset"
-      namespace="modules.wallet"
-      icon="tabler:wallet"
-      value={transactionAsset}
-      setValue={setTransactionAsset}
       buttonContent={
         <>
           <Icon
+            className="size-5"
             icon={
               assets.find(l => l.id === transactionAsset)?.icon ??
               'tabler:wallet-off'
             }
-            className="size-5"
           />
           <span className="-mt-px block truncate">
             {assets.find(l => l.id === transactionAsset)?.name ?? 'None'}
           </span>
         </>
       }
+      icon="tabler:wallet"
+      name="Asset"
+      namespace="modules.wallet"
+      setValue={setTransactionAsset}
+      type="listbox"
+      value={transactionAsset}
     >
       <ListboxNullOption icon="tabler:wallet-off" value={null} />
       {assets.map(({ name, id, icon }, i) => (
-        <ListboxOrComboboxOption key={i} text={name} icon={icon} value={id} />
+        <ListboxOrComboboxOption key={i} icon={icon} text={name} value={id} />
       ))}
     </ListboxOrComboboxInput>
   )

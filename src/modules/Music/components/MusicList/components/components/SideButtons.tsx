@@ -17,22 +17,24 @@ function SideButtons({ music }: { music: IMusicEntry }): React.ReactElement {
   return (
     <div className="flex w-auto min-w-0 shrink-0 items-center justify-end sm:w-2/12">
       <button
-        onClick={() => {
-          toggleFavourite(music).catch(() => {})
-        }}
         className={`rounded-lg p-4 ${
           music.is_favourite
             ? 'text-red-500 hover:text-red-600'
             : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
         } transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50`}
+        onClick={() => {
+          toggleFavourite(music).catch(() => {})
+        }}
       >
         <Icon
-          icon={!music.is_favourite ? 'tabler:heart' : 'tabler:heart-filled'}
           className="text-xl"
+          icon={!music.is_favourite ? 'tabler:heart' : 'tabler:heart-filled'}
         />
       </button>
-      <HamburgerMenu className="relative" largerPadding>
+      <HamburgerMenu largerPadding className="relative">
         <MenuItem
+          icon="tabler:download"
+          text="Download"
           onClick={() => {
             forceDown(
               `${import.meta.env.VITE_API_HOST}/media/${music.collectionId}/${
@@ -41,25 +43,23 @@ function SideButtons({ music }: { music: IMusicEntry }): React.ReactElement {
               music.name
             )
           }}
-          icon="tabler:download"
-          text="Download"
         />
         <MenuItem
+          icon="tabler:pencil"
+          text="Edit"
           onClick={() => {
             setIsModifyMusicModalOpen(true)
             setExistedData(music)
           }}
-          icon="tabler:pencil"
-          text="Edit"
         />
         <MenuItem
+          isRed
+          icon="tabler:trash"
+          text="Delete"
           onClick={() => {
             setExistedData(music)
             setIsDeleteMusicConfirmationModalOpen(true)
           }}
-          icon="tabler:trash"
-          text="Delete"
-          isRed
         />
       </HamburgerMenu>
     </div>

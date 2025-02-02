@@ -17,17 +17,17 @@ function TransactionsCard(): React.ReactElement {
   return (
     <DashboardItem
       className="col-span-2 row-span-3"
+      componentBesideTitle={
+        <Link
+          className="flex items-center gap-2 rounded-lg p-2 font-medium text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50"
+          to="/wallet/transactions"
+        >
+          <Icon className="text-xl" icon="tabler:chevron-right" />
+        </Link>
+      }
       icon="tabler:list"
       namespace="modules.wallet"
       title="Recent Transactions"
-      componentBesideTitle={
-        <Link
-          to="/wallet/transactions"
-          className="flex items-center gap-2 rounded-lg p-2 font-medium text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50"
-        >
-          <Icon icon="tabler:chevron-right" className="text-xl" />
-        </Link>
-      }
     >
       <APIFallbackComponent data={transactions}>
         {transactions => (
@@ -72,7 +72,6 @@ function TransactionsCard(): React.ReactElement {
                                 </td>
                                 <td className="py-4 text-center">
                                   <Link
-                                    to={`/wallet/transactions?type=${transaction.type}`}
                                     className={`rounded-full px-3 py-1 text-sm ${
                                       {
                                         income:
@@ -81,6 +80,7 @@ function TransactionsCard(): React.ReactElement {
                                         transfer: 'bg-blue-500/20 text-blue-500'
                                       }[transaction.type]
                                     }`}
+                                    to={`/wallet/transactions?type=${transaction.type}`}
                                   >
                                     {transaction.type[0].toUpperCase() +
                                       transaction.type.slice(1)}
@@ -92,7 +92,6 @@ function TransactionsCard(): React.ReactElement {
                                 <td className="py-2 text-center">
                                   {transaction.category !== '' ? (
                                     <Link
-                                      to={`/wallet/transactions?category=${transaction.category}`}
                                       className="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm"
                                       style={{
                                         backgroundColor:
@@ -106,8 +105,10 @@ function TransactionsCard(): React.ReactElement {
                                             category.id === transaction.category
                                         )?.color
                                       }}
+                                      to={`/wallet/transactions?category=${transaction.category}`}
                                     >
                                       <Icon
+                                        className="size-4"
                                         icon={
                                           categories.find(
                                             category =>
@@ -115,7 +116,6 @@ function TransactionsCard(): React.ReactElement {
                                               transaction.category
                                           )?.icon ?? 'tabler:currency-dollar'
                                         }
-                                        className="size-4"
                                       />
                                       {categories.find(
                                         category =>
@@ -168,6 +168,7 @@ function TransactionsCard(): React.ReactElement {
                                 }}
                               >
                                 <Icon
+                                  className={'size-6'}
                                   icon={
                                     transaction.type === 'transfer'
                                       ? 'tabler:transfer'
@@ -176,7 +177,6 @@ function TransactionsCard(): React.ReactElement {
                                             category.id === transaction.category
                                         )?.icon ?? 'tabler:currency-dollar'
                                   }
-                                  className={'size-6'}
                                 />
                               </div>
                               <div className="flex w-full min-w-0 flex-col">

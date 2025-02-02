@@ -34,27 +34,27 @@ function ManageTagsModal({
     <>
       <ModalWrapper isOpen={isOpen} minWidth="40rem">
         <ModalHeader
+          actionButtonIcon="tabler:plus"
           icon="tabler:tags"
           title="Manage Tags"
-          onClose={() => {
-            setOpen(false)
-          }}
-          actionButtonIcon="tabler:plus"
           onActionButtonClick={() => {
             setModifyAlbumModalOpenType('create')
+          }}
+          onClose={() => {
+            setOpen(false)
           }}
         />
         <APIFallbackComponent data={albumTagList}>
           {albumTagList =>
             albumTagList.length === 0 ? (
               <EmptyStateScreen
-                namespace="modules.photos"
-                name="tags"
-                icon="tabler:tag-off"
                 ctaContent="new"
                 ctaTProps={{
                   item: t('items.tag')
                 }}
+                icon="tabler:tag-off"
+                name="tags"
+                namespace="modules.photos"
                 onCTAClick={() => {
                   setModifyAlbumModalOpenType('create')
                 }}
@@ -79,13 +79,13 @@ function ManageTagsModal({
                         }}
                       />
                       <MenuItem
+                        isRed
                         icon="tabler:trash"
                         text="Delete"
                         onClick={() => {
                           setExistedData(tag)
                           setIsDeleteConfirmationModalOpen(true)
                         }}
-                        isRed
                       />
                     </HamburgerMenu>
                   </li>
@@ -97,16 +97,16 @@ function ManageTagsModal({
       </ModalWrapper>
       <DeleteConfirmationModal
         apiEndpoint="photos/album/tag"
-        isOpen={isDeleteConfirmationModalOpen}
         data={existedData}
+        isOpen={isDeleteConfirmationModalOpen}
         itemName="tag"
-        onClose={() => {
-          setIsDeleteConfirmationModalOpen(false)
-        }}
+        nameKey="name"
         updateDataLists={() => {
           refreshAlbumTagList()
         }}
-        nameKey="name"
+        onClose={() => {
+          setIsDeleteConfirmationModalOpen(false)
+        }}
       />
     </>
   )

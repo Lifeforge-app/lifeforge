@@ -63,12 +63,12 @@ function TailwindCSSColorsModal({
                     >
                       {color === colorValue && (
                         <Icon
-                          icon="tabler:check"
                           className={`${
                             isLightColor(colorValue)
                               ? 'text-bg-800'
                               : 'text-bg-50'
                           } size-8`}
+                          icon="tabler:check"
                         />
                       )}
                     </button>

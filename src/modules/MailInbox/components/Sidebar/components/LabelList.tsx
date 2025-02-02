@@ -91,15 +91,7 @@ function LabelChildList({
   return (
     <div key={label.label.id} className={level > 0 ? 'pl-6' : ''}>
       <SidebarItem
-        icon="tabler:tag"
-        name={label.label.name}
-        needTranslate={false}
-        onCollapseButtonClick={
-          label.children.length > 0 ? () => setCollapsed(!collapsed) : undefined
-        }
-        number={label.label.count}
-        showCollapseSpacer={level > 0}
-        isCollapsed={collapsed}
+        active={searchParams.get('label') === label.label.id}
         hamburgerMenuItems={
           <>
             <MenuItem
@@ -111,22 +103,30 @@ function LabelChildList({
             />
           </>
         }
-        active={searchParams.get('label') === label.label.id}
-        onClick={() => {
-          setSearchParams({ ...searchParams, label: label.label.id })
-        }}
+        icon="tabler:tag"
+        isCollapsed={collapsed}
+        name={label.label.name}
+        needTranslate={false}
+        number={label.label.count}
+        showCollapseSpacer={level > 0}
         onCancelButtonClick={() => {
           const newParams = new URLSearchParams(searchParams)
           newParams.delete('label')
           setSearchParams(newParams)
         }}
+        onClick={() => {
+          setSearchParams({ ...searchParams, label: label.label.id })
+        }}
+        onCollapseButtonClick={
+          label.children.length > 0 ? () => setCollapsed(!collapsed) : undefined
+        }
       />
       <div className={`overflow-hidden ${collapsed ? 'h-0' : 'h-auto'}`}>
         {label.children.length > 0 && (
           <LabelList
             key={label.label.id}
-            list={label.children}
             level={level + 1}
+            list={label.children}
           />
         )}
       </div>

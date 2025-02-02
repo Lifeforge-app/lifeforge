@@ -36,8 +36,8 @@ function PlaylistDetails({
         {playlistInfo.entries.map(video => (
           <PlaylistVideoEntry
             key={video.id}
-            video={video}
             downloadVideo={downloadVideo}
+            progress={processes[video.id]?.progress ?? 0}
             status={(() => {
               if (
                 (typeof videos !== 'string' &&
@@ -53,7 +53,7 @@ function PlaylistDetails({
 
               return processes[video.id]?.status ?? null
             })()}
-            progress={processes[video.id]?.progress ?? 0}
+            video={video}
           />
         ))}
       </div>

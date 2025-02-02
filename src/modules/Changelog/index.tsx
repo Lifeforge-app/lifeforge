@@ -44,8 +44,6 @@ function Changelog(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
-        title="Change Log"
-        icon="tabler:history"
         hamburgerMenuItems={
           <MenuItem
             icon="tabler:refresh"
@@ -53,6 +51,8 @@ function Changelog(): React.ReactElement {
             onClick={refreshData}
           />
         }
+        icon="tabler:history"
+        title="Change Log"
       />
       <SearchInput
         namespace="modules.changelog"
@@ -70,9 +70,9 @@ function Changelog(): React.ReactElement {
             ) : (
               <div className="flex-center size-full">
                 <EmptyStateScreen
+                  icon="tabler:search-off"
                   name="result"
                   namespace="modules.changelog"
-                  icon="tabler:search-off"
                 />
               </div>
             )}

@@ -17,6 +17,7 @@ function GalleryContainer(): React.ReactElement {
   return (
     <>
       <div
+        ref={galleryWrapperRef}
         className="no-scrollbar w-full flex-1 overflow-y-scroll pr-4 sm:pr-16"
         onScroll={e => {
           if (
@@ -58,7 +59,6 @@ function GalleryContainer(): React.ReactElement {
             )}px`
           }
         }}
-        ref={galleryWrapperRef}
       >
         <Gallery />
       </div>

@@ -35,12 +35,12 @@ function SubtaskBox({
   return (
     <div className="mt-4 rounded-md bg-bg-200/50 p-[1.4rem] shadow-custom dark:bg-bg-800/50">
       <SubtaskBoxHeader
-        spiciness={spiciness}
+        notes={notes}
+        setNewTask={setNewTask}
         setSpiciness={setSpiciness}
         setSubtasks={setSubtasks}
-        setNewTask={setNewTask}
+        spiciness={spiciness}
         summary={summary}
-        notes={notes}
       />
       <APIFallbackComponent data={subtasks}>
         {subtasks =>
@@ -49,12 +49,12 @@ function SubtaskBox({
               {subtasks.map((subtask, index) => (
                 <SubtaskItem
                   key={subtask.id ?? index}
-                  subtask={subtask}
-                  subtasks={subtasks}
-                  setSubtasks={setSubtasks}
                   moveTask={moveTask}
                   newTask={newTask}
                   setNewTask={setNewTask}
+                  setSubtasks={setSubtasks}
+                  subtask={subtask}
+                  subtasks={subtasks}
                 />
               ))}
             </div>

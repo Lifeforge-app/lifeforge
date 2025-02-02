@@ -44,41 +44,41 @@ function Dashboard(): React.ReactElement {
     <ModuleWrapper>
       <div ref={wrapperRef} className="mb-12 flex w-full flex-1 flex-col">
         <ModuleHeader
-          title="Dashboard"
           hamburgerMenuItems={
             <>
               <MenuItem
                 icon={canLayoutChange ? 'tabler:lock-open' : 'tabler:lock'}
+                namespace="modules.dashboard"
                 text={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
                 onClick={() => {
                   setCanLayoutChange(!canLayoutChange)
                 }}
-                namespace="modules.dashboard"
               />
               <MenuItem
                 icon="tabler:apps"
-                text="Manage Widgets"
                 namespace="modules.dashboard"
+                text="Manage Widgets"
                 onClick={() => {
                   setManageWidgetsModalOpen(true)
                 }}
               />
             </>
           }
+          title="Dashboard"
         />
         {isReady && (
           <DashboardGrid
-            wrapperRef={wrapperRef}
             canLayoutChange={canLayoutChange}
+            wrapperRef={wrapperRef}
           />
         )}
       </div>
       <ManageWidgetsModal
         isOpen={manageWidgetsModalOpen}
+        setReady={setReady}
         onClose={() => {
           setManageWidgetsModalOpen(false)
         }}
-        setReady={setReady}
       />
       {/* <FAB alwaysShow text="Ask AI" icon="mage:stars-c" onClick={() => {}} /> */}
     </ModuleWrapper>

@@ -36,7 +36,7 @@ function Repositories(): React.ReactElement {
     <ModuleWrapper>
       <ModuleHeader title="Repositories" />
       <SidebarAndContentWrapper>
-        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <Sidebar setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
         <ContentWrapperWithSidebar>
           <div className="flex-between flex">
             <h1 className="text-3xl font-semibold  md:text-4xl">
@@ -44,24 +44,24 @@ function Repositories(): React.ReactElement {
               {/* <span className="text-base text-bg-500">(10)</span> */}
             </h1>
             <div className="flex items-center gap-6">
-              <Button onClick={() => {}} icon="tabler:plus">
+              <Button icon="tabler:plus" onClick={() => {}}>
                 new repo
               </Button>
               <button
+                className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
                 onClick={() => {
                   setSidebarOpen(true)
                 }}
-                className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
               >
-                <Icon icon="tabler:menu" className="text-2xl" />
+                <Icon className="text-2xl" icon="tabler:menu" />
               </button>
             </div>
           </div>
           <SearchInput
+            namespace="modules.repositories"
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             stuffToSearch="repository"
-            namespace="modules.repositories"
           />
           <APIFallbackComponent data={repos}>
             {repos => (
@@ -100,17 +100,17 @@ function Repositories(): React.ReactElement {
                     </div>
                     <div className="flex items-center gap-6 text-sm text-bg-500">
                       <div className="flex items-center gap-2">
-                        <Icon icon="tabler:clock" className="size-5" />
+                        <Icon className="size-5" icon="tabler:clock" />
                         {moment(repo.updated_at).format('MMM Do, YYYY')}
                       </div>
                       <div className="flex items-center gap-2">
-                        <Icon icon="tabler:git-branch" className="size-5" />
+                        <Icon className="size-5" icon="tabler:git-branch" />
                         {repo.default_branch}
                       </div>
                       <div className="flex items-center gap-2">
                         <Icon
-                          icon="octicon:issue-opened-16"
                           className="size-4"
+                          icon="octicon:issue-opened-16"
                         />
                         {repo.open_issues_count}
                       </div>

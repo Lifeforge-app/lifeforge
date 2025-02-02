@@ -18,12 +18,12 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }): React.ReactElement {
       className="relative flex w-full min-w-0 flex-col items-start rounded-lg bg-bg-50 p-4 transition-all hover:bg-bg-200/70 dark:bg-bg-900 dark:hover:bg-bg-800/50"
     >
       <a
-        target="_blank"
-        rel="noreferrer"
+        className="absolute inset-0 z-10 size-full rounded-lg"
         href={`${import.meta.env.VITE_API_HOST}/media/${item.collectionId}/${
           item.id
         }/${item.file}`}
-        className="absolute inset-0 z-10 size-full rounded-lg"
+        rel="noreferrer"
+        target="_blank"
       />
       <HamburgerMenu
         className="absolute right-6 top-6 z-20"
@@ -34,10 +34,10 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }): React.ReactElement {
       <div className="flex-center aspect-9/12 w-full overflow-hidden rounded-lg bg-bg-200/70 shadow-custom dark:bg-bg-800/50">
         <img
           alt=""
+          className="h-full"
           src={`${import.meta.env.VITE_API_HOST}/media/${item.collectionId}/${
             item.id
           }/${item.thumbnail}`}
-          className="h-full"
         />
       </div>
       <div className="mt-4 flex items-center gap-1 text-sm font-medium text-bg-500">
@@ -49,7 +49,7 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }): React.ReactElement {
 
             return category !== undefined ? (
               <>
-                <Icon icon={category.icon} className="size-4 text-bg-500" />{' '}
+                <Icon className="size-4 text-bg-500" icon={category.icon} />{' '}
                 {category.name}
               </>
             ) : (

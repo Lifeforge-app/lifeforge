@@ -21,9 +21,9 @@ export default function EntryContextMenu({
   return (
     <>
       <MenuItem
+        disabled={downloadLoading}
         icon={downloadLoading ? 'svg-spinners:180-ring' : 'tabler:download'}
         text="Download"
-        disabled={downloadLoading}
         onClick={() => {
           setDownloadLoading(true)
           forceDown(
@@ -47,13 +47,13 @@ export default function EntryContextMenu({
         }}
       />
       <MenuItem
+        isRed
         icon="tabler:trash"
         text="Delete"
         onClick={() => {
           setExistedData(item)
           setDeleteDataConfirmationOpen(true)
         }}
-        isRed
       />
     </>
   )

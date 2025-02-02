@@ -15,19 +15,19 @@ function SearchBar({
   return (
     <div className="flex items-center gap-2">
       <SearchInput
+        namespace="modules.wallet"
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         stuffToSearch="transaction"
-        namespace="modules.wallet"
       />
       <ViewModeSelector
         className="hidden md:flex"
-        viewMode={view}
-        setViewMode={setView}
         options={[
           { value: 'table', icon: 'tabler:table' },
           { value: 'list', icon: 'uil:list-ul' }
         ]}
+        setViewMode={setView}
+        viewMode={view}
       />
     </div>
   )

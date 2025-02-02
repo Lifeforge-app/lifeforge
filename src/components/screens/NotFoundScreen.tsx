@@ -12,16 +12,16 @@ function NotFoundScreen(): React.ReactElement {
       <h1 className="text-4xl font-semibold">{t('notFound.title')}</h1>
       <p className="text-xl text-bg-500">{t('notFound.description')}</p>
       <div className="flex-center mt-6 gap-4">
-        <Button icon="tabler:arrow-left" as={Link} to="/">
+        <Button as={Link} icon="tabler:arrow-left" to="/">
           {t('buttons.goBack')}
         </Button>
         <Button
-          icon="tabler:bug"
           as="a"
-          variant="secondary"
           href="https://github.com/Lifeforge-app/lifeforge/issues"
-          target="_blank"
+          icon="tabler:bug"
           rel="noopener noreferrer"
+          target="_blank"
+          variant="secondary"
         >
           {t('buttons.reportBug')}
         </Button>

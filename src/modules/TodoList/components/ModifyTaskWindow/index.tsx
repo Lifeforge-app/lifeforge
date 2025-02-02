@@ -144,8 +144,8 @@ function ModifyTaskWindow(): React.ReactElement {
       }`}
     >
       <button
-        onClick={closeWindow}
         className="absolute left-0 top-0 size-full"
+        onClick={closeWindow}
       />
       <div
         className={`absolute right-0 flex flex-col transition-all duration-300 ${
@@ -156,13 +156,13 @@ function ModifyTaskWindow(): React.ReactElement {
           <div className="flex-between mb-8 flex ">
             <h1 className="flex items-center gap-3 text-2xl font-semibold">
               <Icon
+                className="size-7"
                 icon={
                   {
                     create: 'tabler:plus',
                     update: 'tabler:pencil'
                   }[innerOpenType ?? 'create']
                 }
-                className="size-7"
               />
               {t(`modals.tasks.${innerOpenType ?? 'create'}`)}
             </h1>
@@ -170,63 +170,63 @@ function ModifyTaskWindow(): React.ReactElement {
               <MenuItem
                 isRed
                 icon="tabler:trash"
+                text="Delete"
                 onClick={() => {
                   setDeleteTaskConfirmationModalOpen(true)
                   setOpenType(null)
                 }}
-                text="Delete"
               />
             </HamburgerMenu>
           </div>
           <div className="space-y-4">
             <TextInput
-              name="Summary"
-              value={summary}
-              placeholder="An urgent task"
-              icon="tabler:abc"
-              darker
-              updateValue={setSummary}
-              className="w-full"
               ref={summaryInputRef}
+              darker
+              className="w-full"
+              icon="tabler:abc"
+              name="Summary"
               namespace="modules.todoList"
+              placeholder="An urgent task"
+              updateValue={setSummary}
+              value={summary}
             />
             <SubtaskBox
-              summary={summary}
               notes={notes}
-              subtasks={subtasks}
               setSubtasks={setSubtasks}
+              subtasks={subtasks}
+              summary={summary}
             />
             <DateInput
-              modalRef={ref}
               darker
               date={dueDate}
-              setDate={setDueDate}
-              name="Due date"
               icon="tabler:calendar"
+              modalRef={ref}
+              name="Due date"
               namespace="modules.todoList"
+              setDate={setDueDate}
             />
             <PrioritySelector priority={priority} setPriority={setPriority} />
             <ListSelector list={list} setList={setList} />
-            <TagsSelector tags={tags} setTags={setTags} />
+            <TagsSelector setTags={setTags} tags={tags} />
             <NotesInput notes={notes} updateNotes={updateNotes} />
           </div>
           <div className="mt-12 flex flex-1 flex-col-reverse items-end gap-2 sm:flex-row">
             <Button
-              loading={loading}
-              onClick={closeWindow}
-              icon={''}
               className="w-full"
+              icon={''}
+              loading={loading}
               variant="secondary"
+              onClick={closeWindow}
             >
               cancel
             </Button>
             <CreateOrModifyButton
+              className="w-full"
               loading={loading}
+              type={innerOpenType}
               onClick={() => {
                 onSubmitButtonClick().catch(console.error)
               }}
-              type={innerOpenType}
-              className="w-full"
             />
           </div>
         </Scrollbar>

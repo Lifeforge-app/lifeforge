@@ -99,32 +99,32 @@ function Review({
   return (
     <>
       <JournalView
-        date={date}
-        title={title}
-        mood={mood}
         cleanedUpText={cleanedUpText}
-        summarizedText={summarizedText}
-        rawText={rawText}
+        date={date}
+        mood={mood}
         photos={photos}
+        rawText={rawText}
+        summarizedText={summarizedText}
+        title={title}
       />
       <div className="flex-between mt-6 flex">
         <Button
+          icon="tabler:arrow-left"
+          variant="no-bg"
           onClick={() => {
             setStep(5)
           }}
-          icon="tabler:arrow-left"
-          variant="no-bg"
         >
           Previous
         </Button>
         <Button
+          iconAtEnd
+          disabled={summarizedText.trim() === ''}
+          icon="tabler:arrow-right"
+          loading={loading}
           onClick={() => {
             onSubmit().catch(console.error)
           }}
-          icon="tabler:arrow-right"
-          iconAtEnd
-          loading={loading}
-          disabled={summarizedText.trim() === ''}
         >
           {openType === 'update' ? 'Update' : 'Create'}
         </Button>

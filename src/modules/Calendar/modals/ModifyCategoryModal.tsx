@@ -101,24 +101,24 @@ function ModifyCategoryModal({
 
   return (
     <Modal
-      namespace="modules.calendar"
-      isOpen={openType !== null}
-      modalRef={modalRef}
-      title={`category.${innerOpenType}`}
+      data={data}
+      fields={FIELDS}
       icon={
         {
           create: 'tabler:plus',
           update: 'tabler:pencil'
         }[innerOpenType!]
       }
+      isOpen={openType !== null}
+      modalRef={modalRef}
+      namespace="modules.calendar"
       openType={openType}
+      setData={setData}
+      title={`category.${innerOpenType}`}
       onClose={() => {
         setOpenType(null)
       }}
       onSubmit={onSubmitButtonClick}
-      fields={FIELDS}
-      data={data}
-      setData={setData}
     />
   )
 }

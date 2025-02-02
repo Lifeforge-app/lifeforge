@@ -18,8 +18,6 @@ function FAB({
 }): React.ReactElement {
   return (
     <Button
-      icon={icon}
-      onClick={onClick}
       as={as ?? 'button'}
       className={`fixed bottom-6 right-6 z-10 shadow-lg ${
         alwaysShow
@@ -32,6 +30,8 @@ function FAB({
             }[hideWhen] ?? ''
       }
       `}
+      icon={icon}
+      onClick={onClick}
     >
       {text}
     </Button>

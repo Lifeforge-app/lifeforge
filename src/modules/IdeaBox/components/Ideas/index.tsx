@@ -26,10 +26,10 @@ function IdeasInsideProvider(): React.ReactElement {
             <ContainerHeader />
             {!viewArchived && (
               <SearchInput
+                namespace="modules.ideaBox"
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
                 stuffToSearch={path === '' ? 'idea' : 'ideaInFolder'}
-                namespace="modules.ideaBox"
               />
             )}
             <TagsSelector />

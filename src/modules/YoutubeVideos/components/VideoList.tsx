@@ -16,9 +16,9 @@ function VideoList({
       {videos.map(video => (
         <VideoEntry
           key={video.id}
-          video={video}
-          setVideoToDelete={setVideoToDelete}
           setIsConfirmDeleteModalOpen={setIsConfirmDeleteModalOpen}
+          setVideoToDelete={setVideoToDelete}
+          video={video}
         />
       ))}
     </div>

@@ -22,23 +22,23 @@ function AdjustmentColumn({
 }): React.ReactElement {
   return (
     <ConfigColumn
+      noDefaultBreakpoints
+      desc={desc}
+      hasDivider={needDivider}
       icon={icon}
       title={title}
-      desc={desc}
-      noDefaultBreakpoints
-      hasDivider={needDivider}
     >
       <div className="w-full">
         <input
-          type="range"
-          min={0}
-          max={max}
-          value={value}
           className="range range-primary w-full bg-bg-200 dark:bg-bg-800"
+          max={max}
+          min={0}
+          step={1}
+          type="range"
+          value={value}
           onChange={e => {
             setValue(parseInt(e.target.value, 10))
           }}
-          step={1}
         />
         <div className="mb-4 flex w-full justify-between px-2.5 text-xs">
           {labels.map((label, index) => (

@@ -29,23 +29,23 @@ function Achievements(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
-        title="Achievements"
-        icon="tabler:award"
         actionButton={
           <Button
+            className="ml-4 hidden md:flex"
             icon="tabler:plus"
+            tProps={{
+              item: t('items.achievement')
+            }}
             onClick={() => {
               setExistedData(null)
               setModifyAchievementModalOpenType('create')
-            }}
-            className="ml-4 hidden md:flex"
-            tProps={{
-              item: t('items.achievement')
             }}
           >
             new
           </Button>
         }
+        icon="tabler:award"
+        title="Achievements"
       />
       <DifficultySelector
         selectedDifficulty={selectedDifficulty}
@@ -59,23 +59,23 @@ function Achievements(): React.ReactElement {
                 <EntryItem
                   key={entry.id}
                   entry={entry}
+                  setDeleteAchievementConfirmationModalOpen={
+                    setDeleteAchievementConfirmationModalOpen
+                  }
                   setExistedData={setExistedData}
                   setModifyAchievementModalOpenType={
                     setModifyAchievementModalOpenType
-                  }
-                  setDeleteAchievementConfirmationModalOpen={
-                    setDeleteAchievementConfirmationModalOpen
                   }
                 />
               ))}
             </div>
           ) : (
             <EmptyStateScreen
-              name="achievement"
-              icon="tabler:award-off"
-              namespace="modules.achievements"
               ctaContent="new"
               ctaTProps={{ item: t('items.achievement') }}
+              icon="tabler:award-off"
+              name="achievement"
+              namespace="modules.achievements"
               onCTAClick={() => {
                 setExistedData(null)
                 setModifyAchievementModalOpenType('create')
@@ -85,31 +85,31 @@ function Achievements(): React.ReactElement {
         }
       </APIFallbackComponent>
       <ModifyAchievementModal
+        currentDifficulty={selectedDifficulty}
+        existedData={existedData}
         openType={modifyAchievementModalOpenType}
         setOpenType={setModifyAchievementModalOpenType}
         updateAchievementList={refreshEntries}
-        existedData={existedData}
-        currentDifficulty={selectedDifficulty}
       />
       <DeleteConfirmationModal
         apiEndpoint="achievements/entries"
         data={existedData}
         isOpen={deleteAchievementConfirmationModalOpen}
         itemName="achievement"
+        nameKey="title"
+        updateDataLists={refreshEntries}
         onClose={() => {
           setExistedData(null)
           setDeleteAchievementConfirmationModalOpen(false)
         }}
-        updateDataLists={refreshEntries}
-        nameKey="title"
       />
       {typeof entries !== 'string' && entries.length > 0 && (
         <FAB
+          hideWhen="md"
           onClick={() => {
             setExistedData(null)
             setModifyAchievementModalOpenType('create')
           }}
-          hideWhen="md"
         />
       )}
     </ModuleWrapper>

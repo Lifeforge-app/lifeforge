@@ -32,14 +32,14 @@ function ProgressIndicator({
     case 'completed':
       return (
         <p className="flex items-center gap-2 text-green-500">
-          <Icon icon="tabler:check" className="size-5" />
+          <Icon className="size-5" icon="tabler:check" />
           Downloaded
         </p>
       )
     case 'failed':
       return (
         <p className="flex items-center gap-2 text-red-500">
-          <Icon icon="tabler:alert-circle" className="size-5" />
+          <Icon className="size-5" icon="tabler:alert-circle" />
           Failed
         </p>
       )
@@ -78,9 +78,9 @@ function DownloadProcessModal({
         {processes =>
           Object.keys(processes).length === 0 ? (
             <EmptyStateScreen
+              icon="tabler:download-off"
               name="downloadProcesses"
               namespace="modules.youtubeVideos"
-              icon="tabler:download-off"
             />
           ) : (
             <>
@@ -93,7 +93,7 @@ function DownloadProcessModal({
                     <div className="flex items-center gap-4">
                       <VideoInfo videoInfo={metadata} />
                     </div>
-                    <ProgressIndicator status={status} progress={progress} />
+                    <ProgressIndicator progress={progress} status={status} />
                   </div>
                 )
               )}

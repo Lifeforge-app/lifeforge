@@ -5,7 +5,7 @@ import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 function Budgets(): React.ReactElement {
   return (
     <ModuleWrapper>
-      <ModuleHeader title="Budgets" icon="tabler:calculator" />
+      <ModuleHeader icon="tabler:calculator" title="Budgets" />
     </ModuleWrapper>
   )
 }

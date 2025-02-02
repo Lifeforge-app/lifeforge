@@ -241,12 +241,12 @@ function ChangiFlightStatus(): React.ReactElement {
           >
             <div className="flex items-center gap-2">
               <Icon
+                className="size-6"
                 icon={
                   SEARCH_TYPE.find(
                     ([, , value]) => value === searchParams.get('type')
                   )?.[1] ?? 'tabler:plane-departure'
                 }
-                className="size-6"
               />
               <span className="whitespace-nowrap font-medium">
                 {SEARCH_TYPE.find(
@@ -254,25 +254,25 @@ function ChangiFlightStatus(): React.ReactElement {
                 )?.[0] ?? 'Departure'}
               </span>
             </div>
-            <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
+            <Icon className="size-5 text-bg-500" icon="tabler:chevron-down" />
           </ListboxButton>
           <ListboxOrComboboxOptions>
             {SEARCH_TYPE.map(([name, icon, value]) => (
               <ListboxOrComboboxOption
                 key={value}
-                value={value}
                 icon={icon}
                 text={name}
+                value={value}
               />
             ))}
           </ListboxOrComboboxOptions>
         </Listbox>
         <SearchInput
           hasTopMargin={false}
-          stuffToSearch="flight"
+          namespace="modules.changiAirport"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          namespace="modules.changiAirport"
+          stuffToSearch="flight"
         />
       </div>
       <Scrollbar className="mt-6 w-full flex-1">
@@ -319,8 +319,8 @@ function ChangiFlightStatus(): React.ReactElement {
                         } ${STATUSES[flight.flight_status]?.[2]}`}
                       >
                         <Icon
-                          icon={STATUSES[flight.flight_status]?.[1]}
                           className="size-4"
+                          icon={STATUSES[flight.flight_status]?.[1]}
                         />
                         {flight.flight_status}
                       </div>
@@ -350,9 +350,9 @@ function ChangiFlightStatus(): React.ReactElement {
                     <td className="whitespace-nowrap p-2 text-left">
                       <div className="flex items-center gap-2">
                         <img
-                          src={flight.airline_details.logo_url}
                           alt={flight.airline_details.name}
                           className="size-6"
+                          src={flight.airline_details.logo_url}
                         />
                         {flight.airline_details.name} ({flight.airline})
                       </div>

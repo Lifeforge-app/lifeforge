@@ -16,33 +16,33 @@ export default function AssetsBalance(): React.ReactElement {
 
   return (
     <DashboardItem
-      icon="tabler:wallet"
-      title="Assets Balance"
       componentBesideTitle={
         <Button
+          className="p-2!"
+          icon={!showBalance ? 'tabler:eye-off' : 'tabler:eye'}
           variant="no-bg"
           onClick={() => {
             setShowBalance(!showBalance)
           }}
-          icon={!showBalance ? 'tabler:eye-off' : 'tabler:eye'}
-          className="p-2!"
         />
       }
+      icon="tabler:wallet"
+      title="Assets Balance"
     >
       <APIFallbackComponent data={assets}>
         {assets => (
           <ul className="grid h-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-2 overflow-y-auto">
             {assets.map(asset => (
               <Link
-                to={'/wallet/assets'}
                 key={asset.id}
                 className={`flex-between flex h-full gap-4 rounded-lg bg-bg-100 p-2 pl-4 pr-0 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all ${componentBgLighterWithHover}`}
+                to={'/wallet/assets'}
               >
                 <div className="flex w-full min-w-0 items-center gap-4">
                   <div className="rounded-md bg-bg-200 p-2 dark:bg-bg-700">
                     <Icon
-                      icon={asset.icon}
                       className="size-6 text-bg-500 dark:text-bg-100"
+                      icon={asset.icon}
                     />
                   </div>
                   <div className="flex w-full min-w-0 flex-col">
@@ -60,8 +60,8 @@ export default function AssetsBalance(): React.ReactElement {
                             .map((_, i) => (
                               <Icon
                                 key={i}
-                                icon="uil:asterisk"
                                 className="size-3"
+                                icon="uil:asterisk"
                               />
                             ))}
                         </span>
@@ -70,7 +70,7 @@ export default function AssetsBalance(): React.ReactElement {
                   </div>
                 </div>
                 <button className="rounded-lg p-4 text-bg-300 transition-all dark:text-bg-700">
-                  <Icon icon="tabler:chevron-right" className="text-xl" />
+                  <Icon className="text-xl" icon="tabler:chevron-right" />
                 </button>
               </Link>
             ))}

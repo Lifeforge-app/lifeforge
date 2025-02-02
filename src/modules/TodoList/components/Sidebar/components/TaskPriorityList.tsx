@@ -20,13 +20,13 @@ function TaskPriorityList({
   return (
     <>
       <SidebarTitle
-        name="priorities"
-        namespace="modules.todoList"
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           setModifyModalOpenType('create')
           setSelectedData(null)
         }}
+        name="priorities"
+        namespace="modules.todoList"
       />
       <APIFallbackComponent data={priorities}>
         {priorities =>

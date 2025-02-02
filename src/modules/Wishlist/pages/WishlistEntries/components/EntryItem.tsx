@@ -61,16 +61,16 @@ function EntryItem({
             className={`${componentBgLighter} relative isolate aspect-square h-auto w-full shrink-0 overflow-hidden rounded-md sm:w-20`}
           >
             <Icon
-              icon="tabler:shopping-bag"
               className="absolute left-1/2 top-1/2 z-[-1] size-8 -translate-x-1/2 -translate-y-1/2 text-bg-200 dark:text-bg-700"
+              icon="tabler:shopping-bag"
             />
             {entry.image !== '' && (
               <img
+                alt=""
+                className="size-full rounded-md"
                 src={`${import.meta.env.VITE_API_HOST}/media/${collectionId}/${
                   entry.id
                 }/${entry.image}`}
-                alt=""
-                className="size-full rounded-md"
               />
             )}
           </div>
@@ -88,31 +88,31 @@ function EntryItem({
         </div>
         <Checkbox
           checked={bought}
+          className="hidden! sm:flex! md:hidden!"
           onChange={() => {
             markAsCompleted().catch(console.error)
           }}
-          className="hidden! sm:flex! md:hidden!"
         />
       </div>
       <div className="flex-between gap-4">
         <Button
+          iconAtEnd
           as="a"
+          className="w-auto px-0! sm:px-4!"
           href={entry.url}
+          icon="iconamoon:arrow-top-right-1"
+          namespace="modules.wishlist"
           target="_blank"
           variant="no-bg"
-          className="w-auto px-0! sm:px-4!"
-          icon="iconamoon:arrow-top-right-1"
-          iconAtEnd
-          namespace="modules.wishlist"
         >
           Visit Website
         </Button>
         <Checkbox
           checked={bought}
+          className="flex! sm:hidden! md:flex!"
           onChange={() => {
             markAsCompleted().catch(console.error)
           }}
-          className="flex! sm:hidden! md:flex!"
         />
         <HamburgerMenu className="absolute right-4 top-4 sm:static">
           <MenuItem
@@ -123,12 +123,12 @@ function EntryItem({
             }}
           />
           <MenuItem
+            isRed
             icon="tabler:trash"
             text="Delete"
             onClick={() => {
               onDelete(entry)
             }}
-            isRed
           />
         </HamburgerMenu>
       </div>

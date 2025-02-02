@@ -159,43 +159,43 @@ function ModifyEventModal({
   return (
     <>
       <Modal
-        isOpen={openType !== null}
-        modalRef={ref}
-        openType={openType}
-        onClose={() => {
-          setOpenType(null)
-        }}
-        namespace="modules.calendar"
-        onSubmit={onSubmitButtonClick}
-        title={`event.${innerOpenType}`}
+        actionButtonIsRed
+        actionButtonIcon="tabler:trash"
+        data={data}
+        fields={FIELDS}
         icon={
           {
             create: 'tabler:plus',
             update: 'tabler:pencil'
           }[innerOpenType!]
         }
-        fields={FIELDS}
-        data={data}
+        isOpen={openType !== null}
+        modalRef={ref}
+        namespace="modules.calendar"
+        openType={openType}
         setData={setData}
-        actionButtonIcon="tabler:trash"
-        actionButtonIsRed
+        title={`event.${innerOpenType}`}
         onActionButtonClick={() => {
           setIsDeleteConfirmationModalOpen(true)
         }}
+        onClose={() => {
+          setOpenType(null)
+        }}
+        onSubmit={onSubmitButtonClick}
       />
       <DeleteConfirmationModal
         apiEndpoint="calendar/event"
-        isOpen={isDeleteConfirmationModalOpen}
         data={existedData}
+        isOpen={isDeleteConfirmationModalOpen}
         itemName="event"
-        onClose={() => {
-          setIsDeleteConfirmationModalOpen(false)
-        }}
+        nameKey="title"
         updateDataLists={() => {
           updateEventList()
           setOpenType(null)
         }}
-        nameKey="title"
+        onClose={() => {
+          setIsDeleteConfirmationModalOpen(false)
+        }}
       />
     </>
   )

@@ -41,10 +41,10 @@ function SidebarTitle({
       </h3>
       {actionButtonIcon !== undefined && (
         <button
-          onClick={actionButtonOnClick}
           className="flex items-center rounded-md p-2 text-bg-600 transition-all hover:bg-bg-100 dark:hover:bg-bg-800 dark:hover:text-bg-50"
+          onClick={actionButtonOnClick}
         >
-          <Icon icon={actionButtonIcon} className="size-5" />
+          <Icon className="size-5" icon={actionButtonIcon} />
         </button>
       )}
     </li>

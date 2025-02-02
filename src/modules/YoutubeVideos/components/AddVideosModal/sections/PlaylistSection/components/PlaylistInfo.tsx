@@ -11,9 +11,9 @@ function PlaylistInfo({
   return (
     <div className="mb-8 flex space-x-4">
       <img
-        src={playlistInfo.thumbnail}
         alt="Playlist thumbnail"
         className="aspect-video w-56 rounded-md"
+        src={playlistInfo.thumbnail}
       />
       <div className="flex flex-col">
         <h1 className="text-xl font-semibold">{playlistInfo.title}</h1>
@@ -21,11 +21,11 @@ function PlaylistInfo({
           {playlistInfo.channel}
         </p>
         <p className="mt-4 flex items-center gap-2 text-bg-500">
-          <Icon icon="tabler:movie" className="size-5" />
+          <Icon className="size-5" icon="tabler:movie" />
           {playlistInfo.total_videos} videos
         </p>
         <p className="flex items-center gap-2 text-bg-500">
-          <Icon icon="tabler:eye" className="size-5" />
+          <Icon className="size-5" icon="tabler:eye" />
           {shortenBigNumber(playlistInfo.views)} views
         </p>
       </div>

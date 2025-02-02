@@ -174,18 +174,18 @@ function ModifyBookModal(): React.ReactElement {
 
   return (
     <Modal
-      namespace="modules.booksLibrary"
+      data={data}
+      fields={FIELDS}
+      icon="tabler:pencil"
       isOpen={modifyDataModalOpenType !== null}
+      loading={typeof languages === 'string' || typeof categories === 'string'}
+      namespace="modules.booksLibrary"
+      openType="update"
+      setData={setData}
+      title="Modify Book Data"
       onClose={() => {
         setModifyDataModalOpenType(null)
       }}
-      title="Modify Book Data"
-      icon="tabler:pencil"
-      loading={typeof languages === 'string' || typeof categories === 'string'}
-      fields={FIELDS}
-      data={data}
-      setData={setData}
-      openType="update"
       onSubmit={onSubmit}
     />
   )

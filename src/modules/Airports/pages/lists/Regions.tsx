@@ -57,17 +57,17 @@ function Regions(): React.ReactElement {
       <APIFallbackComponent data={regionsData} showLoading={false}>
         {continentsData => (
           <div className="mt-6 flex items-center gap-2">
-            <Link to="/airports" className="text-bg-500">
+            <Link className="text-bg-500" to="/airports">
               All Continents
             </Link>
-            <Icon icon="tabler:chevron-right" className="size-5 text-bg-500" />
-            <Link to={`/airports/${continentID}`} className="text-bg-500">
+            <Icon className="size-5 text-bg-500" icon="tabler:chevron-right" />
+            <Link className="text-bg-500" to={`/airports/${continentID}`}>
               {CONTINENTS[continentID as keyof typeof CONTINENTS]}
             </Link>
-            <Icon icon="tabler:chevron-right" className="size-5 text-bg-500" />
+            <Icon className="size-5 text-bg-500" icon="tabler:chevron-right" />
             <Link
-              to={`/airports/${continentID}/${countryID}`}
               className="font-medium text-custom-500"
+              to={`/airports/${continentID}/${countryID}`}
             >
               {continentsData.breadcrumbs[0]}
             </Link>
@@ -77,11 +77,11 @@ function Regions(): React.ReactElement {
       <div className="mt-4 flex items-center gap-2">
         <ContinentSelector />
         <SearchInput
-          stuffToSearch="region"
+          hasTopMargin={false}
           namespace="modules.airports"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          hasTopMargin={false}
+          stuffToSearch="region"
         />
       </div>
       <APIFallbackComponent data={filteredData}>
@@ -95,9 +95,9 @@ function Regions(): React.ReactElement {
                   })
                   .map(([id, [name, amount]]) => (
                     <Link
-                      to={`/airports/${continentID}/${countryID}/${id}`}
                       key={name}
                       className={`flex-between flex w-full rounded-lg p-4 px-6 shadow-custom transition-all ${componentBgWithHover}`}
+                      to={`/airports/${continentID}/${countryID}/${id}`}
                     >
                       <div>
                         <p className="text-left text-xl font-medium">{name}</p>
@@ -106,16 +106,16 @@ function Regions(): React.ReactElement {
                         </p>
                       </div>
                       <Icon
-                        icon="tabler:chevron-right"
                         className="size-5 text-bg-500"
+                        icon="tabler:chevron-right"
                       />
                     </Link>
                   ))
               ) : (
                 <EmptyStateScreen
-                  namespace="modules.airports"
-                  name="regions"
                   icon="tabler:globe-off"
+                  name="regions"
+                  namespace="modules.airports"
                 />
               )}
             </div>

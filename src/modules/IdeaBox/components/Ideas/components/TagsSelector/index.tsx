@@ -89,8 +89,8 @@ function TagsSelector(): React.ReactElement {
             {tags.map(tag => (
               <TagItem
                 key={tag.id}
-                tag={tag}
                 countHashMap={countHashMap}
+                tag={tag}
                 onSelect={handleSelectTag}
               />
             ))}

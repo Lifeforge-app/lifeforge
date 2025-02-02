@@ -22,17 +22,17 @@ function SearchResultItem({
     >
       <div className="flex-center relative inline-flex h-min min-h-80 w-56 shrink-0 flex-col overflow-hidden rounded-md bg-bg-200 dark:bg-bg-800">
         <Icon
-          icon="tabler:book-2"
           className="absolute left-1/2 top-1/2 size-24 -translate-x-1/2 -translate-y-1/2 text-bg-700"
+          icon="tabler:book-2"
         />
         {book.image !== '' && (
           <img
+            alt=""
+            className="relative z-10 border-none object-cover"
+            referrerPolicy="no-referrer"
             src={`${import.meta.env.VITE_API_HOST}/books-library/libgen${
               book.image
             }`}
-            referrerPolicy="no-referrer"
-            alt=""
-            className="relative z-10 border-none object-cover"
           />
         )}
       </div>
@@ -78,13 +78,13 @@ function SearchResultItem({
         </div>
         <div className="mt-6 flex w-full flex-col items-center gap-2 lg:flex-row lg:gap-4">
           <Button
+            className="w-full lg:w-1/2"
+            icon="tabler:eye"
+            namespace="modules.booksLibrary"
+            variant="secondary"
             onClick={() => {
               setViewDetailsFor(book.md5)
             }}
-            variant="secondary"
-            icon="tabler:eye"
-            className="w-full lg:w-1/2"
-            namespace="modules.booksLibrary"
           >
             View Details
           </Button>

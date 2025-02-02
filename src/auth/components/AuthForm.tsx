@@ -69,20 +69,20 @@ function AuthForm(): React.ReactElement {
         <TextInput
           key={index}
           {...input}
+          darker
+          isPassword={input.name === 'Password'}
+          namespace={false}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
             if (e.key === 'Enter') {
               signIn()
             }
           }}
-          isPassword={input.name === 'Password'}
-          darker
-          namespace={false}
         />
       ))}
       <AuthSignInButton
         emailOrUsername={emailOrUsername}
-        password={password}
         loading={loading}
+        password={password}
         signIn={signIn}
       />
     </div>

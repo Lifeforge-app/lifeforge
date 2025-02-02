@@ -34,25 +34,25 @@ function ProgressOrButton({
     case 'completed':
       return (
         <p className="flex items-center gap-2 text-green-500">
-          <Icon icon="tabler:check" className="size-5" />
+          <Icon className="size-5" icon="tabler:check" />
           Downloaded
         </p>
       )
     case 'failed':
       return (
         <p className="flex items-center gap-2 text-red-500">
-          <Icon icon="tabler:alert-circle" className="size-5" />
+          <Icon className="size-5" icon="tabler:alert-circle" />
           Failed
         </p>
       )
     default:
       return (
         <IconButton
+          className="text-bg-500 hover:bg-bg-800/50 hover:text-bg-800 dark:hover:text-bg-50"
           icon="tabler:download"
           onClick={() => {
             downloadVideo(video)
           }}
-          className="text-bg-500 hover:bg-bg-800/50 hover:text-bg-800 dark:hover:text-bg-50"
         />
       )
   }
@@ -75,9 +75,9 @@ function PlaylistVideoEntry({
         <div className="relative h-28 shrink-0 overflow-hidden rounded-md border border-bg-800">
           <img
             alt=""
-            src={video.thumbnail}
-            referrerPolicy="no-referrer"
             className="aspect-video size-full object-cover"
+            referrerPolicy="no-referrer"
+            src={video.thumbnail}
           />
           <p className="absolute bottom-2 right-2 rounded-md bg-bg-900/70 px-1.5 py-0.5 text-sm text-bg-50">
             {moment
@@ -94,10 +94,10 @@ function PlaylistVideoEntry({
         </div>
       </div>
       <ProgressOrButton
-        status={status}
-        progress={progress}
-        video={video}
         downloadVideo={downloadVideo}
+        progress={progress}
+        status={status}
+        video={video}
       />
     </div>
   )

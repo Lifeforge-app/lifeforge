@@ -41,24 +41,18 @@ function AdditionalInfoSection({
     <>
       <div className="mt-6 space-y-4">
         <TextInput
+          darker
+          required
           icon="tabler:dimensions"
           name="Size"
-          value={size}
-          updateValue={setSize}
-          darker
-          placeholder='e.g. "M", "10"'
-          required
           namespace="modules.virtualWardrobe"
+          placeholder='e.g. "M", "10"'
+          updateValue={setSize}
+          value={size}
         />
         <ListboxOrComboboxInput
-          icon="tabler:palette"
-          name="Color"
-          value={colors}
-          setValue={setColors}
-          type="listbox"
           multiple
           required
-          customActive={colors.length > 0}
           buttonContent={
             <div className="flex items-center gap-2">
               {colors.map(color => (
@@ -72,27 +66,33 @@ function AdditionalInfoSection({
               ))}
             </div>
           }
+          customActive={colors.length > 0}
+          icon="tabler:palette"
+          name="Color"
           namespace="modules.virtualWardrobe"
+          setValue={setColors}
+          type="listbox"
+          value={colors}
         >
           {VW_COLORS.map(color => (
             <ListboxOrComboboxOption
-              text={color.name}
               key={color.name}
               color={color.hex}
+              text={color.name}
               value={color.name}
             />
           ))}
         </ListboxOrComboboxInput>
         <CurrencyInput
+          darker
           icon="tabler:currency-dollar"
           name="Price"
+          namespace="modules.virtualWardrobe"
           placeholder='e.g. "100.00"'
-          value={price}
           updateValue={value => {
             setPrice(value ?? '')
           }}
-          darker
-          namespace="modules.virtualWardrobe"
+          value={price}
         />
         <div className="mt-4 size-full rounded-lg bg-bg-200/70 p-6 shadow-custom transition-all focus-within:ring-1 focus-within:ring-bg-300 dark:bg-bg-800/50 dark:focus-within:ring-bg-500">
           <textarea
@@ -107,8 +107,8 @@ function AdditionalInfoSection({
       </div>
       <div className="mt-6 flex justify-between">
         <Button
-          variant="secondary"
           icon="tabler:arrow-left"
+          variant="secondary"
           onClick={() => {
             setStep(step - 1)
           }}
@@ -116,8 +116,8 @@ function AdditionalInfoSection({
           Previous
         </Button>
         <Button
-          icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
           disabled={size === '' || colors.length === 0}
+          icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
           loading={submitButtonLoading}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)

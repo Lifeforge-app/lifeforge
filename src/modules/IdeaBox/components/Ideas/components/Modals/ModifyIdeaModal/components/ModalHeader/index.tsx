@@ -27,6 +27,7 @@ function ModalHeader({
         <h1 className="flex w-full min-w-0 items-center gap-3 text-2xl font-semibold">
           <Icon
             key={innerOpenType}
+            className="size-7"
             icon={
               {
                 create: 'tabler:plus',
@@ -34,7 +35,6 @@ function ModalHeader({
                 paste: 'tabler:plus'
               }[innerOpenType!]
             }
-            className="size-7"
           />
           <span className="w-full min-w-0 items-center gap-3 truncate sm:flex">
             {t(
@@ -53,12 +53,12 @@ function ModalHeader({
           </span>
         </h1>
         <Button
+          icon="tabler:x"
+          iconClassName="size-6"
           variant="no-bg"
           onClick={() => {
             setOpenType(null)
           }}
-          iconClassName="size-6"
-          icon="tabler:x"
         />
       </div>
       <TypeSelector

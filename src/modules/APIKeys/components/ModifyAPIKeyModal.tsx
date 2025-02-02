@@ -117,56 +117,56 @@ function ModifyAPIKeyModal({
       <ModalWrapper isOpen={openType !== null} minWidth="40vw">
         <ModalHeader
           icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
+          namespace="modules.apiKeys"
           title={`apiKey.${openType}`}
           onClose={onClose}
-          namespace="modules.apiKeys"
         />
         <TextInput
           darker
           icon="tabler:id"
           name="Key ID"
-          placeholder="IdOfTheAPIKey"
-          value={id}
-          updateValue={setId}
           namespace="modules.apiKeys"
+          placeholder="IdOfTheAPIKey"
+          updateValue={setId}
+          value={id}
         />
         <TextInput
           darker
+          className="mt-4"
           icon="tabler:key"
           name="Key Name"
-          placeholder="My API Key"
-          value={name}
-          updateValue={setName}
-          className="mt-4"
           namespace="modules.apiKeys"
+          placeholder="My API Key"
+          updateValue={setName}
+          value={name}
         />
         <TextInput
           darker
+          className="mt-4"
           icon="tabler:info-circle"
           name="Key Description"
-          placeholder="A short description of this key"
-          value={description}
-          updateValue={setDescription}
-          className="mt-4"
           namespace="modules.apiKeys"
+          placeholder="A short description of this key"
+          updateValue={setDescription}
+          value={description}
         />
         <IconInput
           icon={icon}
-          setIcon={setIcon}
-          setIconSelectorOpen={setIconSelectorOpen}
           name="Key Icon"
           namespace="modules.apiKeys"
+          setIcon={setIcon}
+          setIconSelectorOpen={setIconSelectorOpen}
         />
         <TextInput
           darker
+          isPassword
+          className="mt-4"
           icon="tabler:key"
           name="API Key"
-          placeholder="••••••••••••••••"
-          value={key}
-          isPassword
-          updateValue={setKey}
-          className="mt-4"
           namespace="modules.apiKeys"
+          placeholder="••••••••••••••••"
+          updateValue={setKey}
+          value={key}
         />
         <CreateOrModifyButton
           loading={loading}

@@ -116,41 +116,41 @@ function ModifyFolderModal(): React.ReactElement {
           }}
         />
         <TextInput
-          namespace="modules.ideaBox"
-          name="Folder name"
-          icon="tabler:cube"
-          value={folderName}
-          updateValue={setFolderName}
           darker
+          icon="tabler:cube"
+          name="Folder name"
+          namespace="modules.ideaBox"
           placeholder="My folder"
+          updateValue={setFolderName}
+          value={folderName}
         />
         <ColorInput
-          namespace="modules.ideaBox"
-          name="Folder color"
           color={folderColor}
-          updateColor={setFolderColor}
+          name="Folder color"
+          namespace="modules.ideaBox"
           setColorPickerOpen={setColorPickerOpen}
+          updateColor={setFolderColor}
         />
         <IconInput
-          namespace="modules.ideaBox"
-          name="Folder icon"
           icon={folderIcon}
+          name="Folder icon"
+          namespace="modules.ideaBox"
           setIcon={setFolderIcon}
           setIconSelectorOpen={setIconSelectorOpen}
         />
         <CreateOrModifyButton
           loading={loading}
+          type={innerOpenType}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-          type={innerOpenType}
         />
       </ModalWrapper>
       <ColorPickerModal
-        isOpen={colorPickerOpen}
-        setOpen={setColorPickerOpen}
         color={folderColor}
+        isOpen={colorPickerOpen}
         setColor={setFolderColor}
+        setOpen={setColorPickerOpen}
       />
       <IconPickerModal
         isOpen={iconSelectorOpen}

@@ -16,12 +16,12 @@ function AssetColumn({
   return (
     <td className="p-2 text-center">
       <Link
-        to={`/wallet/transactions?asset=${asset}`}
         className={`inline-flex w-min items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm text-bg-500 dark:text-bg-400 ${componentBgLighter}`}
+        to={`/wallet/transactions?asset=${asset}`}
       >
         <Icon
-          icon={assets.find(a => a.id === asset)?.icon ?? ''}
           className="size-4 shrink-0"
+          icon={assets.find(a => a.id === asset)?.icon ?? ''}
         />
         {assets.find(a => a.id === asset)?.name}
       </Link>

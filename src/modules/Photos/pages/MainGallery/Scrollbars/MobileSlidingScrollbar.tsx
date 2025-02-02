@@ -9,6 +9,13 @@ function MobileSlidingScrollbar(): React.ReactElement {
   return typeof photos !== 'string' && photos.totalItems !== 0 ? (
     <div
       ref={sideSliderRef}
+      className="group absolute right-0 flex gap-2 sm:hidden"
+      onTouchCancel={() => {
+        sideSliderRef.current?.blur()
+      }}
+      onTouchEnd={() => {
+        sideSliderRef.current?.blur()
+      }}
       onTouchMove={e => {
         if (galleryWrapperRef.current !== null) {
           const br = galleryWrapperRef.current.getBoundingClientRect()
@@ -32,20 +39,13 @@ function MobileSlidingScrollbar(): React.ReactElement {
           )
         }
       }}
-      onTouchEnd={() => {
-        sideSliderRef.current?.blur()
-      }}
-      onTouchCancel={() => {
-        sideSliderRef.current?.blur()
-      }}
-      className="group absolute right-0 flex gap-2 sm:hidden"
     >
       <div
         ref={mobileDateDisplayRef}
         className="pointer-events-none absolute right-14 mt-1 hidden whitespace-nowrap rounded-t-sm border-b-2 border-custom-500 bg-bg-200 p-2 text-sm shadow-md group-hover:block dark:bg-bg-800 sm:right-3"
       ></div>
       <div className="rounded-l-full bg-bg-200 p-4 shadow-xs dark:bg-bg-900">
-        <Icon icon="tabler:caret-up-down-filled" className="text-bg-500" />
+        <Icon className="text-bg-500" icon="tabler:caret-up-down-filled" />
       </div>
     </div>
   ) : (

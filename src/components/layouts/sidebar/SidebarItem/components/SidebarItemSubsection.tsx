@@ -34,12 +34,6 @@ function SidebarItemSubsection({
       >
         {subsection.map(([subsectionName, subsectionIcon, subsectionLink]) => (
           <Link
-            onClick={() => {
-              if (window.innerWidth < 1024) {
-                toggleSidebar()
-              }
-            }}
-            to={`./${titleToPath(name)}/${subsectionLink}`}
             key={subsectionName}
             className={`mx-4 flex w-full items-center ${
               !sidebarExpanded ? 'justify-center' : ''
@@ -55,9 +49,15 @@ function SidebarItemSubsection({
                 ? 'bg-bg-200/30 shadow-custom dark:bg-bg-800'
                 : 'text-bg-500'
             }`}
+            to={`./${titleToPath(name)}/${subsectionLink}`}
+            onClick={() => {
+              if (window.innerWidth < 1024) {
+                toggleSidebar()
+              }
+            }}
           >
             <div className="flex size-7 items-center justify-center">
-              <Icon icon={subsectionIcon} className="size-6" />
+              <Icon className="size-6" icon={subsectionIcon} />
             </div>
 
             {sidebarExpanded && (

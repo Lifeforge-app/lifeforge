@@ -179,18 +179,18 @@ function ModifyEntryModal(): React.ReactElement {
 
   return (
     <Modal
-      namespace="modules.projectsM"
-      isOpen={openType !== null}
-      title={`project.${openType}`}
+      data={data}
+      fields={FIELDS}
       icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
+      isOpen={openType !== null}
+      namespace="modules.projectsM"
       openType={openType}
+      setData={setData}
+      title={`project.${openType}`}
       onClose={() => {
         setOpenType(null)
         setExistedData(null)
       }}
-      fields={FIELDS}
-      data={data}
-      setData={setData}
       onSubmit={onSubmitButtonClick}
     />
   )

@@ -49,29 +49,23 @@ function AddVideosModal({
   return (
     <ModalWrapper isOpen={isOpen} minWidth="50vw">
       <ModalHeader
-        title="videos.create"
-        namespace="modules.youtubeVideos"
+        className="mb-4!"
         icon="tabler:plus"
+        namespace="modules.youtubeVideos"
+        title="videos.create"
         onClose={() => {
           onClose(isVideoDownloading)
         }}
-        className="mb-4!"
       />
       <ListboxOrComboboxInput
-        type="listbox"
-        icon="tabler:category"
-        namespace="modules.youtubeVideos"
-        name="Resource Type"
-        value={selectedResourceType}
-        setValue={setSelectedResourceType}
         buttonContent={
           <>
             <Icon
+              className="size-5"
               icon={
                 RESOURCE_TYPES.find(l => l.value === selectedResourceType)
                   ?.icon ?? 'tabler:circle'
               }
-              className="size-5"
             />
             <span className="-mt-px block truncate">
               {t(
@@ -83,12 +77,18 @@ function AddVideosModal({
             </span>
           </>
         }
+        icon="tabler:category"
+        name="Resource Type"
+        namespace="modules.youtubeVideos"
+        setValue={setSelectedResourceType}
+        type="listbox"
+        value={selectedResourceType}
       >
         {RESOURCE_TYPES.map(({ value, icon }) => (
           <ListboxOrComboboxOption
             key={value}
-            text={t(`items.${value}`)}
             icon={icon}
+            text={t(`items.${value}`)}
             value={value}
           />
         ))}
@@ -105,9 +105,9 @@ function AddVideosModal({
           case 'playlist':
             return (
               <PlaylistSection
-                videos={videos}
                 isOpen={isOpen}
                 setIsVideoDownloading={setIsVideoDownloading}
+                videos={videos}
               />
             )
         }

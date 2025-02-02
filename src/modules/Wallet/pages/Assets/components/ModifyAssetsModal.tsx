@@ -89,47 +89,47 @@ function ModifyAssetsModal({
 
   return (
     <>
-      <ModalWrapper isOpen={openType !== null} className="sm:min-w-[30rem]">
+      <ModalWrapper className="sm:min-w-[30rem]" isOpen={openType !== null}>
         <ModalHeader
           icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-          title={`assets.${openType}`}
           namespace="modules.wallet"
+          title={`assets.${openType}`}
           onClose={() => {
             setOpenType(null)
           }}
         />
         <TextInput
-          namespace="modules.wallet"
-          icon="tabler:wallet"
-          placeholder="My assets"
-          value={assetName}
           darker
+          icon="tabler:wallet"
           name="Asset name"
+          namespace="modules.wallet"
+          placeholder="My assets"
           updateValue={setAssetName}
+          value={assetName}
         />
         <IconInput
-          namespace="modules.wallet"
           icon={assetIcon}
-          setIcon={setAssetIcon}
           name="Asset icon"
+          namespace="modules.wallet"
+          setIcon={setAssetIcon}
           setIconSelectorOpen={setIconSelectorOpen}
         />
         <CurrencyInput
-          namespace="modules.wallet"
-          name="Initial Balance"
-          placeholder="0.00"
-          icon="tabler:currency-dollar"
-          value={`${assetStartingBalance}`}
-          updateValue={updateAssetBalance}
           darker
           className="mt-6"
+          icon="tabler:currency-dollar"
+          name="Initial Balance"
+          namespace="modules.wallet"
+          placeholder="0.00"
+          updateValue={updateAssetBalance}
+          value={`${assetStartingBalance}`}
         />
         <CreateOrModifyButton
           loading={isLoading}
+          type={openType}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-          type={openType}
         />
       </ModalWrapper>
       <IconPickerModal

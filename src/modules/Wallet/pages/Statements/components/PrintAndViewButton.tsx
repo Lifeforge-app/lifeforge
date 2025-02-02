@@ -26,12 +26,12 @@ function PrintAndViewButton({
       </Button>
       <Button
         className="mt-2"
+        icon="tabler:eye"
+        namespace="modules.wallet"
+        variant="secondary"
         onClick={() => {
           setShowStatement(!showStatement)
         }}
-        icon="tabler:eye"
-        variant="secondary"
-        namespace="modules.wallet"
       >
         {showStatement ? 'Hide Statement' : 'Show Statement'}
       </Button>

@@ -75,13 +75,13 @@ function MiniCalendarContent({
             return (
               <MiniCalendarDateItem
                 key={index}
-                index={index}
                 actualIndex={actualIndex}
-                firstDay={firstDay}
-                lastDate={lastDate}
+                categories={categories}
                 date={date}
                 events={events}
-                categories={categories}
+                firstDay={firstDay}
+                index={index}
+                lastDate={lastDate}
               />
             )
           })()

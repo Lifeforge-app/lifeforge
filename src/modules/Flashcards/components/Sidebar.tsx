@@ -24,9 +24,9 @@ function Sidebar({
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
       <SidebarItem
         autoActive
-        onClick={() => {}}
         icon="tabler:cards"
         name="All Decks"
+        onClick={() => {}}
       />
       <SidebarDivider />
       <SidebarTitle name="progress" />
@@ -40,7 +40,7 @@ function Sidebar({
           className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
         >
           <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800">
-            <Icon icon={icon} className="size-6 shrink-0" />
+            <Icon className="size-6 shrink-0" icon={icon} />
             <div className="flex-between flex w-full">{name}</div>
             <span className="text-sm">{Math.floor(Math.random() * 10)}</span>
           </div>

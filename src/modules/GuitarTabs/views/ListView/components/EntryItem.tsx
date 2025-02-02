@@ -27,21 +27,21 @@ function EntryItem({
     >
       <a
         key={entry.id}
+        className="flex items-center justify-between gap-4 p-4"
         href={`${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
           entry.id
         }/${entry.pdf}`}
-        target="_blank"
         rel="noreferrer"
-        className="flex items-center justify-between gap-4 p-4"
+        target="_blank"
       >
         <div className="flex w-full min-w-0 items-center gap-4">
           <div className="flex-center w-12 rounded-lg bg-bg-200 dark:bg-bg-800">
             <img
               alt=""
+              className="h-full"
               src={`${import.meta.env.VITE_API_HOST}/media/${
                 entry.collectionId
               }/${entry.id}/${entry.thumbnail}`}
-              className="h-full"
             />
           </div>
           <div className="flex w-full min-w-0 flex-1 flex-col">
@@ -49,13 +49,13 @@ function EntryItem({
               <h3 className="truncate text-lg font-semibold">{entry.name}</h3>
               {entry.type !== '' && (
                 <Icon
+                  className="size-5 shrink-0 text-bg-500"
                   icon={
                     {
                       fingerstyle: 'mingcute:guitar-line',
                       singalong: 'mdi:guitar-pick-outline'
                     }[entry.type]
                   }
-                  className="size-5 shrink-0 text-bg-500"
                 />
               )}
             </div>
@@ -63,7 +63,7 @@ function EntryItem({
               <p className="min-w-0 truncate">
                 {entry.author !== '' ? entry.author : 'Unknown'}
               </p>
-              <Icon icon="tabler:circle-filled" className="size-1" />
+              <Icon className="size-1" icon="tabler:circle-filled" />
               <span>{entry.pageCount} pages</span>
             </div>
           </div>
@@ -78,17 +78,17 @@ function EntryItem({
         <DownloadMenu entry={entry} />
         <HamburgerMenu className="relative shrink-0">
           <MenuItem
+            icon="tabler:pencil"
+            text="Edit"
             onClick={() => {
               setExistingEntry(entry)
               setModifyEntryModalOpen(true)
             }}
-            text="Edit"
-            icon="tabler:pencil"
           />
           <MenuItem
-            text="Delete"
-            icon="tabler:trash"
             isRed
+            icon="tabler:trash"
+            text="Delete"
             onClick={() => {
               setExistingEntry(entry)
               setDeleteConfirmationModalOpen(true)

@@ -68,13 +68,9 @@ export default function APIOnlineStatusProvider({
   if (isOnline === false) {
     return (
       <EmptyStateScreen
-        icon="tabler:wifi-off"
-        name={false}
-        namespace={false}
-        title="API is Offline"
-        description="The API is currently offline. Please try again later. If you are the developer, please check the API status."
         customCTAButton={
           <Button
+            className="bg-black! text-white!"
             icon="tabler:refresh"
             onClick={() => {
               setIsOnline('loading')
@@ -90,11 +86,15 @@ export default function APIOnlineStatusProvider({
                   setIsOnline(false)
                 })
             }}
-            className="bg-black! text-white!"
           >
             Retry
           </Button>
         }
+        description="The API is currently offline. Please try again later. If you are the developer, please check the API status."
+        icon="tabler:wifi-off"
+        name={false}
+        namespace={false}
+        title="API is Offline"
       />
     )
   }

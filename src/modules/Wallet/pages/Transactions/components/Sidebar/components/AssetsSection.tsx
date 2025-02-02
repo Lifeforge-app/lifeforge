@@ -19,11 +19,11 @@ function AssetsSection({
   return (
     <>
       <SidebarTitle
-        name={t('sidebar.assets')}
         actionButtonIcon="tabler:plus"
         actionButtonOnClick={() => {
           navigate('/wallet/assets#new')
         }}
+        name={t('sidebar.assets')}
       />
       <APIFallbackComponent data={assets}>
         {assets => (
@@ -41,18 +41,27 @@ function AssetsSection({
               .map(({ icon, name, id }, index) => (
                 <SidebarItem
                   key={id}
-                  name={name}
-                  icon={icon}
                   active={
                     searchParams.get('asset') === id ||
                     (searchParams.get('asset') === null && index === 0)
                   }
+                  icon={icon}
+                  name={name}
                   number={
                     typeof filteredTransactions !== 'string'
                       ? filteredTransactions.filter(
                           transaction => transaction.asset === id || id === null
                         ).length
                       : 0
+                  }
+                  onCancelButtonClick={
+                    name !== 'All'
+                      ? () => {
+                          searchParams.delete('asset')
+                          setSearchParams(searchParams)
+                          setSidebarOpen(false)
+                        }
+                      : undefined
                   }
                   onClick={() => {
                     if (id === null) {
@@ -64,15 +73,6 @@ function AssetsSection({
                     }
                     setSidebarOpen(false)
                   }}
-                  onCancelButtonClick={
-                    name !== 'All'
-                      ? () => {
-                          searchParams.delete('asset')
-                          setSearchParams(searchParams)
-                          setSidebarOpen(false)
-                        }
-                      : undefined
-                  }
                 />
               ))}
           </>

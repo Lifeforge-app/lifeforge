@@ -50,10 +50,7 @@ export default function EntryItem({
     >
       <div className="absolute right-3 top-4 z-20 flex">
         <Button
-          onClick={() => {
-            addToFavourites().catch(console.error)
-          }}
-          variant="no-bg"
+          className={`p-2! ${item.is_favourite ? 'text-red-500!' : ''}`}
           icon={(() => {
             if (addToFavouritesLoading) {
               return 'svg-spinners:180-ring'
@@ -61,29 +58,32 @@ export default function EntryItem({
 
             return item.is_favourite ? 'tabler:heart-filled' : 'tabler:heart'
           })()}
-          className={`p-2! ${item.is_favourite ? 'text-red-500!' : ''}`}
+          variant="no-bg"
+          onClick={() => {
+            addToFavourites().catch(console.error)
+          }}
         />
         <HamburgerMenu>
           <EntryContextMenu item={item} />
         </HamburgerMenu>
       </div>
       <a
-        target="_blank"
-        rel="noreferrer"
+        className="absolute inset-0 z-10 size-full rounded-lg"
         href={`${import.meta.env.VITE_API_HOST}/media/${item.collectionId}/${
           item.id
         }/${item.file}`}
-        className="absolute inset-0 z-10 size-full rounded-lg"
+        rel="noreferrer"
+        target="_blank"
       />
       <div
         className={`flex-center aspect-10/12 h-min w-24 rounded-lg p-2 ${componentBgLighter}`}
       >
         <img
           alt=""
+          className="h-full object-cover"
           src={`${import.meta.env.VITE_API_HOST}/media/${item.collectionId}/${
             item.id
           }/${item.thumbnail}`}
-          className="h-full object-cover"
         />
       </div>
 
@@ -97,7 +97,7 @@ export default function EntryItem({
 
               return category !== undefined ? (
                 <>
-                  <Icon icon={category.icon} className="size-4 text-bg-500" />{' '}
+                  <Icon className="size-4 text-bg-500" icon={category.icon} />{' '}
                   {category.name}
                 </>
               ) : (

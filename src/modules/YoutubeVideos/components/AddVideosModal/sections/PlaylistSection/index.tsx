@@ -153,27 +153,27 @@ function PlaylistSection({
   return (
     <>
       <TextInput
-        icon="tabler:link"
-        name="Playlist URL"
-        value={playlistUrl}
-        updateValue={setPlaylistUrl}
-        placeholder="https://www.youtube.com/playlist?list=PL..."
         darker
         className="mt-4"
         disabled={downloadingVideos.current.size > 0}
+        icon="tabler:link"
+        name="Playlist URL"
         namespace="modules.youtubeVideos"
+        placeholder="https://www.youtube.com/playlist?list=PL..."
+        updateValue={setPlaylistUrl}
+        value={playlistUrl}
       />
       <div className="mt-6">
         {URL_REGEX.test(playlistUrl) && (
           <APIFallbackComponent data={playlistInfo}>
             {playlistInfo => (
               <PlaylistDetails
-                playlistInfo={playlistInfo}
+                downloadedVideos={downloadedVideos}
                 downloadingVideos={downloadingVideos}
                 downloadVideo={downloadVideo}
-                videos={videos}
-                downloadedVideos={downloadedVideos}
+                playlistInfo={playlistInfo}
                 processes={processes}
+                videos={videos}
               />
             )}
           </APIFallbackComponent>

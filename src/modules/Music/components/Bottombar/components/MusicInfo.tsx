@@ -15,10 +15,10 @@ export default function MusicInfo(): React.ReactElement {
       <div className="flex w-full min-w-0 items-center">
         <div className="flex size-12 shrink-0 items-center justify-center rounded-md bg-custom-500/20">
           <Icon
-            icon="tabler:disc"
             className={`${
               isPlaying ? 'animate-spin' : ''
             } text-3xl text-custom-500`}
+            icon="tabler:disc"
           />
         </div>
         <div className="ml-4 w-full min-w-0">

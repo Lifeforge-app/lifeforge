@@ -80,18 +80,18 @@ function TransactionsCountCard(): React.ReactElement {
 
   return (
     <DashboardItem
-      icon="tabler:arrows-exchange"
-      namespace="modules.wallet"
-      title="Transactions Count"
       className="col-span-1 row-span-1 min-h-96 xl:min-h-0"
       componentBesideTitle={
         <Link
-          to="./transactions"
           className="flex items-center gap-2 rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50"
+          to="./transactions"
         >
-          <Icon icon="tabler:chevron-right" className="text-xl" />
+          <Icon className="text-xl" icon="tabler:chevron-right" />
         </Link>
       }
+      icon="tabler:arrows-exchange"
+      namespace="modules.wallet"
+      title="Transactions Count"
     >
       <APIFallbackComponent data={transactions}>
         {transactions => (
@@ -106,8 +106,8 @@ function TransactionsCountCard(): React.ReactElement {
               ).map(([type, color]) => (
                 <Link
                   key={type}
-                  to={`/wallet/transactions?type=${type}`}
                   className={`flex-between flex flex-col gap-4 rounded-md p-4 transition-all sm:flex-row ${componentBgLighterWithHover}`}
+                  to={`/wallet/transactions?type=${type}`}
                 >
                   <div className="flex w-full items-center gap-4">
                     <div
@@ -141,8 +141,8 @@ function TransactionsCountCard(): React.ReactElement {
                             .map((_, i) => (
                               <Icon
                                 key={i}
-                                icon="uil:asterisk"
                                 className="-mx-0.5 size-4"
+                                icon="uil:asterisk"
                               />
                             ))}
                         </span>

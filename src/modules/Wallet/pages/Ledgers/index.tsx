@@ -33,25 +33,25 @@ function Ledgers(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
-        icon="tabler:book"
-        title="Ledgers"
         actionButton={
           typeof ledgers !== 'string' &&
           ledgers.length > 0 && (
             <Button
               className="hidden md:flex"
-              onClick={() => {
-                setModifyModalOpenType('create')
-              }}
               icon="tabler:plus"
               tProps={{
                 item: t('items.ledger')
+              }}
+              onClick={() => {
+                setModifyModalOpenType('create')
               }}
             >
               New
             </Button>
           )
         }
+        icon="tabler:book"
+        title="Ledgers"
       />
       <APIFallbackComponent data={ledgers}>
         {ledgers =>
@@ -61,46 +61,46 @@ function Ledgers(): React.ReactElement {
                 <LedgerItem
                   key={ledger.id}
                   ledger={ledger}
-                  setModifyModalOpenType={setModifyModalOpenType}
                   setDeleteLedgersConfirmationOpen={
                     setDeleteLedgersConfirmationOpen
                   }
+                  setModifyModalOpenType={setModifyModalOpenType}
                   setSelectedData={setSelectedData}
                 />
               ))}
             </div>
           ) : (
             <EmptyStateScreen
-              name="ledger"
-              namespace="modules.wallet"
               ctaContent="new"
               ctaTProps={{
                 item: t('items.ledger')
               }}
-              onCTAClick={setModifyModalOpenType}
               icon="tabler:wallet-off"
+              name="ledger"
+              namespace="modules.wallet"
+              onCTAClick={setModifyModalOpenType}
             />
           )
         }
       </APIFallbackComponent>
       <ModifyLedgersModal
         existedData={selectedData}
-        setExistedData={setSelectedData}
         openType={modifyLedgersModalOpenType}
-        setOpenType={setModifyModalOpenType}
         refreshLedgers={refreshLedgers}
+        setExistedData={setSelectedData}
+        setOpenType={setModifyModalOpenType}
       />
       <DeleteConfirmationModal
         apiEndpoint="wallet/ledgers"
-        isOpen={deleteLedgersConfirmationOpen}
         data={selectedData}
+        isOpen={deleteLedgersConfirmationOpen}
         itemName="ledger account"
+        nameKey="name"
+        updateDataLists={refreshLedgers}
         onClose={() => {
           setDeleteLedgersConfirmationOpen(false)
           setSelectedData(null)
         }}
-        updateDataLists={refreshLedgers}
-        nameKey="name"
       />
       <FAB
         hideWhen="md"

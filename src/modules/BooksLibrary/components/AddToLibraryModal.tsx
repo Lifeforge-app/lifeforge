@@ -189,18 +189,18 @@ function AddToLibraryModal({
 
   return (
     <Modal
-      namespace="modules.booksLibrary"
-      isOpen={isOpen}
-      title="Add to library"
-      icon="majesticons:book-plus-line"
       data={data}
-      setData={setData}
       fields={FIELDS}
+      icon="majesticons:book-plus-line"
+      isOpen={isOpen}
+      loading={typeof fetchedData === 'string'}
+      namespace="modules.booksLibrary"
+      setData={setData}
       submitButtonIcon="tabler:download"
       submitButtonLabel="Download"
+      title="Add to library"
       onClose={onClose}
       onSubmit={onSubmit}
-      loading={typeof fetchedData === 'string'}
     />
   )
 }

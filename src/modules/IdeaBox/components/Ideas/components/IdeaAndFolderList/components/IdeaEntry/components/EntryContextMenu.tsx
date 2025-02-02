@@ -88,7 +88,7 @@ function EntryContextMenu({
               entry.type === 'image' ? 'shadow-custom!' : ''
             } ${open ? 'opacity-100!' : ''}`}
           >
-            <Icon icon="tabler:dots-vertical" className="text-xl" />
+            <Icon className="text-xl" icon="tabler:dots-vertical" />
           </div>
         )}
       </MenuButton>
@@ -99,46 +99,46 @@ function EntryContextMenu({
       >
         {!entry.archived && (
           <MenuItem
+            icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
+            text={entry.pinned ? 'Unpin' : 'Pin'}
             onClick={() => {
               pinIdea().catch(console.error)
             }}
-            icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
-            text={entry.pinned ? 'Unpin' : 'Pin'}
           />
         )}
         <MenuItem
+          icon={entry.archived ? 'tabler:archive-off' : 'tabler:archive'}
+          text={entry.archived ? 'Unarchive' : 'Archive'}
           onClick={() => {
             archiveIdea().catch(console.error)
           }}
-          icon={entry.archived ? 'tabler:archive-off' : 'tabler:archive'}
-          text={entry.archived ? 'Unarchive' : 'Archive'}
         />
         <MenuItem
+          icon="tabler:pencil"
+          text="Edit"
           onClick={() => {
             setTypeOfModifyIdea(entry.type)
             setExistedEntry(entry)
             setModifyIdeaModalOpenType('update')
           }}
-          icon="tabler:pencil"
-          text="Edit"
         />
         {path !== '' && (
           <MenuItem
+            icon="tabler:folder-minus"
+            text="Remove from folder"
             onClick={() => {
               removeFromFolder().catch(console.error)
             }}
-            icon="tabler:folder-minus"
-            text="Remove from folder"
           />
         )}
         <MenuItem
+          isRed
+          icon="tabler:trash"
+          text="Delete"
           onClick={() => {
             setExistedEntry(entry)
             setDeleteIdeaConfirmationModalOpen(true)
           }}
-          icon="tabler:trash"
-          text="Delete"
-          isRed
         />
       </MenuItems>
     </Menu>

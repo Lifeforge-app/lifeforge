@@ -20,13 +20,13 @@ export default function EventItem({
 }): React.ReactElement {
   return (
     <button
-      onClick={() => {
-        setModifyEventModalOpenType('update')
-        setExistedData(event)
-      }}
       className="rbc-event flex flex-row! items-center gap-2 rounded-md bg-bg-100 dark:bg-bg-800"
       style={{
         border: 'none'
+      }}
+      onClick={() => {
+        setModifyEventModalOpenType('update')
+        setExistedData(event)
       }}
     >
       {typeof categories !== 'string' && event.category !== '' && (

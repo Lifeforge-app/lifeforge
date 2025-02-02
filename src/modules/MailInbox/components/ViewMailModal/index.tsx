@@ -31,10 +31,10 @@ function ViewMailModal({
   return (
     <ModalWrapper isOpen={openFor !== null} minWidth="80vw">
       <ModalHeader
-        title="mail.view"
-        onClose={onClose}
         icon="tabler:mail"
         namespace="modules.mailInbox"
+        title="mail.view"
+        onClose={onClose}
       />
       <APIFallbackComponent data={mailContent}>
         {mail => (

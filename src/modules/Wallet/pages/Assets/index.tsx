@@ -35,19 +35,17 @@ function Assets(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader
-        icon="tabler:wallet"
-        title="Assets"
         actionButton={
           typeof assets !== 'string' &&
           assets.length > 0 && (
             <Button
               className="hidden sm:flex"
-              onClick={() => {
-                setModifyModalOpenType('create')
-              }}
               icon="tabler:plus"
               tProps={{
                 item: t('items.asset')
+              }}
+              onClick={() => {
+                setModifyModalOpenType('create')
               }}
             >
               new
@@ -57,15 +55,17 @@ function Assets(): React.ReactElement {
         hamburgerMenuItems={
           <>
             <MenuItem
-              text="Hide Amount"
               icon="tabler:eye-off"
+              isToggled={isAmountHidden}
+              text="Hide Amount"
               onClick={() => {
                 toggleAmountVisibility(!isAmountHidden)
               }}
-              isToggled={isAmountHidden}
             />
           </>
         }
+        icon="tabler:wallet"
+        title="Assets"
       />
       <APIFallbackComponent data={assets}>
         {assets =>
@@ -75,55 +75,55 @@ function Assets(): React.ReactElement {
                 <AssetItem
                   key={asset.id}
                   asset={asset}
-                  setSelectedData={setSelectedData}
-                  setModifyModalOpenType={setModifyModalOpenType}
                   setDeleteAssetsConfirmationOpen={
                     setDeleteAssetsConfirmationOpen
                   }
+                  setModifyModalOpenType={setModifyModalOpenType}
+                  setSelectedData={setSelectedData}
                 />
               ))}
             </div>
           ) : (
             <EmptyStateScreen
-              name="assets"
-              namespace="modules.wallet"
               ctaContent="new"
               ctaTProps={{
                 item: t('items.asset')
               }}
-              onCTAClick={setModifyModalOpenType}
               icon="tabler:wallet-off"
+              name="assets"
+              namespace="modules.wallet"
+              onCTAClick={setModifyModalOpenType}
             />
           )
         }
       </APIFallbackComponent>
       {assets.length > 0 && (
         <FAB
+          icon="tabler:plus"
           onClick={() => {
             setSelectedData(null)
             setModifyModalOpenType('create')
           }}
-          icon="tabler:plus"
         />
       )}
       <ModifyAssetsModal
         existedData={selectedData}
-        setExistedData={setSelectedData}
         openType={modifyAssetsModalOpenType}
-        setOpenType={setModifyModalOpenType}
         refreshAssets={refreshAssets}
+        setExistedData={setSelectedData}
+        setOpenType={setModifyModalOpenType}
       />
       <DeleteConfirmationModal
         apiEndpoint="wallet/assets"
-        isOpen={deleteAssetsConfirmationOpen}
         data={selectedData}
+        isOpen={deleteAssetsConfirmationOpen}
         itemName="asset account"
+        nameKey="name"
+        updateDataLists={refreshAssets}
         onClose={() => {
           setDeleteAssetsConfirmationOpen(false)
           setSelectedData(null)
         }}
-        updateDataLists={refreshAssets}
-        nameKey="name"
       />
     </ModuleWrapper>
   )

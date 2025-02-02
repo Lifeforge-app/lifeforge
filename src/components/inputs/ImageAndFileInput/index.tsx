@@ -36,7 +36,7 @@ function ImageAndFileInput({
     <>
       <div className="flex w-full flex-col rounded-md bg-bg-200/30 p-6 shadow-custom dark:bg-bg-800/50">
         <div className="flex items-center gap-4 text-bg-500">
-          <Icon icon={icon} className="size-6" />
+          <Icon className="size-6" icon={icon} />
           <span className="font-medium">
             {t(`${namespace}:inputs.${toCamelCase(name)}`)}{' '}
             {required === true && <span className="text-red-500">*</span>}
@@ -45,22 +45,22 @@ function ImageAndFileInput({
         {preview !== null && (
           <Zoom zoomMargin={100}>
             <img
-              src={preview}
               alt=""
               className="mx-auto mt-6 max-h-64 rounded-md"
+              src={preview}
             />
           </Zoom>
         )}
         {preview !== null && (
           <Button
+            isRed
+            className="mt-6 w-full"
+            icon="tabler:x"
             onClick={() => {
               setPreview(null)
               setImage(null)
               onImageRemoved?.()
             }}
-            className="mt-6 w-full"
-            isRed
-            icon="tabler:x"
           >
             Remove
           </Button>
@@ -69,25 +69,25 @@ function ImageAndFileInput({
           <div className="mt-4 flex items-center justify-between gap-8">
             <p className="w-full truncate">{(image as File).name}</p>
             <Button
+              className="p-2!"
+              icon="tabler:x"
+              variant="no-bg"
               onClick={() => {
                 setImage(null)
                 onImageRemoved?.()
               }}
-              variant="no-bg"
-              className="p-2!"
-              icon="tabler:x"
             />
           </div>
         )}
         {image === null && preview === null && (
           <div className="mt-6 flex flex-col items-center gap-3">
             <Button
-              onClick={() => {
-                setImagePickerModalOpen(true)
-              }}
               className="w-full"
               icon="tabler:upload"
               variant="secondary"
+              onClick={() => {
+                setImagePickerModalOpen(true)
+              }}
             >
               {t('common.buttons:upload')}
             </Button>

@@ -31,6 +31,7 @@ function TypeSelector({
       >
         <div className="flex-center">
           <Icon
+            className="mr-2 size-5"
             icon={
               {
                 text: 'tabler:article',
@@ -38,14 +39,13 @@ function TypeSelector({
                 link: 'tabler:link'
               }[innerTypeOfModifyIdea]
             }
-            className="mr-2 size-5"
           />
           {t(`entryType.${innerTypeOfModifyIdea}`)}
         </div>
         <Icon
-          icon="tabler:chevron-down"
-          className="-mr-1 ml-2 size-4 stroke-[2px]"
           aria-hidden="true"
+          className="-mr-1 ml-2 size-4 stroke-[2px]"
+          icon="tabler:chevron-down"
         />
       </MenuButton>
       <MenuItems
@@ -61,12 +61,12 @@ function TypeSelector({
           <MenuItem
             key={type}
             icon={icon}
-            onClick={() =>
-              setInnerTypeOfModifyIdea(type as 'text' | 'image' | 'link')
-            }
             isToggled={innerTypeOfModifyIdea === type}
             namespace={false}
             text={t(`entryType.${type}`)}
+            onClick={() =>
+              setInnerTypeOfModifyIdea(type as 'text' | 'image' | 'link')
+            }
           />
         ))}
       </MenuItems>

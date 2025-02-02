@@ -45,9 +45,9 @@ function LanguageSelector(): React.ReactElement {
 
   return (
     <ConfigColumn
-      title={t('languageSelector.title')}
       desc={t('languageSelector.desc')}
       icon="tabler:language"
+      title={t('languageSelector.title')}
     >
       <Listbox
         value={language}
@@ -60,14 +60,14 @@ function LanguageSelector(): React.ReactElement {
             className={`flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left shadow-custom outline-hidden transition-all focus:outline-hidden ${componentBgWithHover}`}
           >
             <Icon
-              icon={LANGUAGES.find(({ code }) => code === language)?.icon ?? ''}
               className="size-5"
+              icon={LANGUAGES.find(({ code }) => code === language)?.icon ?? ''}
             />
             <span className="-mt-px block truncate">
               {LANGUAGES.find(({ code }) => code === language)?.name}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <Icon icon="tabler:chevron-down" className="size-5 text-bg-500" />
+              <Icon className="size-5 text-bg-500" icon="tabler:chevron-down" />
             </span>
           </ListboxButton>
           <ListboxOptions
@@ -85,14 +85,14 @@ function LanguageSelector(): React.ReactElement {
                   <>
                     <div>
                       <span className="flex items-center gap-2">
-                        <Icon icon={icon} className="size-5" />
+                        <Icon className="size-5" icon={icon} />
                         {name}
                       </span>
                     </div>
                     {selected && (
                       <Icon
-                        icon="tabler:check"
                         className="block text-lg text-custom-500"
+                        icon="tabler:check"
                       />
                     )}
                   </>

@@ -12,6 +12,8 @@ function DownloadMenu({
   return (
     <HamburgerMenu className="relative shrink-0" customIcon="tabler:download">
       <MenuItem
+        icon="tabler:file-text"
+        text="PDF"
         onClick={() => {
           forceDown(
             `${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
@@ -20,11 +22,11 @@ function DownloadMenu({
             entry.pdf
           ).catch(console.error)
         }}
-        text="PDF"
-        icon="tabler:file-text"
       />
       {entry.audio !== '' && (
         <MenuItem
+          icon="tabler:music"
+          text="Audio"
           onClick={() => {
             forceDown(
               `${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
@@ -33,12 +35,12 @@ function DownloadMenu({
               entry.audio
             ).catch(console.error)
           }}
-          text="Audio"
-          icon="tabler:music"
         />
       )}
       {entry.musescore !== '' && (
         <MenuItem
+          icon="simple-icons:musescore"
+          text="Musescore"
           onClick={() => {
             forceDown(
               `${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
@@ -47,8 +49,6 @@ function DownloadMenu({
               entry.musescore
             ).catch(console.error)
           }}
-          text="Musescore"
-          icon="simple-icons:musescore"
         />
       )}
     </HamburgerMenu>

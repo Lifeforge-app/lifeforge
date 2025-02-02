@@ -60,11 +60,11 @@ function Countries(): React.ReactElement {
       <div className="mt-4 flex items-center gap-2">
         <ContinentSelector />
         <SearchInput
-          stuffToSearch="country"
+          hasTopMargin={false}
           namespace="modules.airports"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          hasTopMargin={false}
+          stuffToSearch="country"
         />
       </div>
       <APIFallbackComponent data={filteredData}>
@@ -78,14 +78,14 @@ function Countries(): React.ReactElement {
                   })
                   .map(([key, [name, amount]]) => (
                     <Link
-                      to={`/airports/${continentID}/${key}`}
                       key={name}
                       className={`flex-between flex w-full rounded-lg p-4 px-6 shadow-custom transition-all ${componentBgWithHover}`}
+                      to={`/airports/${continentID}/${key}`}
                     >
                       <div className="flex items-center gap-4">
                         <Icon
-                          icon={`circle-flags:${key.toLowerCase()}`}
                           className="size-8"
+                          icon={`circle-flags:${key.toLowerCase()}`}
                         />
                         <div>
                           <p className="text-left text-xl font-medium">
@@ -97,16 +97,16 @@ function Countries(): React.ReactElement {
                         </div>
                       </div>
                       <Icon
-                        icon="tabler:chevron-right"
                         className="size-5 text-bg-500"
+                        icon="tabler:chevron-right"
                       />
                     </Link>
                   ))
               ) : (
                 <EmptyStateScreen
-                  namespace="modules.airports"
-                  name="countries"
                   icon="tabler:globe-off"
+                  name="countries"
+                  namespace="modules.airports"
                 />
               )}
             </div>

@@ -13,8 +13,8 @@ export default function IconButton({
   children?: React.ReactNode
 }): React.ReactElement {
   return (
-    <button onClick={onClick} className={`rounded-lg p-4 ${className}`}>
-      <Icon icon={icon} className="text-xl" />
+    <button className={`rounded-lg p-4 ${className}`} onClick={onClick}>
+      <Icon className="text-xl" icon={icon} />
       {children}
     </button>
   )

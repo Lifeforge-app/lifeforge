@@ -81,7 +81,7 @@ function Photos({
     if (openType === 'update' && originalPhotosLength > 0) {
       return (
         <div className="flex-center size-full flex-col gap-4">
-          <Icon icon="tabler:lock" className="size-28" />
+          <Icon className="size-28" icon="tabler:lock" />
           <h2 className="text-4xl font-semibold">Photos are locked</h2>
           <p className="text-center text-lg text-bg-500">
             You can&apos;t upload photos in update mode.
@@ -93,9 +93,9 @@ function Photos({
     if (photos.length === 0) {
       return (
         <EmptyStateScreen
+          ctaContent="Upload Photos"
           icon="tabler:photo-off"
           name="photos"
-          ctaContent="Upload Photos"
           namespace="modules.journal"
           onCTAClick={onUploadClick}
         />
@@ -111,28 +111,28 @@ function Photos({
               className="relative max-h-[300px] min-h-32 grow overflow-hidden rounded-lg"
             >
               <img
-                src={photo.preview}
                 alt=""
                 className="size-full max-h-[300px] min-h-32 object-cover"
+                src={photo.preview}
               />
               <button
+                className="flex-center absolute left-0 top-0 size-full bg-red-900/50 opacity-0 transition-opacity duration-200 hover:opacity-100"
                 onClick={() => {
                   setPhotos(photos.filter(p => p.preview !== photo.preview))
                 }}
-                className="flex-center absolute left-0 top-0 size-full bg-red-900/50 opacity-0 transition-opacity duration-200 hover:opacity-100"
               >
-                <Icon icon="tabler:trash" className="size-6 text-red-500" />
+                <Icon className="size-6 text-red-500" icon="tabler:trash" />
               </button>
             </div>
           ))}
         </div>
         {photos.length < 50 && (
           <Button
-            onClick={onUploadClick}
             className="mt-4 w-full"
             disabled={photos.length >= 50}
             icon="tabler:plus"
             variant="secondary"
+            onClick={onUploadClick}
           >
             upload photos
           </Button>
@@ -148,20 +148,20 @@ function Photos({
       </div>
       <div className="flex-between mt-6 flex">
         <Button
+          icon="tabler:arrow-left"
+          variant="no-bg"
           onClick={() => {
             setStep(3)
           }}
-          icon="tabler:arrow-left"
-          variant="no-bg"
         >
           Previous
         </Button>
         <Button
+          iconAtEnd
+          icon="tabler:arrow-right"
           onClick={() => {
             setStep(5)
           }}
-          icon="tabler:arrow-right"
-          iconAtEnd
         >
           Next
         </Button>

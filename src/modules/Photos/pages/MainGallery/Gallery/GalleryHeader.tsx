@@ -129,9 +129,6 @@ function GalleryHeader(): React.ReactElement {
               icon={
                 fileImportLoading ? 'svg-spinners:180-ring' : 'tabler:upload'
               }
-              onClick={() => {
-                importFiles().catch(() => {})
-              }}
               text={
                 !fileImportLoading
                   ? 'Import photos'
@@ -141,33 +138,36 @@ function GalleryHeader(): React.ReactElement {
                     )}%)`
                   : 'Importing'
               }
+              onClick={() => {
+                importFiles().catch(() => {})
+              }}
             />
           )}
           <MenuItem
             icon="tabler:photo-off"
+            isToggled={hidePhotosInAlbum}
+            text="Hide photos in albums"
             onClick={() => {
               setHidePhotosInAlbum(!hidePhotosInAlbum)
             }}
-            text="Hide photos in albums"
-            isToggled={hidePhotosInAlbum}
           />
           <MenuItem
             icon="tabler:reload"
+            text="Refresh"
             onClick={() => {
               refreshPhotos()
             }}
-            text="Refresh"
           />
         </HamburgerMenu>
       </div>
       <div className="hidden h-14 items-center gap-4 sm:flex">
         {showImportButton && (
           <Button
+            icon="tabler:upload"
+            loading={fileImportLoading}
             onClick={() => {
               importFiles().catch(() => {})
             }}
-            loading={fileImportLoading}
-            icon="tabler:upload"
           >
             {!fileImportLoading ? (
               'import'
@@ -189,18 +189,18 @@ function GalleryHeader(): React.ReactElement {
         >
           <MenuItem
             icon="tabler:photo-off"
+            isToggled={hidePhotosInAlbum}
+            text="Hide photos in albums"
             onClick={() => {
               setHidePhotosInAlbum(!hidePhotosInAlbum)
             }}
-            text="Hide photos in albums"
-            isToggled={hidePhotosInAlbum}
           />
           <MenuItem
             icon="tabler:reload"
+            text="Refresh"
             onClick={() => {
               refreshPhotos()
             }}
-            text="Refresh"
           />
         </HamburgerMenu>
       </div>

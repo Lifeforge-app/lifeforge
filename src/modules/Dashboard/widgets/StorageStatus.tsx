@@ -20,8 +20,8 @@ export default function StorageStatus(): React.ReactElement {
                   <div className="flex-between flex w-full min-w-0">
                     <div className="flex min-w-0 flex-1 items-center gap-2">
                       <Icon
-                        icon="streamline:hard-disk"
                         className="text-xl text-bg-500"
+                        icon="streamline:hard-disk"
                       />
                       <h2 className="mr-4 min-w-0 truncate text-bg-500">
                         {disk.name}

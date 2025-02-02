@@ -55,10 +55,10 @@ function MasterSearchBar(): React.ReactElement {
   return (
     <div className="relative z-50">
       <SearchInput
-        stuffToSearch="All Airport"
         namespace="modules.airports"
         searchQuery={masterSearchQuery}
         setSearchQuery={setMasterSearchQuery}
+        stuffToSearch="All Airport"
         onKeyUp={e => {
           if (e.key === 'Enter' && typeof searchResults !== 'string') {
             if (searchResults.length > 0) {
@@ -77,21 +77,21 @@ function MasterSearchBar(): React.ReactElement {
         >
           <APIFallbackComponent data={searchResults}>
             {searchResults => (
-              <Scrollbar className="flex-1" autoHeight autoHeightMax={384}>
+              <Scrollbar autoHeight autoHeightMax={384} className="flex-1">
                 <div className="flex-1 divide-y divide-bg-200 dark:divide-bg-800">
                   {searchResults.length > 0 ? (
                     searchResults.map(airport => (
                       <Link
                         key={airport.id}
-                        to={`/airports/${airport.continentCode}/${airport.country.code}/${airport.region.code}/${airport.id}`}
                         className="flex-between flex w-full p-4 px-6 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50"
+                        to={`/airports/${airport.continentCode}/${airport.country.code}/${airport.region.code}/${airport.id}`}
                       >
                         <div className="flex items-center gap-4">
                           <Icon
-                            icon={AIRPORT_TYPES[airport.type][1]}
                             className={`size-7 ${
                               AIRPORT_TYPES[airport.type][0]
                             }`}
+                            icon={AIRPORT_TYPES[airport.type][1]}
                           />
                           <div>
                             <p className="text-left text-xl font-medium">
@@ -113,10 +113,10 @@ function MasterSearchBar(): React.ReactElement {
                   ) : (
                     <div className="py-6">
                       <EmptyStateScreen
+                        smaller
+                        icon="tabler:search-off"
                         name="airports"
                         namespace="modules.airports"
-                        icon="tabler:search-off"
-                        smaller
                       />
                     </div>
                   )}

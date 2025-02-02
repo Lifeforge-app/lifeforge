@@ -5,7 +5,7 @@ import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 function AsciiTextGenerator(): React.ReactElement {
   return (
     <ModuleWrapper>
-      <ModuleHeader title="ASCII Text Generator" icon="tabler:terminal" />
+      <ModuleHeader icon="tabler:terminal" title="ASCII Text Generator" />
     </ModuleWrapper>
   )
 }

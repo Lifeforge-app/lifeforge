@@ -7,7 +7,7 @@ function Wind({ data }: { data: IAirportMETARData }): React.ReactElement {
   return (
     <WidgetWrapper>
       <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
-        <Icon icon="tabler:wind" className="text-2xl" />
+        <Icon className="text-2xl" icon="tabler:wind" />
         <span className="ml-2">Wind</span>
       </h1>
       {data.wind !== undefined ? (

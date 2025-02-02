@@ -72,12 +72,12 @@ function Header({
         )}
       </div>
       <button
+        className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
         onClick={() => {
           setSidebarOpen(true)
         }}
-        className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
       >
-        <Icon icon="tabler:menu" className="text-2xl" />
+        <Icon className="text-2xl" icon="tabler:menu" />
       </button>
     </header>
   )

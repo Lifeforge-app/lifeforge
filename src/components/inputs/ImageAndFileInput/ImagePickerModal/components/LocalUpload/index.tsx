@@ -46,16 +46,16 @@ function LocalUpload({
 
   return file === null ? (
     <DnDContainer
-      getRootProps={getRootProps}
       getInputProps={getInputProps}
+      getRootProps={getRootProps}
       isDragActive={isDragActive}
     />
   ) : (
     <PreviewContainer
-      preview={preview}
-      setPreview={setPreview}
       file={file as File}
+      preview={preview}
       setFile={setFile}
+      setPreview={setPreview}
     />
   )
 }
