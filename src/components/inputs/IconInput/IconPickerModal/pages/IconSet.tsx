@@ -77,7 +77,7 @@ function IconSet({
       </h1>
       <SearchInput
         hasTopMargin={false}
-        namespace="common.misc"
+        namespace="common.modals"
         searchQuery={searchTerm}
         setSearchQuery={setSearchTerm}
         stuffToSearch="icon"
@@ -142,7 +142,7 @@ function IconSet({
             <EmptyStateScreen
               icon="tabler:icons-off"
               name="icon"
-              namespace="common.misc"
+              namespace="common.modals"
               tKey="iconPicker"
             />
           </div>

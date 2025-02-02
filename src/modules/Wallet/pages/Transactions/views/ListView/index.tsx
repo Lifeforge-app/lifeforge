@@ -33,7 +33,7 @@ function ListView({
           {({ height, width }: { height: number; width: number }) => (
             <L
               height={height}
-              rowCount={transactions.length}
+              rowCount={transactions.length + 1}
               rowHeight={80}
               rowRenderer={({
                 index,
@@ -44,24 +44,27 @@ function ListView({
                 key: string
                 style: React.CSSProperties
               }) => {
-                const transaction = transactions[index]
+                const transaction =
+                  index === transactions.length ? null : transactions[index]
 
                 return (
                   <div key={key} style={style}>
-                    <TransactionListItem
-                      setDeleteTransactionsConfirmationOpen={
-                        setDeleteTransactionsConfirmationOpen
-                      }
-                      setModifyModalOpenType={setModifyModalOpenType}
-                      setReceiptModalOpen={setReceiptModalOpen}
-                      setReceiptToView={setReceiptToView}
-                      setSelectedData={setSelectedData}
-                      transaction={transaction}
-                    />
+                    {transaction && (
+                      <TransactionListItem
+                        setDeleteTransactionsConfirmationOpen={
+                          setDeleteTransactionsConfirmationOpen
+                        }
+                        setModifyModalOpenType={setModifyModalOpenType}
+                        setReceiptModalOpen={setReceiptModalOpen}
+                        setReceiptToView={setReceiptToView}
+                        setSelectedData={setSelectedData}
+                        transaction={transaction}
+                      />
+                    )}
                   </div>
                 )
               }}
-              width={width}
+              width={width - 2}
             />
           )}
         </AS>

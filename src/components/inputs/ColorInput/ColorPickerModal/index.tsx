@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import Button from '@components/buttons/Button/index.tsx'
 import ModalHeader from '@components/modals/ModalHeader.tsx'
 import MorandiColorPaletteModal from './components/MorandiColorPaletteModal.tsx'
-import TailwindCSSColorsModal from './components/TailwindCSSColorsModal.tsx'
+import TailwindCSSColorsModal from './components/TailwindCSSColorPalette/index.tsx'
 import ModalWrapper from '../../../modals/ModalWrapper.tsx'
 
 function checkContrast(hexColor: string): string {
@@ -60,7 +60,7 @@ function ColorPickerModal({
       <ModalWrapper className="sm:min-w-[28rem]!" isOpen={isOpen}>
         <ModalHeader
           icon="tabler:color-picker"
-          title="Pick a color"
+          title="colorPicker.title"
           onClose={handleClose}
         />
         <Colorful

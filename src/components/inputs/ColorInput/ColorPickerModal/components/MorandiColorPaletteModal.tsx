@@ -21,7 +21,7 @@ function MorandiColorPaletteModal({
     <ModalWrapper isOpen={isOpen} minWidth="60vw">
       <ModalHeader
         icon="tabler:flower"
-        title="Morandi Color Palette"
+        title="colorPicker.modals.morandiColorPalette"
         onClose={onClose}
       />
       <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] gap-4 p-4 pt-0">
