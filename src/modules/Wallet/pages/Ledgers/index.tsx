@@ -56,7 +56,7 @@ function Ledgers(): React.ReactElement {
       <APIFallbackComponent data={ledgers}>
         {ledgers =>
           ledgers.length > 0 ? (
-            <div className="mt-6 space-y-4">
+            <div className="mt-6 mb-24 md:mb-6 space-y-4">
               {ledgers.map(ledger => (
                 <LedgerItem
                   key={ledger.id}

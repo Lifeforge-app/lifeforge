@@ -78,7 +78,7 @@ function IconPickerModal({
             </p>
           }
           icon="tabler:icons"
-          title="Select an Icon"
+          title="iconPicker.title"
           onClose={() => {
             setOpen(false)
           }}
