@@ -91,7 +91,7 @@ function ModifyLedgersModal({
         <ModalHeader
           icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
           namespace="modules.wallet"
-          title={`ledger.${openType}`}
+          title={`ledgers.${openType}`}
           onClose={() => {
             setOpenType(null)
           }}

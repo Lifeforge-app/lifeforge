@@ -132,6 +132,7 @@ function FolderItem({
         {folder.parent !== '' && (
           <MenuItem
             icon="tabler:folder-minus"
+            namespace="modules.ideaBox"
             text="Remove from folder"
             onClick={() => {
               removeFromFolder().catch(console.error)

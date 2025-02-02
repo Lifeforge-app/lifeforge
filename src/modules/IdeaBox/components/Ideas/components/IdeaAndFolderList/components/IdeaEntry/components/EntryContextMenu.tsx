@@ -125,6 +125,7 @@ function EntryContextMenu({
         {path !== '' && (
           <MenuItem
             icon="tabler:folder-minus"
+            namespace="modules.ideaBox"
             text="Remove from folder"
             onClick={() => {
               removeFromFolder().catch(console.error)

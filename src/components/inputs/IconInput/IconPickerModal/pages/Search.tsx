@@ -115,7 +115,7 @@ function Search({
       <div className="flex w-full gap-2">
         <SearchInput
           hasTopMargin={false}
-          namespace="common.misc"
+          namespace="common.modals"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           stuffToSearch="icon"
@@ -197,7 +197,7 @@ function Search({
             <EmptyStateScreen
               icon="tabler:icons-off"
               name="icon"
-              namespace="common.misc"
+              namespace="common.modals"
               tKey="iconPicker"
             />
           </div>

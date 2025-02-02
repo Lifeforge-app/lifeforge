@@ -1,9 +1,8 @@
-import { Icon } from '@iconify/react'
 import React from 'react'
 import colors from 'tailwindcss/colors'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
-import { isLightColor } from '@utils/colors'
+import ColorItem from './components/ColorItem'
 
 function TailwindCSSColorsModal({
   isOpen,
@@ -20,7 +19,7 @@ function TailwindCSSColorsModal({
     <ModalWrapper isOpen={isOpen} minWidth="70vw">
       <ModalHeader
         icon="tabler:brand-tailwind"
-        title="Tailwind CSS Color Palette"
+        title="colorPicker.modals.morandiColorPalette"
         onClose={onClose}
       />
       <div className="space-y-3 overflow-y-auto">
@@ -48,35 +47,16 @@ function TailwindCSSColorsModal({
                 {Object.entries(
                   colors[colorGroup] as Record<string, string>
                 ).map(([colorName, colorValue]) => (
-                  <li key={colorValue} className="w-full">
-                    <button
-                      className={`flex-center aspect-square w-full cursor-pointer rounded-md shadow-custom ${
-                        color === colorValue
-                          ? 'ring-2 ring-bg-900 ring-offset-2 ring-offset-bg-100 dark:ring-bg-50 dark:ring-offset-bg-900'
-                          : ''
-                      }`}
-                      style={{ backgroundColor: colorValue }}
-                      onClick={() => {
-                        setColor(colorValue)
-                        onClose()
-                      }}
-                    >
-                      {color === colorValue && (
-                        <Icon
-                          className={`${
-                            isLightColor(colorValue)
-                              ? 'text-bg-800'
-                              : 'text-bg-50'
-                          } size-8`}
-                          icon="tabler:check"
-                        />
-                      )}
-                    </button>
-                    <p className="mt-2 text-xs font-medium">{colorName}</p>
-                    <code className="block text-xs font-medium text-bg-500">
-                      {colorValue}
-                    </code>
-                  </li>
+                  <ColorItem
+                    key={colorName}
+                    name={colorName}
+                    selected={color}
+                    value={colorValue}
+                    onSelect={color => {
+                      setColor(color)
+                      onClose()
+                    }}
+                  />
                 ))}
               </ul>
             </div>

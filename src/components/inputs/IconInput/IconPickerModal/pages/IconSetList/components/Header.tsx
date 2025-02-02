@@ -46,7 +46,7 @@ function Header({
       <div className="flex w-full flex-col gap-2 sm:flex-row">
         <SearchInput
           hasTopMargin={false}
-          namespace="common.misc"
+          namespace="common.modals"
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           stuffToSearch="icon"
@@ -86,7 +86,7 @@ function Header({
           <SearchInput
             customIcon="tabler:filter"
             hasTopMargin={false}
-            namespace="common.misc"
+            namespace="common.modals"
             searchQuery={iconFilterTerm}
             setSearchQuery={setIconFilterTerm}
             stuffToSearch="Icon Set"
