@@ -11,6 +11,7 @@ function DeleteConfirmationModal({
   data,
   updateDataLists: updateDataList,
   apiEndpoint,
+  customTitle,
   customText,
   nameKey,
   customCallback
@@ -18,9 +19,10 @@ function DeleteConfirmationModal({
   itemName?: string
   isOpen: boolean
   onClose: () => void
-  data?: any
+  data?: any | string[]
   updateDataLists?: () => void
   apiEndpoint?: string
+  customTitle?: string
   customText?: string
   nameKey?: string
   customCallback?: () => Promise<void>
@@ -33,10 +35,11 @@ function DeleteConfirmationModal({
     setLoading(true)
 
     await APIRequest({
-      endpoint: `${apiEndpoint}/${data?.id ?? ''}`,
+      endpoint: `${apiEndpoint}/${!Array.isArray(data) ? data?.id ?? '' : ''}`,
       method: 'DELETE',
       successInfo: 'delete',
       failureInfo: 'delete',
+      body: !Array.isArray(data) ? undefined : { ids: data },
       callback: () => {
         onClose()
         if (updateDataList) updateDataList()
@@ -59,9 +62,14 @@ function DeleteConfirmationModal({
   return (
     <ModalWrapper isOpen={isOpen}>
       <h1 className="text-2xl font-semibold">
-        {t('deleteConfirmation.title', {
-          itemName: nameKey ? data?.[nameKey] : `the ${itemName}`
-        })}
+        {customTitle ??
+          t('deleteConfirmation.title', {
+            itemName: nameKey
+              ? data?.[nameKey]
+              : Array.isArray(data)
+              ? `${data.length} ${itemName}`
+              : `the ${itemName}`
+          })}
       </h1>
       <p className="mt-2 text-bg-500">
         {customText ?? t('deleteConfirmation.desc', { itemName })}
