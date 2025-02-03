@@ -7,7 +7,7 @@ import {
   SidebarWrapper
 } from '@components/layouts/sidebar'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import useFetch from '@hooks/useFetch'
+import { Loadable } from '@interfaces/common'
 import { IMailInboxLabel } from '@interfaces/mail_inbox_interfaces'
 import LabelList from './components/LabelList'
 import { toDashCase } from '../../../../../tools/module-tools/utils/strings'
@@ -15,13 +15,14 @@ import { toDashCase } from '../../../../../tools/module-tools/utils/strings'
 function Sidebar({
   isOpen,
   setOpen,
-  allMailsCount
+  allMailsCount,
+  labels
 }: {
   isOpen: boolean
   setOpen: (value: boolean) => void
   allMailsCount: number
+  labels: Loadable<IMailInboxLabel[]>
 }): React.ReactElement {
-  const [labels] = useFetch<IMailInboxLabel[]>('mail-inbox/labels')
   const [searchParams, setSearchParams] = useSearchParams()
 
   const sidebarItems = useMemo(() => {
