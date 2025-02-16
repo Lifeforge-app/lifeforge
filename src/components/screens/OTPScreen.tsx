@@ -8,6 +8,81 @@ import { Button } from '@components/buttons'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 
+function OTPInputBox({
+  verityOTP,
+  verifyOtpLoading
+}: {
+  verityOTP: (otp: string) => Promise<void>
+  verifyOtpLoading: boolean
+}): React.ReactElement {
+  const [otp, setOtp] = useState('')
+
+  return (
+    <>
+      <OtpInput
+        shouldAutoFocus
+        numInputs={6}
+        renderInput={props => (
+          <input
+            {...props}
+            className="mx-2 size-12! rounded-md border-[1.5px] border-bg-200 bg-bg-50 text-lg text-bg-800 shadow-custom dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200 md:size-16! md:text-2xl"
+            inputMode="numeric"
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                verityOTP(otp).catch(err => {
+                  console.error(err)
+                })
+              }
+            }}
+          />
+        )}
+        value={otp}
+        onChange={setOtp}
+      />
+      <Button
+        iconAtEnd
+        className="mt-6 w-full md:w-3/4 xl:w-1/2"
+        icon="tabler:arrow-right"
+        loading={verifyOtpLoading}
+        namespace="common.vault"
+        tKey="otp"
+        onClick={() => {
+          verityOTP(otp).catch(err => {
+            console.error(err)
+          })
+        }}
+      >
+        verify
+      </Button>
+    </>
+  )
+}
+
+function ResendOTPButton({
+  otpCooldown,
+  sendOtpLoading,
+  requestOTP
+}: {
+  otpCooldown: number
+  sendOtpLoading: boolean
+  requestOTP: () => void
+}): React.ReactElement {
+  const { t } = useTranslation('common.vault')
+
+  return (
+    <Button
+      className="w-full md:w-3/4 xl:w-1/2"
+      disabled={otpCooldown > 0}
+      icon="tabler:refresh"
+      loading={sendOtpLoading}
+      variant="secondary"
+      onClick={requestOTP}
+    >
+      {t('otp.buttons.resend')} {otpCooldown > 0 && `(${otpCooldown}s)`}
+    </Button>
+  )
+}
+
 function OTPScreen({
   verificationEndpoint,
   callback,
@@ -18,7 +93,6 @@ function OTPScreen({
   fetchChallenge: () => Promise<string>
 }): React.ReactElement {
   const { t } = useTranslation('common.vault')
-  const [otp, setOtp] = useState('')
   const [otpSent, setOtpSent] = useState(false)
   const [otpId, setOtpId] = useState(localStorage.getItem('otpId') ?? '')
   const [otpCooldown, setOtpCooldown] = useState(
@@ -61,7 +135,7 @@ function OTPScreen({
     })
   }
 
-  async function verityOTP(): Promise<void> {
+  async function verityOTP(otp: string): Promise<void> {
     if (otp.length !== 6) {
       toast.error(t('otp.messages.invalid'))
       return
@@ -123,51 +197,15 @@ function OTPScreen({
       </p>
       {otpSent ? (
         <>
-          <OtpInput
-            shouldAutoFocus
-            numInputs={6}
-            renderInput={props => (
-              <input
-                {...props}
-                className="mx-2 size-12! rounded-md border-[1.5px] border-bg-200 bg-bg-50 text-lg text-bg-800! shadow-custom dark:border-bg-800 dark:bg-bg-900 dark:text-bg-50 md:size-16! md:text-2xl"
-                inputMode="numeric"
-                onKeyDown={e => {
-                  if (e.key === 'Enter') {
-                    verityOTP().catch(err => {
-                      console.error(err)
-                    })
-                  }
-                }}
-              />
-            )}
-            value={otp}
-            onChange={setOtp}
+          <OTPInputBox
+            verifyOtpLoading={verifyOtpLoading}
+            verityOTP={verityOTP}
           />
-          <Button
-            iconAtEnd
-            className="mt-6 w-full md:w-3/4 xl:w-1/2"
-            icon="tabler:arrow-right"
-            loading={verifyOtpLoading}
-            namespace="common.vault"
-            tKey="otp"
-            onClick={() => {
-              verityOTP().catch(err => {
-                console.error(err)
-              })
-            }}
-          >
-            verify
-          </Button>
-          <Button
-            className="w-full md:w-3/4 xl:w-1/2"
-            disabled={otpCooldown > 0}
-            icon="tabler:refresh"
-            loading={sendOtpLoading}
-            variant="secondary"
-            onClick={requestOTP}
-          >
-            {t('otp.buttons.resend')} {otpCooldown > 0 && `(${otpCooldown}s)`}
-          </Button>
+          <ResendOTPButton
+            otpCooldown={otpCooldown}
+            requestOTP={requestOTP}
+            sendOtpLoading={sendOtpLoading}
+          />
         </>
       ) : (
         <Button

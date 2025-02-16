@@ -84,7 +84,7 @@ const DateInput: React.FC<DateInputProps> = ({
           calendarIcon={null}
           calendarProps={{
             className:
-              'bg-bg-200 dark:bg-bg-800 absolute z-9999 outline-hidden border-none rounded-lg p-4',
+              'bg-bg-200! dark:bg-bg-800! absolute z-9999 outline-hidden border-bg-200! dark:border-bg-700! rounded-lg p-4',
             tileClassName:
               'hover:bg-bg-300 dark:hover:bg-bg-700/50 rounded-md disabled:text-bg-500 disabled:bg-transparent disabled:cursor-not-allowed disabled:hover:bg-transparent! dark:disabled:hover:bg-transparent!',
             locale: language,
