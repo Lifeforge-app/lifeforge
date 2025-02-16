@@ -791,3 +791,7 @@ button[class^='react-calendar__navigation'] {
 .dark .range-primary {
   --range-thumb: var(--color-bg-800);
 }
+
+.bg-neutral {
+  background-color: var(--color-bg-500);
+}

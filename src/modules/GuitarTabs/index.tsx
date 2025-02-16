@@ -204,15 +204,15 @@ function GuitarTabs(): React.ReactElement {
                     className="size-6"
                     icon={
                       SORT_TYPE.find(
-                        ([, , value]) => value === searchParams.get('sort')
-                      )?.[1] ?? 'tabler:clock'
+                        ([, value]) => value === searchParams.get('sort')
+                      )?.[0] ?? 'tabler:clock'
                     }
                   />
                   <span className="whitespace-nowrap font-medium">
                     {t(
                       `sortTypes.${
                         SORT_TYPE.find(
-                          ([, , value]) => value === searchParams.get('sort')
+                          ([, value]) => value === searchParams.get('sort')
                         )?.[1] ?? 'newest'
                       }`
                     )}
