@@ -144,7 +144,7 @@ function Transactions({
                       .map((transaction, index) => (
                         <tr
                           key={transaction.id}
-                          className="even:bg-zinc-800/30 print:even:bg-black/[3%]"
+                          className="even:bg-bg-200 dark:even:bg-zinc-800/30 print:even:bg-black/[3%]"
                         >
                           <td className="whitespace-nowrap p-3 text-lg">
                             {((type === 'transfer' && index % 2 === 0) ||
@@ -214,7 +214,7 @@ function Transactions({
                           </td>
                         </tr>
                       ))}
-                    <tr className="even:bg-zinc-800/30 print:even:bg-black/[3%]">
+                    <tr className="even:bg-bg-200 dark:even:bg-zinc-800/30 print:even:bg-black/[3%]">
                       <td
                         className="whitespace-nowrap p-3 text-left text-xl font-semibold"
                         colSpan={type !== 'transfer' ? 4 : 3}

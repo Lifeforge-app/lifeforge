@@ -42,7 +42,7 @@ function Overview({
             )}
           </p>
         </div>
-        <div className="flex items-center justify-between bg-bg-900 p-3 print:bg-black/[3%]!">
+        <div className="flex items-center justify-between bg-bg-200 dark:bg-bg-900 p-3 print:bg-black/[3%]!">
           <p className="text-xl">Expenses</p>
           <p className="text-lg">
             RM (
@@ -111,7 +111,7 @@ function Overview({
                     Change
                   </th>
                 </tr>
-                <tr className="bg-zinc-800 text-white print:bg-black/70">
+                <tr className="bg-bg-800 text-white print:bg-black/70">
                   <th className="w-full px-4 py-2 text-left text-lg font-medium"></th>
                   <th className="px-4 py-2 text-lg font-medium">RM</th>
                   <th className="px-4 py-2 text-lg font-medium">RM</th>
@@ -125,7 +125,7 @@ function Overview({
                   .map(asset => (
                     <tr
                       key={asset.id}
-                      className="even:bg-zinc-800/30 print:even:bg-black/[3%]"
+                      className="even:bg-bg-200 dark:even:bg-bg-800/30 print:even:bg-black/[3%]"
                     >
                       <td className="p-3 text-lg">
                         <div className="flex items-center gap-2">
@@ -211,7 +211,7 @@ function Overview({
                                 'text-rose-600'
                               }`}
                             >
-                              {lastMonthAmount === 0
+                              {+lastMonthAmount.toFixed(2) === 0
                                 ? '-'
                                 : `${(
                                     ((thatMonthAmount - lastMonthAmount) /
@@ -224,7 +224,7 @@ function Overview({
                       })()}
                     </tr>
                   ))}
-                <tr className="even:bg-zinc-800/30 print:even:bg-black/[3%]">
+                <tr className="even:bg-bg-200 dark:even:bg-bg-800/30 print:even:bg-black/[3%]">
                   <td className="p-3 text-lg">
                     <div className="flex items-center gap-2 text-xl font-semibold">
                       <span>Total Assets</span>
@@ -366,7 +366,7 @@ function Overview({
                         Change
                       </th>
                     </tr>
-                    <tr className="bg-zinc-800 text-white print:bg-black/70">
+                    <tr className="bg-bg-800 text-white print:bg-black/70">
                       <th className="w-full px-4 py-2 text-left text-lg font-medium"></th>
                       <th className="px-4 py-2 text-lg font-medium">RM</th>
                       <th className="px-4 py-2 text-lg font-medium">RM</th>
@@ -381,7 +381,7 @@ function Overview({
                       .map(category => (
                         <tr
                           key={category.id}
-                          className="even:bg-zinc-800/30 print:even:bg-black/[3%]"
+                          className="even:bg-bg-200 dark:even:bg-bg-800/30 print:even:bg-black/[3%]"
                         >
                           <td className="p-3 text-lg">
                             <div className="flex items-center gap-2">
@@ -473,7 +473,7 @@ function Overview({
                           })()}
                         </tr>
                       ))}
-                    <tr className="even:bg-zinc-800/30 print:even:bg-black/[3%]">
+                    <tr className="even:bg-bg-200 dark:even:bg-bg-800/30 print:even:bg-black/[3%]">
                       <td className="p-3 text-lg">
                         <div className="flex items-center gap-2 text-xl font-semibold">
                           <span>
