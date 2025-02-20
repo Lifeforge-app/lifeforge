@@ -9,9 +9,11 @@ import { IMomentVaultEntry } from '@interfaces/moment_vault_interfaces'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 function AudioEntry({
-  entry
+  entry,
+  onDelete
 }: {
   entry: IMomentVaultEntry
+  onDelete: (data: IMomentVaultEntry) => void
 }): React.ReactElement {
   const { theme, bgTemp } = useThemeColors()
   const { theme: lightOrDarkTheme } = usePersonalizationContext()
@@ -88,7 +90,7 @@ function AudioEntry({
             isRed
             icon="tabler:trash"
             text="Delete"
-            onClick={() => {}}
+            onClick={() => onDelete(entry)}
           />
         </HamburgerMenu>
       </div>
