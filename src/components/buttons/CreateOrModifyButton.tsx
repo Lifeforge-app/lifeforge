@@ -5,16 +5,19 @@ function CreateOrModifyButton({
   type,
   loading,
   onClick,
+  disabled,
   className
 }: {
   type: 'create' | 'update' | 'rename' | null
   loading: boolean
   onClick: () => void
+  disabled?: boolean
   className?: string
 }): React.ReactElement {
   return (
     <Button
       className={`mt-6 ${className}`}
+      disabled={disabled}
       icon={
         !loading && type !== null
           ? {
