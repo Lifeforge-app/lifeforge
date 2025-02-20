@@ -40,6 +40,9 @@ function AudioType({
   const [submitLoading, setSubmitLoading] = useState(false)
 
   const startRecording = async () => {
+    setCurrentTime(0)
+    setTotalTime(0)
+
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
     streamRef.current = stream
     const mediaRecorder = new MediaRecorder(stream)
