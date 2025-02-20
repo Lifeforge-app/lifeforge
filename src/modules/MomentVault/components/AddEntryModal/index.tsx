@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-small-switch */
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
@@ -50,6 +50,13 @@ function AddEntryModal({
     useState(false)
   const [audioURL, setAudioURL] = useState<string | null>(null)
   const [transcription, setTranscription] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (openType === null) {
+      setAudioURL(null)
+      setTranscription(null)
+    }
+  }, [openType])
 
   return (
     <>
