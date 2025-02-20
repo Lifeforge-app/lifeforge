@@ -5,6 +5,7 @@ import { Button, FAB } from '@components/buttons'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import useFetch from '@hooks/useFetch'
 import { IMomentVaultEntry } from '@interfaces/moment_vault_interfaces'
 import AddEntryModal from './components/AddEntryModal'
@@ -18,6 +19,11 @@ function MomentVault(): React.ReactElement {
   const [addEntryModalOpenType, setAddEntryModalOpenType] = useState<
     'text' | 'audio' | 'photo' | 'video' | null
   >(null)
+  const [existedData, setExistedData] = useState<IMomentVaultEntry | null>(null)
+  const [
+    deleteEntryConfirmationModalOpen,
+    setDeleteEntryConfirmationModalOpen
+  ] = useState(false)
 
   return (
     <ModuleWrapper>
@@ -76,7 +82,13 @@ function MomentVault(): React.ReactElement {
         icon="tabler:history"
         title="Moment Vault"
       />
-      <EntryList data={data} />
+      <EntryList
+        data={data}
+        onDelete={(data: IMomentVaultEntry) => {
+          setExistedData(data)
+          setDeleteEntryConfirmationModalOpen(true)
+        }}
+      />
       <Menu>
         <FAB as={MenuButton} hideWhen="md" />
         <MenuItems
@@ -125,6 +137,19 @@ function MomentVault(): React.ReactElement {
         onClose={() => {
           setAddEntryModalOpenType(null)
         }}
+      />
+      <DeleteConfirmationModal
+        apiEndpoint="/moment-vault/entries"
+        data={existedData}
+        isOpen={deleteEntryConfirmationModalOpen}
+        itemName="entry"
+        updateDataLists={() =>
+          setData(prev => {
+            if (typeof prev === 'string') return prev
+            return prev.filter(entry => entry.id !== existedData?.id)
+          })
+        }
+        onClose={() => setDeleteEntryConfirmationModalOpen(false)}
       />
     </ModuleWrapper>
   )
