@@ -31,6 +31,7 @@ function AudioType({
   const [recording, setRecording] = useState(false)
   const [totalTime, setTotalTime] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
+  const streamRef = useRef<MediaStream | null>(null)
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const audioChunksRef = useRef<Blob[]>([])
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null)
@@ -40,18 +41,22 @@ function AudioType({
 
   const startRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+    streamRef.current = stream
     const mediaRecorder = new MediaRecorder(stream)
     mediaRecorderRef.current = mediaRecorder
     audioChunksRef.current = []
 
     mediaRecorder.ondataavailable = event => {
-      console.log(event.data)
       if (event.data.size > 0) {
         audioChunksRef.current.push(event.data)
       }
     }
 
     mediaRecorder.onstop = () => {
+      if (!audioChunksRef.current.length) {
+        return
+      }
+
       const audioBlob = new Blob(audioChunksRef.current, {
         type: audioChunksRef.current[0].type
       })
@@ -64,6 +69,7 @@ function AudioType({
   }
 
   const stopRecording = () => {
+    streamRef.current?.getTracks().forEach(track => track.stop())
     mediaRecorderRef.current?.stop()
     setRecording(false)
   }
