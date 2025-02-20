@@ -118,12 +118,13 @@ function AddEntryModal({
         </div>
       </ModalWrapper>
       <DeleteConfirmationModal
-        customCallback={async () => {
-          setAudioURL(null)
-          setTranscription(null)
-        }}
         customConfirmButtonIcon="tabler:reload"
         customConfirmButtonText="Overwrite"
+        customOnClick={async () => {
+          setAudioURL(null)
+          setTranscription(null)
+          setOverwriteAudioWarningModalOpen(false)
+        }}
         customText="Are you sure you want to overwrite the current audio?"
         customTitle="Overwrite Audio"
         isOpen={overwriteAudioWarningModalOpen}

@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-small-switch */
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -6,11 +5,10 @@ import { Button, FAB } from '@components/buttons'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import { IMomentVaultEntry } from '@interfaces/moment_vault_interfaces'
 import AddEntryModal from './components/AddEntryModal'
-import AudioEntry from './components/entries/AudioEntry'
+import EntryList from './components/EntryList'
 
 function MomentVault(): React.ReactElement {
   const { t } = useTranslation('modules.momentVault')
@@ -78,28 +76,7 @@ function MomentVault(): React.ReactElement {
         icon="tabler:history"
         title="Moment Vault"
       />
-      <APIFallbackComponent data={data}>
-        {data => (
-          <div className="mt-6 space-y-4">
-            {data.map(entry => {
-              switch (entry.type) {
-                case 'audio':
-                  return <AudioEntry key={entry.id} entry={entry} />
-                default:
-                  return null
-              }
-            })}
-          </div>
-        )}
-      </APIFallbackComponent>
-      <AddEntryModal
-        openType={addEntryModalOpenType}
-        setData={setData}
-        setOpenType={setAddEntryModalOpenType}
-        onClose={() => {
-          setAddEntryModalOpenType(null)
-        }}
-      />
+      <EntryList data={data} />
       <Menu>
         <FAB as={MenuButton} hideWhen="md" />
         <MenuItems
@@ -141,6 +118,14 @@ function MomentVault(): React.ReactElement {
           />
         </MenuItems>
       </Menu>
+      <AddEntryModal
+        openType={addEntryModalOpenType}
+        setData={setData}
+        setOpenType={setAddEntryModalOpenType}
+        onClose={() => {
+          setAddEntryModalOpenType(null)
+        }}
+      />
     </ModuleWrapper>
   )
 }

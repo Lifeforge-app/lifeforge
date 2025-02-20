@@ -16,7 +16,8 @@ function DeleteConfirmationModal({
   nameKey,
   customCallback,
   customConfirmButtonIcon,
-  customConfirmButtonText
+  customConfirmButtonText,
+  customOnClick
 }: {
   itemName?: string
   isOpen: boolean
@@ -30,6 +31,7 @@ function DeleteConfirmationModal({
   customCallback?: () => Promise<void>
   customConfirmButtonIcon?: string
   customConfirmButtonText?: string
+  customOnClick?: () => void
 }): React.ReactElement {
   const { t } = useTranslation('common.modals')
   const [loading, setLoading] = useState(false)
@@ -93,6 +95,10 @@ function DeleteConfirmationModal({
           icon={customConfirmButtonIcon ?? 'tabler:trash'}
           loading={loading}
           onClick={() => {
+            if (customOnClick !== undefined) {
+              customOnClick()
+              return
+            }
             deleteData().catch(console.error)
           }}
         >
