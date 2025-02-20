@@ -37,6 +37,7 @@ function AudioType({
     audioChunksRef.current = []
 
     mediaRecorder.ondataavailable = event => {
+      console.log(event.data)
       if (event.data.size > 0) {
         audioChunksRef.current.push(event.data)
       }
@@ -44,7 +45,7 @@ function AudioType({
 
     mediaRecorder.onstop = () => {
       const audioBlob = new Blob(audioChunksRef.current, {
-        type: 'audio/webm'
+        type: audioChunksRef.current[0].type
       })
       const url = URL.createObjectURL(audioBlob)
       setAudioURL(url)
