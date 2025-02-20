@@ -12,7 +12,7 @@ function EntryList({
   return (
     <APIFallbackComponent data={data}>
       {data => (
-        <div className="mt-6 space-y-4">
+        <div className="mt-6 space-y-4 mb-24 md:mb-6">
           {data.map(entry => (
             <AudioEntry key={entry.id} entry={entry} />
           ))}
