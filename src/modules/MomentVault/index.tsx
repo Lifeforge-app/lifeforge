@@ -2,7 +2,7 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@components/buttons'
+import { Button, FAB } from '@components/buttons'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
@@ -100,6 +100,47 @@ function MomentVault(): React.ReactElement {
           setAddEntryModalOpenType(null)
         }}
       />
+      <Menu>
+        <FAB as={MenuButton} hideWhen="md" />
+        <MenuItems
+          transition
+          anchor="bottom end"
+          className="w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
+        >
+          <MenuItem
+            icon="tabler:file-text"
+            namespace="modules.momentVault"
+            text="text"
+            onClick={() => {
+              setAddEntryModalOpenType('text')
+            }}
+          />
+          <MenuItem
+            icon="tabler:microphone"
+            namespace="modules.momentVault"
+            text="audio"
+            onClick={() => {
+              setAddEntryModalOpenType('audio')
+            }}
+          />
+          <MenuItem
+            icon="tabler:camera"
+            namespace="modules.momentVault"
+            text="photo"
+            onClick={() => {
+              setAddEntryModalOpenType('photo')
+            }}
+          />
+          <MenuItem
+            icon="tabler:video"
+            namespace="modules.momentVault"
+            text="video"
+            onClick={() => {
+              setAddEntryModalOpenType('video')
+            }}
+          />
+        </MenuItems>
+      </Menu>
     </ModuleWrapper>
   )
 }
