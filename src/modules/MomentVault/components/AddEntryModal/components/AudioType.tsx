@@ -10,9 +10,19 @@ import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import APIRequest from '@utils/fetchData'
 
 function AudioType({
-  onSuccess
+  onSuccess,
+  audioURL,
+  setAudioURL,
+  transcription,
+  setTranscription,
+  setOverwriteAudioWarningModalOpen
 }: {
   onSuccess: (data: IMomentVaultEntry) => void
+  audioURL: string | null
+  setAudioURL: (url: string | null) => void
+  transcription: string | null
+  setTranscription: (transcription: string | null) => void
+  setOverwriteAudioWarningModalOpen: (open: boolean) => void
 }): React.ReactElement {
   const { t } = useTranslation('modules.momentVault')
   const { theme, bgTemp } = useThemeColors()
@@ -21,13 +31,11 @@ function AudioType({
   const [recording, setRecording] = useState(false)
   const [totalTime, setTotalTime] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
-  const [audioURL, setAudioURL] = useState<string | null>(null)
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const audioChunksRef = useRef<Blob[]>([])
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [transcribeLoading, setTranscribeLoading] = useState(false)
-  const [transcribeResult, setTranscribeResult] = useState<string | null>(null)
   const [submitLoading, setSubmitLoading] = useState(false)
 
   const startRecording = async () => {
@@ -80,9 +88,13 @@ function AudioType({
     setTranscribeLoading(true)
 
     const body = new FormData()
-    const file = new File(audioChunksRef.current, 'audio.webm', {
-      type: 'audio/webm'
-    })
+    const file = new File(
+      audioChunksRef.current,
+      `audio.${audioChunksRef.current[0].type.split('/')[1]}`,
+      {
+        type: audioChunksRef.current[0].type
+      }
+    )
     body.append('file', file)
 
     await APIRequest({
@@ -93,7 +105,7 @@ function AudioType({
       successInfo: 'transcribe',
       failureInfo: 'transcribe',
       callback(data) {
-        setTranscribeResult(data.data)
+        setTranscription(data.data)
         setTranscribeLoading(false)
       },
       onFailure() {
@@ -106,13 +118,17 @@ function AudioType({
     setSubmitLoading(true)
 
     const body = new FormData()
-    const file = new File(audioChunksRef.current, 'audio.webm', {
-      type: 'audio/webm'
-    })
+    const file = new File(
+      audioChunksRef.current,
+      `audio.${audioChunksRef.current[0].type.split('/')[1]}`,
+      {
+        type: audioChunksRef.current[0].type
+      }
+    )
 
     body.append('type', 'audio')
     body.append('file', file)
-    body.append('transcription', transcribeResult ?? '')
+    body.append('transcription', transcription ?? '')
 
     await APIRequest({
       endpoint: 'moment-vault/entries',
@@ -175,9 +191,9 @@ function AudioType({
                 </p>
               </div>
             </div>
-            {transcribeResult && (
+            {transcription && (
               <div className="mt-6 border-l-4 border-custom-500 pl-4">
-                <p className="text-bg-500">{transcribeResult}</p>
+                <p className="text-bg-500">{transcription}</p>
               </div>
             )}
             <Button
@@ -197,6 +213,11 @@ function AudioType({
           className="mt-4 w-full"
           icon={recording ? 'tabler:player-stop' : 'tabler:microphone'}
           onClick={() => {
+            if (audioURL !== null) {
+              setOverwriteAudioWarningModalOpen(true)
+              return
+            }
+
             if (recording) {
               stopRecording()
             } else {

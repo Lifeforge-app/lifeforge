@@ -1,10 +1,11 @@
 /* eslint-disable sonarjs/no-small-switch */
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React from 'react'
+import React, { useState } from 'react'
 import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
 } from '@components/inputs'
+import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { Loadable } from '@interfaces/common'
@@ -45,64 +46,90 @@ function AddEntryModal({
   onClose: () => void
   setData: React.Dispatch<React.SetStateAction<Loadable<IMomentVaultEntry[]>>>
 }): React.ReactElement {
+  const [overwriteAudioWarningModalOpen, setOverwriteAudioWarningModalOpen] =
+    useState(false)
+  const [audioURL, setAudioURL] = useState<string | null>(null)
+  const [transcription, setTranscription] = useState<string | null>(null)
+
   return (
-    <ModalWrapper isOpen={openType !== null} minWidth="50vw">
-      <ModalHeader
-        icon="tabler:plus"
-        namespace="modules.momentVault"
-        title="Add Entry"
-        onClose={onClose}
-      />
-      <div className="space-y-4">
-        <ListboxOrComboboxInput
-          required
-          buttonContent={
-            <>
-              <Icon
-                className="size-5"
-                icon={TYPES.find(l => l.id === openType)?.icon ?? ''}
-              />
-              <span className="-mt-px block truncate">
-                {TYPES.find(l => l.id === openType)?.name ?? 'None'}
-              </span>
-            </>
-          }
-          icon="tabler:apps"
-          name="Entry Type"
+    <>
+      <ModalWrapper isOpen={openType !== null} minWidth="50vw">
+        <ModalHeader
+          icon="tabler:plus"
           namespace="modules.momentVault"
-          setValue={setOpenType}
-          type="listbox"
-          value={openType}
-        >
-          {TYPES.map(({ name, id, icon }, i) => (
-            <ListboxOrComboboxOption
-              key={i}
-              icon={icon}
-              text={name}
-              value={id}
-            />
-          ))}
-        </ListboxOrComboboxInput>
-        {(() => {
-          switch (openType) {
-            case 'audio':
-              return (
-                <AudioType
-                  onSuccess={data => {
-                    onClose()
-                    setData(prev => {
-                      if (typeof prev === 'string') return prev
-                      return [...prev, data]
-                    })
-                  }}
+          title="Add Entry"
+          onClose={onClose}
+        />
+        <div className="space-y-4">
+          <ListboxOrComboboxInput
+            required
+            buttonContent={
+              <>
+                <Icon
+                  className="size-5"
+                  icon={TYPES.find(l => l.id === openType)?.icon ?? ''}
                 />
-              )
-            default:
-              return <></>
-          }
-        })()}
-      </div>
-    </ModalWrapper>
+                <span className="-mt-px block truncate">
+                  {TYPES.find(l => l.id === openType)?.name ?? 'None'}
+                </span>
+              </>
+            }
+            icon="tabler:apps"
+            name="Entry Type"
+            namespace="modules.momentVault"
+            setValue={setOpenType}
+            type="listbox"
+            value={openType}
+          >
+            {TYPES.map(({ name, id, icon }, i) => (
+              <ListboxOrComboboxOption
+                key={i}
+                icon={icon}
+                text={name}
+                value={id}
+              />
+            ))}
+          </ListboxOrComboboxInput>
+          {(() => {
+            switch (openType) {
+              case 'audio':
+                return (
+                  <AudioType
+                    audioURL={audioURL}
+                    setAudioURL={setAudioURL}
+                    setOverwriteAudioWarningModalOpen={
+                      setOverwriteAudioWarningModalOpen
+                    }
+                    setTranscription={setTranscription}
+                    transcription={transcription}
+                    onSuccess={data => {
+                      onClose()
+                      setData(prev => {
+                        if (typeof prev === 'string') return prev
+                        return [...prev, data]
+                      })
+                    }}
+                  />
+                )
+              default:
+                return <></>
+            }
+          })()}
+        </div>
+      </ModalWrapper>
+      <DeleteConfirmationModal
+        customCallback={async () => {
+          setAudioURL(null)
+          setTranscription(null)
+        }}
+        customConfirmButtonIcon="tabler:reload"
+        customConfirmButtonText="Overwrite"
+        customText="Are you sure you want to overwrite the current audio?"
+        customTitle="Overwrite Audio"
+        isOpen={overwriteAudioWarningModalOpen}
+        onClose={() => setOverwriteAudioWarningModalOpen(false)}
+      />
+    </>
   )
 }
 
