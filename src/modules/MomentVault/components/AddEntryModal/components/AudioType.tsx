@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import WavesurferPlayer from '@wavesurfer/react'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import WaveSurfer from 'wavesurfer.js'
 import { Button, CreateOrModifyButton } from '@components/buttons'
@@ -145,14 +145,6 @@ function AudioType({
       }
     })
   }
-
-  useEffect(() => {
-    return () => {
-      if (wavesurfer) {
-        wavesurfer.destroy()
-      }
-    }
-  }, [])
 
   return (
     <>
