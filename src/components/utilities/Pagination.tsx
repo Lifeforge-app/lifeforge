@@ -33,30 +33,25 @@ function Pagination({
     )
     const endPage = Math.min(totalPages, startPage + pagesToShow - 1)
 
-    if (startPage > 1) {
-      if (startPage > 2) {
-        pageNumbers.push(
-          <>
-            <button
-              key={1}
-              className={`hidden rounded-md px-3 py-2 lg:block  ${
-                currentPage === 1
-                  ? 'font-semibold text-custom-500'
-                  : 'text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800'
-              }`}
-              onClick={() => {
-                onPageChange(1)
-              }}
-            >
-              {1}
-            </button>
-            <Icon
-              className="hidden text-bg-500 lg:block"
-              icon="uil:ellipsis-h"
-            />
-          </>
-        )
-      }
+    if (startPage > 2) {
+      pageNumbers.push(
+        <>
+          <button
+            key={1}
+            className={`hidden rounded-md px-3 py-2 lg:block  ${
+              currentPage === 1
+                ? 'font-semibold text-custom-500'
+                : 'text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800'
+            }`}
+            onClick={() => {
+              onPageChange(1)
+            }}
+          >
+            {1}
+          </button>
+          <Icon className="hidden text-bg-500 lg:block" icon="uil:ellipsis-h" />
+        </>
+      )
     }
 
     for (let i = startPage; i <= endPage; i++) {

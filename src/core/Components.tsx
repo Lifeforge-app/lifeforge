@@ -141,6 +141,7 @@ const NutritionsTracker = lazy(
 const VirtualWardrobeClothes = lazy(
   async () => await import('../modules/VirtualWardrobe/pages/Clothes')
 )
+const MomentVault = lazy(async () => await import('../modules/MomentVault'))
 
 export const COMPONENTS = {
   dashboard: {
@@ -306,5 +307,8 @@ export const COMPONENTS = {
   'virtual-wardrobe': {
     'virtual-wardrobe': () => <Navigate to="/virtual-wardrobe/clothes" />,
     'virtual-wardrobe-clothes': VirtualWardrobeClothes
+  },
+  'moment-vault': {
+    'moment-vault': MomentVault
   }
 }
