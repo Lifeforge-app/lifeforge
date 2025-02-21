@@ -2,7 +2,7 @@
 
 import ReactDOM from 'react-dom/client'
 import './core/i18n'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router'
 import App from './core/App'
 import 'react-date-picker/dist/DatePicker.css'
 import 'react-calendar/dist/Calendar.css'

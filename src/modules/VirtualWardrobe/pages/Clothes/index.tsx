@@ -1,7 +1,7 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router'
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
 import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'

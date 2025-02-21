@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router'
 import { useAuthContext } from '@providers/AuthProvider'
 import AuthForm from './components/AuthForm'
 import AuthHeader from './components/AuthHeader'

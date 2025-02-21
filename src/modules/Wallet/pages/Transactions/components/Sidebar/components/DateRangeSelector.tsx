@@ -1,7 +1,7 @@
 import moment from 'moment'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router'
 import { DateInput } from '@components/inputs'
 import { SidebarTitle } from '@components/layouts/sidebar'
 

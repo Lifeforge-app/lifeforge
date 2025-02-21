@@ -1,6 +1,6 @@
 import React, { Suspense, useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate } from 'react-router'
 import { ToastContainer } from 'react-toastify'
 import LoadingScreen from '@components/screens/LoadingScreen'
 import NotFoundScreen from '@components/screens/NotFoundScreen'

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router'
 import { FAB } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
