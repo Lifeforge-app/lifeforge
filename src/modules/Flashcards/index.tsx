@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
 import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'

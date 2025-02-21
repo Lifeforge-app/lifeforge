@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
 

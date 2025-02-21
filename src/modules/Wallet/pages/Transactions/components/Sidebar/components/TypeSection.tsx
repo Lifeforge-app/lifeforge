@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router'
 import colors from 'tailwindcss/colors'
 import { SidebarItem, SidebarTitle } from '@components/layouts/sidebar'
 import useThemeColors from '@hooks/useThemeColor'

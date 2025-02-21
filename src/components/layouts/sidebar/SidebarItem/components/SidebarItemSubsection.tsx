@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router'
 import { titleToPath, toCamelCase } from '@utils/strings'
 
 function SidebarItemSubsection({

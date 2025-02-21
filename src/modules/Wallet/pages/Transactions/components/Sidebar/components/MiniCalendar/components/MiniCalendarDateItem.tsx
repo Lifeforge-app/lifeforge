@@ -1,6 +1,6 @@
 import moment from 'moment'
 import React, { useMemo } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router'
 import { useWalletContext } from '@providers/WalletProvider'
 
 interface MiniCalendarDateItemProps {

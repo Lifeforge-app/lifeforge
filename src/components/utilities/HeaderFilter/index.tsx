@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router'
 import useThemeColors from '@hooks/useThemeColor'
 import { rgbToHex } from '@utils/colors'
 import FilterChip from './components/HeaderFilterChip'

@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useDrag, useDrop } from 'react-dnd'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { type IIdeaBoxFolder } from '@interfaces/ideabox_interfaces'

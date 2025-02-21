@@ -2,7 +2,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import moment from 'moment'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router'
 import useFetch from '@hooks/useFetch'
 import { type Loadable } from '@interfaces/common'
 import {

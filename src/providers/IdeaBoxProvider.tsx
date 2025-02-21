@@ -1,7 +1,7 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 import useFetch from '@hooks/useFetch'
 import { type Loadable } from '@interfaces/common'

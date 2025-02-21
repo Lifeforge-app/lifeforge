@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { type IWalletCategory } from '@interfaces/wallet_interfaces'
 
 function CategoryColumn({
