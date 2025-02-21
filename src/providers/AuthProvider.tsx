@@ -7,7 +7,6 @@ import React, {
   useState
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import APIRequest from '@utils/fetchData'
 import { AUTH_ERROR_MESSAGES } from '../constants/auth'
@@ -47,7 +46,6 @@ export default function AuthProvider({
   const [userData, _setUserData] = useState<any>(null)
   const [quota, setQuota] = useState(5)
   const [authLoading, setAuthLoading] = useState(true)
-  const navigate = useNavigate()
 
   const setAuth = useCallback(
     (value: boolean): void => {
@@ -228,19 +226,19 @@ export default function AuthProvider({
             }
           },
           onFailure: () => {
-            navigate('/auth')
+            window.location.href = '/auth'
             toast.error('Invalid login attempt')
           }
         }).catch(() => {
-          navigate('/auth')
+          window.location.href = '/auth'
           toast.error('Invalid login attempt')
         })
       } catch {
-        navigate('/auth')
+        window.location.href = '/auth'
         toast.error('Invalid login attempt')
       }
     },
-    [navigate, verifyToken]
+    [verifyToken]
   )
 
   const logout = useCallback((): void => {

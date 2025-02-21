@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'

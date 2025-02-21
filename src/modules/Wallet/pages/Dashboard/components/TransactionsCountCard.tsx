@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import DashboardItem from '@components/utilities/DashboardItem'
 import Scrollbar from '@components/utilities/Scrollbar'

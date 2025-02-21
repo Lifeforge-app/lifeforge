@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { Button, GoBackButton } from '@components/buttons'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'

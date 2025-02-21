@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import { SearchInput } from '@components/inputs'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
