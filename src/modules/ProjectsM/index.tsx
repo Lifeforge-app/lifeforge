@@ -69,7 +69,7 @@ function ProjectsM(): React.ReactElement {
           <div className="mt-6 flex flex-1 flex-col">
             <APIFallbackComponent data={entries}>
               {entries =>
-                entries.length === 0 ? (
+                entries.length !== 0 ? (
                   <Scrollbar>
                     <ul className="mb-8 flex flex-col">
                       {entries.map(entry => (
