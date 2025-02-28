@@ -1,4 +1,6 @@
+/* eslint-disable import/named */
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { ListResult } from 'pocketbase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button, FAB } from '@components/buttons'
@@ -13,8 +15,9 @@ import EntryList from './components/EntryList'
 
 function MomentVault(): React.ReactElement {
   const { t } = useTranslation('modules.momentVault')
-  const [data, , setData] = useFetch<IMomentVaultEntry[]>(
-    '/moment-vault/entries'
+  const [page, setPage] = useState(1)
+  const [data, refreshData, setData] = useFetch<ListResult<IMomentVaultEntry>>(
+    `/moment-vault/entries?page=${page}`
   )
   const [addEntryModalOpenType, setAddEntryModalOpenType] = useState<
     'text' | 'audio' | 'photo' | 'video' | null
@@ -84,6 +87,9 @@ function MomentVault(): React.ReactElement {
       />
       <EntryList
         data={data}
+        page={page}
+        setData={setData}
+        setPage={setPage}
         onDelete={(data: IMomentVaultEntry) => {
           setExistedData(data)
           setDeleteEntryConfirmationModalOpen(true)
@@ -132,7 +138,7 @@ function MomentVault(): React.ReactElement {
       </Menu>
       <AddEntryModal
         openType={addEntryModalOpenType}
-        setData={setData}
+        refreshData={refreshData}
         setOpenType={setAddEntryModalOpenType}
         onClose={() => {
           setAddEntryModalOpenType(null)
@@ -143,12 +149,7 @@ function MomentVault(): React.ReactElement {
         data={existedData}
         isOpen={deleteEntryConfirmationModalOpen}
         itemName="entry"
-        updateDataLists={() =>
-          setData(prev => {
-            if (typeof prev === 'string') return prev
-            return prev.filter(entry => entry.id !== existedData?.id)
-          })
-        }
+        updateDataLists={refreshData}
         onClose={() => setDeleteEntryConfirmationModalOpen(false)}
       />
     </ModuleWrapper>

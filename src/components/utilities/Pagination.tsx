@@ -121,30 +121,30 @@ function Pagination({
             Previous
           </Button>
           <Button
-            className="sm:hidden"
+            className="sm:hidden w-12"
             icon="uil:angle-left"
             variant="no-bg"
             onClick={() => {
               if (currentPage > 1) {
-                onPageChange(1)
+                onPageChange(currentPage - 1)
               }
             }}
           />
         </>
       ) : (
-        <span className="w-32"></span>
+        <span className="w-12 sm:w-32"></span>
       )}
       <div className="flex items-center gap-2">{renderPageNumbers()}</div>
       {currentPage < totalPages ? (
         <>
           <Button
             iconAtEnd
-            className="sm:hidden"
+            className="sm:hidden w-12"
             icon="uil:angle-right"
             variant="no-bg"
             onClick={() => {
               if (currentPage < totalPages) {
-                onPageChange(totalPages)
+                onPageChange(currentPage + 1)
               }
             }}
           />
@@ -164,7 +164,7 @@ function Pagination({
           </Button>
         </>
       ) : (
-        <span className="w-32"></span>
+        <span className="w-12 sm:w-32"></span>
       )}
     </div>
   )
