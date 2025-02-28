@@ -26,39 +26,46 @@ function MenuItem({
   isToggled,
   disabled,
   preventDefault = false,
-  namespace = 'common.buttons'
+  namespace = 'common.buttons',
+  loading = false
 }: {
   icon?: string
   text: string
   isRed?: boolean
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onClick: (e: React.MouseEvent<HTMLButtonElement>, close: () => void) => void
   isToggled?: boolean
   disabled?: boolean
   preventDefault?: boolean
   namespace?: string | false
+  loading?: boolean
 }): React.ReactElement {
   const { t } = useTranslation(namespace ? namespace : 'common.buttons')
 
   return (
     <HeadlessMenuItem>
-      {function ({ active }) {
+      {function ({ active, close }) {
         return (
           <button
-            className={`${getActiveClass(
-              active,
-              isRed
-            )} flex w-full items-center gap-4 p-4 text-left transition-all`}
-            disabled={disabled}
+            className={`${
+              !disabled && !loading
+                ? getActiveClass(active, isRed)
+                : 'text-bg-500'
+            } flex w-full items-center gap-4 p-4 text-left transition-all`}
+            disabled={disabled || loading}
             onClick={e => {
               if (preventDefault) {
                 e.preventDefault()
               }
               e.stopPropagation()
-              onClick(e)
+              onClick(e, close)
             }}
           >
-            {icon !== undefined && (
-              <Icon className="size-5 shrink-0" icon={icon} />
+            {loading ? (
+              <Icon className="size-5 shrink-0" icon="svg-spinners:180-ring" />
+            ) : (
+              icon !== undefined && (
+                <Icon className="size-5 shrink-0" icon={icon} />
+              )
             )}
             <span className="w-full truncate whitespace-nowrap">
               {namespace !== false

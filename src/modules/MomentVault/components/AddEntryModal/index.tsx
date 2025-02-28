@@ -8,8 +8,6 @@ import {
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
-import { Loadable } from '@interfaces/common'
-import { IMomentVaultEntry } from '@interfaces/moment_vault_interfaces'
 import AudioType from './components/AudioType'
 
 const TYPES = [
@@ -39,12 +37,12 @@ function AddEntryModal({
   openType,
   setOpenType,
   onClose,
-  setData
+  refreshData
 }: {
   openType: 'text' | 'audio' | 'photo' | 'video' | null
   setOpenType: (type: 'text' | 'audio' | 'photo' | 'video' | null) => void
   onClose: () => void
-  setData: React.Dispatch<React.SetStateAction<Loadable<IMomentVaultEntry[]>>>
+  refreshData: () => void
 }): React.ReactElement {
   const [overwriteAudioWarningModalOpen, setOverwriteAudioWarningModalOpen] =
     useState(false)
@@ -109,12 +107,9 @@ function AddEntryModal({
                     }
                     setTranscription={setTranscription}
                     transcription={transcription}
-                    onSuccess={data => {
+                    onSuccess={() => {
                       onClose()
-                      setData(prev => {
-                        if (typeof prev === 'string') return prev
-                        return [...prev, data]
-                      })
+                      refreshData()
                     }}
                   />
                 )

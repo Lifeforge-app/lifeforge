@@ -1,18 +1,28 @@
+/* eslint-disable import/named */
+import { Icon } from '@iconify/react/dist/iconify.js'
 import WavesurferPlayer from '@wavesurfer/react'
+import moment from 'moment'
+import { ListResult } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import WaveSurfer from 'wavesurfer.js'
 import { Button } from '@components/buttons'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import useThemeColors from '@hooks/useThemeColor'
+import { Loadable } from '@interfaces/common'
 import { IMomentVaultEntry } from '@interfaces/moment_vault_interfaces'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import APIRequest from '@utils/fetchData'
 
 function AudioEntry({
   entry,
+  setData,
   onDelete
 }: {
   entry: IMomentVaultEntry
+  setData: React.Dispatch<
+    React.SetStateAction<Loadable<ListResult<IMomentVaultEntry>>>
+  >
   onDelete: (data: IMomentVaultEntry) => void
 }): React.ReactElement {
   const { theme, bgTemp } = useThemeColors()
@@ -23,6 +33,7 @@ function AudioEntry({
   const [currentTime, setCurrentTime] = useState(0)
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [transcriptionLoading, setTranscriptionLoading] = useState(false)
 
   const onReady = (ws: WaveSurfer) => {
     setWavesurfer(ws)
@@ -38,6 +49,41 @@ function AudioEntry({
     if (wavesurfer) {
       wavesurfer.playPause()
     }
+  }
+
+  async function addTranscription(): Promise<void> {
+    setTranscriptionLoading(true)
+
+    await APIRequest({
+      endpoint: `moment-vault/transcribe-existed/${entry.id}`,
+      method: 'POST',
+      successInfo: 'transcribe',
+      failureInfo: 'transcribe',
+      callback(data) {
+        setData(prev => {
+          if (typeof prev === 'string') {
+            return prev
+          }
+
+          const newData = prev.items.map(item => {
+            if (item.id === entry.id) {
+              return {
+                ...item,
+                transcription: data.data
+              }
+            }
+            return item
+          })
+          return {
+            ...prev,
+            items: newData
+          }
+        })
+      },
+      finalCallback: () => {
+        setTranscriptionLoading(false)
+      }
+    })
   }
 
   useEffect(() => {
@@ -82,10 +128,23 @@ function AudioEntry({
             onReady={onReady}
           />
           <p className="text-sm text-bg-500 whitespace-nowrap text-left w-full sm:w-auto">
-            {currentTime.toFixed(2)} / {totalTime.toFixed(2)}
+            {moment().startOf('day').seconds(currentTime).format('mm:ss')} /{' '}
+            {moment().startOf('day').seconds(totalTime).format('mm:ss')}
           </p>
         </div>
         <HamburgerMenu>
+          {entry.transcription === '' && (
+            <MenuItem
+              preventDefault
+              icon="tabler:file-text"
+              loading={transcriptionLoading}
+              namespace="modules.momentVault"
+              text="Transcribe to Text"
+              onClick={(_, close) => {
+                addTranscription().then(close).catch(console.error)
+              }}
+            />
+          )}
           <MenuItem
             isRed
             icon="tabler:trash"
@@ -99,6 +158,9 @@ function AudioEntry({
           <p className="text-bg-500">{entry.transcription}</p>
         </div>
       )}
+      <p className="text-bg-500 mt-4 flex items-center gap-2">
+        <Icon icon="tabler:clock" /> {moment(entry.created).fromNow()}
+      </p>
     </div>
   )
 }
