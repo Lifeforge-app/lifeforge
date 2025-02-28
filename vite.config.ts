@@ -18,8 +18,8 @@ export default defineConfig({
         plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]]
       }
     }),
-    tailwindcss(),
-    mkcert()
+    tailwindcss()
+    // mkcert()
   ],
   resolve: {
     alias: {
