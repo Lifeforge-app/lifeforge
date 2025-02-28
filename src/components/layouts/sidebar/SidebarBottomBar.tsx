@@ -14,6 +14,8 @@ function SidebarBottomBar(): React.ReactElement {
   const { userData, getAvatarURL, logout } = useAuthContext()
   const { componentBgLighterWithHover } = useThemeColors()
 
+  if (!userData) return <></>
+
   return (
     <div
       className={`flex-center w-full min-w-0 pb-4 pt-0 ${
