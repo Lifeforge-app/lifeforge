@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useEffect, useMemo } from 'react'
+import React, { Suspense, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route, Routes, useLocation, useNavigate } from 'react-router'
 import { ToastContainer } from 'react-toastify'
@@ -23,7 +23,7 @@ function AppRouter(): React.ReactElement {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const handleRedirect = useCallback(() => {
+  useEffect(() => {
     if (!authLoading) {
       if (!auth && location.pathname !== '/auth') {
         navigate('/auth?redirect=' + location.pathname + location.search)
@@ -41,8 +41,6 @@ function AppRouter(): React.ReactElement {
       }
     }
   }, [auth, location, authLoading])
-
-  useMemo(handleRedirect, [handleRedirect])
 
   const renderRoutes = useCallback(
     (
@@ -94,6 +92,7 @@ function AppRouter(): React.ReactElement {
   }, [location])
 
   if (authLoading) return <LoadingScreen customMessage="Loading user data" />
+  if (!auth && location.pathname !== '/auth') return <Auth />
 
   return (
     <>

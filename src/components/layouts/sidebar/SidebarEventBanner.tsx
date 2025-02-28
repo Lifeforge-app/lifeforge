@@ -53,11 +53,11 @@ const SidebarEventBanner = (): React.ReactElement => {
   const { userData } = useAuthContext()
 
   const eventType = useMemo(
-    () => getEventType(userData.dateOfBirth),
-    [userData.dateOfBirth]
+    () => getEventType(userData?.dateOfBirth),
+    [userData?.dateOfBirth]
   )
 
-  if (!sidebarExpanded || !eventType) return <></>
+  if (!sidebarExpanded || !eventType || !userData) return <></>
 
   const themeColor = theme ?? '#000000'
   const textColor = isLightColor(themeColor) ? 'text-bg-800' : 'text-bg-50'
