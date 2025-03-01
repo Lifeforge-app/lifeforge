@@ -146,7 +146,7 @@ function ModifyBookModal(): React.ReactElement {
     }
 
     if (data.year_published === '') {
-      data.year_published = '0'
+      setData({ year_published: 0 })
     }
 
     await APIRequest({
