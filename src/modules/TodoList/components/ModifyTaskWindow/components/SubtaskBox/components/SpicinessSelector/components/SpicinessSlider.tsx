@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import {
   SPICINESS_COLOR,
@@ -17,13 +18,12 @@ function SpicinessSlider({
         {SPICINESS_NAME.map((_, index) => (
           <button
             key={index}
-            className={`size-4 rounded-full ${
-              SPICINESS_COLOR[index][spiciness === index ? 1 : 2]
-            } ${
-              spiciness === index
-                ? `ring-2 ring-offset-2 ring-offset-bg-50 dark:ring-offset-bg-800 ${SPICINESS_COLOR[index][3]}`
-                : ''
-            }`}
+            className={clsx(
+              'size-4 rounded-full',
+              SPICINESS_COLOR[index][spiciness === index ? 1 : 2],
+              spiciness === index &&
+                `ring-2 ring-offset-2 ring-offset-bg-50 dark:ring-offset-bg-800 ${SPICINESS_COLOR[index][3]}`
+            )}
             onClick={() => {
               setSpiciness(index)
             }}

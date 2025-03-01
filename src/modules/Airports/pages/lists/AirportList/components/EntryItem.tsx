@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { Link, useParams } from 'react-router'
 import useThemeColors from '@hooks/useThemeColor'
@@ -34,14 +35,18 @@ function EntryItem({
 
   return (
     <Link
-      className={`flex-between flex w-full rounded-lg p-4 px-6 shadow-custom transition-all ${componentBgWithHover}`}
+      className={clsx(
+        'flex-between flex w-full rounded-lg p-4 px-6 shadow-custom transition-all',
+        componentBgWithHover
+      )}
       to={`/airports/${continentID}/${countryID}/${regionID}/${id}`}
     >
       <div className="flex items-center gap-4">
         <Icon
-          className={`size-7 ${
+          className={clsx(
+            'size-7',
             AIRPORT_TYPES[type as keyof typeof AIRPORT_TYPES]?.[0]
-          }`}
+          )}
           icon={AIRPORT_TYPES[type as keyof typeof AIRPORT_TYPES]?.[1]}
         />
         <div>

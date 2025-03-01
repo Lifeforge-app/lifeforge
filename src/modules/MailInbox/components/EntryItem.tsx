@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
 import { Button, Checkbox } from '@components/buttons'
@@ -72,19 +73,18 @@ function EntryItem({
             })()}
           </span>
           <div
-            className={`flex w-full min-w-0 items-center gap-2 text-lg ${
+            className={clsx(
+              'flex w-full min-w-0 items-center gap-2 text-lg',
               mail.seen ? 'font-medium' : 'font-bold'
-            }`}
+            )}
           >
             <span className="min-w-0 truncate">
               {mail.subject === '' ? 'No subject' : mail.subject}
             </span>
             {!mail.seen && (
-              <>
-                <span className="rounded-full bg-custom-500/30 px-3 py-0.5 text-xs font-semibold text-custom-500">
-                  New
-                </span>
-              </>
+              <span className="rounded-full bg-custom-500/30 px-3 py-0.5 text-xs font-semibold text-custom-500">
+                New
+              </span>
             )}
           </div>
 

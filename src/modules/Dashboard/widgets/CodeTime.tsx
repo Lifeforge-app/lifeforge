@@ -1,6 +1,7 @@
 /* eslint-disable import/named */
 import { Icon } from '@iconify/react'
 import { ChartOptions, ScriptableContext } from 'chart.js'
+import clsx from 'clsx'
 import moment from 'moment'
 import React, { useState, useMemo } from 'react'
 import { Bar, Line } from 'react-chartjs-2'
@@ -88,11 +89,12 @@ const ViewSelector = ({
       {views.map(viewType => (
         <button
           key={viewType}
-          className={`flex items-center gap-2 rounded-md p-2 px-4 transition-all ${
+          className={clsx(
+            'flex items-center gap-2 rounded-md p-2 px-4 transition-all',
             viewType === view
               ? 'bg-bg-200/50 dark:bg-bg-700/50'
               : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
-          }`}
+          )}
           onClick={() => setView(viewType as 'bar' | 'line')}
         >
           <Icon

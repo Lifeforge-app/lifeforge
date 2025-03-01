@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { Button } from '@components/buttons'
@@ -45,24 +46,28 @@ function EntryItem<T extends boolean = false>({
 
   return (
     <li
-      className={`group relative flex ${
-        isCartItem ? 'flex-row items-center gap-6' : 'flex-col'
-      } rounded-md ${isCartItem ? componentBgLighter : componentBg} p-4`}
+      className={clsx(
+        'relative flex rounded-md p-4 group',
+        isCartItem ? 'flex-row items-center gap-6' : 'flex-col',
+        isCartItem ? componentBgLighter : componentBg
+      )}
     >
       <img
         alt=""
-        className={`aspect-square h-64 object-contain ${
+        className={clsx(
+          'aspect-square object-contain',
           isCartItem ? 'h-32' : 'h-64'
-        }`}
+        )}
         src={`${import.meta.env.VITE_API_HOST}/media/${
           entry.front_image
         }?thumb=512x0`}
       />
       <div className="flex w-full flex-1 flex-col">
         <div
-          className={`${
+          className={clsx(
+            'flex items-end justify-between gap-4',
             !isCartItem && 'mt-4'
-          } flex items-end justify-between gap-4`}
+          )}
         >
           <div className="space-y-1">
             <p className="flex items-center gap-1 text-sm text-zinc-500">
@@ -94,10 +99,10 @@ function EntryItem<T extends boolean = false>({
                 {entry.colors.map(color => (
                   <span
                     key={color}
-                    className="size-3 justify-self-end rounded-full border  border-bg-500"
+                    className="size-3 justify-self-end rounded-full border border-bg-500"
                     style={{
-                      backgroundColor:
-                        VW_COLORS.find(c => c.name === color)?.hex ?? ''
+                      backgroundColor: VW_COLORS.find(c => c.name === color)
+                        ?.hex
                     }}
                   />
                 ))}
@@ -105,7 +110,9 @@ function EntryItem<T extends boolean = false>({
             </div>
           )}
         </div>
-        <div className={!isCartItem ? 'flex flex-1 flex-col justify-end' : ''}>
+        <div
+          className={clsx(!isCartItem && 'flex flex-1 flex-col justify-end')}
+        >
           <p className="mt-2 text-sm text-zinc-500">
             Worn {entry.times_worn} times
           </p>

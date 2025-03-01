@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -26,12 +27,12 @@ function NotesInput({
       />
       <div className="flex w-full items-center gap-2">
         <span
-          className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 transition-all group-focus-within:!text-custom-500 ${
+          className={clsx(
+            'pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 transition-all group-focus-within:!text-custom-500',
             notes.length === 0
               ? 'top-1/2 -translate-y-1/2 group-focus-within:top-6 group-focus-within:text-[14px]'
               : 'top-6 -translate-y-1/2 text-[14px]'
-          }
-          `}
+          )}
         >
           {t('inputs.notes')}
         </span>

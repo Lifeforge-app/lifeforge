@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
@@ -53,7 +54,10 @@ function ProjectKanban(): React.ReactElement {
               {columns.map((column, id) => (
                 <div
                   key={id}
-                  className={`flex h-min max-h-full w-96 shrink-0 flex-col rounded-lg border-t-4 p-6 pb-0 pr-4 ${componentBg}`}
+                  className={clsx(
+                    'flex h-min max-h-full w-96 shrink-0 flex-col rounded-lg border-t-4 p-6 pb-0 pr-4',
+                    componentBg
+                  )}
                   style={{
                     borderColor: column.color
                   }}

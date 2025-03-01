@@ -3,6 +3,7 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Switch } from '@components/buttons'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import clsx from 'clsx'
 
 function ComponentListItem({
   id,
@@ -103,11 +104,12 @@ function ComponentListItem({
     <li className="flex-between flex gap-8 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-800/50">
       <div className="flex items-center gap-4">
         <div
-          className={`flex size-10 shrink-0 items-center justify-center rounded-lg transition-all ${
+          className={clsx(
+            'flex size-10 shrink-0 items-center justify-center rounded-lg transition-all',
             Object.keys(enabledWidgets).includes(id)
               ? 'bg-custom-500/20 text-custom-500'
               : 'bg-bg-200 text-bg-400 dark:bg-bg-700/50 dark:text-bg-500'
-          }`}
+          )}
         >
           <Icon className="size-6" icon={icon} />
         </div>

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { Link } from 'react-router'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
@@ -23,7 +24,10 @@ function EntryItem({ entry }: { entry: IProjectsMEntry }): React.ReactElement {
 
   return (
     <li
-      className={`m-4 mt-0 flex items-center gap-4 rounded-lg ${componentBgWithHover} shadow-custom transition-all`}
+      className={clsx(
+        'm-4 mt-0 flex items-center gap-4 rounded-lg shadow-custom transition-all',
+        componentBgWithHover
+      )}
     >
       <Link
         className="flex-between flex w-full gap-4 p-6"

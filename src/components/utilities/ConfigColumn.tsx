@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { Tooltip } from 'react-tooltip'
 import { toDashCase } from '../../../tools/module-tools/utils/strings'
@@ -30,17 +31,19 @@ function ConfigColumn({
   return (
     <>
       <div
-        className={`flex w-full min-w-0 flex-col justify-between gap-8 px-4 ${
-          !vertical
-            ? !noDefaultBreakpoints &&
-              {
-                sm: 'sm:flex-row',
-                md: 'md:flex-row',
-                lg: 'lg:flex-row',
-                xl: 'xl:flex-row'
-              }[wrapWhen]
-            : 'flex-col'
-        } ${className}`}
+        className={clsx(
+          'flex w-full min-w-0 flex-col justify-between gap-8 px-4',
+          !vertical &&
+            !noDefaultBreakpoints &&
+            {
+              sm: 'sm:flex-row',
+              md: 'md:flex-row',
+              lg: 'lg:flex-row',
+              xl: 'xl:flex-row'
+            }[wrapWhen],
+          vertical && 'flex-col',
+          className
+        )}
       >
         <div className="flex shrink items-center gap-4">
           <Icon className="size-6 shrink-0 text-bg-500" icon={icon} />

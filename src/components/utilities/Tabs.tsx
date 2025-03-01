@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import React from 'react'
 
 function Tabs<T extends string>({
@@ -26,11 +27,13 @@ function Tabs<T extends string>({
         .map(({ name, icon, id }) => (
           <button
             key={id}
-            className={`flex w-full min-w-0 cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all ${
+            className={clsx(
+              'flex w-full min-w-0 cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all',
               active === id
                 ? 'border-custom-500 font-medium text-custom-500'
-                : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
-            } ${className}`}
+                : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200',
+              className
+            )}
             onClick={() => {
               onNavClick(id)
             }}

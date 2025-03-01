@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import useThemeColors from '@hooks/useThemeColor'
 
@@ -17,16 +18,21 @@ function ViewModeSelector<T extends string>({
 
   return (
     <div
-      className={`mt-4 flex items-center gap-2 rounded-md p-2 shadow-custom ${componentBg} ${className}`}
+      className={clsx(
+        'mt-4 flex items-center gap-2 rounded-md p-2 shadow-custom',
+        componentBg,
+        className
+      )}
     >
       {options.map(({ value, icon }) => (
         <button
           key={value}
-          className={`flex items-center gap-2 rounded-md p-2 transition-all ${
+          className={clsx(
+            'flex items-center gap-2 rounded-md p-2 transition-all',
             value === viewMode
               ? componentBgLighter
               : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
-          }`}
+          )}
           onClick={() => {
             setViewMode(value)
           }}

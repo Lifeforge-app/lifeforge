@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import ConfigColumn from '@components/utilities/ConfigColumn'
@@ -35,11 +36,12 @@ function ThemeSelector(): React.ReactElement {
         ].map(({ id, name, Image }) => (
           <div key={id} className="flex flex-col items-center gap-2">
             <button
-              className={`flex-1 rounded-lg border-2 lg:rounded-xl  ${
+              className={clsx(
+                'flex-1 rounded-lg border-2 lg:rounded-xl',
                 theme === id
                   ? 'border-custom-500'
                   : 'border-bg-200 hover:border-bg-500 dark:border-bg-700 dark:hover:border-bg-500'
-              }`}
+              )}
               type="button"
               onClick={() => {
                 setTheme(id as 'system' | 'light' | 'dark')
@@ -56,9 +58,10 @@ function ThemeSelector(): React.ReactElement {
               </div>
             </button>
             <p
-              className={`mt-4 ${
-                theme === id ? 'font-medium text-custom-500' : ''
-              }`}
+              className={clsx(
+                'mt-4',
+                theme === id && 'font-medium text-custom-500'
+              )}
             >
               {name}
             </p>

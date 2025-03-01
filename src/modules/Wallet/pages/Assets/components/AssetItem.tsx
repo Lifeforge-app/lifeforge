@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useNavigate } from 'react-router'
 import { Button } from '@components/buttons'
@@ -31,9 +32,10 @@ function AssetItem({
         <h2 className="text-xl font-medium">{asset.name}</h2>
       </div>
       <p
-        className={`flex text-5xl font-medium ${
+        className={clsx(
+          'flex text-5xl font-medium',
           isAmountHidden ? 'items-center' : 'items-end'
-        }`}
+        )}
       >
         <span className="mr-2 text-3xl text-bg-500">RM</span>
         {isAmountHidden ? (

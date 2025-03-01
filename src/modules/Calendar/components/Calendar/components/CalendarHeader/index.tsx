@@ -5,6 +5,7 @@ import { Button } from '@components/buttons'
 import useThemeColors from '@hooks/useThemeColor'
 import ChangeViewButton from './components/ChangeViewButton'
 import NavigationButton from './components/NavigationButton'
+import clsx from 'clsx'
 
 interface CalendarHeaderProps {
   label: string
@@ -42,7 +43,10 @@ function CalendarHeader({
       </div>
       <div className="flex w-full gap-4 lg:w-auto">
         <div
-          className={`flex w-full gap-1 rounded-md p-2 shadow-custom ${componentBg}`}
+          className={clsx(
+            'flex w-full gap-1 rounded-md p-2 shadow-custom',
+            componentBg
+          )}
         >
           {['Month', 'Week', 'Day', 'Agenda'].map(view => (
             <ChangeViewButton

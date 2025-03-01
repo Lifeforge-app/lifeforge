@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import React from 'react'
 import WidgetWrapper from './WidgetWrapper'
 import { IAirportMETARData } from '..'
@@ -12,15 +13,12 @@ function Wind({ data }: { data: IAirportMETARData }): React.ReactElement {
       </h1>
       {data.wind !== undefined ? (
         <div
-          className={`flex flex-1 flex-col items-center justify-center gap-2 rounded-md p-4 ${(() => {
-            if (data.wind.gust_kts > 30) {
-              return 'bg-red-500/20 text-red-500'
-            }
-            if (data.wind.gust_kts > 20) {
-              return 'bg-yellow-500/20 text-yellow-500'
-            }
-            return 'bg-green-500/20 text-green-500'
-          })()}`}
+          className={clsx(
+            'flex flex-1 flex-col items-center justify-center gap-2 rounded-md p-4',
+            data.wind.gust_kts > 30 && 'bg-red-500/20 text-red-500',
+            data.wind.gust_kts > 20 && 'bg-yellow-500/20 text-yellow-500',
+            data.wind.gust_kts <= 20 && 'bg-green-500/20 text-green-500'
+          )}
         >
           <p className="text-center text-3xl font-medium">
             {data.wind.speed_kts.toFixed(2)} kts{' '}

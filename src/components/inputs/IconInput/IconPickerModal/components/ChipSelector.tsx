@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useState } from 'react'
 import Chip from './Chip'
 
@@ -16,9 +17,10 @@ function ChipSelector({
   return options.length > 0 ? (
     <div className="mt-4 flex items-center gap-2">
       <div
-        className={`flex pb-1 transition-all ${
+        className={clsx(
+          'flex pb-1 transition-all gap-2',
           expanded ? 'flex-wrap' : 'overflow-x-auto'
-        } gap-2`}
+        )}
       >
         {options
           .sort((a, b) => {
@@ -45,7 +47,7 @@ function ChipSelector({
         }}
       >
         <Icon
-          className={`size-6 transition-all ${expanded ? 'rotate-180' : ''}`}
+          className={clsx('size-6 transition-all', expanded && 'rotate-180')}
           icon="uil:angle-up"
         />
       </button>

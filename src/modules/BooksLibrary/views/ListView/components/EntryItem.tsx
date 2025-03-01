@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useState } from 'react'
 import { Button } from '@components/buttons'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
@@ -46,11 +47,14 @@ export default function EntryItem({
   return (
     <li
       key={item.id}
-      className={`relative flex gap-4 rounded-lg p-4 shadow-custom transition-all ${componentBgWithHover}`}
+      className={clsx(
+        'relative flex gap-4 rounded-lg p-4 shadow-custom transition-all',
+        componentBgWithHover
+      )}
     >
       <div className="absolute right-3 top-4 z-20 flex">
         <Button
-          className={`p-2! ${item.is_favourite ? 'text-red-500!' : ''}`}
+          className={clsx('p-2!', item.is_favourite && 'text-red-500!')}
           icon={(() => {
             if (addToFavouritesLoading) {
               return 'svg-spinners:180-ring'
@@ -76,7 +80,10 @@ export default function EntryItem({
         target="_blank"
       />
       <div
-        className={`flex-center aspect-10/12 h-min w-24 rounded-lg p-2 ${componentBgLighter}`}
+        className={clsx(
+          'flex-center aspect-10/12 h-min w-24 rounded-lg p-2',
+          componentBgLighter
+        )}
       >
         <img
           alt=""

@@ -6,6 +6,7 @@ import {
 } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import useThemeColors from '@hooks/useThemeColor'
@@ -53,16 +54,19 @@ function DefaultThemeColorSelector({
     >
       <div className="relative mt-1 w-full lg:w-56">
         <ListboxButton
-          className={`flex w-full items-center gap-2 rounded-lg shadow-custom ${
-            !themeColor.startsWith('#') ? 'py-4 pl-4 pr-10' : 'py-6 pl-6 pr-12'
-          } text-left outline-hidden transition-all focus:outline-hidden ${componentBgWithHover}`}
+          className={clsx(
+            'flex w-full items-center gap-2 rounded-lg shadow-custom text-left outline-hidden transition-all focus:outline-hidden',
+            !themeColor.startsWith('#') ? 'py-4 pl-4 pr-10' : 'py-6 pl-6 pr-12',
+            componentBgWithHover
+          )}
         >
           <span
-            className={`inline-block size-4 shrink-0 rounded-full ${
+            className={clsx(
+              'inline-block size-4 shrink-0 rounded-full',
               !themeColor.startsWith('#')
                 ? 'bg-custom-500'
                 : 'border-2 border-bg-500'
-            }`}
+            )}
           />
           <span className="-mt-px block truncate">
             {t(
@@ -80,9 +84,10 @@ function DefaultThemeColorSelector({
             )}
           </span>
           <span
-            className={`pointer-events-none absolute inset-y-0 right-0 flex items-center ${
+            className={clsx(
+              'pointer-events-none absolute inset-y-0 right-0 flex items-center',
               themeColor.startsWith('#') ? 'pr-4' : 'pr-2'
-            }`}
+            )}
           >
             <Icon className="size-5 text-bg-500" icon="tabler:chevron-down" />
           </span>
@@ -103,7 +108,10 @@ function DefaultThemeColorSelector({
                   <div>
                     <span className="flex items-center gap-2">
                       <span
-                        className={`theme-${color} inline-block size-4 rounded-full bg-custom-500`}
+                        className={clsx(
+                          'inline-block size-4 rounded-full bg-custom-500',
+                          `theme-${color}`
+                        )}
                       />
                       {t(
                         `themeColorSelector.colors.${toCamelCase(

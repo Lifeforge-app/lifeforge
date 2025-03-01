@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import ConfigColumn from '@components/utilities/ConfigColumn'
 import useThemeColors from '@hooks/useThemeColor'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import clsx from 'clsx'
 
 const LANGUAGES: Array<{
   name: string
@@ -57,7 +58,10 @@ function LanguageSelector(): React.ReactElement {
       >
         <div className="relative mt-1 w-full md:w-64">
           <ListboxButton
-            className={`flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left shadow-custom outline-hidden transition-all focus:outline-hidden ${componentBgWithHover}`}
+            className={clsx(
+              'flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left shadow-custom outline-hidden transition-all focus:outline-hidden',
+              componentBgWithHover
+            )}
           >
             <Icon
               className="size-5"

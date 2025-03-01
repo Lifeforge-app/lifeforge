@@ -27,6 +27,7 @@
     "@yudiel/react-qr-scanner": "^2.1.0",
     "babel-plugin-react-compiler": "^19.0.0-beta-21e868a-20250216",
     "chart.js": "^4.4.7",
+    "clsx": "^2.1.1",
     "color-sorter": "^6.1.2",
     "copy-to-clipboard": "^3.3.3",
     "crypto-js": "^4.2.0",

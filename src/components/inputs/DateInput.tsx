@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useRef } from 'react'
 import DatePicker from 'react-date-picker'
 import { useTranslation } from 'react-i18next'
@@ -70,7 +71,7 @@ const DateInput: React.FC<DateInputProps> = ({
 
   return (
     <InputWrapper
-      className={`${className} ${hasMargin ? 'mt-4' : ''}`}
+      className={clsx(className, hasMargin && 'mt-4')}
       darker={darker}
     >
       <InputIcon active={date !== ''} icon={icon} />

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -20,11 +21,12 @@ function DifficultySelector({
       ].map((achievement, index) => (
         <button
           key={index}
-          className={`w-full cursor-pointer border-b-2 p-2 uppercase tracking-widest transition-all ${
+          className={clsx(
+            'w-full cursor-pointer border-b-2 p-2 uppercase tracking-widest transition-all',
             selectedDifficulty === achievement[0]
               ? `${achievement[1]} ${achievement[2]} font-medium`
               : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
-          }`}
+          )}
           onClick={() => {
             setSelectedDifficulty(achievement[0])
           }}

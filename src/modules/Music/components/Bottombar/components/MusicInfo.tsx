@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import { useMusicContext } from '@providers/MusicProvider'
@@ -15,9 +16,10 @@ export default function MusicInfo(): React.ReactElement {
       <div className="flex w-full min-w-0 items-center">
         <div className="flex size-12 shrink-0 items-center justify-center rounded-md bg-custom-500/20">
           <Icon
-            className={`${
-              isPlaying ? 'animate-spin' : ''
-            } text-3xl text-custom-500`}
+            className={clsx(
+              'text-3xl text-custom-500',
+              isPlaying && 'animate-spin'
+            )}
             icon="tabler:disc"
           />
         </div>

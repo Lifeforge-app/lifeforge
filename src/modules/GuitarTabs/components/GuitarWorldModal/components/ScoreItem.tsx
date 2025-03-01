@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useState } from 'react'
 import { Button } from '@components/buttons'
 import { type IGuitarTabsGuitarWorldScoreEntry } from '@interfaces/guitar_tabs_interfaces'
@@ -73,16 +74,17 @@ function ScoreItem({
         </p>
         <div className="flex items-center gap-3">
           <span
-            className={`mt-2 inline-block rounded-full px-3 py-1 text-[12px] font-medium ${(() => {
-              switch (entry.category) {
-                case '弹唱吉他谱':
-                  return 'bg-green-500/20 text-green-500'
-                case '指弹吉他谱':
-                  return 'bg-blue-500/20 text-blue-500'
-                default:
-                  return 'bg-bg-500/20 text-bg-500'
+            className={clsx(
+              'mt-2 inline-block rounded-full px-3 py-1 text-[12px] font-medium',
+              {
+                'bg-green-500/20 text-green-500':
+                  entry.category === '弹唱吉他谱',
+                'bg-blue-500/20 text-blue-500': entry.category === '指弹吉他谱',
+                'bg-bg-500/20 text-bg-500':
+                  entry.category !== '弹唱吉他谱' &&
+                  entry.category !== '指弹吉他谱'
               }
-            })()}`}
+            )}
           >
             {entry.category}
           </span>

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 
 function SidebarItemSubsectionExpandIcon({
@@ -15,9 +16,10 @@ function SidebarItemSubsectionExpandIcon({
         onClick={toggleSubsection}
       >
         <Icon
-          className={`stroke-[2px] text-bg-500 transition-all ${
-            subsectionExpanded ? 'rotate-90' : ''
-          }`}
+          className={clsx(
+            'stroke-[2px] text-bg-500 transition-all',
+            subsectionExpanded && 'rotate-90'
+          )}
           icon="tabler:chevron-right"
         />
       </button>

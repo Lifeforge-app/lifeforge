@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import moment from 'moment/min/moment-with-locales'
 import React, { useRef, useState } from 'react'
 import useThemeColors from '@hooks/useThemeColor'
@@ -16,11 +17,13 @@ export default function Clock(): React.ReactElement {
   return (
     <div
       ref={ref}
-      className={`flex size-full gap-4 rounded-lg p-4 shadow-custom ${componentBg} ${
+      className={clsx(
+        'flex size-full gap-4 rounded-lg p-4 shadow-custom',
+        componentBg,
         (ref.current?.offsetHeight ?? 0) < 160
           ? 'flex-between flex-row'
           : 'flex-col'
-      }`}
+      )}
     >
       <div className="flex flex-col">
         <span className="font-medium">
@@ -35,17 +38,19 @@ export default function Clock(): React.ReactElement {
         </span>
       </div>
       <span
-        className={`flex items-end font-semibold tracking-wider ${
+        className={clsx(
+          'flex items-end font-semibold tracking-wider',
           (ref.current?.offsetHeight ?? 0) < 160
             ? 'text-4xl'
             : 'my-auto justify-center text-center text-6xl'
-        }`}
+        )}
       >
         {time}
         <span
-          className={`-mb-0.5 ml-1 inline-block w-9 ${
+          className={clsx(
+            '-mb-0.5 ml-1 inline-block w-9 text-bg-500',
             (ref.current?.offsetHeight ?? 0) < 160 ? 'text-2xl' : 'text-4xl'
-          } text-bg-500`}
+          )}
         >
           {seocond}
         </span>

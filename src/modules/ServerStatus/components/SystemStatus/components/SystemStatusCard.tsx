@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import useThemeColors from '@hooks/useThemeColor'
 
@@ -30,7 +31,9 @@ export function SystemStatusCard({
   }
 
   return (
-    <div className={`space-y-4 rounded-lg p-6 shadow-custom ${componentBg}`}>
+    <div
+      className={clsx('space-y-4 rounded-lg p-6 shadow-custom', componentBg)}
+    >
       <div className="flex-between flex">
         <div className="flex items-center gap-2">
           <Icon className="text-2xl text-bg-500" icon={icon} />
@@ -41,10 +44,13 @@ export function SystemStatusCard({
         </p>
       </div>
       <div
-        className={`h-2 w-full overflow-hidden rounded-full ${componentBgLighter}`}
+        className={clsx(
+          'h-2 w-full overflow-hidden rounded-full',
+          componentBgLighter
+        )}
       >
         <div
-          className={`h-full rounded-full transition-all ${colorClass}`}
+          className={clsx('h-full rounded-full transition-all', colorClass)}
           style={{ width: `${(value / 100) * 100}%` }}
         ></div>
       </div>

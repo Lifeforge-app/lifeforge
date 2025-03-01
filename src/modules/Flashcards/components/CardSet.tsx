@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -88,11 +89,12 @@ function CardSet(): React.ReactElement {
         />
         <div className="flex-between flex">
           <h1
-            className={`flex items-center gap-4 ${
+            className={clsx(
+              'flex items-center gap-4 font-semibold',
               typeof containerDetails !== 'string'
                 ? 'text-2xl sm:text-3xl'
                 : 'text-2xl'
-            } font-semibold `}
+            )}
           >
             {(() => {
               switch (containerDetails) {

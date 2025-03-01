@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@components/buttons'
@@ -91,7 +92,10 @@ function ModuleHeader({
         {hamburgerMenuItems !== undefined && (
           <Menu
             as="div"
-            className={`relative z-50 overscroll-contain ${hamburgerMenuClassName}`}
+            className={clsx(
+              'relative z-50 overscroll-contain',
+              hamburgerMenuClassName
+            )}
           >
             <MenuButton className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-50">
               <Icon className="size-5" icon="tabler:dots-vertical" />

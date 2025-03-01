@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
@@ -43,11 +44,12 @@ function CodeTimeTopEntries({
             {['24 hours', '7 days', '30 days'].map((last, index) => (
               <button
                 key={index}
-                className={`rounded-md p-4 px-6 tracking-wide ${
+                className={clsx(
+                  'rounded-md p-4 px-6 tracking-wide',
                   lastFor === last
                     ? 'bg-bg-200 font-semibold text-bg-800 dark:bg-bg-700/50 dark:text-bg-50'
                     : 'text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-700/50'
-                }`}
+                )}
                 onClick={() => {
                   setLastFor(last as '24 hours' | '7 days' | '30 days')
                 }}
@@ -68,13 +70,12 @@ function CodeTimeTopEntries({
                   .map(([key, value], index) => (
                     <div
                       key={key}
-                      className={`h-6 border ${
-                        index === 0 ? 'rounded-l-lg' : ''
-                      } ${
+                      className={clsx(
+                        'h-6 border',
+                        index === 0 && 'rounded-l-lg',
                         index ===
                           Object.entries(topEntries).slice(0, 5).length - 1 &&
-                        'shrink-0 rounded-r-lg'
-                      } ${
+                          'shrink-0 rounded-r-lg',
                         [
                           'bg-red-500/20 border-red-500',
                           'bg-orange-500/20 border-orange-500',
@@ -82,7 +83,7 @@ function CodeTimeTopEntries({
                           'bg-blue-500/20 border-blue-500',
                           'bg-emerald-500/20 border-emerald-500'
                         ][index]
-                      }`}
+                      )}
                       style={{
                         width: `${Math.round(
                           (value /
@@ -103,11 +104,15 @@ function CodeTimeTopEntries({
                   .map(([key, value], index) => (
                     <li
                       key={key}
-                      className={`flex-between relative flex gap-8 rounded-lg p-6 shadow-custom ${componentBg}`}
+                      className={clsx(
+                        'flex-between relative flex gap-8 rounded-lg p-6 shadow-custom',
+                        componentBg
+                      )}
                     >
                       <div className="flex items-center gap-4 break-all text-lg font-medium">
                         <div
-                          className={`size-4 shrink-0 rounded-md border ${
+                          className={clsx(
+                            'size-4 shrink-0 rounded-md border rounded-full',
                             [
                               'bg-red-500/20 border-red-500',
                               'bg-orange-500/20 border-orange-500',
@@ -115,7 +120,7 @@ function CodeTimeTopEntries({
                               'bg-blue-500/20 border-blue-500',
                               'bg-emerald-500/20 border-emerald-500'
                             ][index]
-                          } rounded-full`}
+                          )}
                         ></div>
                         {key}
                       </div>

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
@@ -98,24 +99,27 @@ function DateGroup({
         <>
           <h2 className="mb-2 flex items-end gap-2 text-xl font-semibold">
             <div
-              className={`mb-0.5 overflow-hidden transition-all ${
-                !isSelectedAll ? 'max-w-0 group-hover:max-w-8' : ''
-              }`}
+              className={clsx(
+                'mb-0.5 overflow-hidden transition-all',
+                !isSelectedAll && 'max-w-0 group-hover:max-w-8'
+              )}
             >
               <button
-                className={`group/checkbox flex-center rounded-full border-2  p-0.5 transition-all ${
+                className={clsx(
+                  'group/checkbox flex-center rounded-full border-2 p-0.5 transition-all',
                   isSelectedAll
                     ? 'border-custom-500 bg-custom-500'
                     : 'border-bg-500 hover:border-custom-500!'
-                }`}
+                )}
                 onClick={toggleSelectAll}
               >
                 <Icon
-                  className={`size-4 !stroke-[1px]  transition-all  ${
+                  className={clsx(
+                    'size-4 !stroke-[1px] transition-all',
                     isSelectedAll
                       ? 'stroke-bg-100 text-bg-50 dark:stroke-bg-900 dark:text-bg-800'
                       : 'stroke-bg-500 text-bg-500 group-hover/checkbox:stroke-custom-500! group-hover/checkbox:text-custom-500!'
-                  }`}
+                  )}
                   icon="uil:check"
                 />
               </button>

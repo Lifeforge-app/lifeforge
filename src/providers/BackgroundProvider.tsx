@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import { BG_BLURS } from '@constants/bg_blurs'
 import { usePersonalizationContext } from './PersonalizationProvider'
@@ -15,9 +16,10 @@ function BackgroundProvider({
 
   return (
     <div
-      className={`relative isolate flex h-dvh w-full ${
+      className={clsx(
+        'relative isolate flex h-dvh w-full',
         bgImage !== '' && 'bg-cover bg-center bg-no-repeat'
-      }`}
+      )}
       style={
         bgImage !== ''
           ? {

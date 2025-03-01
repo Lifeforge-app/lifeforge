@@ -1,5 +1,6 @@
+import clsx from 'clsx'
 import moment from 'moment'
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   type ICalendarCategory,
   type ICalendarEvent
@@ -25,8 +26,13 @@ function MiniCalendarDateItem({
   events,
   categories
 }: MiniCalendarDateItemProps): React.ReactElement {
-  function getEventsOnTheDay(): ICalendarEvent[] {
-    return !(firstDay > index || index - firstDay + 1 > lastDate)
+  const isInThisMonth = useMemo(
+    () => !(firstDay > index || index - firstDay + 1 > lastDate),
+    [firstDay, index, lastDate]
+  )
+
+  const eventsOnTheDay = useMemo<ICalendarEvent[]>(() => {
+    return isInThisMonth
       ? events.filter(event => {
           return moment(
             `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
@@ -39,55 +45,49 @@ function MiniCalendarDateItem({
           )
         })
       : []
-  }
+  }, [events, firstDay, index, lastDate, date, actualIndex])
+
+  const isToday = useMemo(
+    () =>
+      moment().isSame(
+        moment(
+          `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
+          'YYYY-M-DD'
+        ),
+        'day'
+      ) && isInThisMonth,
+    [date, firstDay, index, lastDate, actualIndex]
+  )
 
   return (
     <div
       key={index}
-      className={`relative isolate flex flex-col items-center gap-1 text-sm ${
-        firstDay > index || index - firstDay + 1 > lastDate
-          ? 'text-bg-300 dark:text-bg-600'
-          : ''
-      } ${
-        moment().isSame(
-          moment(
-            `${date.getFullYear()}-${date.getMonth() + 1}-${actualIndex}`,
-            'YYYY-M-DD'
-          ),
-          'day'
-        ) &&
-        firstDay <= index &&
-        index - firstDay + 1 <= lastDate
-          ? "font-semibold after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:size-10 after:-translate-x-1/2 after:-translate-y-5 after:rounded-md after:border after:border-custom-500 after:bg-custom-500/10 after:content-['']"
-          : ''
-      }`}
+      className={clsx(
+        'relative isolate flex flex-col items-center gap-1 text-sm',
+        !isInThisMonth && 'text-bg-300 dark:text-bg-600',
+        isToday &&
+          "font-semibold after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:size-10 after:-translate-x-1/2 after:-translate-y-5 after:rounded-md after:border after:border-custom-500 after:bg-custom-500/10 after:content-['']"
+      )}
     >
       <span>{actualIndex}</span>
-      {!(firstDay > index || index - firstDay + 1 > lastDate) &&
-        (() => {
-          const eventsOnTheDay = getEventsOnTheDay()
-
-          return (
-            eventsOnTheDay.length > 0 && (
-              <div className="flex w-full items-center justify-center gap-px">
-                {eventsOnTheDay.slice(0, 3).map(event => (
-                  <div
-                    key={event.id}
-                    className={'size-1 rounded-full'}
-                    style={{
-                      backgroundColor:
-                        typeof categories !== 'string'
-                          ? categories.find(
-                              category => category.id === event.category
-                            )?.color
-                          : ''
-                    }}
-                  />
-                ))}
-              </div>
-            )
-          )
-        })()}
+      {isInThisMonth && eventsOnTheDay.length > 0 && (
+        <div className="flex w-full items-center justify-center gap-px">
+          {eventsOnTheDay.slice(0, 3).map(event => (
+            <div
+              key={event.id}
+              className="size-1 rounded-full"
+              style={{
+                backgroundColor:
+                  typeof categories !== 'string'
+                    ? categories.find(
+                        category => category.id === event.category
+                      )?.color
+                    : ''
+              }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

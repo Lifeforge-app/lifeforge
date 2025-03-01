@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import { GoBackButton } from '@components/buttons'
 import Scrollbar from '@components/utilities/Scrollbar'
@@ -15,11 +16,11 @@ function SidebarWrapper({
 }): React.ReactElement {
   return (
     <aside
-      className={`absolute ${
-        isOpen ? 'left-0' : 'left-full'
-      } top-0 z-9990 size-full shrink-0 rounded-lg bg-bg-50 py-4 shadow-custom backdrop-blur-xs transition-all duration-300 dark:bg-bg-900 xl:static xl:bg-bg-50/50 xl:backdrop-blur-xs xl:dark:bg-bg-900/50 ${
+      className={clsx(
+        'absolute top-0 z-9990 size-full shrink-0 rounded-lg bg-bg-50 py-4 shadow-custom backdrop-blur-xs transition-all duration-300 dark:bg-bg-900 xl:static xl:bg-bg-50/50 xl:backdrop-blur-xs xl:dark:bg-bg-900/50 xl:w-1/4 xl:min-w-96',
+        isOpen ? 'left-0' : 'left-full',
         customHeight ?? 'xl:h-[calc(100%-2rem)]'
-      } xl:w-1/4 xl:min-w-96`}
+      )}
     >
       <Scrollbar>
         <div className="flex-between flex px-8 py-4 xl:hidden">
