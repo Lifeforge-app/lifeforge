@@ -30,7 +30,7 @@ function EntryItem({
       title={
         <>
           {entry.name}
-          <span className="text-sm text-bg-500">({entry.keyId})</span>
+          <code className="text-sm text-bg-500">({entry.keyId})</code>
         </>
       }
     >

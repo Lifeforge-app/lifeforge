@@ -1,4 +1,5 @@
 import pluginJs from '@eslint/js'
+import pluginQuery from '@tanstack/eslint-plugin-query'
 import importPlugin from 'eslint-plugin-import'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 import pluginReact from 'eslint-plugin-react'
@@ -125,5 +126,6 @@ export default [
     rules: {
       'react-compiler/react-compiler': 'error'
     }
-  }
+  },
+  ...pluginQuery.configs['flat/recommended']
 ]

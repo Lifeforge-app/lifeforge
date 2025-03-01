@@ -10,6 +10,16 @@ interface IIdeaBoxContainer extends BasePBCollection {
   text_count: number
 }
 
+interface IIdeaBoxContainerFormState {
+  name: string
+  color: string
+  icon: string
+  cover: {
+    image: string | File | null
+    preview: string | null
+  }
+}
+
 interface IIdeaBoxFolder extends BasePBCollection {
   color: string
   icon: string
@@ -38,4 +48,10 @@ interface IIdeaBoxTag extends BasePBCollection {
   count: number
 }
 
-export type { IIdeaBoxContainer, IIdeaBoxEntry, IIdeaBoxFolder, IIdeaBoxTag }
+export type {
+  IIdeaBoxContainer,
+  IIdeaBoxContainerFormState,
+  IIdeaBoxEntry,
+  IIdeaBoxFolder,
+  IIdeaBoxTag
+}
