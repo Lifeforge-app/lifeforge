@@ -118,7 +118,7 @@ function Modal({
                         name={field.label}
                         namespace={namespace}
                         placeholder={field.placeholder}
-                        updateValue={value => {
+                        setValue={value => {
                           setData({ [field.id]: value })
                         }}
                         value={selectedData as string}
@@ -258,7 +258,7 @@ function Modal({
                         setColorPickerOpen={() => {
                           setColorPickerOpen(field.id)
                         }}
-                        updateColor={value => {
+                        setColor={value => {
                           setData({ [field.id]: value })
                         }}
                       />

@@ -13,7 +13,7 @@ interface IInputProps {
   name: string
   placeholder: string
   value: string
-  updateValue: (value: string) => void
+  setValue: (value: string) => void
 
   inputMode?:
     | 'text'
@@ -57,7 +57,7 @@ function TextInput({
   placeholder,
   ref,
   required,
-  updateValue,
+  setValue: setValue,
   value,
   namespace,
   tKey
@@ -103,8 +103,8 @@ function TextInput({
           noAutoComplete={noAutoComplete}
           placeholder={placeholder}
           reference={ref}
+          setValue={setValue}
           showPassword={showPassword}
-          updateValue={updateValue}
           value={value}
           onKeyDown={onKeyDown}
         />

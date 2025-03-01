@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '@components/buttons'
 import {
   TextInput,
@@ -7,6 +7,7 @@ import {
   ListboxOrComboboxOption
 } from '@components/inputs'
 import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
+import { IVirtualWardrobeFormData } from '@interfaces/virtual_wardrobe_interfaces'
 import APIRequest from '@utils/fetchData'
 
 function BasicInfoSection({
@@ -15,15 +16,9 @@ function BasicInfoSection({
   backImage,
   step,
   setStep,
-  name,
-  setName,
-  category,
-  setCategory,
-  subCategory,
-  setSubCategory,
-  brand,
-  setBrand,
-  setColors,
+  formState,
+  setFormState,
+  handleChange,
   canGoBack
 }: {
   canVision: boolean
@@ -31,15 +26,11 @@ function BasicInfoSection({
   backImage: File | null
   step: number
   setStep: (value: number) => void
-  name: string
-  setName: (value: string) => void
-  category: string | null
-  setCategory: (value: string | null) => void
-  subCategory: string | null
-  setSubCategory: (value: string | null) => void
-  brand: string
-  setBrand: (value: string) => void
-  setColors: (value: string[]) => void
+  formState: IVirtualWardrobeFormData
+  setFormState: (value: IVirtualWardrobeFormData) => void
+  handleChange: (
+    field: keyof IVirtualWardrobeFormData
+  ) => (value: string | string[]) => void
   canGoBack: boolean
 }): React.ReactElement {
   const [visionLoading, setVisionLoading] = useState(false)
@@ -62,10 +53,7 @@ function BasicInfoSection({
       isJSON: false,
       callback: data => {
         const { name, category, subcategory, colors } = data.data
-        setName(name)
-        setCategory(category)
-        setSubCategory(subcategory)
-        setColors(colors)
+        setFormState({ ...formState, name, category, subcategory, colors })
       },
       failureInfo: 'identify',
       finalCallback: () => {
@@ -73,6 +61,10 @@ function BasicInfoSection({
       }
     })
   }
+
+  useEffect(() => {
+    setFormState({ ...formState, subcategory: '' })
+  }, [formState.category])
 
   return (
     <>
@@ -86,8 +78,8 @@ function BasicInfoSection({
           name="Item Name"
           namespace="modules.virtualWardrobe"
           placeholder='e.g. "Blue Shirt"'
-          updateValue={setName}
-          value={name}
+          setValue={handleChange('name')}
+          value={formState.name}
           onActionButtonClick={() => {
             onVision().catch(console.error)
           }}
@@ -99,24 +91,22 @@ function BasicInfoSection({
               <Icon
                 className="size-5"
                 icon={
-                  VW_CATEGORIES.find(l => l.name === category)?.icon ??
-                  'tabler:apps-off'
+                  VW_CATEGORIES.find(l => l.name === formState.category)
+                    ?.icon ?? 'tabler:apps-off'
                 }
               />
               <span className="-mt-px block truncate">
-                {VW_CATEGORIES.find(l => l.name === category)?.name ?? 'None'}
+                {VW_CATEGORIES.find(l => l.name === formState.category)?.name ??
+                  'None'}
               </span>
             </>
           }
           icon="tabler:category"
           name="Category"
           namespace="modules.virtualWardrobe"
-          setValue={(value: string | null) => {
-            setCategory(value)
-            setSubCategory(null)
-          }}
+          setValue={handleChange('category')}
           type="listbox"
-          value={category}
+          value={formState.category}
         >
           <ListboxOrComboboxOption
             icon="tabler:apps-off"
@@ -133,33 +123,33 @@ function BasicInfoSection({
             />
           ))}
         </ListboxOrComboboxInput>
-        {category !== null && (
+        {formState.category !== null && (
           <ListboxOrComboboxInput
             required
             buttonContent={
               <>
                 <span className="-mt-px block truncate">
-                  {subCategory ?? 'None'}
+                  {formState.subcategory ?? 'None'}
                 </span>
               </>
             }
             icon="tabler:tag"
             name="Subcategory"
             namespace="modules.virtualWardrobe"
-            setValue={setSubCategory}
+            setValue={handleChange('subcategory')}
             type="listbox"
-            value={subCategory}
+            value={formState.subcategory}
           >
             <ListboxOrComboboxOption text="None" type="listbox" value={null} />
-            {VW_CATEGORIES.find(l => l.name === category)?.subcategories?.map(
-              (subCategory, i) => (
-                <ListboxOrComboboxOption
-                  key={i}
-                  text={subCategory}
-                  value={subCategory}
-                />
-              )
-            )}
+            {VW_CATEGORIES.find(
+              l => l.name === formState.category
+            )?.subcategories?.map((subCategory, i) => (
+              <ListboxOrComboboxOption
+                key={i}
+                text={subCategory}
+                value={subCategory}
+              />
+            ))}
           </ListboxOrComboboxInput>
         )}
         <TextInput
@@ -168,8 +158,8 @@ function BasicInfoSection({
           name="Brand"
           namespace="modules.virtualWardrobe"
           placeholder='e.g. "Nike"'
-          updateValue={setBrand}
-          value={brand}
+          setValue={handleChange('brand')}
+          value={formState.brand}
         />
       </div>
       <div className="mt-6 flex items-center justify-between">
@@ -187,7 +177,9 @@ function BasicInfoSection({
         <Button
           iconAtEnd
           className={!canGoBack ? 'w-full' : ''}
-          disabled={name === '' || category === null || subCategory === null}
+          disabled={(['name', 'category', 'subcategory'] as const).every(key =>
+            Boolean(formState[key])
+          )}
           icon="tabler:arrow-right"
           onClick={() => {
             setStep(step + 1)

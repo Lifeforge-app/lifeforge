@@ -102,7 +102,7 @@ function ModifyLedgersModal({
           name="Ledger name"
           namespace="modules.wallet"
           placeholder="My Ledgers"
-          updateValue={setLedgerName}
+          setValue={setLedgerName}
           value={ledgerName}
         />
         <IconInput
@@ -117,7 +117,7 @@ function ModifyLedgersModal({
           name="Ledger color"
           namespace="modules.wallet"
           setColorPickerOpen={setColorPickerOpen}
-          updateColor={setLedgerColor}
+          setColor={setLedgerColor}
         />
         <CreateOrModifyButton
           loading={isLoading}

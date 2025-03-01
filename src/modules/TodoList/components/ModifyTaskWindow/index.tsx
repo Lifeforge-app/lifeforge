@@ -187,7 +187,7 @@ function ModifyTaskWindow(): React.ReactElement {
               name="Summary"
               namespace="modules.todoList"
               placeholder="An urgent task"
-              updateValue={setSummary}
+              setValue={setSummary}
               value={summary}
             />
             <SubtaskBox

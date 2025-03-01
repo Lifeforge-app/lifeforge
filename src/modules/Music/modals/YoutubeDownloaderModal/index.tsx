@@ -128,7 +128,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
         name="Video URL"
         namespace="modules.music"
         placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-        updateValue={setVideoURLInput}
+        setValue={setVideoURLInput}
         value={videoURLinput}
       />
       {URL_REGEX.test(videoURL) && (

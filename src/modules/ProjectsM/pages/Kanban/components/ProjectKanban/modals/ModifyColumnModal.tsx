@@ -106,7 +106,7 @@ function ModifyColumnModal({
           name="Column name"
           namespace="modules.projectsM"
           placeholder="My Columns"
-          updateValue={setColumnName}
+          setValue={setColumnName}
           value={columnName}
         />
         <IconInput
@@ -121,7 +121,7 @@ function ModifyColumnModal({
           name="Column color"
           namespace="modules.projectsM"
           setColorPickerOpen={setColorPickerOpen}
-          updateColor={setColumnColor}
+          setColor={setColumnColor}
         />
         <CreateOrModifyButton
           loading={isLoading}

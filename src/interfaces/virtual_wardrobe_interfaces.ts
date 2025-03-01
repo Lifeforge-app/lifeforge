@@ -25,4 +25,19 @@ interface IVirtualWardrobeEntry extends BasePBCollection {
   back_image: string
 }
 
-export type { IVirtualWardrobeEntry, IVirtualWardrobeSidebarData }
+interface IVirtualWardrobeFormData {
+  name: string
+  category: string
+  subcategory: string
+  brand: string
+  size: string
+  colors: string[]
+  price: string
+  notes: string
+}
+
+export type {
+  IVirtualWardrobeEntry,
+  IVirtualWardrobeSidebarData,
+  IVirtualWardrobeFormData
+}

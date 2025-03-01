@@ -160,7 +160,7 @@ function PlaylistSection({
         name="Playlist URL"
         namespace="modules.youtubeVideos"
         placeholder="https://www.youtube.com/playlist?list=PL..."
-        updateValue={setPlaylistUrl}
+        setValue={setPlaylistUrl}
         value={playlistUrl}
       />
       <div className="mt-6">

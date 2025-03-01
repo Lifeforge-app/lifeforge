@@ -105,7 +105,7 @@ function ModifyFolderModal({
           name="Folder Name"
           namespace="modules.notes"
           placeholder="My lovely folder"
-          updateValue={setFolderName}
+          setValue={setFolderName}
           value={folderName}
           onKeyDown={e => {
             if (e.key === 'Enter') {
