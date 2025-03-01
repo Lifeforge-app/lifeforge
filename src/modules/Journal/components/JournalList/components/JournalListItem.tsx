@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
@@ -29,7 +30,10 @@ function JournalListItem({
 
   return (
     <button
-      className={`w-full rounded-lg p-6 text-left shadow-custom ${componentBgWithHover}`}
+      className={clsx(
+        'w-full rounded-lg p-6 text-left shadow-custom',
+        componentBgWithHover
+      )}
       onClick={() => {
         setCurrentViewingJournal(entry.id)
         setJournalViewModalOpen(true)
@@ -49,14 +53,20 @@ function JournalListItem({
         <div className="flex items-center gap-2">
           {entry.photos.length > 0 && (
             <span
-              className={`flex items-center gap-2 whitespace-nowrap rounded-full px-3 py-1 text-base font-medium text-bg-400 shadow-custom ${componentBgLighter}`}
+              className={clsx(
+                'flex items-center gap-2 whitespace-nowrap rounded-full px-3 py-1 text-base font-medium text-bg-400 shadow-custom',
+                componentBgLighter
+              )}
             >
               <Icon className="size-5" icon="tabler:photo" />
               {entry.photos.length} photos
             </span>
           )}
           <span
-            className={`block whitespace-nowrap rounded-full px-3 py-1 text-base font-medium shadow-custom ${componentBgLighter}`}
+            className={clsx(
+              'block whitespace-nowrap rounded-full px-3 py-1 text-base font-medium shadow-custom',
+              componentBgLighter
+            )}
           >
             {entry.mood.emoji} {entry.mood.text}
           </span>

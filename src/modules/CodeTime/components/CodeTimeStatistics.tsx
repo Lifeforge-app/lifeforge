@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
@@ -25,18 +26,25 @@ function CodeTimeStatistics(): React.ReactElement {
             {Object.entries(stats).map(([key, value], index) => (
               <div
                 key={key}
-                className={`flex-between flex w-full flex-col gap-2 rounded-lg p-3 shadow-custom sm:items-start sm:p-6 ${componentBg}`}
+                className={clsx(
+                  'flex-between flex w-full flex-col gap-2 rounded-lg p-3 shadow-custom sm:items-start sm:p-6',
+                  componentBg
+                )}
               >
                 <div className="flex w-full flex-row items-center gap-2 sm:flex-col sm:items-start">
                   <div
-                    className={`flex rounded-lg p-2 shadow-custom sm:p-4 ${componentBgLighter}`}
+                    className={clsx(
+                      'flex rounded-lg p-2 shadow-custom sm:p-4',
+                      componentBgLighter
+                    )}
                   >
                     <Icon
-                      className={`text-2xl sm:text-3xl ${
+                      className={clsx(
+                        'text-2xl sm:text-3xl',
                         index === 3
                           ? 'text-orange-300'
                           : 'text-bg-500 dark:text-bg-50'
-                      }`}
+                      )}
                       icon={
                         {
                           'Most time spent': 'tabler:coffee',

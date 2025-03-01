@@ -8,6 +8,7 @@ import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import CustomZoomContent from './components/CustomZoomContent'
 import EntryContextMenu from './components/EntryContextMenu'
 import TagChip from './components/TagChip'
+import clsx from 'clsx'
 
 function EntryImage({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
   const { componentBg } = useThemeColors()
@@ -31,9 +32,11 @@ function EntryImage({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
       ref={node => {
         dragRef(node)
       }}
-      className={`group relative my-4 flex cursor-pointer items-start justify-between gap-2 rounded-lg p-4 shadow-custom ${componentBg} ${
-        isDragging ? 'cursor-move' : ''
-      }`}
+      className={clsx(
+        'group relative my-4 flex cursor-pointer items-start justify-between gap-2 rounded-lg p-4 shadow-custom',
+        componentBg,
+        isDragging && 'cursor-move'
+      )}
       style={{
         opacity
       }}

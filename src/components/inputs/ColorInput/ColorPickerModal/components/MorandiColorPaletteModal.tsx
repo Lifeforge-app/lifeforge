@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import { sortFn } from 'color-sorter'
 import React from 'react'
 import ModalHeader from '@components/modals/ModalHeader'
@@ -28,11 +29,11 @@ function MorandiColorPaletteModal({
         {MORANDI_COLORS.sort(sortFn).map((morandiColor, index) => (
           <button
             key={index}
-            className={`flex-center aspect-square size-full cursor-pointer rounded-md shadow-custom ${
-              color === morandiColor
-                ? 'ring-2 ring-bg-900 ring-offset-2 ring-offset-bg-100 dark:ring-bg-50 dark:ring-offset-bg-900'
-                : ''
-            }`}
+            className={clsx(
+              'flex-center aspect-square size-full cursor-pointer rounded-md shadow-custom',
+              color === morandiColor &&
+                'ring-2 ring-bg-900 ring-offset-2 ring-offset-bg-100 dark:ring-bg-50 dark:ring-offset-bg-900'
+            )}
             style={{ backgroundColor: morandiColor }}
             onClick={() => {
               setColor(morandiColor)
@@ -41,9 +42,10 @@ function MorandiColorPaletteModal({
           >
             {color === morandiColor && (
               <Icon
-                className={`size-8 ${
+                className={clsx(
+                  'size-8',
                   isLightColor(morandiColor) ? 'text-bg-800' : 'text-bg-50'
-                }`}
+                )}
                 icon="tabler:check"
               />
             )}

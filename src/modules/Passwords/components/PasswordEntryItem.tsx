@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import copy from 'copy-to-clipboard'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -46,7 +47,10 @@ function PasswordEntryITem({
 
   return (
     <div
-      className={`relative flex flex-col items-center gap-4 rounded-md p-4 shadow-custom ${componentBg}`}
+      className={clsx(
+        'relative flex flex-col items-center gap-4 rounded-md p-4 shadow-custom',
+        componentBg
+      )}
     >
       {password.pinned && (
         <Icon
@@ -75,11 +79,12 @@ function PasswordEntryITem({
         </div>
         <div className="ml-8 flex shrink-0 items-center gap-2">
           <p
-            className={`mr-4 select-text ${
+            className={clsx(
+              'mr-4 select-text',
               decryptedPassword === null
                 ? 'hidden text-5xl tracking-tighter md:flex'
-                : 'hidden text-lg lg:flex '
-            }`}
+                : 'hidden text-lg lg:flex'
+            )}
             style={decryptedPassword === null ? { fontFamily: 'Arial' } : {}}
           >
             {decryptedPassword ?? (

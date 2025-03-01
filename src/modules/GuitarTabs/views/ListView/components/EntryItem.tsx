@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
@@ -23,7 +24,10 @@ function EntryItem({
   return (
     <li
       key={entry.id}
-      className={`relative rounded-lg shadow-custom transition-all ${componentBgWithHover}`}
+      className={clsx(
+        'relative rounded-lg shadow-custom transition-all',
+        componentBgWithHover
+      )}
     >
       <a
         key={entry.id}
@@ -68,7 +72,7 @@ function EntryItem({
             </div>
           </div>
         </div>
-        {entry.audio !== '' && (
+        {entry.audio && (
           <AudioPlayer
             url={`${import.meta.env.VITE_API_HOST}/media/${
               entry.collectionId

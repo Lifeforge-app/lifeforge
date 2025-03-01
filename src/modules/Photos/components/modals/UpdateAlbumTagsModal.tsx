@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { Button } from '@components/buttons'
 import ModalWrapper from '@components/modals/ModalWrapper'
@@ -86,11 +87,12 @@ function UpdateAlbumTagsModal({
             {albumTagList.map(tag => (
               <button
                 key={tag.id}
-                className={`rounded-full px-4 py-1 uppercase tracking-wider shadow-custom  transition-all ${
+                className={clsx(
+                  'rounded-full px-4 py-1 uppercase tracking-wider shadow-custom transition-all',
                   selectedTags.includes(tag.id)
                     ? 'bg-custom-500/20 text-custom-500 hover:bg-custom-500/40'
                     : 'bg-bg-800 text-bg-500 hover:bg-bg-700'
-                }`}
+                )}
                 onClick={() => {
                   setSelectedTags(prev => {
                     if (prev.includes(tag.id)) {

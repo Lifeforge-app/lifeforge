@@ -6,6 +6,7 @@ import {
   TransitionChild
 } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useState } from 'react'
 
 interface MenuProps {
@@ -67,13 +68,12 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
   return (
     <Menu as="div" className={className}>
       <MenuButton
-        className={`rounded-md transition-all ${getPaddingClass(
-          largerPadding,
-          smallerPadding
-        )} ${
+        className={clsx(
+          'rounded-md transition-all',
+          getPaddingClass(largerPadding, smallerPadding),
           (style.color === undefined && customTailwindColor) ??
-          getColorClass(lighter)
-        }`}
+            getColorClass(lighter)
+        )}
         style={style}
         onClick={e => {
           e.stopPropagation()
@@ -115,9 +115,10 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
           <MenuItems
             transition
             anchor="bottom end"
-            className={`mt-2 ${
-              customWidth ?? ''
-            } z-9991 overflow-hidden overscroll-contain rounded-md border border-bg-200 bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:border-bg-700 dark:bg-bg-800`}
+            className={clsx(
+              customWidth,
+              'mt-2 z-9991 overflow-hidden overscroll-contain rounded-md border border-bg-200 bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:border-bg-700 dark:bg-bg-800'
+            )}
           >
             {children}
           </MenuItems>

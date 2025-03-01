@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import useThemeColors from '@hooks/useThemeColor'
 import { camelCaseToTitleCase, formatBytes } from '@utils/strings'
@@ -14,7 +15,9 @@ function SectionCard({
   const { componentBg } = useThemeColors()
 
   return (
-    <div className={`space-y-4 rounded-lg p-6 shadow-custom ${componentBg}`}>
+    <div
+      className={clsx('space-y-4 rounded-lg p-6 shadow-custom', componentBg)}
+    >
       <h2 className="text-xl text-bg-500">
         {title === 'mem' ? 'Memory' : camelCaseToTitleCase(title)}
       </h2>
@@ -66,10 +69,10 @@ function SectionCard({
                   {camelCaseToTitleCase(k)}
                 </span>
                 <span className="w-1/2 break-all text-lg text-bg-500">
-                  {k.includes('byte')
-                    ? // @ts-expect-error - uhh lazy to fix for now =)
-                      formatBytes(v)
-                    : String(v) || 'N/A'}
+                  {(k.includes('byte') &&
+                    // @ts-expect-error - uhh lazy to fix for now =)
+                    formatBytes(v)) ||
+                    'N/A'}
                 </span>
               </li>
             ))}

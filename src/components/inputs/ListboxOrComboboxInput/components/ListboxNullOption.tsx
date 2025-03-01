@@ -1,5 +1,6 @@
 import { ListboxOption } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 
 function ListboxNullOption({
@@ -22,16 +23,19 @@ function ListboxNullOption({
       {({ selected }) => (
         <>
           <div
-            className={`flex items-center ${
-              hasBgColor ? 'gap-4' : 'gap-2'
-            } font-medium ${selected && 'text-bg-800 dark:text-bg-100'}`}
+            className={clsx(
+              'flex items-center font-medium',
+              hasBgColor ? 'gap-4' : 'gap-2',
+              selected && 'text-bg-800 dark:text-bg-100'
+            )}
           >
             <span
-              className={`rounded-md  ${
+              className={clsx(
+                'rounded-md',
                 hasBgColor
                   ? 'bg-bg-200 p-2 text-bg-500 dark:bg-bg-700/50'
                   : 'pr-2'
-              }`}
+              )}
             >
               <Icon className="size-5" icon={icon} />
             </span>

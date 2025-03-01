@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -79,11 +80,14 @@ function ModuleItem({
 
   return (
     <li
-      className={`flex flex-col items-center rounded-lg p-4 shadow-custom ${componentBg}`}
+      className={clsx(
+        'flex flex-col items-center rounded-lg p-4 shadow-custom',
+        componentBg
+      )}
     >
       <div className="flex-between flex w-full gap-4">
         <div className="flex items-center gap-4">
-          <div className={`rounded-lg p-3 ${componentBgLighter}`}>
+          <div className={clsx('rounded-lg p-3', componentBgLighter)}>
             <Icon
               className="text-2xl text-custom-500 dark:text-bg-50"
               icon={module.icon}
@@ -125,11 +129,12 @@ function ModuleItem({
       </div>
       <form
         autoComplete="off"
-        className={`flex w-full flex-col rounded-lg transition-all ${
+        className={clsx(
+          'flex w-full flex-col rounded-lg transition-all',
           expandConfig
             ? 'mt-4 max-h-96 overflow-y-auto py-4'
             : 'max-h-0 overflow-hidden py-0'
-        }`}
+        )}
       >
         <input hidden type="text" />
         <input hidden type="password" />

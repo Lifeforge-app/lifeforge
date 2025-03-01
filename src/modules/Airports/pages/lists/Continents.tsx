@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
+import clsx from 'clsx'
 import React, { useMemo, useState } from 'react'
 import { Link } from 'react-router'
 import { SearchInput } from '@components/inputs'
@@ -65,7 +66,10 @@ function Continents(): React.ReactElement {
                 {Object.entries(data).map(([id, amount]) => (
                   <Link
                     key={id}
-                    className={`flex-between flex w-full rounded-lg p-4 px-6 shadow-custom transition-all ${componentBgWithHover}`}
+                    className={clsx(
+                      'flex-between flex w-full rounded-lg p-4 px-6 shadow-custom transition-all',
+                      componentBgWithHover
+                    )}
                     to={`/airports/${id}`}
                   >
                     <div>

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import {
   SPICINESS_COLOR,
@@ -19,7 +20,10 @@ function SpicinessHeader({
         </div>
         <div className="flex items-center gap-2">
           <span
-            className={`size-2 rounded-full ${SPICINESS_COLOR[spiciness][1]}`}
+            className={clsx(
+              'size-2 rounded-full',
+              SPICINESS_COLOR[spiciness][1]
+            )}
           />
           <span>{SPICINESS_NAME[spiciness]}</span>
         </div>

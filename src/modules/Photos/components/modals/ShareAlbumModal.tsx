@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import copy from 'copy-to-clipboard'
 import React, { useState } from 'react'
 import { Button } from '@components/buttons'
@@ -71,19 +72,21 @@ function ShareAlbumModal({
         </div>
         <Switch
           checked={publicity}
-          className={`${
+          className={clsx(
+            'relative inline-flex h-6 w-11 items-center rounded-full',
             publicity ? 'bg-custom-500' : 'bg-bg-300 dark:bg-bg-700/50'
-          } relative inline-flex h-6 w-11 items-center rounded-full`}
+          )}
           onClick={() => {
             changePublicity().catch(console.error)
           }}
         >
           <span
-            className={`${
+            className={clsx(
+              'inline-block size-4 translate-y-[-0.5px] rounded-full transition',
               publicity
                 ? 'translate-x-6 bg-bg-100'
                 : 'translate-x-1 bg-bg-100 dark:bg-bg-500'
-            } inline-block size-4 translate-y-[-0.5px] rounded-full transition`}
+            )}
           />
         </Switch>
       </div>

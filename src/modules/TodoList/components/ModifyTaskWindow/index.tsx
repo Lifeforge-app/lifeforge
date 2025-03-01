@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -137,20 +138,23 @@ function ModifyTaskWindow(): React.ReactElement {
   return (
     <div
       ref={ref}
-      className={`fixed left-0 top-0 h-dvh w-full bg-bg-900/20 backdrop-blur-xs transition-all ${
+      className={clsx(
+        'fixed left-0 top-0 h-dvh w-full bg-bg-900/20 backdrop-blur-xs transition-all',
         innerOpenType !== null
           ? 'z-9990 opacity-100 [transition:z-index_0.1s_linear_0.1s,opacity_0.1s_linear_0.2s]'
           : 'z-0 opacity-0 [transition:z-index_0.1s_linear_0.2s,opacity_0.1s_linear_0.1s]'
-      }`}
+      )}
     >
       <button
         className="absolute left-0 top-0 size-full"
         onClick={closeWindow}
       />
       <div
-        className={`absolute right-0 flex flex-col transition-all duration-300 ${
-          innerOpenType !== null ? 'translate-x-0' : 'translate-x-full'
-        } top-0 size-full bg-bg-100 p-8 dark:bg-bg-900 sm:w-4/5 md:w-3/5 lg:w-2/5`}
+        className={clsx(
+          'absolute right-0 flex flex-col transition-all duration-300 top-0 size-full bg-bg-100 p-8 dark:bg-bg-900 sm:w-4/5 md:w-3/5 lg:w-2/5',
+          innerOpenType !== null && 'translate-x-0',
+          innerOpenType === null && 'translate-x-full'
+        )}
       >
         <Scrollbar>
           <div className="flex-between mb-8 flex ">

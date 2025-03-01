@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
 import { useDrag } from 'react-dnd'
@@ -31,9 +32,11 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
       ref={node => {
         dragRef(node)
       }}
-      className={`group relative my-4 flex flex-col items-start justify-between gap-2 rounded-lg p-4 shadow-custom ${componentBg} ${
-        isDragging ? 'cursor-move' : ''
-      }`}
+      className={clsx(
+        'group relative my-4 flex flex-col items-start justify-between gap-2 rounded-lg p-4 shadow-custom',
+        componentBg,
+        isDragging && 'cursor-move'
+      )}
       style={{
         opacity
       }}

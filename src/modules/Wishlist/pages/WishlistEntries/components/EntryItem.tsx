@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/no-useless-react-setstate */
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { Button, Checkbox } from '@components/buttons'
@@ -53,12 +54,18 @@ function EntryItem({
 
   return (
     <li
-      className={`${componentBg} relative flex flex-col justify-between gap-4 rounded-md p-4 sm:pr-8 md:flex-row md:items-center`}
+      className={clsx(
+        'relative flex flex-col justify-between gap-4 rounded-md p-4 sm:pr-8 md:flex-row md:items-center',
+        componentBg
+      )}
     >
       <div className="flex-between gap-8">
         <div className="flex w-full min-w-0 flex-col gap-4 sm:flex-row sm:items-center">
           <div
-            className={`${componentBgLighter} relative isolate aspect-square h-auto w-full shrink-0 overflow-hidden rounded-md sm:w-20`}
+            className={clsx(
+              'relative isolate aspect-square h-auto w-full shrink-0 overflow-hidden rounded-md sm:w-20',
+              componentBgLighter
+            )}
           >
             <Icon
               className="absolute left-1/2 top-1/2 z-[-1] size-8 -translate-x-1/2 -translate-y-1/2 text-bg-200 dark:text-bg-700"

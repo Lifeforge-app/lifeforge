@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import moment from 'moment'
 import React, { useMemo } from 'react'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
@@ -66,9 +67,10 @@ function Overview({
 
             return (
               <p
-                className={`p-3 text-lg font-medium ${
+                className={clsx(
+                  'p-3 text-lg font-medium',
                   netIncome < 0 && 'text-rose-600'
-                }`}
+                )}
                 style={{
                   borderTop: '2px solid',
                   borderBottom: '6px double'
@@ -192,10 +194,11 @@ function Overview({
                               {numberToMoney(thatMonthAmount)}
                             </td>
                             <td
-                              className={`whitespace-nowrap p-3 text-right text-lg ${
+                              className={clsx(
+                                'whitespace-nowrap p-3 text-right text-lg',
                                 thatMonthAmount - lastMonthAmount < 0 &&
-                                'text-rose-600'
-                              }`}
+                                  'text-rose-600'
+                              )}
                             >
                               {thatMonthAmount - lastMonthAmount < 0
                                 ? `(${numberToMoney(
@@ -206,10 +209,11 @@ function Overview({
                                   )}
                             </td>
                             <td
-                              className={`whitespace-nowrap p-3 text-right text-lg ${
+                              className={clsx(
+                                'whitespace-nowrap p-3 text-right text-lg',
                                 thatMonthAmount - lastMonthAmount < 0 &&
-                                'text-rose-600'
-                              }`}
+                                  'text-rose-600'
+                              )}
                             >
                               {+lastMonthAmount.toFixed(2) === 0
                                 ? '-'
@@ -294,10 +298,11 @@ function Overview({
                           {numberToMoney(thatMonthAmount)}
                         </td>
                         <td
-                          className={`whitespace-nowrap p-3 text-right text-lg font-medium ${
+                          className={clsx(
+                            'whitespace-nowrap p-3 text-right text-lg font-medium',
                             thatMonthAmount - lastMonthAmount < 0 &&
-                            'text-rose-600'
-                          }`}
+                              'text-rose-600'
+                          )}
                           style={{
                             borderTop: '2px solid',
                             borderBottom: '6px double'
@@ -310,10 +315,11 @@ function Overview({
                             : numberToMoney(thatMonthAmount - lastMonthAmount)}
                         </td>
                         <td
-                          className={`whitespace-nowrap p-3 text-right text-lg font-medium ${
+                          className={clsx(
+                            'whitespace-nowrap p-3 text-right text-lg font-medium',
                             thatMonthAmount - lastMonthAmount < 0 &&
-                            'text-rose-600'
-                          }`}
+                              'text-rose-600'
+                          )}
                           style={{
                             borderTop: '2px solid',
                             borderBottom: '6px double'
@@ -435,12 +441,13 @@ function Overview({
                                   {numberToMoney(thatMonthAmount)}
                                 </td>
                                 <td
-                                  className={`whitespace-nowrap p-3 text-right text-lg ${
+                                  className={clsx(
+                                    'whitespace-nowrap p-3 text-right text-lg',
                                     (type === 'income'
                                       ? thatMonthAmount - lastMonthAmount
                                       : lastMonthAmount - thatMonthAmount) <
                                       0 && 'text-rose-600'
-                                  }`}
+                                  )}
                                 >
                                   {thatMonthAmount - lastMonthAmount < 0
                                     ? `(${numberToMoney(
@@ -453,12 +460,13 @@ function Overview({
                                       )}
                                 </td>
                                 <td
-                                  className={`whitespace-nowrap p-3 text-right text-lg ${
+                                  className={clsx(
+                                    'whitespace-nowrap p-3 text-right text-lg',
                                     (type === 'income'
                                       ? thatMonthAmount - lastMonthAmount
                                       : lastMonthAmount - thatMonthAmount) <
                                       0 && 'text-rose-600'
-                                  }`}
+                                  )}
                                 >
                                   {lastMonthAmount === 0
                                     ? '-'
@@ -530,12 +538,13 @@ function Overview({
                               {numberToMoney(thatMonthAmount)}
                             </td>
                             <td
-                              className={`whitespace-nowrap p-3 text-right text-lg font-medium ${
+                              className={clsx(
+                                'whitespace-nowrap p-3 text-right text-lg font-medium',
                                 (type === 'income'
                                   ? thatMonthAmount - lastMonthAmount
                                   : lastMonthAmount - thatMonthAmount) < 0 &&
-                                'text-rose-600'
-                              }`}
+                                  'text-rose-600'
+                              )}
                               style={{
                                 borderTop: '2px solid',
                                 borderBottom: '6px double'
@@ -550,12 +559,13 @@ function Overview({
                                   )}
                             </td>
                             <td
-                              className={`whitespace-nowrap p-3 text-right text-lg font-medium ${
+                              className={clsx(
+                                'whitespace-nowrap p-3 text-right text-lg font-medium',
                                 (type === 'income'
                                   ? thatMonthAmount - lastMonthAmount
                                   : lastMonthAmount - thatMonthAmount) < 0 &&
-                                'text-rose-600'
-                              }`}
+                                  'text-rose-600'
+                              )}
                               style={{
                                 borderTop: '2px solid',
                                 borderBottom: '6px double'

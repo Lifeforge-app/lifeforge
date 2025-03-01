@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -173,11 +174,12 @@ function ModifyJournalEntryModal({
           (stepName, index) => (
             <li
               key={index}
-              className={`step ${
+              className={clsx(
+                'step before:font-medium',
                 step >= index + 1
                   ? 'step-primary before:bg-custom-500 after:bg-custom-500! after:text-bg-50 dark:after:text-bg-800'
                   : 'text-bg-500 before:bg-bg-200 after:bg-bg-200 dark:before:bg-bg-800 dark:after:bg-bg-800'
-              } before:font-medium`}
+              )}
             >
               {stepName}
             </li>

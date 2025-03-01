@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import moment from 'moment'
 import React, { useMemo } from 'react'
 import { useSearchParams } from 'react-router'
@@ -193,14 +194,17 @@ function MiniCalendarDateItem({
   return (
     <button
       key={index}
-      className={`relative h-10 ${getDayClassName({
-        index,
-        firstDay,
-        lastDate,
-        searchParams,
-        isFirstAndLastDay,
-        isBetweenFirstAndLastDay
-      })}`}
+      className={clsx(
+        'relative h-10',
+        getDayClassName({
+          index,
+          firstDay,
+          lastDate,
+          searchParams,
+          isFirstAndLastDay,
+          isBetweenFirstAndLastDay
+        })
+      )}
       onClick={() => {
         const target = `${date.getFullYear()}-${
           date.getMonth() + 1
@@ -245,7 +249,12 @@ function MiniCalendarDateItem({
       <span>{actualIndex}</span>
       {!(firstDay > index || index - firstDay + 1 > lastDate) &&
         transactionCount.total > 0 && (
-          <div className={getTransactionClassName(transactionCount.count)}>
+          <div
+            className={clsx(
+              'absolute left-1/2 top-1/2 z-[-1] flex size-10 -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-md',
+              getTransactionClassName(transactionCount.count)
+            )}
+          >
             {(
               [
                 ['income', 'bg-green-500'],
@@ -255,7 +264,7 @@ function MiniCalendarDateItem({
             ).map(([type, color]) => (
               <span
                 key={type}
-                className={`${color} w-full`}
+                className={clsx(color, 'w-full')}
                 style={{
                   height: `${Math.round(
                     (transactionCount[type] / transactionCount.total) * 100

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useRef } from 'react'
 import { useNavigate } from 'react-router'
 import { Button } from '@components/buttons'
@@ -20,9 +21,10 @@ export default function MusicPlayer(): React.ReactElement {
             <div className="relative flex h-full min-h-0 flex-1 flex-col">
               <div className="absolute left-1/2 top-1/2 flex aspect-square h-full flex-1 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-md bg-bg-100 shadow-custom dark:bg-bg-800">
                 <Icon
-                  className={`aspect-square h-full w-1/2 ${
+                  className={clsx(
+                    'aspect-square h-full w-1/2',
                     isPlaying ? 'animate-spin text-custom-500' : 'text-bg-500'
-                  }`}
+                  )}
                   icon="tabler:disc"
                 />
               </div>

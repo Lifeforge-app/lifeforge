@@ -1,5 +1,6 @@
 import { MenuItem as HeadlessMenuItem } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
@@ -46,11 +47,12 @@ function MenuItem({
       {function ({ active, close }) {
         return (
           <button
-            className={`${
+            className={clsx(
               !disabled && !loading
                 ? getActiveClass(active, isRed)
-                : 'text-bg-500'
-            } flex w-full items-center gap-4 p-4 text-left transition-all`}
+                : 'text-bg-500',
+              'flex w-full items-center gap-4 p-4 text-left transition-all'
+            )}
             disabled={disabled || loading}
             onClick={e => {
               if (preventDefault) {
@@ -63,18 +65,19 @@ function MenuItem({
             {loading ? (
               <Icon className="size-5 shrink-0" icon="svg-spinners:180-ring" />
             ) : (
-              icon !== undefined && (
-                <Icon className="size-5 shrink-0" icon={icon} />
-              )
+              icon && <Icon className="size-5 shrink-0" icon={icon} />
             )}
             <span className="w-full truncate whitespace-nowrap">
               {namespace !== false
                 ? t([toCamelCase(text), `buttons.${toCamelCase(text)}`])
                 : text}
             </span>
-            {isToggled === true && (
+            {isToggled && (
               <Icon
-                className={`${getToggleIconClass(isRed)} ml-4 size-5 shrink-0`}
+                className={clsx(
+                  getToggleIconClass(isRed),
+                  'ml-4 size-5 shrink-0'
+                )}
                 icon="tabler:check"
               />
             )}

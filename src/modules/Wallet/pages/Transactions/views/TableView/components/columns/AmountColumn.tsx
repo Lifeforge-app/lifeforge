@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import { numberToMoney } from '@utils/strings'
 
@@ -11,12 +12,10 @@ function AmountColumn({
   return (
     <td className="p-2 text-center">
       <span
-        className={`${
-          {
-            debit: 'text-green-500',
-            credit: 'text-red-500'
-          }[side]
-        }`}
+        className={clsx({
+          'text-green-500': side === 'debit',
+          'text-red-500': side === 'credit'
+        })}
       >
         {side === 'debit' ? '+' : '-'}
         {numberToMoney(amount)}

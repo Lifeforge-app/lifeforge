@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React, { useRef } from 'react'
 
 function InputBox({
@@ -56,7 +57,10 @@ function InputBox({
           innerRef.current = ref
         }}
         autoComplete={noAutoComplete ? 'false' : 'true'}
-        className={`mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider caret-custom-500 placeholder:text-transparent focus:outline-hidden focus:placeholder:text-bg-500 ${className}`}
+        className={clsx(
+          'mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wider caret-custom-500 placeholder:text-transparent focus:outline-hidden focus:placeholder:text-bg-500',
+          className
+        )}
         disabled={disabled}
         inputMode={inputMode}
         placeholder={placeholder}

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
 import { Tooltip } from 'react-tooltip'
@@ -105,13 +106,14 @@ function TransactionListItem({
             <Icon className="size-1" icon="tabler:circle-filled" />
             <div className="flex items-center gap-1">
               <Icon
-                className={`size-4 ${
+                className={clsx(
+                  'size-4',
                   {
                     income: 'text-green-500',
                     expenses: 'text-red-500',
                     transfer: 'text-blue-500'
                   }[transaction.type as 'income' | 'expenses' | 'transfer']
-                }`}
+                )}
                 icon={
                   {
                     income: 'tabler:login-2',
@@ -152,12 +154,10 @@ function TransactionListItem({
       </div>
       <div className="flex items-center gap-2 text-lg font-medium">
         <span
-          className={`${
-            {
-              debit: 'text-green-500',
-              credit: 'text-red-500'
-            }[transaction.side]
-          }`}
+          className={clsx('text-lg font-medium', {
+            'text-green-500': transaction.side === 'debit',
+            'text-red-500': transaction.side === 'credit'
+          })}
         >
           {transaction.side === 'debit' ? '+' : '-'}
           {numberToMoney(transaction.amount)}

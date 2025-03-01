@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { SearchInput } from '@components/inputs'
@@ -79,7 +80,10 @@ function Countries(): React.ReactElement {
                   .map(([key, [name, amount]]) => (
                     <Link
                       key={name}
-                      className={`flex-between flex w-full rounded-lg p-4 px-6 shadow-custom transition-all ${componentBgWithHover}`}
+                      className={clsx(
+                        'flex-between flex w-full rounded-lg p-4 px-6 shadow-custom transition-all',
+                        componentBgWithHover
+                      )}
                       to={`/airports/${continentID}/${key}`}
                     >
                       <div className="flex items-center gap-4">

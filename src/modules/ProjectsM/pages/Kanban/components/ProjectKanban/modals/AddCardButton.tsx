@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useState } from 'react'
 import { Button } from '@components/buttons'
 import useThemeColors from '@hooks/useThemeColor'
@@ -12,7 +13,10 @@ function AddCardButton(): React.ReactElement {
       {isFocused ? (
         <div className="mb-4 w-full space-y-2">
           <input
-            className={`${componentBgLighter} w-full rounded-md p-4 placeholder:text-bg-500`}
+            className={clsx(
+              'w-full rounded-md p-4 placeholder:text-bg-500',
+              componentBgLighter
+            )}
             placeholder="Enter a title or paste a link"
           />
           <Button

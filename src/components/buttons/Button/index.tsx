@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
@@ -37,7 +38,7 @@ const defaultProps = {
 
 const renderIcon = (icon: string, loading: boolean, iconClassName?: string) => (
   <Icon
-    className={`shrink-0 text-xl ${iconClassName}`}
+    className={clsx('shrink-0 text-xl', iconClassName)}
     icon={loading ? 'svg-spinners:180-ring' : icon}
   />
 )

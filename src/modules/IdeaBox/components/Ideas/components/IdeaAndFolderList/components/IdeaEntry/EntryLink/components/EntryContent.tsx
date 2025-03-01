@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React, { memo } from 'react'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
@@ -16,7 +17,10 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
 
   return typeof data !== 'string' ? (
     <button
-      className={`w-full text-left cursor-pointer space-y-2 rounded-md p-2 ${componentBgLighterWithHover}`}
+      className={clsx(
+        'w-full text-left cursor-pointer space-y-2 rounded-md p-2',
+        componentBgLighterWithHover
+      )}
       onClick={() => {
         const a = document.createElement('a')
         a.href = entry.content

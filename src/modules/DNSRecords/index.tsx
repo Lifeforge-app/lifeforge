@@ -5,6 +5,7 @@ import {
   ListboxOptions
 } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { type JSX, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
@@ -261,18 +262,20 @@ function DNSRecords(): JSX.Element {
                   <tr className="border-b-2 border-bg-200 dark:border-bg-800">
                     <th className="pl-4 pr-0">
                       <div
-                        className={`${
-                          isSelecting ? 'w-6' : 'w-0'
-                        } flex items-center justify-center overflow-hidden transition-all`}
+                        className={clsx(
+                          'flex items-center justify-center overflow-hidden transition-all',
+                          isSelecting && 'w-6'
+                        )}
                       >
                         <button
-                          className={`size-5 rounded-full border-[1.5px] ${
+                          className={clsx(
+                            'size-5 rounded-full border-[1.5px]',
                             records.every(record =>
                               selectedEntries.includes(record.line_index)
                             )
                               ? 'border-custom-500'
                               : 'border-bg-300 dark:border-bg-700'
-                          }`}
+                          )}
                           onClick={() => {
                             toggleSelected('all')
                           }}
@@ -296,11 +299,12 @@ function DNSRecords(): JSX.Element {
                       >
                         {header}
                         <IconButton
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 !p-2 hover:bg-bg-800/50 ${
+                          className={clsx(
+                            'absolute right-4 top-1/2 -translate-y-1/2 !p-2 hover:bg-bg-800/50',
                             sortBy === header
                               ? 'text-bg-800 dark:text-bg-50'
                               : 'text-bg-500'
-                          }`}
+                          )}
                           icon="tabler:transfer-vertical"
                           onClick={() => {
                             setSortBy(header)
@@ -318,11 +322,10 @@ function DNSRecords(): JSX.Element {
                   {records.map(record => (
                     <tr
                       key={record.line_index}
-                      className={`${
-                        isSelecting
-                          ? 'cursor-pointer hover:bg-bg-200 dark:hover:bg-bg-900/50'
-                          : ''
-                      }`}
+                      className={clsx(
+                        isSelecting &&
+                          'cursor-pointer hover:bg-bg-200 dark:hover:bg-bg-900/50'
+                      )}
                       onClick={() => {
                         if (!isSelecting) return
                         toggleSelected(record.line_index)
@@ -330,16 +333,18 @@ function DNSRecords(): JSX.Element {
                     >
                       <td className="pl-4 pr-0">
                         <div
-                          className={`${
+                          className={clsx(
+                            'flex items-center justify-center overflow-hidden transition-all',
                             isSelecting ? 'w-6' : 'w-0'
-                          } flex items-center justify-center overflow-hidden transition-all`}
+                          )}
                         >
                           <button
-                            className={`size-5 rounded-full border-[1.5px] ${
+                            className={clsx(
+                              'size-5 rounded-full border-[1.5px]',
                               selectedEntries.includes(record.line_index)
                                 ? 'border-custom-500'
                                 : 'border-bg-300 dark:border-bg-700'
-                            }`}
+                            )}
                             onClick={() => {
                               toggleSelected(record.line_index)
                             }}
@@ -359,16 +364,16 @@ function DNSRecords(): JSX.Element {
                             record.dname_b64 +
                             (!record.dname_b64!.endsWith('.')
                               ? '.' +
-                                ((rawRecords[1] as IDNSRecordEntry).text_b64
+                                (rawRecords[1] as IDNSRecordEntry).text_b64
                                   ?.split(' ')
-                                  .pop() ?? '')
+                                  .pop()
                               : '')
 
                           return (
                             <a
-                              className={
-                                isSelecting ? 'pointer-events-none' : ''
-                              }
+                              className={clsx(
+                                isSelecting && 'pointer-events-none'
+                              )}
                               href={`http://${link}`}
                               rel="noreferrer"
                               target="_blank"

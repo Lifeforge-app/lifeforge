@@ -7,6 +7,7 @@ import {
   type IPhotosEntry
 } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '../../../providers/PhotosProvider'
+import clsx from 'clsx'
 
 const LLI = LazyLoadImage as any
 
@@ -38,9 +39,11 @@ function ImageObject({
 
   return (
     <div
-      className={`group/image relative size-full min-w-20 overflow-hidden ${
-        selected ? 'bg-custom-500/20' : componentBg
-      } transition-all ${selectedPhotosLength > 0 ? 'cursor-pointer' : ''}`}
+      className={clsx(
+        'group/image relative size-full min-w-20 overflow-hidden transition-all',
+        selected ? 'bg-custom-500/20' : componentBg,
+        selectedPhotosLength > 0 && 'cursor-pointer'
+      )}
       role="button"
       style={style}
       tabIndex={0}
@@ -62,14 +65,17 @@ function ImageObject({
         photo.src.endsWith('/undefined?thumb=0x300') === false && (
           <>
             <div
-              className={`size-full transition-all duration-300 ${
-                selected ? 'p-4' : ''
-              } ${selectedPhotosLength > 0 ? 'pointer-events-none' : ''}`}
+              className={clsx(
+                'size-full transition-all duration-300',
+                selected && 'p-4',
+                selectedPhotosLength > 0 && 'pointer-events-none'
+              )}
             >
               <button
-                className={`relative size-full object-cover ${
-                  selected ? 'rounded-md' : ''
-                }`}
+                className={clsx(
+                  'relative size-full object-cover',
+                  selected && 'rounded-md'
+                )}
                 onClick={() => {
                   setImagePreviewOpenFor(details)
                 }}
@@ -89,18 +95,20 @@ function ImageObject({
               <div className="pointer-events-none absolute top-0 h-12 w-full bg-linear-to-t from-transparent to-black/50 opacity-0 transition-all group-hover/image:opacity-100" />
             )}
             <button
-              className={`group/select-button flex-center absolute left-2.5 top-2.5 size-6 rounded-full transition-all  ${
+              className={clsx(
+                'group/select-button flex-center absolute left-2.5 top-2.5 size-6 rounded-full transition-all',
                 selected
                   ? 'flex bg-custom-500 opacity-100'
                   : 'hidden bg-bg-200 opacity-50 hover:bg-bg-100! hover:opacity-100! group-hover/image:flex'
-              }`}
+              )}
               onClick={toggleSelected}
             >
               <Icon
-                className={`stroke-bg-900 stroke-[2px] text-bg-800 transition-all ${
+                className={clsx(
+                  'stroke-bg-900 stroke-[2px] text-bg-800 transition-all',
                   !selected &&
-                  'group-hover/select-button:stroke-bg-900 group-hover/select-button:text-bg-800'
-                }`}
+                    'group-hover/select-button:stroke-bg-900 group-hover/select-button:text-bg-800'
+                )}
                 icon="tabler:check"
               />
             </button>

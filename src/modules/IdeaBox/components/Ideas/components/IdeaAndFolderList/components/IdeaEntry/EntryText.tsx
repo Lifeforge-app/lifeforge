@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { useDrag } from 'react-dnd'
@@ -30,9 +31,11 @@ function EntryText({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
       ref={node => {
         dragRef(node)
       }}
-      className={`group relative my-4 flex w-full cursor-pointer items-start justify-between gap-2 rounded-lg p-4 text-left shadow-custom ${componentBg} ${
-        isDragging ? 'cursor-move' : ''
-      }`}
+      className={clsx(
+        'group relative my-4 flex w-full cursor-pointer items-start justify-between gap-2 rounded-lg p-4 text-left shadow-custom',
+        componentBg,
+        isDragging && 'cursor-move'
+      )}
       style={{
         opacity
       }}
@@ -55,9 +58,10 @@ function EntryText({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
           </div>
         )}
         <p
-          className={`${
+          className={clsx(
+            '!select-text whitespace-pre-wrap',
             !expanded && 'line-clamp-6'
-          } !select-text whitespace-pre-wrap`}
+          )}
         >
           {entry.content}
         </p>

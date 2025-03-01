@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { Link } from 'react-router'
 import useThemeColors from '@hooks/useThemeColor'
@@ -16,7 +17,10 @@ function AssetColumn({
   return (
     <td className="p-2 text-center">
       <Link
-        className={`inline-flex w-min items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm text-bg-500 dark:text-bg-400 ${componentBgLighter}`}
+        className={clsx(
+          'inline-flex w-min items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm text-bg-500 dark:text-bg-400!',
+          componentBgLighter
+        )}
         to={`/wallet/transactions?asset=${asset}`}
       >
         <Icon

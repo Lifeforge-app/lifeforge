@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -49,11 +50,12 @@ function TransactionsCard(): React.ReactElement {
                             ].map(header => (
                               <th
                                 key={header}
-                                className={`py-2 font-medium ${
+                                className={clsx(
+                                  'py-2 font-medium',
                                   header === 'particulars'
                                     ? 'text-left'
                                     : 'text-center'
-                                }`}
+                                )}
                               >
                                 {t(`table.${header}`)}
                               </th>
@@ -72,14 +74,17 @@ function TransactionsCard(): React.ReactElement {
                                 </td>
                                 <td className="py-4 text-center">
                                   <Link
-                                    className={`rounded-full px-3 py-1 text-sm ${
+                                    className={clsx(
+                                      'rounded-full px-3 py-1 text-sm',
                                       {
-                                        income:
-                                          'bg-green-500/20 text-green-500',
-                                        expenses: 'bg-red-500/20 text-red-500',
-                                        transfer: 'bg-blue-500/20 text-blue-500'
-                                      }[transaction.type]
-                                    }`}
+                                        'bg-green-500/20 text-green-500':
+                                          transaction.type === 'income',
+                                        'bg-red-500/20 text-red-500':
+                                          transaction.type === 'expenses',
+                                        'bg-blue-500/20 text-blue-500':
+                                          transaction.type === 'transfer'
+                                      }
+                                    )}
                                     to={`/wallet/transactions?type=${transaction.type}`}
                                   >
                                     {transaction.type[0].toUpperCase() +
@@ -128,11 +133,11 @@ function TransactionsCard(): React.ReactElement {
                                 </td>
                                 <td className="py-2 text-center">
                                   <span
-                                    className={`${
+                                    className={clsx(
                                       transaction.side === 'debit'
                                         ? 'text-green-500'
                                         : 'text-red-500'
-                                    }`}
+                                    )}
                                   >
                                     {transaction.side === 'debit' ? '+' : '-'}
                                     {numberToMoney(transaction.amount)}
@@ -151,24 +156,25 @@ function TransactionsCard(): React.ReactElement {
                           >
                             <div className="flex w-full min-w-0 items-center gap-4">
                               <div
-                                className={`rounded-md p-2 ${
+                                className={clsx(
+                                  'rounded-md p-2',
                                   transaction.type === 'transfer' &&
-                                  'bg-blue-500/20 text-blue-500'
-                                }`}
-                                style={{
-                                  backgroundColor:
-                                    categories.find(
+                                    'bg-blue-500/20 text-blue-500',
+                                  {
+                                    backgroundColor:
+                                      categories.find(
+                                        category =>
+                                          category.id === transaction.category
+                                      )?.color + '20',
+                                    color: categories.find(
                                       category =>
                                         category.id === transaction.category
-                                    )?.color + '20',
-                                  color: categories.find(
-                                    category =>
-                                      category.id === transaction.category
-                                  )?.color
-                                }}
+                                    )?.color
+                                  }
+                                )}
                               >
                                 <Icon
-                                  className={'size-6'}
+                                  className="size-6"
                                   icon={
                                     transaction.type === 'transfer'
                                       ? 'tabler:transfer'
@@ -192,11 +198,11 @@ function TransactionsCard(): React.ReactElement {
                             <div className="flex flex-col">
                               <div className="text-right">
                                 <span
-                                  className={`${
+                                  className={clsx(
                                     transaction.side === 'debit'
                                       ? 'text-green-500'
                                       : 'text-red-500'
-                                  }`}
+                                  )}
                                 >
                                   {transaction.side === 'debit' ? '+' : '-'}
                                   {numberToMoney(transaction.amount)}

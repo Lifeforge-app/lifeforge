@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps'
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router'
-import { useSearchParams } from 'react-router'
+import { useNavigate, useParams, useSearchParams } from 'react-router'
 import { Button, GoBackButton } from '@components/buttons'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
@@ -158,7 +158,10 @@ function Airport(): React.ReactElement {
                   </div>
                 </div>
                 <div
-                  className={`sticky top-0 z-10 mt-6 flex items-center rounded-md ${componentBg}`}
+                  className={clsx(
+                    'sticky top-0 z-10 mt-6 flex items-center rounded-md',
+                    componentBg
+                  )}
                 >
                   {[
                     ...(airportData.data.has_airline_service
@@ -171,11 +174,12 @@ function Airport(): React.ReactElement {
                   ].map(([name, icon], index) => (
                     <button
                       key={index}
-                      className={`flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all ${
+                      className={clsx(
+                        'flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all',
                         section === name.toLowerCase()
                           ? 'border-custom-500 font-medium text-custom-500'
                           : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
-                      }`}
+                      )}
                       onClick={() => {
                         setSearchParams({ section: name.toLowerCase() })
                       }}

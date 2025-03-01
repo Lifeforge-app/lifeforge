@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
 
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@components/buttons'
@@ -101,11 +102,12 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                         className="relative flex items-center gap-6 font-medium text-bg-500 transition-all"
                       >
                         <button
-                          className={`flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all ${
+                          className={clsx(
+                            'flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all',
                             selectedAlbum === album.id
                               ? 'bg-bg-300 dark:bg-bg-800'
                               : 'hover:bg-bg-200 dark:hover:bg-bg-800/50'
-                          }`}
+                          )}
                           onClick={() => {
                             selectAlbum(album.id)
                           }}

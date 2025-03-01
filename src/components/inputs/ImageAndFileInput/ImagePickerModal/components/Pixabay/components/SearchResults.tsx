@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import PhotoAlbum from 'react-photo-album'
 import Pagination from '@components/utilities/Pagination'
@@ -44,11 +45,12 @@ function SearchResults({
           }))}
           renderPhoto={({ photo, imageProps: { src, alt, style } }) => (
             <button
-              className={`relative isolate block overflow-hidden rounded-md bg-bg-200 outline outline-2 transition-all dark:bg-bg-800/50 ${
+              className={clsx(
+                'relative isolate block overflow-hidden rounded-md bg-bg-200 outline outline-2 transition-all dark:bg-bg-800/50',
                 photo.fullResURL === file
                   ? 'outline-custom-500'
                   : 'outline-transparent hover:outline-bg-500'
-              }`}
+              )}
               style={style}
               onClick={() => {
                 setFile(photo.fullResURL)

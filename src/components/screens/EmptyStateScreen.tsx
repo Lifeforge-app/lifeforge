@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import Button from '../buttons/Button'
@@ -34,31 +35,35 @@ function EmptyStateScreen({
 
   return (
     <div
-      className={`flex-center size-full flex-col ${
+      className={clsx(
+        'flex-center size-full flex-col',
         smaller ? 'gap-4' : 'gap-6'
-      }`}
+      )}
     >
       {icon !== undefined && (
         <Icon
-          className={`${
+          className={clsx(
+            'shrink-0 text-bg-300 dark:text-bg-500',
             smaller ? 'size-24' : 'size-32'
-          } shrink-0 text-bg-300 dark:text-bg-500`}
+          )}
           icon={icon}
         />
       )}
       <h2
-        className={`text-center px-6 ${
+        className={clsx(
+          'text-center px-6 font-semibold text-bg-500',
           smaller ? 'text-3xl' : 'text-4xl'
-        } font-semibold text-bg-500`}
+        )}
       >
         {name
           ? t([tKey, 'empty', name, 'title'].filter(e => e).join('.'))
           : title}
       </h2>
       <p
-        className={`-mt-2 px-6 text-center text-bg-500  ${
+        className={clsx(
+          '-mt-2 px-6 text-center text-bg-500',
           smaller ? 'text-base' : 'text-lg'
-        }`}
+        )}
       >
         {name
           ? t([tKey, 'empty', name, 'description'].filter(e => e).join('.'))

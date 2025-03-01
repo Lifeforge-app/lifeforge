@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
@@ -32,11 +33,17 @@ function Notes(): React.ReactElement {
               {data.map(workspace => (
                 <Link
                   key={workspace.id}
-                  className={`group flex size-full flex-col items-center rounded-lg p-16 shadow-custom ${componentBgWithHover}`}
+                  className={clsx(
+                    'group flex size-full flex-col items-center rounded-lg p-16 shadow-custom',
+                    componentBgWithHover
+                  )}
                   to={`/notes/${workspace.id}`}
                 >
                   <Icon
-                    className="size-20 shrink-0 transition-all group-hover:text-custom-500"
+                    className={clsx(
+                      'size-20 shrink-0 transition-all',
+                      'group-hover:text-custom-500'
+                    )}
                     icon={workspace.icon}
                   />
                   <h2 className="mt-6 text-center text-2xl font-medium uppercase tracking-widest">

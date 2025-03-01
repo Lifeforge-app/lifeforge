@@ -70,7 +70,7 @@ function TagsInput({
 
   return (
     <InputWrapper
-      className={`${className}`}
+      className={className}
       darker={darker}
       disabled={disabled}
       inputRef={inputRef}

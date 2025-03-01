@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useMemo, useState } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
@@ -77,9 +78,10 @@ function ExpensesBreakdownCard(): React.ReactElement {
                 <div className="relative mx-auto flex aspect-square w-4/5 min-w-0 flex-col gap-4">
                   <div className="absolute left-1/2 top-1/2 mt-2 flex size-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center">
                     <div
-                      className={`flex text-3xl font-medium sm:text-4xl ${
+                      className={clsx(
+                        'flex text-3xl font-medium sm:text-4xl',
                         isAmountHidden ? 'items-center' : 'items-end'
-                      }`}
+                      )}
                     >
                       <span className="mr-1 text-xl text-bg-500">RM</span>
                       {typeof incomeExpenses !== 'string' &&
@@ -182,9 +184,10 @@ function ExpensesBreakdownCard(): React.ReactElement {
                             </div>
                             <div className="flex flex-col">
                               <div
-                                className={`flex gap-2 text-right font-medium ${
+                                className={clsx(
+                                  'flex gap-2 text-right font-medium',
                                   isAmountHidden ? 'items-center' : 'items-end'
-                                }`}
+                                )}
                               >
                                 - RM{' '}
                                 {isAmountHidden ? (

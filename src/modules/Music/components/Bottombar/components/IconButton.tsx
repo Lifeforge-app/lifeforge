@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 
 export default function IconButton({
@@ -13,7 +14,7 @@ export default function IconButton({
   children?: React.ReactNode
 }): React.ReactElement {
   return (
-    <button className={`rounded-lg p-4 ${className}`} onClick={onClick}>
+    <button className={clsx('rounded-lg p-4', className)} onClick={onClick}>
       <Icon className="text-xl" icon={icon} />
       {children}
     </button>

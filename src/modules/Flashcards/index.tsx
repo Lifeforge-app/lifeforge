@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useState } from 'react'
 import { Link } from 'react-router'
 import { Button } from '@components/buttons'
@@ -56,11 +57,14 @@ export default function Flashcards(): React.ReactElement {
                   {decks.map(deck => (
                     <Link
                       key={deck.id}
-                      className={`group relative flex flex-col justify-start gap-6 rounded-lg p-8 shadow-custom ${componentBgWithHover}`}
+                      className={clsx(
+                        'group relative flex flex-col justify-start gap-6 rounded-lg p-8 shadow-custom',
+                        componentBgWithHover
+                      )}
                       to={`/flashcards/${deck.id}`}
                     >
                       <div className="space-y-2">
-                        {deck.tag !== '' && (
+                        {deck.tag && (
                           <span
                             className="relative isolate mb-1 w-min whitespace-nowrap rounded-full px-3 py-0.5 text-sm"
                             style={{

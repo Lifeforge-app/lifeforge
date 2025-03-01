@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import useThemeColors from '@hooks/useThemeColor'
@@ -27,7 +28,11 @@ function DashboardItem({
   return (
     <div
       ref={ref}
-      className={`${className} flex size-full flex-col gap-4 rounded-lg p-6 shadow-custom ${componentBg}`}
+      className={clsx(
+        'flex size-full flex-col gap-4 rounded-lg p-6 shadow-custom',
+        componentBg,
+        className
+      )}
     >
       <div className="flex-between mb-2 flex">
         <h2 className="flex items-center gap-2 text-xl font-semibold">
