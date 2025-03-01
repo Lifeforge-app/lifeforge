@@ -89,7 +89,7 @@ function LockedScreen({
         namespace="common.vault"
         placeholder={'••••••••••••••••'}
         tKey="vault"
-        updateValue={setMasterPassWordInputContent}
+        setValue={setMasterPassWordInputContent}
         value={masterPassWordInputContent}
         onKeyDown={e => {
           if (e.key === 'Enter') {

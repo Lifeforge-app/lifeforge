@@ -104,7 +104,7 @@ function ModifyAssetsModal({
           name="Asset name"
           namespace="modules.wallet"
           placeholder="My assets"
-          updateValue={setAssetName}
+          setValue={setAssetName}
           value={assetName}
         />
         <IconInput
@@ -121,7 +121,7 @@ function ModifyAssetsModal({
           name="Initial Balance"
           namespace="modules.wallet"
           placeholder="0.00"
-          updateValue={updateAssetBalance}
+          setValue={updateAssetBalance}
           value={`${assetStartingBalance}`}
         />
         <CreateOrModifyButton

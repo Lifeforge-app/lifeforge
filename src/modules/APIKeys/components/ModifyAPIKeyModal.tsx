@@ -127,7 +127,7 @@ function ModifyAPIKeyModal({
           name="Key ID"
           namespace="modules.apiKeys"
           placeholder="IdOfTheAPIKey"
-          updateValue={setId}
+          setValue={setId}
           value={id}
         />
         <TextInput
@@ -137,7 +137,7 @@ function ModifyAPIKeyModal({
           name="Key Name"
           namespace="modules.apiKeys"
           placeholder="My API Key"
-          updateValue={setName}
+          setValue={setName}
           value={name}
         />
         <TextInput
@@ -147,7 +147,7 @@ function ModifyAPIKeyModal({
           name="Key Description"
           namespace="modules.apiKeys"
           placeholder="A short description of this key"
-          updateValue={setDescription}
+          setValue={setDescription}
           value={description}
         />
         <IconInput
@@ -165,7 +165,7 @@ function ModifyAPIKeyModal({
           name="API Key"
           namespace="modules.apiKeys"
           placeholder="••••••••••••••••"
-          updateValue={setKey}
+          setValue={setKey}
           value={key}
         />
         <CreateOrModifyButton

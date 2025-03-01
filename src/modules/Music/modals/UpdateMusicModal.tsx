@@ -93,7 +93,7 @@ function ModifyMusicModal(): React.ReactElement {
         name="Music name"
         namespace="modules.music"
         placeholder="My lovely music"
-        updateValue={setMusicName}
+        setValue={setMusicName}
         value={musicName}
         onKeyDown={e => {
           if (e.key === 'Enter') {
@@ -108,7 +108,7 @@ function ModifyMusicModal(): React.ReactElement {
         name="Author"
         namespace="modules.music"
         placeholder="John Doe"
-        updateValue={setMusicAuthor}
+        setValue={setMusicAuthor}
         value={musicAuthor}
         onKeyDown={e => {
           if (e.key === 'Enter') {

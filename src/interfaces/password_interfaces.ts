@@ -11,4 +11,13 @@ interface IPasswordEntry extends BasePBCollection {
   pinned: boolean
 }
 
-export type { IPasswordEntry }
+interface IPasswordFormData {
+  name: string
+  icon: string
+  color: string
+  website: string
+  username: string
+  password: string
+}
+
+export type { IPasswordEntry, IPasswordFormData }

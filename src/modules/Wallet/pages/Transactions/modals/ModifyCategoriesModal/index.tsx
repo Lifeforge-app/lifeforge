@@ -165,7 +165,7 @@ function ModifyCategoriesModal({
           name="Category name"
           namespace="modules.wallet"
           placeholder="My Categories"
-          updateValue={setCategoryName}
+          setValue={setCategoryName}
           value={categoryName}
         />
         <IconInput
@@ -180,7 +180,7 @@ function ModifyCategoriesModal({
           name="Category color"
           namespace="modules.wallet"
           setColorPickerOpen={setColorPickerOpen}
-          updateColor={setCategoryColor}
+          setColor={setCategoryColor}
         />
         <CreateOrModifyButton
           loading={isLoading}

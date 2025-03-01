@@ -8,7 +8,7 @@ import InputWrapper from '../shared/InputWrapper'
 function ColorInput({
   name,
   color,
-  updateColor,
+  setColor: updateColor,
   setColorPickerOpen,
   hasTopMargin = true,
   className,
@@ -16,7 +16,7 @@ function ColorInput({
 }: {
   name: string
   color: string
-  updateColor: (value: string) => void
+  setColor: (value: string) => void
   setColorPickerOpen: React.Dispatch<React.SetStateAction<boolean>>
   hasTopMargin?: boolean
   className?: string

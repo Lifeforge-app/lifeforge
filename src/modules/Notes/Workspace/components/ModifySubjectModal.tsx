@@ -110,7 +110,7 @@ function ModifySubjectModal({
           name="Subject name"
           namespace="modules.notes"
           placeholder="My Subject"
-          updateValue={setSubjectName}
+          setValue={setSubjectName}
           value={subjectName}
         />
         <TextInput
@@ -120,7 +120,7 @@ function ModifySubjectModal({
           name="Subject description"
           namespace="modules.notes"
           placeholder="The best subject in the world"
-          updateValue={setSubjectDescription}
+          setValue={setSubjectDescription}
           value={subjectDescription}
         />
         <IconInput

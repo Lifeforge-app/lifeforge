@@ -13,7 +13,7 @@ interface ITagsInputProps {
   icon: string
   placeholder: string
   value: string[]
-  updateValue: (tags: string[]) => void
+  setValue: (tags: string[]) => void
   maxTags?: number
   disabled?: boolean
   className?: string
@@ -33,7 +33,7 @@ function TagsInput({
   icon,
   placeholder,
   value,
-  updateValue,
+  setValue,
   maxTags = 100,
   disabled = false,
   className = '',
@@ -49,14 +49,14 @@ function TagsInput({
 
   const addTag = (): void => {
     if (currentTag.trim() !== '' && value.length < maxTags) {
-      updateValue([...value, currentTag.trim()])
+      setValue([...value, currentTag.trim()])
       setCurrentTag('')
     }
   }
 
   const removeTag = (index: number): void => {
     const newTags = value.filter((_, i) => i !== index)
-    updateValue(newTags)
+    setValue(newTags)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -124,7 +124,7 @@ function TagsInput({
               className="my-0! w-auto! flex-1 py-0 pl-0!"
               inputRef={inputRef}
               placeholder={placeholder}
-              updateValue={setCurrentTag}
+              setValue={setCurrentTag}
               value={currentTag}
               onBlur={addTag}
               onKeyDown={handleKeyDown}

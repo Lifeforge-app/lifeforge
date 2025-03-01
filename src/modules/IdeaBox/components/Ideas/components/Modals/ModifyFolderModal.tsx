@@ -121,7 +121,7 @@ function ModifyFolderModal(): React.ReactElement {
           name="Folder name"
           namespace="modules.ideaBox"
           placeholder="My folder"
-          updateValue={setFolderName}
+          setValue={setFolderName}
           value={folderName}
         />
         <ColorInput
@@ -129,7 +129,7 @@ function ModifyFolderModal(): React.ReactElement {
           name="Folder color"
           namespace="modules.ideaBox"
           setColorPickerOpen={setColorPickerOpen}
-          updateColor={setFolderColor}
+          setColor={setFolderColor}
         />
         <IconInput
           icon={folderIcon}

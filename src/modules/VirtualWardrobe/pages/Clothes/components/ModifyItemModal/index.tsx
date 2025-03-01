@@ -1,15 +1,16 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { ImagePickerModal } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
-import { type IVirtualWardrobeEntry } from '@interfaces/virtual_wardrobe_interfaces'
+import {
+  IVirtualWardrobeFormData,
+  type IVirtualWardrobeEntry
+} from '@interfaces/virtual_wardrobe_interfaces'
 import APIRequest from '@utils/fetchData'
-import { toCamelCase } from '@utils/strings'
 import AdditionalInfoSection from './components/AdditionalInfoSection'
 import BasicInfoSection from './components/BasicInfoSection'
+import StepIndicator from './components/StepIndicator'
 import UploadPhotoSection from './components/UploadPhotoSection'
 
 function ModifyItemModal({
@@ -23,32 +24,42 @@ function ModifyItemModal({
   refreshEntries: () => void
   existedData: IVirtualWardrobeEntry | null
 }): React.ReactElement {
-  const { t } = useTranslation('modules.virtualWardrobe')
   const [step, setStep] = useState<number>(1)
-  const [name, setName] = useState<string>('')
-  const [category, setCategory] = useState<string | null>(null)
-  const [subCategory, setSubCategory] = useState<string | null>(null)
-  const [brand, setBrand] = useState<string>('')
-  const [size, setSize] = useState<string>('')
-  const [colors, setColors] = useState<string[]>([])
-  const [price, setPrice] = useState<string>('')
-  const [notes, setNotes] = useState<string>('')
   const [frontImage, setFrontImage] = useState<File | null>(null)
   const [backImage, setBackImage] = useState<File | null>(null)
   const [frontPreview, setFrontPreview] = useState<string | null>(null)
   const [backPreview, setBackPreview] = useState<string | null>(null)
+
+  const [formState, setFormState] = useState<IVirtualWardrobeFormData>({
+    name: '',
+    category: '',
+    subcategory: '',
+    brand: '',
+    size: '',
+    colors: [],
+    price: '',
+    notes: ''
+  })
+
   const [openImagePickerFor, setOpenImagePickerFor] = useState<
     'front' | 'back' | null
   >(null)
   const [submitButtonLoading, setSubmitButtonLoading] = useState<boolean>(false)
 
+  function handleChange(field: keyof IVirtualWardrobeFormData) {
+    return (value: string | string[]): void => {
+      setFormState({ ...formState, [field]: value })
+    }
+  }
+
   async function onSubmit(): Promise<void> {
     if (
-      name.trim() === '' ||
-      category === '' ||
-      subCategory === '' ||
-      colors.length === 0 ||
-      size.trim() === '' ||
+      (['name', 'category', 'subcategory', 'size', 'colors'] as const).some(
+        key =>
+          Array.isArray(formState[key])
+            ? formState[key].length === 0
+            : formState[key].trim() === ''
+      ) ||
       (openType === 'create' && (frontImage === null || backImage === null))
     ) {
       toast.error('Please fill in all required fields')
@@ -58,14 +69,15 @@ function ModifyItemModal({
     setSubmitButtonLoading(true)
 
     const formData = new FormData()
-    formData.append('name', name.trim())
-    formData.append('category', category ?? '')
-    formData.append('subcategory', subCategory ?? '')
-    formData.append('brand', brand.trim())
-    formData.append('size', size.trim())
-    formData.append('colors', JSON.stringify(colors))
-    formData.append('price', price)
-    formData.append('notes', notes.trim())
+
+    Object.entries(formState).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        formData.append(key, JSON.stringify(value))
+      } else {
+        formData.append(key, value)
+      }
+    })
+
     if (frontImage !== null) formData.append('frontImage', frontImage)
     if (backImage !== null) formData.append('backImage', backImage)
 
@@ -74,19 +86,7 @@ function ModifyItemModal({
         'virtual-wardrobe/entries' +
         (openType === 'update' ? `/${existedData?.id}` : ''),
       method: openType === 'create' ? 'POST' : 'PATCH',
-      body:
-        openType === 'create'
-          ? formData
-          : {
-              name: name.trim(),
-              category: category ?? '',
-              subcategory: subCategory ?? '',
-              brand: brand.trim(),
-              size: size.trim(),
-              colors,
-              price: price === '' ? 0 : parseFloat(price),
-              notes: notes.trim()
-            },
+      body: openType === 'create' ? formData : formState,
       isJSON: openType === 'update',
       successInfo: openType,
       failureInfo: openType,
@@ -101,14 +101,16 @@ function ModifyItemModal({
   useEffect(() => {
     if (openType === 'create') {
       setStep(1)
-      setName('')
-      setCategory(null)
-      setSubCategory(null)
-      setBrand('')
-      setSize('')
-      setColors([])
-      setPrice('')
-      setNotes('')
+      setFormState({
+        name: '',
+        category: '',
+        subcategory: '',
+        brand: '',
+        size: '',
+        colors: [],
+        price: '',
+        notes: ''
+      })
       setFrontImage(null)
       setBackImage(null)
       setFrontPreview(null)
@@ -118,14 +120,16 @@ function ModifyItemModal({
     } else {
       if (existedData !== null) {
         setStep(2)
-        setName(existedData.name)
-        setCategory(existedData.category)
-        setSubCategory(existedData.subcategory)
-        setBrand(existedData.brand)
-        setSize(existedData.size)
-        setColors(existedData.colors)
-        setPrice(existedData.price === 0 ? '' : existedData.price.toString())
-        setNotes(existedData.notes)
+        setFormState({
+          name: existedData.name,
+          category: existedData.category,
+          subcategory: existedData.subcategory,
+          brand: existedData.brand,
+          size: existedData.size,
+          colors: existedData.colors,
+          price: existedData.price === 0 ? '' : existedData.price.toString(),
+          notes: existedData.notes
+        })
         setFrontImage(null)
         setBackImage(null)
         setFrontPreview(null)
@@ -145,48 +149,7 @@ function ModifyItemModal({
           title={`item.${openType}`}
           onClose={onClose}
         />
-        <ol className="flex w-full items-center text-sm font-medium text-bg-500 sm:text-base">
-          {['Upload Photos', 'Basic Info', 'Appearance And Details'].map(
-            (text, index) => (
-              <li
-                key={index}
-                className={`flex items-center ${
-                  index + 1 <= step ? 'text-custom-500' : 'text-bg-500'
-                } ${
-                  index !== 2 &&
-                  `after:mx-4 after:hidden after:h-0.5 after:w-full ${
-                    index + 1 < step
-                      ? 'after:bg-custom-500'
-                      : 'after:bg-bg-300 dark:after:bg-bg-700'
-                  } sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-4`
-                }`}
-              >
-                <div className="flex items-center whitespace-nowrap after:mx-2 after:content-['/'] sm:after:hidden ">
-                  <span
-                    className={`mr-3 flex size-6 items-center justify-center rounded-full font-medium lg:size-10 ${(() => {
-                      if (index + 1 === step) {
-                        return 'border-2 border-custom-500'
-                      }
-
-                      if (index + 1 < step) {
-                        return 'bg-custom-500 text-bg-100 dark:text-bg-900'
-                      }
-
-                      return 'bg-bg-500 text-bg-100 dark:text-bg-900'
-                    })()}`}
-                  >
-                    {openType === 'update' && index === 0 ? (
-                      <Icon className="size-5" icon="tabler:lock" />
-                    ) : (
-                      index + 1
-                    )}
-                  </span>{' '}
-                  {t(`steps.${toCamelCase(text)}`)}
-                </div>
-              </li>
-            )
-          )}
-        </ol>
+        <StepIndicator openType={openType} step={step} />
         {(() => {
           switch (step) {
             case 1:
@@ -209,35 +172,23 @@ function ModifyItemModal({
               return (
                 <BasicInfoSection
                   backImage={backImage}
-                  brand={brand}
                   canGoBack={openType === 'create'}
                   canVision={openType === 'create'}
-                  category={category}
+                  formState={formState}
                   frontImage={frontImage}
-                  name={name}
-                  setBrand={setBrand}
-                  setCategory={setCategory}
-                  setColors={setColors}
-                  setName={setName}
+                  handleChange={handleChange}
+                  setFormState={setFormState}
                   setStep={setStep}
-                  setSubCategory={setSubCategory}
                   step={step}
-                  subCategory={subCategory}
                 />
               )
             case 3:
               return (
                 <AdditionalInfoSection
-                  colors={colors}
-                  notes={notes}
+                  formState={formState}
+                  handleChange={handleChange}
                   openType={openType}
-                  price={price}
-                  setColors={setColors}
-                  setNotes={setNotes}
-                  setPrice={setPrice}
-                  setSize={setSize}
                   setStep={setStep}
-                  size={size}
                   step={step}
                   submitButtonLoading={submitButtonLoading}
                   onSubmitButtonClick={onSubmit}

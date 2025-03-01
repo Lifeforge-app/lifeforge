@@ -155,7 +155,7 @@ function FromOtherAppsModal({
               ? 'https://my.shp.ee/....'
               : 'https://s.lazada.com.my/....'
           }
-          updateValue={setUrl}
+          setValue={setUrl}
           value={url}
         />
         <Button

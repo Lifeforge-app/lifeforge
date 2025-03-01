@@ -98,7 +98,7 @@ function ModifyEntryModal({
         name="Music Name"
         namespace="modules.guitarTabs"
         placeholder="A cool tab"
-        updateValue={value => {
+        setValue={value => {
           setData({ name: value })
         }}
         value={data.name}
@@ -110,7 +110,7 @@ function ModifyEntryModal({
         name="Author"
         namespace="modules.guitarTabs"
         placeholder="John Doe"
-        updateValue={value => {
+        setValue={value => {
           setData({ author: value })
         }}
         value={data.author}

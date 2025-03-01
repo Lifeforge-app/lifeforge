@@ -230,7 +230,7 @@ function ModifyTransactionsModal({
               name="Particulars"
               namespace="modules.wallet"
               placeholder="My Transactions"
-              updateValue={setParticular}
+              setValue={setParticular}
               value={particular}
             />
           )}
@@ -241,7 +241,7 @@ function ModifyTransactionsModal({
             name="Amount"
             namespace="modules.wallet"
             placeholder="0.00"
-            updateValue={setAmount}
+            setValue={setAmount}
             value={amount}
           />
           {transactionType !== 'transfer' && (

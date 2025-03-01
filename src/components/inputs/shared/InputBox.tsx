@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 
 function InputBox({
   value,
-  updateValue,
+  setValue,
   isPassword = false,
   inputMode,
   showPassword,
@@ -16,7 +16,7 @@ function InputBox({
   onBlur = () => {}
 }: {
   value: string
-  updateValue: (value: string) => void
+  setValue: (value: string) => void
   isPassword?: boolean
   inputMode?:
     | 'text'
@@ -65,9 +65,12 @@ function InputBox({
         }
         type={isPassword && showPassword !== true ? 'password' : 'text'}
         value={value}
-        onBlur={onBlur}
+        onBlur={e => {
+          setValue(e.target.value.trim())
+          onBlur()
+        }}
         onChange={e => {
-          updateValue(e.target.value)
+          setValue(e.target.value)
         }}
         onKeyDown={onKeyDown}
       />

@@ -288,7 +288,7 @@ function ModifyIdeaModal(): React.ReactElement {
             name="Idea title"
             namespace="modules.ideaBox"
             placeholder="Mind blowing idea"
-            updateValue={setIdeaTitle}
+            setValue={setIdeaTitle}
             value={ideaTitle}
           />
         )}
@@ -334,7 +334,7 @@ function ModifyIdeaModal(): React.ReactElement {
                     name="Image link"
                     namespace="modules.ideaBox"
                     placeholder="https://example.com/image.jpg"
-                    updateValue={setImageLink}
+                    setValue={setImageLink}
                     value={imageLink}
                   />
                 </>
@@ -352,7 +352,7 @@ function ModifyIdeaModal(): React.ReactElement {
               name="Idea tags"
               namespace="modules.ideaBox"
               placeholder='Tag your idea with "awesome", "cool", etc.'
-              updateValue={setIdeaTags}
+              setValue={setIdeaTags}
               value={ideaTags}
             />
           )}

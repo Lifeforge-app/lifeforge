@@ -20,7 +20,7 @@ function ImageURL({
         namespace="common.misc"
         placeholder="https://example.com/image.jpg"
         tKey="imageUpload"
-        updateValue={(value: string) => {
+        setValue={(value: string) => {
           setFile(value)
           setPreview(value)
         }}

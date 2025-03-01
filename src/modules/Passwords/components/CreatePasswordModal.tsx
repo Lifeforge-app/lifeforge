@@ -12,6 +12,7 @@ import {
 } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
+import { IPasswordFormData } from '@interfaces/password_interfaces'
 import { usePasswordContext } from '@providers/PasswordsProvider'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
@@ -25,25 +26,28 @@ function CreatePasswordModal(): React.ReactElement {
     setModifyPasswordModalOpenType,
     refreshPasswordList
   } = usePasswordContext()
-  const [name, setName] = useState('')
-  const [icon, setIcon] = useState('')
-  const [color, setColor] = useState('')
-  const [website, setWebsite] = useState('')
+
+  const [formState, setFormState] = useState<IPasswordFormData>({
+    name: '',
+    icon: '',
+    color: '',
+    website: '',
+    username: '',
+    password: ''
+  })
+
   const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
   const [colorPickerOpen, setColorPickerOpen] = useState(false)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
 
+  function handleChange(field: keyof IPasswordFormData) {
+    return (value: string): void => {
+      setFormState({ ...formState, [field]: value })
+    }
+  }
+
   async function onSubmit(): Promise<void> {
-    if (
-      name.trim() === '' ||
-      icon.trim() === '' ||
-      color.trim() === '' ||
-      website.trim() === '' ||
-      username.trim() === '' ||
-      password.trim() === ''
-    ) {
+    if (Object.values(formState).some(value => value.trim() === '')) {
       toast.error(t('input.error.fieldEmpty'))
       return
     }
@@ -75,12 +79,8 @@ function CreatePasswordModal(): React.ReactElement {
       }`,
       method: openType === 'create' ? 'POST' : 'PATCH',
       body: {
-        name,
-        icon,
-        color,
-        website,
-        username,
-        password: encrypt(password, challenge),
+        ...formState,
+        password: encrypt(formState.password, challenge),
         master: encryptedMaster
       },
       successInfo: 'create',
@@ -97,19 +97,23 @@ function CreatePasswordModal(): React.ReactElement {
 
   useEffect(() => {
     if (openType === 'create') {
-      setName('')
-      setIcon('')
-      setColor('')
-      setWebsite('')
-      setUsername('')
-      setPassword('')
+      setFormState({
+        name: '',
+        icon: '',
+        color: '',
+        website: '',
+        username: '',
+        password: ''
+      })
     } else if (openType === 'update' && existedData !== null) {
-      setName(existedData.name)
-      setIcon(existedData.icon)
-      setColor(existedData.color)
-      setWebsite(existedData.website)
-      setUsername(existedData.username)
-      setPassword(existedData.decrypted ?? '')
+      setFormState({
+        name: existedData.name,
+        icon: existedData.icon,
+        color: existedData.color,
+        website: existedData.website,
+        username: existedData.username,
+        password: existedData.decrypted ?? ''
+      })
     }
   }, [openType])
 
@@ -142,22 +146,22 @@ function CreatePasswordModal(): React.ReactElement {
             name="Service Name"
             namespace="modules.passwords"
             placeholder="Google"
-            updateValue={setName}
-            value={name}
+            setValue={handleChange('name')}
+            value={formState.name}
           />
           <IconInput
-            icon={icon}
+            icon={formState.icon}
             name="Service Icon"
             namespace="modules.passwords"
-            setIcon={setIcon}
+            setIcon={handleChange('icon')}
             setIconSelectorOpen={setIconSelectorOpen}
           />
           <ColorInput
-            color={color}
+            color={formState.color}
             name="Service Color"
             namespace="modules.passwords"
+            setColor={handleChange('color')}
             setColorPickerOpen={setColorPickerOpen}
-            updateColor={setColor}
           />
           <TextInput
             darker
@@ -167,8 +171,8 @@ function CreatePasswordModal(): React.ReactElement {
             name="Website"
             namespace="modules.passwords"
             placeholder="https://google.com"
-            updateValue={setWebsite}
-            value={website}
+            setValue={handleChange('website')}
+            value={formState.website}
           />
           <TextInput
             darker
@@ -178,8 +182,8 @@ function CreatePasswordModal(): React.ReactElement {
             name="Username or Email"
             namespace="modules.passwords"
             placeholder="johndoe1234@gmail.com"
-            updateValue={setUsername}
-            value={username}
+            setValue={handleChange('username')}
+            value={formState.username}
           />
           <TextInput
             darker
@@ -190,8 +194,8 @@ function CreatePasswordModal(): React.ReactElement {
             name="Password"
             namespace="modules.passwords"
             placeholder="Your password"
-            updateValue={setPassword}
-            value={password}
+            setValue={handleChange('password')}
+            value={formState.password}
           />
           <CreateOrModifyButton
             className="mt-6"
@@ -206,12 +210,12 @@ function CreatePasswordModal(): React.ReactElement {
       <IconPickerModal
         isOpen={iconSelectorOpen}
         setOpen={setIconSelectorOpen}
-        setSelectedIcon={setIcon}
+        setSelectedIcon={handleChange('icon')}
       />
       <ColorPickerModal
-        color={color}
+        color={formState.color}
         isOpen={colorPickerOpen}
-        setColor={setColor}
+        setColor={handleChange('color')}
         setOpen={setColorPickerOpen}
       />
     </>
