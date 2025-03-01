@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import CreatePasswordScreen from '@components/screens/CreatePasswordScreen'
 import LockedScreen from '@components/screens/LockedScreen'
 import OTPScreen from '@components/screens/OTPScreen'
+import QueryWrapper from '@components/screens/QueryWrapper'
 import { type IAPIKeyEntry } from '@interfaces/api_keys_interfaces'
-import { Loadable } from '@interfaces/common'
 import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import EntryItem from './components/EntryItem'
 import ModifyAPIKeyModal from './components/ModifyAPIKeyModal'
 import { fetchChallenge } from './utils/fetchChallenge'
@@ -24,38 +23,25 @@ function APIKeys(): React.ReactElement {
   const [otpSuccess, setOtpSuccess] = useState(false)
   const [masterPassword, setMasterPassword] = useState<string>('')
   const [existingData, setExistingData] = useState<IAPIKeyEntry | null>(null)
+  const { data: challenge } = useQuery({
+    queryKey: ['api-keys', 'challenge'],
+    queryFn: fetchChallenge
+  })
+  const entriesQuery = useQuery<IAPIKeyEntry[]>({
+    queryKey: ['api-keys', 'entries', masterPassword, challenge],
+    queryFn: () =>
+      APIRequestV2(
+        'api-keys?master=' +
+          encodeURIComponent(encrypt(masterPassword, challenge!))
+      ),
+    enabled: !!masterPassword && !!challenge
+  })
+
   const [modifyAPIKeyModalOpenType, setModifyAPIKeyModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
   const [deleteConfirmationModalOpen, setDeleteConfirmationModalOpen] =
     useState(false)
-  const [entries, setEntries] = useState<Loadable<IAPIKeyEntry[]>>('loading')
-
-  async function fetchData(): Promise<void> {
-    setEntries('loading')
-
-    const challenge = await fetchChallenge()
-
-    await APIRequest({
-      endpoint: `api-keys?master=${encodeURIComponent(
-        encrypt(masterPassword, challenge)
-      )}`,
-      method: 'GET',
-      callback(data) {
-        setEntries(data.data)
-      },
-      onFailure: () => {
-        toast.error(t('fetch.fetchError'))
-        setEntries('error')
-      }
-    })
-  }
-
-  useEffect(() => {
-    if (masterPassword !== '') {
-      fetchData().catch(console.error)
-    }
-  }, [masterPassword])
 
   const renderContent = () => {
     if (!otpSuccess) {
@@ -91,33 +77,31 @@ function APIKeys(): React.ReactElement {
 
     return (
       <>
-        <div className="mt-8 flex-1">
-          <APIFallbackComponent data={entries}>
-            {entries => (
-              <>
-                {entries.map((entry, idx) => (
-                  <EntryItem
-                    key={entry.id}
-                    entry={entry}
-                    hasDivider={idx !== entries.length - 1}
-                    setDeleteConfirmationModalOpen={
-                      setDeleteConfirmationModalOpen
-                    }
-                    setExistingData={setExistingData}
-                    setModifyAPIKeyModalOpenType={setModifyAPIKeyModalOpenType}
-                  />
-                ))}
-              </>
-            )}
-          </APIFallbackComponent>
-        </div>
+        <QueryWrapper query={entriesQuery}>
+          {entries => (
+            <div className="mt-8 flex-1 mb-8">
+              {entries.map((entry, idx) => (
+                <EntryItem
+                  key={entry.id}
+                  entry={entry}
+                  hasDivider={idx !== entries.length - 1}
+                  setDeleteConfirmationModalOpen={
+                    setDeleteConfirmationModalOpen
+                  }
+                  setExistingData={setExistingData}
+                  setModifyAPIKeyModalOpenType={setModifyAPIKeyModalOpenType}
+                />
+              ))}
+            </div>
+          )}
+        </QueryWrapper>
         <ModifyAPIKeyModal
+          challenge={challenge!}
           existingData={existingData}
           masterPassword={masterPassword}
           openType={modifyAPIKeyModalOpenType}
           onClose={() => {
             setModifyAPIKeyModalOpenType(null)
-            fetchData().catch(console.error)
           }}
         />
         <DeleteConfirmationModal
@@ -126,9 +110,7 @@ function APIKeys(): React.ReactElement {
           isOpen={deleteConfirmationModalOpen}
           itemName="API Key"
           nameKey="name"
-          updateDataLists={() => {
-            fetchData().catch(console.error)
-          }}
+          queryKey={['api-keys', 'entries', masterPassword, challenge!]}
           onClose={() => {
             setDeleteConfirmationModalOpen(false)
           }}

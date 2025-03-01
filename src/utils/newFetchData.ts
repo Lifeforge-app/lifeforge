@@ -1,0 +1,70 @@
+import { cookieParse } from 'pocketbase'
+import { toast } from 'react-toastify'
+
+function getRequestBody(body: any, isJSON: boolean): any {
+  return isJSON ? JSON.stringify(body) : body
+}
+
+export default async function APIRequestV2<T>(
+  endpoint: string,
+  {
+    method,
+    body,
+    isJSON = true,
+    timeout = 30000
+  }: {
+    method: string
+    body?: any
+    isJSON?: boolean
+    timeout?: number
+  } = {
+    method: 'GET'
+  }
+): Promise<T> {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_HOST}/${endpoint}`,
+      {
+        method,
+        signal: AbortSignal.timeout(timeout),
+        headers: {
+          Authorization: cookieParse(document.cookie).token
+            ? `Bearer ${cookieParse(document.cookie).token}`
+            : '',
+          ...(isJSON ? { 'Content-Type': 'application/json' } : {})
+        },
+        body: body !== undefined ? getRequestBody(body, isJSON) : null
+      }
+    )
+
+    if (!response.ok) {
+      try {
+        const data = await response.json().catch(() => {
+          throw new Error('Failed to perform API request')
+        })
+        throw new Error(data.message)
+      } catch (err: any) {
+        throw new Error(err.message)
+      }
+    }
+
+    const data = await response.json()
+
+    switch (data.state) {
+      case 'error':
+        throw new Error(data.message)
+      case 'success':
+        return data.data
+      default:
+        throw new Error('Failed to perform API request')
+    }
+  } catch (err) {
+    if (err instanceof Error) {
+      toast.error(err.message)
+      throw new Error(err.message)
+    } else {
+      toast.error('Failed to perform API request')
+      throw new Error('Failed to perform API request')
+    }
+  }
+}

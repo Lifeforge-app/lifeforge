@@ -196,8 +196,10 @@ function AddToLibraryModal({
       loading={typeof fetchedData === 'string'}
       namespace="modules.booksLibrary"
       setData={setData}
-      submitButtonIcon="tabler:download"
-      submitButtonLabel="Download"
+      submitButtonProps={{
+        children: 'Download',
+        icon: 'tabler:download'
+      }}
       title="Add to library"
       onClose={onClose}
       onSubmit={onSubmit}

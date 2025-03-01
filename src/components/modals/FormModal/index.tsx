@@ -1,5 +1,8 @@
+import { useQueryClient } from '@tanstack/react-query'
 import React, { useState } from 'react'
+import { Button } from '@components/buttons'
 import LoadingScreen from '@components/screens/LoadingScreen'
+import useModifyMutation from '@hooks/useModifyMutation'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import FormInputs from './components/FormInputs'
 import PickerModals from './components/PickerModals'
@@ -8,10 +11,12 @@ import ModalHeader from '../ModalHeader'
 import ModalWrapper from '../ModalWrapper'
 
 function FormModal<T extends Record<string, any | any[]>>({
+  // fields stuff
   fields,
   data,
   setData,
 
+  // modal stuff
   title,
   icon,
   isOpen,
@@ -19,15 +24,25 @@ function FormModal<T extends Record<string, any | any[]>>({
   onClose,
   loading = false,
 
+  // submit stuff
   onSubmit,
-  submitButtonLabel,
-  submitButtonIcon,
-  submitButtonIconAtEnd,
+  id,
+  endpoint,
+  queryKey,
+  getFinalData,
+  sortBy,
+  sortMode,
+  submitButtonProps = {
+    children: 'Submit',
+    icon: 'tabler:check'
+  },
 
+  // action button stuff
   actionButtonIcon,
   actionButtonIsRed,
   onActionButtonClick,
 
+  // misc stuff
   namespace,
   modalRef
 }: {
@@ -40,27 +55,92 @@ function FormModal<T extends Record<string, any | any[]>>({
   isOpen: boolean
   openType?: 'create' | 'update' | null
   onClose: () => void
-  submitButtonLabel?: string
-  submitButtonIcon?: string
-  submitButtonIconAtEnd?: boolean
-  onSubmit: () => Promise<void>
+  submitButtonProps?: React.ComponentProps<typeof Button>
+  onSubmit?: () => Promise<void>
+  queryKey?: string[]
+  endpoint?: string
+  id?: string
   loading?: boolean
   actionButtonIcon?: string
   actionButtonIsRed?: boolean
   onActionButtonClick?: () => void
   namespace: string
+  getFinalData?: (originalData: T) => Promise<Record<string, any>>
+  sortBy?: keyof T
+  sortMode?: 'asc' | 'desc'
 }): React.ReactElement {
+  const queryClient = useQueryClient()
   const [colorPickerOpen, setColorPickerOpen] = useState<string | null>(null)
   const [iconSelectorOpen, setIconSelectorOpen] = useState<string | null>(null)
   const [imagePickerModalOpen, setImagePickerModalOpen] = useState<
     string | null
   >(null)
   const [submitLoading, setSubmitLoading] = useState(false)
+  const entryCreateMutation = useModifyMutation<T>('create', endpoint ?? '', {
+    onSettled: () => {
+      setSubmitLoading(false)
+    },
+    onSuccess: (newData: T) => {
+      queryClient.setQueryData(queryKey ?? [], (old: T[]) => {
+        return [...old, newData].sort((a, b) => {
+          if (sortBy) {
+            if (sortMode === 'asc') {
+              return a[sortBy] > b[sortBy] ? 1 : -1
+            }
+            return a[sortBy] < b[sortBy] ? 1 : -1
+          }
+          return 0
+        })
+      })
+      onClose()
+    }
+  })
+  const entryUpdateMutation = useModifyMutation<T>(
+    'update',
+    `${endpoint}/${id}`,
+    {
+      onSettled: () => {
+        setSubmitLoading(false)
+      },
+      onSuccess: (newData: T) => {
+        queryClient.setQueryData(queryKey ?? [], (old: T[]) => {
+          return old
+            .map(entry => {
+              if (entry.id === newData.id) {
+                return newData
+              }
+              return entry
+            })
+            .sort((a, b) => {
+              if (sortBy) {
+                if (sortMode === 'asc') {
+                  return a[sortBy] > b[sortBy] ? 1 : -1
+                }
+                return a[sortBy] < b[sortBy] ? 1 : -1
+              }
+              return 0
+            })
+        })
+        onClose()
+      }
+    }
+  )
 
   async function onSubmitButtonClick(): Promise<void> {
     setSubmitLoading(true)
-    await onSubmit()
-    setSubmitLoading(false)
+
+    const finalData = getFinalData ? await getFinalData(data) : data
+
+    if (openType === 'create') {
+      entryCreateMutation.mutate(finalData as any)
+    } else if (openType === 'update') {
+      entryUpdateMutation.mutate(finalData as any)
+    }
+
+    if (onSubmit) {
+      await onSubmit()
+      setSubmitLoading(false)
+    }
   }
 
   return (
@@ -88,9 +168,7 @@ function FormModal<T extends Record<string, any | any[]>>({
             />
             <SubmitButton
               openType={openType}
-              submitButtonIcon={submitButtonIcon}
-              submitButtonIconAtEnd={submitButtonIconAtEnd}
-              submitButtonLabel={submitButtonLabel ?? 'Submit'}
+              submitButtonProps={submitButtonProps}
               submitLoading={submitLoading}
               onSubmitButtonClick={onSubmitButtonClick}
             />

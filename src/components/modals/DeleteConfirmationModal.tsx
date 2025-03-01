@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import APIRequest from '@utils/fetchData'
@@ -17,7 +18,8 @@ function DeleteConfirmationModal({
   customCallback,
   customConfirmButtonIcon,
   customConfirmButtonText,
-  customOnClick
+  customOnClick,
+  queryKey
 }: {
   itemName?: string
   isOpen: boolean
@@ -32,9 +34,11 @@ function DeleteConfirmationModal({
   customConfirmButtonIcon?: string
   customConfirmButtonText?: string
   customOnClick?: () => void
+  queryKey?: string[]
 }): React.ReactElement {
   const { t } = useTranslation('common.modals')
   const [loading, setLoading] = useState(false)
+  const queryClient = useQueryClient()
 
   async function deleteData(): Promise<void> {
     if (data === null) return
@@ -60,6 +64,14 @@ function DeleteConfirmationModal({
         }
       },
       finalCallback: () => {
+        if (queryKey) {
+          queryClient.setQueryData(queryKey, (old: any[]) => {
+            if (!Array.isArray(data)) {
+              return old.filter(item => item.id !== data.id)
+            }
+            return old.filter(item => !data.includes(item.id))
+          })
+        }
         setLoading(false)
       }
     })

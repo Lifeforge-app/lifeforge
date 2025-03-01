@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 
 import React, { useEffect, useState } from 'react'
@@ -6,16 +7,20 @@ import { SearchInput } from '@components/inputs'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import useFetch from '@hooks/useFetch'
+import QueryWrapper from '@components/screens/QueryWrapper'
 import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
+import APIRequestV2 from '@utils/newFetchData'
 import Containers from './components/Containers'
 import ModifyContainerModal from './components/Containers/components/ModifyContainerModal'
 
 function IdeaBox(): React.ReactElement {
   const { t } = useTranslation('modules.ideaBox')
-  const [data, , setData] = useFetch<IIdeaBoxContainer[]>('idea-box/containers')
+  const query = useQuery<IIdeaBoxContainer[]>({
+    queryKey: ['idea-box', 'containers'],
+    queryFn: () => APIRequestV2('idea-box/containers')
+  })
+
   const [modifyContainerModalOpenType, setModifyContainerModalOpenType] =
     useState<'create' | 'update' | null>(null)
   const [
@@ -28,12 +33,12 @@ function IdeaBox(): React.ReactElement {
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
   useEffect(() => {
-    if (Array.isArray(data)) {
+    if (Array.isArray(query.data)) {
       if (debouncedSearchQuery.length === 0) {
-        setFilteredList(data)
+        setFilteredList(query.data)
       } else {
         setFilteredList(
-          data.filter(container =>
+          query.data.filter(container =>
             container.name
               .toLowerCase()
               .includes(debouncedSearchQuery.toLowerCase())
@@ -41,7 +46,7 @@ function IdeaBox(): React.ReactElement {
         )
       }
     }
-  }, [debouncedSearchQuery, data])
+  }, [debouncedSearchQuery, query.data])
 
   return (
     <ModuleWrapper>
@@ -53,7 +58,7 @@ function IdeaBox(): React.ReactElement {
           setSearchQuery={setSearchQuery}
           stuffToSearch="container"
         />
-        <APIFallbackComponent data={data}>
+        <QueryWrapper query={query}>
           {data =>
             data.length > 0 ? (
               <Containers
@@ -77,14 +82,11 @@ function IdeaBox(): React.ReactElement {
               />
             )
           }
-        </APIFallbackComponent>
+        </QueryWrapper>
       </div>
       <ModifyContainerModal
         existedData={existedData}
         openType={modifyContainerModalOpenType}
-        setContainerList={
-          setData as React.Dispatch<React.SetStateAction<IIdeaBoxContainer[]>>
-        }
         setOpenType={setModifyContainerModalOpenType}
       />
       <DeleteConfirmationModal
@@ -92,13 +94,7 @@ function IdeaBox(): React.ReactElement {
         data={existedData}
         isOpen={deleteContainerConfirmationModalOpen}
         itemName="container"
-        updateDataLists={() => {
-          setData(prev =>
-            typeof prev !== 'string'
-              ? prev.filter(container => container.id !== existedData?.id)
-              : prev
-          )
-        }}
+        queryKey={['idea-box', 'containers']}
         onClose={() => {
           setExistedData(null)
           setDeleteContainerConfirmationModalOpen(false)

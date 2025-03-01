@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import FormModal from '@components/modals/FormModal'
 import {
@@ -15,14 +14,15 @@ function ModifyAPIKeyModal({
   openType,
   onClose,
   existingData,
-  masterPassword
+  masterPassword,
+  challenge
 }: {
   openType: 'create' | 'update' | null
   onClose: () => void
   existingData: IAPIKeyEntry | null
   masterPassword: string
+  challenge: string
 }): React.ReactElement {
-  const { t } = useTranslation('modules.apiKeys')
   const [formState, setFormState] = useState<IAPIKeyFormState>({
     id: '',
     name: '',
@@ -69,40 +69,6 @@ function ModifyAPIKeyModal({
     }
   ]
 
-  async function onSubmit(): Promise<void> {
-    if (Object.values(formState).some(value => value === '')) {
-      toast.error(t('input.error.fieldEmpty'))
-      return
-    }
-
-    const challenge = await fetchChallenge()
-
-    const encryptedKey = encrypt(formState.key, masterPassword)
-    const encryptedMaster = encrypt(masterPassword, challenge)
-
-    const encryptedEverything = encrypt(
-      JSON.stringify({
-        ...formState,
-        key: encryptedKey,
-        master: encryptedMaster
-      }),
-      challenge
-    )
-
-    await APIRequest({
-      endpoint: `api-keys${
-        openType === 'update' ? `/${existingData?.id}` : ''
-      }`,
-      method: openType === 'update' ? 'PUT' : 'POST',
-      body: { data: encryptedEverything },
-      successInfo: openType,
-      failureInfo: openType,
-      callback: () => {
-        onClose()
-      }
-    })
-  }
-
   async function fetchKey(): Promise<void> {
     const challenge = await fetchChallenge()
 
@@ -114,8 +80,16 @@ function ModifyAPIKeyModal({
       callback(data) {
         const decryptedKey = decrypt(data.data, challenge)
         const decryptedSecondTime = decrypt(decryptedKey, masterPassword)
+        if (existingData === null) {
+          toast.error('Failed to fetch key')
+          return
+        }
+
         setFormState({
-          ...formState,
+          id: existingData.keyId,
+          name: existingData.name,
+          description: existingData.description,
+          icon: existingData.icon,
           key: decryptedSecondTime
         })
       },
@@ -130,15 +104,10 @@ function ModifyAPIKeyModal({
 
   useEffect(() => {
     if (openType === 'update' && existingData !== null) {
-      setFormState({
-        id: existingData.keyId,
-        name: existingData.name,
-        description: existingData.description,
-        icon: existingData.icon,
-        key: ''
-      })
+      setIsFetchingKey(true)
       fetchKey().catch(console.error)
     } else {
+      setIsFetchingKey(false)
       setFormState({
         id: '',
         name: '',
@@ -152,16 +121,37 @@ function ModifyAPIKeyModal({
   return (
     <FormModal
       data={formState}
+      endpoint="api-keys"
       fields={FIELDS}
+      getFinalData={async originalData => {
+        const challenge = await fetchChallenge()
+
+        const encryptedKey = encrypt(formState.key, masterPassword)
+        const encryptedMaster = encrypt(masterPassword, challenge)
+
+        const encryptedEverything = encrypt(
+          JSON.stringify({
+            ...originalData,
+            key: encryptedKey,
+            master: encryptedMaster
+          }),
+          challenge
+        )
+
+        return { data: encryptedEverything }
+      }}
       icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
+      id={existingData?.id}
       isOpen={openType !== null}
       loading={isFetchingKey}
       namespace="modules.apiKeys"
       openType={openType}
+      queryKey={['api-keys', 'entries', masterPassword, challenge]}
       setData={setFormState}
+      sortBy="name"
+      sortMode="asc"
       title={`apiKey.${openType}`}
       onClose={onClose}
-      onSubmit={onSubmit}
     />
   )
 }
