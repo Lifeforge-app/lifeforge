@@ -2,6 +2,7 @@ interface ITextInputFieldProps {
   label: string
   icon: string
   type: 'text'
+  isPassword?: boolean
   placeholder: string
   disabled?: boolean
 }
@@ -44,7 +45,7 @@ interface IImageAndFileInputFieldProps {
   onFileRemoved?: () => void
 }
 
-type IFieldProps = (
+type IFieldProps<T> = (
   | ITextInputFieldProps
   | IDateInputFieldProps
   | IListboxInputFieldProps
@@ -52,7 +53,7 @@ type IFieldProps = (
   | IIconInputFieldProps
   | IImageAndFileInputFieldProps
 ) & {
-  id: string
+  id: keyof T
 }
 
 export type { IFieldProps }

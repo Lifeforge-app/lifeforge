@@ -32,7 +32,7 @@ function ModifyContainerModal({
     }
   )
 
-  const FIELDS: IFieldProps[] = [
+  const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',
       label: 'Container name',

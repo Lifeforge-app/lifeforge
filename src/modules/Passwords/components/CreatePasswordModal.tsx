@@ -12,7 +12,7 @@ import {
 } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
-import { IPasswordFormData } from '@interfaces/password_interfaces'
+import { IPasswordFormState } from '@interfaces/password_interfaces'
 import { usePasswordContext } from '@providers/PasswordsProvider'
 import { encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
@@ -27,7 +27,7 @@ function CreatePasswordModal(): React.ReactElement {
     refreshPasswordList
   } = usePasswordContext()
 
-  const [formState, setFormState] = useState<IPasswordFormData>({
+  const [formState, setFormState] = useState<IPasswordFormState>({
     name: '',
     icon: '',
     color: '',
@@ -40,7 +40,7 @@ function CreatePasswordModal(): React.ReactElement {
   const [colorPickerOpen, setColorPickerOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  function handleChange(field: keyof IPasswordFormData) {
+  function handleChange(field: keyof IPasswordFormState) {
     return (value: string): void => {
       setFormState({ ...formState, [field]: value })
     }

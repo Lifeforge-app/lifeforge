@@ -8,4 +8,12 @@ interface IAPIKeyEntry extends BasePBCollection {
   key: string
 }
 
-export type { IAPIKeyEntry as IAPIKeyEntry }
+interface IAPIKeyFormState {
+  id: string
+  name: string
+  description: string
+  icon: string
+  key: string
+}
+
+export type { IAPIKeyEntry, IAPIKeyFormState }

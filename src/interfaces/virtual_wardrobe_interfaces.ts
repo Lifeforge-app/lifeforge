@@ -25,7 +25,7 @@ interface IVirtualWardrobeEntry extends BasePBCollection {
   back_image: string
 }
 
-interface IVirtualWardrobeFormData {
+interface IVirtualWardrobeFormState {
   name: string
   category: string
   subcategory: string
@@ -39,5 +39,5 @@ interface IVirtualWardrobeFormData {
 export type {
   IVirtualWardrobeEntry,
   IVirtualWardrobeSidebarData,
-  IVirtualWardrobeFormData
+  IVirtualWardrobeFormState
 }

@@ -34,7 +34,7 @@ function ModifyModal({
       ...(stuff === 'statuses' && { color: '' })
     }
   )
-  const FIELDS: IFieldProps[] = [
+  const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',
       label: `${singleStuff} name`,
@@ -50,7 +50,7 @@ function ModifyModal({
     ...(stuff === 'statuses'
       ? [
           {
-            id: 'color',
+            id: 'color' as const,
             label: `${singleStuff} color`,
             type: 'color' as const
           }

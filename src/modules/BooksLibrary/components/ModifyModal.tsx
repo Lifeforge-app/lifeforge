@@ -31,7 +31,7 @@ function ModifyModal({
       icon: ''
     }
   )
-  const FIELDS: IFieldProps[] = [
+  const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',
       label: `${singleStuff} name`,

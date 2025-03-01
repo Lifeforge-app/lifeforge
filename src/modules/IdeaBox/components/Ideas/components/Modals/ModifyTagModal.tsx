@@ -26,7 +26,7 @@ function ModifyTagModal(): React.ReactElement {
     }
   )
 
-  const FIELDS: IFieldProps[] = [
+  const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',
       label: 'Tag name',

@@ -7,7 +7,7 @@ import {
   ListboxOrComboboxOption
 } from '@components/inputs'
 import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
-import { IVirtualWardrobeFormData } from '@interfaces/virtual_wardrobe_interfaces'
+import { IVirtualWardrobeFormState } from '@interfaces/virtual_wardrobe_interfaces'
 import APIRequest from '@utils/fetchData'
 
 function BasicInfoSection({
@@ -26,10 +26,10 @@ function BasicInfoSection({
   backImage: File | null
   step: number
   setStep: (value: number) => void
-  formState: IVirtualWardrobeFormData
-  setFormState: (value: IVirtualWardrobeFormData) => void
+  formState: IVirtualWardrobeFormState
+  setFormState: (value: IVirtualWardrobeFormState) => void
   handleChange: (
-    field: keyof IVirtualWardrobeFormData
+    field: keyof IVirtualWardrobeFormState
   ) => (value: string | string[]) => void
   canGoBack: boolean
 }): React.ReactElement {
