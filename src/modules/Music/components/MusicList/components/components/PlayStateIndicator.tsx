@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import React, { useMemo } from 'react'
 import { toast } from 'react-toastify'
 import { IMusicEntry } from '@interfaces/music_interfaces'
@@ -31,7 +32,7 @@ function PlayStateIndicator({
 
   return (
     <button
-      className={`rounded-lg p-4 transition-all ${stateClassName}`}
+      className={clsx('rounded-lg p-4 transition-all', stateClassName)}
       onClick={() => {
         togglePlay(music).catch(err => {
           toast.error(`Failed to play music. Error: ${err}`)

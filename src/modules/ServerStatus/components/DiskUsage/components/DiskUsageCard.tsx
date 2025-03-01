@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import React from 'react'
 import useThemeColors from '@hooks/useThemeColor'
 import { IDiskUsage } from '@interfaces/server_status_interfaces'
@@ -9,7 +10,7 @@ function DiskUsageCard({ disk }: { disk: IDiskUsage }): React.ReactElement {
   return (
     <div
       key={disk.name}
-      className={`space-y-4 rounded-lg p-6 shadow-custom ${componentBg}`}
+      className={clsx('space-y-4 rounded-lg p-6 shadow-custom', componentBg)}
     >
       <div className="flex-between flex w-full min-w-0">
         <div className="flex min-w-0 flex-1 items-center gap-2">
@@ -31,7 +32,10 @@ function DiskUsageCard({ disk }: { disk: IDiskUsage }): React.ReactElement {
         <p className="text-lg text-bg-500">{disk.avail}B</p>
       </div>
       <div
-        className={`mt-4 h-3 w-full overflow-hidden rounded-full ${componentBgLighter}`}
+        className={clsx(
+          'mt-4 h-3 w-full overflow-hidden rounded-full',
+          componentBgLighter
+        )}
       >
         <div
           className="h-full rounded-full bg-green-500"

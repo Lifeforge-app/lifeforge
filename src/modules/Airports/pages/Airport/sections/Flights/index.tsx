@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { Button } from '@components/buttons'
@@ -79,7 +80,10 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
       {(data: FlightData[]) => (
         <>
           <div
-            className={`sticky top-[3.64rem] z-10 mt-6 flex items-center rounded-md ${componentBg}`}
+            className={clsx(
+              'sticky top-[3.64rem] z-10 mt-6 flex items-center rounded-md',
+              componentBg
+            )}
           >
             {[
               ['Arrivals', 'tabler:plane-arrival'],
@@ -87,11 +91,12 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
             ].map(([name, icon], index) => (
               <button
                 key={index}
-                className={`flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all ${
+                className={clsx(
+                  'flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all',
                   location.hash.replace('#', '') === name.toLowerCase()
                     ? 'border-custom-500 font-medium text-custom-500'
                     : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
-                }`}
+                )}
                 onClick={() => {
                   navigate(
                     location.pathname +

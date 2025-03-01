@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useParams } from 'react-router'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
@@ -84,9 +85,11 @@ function EntryContextMenu({
       <MenuButton>
         {({ open }) => (
           <div
-            className={`shrink-0 rounded-lg bg-bg-50 p-2 text-bg-500 opacity-0 hover:bg-bg-100 hover:text-bg-800 group-hover:opacity-100 dark:bg-bg-800 dark:text-bg-50 dark:hover:bg-bg-700 dark:hover:text-bg-50 ${
-              entry.type === 'image' ? 'shadow-custom!' : ''
-            } ${open ? 'opacity-100!' : ''}`}
+            className={clsx(
+              'shrink-0 rounded-lg bg-bg-50 p-2 text-bg-500 opacity-0 hover:bg-bg-100 hover:text-bg-800 group-hover:opacity-100 dark:bg-bg-800 dark:text-bg-50 dark:hover:bg-bg-700 dark:hover:text-bg-50',
+              entry.type === 'image' && 'shadow-custom!',
+              open && 'opacity-100!'
+            )}
           >
             <Icon className="text-xl" icon="tabler:dots-vertical" />
           </div>

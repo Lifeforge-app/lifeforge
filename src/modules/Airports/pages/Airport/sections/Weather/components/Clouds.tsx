@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import React from 'react'
 import useThemeColors from '@hooks/useThemeColor'
 import WidgetWrapper from './WidgetWrapper'
@@ -19,7 +20,10 @@ function Clouds({ data }: { data: IAirportMETARData }): React.ReactElement {
           data.clouds.map(cloud => (
             <div
               key={cloud.code}
-              className={`flex-between flex rounded-md p-4 pl-6 ${componentBgLighter}`}
+              className={clsx(
+                'flex-between flex rounded-md p-4 pl-6',
+                componentBgLighter
+              )}
             >
               <p className="text-2xl font-medium">
                 {METAR_CODES[cloud.code as keyof typeof METAR_CODES]}

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import DashboardItem from '@components/utilities/DashboardItem'
 import { type Loadable } from '@interfaces/common'
@@ -52,9 +53,10 @@ function IncomeExpenseCard({
             </p>
             <p>
               <span
-                className={`${
+                className={clsx(
+                  'inline-flex items-center',
                   isIncome ? 'text-green-500' : 'text-red-500'
-                } inline-flex items-center`}
+                )}
               >
                 {isIncome ? '+' : '-'} RM
                 {isAmountHidden ? (

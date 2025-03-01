@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
 import useThemeColors from '@hooks/useThemeColor'
@@ -12,7 +13,10 @@ function MailHeader({ mail }: { mail: IMailInboxEntry }): React.ReactElement {
       <div className="flex-between gap-8">
         <div className="flex items-center gap-2">
           <div
-            className={`flex-center size-10 items-center rounded-full ${componentBgLighter} border border-bg-200 bg-bg-50! dark:border-bg-700`}
+            className={clsx(
+              'flex-center size-10 items-center rounded-full border border-bg-200 bg-bg-50! dark:border-bg-700',
+              componentBgLighter
+            )}
           >
             <Icon className="size-5 text-bg-500" icon="tabler:user" />
           </div>

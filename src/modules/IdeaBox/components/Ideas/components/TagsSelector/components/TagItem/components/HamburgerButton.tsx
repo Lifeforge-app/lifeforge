@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import React, { useMemo } from 'react'
 import { IIdeaBoxTag } from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
@@ -24,7 +25,10 @@ function HamburgerButton({ tag }: { tag: IIdeaBoxTag }): React.ReactElement {
 
   return (
     <button
-      className={`hidden aspect-square h-full items-center justify-center rounded-full text-xs transition-all group-hover:flex ${hamburgerIconColor}`}
+      className={clsx(
+        'hidden aspect-square h-full items-center justify-center rounded-full text-xs transition-all group-hover:flex',
+        hamburgerIconColor
+      )}
       onClick={e => {
         e.stopPropagation()
         setExistedTag(tag)

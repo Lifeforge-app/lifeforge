@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useNavigate } from 'react-router'
 import { GoBackButton } from '@components/buttons'
@@ -66,11 +67,12 @@ function ProjectHeader({
           ].map((icon, index) => (
             <button
               key={index}
-              className={`rounded-md p-4 ${
+              className={clsx(
+                'rounded-md p-4',
                 index === 0
                   ? 'bg-bg-300/50 dark:bg-bg-700/50 dark:text-bg-50'
                   : 'text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-700/50'
-              }`}
+              )}
             >
               <Icon className="text-2xl" icon={icon} />
             </button>

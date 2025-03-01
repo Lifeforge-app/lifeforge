@@ -1,5 +1,6 @@
 import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ConfigColumn from '@components/utilities/ConfigColumn'
@@ -126,7 +127,10 @@ function FontFamilySelector(): React.ReactElement {
       >
         <div className="relative mt-1 w-full md:w-64">
           <ListboxButton
-            className={`flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left shadow-custom outline-hidden transition-all focus:outline-hidden ${componentBgWithHover}`}
+            className={clsx(
+              'flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left shadow-custom outline-hidden transition-all focus:outline-hidden',
+              componentBgWithHover
+            )}
           >
             <span
               className="-mt-px block truncate"

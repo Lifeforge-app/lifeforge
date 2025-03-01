@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
@@ -23,18 +24,22 @@ function EntryItem({
 
   return (
     <div
-      className={`flex items-start justify-between gap-4 rounded-lg p-4 shadow-custom ${componentBg}`}
+      className={clsx(
+        'flex items-start justify-between gap-4 rounded-lg p-4 shadow-custom',
+        componentBg
+      )}
     >
       <div className="flex h-full gap-4">
         <div
-          className={`h-full w-1 shrink-0 rounded-full ${
+          className={clsx(
+            'h-full w-1 shrink-0 rounded-full',
             {
               easy: 'bg-green-500',
               medium: 'bg-yellow-500',
               hard: 'bg-red-500',
               impossible: 'bg-purple-500'
             }[entry.difficulty]
-          }`}
+          )}
         />
         <div>
           <h2 className="text-lg font-semibold">{entry.title}</h2>

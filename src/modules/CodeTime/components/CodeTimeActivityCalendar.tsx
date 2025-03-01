@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 import { useTranslation } from 'react-i18next'
@@ -43,9 +44,10 @@ function CodeTimeActivityCalendar(): React.ReactElement {
       </h1>
       <div className="flex w-full items-center justify-between gap-6 overflow-x-auto">
         <div
-          className={`flex flex-1 items-center${
+          className={clsx(
+            'flex flex-1 items-center',
             Array.isArray(activities) ? 'justify-start' : 'justify-center'
-          }`}
+          )}
         >
           <APIFallbackComponent data={data}>
             {() =>
@@ -120,11 +122,12 @@ function CodeTimeActivityCalendar(): React.ReactElement {
               .map((_, index) => (
                 <button
                   key={index}
-                  className={`flex items-start gap-2 rounded-lg p-4 px-8 font-medium sm:px-12 ${
+                  className={clsx(
+                    'flex items-start gap-2 rounded-lg p-4 px-8 font-medium sm:px-12',
                     year === firstYear + index
                       ? 'bg-bg-200 font-semibold text-bg-800 dark:bg-bg-700/50 dark:text-bg-50'
                       : 'text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-700/50'
-                  }`}
+                  )}
                   onClick={() => {
                     setYear(firstYear + index)
                   }}

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import useThemeColors from '@hooks/useThemeColor'
 
@@ -17,10 +18,11 @@ function FilterChip({
 
   return (
     <span
-      className={`flex-center gap-1 rounded-full px-2 py-1 text-sm ${
+      className={clsx(
+        'flex-center gap-1 rounded-full px-2 py-1 text-sm',
         color === undefined &&
-        `text-bg-500 dark:text-bg-400 ${componentBgLighter}`
-      }`}
+          `text-bg-500 dark:text-bg-400 ${componentBgLighter}`
+      )}
       style={
         color !== undefined ? { backgroundColor: color + '20', color } : {}
       }

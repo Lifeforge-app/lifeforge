@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -20,11 +21,13 @@ function DefaultBgTempSelector({
         {COLORS.map((color, index) => (
           <button
             key={index}
-            className={`flex size-8 items-center justify-center rounded-full ${color} bg-bg-500 ring-offset-2 ring-offset-bg-50 transition-all dark:ring-offset-bg-950 ${
+            className={clsx(
+              'flex size-8 items-center justify-center rounded-full bg-bg-500 ring-offset-2 ring-offset-bg-50 transition-all dark:ring-offset-bg-950',
+              color,
               bgTemp === color
                 ? 'ring-2 ring-bg-500'
                 : 'hover:ring-2 hover:ring-bg-500'
-            }`}
+            )}
             onClick={() => {
               setBgTemp(color)
             }}

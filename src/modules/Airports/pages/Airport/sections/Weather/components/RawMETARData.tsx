@@ -4,6 +4,7 @@ import React from 'react'
 import useThemeColors from '@hooks/useThemeColor'
 import WidgetWrapper from './WidgetWrapper'
 import { IAirportMETARData } from '..'
+import clsx from 'clsx'
 
 function RawMETARData({
   data
@@ -24,7 +25,10 @@ function RawMETARData({
         </span>
       </div>
       <code
-        className={`rounded-md p-4 text-bg-500 shadow-custom ${componentBgLighter}`}
+        className={clsx(
+          'rounded-md p-4 text-bg-500 shadow-custom',
+          componentBgLighter
+        )}
       >
         {data.raw_text}
       </code>

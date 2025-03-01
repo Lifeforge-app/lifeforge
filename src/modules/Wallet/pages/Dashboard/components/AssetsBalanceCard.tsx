@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router'
@@ -39,7 +40,10 @@ function AssetsBalanceCard(): React.ReactElement {
                 {assets.map(asset => (
                   <Link
                     key={asset.id}
-                    className={`flex-between flex w-full min-w-0 flex-1 flex-col gap-4 rounded-lg p-6 shadow-custom transition-all [@media(min-width:400px)]:flex-row ${componentBgLighterWithHover}`}
+                    className={clsx(
+                      'flex-between flex w-full min-w-0 flex-1 flex-col gap-4 rounded-lg p-6 shadow-custom transition-all [@media(min-width:400px)]:flex-row',
+                      componentBgLighterWithHover
+                    )}
                     to={`/wallet/transactions?asset=${asset.id}`}
                   >
                     <div className="flex w-full min-w-0 items-center gap-4">
@@ -49,9 +53,10 @@ function AssetsBalanceCard(): React.ReactElement {
                       </div>
                     </div>
                     <div
-                      className={`flex ${
+                      className={clsx(
+                        'flex gap-2 whitespace-nowrap text-right text-3xl font-medium',
                         isAmountHidden ? 'items-center' : 'items-end'
-                      } gap-2 whitespace-nowrap text-right text-3xl font-medium`}
+                      )}
                     >
                       <span className="text-xl text-bg-500">RM</span>
                       {isAmountHidden ? (

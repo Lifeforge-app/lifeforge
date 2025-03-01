@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
@@ -28,9 +29,10 @@ function SidebarTitle({
 
   return (
     <li
-      className={`flex-between flex gap-4 ${
+      className={clsx(
+        'flex-between flex gap-4 pl-8 pr-5 pt-2 transition-all',
         actionButtonIcon !== undefined ? 'pb-2' : 'pb-4'
-      } pl-8 pr-5 pt-2 transition-all`}
+      )}
     >
       <h3 className="whitespace-nowrap text-sm font-semibold uppercase tracking-widest text-bg-600">
         {t([
@@ -41,7 +43,10 @@ function SidebarTitle({
       </h3>
       {actionButtonIcon !== undefined && (
         <button
-          className="flex items-center rounded-md p-2 text-bg-600 transition-all hover:bg-bg-100 dark:hover:bg-bg-800 dark:hover:text-bg-50"
+          className={clsx(
+            'flex items-center rounded-md p-2 text-bg-600 transition-all',
+            'hover:bg-bg-100 dark:hover:bg-bg-800 dark:hover:text-bg-50'
+          )}
           onClick={actionButtonOnClick}
         >
           <Icon className="size-5" icon={actionButtonIcon} />

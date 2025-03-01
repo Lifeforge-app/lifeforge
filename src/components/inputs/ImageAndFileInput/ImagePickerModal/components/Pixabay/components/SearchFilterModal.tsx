@@ -1,6 +1,7 @@
 import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@components/buttons'
@@ -199,11 +200,12 @@ function SearchFilterModal({
           </div>
           <Switch
             checked={filters.isEditorsChoice}
-            className={`${
+            className={clsx(
+              'relative inline-flex h-6 w-11 items-center rounded-full',
               filters.isEditorsChoice
                 ? 'bg-custom-500'
                 : 'bg-bg-300 dark:bg-bg-800'
-            } relative inline-flex h-6 w-11 items-center rounded-full`}
+            )}
             onChange={() => {
               updateFilters({
                 type: 'SET_IS_EDITORS_CHOICE',
@@ -212,11 +214,12 @@ function SearchFilterModal({
             }}
           >
             <span
-              className={`${
+              className={clsx(
+                'inline-block size-4 rounded-full transition',
                 filters.isEditorsChoice
                   ? 'translate-x-6 bg-bg-100'
                   : 'translate-x-1 bg-bg-100 dark:bg-bg-500'
-              } inline-block size-4 rounded-full transition`}
+              )}
             />
           </Switch>
         </div>

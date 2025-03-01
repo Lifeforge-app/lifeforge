@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@components/buttons'
@@ -35,7 +36,7 @@ function ModalHeader({
   const innerIcon = useDebounce(icon, 100)
 
   return (
-    <div className={`flex-between mb-4 flex gap-4 ${className}`}>
+    <div className={clsx('flex-between mb-4 flex gap-4', className)}>
       <h1 className="flex w-full min-w-0 items-center gap-3 text-2xl font-semibold">
         <Icon className="size-7 shrink-0" icon={innerIcon} />
         <span className="min-w-0 truncate">
@@ -63,11 +64,12 @@ function ModalHeader({
       <div className="flex items-center gap-2">
         {actionButtonIcon !== undefined && (
           <button
-            className={`rounded-md p-2 transition-all hover:bg-bg-100 ${
+            className={clsx(
+              'rounded-md p-2 transition-all hover:bg-bg-100 dark:hover:bg-bg-800',
               actionButtonIsRed
                 ? 'text-red-500 hover:text-red-600'
                 : 'text-bg-500 hover:text-bg-200'
-            } dark:hover:bg-bg-800`}
+            )}
             onClick={onActionButtonClick}
           >
             <Icon className="size-6" icon={actionButtonIcon} />

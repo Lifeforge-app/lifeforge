@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { Link } from 'react-router'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
@@ -20,7 +21,10 @@ function WishlistListItem({
 
   return (
     <Link
-      className={`group relative flex w-full flex-col gap-6 rounded-md p-4 ${componentBgWithHover}`}
+      className={clsx(
+        'group relative flex w-full flex-col gap-6 rounded-md p-4',
+        componentBgWithHover
+      )}
       to={`/wishlist/${list.id}`}
     >
       <div

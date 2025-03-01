@@ -3,6 +3,7 @@ import {
   ComboboxOption as HeadlessComboboxOption
 } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 
 function ListboxOrComboboxOption({
@@ -46,13 +47,15 @@ function ListboxOrComboboxOption({
       {({ selected }: { selected: boolean }) => (
         <>
           <div
-            className={`flex items-center ${
-              color !== undefined ? 'gap-3' : 'gap-2'
-            } ${selected ? 'font-semibold text-bg-800 dark:text-bg-100' : ''}`}
+            className={clsx(
+              'flex items-center',
+              color !== undefined ? 'gap-3' : 'gap-2',
+              selected && 'font-semibold text-bg-800 dark:text-bg-100'
+            )}
           >
             {icon !== undefined ? (
               <span
-                className={`rounded-md ${color !== undefined ? 'p-2' : 'pr-2'}`}
+                className={clsx('rounded-md', color ? 'p-2' : 'pr-2')}
                 style={
                   color !== undefined
                     ? {

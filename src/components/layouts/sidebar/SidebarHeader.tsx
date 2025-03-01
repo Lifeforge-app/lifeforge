@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { SearchInput } from '@components/inputs'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
@@ -15,9 +16,10 @@ function SidebarHeader({
   return (
     <>
       <div
-        className={`flex-between flex h-24 w-full shrink-0 pl-6 transition-none ${
-          !sidebarExpanded ? 'overflow-hidden' : ''
-        }`}
+        className={clsx(
+          'flex-between flex h-24 w-full shrink-0 pl-6 transition-none',
+          !sidebarExpanded && 'overflow-hidden'
+        )}
       >
         <h1 className="ml-1 flex shrink-0 items-center gap-2 whitespace-nowrap text-xl font-semibold">
           <Icon className="text-3xl text-custom-500" icon="tabler:hammer" />

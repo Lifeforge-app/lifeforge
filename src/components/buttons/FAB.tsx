@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import Button from './Button'
 
@@ -19,17 +20,16 @@ function FAB({
   return (
     <Button
       as={as ?? 'button'}
-      className={`fixed bottom-6 right-6 z-10 shadow-lg ${
-        alwaysShow
-          ? ''
-          : {
-              sm: 'sm:hidden',
-              md: 'md:hidden',
-              lg: 'lg:hidden',
-              xl: 'xl:hidden'
-            }[hideWhen] ?? ''
-      }
-      `}
+      className={clsx(
+        'fixed bottom-6 right-6 z-10 shadow-lg',
+        !alwaysShow &&
+          {
+            sm: 'sm:hidden',
+            md: 'md:hidden',
+            lg: 'lg:hidden',
+            xl: 'xl:hidden'
+          }[hideWhen]
+      )}
       icon={icon}
       onClick={onClick}
     >

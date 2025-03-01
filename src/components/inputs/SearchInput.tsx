@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
@@ -44,10 +45,12 @@ function SearchInput({
 
   return (
     <search
-      className={`flex min-h-14 w-full cursor-text items-center gap-4 rounded-lg px-4 shadow-custom transition-all
-        ${componentBgLighterWithHover} ${
-        hasTopMargin ? 'mt-4' : ''
-      } ${className}`}
+      className={clsx(
+        'flex min-h-14 w-full cursor-text items-center gap-4 rounded-lg px-4 shadow-custom transition-all',
+        componentBgLighterWithHover,
+        hasTopMargin && 'mt-4',
+        className
+      )}
       onClick={e => {
         e.currentTarget.querySelector('input')?.focus()
       }}
@@ -75,11 +78,13 @@ function SearchInput({
       />
       {onFilterIconClick !== undefined && (
         <button
-          className={`flex items-center gap-1 rounded-lg p-2 ${
+          className={clsx(
+            'flex items-center gap-1 rounded-lg p-2',
             filterAmount !== undefined && filterAmount > 0
               ? 'text-bg-900 dark:text-bg-100'
-              : 'text-bg-500 hover:text-bg-900 dark:hover:text-bg-100'
-          } transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50`}
+              : 'text-bg-500 hover:text-bg-900 dark:hover:text-bg-100',
+            'transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50'
+          )}
           onClick={onFilterIconClick}
         >
           <Icon className="text-xl" icon="tabler:filter" />

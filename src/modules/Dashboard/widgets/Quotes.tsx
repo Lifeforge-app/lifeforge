@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
@@ -22,9 +23,10 @@ export default function Quotes(): React.ReactElement {
       <APIFallbackComponent data={quote}>
         {quote => (
           <div
-            className={`text-center text-xl font-medium ${
+            className={clsx(
+              'text-center text-xl font-medium',
               isLightColor(theme) ? 'text-bg-800' : 'text-bg-50'
-            }`}
+            )}
           >
             {quote}
           </div>

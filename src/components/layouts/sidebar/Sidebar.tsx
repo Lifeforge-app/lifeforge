@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React, { useState } from 'react'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import SidebarBottomBar from './SidebarBottomBar'
@@ -13,11 +14,12 @@ function Sidebar(): React.ReactElement {
   return (
     <>
       <aside
-        className={`${
+        className={clsx(
+          'absolute left-0 top-0 z-9990 flex h-full shrink-0 flex-col overflow-hidden rounded-r-2xl bg-bg-50 shadow-custom backdrop-blur-xs transition-all duration-300 dark:bg-bg-900 lg:relative lg:bg-bg-50/50 lg:backdrop-blur-xs lg:dark:bg-bg-900/50',
           sidebarExpanded
             ? 'w-full min-w-80 sm:w-1/2 lg:w-3/12 xl:w-1/5'
             : 'w-0 min-w-0 sm:w-[5.4rem]'
-        } absolute left-0 top-0 z-9990 flex h-full shrink-0 flex-col overflow-hidden rounded-r-2xl bg-bg-50 shadow-custom backdrop-blur-xs transition-all duration-300 dark:bg-bg-900 lg:relative lg:bg-bg-50/50 lg:backdrop-blur-xs lg:dark:bg-bg-900/50`}
+        )}
       >
         <SidebarEventBanner />
         <SidebarHeader

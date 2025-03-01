@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import { useNavigate } from 'react-router'
 import { GoBackButton } from '@components/buttons'
@@ -207,7 +208,10 @@ function CFOPF2L(): React.ReactElement {
                     {subsubsection.algs.map(({ alg, pattern, warn }, i) => (
                       <div
                         key={i}
-                        className={`flex w-full items-center gap-6 rounded-md p-4 shadow-custom ${componentBg}`}
+                        className={clsx(
+                          'flex w-full items-center gap-6 rounded-md p-4 shadow-custom',
+                          componentBg
+                        )}
                       >
                         <div className="rounded-md bg-bg-800/50 p-1 pb-2">
                           <Cube pattern={pattern} />
@@ -216,9 +220,9 @@ function CFOPF2L(): React.ReactElement {
                           {alg.map((a, j) => (
                             <p
                               key={a}
-                              className={
-                                warn?.includes(j) === true ? 'text-red-400' : ''
-                              }
+                              className={clsx(
+                                warn?.includes(j) && 'text-red-400'
+                              )}
                             >
                               {a}
                             </p>

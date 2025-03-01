@@ -5,6 +5,7 @@ import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import { isLightColor } from '@utils/colors'
 import HamburgerButton from './components/HamburgerButton'
 import ItemCount from './components/ItemCount'
+import clsx from 'clsx'
 
 function TagItem({
   tag,
@@ -32,7 +33,10 @@ function TagItem({
   return (
     <div
       key={tag.id}
-      className={`group inline-flex cursor-pointer items-center gap-2 rounded-full px-3 py-1 transition-all ${tagColor}`}
+      className={clsx(
+        'group inline-flex cursor-pointer items-center gap-2 rounded-full px-3 py-1 transition-all',
+        tagColor
+      )}
       role="button"
       style={{
         backgroundColor: selectedTags.includes(tag.name) ? tag.color : ''

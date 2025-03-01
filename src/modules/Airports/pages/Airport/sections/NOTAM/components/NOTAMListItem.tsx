@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 
 function NOTAMListItem({
@@ -25,15 +26,20 @@ function NOTAMListItem({
           {data.title[1]}
         </h3>
         <span
-          className={`rounded-full px-3 py-1 text-sm font-semibold ${
+          className={clsx(
+            'rounded-full px-3 py-1 text-sm font-semibold',
             {
-              active: 'text-green-500 bg-green-500/20',
-              expired: 'text-bg-500 bg-bg-500/20',
-              scheduled: 'text-yellow-500 bg-yellow-500/20'
-            }[
-              data.status.toLowerCase() as 'active' | 'expired' | 'scheduled'
-            ] ?? 'bg-bg-500/20 text-bg-500'
-          }`}
+              'text-green-500 bg-green-500/20':
+                data.status.toLowerCase() === 'active',
+              'text-bg-500 bg-bg-500/20':
+                data.status.toLowerCase() === 'expired',
+              'text-yellow-500 bg-yellow-500/20':
+                data.status.toLowerCase() === 'scheduled'
+            },
+            !['active', 'expired', 'scheduled'].includes(
+              data.status.toLowerCase()
+            ) && 'bg-bg-500/20 text-bg-500'
+          )}
         >
           {data.status}
         </span>

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import useThemeColors from '@hooks/useThemeColor'
 
@@ -12,7 +13,11 @@ function WidgetWrapper({
 
   return (
     <div
-      className={`${className} flex size-full flex-col gap-4 rounded-lg p-6 shadow-custom ${componentBg}`}
+      className={clsx(
+        'flex size-full flex-col gap-4 rounded-lg p-6 shadow-custom',
+        componentBg,
+        className
+      )}
     >
       {children}
     </div>

@@ -5,6 +5,7 @@ import { SidebarItem } from '@components/layouts/sidebar'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { Loadable } from '@interfaces/common'
 import { IMailInboxLabel } from '@interfaces/mail_inbox_interfaces'
+import clsx from 'clsx'
 
 interface ILabelListStructure {
   label: IMailInboxLabel
@@ -121,7 +122,7 @@ function LabelChildList({
           label.children.length > 0 ? () => setCollapsed(!collapsed) : undefined
         }
       />
-      <div className={`overflow-hidden ${collapsed ? 'h-0' : 'h-auto'}`}>
+      <div className={clsx('overflow-hidden', collapsed ? 'h-0' : 'h-auto')}>
         {label.children.length > 0 && (
           <LabelList
             key={label.label.id}

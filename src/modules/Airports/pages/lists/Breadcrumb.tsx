@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { Link, useParams } from 'react-router'
 
@@ -23,17 +24,16 @@ function LinkItem({
 }): React.ReactElement {
   return (
     <Link
-      className={`transition-all ${(() => {
-        if (isHighlighted) {
-          return 'font-bold text-custom-500 hover:text-custom-600'
-        }
-
-        return `text-bg-500 ${
-          to !== ''
-            ? 'hover:text-bg-600 dark:hover:text-bg-50'
-            : 'pointer-events-none'
-        }`
-      })()}`}
+      className={clsx(
+        'transition-all',
+        isHighlighted
+          ? 'font-bold text-custom-500 hover:text-custom-600'
+          : 'text-bg-500',
+        !isHighlighted &&
+          to !== '' &&
+          'hover:text-bg-600 dark:hover:text-bg-50',
+        !isHighlighted && to === '' && 'pointer-events-none'
+      )}
       to={to}
     >
       {children}
@@ -98,9 +98,10 @@ function Breadcrumbs({
 
   return (
     <div
-      className={`${
+      className={clsx(
+        'flex items-center gap-2',
         airportID !== undefined ? 'mb-4 mt-2' : 'mt-6'
-      } flex items-center gap-2`}
+      )}
     >
       {breadcrumbItems.map(
         (item, index) =>

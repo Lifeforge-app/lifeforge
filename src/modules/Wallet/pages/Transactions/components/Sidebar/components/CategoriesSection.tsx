@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
@@ -54,21 +55,22 @@ function CategoriesSection({
                   icon={
                     <div className="relative flex size-7 items-center justify-center">
                       <Icon
-                        className={`size-6 shrink-0 ${
-                          searchParams.get('category') === id
-                            ? 'text-custom-500'
-                            : ''
-                        }`}
+                        className={clsx(
+                          'size-6 shrink-0',
+                          searchParams.get('category') === id &&
+                            'text-custom-500'
+                        )}
                         icon={icon}
                       />
                       <Icon
-                        className={`absolute -bottom-2 -right-2 size-4 shrink-0 ${
+                        className={clsx(
+                          'absolute -bottom-2 -right-2 size-4 shrink-0',
                           {
                             income: 'text-green-500',
                             expenses: 'text-red-500',
                             all: 'text-yellow-500'
                           }[type]
-                        }`}
+                        )}
                         icon={
                           {
                             income: 'tabler:login-2',

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import Button from './Button'
 
@@ -16,7 +17,7 @@ function CreateOrModifyButton({
 }): React.ReactElement {
   return (
     <Button
-      className={`mt-6 ${className}`}
+      className={clsx('mt-6', className)}
       disabled={disabled}
       icon={
         !loading && type !== null

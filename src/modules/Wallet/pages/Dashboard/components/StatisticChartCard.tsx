@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import moment from 'moment'
 import React, { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
@@ -76,10 +77,11 @@ function StatisticChardCard(): React.ReactElement {
           {['income', 'expenses'].map(type => (
             <div key={type} className="flex items-center gap-2">
               <span
-                className={`-mb-0.5 size-3 rounded-full ${
+                className={clsx(
+                  '-mb-0.5 size-3 rounded-full',
                   type === 'income' ? 'bg-green-500' : 'bg-red-500'
-                }`}
-              ></span>
+                )}
+              />
               <span className="text-sm">{t(`transactionTypes.${type}`)}</span>
             </div>
           ))}

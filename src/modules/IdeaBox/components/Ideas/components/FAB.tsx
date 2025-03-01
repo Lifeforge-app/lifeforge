@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@components/buttons'
@@ -26,16 +27,20 @@ function FAB(): React.ReactElement {
           <>
             <Button
               as={MenuButton}
-              className="relative z-10 shadow-lg"
+              className={clsx(
+                'relative z-10 shadow-lg',
+                open && 'rotate-45',
+                'transition-all'
+              )}
               icon="tabler:plus"
-              iconClassName={`${open ? 'rotate-45' : ''} transition-all`}
+              iconClassName={clsx(open && 'rotate-45', 'transition-all')}
             />
             <MenuItems
               transition
               anchor="top end"
-              className="z-9999 mb-4 rounded-lg outline-hidden transition duration-100
-              ease-out [--anchor-gap:1rem] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0
-              "
+              className={clsx(
+                'z-9999 mb-4 rounded-lg outline-hidden transition duration-100 ease-out [--anchor-gap:1rem] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0'
+              )}
             >
               {[
                 ['Folder', 'tabler:folder'],
@@ -74,14 +79,16 @@ function FAB(): React.ReactElement {
               ))}
             </MenuItems>
             <div
-              className={`fixed left-0 top-0 size-full transition-transform ${
+              className={clsx(
+                'fixed left-0 top-0 size-full transition-transform',
                 open ? 'translate-x-0 duration-0' : 'translate-x-full delay-100'
-              }`}
+              )}
             >
               <div
-                className={`size-full bg-bg-900/50 backdrop-blur-xs transition-opacity ${
+                className={clsx(
+                  'size-full bg-bg-900/50 backdrop-blur-xs transition-opacity',
                   open ? 'opacity-100' : 'opacity-0'
-                }`}
+                )}
               />
             </div>
           </>

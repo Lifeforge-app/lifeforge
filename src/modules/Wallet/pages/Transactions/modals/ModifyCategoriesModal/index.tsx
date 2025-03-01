@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -107,9 +108,10 @@ function ModifyCategoriesModal({
           }}
         />
         <div
-          className={`flex-between flex gap-4 ${
+          className={clsx(
+            'flex-between flex gap-4',
             openType === 'update' ? 'mb-4' : 'mb-2'
-          }`}
+          )}
         >
           <span className="flex items-center gap-2 font-medium text-bg-500">
             <Icon className="size-6" icon="tabler:apps" />
@@ -117,13 +119,13 @@ function ModifyCategoriesModal({
           </span>
           {openType === 'update' && (
             <div
-              className={`flex items-center gap-2 ${
+              className={clsx(
+                'flex items-center gap-2 rounded-md p-2',
                 {
                   income: 'bg-green-500/20 text-green-500',
                   expenses: 'bg-red-500/20 text-red-500'
                 }[categoryType]
-              }
-              rounded-md p-2`}
+              )}
             >
               <Icon
                 className="size-5"
@@ -179,8 +181,8 @@ function ModifyCategoriesModal({
           color={categoryColor}
           name="Category color"
           namespace="modules.wallet"
-          setColorPickerOpen={setColorPickerOpen}
           setColor={setCategoryColor}
+          setColorPickerOpen={setColorPickerOpen}
         />
         <CreateOrModifyButton
           loading={isLoading}

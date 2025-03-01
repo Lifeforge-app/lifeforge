@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import { cookieParse } from 'pocketbase'
 import React from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
@@ -200,11 +201,12 @@ function DirectoryHeader({
       />
       <div className="flex-between relative z-100 flex w-full gap-4 sm:gap-12">
         <div
-          className={`flex min-w-0 flex-1 items-center gap-4 ${
+          className={clsx(
+            'flex min-w-0 flex-1 items-center gap-4 font-semibold',
             typeof currentPath !== 'string'
               ? 'text-2xl sm:text-3xl'
               : 'text-2xl'
-          } font-semibold`}
+          )}
         >
           {(() => {
             switch (currentPath) {
@@ -241,11 +243,11 @@ function DirectoryHeader({
                           <>
                             <Link
                               key={index}
-                              className={`${
-                                index === currentPath.path.length - 1
-                                  ? 'text-custom-500'
-                                  : ''
-                              } whitespace-nowrap`}
+                              className={clsx(
+                                'whitespace-nowrap',
+                                index === currentPath.path.length - 1 &&
+                                  'text-custom-500'
+                              )}
                               to={`/notes/${currentPath.path
                                 .slice(0, index + 1)
                                 .map(path => path.id)

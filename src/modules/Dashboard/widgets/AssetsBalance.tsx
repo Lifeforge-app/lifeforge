@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useState } from 'react'
 import { Link } from 'react-router'
 import { Button } from '@components/buttons'
@@ -35,7 +36,10 @@ export default function AssetsBalance(): React.ReactElement {
             {assets.map(asset => (
               <Link
                 key={asset.id}
-                className={`flex-between flex h-full gap-4 rounded-lg bg-bg-100 p-2 pl-4 pr-0 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all ${componentBgLighterWithHover}`}
+                className={clsx(
+                  'flex-between flex h-full gap-4 rounded-lg bg-bg-100 p-2 pl-4 pr-0 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all',
+                  componentBgLighterWithHover
+                )}
                 to={'/wallet/assets'}
               >
                 <div className="flex w-full min-w-0 items-center gap-4">

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { Button } from '@components/buttons'
 
@@ -38,11 +39,12 @@ function Pagination({
         <>
           <button
             key={1}
-            className={`hidden rounded-md px-3 py-2 lg:block  ${
+            className={clsx(
+              'hidden rounded-md px-3 py-2 lg:block',
               currentPage === 1
                 ? 'font-semibold text-custom-500'
                 : 'text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800'
-            }`}
+            )}
             onClick={() => {
               onPageChange(1)
             }}
@@ -58,11 +60,12 @@ function Pagination({
       pageNumbers.push(
         <button
           key={i}
-          className={`rounded-md px-5 py-3  ${
+          className={clsx(
+            'rounded-md px-5 py-3',
             currentPage === i
               ? 'font-semibold lg:text-custom-500'
               : 'hidden text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800 lg:block'
-          }`}
+          )}
           onClick={() => {
             onPageChange(i)
           }}
@@ -85,11 +88,12 @@ function Pagination({
           )}
           <button
             key={totalPages}
-            className={`hidden rounded-md px-5 py-3 lg:block  ${
+            className={clsx(
+              'hidden rounded-md px-5 py-3 lg:block',
               currentPage === totalPages
                 ? 'font-semibold text-custom-500'
                 : 'text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800'
-            }`}
+            )}
             onClick={() => {
               onPageChange(totalPages)
             }}
@@ -104,11 +108,11 @@ function Pagination({
   }
 
   return (
-    <div className={`flex-between flex gap-2 ${className}`}>
+    <div className={clsx('flex-between flex gap-2', className)}>
       {currentPage !== 1 ? (
         <>
           <Button
-            className="hidden sm:flex w-32"
+            className={clsx('hidden sm:flex w-32')}
             disabled={currentPage === 1}
             icon="uil:angle-left"
             variant="no-bg"
@@ -121,7 +125,7 @@ function Pagination({
             Previous
           </Button>
           <Button
-            className="sm:hidden w-12"
+            className={clsx('sm:hidden w-12')}
             icon="uil:angle-left"
             variant="no-bg"
             onClick={() => {
@@ -139,7 +143,7 @@ function Pagination({
         <>
           <Button
             iconAtEnd
-            className="sm:hidden w-12"
+            className={clsx('sm:hidden w-12')}
             icon="uil:angle-right"
             variant="no-bg"
             onClick={() => {
@@ -150,7 +154,7 @@ function Pagination({
           />
           <Button
             iconAtEnd
-            className="hidden sm:flex w-32"
+            className={clsx('hidden sm:flex w-32')}
             disabled={currentPage === totalPages}
             icon="uil:angle-right"
             variant="no-bg"

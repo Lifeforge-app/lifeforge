@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { Link } from 'react-router'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
@@ -25,7 +26,10 @@ function ContainerItem({
 
   return (
     <div
-      className={`group relative flex flex-col items-center justify-start gap-6 overflow-hidden rounded-lg shadow-custom ${componentBgWithHover}`}
+      className={clsx(
+        'group relative flex flex-col items-center justify-start gap-6 overflow-hidden rounded-lg shadow-custom',
+        componentBgWithHover
+      )}
     >
       <div className="flex-center aspect-video w-full bg-bg-200 dark:bg-bg-800">
         {container.cover !== '' ? (

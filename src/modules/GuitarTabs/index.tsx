@@ -1,6 +1,7 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
@@ -197,7 +198,10 @@ function GuitarTabs(): React.ReactElement {
               }}
             >
               <ListboxButton
-                className={`flex-between mt-4 flex w-48 gap-2 rounded-md p-4 shadow-custom ${componentBgWithHover}`}
+                className={clsx(
+                  'flex-between mt-4 flex w-48 gap-2 rounded-md p-4 shadow-custom',
+                  componentBgWithHover
+                )}
               >
                 <div className="flex items-center gap-2">
                   <Icon

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React, { useMemo } from 'react'
 
 interface InputLabelProps {
@@ -34,7 +35,11 @@ const InputLabel: React.FC<InputLabelProps> = ({
 
   return (
     <span
-      className={`pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 transition-all ${labelColorClasses} ${labelPositionClasses}`}
+      className={clsx(
+        'pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 transition-all',
+        labelColorClasses,
+        labelPositionClasses
+      )}
     >
       {label}
       {required && <span className="text-red-500"> *</span>}

@@ -3,6 +3,7 @@ import React from 'react'
 import { BG_BLURS } from '@constants/bg_blurs'
 import useThemeColors from '@hooks/useThemeColor'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import clsx from 'clsx'
 
 function ResultShowcase({
   bgBrightness,
@@ -40,7 +41,10 @@ function ResultShowcase({
           }}
         />
         <div
-          className={`flex size-full flex-col gap-4 rounded-lg p-4 shadow-custom ${componentBg}`}
+          className={clsx(
+            'flex size-full flex-col gap-4 rounded-lg p-4 shadow-custom',
+            componentBg
+          )}
         >
           <h1 className="flex items-center gap-2 text-2xl font-semibold">
             <Icon className="size-8 shrink-0" icon="tabler:box" />
@@ -51,7 +55,10 @@ function ResultShowcase({
           </p>
           <div className="flex gap-4">
             <div
-              className={`flex w-full flex-col sm:flex-row ${componentBgLighter} items-start gap-4 rounded-lg p-4 sm:items-center`}
+              className={clsx(
+                'flex w-full flex-col sm:flex-row items-start gap-4 rounded-lg p-4 sm:items-center',
+                componentBgLighter
+              )}
             >
               <span className="block rounded-md bg-custom-500/20 p-4 text-custom-500">
                 <Icon className="size-8" icon="tabler:box" />

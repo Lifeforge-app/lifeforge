@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import {
   type ITodoListEntry,
@@ -14,9 +15,10 @@ function TaskCompletionCheckbox({
 }): React.ReactElement {
   return (
     <button
-      className={`flex-center relative z-50 size-5 rounded-full ring-2 ring-offset-2 ring-offset-bg-50 transition-all hover:border-custom-500 dark:ring-offset-bg-900 ${
+      className={clsx(
+        'flex-center relative z-50 size-5 rounded-full ring-2 ring-offset-2 ring-offset-bg-50 transition-all hover:border-custom-500 dark:ring-offset-bg-900',
         entry.done ? 'ring-custom-500' : 'ring-bg-200 dark:ring-bg-500'
-      }`}
+      )}
       onClick={() => {
         toggleTaskCompletion(entry.id)
       }}

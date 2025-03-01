@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
+import clsx from 'clsx'
 import moment from 'moment'
 import React, { useRef } from 'react'
 import { usePhotosContext } from '@providers/PhotosProvider.tsx'
@@ -147,9 +148,10 @@ function TimelineScrollbar(): React.ReactElement {
           ></div>
           <div
             ref={timelineDateDisplayRef}
-            className={`pointer-events-none absolute right-14 z-10 hidden rounded-t-md border-b-2 border-custom-500 bg-bg-200 p-2 text-sm shadow-md dark:bg-bg-800 sm:right-3 sm:block ${
-              isDraggingRef.current ? 'hidden!' : ''
-            }`}
+            className={clsx(
+              'pointer-events-none absolute right-14 z-10 hidden rounded-t-md border-b-2 border-custom-500 bg-bg-200 p-2 text-sm shadow-md dark:bg-bg-800 sm:right-3 sm:block',
+              isDraggingRef.current && 'hidden!'
+            )}
             style={{
               top: '-36px'
             }}

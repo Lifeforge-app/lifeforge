@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
@@ -17,11 +18,12 @@ function BookMeta({
 
   return (
     <div
-      className={`mt-4 flex w-full min-w-0 flex-wrap gap-2 text-sm text-bg-500  ${
+      className={clsx(
+        'mt-4 flex w-full min-w-0 flex-wrap gap-2 text-sm text-bg-500',
         isGridView
           ? 'flex-col sm:flex-row sm:items-center'
           : 'flex-row items-center'
-      }`}
+      )}
     >
       {typeof languages !== 'string' &&
         (() => {
@@ -41,14 +43,17 @@ function BookMeta({
                     {i !== langs.length - 1 && (
                       <Icon
                         key={`separator-${lang.id}`}
-                        className={`size-1 ${isGridView && 'hidden sm:block'}`}
+                        className={clsx(
+                          'size-1',
+                          isGridView && 'hidden sm:block'
+                        )}
                         icon="tabler:circle-filled"
                       />
                     )}
                   </div>
                 ))}
                 <Icon
-                  className={`size-1 ${isGridView && 'hidden sm:block'}`}
+                  className={clsx('size-1', isGridView && 'hidden sm:block')}
                   icon="tabler:circle-filled"
                 />
               </>
@@ -62,7 +67,7 @@ function BookMeta({
             {item.year_published}
           </p>
           <Icon
-            className={`size-1 ${isGridView && 'hidden sm:block'}`}
+            className={clsx('size-1', isGridView && 'hidden sm:block')}
             icon="tabler:circle-filled"
           />
         </>
@@ -70,9 +75,10 @@ function BookMeta({
       {item.publisher !== '' && (
         <>
           <p
-            className={`flex min-w-0 max-w-48 shrink-0 items-center whitespace-nowrap text-bg-500 ${
+            className={clsx(
+              'flex min-w-0 max-w-48 shrink-0 items-center whitespace-nowrap text-bg-500',
               isGridView ? 'w-full sm:w-auto' : 'w-auto'
-            }`}
+            )}
           >
             <Icon className="mr-1 size-4 shrink-0" icon="tabler:user" />
             <span className="w-full min-w-0 max-w-44 truncate">
@@ -80,7 +86,7 @@ function BookMeta({
             </span>
           </p>
           <Icon
-            className={`size-1 ${isGridView && 'hidden sm:block'}`}
+            className={clsx('size-1', isGridView && 'hidden sm:block')}
             icon="tabler:circle-filled"
           />
         </>
@@ -90,7 +96,7 @@ function BookMeta({
         {cleanFileSize(item.size)}
       </p>
       <Icon
-        className={`size-1 ${isGridView && 'hidden sm:block'}`}
+        className={clsx('size-1', isGridView && 'hidden sm:block')}
         icon="tabler:circle-filled"
       />
       <p className="flex shrink-0 items-center whitespace-nowrap text-bg-500">

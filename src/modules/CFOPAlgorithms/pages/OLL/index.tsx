@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import { useNavigate } from 'react-router'
 import { GoBackButton } from '@components/buttons'
@@ -37,7 +38,10 @@ function CFOPF2L(): React.ReactElement {
           return (
             <li
               key={index}
-              className={`flex w-full items-center justify-between gap-8 rounded-md p-4 shadow-custom ${componentBg}`}
+              className={clsx(
+                'flex w-full items-center justify-between gap-8 rounded-md p-4 shadow-custom',
+                componentBg
+              )}
             >
               <div className="flex items-center gap-8">
                 <div className="rounded-md bg-bg-200/70 p-2 dark:bg-bg-800/50">
@@ -47,11 +51,12 @@ function CFOPF2L(): React.ReactElement {
                       {cube.back[0].reverse().map((col, i) => (
                         <div key={i} className="flex size-5 items-end gap-0.5">
                           <div
-                            className={`h-1 w-5 rounded-full ${
+                            className={clsx(
+                              'h-1 w-5 rounded-full',
                               col === 'Y'
                                 ? 'bg-yellow-500'
                                 : 'bg-bg-400 dark:bg-bg-700'
-                            }`}
+                            )}
                           ></div>
                         </div>
                       ))}
@@ -61,30 +66,33 @@ function CFOPF2L(): React.ReactElement {
                       <div key={i} className="flex gap-0.5">
                         <div className="flex size-5 justify-end">
                           <div
-                            className={`h-5 w-1 rounded-full ${
+                            className={clsx(
+                              'h-5 w-1 rounded-full',
                               cube.left[0][i] === 'Y'
                                 ? 'bg-yellow-500'
                                 : 'bg-bg-400 dark:bg-bg-700'
-                            }`}
+                            )}
                           ></div>
                         </div>
                         {row.map((col, i) => (
                           <div
                             key={i}
-                            className={`size-5 rounded-sm ${
+                            className={clsx(
+                              'size-5 rounded-sm',
                               col === 'Y'
                                 ? 'bg-yellow-500'
                                 : 'bg-bg-400 dark:bg-bg-700'
-                            }`}
+                            )}
                           ></div>
                         ))}
                         <div className="flex size-5 justify-start">
                           <div
-                            className={`h-5 w-1 rounded-full ${
+                            className={clsx(
+                              'h-5 w-1 rounded-full',
                               cube.right[0][2 - i] === 'Y'
                                 ? 'bg-yellow-500'
                                 : 'bg-bg-400 dark:bg-bg-700'
-                            }`}
+                            )}
                           ></div>
                         </div>
                       </div>
@@ -94,11 +102,12 @@ function CFOPF2L(): React.ReactElement {
                       {cube.front[0].map((col, i) => (
                         <div key={i} className="flex size-5 items-start">
                           <div
-                            className={`h-1 w-5 rounded-full ${
+                            className={clsx(
+                              'h-1 w-5 rounded-full',
                               col === 'Y'
                                 ? 'bg-yellow-500'
                                 : 'bg-bg-400 dark:bg-bg-700'
-                            }`}
+                            )}
                           ></div>
                         </div>
                       ))}

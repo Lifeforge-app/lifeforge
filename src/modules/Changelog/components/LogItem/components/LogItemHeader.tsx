@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
 import { type IChangeLogVersion } from '@interfaces/changelog_interfaces'
@@ -17,11 +18,12 @@ function LogItemHeader({
         <span className="inline sm:hidden">)</span>
       </span>
       <div
-        className={`mx-4 hidden size-4 rounded-full bg-bg-100 dark:bg-bg-950 sm:block ${
+        className={clsx(
+          'mx-4 hidden size-4 rounded-full bg-bg-100 dark:bg-bg-950 sm:block outline outline-4 outline-bg-100 dark:outline-bg-950',
           moment(entry.date_range[1]).isAfter(moment())
             ? 'border-4 border-custom-500'
             : 'border-2 border-bg-600'
-        } outline outline-4 outline-bg-100 dark:outline-bg-950`}
+        )}
       />
       Ver. {entry.version}
     </h3>

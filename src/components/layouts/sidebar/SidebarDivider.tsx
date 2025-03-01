@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 
 function SidebarDivider({
@@ -7,9 +8,10 @@ function SidebarDivider({
 }): React.ReactElement {
   return (
     <li
-      className={`${
-        !noMargin ? 'my-4' : ''
-      } h-px shrink-0 bg-bg-200 dark:bg-bg-700/50`}
+      className={clsx(
+        'h-px shrink-0 bg-bg-200 dark:bg-bg-700/50',
+        !noMargin && 'my-4'
+      )}
     />
   )
 }

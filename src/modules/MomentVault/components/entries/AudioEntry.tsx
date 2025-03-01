@@ -1,6 +1,7 @@
 /* eslint-disable import/named */
 import { Icon } from '@iconify/react/dist/iconify.js'
 import WavesurferPlayer from '@wavesurfer/react'
+import clsx from 'clsx'
 import moment from 'moment'
 import { ListResult } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
@@ -96,7 +97,7 @@ function AudioEntry({
 
   return (
     <div
-      className={`w-full ${componentBg} rounded-md shadow-custom p-4`}
+      className={clsx('w-full rounded-md shadow-custom p-4', componentBg)}
       id={`audio-entry-${entry.id}`}
     >
       <div className="flex items-center gap-4">
@@ -105,7 +106,7 @@ function AudioEntry({
           icon={isPlaying ? 'tabler:pause' : 'tabler:play'}
           onClick={onPlayPause}
         />
-        <div className="flex w-full items-center *:first:w-full sm:flex-row gap-2 sm:gap-4 flex-col">
+        <div className="flex w-full items-center sm:flex-row gap-2 sm:gap-4 flex-col *:first:w-full">
           <WavesurferPlayer
             barGap={2}
             barRadius={100}

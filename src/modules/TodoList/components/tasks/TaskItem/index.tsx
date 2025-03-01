@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import useThemeColors from '@hooks/useThemeColor'
 import { type Loadable } from '@interfaces/common'
@@ -97,9 +98,10 @@ function TaskItem({
     <>
       <li
         key={entry.id}
-        className={`flex-between relative isolate flex gap-4 rounded-lg p-4 pl-5 pr-6 shadow-custom transition-all ${
+        className={clsx(
+          'flex-between relative isolate flex gap-4 rounded-lg p-4 pl-5 pr-6 shadow-custom transition-all',
           lighter ? 'bg-bg-100/50 dark:bg-bg-800' : componentBgWithHover
-        }`}
+        )}
       >
         <div className="flex items-center gap-4">
           {typeof lists !== 'string' && entry.list !== '' && (

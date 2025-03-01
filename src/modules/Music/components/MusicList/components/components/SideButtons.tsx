@@ -5,6 +5,7 @@ import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { IMusicEntry } from '@interfaces/music_interfaces'
 import { useMusicContext } from '@providers/MusicProvider'
 import forceDown from '@utils/forceDown'
+import clsx from 'clsx'
 
 function SideButtons({ music }: { music: IMusicEntry }): React.ReactElement {
   const {
@@ -17,11 +18,12 @@ function SideButtons({ music }: { music: IMusicEntry }): React.ReactElement {
   return (
     <div className="flex w-auto min-w-0 shrink-0 items-center justify-end sm:w-2/12">
       <button
-        className={`rounded-lg p-4 ${
+        className={clsx(
+          'rounded-lg p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50',
           music.is_favourite
             ? 'text-red-500 hover:text-red-600'
             : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
-        } transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50`}
+        )}
         onClick={() => {
           toggleFavourite(music).catch(() => {})
         }}

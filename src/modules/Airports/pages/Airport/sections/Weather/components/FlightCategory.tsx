@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import React from 'react'
 import WidgetWrapper from './WidgetWrapper'
 import { IAirportMETARData } from '..'
@@ -16,15 +17,17 @@ function FlightCategory({
       </h1>
       <div className="flex w-full flex-1 flex-col items-center justify-center">
         <div
-          className={`w-full rounded-md p-4 text-center text-3xl font-semibold tracking-widest ${
+          className={clsx(
+            'w-full rounded-md p-4 text-center text-3xl font-semibold tracking-widest',
             {
-              VFR: 'bg-green-500/20 text-green-500',
-              MVFR: 'bg-blue-500/20 text-blue-500',
-              IFR: 'bg-red-500/20 text-red-500',
-              LIFR: 'bg-purple-500/20 text-purple-500',
-              UNKN: 'bg-gray-500/20 text-gray-500'
-            }[data.flight_category]
-          }`}
+              'bg-green-500/20 text-green-500': data.flight_category === 'VFR',
+              'bg-blue-500/20 text-blue-500': data.flight_category === 'MVFR',
+              'bg-red-500/20 text-red-500': data.flight_category === 'IFR',
+              'bg-purple-500/20 text-purple-500':
+                data.flight_category === 'LIFR',
+              'bg-gray-500/20 text-gray-500': data.flight_category === 'UNKN'
+            }
+          )}
         >
           {data.flight_category}
         </div>

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import React, { useMemo } from 'react'
 import WidgetWrapper from './WidgetWrapper'
 import { IAirportMETARData } from '..'
@@ -27,7 +28,10 @@ function Ceiling({ data }: { data: IAirportMETARData }): React.ReactElement {
       </h1>
       {data.ceiling !== undefined ? (
         <div
-          className={`flex flex-1 flex-col items-center justify-center gap-2 rounded-md p-4 ${statusColor}`}
+          className={clsx(
+            'flex flex-1 flex-col items-center justify-center gap-2 rounded-md p-4',
+            statusColor
+          )}
         >
           <p className="text-center text-3xl font-medium">
             {data.ceiling.feet_agl} ft <span className="text-lg">AGL</span>

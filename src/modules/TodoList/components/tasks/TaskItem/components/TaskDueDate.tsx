@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
 import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
@@ -12,11 +13,12 @@ function TaskDueDate({ entry }: { entry: ITodoListEntry }): React.ReactElement {
       ) : (
         entry.due_date !== '' && (
           <div
-            className={`text-sm ${
+            className={clsx(
+              'text-sm',
               moment(entry.due_date).isBefore(moment())
                 ? 'text-red-500'
                 : 'text-bg-500'
-            }`}
+            )}
           >
             Due {moment(entry.due_date).fromNow()}
           </div>

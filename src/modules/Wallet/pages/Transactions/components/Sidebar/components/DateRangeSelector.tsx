@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -51,7 +52,7 @@ function DateRangeSelector(): React.ReactElement {
           <DateInput
             key={type}
             darker
-            className={`w-full ${idx === 1 && 'mt-4'}`}
+            className={clsx('w-full', idx === 1 && 'mt-4')}
             date={
               searchParams.get(type) !== null &&
               moment(searchParams.get(type)).isValid()

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { GoBackButton } from '@components/buttons'
@@ -77,11 +78,10 @@ function ContainerHeader(): React.ReactElement {
         <div className="absolute inset-0 rounded-lg bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,0.7)_80%)]"></div>
         <div className="flex-between relative z-9999 flex w-full">
           <h1
-            className={`flex items-center gap-4 ${
-              typeof pathDetails !== 'string'
-                ? 'text-2xl sm:text-3xl'
-                : 'text-2xl'
-            } font-semibold text-bg-100`}
+            className={clsx(
+              'flex items-center gap-4 font-semibold text-bg-100',
+              typeof pathDetails !== 'string' && 'text-2xl sm:text-3xl'
+            )}
           >
             {(() => {
               switch (pathDetails) {

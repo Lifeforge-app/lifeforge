@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React, { useState } from 'react'
 import { Button } from '@components/buttons'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
@@ -59,7 +60,7 @@ function OpenaiApiPricing(): React.ReactElement {
                   {Object.entries(data).map(([key, value]) => (
                     <div
                       key={key}
-                      className={`p-6 ${componentBgLighter} rounded-lg`}
+                      className={clsx('p-6', componentBgLighter, 'rounded-lg')}
                     >
                       <h2 className="relative pl-4 text-2xl font-semibold before:absolute before:left-0 before:top-0 before:h-full before:w-[4px] before:rounded-full before:bg-custom-500">
                         {key}
@@ -95,12 +96,12 @@ function OpenaiApiPricing(): React.ReactElement {
                                     ([model, items], index) => (
                                       <tr
                                         key={JSON.stringify(items)}
-                                        className={
+                                        className={clsx(
                                           index !==
-                                          Object.entries(value.data).length - 1
-                                            ? 'border-b-2 border-bg-100 dark:border-bg-800'
-                                            : ''
-                                        }
+                                            Object.entries(value.data).length -
+                                              1 &&
+                                            'border-b-2 border-bg-100 dark:border-bg-800'
+                                        )}
                                       >
                                         <td className="px-2">{model}</td>
                                         <td className="p-2">
@@ -147,9 +148,10 @@ function OpenaiApiPricing(): React.ReactElement {
                                   <th className="w-2/3 p-2 text-left text-lg font-semibold">
                                     <div className="flex">
                                       <div
-                                        className={`${
+                                        className={clsx(
+                                          'min-w-72',
                                           hasBatchPrice ? 'w-1/2' : 'w-full'
-                                        } min-w-72`}
+                                        )}
                                       >
                                         Price
                                       </div>
@@ -167,12 +169,12 @@ function OpenaiApiPricing(): React.ReactElement {
                                   ([model, prices], index) => (
                                     <tr
                                       key={model}
-                                      className={`${
+                                      className={clsx(
                                         index !==
                                           Object.entries(value.data).length -
                                             1 &&
-                                        'border-b-2 border-bg-100 dark:border-bg-800'
-                                      }`}
+                                          'border-b-2 border-bg-100 dark:border-bg-800'
+                                      )}
                                     >
                                       <td className="px-2">{model}</td>
                                       <td className="p-2">
@@ -213,18 +215,19 @@ function OpenaiApiPricing(): React.ReactElement {
                                                     return (
                                                       <>
                                                         <td
-                                                          className={`${
+                                                          className={clsx(
+                                                            'text-bg-700 dark:text-bg-300',
                                                             hasBatchPrice
                                                               ? 'w-1/2'
                                                               : 'w-full'
-                                                          } text-bg-700 dark:text-bg-300`}
+                                                          )}
                                                         >
                                                           {formatPrice(
                                                             e.single
                                                           )}
                                                         </td>
                                                         {hasBatchPrice && (
-                                                          <td className=" text-bg-700 dark:text-bg-300">
+                                                          <td className="text-bg-700 dark:text-bg-300">
                                                             {formatPrice(
                                                               e.batch
                                                             )}

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React, { useMemo } from 'react'
 import { useParams } from 'react-router'
 import { IIdeaBoxTag } from '@interfaces/ideabox_interfaces'
@@ -27,7 +28,9 @@ function ItemCount({
   }, [selectedTags, tag])
 
   return (
-    <span className={`ml-[5px] text-xs group-hover:hidden ${tagCountColor}`}>
+    <span
+      className={clsx('ml-[5px] text-xs group-hover:hidden', tagCountColor)}
+    >
       {path === '' && debouncedSearchQuery.trim().length === 0
         ? tag.count
         : count}

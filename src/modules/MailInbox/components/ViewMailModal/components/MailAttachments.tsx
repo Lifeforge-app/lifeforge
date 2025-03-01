@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import React from 'react'
 import FILE_ICONS from '@constants/file_icons'
 import useThemeColors from '@hooks/useThemeColor'
@@ -23,7 +24,10 @@ function MailAttachments({
       </h3>
       <div className="mt-4 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
         {mail.attachments?.map((attachment, index) => (
-          <div key={index} className={`gap-2 p-4 ${componentBg} shadow-custom`}>
+          <div
+            key={index}
+            className={clsx('gap-2 p-4 shadow-custom', componentBg)}
+          >
             <div className="flex-center aspect-square w-full">
               {[
                 'jpg',

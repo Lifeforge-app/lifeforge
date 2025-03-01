@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { toCamelCase } from '@utils/strings'
@@ -28,9 +29,10 @@ function TableHeader({
             (visibleColumn.includes(column) || column === '') && (
               <th
                 key={column}
-                className={`p-2 font-medium ${
-                  column === 'Particulars' ? 'text-left' : ''
-                }`}
+                className={clsx(
+                  'p-2 font-medium',
+                  column === 'Particulars' && 'text-left'
+                )}
               >
                 {column !== '' && t(`table.${toCamelCase(column)}`)}
               </th>

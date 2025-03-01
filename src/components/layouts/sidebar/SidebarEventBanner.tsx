@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import moment from 'moment'
 import React, { useMemo } from 'react'
 import useThemeColors from '@hooks/useThemeColor'
@@ -66,7 +67,11 @@ const SidebarEventBanner = (): React.ReactElement => {
 
   return (
     <div
-      className={`flex-between flex w-full gap-2 whitespace-nowrap rounded-tr-2xl ${bgColor} p-4 text-lg font-medium ${textColor}`}
+      className={clsx(
+        'flex-between flex w-full gap-2 whitespace-nowrap rounded-tr-2xl p-4 text-lg font-medium',
+        bgColor,
+        textColor
+      )}
     >
       <div className="flex w-full min-w-0 items-center gap-3">
         {eventType === 'christmas' && (

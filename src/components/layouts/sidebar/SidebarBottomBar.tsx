@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import React from 'react'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
@@ -18,15 +19,17 @@ function SidebarBottomBar(): React.ReactElement {
 
   return (
     <div
-      className={`flex-center w-full min-w-0 pb-4 pt-0 ${
+      className={clsx(
+        'flex-center w-full min-w-0 pb-4 pt-0',
         sidebarExpanded && 'px-4'
-      }`}
+      )}
     >
       <Menu as="div" className="relative w-full min-w-0">
         <MenuButton
-          className={`flex-between w-full min-w-0 gap-8 text-left ${
+          className={clsx(
+            'flex-between w-full min-w-0 gap-8 text-left rounded-md p-4',
             sidebarExpanded && componentBgLighterWithHover
-          } rounded-md p-4`}
+          )}
         >
           <div className="flex-center w-full min-w-0 gap-3">
             <div className="flex size-9 items-center justify-center overflow-hidden rounded-full bg-bg-100 dark:bg-bg-800">
@@ -41,9 +44,10 @@ function SidebarBottomBar(): React.ReactElement {
               )}
             </div>
             <div
-              className={`${
+              className={clsx(
+                'w-full min-w-0 flex-col items-start',
                 sidebarExpanded ? 'flex' : 'hidden'
-              } w-full min-w-0 flex-col items-start`}
+              )}
             >
               <div className="font-semibold ">{userData?.name}</div>
               <div className="w-full min-w-0 truncate text-sm text-bg-500">
@@ -52,9 +56,10 @@ function SidebarBottomBar(): React.ReactElement {
             </div>
           </div>
           <Icon
-            className={`size-5 shrink-0 stroke-[2px] text-bg-500 ${
+            className={clsx(
+              'size-5 shrink-0 stroke-[2px] text-bg-500',
               sidebarExpanded ? 'flex' : 'hidden'
-            }`}
+            )}
             icon="ph:caret-up-down-bold"
           />
         </MenuButton>

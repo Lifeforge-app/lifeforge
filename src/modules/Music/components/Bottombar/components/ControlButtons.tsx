@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import { toast } from 'react-toastify'
 import { useMusicContext } from '@providers/MusicProvider'
@@ -27,14 +28,13 @@ export default function ControlButtons({
   }
 
   return (
-    <div className={`flex-center gap-2 ${!isWidget ? 'xl:w-1/3' : ''}`}>
+    <div className={clsx('flex-center gap-2', !isWidget && 'xl:w-1/3')}>
       {(isFull || !isWidget) && (
         <IconButton
-          className={
-            isShuffle
-              ? 'text-custom-500 hover:text-custom-600'
-              : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
-          }
+          className={clsx(
+            'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50',
+            isShuffle && 'text-custom-500 hover:text-custom-600'
+          )}
           icon="uil:shuffle"
           onClick={() => {
             setIsShuffle(!isShuffle)
@@ -65,11 +65,10 @@ export default function ControlButtons({
       />
       {(isFull || !isWidget) && (
         <IconButton
-          className={
-            isRepeat
-              ? 'text-custom-500 hover:text-custom-600'
-              : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
-          }
+          className={clsx(
+            'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50',
+            isRepeat && 'text-custom-500 hover:text-custom-600'
+          )}
           icon="uil:repeat"
           onClick={() => {
             setIsRepeat(!isRepeat)

@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
@@ -32,11 +33,12 @@ function Header({
       />
       <div className="flex-between w-full min-w-0 gap-8">
         <h1
-          className={`flex items-center gap-4 ${
+          className={clsx(
+            'flex items-center gap-4 w-full min-w-0 font-semibold',
             typeof wishlistListDetails !== 'string'
               ? 'text-2xl sm:text-3xl'
               : 'text-2xl'
-          } w-full min-w-0 font-semibold`}
+          )}
         >
           {(() => {
             switch (wishlistListDetails) {

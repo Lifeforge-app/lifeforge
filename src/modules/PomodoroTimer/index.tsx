@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -28,7 +29,7 @@ export default function PomodoroTimer(): React.ReactElement {
       <div className="mt-6 flex w-full flex-1">
         <Timer />
         <TodoListProvider>
-          <aside className={`mb-16 w-2/6 rounded-lg p-6 ${componentBg}`}>
+          <aside className={clsx('mb-16 w-2/6 rounded-lg p-6', componentBg)}>
             <h1 className="mb-8 flex items-center gap-2 text-xl font-semibold">
               <Icon className="text-2xl" icon="tabler:clipboard-list" />
               <span className="ml-2">{t('title')}</span>
@@ -36,7 +37,7 @@ export default function PomodoroTimer(): React.ReactElement {
             <Scrollbar>
               <APIFallbackComponent data={entries}>
                 {entries => (
-                  <div className="flex flex-1 flex-col ">
+                  <div className="flex flex-1 flex-col">
                     <ul className="flex flex-1 flex-col gap-4 pb-24 sm:pb-8">
                       {entries.length > 0 ? (
                         entries.map(entry => (

@@ -1,5 +1,6 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router'
 import {
@@ -237,7 +238,10 @@ function ChangiFlightStatus(): React.ReactElement {
           }}
         >
           <ListboxButton
-            className={`flex-between flex w-48 gap-2 rounded-md p-4 shadow-custom ${componentBgWithHover}`}
+            className={clsx(
+              'flex-between flex w-48 gap-2 rounded-md p-4 shadow-custom',
+              componentBgWithHover
+            )}
           >
             <div className="flex items-center gap-2">
               <Icon
@@ -245,13 +249,13 @@ function ChangiFlightStatus(): React.ReactElement {
                 icon={
                   SEARCH_TYPE.find(
                     ([, , value]) => value === searchParams.get('type')
-                  )?.[1] ?? 'tabler:plane-departure'
+                  )?.[1] || 'tabler:plane-departure'
                 }
               />
               <span className="whitespace-nowrap font-medium">
                 {SEARCH_TYPE.find(
                   ([, , value]) => value === searchParams.get('type')
-                )?.[0] ?? 'Departure'}
+                )?.[0] || 'Departure'}
               </span>
             </div>
             <Icon className="size-5 text-bg-500" icon="tabler:chevron-down" />
@@ -314,9 +318,11 @@ function ChangiFlightStatus(): React.ReactElement {
                   >
                     <td className="whitespace-nowrap p-2 text-center">
                       <div
-                        className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm ${
-                          STATUSES[flight.flight_status]?.[0]
-                        } ${STATUSES[flight.flight_status]?.[2]}`}
+                        className={clsx(
+                          'inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm',
+                          STATUSES[flight.flight_status]?.[0],
+                          STATUSES[flight.flight_status]?.[2]
+                        )}
                       >
                         <Icon
                           className="size-4"

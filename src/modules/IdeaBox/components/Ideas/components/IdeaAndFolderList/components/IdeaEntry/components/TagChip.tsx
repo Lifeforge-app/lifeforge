@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
 import React, { useMemo } from 'react'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import { isLightColor } from '@utils/colors'
@@ -31,7 +32,10 @@ function TagChip({ text }: { text: string }): React.ReactElement {
 
   return (
     <div
-      className={`flex items-center rounded-full px-3 py-1 text-sm shadow-xs ${tagColor}`}
+      className={clsx(
+        'flex items-center rounded-full px-3 py-1 text-sm shadow-xs',
+        tagColor
+      )}
       style={{
         backgroundColor: metadata !== undefined && active ? metadata.color : ''
       }}

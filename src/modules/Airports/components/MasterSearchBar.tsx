@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { SearchInput } from '@components/inputs'
@@ -71,9 +72,10 @@ function MasterSearchBar(): React.ReactElement {
       />
       {debouncedMasterSearchQuery.length >= 3 && (
         <div
-          className={`absolute z-50 mt-4 flex w-full flex-col rounded-md border-bg-800 bg-bg-50 shadow-custom dark:border-2 dark:bg-bg-900 ${
+          className={clsx(
+            'absolute z-50 mt-4 flex w-full flex-col rounded-md border-bg-800 bg-bg-50 shadow-custom dark:border-2 dark:bg-bg-900',
             typeof searchResults === 'string' && 'pt-6'
-          }`}
+          )}
         >
           <APIFallbackComponent data={searchResults}>
             {searchResults => (
@@ -88,9 +90,10 @@ function MasterSearchBar(): React.ReactElement {
                       >
                         <div className="flex items-center gap-4">
                           <Icon
-                            className={`size-7 ${
+                            className={clsx(
+                              'size-7',
                               AIRPORT_TYPES[airport.type][0]
-                            }`}
+                            )}
                             icon={AIRPORT_TYPES[airport.type][1]}
                           />
                           <div>

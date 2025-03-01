@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
@@ -36,7 +37,10 @@ function EntryItem({
   return (
     <a
       key={entry.id}
-      className={`block rounded-lg p-4 shadow-custom transition-all ${componentBgWithHover}`}
+      className={clsx(
+        'block rounded-lg p-4 shadow-custom transition-all',
+        componentBgWithHover
+      )}
       href={`${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
         entry.id
       }/${entry.pdf}`}
@@ -95,7 +99,7 @@ function EntryItem({
         <div className="w-full min-w-0">
           <div className="flex items-center gap-2">
             <h3 className="truncate text-lg font-medium">{entry.name}</h3>
-            {entry.type !== '' && (
+            {entry.type && (
               <Icon
                 className="size-5 shrink-0 text-bg-500"
                 icon={
@@ -114,12 +118,12 @@ function EntryItem({
             )}
           </div>
           <p className="truncate text-sm text-bg-500">
-            {entry.author !== '' ? entry.author : 'Unknown'}
+            {entry.author || 'Unknown'}
           </p>
         </div>
         <div className="flex items-center gap-2">
           <DownloadMenu entry={entry} />
-          {entry.audio !== '' && (
+          {entry.audio && (
             <AudioPlayer
               url={`${import.meta.env.VITE_API_HOST}/media/${
                 entry.collectionId

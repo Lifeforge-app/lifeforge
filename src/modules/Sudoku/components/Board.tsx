@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import { type SudokuBoard } from '@interfaces/sudoku_interfaces'
 
@@ -10,20 +11,22 @@ function Board({ data }: { data: SudokuBoard }): React.ReactElement {
           .map((_, j) => (
             <div
               key={j}
-              className={`${
+              className={clsx(
+                'grid size-full grid-rows-9',
                 ![2, 5, 8].includes(j) &&
-                'border-r border-zinc-500 print:border-zinc-400!'
-              } grid size-full grid-rows-9`}
+                  'border-r border-zinc-500 print:border-zinc-400!'
+              )}
             >
               {Array(9)
                 .fill(0)
                 .map((_, k) => (
                   <div
                     key={k}
-                    className={`${
+                    className={clsx(
+                      'size-full',
                       ![2, 5, 8].includes(k) &&
-                      'border-b border-zinc-500 print:border-zinc-400!'
-                    } size-full`}
+                        'border-b border-zinc-500 print:border-zinc-400!'
+                    )}
                   >
                     {data.mission[k * 9 + j] !== '0' && (
                       <div className="flex size-full items-center justify-center text-lg">

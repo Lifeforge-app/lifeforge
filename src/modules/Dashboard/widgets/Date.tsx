@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import moment from 'moment/min/moment-with-locales'
 import React, { useRef } from 'react'
 import useThemeColors from '@hooks/useThemeColor'
@@ -13,20 +14,21 @@ export default function DateWidget(): React.ReactElement {
   return (
     <div
       ref={ref}
-      className={`flex size-full gap-4 rounded-lg bg-custom-500 p-4 ${
-        isLightColor(theme) ? 'text-bg-800' : 'text-bg-50'
-      } shadow-custom ${
+      className={clsx(
+        'flex size-full gap-4 rounded-lg bg-custom-500 p-4 shadow-custom',
+        isLightColor(theme) ? 'text-bg-800' : 'text-bg-50',
         (ref.current?.offsetHeight ?? 0) < 240
           ? 'flex-row items-end'
           : 'flex-col items-start justify-end'
-      }`}
+      )}
     >
       <span
-        className={`flex aspect-square items-center justify-center rounded-md bg-bg-100 ${
+        className={clsx(
+          'flex aspect-square items-center justify-center rounded-md bg-bg-100 font-semibold text-custom-500 shadow-inner dark:bg-bg-900',
           (ref.current?.offsetHeight ?? 0) < 160
             ? 'h-full text-4xl'
             : 'p-8 text-6xl'
-        } font-semibold text-custom-500 shadow-inner dark:bg-bg-900`}
+        )}
       >
         {moment().format('DD')}
       </span>

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 
 function SidebarItemIcon({
@@ -14,7 +15,7 @@ function SidebarItemIcon({
         <>
           {typeof icon === 'string' ? (
             <Icon
-              className={`size-6 shrink-0 ${active ? 'text-custom-500' : ''}`}
+              className={clsx('size-6 shrink-0', active && 'text-custom-500')}
               icon={icon}
             />
           ) : (

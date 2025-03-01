@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { Link, useParams } from 'react-router'
@@ -99,9 +100,11 @@ function FolderItem({
         dragRef(stuff)
         drop(stuff)
       }}
-      className={`flex-between relative isolate flex rounded-md p-4 shadow-custom backdrop-blur-xs before:absolute before:left-0 before:top-0 before:size-full before:rounded-md before:transition-all hover:before:bg-white/5 ${
-        isOver ? 'text-bg-50 dark:text-bg-800' : ''
-      } ${isDragging ? 'cursor-move' : ''} font-medium transition-all`}
+      className={clsx(
+        'flex-between relative isolate flex rounded-md p-4 shadow-custom backdrop-blur-xs before:absolute before:left-0 before:top-0 before:size-full before:rounded-md before:transition-all hover:before:bg-white/5 font-medium transition-all',
+        isOver && 'text-bg-50 dark:text-bg-800',
+        isDragging && 'cursor-move'
+      )}
       style={{
         backgroundColor:
           folder.color +

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
@@ -106,12 +107,15 @@ function TransactionsCountCard(): React.ReactElement {
               ).map(([type, color]) => (
                 <Link
                   key={type}
-                  className={`flex-between flex flex-col gap-4 rounded-md p-4 transition-all sm:flex-row ${componentBgLighterWithHover}`}
+                  className={clsx(
+                    'flex-between flex flex-col gap-4 rounded-md p-4 transition-all sm:flex-row',
+                    componentBgLighterWithHover
+                  )}
                   to={`/wallet/transactions?type=${type}`}
                 >
                   <div className="flex w-full items-center gap-4">
                     <div
-                      className={`rounded-md ${color} size-4 shrink-0`}
+                      className={clsx('rounded-md size-4 shrink-0', color)}
                     ></div>
                     <div className="flex flex-col">
                       <div className="font-semibold ">
@@ -124,9 +128,10 @@ function TransactionsCountCard(): React.ReactElement {
                   </div>
                   <div className="flex w-full flex-row items-center justify-between sm:w-auto sm:flex-col sm:items-end">
                     <div
-                      className={`flex gap-2 whitespace-nowrap text-right font-medium ${
+                      className={clsx(
+                        'flex gap-2 whitespace-nowrap text-right font-medium',
                         isAmountHidden ? 'items-center' : 'items-end'
-                      }`}
+                      )}
                     >
                       {{
                         income: '+',

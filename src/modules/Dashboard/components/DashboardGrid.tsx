@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 
@@ -105,7 +106,7 @@ function DashboardGrid({
     </div>
   ) : (
     <RGL
-      className={`pt-6 ${canLayoutChange ? 'pb-64' : ''}`}
+      className={clsx('pt-6', canLayoutChange && 'pb-64')}
       cols={
         {
           lg: 8,
@@ -130,7 +131,7 @@ function DashboardGrid({
             .flat()
         )
       ].map(widgetId => (
-        <div key={widgetId} className={canLayoutChange ? 'cursor-move' : ''}>
+        <div key={widgetId} className={clsx(canLayoutChange && 'cursor-move')}>
           {(() => {
             const Component = COMPONENTS[widgetId as keyof typeof COMPONENTS]
             return <Component />

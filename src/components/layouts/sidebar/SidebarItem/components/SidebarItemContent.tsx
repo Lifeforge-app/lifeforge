@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
@@ -52,15 +53,21 @@ function SidebarItemContent({
           ))}
         {number !== undefined && (
           <span
-            className={`pr-2 text-sm ${(() => {
-              if (isMenuOpen || (onCancelButtonClick !== undefined && active)) {
-                return 'hidden'
-              }
-
-              return hamburgerMenuItems !== undefined
-                ? 'group-hover:hidden'
-                : 'block'
-            })()}`}
+            className={clsx(
+              'pr-2 text-sm',
+              (() => {
+                if (
+                  isMenuOpen ||
+                  (onCancelButtonClick !== undefined && active)
+                ) {
+                  return 'hidden'
+                } else if (hamburgerMenuItems !== undefined) {
+                  return 'group-hover:hidden'
+                } else {
+                  return 'block'
+                }
+              })()
+            )}
           >
             {number.toLocaleString()}
           </span>
@@ -69,9 +76,10 @@ function SidebarItemContent({
       {!active && hamburgerMenuItems !== undefined && (
         <HamburgerMenu
           smallerPadding
-          className={`relative overscroll-contain ${
-            !isMenuOpen ? 'hidden group-hover:block' : ''
-          }`}
+          className={clsx(
+            'relative overscroll-contain',
+            !isMenuOpen && 'hidden group-hover:block'
+          )}
           onButtonClick={e => {
             e.stopPropagation()
             setIsMenuOpen(true)

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React, { useEffect, useRef } from 'react'
 import useThemeColors from '@hooks/useThemeColor'
 import { algsetAlgs } from '../../algorithms/PLL'
@@ -91,7 +92,10 @@ function AlgEntry({
 
   return (
     <li
-      className={`flex w-full items-center justify-between gap-8 rounded-md p-4 shadow-custom ${componentBg}`}
+      className={clsx(
+        'flex w-full items-center justify-between gap-8 rounded-md p-4 shadow-custom',
+        componentBg
+      )}
     >
       <div className="flex items-center gap-8">
         <div className="rounded-md bg-bg-200/70 p-2 dark:bg-bg-800/50">
@@ -101,9 +105,10 @@ function AlgEntry({
               {cube.back[0].reverse().map((col, i) => (
                 <div key={i} className="flex size-5 items-end gap-0.5">
                   <div
-                    className={`h-1 w-5 rounded-full ${
+                    className={clsx(
+                      'h-1 w-5 rounded-full',
                       COLORS[col as keyof typeof COLORS]
-                    }`}
+                    )}
                   ></div>
                 </div>
               ))}
@@ -113,9 +118,10 @@ function AlgEntry({
               <div key={i} className="flex gap-0.5">
                 <div className="flex size-5 justify-end">
                   <div
-                    className={`h-5 w-1 rounded-full ${
+                    className={clsx(
+                      'h-5 w-1 rounded-full',
                       COLORS[cube.left[0][i] as keyof typeof COLORS]
-                    }`}
+                    )}
                   ></div>
                 </div>
                 {row.map((col, j) => (
@@ -124,16 +130,18 @@ function AlgEntry({
                     ref={el => {
                       refs.current[i * 3 + j] = el
                     }}
-                    className={`size-5 rounded-sm ${
+                    className={clsx(
+                      'size-5 rounded-sm',
                       col === 'Y' ? 'bg-yellow-500' : 'bg-bg-700'
-                    }`}
+                    )}
                   ></div>
                 ))}
                 <div className="flex size-5 justify-start">
                   <div
-                    className={`h-5 w-1 rounded-full ${
+                    className={clsx(
+                      'h-5 w-1 rounded-full',
                       COLORS[cube.right[0][2 - i] as keyof typeof COLORS]
-                    }`}
+                    )}
                   ></div>
                 </div>
               </div>
@@ -143,9 +151,10 @@ function AlgEntry({
               {cube.front[0].map((col, i) => (
                 <div key={i} className="flex size-5 items-start">
                   <div
-                    className={`h-1 w-5 rounded-full ${
+                    className={clsx(
+                      'h-1 w-5 rounded-full',
                       COLORS[col as keyof typeof COLORS]
-                    }`}
+                    )}
                   ></div>
                 </div>
               ))}

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { Link, useParams } from 'react-router'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
@@ -24,10 +25,16 @@ function SubjectItem({
 
   return (
     <div
-      className={`group relative flex size-full flex-col items-center rounded-lg p-8 shadow-custom transition-all ${componentBgWithHover}`}
+      className={clsx(
+        'group relative flex size-full flex-col items-center rounded-lg p-8 shadow-custom transition-all',
+        componentBgWithHover
+      )}
     >
       <Icon
-        className="pointer-events-none z-10 size-20 shrink-0 transition-all group-hover:text-custom-500"
+        className={clsx(
+          'pointer-events-none z-10 size-20 shrink-0 transition-all',
+          'group-hover:text-custom-500'
+        )}
         icon={subject.icon}
       />
       <h2 className="mt-6 text-center text-2xl font-medium uppercase tracking-widest">
