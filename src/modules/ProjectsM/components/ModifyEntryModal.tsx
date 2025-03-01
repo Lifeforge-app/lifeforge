@@ -57,7 +57,7 @@ function ModifyEntryModal(): React.ReactElement {
     }
   )
 
-  const FIELDS: IFieldProps[] = [
+  const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',
       type: 'text',

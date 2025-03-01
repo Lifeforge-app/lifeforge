@@ -91,7 +91,7 @@ function APIKeys(): React.ReactElement {
 
     return (
       <>
-        <div className="mt-6 flex-1">
+        <div className="mt-8 flex-1">
           <APIFallbackComponent data={entries}>
             {entries => (
               <>
