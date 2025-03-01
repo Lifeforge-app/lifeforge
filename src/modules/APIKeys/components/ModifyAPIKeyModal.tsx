@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { CreateOrModifyButton } from '@components/buttons'
-import { IconInput, IconPickerModal, TextInput } from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import { type IAPIKeyEntry } from '@interfaces/api_keys_interfaces'
+import Modal from '@components/modals/Modal'
+import {
+  IAPIKeyFormState,
+  type IAPIKeyEntry
+} from '@interfaces/api_keys_interfaces'
+import { IFieldProps } from '@interfaces/modal_interfaces'
 import { decrypt, encrypt } from '@utils/encryption'
 import APIRequest from '@utils/fetchData'
 import { fetchChallenge } from '../utils/fetchChallenge'
@@ -22,38 +23,65 @@ function ModifyAPIKeyModal({
   masterPassword: string
 }): React.ReactElement {
   const { t } = useTranslation('modules.apiKeys')
-  const [id, setId] = useState('')
-  const [name, setName] = useState('')
-  const [icon, setIcon] = useState('')
-  const [description, setDescription] = useState('')
-  const [key, setKey] = useState('')
-  const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [formState, setFormState] = useState<IAPIKeyFormState>({
+    id: '',
+    name: '',
+    description: '',
+    icon: '',
+    key: ''
+  })
+
+  const FIELDS: IFieldProps<IAPIKeyFormState>[] = [
+    {
+      icon: 'tabler:id',
+      type: 'text',
+      placeholder: 'id-of-the-api-key',
+      label: 'Key ID',
+      id: 'id'
+    },
+    {
+      icon: 'tabler:key',
+      type: 'text',
+      placeholder: 'My API Key',
+      label: 'Key Name',
+      id: 'name'
+    },
+    {
+      icon: 'tabler:info-circle',
+      type: 'text',
+      placeholder: 'A short description of this key',
+      label: 'Key Description',
+      id: 'description'
+    },
+    {
+      type: 'icon',
+      label: 'Key Icon',
+      id: 'icon'
+    },
+    {
+      icon: 'tabler:key',
+      type: 'text',
+      isPassword: true,
+      placeholder: '••••••••••••••••',
+      label: 'API Key',
+      id: 'key'
+    }
+  ]
 
   async function onSubmit(): Promise<void> {
-    if (
-      id.trim() === '' ||
-      name.trim() === '' ||
-      key.trim() === '' ||
-      icon.trim() === '' ||
-      description.trim() === ''
-    ) {
+    if (Object.values(formState).some(value => value === '')) {
       toast.error(t('input.error.fieldEmpty'))
       return
     }
-    setLoading(true)
 
-    const challenge = await fetchChallenge(setLoading)
+    const challenge = await fetchChallenge()
 
-    const encryptedKey = encrypt(key, masterPassword)
+    const encryptedKey = encrypt(formState.key, masterPassword)
     const encryptedMaster = encrypt(masterPassword, challenge)
 
     const encryptedEverything = encrypt(
       JSON.stringify({
-        id,
-        name,
-        description,
-        icon,
+        ...formState,
         key: encryptedKey,
         master: encryptedMaster
       }),
@@ -70,9 +98,6 @@ function ModifyAPIKeyModal({
       failureInfo: openType,
       callback: () => {
         onClose()
-      },
-      finalCallback: () => {
-        setLoading(false)
       }
     })
   }
@@ -88,7 +113,10 @@ function ModifyAPIKeyModal({
       callback(data) {
         const decryptedKey = decrypt(data.data, challenge)
         const decryptedSecondTime = decrypt(decryptedKey, masterPassword)
-        setKey(decryptedSecondTime)
+        setFormState({
+          ...formState,
+          key: decryptedSecondTime
+        })
       },
       onFailure: () => {
         console.error('Failed to fetch key')
@@ -98,90 +126,38 @@ function ModifyAPIKeyModal({
 
   useEffect(() => {
     if (openType === 'update' && existingData !== null) {
-      setId(existingData.keyId)
-      setName(existingData.name)
-      setDescription(existingData.description)
-      setIcon(existingData.icon)
+      setFormState({
+        id: existingData.keyId,
+        name: existingData.name,
+        description: existingData.description,
+        icon: existingData.icon,
+        key: ''
+      })
       fetchKey().catch(console.error)
     } else {
-      setId('')
-      setName('')
-      setDescription('')
-      setIcon('')
-      setKey('')
+      setFormState({
+        id: '',
+        name: '',
+        description: '',
+        icon: '',
+        key: ''
+      })
     }
   }, [openType])
 
   return (
-    <>
-      <ModalWrapper isOpen={openType !== null} minWidth="40vw">
-        <ModalHeader
-          icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-          namespace="modules.apiKeys"
-          title={`apiKey.${openType}`}
-          onClose={onClose}
-        />
-        <TextInput
-          darker
-          icon="tabler:id"
-          name="Key ID"
-          namespace="modules.apiKeys"
-          placeholder="IdOfTheAPIKey"
-          setValue={setId}
-          value={id}
-        />
-        <TextInput
-          darker
-          className="mt-4"
-          icon="tabler:key"
-          name="Key Name"
-          namespace="modules.apiKeys"
-          placeholder="My API Key"
-          setValue={setName}
-          value={name}
-        />
-        <TextInput
-          darker
-          className="mt-4"
-          icon="tabler:info-circle"
-          name="Key Description"
-          namespace="modules.apiKeys"
-          placeholder="A short description of this key"
-          setValue={setDescription}
-          value={description}
-        />
-        <IconInput
-          icon={icon}
-          name="Key Icon"
-          namespace="modules.apiKeys"
-          setIcon={setIcon}
-          setIconSelectorOpen={setIconSelectorOpen}
-        />
-        <TextInput
-          darker
-          isPassword
-          className="mt-4"
-          icon="tabler:key"
-          name="API Key"
-          namespace="modules.apiKeys"
-          placeholder="••••••••••••••••"
-          setValue={setKey}
-          value={key}
-        />
-        <CreateOrModifyButton
-          loading={loading}
-          type={openType === 'create' ? 'create' : 'update'}
-          onClick={() => {
-            onSubmit().catch(console.error)
-          }}
-        />
-      </ModalWrapper>
-      <IconPickerModal
-        isOpen={iconSelectorOpen}
-        setOpen={setIconSelectorOpen}
-        setSelectedIcon={setIcon}
-      />
-    </>
+    <Modal
+      data={formState}
+      fields={FIELDS}
+      icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
+      isOpen={openType !== null}
+      namespace="modules.apiKeys"
+      openType={openType}
+      setData={setFormState}
+      title={`apiKey.${openType}`}
+      onClose={onClose}
+      onSubmit={onSubmit}
+    />
   )
 }
 

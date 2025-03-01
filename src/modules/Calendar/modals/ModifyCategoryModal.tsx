@@ -35,7 +35,7 @@ function ModifyCategoryModal({
     }
   )
 
-  const FIELDS: IFieldProps[] = [
+  const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',
       label: 'Category name',

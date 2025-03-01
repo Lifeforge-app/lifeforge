@@ -40,7 +40,7 @@ function ModifyEntryModal({
     }
   )
 
-  const FIELDS: IFieldProps[] = [
+  const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'list',
       label: 'Wishlist Name',

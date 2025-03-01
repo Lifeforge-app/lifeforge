@@ -19,7 +19,7 @@ import { type IFieldProps } from '@interfaces/modal_interfaces'
 import ModalHeader from './ModalHeader'
 import ModalWrapper from './ModalWrapper'
 
-function Modal({
+function Modal<T extends Record<string, any | any[]>>({
   modalRef,
   fields,
   data,
@@ -40,27 +40,9 @@ function Modal({
   namespace
 }: {
   modalRef?: React.RefObject<HTMLDivElement | null>
-  fields: IFieldProps[]
-  data: Record<
-    string,
-    | string
-    | string[]
-    | {
-        image: string | File | null
-        preview: string | null
-      }
-  >
-  setData: (
-    data: Record<
-      string,
-      | string
-      | string[]
-      | {
-          image: string | File | null
-          preview: string | null
-        }
-    >
-  ) => void
+  fields: IFieldProps<T>[]
+  data: T
+  setData: React.Dispatch<React.SetStateAction<T>>
   title: string
   icon: string
   isOpen: boolean
@@ -111,15 +93,16 @@ function Modal({
                   case 'text':
                     return (
                       <TextInput
-                        key={field.id}
+                        key={field.id as string}
                         darker
                         disabled={field.disabled}
                         icon={field.icon}
+                        isPassword={field.isPassword}
                         name={field.label}
                         namespace={namespace}
                         placeholder={field.placeholder}
                         setValue={value => {
-                          setData({ [field.id]: value })
+                          setData(prev => ({ ...prev, [field.id]: value }))
                         }}
                         value={selectedData as string}
                       />
@@ -127,7 +110,7 @@ function Modal({
                   case 'date':
                     return (
                       <DateInput
-                        key={field.id}
+                        key={field.id as string}
                         darker
                         date={selectedData as string}
                         icon={field.icon}
@@ -136,20 +119,20 @@ function Modal({
                         name={field.label}
                         namespace={namespace}
                         setDate={(date: string) => {
-                          setData({ [field.id]: date })
+                          setData(prev => ({ ...prev, [field.id]: date }))
                         }}
                       />
                     )
                   case 'listbox':
                     return (
                       <ListboxOrComboboxInput
-                        key={field.id}
+                        key={field.id as string}
                         buttonContent={
                           field.multiple === true &&
                           Array.isArray(selectedData) ? (
                             <>
                               {selectedData.length > 0 ? (
-                                selectedData.map((item, i) => (
+                                selectedData.map((item: string, i: number) => (
                                   <>
                                     <Icon
                                       key={item}
@@ -226,7 +209,7 @@ function Modal({
                         name={field.label}
                         namespace={namespace}
                         setValue={(value: string | string[]) => {
-                          setData({ [field.id]: value })
+                          setData(prev => ({ ...prev, [field.id]: value }))
                         }}
                         type="listbox"
                         value={selectedData}
@@ -251,30 +234,30 @@ function Modal({
                   case 'color':
                     return (
                       <ColorInput
-                        key={field.id}
+                        key={field.id as string}
                         color={selectedData as string}
                         name={field.label}
                         namespace={namespace}
-                        setColorPickerOpen={() => {
-                          setColorPickerOpen(field.id)
-                        }}
                         setColor={value => {
-                          setData({ [field.id]: value })
+                          setData(prev => ({ ...prev, [field.id]: value }))
+                        }}
+                        setColorPickerOpen={() => {
+                          setColorPickerOpen(field.id as string)
                         }}
                       />
                     )
                   case 'icon':
                     return (
                       <IconInput
-                        key={field.id}
+                        key={field.id as string}
                         icon={selectedData as string}
                         name={field.label}
                         namespace={namespace}
                         setIcon={value => {
-                          setData({ [field.id]: value })
+                          setData(prev => ({ ...prev, [field.id]: value }))
                         }}
                         setIconSelectorOpen={() => {
-                          setIconSelectorOpen(field.id)
+                          setIconSelectorOpen(field.id as string)
                         }}
                       />
                     )
@@ -301,7 +284,8 @@ function Modal({
                           ).preview
                         }
                         setImage={value => {
-                          setData({
+                          setData(prev => ({
+                            ...prev,
                             [field.id]: {
                               ...(selectedData as {
                                 image: string | File | null
@@ -309,14 +293,15 @@ function Modal({
                               }),
                               image: value
                             }
-                          })
+                          }))
                         }}
                         setImagePickerModalOpen={() => {
-                          setImagePickerModalOpen(field.id)
+                          setImagePickerModalOpen(field.id as string)
                           field.onFileRemoved?.()
                         }}
                         setPreview={value => {
-                          setData({
+                          setData(prev => ({
+                            ...prev,
                             [field.id]: {
                               ...(selectedData as {
                                 image: string | File | null
@@ -324,15 +309,16 @@ function Modal({
                               }),
                               preview: value
                             }
-                          })
+                          }))
                         }}
                         onImageRemoved={() => {
-                          setData({
+                          setData(prev => ({
+                            ...prev,
                             [field.id]: {
                               image: null,
                               preview: null
                             }
-                          })
+                          }))
                         }}
                       />
                     )
@@ -372,9 +358,10 @@ function Modal({
           color={(data[colorPickerOpen ?? ''] as string) ?? '#FFFFFF'}
           isOpen={colorPickerOpen !== null}
           setColor={value => {
-            setData({
+            setData(prev => ({
+              ...prev,
               [colorPickerOpen ?? '']: value
-            })
+            }))
           }}
           setOpen={() => {
             setColorPickerOpen(null)
@@ -388,9 +375,10 @@ function Modal({
             setIconSelectorOpen(null)
           }}
           setSelectedIcon={value => {
-            setData({
+            setData(prev => ({
+              ...prev,
               [iconSelectorOpen ?? '']: value
-            })
+            }))
           }}
         />
       )}
@@ -406,12 +394,13 @@ function Modal({
             setImagePickerModalOpen(null)
           }}
           onSelect={async (file, preview) => {
-            setData({
+            setData(prev => ({
+              ...prev,
               [imagePickerModalOpen ?? '']: {
                 image: file,
                 preview
               }
-            })
+            }))
           }}
         />
       )}

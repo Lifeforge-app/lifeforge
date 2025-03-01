@@ -37,7 +37,7 @@ function ModifyAchievementModal({
     }
   )
 
-  const FIELDS: IFieldProps[] = [
+  const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'title',
       label: 'Achievement title',

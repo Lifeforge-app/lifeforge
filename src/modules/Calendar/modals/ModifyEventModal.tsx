@@ -52,7 +52,7 @@ function ModifyEventModal({
   )
   const ref = useRef<HTMLInputElement>(null)
 
-  const FIELDS: IFieldProps[] = [
+  const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'title',
       label: 'Event title',

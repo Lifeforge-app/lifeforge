@@ -41,7 +41,7 @@ function ModifyBookModal(): React.ReactElement {
     }
   )
 
-  const FIELDS: IFieldProps[] = [
+  const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'md5',
       label: 'MD5',

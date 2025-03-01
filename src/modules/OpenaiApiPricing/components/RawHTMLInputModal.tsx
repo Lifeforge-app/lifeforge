@@ -21,7 +21,7 @@ function RawHTMLInputModal({
       raw: ''
     }
   )
-  const FIELDS: IFieldProps[] = [
+  const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'raw',
       label: 'raw html',

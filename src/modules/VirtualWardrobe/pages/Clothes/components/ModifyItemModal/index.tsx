@@ -4,7 +4,7 @@ import { ImagePickerModal } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import {
-  IVirtualWardrobeFormData,
+  IVirtualWardrobeFormState,
   type IVirtualWardrobeEntry
 } from '@interfaces/virtual_wardrobe_interfaces'
 import APIRequest from '@utils/fetchData'
@@ -30,7 +30,7 @@ function ModifyItemModal({
   const [frontPreview, setFrontPreview] = useState<string | null>(null)
   const [backPreview, setBackPreview] = useState<string | null>(null)
 
-  const [formState, setFormState] = useState<IVirtualWardrobeFormData>({
+  const [formState, setFormState] = useState<IVirtualWardrobeFormState>({
     name: '',
     category: '',
     subcategory: '',
@@ -46,7 +46,7 @@ function ModifyItemModal({
   >(null)
   const [submitButtonLoading, setSubmitButtonLoading] = useState<boolean>(false)
 
-  function handleChange(field: keyof IVirtualWardrobeFormData) {
+  function handleChange(field: keyof IVirtualWardrobeFormState) {
     return (value: string | string[]): void => {
       setFormState({ ...formState, [field]: value })
     }

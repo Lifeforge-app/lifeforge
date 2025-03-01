@@ -7,7 +7,7 @@ import {
   ListboxOrComboboxOption
 } from '@components/inputs'
 import VW_COLORS from '@constants/virtual_wardrobe_colors'
-import { IVirtualWardrobeFormData } from '@interfaces/virtual_wardrobe_interfaces'
+import { IVirtualWardrobeFormState } from '@interfaces/virtual_wardrobe_interfaces'
 
 function AdditionalInfoSection({
   step,
@@ -23,9 +23,9 @@ function AdditionalInfoSection({
   submitButtonLoading: boolean
   onSubmitButtonClick: () => Promise<void>
   openType: 'create' | 'update' | null
-  formState: IVirtualWardrobeFormData
+  formState: IVirtualWardrobeFormState
   handleChange: (
-    field: keyof IVirtualWardrobeFormData
+    field: keyof IVirtualWardrobeFormState
   ) => (value: string | string[]) => void
 }): React.ReactElement {
   return (
