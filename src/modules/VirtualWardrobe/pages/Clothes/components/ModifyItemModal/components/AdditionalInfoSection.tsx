@@ -7,35 +7,26 @@ import {
   ListboxOrComboboxOption
 } from '@components/inputs'
 import VW_COLORS from '@constants/virtual_wardrobe_colors'
+import { IVirtualWardrobeFormData } from '@interfaces/virtual_wardrobe_interfaces'
 
 function AdditionalInfoSection({
   step,
   setStep,
-  size,
-  setSize,
-  colors,
-  setColors,
-  price,
-  setPrice,
-  notes,
-  setNotes,
   submitButtonLoading,
   onSubmitButtonClick,
-  openType
+  openType,
+  formState,
+  handleChange
 }: {
   step: number
   setStep: (value: number) => void
-  size: string
-  setSize: (value: string) => void
-  colors: string[]
-  setColors: (value: string[]) => void
-  price: string
-  setPrice: (value: string) => void
-  notes: string
-  setNotes: (value: string) => void
   submitButtonLoading: boolean
   onSubmitButtonClick: () => Promise<void>
   openType: 'create' | 'update' | null
+  formState: IVirtualWardrobeFormData
+  handleChange: (
+    field: keyof IVirtualWardrobeFormData
+  ) => (value: string | string[]) => void
 }): React.ReactElement {
   return (
     <>
@@ -47,15 +38,15 @@ function AdditionalInfoSection({
           name="Size"
           namespace="modules.virtualWardrobe"
           placeholder='e.g. "M", "10"'
-          updateValue={setSize}
-          value={size}
+          setValue={handleChange('size')}
+          value={formState.size}
         />
         <ListboxOrComboboxInput
           multiple
           required
           buttonContent={
             <div className="flex items-center gap-2">
-              {colors.map(color => (
+              {formState.colors.map(color => (
                 <span
                   key={color}
                   className="size-4 rounded-full"
@@ -66,13 +57,13 @@ function AdditionalInfoSection({
               ))}
             </div>
           }
-          customActive={colors.length > 0}
+          customActive={formState.colors.length > 0}
           icon="tabler:palette"
           name="Color"
           namespace="modules.virtualWardrobe"
-          setValue={setColors}
+          setValue={handleChange('colors')}
           type="listbox"
-          value={colors}
+          value={formState.colors}
         >
           {VW_COLORS.map(color => (
             <ListboxOrComboboxOption
@@ -89,19 +80,15 @@ function AdditionalInfoSection({
           name="Price"
           namespace="modules.virtualWardrobe"
           placeholder='e.g. "100.00"'
-          updateValue={value => {
-            setPrice(value ?? '')
-          }}
-          value={price}
+          setValue={handleChange('price')}
+          value={formState.price}
         />
         <div className="mt-4 size-full rounded-lg bg-bg-200/70 p-6 shadow-custom transition-all focus-within:ring-1 focus-within:ring-bg-300 dark:bg-bg-800/50 dark:focus-within:ring-bg-500">
           <textarea
             className="h-max min-h-32 w-full resize-none bg-transparent caret-custom-500 placeholder:text-bg-500"
             placeholder="Any additional notes?"
-            value={notes}
-            onChange={e => {
-              setNotes(e.target.value)
-            }}
+            value={formState.notes}
+            onChange={e => handleChange('notes')(e.target.value)}
           />
         </div>
       </div>
@@ -116,7 +103,7 @@ function AdditionalInfoSection({
           Previous
         </Button>
         <Button
-          disabled={size === '' || colors.length === 0}
+          disabled={formState.size === '' || formState.colors.length === 0}
           icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
           loading={submitButtonLoading}
           onClick={() => {

@@ -116,7 +116,7 @@ function ModifyAlbumModal({
         name="Album name"
         namespace="modules.photos"
         placeholder="My lovely album"
-        updateValue={setAlbumName}
+        setValue={setAlbumName}
         value={albumName}
         onKeyDown={e => {
           if (e.key === 'Enter') {

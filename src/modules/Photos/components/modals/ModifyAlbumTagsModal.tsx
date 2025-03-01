@@ -115,7 +115,7 @@ function ModifyAlbumTagsModal({
         name="Tag name"
         namespace="modules.photos"
         placeholder="My lovely tag"
-        updateValue={setTagName}
+        setValue={setTagName}
         value={tagName}
         onKeyDown={e => {
           if (e.key === 'Enter') {

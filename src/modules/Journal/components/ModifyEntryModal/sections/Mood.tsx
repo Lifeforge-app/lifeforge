@@ -89,7 +89,7 @@ function Mood({
                 name="Mood of the day"
                 namespace="modules.journal"
                 placeholder="How do you feel?"
-                updateValue={value => {
+                setValue={value => {
                   setMood({ ...mood, text: value })
                 }}
                 value={mood.text}
@@ -101,7 +101,7 @@ function Mood({
                 name="Emoji"
                 namespace="modules.journal"
                 placeholder="Emoji"
-                updateValue={value => {
+                setValue={value => {
                   setMood({ ...mood, emoji: value })
                 }}
                 value={mood.emoji}

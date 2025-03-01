@@ -74,7 +74,7 @@ function GuitarWorldModal({
             name="cookie"
             namespace="modules.guitarTabs"
             placeholder="Cookie from Guitar World"
-            updateValue={setCookie}
+            setValue={setCookie}
             value={cookie}
           />
           <Button

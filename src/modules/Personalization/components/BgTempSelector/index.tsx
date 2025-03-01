@@ -50,7 +50,7 @@ function BgTempSelector(): React.ReactElement {
               name="Color Hex"
               namespace="modules.personalization"
               setColorPickerOpen={setColorPickerModalOpen}
-              updateColor={setCustomBgTemp}
+              setColor={setCustomBgTemp}
             />
             {bgTemp !== customBgTemp &&
               customBgTemp.match(/^#[0-9A-F]{6}$/i) !== null && (

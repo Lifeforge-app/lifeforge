@@ -11,7 +11,7 @@ function CurrencyInputComponent({
   placeholder,
   icon,
   value,
-  updateValue,
+  setValue,
   darker = false,
   className = '',
   required,
@@ -22,7 +22,7 @@ function CurrencyInputComponent({
   placeholder: string
   icon: string
   value: string | undefined
-  updateValue: (value: string | undefined) => void
+  setValue: (value: string) => void
   darker?: boolean
   className?: string
   required?: boolean
@@ -47,7 +47,7 @@ function CurrencyInputComponent({
           name={name}
           placeholder={placeholder}
           value={value}
-          onValueChange={updateValue}
+          onValueChange={value => setValue(value ?? '')}
         />
       </div>
     </InputWrapper>

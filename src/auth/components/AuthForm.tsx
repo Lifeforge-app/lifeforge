@@ -54,7 +54,7 @@ function AuthForm(): React.ReactElement {
             placeholder: t('common.auth:inputs.emailOrUsername.placeholder'),
             icon: 'tabler:user',
             value: emailOrUsername,
-            updateValue: setEmail,
+            setValue: setEmail,
             inputMode: 'email'
           },
           {
@@ -62,7 +62,7 @@ function AuthForm(): React.ReactElement {
             placeholder: '••••••••••••••••',
             icon: 'tabler:key',
             value: password,
-            updateValue: setPassword
+            setValue: setPassword
           }
         ] as const
       ).map((input, index) => (

@@ -77,7 +77,7 @@ function ModifyModal({
           name={title}
           namespace="modules.accountSettings"
           placeholder={`Enter new ${title}`}
-          updateValue={setValue}
+          setValue={setValue}
           value={value}
           onKeyDown={e => {
             if (e.key === 'Enter') {

@@ -154,7 +154,7 @@ function ModuleItem({
                         name={property.name}
                         namespace="modules.modules"
                         placeholder={property.placeholder}
-                        updateValue={() => {}}
+                        setValue={() => {}}
                         value={''}
                       />
                     )

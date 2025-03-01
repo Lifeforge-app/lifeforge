@@ -94,7 +94,7 @@ function CreatePasswordScreen({
           namespace="common.vault"
           placeholder="••••••••••••••••"
           tKey="vault"
-          updateValue={setNewPassword}
+          setValue={setNewPassword}
           value={newPassword}
           onActionButtonClick={() => {
             const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -125,7 +125,7 @@ function CreatePasswordScreen({
           namespace="common.vault"
           placeholder="••••••••••••••••"
           tKey="vault"
-          updateValue={setConfirmPassword}
+          setValue={setConfirmPassword}
           value={confirmPassword}
           onKeyDown={e => {
             if (e.key === 'Enter') {

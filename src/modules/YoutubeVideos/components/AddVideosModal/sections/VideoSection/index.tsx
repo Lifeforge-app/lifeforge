@@ -122,7 +122,7 @@ function VideoSection({
         name="Video URL"
         namespace="modules.youtubeVideos"
         placeholder="https://www.youtube.com/watch?v=..."
-        updateValue={setVideoUrl}
+        setValue={setVideoUrl}
         value={videoUrl}
       />
       {URL_REGEX.test(debouncedVideoUrl) && (

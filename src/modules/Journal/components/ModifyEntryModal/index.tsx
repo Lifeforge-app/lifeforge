@@ -162,7 +162,7 @@ function ModifyJournalEntryModal({
         name="Journal Title"
         namespace="modules.journal"
         placeholder="A Beautiful Day"
-        updateValue={setTitle}
+        setValue={setTitle}
         value={title}
         onActionButtonClick={() => {
           generateTitle().catch(console.error)
