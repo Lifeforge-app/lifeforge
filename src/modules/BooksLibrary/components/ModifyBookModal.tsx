@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
-import Modal from '@components/modals/Modal'
+import FormModal from '@components/modals/FormModal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import APIRequest from '@utils/fetchData'
@@ -173,7 +173,7 @@ function ModifyBookModal(): React.ReactElement {
   }, [existedData])
 
   return (
-    <Modal
+    <FormModal
       data={data}
       fields={FIELDS}
       icon="tabler:pencil"

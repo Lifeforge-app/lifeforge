@@ -5,7 +5,7 @@ import React, { useEffect, useReducer, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import Modal from '@components/modals/Modal'
+import FormModal from '@components/modals/FormModal'
 import ErrorScreen from '@components/screens/ErrorScreen'
 import LoadingScreen from '@components/screens/LoadingScreen'
 import {
@@ -158,7 +158,7 @@ function ModifyEventModal({
 
   return (
     <>
-      <Modal
+      <FormModal
         actionButtonIsRed
         actionButtonIcon="tabler:trash"
         data={data}
