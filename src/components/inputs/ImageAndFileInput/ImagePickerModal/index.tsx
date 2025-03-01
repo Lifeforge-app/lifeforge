@@ -53,7 +53,7 @@ function ImagePickerModal({
   acceptedMimeTypes: Record<string, string[]>
   onSelect: (file: string | File, preview: string | null) => Promise<void>
 }): React.ReactElement {
-  const { t } = useTranslation('common.misc')
+  const { t } = useTranslation('common.modals')
   const [file, setFile] = useState<File | string | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
   const [mode, setMode] = useState<'local' | 'url' | 'pixabay'>('local')
@@ -74,7 +74,7 @@ function ImagePickerModal({
       <ModalWrapper className="overflow-hidden" isOpen={isOpen} minWidth="70vw">
         <ModalHeader
           icon="tabler:photo"
-          title="Image Selector"
+          title="imagePicker.title"
           onClose={onClose}
         />
         {(enablePixaBay || enableUrl) && (
@@ -87,17 +87,17 @@ function ImagePickerModal({
             )}
             items={[
               {
-                name: t('imageUpload.pixabay'),
+                name: t('imagePicker.pixabay'),
                 icon: 'tabler:upload',
                 id: 'local'
               },
               {
-                name: t('imageUpload.url'),
+                name: t('imagePicker.url'),
                 icon: 'tabler:link',
                 id: 'url'
               },
               {
-                name: t('imageUpload.pixabay'),
+                name: t('imagePicker.pixabay'),
                 icon: 'simple-icons:pixabay',
                 id: 'pixabay'
               }

@@ -1,11 +1,12 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 import COLOR from 'tailwindcss/colors'
 import FormModal from '@components/modals/FormModal'
-import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
+import {
+  IAchievementFormState,
+  type IAchievementEntry
+} from '@interfaces/achievements_interfaces'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
-import APIRequest from '@utils/fetchData'
 
 const difficulties = [
   ['easy', 'green'],
@@ -17,27 +18,22 @@ const difficulties = [
 function ModifyAchievementModal({
   openType,
   setOpenType,
-  updateAchievementList,
   existedData,
   currentDifficulty
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  updateAchievementList: () => void
   existedData: IAchievementEntry | null
-  currentDifficulty: string
+  currentDifficulty: IAchievementEntry['difficulty']
 }): React.ReactElement {
   const { t } = useTranslation('modules.achievements')
-  const [data, setData] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      title: '',
-      thoughts: '',
-      difficulty: ''
-    }
-  )
+  const [formState, setFormState] = useState<IAchievementFormState>({
+    title: '',
+    thoughts: '',
+    difficulty: 'easy'
+  })
 
-  const FIELDS: IFieldProps<typeof data>[] = [
+  const FIELDS: IFieldProps<typeof formState>[] = [
     {
       id: 'title',
       label: 'Achievement title',
@@ -65,40 +61,11 @@ function ModifyAchievementModal({
     }
   ]
 
-  async function onSubmitButtonClick(): Promise<void> {
-    const { title, thoughts, difficulty } = data
-    if (
-      title.trim().length === 0 ||
-      thoughts.trim().length === 0 ||
-      difficulty.trim().length === 0
-    ) {
-      toast.error(t('input.error.fieldEmpty'))
-      return
-    }
-
-    await APIRequest({
-      endpoint:
-        'achievements/entries' +
-        (openType === 'update' ? `/${existedData?.id}` : ''),
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: data,
-      successInfo: openType,
-      failureInfo: openType,
-      callback: () => {
-        setOpenType(null)
-        updateAchievementList()
-      },
-      onFailure: () => {
-        setOpenType(null)
-      }
-    })
-  }
-
   useEffect(() => {
     if (openType === 'update' && existedData !== null) {
-      setData(existedData)
+      setFormState(existedData)
     } else {
-      setData({
+      setFormState({
         title: '',
         thoughts: '',
         difficulty: currentDifficulty
@@ -108,7 +75,8 @@ function ModifyAchievementModal({
 
   return (
     <FormModal
-      data={data}
+      data={formState}
+      endpoint="achievements/entries"
       fields={FIELDS}
       icon={
         {
@@ -116,15 +84,16 @@ function ModifyAchievementModal({
           update: 'tabler:pencil'
         }[openType!]
       }
+      id={existedData?.id}
       isOpen={openType !== null}
       namespace="modules.achievements"
       openType={openType}
-      setData={setData}
+      queryKey={['achievements/entries', currentDifficulty]}
+      setData={setFormState}
       title={`achievement.${openType}`}
       onClose={() => {
         setOpenType(null)
       }}
-      onSubmit={onSubmitButtonClick}
     />
   )
 }

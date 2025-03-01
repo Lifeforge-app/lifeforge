@@ -2,16 +2,12 @@ import React from 'react'
 import { CreateOrModifyButton, Button } from '@components/buttons'
 
 function SubmitButton({
-  submitButtonLabel,
-  submitButtonIcon,
-  submitButtonIconAtEnd,
+  submitButtonProps,
   submitLoading,
   openType,
   onSubmitButtonClick
 }: {
-  submitButtonLabel: string
-  submitButtonIcon?: string
-  submitButtonIconAtEnd?: boolean
+  submitButtonProps: React.ComponentProps<typeof Button>
   submitLoading: boolean
   openType?: 'create' | 'update' | null
   onSubmitButtonClick: () => Promise<void>
@@ -29,15 +25,12 @@ function SubmitButton({
       ) : (
         <Button
           className="mt-4"
-          icon={submitButtonIcon ?? ''}
-          iconAtEnd={submitButtonIconAtEnd}
+          {...submitButtonProps}
           loading={submitLoading}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-        >
-          {submitButtonLabel}
-        </Button>
+        />
       )}
     </>
   )

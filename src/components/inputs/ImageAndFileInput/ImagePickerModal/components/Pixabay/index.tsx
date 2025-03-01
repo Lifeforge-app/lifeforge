@@ -81,10 +81,11 @@ function Pixabay({
             ].filter(e => e).length
           }
           hasTopMargin={false}
-          namespace="common.misc"
+          namespace="common.modals"
           searchQuery={query}
           setSearchQuery={setQuery}
-          stuffToSearch="imageUpload.items.pixabay"
+          stuffToSearch="pixabay"
+          tKey="pixabay"
           onFilterIconClick={() => {
             setIsSearchFilterModalOpen(true)
           }}
@@ -127,8 +128,8 @@ function Pixabay({
                   <EmptyStateScreen
                     icon="simple-icons:pixabay"
                     name="pixabay"
-                    namespace="common.misc"
-                    tKey="imageUpload"
+                    namespace="common.modals"
+                    tKey="imagePicker"
                   />
                 </div>
               )
@@ -137,8 +138,8 @@ function Pixabay({
                 <EmptyStateScreen
                   icon="tabler:photo-off"
                   name="result"
-                  namespace="common.misc"
-                  tKey="imageUpload"
+                  namespace="common.modals"
+                  tKey="imagePicker"
                 />
               ) : (
                 <SearchResults

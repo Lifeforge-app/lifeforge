@@ -6,4 +6,10 @@ interface IAchievementEntry extends BasePBCollection {
   difficulty: 'easy' | 'medium' | 'hard' | 'impossible'
 }
 
-export type { IAchievementEntry }
+interface IAchievementFormState {
+  title: string
+  thoughts: string
+  difficulty: 'easy' | 'medium' | 'hard' | 'impossible'
+}
+
+export type { IAchievementEntry, IAchievementFormState }

@@ -1,23 +1,27 @@
+import { useQuery } from '@tanstack/react-query'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button, FAB } from '@components/buttons'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import useFetch from '@hooks/useFetch'
+import QueryWrapper from '@components/screens/QueryWrapper'
 import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
+import APIRequestV2 from '@utils/newFetchData'
 import DifficultySelector from './components/DifficultySelector'
 import EntryItem from './components/EntryItem'
 import ModifyAchievementModal from './ModifyAchievementModal'
 
 function Achievements(): React.ReactElement {
   const { t } = useTranslation('modules.achievements')
-  const [selectedDifficulty, setSelectedDifficulty] = React.useState('easy')
-  const [entries, refreshEntries] = useFetch<IAchievementEntry[]>(
-    'achievements/entries/' + selectedDifficulty
-  )
+  const [selectedDifficulty, setSelectedDifficulty] =
+    useState<IAchievementEntry['difficulty']>('impossible')
+  const entriesQuery = useQuery<IAchievementEntry[]>({
+    queryKey: ['achievements/entries', selectedDifficulty],
+    queryFn: () => APIRequestV2(`achievements/entries/${selectedDifficulty}`)
+  })
+
   const [modifyAchievementModalOpenType, setModifyAchievementModalOpenType] =
     useState<'create' | 'update' | null>(null)
   const [existedData, setExistedData] = useState<IAchievementEntry | null>(null)
@@ -51,7 +55,7 @@ function Achievements(): React.ReactElement {
         selectedDifficulty={selectedDifficulty}
         setSelectedDifficulty={setSelectedDifficulty}
       />
-      <APIFallbackComponent data={entries}>
+      <QueryWrapper query={entriesQuery}>
         {entries =>
           entries.length > 0 ? (
             <div className="mt-6 space-y-4">
@@ -83,13 +87,12 @@ function Achievements(): React.ReactElement {
             />
           )
         }
-      </APIFallbackComponent>
+      </QueryWrapper>
       <ModifyAchievementModal
         currentDifficulty={selectedDifficulty}
         existedData={existedData}
         openType={modifyAchievementModalOpenType}
         setOpenType={setModifyAchievementModalOpenType}
-        updateAchievementList={refreshEntries}
       />
       <DeleteConfirmationModal
         apiEndpoint="achievements/entries"
@@ -97,13 +100,13 @@ function Achievements(): React.ReactElement {
         isOpen={deleteAchievementConfirmationModalOpen}
         itemName="achievement"
         nameKey="title"
-        updateDataLists={refreshEntries}
+        queryKey={['achievements/entries', selectedDifficulty]}
         onClose={() => {
           setExistedData(null)
           setDeleteAchievementConfirmationModalOpen(false)
         }}
       />
-      {typeof entries !== 'string' && entries.length > 0 && (
+      {entriesQuery.isSuccess && entriesQuery.data.length > 0 && (
         <FAB
           hideWhen="md"
           onClick={() => {
