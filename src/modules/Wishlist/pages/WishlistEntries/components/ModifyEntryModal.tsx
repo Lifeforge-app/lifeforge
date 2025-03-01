@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import Modal from '@components/modals/Modal'
+import FormModal from '@components/modals/FormModal'
 import { type Loadable } from '@interfaces/common'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import {
@@ -204,7 +204,7 @@ function ModifyEntryModal({
   }, [openType, existedData])
 
   return (
-    <Modal
+    <FormModal
       data={data}
       fields={FIELDS}
       icon={

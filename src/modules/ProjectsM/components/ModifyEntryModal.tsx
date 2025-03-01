@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
-import Modal from '@components/modals/Modal'
+import FormModal from '@components/modals/FormModal'
 import ErrorScreen from '@components/screens/ErrorScreen'
 import LoadingScreen from '@components/screens/LoadingScreen'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
@@ -27,22 +27,6 @@ function ModifyEntryModal(): React.ReactElement {
     visibilities: { data: visibilities },
     technologies: { data: technologies }
   } = useProjectsMContext()
-
-  if (
-    [categories, statuses, visibilities, technologies].some(
-      data => data === 'error'
-    )
-  ) {
-    return <ErrorScreen message="Failed to fetch data" />
-  }
-
-  if (
-    [categories, statuses, visibilities, technologies].some(
-      data => data === 'loading'
-    )
-  ) {
-    return <LoadingScreen />
-  }
 
   const [data, setData] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -147,6 +131,22 @@ function ModifyEntryModal(): React.ReactElement {
     }
   }, [openType, existedData])
 
+  if (
+    [categories, statuses, visibilities, technologies].some(
+      data => data === 'error'
+    )
+  ) {
+    return <ErrorScreen message="Failed to fetch data" />
+  }
+
+  if (
+    [categories, statuses, visibilities, technologies].some(
+      data => data === 'loading'
+    )
+  ) {
+    return <LoadingScreen />
+  }
+
   async function onSubmitButtonClick(): Promise<void> {
     const { name, icon, color, category, status, visibility } = data
     if (
@@ -178,7 +178,7 @@ function ModifyEntryModal(): React.ReactElement {
   }
 
   return (
-    <Modal
+    <FormModal
       data={data}
       fields={FIELDS}
       icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}

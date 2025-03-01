@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
-import Modal from '@components/modals/Modal'
+import FormModal from '@components/modals/FormModal'
 import useFetch from '@hooks/useFetch'
 import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
@@ -188,7 +188,7 @@ function AddToLibraryModal({
   }, [fetchedData, languages])
 
   return (
-    <Modal
+    <FormModal
       data={data}
       fields={FIELDS}
       icon="majesticons:book-plus-line"
