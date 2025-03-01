@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import Modal from '@components/modals/Modal'
+import FormModal from '@components/modals/FormModal'
 import {
   IAPIKeyFormState,
   type IAPIKeyEntry
@@ -30,6 +30,7 @@ function ModifyAPIKeyModal({
     icon: '',
     key: ''
   })
+  const [isFetchingKey, setIsFetchingKey] = useState(true)
 
   const FIELDS: IFieldProps<IAPIKeyFormState>[] = [
     {
@@ -120,6 +121,9 @@ function ModifyAPIKeyModal({
       },
       onFailure: () => {
         console.error('Failed to fetch key')
+      },
+      finalCallback: () => {
+        setIsFetchingKey(false)
       }
     })
   }
@@ -146,11 +150,12 @@ function ModifyAPIKeyModal({
   }, [openType])
 
   return (
-    <Modal
+    <FormModal
       data={formState}
       fields={FIELDS}
       icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
       isOpen={openType !== null}
+      loading={isFetchingKey}
       namespace="modules.apiKeys"
       openType={openType}
       setData={setFormState}

@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import Modal from '@components/modals/Modal'
+import FormModal from '@components/modals/FormModal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import APIRequest from '@utils/fetchData'
@@ -88,7 +88,7 @@ function ModifyModal({
   }
 
   return (
-    <Modal
+    <FormModal
       data={data}
       fields={FIELDS}
       icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}

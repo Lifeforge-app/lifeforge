@@ -83,6 +83,10 @@ textarea {
   @apply border-hidden;
 }
 
+button {
+  @apply cursor-pointer;
+}
+
 code {
   font-family: 'Jetbrains Mono', monospace;
 }
