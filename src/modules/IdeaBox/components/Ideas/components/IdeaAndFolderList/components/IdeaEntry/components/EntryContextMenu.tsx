@@ -19,7 +19,9 @@ function EntryContextMenu({
     setModifyIdeaModalOpenType,
     setExistedEntry,
     setDeleteIdeaConfirmationModalOpen,
-    viewArchived
+    viewArchived,
+    debouncedSearchQuery,
+    selectedTags
   } = useIdeaBoxContext()
   const queryClient = useQueryClient()
 
@@ -125,7 +127,7 @@ function EntryContextMenu({
             setModifyIdeaModalOpenType('update')
           }}
         />
-        {path !== '' && (
+        {!debouncedSearchQuery && selectedTags.length === 0 && (
           <MenuItem
             icon="tabler:folder-minus"
             namespace="modules.ideaBox"

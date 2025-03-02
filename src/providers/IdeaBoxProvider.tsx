@@ -158,8 +158,7 @@ export default function IdeaBoxProvider({
       id !== undefined &&
       path !== undefined &&
       pathValidQuery.data &&
-      (debouncedSearchQuery.trim().length > 0 ||
-        (selectedTags.length > 0 && path === ''))
+      (debouncedSearchQuery.trim().length > 0 || selectedTags.length > 0)
   })
 
   const [modifyIdeaModalOpenType, setModifyIdeaModalOpenType] = useState<
