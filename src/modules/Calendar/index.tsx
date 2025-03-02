@@ -1,15 +1,17 @@
+import { useQuery } from '@tanstack/react-query'
 import React, { useEffect, useState } from 'react'
 import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
+import QueryWrapper from '@components/screens/QueryWrapper'
 import Scrollbar from '@components/utilities/Scrollbar'
-import useFetch from '@hooks/useFetch'
 import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
+import APIRequestV2 from '@utils/newFetchData'
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
 import ModifyCategoryModal from './modals/ModifyCategoryModal'
@@ -17,10 +19,14 @@ import ModifyEventModal from './modals/ModifyEventModal'
 
 function CalendarModule(): React.ReactElement {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [rawEvents, refreshRawEvents, setRawEvents] =
-    useFetch<ICalendarEvent[]>('calendar/event')
-  const [categories, refreshCategories, setCategories] =
-    useFetch<ICalendarCategory[]>('calendar/category')
+  const rawEventsQuery = useQuery<ICalendarEvent[]>({
+    queryKey: ['calendar', 'events'],
+    queryFn: () => APIRequestV2('calendar/events')
+  })
+  const categoriesQuery = useQuery<ICalendarCategory[]>({
+    queryKey: ['calendar', 'categories'],
+    queryFn: () => APIRequestV2('calendar/categories')
+  })
   const [events, setEvents] = useState<ICalendarEvent[]>([])
   const [modifyEventModalOpenType, setModifyEventModalOpenType] = useState<
     'create' | 'update' | null
@@ -37,16 +43,16 @@ function CalendarModule(): React.ReactElement {
     useState<ICalendarCategory | null>(null)
 
   useEffect(() => {
-    if (typeof rawEvents !== 'string') {
+    if (rawEventsQuery.isSuccess && rawEventsQuery.data) {
       setEvents(
-        rawEvents.map(event => ({
+        rawEventsQuery.data.map(event => ({
           ...event,
           start: new Date(event.start),
           end: new Date(event.end)
         }))
       )
     }
-  }, [rawEvents])
+  }, [rawEventsQuery.data, rawEventsQuery.isSuccess])
 
   return (
     <>
@@ -54,10 +60,9 @@ function CalendarModule(): React.ReactElement {
         <ModuleHeader icon="tabler:calendar" title="Calendar" />
         <SidebarAndContentWrapper>
           <Sidebar
-            categories={categories}
+            categoriesQuery={categoriesQuery}
             events={events}
             modifyCategoryModalOpenType={modifyCategoryOpenType}
-            refreshCategories={refreshCategories}
             setDeleteCategoryConfirmationModalOpen={
               setDeleteCategoryConfirmationModalOpen
             }
@@ -69,50 +74,39 @@ function CalendarModule(): React.ReactElement {
           <ContentWrapperWithSidebar>
             <Scrollbar>
               <div className="mb-8 size-full pr-4">
-                <CalendarComponent
-                  categories={categories}
-                  events={events}
-                  refreshRawEvents={refreshRawEvents}
-                  setExistedData={setExistedData}
-                  setModifyEventModalOpenType={setModifyEventModalOpenType}
-                  setRawEvents={setRawEvents}
-                />
+                <QueryWrapper query={categoriesQuery}>
+                  {categories => (
+                    <CalendarComponent
+                      categories={categories}
+                      events={events}
+                      setExistedData={setExistedData}
+                      setModifyEventModalOpenType={setModifyEventModalOpenType}
+                    />
+                  )}
+                </QueryWrapper>
               </div>
             </Scrollbar>
           </ContentWrapperWithSidebar>
         </SidebarAndContentWrapper>
       </ModuleWrapper>
       <ModifyEventModal
-        categories={categories}
+        categoriesQuery={categoriesQuery}
         existedData={existedData}
         openType={modifyEventModalOpenType}
         setOpenType={setModifyEventModalOpenType}
-        updateEventList={() => {
-          refreshRawEvents()
-          refreshCategories()
-        }}
       />
       <ModifyCategoryModal
         existedData={existedCategoryData}
         openType={modifyCategoryOpenType}
-        refreshCategories={refreshCategories}
         setOpenType={setModifyCategoryOpenType}
       />
       <DeleteConfirmationModal
-        apiEndpoint="calendar/category"
+        apiEndpoint="calendar/categories"
         data={existedCategoryData}
         isOpen={deleteCategoryConfirmationModalOpen}
         itemName="category"
         nameKey="name"
-        updateDataLists={() => {
-          if (typeof categories === 'string') return
-
-          setCategories(
-            categories.filter(
-              category => category.id !== existedCategoryData?.id
-            )
-          )
-        }}
+        queryKey={['calendar', 'categories']}
         onClose={() => {
           setDeleteCategoryConfirmationModalOpen(false)
         }}
