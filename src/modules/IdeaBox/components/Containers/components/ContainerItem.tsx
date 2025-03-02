@@ -34,7 +34,7 @@ function ContainerItem({
       <div className="flex-center aspect-video w-full bg-bg-200 dark:bg-bg-800">
         {container.cover !== '' ? (
           <img
-            alt={container.cover}
+            alt=""
             className="aspect-video size-full object-cover"
             src={`${import.meta.env.VITE_API_HOST}/media${
               container.cover
