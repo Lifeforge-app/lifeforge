@@ -44,6 +44,7 @@ interface IIdeaBoxEntry extends BasePBCollection {
   tags?: string[]
   pinned: boolean
   archived: boolean
+  fullPath?: string
 }
 
 interface IIdeaBoxTag extends BasePBCollection {

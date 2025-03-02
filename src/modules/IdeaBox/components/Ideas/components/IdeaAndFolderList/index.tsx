@@ -1,6 +1,5 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
@@ -9,7 +8,6 @@ import IdeaList from './components/IdeaList'
 
 function IdeaAndFolderList(): React.ReactElement {
   const { t } = useTranslation('modules.ideaBox')
-  const { '*': path } = useParams<{ '*': string }>()
   const {
     entries,
     entriesLoading,
@@ -25,8 +23,7 @@ function IdeaAndFolderList(): React.ReactElement {
 
   return (
     <div className="mb-20 mt-6">
-      {debouncedSearchQuery.trim().length === 0 &&
-      !(path === '' && selectedTags.length > 0) ? (
+      {debouncedSearchQuery.trim().length === 0 && selectedTags.length === 0 ? (
         <APIFallbackComponent data={entriesLoading ? 'loading' : entries}>
           {data => (
             <APIFallbackComponent data={foldersLoading ? 'loading' : folders}>
