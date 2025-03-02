@@ -11,7 +11,7 @@ import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 
 function SidebarBottomBar(): React.ReactElement {
   const navigate = useNavigate()
-  const { sidebarExpanded } = useGlobalStateContext()
+  const { sidebarExpanded, toggleSidebar } = useGlobalStateContext()
   const { userData, getAvatarURL, logout } = useAuthContext()
   const { componentBgLighterWithHover } = useThemeColors()
 
@@ -32,7 +32,7 @@ function SidebarBottomBar(): React.ReactElement {
           )}
         >
           <div className="flex-center w-full min-w-0 gap-3">
-            <div className="flex size-9 items-center justify-center overflow-hidden rounded-full bg-bg-100 dark:bg-bg-800">
+            <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-bg-100 dark:bg-bg-800">
               {userData.avatar !== '' ? (
                 <img
                   alt=""
@@ -74,6 +74,9 @@ function SidebarBottomBar(): React.ReactElement {
               namespace="common.sidebar"
               text="Account settings"
               onClick={() => {
+                if (window.innerWidth < 1024) {
+                  toggleSidebar()
+                }
                 navigate('/account')
               }}
             />

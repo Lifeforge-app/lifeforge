@@ -4,12 +4,6 @@ import FormModal from '@components/modals/FormModal'
 import ErrorScreen from '@components/screens/ErrorScreen'
 import LoadingScreen from '@components/screens/LoadingScreen'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
-import {
-  type IProjectsMCategory,
-  type IProjectsMStatus,
-  type IProjectsMTechnology,
-  type IProjectsMVisibility
-} from '@interfaces/projects_m_interfaces'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import APIRequest from '@utils/fetchData'
 
@@ -64,11 +58,14 @@ function ModifyEntryModal(): React.ReactElement {
       type: 'listbox',
       label: 'Project category',
       icon: 'tabler:category',
-      options: (categories as IProjectsMCategory[]).map(category => ({
-        value: category.id,
-        icon: category.icon,
-        text: category.name
-      })),
+      options:
+        typeof categories !== 'string'
+          ? categories.map(category => ({
+              value: category.id,
+              icon: category.icon,
+              text: category.name
+            }))
+          : [],
       nullOption: 'tabler:apps-off'
     },
     {
@@ -76,12 +73,15 @@ function ModifyEntryModal(): React.ReactElement {
       type: 'listbox',
       label: 'Project status',
       icon: 'tabler:info-circle',
-      options: (statuses as IProjectsMStatus[]).map(status => ({
-        value: status.id,
-        icon: status.icon,
-        text: status.name,
-        color: status.color
-      })),
+      options:
+        typeof statuses !== 'string'
+          ? statuses.map(status => ({
+              value: status.id,
+              icon: status.icon,
+              text: status.name,
+              color: status.color
+            }))
+          : [],
       nullOption: 'tabler:progress-help'
     },
     {
@@ -89,11 +89,14 @@ function ModifyEntryModal(): React.ReactElement {
       type: 'listbox',
       label: 'Project visibility',
       icon: 'tabler:eye',
-      options: (visibilities as IProjectsMVisibility[]).map(visibility => ({
-        value: visibility.id,
-        icon: visibility.icon,
-        text: visibility.name
-      })),
+      options:
+        typeof visibilities !== 'string'
+          ? visibilities.map(visibility => ({
+              value: visibility.id,
+              icon: visibility.icon,
+              text: visibility.name
+            }))
+          : [],
       nullOption: 'tabler:eye-off'
     },
     {
@@ -101,11 +104,14 @@ function ModifyEntryModal(): React.ReactElement {
       type: 'listbox',
       label: 'Project technologies',
       icon: 'tabler:cpu',
-      options: (technologies as IProjectsMTechnology[]).map(technology => ({
-        value: technology.id,
-        text: technology.name,
-        icon: technology.icon
-      })),
+      options:
+        typeof technologies !== 'string'
+          ? technologies.map(technology => ({
+              value: technology.id,
+              text: technology.name,
+              icon: technology.icon
+            }))
+          : [],
       multiple: true,
       nullOption: 'tabler:flask-off'
     }
