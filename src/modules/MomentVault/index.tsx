@@ -86,6 +86,7 @@ function MomentVault(): React.ReactElement {
         title="Moment Vault"
       />
       <EntryList
+        addEntryModalOpenType={addEntryModalOpenType}
         data={data}
         page={page}
         setData={setData}
