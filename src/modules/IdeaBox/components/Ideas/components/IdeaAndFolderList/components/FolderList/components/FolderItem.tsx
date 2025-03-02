@@ -4,20 +4,47 @@ import clsx from 'clsx'
 import React from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { Link, useParams } from 'react-router'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+import { toast } from 'react-toastify'
 import {
   IIdeaBoxEntry,
   type IIdeaBoxFolder
 } from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
+import FolderContextMenu from './FolderContextMenu'
 
-function FolderItem({
-  folder
-}: {
+interface FolderItemProps {
   folder: IIdeaBoxFolder
-}): React.ReactElement {
+}
+
+function getStyle({
+  isOver,
+  canDrop,
+  folderColor,
+  opacity
+}: {
+  isOver: boolean
+  canDrop: boolean
+  folderColor: string
+  opacity: number
+}): React.CSSProperties {
+  const backgroundColor = `${folderColor}${(() => {
+    if (!canDrop) return '20'
+    return isOver ? '' : '50'
+  })()}`
+  const color = (() => {
+    if (!canDrop) return folderColor
+    return isOver ? '' : folderColor
+  })()
+
+  return {
+    backgroundColor,
+    color,
+    opacity
+  }
+}
+
+function FolderItem({ folder }: FolderItemProps): React.ReactElement {
   const {
     setModifyFolderModalOpenType,
     setDeleteFolderConfirmationModalOpen,
@@ -25,23 +52,24 @@ function FolderItem({
   } = useIdeaBoxContext()
   const queryClient = useQueryClient()
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
+
   const [{ opacity, isDragging }, dragRef] = useDrag(
     () => ({
       type: 'FOLDER',
-      item: {
-        targetId: folder.id,
-        type: 'folder'
-      },
+      item: { targetId: folder.id, type: 'folder' },
       collect: monitor => ({
         opacity: monitor.isDragging() ? 0.5 : 1,
         isDragging: !!monitor.isDragging()
       })
     }),
-    []
+    [folder.id]
   )
 
   const [{ isOver, canDrop }, drop] = useDrop(() => ({
     accept: ['IDEA', 'FOLDER'],
+    canDrop: (item: { targetId: string; type: 'idea' | 'folder' }) =>
+      item.type === 'idea' ||
+      (item.type === 'folder' && item.targetId !== folder.id),
     drop: (e: { targetId: string; type: 'idea' | 'folder' }) => {
       putIntoFolder(e).catch(console.error)
     },
@@ -51,120 +79,78 @@ function FolderItem({
     })
   }))
 
-  async function putIntoFolder({
+  const putIntoFolder = async ({
     targetId,
     type
   }: {
     targetId: string
     type: 'idea' | 'folder'
-  }): Promise<void> {
-    await APIRequest({
-      method: 'POST',
-      endpoint: `idea-box/${type}s/move/${targetId}?target=${folder.id}`,
-      successInfo: 'add',
-      failureInfo: 'add',
-      callback: () => {
-        switch (type) {
-          case 'idea':
-            queryClient.setQueryData(
-              ['idea-box', 'ideas', id, path, false],
-              (prev: IIdeaBoxEntry[]) =>
-                prev.filter(idea => idea.id !== targetId)
-            )
-            break
-          case 'folder':
-            queryClient.setQueryData(
-              ['idea-box', 'folders', id, path],
-              (prev: IIdeaBoxFolder[]) =>
-                prev.filter(folder => folder.id !== targetId)
-            )
-        }
-      }
-    })
+  }): Promise<void> => {
+    if (type === 'folder' && targetId === folder.id) return
+
+    try {
+      await APIRequestV2(
+        `idea-box/${type}s/move/${targetId}?target=${folder.id}`,
+        { method: 'POST' }
+      )
+      queryClient.setQueryData(
+        ['idea-box', type === 'idea' ? 'ideas' : 'folders', id, path],
+        (prev: IIdeaBoxEntry[] | IIdeaBoxFolder[]) =>
+          prev.filter(item => item.id !== targetId)
+      )
+    } catch {
+      toast.error('Failed to move item')
+    }
   }
 
-  async function removeFromFolder(): Promise<void> {
-    await APIRequest({
-      endpoint: `idea-box/folders/move/${folder.id}`,
-      method: 'DELETE',
-      successInfo: 'remove',
-      failureInfo: 'remove',
-      callback: () => {
-        queryClient.setQueryData(
-          ['idea-box', 'folders', id, path],
-          (prev: IIdeaBoxFolder[]) => prev.filter(f => f.id !== folder.id)
-        )
-      }
-    })
+  const removeFromFolder = async (): Promise<void> => {
+    try {
+      await APIRequestV2(`idea-box/folders/move/${folder.id}`, {
+        method: 'DELETE'
+      })
+      queryClient.setQueryData(
+        ['idea-box', 'folders', id, path],
+        (prev: IIdeaBoxFolder[]) => prev.filter(f => f.id !== folder.id)
+      )
+    } catch {
+      toast.error('Failed to remove item from folder')
+    }
   }
 
   return (
     <Link
       key={folder.id}
-      ref={stuff => {
-        dragRef(stuff)
-        drop(stuff)
+      ref={node => {
+        dragRef(node)
+        drop(node)
       }}
       className={clsx(
         'flex-between relative isolate flex rounded-md p-4 shadow-custom backdrop-blur-xs before:absolute before:left-0 before:top-0 before:size-full before:rounded-md before:transition-all hover:before:bg-white/5 font-medium transition-all',
         isOver && 'text-bg-50 dark:text-bg-800',
         isDragging && 'cursor-move'
       )}
-      style={{
-        backgroundColor:
-          folder.color +
-          (() => {
-            if (isOver) {
-              return ''
-            }
-
-            return canDrop ? '50' : '20'
-          })(),
-        color: !isOver ? folder.color : '',
+      style={getStyle({
+        isOver,
+        canDrop,
+        folderColor: folder.color,
         opacity
-      }}
+      })}
       to={`/idea-box/${id}/${path}/${folder.id}`.replace('//', '/')}
     >
       <div className="flex">
         <Icon className="mr-2 size-5 shrink-0" icon={folder.icon} />
         {folder.name}
       </div>
-      <HamburgerMenu
-        smallerPadding
-        className="relative"
-        customHoverColor={folder.color + '20'}
-        style={{
-          color: !isOver ? folder.color : ''
-        }}
-      >
-        {folder.parent !== '' && (
-          <MenuItem
-            icon="tabler:folder-minus"
-            namespace="modules.ideaBox"
-            text="Remove from folder"
-            onClick={() => {
-              removeFromFolder().catch(console.error)
-            }}
-          />
-        )}
-        <MenuItem
-          icon="tabler:pencil"
-          text="Edit"
-          onClick={() => {
-            setModifyFolderModalOpenType('update')
-            setExistedFolder(folder)
-          }}
-        ></MenuItem>
-        <MenuItem
-          isRed
-          icon="tabler:trash"
-          text="Delete"
-          onClick={() => {
-            setExistedFolder(folder)
-            setDeleteFolderConfirmationModalOpen(true)
-          }}
-        ></MenuItem>
-      </HamburgerMenu>
+      <FolderContextMenu
+        folder={folder}
+        isOver={isOver}
+        removeFromFolder={removeFromFolder}
+        setDeleteFolderConfirmationModalOpen={
+          setDeleteFolderConfirmationModalOpen
+        }
+        setExistedFolder={setExistedFolder}
+        setModifyFolderModalOpenType={setModifyFolderModalOpenType}
+      />
     </Link>
   )
 }
