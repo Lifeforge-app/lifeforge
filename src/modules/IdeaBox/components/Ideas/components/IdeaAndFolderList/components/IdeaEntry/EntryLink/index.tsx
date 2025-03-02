@@ -56,13 +56,15 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
             ))}
           </div>
         )}
-        <h3 className="text-xl font-semibold ">{entry.title}</h3>
-        <span className="text-sm text-bg-500">
-          {moment(entry.updated).fromNow()}
-        </span>
+        {entry.title && (
+          <h3 className="text-xl font-semibold">{entry.title}</h3>
+        )}
         <EntryContextMenu entry={entry} />
       </div>
       <EntryContent entry={entry} />
+      <span className="text-sm text-bg-500">
+        {moment(entry.updated).fromNow()}
+      </span>
       <InFolderChip entry={entry} />
     </div>
   )

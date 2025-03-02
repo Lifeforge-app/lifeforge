@@ -11,12 +11,14 @@ export default async function APIRequestV2<T>(
     method,
     body,
     isJSON = true,
-    timeout = 30000
+    timeout = 30000,
+    raiseError = true
   }: {
-    method: string
+    method?: string
     body?: any
     isJSON?: boolean
     timeout?: number
+    raiseError?: boolean
   } = {
     method: 'GET'
   }
@@ -59,12 +61,16 @@ export default async function APIRequestV2<T>(
         throw new Error('Failed to perform API request')
     }
   } catch (err) {
-    if (err instanceof Error) {
-      toast.error(err.message)
-      throw new Error(err.message)
+    if (raiseError) {
+      if (err instanceof Error) {
+        toast.error(err.message)
+        throw new Error(err.message)
+      } else {
+        toast.error('Failed to perform API request')
+        throw new Error('Failed to perform API request')
+      }
     } else {
-      toast.error('Failed to perform API request')
-      throw new Error('Failed to perform API request')
+      return undefined as T
     }
   }
 }

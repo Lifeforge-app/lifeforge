@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { InputIcon, InputLabel, InputWrapper } from '@components/inputs'
 
-function IdeaContentInput({
+function TextContentInput({
   innerTypeOfModifyIdea,
   ideaContent,
   ideaLink,
@@ -72,4 +72,4 @@ function IdeaContentInput({
   )
 }
 
-export default IdeaContentInput
+export default TextContentInput

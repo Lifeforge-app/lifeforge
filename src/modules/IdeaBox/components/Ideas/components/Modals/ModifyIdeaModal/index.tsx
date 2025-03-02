@@ -3,30 +3,23 @@ import { useDebounce } from '@uidotdev/usehooks'
 
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
-import { TextInput, TagsInput } from '@components/inputs'
-import DnDContainer from '@components/inputs/ImageAndFileInput/ImagePickerModal/components/LocalUpload/components/DnDContainer'
-import PreviewContainer from '@components/inputs/ImageAndFileInput/ImagePickerModal/components/LocalUpload/components/PreviewContainer'
 import ModalWrapper from '@components/modals/ModalWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import APIRequest from '@utils/fetchData'
-import IdeaContentInput from './components/IdeaContentInput'
 import ModalHeader from './components/ModalHeader'
+import IdeaContentInput from './IdeaContentInput'
 
 function ModifyIdeaModal(): React.ReactElement {
-  const { t } = useTranslation('modules.ideaBox')
   const {
     modifyIdeaModalOpenType: openType,
     setModifyIdeaModalOpenType: setOpenType,
     typeOfModifyIdea,
     existedEntry,
     pastedData,
-    tags,
     viewArchived,
     selectedTags,
     debouncedSearchQuery
@@ -151,7 +144,7 @@ function ModifyIdeaModal(): React.ReactElement {
         }
         break
       case 'link':
-        if (ideaTitle.trim().length === 0 || ideaLink.trim().length === 0) {
+        if (ideaLink.trim().length === 0) {
           toast.error('Idea title and link cannot be empty.')
           return
         }
@@ -304,84 +297,30 @@ function ModifyIdeaModal(): React.ReactElement {
         setInnerTypeOfModifyIdea={setInnerTypeOfModifyIdea}
         setOpenType={setOpenType}
       />
-      <div className="space-y-4">
-        {innerTypeOfModifyIdea !== 'text' && (
-          <TextInput
-            darker
-            icon="tabler:bulb"
-            name="Idea title"
-            namespace="modules.ideaBox"
-            placeholder="Mind blowing idea"
-            setValue={setIdeaTitle}
-            value={ideaTitle}
-          />
-        )}
-        {innerTypeOfModifyIdea !== 'image' ? (
-          <IdeaContentInput
-            ideaContent={ideaContent}
-            ideaLink={ideaLink}
-            innerTypeOfModifyIdea={innerTypeOfModifyIdea}
-            updateIdeaContent={updateIdeaContent}
-            updateIdeaLink={updateIdeaLink}
-          />
-        ) : (
-          innerOpenType !== 'update' && (
-            <>
-              {preview ? (
-                <>
-                  <PreviewContainer
-                    file={ideaImage}
-                    fileName={debouncedImageLink.split('/').pop() ?? undefined}
-                    preview={preview as string}
-                    setFile={setIdeaImage}
-                    setPreview={setPreview}
-                    onRemove={() => {
-                      setImageLink('')
-                    }}
-                  />
-                </>
-              ) : (
-                <DnDContainer
-                  getInputProps={getInputProps}
-                  getRootProps={getRootProps}
-                  isDragActive={isDragActive}
-                />
-              )}
-              {ideaImage === null && (
-                <>
-                  <div className="mt-6 text-center font-medium uppercase tracking-widest text-bg-500">
-                    {t('imageUpload.orPasteLink')}
-                  </div>
-                  <TextInput
-                    darker
-                    icon="tabler:link"
-                    name="Image link"
-                    namespace="modules.ideaBox"
-                    placeholder="https://example.com/image.jpg"
-                    setValue={setImageLink}
-                    value={imageLink}
-                  />
-                </>
-              )}
-            </>
-          )
-        )}
-        <APIFallbackComponent data={tags}>
-          {tags => (
-            <TagsInput
-              darker
-              className="mt-6"
-              existedTags={tags}
-              icon="tabler:tag"
-              name="Idea tags"
-              namespace="modules.ideaBox"
-              placeholder='Tag your idea with "awesome", "cool", etc.'
-              setValue={setIdeaTags}
-              value={ideaTags}
-            />
-          )}
-        </APIFallbackComponent>
-      </div>
+      <IdeaContentInput
+        debouncedImageLink={debouncedImageLink}
+        getInputProps={getInputProps}
+        getRootProps={getRootProps}
+        ideaContent={ideaContent}
+        ideaImage={ideaImage}
+        ideaLink={ideaLink}
+        ideaTags={ideaTags}
+        ideaTitle={ideaTitle}
+        imageLink={imageLink}
+        innerOpenType={innerOpenType}
+        innerTypeOfModifyIdea={innerTypeOfModifyIdea}
+        isDragActive={isDragActive}
+        preview={preview}
+        setIdeaContent={setIdeaContent}
+        setIdeaImage={setIdeaImage}
+        setIdeaLink={setIdeaLink}
+        setIdeaTags={setIdeaTags}
+        setIdeaTitle={setIdeaTitle}
+        setImageLink={setImageLink}
+        setPreview={setPreview}
+        updateIdeaContent={updateIdeaContent}
+        updateIdeaLink={updateIdeaLink}
+      />
       <Button
         className="mt-6"
         icon={

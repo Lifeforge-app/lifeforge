@@ -1,21 +1,22 @@
+import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import React, { memo } from 'react'
-import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
+import APIRequestV2 from '@utils/newFetchData'
 
 function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
   const { componentBgLighterWithHover } = useThemeColors()
-  const [data] = useFetch<Record<string, any>>(
-    `idea-box/og-data/${entry.id}`,
-    true,
-    'GET',
-    undefined,
-    true,
-    false
-  )
+  const OGQuery = useQuery<Record<string, any>>({
+    queryKey: ['idea-box', 'og', entry.id],
+    queryFn: () =>
+      APIRequestV2(`idea-box/og-data/${entry.id}`, {
+        raiseError: false
+      }),
+    retry: 5
+  })
 
-  return typeof data !== 'string' ? (
+  return OGQuery.isSuccess && OGQuery.data !== undefined ? (
     <button
       className={clsx(
         'w-full text-left cursor-pointer space-y-2 rounded-md p-2',
@@ -29,12 +30,12 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
         a.click()
       }}
     >
-      {data.ogImage !== undefined && (
+      {OGQuery.data.ogImage !== undefined && (
         <img
           alt=""
           className="w-full rounded-md border-0 object-contain"
           src={(() => {
-            const url: string = data.ogImage?.[0].url
+            const url: string = OGQuery.data.ogImage?.[0].url
 
             if (!url.startsWith('http')) {
               return `${new URL(entry.content).origin}${
@@ -47,14 +48,14 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
         />
       )}
       <p className="text-xs font-medium text-custom-500">
-        {data.ogSiteName ?? new URL(entry.content).hostname}
+        {OGQuery.data.ogSiteName ?? new URL(entry.content).hostname}
       </p>
-      {data.ogTitle !== undefined && (
-        <p className="text-sm font-medium">{data.ogTitle}</p>
+      {OGQuery.data.ogTitle !== undefined && (
+        <p className="text-sm font-medium">{OGQuery.data.ogTitle}</p>
       )}
-      {data.ogDescription !== undefined && (
+      {OGQuery.data.ogDescription !== undefined && (
         <p className="mt-2 break-words text-xs text-bg-500">
-          {data.ogDescription}
+          {OGQuery.data.ogDescription}
         </p>
       )}
     </button>
