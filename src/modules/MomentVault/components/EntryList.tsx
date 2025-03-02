@@ -12,7 +12,8 @@ function EntryList({
   page,
   setPage,
   onDelete,
-  setData
+  setData,
+  addEntryModalOpenType
 }: {
   data: Loadable<ListResult<IMomentVaultEntry>>
   page: number
@@ -21,6 +22,7 @@ function EntryList({
   setData: React.Dispatch<
     React.SetStateAction<Loadable<ListResult<IMomentVaultEntry>>>
   >
+  addEntryModalOpenType: 'text' | 'audio' | 'photo' | 'video' | null
 }): React.ReactElement {
   useEffect(() => {
     const els = document.querySelectorAll<HTMLDivElement>('.pagination')
@@ -45,6 +47,7 @@ function EntryList({
             {data.items.map(entry => (
               <AudioEntry
                 key={entry.id}
+                addEntryModalOpenType={addEntryModalOpenType}
                 entry={entry}
                 setData={setData}
                 onDelete={onDelete}
