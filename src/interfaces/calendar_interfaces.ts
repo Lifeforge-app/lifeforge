@@ -7,6 +7,13 @@ interface ICalendarEvent extends BasePBCollection {
   category: string
 }
 
+interface ICalendarEventFormState {
+  title: string
+  start: string
+  end: string
+  category: string
+}
+
 interface ICalendarCategory extends BasePBCollection {
   color: string
   icon: string
@@ -14,4 +21,15 @@ interface ICalendarCategory extends BasePBCollection {
   amount: number
 }
 
-export type { ICalendarCategory, ICalendarEvent }
+interface ICalendarCategoryFormState {
+  name: string
+  icon: string
+  color: string
+}
+
+export type {
+  ICalendarCategory,
+  ICalendarEventFormState,
+  ICalendarEvent,
+  ICalendarCategoryFormState
+}

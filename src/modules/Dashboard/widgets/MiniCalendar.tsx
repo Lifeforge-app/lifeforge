@@ -14,8 +14,8 @@ export default function MiniCalendar(): React.ReactElement {
   const [currentMonth, setCurrentMonth] = useState(moment().month())
   const [currentYear, setCurrentYear] = useState(moment().year())
 
-  const [events] = useFetch<ICalendarEvent[]>('calendar/event')
-  const [categories] = useFetch<ICalendarCategory[]>('calendar/category')
+  const [events] = useFetch<ICalendarEvent[]>('calendar/events')
+  const [categories] = useFetch<ICalendarCategory[]>('calendar/categories')
 
   return (
     <DashboardItem icon="tabler:calendar" title="mini Calendar">

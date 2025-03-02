@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import moment from 'moment'
 import React, { useCallback } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
@@ -17,24 +18,21 @@ const DnDCalendar: any = withDragAndDrop(Calendar)
 
 interface CalendarComponentProps {
   events: ICalendarEvent[]
-  setRawEvents: React.Dispatch<React.SetStateAction<Loadable<ICalendarEvent[]>>>
   categories: Loadable<ICalendarCategory[]>
   setModifyEventModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedData: React.Dispatch<React.SetStateAction<ICalendarEvent | null>>
-  refreshRawEvents: () => void
 }
 
 function CalendarComponent({
   events,
-  setRawEvents,
   categories,
   setModifyEventModalOpenType,
-  setExistedData,
-  refreshRawEvents
+  setExistedData
 }: CalendarComponentProps): React.ReactElement {
   const [searchParams] = useSearchParams()
+  const queryClient = useQueryClient()
 
   async function updateEvent({
     event,
@@ -45,25 +43,24 @@ function CalendarComponent({
     start: Date
     end: Date
   }): Promise<void> {
-    setRawEvents(prevEvents => {
-      if (typeof prevEvents === 'string') {
-        return prevEvents
-      }
-
-      return prevEvents.map(prevEvent => {
-        if (prevEvent.id === event.id) {
-          return {
-            ...prevEvent,
-            start,
-            end
+    queryClient.setQueryData(
+      ['calendar', 'events'],
+      (prevEvents: ICalendarEvent[]) => {
+        return prevEvents.map(prevEvent => {
+          if (prevEvent.id === event.id) {
+            return {
+              ...prevEvent,
+              start,
+              end
+            }
           }
-        }
-        return prevEvent
-      })
-    })
+          return prevEvent
+        })
+      }
+    )
 
     await APIRequest({
-      endpoint: `calendar/event/${event.id}`,
+      endpoint: `calendar/events/${event.id}`,
       method: 'PATCH',
       body: {
         title: event.title,
@@ -72,7 +69,9 @@ function CalendarComponent({
         category: event.category
       },
       failureInfo: 'update',
-      onFailure: refreshRawEvents
+      onFailure: () => {
+        queryClient.invalidateQueries({ queryKey: ['calendar', 'events'] })
+      }
     })
   }
 
@@ -91,7 +90,7 @@ function CalendarComponent({
         updated: ''
       })
     },
-    [setRawEvents]
+    []
   )
 
   return (
