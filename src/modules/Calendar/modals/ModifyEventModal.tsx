@@ -1,58 +1,39 @@
+import { UseQueryResult } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 
 import moment from 'moment'
-import React, { useEffect, useReducer, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+import React, { useEffect, useRef, useState } from 'react'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import FormModal from '@components/modals/FormModal'
-import ErrorScreen from '@components/screens/ErrorScreen'
-import LoadingScreen from '@components/screens/LoadingScreen'
 import {
+  ICalendarEventFormState,
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
-import { type Loadable } from '@interfaces/common'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
-import APIRequest from '@utils/fetchData'
 
 interface ModifyEventModalProps {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  updateEventList: () => void
   existedData: ICalendarEvent | null
-  categories: Loadable<ICalendarCategory[]>
+  categoriesQuery: UseQueryResult<ICalendarCategory[]>
 }
 
 function ModifyEventModal({
   openType,
   setOpenType,
-  updateEventList,
   existedData,
-  categories
+  categoriesQuery
 }: ModifyEventModalProps): React.ReactElement {
-  const { t } = useTranslation('modules.calendar')
-
-  const [data, setData] = useReducer(
-    (state, _newState) => {
-      const newState = { ...state, ..._newState }
-
-      if (newState.start > newState.end) {
-        newState.end = newState.start
-      }
-
-      return newState
-    },
-    {
-      title: '',
-      start: '',
-      end: '',
-      category: ''
-    }
-  )
+  const [formState, setFormState] = useState<ICalendarEventFormState>({
+    title: '',
+    start: '',
+    end: '',
+    category: ''
+  })
   const ref = useRef<HTMLInputElement>(null)
 
-  const FIELDS: IFieldProps<typeof data>[] = [
+  const FIELDS: IFieldProps<ICalendarEventFormState>[] = [
     {
       id: 'title',
       label: 'Event title',
@@ -81,15 +62,14 @@ function ModifyEventModal({
       label: 'Event Category',
       icon: 'tabler:list',
       type: 'listbox',
-      options:
-        typeof categories === 'string'
-          ? []
-          : categories.map(({ name, color, icon, id }) => ({
-              value: id,
-              text: name,
-              icon,
-              color
-            })),
+      options: categoriesQuery.isSuccess
+        ? categoriesQuery.data.map(({ name, color, icon, id }) => ({
+            value: id,
+            text: name,
+            icon,
+            color
+          }))
+        : [],
       nullOption: 'tabler:apps-off'
     }
   ]
@@ -98,52 +78,26 @@ function ModifyEventModal({
   const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
     useState(false)
 
-  async function onSubmitButtonClick(): Promise<void> {
-    const { title, start, end, category } = data
-
-    if (title.trim().length === 0 || start === '' || end === '') {
-      toast.error(t('input.error.fieldEmpty'))
-      return
-    }
-
-    const event = {
-      title: title.trim(),
-      start: moment(start).toISOString(),
-      end: moment(end).toISOString(),
-      category
-    }
-
-    await APIRequest({
-      endpoint:
-        'calendar/event' +
-        (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
-      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-      body: event,
-      successInfo: innerOpenType,
-      failureInfo: innerOpenType,
-      callback: () => {
-        setOpenType(null)
-        updateEventList()
-      }
-    })
-  }
-
   useEffect(() => {
     if (innerOpenType === 'update' && existedData !== null) {
-      setData({
+      setFormState({
         title: existedData.title,
         start: moment(existedData.start).toISOString(),
         end: moment(existedData.end).toISOString(),
         category: existedData.category
       })
     } else {
-      setData({
+      setFormState({
         title: '',
-        category: ''
+        category: '',
+        start: '',
+        end: ''
       })
 
       if (existedData !== null) {
-        setData({
+        setFormState({
+          title: '',
+          category: '',
           start: moment(existedData.start).toISOString(),
           end: moment(existedData.end).toISOString()
         })
@@ -151,17 +105,13 @@ function ModifyEventModal({
     }
   }, [innerOpenType, existedData])
 
-  if (categories === 'loading') return <LoadingScreen />
-  if (categories === 'error') {
-    return <ErrorScreen message="Failed to fetch data" />
-  }
-
   return (
     <>
       <FormModal
         actionButtonIsRed
         actionButtonIcon="tabler:trash"
-        data={data}
+        data={formState}
+        endpoint="calendar/events"
         fields={FIELDS}
         icon={
           {
@@ -169,11 +119,14 @@ function ModifyEventModal({
             update: 'tabler:pencil'
           }[innerOpenType!]
         }
+        id={existedData?.id}
         isOpen={openType !== null}
+        loading={categoriesQuery.isLoading}
         modalRef={ref}
         namespace="modules.calendar"
         openType={openType}
-        setData={setData}
+        queryKey={['calendar', 'events']}
+        setData={setFormState}
         title={`event.${innerOpenType}`}
         onActionButtonClick={() => {
           setIsDeleteConfirmationModalOpen(true)
@@ -181,20 +134,17 @@ function ModifyEventModal({
         onClose={() => {
           setOpenType(null)
         }}
-        onSubmit={onSubmitButtonClick}
       />
       <DeleteConfirmationModal
-        apiEndpoint="calendar/event"
+        apiEndpoint="calendar/events"
         data={existedData}
         isOpen={isDeleteConfirmationModalOpen}
         itemName="event"
         nameKey="title"
-        updateDataLists={() => {
-          updateEventList()
-          setOpenType(null)
-        }}
+        queryKey={['calendar', 'events']}
         onClose={() => {
           setIsDeleteConfirmationModalOpen(false)
+          setOpenType(null)
         }}
       />
     </>

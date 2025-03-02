@@ -1,39 +1,30 @@
 import { useDebounce } from '@uidotdev/usehooks'
-
-import React, { useEffect, useReducer, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+import React, { useEffect, useRef, useState } from 'react'
 import FormModal from '@components/modals/FormModal'
-import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
+import {
+  ICalendarCategoryFormState,
+  type ICalendarCategory
+} from '@interfaces/calendar_interfaces'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
-import APIRequest from '@utils/fetchData'
 
 interface ModifyCategoryModalProps {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   existedData: ICalendarCategory | null
-  refreshCategories: () => void
 }
 
 function ModifyCategoryModal({
   openType,
   setOpenType,
-  existedData,
-  refreshCategories
+  existedData
 }: ModifyCategoryModalProps): React.ReactElement {
-  const { t } = useTranslation('modules.calendar')
   const modalRef = useRef<HTMLDivElement>(null)
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
-  const [data, setData] = useReducer(
-    (state, _newState) => {
-      return { ...state, ..._newState }
-    },
-    {
-      name: '',
-      icon: '',
-      color: '#FFFFFF'
-    }
-  )
+  const [data, setData] = useState<ICalendarCategoryFormState>({
+    name: '',
+    icon: '',
+    color: '#FFFFFF'
+  })
 
   const FIELDS: IFieldProps<typeof data>[] = [
     {
@@ -55,38 +46,6 @@ function ModifyCategoryModal({
     }
   ]
 
-  async function onSubmitButtonClick(): Promise<void> {
-    const { name, icon, color } = data
-    if (
-      name.trim().length === 0 ||
-      icon.trim().length === 0 ||
-      color.trim().length === 0
-    ) {
-      toast.error(t('input.error.fieldEmpty'))
-      return
-    }
-
-    const category = {
-      name: name.trim(),
-      icon: icon.trim(),
-      color: color.trim()
-    }
-
-    await APIRequest({
-      endpoint:
-        'calendar/category' +
-        (openType === 'update' ? `/${existedData?.id}` : ''),
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: category,
-      successInfo: openType,
-      failureInfo: openType,
-      callback: () => {
-        setOpenType(null)
-        refreshCategories()
-      }
-    })
-  }
-
   useEffect(() => {
     if (openType === 'update' && existedData !== null) {
       setData(existedData)
@@ -102,6 +61,7 @@ function ModifyCategoryModal({
   return (
     <FormModal
       data={data}
+      endpoint="calendar/categories"
       fields={FIELDS}
       icon={
         {
@@ -109,16 +69,17 @@ function ModifyCategoryModal({
           update: 'tabler:pencil'
         }[innerOpenType!]
       }
+      id={existedData?.id}
       isOpen={openType !== null}
       modalRef={modalRef}
       namespace="modules.calendar"
       openType={openType}
+      queryKey={['calendar', 'categories']}
       setData={setData}
       title={`category.${innerOpenType}`}
       onClose={() => {
         setOpenType(null)
       }}
-      onSubmit={onSubmitButtonClick}
     />
   )
 }

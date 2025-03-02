@@ -1,16 +1,17 @@
+import { UseQueryResult } from '@tanstack/react-query'
 import React from 'react'
 import { SidebarWrapper } from '@components/layouts/sidebar'
+import QueryWrapper from '@components/screens/QueryWrapper'
 import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
-import { type Loadable } from '@interfaces/common'
 import CategoryList from './components/CategoryList'
 import MiniCalendar from './components/MiniCalendar'
 
 function Sidebar({
   events,
-  categories,
+  categoriesQuery,
   sidebarOpen,
   setSidebarOpen,
   setModifyCategoryModalOpenType,
@@ -18,8 +19,7 @@ function Sidebar({
   setDeleteCategoryConfirmationModalOpen
 }: {
   events: ICalendarEvent[]
-  categories: Loadable<ICalendarCategory[]>
-  refreshCategories: () => void
+  categoriesQuery: UseQueryResult<ICalendarCategory[]>
   sidebarOpen: boolean
   setSidebarOpen: (value: boolean) => void
   modifyCategoryModalOpenType: 'create' | 'update' | null
@@ -33,15 +33,21 @@ function Sidebar({
 }): React.ReactElement {
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
-      <MiniCalendar categories={categories} events={events} />
-      <CategoryList
-        categories={categories}
-        setDeleteCategoryConfirmationModalOpen={
-          setDeleteCategoryConfirmationModalOpen
-        }
-        setExistedData={setExistedData}
-        setModifyCategoryModalOpenType={setModifyCategoryModalOpenType}
-      />
+      <QueryWrapper query={categoriesQuery}>
+        {categories => (
+          <>
+            <MiniCalendar categories={categories} events={events} />
+            <CategoryList
+              categories={categories}
+              setDeleteCategoryConfirmationModalOpen={
+                setDeleteCategoryConfirmationModalOpen
+              }
+              setExistedData={setExistedData}
+              setModifyCategoryModalOpenType={setModifyCategoryModalOpenType}
+            />
+          </>
+        )}
+      </QueryWrapper>
     </SidebarWrapper>
   )
 }

@@ -1,9 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { SidebarTitle } from '@components/layouts/sidebar'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
-import { type Loadable } from '@interfaces/common'
 import CategoryListItem from './components/CategoryListItem'
 
 function CategoryList({
@@ -12,7 +10,7 @@ function CategoryList({
   setExistedData,
   setDeleteCategoryConfirmationModalOpen
 }: {
-  categories: Loadable<ICalendarCategory[]>
+  categories: ICalendarCategory[]
   setModifyCategoryModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
@@ -35,35 +33,29 @@ function CategoryList({
             namespace="modules.calendar"
           />
         </div>
-        <APIFallbackComponent data={categories}>
-          {categories =>
-            categories.length > 0 ? (
-              <ul className="-mt-2 flex h-full min-w-0 flex-col pb-4">
-                {categories.map(item => (
-                  <CategoryListItem
-                    key={item.id}
-                    item={item}
-                    setDeleteConfirmationModalOpen={
-                      setDeleteCategoryConfirmationModalOpen
-                    }
-                    setModifyModalOpenType={setModifyCategoryModalOpenType}
-                    setSelectedData={setExistedData}
-                  />
-                ))}
-              </ul>
-            ) : (
-              <div className="flex h-full flex-col items-center justify-center gap-4 px-2">
-                <Icon className="size-12" icon="tabler:article-off" />
-                <p className="text-lg font-medium">
-                  Oops, no categories found.
-                </p>
-                <p className="text-center text-sm text-bg-500">
-                  You can create categories by clicking the plus button above.
-                </p>
-              </div>
-            )
-          }
-        </APIFallbackComponent>
+        {categories.length > 0 ? (
+          <ul className="-mt-2 flex h-full min-w-0 flex-col pb-4">
+            {categories.map(item => (
+              <CategoryListItem
+                key={item.id}
+                item={item}
+                setDeleteConfirmationModalOpen={
+                  setDeleteCategoryConfirmationModalOpen
+                }
+                setModifyModalOpenType={setModifyCategoryModalOpenType}
+                setSelectedData={setExistedData}
+              />
+            ))}
+          </ul>
+        ) : (
+          <div className="flex h-full flex-col items-center justify-center gap-4 px-2">
+            <Icon className="size-12" icon="tabler:article-off" />
+            <p className="text-lg font-medium">Oops, no categories found.</p>
+            <p className="text-center text-sm text-bg-500">
+              You can create categories by clicking the plus button above.
+            </p>
+          </div>
+        )}
       </section>
     </>
   )
