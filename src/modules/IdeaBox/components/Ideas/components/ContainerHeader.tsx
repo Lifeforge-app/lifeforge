@@ -1,46 +1,16 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { GoBackButton } from '@components/buttons'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import {
-  type IIdeaBoxContainer,
-  type IIdeaBoxFolder
-} from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
-import APIRequest from '@utils/fetchData'
 
 function ContainerHeader(): React.ReactElement {
-  const { valid, viewArchived, setViewArchived } = useIdeaBoxContext()
+  const { pathDetails, pathDetailsLoading, viewArchived, setViewArchived } =
+    useIdeaBoxContext()
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
-  const [pathDetails, setPathDetails] = useState<
-    | {
-        container: IIdeaBoxContainer
-        path: IIdeaBoxFolder[]
-      }
-    | 'loading'
-    | 'error'
-  >('loading')
   const navigate = useNavigate()
-
-  async function fetchPathDetails(): Promise<void> {
-    setPathDetails('loading')
-    await APIRequest({
-      method: 'GET',
-      endpoint: `idea-box/path/${id}/${path}`,
-      callback: data => {
-        setPathDetails(data.data)
-      }
-    })
-  }
-
-  useEffect(() => {
-    if (valid === true) {
-      fetchPathDetails().catch(console.error)
-    }
-  }, [valid, id, path])
 
   return (
     <header className="space-y-4">
@@ -70,101 +40,83 @@ function ContainerHeader(): React.ReactElement {
           backgroundImage:
             typeof pathDetails !== 'string'
               ? `url(${import.meta.env.VITE_API_HOST}/media/${
-                  pathDetails.container.cover
+                  pathDetails?.container.cover
                 })`
               : ''
         }}
       >
         <div className="absolute inset-0 rounded-lg bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,0.7)_80%)]"></div>
         <div className="flex-between relative z-9999 flex w-full">
-          <h1
-            className={clsx(
-              'flex items-center gap-4 font-semibold text-bg-100',
-              typeof pathDetails !== 'string' && 'text-2xl sm:text-3xl'
-            )}
-          >
+          <h1 className="flex items-center gap-4 font-semibold text-bg-100 text-2xl sm:text-3xl">
             {(() => {
-              switch (pathDetails) {
-                case 'loading':
-                  return (
-                    <>
-                      <span className="small-loader-light"></span>
-                      Loading...
-                    </>
-                  )
-                case 'error':
-                  return (
-                    <>
-                      <Icon
-                        className="mt-0.5 size-7 text-red-500"
-                        icon="tabler:alert-triangle"
-                      />
-                      Failed to fetch data from server.
-                    </>
-                  )
-                default:
-                  return (
-                    <div className="flex flex-wrap items-center gap-3">
-                      <Link
-                        className="flex items-center gap-3"
-                        to={`/idea-box/${id}`}
+              if (pathDetailsLoading) {
+                return (
+                  <>
+                    <span className="small-loader-light"></span>
+                    Loading...
+                  </>
+                )
+              } else {
+                return (
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Link
+                      className="flex items-center gap-3"
+                      to={`/idea-box/${id}`}
+                    >
+                      <div
+                        className="rounded-lg p-3"
+                        style={{
+                          backgroundColor: pathDetails!.container.color + '20'
+                        }}
                       >
-                        <div
-                          className="rounded-lg p-3"
+                        <Icon
+                          className="text-2xl sm:text-3xl"
+                          icon={pathDetails!.container.icon}
                           style={{
-                            backgroundColor: pathDetails.container.color + '20'
+                            color: pathDetails!.container.color
                           }}
+                        />
+                      </div>
+                      {viewArchived ? 'Archived ideas in ' : ''}
+                      {pathDetails!.container.name}
+                    </Link>
+                    {pathDetails!.path.length > 0 && (
+                      <Icon
+                        className="size-5 text-gray-500"
+                        icon="tabler:chevron-right"
+                      />
+                    )}
+                    {pathDetails!.path.map((folder, index) => (
+                      <>
+                        <Link
+                          key={folder.id}
+                          className="relative flex items-center gap-2 rounded-lg p-3 text-base before:absolute before:left-0 before:top-0 before:size-full before:rounded-md before:transition-all hover:before:bg-white/5"
+                          style={{
+                            backgroundColor: folder.color + '20',
+                            color: folder.color
+                          }}
+                          to={`/idea-box/${id}/${path
+                            ?.split('/')
+                            .slice(0, index + 1)
+                            .join('/')
+                            .replace('//', '/')}`}
                         >
                           <Icon
-                            className="text-2xl sm:text-3xl"
-                            icon={pathDetails.container.icon}
-                            style={{
-                              color: pathDetails.container.color
-                            }}
+                            className="shrink-0 text-xl"
+                            icon={folder.icon}
                           />
-                        </div>
-                        {viewArchived ? 'Archived ideas in ' : ''}
-                        {pathDetails.container.name}
-                      </Link>
-                      {pathDetails.path.length > 0 && (
-                        <Icon
-                          className="size-5 text-gray-500"
-                          icon="tabler:chevron-right"
-                        />
-                      )}
-                      {pathDetails.path.map((folder, index) => (
-                        <>
-                          <Link
-                            key={folder.id}
-                            className="relative flex items-center gap-2 rounded-lg p-3 text-base before:absolute before:left-0 before:top-0 before:size-full before:rounded-md before:transition-all hover:before:bg-white/5"
-                            style={{
-                              backgroundColor: folder.color + '20',
-                              color: folder.color
-                            }}
-                            to={`/idea-box/${id}/${path
-                              ?.split('/')
-                              .slice(0, index + 1)
-                              .join('/')
-                              .replace('//', '/')}`}
-                          >
-                            <Icon
-                              className="shrink-0 text-xl"
-                              icon={folder.icon}
-                            />
-                            <span className="hidden md:block">
-                              {folder.name}
-                            </span>
-                          </Link>
-                          {index !== pathDetails.path.length - 1 && (
-                            <Icon
-                              className="size-5 text-gray-500"
-                              icon="tabler:chevron-right"
-                            />
-                          )}
-                        </>
-                      ))}
-                    </div>
-                  )
+                          <span className="hidden md:block">{folder.name}</span>
+                        </Link>
+                        {index !== pathDetails!.path.length - 1 && (
+                          <Icon
+                            className="size-5 text-gray-500"
+                            icon="tabler:chevron-right"
+                          />
+                        )}
+                      </>
+                    ))}
+                  </div>
+                )
               }
             })()}
           </h1>

@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 
 import React, { useCallback, useEffect, useState } from 'react'
@@ -11,7 +12,7 @@ import DnDContainer from '@components/inputs/ImageAndFileInput/ImagePickerModal/
 import PreviewContainer from '@components/inputs/ImageAndFileInput/ImagePickerModal/components/LocalUpload/components/PreviewContainer'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
+import { IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import APIRequest from '@utils/fetchData'
 import IdeaContentInput from './components/IdeaContentInput'
@@ -23,12 +24,12 @@ function ModifyIdeaModal(): React.ReactElement {
     modifyIdeaModalOpenType: openType,
     setModifyIdeaModalOpenType: setOpenType,
     typeOfModifyIdea,
-    setEntries,
-    setSearchResults,
-    refreshTags,
     existedEntry,
     pastedData,
-    tags
+    tags,
+    viewArchived,
+    selectedTags,
+    debouncedSearchQuery
   } = useIdeaBoxContext()
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
@@ -44,6 +45,7 @@ function ModifyIdeaModal(): React.ReactElement {
   const debouncedImageLink = useDebounce(imageLink, 500)
   const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
   const [loading, setLoading] = useState(false)
+  const queryClient = useQueryClient()
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = new FileReader()
@@ -193,27 +195,49 @@ function ModifyIdeaModal(): React.ReactElement {
       failureInfo: innerOpenType,
       callback: res => {
         if (innerOpenType === 'update') {
-          ;[setEntries, setSearchResults].forEach(e => {
-            e(prev =>
-              typeof prev !== 'string'
-                ? prev.map(idea =>
-                    idea.id === existedEntry?.id
-                      ? (res.data as IIdeaBoxEntry)
-                      : idea
-                  )
-                : prev
+          const updateFunc = (prev: IIdeaBoxEntry[]) =>
+            prev.map(idea =>
+              idea.id === existedEntry?.id ? (res.data as IIdeaBoxEntry) : idea
             )
-          })
+
+          queryClient.setQueryData(
+            ['idea-box', 'ideas', id, path, viewArchived],
+            updateFunc
+          )
+          queryClient.setQueryData(
+            [
+              'idea-box',
+              'search',
+              id,
+              path,
+              selectedTags,
+              debouncedSearchQuery
+            ],
+            updateFunc
+          )
         } else {
-          ;[setEntries, setSearchResults].forEach(e => {
-            e(prev =>
-              typeof prev !== 'string'
-                ? [res.data as IIdeaBoxEntry, ...prev]
-                : prev
-            )
-          })
+          const updateFunc = (prev: IIdeaBoxEntry[]) => [
+            res.data as IIdeaBoxEntry,
+            ...prev
+          ]
+
+          queryClient.setQueryData(
+            ['idea-box', 'ideas', id, path, viewArchived],
+            updateFunc
+          )
+          queryClient.setQueryData(
+            [
+              'idea-box',
+              'search',
+              id,
+              path,
+              selectedTags,
+              debouncedSearchQuery
+            ],
+            updateFunc
+          )
         }
-        refreshTags()
+        queryClient.invalidateQueries({ queryKey: ['idea-box', 'tags', id] })
         setOpenType(null)
       },
       isJSON: innerOpenType === 'update'

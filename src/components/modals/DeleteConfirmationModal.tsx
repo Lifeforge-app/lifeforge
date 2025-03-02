@@ -19,7 +19,8 @@ function DeleteConfirmationModal({
   customConfirmButtonIcon,
   customConfirmButtonText,
   customOnClick,
-  queryKey
+  queryKey,
+  multiQueryKey = false
 }: {
   itemName?: string
   isOpen: boolean
@@ -34,7 +35,8 @@ function DeleteConfirmationModal({
   customConfirmButtonIcon?: string
   customConfirmButtonText?: string
   customOnClick?: () => void
-  queryKey?: string[]
+  queryKey?: unknown[] | unknown[][]
+  multiQueryKey?: boolean
 }): React.ReactElement {
   const { t } = useTranslation('common.modals')
   const [loading, setLoading] = useState(false)
@@ -65,12 +67,20 @@ function DeleteConfirmationModal({
       },
       finalCallback: () => {
         if (queryKey) {
-          queryClient.setQueryData(queryKey, (old: any[]) => {
+          const updateFunc = (old: any[]) => {
             if (!Array.isArray(data)) {
               return old.filter(item => item.id !== data.id)
             }
             return old.filter(item => !data.includes(item.id))
-          })
+          }
+
+          if (multiQueryKey) {
+            ;(queryKey as unknown[][]).forEach(key => {
+              queryClient.setQueryData(key, updateFunc)
+            })
+          } else {
+            queryClient.setQueryData(queryKey, updateFunc)
+          }
         }
         setLoading(false)
       }

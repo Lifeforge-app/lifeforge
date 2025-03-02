@@ -1,11 +1,15 @@
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import React from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { Link, useParams } from 'react-router'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { type IIdeaBoxFolder } from '@interfaces/ideabox_interfaces'
+import {
+  IIdeaBoxEntry,
+  type IIdeaBoxFolder
+} from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import APIRequest from '@utils/fetchData'
 
@@ -15,18 +19,17 @@ function FolderItem({
   folder: IIdeaBoxFolder
 }): React.ReactElement {
   const {
-    setEntries,
-    setFolders,
     setModifyFolderModalOpenType,
     setDeleteFolderConfirmationModalOpen,
     setExistedFolder
   } = useIdeaBoxContext()
+  const queryClient = useQueryClient()
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
   const [{ opacity, isDragging }, dragRef] = useDrag(
     () => ({
       type: 'FOLDER',
       item: {
-        id: folder.id,
+        targetId: folder.id,
         type: 'folder'
       },
       collect: monitor => ({
@@ -39,7 +42,7 @@ function FolderItem({
 
   const [{ isOver, canDrop }, drop] = useDrop(() => ({
     accept: ['IDEA', 'FOLDER'],
-    drop: (e: { id: string; type: 'idea' | 'folder' }) => {
+    drop: (e: { targetId: string; type: 'idea' | 'folder' }) => {
       putIntoFolder(e).catch(console.error)
     },
     collect: monitor => ({
@@ -49,30 +52,32 @@ function FolderItem({
   }))
 
   async function putIntoFolder({
-    id,
+    targetId,
     type
   }: {
-    id: string
+    targetId: string
     type: 'idea' | 'folder'
   }): Promise<void> {
     await APIRequest({
       method: 'POST',
-      endpoint: `idea-box/${type}s/move/${id}?target=${folder.id}`,
+      endpoint: `idea-box/${type}s/move/${targetId}?target=${folder.id}`,
       successInfo: 'add',
       failureInfo: 'add',
       callback: () => {
         switch (type) {
           case 'idea':
-            setEntries(prev => {
-              if (prev === 'loading' || prev === 'error') return prev
-              return prev.filter(idea => idea.id !== id)
-            })
+            queryClient.setQueryData(
+              ['idea-box', 'ideas', id, path, false],
+              (prev: IIdeaBoxEntry[]) =>
+                prev.filter(idea => idea.id !== targetId)
+            )
             break
           case 'folder':
-            setFolders(prev => {
-              if (prev === 'loading' || prev === 'error') return prev
-              return prev.filter(folder => folder.id !== id)
-            })
+            queryClient.setQueryData(
+              ['idea-box', 'folders', id, path],
+              (prev: IIdeaBoxFolder[]) =>
+                prev.filter(folder => folder.id !== targetId)
+            )
         }
       }
     })
