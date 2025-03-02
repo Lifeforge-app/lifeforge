@@ -90,10 +90,10 @@ function FolderItem({
       successInfo: 'remove',
       failureInfo: 'remove',
       callback: () => {
-        setFolders(prev => {
-          if (prev === 'loading' || prev === 'error') return prev
-          return prev.filter(f => f.id !== folder.id)
-        })
+        queryClient.setQueryData(
+          ['idea-box', 'folders', id, path],
+          (prev: IIdeaBoxFolder[]) => prev.filter(f => f.id !== folder.id)
+        )
       }
     })
   }
