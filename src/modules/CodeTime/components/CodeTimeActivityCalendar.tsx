@@ -37,7 +37,7 @@ function CodeTimeActivityCalendar(): React.ReactElement {
   }, [data])
 
   return (
-    <div className="space-y-8">
+    <div>
       <h1 className="flex items-center gap-2 text-2xl font-semibold">
         <Icon className="text-3xl" icon="tabler:activity" />
         <span className="ml-2">{t('headers.activitiesCalendar')}</span>
@@ -45,7 +45,7 @@ function CodeTimeActivityCalendar(): React.ReactElement {
       <div className="flex w-full items-center justify-between gap-6 overflow-x-auto">
         <div
           className={clsx(
-            'flex flex-1 items-center',
+            'flex flex-1 items-center pt-8',
             Array.isArray(activities) ? 'justify-start' : 'justify-center'
           )}
         >
