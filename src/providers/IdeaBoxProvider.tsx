@@ -242,8 +242,6 @@ export default function IdeaBoxProvider({
       return
     }
 
-    console.log(pathValidQuery.isLoading, pathValidQuery.data)
-
     if (!pathValidQuery.isLoading && !pathValidQuery.data) {
       toast.error('Invalid ID')
       navigate('/idea-box')
