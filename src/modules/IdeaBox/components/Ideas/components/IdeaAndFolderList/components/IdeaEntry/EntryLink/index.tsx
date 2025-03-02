@@ -7,6 +7,7 @@ import useThemeColors from '@hooks/useThemeColor'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import EntryContent from './components/EntryContent'
 import EntryContextMenu from '../components/EntryContextMenu'
+import InFolderChip from '../components/InFolderChip'
 import TagChip from '../components/TagChip'
 
 function EntryLink({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
@@ -59,24 +60,10 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
         <span className="text-sm text-bg-500">
           {moment(entry.updated).fromNow()}
         </span>
-        {typeof entry.folder !== 'string' && (
-          <span className="mt-3 flex items-center gap-2 text-sm">
-            In
-            <span
-              className="inline-flex items-center gap-2 rounded-full px-3 py-1 pl-2"
-              style={{
-                color: entry.folder.color,
-                backgroundColor: entry.folder.color + '30'
-              }}
-            >
-              <Icon className="size-4" icon={entry.folder.icon} />
-              {entry.folder.name}
-            </span>
-          </span>
-        )}
         <EntryContextMenu entry={entry} />
       </div>
       <EntryContent entry={entry} />
+      <InFolderChip entry={entry} />
     </div>
   )
 }

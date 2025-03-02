@@ -7,8 +7,14 @@ import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 
 function ContainerHeader(): React.ReactElement {
-  const { pathDetails, pathDetailsLoading, viewArchived, setViewArchived } =
-    useIdeaBoxContext()
+  const {
+    pathDetails,
+    pathDetailsLoading,
+    viewArchived,
+    setViewArchived,
+    setSearchQuery,
+    setSelectedTags
+  } = useIdeaBoxContext()
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
   const navigate = useNavigate()
 
@@ -20,6 +26,8 @@ function ContainerHeader(): React.ReactElement {
             if (viewArchived) {
               setViewArchived(false)
             }
+            setSearchQuery('')
+            setSelectedTags([])
             navigate(location.pathname.split('/').slice(0, -1).join('/'))
           }}
         />
@@ -62,6 +70,10 @@ function ContainerHeader(): React.ReactElement {
                     <Link
                       className="flex items-center gap-3"
                       to={`/idea-box/${id}`}
+                      onClick={() => {
+                        setSelectedTags([])
+                        setSearchQuery('')
+                      }}
                     >
                       <div
                         className="rounded-lg p-3"
@@ -100,6 +112,10 @@ function ContainerHeader(): React.ReactElement {
                             .slice(0, index + 1)
                             .join('/')
                             .replace('//', '/')}`}
+                          onClick={() => {
+                            setSelectedTags([])
+                            setSearchQuery('')
+                          }}
                         >
                           <Icon
                             className="shrink-0 text-xl"
