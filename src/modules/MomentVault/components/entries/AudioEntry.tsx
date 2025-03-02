@@ -18,13 +18,15 @@ import APIRequest from '@utils/fetchData'
 function AudioEntry({
   entry,
   setData,
-  onDelete
+  onDelete,
+  addEntryModalOpenType
 }: {
   entry: IMomentVaultEntry
   setData: React.Dispatch<
     React.SetStateAction<Loadable<ListResult<IMomentVaultEntry>>>
   >
   onDelete: (data: IMomentVaultEntry) => void
+  addEntryModalOpenType: 'text' | 'audio' | 'photo' | 'video' | null
 }): React.ReactElement {
   const { theme, bgTemp } = useThemeColors()
   const { theme: lightOrDarkTheme } = usePersonalizationContext()
@@ -93,7 +95,7 @@ function AudioEntry({
       el.style.willChange = 'opacity, transform'
       el.getBoundingClientRect()
     }
-  }, [])
+  }, [addEntryModalOpenType])
 
   return (
     <div
