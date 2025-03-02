@@ -1,35 +1,34 @@
+import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router'
-import { useSearchParams } from 'react-router'
+import { useNavigate, useParams, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
-import useFetch from '@hooks/useFetch'
-import { type Loadable } from '@interfaces/common'
 import {
+  IIdeaBoxContainer,
   type IIdeaBoxEntry,
   type IIdeaBoxFolder,
   type IIdeaBoxTag
 } from '@interfaces/ideabox_interfaces'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 interface IIdeaBoxData {
-  valid: boolean | 'loading' | 'error'
-  entries: Loadable<IIdeaBoxEntry[]>
-  folders: Loadable<IIdeaBoxFolder[]>
-  tags: Loadable<IIdeaBoxTag[]>
-  searchResults: Loadable<IIdeaBoxEntry[]>
-
-  setEntries: React.Dispatch<React.SetStateAction<Loadable<IIdeaBoxEntry[]>>>
-  setFolders: React.Dispatch<React.SetStateAction<Loadable<IIdeaBoxFolder[]>>>
-  setTags: React.Dispatch<React.SetStateAction<Loadable<IIdeaBoxTag[]>>>
-  setSearchResults: React.Dispatch<
-    React.SetStateAction<Loadable<IIdeaBoxEntry[]>>
-  >
-
-  refreshEntries: () => void
-  refreshFolders: () => void
-  refreshTags: () => void
-  refreshSearchResults: () => void
+  pathValid: boolean
+  pathValidLoading: boolean
+  pathDetails:
+    | {
+        container: IIdeaBoxContainer
+        path: IIdeaBoxFolder[]
+      }
+    | undefined
+  pathDetailsLoading: boolean
+  entries: IIdeaBoxEntry[]
+  entriesLoading: boolean
+  folders: IIdeaBoxFolder[]
+  foldersLoading: boolean
+  tags: IIdeaBoxTag[]
+  tagsLoading: boolean
+  searchResults: IIdeaBoxEntry[]
+  searchResultsLoading: boolean
 
   searchQuery: string
   debouncedSearchQuery: string
@@ -104,14 +103,62 @@ export default function IdeaBoxProvider({
     searchParams.get('archived') === 'true'
   )
 
-  const [valid] = useFetch<boolean>(`idea-box/valid/${id}/${path}`)
+  const pathValidQuery = useQuery<boolean>({
+    queryKey: ['idea-box', 'valid', id, path],
+    queryFn: () => APIRequestV2(`idea-box/valid/${id}/${path}`),
+    enabled: id !== undefined && path !== undefined
+  })
+  const pathDetailsQuery = useQuery<{
+    container: IIdeaBoxContainer
+    path: IIdeaBoxFolder[]
+  }>({
+    queryKey: ['idea-box', 'details', id, path],
+    queryFn: () => APIRequestV2(`idea-box/path/${id}/${path}`),
+    enabled: id !== undefined && path !== undefined && pathValidQuery.data
+  })
 
-  const [searchResults, setSearchResults] = useState<Loadable<IIdeaBoxEntry[]>>(
-    []
-  )
-  const [entries, setEntries] = useState<Loadable<IIdeaBoxEntry[]>>('loading')
-  const [folders, setFolders] = useState<Loadable<IIdeaBoxFolder[]>>('loading')
-  const [tags, setTags] = useState<Loadable<IIdeaBoxTag[]>>('loading')
+  const entriesQuery = useQuery<IIdeaBoxEntry[]>({
+    queryKey: ['idea-box', 'ideas', id, path, viewArchived],
+    queryFn: () =>
+      APIRequestV2(`idea-box/ideas/${id}/${path}?archived=${viewArchived}`),
+    enabled: id !== undefined && path !== undefined && pathValidQuery.data
+  })
+
+  const foldersQuery = useQuery<IIdeaBoxFolder[]>({
+    queryKey: ['idea-box', 'folders', id, path],
+    queryFn: () => APIRequestV2(`idea-box/folders/${id}/${path}`),
+    enabled: id !== undefined && path !== undefined && pathValidQuery.data
+  })
+
+  const tagsQuery = useQuery<IIdeaBoxTag[]>({
+    queryKey: ['idea-box', 'tags', id],
+    queryFn: () => APIRequestV2(`idea-box/tags/${id}`),
+    enabled: id !== undefined
+  })
+
+  const searchResultsQuery = useQuery<IIdeaBoxEntry[]>({
+    queryKey: [
+      'idea-box',
+      'search',
+      id,
+      path,
+      selectedTags,
+      debouncedSearchQuery
+    ],
+    queryFn: () =>
+      APIRequestV2(
+        `idea-box/search?q=${encodeURIComponent(
+          debouncedSearchQuery.trim()
+        )}&container=${id}&tags=${encodeURIComponent(selectedTags.join(','))}${
+          path !== '' ? `&folder=${path?.split('/').pop()}` : ''
+        }`
+      ),
+    enabled:
+      id !== undefined &&
+      path !== undefined &&
+      pathValidQuery.data &&
+      debouncedSearchQuery.trim().length > 0
+  })
 
   const [modifyIdeaModalOpenType, setModifyIdeaModalOpenType] = useState<
     null | 'create' | 'update' | 'paste'
@@ -185,104 +232,22 @@ export default function IdeaBoxProvider({
     }
   }
 
-  function refreshData(): void {
-    setEntries('loading')
-    APIRequest({
-      endpoint: `idea-box/ideas/${id}/${path}?archived=${viewArchived}`,
-      method: 'GET',
-      callback: data => {
-        setEntries(data.data)
-      },
-      onFailure: () => {
-        setEntries('error')
-      }
-    }).catch(() => {
-      setEntries('error')
-    })
-  }
-
-  function refreshSearchResults(): void {
-    setSearchResults('loading')
-    APIRequest({
-      endpoint: `idea-box/search?q=${encodeURIComponent(
-        debouncedSearchQuery.trim()
-      )}&container=${id}&tags=${encodeURIComponent(selectedTags.join(','))}${
-        path !== '' ? `&folder=${path?.split('/').pop()}` : ''
-      }`,
-      method: 'GET',
-      callback: data => {
-        setSearchResults(data.data)
-      },
-      onFailure: () => {
-        setSearchResults('error')
-      }
-    }).catch(() => {
-      setSearchResults('error')
-    })
-  }
-
-  function refreshFolders(): void {
-    setFolders('loading')
-    APIRequest({
-      endpoint: `idea-box/folders/${id}/${path}`,
-      method: 'GET',
-      callback: data => {
-        setFolders(data.data)
-      },
-      onFailure: () => {
-        setFolders('error')
-      }
-    }).catch(() => {
-      setFolders('error')
-    })
-  }
-
-  function refreshTags(): void {
-    setTags('loading')
-    APIRequest({
-      endpoint: `idea-box/tags/${id}`,
-      method: 'GET',
-      callback: data => {
-        setTags(data.data)
-      }
-    }).catch(() => {
-      setTags('error')
-    })
-  }
-
-  useEffect(() => {
-    if (valid === true) {
-      refreshData()
-      refreshFolders()
-      refreshTags()
-    }
-  }, [id, path, viewArchived, valid])
-
   useEffect(() => {
     setSearchParams({ archived: viewArchived.toString() })
   }, [viewArchived])
-
-  useEffect(() => {
-    if (
-      debouncedSearchQuery.trim().length > 0 ||
-      (selectedTags.length > 0 && path === '')
-    ) {
-      refreshSearchResults()
-    } else {
-      setSearchResults([])
-    }
-  }, [debouncedSearchQuery, selectedTags, path])
 
   useEffect(() => {
     if (id === undefined) {
       return
     }
 
-    if (typeof valid === 'boolean' && !valid) {
+    console.log(pathValidQuery.isLoading, pathValidQuery.data)
+
+    if (!pathValidQuery.isLoading && !pathValidQuery.data) {
       toast.error('Invalid ID')
       navigate('/idea-box')
     }
-  }, [valid, id])
+  }, [id, pathValidQuery.isLoading, pathValidQuery.data])
 
   useEffect(() => {
     document.addEventListener('paste', onPasteImage)
@@ -294,19 +259,18 @@ export default function IdeaBoxProvider({
 
   const value = useMemo(
     () => ({
-      valid,
-      entries,
-      folders,
-      tags,
-      searchResults,
-      setEntries,
-      setFolders,
-      setTags,
-      setSearchResults,
-      refreshEntries: refreshData,
-      refreshFolders,
-      refreshTags,
-      refreshSearchResults,
+      pathValid: pathValidQuery.data ?? false,
+      pathValidLoading: pathValidQuery.isLoading,
+      pathDetails: pathDetailsQuery.data,
+      pathDetailsLoading: pathDetailsQuery.isLoading,
+      entries: entriesQuery.data ?? [],
+      entriesLoading: entriesQuery.isLoading,
+      folders: foldersQuery.data ?? [],
+      foldersLoading: foldersQuery.isLoading,
+      tags: tagsQuery.data ?? [],
+      tagsLoading: tagsQuery.isLoading,
+      searchResults: searchResultsQuery.data ?? [],
+      searchResultsLoading: searchResultsQuery.isLoading,
       searchQuery,
       debouncedSearchQuery,
       setSearchQuery,
@@ -336,11 +300,18 @@ export default function IdeaBoxProvider({
       setDeleteFolderConfirmationModalOpen
     }),
     [
-      valid,
-      entries,
-      folders,
-      tags,
-      searchResults,
+      pathValidQuery.data,
+      pathValidQuery.isLoading,
+      pathDetailsQuery.data,
+      pathDetailsQuery.isLoading,
+      foldersQuery.data,
+      foldersQuery.isLoading,
+      tagsQuery.data,
+      tagsQuery.isLoading,
+      entriesQuery.data,
+      entriesQuery.isLoading,
+      searchResultsQuery.data,
+      searchResultsQuery.isLoading,
       searchQuery,
       debouncedSearchQuery,
       selectedTags,

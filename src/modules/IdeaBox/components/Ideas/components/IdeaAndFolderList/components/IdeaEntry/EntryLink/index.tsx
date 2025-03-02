@@ -16,7 +16,7 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
     () => ({
       type: 'IDEA',
       item: {
-        id: entry.id,
+        targetId: entry.id,
         type: 'idea'
       },
       collect: monitor => ({

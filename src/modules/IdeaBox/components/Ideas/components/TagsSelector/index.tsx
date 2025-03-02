@@ -16,7 +16,9 @@ function TagsSelector(): React.ReactElement {
   const { '*': path } = useParams<{ '*': string }>()
   const {
     tags,
+    tagsLoading,
     entries,
+    entriesLoading,
     searchResults,
     debouncedSearchQuery,
     viewArchived,
@@ -25,12 +27,8 @@ function TagsSelector(): React.ReactElement {
   } = useIdeaBoxContext()
 
   const filteredTags = useMemo(() => {
-    if (
-      typeof entries === 'string' ||
-      typeof searchResults === 'string' ||
-      typeof tags === 'string'
-    ) {
-      return tags
+    if (tagsLoading || entriesLoading || typeof entries === 'string') {
+      return 'loading'
     }
 
     if (debouncedSearchQuery.trim().length > 0) {
@@ -56,7 +54,7 @@ function TagsSelector(): React.ReactElement {
     if (
       typeof filteredTags === 'string' ||
       typeof searchResults === 'string' ||
-      typeof entries === 'string'
+      entriesLoading
     ) {
       return hashMap
     }
@@ -71,7 +69,15 @@ function TagsSelector(): React.ReactElement {
     })
 
     return hashMap
-  }, [filteredTags, searchResults, entries, debouncedSearchQuery])
+  }, [
+    filteredTags,
+    searchResults,
+    entries,
+    debouncedSearchQuery,
+    entriesLoading,
+    tags,
+    tagsLoading
+  ])
 
   const handleSelectTag = (tagName: string) => {
     if (selectedTags.includes(tagName)) {

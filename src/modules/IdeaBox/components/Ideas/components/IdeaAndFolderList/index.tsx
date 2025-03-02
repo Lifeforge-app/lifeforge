@@ -12,8 +12,11 @@ function IdeaAndFolderList(): React.ReactElement {
   const { '*': path } = useParams<{ '*': string }>()
   const {
     entries,
+    entriesLoading,
     folders,
+    foldersLoading,
     searchResults,
+    searchResultsLoading,
     debouncedSearchQuery,
     selectedTags,
     viewArchived,
@@ -24,44 +27,45 @@ function IdeaAndFolderList(): React.ReactElement {
     <div className="mb-20 mt-6">
       {debouncedSearchQuery.trim().length === 0 &&
       !(path === '' && selectedTags.length > 0) ? (
-        <APIFallbackComponent data={entries}>
+        <APIFallbackComponent data={entriesLoading ? 'loading' : entries}>
           {data => (
-            <APIFallbackComponent data={folders}>
+            <APIFallbackComponent data={foldersLoading ? 'loading' : folders}>
               {folders => (
                 <>
-                  {typeof folders !== 'string' &&
-                    (data.length === 0 && folders.length === 0 ? (
-                      <div className="mt-6">
-                        {!viewArchived ? (
-                          <EmptyStateScreen
-                            ctaContent="new"
-                            ctaTProps={{ item: t('items.idea') }}
-                            icon="tabler:bulb-off"
-                            name="idea"
-                            namespace="modules.ideaBox"
-                            onCTAClick={setModifyIdeaModalOpenType as any}
-                          />
-                        ) : (
-                          <EmptyStateScreen
-                            icon="tabler:archive-off"
-                            name="archived"
-                            namespace="modules.ideaBox"
-                          />
-                        )}
-                      </div>
-                    ) : (
-                      <>
-                        {folders.length > 0 && !viewArchived && <FolderList />}
-                        {data.length > 0 && <IdeaList data={data} />}
-                      </>
-                    ))}
+                  {data.length === 0 && folders.length === 0 ? (
+                    <div className="mt-6">
+                      {!viewArchived ? (
+                        <EmptyStateScreen
+                          ctaContent="new"
+                          ctaTProps={{ item: t('items.idea') }}
+                          icon="tabler:bulb-off"
+                          name="idea"
+                          namespace="modules.ideaBox"
+                          onCTAClick={setModifyIdeaModalOpenType as any}
+                        />
+                      ) : (
+                        <EmptyStateScreen
+                          icon="tabler:archive-off"
+                          name="archived"
+                          namespace="modules.ideaBox"
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    <>
+                      {folders.length > 0 && !viewArchived && <FolderList />}
+                      {data.length > 0 && <IdeaList data={data} />}
+                    </>
+                  )}
                 </>
               )}
             </APIFallbackComponent>
           )}
         </APIFallbackComponent>
       ) : (
-        <APIFallbackComponent data={searchResults}>
+        <APIFallbackComponent
+          data={searchResultsLoading ? 'loading' : searchResults}
+        >
           {searchResults => (
             <>
               {searchResults.length === 0 ? (

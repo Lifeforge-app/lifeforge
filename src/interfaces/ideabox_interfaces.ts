@@ -28,6 +28,12 @@ interface IIdeaBoxFolder extends BasePBCollection {
   parent: string
 }
 
+interface IIdeaBoxFolderFormState {
+  name: string
+  color: string
+  icon: string
+}
+
 interface IIdeaBoxEntry extends BasePBCollection {
   folder: string | IIdeaBoxFolder
   container: string
@@ -48,10 +54,18 @@ interface IIdeaBoxTag extends BasePBCollection {
   count: number
 }
 
+interface IIdeaBoxTagFormState {
+  name: string
+  color: string
+  icon: string
+}
+
 export type {
   IIdeaBoxContainer,
   IIdeaBoxContainerFormState,
   IIdeaBoxEntry,
   IIdeaBoxFolder,
-  IIdeaBoxTag
+  IIdeaBoxFolderFormState,
+  IIdeaBoxTag,
+  IIdeaBoxTagFormState
 }

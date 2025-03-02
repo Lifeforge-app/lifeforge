@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import React from 'react'
 import { useParams } from 'react-router'
@@ -17,11 +18,11 @@ function EntryContextMenu({
     setTypeOfModifyIdea,
     setModifyIdeaModalOpenType,
     setExistedEntry,
-    setDeleteIdeaConfirmationModalOpen,
-    setEntries
+    setDeleteIdeaConfirmationModalOpen
   } = useIdeaBoxContext()
+  const queryClient = useQueryClient()
 
-  const { '*': path } = useParams<{ '*': string }>()
+  const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
   async function pinIdea(): Promise<void> {
     await APIRequest({
@@ -30,19 +31,19 @@ function EntryContextMenu({
       successInfo: entry.pinned ? 'unpin' : 'pin',
       failureInfo: entry.pinned ? 'unpin' : 'pin',
       callback: res => {
-        setEntries(prev =>
-          typeof prev !== 'string'
-            ? prev
-                .map(idea =>
-                  idea.id === entry.id ? (res.data as IIdeaBoxEntry) : idea
-                )
-                .sort((a, b) => {
-                  if (a.pinned === b.pinned) {
-                    return a.created < b.created ? 1 : -1
-                  }
-                  return a.pinned ? -1 : 1
-                })
-            : prev
+        queryClient.setQueryData(
+          ['idea-box', 'ideas', id!, path!, false],
+          (prev: IIdeaBoxEntry[]) =>
+            prev
+              .map(idea =>
+                idea.id === entry.id ? (res.data as IIdeaBoxEntry) : idea
+              )
+              .sort((a, b) => {
+                if (a.pinned === b.pinned) {
+                  return a.created < b.created ? 1 : -1
+                }
+                return a.pinned ? -1 : 1
+              })
         )
       }
     })
@@ -55,10 +56,9 @@ function EntryContextMenu({
       successInfo: entry.archived ? 'unarchive' : 'archive',
       failureInfo: entry.archived ? 'unarchive' : 'archive',
       callback: () => {
-        setEntries(prev =>
-          typeof prev !== 'string'
-            ? prev.filter(idea => idea.id !== entry.id)
-            : prev
+        queryClient.setQueryData(
+          ['idea-box', 'ideas', id!, path!, false],
+          (prev: IIdeaBoxEntry[]) => prev.filter(idea => idea.id !== entry.id)
         )
       }
     })
@@ -71,10 +71,9 @@ function EntryContextMenu({
       successInfo: 'remove',
       failureInfo: 'remove',
       callback: () => {
-        setEntries(prev =>
-          typeof prev !== 'string'
-            ? prev.filter(idea => idea.id !== entry.id)
-            : prev
+        queryClient.setQueryData(
+          ['idea-box', 'ideas', id!, path!, false],
+          (prev: IIdeaBoxEntry[]) => prev.filter(idea => idea.id !== entry.id)
         )
       }
     })

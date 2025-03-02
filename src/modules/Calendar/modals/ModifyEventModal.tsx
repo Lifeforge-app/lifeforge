@@ -1,5 +1,4 @@
 import { UseQueryResult } from '@tanstack/react-query'
-import { useDebounce } from '@uidotdev/usehooks'
 
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
@@ -74,12 +73,11 @@ function ModifyEventModal({
     }
   ]
 
-  const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
   const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
     useState(false)
 
   useEffect(() => {
-    if (innerOpenType === 'update' && existedData !== null) {
+    if (openType === 'update' && existedData !== null) {
       setFormState({
         title: existedData.title,
         start: moment(existedData.start).toISOString(),
@@ -103,7 +101,7 @@ function ModifyEventModal({
         })
       }
     }
-  }, [innerOpenType, existedData])
+  }, [openType, existedData])
 
   return (
     <>
@@ -117,7 +115,7 @@ function ModifyEventModal({
           {
             create: 'tabler:plus',
             update: 'tabler:pencil'
-          }[innerOpenType!]
+          }[openType!]
         }
         id={existedData?.id}
         isOpen={openType !== null}
@@ -127,7 +125,7 @@ function ModifyEventModal({
         openType={openType}
         queryKey={['calendar', 'events']}
         setData={setFormState}
-        title={`event.${innerOpenType}`}
+        title={`event.${openType}`}
         onActionButtonClick={() => {
           setIsDeleteConfirmationModalOpen(true)
         }}
