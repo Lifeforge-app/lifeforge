@@ -1,32 +1,24 @@
-import React, { useEffect, useReducer } from 'react'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import { toast } from 'react-toastify'
 import FormModal from '@components/modals/FormModal'
-import { type IIdeaBoxTag } from '@interfaces/ideabox_interfaces'
+import { IIdeaBoxTagFormState } from '@interfaces/ideabox_interfaces'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
-import APIRequest from '@utils/fetchData'
 
 function ModifyTagModal(): React.ReactElement {
-  const { t } = useTranslation('modules.ideaBox')
   const {
     modifyTagModalOpenType: openType,
     setModifyTagModalOpenType: setOpenType,
-    existedTag: existedData,
-    setTags
+    existedTag: existedData
   } = useIdeaBoxContext()
   const { id } = useParams<{ id: string }>()
-  const [data, setData] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      name: '',
-      icon: '',
-      color: ''
-    }
-  )
+  const [formState, setFormState] = useState<IIdeaBoxTagFormState>({
+    name: '',
+    icon: '',
+    color: ''
+  })
 
-  const FIELDS: IFieldProps<typeof data>[] = [
+  const FIELDS: IFieldProps<IIdeaBoxTagFormState>[] = [
     {
       id: 'name',
       label: 'Tag name',
@@ -47,58 +39,11 @@ function ModifyTagModal(): React.ReactElement {
     }
   ]
 
-  function updateDataList(data: IIdeaBoxTag): void {
-    if (openType === 'update') {
-      setTags(prev =>
-        typeof prev !== 'string'
-          ? prev.map(tag => (tag.id === existedData?.id ? data : tag))
-          : prev
-      )
-    } else {
-      setTags(prev => (typeof prev !== 'string' ? [...prev, data] : prev))
-    }
-  }
-
-  async function onSubmitButtonClick(): Promise<void> {
-    const { name, icon, color } = data
-    if (
-      name.trim().length === 0 ||
-      color.trim().length === 0 ||
-      icon.trim().length === 0
-    ) {
-      toast.error(t('input.error.fieldEmpty'))
-      return
-    }
-
-    const tag = {
-      name: name.trim(),
-      color: color.trim(),
-      icon: icon.trim()
-    }
-
-    await APIRequest({
-      endpoint:
-        'idea-box/tags' +
-        (openType === 'update' ? `/${existedData?.id}` : `/${id}`),
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: tag,
-      successInfo: openType,
-      failureInfo: openType,
-      callback: res => {
-        setOpenType(null)
-        updateDataList(res.data)
-      },
-      onFailure: () => {
-        setOpenType(null)
-      }
-    })
-  }
-
   useEffect(() => {
     if (existedData !== null) {
-      setData(existedData)
+      setFormState(existedData)
     } else {
-      setData({
+      setFormState({
         name: '',
         icon: '',
         color: ''
@@ -108,7 +53,8 @@ function ModifyTagModal(): React.ReactElement {
 
   return (
     <FormModal
-      data={data}
+      data={formState}
+      endpoint="idea-box/tags"
       fields={FIELDS}
       icon={
         {
@@ -116,15 +62,16 @@ function ModifyTagModal(): React.ReactElement {
           update: 'tabler:pencil'
         }[openType!]
       }
+      id={existedData?.id}
       isOpen={openType !== null}
       namespace="modules.ideaBox"
       openType={openType}
-      setData={setData}
+      queryKey={['idea-box', 'tags', id!]}
+      setData={setFormState}
       title={`tag.${openType}`}
       onClose={() => {
         setOpenType(null)
       }}
-      onSubmit={onSubmitButtonClick}
     />
   )
 }

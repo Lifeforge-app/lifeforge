@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
 import { useDrag } from 'react-dnd'
@@ -8,7 +9,6 @@ import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import CustomZoomContent from './components/CustomZoomContent'
 import EntryContextMenu from './components/EntryContextMenu'
 import TagChip from './components/TagChip'
-import clsx from 'clsx'
 
 function EntryImage({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
   const { componentBg } = useThemeColors()
@@ -16,7 +16,7 @@ function EntryImage({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
     () => ({
       type: 'IDEA',
       item: {
-        id: entry.id,
+        targetId: entry.id,
         type: 'idea'
       },
       collect: monitor => ({

@@ -1,8 +1,10 @@
 import React from 'react'
+import { useParams } from 'react-router'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 
 function DeleteModals(): React.ReactElement {
+  const { id, '*': path } = useParams<{ id: string; '*': string }>()
   const {
     deleteIdeaConfirmationModalOpen,
     setDeleteIdeaConfirmationModalOpen,
@@ -10,32 +12,23 @@ function DeleteModals(): React.ReactElement {
     setDeleteFolderConfirmationModalOpen,
     existedEntry,
     existedFolder,
-    setEntries,
-    setSearchResults,
-    setFolders,
-    refreshTags
+    viewArchived,
+    selectedTags,
+    debouncedSearchQuery
   } = useIdeaBoxContext()
 
   return (
     <>
       <DeleteConfirmationModal
+        multiQueryKey
         apiEndpoint="idea-box/ideas"
         data={existedEntry}
         isOpen={deleteIdeaConfirmationModalOpen}
         itemName="idea"
-        updateDataLists={() => {
-          setEntries(prevData =>
-            typeof prevData !== 'string'
-              ? prevData.filter(entry => entry.id !== existedEntry?.id)
-              : prevData
-          )
-          setSearchResults(prevData =>
-            typeof prevData !== 'string'
-              ? prevData.filter(entry => entry.id !== existedEntry?.id)
-              : prevData
-          )
-          refreshTags()
-        }}
+        queryKey={[
+          ['idea-box', 'search', id, path, selectedTags, debouncedSearchQuery],
+          ['idea-box', 'ideas', id!, path!, viewArchived]
+        ]}
         onClose={() => {
           setDeleteIdeaConfirmationModalOpen(false)
         }}
@@ -45,13 +38,7 @@ function DeleteModals(): React.ReactElement {
         data={existedFolder}
         isOpen={deleteFolderConfirmationModalOpen}
         itemName="folder"
-        updateDataLists={() => {
-          setFolders(prevData =>
-            typeof prevData !== 'string'
-              ? prevData.filter(folder => folder.id !== existedFolder?.id)
-              : prevData
-          )
-        }}
+        queryKey={['idea-box', 'folders', id!, path!]}
         onClose={() => {
           setDeleteFolderConfirmationModalOpen(false)
         }}
