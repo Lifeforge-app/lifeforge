@@ -18,7 +18,8 @@ function EntryContextMenu({
     setTypeOfModifyIdea,
     setModifyIdeaModalOpenType,
     setExistedEntry,
-    setDeleteIdeaConfirmationModalOpen
+    setDeleteIdeaConfirmationModalOpen,
+    viewArchived
   } = useIdeaBoxContext()
   const queryClient = useQueryClient()
 
@@ -32,7 +33,7 @@ function EntryContextMenu({
       failureInfo: entry.pinned ? 'unpin' : 'pin',
       callback: res => {
         queryClient.setQueryData(
-          ['idea-box', 'ideas', id!, path!, false],
+          ['idea-box', 'ideas', id!, path!, viewArchived],
           (prev: IIdeaBoxEntry[]) =>
             prev
               .map(idea =>
@@ -57,7 +58,7 @@ function EntryContextMenu({
       failureInfo: entry.archived ? 'unarchive' : 'archive',
       callback: () => {
         queryClient.setQueryData(
-          ['idea-box', 'ideas', id!, path!, false],
+          ['idea-box', 'ideas', id!, path!, viewArchived],
           (prev: IIdeaBoxEntry[]) => prev.filter(idea => idea.id !== entry.id)
         )
       }
@@ -72,7 +73,7 @@ function EntryContextMenu({
       failureInfo: 'remove',
       callback: () => {
         queryClient.setQueryData(
-          ['idea-box', 'ideas', id!, path!, false],
+          ['idea-box', 'ideas', id!, path!, viewArchived],
           (prev: IIdeaBoxEntry[]) => prev.filter(idea => idea.id !== entry.id)
         )
       }

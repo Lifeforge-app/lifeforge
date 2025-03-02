@@ -108,6 +108,7 @@ export default function IdeaBoxProvider({
     queryFn: () => APIRequestV2(`idea-box/valid/${id}/${path}`),
     enabled: id !== undefined && path !== undefined
   })
+
   const pathDetailsQuery = useQuery<{
     container: IIdeaBoxContainer
     path: IIdeaBoxFolder[]
@@ -157,7 +158,8 @@ export default function IdeaBoxProvider({
       id !== undefined &&
       path !== undefined &&
       pathValidQuery.data &&
-      debouncedSearchQuery.trim().length > 0
+      (debouncedSearchQuery.trim().length > 0 ||
+        (selectedTags.length > 0 && path === ''))
   })
 
   const [modifyIdeaModalOpenType, setModifyIdeaModalOpenType] = useState<

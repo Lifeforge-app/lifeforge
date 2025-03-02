@@ -11,11 +11,11 @@ function TagChip({ text }: { text: string }): React.ReactElement {
       typeof tags !== 'string'
         ? tags.find(tag => tag.name === text)
         : undefined,
-    [selectedTags, text]
+    [selectedTags, text, tags]
   )
   const active = useMemo(
     () => selectedTags.includes(text),
-    [selectedTags, text]
+    [selectedTags, text, tags]
   )
 
   const tagColor = useMemo(() => {
