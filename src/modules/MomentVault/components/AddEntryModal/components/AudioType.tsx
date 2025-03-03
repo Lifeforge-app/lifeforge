@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import WavesurferPlayer from '@wavesurfer/react'
+import moment from 'moment'
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import WaveSurfer from 'wavesurfer.js'
@@ -196,7 +197,8 @@ function AudioType({
                   onReady={onReady}
                 />
                 <p className="text-sm text-bg-500 whitespace-nowrap text-left w-full sm:w-auto">
-                  {currentTime.toFixed(2)} / {totalTime.toFixed(2)}
+                  {moment().startOf('day').seconds(currentTime).format('mm:ss')}{' '}
+                  / {moment().startOf('day').seconds(totalTime).format('mm:ss')}
                 </p>
               </div>
             </div>

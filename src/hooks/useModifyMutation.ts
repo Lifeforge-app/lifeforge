@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/use-type-alias */
 import { useMutation, UseMutationResult } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import APIRequestV2 from '@utils/newFetchData'

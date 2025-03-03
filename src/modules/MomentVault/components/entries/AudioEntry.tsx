@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import moment from 'moment'
 import { ListResult } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
 import { Button } from '@components/buttons'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
@@ -13,7 +14,7 @@ import useThemeColors from '@hooks/useThemeColor'
 import { Loadable } from '@interfaces/common'
 import { IMomentVaultEntry } from '@interfaces/moment_vault_interfaces'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function AudioEntry({
   entry,
@@ -57,36 +58,38 @@ function AudioEntry({
   async function addTranscription(): Promise<void> {
     setTranscriptionLoading(true)
 
-    await APIRequest({
-      endpoint: `moment-vault/transcribe-existed/${entry.id}`,
-      method: 'POST',
-      successInfo: 'transcribe',
-      failureInfo: 'transcribe',
-      callback(data) {
-        setData(prev => {
-          if (typeof prev === 'string') {
-            return prev
-          }
+    try {
+      const data = await APIRequestV2<string>(
+        `moment-vault/transcribe-existed/${entry.id}`,
+        {
+          method: 'POST'
+        }
+      )
 
-          const newData = prev.items.map(item => {
-            if (item.id === entry.id) {
-              return {
-                ...item,
-                transcription: data.data
-              }
+      setData(prev => {
+        if (typeof prev === 'string') {
+          return prev
+        }
+
+        const newData = prev.items.map(item => {
+          if (item.id === entry.id) {
+            return {
+              ...item,
+              transcription: data
             }
-            return item
-          })
-          return {
-            ...prev,
-            items: newData
           }
+          return item
         })
-      },
-      finalCallback: () => {
-        setTranscriptionLoading(false)
-      }
-    })
+        return {
+          ...prev,
+          items: newData
+        }
+      })
+    } catch {
+      toast.error('Failed to transcribe audio')
+    } finally {
+      setTranscriptionLoading(false)
+    }
   }
 
   useEffect(() => {
