@@ -41,7 +41,6 @@ function BgImageSelector(): React.ReactElement {
         endpoint: 'user/personalization/bg-image',
         method: 'PUT',
         body: formData,
-        isJSON: false,
         callback: data => {
           setBgImage(`${import.meta.env.VITE_API_HOST}/${data.data}`)
           toast.success('Background image updated')

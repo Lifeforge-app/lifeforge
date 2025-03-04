@@ -82,7 +82,6 @@ function Review({
         openType === 'update' ? `/${id}` : ''
       }`,
       method: openType === 'update' ? 'PUT' : 'POST',
-      isJSON: false,
       body: formData,
       successInfo: openType,
       failureInfo: openType,

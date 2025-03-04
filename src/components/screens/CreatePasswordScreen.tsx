@@ -8,7 +8,7 @@ import { Button } from '@components/buttons'
 import { TextInput } from '@components/inputs'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { useAuthContext } from '@providers/AuthProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function CreatePasswordScreen({
   endpoint,
@@ -40,20 +40,19 @@ function CreatePasswordScreen({
 
     setLoading(true)
 
-    await APIRequest({
-      endpoint,
-      method: 'POST',
-      body: { password: newPassword, id: userData.id },
-      successInfo: 'created',
-      failureInfo: 'created',
-      finalCallback: () => {
-        setLoading(false)
-        setConfirmationModalOpen(false)
-      },
-      callback: () => {
-        setUserData({ ...userData, [keyInUserData]: true })
-      }
-    })
+    try {
+      await APIRequestV2(endpoint, {
+        method: 'POST',
+        body: { password: newPassword, id: userData.id }
+      })
+
+      setUserData({ ...userData, [keyInUserData]: true })
+    } catch {
+      toast.error('An error occurred')
+    } finally {
+      setLoading(false)
+      setConfirmationModalOpen(false)
+    }
   }
 
   function confirmAction(): void {
@@ -93,8 +92,8 @@ function CreatePasswordScreen({
           name="New Password"
           namespace="common.vault"
           placeholder="••••••••••••••••"
-          tKey="vault"
           setValue={setNewPassword}
+          tKey="vault"
           value={newPassword}
           onActionButtonClick={() => {
             const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -124,8 +123,8 @@ function CreatePasswordScreen({
           name="Confirm Password"
           namespace="common.vault"
           placeholder="••••••••••••••••"
-          tKey="vault"
           setValue={setConfirmPassword}
+          tKey="vault"
           value={confirmPassword}
           onKeyDown={e => {
             if (e.key === 'Enter') {

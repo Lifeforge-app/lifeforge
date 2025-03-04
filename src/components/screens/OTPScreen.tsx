@@ -6,7 +6,7 @@ import OtpInput from 'react-otp-input'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { encrypt } from '@utils/encryption'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function OTPInputBox({
   verityOTP,
@@ -106,33 +106,30 @@ function OTPScreen({
   const [sendOtpLoading, setSendOtpLoading] = useState(false)
   const [verifyOtpLoading, setVerifyOtpLoading] = useState(false)
 
-  function requestOTP(): void {
+  async function requestOTP(): Promise<void> {
     if (otpCooldown > 0) {
       toast.error(t('otp.messages.cooldown'))
       return
     }
 
     setSendOtpLoading(true)
-    APIRequest({
-      method: 'GET',
-      endpoint: 'user/auth/otp',
-      callback: response => {
-        setOtpSent(true)
-        setOtpId(response.data)
-        setOtpCooldown(60)
-        const coolDown = new Date().getTime() + 60000
-        localStorage.setItem('otpCooldown', coolDown.toString())
-        toast.success(t('otp.messages.success'))
-      },
-      onFailure: () => {
-        toast.error(t('otp.messages.failed'))
-      },
-      finalCallback: () => {
-        setSendOtpLoading(false)
-      }
-    }).catch(err => {
-      console.error(err)
-    })
+
+    try {
+      const data = await APIRequestV2<string>('user/auth/otp', {
+        method: 'GET'
+      })
+
+      setOtpSent(true)
+      setOtpId(data)
+      setOtpCooldown(60)
+      const coolDown = new Date().getTime() + 60000
+      localStorage.setItem('otpCooldown', coolDown.toString())
+      toast.success(t('otp.messages.success'))
+    } catch {
+      toast.error(t('otp.messages.failed'))
+    } finally {
+      setSendOtpLoading(false)
+    }
   }
 
   async function verityOTP(otp: string): Promise<void> {
@@ -144,29 +141,27 @@ function OTPScreen({
     setVerifyOtpLoading(true)
     const challenge = await fetchChallenge()
 
-    await APIRequest({
-      endpoint: verificationEndpoint,
-      method: 'POST',
-      body: {
-        otp: encrypt(otp, challenge),
-        otpId
-      },
-      callback(data) {
-        if (data.state === 'success' && data.data === true) {
-          callback()
-          localStorage.removeItem('otpCooldown')
-          toast.success(t('otp.messages.verify.success'))
-        } else {
-          toast.error(t('otp.messages.verify.failed'))
+    try {
+      const data = await APIRequestV2<boolean>(verificationEndpoint, {
+        method: 'POST',
+        body: {
+          otp: encrypt(otp, challenge),
+          otpId
         }
-      },
-      onFailure: () => {
+      })
+
+      if (data) {
+        callback()
+        localStorage.removeItem('otpCooldown')
+        toast.success(t('otp.messages.verify.success'))
+      } else {
         toast.error(t('otp.messages.verify.failed'))
-      },
-      finalCallback: () => {
-        setVerifyOtpLoading(false)
       }
-    })
+    } catch {
+      toast.error(t('otp.messages.verify.failed'))
+    } finally {
+      setVerifyOtpLoading(false)
+    }
   }
 
   useEffect(() => {

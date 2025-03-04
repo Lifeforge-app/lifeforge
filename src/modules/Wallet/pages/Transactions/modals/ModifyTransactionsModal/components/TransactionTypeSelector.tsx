@@ -29,6 +29,7 @@ function TransactionTypeSelector({
 
   return (
     <ListboxOrComboboxInput
+      required
       buttonContent={
         <>
           <Icon

@@ -16,7 +16,6 @@ export default async function APIRequest({
   successInfo,
   failureInfo,
   onFailure,
-  isJSON = true,
   timeout = 30000
 }: {
   endpoint: string
@@ -27,9 +26,14 @@ export default async function APIRequest({
   successInfo?: string | null | false
   failureInfo?: string | null | false
   onFailure?: () => void
-  isJSON?: boolean
   timeout?: number
 }): Promise<any> {
+  const isJSON = !(
+    body instanceof FormData ||
+    body instanceof URLSearchParams ||
+    body instanceof Blob
+  )
+
   await fetch(`${import.meta.env.VITE_API_HOST}/${endpoint}`, {
     method,
     signal: AbortSignal.timeout(timeout),

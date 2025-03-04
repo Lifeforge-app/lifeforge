@@ -6,7 +6,7 @@ import { DateInput, TextInput } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { useAuthContext } from '@providers/AuthProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import { toCamelCase } from '@utils/strings'
 
 function ModifyModal({
@@ -31,36 +31,35 @@ function ModifyModal({
 
   async function onSubmit(): Promise<void> {
     setLoading(true)
-    await APIRequest({
-      method: 'PATCH',
-      endpoint: '/user/settings',
-      body: {
-        data: {
-          [id]:
-            type === 'date'
-              ? moment(value).subtract(1, 'second').format('YYYY-MM-DD')
-              : value
+
+    try {
+      await APIRequestV2('/user/settings', {
+        method: 'POST',
+        body: {
+          data: {
+            [id]:
+              type === 'date'
+                ? moment(value).subtract(1, 'second').format('YYYY-MM-DD')
+                : value
+          }
         }
-      },
-      successInfo: id !== 'email' && 'update',
-      failureInfo: id !== 'email' && 'update',
-      callback: () => {
-        if (id === 'email') {
-          toast.info('A verification email has been sent to your new email.')
-        } else {
-          setUserData({ ...userData, [id]: value })
-        }
-      },
-      onFailure: () => {
-        if (id === 'email') {
-          toast.error('Failed to send verification email.')
-        }
-      },
-      finalCallback: () => {
-        setLoading(false)
-        onClose()
+      })
+
+      if (id === 'email') {
+        toast.info('A verification email has been sent to your new email.')
+      } else {
+        setUserData({ ...userData, [id]: value })
       }
-    })
+    } catch {
+      if (id === 'email') {
+        toast.error('Failed to send verification email.')
+      } else {
+        toast.error('An error occurred.')
+      }
+    } finally {
+      setLoading(false)
+      onClose()
+    }
   }
 
   return (

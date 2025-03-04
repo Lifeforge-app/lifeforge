@@ -41,8 +41,7 @@ function useModifyMutation<T>(
 
         return APIRequestV2(endpoint, {
           method: type === 'create' ? 'POST' : 'PATCH',
-          body: formData,
-          isJSON: false
+          body: formData
         })
       }
 

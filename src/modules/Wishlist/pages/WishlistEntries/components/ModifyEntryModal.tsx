@@ -147,7 +147,6 @@ function ModifyEntryModal({
         (openType === 'update' ? `/${existedData?.id}` : ''),
       method: openType === 'create' ? 'POST' : 'PATCH',
       body: formData,
-      isJSON: false,
       successInfo: openType,
       failureInfo: openType,
       callback: res => {
