@@ -1,5 +1,15 @@
 import { cookieParse } from 'pocketbase'
 
+interface ApiResponse<T> {
+  state: 'success' | 'error'
+  data?: T
+  message?: string
+}
+
+interface CookieData {
+  token?: string
+}
+
 function getRequestBody(body: any, isJSON: boolean): any {
   return isJSON ? JSON.stringify(body) : body
 }
@@ -7,71 +17,64 @@ function getRequestBody(body: any, isJSON: boolean): any {
 export default async function fetchAPI<T>(
   endpoint: string,
   {
-    method,
+    method = 'GET',
     body,
     timeout = 30000,
     raiseError = true
   }: {
     method?: string
-    body?: any
+    body?: string | FormData | URLSearchParams | Blob | Record<string, unknown>
     timeout?: number
     raiseError?: boolean
-  } = {
-    method: 'GET'
-  }
+  } = {}
 ): Promise<T> {
-  const isJSON = !(
-    body instanceof FormData ||
-    body instanceof URLSearchParams ||
-    body instanceof Blob
-  )
+  const apiHost = import.meta.env.VITE_API_HOST
+  if (!apiHost) {
+    throw new Error('VITE_API_HOST environment variable is not defined')
+  }
 
-  try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_HOST}/${endpoint.replace(/^\//, '')}`,
-      {
-        method,
-        signal: AbortSignal.timeout(timeout),
-        headers: {
-          Authorization: cookieParse(document.cookie).token
-            ? `Bearer ${cookieParse(document.cookie).token}`
-            : '',
-          ...(isJSON ? { 'Content-Type': 'application/json' } : {})
-        },
-        body: body !== undefined ? getRequestBody(body, isJSON) : null
-      }
+  const isJSON =
+    !!body &&
+    !(
+      body instanceof FormData ||
+      body instanceof URLSearchParams ||
+      body instanceof Blob
     )
 
+  const cookies = cookieParse(document.cookie) as CookieData
+  const token = cookies.token ?? ''
+
+  try {
+    const url = new URL(endpoint, apiHost)
+    const response = await fetch(url.toString(), {
+      method,
+      signal: AbortSignal.timeout(timeout),
+      headers: {
+        Authorization: token ? `Bearer ${token}` : '',
+        ...(isJSON ? { 'Content-Type': 'application/json' } : {})
+      },
+      body: body && getRequestBody(body, isJSON)
+    })
+
     if (!response.ok) {
-      try {
-        const data = await response.json().catch(() => {
-          throw new Error('Failed to perform API request')
-        })
-        throw new Error(data.message)
-      } catch (err: any) {
-        throw new Error(err.message)
-      }
+      const data = (await response.json()) as ApiResponse<T>
+      throw new Error(data.message || 'Failed to perform API request')
     }
 
-    const data = await response.json()
-
-    switch (data.state) {
-      case 'error':
-        throw new Error(data.message)
-      case 'success':
-        return data.data
-      default:
-        throw new Error('Failed to perform API request')
+    const data = (await response.json()) as ApiResponse<T>
+    if (data.state === 'error') {
+      throw new Error(data.message || 'API returned an error')
     }
+    if (data.state === 'success') {
+      return data.data as T
+    }
+    throw new Error('Unexpected API response format')
   } catch (err) {
     if (raiseError) {
-      if (err instanceof Error) {
-        throw new Error(err.message)
-      } else {
-        throw new Error('Failed to perform API request')
-      }
-    } else {
-      return undefined as T
+      throw err instanceof Error
+        ? err
+        : new Error('Failed to perform API request')
     }
+    return undefined as T
   }
 }

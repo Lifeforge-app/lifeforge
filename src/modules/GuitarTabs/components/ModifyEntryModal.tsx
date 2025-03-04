@@ -72,7 +72,7 @@ function ModifyEntryModal({
     try {
       await fetchAPI(`guitar-tabs/entries/${existingItem?.id}`, {
         method: 'PATCH',
-        body: data
+        body: data as any as Record<string, unknown>
       })
       refreshEntries()
       onClose()
