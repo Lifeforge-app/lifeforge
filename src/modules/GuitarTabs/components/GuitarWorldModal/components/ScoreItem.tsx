@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { type IGuitarTabsGuitarWorldScoreEntry } from '@interfaces/guitar_tabs_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function ScoreItem({
   entry,
@@ -46,7 +46,7 @@ function ScoreItem({
     setIsDownloading(true)
 
     try {
-      await APIRequestV2('guitar-tabs/guitar-world/download', {
+      await fetchAPI('guitar-tabs/guitar-world/download', {
         method: 'POST',
         body: {
           cookie,

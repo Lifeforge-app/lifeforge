@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import FormModal from '@components/modals/FormModal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyTagModal(): React.ReactElement {
   const { t } = useTranslation('modules.todoList')
@@ -37,18 +37,20 @@ function ModifyTagModal(): React.ReactElement {
       return
     }
 
-    await APIRequest({
-      endpoint:
+    try {
+      await fetchAPI(
         'todo-list/tags' + (openType === 'update' ? `/${selectedTag?.id}` : ''),
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: data,
-      successInfo: openType,
-      failureInfo: openType,
-      callback: () => {
-        setOpenType(null)
-        refreshTagsList()
-      }
-    })
+        {
+          method: openType === 'create' ? 'POST' : 'PATCH',
+          body: data
+        }
+      )
+
+      setOpenType(null)
+      refreshTagsList()
+    } catch {
+      toast.error('Error')
+    }
   }
 
   useEffect(() => {

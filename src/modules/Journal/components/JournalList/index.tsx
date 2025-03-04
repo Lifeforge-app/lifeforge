@@ -7,7 +7,7 @@ import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import { type Loadable } from '@interfaces/common'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { encrypt } from '@utils/encryption'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import JournalListItem from './components/JournalListItem'
 
 function JournalList({
@@ -47,9 +47,9 @@ function JournalList({
     setEditLoading(true)
 
     try {
-      const challenge = await APIRequestV2<string>(`journal/auth/challenge`)
+      const challenge = await fetchAPI<string>(`journal/auth/challenge`)
 
-      const data = await APIRequestV2<IJournalEntry>(
+      const data = await fetchAPI<IJournalEntry>(
         `journal/entries/get/${id}?master=${encodeURIComponent(
           encrypt(masterPassword, challenge)
         )}`

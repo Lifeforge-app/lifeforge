@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
+import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import {
   TextInput,
@@ -10,7 +11,7 @@ import {
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWishlistEntry } from '@interfaces/wishlist_interfaces'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 const PROVIDERS = [
   {
@@ -56,30 +57,35 @@ function FromOtherAppsModal({
   async function fetchData(): Promise<void> {
     setLoading('loading')
 
-    await APIRequest({
-      endpoint: 'wishlist/entries/external',
-      method: 'POST',
-      body: {
-        provider,
-        url
-      },
-      callback(data) {
-        const { name, price, image } = data.data
-        setLoading(false)
-        setModifyEntryModalOpenType('create')
-        setExistedData({
-          name: name ?? '',
-          price: price?.toString() ?? '0',
-          image,
-          url,
-          list: id
-        })
-        onClose()
-      },
-      onFailure() {
-        setLoading('error')
-      }
-    })
+    try {
+      const data = await fetchAPI<{
+        name: string
+        price: number
+        image: string
+      }>('wishlist/entries/external', {
+        method: 'POST',
+        body: {
+          provider,
+          url
+        }
+      })
+
+      const { name, price, image } = data
+      setModifyEntryModalOpenType('create')
+      setExistedData({
+        name: name ?? '',
+        price: price ?? 0,
+        image,
+        url,
+        list: id
+      })
+      onClose()
+    } catch {
+      toast.error('Failed to import product')
+      setLoading('error')
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {

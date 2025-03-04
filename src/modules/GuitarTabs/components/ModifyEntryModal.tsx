@@ -13,7 +13,7 @@ import {
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 interface IState {
   name: string
@@ -70,7 +70,7 @@ function ModifyEntryModal({
     setLoading(true)
 
     try {
-      await APIRequestV2(`guitar-tabs/entries/${existingItem?.id}`, {
+      await fetchAPI(`guitar-tabs/entries/${existingItem?.id}`, {
         method: 'PATCH',
         body: data
       })

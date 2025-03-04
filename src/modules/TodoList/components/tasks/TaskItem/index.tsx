@@ -4,7 +4,7 @@ import useThemeColors from '@hooks/useThemeColor'
 import { type Loadable } from '@interfaces/common'
 import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 import SubtaskItem from './components/SubtaskItem'
 import TaskCompletionCheckbox from './components/TaskCompletionCheckbox'
 import TaskDueDate from './components/TaskDueDate'
@@ -66,11 +66,12 @@ function TaskItem({
       }
     }
 
-    await APIRequest({
-      endpoint: `todo-list/entries/toggle/${entry.id}`,
-      method: 'POST',
-      failureInfo: 'update',
-      onFailure: () => {
+    try {
+      await fetchAPI(`todo-list/entries/toggle/${entry.id}`, {
+        method: 'POST'
+      })
+
+      setTimeout(() => {
         if (!isOuter) {
           refreshInnerEntries()
         } else {
@@ -78,20 +79,17 @@ function TaskItem({
             refreshEntries()
           }
         }
-      },
-      callback: () => {
-        setTimeout(() => {
-          if (!isOuter) {
-            refreshInnerEntries()
-          } else {
-            if (refreshEntries) {
-              refreshEntries()
-            }
-          }
-          refreshStatusCounter()
-        }, 500)
+        refreshStatusCounter()
+      }, 500)
+    } catch {
+      if (!isOuter) {
+        refreshInnerEntries()
+      } else {
+        if (refreshEntries) {
+          refreshEntries()
+        }
       }
-    })
+    }
   }
 
   return (

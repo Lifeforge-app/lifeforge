@@ -6,7 +6,7 @@ import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import DownloadMenu from '../../../components/DownloadMenu'
 import AudioPlayer from '../../ListView/components/AudioPlayer'
 
@@ -27,7 +27,7 @@ function EntryItem({
 
   async function favouriteTab(): Promise<void> {
     try {
-      await APIRequestV2(`guitar-tabs/entries/favourite/${entry.id}`, {
+      await fetchAPI(`guitar-tabs/entries/favourite/${entry.id}`, {
         method: 'POST'
       })
 

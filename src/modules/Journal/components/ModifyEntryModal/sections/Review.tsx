@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { encrypt } from '@utils/encryption'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import JournalView from '../../JournalView'
 
 function Review({
@@ -47,7 +47,7 @@ function Review({
     setLoading(true)
 
     try {
-      const challenge = await APIRequestV2<string>('journal/auth/challenge')
+      const challenge = await fetchAPI<string>('journal/auth/challenge')
 
       const encryptedTitle = encrypt(title, masterPassword)
       const encryptedRaw = encrypt(rawText, masterPassword)
@@ -78,7 +78,7 @@ function Review({
         })
       }
 
-      await APIRequestV2(
+      await fetchAPI(
         `journal/entries/${openType}${openType === 'update' ? '/' + id : ''}`,
         {
           method: openType === 'update' ? 'PUT' : 'POST',

@@ -9,7 +9,7 @@ import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function AddPhotosToAlbumModal(): React.ReactElement {
   const { t } = useTranslation('modules.photos')
@@ -43,7 +43,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
     setLoading(true)
 
     try {
-      await APIRequestV2(`photos/album/add-photos/${selectedAlbum}`, {
+      await fetchAPI(`photos/album/add-photos/${selectedAlbum}`, {
         method: 'PATCH',
         body: {
           photos: selectedPhotos.filter(

@@ -15,7 +15,7 @@ import ModalWrapper from '@components/modals/ModalWrapper'
 import { IPasswordFormState } from '@interfaces/password_interfaces'
 import { usePasswordContext } from '@providers/PasswordsProvider'
 import { encrypt } from '@utils/encryption'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function CreatePasswordModal(): React.ReactElement {
   const { t } = useTranslation('modules.passwords')
@@ -71,7 +71,7 @@ function CreatePasswordModal(): React.ReactElement {
     const encryptedMaster = encrypt(masterPassword, challenge)
 
     try {
-      await APIRequestV2(
+      await fetchAPI(
         `passwords/password${
           openType === 'update' ? `/${existedData?.id}` : ''
         }`,

@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import FormModal from '@components/modals/FormModal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyBookModal(): React.ReactElement {
   const {
@@ -150,7 +150,7 @@ function ModifyBookModal(): React.ReactElement {
     }
 
     try {
-      await APIRequestV2(`books-library/entries/${existedData?.id}`, {
+      await fetchAPI(`books-library/entries/${existedData?.id}`, {
         method: 'PATCH',
         body: data
       })

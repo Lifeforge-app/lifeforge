@@ -1,13 +1,13 @@
 import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
 import { decrypt, encrypt } from '@utils/encryption'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 export async function getDecryptedPassword(
   masterPassword: string,
   id: string
 ): Promise<string> {
-  const challenge = await APIRequestV2<string>('passwords/auth/challenge')
+  const challenge = await fetchAPI<string>('passwords/auth/challenge')
 
   const encryptedMaster = encrypt(masterPassword, challenge)
 

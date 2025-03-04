@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Markdown from 'react-markdown'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function RawCodeAndSummary({
   id,
@@ -21,12 +21,9 @@ function RawCodeAndSummary({
     setSummarizeButtonLoading(true)
 
     try {
-      const data = await APIRequestV2<string>(
-        `airports/NOTAM/${id}/summarize`,
-        {
-          method: 'GET'
-        }
-      )
+      const data = await fetchAPI<string>(`airports/NOTAM/${id}/summarize`, {
+        method: 'GET'
+      })
 
       setSummary(data)
       toast.success('NOTAM summarized successfully')

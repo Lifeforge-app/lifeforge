@@ -12,7 +12,7 @@ import Scrollbar from '@components/utilities/Scrollbar'
 import useFetch from '@hooks/useFetch'
 import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 import ListSelector from './components/ListSelector'
 import NotesInput from './components/NotesInput'
 import PrioritySelector from './components/PrioritySelector'
@@ -72,30 +72,28 @@ function ModifyTaskWindow(): React.ReactElement {
       tags
     }
 
-    await APIRequest({
-      endpoint:
+    try {
+      await fetchAPI(
         'todo-list/entries' +
-        (innerOpenType === 'update' ? `/${selectedTask?.id}` : ''),
-      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-      body: task,
-      successInfo: innerOpenType,
-      failureInfo: innerOpenType,
-      callback: () => {
-        setOpenType(null)
-        setSelectedTask(null)
-        refreshEntries()
-        refreshTagsList()
-        refreshPriorities()
-        refreshLists()
-        refreshStatusCounter()
-      },
-      onFailure: () => {
-        setOpenType(null)
-      },
-      finalCallback: () => {
-        setLoading(false)
-      }
-    })
+          (innerOpenType === 'update' ? `/${selectedTask?.id}` : ''),
+        {
+          method: innerOpenType === 'create' ? 'POST' : 'PATCH',
+          body: task
+        }
+      )
+
+      setOpenType(null)
+      setSelectedTask(null)
+      refreshEntries()
+      refreshTagsList()
+      refreshPriorities()
+      refreshLists()
+      refreshStatusCounter()
+    } catch {
+      toast.error('Error')
+    } finally {
+      setLoading(false)
+    }
   }
 
   function updateNotes(event: React.FormEvent<HTMLTextAreaElement>): void {

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import FormModal from '@components/modals/FormModal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { type IWishlistList } from '@interfaces/wishlist_interfaces'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyWishlistListModal({
   openType,
@@ -73,21 +73,20 @@ function ModifyWishlistListModal({
       icon: icon.trim()
     }
 
-    await APIRequest({
-      endpoint:
+    try {
+      await fetchAPI(
         'wishlist/lists' + (openType === 'update' ? `/${existedData?.id}` : ''),
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: wishlist,
-      successInfo: openType,
-      failureInfo: openType,
-      callback: () => {
-        setOpenType(null)
-        updateWishlistList()
-      },
-      onFailure: () => {
-        setOpenType(null)
-      }
-    })
+        {
+          method: openType === 'create' ? 'POST' : 'PATCH',
+          body: wishlist
+        }
+      )
+
+      setOpenType(null)
+      updateWishlistList()
+    } catch {
+      toast.error('Error')
+    }
   }
 
   useEffect(() => {

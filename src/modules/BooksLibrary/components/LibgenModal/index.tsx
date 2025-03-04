@@ -8,7 +8,7 @@ import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import LoadingScreen from '@components/screens/LoadingScreen'
 import Scrollbar from '@components/utilities/Scrollbar'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import Details from './components/Details'
 import SearchResultItem from './components/SearchResultItem'
 import Pagination from '../../../../components/utilities/Pagination'
@@ -35,7 +35,7 @@ function LibgenModal(): React.ReactElement {
     setLoading(true)
 
     try {
-      const response = await APIRequestV2<{
+      const response = await fetchAPI<{
         query: string
         resultsCount: string
         page: number

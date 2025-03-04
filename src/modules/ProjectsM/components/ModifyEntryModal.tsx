@@ -5,7 +5,7 @@ import ErrorScreen from '@components/screens/ErrorScreen'
 import LoadingScreen from '@components/screens/LoadingScreen'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyEntryModal(): React.ReactElement {
   const {
@@ -167,20 +167,23 @@ function ModifyEntryModal(): React.ReactElement {
       return
     }
 
-    await APIRequest({
-      endpoint: `projects-m/entries${
-        openType === 'update' ? `/${existedData?.id}` : ''
-      }`,
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: data,
-      successInfo: openType,
-      failureInfo: openType,
-      callback: () => {
-        refreshEntries()
-        setExistedData(null)
-        setOpenType(null)
-      }
-    })
+    try {
+      await fetchAPI(
+        `projects-m/entries${
+          openType === 'update' ? `/${existedData?.id}` : ''
+        }`,
+        {
+          method: openType === 'create' ? 'POST' : 'PATCH',
+          body: data
+        }
+      )
+
+      refreshEntries()
+      setExistedData(null)
+      setOpenType(null)
+    } catch {
+      toast.error('Error')
+    }
   }
 
   return (

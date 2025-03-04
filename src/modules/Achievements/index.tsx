@@ -8,7 +8,7 @@ import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import QueryWrapper from '@components/screens/QueryWrapper'
 import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import DifficultySelector from './components/DifficultySelector'
 import EntryItem from './components/EntryItem'
 import ModifyAchievementModal from './ModifyAchievementModal'
@@ -19,7 +19,7 @@ function Achievements(): React.ReactElement {
     useState<IAchievementEntry['difficulty']>('impossible')
   const entriesQuery = useQuery<IAchievementEntry[]>({
     queryKey: ['achievements/entries', selectedDifficulty],
-    queryFn: () => APIRequestV2(`achievements/entries/${selectedDifficulty}`)
+    queryFn: () => fetchAPI(`achievements/entries/${selectedDifficulty}`)
   })
 
   const [modifyAchievementModalOpenType, setModifyAchievementModalOpenType] =

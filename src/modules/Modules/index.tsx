@@ -7,7 +7,7 @@ import LoadingScreen from '@components/screens/LoadingScreen'
 // import { type IModuleEntry } from '@interfaces/module_interfaces'
 import { type IRoutes } from '@interfaces/routes_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import { titleToPath, toCamelCase } from '@utils/strings'
 import ModuleItem from './ModuleItem'
 import _ROUTES from '../../core/routes_config.json'
@@ -105,7 +105,7 @@ function Modules(): React.ReactElement {
     })
 
     try {
-      await APIRequestV2('user/module', {
+      await fetchAPI('user/module', {
         method: 'PATCH',
         body: {
           data: newEnabledModules

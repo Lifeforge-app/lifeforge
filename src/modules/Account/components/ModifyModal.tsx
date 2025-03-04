@@ -6,7 +6,7 @@ import { DateInput, TextInput } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { useAuthContext } from '@providers/AuthProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import { toCamelCase } from '@utils/strings'
 
 function ModifyModal({
@@ -33,7 +33,7 @@ function ModifyModal({
     setLoading(true)
 
     try {
-      await APIRequestV2('/user/settings', {
+      await fetchAPI('/user/settings', {
         method: 'POST',
         body: {
           data: {

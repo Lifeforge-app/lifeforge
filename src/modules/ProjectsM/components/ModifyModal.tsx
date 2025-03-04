@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import FormModal from '@components/modals/FormModal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import { toCamelCase } from '@utils/strings'
 
 function ModifyModal({
@@ -86,7 +86,7 @@ function ModifyModal({
     }
 
     try {
-      await APIRequestV2(
+      await fetchAPI(
         `projects-m/${stuff}${
           openType === 'update' ? `/${existedData?.id}` : ''
         }`,

@@ -13,7 +13,7 @@ import {
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IProjectsMKanbanColumn } from '@interfaces/projects_m_interfaces'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyColumnModal({
   openType,
@@ -66,27 +66,30 @@ function ModifyColumnModal({
     }
 
     setIsLoading(true)
-    await APIRequest({
-      endpoint: `projects-m/kanban/column${
-        openType === 'update' ? `/${existedData?.id}` : `/${id}`
-      }`,
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: {
-        name: columnName,
-        icon: columnIcon,
-        color: columnColor
-      },
-      successInfo: openType,
-      failureInfo: openType,
-      callback: () => {
-        refreshColumns()
-        setExistedData(null)
-        setOpenType(null)
-      },
-      finalCallback: () => {
-        setIsLoading(false)
-      }
-    })
+
+    try {
+      await fetchAPI(
+        `projects-m/kanban/column${
+          openType === 'update' ? `/${existedData?.id}` : `/${id}`
+        }`,
+        {
+          method: openType === 'create' ? 'POST' : 'PATCH',
+          body: {
+            name: columnName,
+            icon: columnIcon,
+            color: columnColor
+          }
+        }
+      )
+
+      refreshColumns()
+      setExistedData(null)
+      setOpenType(null)
+    } catch {
+      toast.error(t('input.error.failed'))
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -120,8 +123,8 @@ function ModifyColumnModal({
           color={columnColor}
           name="Column color"
           namespace="modules.projectsM"
-          setColorPickerOpen={setColorPickerOpen}
           setColor={setColumnColor}
+          setColorPickerOpen={setColorPickerOpen}
         />
         <CreateOrModifyButton
           loading={isLoading}

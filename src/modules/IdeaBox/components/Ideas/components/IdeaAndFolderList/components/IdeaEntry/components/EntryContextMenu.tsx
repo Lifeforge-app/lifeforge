@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function EntryContextMenu({
   entry
@@ -30,7 +30,7 @@ function EntryContextMenu({
 
   async function pinIdea(): Promise<void> {
     try {
-      await APIRequestV2(`idea-box/ideas/pin/${entry.id}`, {
+      await fetchAPI(`idea-box/ideas/pin/${entry.id}`, {
         method: 'POST'
       })
 
@@ -55,7 +55,7 @@ function EntryContextMenu({
 
   async function archiveIdea(): Promise<void> {
     try {
-      await APIRequestV2(`idea-box/ideas/archive/${entry.id}`, {
+      await fetchAPI(`idea-box/ideas/archive/${entry.id}`, {
         method: 'POST'
       })
 
@@ -70,7 +70,7 @@ function EntryContextMenu({
 
   async function removeFromFolder(): Promise<void> {
     try {
-      await APIRequestV2(`idea-box/ideas/move/${entry.id}`, {
+      await fetchAPI(`idea-box/ideas/move/${entry.id}`, {
         method: 'DELETE'
       })
 

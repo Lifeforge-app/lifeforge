@@ -10,7 +10,7 @@ import {
   type IIdeaBoxFolder
 } from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import FolderContextMenu from './FolderContextMenu'
 
 interface FolderItemProps {
@@ -89,10 +89,9 @@ function FolderItem({ folder }: FolderItemProps): React.ReactElement {
     if (type === 'folder' && targetId === folder.id) return
 
     try {
-      await APIRequestV2(
-        `idea-box/${type}s/move/${targetId}?target=${folder.id}`,
-        { method: 'POST' }
-      )
+      await fetchAPI(`idea-box/${type}s/move/${targetId}?target=${folder.id}`, {
+        method: 'POST'
+      })
       queryClient.setQueryData(
         ['idea-box', type === 'idea' ? 'ideas' : 'folders', id, path],
         (prev: IIdeaBoxEntry[] | IIdeaBoxFolder[]) =>
@@ -105,7 +104,7 @@ function FolderItem({ folder }: FolderItemProps): React.ReactElement {
 
   const removeFromFolder = async (): Promise<void> => {
     try {
-      await APIRequestV2(`idea-box/folders/move/${folder.id}`, {
+      await fetchAPI(`idea-box/folders/move/${folder.id}`, {
         method: 'DELETE'
       })
       queryClient.setQueryData(

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { encrypt } from '@utils/encryption'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function Cleanup({
   setStep,
@@ -38,9 +38,9 @@ function Cleanup({
     setLoading(true)
 
     try {
-      const challenge = await APIRequestV2<string>(`journal/auth/challenge`)
+      const challenge = await fetchAPI<string>(`journal/auth/challenge`)
 
-      const data = await APIRequestV2<string>('journal/entries/ai/cleanup', {
+      const data = await fetchAPI<string>('journal/entries/ai/cleanup', {
         method: 'POST',
         body: {
           text: encrypt(rawText, masterPassword),

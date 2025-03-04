@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { type Loadable } from '@interfaces/common'
 import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/fetchAPI'
 import SpicinessSelector from './SpicinessSelector'
 
 function SubtaskBoxHeader({
@@ -32,29 +32,33 @@ function SubtaskBoxHeader({
     }
 
     setAIGenerateLoading(true)
-    await APIRequest({
-      method: 'POST',
-      endpoint: 'todo-list/subtasks/ai-generate',
-      body: {
-        summary,
-        notes,
-        level: spiciness
-      },
-      successInfo: 'generate',
-      failureInfo: 'generate',
-      callback: data => {
-        setAIGenerateLoading(false)
-        setSubtasks(
-          data.data.map((e: string) => ({
-            id: `new-${Math.random()}`,
-            title: e
-          }))
-        )
-      },
-      finalCallback: () => {
-        setAIGenerateLoading(false)
-      }
-    })
+
+    try {
+      const data = await APIRequestV2<string[]>(
+        'todo-list/subtasks/ai-generate',
+        {
+          method: 'POST',
+          body: {
+            summary,
+            notes,
+            level: spiciness
+          }
+        }
+      )
+
+      setAIGenerateLoading(false)
+      setSubtasks(
+        data.map((e: string) => ({
+          id: `new-${Math.random()}`,
+          title: e,
+          done: false
+        }))
+      )
+    } catch {
+      toast.error('Failed to generate subtasks')
+    } finally {
+      setAIGenerateLoading(false)
+    }
   }
 
   return (

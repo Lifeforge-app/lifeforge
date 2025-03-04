@@ -12,7 +12,7 @@ import {
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWalletLedger } from '@interfaces/wallet_interfaces'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyLedgersModal({
   openType,
@@ -62,27 +62,28 @@ function ModifyLedgersModal({
     }
 
     setIsLoading(true)
-    await APIRequest({
-      endpoint: `wallet/ledgers${
-        openType === 'update' ? `/${existedData?.id}` : ''
-      }`,
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: {
-        name: ledgerName,
-        icon: ledgerIcon,
-        color: ledgerColor
-      },
-      successInfo: openType,
-      failureInfo: openType,
-      callback: () => {
-        refreshLedgers()
-        setExistedData(null)
-        setOpenType(null)
-      },
-      finalCallback: () => {
-        setIsLoading(false)
-      }
-    })
+
+    try {
+      await fetchAPI(
+        `wallet/ledgers${openType === 'update' ? '/' + existedData?.id : ''}`,
+        {
+          method: openType === 'create' ? 'POST' : 'PATCH',
+          body: {
+            name: ledgerName,
+            icon: ledgerIcon,
+            color: ledgerColor
+          }
+        }
+      )
+
+      refreshLedgers()
+      setExistedData(null)
+      setOpenType(null)
+    } catch {
+      toast.error(t('input.error.failed'))
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -116,8 +117,8 @@ function ModifyLedgersModal({
           color={ledgerColor}
           name="Ledger color"
           namespace="modules.wallet"
-          setColorPickerOpen={setColorPickerOpen}
           setColor={setLedgerColor}
+          setColorPickerOpen={setColorPickerOpen}
         />
         <CreateOrModifyButton
           loading={isLoading}

@@ -10,7 +10,7 @@ import { type Loadable } from '@interfaces/common'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import JournalList from './components/JournalList'
 import JournalViewModal from './components/JournalViewModal'
 import ModifyJournalEntryModal from './components/ModifyEntryModal'
@@ -40,9 +40,9 @@ function Journal(): React.ReactElement {
     setEntries('loading')
 
     try {
-      const challenge = await APIRequestV2<string>(`journal/auth/challenge`)
+      const challenge = await fetchAPI<string>(`journal/auth/challenge`)
 
-      const data = await APIRequestV2<IJournalEntry[]>(
+      const data = await fetchAPI<IJournalEntry[]>(
         `journal/entries/list?master=${encodeURIComponent(
           encrypt(masterPassword, challenge)
         )}`

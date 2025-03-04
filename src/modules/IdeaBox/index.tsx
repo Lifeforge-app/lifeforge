@@ -10,7 +10,7 @@ import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import QueryWrapper from '@components/screens/QueryWrapper'
 import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import Containers from './components/Containers'
 import ModifyContainerModal from './components/Containers/components/ModifyContainerModal'
 
@@ -18,7 +18,7 @@ function IdeaBox(): React.ReactElement {
   const { t } = useTranslation('modules.ideaBox')
   const query = useQuery<IIdeaBoxContainer[]>({
     queryKey: ['idea-box', 'containers'],
-    queryFn: () => APIRequestV2('idea-box/containers')
+    queryFn: () => fetchAPI('idea-box/containers')
   })
 
   const [modifyContainerModalOpenType, setModifyContainerModalOpenType] =

@@ -6,7 +6,7 @@ import OtpInput from 'react-otp-input'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { encrypt } from '@utils/encryption'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function OTPInputBox({
   verityOTP,
@@ -113,7 +113,7 @@ function OTPScreen({
     setSendOtpLoading(true)
 
     try {
-      const data = await APIRequestV2<string>(`${endpoint}/otp`, {
+      const data = await fetchAPI<string>(`${endpoint}/otp`, {
         method: 'GET'
       })
 
@@ -139,9 +139,9 @@ function OTPScreen({
     setVerifyOtpLoading(true)
 
     try {
-      const challenge = await APIRequestV2<string>(`${endpoint}/challenge`)
+      const challenge = await fetchAPI<string>(`${endpoint}/challenge`)
 
-      const data = await APIRequestV2<boolean>(endpoint, {
+      const data = await fetchAPI<boolean>(endpoint, {
         method: 'POST',
         body: {
           otp: encrypt(otp, challenge),

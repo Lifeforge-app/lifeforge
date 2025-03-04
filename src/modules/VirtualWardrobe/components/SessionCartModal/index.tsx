@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
@@ -6,7 +7,7 @@ import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import { Loadable } from '@interfaces/common'
 import { type IVirtualWardrobeEntry } from '@interfaces/virtual_wardrobe_interfaces'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 import CheckoutConfirmationModal from './components/CheckoutConfirmationModal'
 import EntryItem from '../../pages/Clothes/components/EntryItem'
 
@@ -29,36 +30,36 @@ function SessionCartModal({
     useState(false)
 
   async function handleRemoveFromCart(entryId: string): Promise<void> {
-    await APIRequest({
-      endpoint: `virtual-wardrobe/session/${entryId}`,
-      method: 'DELETE',
-      successInfo: 'remove',
-      failureInfo: 'remove',
-      callback: () => {
-        setCartItems(prev => {
-          if (typeof prev === 'string') return prev
-          return prev.filter(entry => entry.id !== entryId)
-        })
-        refreshEntries()
-      }
-    })
+    try {
+      await fetchAPI(`virtual-wardrobe/session/${entryId}`, {
+        method: 'DELETE'
+      })
+
+      setCartItems(prev => {
+        if (typeof prev === 'string') return prev
+        return prev.filter(entry => entry.id !== entryId)
+      })
+      refreshEntries()
+    } catch {
+      toast.error('Failed to remove item from cart')
+    }
   }
 
   async function handleCheckout(notes: string): Promise<void> {
-    await APIRequest({
-      endpoint: 'virtual-wardrobe/session/checkout',
-      method: 'POST',
-      body: {
-        notes
-      },
-      successInfo: 'checkout',
-      failureInfo: 'checkout',
-      callback: () => {
-        setCartItems([])
-        refreshEntries()
-        onClose()
-      }
-    })
+    try {
+      await fetchAPI('virtual-wardrobe/session/checkout', {
+        method: 'POST',
+        body: {
+          notes
+        }
+      })
+
+      setCartItems([])
+      refreshEntries()
+      onClose()
+    } catch {
+      toast.error('Failed to checkout')
+    }
   }
 
   return (
