@@ -28,7 +28,7 @@ export default async function fetchAPI<T>(
 
   try {
     const response = await fetch(
-      [import.meta.env.VITE_API_HOST, endpoint].join('/').replace(/\/+/g, '/'),
+      `${import.meta.env.VITE_API_HOST}/${endpoint.replace(/^\//, '')}`,
       {
         method,
         signal: AbortSignal.timeout(timeout),
