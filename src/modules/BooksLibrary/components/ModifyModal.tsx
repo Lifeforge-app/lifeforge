@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import FormModal from '@components/modals/FormModal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import { toCamelCase } from '@utils/strings'
 
 function ModifyModal({
@@ -68,23 +68,26 @@ function ModifyModal({
       return
     }
 
-    await APIRequest({
-      endpoint: `books-library/${stuff}${
-        openType === 'update' ? `/${existedData?.id}` : ''
-      }`,
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: {
-        name,
-        icon
-      },
-      successInfo: openType,
-      failureInfo: openType,
-      callback: () => {
-        refreshData()
-        setExistedData(null)
-        setOpenType(null)
-      }
-    })
+    try {
+      await APIRequestV2(
+        `books-library/${stuff}${
+          openType === 'update' ? `/${existedData?.id}` : ''
+        }`,
+        {
+          method: openType === 'create' ? 'POST' : 'PATCH',
+          body: {
+            name,
+            icon
+          }
+        }
+      )
+
+      refreshData()
+      setExistedData(null)
+      setOpenType(null)
+    } catch {
+      toast.error(`Failed to ${openType} ${singleStuff}`)
+    }
   }
 
   return (

@@ -1,11 +1,9 @@
 import { Icon } from '@iconify/react'
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { encrypt } from '@utils/encryption'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function Summarize({
   setStep,
@@ -20,7 +18,6 @@ function Summarize({
   summarizedText: string
   masterPassword: string
 }): React.ReactElement {
-  const { t } = useTranslation('modules.journal')
   const [loading, setLoading] = useState(false)
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -40,45 +37,26 @@ function Summarize({
 
     setLoading(true)
 
-    const challenge = await fetch(
-      `${import.meta.env.VITE_API_HOST}/journal/auth/challenge`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+    try {
+      const challenge = await APIRequestV2<string>('journal/auth/challenge')
+
+      const data = await APIRequestV2<string>('/journal/entries/ai/summarize', {
+        method: 'POST',
+        body: {
+          text: encrypt(cleanedUpText, masterPassword),
+          master: encrypt(masterPassword, challenge)
         }
-      }
-    ).then(async res => {
-      const data = await res.json()
-      if (res.ok && data.state === 'success') {
-        return data.data
-      } else {
-        toast.error(t('journal.failedToUnlock'))
-        setLoading(false)
+      })
 
-        throw new Error(t('journal.failedToUnlock'))
-      }
-    })
-
-    await APIRequest({
-      endpoint: '/journal/entries/ai/summarize',
-      method: 'POST',
-      body: {
-        text: encrypt(cleanedUpText, masterPassword),
-        master: encrypt(masterPassword, challenge)
-      },
-      successInfo: 'summarized',
-      failureInfo: 'summarized',
-      callback: data => {
-        setSummarizedText(data.data)
-        setTimeout(() => {
-          updateTextAreaHeight()
-        }, 100)
-      },
-      finalCallback: () => {
-        setLoading(false)
-      }
-    })
+      setSummarizedText(data)
+      setTimeout(() => {
+        updateTextAreaHeight()
+      }, 100)
+    } catch {
+      toast.error('Failed to summarize text')
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {

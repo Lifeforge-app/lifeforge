@@ -9,7 +9,7 @@ import { IconInput, IconPickerModal, TextInput } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type INotesSubject } from '@interfaces/notes_interfaces'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function ModifySubjectModal({
   openType,
@@ -50,25 +50,23 @@ function ModifySubjectModal({
       workspace
     }
 
-    await APIRequest({
-      endpoint:
+    try {
+      await APIRequestV2(
         'notes/subject' +
-        (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
-      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-      body: subject,
-      successInfo: innerOpenType,
-      failureInfo: innerOpenType,
-      callback: () => {
-        setOpenType(null)
-        updateSubjectList()
-      },
-      onFailure: () => {
-        setOpenType(null)
-      },
-      finalCallback: () => {
-        setLoading(false)
-      }
-    })
+          (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
+        {
+          method: innerOpenType === 'create' ? 'POST' : 'PATCH',
+          body: subject
+        }
+      )
+
+      setOpenType(null)
+      updateSubjectList()
+    } catch {
+      toast.error(`Failed to ${innerOpenType} subject`)
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {

@@ -15,7 +15,7 @@ import ModalWrapper from '@components/modals/ModalWrapper'
 import { IPasswordFormState } from '@interfaces/password_interfaces'
 import { usePasswordContext } from '@providers/PasswordsProvider'
 import { encrypt } from '@utils/encryption'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function CreatePasswordModal(): React.ReactElement {
   const { t } = useTranslation('modules.passwords')
@@ -54,15 +54,12 @@ function CreatePasswordModal(): React.ReactElement {
 
     setLoading(true)
 
-    const challenge = await fetch(
-      `${import.meta.env.VITE_API_HOST}/passwords/password/challenge`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        }
+    const challenge = await fetch('passwords/password/challenge', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${cookieParse(document.cookie).token}`
       }
-    ).then(async res => {
+    }).then(async res => {
       const data = await res.json()
       if (res.ok && data.state === 'success') {
         return data.data
@@ -73,26 +70,28 @@ function CreatePasswordModal(): React.ReactElement {
 
     const encryptedMaster = encrypt(masterPassword, challenge)
 
-    await APIRequest({
-      endpoint: `passwords/password${
-        openType === 'update' ? `/${existedData?.id}` : ''
-      }`,
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: {
-        ...formState,
-        password: encrypt(formState.password, challenge),
-        master: encryptedMaster
-      },
-      successInfo: 'create',
-      failureInfo: 'create',
-      callback: () => {
-        refreshPasswordList()
-      },
-      finalCallback: () => {
-        setLoading(false)
-        setModifyPasswordModalOpenType(null)
-      }
-    })
+    try {
+      await APIRequestV2(
+        `passwords/password${
+          openType === 'update' ? `/${existedData?.id}` : ''
+        }`,
+        {
+          method: openType === 'create' ? 'POST' : 'PATCH',
+          body: {
+            ...formState,
+            password: encrypt(formState.password, challenge),
+            master: encryptedMaster
+          }
+        }
+      )
+
+      refreshPasswordList()
+    } catch {
+      toast.error('Failed to create password')
+    } finally {
+      setLoading(false)
+      setModifyPasswordModalOpenType(null)
+    }
   }
 
   useEffect(() => {

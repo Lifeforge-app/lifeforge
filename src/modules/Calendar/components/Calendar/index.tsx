@@ -9,7 +9,7 @@ import {
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
 import { type Loadable } from '@interfaces/common'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import CalendarHeader from './components/CalendarHeader'
 import EventItem from './components/EventItem'
 
@@ -59,20 +59,19 @@ function CalendarComponent({
       }
     )
 
-    await APIRequest({
-      endpoint: `calendar/events/${event.id}`,
-      method: 'PATCH',
-      body: {
-        title: event.title,
-        start: moment(start).toISOString(),
-        end: moment(end).toISOString(),
-        category: event.category
-      },
-      failureInfo: 'update',
-      onFailure: () => {
-        queryClient.invalidateQueries({ queryKey: ['calendar', 'events'] })
-      }
-    })
+    try {
+      await APIRequestV2<ICalendarEvent>(`calendar/events/${event.id}`, {
+        method: 'PATCH',
+        body: {
+          title: event.title,
+          start: moment(start).toISOString(),
+          end: moment(end).toISOString(),
+          category: event.category
+        }
+      })
+    } catch {
+      queryClient.invalidateQueries({ queryKey: ['calendar', 'events'] })
+    }
   }
 
   const handleSelectSlot = useCallback(

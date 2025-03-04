@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { encrypt } from '@utils/encryption'
-import APIRequest from '@utils/fetchData'
-import { fetchChallenge } from '../../../utils/fetchChallenge'
+import APIRequestV2 from '@utils/newFetchData'
 
 function Cleanup({
   setStep,
@@ -37,27 +37,26 @@ function Cleanup({
 
     setLoading(true)
 
-    const challenge = await fetchChallenge(setLoading)
+    try {
+      const challenge = await APIRequestV2<string>(`journal/auth/challenge`)
 
-    await APIRequest({
-      endpoint: '/journal/entries/ai/cleanup',
-      method: 'POST',
-      body: {
-        text: encrypt(rawText, masterPassword),
-        master: encrypt(masterPassword, challenge)
-      },
-      successInfo: 'cleanedup',
-      failureInfo: 'cleanedup',
-      callback: data => {
-        setCleanedUpText(data.data)
-        setTimeout(() => {
-          updateTextAreaHeight()
-        }, 100)
-      },
-      finalCallback: () => {
-        setLoading(false)
-      }
-    })
+      const data = await APIRequestV2<string>('journal/entries/ai/cleanup', {
+        method: 'POST',
+        body: {
+          text: encrypt(rawText, masterPassword),
+          master: encrypt(masterPassword, challenge)
+        }
+      })
+
+      setCleanedUpText(data)
+      setTimeout(() => {
+        updateTextAreaHeight()
+      }, 100)
+    } catch {
+      toast.error('Failed to clean up text')
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {

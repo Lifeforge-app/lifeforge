@@ -9,7 +9,7 @@ import { Button } from '@components/buttons'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import ModalHeader from './components/ModalHeader'
 import IdeaContentInput from './IdeaContentInput'
 
@@ -166,74 +166,56 @@ function ModifyIdeaModal(): React.ReactElement {
     formData.append('folder', path?.split('/').pop() ?? '')
     formData.append('tags', JSON.stringify(ideaTags))
 
-    await APIRequest({
-      endpoint: `idea-box/ideas/${
-        innerOpenType === 'update' ? existedEntry?.id : ''
-      }`,
-      method: innerOpenType === 'update' ? 'PATCH' : 'POST',
-      body:
-        innerOpenType === 'update'
-          ? {
-              title: ideaTitle.trim(),
-              content: ideaContent.trim(),
-              link: ideaLink.trim(),
-              type: innerTypeOfModifyIdea,
-              tags: ideaTags
-            }
-          : formData,
-      finalCallback: () => {
-        setLoading(false)
-      },
-      successInfo: innerOpenType,
-      failureInfo: innerOpenType,
-      callback: res => {
-        if (innerOpenType === 'update') {
-          const updateFunc = (prev: IIdeaBoxEntry[]) =>
-            prev.map(idea =>
-              idea.id === existedEntry?.id ? (res.data as IIdeaBoxEntry) : idea
-            )
-
-          queryClient.setQueryData(
-            ['idea-box', 'ideas', id, path, viewArchived],
-            updateFunc
-          )
-          queryClient.setQueryData(
-            [
-              'idea-box',
-              'search',
-              id,
-              path,
-              selectedTags,
-              debouncedSearchQuery
-            ],
-            updateFunc
-          )
-        } else {
-          const updateFunc = (prev: IIdeaBoxEntry[]) => [
-            res.data as IIdeaBoxEntry,
-            ...prev
-          ]
-
-          queryClient.setQueryData(
-            ['idea-box', 'ideas', id, path, viewArchived],
-            updateFunc
-          )
-          queryClient.setQueryData(
-            [
-              'idea-box',
-              'search',
-              id,
-              path,
-              selectedTags,
-              debouncedSearchQuery
-            ],
-            updateFunc
-          )
+    try {
+      const data = await APIRequestV2<IIdeaBoxEntry>(
+        `idea-box/ideas/${innerOpenType === 'update' ? existedEntry?.id : ''}`,
+        {
+          method: innerOpenType === 'update' ? 'PATCH' : 'POST',
+          body:
+            innerOpenType === 'update'
+              ? {
+                  title: ideaTitle.trim(),
+                  content: ideaContent.trim(),
+                  link: ideaLink.trim(),
+                  type: innerTypeOfModifyIdea,
+                  tags: ideaTags
+                }
+              : formData
         }
-        queryClient.invalidateQueries({ queryKey: ['idea-box', 'tags', id] })
-        setOpenType(null)
+      )
+
+      if (innerOpenType === 'update') {
+        const updateFunc = (prev: IIdeaBoxEntry[]) =>
+          prev.map(idea => (idea.id === existedEntry?.id ? data : idea))
+
+        queryClient.setQueryData(
+          ['idea-box', 'ideas', id, path, viewArchived],
+          updateFunc
+        )
+        queryClient.setQueryData(
+          ['idea-box', 'search', id, path, selectedTags, debouncedSearchQuery],
+          updateFunc
+        )
+      } else {
+        const updateFunc = (prev: IIdeaBoxEntry[]) => [data, ...prev]
+
+        queryClient.setQueryData(
+          ['idea-box', 'ideas', id, path, viewArchived],
+          updateFunc
+        )
+        queryClient.setQueryData(
+          ['idea-box', 'search', id, path, selectedTags, debouncedSearchQuery],
+          updateFunc
+        )
       }
-    })
+
+      queryClient.invalidateQueries({ queryKey: ['idea-box', 'tags', id] })
+      setOpenType(null)
+    } catch {
+      toast.error(`Failed to ${innerOpenType} idea`)
+    } finally {
+      setLoading(false)
+    }
   }
 
   function onPasteImage(event: ClipboardEvent): void {

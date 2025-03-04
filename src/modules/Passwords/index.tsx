@@ -11,7 +11,6 @@ import { useAuthContext } from '@providers/AuthProvider'
 import { usePasswordContext } from '@providers/PasswordsProvider'
 import CreatePasswordModal from './components/CreatePasswordModal'
 import PasswordList from './components/PasswordList'
-import { fetchChallenge } from './utils/fetchChallenge'
 import LockedScreen from '../../components/screens/LockedScreen'
 
 function ModalsSection() {
@@ -57,10 +56,7 @@ function Passwords(): React.ReactElement {
       return (
         <OTPScreen
           callback={() => setOtpSuccess(true)}
-          fetchChallenge={() => {
-            return fetchChallenge('master')
-          }}
-          verificationEndpoint="passwords/master/otp"
+          endpoint="passwords/master"
         />
       )
     }
@@ -68,10 +64,7 @@ function Passwords(): React.ReactElement {
     if (masterPassword === '') {
       return (
         <LockedScreen
-          endpoint="passwords/master/verify"
-          fetchChallenge={() => {
-            return fetchChallenge('master')
-          }}
+          endpoint="passwords/master"
           setMasterPassword={setMasterPassword}
         />
       )

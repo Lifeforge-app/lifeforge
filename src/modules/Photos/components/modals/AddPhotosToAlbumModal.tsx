@@ -9,7 +9,7 @@ import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { usePhotosContext } from '@providers/PhotosProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function AddPhotosToAlbumModal(): React.ReactElement {
   const { t } = useTranslation('modules.photos')
@@ -32,40 +32,41 @@ function AddPhotosToAlbumModal(): React.ReactElement {
   }
 
   async function onSubmitButtonClick(): Promise<void> {
-    if (typeof photos === 'string' || typeof albumList === 'string') {
-      return
-    }
-
-    if (selectedAlbum === '') {
+    if (
+      typeof photos === 'string' ||
+      typeof albumList === 'string' ||
+      selectedAlbum === ''
+    ) {
       return
     }
 
     setLoading(true)
 
-    await APIRequest({
-      endpoint: `photos/album/add-photos/${selectedAlbum}`,
-      method: 'PATCH',
-      body: {
-        photos: selectedPhotos.filter(
-          photo =>
-            !(
-              photos.items
-                .map(p => p[1])
-                .flat()
-                .find(p => p.id === photo)?.is_in_album ?? false
-            )
-        )
-      },
-      successInfo: 'add',
-      failureInfo: 'add',
-      callback: () => {
-        setSelectedPhotos([])
-        setLoading(false)
-        setOpen(false)
-        updateAlbumList()
-        updatePhotos()
-      }
-    })
+    try {
+      await APIRequestV2(`photos/album/add-photos/${selectedAlbum}`, {
+        method: 'PATCH',
+        body: {
+          photos: selectedPhotos.filter(
+            photo =>
+              !(
+                photos.items
+                  .map(p => p[1])
+                  .flat()
+                  .find(p => p.id === photo)?.is_in_album ?? false
+              )
+          )
+        }
+      })
+
+      setSelectedPhotos([])
+      setOpen(false)
+      updateAlbumList()
+      updatePhotos()
+    } catch {
+      console.error('Failed to add photos to album')
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {

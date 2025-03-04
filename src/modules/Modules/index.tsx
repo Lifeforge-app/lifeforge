@@ -1,12 +1,13 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import LoadingScreen from '@components/screens/LoadingScreen'
 // import { type IModuleEntry } from '@interfaces/module_interfaces'
 import { type IRoutes } from '@interfaces/routes_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import { titleToPath, toCamelCase } from '@utils/strings'
 import ModuleItem from './ModuleItem'
 import _ROUTES from '../../core/routes_config.json'
@@ -90,27 +91,33 @@ function Modules(): React.ReactElement {
   const { userData, setUserData } = useAuthContext()
 
   async function toggleModule(moduleName: string): Promise<void> {
-    if (userData.enabledModules.includes(titleToPath(moduleName))) {
-      userData.enabledModules = userData.enabledModules.filter(
-        (module: string) => module !== titleToPath(moduleName)
-      )
-    } else {
-      userData.enabledModules.push(titleToPath(moduleName))
-    }
+    const newEnabledModules = userData.enabledModules.includes(
+      titleToPath(moduleName)
+    )
+      ? userData.enabledModules.filter(
+          (module: string) => module !== titleToPath(moduleName)
+        )
+      : [...userData.enabledModules, titleToPath(moduleName)]
+
     setUserData({
       ...userData,
-      enabledModules: userData.enabledModules
+      enabledModules: newEnabledModules
     })
 
-    await APIRequest({
-      endpoint: 'user/module',
-      method: 'PATCH',
-      body: {
-        id: userData.id,
-        data: userData.enabledModules
-      },
-      failureInfo: 'update'
-    })
+    try {
+      await APIRequestV2('user/module', {
+        method: 'PATCH',
+        body: {
+          data: newEnabledModules
+        }
+      })
+    } catch {
+      toast.error('Failed to update modules')
+      setUserData({
+        ...userData,
+        enabledModules: userData.enabledModules
+      })
+    }
   }
 
   return (

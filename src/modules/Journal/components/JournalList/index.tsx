@@ -1,4 +1,3 @@
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -8,7 +7,7 @@ import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import { type Loadable } from '@interfaces/common'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { encrypt } from '@utils/encryption'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import JournalListItem from './components/JournalListItem'
 
 function JournalList({
@@ -47,39 +46,22 @@ function JournalList({
   async function updateEntry(id: string): Promise<void> {
     setEditLoading(true)
 
-    const challenge = await fetch(
-      `${import.meta.env.VITE_API_HOST}/journal/auth/challenge`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
-        }
-      }
-    ).then(async res => {
-      const data = await res.json()
-      if (res.ok && data.state === 'success') {
-        return data.data
-      } else {
-        throw new Error(t('fetch.fetchError'))
-      }
-    })
+    try {
+      const challenge = await APIRequestV2<string>(`journal/auth/challenge`)
 
-    await APIRequest({
-      endpoint: `journal/entries/get/${id}?master=${encodeURIComponent(
-        encrypt(masterPassword, challenge)
-      )}`,
-      method: 'GET',
-      callback(data) {
-        setExistedData(data.data)
-        setModifyEntryModalOpenType('update')
-      },
-      onFailure: () => {
-        toast.error(t('fetch.fetchError'))
-      },
-      finalCallback: () => {
-        setEditLoading(false)
-      }
-    })
+      const data = await APIRequestV2<IJournalEntry>(
+        `journal/entries/get/${id}?master=${encodeURIComponent(
+          encrypt(masterPassword, challenge)
+        )}`
+      )
+
+      setExistedData(data)
+      setModifyEntryModalOpenType('update')
+    } catch {
+      toast.error(t('fetch.fetchError'))
+    } finally {
+      setEditLoading(false)
+    }
   }
 
   return (

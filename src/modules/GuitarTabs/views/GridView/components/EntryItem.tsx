@@ -1,11 +1,12 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React from 'react'
+import { toast } from 'react-toastify'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import DownloadMenu from '../../../components/DownloadMenu'
 import AudioPlayer from '../../ListView/components/AudioPlayer'
 
@@ -25,13 +26,15 @@ function EntryItem({
   const { componentBgWithHover } = useThemeColors()
 
   async function favouriteTab(): Promise<void> {
-    await APIRequest({
-      endpoint: `guitar-tabs/entries/favourite/${entry.id}`,
-      method: 'POST',
-      successInfo: entry.isFavourite ? 'unfavourite' : 'favourite',
-      failureInfo: entry.isFavourite ? 'unfavourite' : 'favourite',
-      callback: refreshEntries
-    })
+    try {
+      await APIRequestV2(`guitar-tabs/entries/favourite/${entry.id}`, {
+        method: 'POST'
+      })
+
+      refreshEntries()
+    } catch {
+      toast.error('Failed to add to favourites')
+    }
   }
 
   return (

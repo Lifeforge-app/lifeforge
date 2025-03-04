@@ -84,13 +84,11 @@ function ResendOTPButton({
 }
 
 function OTPScreen({
-  verificationEndpoint,
-  callback,
-  fetchChallenge
+  endpoint,
+  callback
 }: {
-  verificationEndpoint: string
+  endpoint: string
   callback: () => void
-  fetchChallenge: () => Promise<string>
 }): React.ReactElement {
   const { t } = useTranslation('common.vault')
   const [otpSent, setOtpSent] = useState(false)
@@ -115,7 +113,7 @@ function OTPScreen({
     setSendOtpLoading(true)
 
     try {
-      const data = await APIRequestV2<string>('user/auth/otp', {
+      const data = await APIRequestV2<string>(`${endpoint}/otp`, {
         method: 'GET'
       })
 
@@ -139,10 +137,11 @@ function OTPScreen({
     }
 
     setVerifyOtpLoading(true)
-    const challenge = await fetchChallenge()
 
     try {
-      const data = await APIRequestV2<boolean>(verificationEndpoint, {
+      const challenge = await APIRequestV2<string>(`${endpoint}/challenge`)
+
+      const data = await APIRequestV2<boolean>(endpoint, {
         method: 'POST',
         body: {
           otp: encrypt(otp, challenge),

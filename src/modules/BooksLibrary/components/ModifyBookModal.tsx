@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import FormModal from '@components/modals/FormModal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function ModifyBookModal(): React.ReactElement {
   const {
@@ -149,18 +149,18 @@ function ModifyBookModal(): React.ReactElement {
       setData({ year_published: 0 })
     }
 
-    await APIRequest({
-      endpoint: `books-library/entries/${existedData?.id}`,
-      method: 'PATCH',
-      body: data,
-      callback: () => {
-        setModifyDataModalOpenType(null)
-        setExistedData(null)
-        refreshData()
-      },
-      successInfo: 'update',
-      failureInfo: 'update'
-    })
+    try {
+      await APIRequestV2(`books-library/entries/${existedData?.id}`, {
+        method: 'PATCH',
+        body: data
+      })
+
+      setModifyDataModalOpenType(null)
+      setExistedData(null)
+      refreshData()
+    } catch {
+      toast.error('Failed to update book data')
+    }
   }
 
   useEffect(() => {

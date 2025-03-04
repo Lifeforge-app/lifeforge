@@ -1,10 +1,11 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import { IPasswordEntry } from '@interfaces/password_interfaces'
 import { usePasswordContext } from '@providers/PasswordsProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import PasswordEntryItem from './PasswordEntryItem'
 
 function PasswordList(): React.ReactElement {
@@ -25,20 +26,20 @@ function PasswordList(): React.ReactElement {
       return 0
     }
 
-    const callback = () =>
+    try {
+      await APIRequestV2(`passwords/password/pin/${id}`, {
+        method: 'POST'
+      })
+
       setPasswordList(prev => {
         if (prev === 'loading' || prev === 'error') return prev
 
         return prev.map(mapPasswords).sort(sortPasswords)
       })
-
-    await APIRequest({
-      endpoint: `passwords/password/pin/${id}`,
-      method: 'POST',
-      successInfo: 'pin',
-      failureInfo: 'pin',
-      callback
-    })
+    } catch {
+      toast.error(t('error.pin'))
+      setPasswordList('error')
+    }
   }
 
   return (

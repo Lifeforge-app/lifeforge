@@ -11,8 +11,8 @@ import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import { SidebarDivider } from '@components/layouts/sidebar'
 import useThemeColors from '@hooks/useThemeColor'
-import APIRequest from '@utils/fetchData'
 import IntervalManager from '@utils/intervalManager'
+import APIRequestV2 from '@utils/newFetchData'
 
 const intervalManager = IntervalManager.getInstance()
 
@@ -156,12 +156,13 @@ function Header({
   }
 
   async function downloadAll(): Promise<void> {
-    await APIRequest({
-      endpoint: '/guitar-tabs/entries/download-all',
-      method: 'GET',
-      successInfo: 'NASFilesReady',
-      failureInfo: 'download'
-    })
+    try {
+      await APIRequestV2('guitar-tabs/entries/download-all')
+
+      toast.success('Guitar tabs are being downloaded!')
+    } catch {
+      toast.error('Failed to download guitar tabs!')
+    }
   }
 
   return (

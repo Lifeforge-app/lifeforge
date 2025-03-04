@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 
 import React, { useEffect, useReducer, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
 import {
   TextInput,
@@ -12,7 +13,7 @@ import {
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 interface IState {
   name: string
@@ -68,20 +69,18 @@ function ModifyEntryModal({
   async function onSubmit(): Promise<void> {
     setLoading(true)
 
-    await APIRequest({
-      endpoint: `guitar-tabs/entries/${existingItem?.id}`,
-      method: 'PUT',
-      body: data,
-      successInfo: 'update',
-      failureInfo: 'update',
-      callback: () => {
-        refreshEntries()
-        onClose()
-      },
-      finalCallback: () => {
-        setLoading(false)
-      }
-    })
+    try {
+      await APIRequestV2(`guitar-tabs/entries/${existingItem?.id}`, {
+        method: 'PATCH',
+        body: data
+      })
+      refreshEntries()
+      onClose()
+    } catch {
+      toast.error('Failed to update guitar tab data')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

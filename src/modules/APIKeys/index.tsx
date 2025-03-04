@@ -50,8 +50,7 @@ function APIKeys(): React.ReactElement {
           callback={() => {
             setOtpSuccess(true)
           }}
-          fetchChallenge={fetchChallenge}
-          verificationEndpoint="api-keys/auth/otp"
+          endpoint="api-keys/auth"
         />
       )
     }
@@ -68,8 +67,7 @@ function APIKeys(): React.ReactElement {
     if (masterPassword === '') {
       return (
         <LockedScreen
-          endpoint="api-keys/auth/verify"
-          fetchChallenge={fetchChallenge}
+          endpoint="api-keys/auth"
           setMasterPassword={setMasterPassword}
         />
       )

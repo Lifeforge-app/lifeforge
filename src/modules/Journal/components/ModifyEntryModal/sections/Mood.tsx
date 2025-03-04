@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { TextInput } from '@components/inputs'
 import { encrypt } from '@utils/encryption'
-import APIRequest from '@utils/fetchData'
-import { fetchChallenge } from '../../../utils/fetchChallenge'
+import APIRequestV2 from '@utils/newFetchData'
 
 function Mood({
   setStep,
@@ -40,24 +40,26 @@ function Mood({
 
     setLoading(true)
 
-    const challenge = await fetchChallenge(setLoading)
+    try {
+      const challenge = await APIRequestV2<string>('journal/auth/challenge')
 
-    await APIRequest({
-      endpoint: '/journal/entries/ai/mood',
-      method: 'POST',
-      body: {
-        text: encrypt(cleanedUpText, masterPassword),
-        master: encrypt(masterPassword, challenge)
-      },
-      successInfo: 'predicted',
-      failureInfo: 'predicted',
-      callback: data => {
-        setMood(data.data)
-      },
-      finalCallback: () => {
-        setLoading(false)
-      }
-    })
+      const data = await APIRequestV2<{
+        text: string
+        emoji: string
+      }>('/journal/entries/ai/mood', {
+        method: 'POST',
+        body: {
+          text: encrypt(cleanedUpText, masterPassword),
+          master: encrypt(masterPassword, challenge)
+        }
+      })
+
+      setMood(data)
+    } catch {
+      toast.error('Failed to predict mood')
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {

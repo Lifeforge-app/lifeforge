@@ -8,7 +8,7 @@ import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import LoadingScreen from '@components/screens/LoadingScreen'
 import Scrollbar from '@components/utilities/Scrollbar'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import Details from './components/Details'
 import SearchResultItem from './components/SearchResultItem'
 import Pagination from '../../../../components/utilities/Pagination'
@@ -34,19 +34,26 @@ function LibgenModal(): React.ReactElement {
   async function fetchBookResults(page: number): Promise<void> {
     setLoading(true)
 
-    return await APIRequest({
-      endpoint: `books-library/libgen/search?req=${searchQuery}&lg_topic=libgen&open=0&view=detailed&res=25&column=def&phrase=0&sort=year&sortmode=DESC&page=${
-        page ?? 1
-      }`,
-      method: 'GET',
-      callback: (response: any) => {
-        setData(response.data.data.length === 0 ? null : response.data)
-        setTotalPages(Math.ceil(parseInt(response.data.resultsCount) / 25))
-      },
-      finalCallback: () => {
-        setLoading(false)
-      }
-    })
+    try {
+      const response = await APIRequestV2<{
+        query: string
+        resultsCount: string
+        page: number
+        data: Array<Record<string, any>>
+      }>(
+        `books-library/libgen/search?req=${searchQuery}&lg_topic=libgen&open=0&view=detailed&res=25&column=def&phrase=0&sort=year&sortmode=DESC&page=${
+          page ?? 1
+        }`
+      )
+
+      setData(response.data.length === 0 ? null : response)
+      setTotalPages(Math.ceil(parseInt(response.resultsCount) / 25))
+    } catch {
+      toast.error('Failed to fetch search results')
+      setData(null)
+    } finally {
+      setLoading(false)
+    }
   }
 
   async function searchBooks(): Promise<void> {
