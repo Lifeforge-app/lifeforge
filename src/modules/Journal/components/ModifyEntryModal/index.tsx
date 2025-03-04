@@ -7,7 +7,7 @@ import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { encrypt } from '@utils/encryption'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import Cleanup from './sections/Cleanup'
 import Mood from './sections/Mood'
 import Photos from './sections/Photos'
@@ -62,9 +62,9 @@ function ModifyJournalEntryModal({
     setTitleGenerationLoading(true)
 
     try {
-      const challenge = await APIRequestV2<string>(`journal/auth/challenge`)
+      const challenge = await fetchAPI<string>(`journal/auth/challenge`)
 
-      const data = await APIRequestV2<string>('journal/entries/ai/title', {
+      const data = await fetchAPI<string>('journal/entries/ai/title', {
         method: 'POST',
         body: {
           text: encrypt(cleanedUpText, masterPassword),

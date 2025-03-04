@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IFlashcardCard } from '@interfaces/flashcard_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function EditCardModal({
   deck,
@@ -53,7 +53,7 @@ function EditCardModal({
     setLoading(true)
 
     try {
-      await APIRequestV2('flashcards/card/update', {
+      await fetchAPI('flashcards/card/update', {
         method: 'PUT',
         body: {
           deck,

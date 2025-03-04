@@ -6,7 +6,7 @@ import { Button } from '@components/buttons'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import ConfigColumn from '@components/utilities/ConfigColumn'
 import { useAuthContext } from '@providers/AuthProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function AvatarColumn(): React.ReactElement {
   const { t } = useTranslation('modules.accountSettings')
@@ -30,7 +30,7 @@ function AvatarColumn(): React.ReactElement {
         setLoading(true)
 
         try {
-          const data = await APIRequestV2<string>('/user/settings/avatar', {
+          const data = await fetchAPI<string>('/user/settings/avatar', {
             method: 'PUT',
             body: formData
           })

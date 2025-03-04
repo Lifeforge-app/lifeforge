@@ -9,7 +9,7 @@ import {
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
 import { type Loadable } from '@interfaces/common'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import CalendarHeader from './components/CalendarHeader'
 import EventItem from './components/EventItem'
 
@@ -60,7 +60,7 @@ function CalendarComponent({
     )
 
     try {
-      await APIRequestV2<ICalendarEvent>(`calendar/events/${event.id}`, {
+      await fetchAPI<ICalendarEvent>(`calendar/events/${event.id}`, {
         method: 'PATCH',
         body: {
           title: event.title,

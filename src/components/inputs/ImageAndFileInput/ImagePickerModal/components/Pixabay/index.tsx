@@ -9,7 +9,7 @@ import {
   type IPixabaySearchFilter,
   type IPixabaySearchResult
 } from '@interfaces/pixabay_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import SearchResults from './components/SearchResults'
 
 function Pixabay({
@@ -54,7 +54,7 @@ function Pixabay({
     })
 
     try {
-      const data = await APIRequestV2<IPixabaySearchResult>(
+      const data = await fetchAPI<IPixabaySearchResult>(
         `pixabay/search?${params.toString()}`
       )
       setResults(data)

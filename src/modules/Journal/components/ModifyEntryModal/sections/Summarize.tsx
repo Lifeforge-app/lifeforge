@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { encrypt } from '@utils/encryption'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function Summarize({
   setStep,
@@ -38,9 +38,9 @@ function Summarize({
     setLoading(true)
 
     try {
-      const challenge = await APIRequestV2<string>('journal/auth/challenge')
+      const challenge = await fetchAPI<string>('journal/auth/challenge')
 
-      const data = await APIRequestV2<string>('/journal/entries/ai/summarize', {
+      const data = await fetchAPI<string>('/journal/entries/ai/summarize', {
         method: 'POST',
         body: {
           text: encrypt(cleanedUpText, masterPassword),

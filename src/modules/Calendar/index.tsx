@@ -11,7 +11,7 @@ import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
 import ModifyCategoryModal from './modals/ModifyCategoryModal'
@@ -21,11 +21,11 @@ function CalendarModule(): React.ReactElement {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const rawEventsQuery = useQuery<ICalendarEvent[]>({
     queryKey: ['calendar', 'events'],
-    queryFn: () => APIRequestV2('calendar/events')
+    queryFn: () => fetchAPI('calendar/events')
   })
   const categoriesQuery = useQuery<ICalendarCategory[]>({
     queryKey: ['calendar', 'categories'],
-    queryFn: () => APIRequestV2('calendar/categories')
+    queryFn: () => fetchAPI('calendar/categories')
   })
   const [events, setEvents] = useState<ICalendarEvent[]>([])
   const [modifyEventModalOpenType, setModifyEventModalOpenType] = useState<

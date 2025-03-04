@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { usePhotosContext } from '@providers/PhotosProvider'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function RemovePhotosFromAlbumConfirmationModal({
   refreshPhotos,
@@ -25,24 +26,23 @@ function RemovePhotosFromAlbumConfirmationModal({
 
     setLoading(true)
 
-    await APIRequest({
-      endpoint: `photos/album/remove-photo/${albumId}`,
-      method: 'DELETE',
-      body: {
-        photos: selectedPhotos
-      },
-      successInfo: 'remove',
-      failureInfo: 'remove',
-      callback: () => {
-        setRemovePhotosFromAlbumConfirmationModalOpen(false)
-        refreshAlbumList()
-        refreshPhotos()
-        setSelectedPhotos([])
-      },
-      finalCallback: () => {
-        setLoading(false)
-      }
-    })
+    try {
+      await fetchAPI(`photos/album/remove-photo/${albumId}`, {
+        method: 'DELETE',
+        body: {
+          photos: selectedPhotos
+        }
+      })
+
+      setRemovePhotosFromAlbumConfirmationModalOpen(false)
+      refreshAlbumList()
+      refreshPhotos()
+      setSelectedPhotos([])
+    } catch {
+      toast.error('Failed to remove photos from album')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

@@ -7,7 +7,7 @@ import { Button } from '@components/buttons'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import FlightsTable from './components/FlightsTable'
 
 interface FlightData {
@@ -40,7 +40,7 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
     setPreviousPageLoading(true)
 
     try {
-      const data = await APIRequestV2<FlightData[]>(
+      const data = await fetchAPI<FlightData[]>(
         `airports/airport/${IATA}/flights/${location.hash
           .replace('#', '')
           .toLowerCase()}?page=${nextPageNum[0]}`,
@@ -66,7 +66,7 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
     setNextPageLoading(true)
 
     try {
-      const data = await APIRequestV2<FlightData[]>(
+      const data = await fetchAPI<FlightData[]>(
         `airports/airport/${IATA}/flights/${location.hash
           .replace('#', '')
           .toLowerCase()}?page=${nextPageNum[1]}`,

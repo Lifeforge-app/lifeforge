@@ -9,7 +9,7 @@ import { Button } from '@components/buttons'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import ModalHeader from './components/ModalHeader'
 import IdeaContentInput from './IdeaContentInput'
 
@@ -167,7 +167,7 @@ function ModifyIdeaModal(): React.ReactElement {
     formData.append('tags', JSON.stringify(ideaTags))
 
     try {
-      const data = await APIRequestV2<IIdeaBoxEntry>(
+      const data = await fetchAPI<IIdeaBoxEntry>(
         `idea-box/ideas/${innerOpenType === 'update' ? existedEntry?.id : ''}`,
         {
           method: innerOpenType === 'update' ? 'PATCH' : 'POST',

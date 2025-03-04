@@ -14,7 +14,7 @@ import useThemeColors from '@hooks/useThemeColor'
 import { Loadable } from '@interfaces/common'
 import { IMomentVaultEntry } from '@interfaces/moment_vault_interfaces'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function AudioEntry({
   entry,
@@ -59,7 +59,7 @@ function AudioEntry({
     setTranscriptionLoading(true)
 
     try {
-      const data = await APIRequestV2<string>(
+      const data = await fetchAPI<string>(
         `moment-vault/transcribe-existed/${entry.id}`,
         {
           method: 'POST'

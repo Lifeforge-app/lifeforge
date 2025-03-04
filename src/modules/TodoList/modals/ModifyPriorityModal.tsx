@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import FormModal from '@components/modals/FormModal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyPriorityModal(): React.ReactElement {
   const { t } = useTranslation('modules.todoList')
@@ -45,7 +45,7 @@ function ModifyPriorityModal(): React.ReactElement {
     }
 
     try {
-      await APIRequestV2(
+      await fetchAPI(
         'todo-list/priorities' +
           (openType === 'update' ? `/${selectedPriority?.id}` : ''),
         {

@@ -12,7 +12,7 @@ import QueryWrapper from '@components/screens/QueryWrapper'
 import { type IAPIKeyEntry } from '@interfaces/api_keys_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import EntryItem from './components/EntryItem'
 import ModifyAPIKeyModal from './components/ModifyAPIKeyModal'
 import { fetchChallenge } from './utils/fetchChallenge'
@@ -30,7 +30,7 @@ function APIKeys(): React.ReactElement {
   const entriesQuery = useQuery<IAPIKeyEntry[]>({
     queryKey: ['api-keys', 'entries', masterPassword, challenge],
     queryFn: () =>
-      APIRequestV2(
+      fetchAPI(
         'api-keys?master=' +
           encodeURIComponent(encrypt(masterPassword, challenge!))
       ),

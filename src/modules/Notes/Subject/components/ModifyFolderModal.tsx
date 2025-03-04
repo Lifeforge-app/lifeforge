@@ -9,7 +9,7 @@ import { TextInput } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type INotesEntry } from '@interfaces/notes_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyFolderModal({
   openType,
@@ -54,7 +54,7 @@ function ModifyFolderModal({
     }
 
     try {
-      await APIRequestV2(
+      await fetchAPI(
         `notes/entries/${innerOpenType}/folder` +
           (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
         {

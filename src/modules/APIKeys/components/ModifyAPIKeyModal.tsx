@@ -7,7 +7,7 @@ import {
 } from '@interfaces/api_keys_interfaces'
 import { IFieldProps } from '@interfaces/modal_interfaces'
 import { decrypt, encrypt } from '@utils/encryption'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import { fetchChallenge } from '../utils/fetchChallenge'
 
 function ModifyAPIKeyModal({
@@ -73,7 +73,7 @@ function ModifyAPIKeyModal({
     const challenge = await fetchChallenge()
 
     try {
-      const data = await APIRequestV2<string>(
+      const data = await fetchAPI<string>(
         `api-keys/${existingData?.id}?master=${encodeURIComponent(
           encrypt(masterPassword, challenge)
         )}`

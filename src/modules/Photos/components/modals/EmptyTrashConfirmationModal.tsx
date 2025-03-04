@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import ModalWrapper from '@components/modals/ModalWrapper'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function EmptyTrashConfirmationModal({
   isOpen,
@@ -17,22 +18,18 @@ function EmptyTrashConfirmationModal({
   async function deleteData(): Promise<void> {
     setLoading(true)
 
-    await APIRequest({
-      endpoint: 'photos/trash/empty',
-      method: 'DELETE',
-      successInfo: 'delete',
-      failureInfo: 'delete',
-      callback: () => {
-        refreshPhotos()
-      },
-      onFailure: () => {
-        setOpen(false)
-      },
-      finalCallback: () => {
-        setLoading(false)
-        setOpen(false)
-      }
-    })
+    try {
+      await fetchAPI('photos/trash/empty', {
+        method: 'DELETE'
+      })
+
+      refreshPhotos()
+    } catch {
+      toast.error('Failed to empty trash')
+    } finally {
+      setLoading(false)
+      setOpen(false)
+    }
   }
 
   return (

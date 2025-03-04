@@ -6,7 +6,7 @@ import { TextInput } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { useMusicContext } from '@providers/MusicProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyMusicModal(): React.ReactElement {
   const { t } = useTranslation('modules.music')
@@ -35,7 +35,7 @@ function ModifyMusicModal(): React.ReactElement {
     }
 
     try {
-      await APIRequestV2(`music-library/entries/${targetMusic?.id}`, {
+      await fetchAPI(`music-library/entries/${targetMusic?.id}`, {
         method: 'PATCH',
         body: music
       })

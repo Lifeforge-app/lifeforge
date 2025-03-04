@@ -2,6 +2,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
+import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
 import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
@@ -16,7 +17,7 @@ import {
   type IVirtualWardrobeSidebarData,
   type IVirtualWardrobeEntry
 } from '@interfaces/virtual_wardrobe_interfaces'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 import EntryItem from './components/EntryItem'
 import Header from './components/Header'
 import ModifyItemModal from './components/ModifyItemModal'
@@ -58,18 +59,18 @@ function VirtualWardrobeClothes(): React.ReactElement {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   async function handleAddToCart(entry: IVirtualWardrobeEntry): Promise<void> {
-    await APIRequest({
-      endpoint: `virtual-wardrobe/session/${entry.id}`,
-      method: 'POST',
-      successInfo: 'add',
-      failureInfo: 'add',
-      callback: () => {
-        setSessionCartItems(prev => {
-          if (typeof prev === 'string') return prev
-          return [...prev, entry]
-        })
-      }
-    })
+    try {
+      await fetchAPI(`virtual-wardrobe/session/${entry.id}`, {
+        method: 'POST'
+      })
+
+      setSessionCartItems(prev => {
+        if (typeof prev === 'string') return prev
+        return [...prev, entry]
+      })
+    } catch {
+      toast.error('Failed to add item to cart')
+    }
   }
 
   return (

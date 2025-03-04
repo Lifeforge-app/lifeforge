@@ -5,7 +5,7 @@ import { Button } from '@components/buttons'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import ConfigColumn from '@components/utilities/ConfigColumn'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import AdjustBgImageModal from './components/AdjustBgImageModal'
 import ImagePickerModal from '../../../../components/inputs/ImageAndFileInput/ImagePickerModal'
 
@@ -22,7 +22,7 @@ function BgImageSelector(): React.ReactElement {
 
   async function onSubmit(url: string | File): Promise<void> {
     try {
-      const data = await APIRequestV2<string>('user/personalization/bg-image', {
+      const data = await fetchAPI<string>('user/personalization/bg-image', {
         method: 'PUT',
         body:
           typeof url === 'string'

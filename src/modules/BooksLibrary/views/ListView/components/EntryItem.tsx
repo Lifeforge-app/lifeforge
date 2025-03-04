@@ -7,7 +7,7 @@ import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
@@ -28,7 +28,7 @@ export default function EntryItem({
     setAddToFavouritesLoading(true)
 
     try {
-      await APIRequestV2<IBooksLibraryEntry>(
+      await fetchAPI<IBooksLibraryEntry>(
         `books-library/entries/favourite/${item.id}`,
         {
           method: 'POST'

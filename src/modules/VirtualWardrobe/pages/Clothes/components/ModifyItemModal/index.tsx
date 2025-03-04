@@ -7,7 +7,7 @@ import {
   IVirtualWardrobeFormState,
   type IVirtualWardrobeEntry
 } from '@interfaces/virtual_wardrobe_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import AdditionalInfoSection from './components/AdditionalInfoSection'
 import BasicInfoSection from './components/BasicInfoSection'
 import StepIndicator from './components/StepIndicator'
@@ -82,7 +82,7 @@ function ModifyItemModal({
     if (backImage !== null) formData.append('backImage', backImage)
 
     try {
-      await APIRequestV2(
+      await fetchAPI(
         'virtual-wardrobe/entries' +
           (openType === 'update' ? `/${existedData?.id}` : ''),
         {

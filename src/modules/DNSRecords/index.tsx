@@ -23,7 +23,7 @@ import {
   DNSRecordType,
   type IDNSRecordEntry
 } from '@interfaces/dns_records_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import IconButton from '../Music/components/Bottombar/components/IconButton'
 
 const FILTER_TYPE = ['All', 'A', 'AAAA', 'CNAME', 'TXT']
@@ -56,7 +56,7 @@ function DNSRecords(): JSX.Element {
     }
 
     try {
-      await APIRequestV2(`dns-records?serial=${serial}`, {
+      await fetchAPI(`dns-records?serial=${serial}`, {
         method: 'DELETE',
         body: {
           target: Array.isArray(index) ? index : [index]

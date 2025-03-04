@@ -9,7 +9,7 @@ import { IconInput, IconPickerModal, TextInput } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type INotesSubject } from '@interfaces/notes_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifySubjectModal({
   openType,
@@ -51,7 +51,7 @@ function ModifySubjectModal({
     }
 
     try {
-      await APIRequestV2(
+      await fetchAPI(
         'notes/subject' +
           (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
         {

@@ -12,7 +12,7 @@ import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import { SidebarDivider } from '@components/layouts/sidebar'
 import useThemeColors from '@hooks/useThemeColor'
 import IntervalManager from '@utils/intervalManager'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 const intervalManager = IntervalManager.getInstance()
 
@@ -157,7 +157,7 @@ function Header({
 
   async function downloadAll(): Promise<void> {
     try {
-      await APIRequestV2('guitar-tabs/entries/download-all')
+      await fetchAPI('guitar-tabs/entries/download-all')
 
       toast.success('Guitar tabs are being downloaded!')
     } catch {

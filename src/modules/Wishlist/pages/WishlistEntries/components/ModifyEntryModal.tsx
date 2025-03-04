@@ -8,7 +8,7 @@ import {
   type IWishlistList,
   type IWishlistEntry
 } from '@interfaces/wishlist_interfaces'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyEntryModal({
   openType,
@@ -141,22 +141,21 @@ function ModifyEntryModal({
         : 'false'
     )
 
-    await APIRequest({
-      endpoint:
+    try {
+      const data = await fetchAPI<IWishlistEntry>(
         'wishlist/entries' +
-        (openType === 'update' ? `/${existedData?.id}` : ''),
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: formData,
-      successInfo: openType,
-      failureInfo: openType,
-      callback: res => {
-        setOpenType(null)
-        updateDataList(res.data)
-      },
-      onFailure: () => {
-        setOpenType(null)
-      }
-    })
+          (openType === 'update' ? `/${existedData?.id}` : ''),
+        {
+          method: openType === 'create' ? 'POST' : 'PATCH',
+          body: formData
+        }
+      )
+
+      setOpenType(null)
+      updateDataList(data)
+    } catch {
+      setOpenType(null)
+    }
   }
 
   useEffect(() => {
