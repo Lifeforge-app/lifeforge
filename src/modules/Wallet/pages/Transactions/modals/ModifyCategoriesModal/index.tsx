@@ -15,7 +15,7 @@ import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWalletCategory } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import CategoryToggleButton from './components/CategoryToggleButton'
 
 function ModifyCategoriesModal({
@@ -72,28 +72,31 @@ function ModifyCategoriesModal({
     }
 
     setIsLoading(true)
-    await APIRequest({
-      endpoint: `wallet/categories${
-        openType === 'update' ? `/${existedData?.id}` : ''
-      }`,
-      method: openType !== 'update' ? 'POST' : 'PATCH',
-      body: {
-        type: categoryType,
-        name: categoryName,
-        icon: categoryIcon,
-        color: categoryColor
-      },
-      successInfo: openType === 'update' ? 'update' : 'create',
-      failureInfo: openType === 'update' ? 'update' : 'create',
-      callback: () => {
-        refreshCategories()
-        setExistedData(null)
-        setOpenType(null)
-      },
-      finalCallback: () => {
-        setIsLoading(false)
-      }
-    })
+
+    try {
+      await APIRequestV2(
+        `wallet/categories${
+          openType === 'update' ? `/${existedData?.id}` : ''
+        }`,
+        {
+          method: openType !== 'update' ? 'POST' : 'PATCH',
+          body: {
+            type: categoryType,
+            name: categoryName,
+            icon: categoryIcon,
+            color: categoryColor
+          }
+        }
+      )
+
+      refreshCategories()
+      setExistedData(null)
+      setOpenType(null)
+    } catch {
+      toast.error(t('input.error.somethingWentWrong'))
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (

@@ -7,7 +7,7 @@ import {
 } from '@interfaces/api_keys_interfaces'
 import { IFieldProps } from '@interfaces/modal_interfaces'
 import { decrypt, encrypt } from '@utils/encryption'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import { fetchChallenge } from '../utils/fetchChallenge'
 
 function ModifyAPIKeyModal({
@@ -72,34 +72,32 @@ function ModifyAPIKeyModal({
   async function fetchKey(): Promise<void> {
     const challenge = await fetchChallenge()
 
-    await APIRequest({
-      endpoint: `api-keys/${existingData?.id}?master=${encodeURIComponent(
-        encrypt(masterPassword, challenge)
-      )}`,
-      method: 'GET',
-      callback(data) {
-        const decryptedKey = decrypt(data.data, challenge)
-        const decryptedSecondTime = decrypt(decryptedKey, masterPassword)
-        if (existingData === null) {
-          toast.error('Failed to fetch key')
-          return
-        }
+    try {
+      const data = await APIRequestV2<string>(
+        `api-keys/${existingData?.id}?master=${encodeURIComponent(
+          encrypt(masterPassword, challenge)
+        )}`
+      )
 
-        setFormState({
-          id: existingData.keyId,
-          name: existingData.name,
-          description: existingData.description,
-          icon: existingData.icon,
-          key: decryptedSecondTime
-        })
-      },
-      onFailure: () => {
-        console.error('Failed to fetch key')
-      },
-      finalCallback: () => {
-        setIsFetchingKey(false)
+      const decryptedKey = decrypt(data, challenge)
+      const decryptedSecondTime = decrypt(decryptedKey, masterPassword)
+      if (existingData === null) {
+        toast.error('Failed to fetch key')
+        return
       }
-    })
+
+      setFormState({
+        id: existingData.keyId,
+        name: existingData.name,
+        description: existingData.description,
+        icon: existingData.icon,
+        key: decryptedSecondTime
+      })
+    } catch {
+      console.error('Failed to fetch key')
+    } finally {
+      setIsFetchingKey(false)
+    }
   }
 
   useEffect(() => {

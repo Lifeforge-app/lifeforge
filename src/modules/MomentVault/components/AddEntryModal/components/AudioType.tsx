@@ -111,7 +111,6 @@ function AudioType({
       endpoint: 'moment-vault/transcribe',
       method: 'POST',
       body,
-      isJSON: false,
       successInfo: 'transcribe',
       failureInfo: 'transcribe',
       callback(data) {
@@ -144,7 +143,6 @@ function AudioType({
       endpoint: 'moment-vault/entries',
       method: 'POST',
       body,
-      isJSON: false,
       successInfo: 'create',
       failureInfo: 'create',
       callback(data) {

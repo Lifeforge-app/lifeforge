@@ -6,7 +6,7 @@ import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IAirportNOTAMEntry } from '@interfaces/airports_interfaces'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import NOTAMListItem from './components/NOTAMListItem'
 
 function NOTAM({
@@ -27,29 +27,28 @@ function NOTAM({
   const [hasNextPage, setHasNextPage] = useState(true)
 
   async function fetchNextPage(): Promise<void> {
-    if (hasNextPage) {
-      setLoading(true)
-      const nextPage = currentPage === -1 ? 1 : currentPage + 1
-      await APIRequest({
-        endpoint: `airports/airport/${airportID}/NOTAM?page=${nextPage}`,
-        method: 'GET',
-        callback(data) {
-          if (data.data.length === 0) {
-            setHasNextPage(false)
-          } else {
-            if (typeof NOTAMData !== 'string') {
-              NOTAMData.push(...data.data)
-              setCurrentPage(nextPage)
-            }
-          }
-        },
-        finalCallback() {
-          setLoading(false)
-        },
-        onFailure() {
-          toast.error('Failed to fetch NOTAM data')
+    if (!hasNextPage) return
+
+    setLoading(true)
+    const nextPage = currentPage === -1 ? 1 : currentPage + 1
+
+    try {
+      const data = await APIRequestV2<IAirportNOTAMEntry[]>(
+        `airports/airport/${airportID}/NOTAM?page=${nextPage}`
+      )
+
+      if (data.length === 0) {
+        setHasNextPage(false)
+      } else {
+        if (typeof NOTAMData !== 'string') {
+          NOTAMData.push(...data)
+          setCurrentPage(nextPage)
         }
-      })
+      }
+    } catch {
+      toast.error('Failed to fetch NOTAM data')
+    } finally {
+      setLoading(false)
     }
   }
 

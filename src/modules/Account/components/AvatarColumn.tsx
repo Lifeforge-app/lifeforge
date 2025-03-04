@@ -1,11 +1,12 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import ConfigColumn from '@components/utilities/ConfigColumn'
 import { useAuthContext } from '@providers/AuthProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function AvatarColumn(): React.ReactElement {
   const { t } = useTranslation('modules.accountSettings')
@@ -27,20 +28,18 @@ function AvatarColumn(): React.ReactElement {
         formData.append('file', file)
 
         setLoading(true)
-        await APIRequest({
-          method: 'PUT',
-          endpoint: '/user/settings/avatar',
-          body: formData,
-          isJSON: false,
-          successInfo: 'update',
-          failureInfo: 'update',
-          callback: data => {
-            setUserData({ ...userData, avatar: data.data })
-          },
-          finalCallback: () => {
-            setLoading(false)
-          }
-        })
+
+        try {
+          const data = await APIRequestV2<string>('/user/settings/avatar', {
+            method: 'PUT',
+            body: formData
+          })
+          setUserData({ ...userData, avatar: data })
+        } catch {
+          toast.error('An error occurred')
+        } finally {
+          setLoading(false)
+        }
       }
     }
   }

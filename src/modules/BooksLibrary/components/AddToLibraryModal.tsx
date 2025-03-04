@@ -5,7 +5,7 @@ import useFetch from '@hooks/useFetch'
 import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function AddToLibraryModal({
   isOpen,
@@ -160,18 +160,18 @@ function AddToLibraryModal({
   ]
 
   async function onSubmit(): Promise<void> {
-    await APIRequest({
-      endpoint: `books-library/libgen/add-to-library/${md5}`,
-      method: 'POST',
-      body: {
-        metadata: data
-      },
-      callback: () => {
-        onClose()
-        toast.success('Book added to download queue')
-      },
-      failureInfo: 'downloaded'
-    })
+    try {
+      await APIRequestV2(`books-library/libgen/add-to-library/${md5}`, {
+        method: 'POST',
+        body: {
+          metadata: data
+        }
+      })
+      onClose()
+      toast.success('Book added to download queue')
+    } catch {
+      toast.error('Failed to add book to download queue')
+    }
   }
 
   useEffect(() => {

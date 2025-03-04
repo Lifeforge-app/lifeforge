@@ -232,8 +232,7 @@ function ModifyIdeaModal(): React.ReactElement {
         }
         queryClient.invalidateQueries({ queryKey: ['idea-box', 'tags', id] })
         setOpenType(null)
-      },
-      isJSON: innerOpenType === 'update'
+      }
     })
   }
 

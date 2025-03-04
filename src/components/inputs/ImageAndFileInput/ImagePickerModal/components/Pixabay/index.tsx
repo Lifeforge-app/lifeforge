@@ -9,7 +9,7 @@ import {
   type IPixabaySearchFilter,
   type IPixabaySearchResult
 } from '@interfaces/pixabay_interfaces'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import SearchResults from './components/SearchResults'
 
 function Pixabay({
@@ -53,19 +53,16 @@ function Pixabay({
       editors_choice: filters.isEditorsChoice ? 'true' : 'false'
     })
 
-    await APIRequest({
-      endpoint: `pixabay/search?${params.toString()}`,
-      method: 'GET',
-      callback: data => {
-        setResults(data.data)
-      },
-      onFailure: () => {
-        setResults('error')
-      },
-      finalCallback: () => {
-        setLoading(false)
-      }
-    })
+    try {
+      const data = await APIRequestV2<IPixabaySearchResult>(
+        `pixabay/search?${params.toString()}`
+      )
+      setResults(data)
+    } catch {
+      setResults('error')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

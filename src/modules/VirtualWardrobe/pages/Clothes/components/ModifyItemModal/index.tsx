@@ -87,7 +87,6 @@ function ModifyItemModal({
         (openType === 'update' ? `/${existedData?.id}` : ''),
       method: openType === 'create' ? 'POST' : 'PATCH',
       body: openType === 'create' ? formData : formState,
-      isJSON: openType === 'update',
       successInfo: openType,
       failureInfo: openType,
       callback: refreshEntries,

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import ConfigColumn from '@components/utilities/ConfigColumn'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function PasswordColumn(): React.ReactElement {
   const { t } = useTranslation('modules.accountSettings')
@@ -11,19 +11,17 @@ function PasswordColumn(): React.ReactElement {
 
   async function onPasswordChange(): Promise<void> {
     setLoading(true)
-    APIRequest({
-      method: 'POST',
-      endpoint: '/user/settings/request-password-reset',
-      callback: () => {
-        toast.info('A password reset link has been sent to your email.')
-      },
-      onFailure: () => {
-        toast.error('Failed to send password reset link.')
-      },
-      finalCallback: () => {
-        setLoading(false)
-      }
-    }).catch(console.error)
+
+    try {
+      await APIRequestV2('/user/settings/request-password-reset', {
+        method: 'POST'
+      })
+      toast.info('A password reset link has been sent to your email.')
+    } catch {
+      toast.error('Failed to send password reset link.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

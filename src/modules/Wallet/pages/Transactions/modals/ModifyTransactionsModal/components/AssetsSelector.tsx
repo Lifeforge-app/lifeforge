@@ -26,6 +26,7 @@ function AssetsSelector({
 
   return (
     <ListboxOrComboboxInput
+      required
       buttonContent={
         <>
           <Icon

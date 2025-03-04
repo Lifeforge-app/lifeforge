@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import FormModal from '@components/modals/FormModal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import { toCamelCase } from '@utils/strings'
 
 function ModifyModal({
@@ -85,24 +85,27 @@ function ModifyModal({
       return
     }
 
-    await APIRequest({
-      endpoint: `projects-m/${stuff}${
-        openType === 'update' ? `/${existedData?.id}` : ''
-      }`,
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: {
-        name,
-        icon,
-        ...(stuff === 'statuses' && { color })
-      },
-      successInfo: openType,
-      failureInfo: openType,
-      callback: () => {
-        refreshData()
-        setExistedData(null)
-        setOpenType(null)
-      }
-    })
+    try {
+      await APIRequestV2(
+        `projects-m/${stuff}${
+          openType === 'update' ? `/${existedData?.id}` : ''
+        }`,
+        {
+          method: openType === 'create' ? 'POST' : 'PATCH',
+          body: {
+            name,
+            icon,
+            ...(stuff === 'statuses' && { color })
+          }
+        }
+      )
+
+      refreshData()
+      setExistedData(null)
+      setOpenType(null)
+    } catch {
+      toast.error(t('input.error.somethingWentWrong'))
+    }
   }
 
   return (

@@ -46,7 +46,6 @@ function ScanReceiptModal({
       endpoint: 'wallet/transactions/scan-receipt',
       method: 'POST',
       body: formData,
-      isJSON: false,
       failureInfo: 'upload',
       callback(data) {
         setModifyModalOpenType('create')

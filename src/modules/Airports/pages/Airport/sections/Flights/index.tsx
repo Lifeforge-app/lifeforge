@@ -2,11 +2,12 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
+import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import FlightsTable from './components/FlightsTable'
 
 interface FlightData {
@@ -37,36 +38,54 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
 
   async function fetchPreviousPage(): Promise<void> {
     setPreviousPageLoading(true)
-    await APIRequest({
-      endpoint: `airports/airport/${IATA}/flights/${location.hash
-        .replace('#', '')
-        .toLowerCase()}?page=${nextPageNum[0]}`,
-      method: 'GET',
-      callback(data) {
-        setFlightsData([...data.data, ...flightsData])
-        setPageNum([nextPageNum[0] - 1, nextPageNum[1]])
-      },
-      finalCallback() {
-        setPreviousPageLoading(false)
-      }
-    })
+
+    try {
+      const data = await APIRequestV2<FlightData[]>(
+        `airports/airport/${IATA}/flights/${location.hash
+          .replace('#', '')
+          .toLowerCase()}?page=${nextPageNum[0]}`,
+        {
+          method: 'GET'
+        }
+      )
+
+      setFlightsData(prevData => {
+        if (typeof prevData === 'string') return prevData
+        return [...data, ...prevData]
+      })
+      setPageNum([nextPageNum[0] - 1, nextPageNum[1]])
+    } catch {
+      setFlightsData('error')
+      toast.error('Failed to fetch previous page')
+    } finally {
+      setPreviousPageLoading(false)
+    }
   }
 
   async function fetchNextPage(): Promise<void> {
     setNextPageLoading(true)
-    await APIRequest({
-      endpoint: `airports/airport/${IATA}/flights/${location.hash
-        .replace('#', '')
-        .toLowerCase()}?page=${nextPageNum[1]}`,
-      method: 'GET',
-      callback(data) {
-        setFlightsData([...flightsData, ...data.data])
-        setPageNum([nextPageNum[0], nextPageNum[1] + 1])
-      },
-      finalCallback() {
-        setNextPageLoading(false)
-      }
-    })
+
+    try {
+      const data = await APIRequestV2<FlightData[]>(
+        `airports/airport/${IATA}/flights/${location.hash
+          .replace('#', '')
+          .toLowerCase()}?page=${nextPageNum[1]}`,
+        {
+          method: 'GET'
+        }
+      )
+
+      setFlightsData(prevData => {
+        if (typeof prevData === 'string') return prevData
+        return [...prevData, ...data]
+      })
+      setPageNum([nextPageNum[0], nextPageNum[1] + 1])
+    } catch {
+      setFlightsData('error')
+      toast.error('Failed to fetch next page')
+    } finally {
+      setNextPageLoading(false)
+    }
   }
 
   useEffect(() => {

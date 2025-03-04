@@ -28,6 +28,7 @@ function CategorySelector({
 
   return (
     <ListboxOrComboboxInput
+      required
       buttonContent={
         <>
           <Icon
