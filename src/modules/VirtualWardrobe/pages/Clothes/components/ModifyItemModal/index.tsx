@@ -87,7 +87,10 @@ function ModifyItemModal({
           (openType === 'update' ? `/${existedData?.id}` : ''),
         {
           method: openType === 'create' ? 'POST' : 'PATCH',
-          body: openType === 'create' ? formData : formState
+          body:
+            openType === 'create'
+              ? formData
+              : (formState as any as Record<string, unknown>)
         }
       )
       refreshEntries()
