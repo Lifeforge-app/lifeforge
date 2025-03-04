@@ -10,19 +10,23 @@ export default async function APIRequestV2<T>(
   {
     method,
     body,
-    isJSON = true,
     timeout = 30000,
     raiseError = true
   }: {
     method?: string
     body?: any
-    isJSON?: boolean
     timeout?: number
     raiseError?: boolean
   } = {
     method: 'GET'
   }
 ): Promise<T> {
+  const isJSON = !(
+    body instanceof FormData ||
+    body instanceof URLSearchParams ||
+    body instanceof Blob
+  )
+
   try {
     const response = await fetch(
       `${import.meta.env.VITE_API_HOST}/${endpoint}`,

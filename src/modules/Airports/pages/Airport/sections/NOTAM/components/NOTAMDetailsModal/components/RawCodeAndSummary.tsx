@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Markdown from 'react-markdown'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function RawCodeAndSummary({
   id,
@@ -19,20 +19,22 @@ function RawCodeAndSummary({
 
   async function summarizeWithAI(): Promise<void> {
     setSummarizeButtonLoading(true)
-    await APIRequest({
-      endpoint: `airports/NOTAM/${id}/summarize`,
-      method: 'GET',
-      callback(data) {
-        setSummary(data.data)
-        toast.success('NOTAM summarized successfully')
-      },
-      onFailure() {
-        toast.error('Failed to summarize NOTAM')
-      },
-      finalCallback() {
-        setSummarizeButtonLoading(false)
-      }
-    })
+
+    try {
+      const data = await APIRequestV2<string>(
+        `airports/NOTAM/${id}/summarize`,
+        {
+          method: 'GET'
+        }
+      )
+
+      setSummary(data)
+      toast.success('NOTAM summarized successfully')
+    } catch {
+      toast.error('Failed to summarize NOTAM')
+    } finally {
+      setSummarizeButtonLoading(false)
+    }
   }
 
   useEffect(() => {

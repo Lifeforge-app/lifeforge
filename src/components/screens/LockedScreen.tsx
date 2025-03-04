@@ -4,9 +4,8 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { TextInput } from '@components/inputs'
-import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function LockedScreen({
   endpoint,
@@ -19,7 +18,6 @@ function LockedScreen({
     setLoading?: React.Dispatch<React.SetStateAction<boolean>>
   ) => Promise<string>
 }): React.ReactElement {
-  const { userData } = useAuthContext()
   const [masterPassWordInputContent, setMasterPassWordInputContent] =
     useState<string>('')
   const [loading, setLoading] = useState(false)
@@ -35,41 +33,38 @@ function LockedScreen({
 
     const challenge = await fetchChallenge(setLoading)
 
-    await APIRequest({
-      endpoint,
-      method: 'POST',
-      body: {
-        password: encrypt(masterPassWordInputContent, challenge),
-        id: userData.id
-      },
-      callback: data => {
-        if (data.data === true) {
-          toast.info(
-            t('fetch.success', {
-              action: t('fetch.unlock')
-            })
-          )
-          setMasterPassword(masterPassWordInputContent)
-          setMasterPassWordInputContent('')
-        } else {
-          toast.error(
-            t('fetch.failure', {
-              action: t('fetch.unlock')
-            })
-          )
+    try {
+      const data = await APIRequestV2<boolean>(endpoint, {
+        method: 'POST',
+        body: {
+          password: encrypt(masterPassWordInputContent, challenge)
         }
-      },
-      finalCallback: () => {
-        setLoading(false)
-      },
-      onFailure: () => {
+      })
+
+      if (data === true) {
+        toast.info(
+          t('fetch.success', {
+            action: t('fetch.unlock')
+          })
+        )
+        setMasterPassword(masterPassWordInputContent)
+        setMasterPassWordInputContent('')
+      } else {
         toast.error(
           t('fetch.failure', {
             action: t('fetch.unlock')
           })
         )
       }
-    })
+    } catch {
+      toast.error(
+        t('fetch.failure', {
+          action: t('fetch.unlock')
+        })
+      )
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -88,8 +83,8 @@ function LockedScreen({
         name="Master Password"
         namespace="common.vault"
         placeholder={'••••••••••••••••'}
-        tKey="vault"
         setValue={setMasterPassWordInputContent}
+        tKey="vault"
         value={masterPassWordInputContent}
         onKeyDown={e => {
           if (e.key === 'Enter') {

@@ -132,7 +132,7 @@ function ModifyTransactionsModal({
         !category ||
         !transactionAsset
       ) {
-        toast.error('Please fill in the particulars, date, and amount.')
+        toast.error('Please fill in required fields.')
         return
       }
     }
@@ -164,7 +164,6 @@ function ModifyTransactionsModal({
       }`,
       method: openType === 'create' ? 'POST' : 'PATCH',
       body: data,
-      isJSON: false,
       successInfo: openType,
       failureInfo: openType,
       callback: () => {
@@ -197,6 +196,9 @@ function ModifyTransactionsModal({
             setTransactionType={(type: 'income' | 'expenses' | 'transfer') => {
               setTransactionType(type)
               setCategory(null)
+              setTransactionAsset(null)
+              setFromAsset(null)
+              setToAsset(null)
             }}
             transactionType={transactionType}
           />
@@ -215,6 +217,7 @@ function ModifyTransactionsModal({
           )}
           <DateInput
             darker
+            required
             date={transactionDate}
             icon="tabler:calendar"
             modalRef={ref}
@@ -225,6 +228,7 @@ function ModifyTransactionsModal({
           {transactionType !== 'transfer' && (
             <TextInput
               darker
+              required
               className="mt-4"
               icon="tabler:file-text"
               name="Particulars"
@@ -236,6 +240,7 @@ function ModifyTransactionsModal({
           )}
           <CurrencyInput
             darker
+            required
             className="mt-4"
             icon="tabler:currency-dollar"
             name="Amount"

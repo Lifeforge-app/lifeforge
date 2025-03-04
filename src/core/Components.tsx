@@ -247,7 +247,7 @@ export const COMPONENTS = {
   documentation: {
     documentation: () => {
       window.location.href =
-        'https://docs.lifeforge.thecodeblog.net/getting-started/introduction'
+        'https://docs.lifeforge.melvinchia.dev/getting-started/introduction'
       return (<Navigate to="/" />) as React.ReactElement
     }
   },

@@ -1,7 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import APIRequest from '@utils/fetchData'
+import { toast } from 'react-toastify'
+import APIRequestV2 from '@utils/newFetchData'
 import ModalWrapper from './ModalWrapper'
 import Button from '../buttons/Button'
 
@@ -46,45 +47,47 @@ function DeleteConfirmationModal({
     if (data === null) return
     setLoading(true)
 
-    await APIRequest({
-      endpoint: `${apiEndpoint}/${!Array.isArray(data) ? data?.id ?? '' : ''}`,
-      method: 'DELETE',
-      successInfo: 'delete',
-      failureInfo: 'delete',
-      body: !Array.isArray(data) ? undefined : { ids: data },
-      callback: () => {
-        onClose()
-        if (updateDataList) updateDataList()
-
-        if (customCallback) {
-          customCallback()
-            .then(() => {
-              setLoading(false)
-              onClose()
-            })
-            .catch(console.error)
-        }
-      },
-      finalCallback: () => {
-        if (queryKey) {
-          const updateFunc = (old: any[]) => {
-            if (!Array.isArray(data)) {
-              return old.filter(item => item.id !== data.id)
-            }
-            return old.filter(item => !data.includes(item.id))
-          }
-
-          if (multiQueryKey) {
-            ;(queryKey as unknown[][]).forEach(key => {
-              queryClient.setQueryData(key, updateFunc)
-            })
-          } else {
-            queryClient.setQueryData(queryKey, updateFunc)
-          }
-        }
-        setLoading(false)
+    await APIRequestV2(
+      `${apiEndpoint}/${!Array.isArray(data) ? data?.id ?? '' : ''}`,
+      {
+        method: 'DELETE',
+        body: !Array.isArray(data) ? undefined : { ids: data }
       }
-    })
+    )
+
+    try {
+      onClose()
+      if (updateDataList) updateDataList()
+
+      if (customCallback) {
+        customCallback()
+          .then(() => {
+            setLoading(false)
+            onClose()
+          })
+          .catch(console.error)
+      }
+    } catch {
+      toast.error(t('deleteConfirmation.error'))
+    } finally {
+      if (queryKey) {
+        const updateFunc = (old: any[]) => {
+          if (!Array.isArray(data)) {
+            return old.filter(item => item.id !== data.id)
+          }
+          return old.filter(item => !data.includes(item.id))
+        }
+
+        if (multiQueryKey) {
+          ;(queryKey as unknown[][]).forEach(key => {
+            queryClient.setQueryData(key, updateFunc)
+          })
+        } else {
+          queryClient.setQueryData(queryKey, updateFunc)
+        }
+      }
+      setLoading(false)
+    }
   }
 
   return (

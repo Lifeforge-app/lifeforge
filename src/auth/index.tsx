@@ -36,7 +36,7 @@ function Auth(): React.ReactElement {
             A project by{' '}
             <a
               className="text-custom-500 underline"
-              href="https://thecodeblog.net"
+              href="https://melvinchia.dev"
               rel="noreferrer"
               target="_blank"
             >

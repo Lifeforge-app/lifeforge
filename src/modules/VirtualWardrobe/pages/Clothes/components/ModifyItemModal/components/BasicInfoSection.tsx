@@ -50,7 +50,6 @@ function BasicInfoSection({
       method: 'POST',
       endpoint: 'virtual-wardrobe/entries/vision',
       body: formData,
-      isJSON: false,
       callback: data => {
         const { name, category, subcategory, colors } = data.data
         setFormState({ ...formState, name, category, subcategory, colors })

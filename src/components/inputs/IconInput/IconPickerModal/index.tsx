@@ -69,7 +69,7 @@ function IconPickerModal({
               powered by&nbsp;
               <a
                 className="underline"
-                href="https://iconify.thecodeblog.net"
+                href="https://iconify.design"
                 rel="noreferrer"
                 target="_blank"
               >
