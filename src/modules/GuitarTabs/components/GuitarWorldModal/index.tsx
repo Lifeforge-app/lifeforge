@@ -7,7 +7,7 @@ import ModalWrapper from '@components/modals/ModalWrapper'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { Loadable } from '@interfaces/common'
 import { type IGuitarTabsGuitarWorldScores } from '@interfaces/guitar_tabs_interfaces'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import ScoreList from './components/ScoreList'
 
 function GuitarWorldModal({
@@ -34,20 +34,22 @@ function GuitarWorldModal({
     setProceedLoading(true)
     setShowData(true)
 
-    await APIRequest({
-      endpoint: 'guitar-tabs/guitar-world',
-      method: 'POST',
-      body: { cookie, page },
-      callback: data => {
-        setData(data.data)
-      },
-      onFailure() {
-        setData('error')
-      },
-      finalCallback() {
-        setProceedLoading(false)
-      }
-    })
+    try {
+      const data = await APIRequestV2<IGuitarTabsGuitarWorldScores>(
+        'guitar-tabs/guitar-world',
+        {
+          method: 'POST',
+          body: { cookie, page }
+        }
+      )
+
+      setData(data)
+    } catch {
+      toast.error('Failed to fetch scores')
+      setData('error')
+    } finally {
+      setProceedLoading(false)
+    }
   }
 
   useEffect(() => {

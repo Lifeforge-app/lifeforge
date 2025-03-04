@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Outlet } from 'react-router'
+import { toast } from 'react-toastify'
 import useFetch from '@hooks/useFetch'
 import {
   type IBooksLibraryLanguage,
@@ -7,14 +8,14 @@ import {
   type IBooksLibraryEntry,
   type IBooksLibraryFileType
 } from '@interfaces/books_library_interfaces'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 type ModifyModalOpenType = 'create' | 'update' | null
 
 function useBooksLibraryCommonState<T>(
   endpoint: string
 ): IBooksLibraryCommon<T> {
-  const [data, refreshData] = useFetch<T[]>(endpoint)
+  const [data, refreshData, setData] = useFetch<T[]>(endpoint)
   const [modifyDataModalOpenType, setModifyDataModalOpenType] =
     useState<ModifyModalOpenType>(null)
   const [existedData, setExistedData] = useState<T | null>(null)
@@ -24,6 +25,7 @@ function useBooksLibraryCommonState<T>(
   return {
     data,
     refreshData,
+    setData,
     modifyDataModalOpenType,
     setModifyDataModalOpenType,
     existedData,
@@ -36,6 +38,7 @@ function useBooksLibraryCommonState<T>(
 interface IBooksLibraryCommon<T> {
   data: T[] | 'loading' | 'error'
   refreshData: () => void
+  setData: React.Dispatch<React.SetStateAction<T[] | 'loading' | 'error'>>
   modifyDataModalOpenType: 'create' | 'update' | null
   setModifyDataModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
@@ -135,41 +138,42 @@ export default function BooksLibraryProvider(): React.ReactElement {
     >
   >({})
 
-  function checkProgress(): void {
-    APIRequest({
-      endpoint: 'books-library/libgen/download-progresses',
-      method: 'GET',
-      callback(data) {
-        if (data.state === 'success') {
-          const processes = data.data as Record<
-            string,
-            {
-              downloaded: string
-              total: string
-              percentage: string
-              speed: string
-              ETA: string
-              metadata: Record<string, any>
-            }
-          >
-          if (JSON.stringify(processes) !== lastProcessesData.current) {
-            setProcesses(processes)
-            lastProcessesData.current = JSON.stringify(processes)
+  async function checkProgress(): Promise<void> {
+    try {
+      const data = await APIRequestV2<
+        Record<
+          string,
+          {
+            downloaded: string
+            total: string
+            percentage: string
+            speed: string
+            ETA: string
+            metadata: Record<string, any>
           }
+        >
+      >('books-library/libgen/download-progresses')
 
-          if (
-            !isFirstTime &&
-            lastProcessesLength !== null &&
-            lastProcessesLength.current !== Object.keys(processes).length
-          ) {
-            entriesState.refreshData()
-            fileTypesState.refreshData()
-          }
-          lastProcessesLength.current = Object.keys(processes).length
-          setIsFirstTime(false)
-        }
+      const processes = data
+
+      if (JSON.stringify(processes) !== lastProcessesData.current) {
+        setProcesses(processes)
+        lastProcessesData.current = JSON.stringify(processes)
       }
-    }).catch(console.error)
+
+      if (
+        !isFirstTime &&
+        lastProcessesLength !== null &&
+        lastProcessesLength.current !== Object.keys(processes).length
+      ) {
+        entriesState.refreshData()
+        fileTypesState.refreshData()
+      }
+      lastProcessesLength.current = Object.keys(processes).length
+      setIsFirstTime(false)
+    } catch {
+      toast.error('Failed to fetch download progress')
+    }
   }
 
   useEffect(() => {

@@ -23,7 +23,7 @@ import {
   DNSRecordType,
   type IDNSRecordEntry
 } from '@interfaces/dns_records_interfaces'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import IconButton from '../Music/components/Bottombar/components/IconButton'
 
 const FILTER_TYPE = ['All', 'A', 'AAAA', 'CNAME', 'TXT']
@@ -54,27 +54,27 @@ function DNSRecords(): JSX.Element {
     } else {
       setBulkDeleteLoading(true)
     }
-    await APIRequest({
-      endpoint: `dns-records?serial=${serial}`,
-      body: {
-        target: Array.isArray(index) ? index : [index]
-      },
-      method: 'DELETE',
-      callback() {
-        updateRawRecords()
-      },
-      successInfo: 'delete',
-      failureInfo: 'delete',
-      finalCallback() {
-        if (typeof index === 'number') {
-          setDeleteLoading(-1)
-        } else {
-          setBulkDeleteLoading(false)
-          setSelectedEntries([])
-          setIsSelecting(false)
+
+    try {
+      await APIRequestV2(`dns-records?serial=${serial}`, {
+        method: 'DELETE',
+        body: {
+          target: Array.isArray(index) ? index : [index]
         }
+      })
+
+      updateRawRecords()
+    } catch {
+      toast.error('Failed to delete DNS record')
+    } finally {
+      if (typeof index === 'number') {
+        setDeleteLoading(-1)
+      } else {
+        setBulkDeleteLoading(false)
+        setSelectedEntries([])
+        setIsSelecting(false)
       }
-    })
+    }
   }
 
   function toggleSelected(index: number | 'all'): void {

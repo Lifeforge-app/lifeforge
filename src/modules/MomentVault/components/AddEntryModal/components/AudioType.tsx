@@ -3,12 +3,13 @@ import WavesurferPlayer from '@wavesurfer/react'
 import moment from 'moment'
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
 import { Button, CreateOrModifyButton } from '@components/buttons'
 import useThemeColors from '@hooks/useThemeColor'
 import { IMomentVaultEntry } from '@interfaces/moment_vault_interfaces'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function AudioType({
   onSuccess,
@@ -107,20 +108,18 @@ function AudioType({
     )
     body.append('file', file)
 
-    await APIRequest({
-      endpoint: 'moment-vault/transcribe',
-      method: 'POST',
-      body,
-      successInfo: 'transcribe',
-      failureInfo: 'transcribe',
-      callback(data) {
-        setTranscription(data.data)
-        setTranscribeLoading(false)
-      },
-      onFailure() {
-        setTranscribeLoading(false)
-      }
-    })
+    try {
+      const data = await APIRequestV2<string>('moment-vault/transcribe', {
+        method: 'POST',
+        body
+      })
+
+      setTranscription(data)
+    } catch {
+      toast.error(t('fetch.fetchError'))
+    } finally {
+      setTranscribeLoading(false)
+    }
   }
 
   async function onSubmit() {
@@ -139,19 +138,23 @@ function AudioType({
     body.append('file', file)
     body.append('transcription', transcription ?? '')
 
-    await APIRequest({
-      endpoint: 'moment-vault/entries',
-      method: 'POST',
-      body,
-      successInfo: 'create',
-      failureInfo: 'create',
-      callback(data) {
-        onSuccess(data.data)
-      },
-      finalCallback() {
-        setSubmitLoading(false)
-      }
-    })
+    try {
+      const data = await APIRequestV2<IMomentVaultEntry>(
+        'moment-vault/entries',
+        {
+          method: 'POST',
+          body
+        }
+      )
+
+      setAudioURL(null)
+      setTranscription(null)
+      onSuccess(data)
+    } catch {
+      toast.error(t('fetch.fetchError'))
+    } finally {
+      setSubmitLoading(false)
+    }
   }
 
   return (

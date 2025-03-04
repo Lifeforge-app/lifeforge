@@ -4,10 +4,11 @@ import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import React from 'react'
 import { useParams } from 'react-router'
+import { toast } from 'react-toastify'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function EntryContextMenu({
   entry
@@ -28,58 +29,58 @@ function EntryContextMenu({
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
   async function pinIdea(): Promise<void> {
-    await APIRequest({
-      endpoint: `idea-box/ideas/pin/${entry.id}`,
-      method: 'POST',
-      successInfo: entry.pinned ? 'unpin' : 'pin',
-      failureInfo: entry.pinned ? 'unpin' : 'pin',
-      callback: res => {
-        queryClient.setQueryData(
-          ['idea-box', 'ideas', id!, path!, viewArchived],
-          (prev: IIdeaBoxEntry[]) =>
-            prev
-              .map(idea =>
-                idea.id === entry.id ? (res.data as IIdeaBoxEntry) : idea
-              )
-              .sort((a, b) => {
-                if (a.pinned === b.pinned) {
-                  return a.created < b.created ? 1 : -1
-                }
-                return a.pinned ? -1 : 1
-              })
-        )
-      }
-    })
+    try {
+      await APIRequestV2(`idea-box/ideas/pin/${entry.id}`, {
+        method: 'POST'
+      })
+
+      queryClient.setQueryData(
+        ['idea-box', 'ideas', id!, path!, viewArchived],
+        (prev: IIdeaBoxEntry[]) =>
+          prev
+            .map(idea =>
+              idea.id === entry.id ? { ...idea, pinned: !idea.pinned } : idea
+            )
+            .sort((a, b) => {
+              if (a.pinned === b.pinned) {
+                return a.created < b.created ? 1 : -1
+              }
+              return a.pinned ? -1 : 1
+            })
+      )
+    } catch {
+      toast.error(`Failed to ${entry.pinned ? 'unpin' : 'pin'} idea`)
+    }
   }
 
   async function archiveIdea(): Promise<void> {
-    await APIRequest({
-      endpoint: `idea-box/ideas/archive/${entry.id}`,
-      method: 'POST',
-      successInfo: entry.archived ? 'unarchive' : 'archive',
-      failureInfo: entry.archived ? 'unarchive' : 'archive',
-      callback: () => {
-        queryClient.setQueryData(
-          ['idea-box', 'ideas', id!, path!, viewArchived],
-          (prev: IIdeaBoxEntry[]) => prev.filter(idea => idea.id !== entry.id)
-        )
-      }
-    })
+    try {
+      await APIRequestV2(`idea-box/ideas/archive/${entry.id}`, {
+        method: 'POST'
+      })
+
+      queryClient.setQueryData(
+        ['idea-box', 'ideas', id!, path!, viewArchived],
+        (prev: IIdeaBoxEntry[]) => prev.filter(idea => idea.id !== entry.id)
+      )
+    } catch {
+      toast.error(`Failed to ${entry.archived ? 'unarchive' : 'archive'} idea`)
+    }
   }
 
   async function removeFromFolder(): Promise<void> {
-    await APIRequest({
-      endpoint: `idea-box/ideas/move/${entry.id}`,
-      method: 'DELETE',
-      successInfo: 'remove',
-      failureInfo: 'remove',
-      callback: () => {
-        queryClient.setQueryData(
-          ['idea-box', 'ideas', id!, path!, viewArchived],
-          (prev: IIdeaBoxEntry[]) => prev.filter(idea => idea.id !== entry.id)
-        )
-      }
-    })
+    try {
+      await APIRequestV2(`idea-box/ideas/move/${entry.id}`, {
+        method: 'DELETE'
+      })
+
+      queryClient.setQueryData(
+        ['idea-box', 'ideas', id!, path!, viewArchived],
+        (prev: IIdeaBoxEntry[]) => prev.filter(idea => idea.id !== entry.id)
+      )
+    } catch {
+      toast.error('Failed to remove idea from folder')
+    }
   }
 
   return (

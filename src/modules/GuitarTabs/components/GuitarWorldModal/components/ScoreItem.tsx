@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { type IGuitarTabsGuitarWorldScoreEntry } from '@interfaces/guitar_tabs_interfaces'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function ScoreItem({
   entry,
@@ -44,23 +45,23 @@ function ScoreItem({
   async function downloadScore(): Promise<void> {
     setIsDownloading(true)
 
-    await APIRequest({
-      endpoint: 'guitar-tabs/guitar-world/download',
-      method: 'POST',
-      body: {
-        cookie,
-        id: entry.id,
-        name: entry.name,
-        category: entry.category,
-        mainArtist: entry.mainArtist,
-        audioUrl: entry.audioUrl
-      },
-      successInfo: 'download',
-      failureInfo: 'download',
-      finalCallback() {
-        setIsDownloading(false)
-      }
-    })
+    try {
+      await APIRequestV2('guitar-tabs/guitar-world/download', {
+        method: 'POST',
+        body: {
+          cookie,
+          id: entry.id,
+          name: entry.name,
+          category: entry.category,
+          mainArtist: entry.mainArtist,
+          audioUrl: entry.audioUrl
+        }
+      })
+    } catch {
+      toast.error('Failed to download score')
+    } finally {
+      setIsDownloading(false)
+    }
   }
 
   return (

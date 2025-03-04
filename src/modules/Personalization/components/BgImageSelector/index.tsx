@@ -5,7 +5,7 @@ import { Button } from '@components/buttons'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import ConfigColumn from '@components/utilities/ConfigColumn'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import AdjustBgImageModal from './components/AdjustBgImageModal'
 import ImagePickerModal from '../../../../components/inputs/ImageAndFileInput/ImagePickerModal'
 
@@ -21,34 +21,25 @@ function BgImageSelector(): React.ReactElement {
   ] = useState(false)
 
   async function onSubmit(url: string | File): Promise<void> {
-    if (typeof url === 'string') {
-      await APIRequest({
-        endpoint: 'user/personalization/bg-image',
+    try {
+      const data = await APIRequestV2<string>('user/personalization/bg-image', {
         method: 'PUT',
-        body: { url },
-        callback: data => {
-          setBgImage(`${import.meta.env.VITE_API_HOST}/${data.data}`)
-          toast.success('Background image updated')
-        },
-        onFailure: () => {
-          toast.error('Failed to update background image')
-        }
+        body:
+          typeof url === 'string'
+            ? { url }
+            : (() => {
+                const formData = new FormData()
+                formData.append('file', url)
+                return formData
+              })()
       })
-    } else {
-      const formData = new FormData()
-      formData.append('file', url)
-      await APIRequest({
-        endpoint: 'user/personalization/bg-image',
-        method: 'PUT',
-        body: formData,
-        callback: data => {
-          setBgImage(`${import.meta.env.VITE_API_HOST}/${data.data}`)
-          toast.success('Background image updated')
-        },
-        onFailure: () => {
-          toast.error('Failed to update background image')
-        }
-      })
+
+      setBgImage(`${import.meta.env.VITE_API_HOST}/${data}`)
+      toast.success('Background image updated')
+    } catch {
+      toast.error('Failed to update background image')
+    } finally {
+      setImageSelectorModalOpen(false)
     }
   }
 

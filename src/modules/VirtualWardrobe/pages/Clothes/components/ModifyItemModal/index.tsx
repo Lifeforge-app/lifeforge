@@ -7,7 +7,7 @@ import {
   IVirtualWardrobeFormState,
   type IVirtualWardrobeEntry
 } from '@interfaces/virtual_wardrobe_interfaces'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import AdditionalInfoSection from './components/AdditionalInfoSection'
 import BasicInfoSection from './components/BasicInfoSection'
 import StepIndicator from './components/StepIndicator'
@@ -81,20 +81,22 @@ function ModifyItemModal({
     if (frontImage !== null) formData.append('frontImage', frontImage)
     if (backImage !== null) formData.append('backImage', backImage)
 
-    await APIRequest({
-      endpoint:
+    try {
+      await APIRequestV2(
         'virtual-wardrobe/entries' +
-        (openType === 'update' ? `/${existedData?.id}` : ''),
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: openType === 'create' ? formData : formState,
-      successInfo: openType,
-      failureInfo: openType,
-      callback: refreshEntries,
-      finalCallback: () => {
-        setSubmitButtonLoading(false)
-        onClose()
-      }
-    })
+          (openType === 'update' ? `/${existedData?.id}` : ''),
+        {
+          method: openType === 'create' ? 'POST' : 'PATCH',
+          body: openType === 'create' ? formData : formState
+        }
+      )
+      refreshEntries()
+      onClose()
+    } catch {
+      toast.error('Failed to update item data')
+    } finally {
+      setSubmitButtonLoading(false)
+    }
   }
 
   useEffect(() => {

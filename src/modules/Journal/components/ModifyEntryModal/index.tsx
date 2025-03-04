@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -8,7 +7,7 @@ import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { encrypt } from '@utils/encryption'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import Cleanup from './sections/Cleanup'
 import Mood from './sections/Mood'
 import Photos from './sections/Photos'
@@ -62,42 +61,23 @@ function ModifyJournalEntryModal({
 
     setTitleGenerationLoading(true)
 
-    const challenge = await fetch(
-      `${import.meta.env.VITE_API_HOST}/journal/auth/challenge`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+    try {
+      const challenge = await APIRequestV2<string>(`journal/auth/challenge`)
+
+      const data = await APIRequestV2<string>('journal/entries/ai/title', {
+        method: 'POST',
+        body: {
+          text: encrypt(cleanedUpText, masterPassword),
+          master: encrypt(masterPassword, challenge)
         }
-      }
-    ).then(async res => {
-      const data = await res.json()
-      if (res.ok && data.state === 'success') {
-        return data.data
-      } else {
-        toast.error(t('journal.failedToUnlock'))
-        setTitleGenerationLoading(false)
+      })
 
-        throw new Error(t('journal.failedToUnlock'))
-      }
-    })
-
-    await APIRequest({
-      endpoint: '/journal/entries/ai/title',
-      method: 'POST',
-      body: {
-        text: encrypt(cleanedUpText, masterPassword),
-        master: encrypt(masterPassword, challenge)
-      },
-      successInfo: 'generate',
-      failureInfo: 'generate',
-      callback: data => {
-        setTitle(data.data)
-      },
-      finalCallback: () => {
-        setTitleGenerationLoading(false)
-      }
-    })
+      setTitle(data)
+    } catch {
+      toast.error(t('fetch.fetchError'))
+    } finally {
+      setTitleGenerationLoading(false)
+    }
   }
 
   useEffect(() => {

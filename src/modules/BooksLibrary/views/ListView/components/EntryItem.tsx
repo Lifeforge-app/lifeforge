@@ -7,7 +7,7 @@ import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
@@ -19,29 +19,41 @@ export default function EntryItem({
   const { componentBgWithHover, componentBgLighter } = useThemeColors()
   const {
     categories: { data: categories },
-    entries: { refreshData: refreshEntries }
+    entries: { setData: setEntries }
   } = useBooksLibraryContext()
 
   const [addToFavouritesLoading, setAddToFavouritesLoading] = useState(false)
 
   async function addToFavourites(): Promise<void> {
     setAddToFavouritesLoading(true)
-    await APIRequest({
-      endpoint: `books-library/entries/favourite/${item.id}`,
-      method: 'POST',
-      successInfo: item.is_favourite
-        ? 'Removed from favourites'
-        : 'Added to favourites',
-      failureInfo: item.is_favourite
-        ? 'Removed from favourites'
-        : 'Added to favourites',
-      callback: () => {
-        refreshEntries()
-      },
-      finalCallback: () => {
-        setAddToFavouritesLoading(false)
-      }
-    })
+
+    try {
+      await APIRequestV2<IBooksLibraryEntry>(
+        `books-library/entries/favourite/${item.id}`,
+        {
+          method: 'POST'
+        }
+      )
+
+      setEntries(prevEntries => {
+        if (typeof prevEntries === 'string') return prevEntries
+
+        return prevEntries.map(entry => {
+          if (entry.id === item.id) {
+            return {
+              ...entry,
+              is_favourite: !entry.is_favourite
+            }
+          }
+
+          return entry
+        })
+      })
+    } catch {
+      console.error('Failed to add to favourites')
+    } finally {
+      setAddToFavouritesLoading(false)
+    }
   }
 
   return (
