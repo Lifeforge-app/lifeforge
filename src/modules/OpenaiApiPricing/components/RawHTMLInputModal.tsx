@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import FormModal from '@components/modals/FormModal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function RawHTMLInputModal({
   isOpen,
@@ -38,19 +38,16 @@ function RawHTMLInputModal({
       return
     }
 
-    await APIRequest({
-      endpoint: 'openai-api-pricing',
-      method: 'POST',
-      body: {
-        raw
-      },
-      successInfo: 'fetch',
-      failureInfo: 'fetch',
-      callback: () => {
-        refreshData()
-        setIsOpen(false)
-      }
-    })
+    try {
+      await APIRequestV2('openai-api-pricing', {
+        method: 'POST',
+        body: { raw }
+      })
+      refreshData()
+      setIsOpen(false)
+    } catch {
+      toast.error('Failed to submit')
+    }
   }
 
   useEffect(() => {

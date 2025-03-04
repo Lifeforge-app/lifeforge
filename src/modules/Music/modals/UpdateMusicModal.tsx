@@ -6,7 +6,7 @@ import { TextInput } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { useMusicContext } from '@providers/MusicProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function ModifyMusicModal(): React.ReactElement {
   const { t } = useTranslation('modules.music')
@@ -34,35 +34,34 @@ function ModifyMusicModal(): React.ReactElement {
       author: musicAuthor.trim()
     }
 
-    await APIRequest({
-      endpoint: `music/entries/${targetMusic?.id}`,
-      method: 'PATCH',
-      body: music,
-      successInfo: 'update',
-      failureInfo: 'update',
-      finalCallback: () => {
-        setLoading(false)
-      },
-      callback: () => {
-        setOpen(false)
-        setMusics(prev => {
-          if (typeof prev === 'string') {
-            return prev
-          }
+    try {
+      await APIRequestV2(`music-library/entries/${targetMusic?.id}`, {
+        method: 'PATCH',
+        body: music
+      })
 
-          return prev.map(music => {
-            if (music.id === targetMusic?.id) {
-              return {
-                ...music,
-                name: musicName,
-                author: musicAuthor
-              }
+      setOpen(false)
+      setMusics(prev => {
+        if (typeof prev === 'string') {
+          return prev
+        }
+
+        return prev.map(music => {
+          if (music.id === targetMusic?.id) {
+            return {
+              ...music,
+              name: musicName,
+              author: musicAuthor
             }
-            return music
-          })
+          }
+          return music
         })
-      }
-    })
+      })
+    } catch {
+      toast.error('Failed to update music data')
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {

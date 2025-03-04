@@ -9,14 +9,10 @@ import APIRequestV2 from '@utils/newFetchData'
 
 function LockedScreen({
   endpoint,
-  setMasterPassword,
-  fetchChallenge
+  setMasterPassword
 }: {
   endpoint: string
   setMasterPassword: React.Dispatch<React.SetStateAction<string>>
-  fetchChallenge: (
-    setLoading?: React.Dispatch<React.SetStateAction<boolean>>
-  ) => Promise<string>
 }): React.ReactElement {
   const [masterPassWordInputContent, setMasterPassWordInputContent] =
     useState<string>('')
@@ -31,9 +27,9 @@ function LockedScreen({
 
     setLoading(true)
 
-    const challenge = await fetchChallenge(setLoading)
-
     try {
+      const challenge = await APIRequestV2<string>(`${endpoint}/challenge`)
+
       const data = await APIRequestV2<boolean>(endpoint, {
         method: 'POST',
         body: {

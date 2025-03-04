@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import FormModal from '@components/modals/FormModal'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function ModifyPriorityModal(): React.ReactElement {
   const { t } = useTranslation('modules.todoList')
@@ -44,19 +44,21 @@ function ModifyPriorityModal(): React.ReactElement {
       return
     }
 
-    await APIRequest({
-      endpoint:
+    try {
+      await APIRequestV2(
         'todo-list/priorities' +
-        (openType === 'update' ? `/${selectedPriority?.id}` : ''),
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: data,
-      successInfo: openType,
-      failureInfo: openType,
-      callback: () => {
-        setOpenType(null)
-        refreshPriorities()
-      }
-    })
+          (openType === 'update' ? `/${selectedPriority?.id}` : ''),
+        {
+          method: openType === 'create' ? 'POST' : 'PATCH',
+          body: data
+        }
+      )
+
+      setOpenType(null)
+      refreshPriorities()
+    } catch {
+      toast.error('Failed to update priority data')
+    }
   }
 
   useEffect(() => {

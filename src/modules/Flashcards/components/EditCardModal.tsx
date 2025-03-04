@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { CreateOrModifyButton } from '@components/buttons'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IFlashcardCard } from '@interfaces/flashcard_interfaces'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function EditCardModal({
   deck,
@@ -52,25 +52,24 @@ function EditCardModal({
 
     setLoading(true)
 
-    await APIRequest({
-      endpoint: 'flashcards/card/update',
-      method: 'PUT',
-      body: {
-        deck,
-        cards: updatedCards,
-        toBeDeletedId
-      },
-      successInfo: 'create',
-      failureInfo: "Oops! Couldn't update the cards. Please try again.",
-      callback: () => {
-        onClose()
-        refreshCards()
-        refreshContainerDetails()
-      },
-      finalCallback: () => {
-        setLoading(false)
-      }
-    })
+    try {
+      await APIRequestV2('flashcards/card/update', {
+        method: 'PUT',
+        body: {
+          deck,
+          cards: updatedCards,
+          toBeDeletedId
+        }
+      })
+
+      onClose()
+      refreshCards()
+      refreshContainerDetails()
+    } catch {
+      toast.error("Oops! Couldn't update the cards. Please try again.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {

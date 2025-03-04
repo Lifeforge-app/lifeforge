@@ -10,11 +10,10 @@ import { type Loadable } from '@interfaces/common'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 import JournalList from './components/JournalList'
 import JournalViewModal from './components/JournalViewModal'
 import ModifyJournalEntryModal from './components/ModifyEntryModal'
-import { fetchChallenge } from './utils/fetchChallenge'
 import CreatePasswordScreen from '../../components/screens/CreatePasswordScreen'
 import LockedScreen from '../../components/screens/LockedScreen'
 
@@ -40,21 +39,20 @@ function Journal(): React.ReactElement {
   async function fetchData(): Promise<void> {
     setEntries('loading')
 
-    const challenge = await fetchChallenge()
+    try {
+      const challenge = await APIRequestV2<string>(`journal/auth/challenge`)
 
-    await APIRequest({
-      endpoint: `journal/entries/list?master=${encodeURIComponent(
-        encrypt(masterPassword, challenge)
-      )}`,
-      method: 'GET',
-      callback(data) {
-        setEntries(data.data)
-      },
-      onFailure: () => {
-        toast.error(t('fetch.fetchError'))
-        setEntries('error')
-      }
-    })
+      const data = await APIRequestV2<IJournalEntry[]>(
+        `journal/entries/list?master=${encodeURIComponent(
+          encrypt(masterPassword, challenge)
+        )}`
+      )
+
+      setEntries(data)
+    } catch {
+      toast.error(t('fetch.fetchError'))
+      setEntries('error')
+    }
   }
 
   const renderContent = () => {
@@ -64,8 +62,7 @@ function Journal(): React.ReactElement {
           callback={() => {
             setOtpSuccess(true)
           }}
-          fetchChallenge={fetchChallenge}
-          verificationEndpoint="journal/auth/otp"
+          endpoint="journal/auth"
         />
       )
     }
@@ -82,8 +79,7 @@ function Journal(): React.ReactElement {
     if (masterPassword === '') {
       return (
         <LockedScreen
-          endpoint="journal/auth/verify"
-          fetchChallenge={fetchChallenge}
+          endpoint="journal/auth"
           setMasterPassword={setMasterPassword}
         />
       )

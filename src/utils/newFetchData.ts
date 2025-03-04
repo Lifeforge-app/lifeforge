@@ -29,7 +29,7 @@ export default async function APIRequestV2<T>(
 
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_HOST}/${endpoint}`,
+      [import.meta.env.VITE_API_HOST, endpoint].join('/').replace(/\/+/g, '/'),
       {
         method,
         signal: AbortSignal.timeout(timeout),

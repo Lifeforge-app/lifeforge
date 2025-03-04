@@ -9,7 +9,7 @@ import { TextInput } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type INotesEntry } from '@interfaces/notes_interfaces'
-import APIRequest from '@utils/fetchData'
+import APIRequestV2 from '@utils/newFetchData'
 
 function ModifyFolderModal({
   openType,
@@ -53,22 +53,23 @@ function ModifyFolderModal({
       subject
     }
 
-    await APIRequest({
-      endpoint:
+    try {
+      await APIRequestV2(
         `notes/entries/${innerOpenType}/folder` +
-        (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
-      method: innerOpenType === 'create' ? 'POST' : 'PATCH',
-      body: entry,
-      successInfo: innerOpenType,
-      failureInfo: innerOpenType,
-      finalCallback: () => {
-        setLoading(false)
-      },
-      callback: () => {
-        setOpenType(null)
-        updateNotesEntries()
-      }
-    })
+          (innerOpenType === 'update' ? `/${existedData?.id}` : ''),
+        {
+          method: innerOpenType === 'create' ? 'POST' : 'PATCH',
+          body: entry
+        }
+      )
+
+      setOpenType(null)
+      updateNotesEntries()
+    } catch {
+      toast.error(`Failed to ${innerOpenType} folder`)
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
