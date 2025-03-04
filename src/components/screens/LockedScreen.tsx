@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { TextInput } from '@components/inputs'
 import { encrypt } from '@utils/encryption'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function LockedScreen({
   endpoint,
@@ -28,9 +28,9 @@ function LockedScreen({
     setLoading(true)
 
     try {
-      const challenge = await APIRequestV2<string>(`${endpoint}/challenge`)
+      const challenge = await fetchAPI<string>(`${endpoint}/challenge`)
 
-      const data = await APIRequestV2<boolean>(endpoint, {
+      const data = await fetchAPI<boolean>(endpoint, {
         method: 'POST',
         body: {
           password: encrypt(masterPassWordInputContent, challenge)

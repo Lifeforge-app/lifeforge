@@ -9,7 +9,7 @@ import { Button, CreateOrModifyButton } from '@components/buttons'
 import useThemeColors from '@hooks/useThemeColor'
 import { IMomentVaultEntry } from '@interfaces/moment_vault_interfaces'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function AudioType({
   onSuccess,
@@ -109,7 +109,7 @@ function AudioType({
     body.append('file', file)
 
     try {
-      const data = await APIRequestV2<string>('moment-vault/transcribe', {
+      const data = await fetchAPI<string>('moment-vault/transcribe', {
         method: 'POST',
         body
       })
@@ -139,13 +139,10 @@ function AudioType({
     body.append('transcription', transcription ?? '')
 
     try {
-      const data = await APIRequestV2<IMomentVaultEntry>(
-        'moment-vault/entries',
-        {
-          method: 'POST',
-          body
-        }
-      )
+      const data = await fetchAPI<IMomentVaultEntry>('moment-vault/entries', {
+        method: 'POST',
+        body
+      })
 
       setAudioURL(null)
       setTranscription(null)

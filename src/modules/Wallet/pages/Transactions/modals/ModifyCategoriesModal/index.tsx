@@ -15,7 +15,7 @@ import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWalletCategory } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import CategoryToggleButton from './components/CategoryToggleButton'
 
 function ModifyCategoriesModal({
@@ -74,7 +74,7 @@ function ModifyCategoriesModal({
     setIsLoading(true)
 
     try {
-      await APIRequestV2(
+      await fetchAPI(
         `wallet/categories${
           openType === 'update' ? `/${existedData?.id}` : ''
         }`,

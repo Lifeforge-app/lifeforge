@@ -17,7 +17,7 @@ import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 import AssetsFromToSelector from './components/AssetsFromToSelector'
 import AssetsSelector from './components/AssetsSelector'
 import CategorySelector from './components/CategorySelector'
@@ -158,24 +158,27 @@ function ModifyTransactionsModal({
     if (receipt) data.append('file', receipt)
 
     setLoading(true)
-    await APIRequest({
-      endpoint: `wallet/transactions${
-        openType === 'update' ? `/${existedData?.id}` : ''
-      }`,
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: data,
-      successInfo: openType,
-      failureInfo: openType,
-      callback: () => {
-        refreshTransactions()
-        refreshAssets()
-        setExistedData(null)
-        setOpenType(null)
-      },
-      finalCallback: () => {
-        setLoading(false)
-      }
-    })
+
+    try {
+      await fetchAPI(
+        `wallet/transactions${
+          openType === 'update' ? `/${existedData?.id}` : ''
+        }`,
+        {
+          method: openType === 'create' ? 'POST' : 'PATCH',
+          body: data
+        }
+      )
+
+      refreshTransactions()
+      refreshAssets()
+      setExistedData(null)
+      setOpenType(null)
+    } catch {
+      toast.error('Failed to save transaction')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

@@ -1,5 +1,3 @@
-/* eslint-disable sonarjs/no-nested-functions */
-
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -8,7 +6,7 @@ import { TextInput } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 import { usePhotosContext } from '../../../../providers/PhotosProvider'
 
 function ModifyAlbumModal({
@@ -40,45 +38,43 @@ function ModifyAlbumModal({
       name: albumName.trim()
     }
 
-    await APIRequest({
-      endpoint:
+    try {
+      const data = await fetchAPI<IPhotosAlbum>(
         `photos/album/${openType}` +
-        (openType === 'rename' ? `/${targetAlbum?.id}` : ''),
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: album,
-      successInfo: openType,
-      failureInfo: openType,
-      callback: data => {
-        setOpenType(false)
-        setAlbumList(prev => {
-          if (typeof prev === 'string') {
-            return prev
-          }
-
-          return openType === 'create'
-            ? [data.data, ...prev]
-            : prev.map(album => {
-                if (album.id === targetAlbum?.id) {
-                  return {
-                    ...album,
-                    name: albumName
-                  }
-                }
-
-                return album
-              })
-        })
-        if (refreshAlbumData !== undefined) {
-          refreshAlbumData()
+          (openType === 'rename' ? `/${targetAlbum?.id}` : ''),
+        {
+          method: openType === 'create' ? 'POST' : 'PATCH',
+          body: album
         }
-      },
-      onFailure: () => {
-        setOpenType(false)
-      },
-      finalCallback: () => {
-        setLoading(false)
+      )
+
+      setOpenType(false)
+      setAlbumList(prev => {
+        if (typeof prev === 'string') {
+          return prev
+        }
+
+        return openType === 'create'
+          ? [data, ...prev]
+          : prev.map(album => {
+              if (album.id === targetAlbum?.id) {
+                return {
+                  ...album,
+                  name: albumName
+                }
+              }
+
+              return album
+            })
+      })
+      if (refreshAlbumData !== undefined) {
+        refreshAlbumData()
       }
-    })
+    } catch {
+      toast.error(t('input.error.failed'))
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {

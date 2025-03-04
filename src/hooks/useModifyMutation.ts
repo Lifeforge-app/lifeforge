@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/use-type-alias */
 import { useMutation, UseMutationResult } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function useModifyMutation<T>(
   type: 'create' | 'update',
@@ -39,7 +39,7 @@ function useModifyMutation<T>(
           }
         })
 
-        return APIRequestV2(endpoint, {
+        return fetchAPI(endpoint, {
           method: type === 'create' ? 'POST' : 'PATCH',
           body: formData
         })
@@ -66,7 +66,7 @@ function useModifyMutation<T>(
         }
       })
 
-      return APIRequestV2(endpoint, {
+      return fetchAPI(endpoint, {
         method: type === 'create' ? 'POST' : 'PATCH',
         body: data
       })

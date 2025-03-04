@@ -1,5 +1,3 @@
-/* eslint-disable sonarjs/no-nested-functions */
-
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -9,7 +7,7 @@ import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IPhotoAlbumTag } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '@providers/PhotosProvider'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyAlbumTagsModal({
   openType,
@@ -40,44 +38,43 @@ function ModifyAlbumTagsModal({
       name: tagName.trim()
     }
 
-    await APIRequest({
-      endpoint:
+    try {
+      const data = await fetchAPI<IPhotoAlbumTag>(
         'photos/album/tag' + (openType === 'rename' ? `/${targetTag?.id}` : ''),
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: tag,
-      successInfo: openType,
-      failureInfo: openType,
-      callback: data => {
-        setOpenType(false)
-        setAlbumTagList(prev => {
-          if (typeof prev === 'string') {
-            return prev
-          }
-
-          return openType === 'create'
-            ? [data.data, ...prev]
-            : prev.map(tag => {
-                if (tag.id === targetTag?.id) {
-                  return {
-                    ...tag,
-                    name: tagName
-                  }
-                }
-
-                return tag
-              })
-        })
-        if (refreshTagData !== undefined) {
-          refreshTagData()
+        {
+          method: openType === 'create' ? 'POST' : 'PATCH',
+          body: tag
         }
-      },
-      onFailure: () => {
-        setOpenType(false)
-      },
-      finalCallback: () => {
-        setLoading(false)
+      )
+
+      setOpenType(false)
+      setAlbumTagList(prev => {
+        if (typeof prev === 'string') {
+          return prev
+        }
+
+        return openType === 'create'
+          ? [data, ...prev]
+          : prev.map(tag => {
+              if (tag.id === targetTag?.id) {
+                return {
+                  ...tag,
+                  name: tagName
+                }
+              }
+
+              return tag
+            })
+      })
+
+      if (refreshTagData !== undefined) {
+        refreshTagData()
       }
-    })
+    } catch {
+      toast.error(t('input.error.failed'))
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {

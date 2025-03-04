@@ -6,7 +6,7 @@ import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import useFetch from '@hooks/useFetch'
 import { type IAirportNOTAMEntry } from '@interfaces/airports_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import NOTAMListItem from './components/NOTAMListItem'
 
 function NOTAM({
@@ -33,7 +33,7 @@ function NOTAM({
     const nextPage = currentPage === -1 ? 1 : currentPage + 1
 
     try {
-      const data = await APIRequestV2<IAirportNOTAMEntry[]>(
+      const data = await fetchAPI<IAirportNOTAMEntry[]>(
         `airports/airport/${airportID}/NOTAM?page=${nextPage}`
       )
 

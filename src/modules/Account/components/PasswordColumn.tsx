@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import ConfigColumn from '@components/utilities/ConfigColumn'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function PasswordColumn(): React.ReactElement {
   const { t } = useTranslation('modules.accountSettings')
@@ -13,7 +13,7 @@ function PasswordColumn(): React.ReactElement {
     setLoading(true)
 
     try {
-      await APIRequestV2('/user/settings/request-password-reset', {
+      await fetchAPI('/user/settings/request-password-reset', {
         method: 'POST'
       })
       toast.info('A password reset link has been sent to your email.')

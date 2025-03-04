@@ -5,7 +5,7 @@ import useFetch from '@hooks/useFetch'
 import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function AddToLibraryModal({
   isOpen,
@@ -161,7 +161,7 @@ function AddToLibraryModal({
 
   async function onSubmit(): Promise<void> {
     try {
-      await APIRequestV2(`books-library/libgen/add-to-library/${md5}`, {
+      await fetchAPI(`books-library/libgen/add-to-library/${md5}`, {
         method: 'POST',
         body: {
           metadata: data

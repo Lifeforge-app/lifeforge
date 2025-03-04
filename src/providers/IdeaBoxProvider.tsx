@@ -9,7 +9,7 @@ import {
   type IIdeaBoxFolder,
   type IIdeaBoxTag
 } from '@interfaces/ideabox_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 interface IIdeaBoxData {
   pathValid: boolean
@@ -105,7 +105,7 @@ export default function IdeaBoxProvider({
 
   const pathValidQuery = useQuery<boolean>({
     queryKey: ['idea-box', 'valid', id, path],
-    queryFn: () => APIRequestV2(`idea-box/valid/${id}/${path}`),
+    queryFn: () => fetchAPI(`idea-box/valid/${id}/${path}`),
     enabled: id !== undefined && path !== undefined
   })
 
@@ -114,26 +114,26 @@ export default function IdeaBoxProvider({
     path: IIdeaBoxFolder[]
   }>({
     queryKey: ['idea-box', 'details', id, path],
-    queryFn: () => APIRequestV2(`idea-box/path/${id}/${path}`),
+    queryFn: () => fetchAPI(`idea-box/path/${id}/${path}`),
     enabled: id !== undefined && path !== undefined && pathValidQuery.data
   })
 
   const entriesQuery = useQuery<IIdeaBoxEntry[]>({
     queryKey: ['idea-box', 'ideas', id, path, viewArchived],
     queryFn: () =>
-      APIRequestV2(`idea-box/ideas/${id}/${path}?archived=${viewArchived}`),
+      fetchAPI(`idea-box/ideas/${id}/${path}?archived=${viewArchived}`),
     enabled: id !== undefined && path !== undefined && pathValidQuery.data
   })
 
   const foldersQuery = useQuery<IIdeaBoxFolder[]>({
     queryKey: ['idea-box', 'folders', id, path],
-    queryFn: () => APIRequestV2(`idea-box/folders/${id}/${path}`),
+    queryFn: () => fetchAPI(`idea-box/folders/${id}/${path}`),
     enabled: id !== undefined && path !== undefined && pathValidQuery.data
   })
 
   const tagsQuery = useQuery<IIdeaBoxTag[]>({
     queryKey: ['idea-box', 'tags', id],
-    queryFn: () => APIRequestV2(`idea-box/tags/${id}`),
+    queryFn: () => fetchAPI(`idea-box/tags/${id}`),
     enabled: id !== undefined
   })
 
@@ -147,7 +147,7 @@ export default function IdeaBoxProvider({
       debouncedSearchQuery
     ],
     queryFn: () =>
-      APIRequestV2(
+      fetchAPI(
         `idea-box/search?q=${encodeURIComponent(
           debouncedSearchQuery.trim()
         )}&container=${id}&tags=${encodeURIComponent(selectedTags.join(','))}${

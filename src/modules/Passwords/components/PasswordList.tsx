@@ -5,7 +5,7 @@ import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import { IPasswordEntry } from '@interfaces/password_interfaces'
 import { usePasswordContext } from '@providers/PasswordsProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import PasswordEntryItem from './PasswordEntryItem'
 
 function PasswordList(): React.ReactElement {
@@ -27,7 +27,7 @@ function PasswordList(): React.ReactElement {
     }
 
     try {
-      await APIRequestV2(`passwords/password/pin/${id}`, {
+      await fetchAPI(`passwords/password/pin/${id}`, {
         method: 'POST'
       })
 

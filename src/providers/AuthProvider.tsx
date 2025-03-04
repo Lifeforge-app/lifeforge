@@ -8,7 +8,7 @@ import React, {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 import { AUTH_ERROR_MESSAGES } from '../constants/auth'
 
 interface IAuthData {
@@ -179,7 +179,7 @@ export default function AuthProvider({
   )
 
   const verifyOAuth = useCallback(
-    (code: string, state: string): void => {
+    async (code: string, state: string): Promise<void> => {
       try {
         const storedState = localStorage.getItem('authState')
         const storedProvider = localStorage.getItem('authProvider')
@@ -194,45 +194,30 @@ export default function AuthProvider({
           throw new Error('Invalid state')
         }
 
-        APIRequest({
-          endpoint: 'user/auth/oauth-verify',
+        const token = await fetchAPI<string>('user/auth/oauth-verify', {
           method: 'POST',
-          body: { code, provider: storedProvider },
-          callback: data => {
-            if (data.state === 'success') {
-              document.cookie = `token=${
-                data.token
-              }; path=/; expires=${new Date(
-                Date.now() + 7 * 24 * 60 * 60 * 1000
-              ).toUTCString()}`
-
-              verifyToken(data.token)
-                .then(async ({ success, userData }) => {
-                  if (success) {
-                    setUserData(userData)
-                    setAuth(true)
-
-                    toast.success(t('auth.welcome') + userData.username)
-                  }
-                })
-                .catch(() => {
-                  setAuth(false)
-                })
-                .finally(() => {
-                  setAuthLoading(false)
-                })
-            } else {
-              throw new Error(data.message)
-            }
-          },
-          onFailure: () => {
-            window.location.href = '/auth'
-            toast.error('Invalid login attempt')
-          }
-        }).catch(() => {
-          window.location.href = '/auth'
-          toast.error('Invalid login attempt')
+          body: { code, provider: storedProvider }
         })
+
+        document.cookie = `token=${token}; path=/; expires=${new Date(
+          Date.now() + 7 * 24 * 60 * 60 * 1000
+        ).toUTCString()}`
+
+        verifyToken(token)
+          .then(async ({ success, userData }) => {
+            if (success) {
+              setUserData(userData)
+              setAuth(true)
+
+              toast.success(t('auth.welcome') + userData.username)
+            }
+          })
+          .catch(() => {
+            setAuth(false)
+          })
+          .finally(() => {
+            setAuthLoading(false)
+          })
       } catch {
         window.location.href = '/auth'
         toast.error('Invalid login attempt')

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { SearchInput } from '@components/inputs'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 import DownloadProcessModal from './DownloadProcessModal'
 
 function Header({
@@ -42,42 +43,40 @@ function Header({
   >({})
   const [isFirstTime, setIsFirstTime] = useState(true)
 
-  function checkProgress(): void {
+  async function checkProgress(): Promise<void> {
     if (!needsProgressCheck && !isFirstTime) return
     setIsFirstTime(false)
 
-    APIRequest({
-      endpoint: 'youtube-videos/video/download-status',
-      method: 'POST',
-      failureInfo: 'Failed to get download status',
-      body: { id: 'all' },
-      callback(data) {
-        if (data.state === 'success') {
-          const processes = data.data as Record<
-            string,
-            {
-              status: 'completed' | 'failed' | 'in_progress'
-              progress: number
-              metadata: IYoutubeVideoInfo
-            }
-          >
-
-          if (
-            (Object.keys(processes).length !== 0 &&
-              !Object.values(processes).some(
-                p => p.status === 'in_progress'
-              )) ||
-            Object.keys(processes).length === 0
-          ) {
-            if (!isFirstTime) {
-              refreshVideos()
-            }
-            setNeedsProgressCheck(false)
+    try {
+      const processes = await fetchAPI<
+        Record<
+          string,
+          {
+            status: 'completed' | 'failed' | 'in_progress'
+            progress: number
+            metadata: IYoutubeVideoInfo
           }
-          setProcesses(processes)
+        >
+      >('youtube-videos/video/download-status', {
+        method: 'POST',
+        body: { id: 'all' }
+      })
+
+      if (
+        (Object.keys(processes).length !== 0 &&
+          !Object.values(processes).every(p => p.status === 'in_progress')) ||
+        Object.keys(processes).length === 0
+      ) {
+        if (!isFirstTime) {
+          refreshVideos()
         }
+        setNeedsProgressCheck(false)
       }
-    }).catch(console.error)
+      setProcesses(processes)
+    } catch {
+      setNeedsProgressCheck(false)
+      toast.error(t('input.error.failed'))
+    }
   }
 
   useEffect(() => {

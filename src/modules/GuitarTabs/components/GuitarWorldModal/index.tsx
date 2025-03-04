@@ -7,7 +7,7 @@ import ModalWrapper from '@components/modals/ModalWrapper'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { Loadable } from '@interfaces/common'
 import { type IGuitarTabsGuitarWorldScores } from '@interfaces/guitar_tabs_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import ScoreList from './components/ScoreList'
 
 function GuitarWorldModal({
@@ -35,7 +35,7 @@ function GuitarWorldModal({
     setShowData(true)
 
     try {
-      const data = await APIRequestV2<IGuitarTabsGuitarWorldScores>(
+      const data = await fetchAPI<IGuitarTabsGuitarWorldScores>(
         'guitar-tabs/guitar-world',
         {
           method: 'POST',

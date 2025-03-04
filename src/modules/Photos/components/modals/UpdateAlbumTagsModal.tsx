@@ -2,12 +2,13 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '@providers/PhotosProvider'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function UpdateAlbumTagsModal({
   isOpen,
@@ -31,36 +32,35 @@ function UpdateAlbumTagsModal({
   async function onSubmitButtonClick(): Promise<void> {
     setLoading(true)
 
-    await APIRequest({
-      endpoint: `photos/album/tag/update-album/${selectedAlbum?.id}`,
-      method: 'PATCH',
-      body: { tags: selectedTags },
-      successInfo: 'update',
-      failureInfo: 'update',
-      callback: () => {
-        setOpen(false)
-        setAlbumList(prev => {
-          if (typeof prev === 'string') {
-            return prev
+    try {
+      await fetchAPI(`photos/album/tag/update-album/${selectedAlbum?.id}`, {
+        method: 'PATCH',
+        body: { tags: selectedTags }
+      })
+
+      setOpen(false)
+      setAlbumList(prev => {
+        if (typeof prev === 'string') {
+          return prev
+        }
+
+        return prev.map(album => {
+          if (album.id === selectedAlbum?.id) {
+            return {
+              ...album,
+              tags: selectedTags
+            }
           }
 
-          return prev.map(album => {
-            if (album.id === selectedAlbum?.id) {
-              return {
-                ...album,
-                tags: selectedTags
-              }
-            }
-
-            return album
-          })
+          return album
         })
-        refreshAlbumTagList()
-      },
-      finalCallback: () => {
-        setLoading(false)
-      }
-    })
+      })
+      refreshAlbumTagList()
+    } catch {
+      toast.error('Failed to update tags')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

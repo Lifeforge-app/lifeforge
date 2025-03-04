@@ -8,7 +8,7 @@ import {
   type IBooksLibraryEntry,
   type IBooksLibraryFileType
 } from '@interfaces/books_library_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 type ModifyModalOpenType = 'create' | 'update' | null
 
@@ -140,7 +140,7 @@ export default function BooksLibraryProvider(): React.ReactElement {
 
   async function checkProgress(): Promise<void> {
     try {
-      const data = await APIRequestV2<
+      const data = await fetchAPI<
         Record<
           string,
           {

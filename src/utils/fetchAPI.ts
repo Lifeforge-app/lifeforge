@@ -1,11 +1,10 @@
 import { cookieParse } from 'pocketbase'
-import { toast } from 'react-toastify'
 
 function getRequestBody(body: any, isJSON: boolean): any {
   return isJSON ? JSON.stringify(body) : body
 }
 
-export default async function APIRequestV2<T>(
+export default async function fetchAPI<T>(
   endpoint: string,
   {
     method,
@@ -67,10 +66,8 @@ export default async function APIRequestV2<T>(
   } catch (err) {
     if (raiseError) {
       if (err instanceof Error) {
-        toast.error(err.message)
         throw new Error(err.message)
       } else {
-        toast.error('Failed to perform API request')
         throw new Error('Failed to perform API request')
       }
     } else {

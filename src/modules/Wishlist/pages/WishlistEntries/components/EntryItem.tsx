@@ -3,13 +3,14 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button, Checkbox } from '@components/buttons'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import useThemeColors from '@hooks/useThemeColor'
 import { type Loadable } from '@interfaces/common'
 import { type IWishlistEntry } from '@interfaces/wishlist_interfaces'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 import { numberToMoney } from '@utils/strings'
 
 function EntryItem({
@@ -39,17 +40,16 @@ function EntryItem({
   async function markAsCompleted(): Promise<void> {
     setBought(!bought)
 
-    await APIRequest({
-      endpoint: `wishlist/entries/bought/${entry.id}`,
-      method: 'PATCH',
-      failureInfo: 'update',
-      onFailure: () => {
-        setBought(bought)
-      },
-      callback() {
-        setTimeout(toggleBought, 500)
-      }
-    })
+    try {
+      await fetchAPI(`wishlist/entries/bought/${entry.id}`, {
+        method: 'PATCH'
+      })
+
+      setTimeout(toggleBought, 500)
+    } catch {
+      toast.error('Failed to update entry completion status')
+      setBought(bought)
+    }
   }
 
   return (

@@ -7,7 +7,7 @@ import {
   type IPhotosEntryDimensionsAll
 } from '@interfaces/photos_interfaces'
 import { usePhotosContext } from '@providers/PhotosProvider'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function DeletePhotosConfirmationModal({
   isInAlbumGallery = false,
@@ -40,53 +40,49 @@ function DeletePhotosConfirmationModal({
 
     setLoading(true)
 
-    await APIRequest({
-      endpoint: `photos/entries/delete?isInAlbum=${isInAlbumGallery}`,
-      method: 'DELETE',
-      body: {
-        photos: customPhotoToBeDeleted
-          ? [customPhotoToBeDeleted.id]
-          : selectedPhotos
-      },
-      successInfo: 'delete',
-      failureInfo: 'delete',
-      callback: () => {
-        if (customSetIsOpen) {
-          customSetIsOpen(false)
-        } else {
-          setDeletePhotosConfirmationModalOpen(false)
+    try {
+      await fetchAPI(`photos/entries/delete?isInAlbum=${isInAlbumGallery}`, {
+        method: 'DELETE',
+        body: {
+          photos: customPhotoToBeDeleted
+            ? [customPhotoToBeDeleted.id]
+            : selectedPhotos
         }
-        setSelectedPhotos([])
+      })
 
-        if (isInAlbumGallery) {
-          if (customPhotoToBeDeleted) {
-            // @ts-expect-error Lazy to fix for now ;-;
-            setPhotos(prevPhotos =>
-              // @ts-expect-error Lazy to fix for now ;-;
-              prevPhotos.filter(photo => photo.id !== customPhotoToBeDeleted.id)
-            )
-          } else {
-            // @ts-expect-error Lazy to fix for now ;-;
-            setPhotos(prevPhotos =>
-              // @ts-expect-error Lazy to fix for now ;-;
-              prevPhotos.filter(photo => !selectedPhotos.includes(photo.id))
-            )
-          }
-        } else {
-          refreshPhotos()
-        }
-      },
-      onFailure: () => {
-        if (customSetIsOpen) {
-          customSetIsOpen(false)
-        } else {
-          setDeletePhotosConfirmationModalOpen(false)
-        }
-      },
-      finalCallback: () => {
-        setLoading(false)
+      if (customSetIsOpen) {
+        customSetIsOpen(false)
+      } else {
+        setDeletePhotosConfirmationModalOpen(false)
       }
-    })
+      setSelectedPhotos([])
+
+      if (isInAlbumGallery) {
+        if (customPhotoToBeDeleted) {
+          // @ts-expect-error Lazy to fix for now ;-;
+          setPhotos(prevPhotos =>
+            // @ts-expect-error Lazy to fix for now ;-;
+            prevPhotos.filter(photo => photo.id !== customPhotoToBeDeleted.id)
+          )
+        } else {
+          // @ts-expect-error Lazy to fix for now ;-;
+          setPhotos(prevPhotos =>
+            // @ts-expect-error Lazy to fix for now ;-;
+            prevPhotos.filter(photo => !selectedPhotos.includes(photo.id))
+          )
+        }
+      } else {
+        refreshPhotos()
+      }
+    } catch {
+      if (customSetIsOpen) {
+        customSetIsOpen(false)
+      } else {
+        setDeletePhotosConfirmationModalOpen(false)
+      }
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

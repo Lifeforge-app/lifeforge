@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import {
   TextInput,
@@ -8,7 +9,7 @@ import {
 } from '@components/inputs'
 import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
 import { IVirtualWardrobeFormState } from '@interfaces/virtual_wardrobe_interfaces'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function BasicInfoSection({
   canVision,
@@ -46,19 +47,24 @@ function BasicInfoSection({
     formData.append('frontImage', frontImage)
     formData.append('backImage', backImage)
 
-    await APIRequest({
-      method: 'POST',
-      endpoint: 'virtual-wardrobe/entries/vision',
-      body: formData,
-      callback: data => {
-        const { name, category, subcategory, colors } = data.data
-        setFormState({ ...formState, name, category, subcategory, colors })
-      },
-      failureInfo: 'identify',
-      finalCallback: () => {
-        setVisionLoading(false)
-      }
-    })
+    try {
+      const data = await fetchAPI<{
+        name: string
+        category: string
+        subcategory: string
+        colors: string[]
+      }>('virtual-wardrobe/entries/vision', {
+        method: 'POST',
+        body: formData
+      })
+
+      const { name, category, subcategory, colors } = data
+      setFormState({ ...formState, name, category, subcategory, colors })
+    } catch {
+      toast.error('Failed to identify item')
+    } finally {
+      setVisionLoading(false)
+    }
   }
 
   useEffect(() => {

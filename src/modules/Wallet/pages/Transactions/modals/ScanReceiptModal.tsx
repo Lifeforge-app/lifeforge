@@ -6,8 +6,11 @@ import { Button, Switch } from '@components/buttons'
 import { ImageAndFileInput, ImagePickerModal } from '@components/inputs'
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
-import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
-import APIRequest from '@utils/fetchData'
+import {
+  IWalletReceiptScanResult,
+  type IWalletTransaction
+} from '@interfaces/wallet_interfaces'
+import fetchAPI from '@utils/fetchAPI'
 
 function ScanReceiptModal({
   open,
@@ -42,23 +45,31 @@ function ScanReceiptModal({
     const formData = new FormData()
     formData.append('file', file)
 
-    await APIRequest({
-      endpoint: 'wallet/transactions/scan-receipt',
-      method: 'POST',
-      body: formData,
-      failureInfo: 'upload',
-      callback(data) {
-        setModifyModalOpenType('create')
-        setExistedData({
-          ...data.data,
-          receipt: keepReceiptAfterScan ? file : ''
-        })
-        setOpen(false)
-      },
-      finalCallback() {
-        setLoading(false)
-      }
-    })
+    try {
+      const data = await fetchAPI<IWalletReceiptScanResult>(
+        'wallet/transactions/scan-receipt',
+        {
+          method: 'POST',
+          body: formData
+        }
+      )
+
+      setModifyModalOpenType('create')
+      setExistedData(prev =>
+        prev
+          ? {
+              ...prev,
+              ...data,
+              receipt: keepReceiptAfterScan ? file : ''
+            }
+          : null
+      )
+      setOpen(false)
+    } catch {
+      toast.error('Failed to scan receipt')
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {

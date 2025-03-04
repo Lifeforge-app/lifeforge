@@ -1,7 +1,8 @@
 import React from 'react'
+import { toast } from 'react-toastify'
 import type { ITodoSubtask } from '@interfaces/todo_list_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 import TaskCompletionCheckbox from './TaskCompletionCheckbox'
 
 function SubtaskItem({
@@ -34,16 +35,17 @@ function SubtaskItem({
       )
     }
 
-    await APIRequest({
-      endpoint: `todo-list/subtasks/toggle/${entry.id}`,
-      method: 'PATCH',
-      failureInfo: 'update',
-      onFailure: () => {
-        if (refreshEntries !== undefined) {
-          refreshEntries()
-        }
+    try {
+      await fetchAPI(`todo-list/subtasks/toggle/${entry.id}`, {
+        method: 'PATCH'
+      })
+    } catch {
+      if (refreshEntries !== undefined) {
+        refreshEntries()
       }
-    })
+
+      toast.error('Failed to update subtask completion status')
+    }
   }
 
   return (

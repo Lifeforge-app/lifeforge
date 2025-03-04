@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-nested-functions */
 import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
@@ -7,7 +6,7 @@ import React, { useState } from 'react'
 import { Button } from '@components/buttons'
 import { type Loadable } from '@interfaces/common'
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function ShareAlbumModal({
   albumId,
@@ -30,36 +29,33 @@ function ShareAlbumModal({
       return { ...prev, is_public: !publicity }
     })
 
-    await APIRequest({
-      endpoint: `photos/album/set-publicity/${albumId}`,
-      method: 'POST',
-      body: {
-        publicity: !publicity
-      },
-      successInfo: publicity ? 'private' : 'public',
-      failureInfo: publicity ? 'private' : 'public',
-      onFailure: () => {
-        setAlbumData(prev => {
-          if (prev === 'loading' || prev === 'error') {
-            return prev
+    try {
+      await fetchAPI(`photos/album/set-publicity/${albumId}`, {
+        method: 'POST',
+        body: {
+          publicity: !publicity
+        }
+      })
+
+      setAlbumList(prev => {
+        if (prev === 'loading' || prev === 'error') {
+          return prev
+        }
+        return prev.map(album => {
+          if (album.id === albumId) {
+            return { ...album, is_public: !publicity }
           }
-          return { ...prev, is_public: publicity }
+          return album
         })
-      },
-      callback: () => {
-        setAlbumList(prev => {
-          if (prev === 'loading' || prev === 'error') {
-            return prev
-          }
-          return prev.map(album => {
-            if (album.id === albumId) {
-              return { ...album, is_public: !publicity }
-            }
-            return album
-          })
-        })
-      }
-    })
+      })
+    } catch {
+      setAlbumData(prev => {
+        if (prev === 'loading' || prev === 'error') {
+          return prev
+        }
+        return { ...prev, is_public: publicity }
+      })
+    }
   }
 
   return (

@@ -8,7 +8,7 @@ import { Button } from '@components/buttons'
 import { TextInput } from '@components/inputs'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { useAuthContext } from '@providers/AuthProvider'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function CreatePasswordScreen({
   endpoint,
@@ -41,7 +41,7 @@ function CreatePasswordScreen({
     setLoading(true)
 
     try {
-      await APIRequestV2(endpoint, {
+      await fetchAPI(endpoint, {
         method: 'POST',
         body: { password: newPassword, id: userData.id }
       })

@@ -3,14 +3,14 @@ import clsx from 'clsx'
 import React, { memo } from 'react'
 import useThemeColors from '@hooks/useThemeColor'
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
   const { componentBgLighterWithHover } = useThemeColors()
   const OGQuery = useQuery<Record<string, any>>({
     queryKey: ['idea-box', 'og', entry.id],
     queryFn: () =>
-      APIRequestV2(`idea-box/og-data/${entry.id}`, {
+      fetchAPI(`idea-box/og-data/${entry.id}`, {
         raiseError: false
       }),
     retry: 5

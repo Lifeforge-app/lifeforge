@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 import ModalWrapper from './ModalWrapper'
 import Button from '../buttons/Button'
 
@@ -47,7 +47,7 @@ function DeleteConfirmationModal({
     if (data === null) return
     setLoading(true)
 
-    await APIRequestV2(
+    await fetchAPI(
       `${apiEndpoint}/${!Array.isArray(data) ? data?.id ?? '' : ''}`,
       {
         method: 'DELETE',

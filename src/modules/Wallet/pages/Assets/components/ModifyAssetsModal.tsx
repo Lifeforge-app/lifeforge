@@ -11,7 +11,7 @@ import {
 import ModalHeader from '@components/modals/ModalHeader'
 import ModalWrapper from '@components/modals/ModalWrapper'
 import { type IWalletAsset } from '@interfaces/wallet_interfaces'
-import APIRequest from '@utils/fetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyAssetsModal({
   openType,
@@ -64,27 +64,28 @@ function ModifyAssetsModal({
     }
 
     setIsLoading(true)
-    await APIRequest({
-      endpoint: `wallet/assets${
-        openType === 'update' ? `/${existedData?.id}` : ''
-      }`,
-      method: openType === 'create' ? 'POST' : 'PATCH',
-      body: {
-        name: assetName,
-        icon: assetIcon,
-        starting_balance: assetStartingBalance
-      },
-      successInfo: openType,
-      failureInfo: openType,
-      callback: () => {
-        refreshAssets()
-        setExistedData(null)
-        setOpenType(null)
-      },
-      finalCallback: () => {
-        setIsLoading(false)
-      }
-    })
+
+    try {
+      await fetchAPI(
+        `wallet/assets${openType === 'update' ? '/' + existedData?.id : ''}`,
+        {
+          method: openType === 'create' ? 'POST' : 'PATCH',
+          body: {
+            name: assetName,
+            icon: assetIcon,
+            starting_balance: assetStartingBalance
+          }
+        }
+      )
+
+      refreshAssets()
+      setExistedData(null)
+      setOpenType(null)
+    } catch {
+      toast.error(t('input.error.failed'))
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (

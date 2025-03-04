@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { TextInput } from '@components/inputs'
 import { encrypt } from '@utils/encryption'
-import APIRequestV2 from '@utils/newFetchData'
+import fetchAPI from '@utils/fetchAPI'
 
 function Mood({
   setStep,
@@ -41,9 +41,9 @@ function Mood({
     setLoading(true)
 
     try {
-      const challenge = await APIRequestV2<string>('journal/auth/challenge')
+      const challenge = await fetchAPI<string>('journal/auth/challenge')
 
-      const data = await APIRequestV2<{
+      const data = await fetchAPI<{
         text: string
         emoji: string
       }>('/journal/entries/ai/mood', {
