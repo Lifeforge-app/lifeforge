@@ -29,6 +29,20 @@ function FormInputs<T>({
   setIconSelectorOpen: (id: string) => void
   setImagePickerModalOpen: (id: string) => void
 }): React.ReactElement {
+  const handleChange = (field: IFieldProps<T>) => {
+    return (
+      value:
+        | string
+        | string[]
+        | {
+            image: string | File | null
+            preview: string | null
+          }
+    ) => {
+      setData(prev => ({ ...prev, [field.id]: value }))
+    }
+  }
+
   return (
     <div className="space-y-4">
       {fields.map(field => {
@@ -46,9 +60,7 @@ function FormInputs<T>({
                 name={field.label}
                 namespace={namespace}
                 placeholder={field.placeholder}
-                setValue={value => {
-                  setData(prev => ({ ...prev, [field.id]: value }))
-                }}
+                setValue={handleChange(field)}
                 value={selectedData as string}
               />
             )
@@ -63,9 +75,7 @@ function FormInputs<T>({
                 modalRef={field.modalRef}
                 name={field.label}
                 namespace={namespace}
-                setDate={(date: string) => {
-                  setData(prev => ({ ...prev, [field.id]: date }))
-                }}
+                setDate={handleChange(field)}
               />
             )
           case 'listbox':
@@ -146,9 +156,7 @@ function FormInputs<T>({
                 multiple={field.multiple}
                 name={field.label}
                 namespace={namespace}
-                setValue={(value: string | string[]) => {
-                  setData(prev => ({ ...prev, [field.id]: value }))
-                }}
+                setValue={handleChange(field)}
                 type="listbox"
                 value={selectedData}
               >
@@ -176,9 +184,7 @@ function FormInputs<T>({
                 color={selectedData as string}
                 name={field.label}
                 namespace={namespace}
-                setColor={value => {
-                  setData(prev => ({ ...prev, [field.id]: value }))
-                }}
+                setColor={handleChange(field)}
                 setColorPickerOpen={() => {
                   setColorPickerOpen(field.id as string)
                 }}
@@ -191,9 +197,7 @@ function FormInputs<T>({
                 icon={selectedData as string}
                 name={field.label}
                 namespace={namespace}
-                setIcon={value => {
-                  setData(prev => ({ ...prev, [field.id]: value }))
-                }}
+                setIcon={handleChange(field)}
                 setIconSelectorOpen={() => {
                   setIconSelectorOpen(field.id as string)
                 }}
@@ -221,43 +225,34 @@ function FormInputs<T>({
                     }
                   ).preview
                 }
-                setImage={value => {
-                  setData(prev => ({
-                    ...prev,
-                    [field.id]: {
-                      ...(selectedData as {
-                        image: string | File | null
-                        preview: string | null
-                      }),
-                      image: value
-                    }
-                  }))
-                }}
+                setImage={value =>
+                  handleChange(field)({
+                    ...(selectedData as {
+                      image: string | File | null
+                      preview: string | null
+                    }),
+                    image: value
+                  })
+                }
                 setImagePickerModalOpen={() => {
                   setImagePickerModalOpen(field.id as string)
                   field.onFileRemoved?.()
                 }}
-                setPreview={value => {
-                  setData(prev => ({
-                    ...prev,
-                    [field.id]: {
-                      ...(selectedData as {
-                        image: string | File | null
-                        preview: string | null
-                      }),
-                      preview: value
-                    }
-                  }))
-                }}
-                onImageRemoved={() => {
-                  setData(prev => ({
-                    ...prev,
-                    [field.id]: {
-                      image: null,
-                      preview: null
-                    }
-                  }))
-                }}
+                setPreview={value =>
+                  handleChange(field)({
+                    ...(selectedData as {
+                      image: string | File | null
+                      preview: string | null
+                    }),
+                    preview: value
+                  })
+                }
+                onImageRemoved={() =>
+                  handleChange(field)({
+                    image: null,
+                    preview: null
+                  })
+                }
               />
             )
           default:
