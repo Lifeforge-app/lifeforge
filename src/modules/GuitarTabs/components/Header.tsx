@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 
+import { useQueryClient } from '@tanstack/react-query'
 import { cookieParse } from 'pocketbase'
 import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,8 +12,8 @@ import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import { SidebarDivider } from '@components/layouts/sidebar'
 import useThemeColors from '@hooks/useThemeColor'
-import IntervalManager from '@utils/intervalManager'
 import fetchAPI from '@utils/fetchAPI'
+import IntervalManager from '@utils/intervalManager'
 
 const intervalManager = IntervalManager.getInstance()
 
@@ -24,18 +25,19 @@ const SORT_TYPE = [
 ]
 
 function Header({
-  refreshEntries,
   totalItems,
   setGuitarWorldModalOpen,
   view,
-  setView
+  setView,
+  queryKey
 }: {
-  refreshEntries: () => void
   totalItems: number
   setGuitarWorldModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   view: 'grid' | 'list'
   setView: React.Dispatch<React.SetStateAction<'grid' | 'list'>>
+  queryKey: unknown[]
 }): React.ReactElement {
+  const queryClient = useQueryClient()
   const { t } = useTranslation('modules.guitarTabs')
   const [searchParams, setSearchParams] = useSearchParams()
   const toastId = useRef<Id>(null)
@@ -82,7 +84,7 @@ function Header({
                       }
                       toast.success('Guitar tabs uploaded successfully!')
                       intervalManager.clearAllIntervals()
-                      refreshEntries()
+                      queryClient.invalidateQueries({ queryKey })
                       break
                     case 'in_progress':
                       updateProgressBar((total - left) / total)

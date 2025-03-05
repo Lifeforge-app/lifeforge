@@ -57,7 +57,7 @@ function FormModal<T extends Record<string, any | any[]>>({
   onClose: () => void
   submitButtonProps?: React.ComponentProps<typeof Button>
   onSubmit?: () => Promise<void>
-  queryKey?: string[]
+  queryKey?: unknown[]
   endpoint?: string
   id?: string
   loading?: boolean

@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import React from 'react'
 import { toast } from 'react-toastify'
@@ -12,17 +13,18 @@ import AudioPlayer from '../../ListView/components/AudioPlayer'
 
 function EntryItem({
   entry,
-  refreshEntries,
   setModifyEntryModalOpen,
   setExistingEntry,
-  setDeleteConfirmationModalOpen
+  setDeleteConfirmationModalOpen,
+  queryKey
 }: {
   entry: IGuitarTabsEntry
-  refreshEntries: () => void
   setModifyEntryModalOpen: (value: boolean) => void
   setExistingEntry: (value: IGuitarTabsEntry) => void
   setDeleteConfirmationModalOpen: (value: boolean) => void
+  queryKey: unknown[]
 }): React.ReactElement {
+  const queryClient = useQueryClient()
   const { componentBgWithHover } = useThemeColors()
 
   async function favouriteTab(): Promise<void> {
@@ -31,7 +33,15 @@ function EntryItem({
         method: 'POST'
       })
 
-      refreshEntries()
+      queryClient.setQueryData(queryKey, (data: IGuitarTabsEntry[]) => {
+        return data.map(item => {
+          if (item.id === entry.id) {
+            return { ...item, isFavourite: !item.isFavourite }
+          }
+
+          return item
+        })
+      })
     } catch {
       toast.error('Failed to add to favourites')
     }
