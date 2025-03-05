@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import COLOR from 'tailwindcss/colors'
 import FormModal from '@components/modals/FormModal'
 import {
-  IAchievementFormState,
+  IAchievementEntryFormState,
   type IAchievementEntry
 } from '@interfaces/achievements_interfaces'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
@@ -27,13 +27,13 @@ function ModifyAchievementModal({
   currentDifficulty: IAchievementEntry['difficulty']
 }): React.ReactElement {
   const { t } = useTranslation('modules.achievements')
-  const [formState, setFormState] = useState<IAchievementFormState>({
+  const [formState, setFormState] = useState<IAchievementEntryFormState>({
     title: '',
     thoughts: '',
     difficulty: 'easy'
   })
 
-  const FIELDS: IFieldProps<typeof formState>[] = [
+  const FIELDS: IFieldProps<IAchievementEntryFormState>[] = [
     {
       id: 'title',
       label: 'Achievement title',

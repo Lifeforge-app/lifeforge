@@ -1,25 +1,11 @@
-import { Icon } from '@iconify/react'
-
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import { CreateOrModifyButton } from '@components/buttons'
+import FormModal from '@components/modals/FormModal'
 import {
-  TextInput,
-  ListboxOrComboboxInput,
-  ListboxNullOption,
-  ListboxOrComboboxOption
-} from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
-import fetchAPI from '@utils/fetchAPI'
-
-interface IState {
-  name: string
-  author: string
-  type: 'singalong' | 'fingerstyle' | ''
-}
+  IGuitarTabsEntryFormState,
+  type IGuitarTabsEntry
+} from '@interfaces/guitar_tabs_interfaces'
+import { IFieldProps } from '@interfaces/modal_interfaces'
 
 const TYPES = [
   { id: 'fingerstyle', icon: 'mingcute:guitar-line' },
@@ -30,35 +16,65 @@ function ModifyEntryModal({
   isOpen,
   onClose,
   existingItem,
-  refreshEntries
+  queryKey
 }: {
   isOpen: boolean
   onClose: () => void
   existingItem: IGuitarTabsEntry | null
-  refreshEntries: () => void
+  queryKey: unknown[]
 }): React.ReactElement {
   const { t } = useTranslation('modules.guitarTabs')
 
-  function reducer(state: IState, action: Partial<IState>): IState {
-    return { ...state, ...action }
-  }
-
-  const [data, setData] = useReducer(reducer, {
+  const [formState, setFormState] = useState<IGuitarTabsEntryFormState>({
     name: '',
     author: '',
     type: ''
   })
-  const [loading, setLoading] = useState(false)
+
+  const FIELDS: IFieldProps<IGuitarTabsEntryFormState>[] = [
+    {
+      id: 'name',
+      label: 'Music Name',
+      icon: 'tabler:music',
+      placeholder: 'A cool tab',
+      type: 'text'
+    },
+    {
+      id: 'author',
+      label: 'Author',
+      icon: 'tabler:user',
+      placeholder: 'John Doe',
+      type: 'text'
+    },
+    {
+      id: 'type',
+      label: 'Score Type',
+      icon: 'tabler:category',
+      type: 'listbox',
+      options: [
+        {
+          value: '',
+          text: t('scoreTypes.uncategorized'),
+          icon: 'tabler:music-off'
+        },
+        ...TYPES.map(({ id, icon }) => ({
+          value: id,
+          text: t(`scoreTypes.${id}`),
+          icon
+        }))
+      ]
+    }
+  ]
 
   useEffect(() => {
     if (existingItem !== null) {
-      setData({
+      setFormState({
         name: existingItem.name,
         author: existingItem.author,
         type: existingItem.type
       })
     } else {
-      setData({
+      setFormState({
         name: '',
         author: '',
         type: ''
@@ -66,105 +82,21 @@ function ModifyEntryModal({
     }
   }, [existingItem])
 
-  async function onSubmit(): Promise<void> {
-    setLoading(true)
-
-    try {
-      await fetchAPI(`guitar-tabs/entries/${existingItem?.id}`, {
-        method: 'PATCH',
-        body: data as any as Record<string, unknown>
-      })
-      refreshEntries()
-      onClose()
-    } catch {
-      toast.error('Failed to update guitar tab data')
-    } finally {
-      setLoading(false)
-    }
-  }
-
   return (
-    <ModalWrapper className="md:min-w-[30vw]!" isOpen={isOpen}>
-      <ModalHeader
-        icon="tabler:pencil"
-        namespace="modules.guitarTabs"
-        title="guitarTabs.update"
-        onClose={onClose}
-      />
-      <TextInput
-        darker
-        icon="tabler:music"
-        name="Music Name"
-        namespace="modules.guitarTabs"
-        placeholder="A cool tab"
-        setValue={value => {
-          setData({ name: value })
-        }}
-        value={data.name}
-      />
-      <TextInput
-        darker
-        className="mt-4"
-        icon="tabler:user"
-        name="Author"
-        namespace="modules.guitarTabs"
-        placeholder="John Doe"
-        setValue={value => {
-          setData({ author: value })
-        }}
-        value={data.author}
-      />
-      <ListboxOrComboboxInput
-        buttonContent={
-          <>
-            <Icon
-              className="size-5"
-              icon={
-                data.type !== ''
-                  ? {
-                      fingerstyle: 'mingcute:guitar-line',
-                      singalong: 'mdi:guitar-pick-outline'
-                    }[data.type]
-                  : 'tabler:music-off'
-              }
-            />
-            <span className="-mt-px block truncate">
-              {data.type !== ''
-                ? t(`scoreTypes.${data.type}`)
-                : t('scoreTypes.uncategorized')}
-            </span>
-          </>
-        }
-        icon="tabler:category"
-        name="Score Type"
-        namespace="modules.guitarTabs"
-        setValue={value => {
-          setData({ type: value })
-        }}
-        type="listbox"
-        value={data.type}
-      >
-        <ListboxNullOption
-          icon="tabler:music-off"
-          text={t('scoreTypes.uncategorized')}
-        />
-        {TYPES.map(({ id, icon }) => (
-          <ListboxOrComboboxOption
-            key={id}
-            icon={icon}
-            text={t(`scoreTypes.${id}`)}
-            value={id}
-          />
-        ))}
-      </ListboxOrComboboxInput>
-      <CreateOrModifyButton
-        loading={loading}
-        type="update"
-        onClick={() => {
-          onSubmit().catch(console.error)
-        }}
-      />
-    </ModalWrapper>
+    <FormModal
+      data={formState}
+      endpoint="guitar-tabs/entries"
+      fields={FIELDS}
+      icon="tabler:pencil"
+      id={existingItem?.id}
+      isOpen={isOpen}
+      namespace="modules.guitarTabs"
+      openType="update"
+      queryKey={queryKey}
+      setData={setFormState}
+      title="update"
+      onClose={onClose}
+    />
   )
 }
 
