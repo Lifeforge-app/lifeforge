@@ -1,8 +1,9 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import {
@@ -14,8 +15,8 @@ import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapper
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+import QueryWrapper from '@components/screens/QueryWrapper'
 import Scrollbar from '@components/utilities/Scrollbar'
 import ViewModeSelector from '@components/utilities/ViewModeSelector'
 import useFetch from '@hooks/useFetch'
@@ -24,6 +25,7 @@ import {
   type IGuitarTabsEntry,
   type IGuitarTabsSidebarData
 } from '@interfaces/guitar_tabs_interfaces'
+import fetchAPI from '@utils/fetchAPI'
 import GuitarWorldModal from './components/GuitarWorldModal'
 import Header from './components/Header'
 import ModifyEntryModal from './components/ModifyEntryModal'
@@ -47,21 +49,52 @@ function GuitarTabs(): React.ReactElement {
   const [searchQuery, setSearchQuery] = useState<string>('')
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
   const [searchParams, setSearchParams] = useSearchParams()
+  const category = useMemo(
+    () => searchParams.get('category') ?? 'all',
+    [searchParams]
+  )
+  const author = useMemo(() => searchParams.get('author') ?? '', [searchParams])
+  const starred = useMemo(
+    () => searchParams.get('starred') === 'true',
+    [searchParams]
+  )
+  const sort = useMemo(
+    () => searchParams.get('sort') ?? 'newest',
+    [searchParams]
+  )
+  const queryKey = useMemo(
+    () => [
+      'guitar-tabs',
+      'entries',
+      page,
+      debouncedSearchQuery,
+      category,
+      starred,
+      author,
+      sort
+    ],
+    [page, debouncedSearchQuery, category, starred, author, sort]
+  )
 
-  const [entries, refreshEntries] = useFetch<{
+  const entriesQuery = useQuery<{
     totalItems: number
     totalPages: number
     page: number
     items: IGuitarTabsEntry[]
-  }>(
-    `guitar-tabs/entries?page=${page}&query=${encodeURIComponent(
-      debouncedSearchQuery.trim()
-    )}&category=${searchParams.get('category') ?? 'all'}${
-      searchParams.get('starred') !== null ? '&starred=true' : ''
-    }&author=${searchParams.get('author') ?? 'all'}&sort=${
-      searchParams.get('sort') ?? 'newest'
-    }`
-  )
+  }>({
+    // eslint-disable-next-line @tanstack/query/exhaustive-deps
+    queryKey,
+    queryFn: () =>
+      fetchAPI(
+        `guitar-tabs/entries?page=${page}&query=${encodeURIComponent(
+          debouncedSearchQuery.trim()
+        )}&category=${searchParams.get('category') ?? 'all'}${
+          searchParams.get('starred') !== null ? '&starred=true' : ''
+        }&author=${searchParams.get('author') ?? 'all'}&sort=${
+          searchParams.get('sort') ?? 'newest'
+        }`
+      )
+  })
   const [sidebarData, refreshSidebarData] = useFetch<IGuitarTabsSidebarData>(
     'guitar-tabs/entries/sidebar-data'
   )
@@ -73,6 +106,7 @@ function GuitarTabs(): React.ReactElement {
   const [deleteConfirmationModalOpen, setDeleteConfirmationModalOpen] =
     useState(false)
   const [guitarWorldModalOpen, setGuitarWorldModalOpen] = useState(false)
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     setPage(1)
@@ -113,10 +147,7 @@ function GuitarTabs(): React.ReactElement {
         return (
           <GridView
             entries={entries.items}
-            refreshEntries={() => {
-              refreshEntries()
-              refreshSidebarData()
-            }}
+            queryKey={queryKey}
             setDeleteConfirmationModalOpen={setDeleteConfirmationModalOpen}
             setExistingEntry={setExistingEntry}
             setModifyEntryModalOpen={setModifyEntryModalOpen}
@@ -137,10 +168,10 @@ function GuitarTabs(): React.ReactElement {
   return (
     <ModuleWrapper>
       <Header
-        refreshEntries={refreshEntries}
+        queryKey={queryKey}
         setGuitarWorldModalOpen={setGuitarWorldModalOpen}
         setView={setView}
-        totalItems={typeof entries !== 'string' ? entries.totalItems : 0}
+        totalItems={entriesQuery.data?.totalItems ?? 0}
         view={view}
       />
       <SidebarAndContentWrapper>
@@ -174,7 +205,7 @@ function GuitarTabs(): React.ReactElement {
                 }`.trim()}
               </h1>
               <span className="ml-2 mr-8 text-base text-bg-500">
-                ({typeof entries !== 'string' ? entries.totalItems : 0})
+                ({entriesQuery.data?.totalItems ?? 0})
               </span>
             </div>
 
@@ -254,7 +285,7 @@ function GuitarTabs(): React.ReactElement {
               viewMode={view}
             />
           </div>
-          <APIFallbackComponent data={entries}>
+          <QueryWrapper query={entriesQuery}>
             {entries => (
               <Scrollbar className="mt-6 pb-16">
                 <Pagination
@@ -272,16 +303,13 @@ function GuitarTabs(): React.ReactElement {
                 />
               </Scrollbar>
             )}
-          </APIFallbackComponent>
+          </QueryWrapper>
         </ContentWrapperWithSidebar>
       </SidebarAndContentWrapper>
       <ModifyEntryModal
         existingItem={existingEntry}
         isOpen={modifyEntryModalOpen}
-        refreshEntries={() => {
-          refreshEntries()
-          refreshSidebarData()
-        }}
+        queryKey={queryKey}
         onClose={() => {
           setModifyEntryModalOpen(false)
           setExistingEntry(null)
@@ -293,10 +321,7 @@ function GuitarTabs(): React.ReactElement {
         isOpen={deleteConfirmationModalOpen}
         itemName="guitar tab"
         nameKey="title"
-        updateDataLists={() => {
-          refreshEntries()
-          refreshSidebarData()
-        }}
+        queryKey={queryKey}
         onClose={() => {
           setDeleteConfirmationModalOpen(false)
         }}
@@ -304,7 +329,7 @@ function GuitarTabs(): React.ReactElement {
       <GuitarWorldModal
         isOpen={guitarWorldModalOpen}
         onClose={() => {
-          refreshEntries()
+          queryClient.invalidateQueries({ queryKey })
           refreshSidebarData()
           setGuitarWorldModalOpen(false)
         }}

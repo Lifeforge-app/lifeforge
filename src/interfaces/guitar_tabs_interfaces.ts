@@ -12,6 +12,12 @@ interface IGuitarTabsEntry extends BasePBCollection {
   isFavourite: boolean
 }
 
+interface IGuitarTabsEntryFormState {
+  name: string
+  author: string
+  type: 'singalong' | 'fingerstyle' | ''
+}
+
 interface IGuitarTabsSidebarData {
   total: number
   favourites: number
@@ -41,6 +47,7 @@ interface IGuitarTabsGuitarWorldScores {
 
 export type {
   IGuitarTabsEntry,
+  IGuitarTabsEntryFormState,
   IGuitarTabsSidebarData,
   IGuitarTabsGuitarWorldScores,
   IGuitarTabsGuitarWorldScoreEntry
