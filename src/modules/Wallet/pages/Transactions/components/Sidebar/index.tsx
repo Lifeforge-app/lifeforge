@@ -49,7 +49,7 @@ function Sidebar({
         setManageCategoriesModalOpen={setManageCategoriesModalOpen}
         setSidebarOpen={setSidebarOpen}
       />
-      <SidebarDivider />
+      {searchParams.get('type') !== 'transfer' && <SidebarDivider />}
       <AssetsSection setSidebarOpen={setSidebarOpen} />
       <SidebarDivider />
       <LedgerSection setSidebarOpen={setSidebarOpen} />

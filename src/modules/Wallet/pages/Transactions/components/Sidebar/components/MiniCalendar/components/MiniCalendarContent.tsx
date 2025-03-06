@@ -5,10 +5,12 @@ import MiniCalendarDateItem from './MiniCalendarDateItem'
 
 function MiniCalendarContent({
   currentMonth,
-  currentYear
+  currentYear,
+  viewsFilter
 }: {
   currentMonth: number
   currentYear: number
+  viewsFilter: ('income' | 'expenses' | 'transfer')[]
 }): React.ReactElement {
   const { language } = usePersonalizationContext()
   const [nextToSelect, setNextToSelect] = useState<'start' | 'end'>('start')
@@ -73,6 +75,7 @@ function MiniCalendarContent({
                 lastDate={lastDate}
                 nextToSelect={nextToSelect}
                 setNextToSelect={setNextToSelect}
+                viewsFilter={viewsFilter}
               />
             )
           })()

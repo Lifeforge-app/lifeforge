@@ -1,18 +1,59 @@
 import moment from 'moment'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import HamburgerMenu from '@components/buttons/HamburgerMenu'
+import HamburgerSelectorWrapper from '@components/buttons/HamburgerMenu/components/HamburgerSelectorWrapper'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import { SidebarTitle } from '@components/layouts/sidebar'
 import MiniCalendarContent from './components/MiniCalendarContent'
 import MiniCalendarHeader from './components/MiniCalendarHeader'
+
+const VIEWS = [
+  ['tabler:login-2', 'income'],
+  ['tabler:logout', 'expenses'],
+  ['tabler:transfer', 'transfer']
+] as const
 
 function MiniCalendar(): React.ReactElement {
   const { t } = useTranslation('modules.wallet')
   const [currentMonth, setCurrentMonth] = useState(moment().month())
   const [currentYear, setCurrentYear] = useState(moment().year())
+  const [viewsFilter, setViewsFilter] = useState<
+    ('income' | 'expenses' | 'transfer')[]
+  >(['income', 'expenses'])
+
+  function toggleView(view: 'income' | 'expenses' | 'transfer') {
+    setViewsFilter(prevViews =>
+      prevViews.includes(view)
+        ? prevViews.filter(v => v !== view)
+        : [...prevViews, view]
+    )
+  }
 
   return (
     <>
-      <SidebarTitle name={t('sidebar.calendarHeatmap')} />
+      <SidebarTitle
+        customActionButton={
+          <HamburgerMenu>
+            <HamburgerSelectorWrapper icon="tabler:eye" title="Toggle view">
+              {VIEWS.map(([icon, id]) => (
+                <MenuItem
+                  key={id}
+                  icon={icon}
+                  isToggled={viewsFilter.includes(id)}
+                  namespace={false}
+                  text={t(`transactionTypes.${id}`)}
+                  onClick={e => {
+                    e.preventDefault()
+                    toggleView(id)
+                  }}
+                />
+              ))}
+            </HamburgerSelectorWrapper>
+          </HamburgerMenu>
+        }
+        name={t('sidebar.calendarHeatmap')}
+      />
       <div className="w-full px-8">
         <MiniCalendarHeader
           currentMonth={currentMonth}
@@ -23,6 +64,7 @@ function MiniCalendar(): React.ReactElement {
         <MiniCalendarContent
           currentMonth={currentMonth}
           currentYear={currentYear}
+          viewsFilter={viewsFilter}
         />
       </div>
     </>

@@ -7,7 +7,7 @@ export async function getDecryptedPassword(
   masterPassword: string,
   id: string
 ): Promise<string> {
-  const challenge = await fetchAPI<string>('passwords/auth/challenge')
+  const challenge = await fetchAPI<string>('passwords/password/challenge')
 
   const encryptedMaster = encrypt(masterPassword, challenge)
 

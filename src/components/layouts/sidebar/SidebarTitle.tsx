@@ -17,12 +17,14 @@ interface PropsWithoutActionButton {
 type SidebarItemProps = {
   name: string
   namespace?: string
+  customActionButton?: React.ReactElement
 } & (PropsWithActionButton | PropsWithoutActionButton)
 
 function SidebarTitle({
   name,
   actionButtonIcon,
   actionButtonOnClick,
+  customActionButton,
   namespace
 }: SidebarItemProps): React.ReactElement {
   const { t } = useTranslation([namespace, 'common.sidebar'])
@@ -41,17 +43,18 @@ function SidebarTitle({
           name
         ])}
       </h3>
-      {actionButtonIcon !== undefined && (
-        <button
-          className={clsx(
-            'flex items-center rounded-md p-2 text-bg-600 transition-all',
-            'hover:bg-bg-100 dark:hover:bg-bg-800 dark:hover:text-bg-50'
-          )}
-          onClick={actionButtonOnClick}
-        >
-          <Icon className="size-5" icon={actionButtonIcon} />
-        </button>
-      )}
+      {customActionButton ??
+        (actionButtonIcon !== undefined && (
+          <button
+            className={clsx(
+              'flex items-center rounded-md p-2 text-bg-600 transition-all',
+              'hover:bg-bg-100 dark:hover:bg-bg-800 dark:hover:text-bg-50'
+            )}
+            onClick={actionButtonOnClick}
+          >
+            <Icon className="size-5" icon={actionButtonIcon} />
+          </button>
+        ))}
     </li>
   )
 }

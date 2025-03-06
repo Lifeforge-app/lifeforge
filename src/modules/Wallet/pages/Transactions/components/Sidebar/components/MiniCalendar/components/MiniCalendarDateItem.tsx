@@ -12,6 +12,7 @@ interface MiniCalendarDateItemProps {
   date: Date
   nextToSelect: 'start' | 'end'
   setNextToSelect: React.Dispatch<React.SetStateAction<'start' | 'end'>>
+  viewsFilter: ('income' | 'expenses' | 'transfer')[]
 }
 
 const getDayClassName = ({
@@ -86,7 +87,8 @@ function MiniCalendarDateItem({
   lastDate,
   date,
   nextToSelect,
-  setNextToSelect
+  setNextToSelect,
+  viewsFilter
 }: MiniCalendarDateItemProps): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()
   const { transactions } = useWalletContext()
@@ -124,6 +126,10 @@ function MiniCalendarDateItem({
 
     return relatedTransactions.reduce(
       (acc, transaction) => {
+        if (!viewsFilter.includes(transaction.type)) {
+          return acc
+        }
+
         if (transaction.type === 'income') {
           acc.income += transaction.amount
         } else if (transaction.type === 'expenses') {
