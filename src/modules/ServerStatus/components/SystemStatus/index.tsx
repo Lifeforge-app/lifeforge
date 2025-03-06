@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useEffect } from 'react'
 import APIFallbackComponent from '@components/screens/APIComponentWithFallback'

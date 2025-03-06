@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { UseQueryResult } from '@tanstack/react-query'
 import React from 'react'
 import HeaderFilter from '@components/utilities/HeaderFilter'

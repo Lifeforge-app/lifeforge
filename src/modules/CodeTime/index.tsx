@@ -4,6 +4,7 @@ import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import CodeTimeActivityCalendar from './components/CodeTimeActivityCalendar'
 import CodeTimeStatistics from './components/CodeTimeStatistics'
+import CodeTimeTimeChart from './components/CodeTimeTimeChart'
 import CodeTimeTopEntries from './components/CodeTimeTopEntries'
 
 export default function CodeTime(): React.ReactElement {
@@ -14,10 +15,16 @@ export default function CodeTime(): React.ReactElement {
         <CodeTimeStatistics />
         <CodeTimeActivityCalendar />
         {['projects', 'languages'].map(type => (
-          <CodeTimeTopEntries
-            key={type}
-            type={type as 'projects' | 'languages'}
-          />
+          <>
+            <CodeTimeTimeChart
+              key={type}
+              type={type as 'projects' | 'languages'}
+            />
+            <CodeTimeTopEntries
+              key={type}
+              type={type as 'projects' | 'languages'}
+            />
+          </>
         ))}
       </div>
     </ModuleWrapper>
