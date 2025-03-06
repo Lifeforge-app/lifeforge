@@ -61,6 +61,10 @@ export default async function fetchAPI<T>(
       throw new Error(data.message || 'Failed to perform API request')
     }
 
+    if (response.status === 204) {
+      return undefined as T
+    }
+
     const data = (await response.json()) as ApiResponse<T>
     if (data.state === 'error') {
       throw new Error(data.message || 'API returned an error')
