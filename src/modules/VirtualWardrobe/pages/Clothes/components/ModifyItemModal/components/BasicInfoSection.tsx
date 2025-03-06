@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import {
@@ -67,10 +67,6 @@ function BasicInfoSection({
     }
   }
 
-  useEffect(() => {
-    setFormState({ ...formState, subcategory: '' })
-  }, [formState.category])
-
   return (
     <>
       <div className="mt-6 space-y-4">
@@ -109,7 +105,9 @@ function BasicInfoSection({
           icon="tabler:category"
           name="Category"
           namespace="modules.virtualWardrobe"
-          setValue={handleChange('category')}
+          setValue={(value: string) => {
+            setFormState({ ...formState, category: value, subcategory: '' })
+          }}
           type="listbox"
           value={formState.category}
         >
@@ -182,8 +180,8 @@ function BasicInfoSection({
         <Button
           iconAtEnd
           className={!canGoBack ? 'w-full' : ''}
-          disabled={(['name', 'category', 'subcategory'] as const).every(key =>
-            Boolean(formState[key])
+          disabled={(['name', 'category', 'subcategory'] as const).some(
+            key => !formState[key]
           )}
           icon="tabler:arrow-right"
           onClick={() => {
