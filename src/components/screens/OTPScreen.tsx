@@ -113,7 +113,7 @@ function OTPScreen({
     setSendOtpLoading(true)
 
     try {
-      const data = await fetchAPI<string>(`${endpoint}/otp`, {
+      const data = await fetchAPI<string>('user/auth/otp', {
         method: 'GET'
       })
 
@@ -141,7 +141,7 @@ function OTPScreen({
     try {
       const challenge = await fetchAPI<string>(`${endpoint}/challenge`)
 
-      const data = await fetchAPI<boolean>(endpoint, {
+      const data = await fetchAPI<boolean>(`${endpoint}/otp`, {
         method: 'POST',
         body: {
           otp: encrypt(otp, challenge),

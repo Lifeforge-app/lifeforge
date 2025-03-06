@@ -34,7 +34,7 @@ function TransactionsCard(): React.ReactElement {
         {transactions => (
           <APIFallbackComponent data={categories}>
             {categories => (
-              <div className="mt-6 size-full min-h-96 xl:min-h-0">
+              <div className="size-full min-h-96 xl:min-h-0">
                 <Scrollbar>
                   {transactions.length > 0 ? (
                     <>
@@ -159,19 +159,19 @@ function TransactionsCard(): React.ReactElement {
                                 className={clsx(
                                   'rounded-md p-2',
                                   transaction.type === 'transfer' &&
-                                    'bg-blue-500/20 text-blue-500',
-                                  {
-                                    backgroundColor:
-                                      categories.find(
-                                        category =>
-                                          category.id === transaction.category
-                                      )?.color + '20',
-                                    color: categories.find(
+                                    'bg-blue-500/20 text-blue-500'
+                                )}
+                                style={{
+                                  backgroundColor:
+                                    categories.find(
                                       category =>
                                         category.id === transaction.category
-                                    )?.color
-                                  }
-                                )}
+                                    )?.color + '20',
+                                  color: categories.find(
+                                    category =>
+                                      category.id === transaction.category
+                                  )?.color
+                                }}
                               >
                                 <Icon
                                   className="size-6"
