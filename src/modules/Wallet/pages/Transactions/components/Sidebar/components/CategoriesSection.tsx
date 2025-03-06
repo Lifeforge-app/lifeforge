@@ -20,7 +20,7 @@ function CategoriesSection({
   const [searchParams, setSearchParams] = useSearchParams()
   const { categories, filteredTransactions } = useWalletContext()
 
-  return (
+  return searchParams.get('type') !== 'transfer' ? (
     <>
       <SidebarTitle
         actionButtonIcon="tabler:plus"
@@ -47,6 +47,11 @@ function CategoriesSection({
                     ['income', 'expenses'].indexOf(a.type) -
                     ['income', 'expenses'].indexOf(b.type)
                 ) as any
+              )
+              .filter(
+                ({ type }) =>
+                  searchParams.get('type') === type ||
+                  (searchParams.get('type') ?? 'all') === 'all'
               )
               .map(({ icon, name, color, id, type }) => (
                 <SidebarItem
@@ -123,6 +128,8 @@ function CategoriesSection({
         )}
       </APIFallbackComponent>
     </>
+  ) : (
+    <></>
   )
 }
 

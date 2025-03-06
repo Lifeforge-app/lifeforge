@@ -28,6 +28,14 @@ function ExpensesBreakdownCard(): React.ReactElement {
   const [year] = useState(new Date().getFullYear())
   const [month] = useState(new Date().getMonth())
 
+  const expensesCategories = useMemo(() => {
+    if (typeof categories === 'string') {
+      return []
+    }
+
+    return categories.filter(category => category.type === 'expenses')
+  }, [categories])
+
   const thisMonthsTransactions = useMemo(() => {
     if (typeof transactions === 'string') {
       return []
@@ -39,18 +47,21 @@ function ExpensesBreakdownCard(): React.ReactElement {
     })
   }, [transactions, year, month])
 
-  const spentOnEachCategory = useMemo(() => {
+  const spentOnEachCategory = useMemo<Record<string, number>>(() => {
     if (typeof categories === 'string' || typeof transactions === 'string') {
-      return []
+      return {}
     }
 
-    return categories
-      .filter(category => category.type === 'expenses')
-      .map(category =>
-        thisMonthsTransactions
+    return expensesCategories.reduce<Record<string, number>>(
+      (acc, category) => {
+        acc[category.id] = thisMonthsTransactions
           .filter(transaction => transaction.category === category.id)
           .reduce((acc, curr) => acc + curr.amount, 0)
-      )
+
+        return acc
+      },
+      {}
+    )
   }, [categories, thisMonthsTransactions])
 
   const { t } = useTranslation('modules.wallet')
@@ -108,19 +119,19 @@ function ExpensesBreakdownCard(): React.ReactElement {
                   <Doughnut
                     className="relative aspect-square w-full min-w-0"
                     data={{
-                      labels: categories
-                        .filter(category => category.type === 'expenses')
-                        .map(category => category.name),
+                      labels: expensesCategories.map(category => category.name),
                       datasets: [
                         {
                           label: 'Monies spent',
-                          data: spentOnEachCategory,
-                          backgroundColor: categories
-                            .filter(category => category.type === 'expenses')
-                            .map(category => category.color + '20'),
-                          borderColor: categories
-                            .filter(category => category.type === 'expenses')
-                            .map(category => category.color),
+                          data: expensesCategories.map(
+                            category => spentOnEachCategory[category.id]
+                          ),
+                          backgroundColor: expensesCategories.map(
+                            category => category.color + '20'
+                          ),
+                          borderColor: expensesCategories.map(
+                            category => category.color
+                          ),
                           borderWidth: 1
                         }
                       ]
@@ -129,8 +140,8 @@ function ExpensesBreakdownCard(): React.ReactElement {
                   />
                 </div>
                 <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
-                  {categories
-                    .filter(category => category.type === 'expenses')
+                  {expensesCategories
+                    .filter(category => spentOnEachCategory[category.id])
                     .map(category => (
                       <div
                         key={category.id}
@@ -150,7 +161,11 @@ function ExpensesBreakdownCard(): React.ReactElement {
                   <Scrollbar className="mb-4">
                     <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
                       {categories
-                        .filter(category => category.type === 'expenses')
+                        .filter(
+                          category =>
+                            category.type === 'expenses' &&
+                            spentOnEachCategory[category.id] > 0
+                        )
                         .map(category => (
                           <Link
                             key={category.id}

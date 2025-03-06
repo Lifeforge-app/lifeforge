@@ -30,7 +30,7 @@ function LockedScreen({
     try {
       const challenge = await fetchAPI<string>(`${endpoint}/challenge`)
 
-      const data = await fetchAPI<boolean>(endpoint, {
+      const data = await fetchAPI<boolean>(`${endpoint}/verify`, {
         method: 'POST',
         body: {
           password: encrypt(masterPassWordInputContent, challenge)
