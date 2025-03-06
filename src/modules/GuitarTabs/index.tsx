@@ -1,6 +1,6 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import clsx from 'clsx'
 import React, { useEffect, useMemo, useState } from 'react'
@@ -19,13 +19,12 @@ import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import QueryWrapper from '@components/screens/QueryWrapper'
 import Scrollbar from '@components/utilities/Scrollbar'
 import ViewModeSelector from '@components/utilities/ViewModeSelector'
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 import useThemeColors from '@hooks/useThemeColor'
 import {
   type IGuitarTabsEntry,
   type IGuitarTabsSidebarData
 } from '@interfaces/guitar_tabs_interfaces'
-import fetchAPI from '@utils/fetchAPI'
 import GuitarWorldModal from './components/GuitarWorldModal'
 import Header from './components/Header'
 import ModifyEntryModal from './components/ModifyEntryModal'
@@ -44,6 +43,7 @@ const SORT_TYPE = [
 function GuitarTabs(): React.ReactElement {
   const { t } = useTranslation('modules.guitarTabs')
   const { componentBgWithHover } = useThemeColors()
+  const queryClient = useQueryClient()
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [page, setPage] = useState<number>(1)
   const [searchQuery, setSearchQuery] = useState<string>('')
@@ -76,27 +76,24 @@ function GuitarTabs(): React.ReactElement {
     [page, debouncedSearchQuery, category, starred, author, sort]
   )
 
-  const entriesQuery = useQuery<{
+  const entriesQuery = useAPIQuery<{
     totalItems: number
     totalPages: number
     page: number
     items: IGuitarTabsEntry[]
-  }>({
-    // eslint-disable-next-line @tanstack/query/exhaustive-deps
-    queryKey,
-    queryFn: () =>
-      fetchAPI(
-        `guitar-tabs/entries?page=${page}&query=${encodeURIComponent(
-          debouncedSearchQuery.trim()
-        )}&category=${searchParams.get('category') ?? 'all'}${
-          searchParams.get('starred') !== null ? '&starred=true' : ''
-        }&author=${searchParams.get('author') ?? 'all'}&sort=${
-          searchParams.get('sort') ?? 'newest'
-        }`
-      )
-  })
-  const [sidebarData, refreshSidebarData] = useFetch<IGuitarTabsSidebarData>(
-    'guitar-tabs/entries/sidebar-data'
+  }>(
+    `guitar-tabs/entries?page=${page}&query=${encodeURIComponent(
+      debouncedSearchQuery.trim()
+    )}&category=${searchParams.get('category') ?? 'all'}${
+      searchParams.get('starred') !== null ? '&starred=true' : ''
+    }&author=${searchParams.get('author') ?? 'all'}&sort=${
+      searchParams.get('sort') ?? 'newest'
+    }`,
+    queryKey
+  )
+  const sidebarDataQuery = useAPIQuery<IGuitarTabsSidebarData>(
+    'guitar-tabs/entries/sidebar-data',
+    ['guitar-tabs', 'sidebar-data']
   )
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [modifyEntryModalOpen, setModifyEntryModalOpen] = useState(false)
@@ -106,7 +103,6 @@ function GuitarTabs(): React.ReactElement {
   const [deleteConfirmationModalOpen, setDeleteConfirmationModalOpen] =
     useState(false)
   const [guitarWorldModalOpen, setGuitarWorldModalOpen] = useState(false)
-  const queryClient = useQueryClient()
 
   useEffect(() => {
     setPage(1)
@@ -178,7 +174,7 @@ function GuitarTabs(): React.ReactElement {
         <Sidebar
           isOpen={sidebarOpen}
           setOpen={setSidebarOpen}
-          sidebarData={sidebarData}
+          sidebarDataQuery={sidebarDataQuery}
         />
         <ContentWrapperWithSidebar>
           <header className="flex-between flex w-full">
@@ -330,7 +326,9 @@ function GuitarTabs(): React.ReactElement {
         isOpen={guitarWorldModalOpen}
         onClose={() => {
           queryClient.invalidateQueries({ queryKey })
-          refreshSidebarData()
+          queryClient.invalidateQueries({
+            queryKey: ['guitar-tabs', 'sidebar-data']
+          })
           setGuitarWorldModalOpen(false)
         }}
       />

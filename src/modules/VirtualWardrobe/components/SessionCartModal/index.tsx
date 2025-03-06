@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
@@ -15,17 +16,15 @@ function SessionCartModal({
   isOpen,
   onClose,
   cartItems,
-  setCartItems,
   refreshEntries
 }: {
   isOpen: boolean
   onClose: () => void
   cartItems: Loadable<IVirtualWardrobeEntry[]>
-  setCartItems: React.Dispatch<
-    React.SetStateAction<Loadable<IVirtualWardrobeEntry[]>>
-  >
+
   refreshEntries: () => void
 }): React.ReactElement {
+  const queryClient = useQueryClient()
   const [checkoutConfirmationModalOpen, setCheckoutConfirmationModalOpen] =
     useState(false)
 
@@ -35,10 +34,13 @@ function SessionCartModal({
         method: 'DELETE'
       })
 
-      setCartItems(prev => {
-        if (typeof prev === 'string') return prev
-        return prev.filter(entry => entry.id !== entryId)
-      })
+      queryClient.setQueryData<IVirtualWardrobeEntry[]>(
+        ['virtual-wardrobe', 'session-cart-items'],
+        prev => {
+          if (!prev) return []
+          return prev.filter(entry => entry.id !== entryId)
+        }
+      )
       refreshEntries()
     } catch {
       toast.error('Failed to remove item from cart')
@@ -54,7 +56,10 @@ function SessionCartModal({
         }
       })
 
-      setCartItems([])
+      queryClient.setQueryData<IVirtualWardrobeEntry[]>(
+        ['virtual-wardrobe', 'session-cart-items'],
+        []
+      )
       refreshEntries()
       onClose()
     } catch {
@@ -67,6 +72,7 @@ function SessionCartModal({
       <ModalWrapper isOpen={isOpen} minWidth="50vw">
         <ModalHeader
           icon="tabler:shopping-bag"
+          namespace="modules.virtualWardrobe"
           title="Session Cart"
           onClose={onClose}
         />

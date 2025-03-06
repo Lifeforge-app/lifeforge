@@ -1,3 +1,4 @@
+import { UseQueryResult } from '@tanstack/react-query'
 import React from 'react'
 import { useSearchParams } from 'react-router'
 import {
@@ -6,30 +7,31 @@ import {
   SidebarTitle,
   SidebarWrapper
 } from '@components/layouts/sidebar'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+import QueryWrapper from '@components/screens/QueryWrapper'
 import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
 import VW_COLORS from '@constants/virtual_wardrobe_colors'
-import { Loadable } from '@interfaces/common'
 import { type IVirtualWardrobeSidebarData } from '@interfaces/virtual_wardrobe_interfaces'
 
 function Sidebar({
   isOpen,
   setOpen,
-  sidebarData
+  sidebarDataQuery
 }: {
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  sidebarData: Loadable<IVirtualWardrobeSidebarData>
+  sidebarDataQuery: UseQueryResult<IVirtualWardrobeSidebarData>
 }): React.ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (
     <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
-      <APIFallbackComponent data={sidebarData}>
+      <QueryWrapper query={sidebarDataQuery}>
         {sidebarData => (
           <>
             <SidebarItem
-              active={Array.from(searchParams.keys()).length === 0}
+              active={Array.from(searchParams.keys()).every(
+                key => !searchParams.get(key)
+              )}
               icon="tabler:list"
               name="All Clothes"
               namespace="modules.virtualWardrobe"
@@ -218,7 +220,7 @@ function Sidebar({
               ))}
           </>
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
     </SidebarWrapper>
   )
 }

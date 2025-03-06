@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { ImagePickerModal } from '@components/inputs'
@@ -17,13 +18,16 @@ function ModifyItemModal({
   openType,
   onClose,
   refreshEntries,
-  existedData
+  existedData,
+  queryKey
 }: {
   openType: 'create' | 'update' | null
   onClose: () => void
   refreshEntries: () => void
   existedData: IVirtualWardrobeEntry | null
+  queryKey: unknown[]
 }): React.ReactElement {
+  const queryClient = useQueryClient()
   const [step, setStep] = useState<number>(1)
   const [frontImage, setFrontImage] = useState<File | null>(null)
   const [backImage, setBackImage] = useState<File | null>(null)
@@ -82,7 +86,7 @@ function ModifyItemModal({
     if (backImage !== null) formData.append('backImage', backImage)
 
     try {
-      await fetchAPI(
+      const data = await fetchAPI<IVirtualWardrobeEntry>(
         'virtual-wardrobe/entries' +
           (openType === 'update' ? `/${existedData?.id}` : ''),
         {
@@ -93,6 +97,15 @@ function ModifyItemModal({
               : (formState as any as Record<string, unknown>)
         }
       )
+
+      queryClient.setQueryData<IVirtualWardrobeEntry[]>(queryKey, old => {
+        if (openType === 'create') {
+          return old ? [...old, data] : [data]
+        } else {
+          return old?.map(item => (item.id === data.id ? data : item)) ?? []
+        }
+      })
+
       refreshEntries()
       onClose()
     } catch {
