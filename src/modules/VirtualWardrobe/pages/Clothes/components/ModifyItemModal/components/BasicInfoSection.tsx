@@ -126,7 +126,7 @@ function BasicInfoSection({
             />
           ))}
         </ListboxOrComboboxInput>
-        {formState.category !== null && (
+        {formState.category && (
           <ListboxOrComboboxInput
             required
             buttonContent={
