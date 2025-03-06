@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React, { useMemo } from 'react'
 import { IIdeaBoxTag } from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'

@@ -151,6 +151,7 @@ const CodeTime = (): React.ReactElement => {
             return gradient
           },
           fill: 'origin',
+          lineTension: 0.3,
           borderColor: theme,
           borderWidth: 1,
           pointBorderColor: 'rgba(0, 0, 0, 0)',

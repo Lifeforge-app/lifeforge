@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React, { useMemo } from 'react'
 import { isLightColor, oklchToHex } from '@utils/colors'
