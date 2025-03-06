@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-nested-conditional */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { ListResult } from 'pocketbase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'

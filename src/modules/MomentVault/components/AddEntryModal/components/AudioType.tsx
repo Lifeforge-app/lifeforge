@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import WavesurferPlayer from '@wavesurfer/react'
 import moment from 'moment'
 import React, { useRef, useState } from 'react'

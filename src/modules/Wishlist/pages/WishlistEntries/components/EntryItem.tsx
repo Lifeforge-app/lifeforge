@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-useless-react-setstate */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useState } from 'react'

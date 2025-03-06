@@ -1,5 +1,5 @@
 /* eslint-disable import/named */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import WavesurferPlayer from '@wavesurfer/react'
 import clsx from 'clsx'
 import moment from 'moment'

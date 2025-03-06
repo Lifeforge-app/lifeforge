@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link, useParams } from 'react-router'
 import { IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
