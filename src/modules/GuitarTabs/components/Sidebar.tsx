@@ -1,3 +1,4 @@
+import { UseQueryResult } from '@tanstack/react-query'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
@@ -7,16 +8,15 @@ import {
   SidebarTitle,
   SidebarWrapper
 } from '@components/layouts/sidebar'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import { type Loadable } from '@interfaces/common'
+import QueryWrapper from '@components/screens/QueryWrapper'
 import { type IGuitarTabsSidebarData } from '@interfaces/guitar_tabs_interfaces'
 
 function Sidebar({
-  sidebarData,
+  sidebarDataQuery,
   isOpen,
   setOpen
 }: {
-  sidebarData: Loadable<IGuitarTabsSidebarData>
+  sidebarDataQuery: UseQueryResult<IGuitarTabsSidebarData>
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
@@ -25,7 +25,7 @@ function Sidebar({
 
   return (
     <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
-      <APIFallbackComponent data={sidebarData}>
+      <QueryWrapper query={sidebarDataQuery}>
         {sidebarData => (
           <>
             <SidebarItem
@@ -120,7 +120,7 @@ function Sidebar({
               ))}
           </>
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
     </SidebarWrapper>
   )
 }

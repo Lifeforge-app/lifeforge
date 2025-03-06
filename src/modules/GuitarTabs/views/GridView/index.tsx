@@ -16,7 +16,7 @@ function GridView({
   queryKey: unknown[]
 }): React.ReactElement {
   return (
-    <div className="mb-6 grid grid-cols-[repeat(auto-fill,minmax(12rem,1fr))] gap-4">
+    <div className="mb-6 grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
       {entries.map(entry => (
         <EntryItem
           key={entry.id}

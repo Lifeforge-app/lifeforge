@@ -1,21 +1,21 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { UseQueryResult } from '@tanstack/react-query'
 import React from 'react'
 import HeaderFilter from '@components/utilities/HeaderFilter'
 import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
 import VW_COLORS from '@constants/virtual_wardrobe_colors'
-import { Loadable } from '@interfaces/common'
 import {
   IVirtualWardrobeEntry,
   IVirtualWardrobeSidebarData
 } from '@interfaces/virtual_wardrobe_interfaces'
 
 function Header({
-  entries,
-  sidebarData,
+  entriesQuery,
+  sidebarDataQuery,
   setSidebarOpen
 }: {
-  entries: Loadable<IVirtualWardrobeEntry[]>
-  sidebarData: Loadable<IVirtualWardrobeSidebarData>
+  entriesQuery: UseQueryResult<IVirtualWardrobeEntry[]>
+  sidebarDataQuery: UseQueryResult<IVirtualWardrobeSidebarData>
   setSidebarOpen: (open: boolean) => void
 }): React.ReactElement {
   return (
@@ -26,41 +26,45 @@ function Header({
             All Clothes
           </h1>
           <span className="ml-2 mr-8 text-base text-bg-500">
-            ({typeof entries !== 'string' ? entries.length : 0})
+            ({entriesQuery.isSuccess ? entriesQuery.data.length : 0})
           </span>
         </div>
-        {typeof sidebarData !== 'string' && (
+        {sidebarDataQuery.isSuccess && sidebarDataQuery.data && (
           <HeaderFilter
             items={{
               category: {
-                data: Object.keys(sidebarData.categories).map(cat => ({
-                  id: cat,
-                  name: cat,
-                  icon: VW_CATEGORIES.find(c => c.name === cat)?.icon ?? ''
-                }))
+                data: Object.keys(sidebarDataQuery.data.categories).map(
+                  cat => ({
+                    id: cat,
+                    name: cat,
+                    icon: VW_CATEGORIES.find(c => c.name === cat)?.icon ?? ''
+                  })
+                )
               },
               subcategory: {
-                data: Object.keys(sidebarData.subcategories).map(sub => ({
-                  id: sub,
-                  name: sub
-                }))
+                data: Object.keys(sidebarDataQuery.data.subcategories).map(
+                  sub => ({
+                    id: sub,
+                    name: sub
+                  })
+                )
               },
               brand: {
-                data: Object.keys(sidebarData.brands).map(brand => ({
+                data: Object.keys(sidebarDataQuery.data.brands).map(brand => ({
                   id: brand === '' ? 'unknown' : brand,
                   name: brand === '' ? 'Unknown' : brand,
                   icon: 'tabler:tag'
                 }))
               },
               size: {
-                data: Object.keys(sidebarData.sizes).map(size => ({
+                data: Object.keys(sidebarDataQuery.data.sizes).map(size => ({
                   id: size,
                   name: size,
                   icon: 'tabler:ruler'
                 }))
               },
               color: {
-                data: Object.keys(sidebarData.colors).map(color => ({
+                data: Object.keys(sidebarDataQuery.data.colors).map(color => ({
                   id: color,
                   name: color,
                   color: VW_COLORS.find(c => c.name === color)?.hex ?? ''
