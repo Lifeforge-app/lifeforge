@@ -72,16 +72,15 @@ const DateInput: React.FC<DateInputProps> = ({
           '.react-datetime-picker__clock'
         )[index] as HTMLElement
 
-        if (!reactClock) {
-          return
+        if (reactClock) {
+          reactClock.style.position = 'absolute'
+
+          reactClock.style.top = `${
+            inputRect.top + inputRect.height + window.scrollY
+          }px`
+
+          reactClock.style.left = `${inputRect.left + window.scrollX}px`
         }
-
-        reactClock.style.position = 'absolute'
-        reactClock.style.top = `${
-          inputRect.top + inputRect.height + window.scrollY
-        }px`
-
-        reactClock.style.left = `${inputRect.left + window.scrollX}px`
       }
 
       reactCalendar.style.top = `${
@@ -128,6 +127,7 @@ const DateInput: React.FC<DateInputProps> = ({
           onChange={(newDate: Value) => {
             setDate(newDate as any) //TODO
           }}
+          onClockOpen={updateCalendarLocation}
         />
         {date !== '' && (
           <button

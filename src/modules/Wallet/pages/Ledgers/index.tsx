@@ -96,7 +96,7 @@ function Ledgers(): React.ReactElement {
         isOpen={deleteLedgersConfirmationOpen}
         itemName="ledger account"
         nameKey="name"
-        updateDataLists={refreshLedgers}
+        updateDataList={refreshLedgers}
         onClose={() => {
           setDeleteLedgersConfirmationOpen(false)
           setSelectedData(null)

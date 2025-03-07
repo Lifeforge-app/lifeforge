@@ -88,7 +88,7 @@ function NotesSubject(): React.ReactElement {
               data={existedData}
               isOpen={deleteFolderConfirmationModalOpen}
               itemName="folder"
-              updateDataLists={refreshNotesEntries}
+              updateDataList={refreshNotesEntries}
               onClose={() => {
                 setExistedData(null)
                 setDeleteFolderConfirmationModalOpen(false)

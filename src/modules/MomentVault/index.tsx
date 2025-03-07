@@ -150,7 +150,7 @@ function MomentVault(): React.ReactElement {
         data={existedData}
         isOpen={deleteEntryConfirmationModalOpen}
         itemName="entry"
-        updateDataLists={refreshData}
+        updateDataList={refreshData}
         onClose={() => setDeleteEntryConfirmationModalOpen(false)}
       />
     </ModuleWrapper>

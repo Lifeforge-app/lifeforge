@@ -97,7 +97,7 @@ function Music(): React.ReactElement {
         isOpen={isDeleteMusicConfirmationModalOpen}
         itemName="music"
         nameKey="name"
-        updateDataLists={refreshMusics}
+        updateDataList={refreshMusics}
         onClose={() => {
           setIsDeleteMusicConfirmationModalOpen(false)
         }}

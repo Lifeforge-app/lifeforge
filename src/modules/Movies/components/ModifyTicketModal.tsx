@@ -1,17 +1,31 @@
+import { useQueryClient } from '@tanstack/react-query'
 import React, { useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
+import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import FormModal from '@components/modals/FormModal'
 import { IFieldProps } from '@interfaces/modal_interfaces'
-import { IMovieTicketFormState } from '@interfaces/movies_interfaces'
+import {
+  IMovieEntry,
+  IMovieTicketFormState
+} from '@interfaces/movies_interfaces'
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyTicketModal({
   openType,
   setOpenType,
-  targetId
+  existedData,
+  queryKey
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  targetId: string
+  existedData: IMovieEntry | null
+  queryKey: unknown[]
 }): React.ReactElement {
+  const queryClient = useQueryClient()
+  const [
+    deleteTicketConfirmationModalOpen,
+    setDeleteTicketConfirmationModalOpen
+  ] = useState(false)
   const [formState, setFormState] = useState<IMovieTicketFormState>({
     entry_id: '',
     ticket_number: '',
@@ -28,7 +42,8 @@ function ModifyTicketModal({
       label: 'Ticket number',
       icon: 'tabler:ticket',
       placeholder: '123456789',
-      type: 'text'
+      type: 'text',
+      qrScanner: true
     },
     {
       id: 'theatre_seat',
@@ -60,33 +75,111 @@ function ModifyTicketModal({
     }
   ]
 
+  async function deleteTicket() {
+    try {
+      await fetchAPI(`/movies/entries/ticket/${existedData?.id}`, {
+        method: 'DELETE'
+      })
+
+      queryClient.setQueryData<IMovieEntry[]>(queryKey, oldData => {
+        if (!oldData) return oldData
+        return oldData.map(entry => {
+          if (entry.id === existedData?.id) {
+            return {
+              ...entry,
+              ticket_number: '',
+              theatre_location: '',
+              theatre_number: '',
+              theatre_seat: '',
+              theatre_showtime: ''
+            }
+          }
+
+          return entry
+        })
+      })
+
+      toast.success('Ticket deleted successfully!')
+      setDeleteTicketConfirmationModalOpen(false)
+      setOpenType(null)
+    } catch {
+      toast.error('Failed to delete ticket')
+    }
+  }
+
   useEffect(() => {
-    if (targetId) {
+    if (!existedData) return
+
+    if (openType === 'create') {
       setFormState(prev => ({
         ...prev,
-        entry_id: targetId
+        entry_id: existedData.id,
+        ticket_number: '',
+        theatre_location: '',
+        theatre_number: '',
+        theatre_seat: '',
+        theatre_showtime: ''
       }))
+      return
     }
-  }, [targetId])
+
+    if (openType === 'update') {
+      setFormState({
+        entry_id: existedData.id,
+        ticket_number: existedData.ticket_number,
+        theatre_location: existedData.theatre_location,
+        theatre_number: existedData.theatre_number,
+        theatre_seat: existedData.theatre_seat,
+        theatre_showtime: existedData.theatre_showtime
+      })
+    }
+  }, [openType, existedData])
+
+  function updateDataList(newData: IMovieEntry) {
+    queryClient.setQueryData<IMovieEntry[]>(queryKey, oldData => {
+      if (!oldData) return oldData
+      return oldData.map(entry => {
+        if (entry.id === newData.id) {
+          return newData
+        }
+        return entry
+      })
+    })
+  }
 
   return (
-    <FormModal
-      data={formState}
-      endpoint="/movies/entries/ticket"
-      fields={FIELDS}
-      icon="tabler:ticket"
-      id={targetId}
-      isOpen={openType !== null}
-      modalRef={modalRef}
-      namespace="modules.movies"
-      openType={openType}
-      queryKey={['movies', 'entries']}
-      setData={setFormState}
-      title={`ticket.${openType}`}
-      onClose={() => {
-        setOpenType(null)
-      }}
-    />
+    <>
+      <FormModal
+        actionButtonIsRed
+        actionButtonIcon={openType === 'update' ? 'tabler:trash' : ''}
+        customUpdateDataList={{
+          create: updateDataList,
+          update: updateDataList
+        }}
+        data={formState}
+        endpoint="/movies/entries/ticket"
+        fields={FIELDS}
+        icon="tabler:ticket"
+        id={existedData?.id}
+        isOpen={openType !== null}
+        modalRef={modalRef}
+        namespace="modules.movies"
+        openType={openType}
+        queryKey={queryKey}
+        setData={setFormState}
+        title={`ticket.${openType}`}
+        onActionButtonClick={() => setDeleteTicketConfirmationModalOpen(true)}
+        onClose={() => {
+          setOpenType(null)
+        }}
+      />
+      <DeleteConfirmationModal
+        customOnClick={deleteTicket}
+        isOpen={deleteTicketConfirmationModalOpen}
+        itemName="ticket"
+        onClose={() => setDeleteTicketConfirmationModalOpen(false)}
+      />
+    </>
   )
 }
 

@@ -170,7 +170,7 @@ function WishlistEntries(): React.ReactElement {
         isOpen={deleteEntryConfirmationModalOpen}
         itemName="entry"
         nameKey="name"
-        updateDataLists={() => {
+        updateDataList={() => {
           setEntries(prev => {
             if (typeof prev === 'string') {
               return prev

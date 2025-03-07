@@ -29,7 +29,7 @@ function ModalsSection() {
         data={existedData}
         isOpen={isDeletePasswordConfirmationModalOpen}
         itemName="password"
-        updateDataLists={refreshPasswordList}
+        updateDataList={refreshPasswordList}
         onClose={() => {
           setIsDeletePasswordConfirmationModalOpen(false)
         }}

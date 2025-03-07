@@ -25,7 +25,7 @@
     "@uiw/react-color": "^2.3.4",
     "@vis.gl/react-google-maps": "^1.5.0",
     "@wavesurfer/react": "^1.0.9",
-    "@yudiel/react-qr-scanner": "^2.1.0",
+    "@yudiel/react-qr-scanner": "^2.2.1",
     "babel-plugin-react-compiler": "^19.0.0-beta-21e868a-20250216",
     "chart.js": "^4.4.7",
     "clsx": "^2.1.1",

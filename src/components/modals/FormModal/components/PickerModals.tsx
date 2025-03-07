@@ -4,6 +4,7 @@ import {
   IconPickerModal,
   ImagePickerModal
 } from '@components/inputs'
+import QRCodeScanner from '@components/inputs/QRCodeScanner'
 import { IFieldProps } from '@interfaces/modal_interfaces'
 
 function PickerModals<T extends Record<string, any | any[]>>({
@@ -15,7 +16,9 @@ function PickerModals<T extends Record<string, any | any[]>>({
   iconSelectorOpen,
   setIconSelectorOpen,
   imagePickerModalOpen,
-  setImagePickerModalOpen
+  setImagePickerModalOpen,
+  qrScannerModalOpen,
+  setQRScannerModalOpen
 }: {
   fields: IFieldProps<T>[]
   data: T
@@ -26,6 +29,8 @@ function PickerModals<T extends Record<string, any | any[]>>({
   setIconSelectorOpen: (id: string | null) => void
   imagePickerModalOpen: string | null
   setImagePickerModalOpen: (id: string | null) => void
+  qrScannerModalOpen: string | null
+  setQRScannerModalOpen: (id: string | null) => void
 }): React.ReactElement {
   return (
     <>
@@ -76,6 +81,20 @@ function PickerModals<T extends Record<string, any | any[]>>({
                 image: file,
                 preview
               }
+            }))
+          }}
+        />
+      )}
+      {fields.some(f => Object.keys(f).includes('qrScanner')) && (
+        <QRCodeScanner
+          isOpen={qrScannerModalOpen !== null}
+          onClose={() => {
+            setQRScannerModalOpen(null)
+          }}
+          onScanned={data => {
+            setData(prev => ({
+              ...prev,
+              [qrScannerModalOpen ?? '']: data
             }))
           }}
         />

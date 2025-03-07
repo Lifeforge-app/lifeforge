@@ -139,7 +139,7 @@ function ProjectKanban(): React.ReactElement {
         isOpen={deleteColumnConfirmationModalOpen}
         itemName="column"
         nameKey="name"
-        updateDataLists={refreshColumns}
+        updateDataList={refreshColumns}
         onClose={() => {
           setDeleteColumnConfirmationModalOpen(false)
         }}

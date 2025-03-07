@@ -126,7 +126,7 @@ function NotesCategory(): React.ReactElement {
             isOpen={deleteSubjectConfirmationModalOpen}
             itemName="subject"
             nameKey="title"
-            updateDataLists={refreshSubjectData}
+            updateDataList={refreshSubjectData}
             onClose={() => {
               setDeleteSubjectConfirmationModalOpen(false)
             }}

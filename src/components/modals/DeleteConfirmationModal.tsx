@@ -11,7 +11,7 @@ function DeleteConfirmationModal({
   isOpen,
   onClose,
   data,
-  updateDataLists: updateDataList,
+  updateDataList,
   apiEndpoint,
   customTitle,
   customText,
@@ -27,7 +27,7 @@ function DeleteConfirmationModal({
   isOpen: boolean
   onClose: () => void
   data?: any | string[]
-  updateDataLists?: () => void
+  updateDataList?: () => void
   apiEndpoint?: string
   customTitle?: string
   customText?: string
@@ -35,7 +35,7 @@ function DeleteConfirmationModal({
   customCallback?: () => Promise<void>
   customConfirmButtonIcon?: string
   customConfirmButtonText?: string
-  customOnClick?: () => void
+  customOnClick?: () => Promise<void>
   queryKey?: unknown[] | unknown[][]
   multiQueryKey?: boolean
 }): React.ReactElement {
@@ -121,7 +121,8 @@ function DeleteConfirmationModal({
           loading={loading}
           onClick={() => {
             if (customOnClick !== undefined) {
-              customOnClick()
+              setLoading(true)
+              customOnClick().finally(() => setLoading(false))
               return
             }
             deleteData().catch(console.error)
