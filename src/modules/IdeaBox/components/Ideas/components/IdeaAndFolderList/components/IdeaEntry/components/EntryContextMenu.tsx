@@ -63,6 +63,10 @@ function EntryContextMenu({
         ['idea-box', 'ideas', id!, path!, viewArchived],
         (prev: IIdeaBoxEntry[]) => prev.filter(idea => idea.id !== entry.id)
       )
+      queryClient.setQueryData(
+        ['idea-box', 'search', id, path, selectedTags, debouncedSearchQuery],
+        (prev: IIdeaBoxEntry[]) => prev.filter(idea => idea.id !== entry.id)
+      )
     } catch {
       toast.error(`Failed to ${entry.archived ? 'unarchive' : 'archive'} idea`)
     }
