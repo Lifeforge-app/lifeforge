@@ -227,7 +227,7 @@ function Transactions(): React.ReactElement {
         data={selectedData}
         isOpen={deleteTransactionsConfirmationOpen}
         itemName="transaction"
-        updateDataLists={() => {
+        updateDataList={() => {
           refreshTransactions()
           refreshAssets()
         }}

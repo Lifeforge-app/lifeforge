@@ -271,7 +271,7 @@ function VirtualWardrobeClothes(): React.ReactElement {
           searchParams.toString(),
           debouncedSearchQuery
         ]}
-        updateDataLists={() => {
+        updateDataList={() => {
           queryClient.setQueryData<IVirtualWardrobeEntry[]>(
             ['virtual-wardrobe', 'session-cart-items'],
             prev => {

@@ -79,7 +79,7 @@ function Wishlist(): React.ReactElement {
         isOpen={deleteConfirmationModalOpen}
         itemName="wishlist"
         nameKey="name"
-        updateDataLists={() => {
+        updateDataList={() => {
           setLists(prev => {
             if (typeof prev === 'string') return prev
             return prev.filter(list => list.id !== existedData?.id)

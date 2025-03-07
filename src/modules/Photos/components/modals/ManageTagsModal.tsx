@@ -101,7 +101,7 @@ function ManageTagsModal({
         isOpen={isDeleteConfirmationModalOpen}
         itemName="tag"
         nameKey="name"
-        updateDataLists={() => {
+        updateDataList={() => {
           refreshAlbumTagList()
         }}
         onClose={() => {

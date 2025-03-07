@@ -5,6 +5,7 @@ interface ITextInputFieldProps {
   isPassword?: boolean
   placeholder: string
   disabled?: boolean
+  qrScanner?: boolean
 }
 
 interface IDateInputFieldProps {

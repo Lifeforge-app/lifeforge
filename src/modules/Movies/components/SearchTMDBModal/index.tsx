@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Button } from '@components/buttons'
 import { SearchInput } from '@components/inputs'
@@ -65,6 +65,14 @@ function SearchTMDBModal({
       toast.error('An error occurred while adding the movie to your library!')
     }
   }
+
+  useEffect(() => {
+    if (isOpen) {
+      setSearchQuery('')
+      setSearchResults(null)
+      setPage(1)
+    }
+  }, [isOpen])
 
   return (
     <ModalWrapper isOpen={isOpen} minWidth="70vw">

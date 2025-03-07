@@ -165,7 +165,7 @@ function BooksLibrary(): React.ReactElement {
           isOpen={config.isOpen}
           itemName={config.itemName}
           nameKey={config.nameKey}
-          updateDataLists={config.updateDataList}
+          updateDataList={config.updateDataList}
           onClose={() => {
             config.setOpen(false)
             config.setData(null)
@@ -178,7 +178,7 @@ function BooksLibrary(): React.ReactElement {
         isOpen={deleteBookConfirmationModalOpen}
         itemName="book"
         nameKey="title"
-        updateDataLists={() => {
+        updateDataList={() => {
           refreshEntries()
           refreshFileTypes()
         }}

@@ -27,6 +27,7 @@ interface IMovieSearchResults {
 interface IMovieEntry extends BasePBCollection {
   tmdb_id: number
   title: string
+  original_title: string
   poster: string
   genres: string[]
   duration: number

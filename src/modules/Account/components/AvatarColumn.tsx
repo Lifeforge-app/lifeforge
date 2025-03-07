@@ -91,7 +91,7 @@ function AvatarColumn(): React.ReactElement {
         data={{}}
         isOpen={deleteAvatarConfirmationModal}
         itemName="avatar"
-        updateDataLists={() => {
+        updateDataList={() => {
           setUserData({ ...userData, avatar: '' })
         }}
         onClose={() => {

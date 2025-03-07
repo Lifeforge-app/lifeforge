@@ -119,7 +119,7 @@ function Assets(): React.ReactElement {
         isOpen={deleteAssetsConfirmationOpen}
         itemName="asset account"
         nameKey="name"
-        updateDataLists={refreshAssets}
+        updateDataList={refreshAssets}
         onClose={() => {
           setDeleteAssetsConfirmationOpen(false)
           setSelectedData(null)

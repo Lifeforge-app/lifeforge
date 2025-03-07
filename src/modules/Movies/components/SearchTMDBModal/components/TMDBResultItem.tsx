@@ -40,7 +40,13 @@ function TMDBResultItem({
         <p className="font-semibold text-custom-500">
           {moment(data.release_date).year()}
         </p>
-        <h1 className="text-xl font-semibold">{data.title}</h1>
+        <h1 className="text-xl font-semibold">
+          {data.title}
+          <span className="text-base font-medium text-bg-500">
+            {' '}
+            ({data.original_title})
+          </span>
+        </h1>
         <p className="mt-2 line-clamp-2 text-bg-500">{data.overview}</p>
         <Button
           className="mt-4 w-full"
