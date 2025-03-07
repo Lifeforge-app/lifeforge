@@ -153,6 +153,17 @@
           "virtual-wardrobe-outfits": "virtual-wardrobe/outfits"
         },
         "togglable": true
+      },
+      {
+        "name": "Movies",
+        "icon": "tabler:movie",
+        "routes": {
+          "movies": "movies"
+        },
+        "togglable": true,
+        "requiredAPIKeys": [
+          "tmdb"
+        ]
       }
     ]
   },
@@ -359,6 +370,14 @@
           "passwords": ""
         },
         "togglable": true
+      },
+      {
+        "name": "API Keys",
+        "icon": "tabler:password",
+        "routes": {
+          "api-keys": "api-keys"
+        },
+        "togglable": false
       }
     ]
   },
@@ -471,14 +490,6 @@
         "icon": "tabler:plug",
         "routes": {
           "modules": "modules"
-        },
-        "togglable": false
-      },
-      {
-        "name": "API Keys",
-        "icon": "tabler:password",
-        "routes": {
-          "api-keys": "api-keys"
         },
         "togglable": false
       },

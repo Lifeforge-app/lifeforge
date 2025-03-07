@@ -2,8 +2,8 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import useFetch from '@hooks/useFetch'
+import QueryWrapper from '@components/screens/QueryWrapper'
+import useAPIQuery from '@hooks/useAPIQuery'
 import useThemeColors from '@hooks/useThemeColor'
 import { toCamelCase } from '@utils/strings'
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
@@ -11,7 +11,10 @@ import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 function CodeTimeStatistics(): React.ReactElement {
   const { t } = useTranslation('modules.codeTime')
   const { componentBg, componentBgLighter } = useThemeColors()
-  const [stats] = useFetch<Record<string, number>>('code-time/statistics')
+  const statsQuery = useAPIQuery<Record<string, number>>(
+    'code-time/statistics',
+    ['code-time', 'statistics']
+  )
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -20,7 +23,7 @@ function CodeTimeStatistics(): React.ReactElement {
         <span className="ml-2">{t('headers.statistics')}</span>
       </h1>
 
-      <APIFallbackComponent data={stats}>
+      <QueryWrapper query={statsQuery}>
         {stats => (
           <div className="grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-4">
             {Object.entries(stats).map(([key, value], index) => (
@@ -76,7 +79,7 @@ function CodeTimeStatistics(): React.ReactElement {
             ))}
           </div>
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
     </div>
   )
 }

@@ -8,7 +8,8 @@ import {
   ListboxOrComboboxOption,
   ColorInput,
   IconInput,
-  ImageAndFileInput
+  ImageAndFileInput,
+  LocationInput
 } from '@components/inputs'
 import { IFieldProps } from '@interfaces/modal_interfaces'
 
@@ -64,12 +65,13 @@ function FormInputs<T>({
                 value={selectedData as string}
               />
             )
-          case 'date':
+          case 'datetime':
             return (
               <DateInput
                 key={field.id as string}
                 darker
                 date={selectedData as string}
+                hasTime={field.hasTime}
                 icon={field.icon}
                 index={field.index}
                 modalRef={field.modalRef}
@@ -201,6 +203,17 @@ function FormInputs<T>({
                 setIconSelectorOpen={() => {
                   setIconSelectorOpen(field.id as string)
                 }}
+              />
+            )
+
+          case 'location':
+            return (
+              <LocationInput
+                key={field.id as string}
+                label={field.label}
+                location={selectedData as string}
+                namespace={namespace}
+                setLocation={value => handleChange(field)(value ?? '')}
               />
             )
           case 'file':

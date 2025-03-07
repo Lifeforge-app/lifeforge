@@ -10,9 +10,10 @@ interface ITextInputFieldProps {
 interface IDateInputFieldProps {
   label: string
   icon: string
-  type: 'date'
+  type: 'datetime'
   index: number
-  modalRef: React.RefObject<HTMLInputElement | null>
+  hasTime?: boolean
+  modalRef: React.RefObject<HTMLDivElement | null>
 }
 
 interface IListboxInputFieldProps {
@@ -45,6 +46,11 @@ interface IImageAndFileInputFieldProps {
   onFileRemoved?: () => void
 }
 
+interface ILocationInputFieldProps {
+  label: string
+  type: 'location'
+}
+
 type IFieldProps<T> = (
   | ITextInputFieldProps
   | IDateInputFieldProps
@@ -52,6 +58,7 @@ type IFieldProps<T> = (
   | IColorInputFieldProps
   | IIconInputFieldProps
   | IImageAndFileInputFieldProps
+  | ILocationInputFieldProps
 ) & {
   id: keyof T
 }

@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 import { useTranslation } from 'react-i18next'
 import { Tooltip } from 'react-tooltip'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import useFetch from '@hooks/useFetch'
+import QueryWrapper from '@components/screens/QueryWrapper'
+import useAPIQuery from '@hooks/useAPIQuery'
 import useThemeColors from '@hooks/useThemeColor'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
@@ -14,14 +14,14 @@ function CodeTimeActivityCalendar(): React.ReactElement {
   const { theme } = usePersonalizationContext()
   const { theme: themeColor } = useThemeColors()
   const [year, setYear] = useState(new Date().getFullYear())
-  const [data] = useFetch<{
+  const dataQuery = useAPIQuery<{
     data: Array<{
       date: string
       count: number
       level: 0 | 1 | 2 | 3 | 4
     }>
     firstYear: number
-  }>(`code-time/activities?year=${year}`)
+  }>(`code-time/activities?year=${year}`, ['code-time', 'activities', year])
   const [activities, setActivities] = useState<Array<{
     date: string
     count: number
@@ -30,11 +30,15 @@ function CodeTimeActivityCalendar(): React.ReactElement {
   const [firstYear, setFirstYear] = useState<number>()
 
   useEffect(() => {
-    if (typeof data !== 'string') {
-      setActivities(data.data)
-      setFirstYear(data.firstYear)
+    if (!dataQuery.isSuccess) {
+      return
     }
-  }, [data])
+
+    if (dataQuery.data) {
+      setActivities(dataQuery.data.data)
+      setFirstYear(dataQuery.data.firstYear)
+    }
+  }, [dataQuery.isSuccess, dataQuery.data])
 
   return (
     <div>
@@ -49,7 +53,7 @@ function CodeTimeActivityCalendar(): React.ReactElement {
             Array.isArray(activities) ? 'justify-start' : 'justify-center'
           )}
         >
-          <APIFallbackComponent data={data}>
+          <QueryWrapper query={dataQuery}>
             {() =>
               Array.isArray(activities) ? (
                 <ActivityCalendar
@@ -112,7 +116,7 @@ function CodeTimeActivityCalendar(): React.ReactElement {
                 <div className="text-bg-500">No activities found</div>
               )
             }
-          </APIFallbackComponent>
+          </QueryWrapper>
         </div>
         <Tooltip className="z-9999" id="react-tooltip" />
         {firstYear && (
