@@ -2,7 +2,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import { IMovieEntry } from '@interfaces/movies_interfaces'
-import MovieListItem from './MovieListItem'
+import MovieItem from './MovieItem'
 
 function MovieList({
   data,
@@ -37,9 +37,10 @@ function MovieList({
   return (
     <div className="mt-6 space-y-4 mb-24 md:mb-6">
       {data.map(item => (
-        <MovieListItem
+        <MovieItem
           key={item.id}
           data={item}
+          type="list"
           onDelete={onDelete}
           onModifyTicket={onModifyTicket}
           onShowTicket={onShowTicket}

@@ -8,16 +8,18 @@ import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import useThemeColors from '@hooks/useThemeColor'
 import { IMovieEntry } from '@interfaces/movies_interfaces'
 
-function MovieListItem({
+function MovieItem({
   data,
   onModifyTicket,
   onShowTicket,
-  onDelete
+  onDelete,
+  type
 }: {
   data: IMovieEntry
   onModifyTicket: (type: 'create' | 'update', entry: IMovieEntry) => void
   onShowTicket: (id: string) => void
   onDelete: (entry: IMovieEntry) => void
+  type: 'grid' | 'list'
 }): React.ReactElement {
   const { componentBg } = useThemeColors()
 
@@ -25,7 +27,8 @@ function MovieListItem({
     <div
       className={clsx(
         componentBg,
-        'p-6 rounded-md flex gap-6 items-center flex-col md:flex-row relative'
+        'p-6 rounded-md flex gap-6 items-center relative',
+        type === 'grid' ? 'flex-col' : 'flex-col md:flex-row'
       )}
     >
       <div className="h-66 w-48 flex items-center rounded-md overflow-hidden justify-center shrink-0 bg-bg-200 dark:bg-bg-800 relative isolate">
@@ -39,7 +42,7 @@ function MovieListItem({
           src={`http://image.tmdb.org/t/p/w300/${data.poster}`}
         />
       </div>
-      <div className="w-full">
+      <div className="w-full flex flex-col flex-1">
         <p className="font-semibold text-custom-500 mb-1">
           {moment(data.release_date).year()}
         </p>
@@ -51,7 +54,7 @@ function MovieListItem({
           </span>
         </h1>
         <p className="mt-2 line-clamp-2 text-bg-500">{data.overview}</p>
-        <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mt-4">
+        <div className="flex flex-1 flex-wrap items-center gap-x-8 gap-y-4 mt-4">
           <div className="space-y-2">
             <div className="flex items-center gap-2 font-medium text-bg-500">
               <Icon className="size-5" icon="tabler:category" />
@@ -108,7 +111,12 @@ function MovieListItem({
             </div>
           </div>
         </div>
-        <div className="flex gap-2 mt-6 flex-col md:flex-row">
+        <div
+          className={clsx(
+            'flex mt-6 gap-2',
+            type === 'grid' ? 'flex-col' : 'flex-col md:flex-row'
+          )}
+        >
           <Button
             className="w-full"
             icon="tabler:check"
@@ -149,4 +157,4 @@ function MovieListItem({
   )
 }
 
-export default MovieListItem
+export default MovieItem
