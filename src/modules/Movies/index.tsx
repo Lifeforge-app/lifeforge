@@ -7,15 +7,18 @@ import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
 import QueryWrapper from '@components/screens/QueryWrapper'
+import ViewModeSelector from '@components/utilities/ViewModeSelector'
 import useAPIQuery from '@hooks/useAPIQuery'
 import { IMovieEntry } from '@interfaces/movies_interfaces'
 import ModifyTicketModal from './components/ModifyTicketModal'
+import MovieGrid from './components/MovieGrid'
 import MovieList from './components/MovieList'
 import SearchTMDBModal from './components/SearchTMDBModal'
 import ShowTicketModal from './components/ShowTicketModal'
 
 function Movies(): React.ReactElement {
   const { t } = useTranslation('modules.movies')
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [searchTMDBModal, setSearchTMDBModal] = useState(false)
   const [modifyTicketModalOpenType, setModifyTicketModalOpenType] = useState<
     'create' | 'update' | null
@@ -47,30 +50,43 @@ function Movies(): React.ReactElement {
         icon="tabler:movie"
         title="Movies"
       />
-      <SearchInput
-        className="mt-6"
-        namespace="modules.movies"
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        stuffToSearch="movie"
-      />
+      <div className="mt-6 flex items-center gap-2">
+        <SearchInput
+          namespace="modules.movies"
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          stuffToSearch="movie"
+        />
+        <ViewModeSelector
+          className="hidden md:flex"
+          options={[
+            { icon: 'uil:apps', value: 'grid' },
+            { icon: 'tabler:list', value: 'list' }
+          ]}
+          setViewMode={setViewMode}
+          viewMode={viewMode}
+        />
+      </div>
       <QueryWrapper query={entriesQuery}>
-        {data => (
-          <MovieList
-            data={data.filter(entry =>
-              entry.title
-                .toLowerCase()
-                .includes(debouncedSearchQuery.toLowerCase())
-            )}
-            onDelete={entry => setToBeDeleted(entry)}
-            onModifyTicket={(type, entry) => {
-              setModifyTicketModalOpenType(type)
-              setToBeUpdated(entry)
-            }}
-            onNewMovie={() => setSearchTMDBModal(true)}
-            onShowTicket={id => setShowTicketModalOpenFor(id)}
-          />
-        )}
+        {data => {
+          const FinalComponent = viewMode === 'grid' ? MovieGrid : MovieList
+          return (
+            <FinalComponent
+              data={data.filter(entry =>
+                entry.title
+                  .toLowerCase()
+                  .includes(debouncedSearchQuery.toLowerCase())
+              )}
+              onDelete={entry => setToBeDeleted(entry)}
+              onModifyTicket={(type, entry) => {
+                setModifyTicketModalOpenType(type)
+                setToBeUpdated(entry)
+              }}
+              onNewMovie={() => setSearchTMDBModal(true)}
+              onShowTicket={id => setShowTicketModalOpenFor(id)}
+            />
+          )
+        }}
       </QueryWrapper>
       <SearchTMDBModal
         entriesIDs={entriesQuery.data?.map(entry => entry.tmdb_id) ?? []}
