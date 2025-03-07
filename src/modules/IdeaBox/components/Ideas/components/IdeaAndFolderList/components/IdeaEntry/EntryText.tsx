@@ -67,7 +67,7 @@ function EntryText({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
           {entry.content}
         </p>
         <span className="text-sm text-bg-500">
-          {moment(entry.updated).fromNow()}
+          {moment(entry.created).fromNow()}
         </span>
         <InFolderChip entry={entry} />
       </div>

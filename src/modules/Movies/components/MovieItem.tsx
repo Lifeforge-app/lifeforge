@@ -27,7 +27,7 @@ function MovieItem({
     <div
       className={clsx(
         componentBg,
-        'p-6 rounded-md flex gap-6 items-center relative',
+        'p-6 rounded-md flex gap-6 items-center relative shadow-custom',
         type === 'grid' ? 'flex-col' : 'flex-col md:flex-row'
       )}
     >

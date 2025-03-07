@@ -22,7 +22,7 @@ function TMDBResultItem({
     <div
       className={clsx(
         componentBgLighter,
-        'p-4 rounded-md flex items-center gap-6 flex-col md:flex-row'
+        'p-4 rounded-md flex items-center gap-6 flex-col md:flex-row shadow-custom'
       )}
     >
       <div className="h-48 w-32 shrink-0 bg-bg-200 dark:bg-bg-800 relative isolate">

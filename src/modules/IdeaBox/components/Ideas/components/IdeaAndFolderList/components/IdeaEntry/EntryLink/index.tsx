@@ -63,7 +63,7 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
       </div>
       <EntryContent entry={entry} />
       <span className="text-sm text-bg-500">
-        {moment(entry.updated).fromNow()}
+        {moment(entry.created).fromNow()}
       </span>
       <InFolderChip entry={entry} />
     </div>

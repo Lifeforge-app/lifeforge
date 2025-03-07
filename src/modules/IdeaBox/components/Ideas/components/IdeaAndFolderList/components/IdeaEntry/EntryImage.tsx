@@ -75,7 +75,7 @@ function EntryImage({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
           />
         </Zoom>
         <span className="block text-sm text-bg-500">
-          {moment(entry.updated).fromNow()}
+          {moment(entry.created).fromNow()}
         </span>
         <InFolderChip entry={entry} />
       </div>
