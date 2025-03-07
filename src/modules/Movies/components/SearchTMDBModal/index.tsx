@@ -95,7 +95,7 @@ function SearchTMDBModal({
         title="Search TMDB"
         onClose={onClose}
       />
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 sm:flex-row flex-col">
         <SearchInput
           hasTopMargin={false}
           namespace="modules.movies"
@@ -113,6 +113,7 @@ function SearchTMDBModal({
         />
         <Button
           iconAtEnd
+          className="w-full sm:w-auto"
           disabled={searchQuery.trim() === ''}
           icon="tabler:arrow-right"
           loading={searchLoading}

@@ -4,7 +4,7 @@ import EmptyStateScreen from '@components/screens/EmptyStateScreen'
 import { IMovieEntry } from '@interfaces/movies_interfaces'
 import MovieItem from './MovieItem'
 
-function MovieList({
+function MovieGrid({
   data,
   onModifyTicket,
   onShowTicket,
@@ -35,12 +35,12 @@ function MovieList({
   }
 
   return (
-    <div className="mt-6 space-y-4 mb-24 md:mb-6">
+    <div className="mt-6 gap-3 grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] mb-24 md:mb-6">
       {data.map(item => (
         <MovieItem
           key={item.id}
           data={item}
-          type="list"
+          type="grid"
           onDelete={onDelete}
           onModifyTicket={onModifyTicket}
           onShowTicket={onShowTicket}
@@ -50,4 +50,4 @@ function MovieList({
   )
 }
 
-export default MovieList
+export default MovieGrid
