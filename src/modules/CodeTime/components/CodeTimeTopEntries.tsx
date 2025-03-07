@@ -2,8 +2,8 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import useFetch from '@hooks/useFetch'
+import QueryWrapper from '@components/screens/QueryWrapper'
+import useAPIQuery from '@hooks/useAPIQuery'
 import useThemeColors from '@hooks/useThemeColor'
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
@@ -17,8 +17,9 @@ function CodeTimeTopEntries({
   const [lastFor, setLastFor] = useState<'24 hours' | '7 days' | '30 days'>(
     '24 hours'
   )
-  const [topEntries] = useFetch<Record<string, number>>(
-    `code-time/${type}?last=${lastFor}`
+  const topEntriesQuery = useAPIQuery<Record<string, number>>(
+    `code-time/${type}?last=${lastFor}`,
+    ['code-time', 'top', type, lastFor]
   )
 
   return (
@@ -60,7 +61,7 @@ function CodeTimeTopEntries({
           </div>
         </div>
       </div>
-      <APIFallbackComponent data={topEntries}>
+      <QueryWrapper query={topEntriesQuery}>
         {topEntries => (
           <>
             <div className="flex w-full">
@@ -132,7 +133,7 @@ function CodeTimeTopEntries({
             </ul>
           </>
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
     </div>
   )
 }

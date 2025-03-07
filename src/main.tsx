@@ -15,6 +15,8 @@ import 'react-grid-layout/css/styles.css'
 import './styles/react-resizable.css'
 import 'leaflet/dist/leaflet.css'
 import 'react-virtualized/styles.css'
+import 'react-datetime-picker/dist/DateTimePicker.css'
+import 'react-clock/dist/Clock.css'
 import './styles/index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

@@ -44,7 +44,7 @@ function ModifyEventModal({
       id: 'start',
       label: 'Start time',
       icon: 'tabler:clock',
-      type: 'date',
+      type: 'datetime',
       index: 0,
       modalRef: ref
     },
@@ -52,7 +52,7 @@ function ModifyEventModal({
       id: 'end',
       label: 'End time',
       icon: 'tabler:clock',
-      type: 'date',
+      type: 'datetime',
       index: 1,
       modalRef: ref
     },

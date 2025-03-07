@@ -60,7 +60,7 @@ function SearchInput({
         icon={customIcon ?? 'tabler:search'}
       />
       <input
-        className="w-full bg-transparent placeholder:text-bg-500"
+        className="w-full bg-transparent caret-custom-500 placeholder:text-bg-500"
         placeholder={t(`search`, {
           item: t([
             `${namespace}:${[tKey, 'items', toCamelCase(stuffToSearch)]

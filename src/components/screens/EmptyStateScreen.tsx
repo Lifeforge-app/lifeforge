@@ -22,7 +22,7 @@ function EmptyStateScreen({
   name: string | false
   title?: string
   description?: string
-  icon?: string
+  icon?: string | React.ReactElement
   ctaContent?: string
   ctaTProps?: Record<string, unknown>
   ctaIcon?: string
@@ -40,15 +40,18 @@ function EmptyStateScreen({
         smaller ? 'gap-4' : 'gap-6'
       )}
     >
-      {icon !== undefined && (
-        <Icon
-          className={clsx(
-            'shrink-0 text-bg-300 dark:text-bg-500',
-            smaller ? 'size-24' : 'size-32'
-          )}
-          icon={icon}
-        />
-      )}
+      {icon !== undefined &&
+        (typeof icon === 'string' ? (
+          <Icon
+            className={clsx(
+              'shrink-0 text-bg-300 dark:text-bg-500',
+              smaller ? 'size-24' : 'size-32'
+            )}
+            icon={icon}
+          />
+        ) : (
+          icon
+        ))}
       <h2
         className={clsx(
           'text-center px-6 font-semibold text-bg-500',
@@ -61,7 +64,7 @@ function EmptyStateScreen({
       </h2>
       <p
         className={clsx(
-          '-mt-2 px-6 text-center text-bg-500',
+          '-mt-2 px-6 text-center text-bg-500 whitespace-pre-wrap',
           smaller ? 'text-base' : 'text-lg'
         )}
       >

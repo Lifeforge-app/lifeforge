@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React, { useRef } from 'react'
 import DatePicker from 'react-date-picker'
+import DateTimePicker from 'react-datetime-picker'
 import { useTranslation } from 'react-i18next'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { toCamelCase } from '@utils/strings'
@@ -23,6 +24,7 @@ interface DateInputProps {
   modalRef?: React.RefObject<HTMLElement | null>
   index?: number
   required?: boolean
+  hasTime?: boolean
   namespace: string
 }
 
@@ -37,8 +39,10 @@ const DateInput: React.FC<DateInputProps> = ({
   modalRef,
   index = 0,
   required,
+  hasTime = false,
   namespace
 }) => {
+  const FinalComponent = hasTime ? DateTimePicker : DatePicker
   const { t } = useTranslation(namespace)
   const { language } = usePersonalizationContext()
   const ref = useRef<HTMLInputElement | null>(null)
@@ -53,13 +57,32 @@ const DateInput: React.FC<DateInputProps> = ({
         index
       ] as HTMLElement
 
-      const calendarInput = ref.current.querySelector('.react-date-picker')
+      const calendarInput = ref.current.querySelector(
+        hasTime ? '.react-datetime-picker' : '.react-date-picker'
+      )
 
-      if (reactCalendar === null || calendarInput === null) {
+      if (!reactCalendar || !calendarInput) {
         return
       }
 
       const inputRect = calendarInput.getBoundingClientRect()
+
+      if (hasTime) {
+        const reactClock = document.querySelectorAll(
+          '.react-datetime-picker__clock'
+        )[index] as HTMLElement
+
+        if (!reactClock) {
+          return
+        }
+
+        reactClock.style.position = 'absolute'
+        reactClock.style.top = `${
+          inputRect.top + inputRect.height + window.scrollY
+        }px`
+
+        reactClock.style.left = `${inputRect.left + window.scrollX}px`
+      }
 
       reactCalendar.style.top = `${
         inputRect.top + inputRect.height + window.scrollY
@@ -81,7 +104,7 @@ const DateInput: React.FC<DateInputProps> = ({
           label={t(`inputs.${toCamelCase(name)}`)}
           required={required === true}
         />
-        <DatePicker
+        <FinalComponent
           calendarIcon={null}
           calendarProps={{
             className:
@@ -96,14 +119,14 @@ const DateInput: React.FC<DateInputProps> = ({
           }}
           className="mt-6 h-10 w-full rounded-lg border-none bg-transparent px-4 tracking-wider outline-hidden placeholder:text-transparent focus:outline-hidden focus:placeholder:text-bg-500"
           clearIcon={null}
-          format="dd-MM-y"
+          format={hasTime ? 'dd-MM-yyyy HH:mm' : 'dd-MM-yyyy'}
           portalContainer={
             modalRef?.current ?? (document.querySelector('#app') as HTMLElement)
           }
           value={date}
           onCalendarOpen={updateCalendarLocation}
           onChange={(newDate: Value) => {
-            setDate(newDate?.toString() ?? '')
+            setDate(newDate as any) //TODO
           }}
         />
         {date !== '' && (

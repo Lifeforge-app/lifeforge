@@ -83,6 +83,7 @@ function APIKeys(): React.ReactElement {
                   key={entry.id}
                   entry={entry}
                   hasDivider={idx !== entries.length - 1}
+                  masterPassword={masterPassword}
                   setDeleteConfirmationModalOpen={
                     setDeleteConfirmationModalOpen
                   }

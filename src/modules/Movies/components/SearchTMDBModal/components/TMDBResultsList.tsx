@@ -1,0 +1,64 @@
+import React from 'react'
+import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+import Pagination from '@components/utilities/Pagination'
+import { IMovieSearchResults } from '@interfaces/movies_interfaces'
+import TMDBResultItem from './TMDBResultItem'
+
+function TMDBResultsList({
+  results,
+  page,
+  setPage,
+  onAddToLibrary,
+  entriesIDs
+}: {
+  results: IMovieSearchResults | null
+  page: number
+  setPage: (page: number) => void
+  onAddToLibrary: (id: number) => Promise<void>
+  entriesIDs: number[]
+}): React.ReactElement {
+  if (results === null) {
+    return <></>
+  }
+
+  if (results.total_results === 0) {
+    return (
+      <div className="mt-6">
+        <EmptyStateScreen
+          icon="tabler:search-off"
+          name="search"
+          namespace="modules.movies"
+        />
+      </div>
+    )
+  }
+
+  return (
+    <>
+      <Pagination
+        className="mb-4 mt-6"
+        currentPage={page}
+        totalPages={results.total_pages}
+        onPageChange={setPage}
+      />
+      <div className="w-full mt-6 space-y-2">
+        {results.results.map(entry => (
+          <TMDBResultItem
+            key={entry.id}
+            data={entry}
+            isAdded={entriesIDs.includes(entry.id)}
+            onAddToLibrary={onAddToLibrary}
+          />
+        ))}
+      </div>
+      <Pagination
+        className="mt-4"
+        currentPage={page}
+        totalPages={results.total_pages}
+        onPageChange={setPage}
+      />
+    </>
+  )
+}
+
+export default TMDBResultsList

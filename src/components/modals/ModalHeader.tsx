@@ -42,14 +42,14 @@ function ModalHeader({
         <span className="min-w-0 truncate">
           {needTranslate
             ? t([
-                `${toCamelCase(innerTitle)}`,
-                `${toCamelCase(innerTitle)}.title`,
-                `modals.${toCamelCase(innerTitle)}`,
                 `modals.${toCamelCase(innerTitle)}.title`,
-                `${innerTitle}`,
+                `modals.${toCamelCase(innerTitle)}`,
+                `${toCamelCase(innerTitle)}.title`,
+                `${toCamelCase(innerTitle)}`,
                 `${innerTitle}.title`,
-                `modals.${innerTitle}`,
-                `modals.${innerTitle}.title`
+                `${innerTitle}`,
+                `modals.${innerTitle}.title`,
+                `modals.${innerTitle}`
               ])
             : innerTitle}
         </span>
