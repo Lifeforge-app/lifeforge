@@ -15,13 +15,12 @@ function MissingAPIKeyScreen({
   return (
     <div className="flex-center size-full flex-1 flex-col gap-4">
       <Icon className="size-28" icon="tabler:key-off" />
-      <h2 className="text-4xl font-semibold">{t('apiKeys.missing.title')}</h2>
+      <h2 className="text-4xl font-semibold">{t('missing.title')}</h2>
       <p className="text-center text-lg text-bg-500">
-        {t('apiKeys.missing.description')}
+        {t('missing.description')}
       </p>
       <p className="mb-8 mt-4 text-center text-lg text-bg-500">
-        {t('apiKeys.missing.requiredKeysAre')}{' '}
-        <code>{requiredAPIKeys.join(', ')}</code>
+        {t('missing.requiredKeysAre')} <code>{requiredAPIKeys.join(', ')}</code>
       </p>
       <Button iconAtEnd as={Link} icon="tabler:arrow-right" to="/api-keys">
         Config API Keys

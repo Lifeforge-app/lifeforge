@@ -559,11 +559,11 @@ input:-webkit-autofill:active {
   caret-color: #ffffff;
 }
 
-.react-date-picker__wrapper {
-  @apply border-none;
+.react-date-picker__wrapper, .react-datetime-picker__wrapper {
+  @apply border-none!;
 }
 
-.react-date-picker__inputGroup {
+.react-date-picker__inputGroup, .react-datetime-picker__inputGroup {
   @apply p-0;
 }
 

@@ -6,6 +6,7 @@ function ModalWrapper({
   children,
   minWidth,
   minHeight,
+  maxWidth,
   className,
   modalRef
 }: {
@@ -13,6 +14,7 @@ function ModalWrapper({
   children: React.ReactNode
   minWidth?: string
   minHeight?: string
+  maxWidth?: string
   className?: string
   modalRef?: React.RefObject<HTMLDivElement | null>
 }): React.ReactElement {
@@ -48,7 +50,8 @@ function ModalWrapper({
         )}
         style={{
           minWidth: minWidth,
-          minHeight: minHeight
+          minHeight: minHeight,
+          maxWidth: maxWidth
         }}
       >
         {innerIsOpen && children}

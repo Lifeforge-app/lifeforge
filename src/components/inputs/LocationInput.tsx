@@ -38,11 +38,13 @@ export interface Prediction {
 function LocationInput({
   location,
   setLocation,
-  namespace
+  namespace,
+  label
 }: {
   location: string | null
-  setLocation: React.Dispatch<React.SetStateAction<string | null>>
+  setLocation: (value: string | null) => void
   namespace: string
+  label?: string
 }): React.ReactElement {
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query, 500)
@@ -62,7 +64,7 @@ function LocationInput({
       customActive={Boolean(location)}
       displayValue={(value: string) => value}
       icon="tabler:map-pin"
-      name="Location"
+      name={label || 'Location'}
       namespace={namespace}
       setQuery={setQuery}
       setValue={setLocation}

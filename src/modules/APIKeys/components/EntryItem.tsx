@@ -1,17 +1,24 @@
 import { Icon } from '@iconify/react'
+import copy from 'copy-to-clipboard'
 import moment from 'moment'
-import React from 'react'
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
+import { Button } from '@components/buttons'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
 import ConfigColumn from '@components/utilities/ConfigColumn'
 import { type IAPIKeyEntry } from '@interfaces/api_keys_interfaces'
+import { decrypt, encrypt } from '@utils/encryption'
+import fetchAPI from '@utils/fetchAPI'
+import { fetchChallenge } from '../utils/fetchChallenge'
 
 function EntryItem({
   entry,
   hasDivider,
   setExistingData,
   setModifyAPIKeyModalOpenType,
-  setDeleteConfirmationModalOpen
+  setDeleteConfirmationModalOpen,
+  masterPassword
 }: {
   entry: IAPIKeyEntry
   hasDivider: boolean
@@ -20,7 +27,33 @@ function EntryItem({
     React.SetStateAction<'create' | 'update' | null>
   >
   setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  masterPassword: string
 }): React.ReactElement {
+  const [isCopying, setIsCopying] = useState(false)
+  async function copyKey(): Promise<void> {
+    const challenge = await fetchChallenge()
+    setIsCopying(true)
+
+    try {
+      const data = await fetchAPI<string>(
+        `api-keys/${entry.id}?master=${encodeURIComponent(
+          encrypt(masterPassword, challenge)
+        )}`
+      )
+
+      const decryptedKey = decrypt(data, challenge)
+      const decryptedSecondTime = decrypt(decryptedKey, masterPassword)
+
+      copy(decryptedSecondTime)
+      toast.success('Key copied to clipboard')
+    } catch (err) {
+      console.error(err)
+      toast.error('Failed to fetch key')
+    } finally {
+      setIsCopying(false)
+    }
+  }
+
   return (
     <ConfigColumn
       key={entry.id}
@@ -47,25 +80,36 @@ function EntryItem({
           Last updated: {moment(entry.updated).fromNow()}
         </span>
       </div>
-      <HamburgerMenu className="relative ml-2">
-        <MenuItem
-          icon="tabler:pencil"
-          text="edit"
+      <div className="flex gap-2 ml-2">
+        <Button
+          className="p-2!"
+          icon="tabler:copy"
+          loading={isCopying}
+          variant="no-bg"
           onClick={() => {
-            setExistingData(entry)
-            setModifyAPIKeyModalOpenType('update')
+            copyKey().catch(console.error)
           }}
         />
-        <MenuItem
-          isRed
-          icon="tabler:trash"
-          text="delete"
-          onClick={() => {
-            setDeleteConfirmationModalOpen(true)
-            setExistingData(entry)
-          }}
-        />
-      </HamburgerMenu>
+        <HamburgerMenu className="relative">
+          <MenuItem
+            icon="tabler:pencil"
+            text="edit"
+            onClick={() => {
+              setExistingData(entry)
+              setModifyAPIKeyModalOpenType('update')
+            }}
+          />
+          <MenuItem
+            isRed
+            icon="tabler:trash"
+            text="delete"
+            onClick={() => {
+              setDeleteConfirmationModalOpen(true)
+              setExistingData(entry)
+            }}
+          />
+        </HamburgerMenu>
+      </div>
     </ConfigColumn>
   )
 }
