@@ -38,6 +38,8 @@ function ContainerHeader(): React.ReactElement {
             text={viewArchived ? 'View Active' : 'View Archived'}
             onClick={() => {
               setViewArchived(!viewArchived)
+              setSearchQuery('')
+              setSelectedTags([])
             }}
           />
         </HamburgerMenu>
