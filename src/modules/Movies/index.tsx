@@ -22,7 +22,7 @@ function Movies(): React.ReactElement {
   >(null)
   const [showTicketModalOpenFor, setShowTicketModalOpenFor] = useState('')
   const [toBeDeleted, setToBeDeleted] = useState<IMovieEntry | null>(null)
-  const [targetId, setTargetId] = useState('')
+  const [toBeUpdated, setToBeUpdated] = useState<IMovieEntry | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 500)
   const queryKey = useMemo(
@@ -63,10 +63,11 @@ function Movies(): React.ReactElement {
                 .includes(debouncedSearchQuery.toLowerCase())
             )}
             onDelete={entry => setToBeDeleted(entry)}
-            onModifyTicket={(type, id) => {
+            onModifyTicket={(type, entry) => {
               setModifyTicketModalOpenType(type)
-              setTargetId(id)
+              setToBeUpdated(entry)
             }}
+            onNewMovie={() => setSearchTMDBModal(true)}
             onShowTicket={id => setShowTicketModalOpenFor(id)}
           />
         )}
@@ -78,9 +79,10 @@ function Movies(): React.ReactElement {
         onClose={() => setSearchTMDBModal(false)}
       />
       <ModifyTicketModal
+        existedData={toBeUpdated}
         openType={modifyTicketModalOpenType}
+        queryKey={queryKey}
         setOpenType={setModifyTicketModalOpenType}
-        targetId={targetId}
       />
       <ShowTicketModal
         entry={entriesQuery.data?.find(

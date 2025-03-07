@@ -105,7 +105,7 @@ function TodoListContainer(): React.ReactElement {
         isOpen={deleteTaskConfirmationModalOpen}
         itemName="task"
         nameKey="summary"
-        updateDataLists={refreshEntries}
+        updateDataList={refreshEntries}
         onClose={() => {
           setDeleteTaskConfirmationModalOpen(false)
           refreshPriorities()
@@ -129,7 +129,7 @@ function TodoListContainer(): React.ReactElement {
         data={selectedPriority}
         isOpen={deletePriorityConfirmationModalOpen}
         itemName="priority"
-        updateDataLists={refreshPriorities}
+        updateDataList={refreshPriorities}
         onClose={() => {
           setDeletePriorityConfirmationModalOpen(false)
         }}
@@ -141,7 +141,7 @@ function TodoListContainer(): React.ReactElement {
         data={selectedList}
         isOpen={deleteListConfirmationModalOpen}
         itemName="list"
-        updateDataLists={refreshLists}
+        updateDataList={refreshLists}
         onClose={() => {
           setDeleteListConfirmationModalOpen(false)
         }}
@@ -153,7 +153,7 @@ function TodoListContainer(): React.ReactElement {
         data={selectedTag}
         isOpen={deleteTagConfirmationModalOpen}
         itemName="tag"
-        updateDataLists={refreshTagsList}
+        updateDataList={refreshTagsList}
         onClose={() => {
           setDeleteTagConfirmationModalOpen(false)
         }}

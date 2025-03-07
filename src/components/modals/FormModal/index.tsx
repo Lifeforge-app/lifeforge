@@ -36,6 +36,7 @@ function FormModal<T extends Record<string, any | any[]>>({
     children: 'Submit',
     icon: 'tabler:check'
   },
+  customUpdateDataList,
 
   // action button stuff
   actionButtonIcon,
@@ -68,11 +69,18 @@ function FormModal<T extends Record<string, any | any[]>>({
   getFinalData?: (originalData: T) => Promise<Record<string, any>>
   sortBy?: keyof T
   sortMode?: 'asc' | 'desc'
+  customUpdateDataList?: {
+    create?: (newData: any) => void
+    update?: (newData: any) => void
+  }
 }): React.ReactElement {
   const queryClient = useQueryClient()
   const [colorPickerOpen, setColorPickerOpen] = useState<string | null>(null)
   const [iconSelectorOpen, setIconSelectorOpen] = useState<string | null>(null)
   const [imagePickerModalOpen, setImagePickerModalOpen] = useState<
+    string | null
+  >(null)
+  const [qrCodeScannerModalOpen, setQRCodeScannerModalOpen] = useState<
     string | null
   >(null)
   const [submitLoading, setSubmitLoading] = useState(false)
@@ -81,17 +89,21 @@ function FormModal<T extends Record<string, any | any[]>>({
       setSubmitLoading(false)
     },
     onSuccess: (newData: T) => {
-      queryClient.setQueryData(queryKey ?? [], (old: T[]) => {
-        return [...old, newData].sort((a, b) => {
-          if (sortBy) {
-            if (sortMode === 'asc') {
-              return a[sortBy] > b[sortBy] ? 1 : -1
+      if (customUpdateDataList?.create) {
+        customUpdateDataList.create(newData)
+      } else {
+        queryClient.setQueryData(queryKey ?? [], (old: T[]) => {
+          return [...old, newData].sort((a, b) => {
+            if (sortBy) {
+              if (sortMode === 'asc') {
+                return a[sortBy] > b[sortBy] ? 1 : -1
+              }
+              return a[sortBy] < b[sortBy] ? 1 : -1
             }
-            return a[sortBy] < b[sortBy] ? 1 : -1
-          }
-          return 0
+            return 0
+          })
         })
-      })
+      }
       onClose()
     }
   })
@@ -103,24 +115,28 @@ function FormModal<T extends Record<string, any | any[]>>({
         setSubmitLoading(false)
       },
       onSuccess: (newData: T) => {
-        queryClient.setQueryData(queryKey ?? [], (old: T[]) => {
-          return old
-            .map(entry => {
-              if (entry.id === newData.id) {
-                return newData
-              }
-              return entry
-            })
-            .sort((a, b) => {
-              if (sortBy) {
-                if (sortMode === 'asc') {
-                  return a[sortBy] > b[sortBy] ? 1 : -1
+        if (customUpdateDataList?.update) {
+          customUpdateDataList.update(newData)
+        } else {
+          queryClient.setQueryData(queryKey ?? [], (old: T[]) => {
+            return old
+              .map(entry => {
+                if (entry.id === newData.id) {
+                  return newData
                 }
-                return a[sortBy] < b[sortBy] ? 1 : -1
-              }
-              return 0
-            })
-        })
+                return entry
+              })
+              .sort((a, b) => {
+                if (sortBy) {
+                  if (sortMode === 'asc') {
+                    return a[sortBy] > b[sortBy] ? 1 : -1
+                  }
+                  return a[sortBy] < b[sortBy] ? 1 : -1
+                }
+                return 0
+              })
+          })
+        }
         onClose()
       }
     }
@@ -165,6 +181,7 @@ function FormModal<T extends Record<string, any | any[]>>({
               setData={setData}
               setIconSelectorOpen={setIconSelectorOpen}
               setImagePickerModalOpen={setImagePickerModalOpen}
+              setQrScannerModalOpen={setQRCodeScannerModalOpen}
             />
             <SubmitButton
               openType={openType}
@@ -183,10 +200,12 @@ function FormModal<T extends Record<string, any | any[]>>({
         fields={fields}
         iconSelectorOpen={iconSelectorOpen}
         imagePickerModalOpen={imagePickerModalOpen}
+        qrScannerModalOpen={qrCodeScannerModalOpen}
         setColorPickerOpen={setColorPickerOpen}
         setData={setData}
         setIconSelectorOpen={setIconSelectorOpen}
         setImagePickerModalOpen={setImagePickerModalOpen}
+        setQRScannerModalOpen={setQRCodeScannerModalOpen}
       />
     </>
   )

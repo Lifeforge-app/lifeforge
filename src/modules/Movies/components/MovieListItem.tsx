@@ -15,7 +15,7 @@ function MovieListItem({
   onDelete
 }: {
   data: IMovieEntry
-  onModifyTicket: (type: 'create' | 'update', id: string) => void
+  onModifyTicket: (type: 'create' | 'update', entry: IMovieEntry) => void
   onShowTicket: (id: string) => void
   onDelete: (entry: IMovieEntry) => void
 }): React.ReactElement {
@@ -25,7 +25,7 @@ function MovieListItem({
     <div
       className={clsx(
         componentBg,
-        'p-6 rounded-md flex gap-6 flex-col md:flex-row relative'
+        'p-6 rounded-md flex gap-6 items-center flex-col md:flex-row relative'
       )}
     >
       <div className="h-66 w-48 flex items-center rounded-md overflow-hidden justify-center shrink-0 bg-bg-200 dark:bg-bg-800 relative isolate">
@@ -43,7 +43,13 @@ function MovieListItem({
         <p className="font-semibold text-custom-500 mb-1">
           {moment(data.release_date).year()}
         </p>
-        <h1 className="text-xl font-semibold">{data.title}</h1>
+        <h1 className="text-xl font-semibold">
+          {data.title}
+          <span className="text-base font-medium text-bg-500">
+            {' '}
+            ({data.original_title})
+          </span>
+        </h1>
         <p className="mt-2 line-clamp-2 text-bg-500">{data.overview}</p>
         <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mt-4">
           <div className="space-y-2">
@@ -58,7 +64,11 @@ function MovieListItem({
               <Icon className="size-5" icon="tabler:calendar" />
               Release Date
             </div>
-            <div>{moment(data.release_date).format('DD MMM YYYY')}</div>
+            <div>
+              {data.release_date
+                ? moment(data.release_date).format('DD MMM YYYY')
+                : 'TBA'}
+            </div>
           </div>
           <div className="space-y-2">
             <div className="flex items-center gap-2 font-medium text-bg-500">
@@ -98,16 +108,26 @@ function MovieListItem({
             </div>
           </div>
         </div>
-        {data.ticket_number && (
+        <div className="flex gap-2 mt-6 flex-col md:flex-row">
           <Button
-            className="w-full mt-6"
-            icon="tabler:ticket"
+            className="w-full"
+            icon="tabler:check"
             namespace="modules.movies"
-            onClick={() => onShowTicket(data.id)}
+            variant="secondary"
           >
-            Show Ticket
+            Mark as Watched
           </Button>
-        )}
+          {data.ticket_number && (
+            <Button
+              className="w-full"
+              icon="tabler:ticket"
+              namespace="modules.movies"
+              onClick={() => onShowTicket(data.id)}
+            >
+              Show Ticket
+            </Button>
+          )}
+        </div>
       </div>
       <HamburgerMenu className="absolute top-4 right-4">
         <MenuItem
@@ -115,14 +135,8 @@ function MovieListItem({
           namespace="modules.movies"
           text={data.ticket_number ? 'Update Ticket' : 'Add Ticket'}
           onClick={() => {
-            onModifyTicket(data.ticket_number ? 'update' : 'create', data.id)
+            onModifyTicket(data.ticket_number ? 'update' : 'create', data)
           }}
-        />
-        <MenuItem
-          icon="tabler:check"
-          namespace="modules.movies"
-          text="Mark as Watched"
-          onClick={() => {}}
         />
         <MenuItem
           isRed

@@ -80,7 +80,8 @@ function useModifyMutation<T>(
     onSettled: () => {
       options?.onSettled?.()
     },
-    onError: () => {
+    onError: err => {
+      console.error(err)
       toast.error(`Failed to ${type === 'create' ? 'create' : 'update'}`)
       options?.onError?.()
     }

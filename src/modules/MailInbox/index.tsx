@@ -332,7 +332,7 @@ function MailInbox(): React.ReactElement {
         data={selected}
         isOpen={deleteConfirmationModalOpen}
         itemName="mail"
-        updateDataLists={() => {
+        updateDataList={() => {
           refreshMails()
           refreshLabels()
         }}

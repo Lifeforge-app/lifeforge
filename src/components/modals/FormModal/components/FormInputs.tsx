@@ -20,7 +20,8 @@ function FormInputs<T>({
   namespace,
   setColorPickerOpen,
   setIconSelectorOpen,
-  setImagePickerModalOpen
+  setImagePickerModalOpen,
+  setQrScannerModalOpen
 }: {
   fields: IFieldProps<T>[]
   data: T
@@ -29,6 +30,7 @@ function FormInputs<T>({
   setColorPickerOpen: (id: string) => void
   setIconSelectorOpen: (id: string) => void
   setImagePickerModalOpen: (id: string) => void
+  setQrScannerModalOpen: (id: string) => void
 }): React.ReactElement {
   const handleChange = (field: IFieldProps<T>) => {
     return (
@@ -55,6 +57,7 @@ function FormInputs<T>({
               <TextInput
                 key={field.id as string}
                 darker
+                actionButtonIcon={field.qrScanner ? 'tabler:qrcode' : ''}
                 disabled={field.disabled}
                 icon={field.icon}
                 isPassword={field.isPassword}
@@ -63,6 +66,9 @@ function FormInputs<T>({
                 placeholder={field.placeholder}
                 setValue={handleChange(field)}
                 value={selectedData as string}
+                onActionButtonClick={() => {
+                  setQrScannerModalOpen(field.id as string)
+                }}
               />
             )
           case 'datetime':

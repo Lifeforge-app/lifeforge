@@ -123,7 +123,7 @@ function Journal(): React.ReactElement {
           data={existedData}
           isOpen={deleteJournalConfirmationModalOpen}
           itemName="journal entry"
-          updateDataLists={() => {
+          updateDataList={() => {
             setExistedData(null)
             fetchData().catch(console.error)
           }}

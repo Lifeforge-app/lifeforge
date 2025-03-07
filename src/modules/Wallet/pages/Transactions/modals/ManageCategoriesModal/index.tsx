@@ -95,7 +95,7 @@ function ManageCategoriesModal({
         isOpen={deleteCategoriesConfirmationOpen}
         itemName="category"
         nameKey="name"
-        updateDataLists={refreshCategories}
+        updateDataList={refreshCategories}
         onClose={() => {
           setDeleteCategoriesConfirmationOpen(false)
         }}

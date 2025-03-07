@@ -110,7 +110,7 @@ function ProjectsM(): React.ReactElement {
           isOpen={config.isOpen}
           itemName={config.itemName}
           nameKey={config.nameKey}
-          updateDataLists={config.updateDataList}
+          updateDataList={config.updateDataList}
           onClose={() => {
             config.setOpen(false)
             config.setData(null)

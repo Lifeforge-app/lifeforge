@@ -18,6 +18,10 @@ function InputWrapper({
   const { componentBgWithHover, componentBgLighterWithHover } = useThemeColors()
 
   function focusInput(e: React.MouseEvent | React.FocusEvent) {
+    if ((e.target as HTMLElement).tagName === 'BUTTON') {
+      return
+    }
+
     if (inputRef?.current !== undefined && inputRef.current !== null) {
       inputRef.current.focus()
       if ((e.target as HTMLElement).tagName !== 'INPUT') {
