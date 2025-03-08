@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@components/buttons'
+import { Button, FAB } from '@components/buttons'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
@@ -77,7 +77,7 @@ function APIKeys(): React.ReactElement {
       <>
         <QueryWrapper query={entriesQuery}>
           {entries => (
-            <div className="mt-8 flex-1 mb-8">
+            <div className="mt-8 flex-1 mb-24 lg:mb-6">
               {entries.map((entry, idx) => (
                 <EntryItem
                   key={entry.id}
@@ -144,6 +144,13 @@ function APIKeys(): React.ReactElement {
         />
       </div>
       {renderContent()}
+      {otpSuccess && masterPassword !== '' && (
+        <FAB
+          onClick={() => {
+            setModifyAPIKeyModalOpenType('create')
+          }}
+        />
+      )}
     </ModuleWrapper>
   )
 }
