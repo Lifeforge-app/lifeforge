@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Tooltip } from 'react-tooltip'
 import { toDashCase } from '../../../tools/module-tools/utils/strings'
 
@@ -28,9 +28,19 @@ function ConfigColumn({
   noDefaultBreakpoints?: boolean
   className?: string
 }): React.ReactElement {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!ref.current) return
+
+    ref.current.style.willChange = 'opacity, transform'
+    ref.current.getBoundingClientRect()
+  }, [ref])
+
   return (
     <>
       <div
+        ref={ref}
         className={clsx(
           'flex w-full min-w-0 flex-col justify-between gap-8 px-4',
           !vertical &&

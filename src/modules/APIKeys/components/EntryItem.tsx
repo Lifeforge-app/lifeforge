@@ -67,8 +67,8 @@ function EntryItem({
         </>
       }
     >
-      <div>
-        <code className="flex items-center justify-end gap-1 text-lg">
+      <div className="w-full">
+        <code className="flex items-center md:justify-end gap-1 text-lg">
           {Array(12)
             .fill(0)
             .map((_, i) => (
