@@ -95,6 +95,10 @@ code {
   outline: none;
 }
 
+*:disabled {
+  cursor: not-allowed;
+}
+
 .stroke-\[2px\] > path {
   stroke-width: 2.5px;
 }

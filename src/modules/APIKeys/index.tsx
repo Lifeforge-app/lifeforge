@@ -9,13 +9,13 @@ import CreatePasswordScreen from '@components/screens/CreatePasswordScreen'
 import LockedScreen from '@components/screens/LockedScreen'
 import OTPScreen from '@components/screens/OTPScreen'
 import QueryWrapper from '@components/screens/QueryWrapper'
+import useAPIQuery from '@hooks/useAPIQuery'
 import { type IAPIKeyEntry } from '@interfaces/api_keys_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
 import EntryItem from './components/EntryItem'
 import ModifyAPIKeyModal from './components/ModifyAPIKeyModal'
-import { fetchChallenge } from './utils/fetchChallenge'
 
 function APIKeys(): React.ReactElement {
   const { t } = useTranslation('modules.apiKeys')
@@ -23,10 +23,10 @@ function APIKeys(): React.ReactElement {
   const [otpSuccess, setOtpSuccess] = useState(false)
   const [masterPassword, setMasterPassword] = useState<string>('')
   const [existingData, setExistingData] = useState<IAPIKeyEntry | null>(null)
-  const { data: challenge } = useQuery({
-    queryKey: ['api-keys', 'challenge'],
-    queryFn: fetchChallenge
-  })
+  const { data: challenge } = useAPIQuery<string>('api-keys/auth/challenge', [
+    'api-keys',
+    'challenge'
+  ])
   const entriesQuery = useQuery<IAPIKeyEntry[]>({
     queryKey: ['api-keys', 'entries', masterPassword, challenge],
     queryFn: () =>

@@ -86,10 +86,10 @@ function TextInput({
           label={
             namespace !== false
               ? t([
-                  [tKey, 'inputs', toCamelCase(name)].filter(e => e).join('.'),
-                  [tKey, 'inputs', toCamelCase(name), 'label']
+                [tKey, 'inputs', toCamelCase(name), 'label']
                     .filter(e => e)
-                    .join('.')
+                    .join('.'),
+                  [tKey, 'inputs', toCamelCase(name)].filter(e => e).join('.'),
                 ])
               : name
           }
