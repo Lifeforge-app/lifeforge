@@ -4,33 +4,35 @@ import React, { useMemo } from 'react'
 interface InputLabelProps {
   label: string
   active: boolean
-  isListbox?: boolean
+  isCombobox?: boolean
+  isListboxOrCombobox?: boolean
   required?: boolean
 }
 
 const InputLabel: React.FC<InputLabelProps> = ({
   label,
   active,
-  isListbox = false,
+  isListboxOrCombobox = false,
+  isCombobox = false,
   required = false
 }) => {
   const labelPositionClasses = useMemo(() => {
     if (!active) {
       return `top-1/2 -translate-y-1/2 ${
-        isListbox
-          ? 'group-focus-within:top-5 group-focus-within:text-[14px] group-data-open:top-5 group-data-open:text-[14px]'
+        isListboxOrCombobox
+          ? `${isCombobox && "group-focus-within:top-5 group-focus-within:text-[14px]"} group-data-open:top-5 group-data-open:text-[14px]`
           : 'group-focus-within:top-5 group-focus-within:text-[14px]'
       }`
     }
     return 'top-5 -translate-y-1/2 text-[14px]'
-  }, [active, isListbox])
+  }, [active, isListboxOrCombobox, isCombobox])
 
   const labelColorClasses = useMemo(
     () =>
-      isListbox
+      isListboxOrCombobox
         ? 'group-data-open:text-custom-500!'
         : 'group-focus-within:text-custom-500!',
-    [isListbox]
+    [isListboxOrCombobox]
   )
 
   return (
