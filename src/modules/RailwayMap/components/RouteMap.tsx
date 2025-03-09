@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import * as d3 from 'd3'
 import React, { useEffect, useMemo, useRef } from 'react'
 import useThemeColors from '@hooks/useThemeColor'
@@ -33,13 +34,15 @@ const roundedPolygon = (points: { x: number; y: number }[], radius: number) => {
 function RouteMap({
   stations,
   lines,
-  filteredLinesCode
+  filteredLinesCode,
+  shortestRoute
 }: {
   stations: IRailwayMapStation[]
   lines: IRailwayMapLine[]
   filteredLinesCode: string[]
+  shortestRoute: IRailwayMapStation[]
 }): React.ReactElement {
-  const { bgTemp } = useThemeColors()
+  const { bgTemp, componentBg } = useThemeColors()
 
   const filteredLines = useMemo(
     () => lines.filter(line => filteredLinesCode.includes(line.id)),
@@ -91,6 +94,11 @@ function RouteMap({
 
     for (const station of filteredStations) {
       if (!station.map_data) continue
+      if (
+        shortestRoute.length !== 0 &&
+        !shortestRoute.some(s => s.id === station.id)
+      )
+        continue
 
       if (station.type === 'interchange') {
         g.append('rect')
@@ -98,7 +106,12 @@ function RouteMap({
           .attr('y', station.map_data.y - 10)
           .attr('width', 20)
           .attr('height', 20 * station.map_data.width)
-          .attr('fill', bgTemp[950])
+          .attr(
+            'fill',
+            shortestRoute.some(s => s.id === station.id)
+              ? bgTemp[200]
+              : bgTemp[950]
+          )
           .attr('stroke', bgTemp[200])
           .attr('stroke-width', 3)
           .attr('rx', 10)
@@ -125,9 +138,19 @@ function RouteMap({
           .attr('cx', station.map_data.x)
           .attr('cy', station.map_data.y)
           .attr('r', 6)
-          .attr('fill', bgTemp[950])
+          .attr(
+            'fill',
+            shortestRoute.some(s => s.id === station.id)
+              ? line
+                ? line.color
+                : bgTemp[200]
+              : bgTemp[950]
+          )
           .attr('stroke', line ? line.color : 'black')
-          .attr('stroke-width', 2)
+          .attr(
+            'stroke-width',
+            shortestRoute.some(s => s.id === station.id) ? 5 : 2
+          )
           .attr('cursor', 'pointer')
           .attr('onclick', `alert('${station.map_data.text}')`)
       }
@@ -156,12 +179,16 @@ function RouteMap({
           })
         })
     }
-  }, [lines, filteredLines, filteredStations, stations])
+  }, [lines, filteredLines, filteredStations, stations, shortestRoute])
 
   const ref = useRef<SVGSVGElement>(null)
   return (
-    <div className="w-full mt-6 flex-1">
-      <svg ref={ref} height="100%" width="100%"></svg>
+    <div className="w-full mt-6 pb-8 flex-1">
+      <div
+        className={clsx('w-full h-full rounded-lg shadow-custom', componentBg)}
+      >
+        <svg ref={ref} height="100%" width="100%"></svg>
+      </div>
     </div>
   )
 }

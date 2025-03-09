@@ -10,13 +10,15 @@ function ListboxOrComboboxOption({
   value,
   text,
   icon,
+  iconAtEnd = false,
   color,
   type = 'listbox',
   matchedSubstrings
 }: {
   value: string | number | Record<string, any> | null
   text: string
-  icon?: string
+  icon?: string | React.ReactElement
+  iconAtEnd?: boolean
   color?: string
   type?: 'listbox' | 'combobox'
   matchedSubstrings?: Array<{ length: number; offset: number }>
@@ -48,9 +50,10 @@ function ListboxOrComboboxOption({
         <>
           <div
             className={clsx(
-              'flex items-center',
+              'flex items-center w-full',
               color !== undefined ? 'gap-3' : 'gap-2',
-              selected && 'font-semibold text-bg-800 dark:text-bg-100'
+              selected && 'font-semibold text-bg-800 dark:text-bg-100',
+              iconAtEnd && 'flex flex-between flex-row-reverse'
             )}
           >
             {icon !== undefined ? (
@@ -65,7 +68,11 @@ function ListboxOrComboboxOption({
                     : {}
                 }
               >
-                <Icon className="size-5" icon={icon} />
+                {typeof icon === 'string' ? (
+                  <Icon className="size-5" icon={icon} />
+                ) : (
+                  icon
+                )}
               </span>
             ) : (
               color !== undefined && (

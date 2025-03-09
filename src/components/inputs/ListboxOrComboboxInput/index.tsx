@@ -1,40 +1,40 @@
-import { ComboboxInput, ListboxButton } from "@headlessui/react";
-import { Icon } from "@iconify/react";
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { toCamelCase } from "@utils/strings";
-import ComboboxInputWrapper from "./components/ComboboxInputWrapper";
-import ListboxInputWrapper from "./components/ListboxInputWrapper";
-import ListboxOrComboboxOptions from "./components/ListboxOrComboboxOptions";
-import InputIcon from "../shared/InputIcon";
-import InputLabel from "../shared/InputLabel";
+import { ComboboxInput, ListboxButton } from '@headlessui/react'
+import { Icon } from '@iconify/react'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { toCamelCase } from '@utils/strings'
+import ComboboxInputWrapper from './components/ComboboxInputWrapper'
+import ListboxInputWrapper from './components/ListboxInputWrapper'
+import ListboxOrComboboxOptions from './components/ListboxOrComboboxOptions'
+import InputIcon from '../shared/InputIcon'
+import InputLabel from '../shared/InputLabel'
 
 interface IGeneralProps {
-  name: string;
-  icon: string;
-  value: any;
-  setValue: (value: any) => void;
-  className?: string;
-  children: React.ReactNode;
-  customActive?: boolean;
-  required?: boolean;
-  namespace: string | false;
-  tKey?: string;
+  name: string
+  icon: string
+  value: any
+  setValue: (value: any) => void
+  className?: string
+  children: React.ReactNode
+  customActive?: boolean
+  required?: boolean
+  namespace: string | false
+  tKey?: string
 }
 
 interface IListboxProps extends IGeneralProps {
-  type: "listbox";
-  buttonContent: React.ReactElement;
-  multiple?: boolean;
+  type: 'listbox'
+  buttonContent: React.ReactElement
+  multiple?: boolean
 }
 
 interface IComboboxProps extends IGeneralProps {
-  type: "combobox";
-  setQuery: (query: string) => void;
-  displayValue: (value: any) => string;
+  type: 'combobox'
+  setQuery: (query: string) => void
+  displayValue: (value: any) => string
 }
 
-type IListboxOrComboboxInputProps = IListboxProps | IComboboxProps;
+type IListboxOrComboboxInputProps = IListboxProps | IComboboxProps
 
 function ListboxOrComboboxInput(
   props: IListboxOrComboboxInputProps
@@ -49,12 +49,12 @@ function ListboxOrComboboxInput(
     required,
     customActive,
     namespace,
-    tKey = "",
-  } = props;
-  const { t } = useTranslation(namespace ? namespace : undefined);
+    tKey = ''
+  } = props
+  const { t } = useTranslation(namespace ? namespace : undefined)
 
   switch (type) {
-    case "listbox":
+    case 'listbox':
     case undefined:
       return (
         <ListboxInputWrapper
@@ -79,12 +79,12 @@ function ListboxOrComboboxInput(
               label={t(
                 namespace !== false
                   ? t([
-                      [tKey, "inputs", toCamelCase(name), "label"]
-                        .filter((e) => e)
-                        .join("."),
-                      [tKey, "inputs", toCamelCase(name)]
-                        .filter((e) => e)
-                        .join("."),
+                      [tKey, 'inputs', toCamelCase(name), 'label']
+                        .filter(e => e)
+                        .join('.'),
+                      [tKey, 'inputs', toCamelCase(name)]
+                        .filter(e => e)
+                        .join('.')
                     ])
                   : name
               )}
@@ -104,15 +104,16 @@ function ListboxOrComboboxInput(
           </ListboxButton>
           <ListboxOrComboboxOptions>{children}</ListboxOrComboboxOptions>
         </ListboxInputWrapper>
-      );
-    case "combobox":
+      )
+    case 'combobox':
       return (
         <ComboboxInputWrapper
+          className={props.className}
           setQuery={props.setQuery}
           value={value}
           onChange={setValue}
         >
-          <div className="group flex w-full items-center">
+          <div className="group flex w-full items-center pl-6">
             <InputIcon
               isListbox
               active={
@@ -121,6 +122,7 @@ function ListboxOrComboboxInput(
               icon={icon}
             />
             <InputLabel
+              isCombobox
               isListboxOrCombobox
               active={
                 (value !== null && value.length !== 0) || customActive === true
@@ -132,7 +134,7 @@ function ListboxOrComboboxInput(
               className="relative mb-3 mt-10 flex w-full items-center gap-2 rounded-lg bg-transparent! px-5 text-left focus:outline-hidden"
               displayValue={props.displayValue}
               onChange={(e: any) => {
-                props.setQuery(e.target.value);
+                props.setQuery(e.target.value)
               }}
             />
           </div>
@@ -140,8 +142,8 @@ function ListboxOrComboboxInput(
             {children}
           </ListboxOrComboboxOptions>
         </ComboboxInputWrapper>
-      );
+      )
   }
 }
 
-export default ListboxOrComboboxInput;
+export default ListboxOrComboboxInput
