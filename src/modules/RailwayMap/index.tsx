@@ -3,6 +3,8 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import React, { memo, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+import { Button } from '@components/buttons'
 import HamburgerMenu from '@components/buttons/HamburgerMenu'
 import HamburgerSelectorWrapper from '@components/buttons/HamburgerMenu/components/HamburgerSelectorWrapper'
 import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
@@ -20,12 +22,14 @@ import {
   IRailwayMapLine,
   IRailwayMapStation
 } from '@interfaces/railway_map_interfaces'
+import fetchAPI from '@utils/fetchAPI'
 import { toCamelCase } from '@utils/strings'
 import MapInstance from './components/MapInstance'
 import RouteMap from './components/RouteMap'
+import RoutePlanner from './components/RoutePlanner'
 
 const VIEW_TYPES = [
-  ['tabler:route', 'Route Map', 'route'],
+  ['tabler:route-alt-left', 'Route Map', 'route'],
   ['tabler:world', 'Earth Map', 'earth'],
   ['tabler:list', 'Station List', 'list']
 ]
@@ -44,6 +48,31 @@ function RailwayMap(): React.ReactElement {
     ['railway-map', 'stations']
   )
   const [filteredLines, setFilteredLines] = useState<string[]>([])
+  const [routePlannerOpen, setRoutePlannerOpen] = useState(false)
+  const [routePlannerStart, setRoutePlannerStart] = useState('')
+  const [routePlannerEnd, setRoutePlannerEnd] = useState('')
+  const [routePlannerLoading, setRoutePlannerLoading] = useState(false)
+  const [shortestRoute, setShortestRoute] = useState<IRailwayMapStation[]>([])
+
+  async function fetchShortestRoute() {
+    if (!routePlannerStart || !routePlannerEnd) {
+      toast.error('Please select a start and end station')
+      return
+    }
+
+    setRoutePlannerLoading(true)
+    setShortestRoute([])
+    try {
+      const data = await fetchAPI<IRailwayMapStation[]>(
+        `railway-map/shortest?start=${routePlannerStart}&end=${routePlannerEnd}`
+      )
+      setShortestRoute(data)
+    } catch {
+      toast.error('Failed to fetch shortest route')
+    } finally {
+      setRoutePlannerLoading(false)
+    }
+  }
 
   useEffect(() => {
     if (linesQuery.data) {
@@ -153,7 +182,29 @@ function RailwayMap(): React.ReactElement {
                       ))}
                     </HamburgerSelectorWrapper>
                   </HamburgerMenu>
+                  <Button
+                    icon="tabler:route"
+                    variant={routePlannerOpen ? 'primary' : 'no-bg'}
+                    onClick={() => {
+                      setRoutePlannerOpen(!routePlannerOpen)
+                    }}
+                  />
                 </div>
+                <RoutePlanner
+                  clearShortestRoute={() => setShortestRoute([])}
+                  end={routePlannerEnd}
+                  fetchShortestRoute={fetchShortestRoute}
+                  hasShortestRoute={shortestRoute.length > 0}
+                  isOpen={routePlannerOpen}
+                  lines={lines.filter(line => line.type === 'MRT')}
+                  loading={routePlannerLoading}
+                  setEnd={setRoutePlannerEnd}
+                  setStart={setRoutePlannerStart}
+                  start={routePlannerStart}
+                  stations={stations.filter(
+                    station => station.map_data !== null
+                  )}
+                />
                 {(() => {
                   switch (viewType) {
                     case 'earth':
@@ -174,6 +225,7 @@ function RailwayMap(): React.ReactElement {
                         <RouteMap
                           filteredLinesCode={filteredLines}
                           lines={lines}
+                          shortestRoute={shortestRoute}
                           stations={stations}
                         />
                       )
