@@ -143,6 +143,7 @@ const VirtualWardrobeClothes = lazy(
 )
 const MomentVault = lazy(async () => await import('../modules/MomentVault'))
 const Movies = lazy(async () => import('../modules/Movies'))
+const RailwayMap = lazy(async () => import('../modules/RailwayMap'))
 
 export const COMPONENTS = {
   dashboard: {
@@ -314,5 +315,8 @@ export const COMPONENTS = {
   },
   movies: {
     movies: Movies
+  },
+  'railway-map': {
+    'railway-map': RailwayMap
   }
 }

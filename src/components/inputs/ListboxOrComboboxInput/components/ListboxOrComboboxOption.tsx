@@ -41,7 +41,7 @@ function ListboxOrComboboxOption({
 
   return (
     <Element
-      className="flex-between relative flex cursor-pointer select-none p-4 transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
+      className="flex-between relative gap-8 flex cursor-pointer select-none p-4 transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
       value={value}
     >
       {({ selected }: { selected: boolean }) => (
@@ -88,7 +88,7 @@ function ListboxOrComboboxOption({
           </div>
           {selected && (
             <Icon
-              className="block text-lg text-custom-500"
+              className="block shrink-0 text-lg text-custom-500"
               icon="tabler:check"
             />
           )}

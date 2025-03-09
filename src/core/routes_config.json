@@ -385,6 +385,14 @@
     "title": "Information",
     "items": [
       {
+        "name": "Railway Map",
+        "icon": "uil:subway",
+        "routes": {
+          "railway-map": "railway-map"
+        },
+        "togglable": true
+      },
+      {
         "name": "Airports",
         "icon": "ic:round-connecting-airports",
         "routes": {
