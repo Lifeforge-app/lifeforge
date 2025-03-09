@@ -36,8 +36,8 @@ function ThemeColorSelector(): React.ReactElement {
               hasTopMargin={false}
               name="Color Hex"
               namespace="modules.personalization"
-              setColorPickerOpen={setColorPickerModalOpen}
               setColor={setCustomThemeColor}
+              setColorPickerOpen={setColorPickerModalOpen}
             />
             {themeColor !== customThemeColor &&
               customThemeColor.match(/^#[0-9A-F]{6}$/i) !== null && (

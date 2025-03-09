@@ -30,7 +30,7 @@ function MenuItem({
   namespace = 'common.buttons',
   loading = false
 }: {
-  icon?: string
+  icon?: string | React.ReactElement
   text: string
   isRed?: boolean
   onClick: (e: React.MouseEvent<HTMLButtonElement>, close: () => void) => void
@@ -64,8 +64,10 @@ function MenuItem({
           >
             {loading ? (
               <Icon className="size-5 shrink-0" icon="svg-spinners:180-ring" />
+            ) : typeof icon === 'string' ? (
+              <Icon className="size-5 shrink-0" icon={icon} />
             ) : (
-              icon && <Icon className="size-5 shrink-0" icon={icon} />
+              icon
             )}
             <span className="w-full truncate whitespace-nowrap">
               {namespace !== false

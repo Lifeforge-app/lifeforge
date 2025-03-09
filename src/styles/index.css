@@ -63,6 +63,12 @@ layer(base);
   @apply flex items-center justify-between;
 }
 
+@font-face {
+  font-family: 'LTAIdentityMedium';
+  src: url('/fonts/LTAIdentity-Medium.woff2') format('woff2'),
+    url('/fonts/LTAIdentity-Medium.woff') format('woff');
+}
+
 :root {
   interpolate-size: allow-keywords;
   font-size: 15px;
@@ -563,11 +569,13 @@ input:-webkit-autofill:active {
   caret-color: #ffffff;
 }
 
-.react-date-picker__wrapper, .react-datetime-picker__wrapper {
+.react-date-picker__wrapper,
+.react-datetime-picker__wrapper {
   @apply border-none!;
 }
 
-.react-date-picker__inputGroup, .react-datetime-picker__inputGroup {
+.react-date-picker__inputGroup,
+.react-datetime-picker__inputGroup {
   @apply p-0;
 }
 
