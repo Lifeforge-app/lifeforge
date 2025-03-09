@@ -33,7 +33,6 @@ function ConfigColumn({
   useEffect(() => {
     if (!ref.current) return
 
-    ref.current.style.willChange = 'opacity, transform'
     ref.current.getBoundingClientRect()
   }, [ref])
 
