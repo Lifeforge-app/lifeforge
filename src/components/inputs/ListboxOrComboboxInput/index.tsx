@@ -113,12 +113,13 @@ function ListboxOrComboboxInput(
           value={value}
           onChange={setValue}
         >
-          <div className="group flex w-full items-center pl-6">
+          <div className="group relative flex w-full items-center">
             <InputIcon
               isListbox
               active={
                 (value !== null && value.length !== 0) || customActive === true
               }
+              className="absolute left-6"
               icon={icon}
             />
             <InputLabel
@@ -131,7 +132,7 @@ function ListboxOrComboboxInput(
               required={required === true}
             />
             <ComboboxInput
-              className="relative mt-10 mb-3 flex w-full items-center gap-2 rounded-lg bg-transparent! px-5 text-left focus:outline-hidden"
+              className="relative mt-10 mb-3 flex w-full items-center gap-2 rounded-lg bg-transparent! pr-5 pl-17.5 text-left focus:outline-hidden"
               displayValue={props.displayValue}
               onChange={(e: any) => {
                 props.setQuery(e.target.value)

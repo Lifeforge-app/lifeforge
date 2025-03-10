@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import useAPIQuery from '@hooks/useAPIQuery'
 import {
@@ -25,9 +25,16 @@ interface IRailwayMapData {
   routePlannerEnd: string
   setRoutePlannerEnd: React.Dispatch<React.SetStateAction<string>>
   routePlannerLoading: boolean
-  shortestRoute: IRailwayMapStation[]
+  shortestRoute: IRailwayMapStation[] | 'loading' | 'error'
   fetchShortestRoute: () => Promise<void>
   clearShortestRoute: () => void
+  routeMapSVGRef: React.RefObject<SVGSVGElement | null>
+  routeMapGRef: React.RefObject<SVGGElement | null>
+  selectedStation: IRailwayMapStation | null
+  setSelectedStation: React.Dispatch<
+    React.SetStateAction<IRailwayMapStation | null>
+  >
+  centerStation: IRailwayMapStation | undefined
 }
 
 export const RailwayMapContext = React.createContext<
@@ -54,7 +61,17 @@ export default function RailwayMapProvider({
   const [routePlannerStart, setRoutePlannerStart] = useState('')
   const [routePlannerEnd, setRoutePlannerEnd] = useState('')
   const [routePlannerLoading, setRoutePlannerLoading] = useState(false)
-  const [shortestRoute, setShortestRoute] = useState<IRailwayMapStation[]>([])
+  const [shortestRoute, setShortestRoute] = useState<
+    IRailwayMapStation[] | 'loading' | 'error'
+  >([])
+  const [selectedStation, setSelectedStation] =
+    useState<IRailwayMapStation | null>(null)
+  const centerStation = useMemo(() => {
+    return stationsQuery.data?.find(station => station.name === 'Novena')
+  }, [stationsQuery.data])
+
+  const routeMapSVGRef = useRef<SVGSVGElement>(null)
+  const routeMapGRef = useRef<SVGGElement>(null)
 
   async function fetchShortestRoute() {
     if (!routePlannerStart || !routePlannerEnd) {
@@ -63,13 +80,14 @@ export default function RailwayMapProvider({
     }
 
     setRoutePlannerLoading(true)
-    setShortestRoute([])
+    setShortestRoute('loading')
     try {
       const data = await fetchAPI<IRailwayMapStation[]>(
         `railway-map/shortest?start=${routePlannerStart}&end=${routePlannerEnd}`
       )
       setShortestRoute(data)
     } catch {
+      setShortestRoute('error')
       toast.error('Failed to fetch shortest route')
     } finally {
       setRoutePlannerLoading(false)
@@ -107,7 +125,12 @@ export default function RailwayMapProvider({
       routePlannerLoading,
       shortestRoute,
       fetchShortestRoute,
-      clearShortestRoute
+      clearShortestRoute,
+      routeMapSVGRef,
+      routeMapGRef,
+      selectedStation,
+      setSelectedStation,
+      centerStation
     }),
     [
       viewType,
@@ -121,7 +144,11 @@ export default function RailwayMapProvider({
       routePlannerStart,
       routePlannerEnd,
       routePlannerLoading,
-      shortestRoute
+      shortestRoute,
+      routeMapSVGRef,
+      routeMapGRef,
+      selectedStation,
+      centerStation
     ]
   )
 

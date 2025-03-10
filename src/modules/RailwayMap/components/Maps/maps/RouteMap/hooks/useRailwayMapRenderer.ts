@@ -1,38 +1,128 @@
 import * as d3 from 'd3'
-import { useEffect, RefObject } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
+import useThemeColors from '@hooks/useThemeColor'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { useRailwayMapContext } from '@providers/RailwayMapProvider'
 import {
-  IRailwayMapLine,
-  IRailwayMapStation
-} from '@interfaces/railway_map_interfaces'
-import { setupZooming, drawLines, drawStations } from '../utils/renderUtils'
+  setupZooming,
+  drawLines,
+  drawStations,
+  clearSelection,
+  updateSelection,
+  centerMapOnStation
+} from '../utils/renderUtils'
 
-interface RailwayMapRendererProps {
-  svgRef: RefObject<SVGSVGElement | null>
-  filteredLines: IRailwayMapLine[]
-  filteredStations: IRailwayMapStation[]
-  shortestRoute: IRailwayMapStation[]
-  lines: IRailwayMapLine[]
-  bgTemp: { [key: number]: string }
-}
+export const useRailwayMapRenderer = (): void => {
+  const { bgTemp } = useThemeColors()
+  const { theme } = usePersonalizationContext()
+  const {
+    filteredLines: filteredLinesCode,
+    lines,
+    stations,
+    shortestRoute,
+    routeMapSVGRef: svgRef,
+    routeMapGRef: gRef,
+    selectedStation,
+    setSelectedStation,
+    centerStation
+  } = useRailwayMapContext()
+  const finalTheme = useMemo(() => {
+    if (theme === 'system') {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light'
+    }
 
-export const useRailwayMapRenderer = ({
-  svgRef,
-  filteredLines,
-  filteredStations,
-  shortestRoute,
-  lines,
-  bgTemp
-}: RailwayMapRendererProps): void => {
+    return theme
+  }, [theme])
+
+  const isInitializedRef = useRef(false)
+
+  const filteredLines = useMemo(
+    () => lines.filter(line => filteredLinesCode.includes(line.id)),
+    [lines, filteredLinesCode]
+  )
+
+  const filteredStations = useMemo(
+    () =>
+      stations.filter(station =>
+        station.lines.some(line => filteredLinesCode.includes(line))
+      ),
+    [stations, filteredLinesCode]
+  )
+
   useEffect(() => {
-    if (!svgRef.current) return
+    if (!svgRef.current || isInitializedRef.current || !centerStation) return
 
     const svg = d3.select(svgRef.current)
     svg.selectAll('*').remove()
 
     const g = svg.append('g')
+    gRef.current = g.node() as SVGGElement
 
-    setupZooming(svg, g)
+    setupZooming(svg, g, centerStation)
+    isInitializedRef.current = true
+
+    return () => {
+      svg.selectAll('*').remove()
+      isInitializedRef.current = false
+    }
+  }, [svgRef, gRef, centerStation, shortestRoute])
+
+  useEffect(() => {
+    if (!gRef.current || !isInitializedRef.current) return
+
+    const g = d3.select(gRef.current)
+    g.selectAll('path').remove()
+
     drawLines(g, filteredLines, shortestRoute)
-    drawStations(g, filteredStations, shortestRoute, lines, bgTemp)
-  }, [svgRef, filteredLines, filteredStations, shortestRoute, lines, bgTemp])
+  }, [filteredLines, shortestRoute, centerStation])
+
+  useEffect(() => {
+    if (!gRef.current || !isInitializedRef.current) return
+
+    const g = d3.select(gRef.current)
+    g.selectAll('circle, rect, text').remove()
+
+    drawStations(
+      g,
+      filteredStations,
+      shortestRoute,
+      lines,
+      bgTemp,
+      finalTheme,
+      selectedStation,
+      setSelectedStation
+    )
+  }, [filteredStations, shortestRoute, lines, bgTemp, centerStation])
+
+  useEffect(() => {
+    if (!gRef.current || !isInitializedRef.current) return
+
+    const g = d3.select(gRef.current)
+
+    try {
+      if (selectedStation) {
+        updateSelection(
+          g,
+          selectedStation,
+          lines,
+          bgTemp[finalTheme === 'dark' ? 900 : 50]
+        )
+        centerMapOnStation(
+          svgRef,
+          gRef,
+          selectedStation,
+          centerStation!,
+          2,
+          1000,
+          false
+        )
+      } else {
+        clearSelection(g, bgTemp[finalTheme === 'dark' ? 900 : 50])
+      }
+    } catch (error) {
+      console.error('Error updating station selection:', error)
+    }
+  }, [selectedStation, lines, centerStation, shortestRoute])
 }
