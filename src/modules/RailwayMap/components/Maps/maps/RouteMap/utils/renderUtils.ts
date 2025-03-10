@@ -74,7 +74,10 @@ export const drawInterchange = (
   stroke: string,
   fill: string,
   isSelected: boolean,
-  setSelectedStation: (station: IRailwayMapStation | null) => void
+  setSelectedStation: (station: IRailwayMapStation | null) => void,
+  svgRef: React.RefObject<SVGSVGElement | null>,
+  gRef: React.RefObject<SVGGElement | null>,
+  centerStation: IRailwayMapStation
 ) => {
   const attributes = {
     id: `station-${station.id}`,
@@ -99,6 +102,7 @@ export const drawInterchange = (
 
   item.on('click', () => {
     setSelectedStation(station)
+    centerMapOnStation(svgRef, gRef, station, centerStation!, 2, 1000, false)
   })
 
   item.on('mouseenter', () => {
@@ -134,7 +138,10 @@ export const drawStation = (
   stroke: string,
   fill: string,
   isSelected: boolean,
-  setSelectedStation: (station: IRailwayMapStation | null) => void
+  setSelectedStation: (station: IRailwayMapStation | null) => void,
+  svgRef: React.RefObject<SVGSVGElement | null>,
+  gRef: React.RefObject<SVGGElement | null>,
+  centerStation: IRailwayMapStation
 ) => {
   const attributes = {
     id: `station-${station.id}`,
@@ -155,6 +162,7 @@ export const drawStation = (
 
   item.on('click', () => {
     setSelectedStation(station)
+    centerMapOnStation(svgRef, gRef, station, centerStation!, 2, 1000, false)
   })
 
   item.on('mouseenter', () => {
@@ -217,7 +225,10 @@ export const drawStations = (
   bgTemp: { [key: number]: string },
   finalTheme: 'light' | 'dark',
   selectedStation: IRailwayMapStation | null,
-  setSelectedStation: (station: IRailwayMapStation | null) => void
+  setSelectedStation: (station: IRailwayMapStation | null) => void,
+  svgRef: React.RefObject<SVGSVGElement | null>,
+  gRef: React.RefObject<SVGGElement | null>,
+  centerStation: IRailwayMapStation
 ) => {
   filteredStations.forEach(station => {
     if (ignoreStation(station, shortestRoute)) return
@@ -239,7 +250,10 @@ export const drawStations = (
           ? bgTemp[200]
           : bgTemp[finalTheme === 'dark' ? 900 : 100],
         isSelected,
-        setSelectedStation
+        setSelectedStation,
+        svgRef,
+        gRef,
+        centerStation
       )
       return
     }
@@ -258,7 +272,10 @@ export const drawStations = (
       line ? line.color : 'black',
       fill,
       isSelected,
-      setSelectedStation
+      setSelectedStation,
+      svgRef,
+      gRef,
+      centerStation
     )
   })
 }
