@@ -14,34 +14,34 @@ export default function StorageStatus(): React.ReactElement {
       <Scrollbar>
         <APIFallbackComponent data={diskUsage}>
           {diskUsage => (
-            <div className="-mt-4 flex max-h-96 flex-col divide-y divide-bg-200 dark:divide-bg-700">
+            <div className="divide-bg-200 dark:divide-bg-700 -mt-4 flex max-h-96 flex-col divide-y">
               {diskUsage.map(disk => (
                 <div key={disk.name} className="space-y-4 py-6">
                   <div className="flex-between flex w-full min-w-0">
                     <div className="flex min-w-0 flex-1 items-center gap-2">
                       <Icon
-                        className="text-xl text-bg-500"
+                        className="text-bg-500 text-xl"
                         icon="streamline:hard-disk"
                       />
-                      <h2 className="mr-4 min-w-0 truncate text-bg-500">
+                      <h2 className="text-bg-500 mr-4 min-w-0 truncate">
                         {disk.name}
                       </h2>
                     </div>
-                    <p className="shrink-0 rounded-md border border-bg-200 px-4 py-2 text-sm text-bg-500 dark:border-bg-500">
+                    <p className="border-bg-200 text-bg-500 dark:border-bg-500 shrink-0 rounded-md border px-4 py-2 text-sm">
                       {disk.size}B
                     </p>
                   </div>
-                  <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-bg-200 dark:bg-bg-800">
+                  <div className="bg-bg-200 dark:bg-bg-800 mt-2 h-2 w-full overflow-hidden rounded-full">
                     <div
-                      className="h-full rounded-full bg-custom-500"
+                      className="bg-custom-500 h-full rounded-full"
                       style={{ width: disk.usedPercent }}
                     ></div>
                   </div>
                   <div className="flex-between -mt-2 flex">
-                    <p className="text-sm text-bg-500">
+                    <p className="text-bg-500 text-sm">
                       {disk.used}B / {disk.size}B
                     </p>
-                    <p className="text-sm text-bg-500">
+                    <p className="text-bg-500 text-sm">
                       {disk.usedPercent} used
                     </p>
                   </div>

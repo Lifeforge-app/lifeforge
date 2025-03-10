@@ -80,15 +80,15 @@ function ShareAlbumModal({
             className={clsx(
               'inline-block size-4 translate-y-[-0.5px] rounded-full transition',
               publicity
-                ? 'translate-x-6 bg-bg-100'
-                : 'translate-x-1 bg-bg-100 dark:bg-bg-500'
+                ? 'bg-bg-100 translate-x-6'
+                : 'bg-bg-100 dark:bg-bg-500 translate-x-1'
             )}
           />
         </Switch>
       </div>
       {publicity && (
         <>
-          <div className="mt-4 flex gap-2 rounded-md bg-bg-700/50 p-3 text-bg-800 shadow-md dark:text-bg-50">
+          <div className="bg-bg-700/50 text-bg-800 dark:text-bg-50 mt-4 flex gap-2 rounded-md p-3 shadow-md">
             <Icon className="size-6" icon="tabler:link" />
             <input
               className="w-full bg-transparent focus:outline-hidden"

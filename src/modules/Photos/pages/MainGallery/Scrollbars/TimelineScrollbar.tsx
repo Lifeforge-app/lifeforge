@@ -21,7 +21,7 @@ function TimelineScrollbar(): React.ReactElement {
       {typeof photos !== 'string' && photos.totalItems !== 0 && (
         <>
           <div
-            className="group peer absolute right-0 top-0 h-full w-0 sm:w-16"
+            className="group peer absolute top-0 right-0 h-full w-0 sm:w-16"
             onClick={e => {
               if (galleryWrapperRef.current !== null) {
                 const galleryContainerHeight =
@@ -114,7 +114,7 @@ function TimelineScrollbar(): React.ReactElement {
                     .map(([year, date]) => (
                       <span
                         key={year}
-                        className="flex-center pointer-events-none absolute z-5 hidden h-4 w-full -translate-y-4 bg-bg-100 text-sm text-bg-500 dark:bg-bg-950 sm:flex"
+                        className="flex-center bg-bg-100 text-bg-500 dark:bg-bg-950 pointer-events-none absolute z-5 hidden h-4 w-full -translate-y-4 text-sm sm:flex"
                         style={{
                           top: `${eachDayDimensions[date as any]?.inTimeline}px`
                         }}
@@ -130,7 +130,7 @@ function TimelineScrollbar(): React.ReactElement {
                     .map(([month, date]) => (
                       <span
                         key={month}
-                        className="pointer-events-none absolute right-1/2 hidden size-1 -translate-y-1 translate-x-1/2 rounded-full bg-bg-400 dark:bg-bg-500 sm:flex"
+                        className="bg-bg-400 dark:bg-bg-500 pointer-events-none absolute right-1/2 hidden size-1 -translate-y-1 translate-x-1/2 rounded-full sm:flex"
                         style={{
                           top: `${eachDayDimensions[date as any]?.inTimeline}px`
                         }}
@@ -143,13 +143,13 @@ function TimelineScrollbar(): React.ReactElement {
           <div
             ref={movingTimelineDateDisplayRef}
             className={
-              'pointer-events-none absolute right-14 z-10 hidden rounded-t-md border-b-2 border-custom-500 bg-bg-200 p-2 text-sm shadow-md dark:bg-bg-800 sm:right-3 sm:peer-hover:block'
+              'border-custom-500 bg-bg-200 dark:bg-bg-800 pointer-events-none absolute right-14 z-10 hidden rounded-t-md border-b-2 p-2 text-sm shadow-md sm:right-3 sm:peer-hover:block'
             }
           ></div>
           <div
             ref={timelineDateDisplayRef}
             className={clsx(
-              'pointer-events-none absolute right-14 z-10 hidden rounded-t-md border-b-2 border-custom-500 bg-bg-200 p-2 text-sm shadow-md dark:bg-bg-800 sm:right-3 sm:block',
+              'border-custom-500 bg-bg-200 dark:bg-bg-800 pointer-events-none absolute right-14 z-10 hidden rounded-t-md border-b-2 p-2 text-sm shadow-md sm:right-3 sm:block',
               isDraggingRef.current && 'hidden!'
             )}
             style={{

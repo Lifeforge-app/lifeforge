@@ -27,7 +27,7 @@ function FlightsTable({
               <th
                 key={title}
                 className={clsx(
-                  'border-b-2 border-bg-200 px-4 py-2 pt-4 text-bg-500 dark:border-bg-700',
+                  'border-bg-200 text-bg-500 dark:border-bg-700 border-b-2 px-4 py-2 pt-4',
                   componentBg
                 )}
               >
@@ -51,7 +51,7 @@ function FlightsTable({
               <td
                 key={index}
                 className={clsx(
-                  'border-b border-bg-200 px-4 py-2 text-center dark:border-bg-800',
+                  'border-bg-200 dark:border-bg-800 border-b px-4 py-2 text-center',
                   index === 5 &&
                     (() => {
                       const statusColors: { [key: string]: string } = {

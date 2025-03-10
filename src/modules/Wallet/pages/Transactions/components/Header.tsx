@@ -84,7 +84,7 @@ function Header({
               searchParams.size === 0 && searchQuery === '' ? 'all' : 'filtered'
             }Transactions`
           )}{' '}
-          <span className="text-base text-bg-500">
+          <span className="text-bg-500 text-base">
             ({filteredTransactions.length})
           </span>
         </h1>
@@ -143,7 +143,7 @@ function Header({
             <MenuItems
               transition
               anchor="bottom end"
-              className="mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
+              className="bg-bg-100 dark:bg-bg-800 mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
             >
               <MenuItem
                 icon="tabler:plus"

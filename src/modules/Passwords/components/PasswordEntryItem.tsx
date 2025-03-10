@@ -48,13 +48,13 @@ function PasswordEntryITem({
   return (
     <div
       className={clsx(
-        'relative flex flex-col items-center gap-4 rounded-md p-4 shadow-custom',
+        'shadow-custom relative flex flex-col items-center gap-4 rounded-md p-4',
         componentBg
       )}
     >
       {password.pinned && (
         <Icon
-          className="absolute left-0 top-0 size-6 -translate-x-1/2 -translate-y-1/2 -rotate-90 text-custom-500"
+          className="text-custom-500 absolute top-0 left-0 size-6 -translate-x-1/2 -translate-y-1/2 -rotate-90"
           icon="tabler:pin-filled"
         />
       )}
@@ -74,7 +74,7 @@ function PasswordEntryITem({
           </div>
           <div className="flex min-w-0 flex-1 flex-col">
             <h3 className="text-xl font-semibold">{password.name}</h3>
-            <p className="truncate text-bg-500">{password.username}</p>
+            <p className="text-bg-500 truncate">{password.username}</p>
           </div>
         </div>
         <div className="ml-8 flex shrink-0 items-center gap-2">
@@ -92,7 +92,7 @@ function PasswordEntryITem({
                 {Array.from({ length: 12 }, (_, i) => (
                   <span
                     key={i}
-                    className="size-1.5 rounded-full bg-bg-500 dark:bg-bg-100"
+                    className="bg-bg-500 dark:bg-bg-100 size-1.5 rounded-full"
                   ></span>
                 ))}
               </span>
@@ -173,7 +173,7 @@ function PasswordEntryITem({
         </div>
       </div>
       {decryptedPassword !== null && (
-        <p className="block w-full rounded-md bg-bg-800 p-4 text-center lg:hidden">
+        <p className="bg-bg-800 block w-full rounded-md p-4 text-center lg:hidden">
           {decryptedPassword}
         </p>
       )}

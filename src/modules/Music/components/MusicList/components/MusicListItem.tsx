@@ -17,16 +17,16 @@ function MusicListItem({ music }: { music: IMusicEntry }): React.ReactElement {
         <PlayStateIndicator music={music} />
         <div className="w-full min-w-0">
           <p className="w-full min-w-0 truncate pr-8">{music.name}</p>
-          <p className="block w-full min-w-0 truncate text-sm text-bg-500 md:hidden">
+          <p className="text-bg-500 block w-full min-w-0 truncate text-sm md:hidden">
             {music.author} <span className="text-bg-500">•</span>{' '}
             {formatDuration(music.duration)}
           </p>
         </div>
       </div>
-      <div className="hidden w-3/12 min-w-0 text-bg-500 lg:block">
+      <div className="text-bg-500 hidden w-3/12 min-w-0 lg:block">
         <p className="w-full min-w-0 truncate pr-8">{music.author}</p>
       </div>
-      <div className="hidden w-3/12 min-w-0 text-bg-500 sm:block lg:w-2/12">
+      <div className="text-bg-500 hidden w-3/12 min-w-0 sm:block lg:w-2/12">
         {formatDuration(music.duration)}
       </div>
       <SideButtons music={music} />

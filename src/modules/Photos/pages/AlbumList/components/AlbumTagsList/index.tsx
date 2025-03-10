@@ -52,7 +52,7 @@ function AlbumTagsList({
                   />
                 ))}
               <button
-                className="flex items-center rounded-full bg-bg-900 px-3 py-1 text-sm tracking-wider text-bg-500 shadow-custom transition-all hover:bg-bg-300 dark:hover:bg-bg-700/50"
+                className="bg-bg-900 text-bg-500 shadow-custom hover:bg-bg-300 dark:hover:bg-bg-700/50 flex items-center rounded-full px-3 py-1 text-sm tracking-wider transition-all"
                 onClick={() => {
                   setModifyAlbumTagModalOpenType('create')
                 }}
@@ -61,7 +61,7 @@ function AlbumTagsList({
               </button>
             </div>
             <button
-              className="ml-2 mt-0.5 rounded-full p-1 text-sm text-bg-500 transition-all hover:bg-bg-900"
+              className="text-bg-500 hover:bg-bg-900 mt-0.5 ml-2 rounded-full p-1 text-sm transition-all"
               onClick={() => {
                 setTagsCollapsed(!tagsCollapsed)
               }}

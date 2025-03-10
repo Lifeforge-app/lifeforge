@@ -59,7 +59,7 @@ function HeaderFilter({
                   key={query}
                   color={
                     isColored === true
-                      ? target.color ?? themeColorHex
+                      ? (target.color ?? themeColorHex)
                       : undefined
                   }
                   icon={target.icon ?? ''}

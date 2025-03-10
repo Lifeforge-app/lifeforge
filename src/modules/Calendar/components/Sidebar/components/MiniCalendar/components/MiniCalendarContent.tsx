@@ -29,7 +29,7 @@ function MiniCalendarContent({
         'zh-TW': ['一', '二', '三', '四', '五', '六', '日'],
         ms: ['Is', 'Se', 'Ra', 'Kh', 'Ju', 'Sa', 'Ah']
       }[language ?? 'en']?.map(day => (
-        <div key={day} className="flex-center text-sm text-bg-500">
+        <div key={day} className="flex-center text-bg-500 text-sm">
           {day}
         </div>
       ))}

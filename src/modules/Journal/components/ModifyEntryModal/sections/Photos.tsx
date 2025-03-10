@@ -83,7 +83,7 @@ function Photos({
         <div className="flex-center size-full flex-col gap-4">
           <Icon className="size-28" icon="tabler:lock" />
           <h2 className="text-4xl font-semibold">Photos are locked</h2>
-          <p className="text-center text-lg text-bg-500">
+          <p className="text-bg-500 text-center text-lg">
             You can&apos;t upload photos in update mode.
           </p>
         </div>
@@ -116,7 +116,7 @@ function Photos({
                 src={photo.preview}
               />
               <button
-                className="flex-center absolute left-0 top-0 size-full bg-red-900/50 opacity-0 transition-opacity duration-200 hover:opacity-100"
+                className="flex-center absolute top-0 left-0 size-full bg-red-900/50 opacity-0 transition-opacity duration-200 hover:opacity-100"
                 onClick={() => {
                   setPhotos(photos.filter(p => p.preview !== photo.preview))
                 }}
@@ -143,7 +143,7 @@ function Photos({
 
   return (
     <>
-      <div className="mt-4 flex w-full flex-1 shrink-0 flex-col rounded-lg bg-bg-200/50 p-6 shadow-custom transition-all focus-within:ring-1 focus-within:ring-bg-500 dark:bg-bg-800/50">
+      <div className="bg-bg-200/50 shadow-custom focus-within:ring-bg-500 dark:bg-bg-800/50 mt-4 flex w-full flex-1 shrink-0 flex-col rounded-lg p-6 transition-all focus-within:ring-1">
         {renderContent()}
       </div>
       <div className="flex-between mt-6 flex">

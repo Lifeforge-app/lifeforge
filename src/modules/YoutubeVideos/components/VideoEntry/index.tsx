@@ -22,7 +22,7 @@ function VideoEntry({
     <a
       key={video.id}
       className={clsx(
-        'relative flex w-full items-center justify-between gap-8 rounded-md p-4 shadow-custom transition-all',
+        'shadow-custom relative flex w-full items-center justify-between gap-8 rounded-md p-4 transition-all',
         componentBgWithHover
       )}
       href={`${import.meta.env.VITE_API_HOST}/youtube-videos/video/stream/${
@@ -35,7 +35,7 @@ function VideoEntry({
         <VideoThumbnail duration={video.duration} id={video.youtube_id} />
         <VideoDetails video={video} />
       </div>
-      <HamburgerMenu className="absolute right-4 top-4">
+      <HamburgerMenu className="absolute top-4 right-4">
         <MenuItem
           icon="tabler:brand-youtube"
           namespace="modules.youtubeVideos"

@@ -60,7 +60,7 @@ function ManageTagsModal({
                 }}
               />
             ) : (
-              <ul className="mb-4 flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
+              <ul className="divide-bg-200 dark:divide-bg-800 mb-4 flex flex-col divide-y">
                 {albumTagList.map(tag => (
                   <li
                     key={tag.id}

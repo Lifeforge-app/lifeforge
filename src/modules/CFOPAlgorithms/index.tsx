@@ -20,7 +20,7 @@ function CFOPAlgorithms(): React.ReactElement {
           <Link
             key={key}
             className={clsx(
-              'flex flex-col items-center justify-center rounded-md p-4 shadow-custom transition-all',
+              'shadow-custom flex flex-col items-center justify-center rounded-md p-4 transition-all',
               componentBgWithHover
             )}
             to={`/cfop-algorithms/${key.toLowerCase()}`}

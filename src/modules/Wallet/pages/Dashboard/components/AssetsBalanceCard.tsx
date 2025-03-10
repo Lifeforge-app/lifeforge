@@ -22,7 +22,7 @@ function AssetsBalanceCard(): React.ReactElement {
       className="col-span-1 row-span-2 min-h-96 xl:min-h-0"
       componentBesideTitle={
         <Link
-          className="flex items-center gap-2 rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50"
+          className="text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50 flex items-center gap-2 rounded-lg p-2 transition-all"
           to="./assets"
         >
           <Icon className="text-xl" icon="tabler:chevron-right" />
@@ -41,7 +41,7 @@ function AssetsBalanceCard(): React.ReactElement {
                   <Link
                     key={asset.id}
                     className={clsx(
-                      'flex-between flex w-full min-w-0 flex-1 flex-col gap-4 rounded-lg p-6 shadow-custom transition-all [@media(min-width:400px)]:flex-row',
+                      'flex-between shadow-custom flex w-full min-w-0 flex-1 flex-col gap-4 rounded-lg p-6 transition-all [@media(min-width:400px)]:flex-row',
                       componentBgLighterWithHover
                     )}
                     to={`/wallet/transactions?asset=${asset.id}`}
@@ -54,11 +54,11 @@ function AssetsBalanceCard(): React.ReactElement {
                     </div>
                     <div
                       className={clsx(
-                        'flex gap-2 whitespace-nowrap text-right text-3xl font-medium',
+                        'flex gap-2 text-right text-3xl font-medium whitespace-nowrap',
                         isAmountHidden ? 'items-center' : 'items-end'
                       )}
                     >
-                      <span className="text-xl text-bg-500">RM</span>
+                      <span className="text-bg-500 text-xl">RM</span>
                       {isAmountHidden ? (
                         <span className="flex items-center">
                           {Array(4)

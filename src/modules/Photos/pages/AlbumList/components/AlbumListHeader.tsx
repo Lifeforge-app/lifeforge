@@ -25,9 +25,9 @@ function AlbumListHeader({
     <>
       <header className="w-full min-w-0">
         <div className="flex-between flex">
-          <h1 className="text-3xl font-semibold md:text-4xl ">
+          <h1 className="text-3xl font-semibold md:text-4xl">
             Albums{' '}
-            <span className="text-base text-bg-500">
+            <span className="text-bg-500 text-base">
               ({typeof albumList !== 'string' ? albumList.length : '...'})
             </span>
           </h1>

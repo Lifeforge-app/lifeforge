@@ -1,0 +1,64 @@
+import React from 'react'
+import {
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption
+} from '@components/inputs'
+import {
+  IRailwayMapLine,
+  IRailwayMapStation
+} from '@interfaces/railway_map_interfaces'
+import StationCodes from './StationCode'
+import { formatStationDisplay } from '../utils/stations'
+
+interface StationSelectorProps {
+  stations: IRailwayMapStation[]
+  lines: IRailwayMapLine[]
+  filteredStations: IRailwayMapStation[]
+  value: string
+  setValue: (value: string) => void
+  setQuery: (query: string) => void
+  className?: string
+  icon: string
+  name: string
+  namespace: string
+}
+
+const StationSelector: React.FC<StationSelectorProps> = ({
+  stations,
+  lines,
+  filteredStations,
+  value,
+  setValue,
+  setQuery,
+  className,
+  icon,
+  name,
+  namespace
+}) => {
+  return (
+    <ListboxOrComboboxInput
+      className={className}
+      displayValue={value => formatStationDisplay(stations, value)}
+      icon={icon}
+      name={name}
+      namespace={namespace}
+      setQuery={setQuery}
+      setValue={setValue}
+      type="combobox"
+      value={value}
+    >
+      {filteredStations.map(station => (
+        <ListboxOrComboboxOption
+          key={station.id}
+          iconAtEnd
+          icon={<StationCodes codes={station.codes} lines={lines} />}
+          text={station.name}
+          type="combobox"
+          value={station.id}
+        />
+      ))}
+    </ListboxOrComboboxInput>
+  )
+}
+
+export default StationSelector

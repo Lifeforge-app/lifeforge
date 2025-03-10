@@ -144,13 +144,13 @@ function LibgenModal(): React.ReactElement {
                   return (
                     <>
                       <div className="mb-4 space-y-1">
-                        <p className="text-lg font-medium text-bg-500">
+                        <p className="text-bg-500 text-lg font-medium">
                           Search results for{' '}
                           <span className="text-bg-900 dark:text-bg-100">
                             &quot;{data.query}&quot;
                           </span>
                         </p>
-                        <p className="text-sm font-light text-bg-500">
+                        <p className="text-bg-500 text-sm font-light">
                           {data.resultsCount}
                         </p>
                       </div>

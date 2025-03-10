@@ -156,8 +156,8 @@ function AudioType({
 
   return (
     <>
-      <div className="flex w-full flex-col rounded-md bg-bg-200/50 p-6 shadow-custom dark:bg-bg-800/50">
-        <div className="flex items-center gap-4 text-bg-500">
+      <div className="bg-bg-200/50 shadow-custom dark:bg-bg-800/50 flex w-full flex-col rounded-md p-6">
+        <div className="text-bg-500 flex items-center gap-4">
           <Icon className="size-6" icon="tabler:microphone" />
           <span className="font-medium">
             {t(`modules.momentVault:inputs.audio`)}{' '}
@@ -166,12 +166,12 @@ function AudioType({
         </div>
         {audioURL && (
           <>
-            <div className="w-full flex items-center mt-6 gap-4 bg-bg-300/50 dark:bg-bg-800 [&>*:nth-child(2)]:w-full md:pr-8 shadow-custom rounded-md p-4">
+            <div className="bg-bg-300/50 dark:bg-bg-800 shadow-custom mt-6 flex w-full items-center gap-4 rounded-md p-4 md:pr-8 [&>*:nth-child(2)]:w-full">
               <Button
                 icon={isPlaying ? 'tabler:pause' : 'tabler:play'}
                 onClick={onPlayPause}
               />
-              <div className="flex w-full items-center *:first:w-full sm:flex-row gap-2 sm:gap-4 flex-col">
+              <div className="flex w-full flex-col items-center gap-2 *:first:w-full sm:flex-row sm:gap-4">
                 <WavesurferPlayer
                   barGap={2}
                   barRadius={100}
@@ -194,14 +194,14 @@ function AudioType({
                   onPlay={() => setIsPlaying(true)}
                   onReady={onReady}
                 />
-                <p className="text-sm text-bg-500 whitespace-nowrap text-left w-full sm:w-auto">
+                <p className="text-bg-500 w-full text-left text-sm whitespace-nowrap sm:w-auto">
                   {moment().startOf('day').seconds(currentTime).format('mm:ss')}{' '}
                   / {moment().startOf('day').seconds(totalTime).format('mm:ss')}
                 </p>
               </div>
             </div>
             {transcription && (
-              <div className="mt-6 border-l-4 border-custom-500 pl-4">
+              <div className="border-custom-500 mt-6 border-l-4 pl-4">
                 <p className="text-bg-500">{transcription}</p>
               </div>
             )}
@@ -238,7 +238,7 @@ function AudioType({
         </Button>
       </div>
       <CreateOrModifyButton
-        className="w-full mt-8!"
+        className="mt-8! w-full"
         disabled={!audioURL}
         loading={submitLoading}
         type="create"

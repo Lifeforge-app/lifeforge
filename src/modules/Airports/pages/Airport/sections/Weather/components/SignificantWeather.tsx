@@ -11,7 +11,7 @@ function SignificantWeather({
 }): React.ReactElement {
   return (
     <WidgetWrapper className="col-span-2">
-      <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
+      <h1 className="text-bg-500 mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon className="text-2xl" icon="tabler:cloud-exclamation" />
         <span className="ml-2">Weather</span>
       </h1>
@@ -19,7 +19,7 @@ function SignificantWeather({
         {data.conditions !== undefined ? (
           <>
             <Icon
-              className="text-6xl text-custom-500"
+              className="text-custom-500 text-6xl"
               icon={
                 METAR_ICONS[
                   data.conditions?.filter(e => !'+-,VC'.includes(e.code))[0]

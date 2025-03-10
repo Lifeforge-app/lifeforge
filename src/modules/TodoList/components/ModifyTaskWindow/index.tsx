@@ -137,25 +137,25 @@ function ModifyTaskWindow(): React.ReactElement {
     <div
       ref={ref}
       className={clsx(
-        'fixed left-0 top-0 h-dvh w-full bg-bg-900/20 backdrop-blur-xs transition-all',
+        'bg-bg-900/20 fixed top-0 left-0 h-dvh w-full backdrop-blur-xs transition-all',
         innerOpenType !== null
           ? 'z-9990 opacity-100 [transition:z-index_0.1s_linear_0.1s,opacity_0.1s_linear_0.2s]'
           : 'z-0 opacity-0 [transition:z-index_0.1s_linear_0.2s,opacity_0.1s_linear_0.1s]'
       )}
     >
       <button
-        className="absolute left-0 top-0 size-full"
+        className="absolute top-0 left-0 size-full"
         onClick={closeWindow}
       />
       <div
         className={clsx(
-          'absolute right-0 flex flex-col transition-all duration-300 top-0 size-full bg-bg-100 p-8 dark:bg-bg-900 sm:w-4/5 md:w-3/5 lg:w-2/5',
+          'bg-bg-100 dark:bg-bg-900 absolute top-0 right-0 flex size-full flex-col p-8 transition-all duration-300 sm:w-4/5 md:w-3/5 lg:w-2/5',
           innerOpenType !== null && 'translate-x-0',
           innerOpenType === null && 'translate-x-full'
         )}
       >
         <Scrollbar>
-          <div className="flex-between mb-8 flex ">
+          <div className="flex-between mb-8 flex">
             <h1 className="flex items-center gap-3 text-2xl font-semibold">
               <Icon
                 className="size-7"

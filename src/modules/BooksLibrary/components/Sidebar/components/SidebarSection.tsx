@@ -50,7 +50,7 @@ function SidebarSection({
               ))}
             </>
           ) : (
-            <p className="text-center text-bg-500">
+            <p className="text-bg-500 text-center">
               {t(`emptyState.${stuff}`)}
             </p>
           )

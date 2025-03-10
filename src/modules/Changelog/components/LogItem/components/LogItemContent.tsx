@@ -15,7 +15,7 @@ function LogItemContent({
         .map(subEntry => (
           <li key={subEntry.id} className="ml-4 sm:ml-44">
             <div className="inline-flex flex-col items-start md:flex-row md:gap-2">
-              <span className="whitespace-nowrap font-semibold">
+              <span className="font-semibold whitespace-nowrap">
                 {subEntry.feature}:
               </span>{' '}
               <span

@@ -18,9 +18,9 @@ function ChangeViewButton({
     <button
       key={view}
       className={clsx(
-        'w-full whitespace-nowrap rounded-md p-2 px-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800',
+        'hover:bg-bg-100 dark:hover:bg-bg-800 w-full rounded-md p-2 px-4 whitespace-nowrap transition-all',
         view.toLowerCase() === currentView
-          ? 'bg-bg-200/50 font-medium text-bg-800 shadow-xs dark:bg-bg-800 dark:text-bg-200'
+          ? 'bg-bg-200/50 text-bg-800 dark:bg-bg-800 dark:text-bg-200 font-medium shadow-xs'
           : 'text-bg-500'
       )}
       onClick={() => {

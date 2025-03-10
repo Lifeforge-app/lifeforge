@@ -12,9 +12,9 @@ function TaskTags({ entry }: { entry: ITodoListEntry }): React.ReactElement {
         entry.tags.map(tag => (
           <span
             key={tag}
-            className="relative isolate px-2 py-0.5 text-xs text-custom-500"
+            className="text-custom-500 relative isolate px-2 py-0.5 text-xs"
           >
-            <div className="absolute left-0 top-0 z-[-1] size-full rounded-full bg-custom-500 opacity-20" />
+            <div className="bg-custom-500 absolute top-0 left-0 z-[-1] size-full rounded-full opacity-20" />
             #{tags.find(t => t.id === tag)?.name}
           </span>
         ))}

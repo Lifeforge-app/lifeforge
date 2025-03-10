@@ -45,7 +45,7 @@ function ContainerHeader(): React.ReactElement {
         </HamburgerMenu>
       </div>
       <div
-        className="relative isolate flex h-56 w-full items-end justify-between rounded-lg bg-bg-900 bg-cover bg-center bg-no-repeat p-6 sm:h-72"
+        className="bg-bg-900 relative isolate flex h-56 w-full items-end justify-between rounded-lg bg-cover bg-center bg-no-repeat p-6 sm:h-72"
         style={{
           backgroundImage:
             typeof pathDetails !== 'string'
@@ -57,7 +57,7 @@ function ContainerHeader(): React.ReactElement {
       >
         <div className="absolute inset-0 rounded-lg bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,0.7)_80%)]"></div>
         <div className="flex-between relative z-9999 flex w-full">
-          <h1 className="flex items-center gap-4 font-semibold text-bg-100 text-2xl sm:text-3xl">
+          <h1 className="text-bg-100 flex items-center gap-4 text-2xl font-semibold sm:text-3xl">
             {(() => {
               if (pathDetailsLoading) {
                 return (
@@ -104,7 +104,7 @@ function ContainerHeader(): React.ReactElement {
                       <>
                         <Link
                           key={folder.id}
-                          className="relative flex items-center gap-2 rounded-lg p-3 text-base before:absolute before:left-0 before:top-0 before:size-full before:rounded-md before:transition-all hover:before:bg-white/5"
+                          className="relative flex items-center gap-2 rounded-lg p-3 text-base before:absolute before:top-0 before:left-0 before:size-full before:rounded-md before:transition-all hover:before:bg-white/5"
                           style={{
                             backgroundColor: folder.color + '20',
                             color: folder.color

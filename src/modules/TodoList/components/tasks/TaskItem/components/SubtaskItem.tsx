@@ -49,7 +49,7 @@ function SubtaskItem({
   }
 
   return (
-    <div className="flex-between flex rounded-md bg-bg-50 p-6 shadow-custom dark:bg-bg-900">
+    <div className="flex-between bg-bg-50 shadow-custom dark:bg-bg-900 flex rounded-md p-6">
       {entry.title}
       <TaskCompletionCheckbox
         entry={entry}

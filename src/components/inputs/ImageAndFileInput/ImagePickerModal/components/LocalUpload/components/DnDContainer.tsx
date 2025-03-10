@@ -17,15 +17,15 @@ function DnDContainer({
 
   return (
     <div
-      className="flex-center size-full min-h-96 flex-1 flex-col rounded-lg border-[3px] border-dashed border-bg-500 py-12"
+      className="flex-center border-bg-500 size-full min-h-96 flex-1 flex-col rounded-lg border-[3px] border-dashed py-12"
       {...getRootProps()}
     >
       <input {...getInputProps()} />
-      <Icon className="size-20 text-bg-500" icon="tabler:drag-drop" />
-      <div className="mt-4 text-center text-2xl font-medium text-bg-500">
+      <Icon className="text-bg-500 size-20" icon="tabler:drag-drop" />
+      <div className="text-bg-500 mt-4 text-center text-2xl font-medium">
         {isDragActive ? t('dnd.dropHere') : t('dnd.dragAndDropToUpload')}
       </div>
-      <div className="mt-4 text-center text-lg font-semibold uppercase tracking-widest text-bg-500">
+      <div className="text-bg-500 mt-4 text-center text-lg font-semibold tracking-widest uppercase">
         {t('dnd.or')}
       </div>
       <Button

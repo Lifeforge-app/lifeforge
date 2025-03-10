@@ -29,17 +29,17 @@ function BgTempSelector(): React.ReactElement {
         <DefaultBgTempSelector bgTemp={bgTemp} setBgTemp={setBgTemp} />
         <button
           className={clsx(
-            'ml-4 flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-full border-2 border-bg-500 ring-offset-2 ring-offset-bg-50 transition-all dark:ring-offset-bg-950 lg:w-12',
+            'border-bg-500 ring-offset-bg-50 dark:ring-offset-bg-950 ml-4 flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-full border-2 ring-offset-2 transition-all lg:w-12',
             bgTemp.startsWith('#')
-              ? 'ring-2 ring-bg-500'
-              : 'hover:ring-2 hover:ring-bg-500'
+              ? 'ring-bg-500 ring-2'
+              : 'hover:ring-bg-500 hover:ring-2'
           )}
           onClick={() => {
             setBgTemp(customBgTemp)
           }}
         >
-          <Icon className="size-6 text-bg-500" icon="tabler:palette" />
-          <span className="font-medium text-bg-500 md:hidden">
+          <Icon className="text-bg-500 size-6" icon="tabler:palette" />
+          <span className="text-bg-500 font-medium md:hidden">
             {t('bgTempSelector.customBgTemp')}
           </span>
         </button>
@@ -58,7 +58,7 @@ function BgTempSelector(): React.ReactElement {
               customBgTemp.match(/^#[0-9A-F]{6}$/i) !== null && (
                 <>
                   <Button
-                    className="w-full hidden lg:flex"
+                    className="hidden w-full lg:flex"
                     icon="uil:save"
                     onClick={() => {
                       setBgTemp(customBgTemp)

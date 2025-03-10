@@ -65,17 +65,17 @@ ${commandsString}
   
   ${chalk.bold(t('moduleTools.help.optionsTitle'))}:
     ${chalk.yellow('-h, --help')}      ${chalk.gray(
-    t('moduleTools.help.optionDescriptions.help')
-  )}
+      t('moduleTools.help.optionDescriptions.help')
+    )}
     ${chalk.yellow('-l, --language')}  ${chalk.gray(
-    t('moduleTools.help.optionDescriptions.language')
-  )}
+      t('moduleTools.help.optionDescriptions.language')
+    )}
     ${chalk.yellow('-u, --username')}  ${chalk.gray(
-    t('moduleTools.help.optionDescriptions.username')
-  )}
+      t('moduleTools.help.optionDescriptions.username')
+    )}
     ${chalk.yellow('-p, --password')}  ${chalk.gray(
-    t('moduleTools.help.optionDescriptions.password')
-  )}
+      t('moduleTools.help.optionDescriptions.password')
+    )}
   `)
 }
 

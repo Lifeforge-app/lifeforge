@@ -77,7 +77,7 @@ function APIKeys(): React.ReactElement {
       <>
         <QueryWrapper query={entriesQuery}>
           {entries => (
-            <div className="mt-8 flex-1 mb-24 lg:mb-6">
+            <div className="mt-8 mb-24 flex-1 lg:mb-6">
               {entries.map((entry, idx) => (
                 <EntryItem
                   key={entry.id}

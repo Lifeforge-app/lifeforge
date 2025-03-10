@@ -11,7 +11,7 @@ function Clouds({ data }: { data: IAirportMETARData }): React.ReactElement {
 
   return (
     <WidgetWrapper className="col-span-4">
-      <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
+      <h1 className="text-bg-500 mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon className="text-2xl" icon="tabler:cloud" />
         <span className="ml-2">Clouds</span>
       </h1>
@@ -30,15 +30,15 @@ function Clouds({ data }: { data: IAirportMETARData }): React.ReactElement {
               </p>
               <p className="flex flex-col text-right text-2xl font-medium">
                 {cloud.base_feet_agl} ft AGL
-                <span className="text-base font-normal text-bg-500">
+                <span className="text-bg-500 text-base font-normal">
                   {cloud.base_meters_agl.toFixed(2)} m AGL
                 </span>
               </p>
             </div>
           ))
         ) : (
-          <div className="flex items-center justify-center p-4  pl-6">
-            <p className="text-xl text-bg-500">No significant clouds</p>
+          <div className="flex items-center justify-center p-4 pl-6">
+            <p className="text-bg-500 text-xl">No significant clouds</p>
           </div>
         )}
       </ul>

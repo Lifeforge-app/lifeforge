@@ -200,13 +200,13 @@ function GuitarTabs(): React.ReactElement {
                     : ''
                 }`.trim()}
               </h1>
-              <span className="ml-2 mr-8 text-base text-bg-500">
+              <span className="text-bg-500 mr-8 ml-2 text-base">
                 ({entriesQuery.data?.totalItems ?? 0})
               </span>
             </div>
 
             <button
-              className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
+              className="text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 -ml-4 rounded-lg p-4 transition-all lg:hidden"
               onClick={() => {
                 setSidebarOpen(true)
               }}
@@ -226,7 +226,7 @@ function GuitarTabs(): React.ReactElement {
             >
               <ListboxButton
                 className={clsx(
-                  'flex-between mt-4 flex w-48 gap-2 rounded-md p-4 shadow-custom',
+                  'flex-between shadow-custom mt-4 flex w-48 gap-2 rounded-md p-4',
                   componentBgWithHover
                 )}
               >
@@ -239,7 +239,7 @@ function GuitarTabs(): React.ReactElement {
                       )?.[0] ?? 'tabler:clock'
                     }
                   />
-                  <span className="whitespace-nowrap font-medium">
+                  <span className="font-medium whitespace-nowrap">
                     {t(
                       `sortTypes.${
                         SORT_TYPE.find(
@@ -250,7 +250,7 @@ function GuitarTabs(): React.ReactElement {
                   </span>
                 </div>
                 <Icon
-                  className="size-5 text-bg-500"
+                  className="text-bg-500 size-5"
                   icon="tabler:chevron-down"
                 />
               </ListboxButton>

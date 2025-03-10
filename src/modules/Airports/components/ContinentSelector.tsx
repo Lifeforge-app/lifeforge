@@ -39,18 +39,18 @@ function ContinentSelector(): React.ReactElement {
     >
       <ListboxButton
         className={clsx(
-          'flex-between flex w-48 gap-2 rounded-lg p-4 shadow-custom',
+          'flex-between shadow-custom flex w-48 gap-2 rounded-lg p-4',
           componentBg
         )}
       >
         <div className="flex items-center gap-2">
-          <span className="whitespace-nowrap font-medium">
+          <span className="font-medium whitespace-nowrap">
             {continentID === 'all'
               ? 'All Continents'
               : CONTINENTS[continentID as keyof typeof CONTINENTS]}
           </span>
         </div>
-        <Icon className="size-5 text-bg-500" icon="tabler:chevron-down" />
+        <Icon className="text-bg-500 size-5" icon="tabler:chevron-down" />
       </ListboxButton>
       <ListboxOrComboboxOptions lighter>
         <ListboxOrComboboxOption text="All Continents" value="all" />

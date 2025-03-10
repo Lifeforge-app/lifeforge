@@ -16,7 +16,7 @@ function TaskCompletionCheckbox({
   return (
     <button
       className={clsx(
-        'flex-center relative z-50 size-5 rounded-full ring-2 ring-offset-2 ring-offset-bg-50 transition-all hover:border-custom-500 dark:ring-offset-bg-900',
+        'flex-center ring-offset-bg-50 hover:border-custom-500 dark:ring-offset-bg-900 relative z-50 size-5 rounded-full ring-2 ring-offset-2 transition-all',
         entry.done ? 'ring-custom-500' : 'ring-bg-200 dark:ring-bg-500'
       )}
       onClick={() => {
@@ -25,7 +25,7 @@ function TaskCompletionCheckbox({
     >
       {entry.done && (
         <Icon
-          className="size-4 stroke-custom-500 stroke-1 text-custom-500"
+          className="stroke-custom-500 text-custom-500 size-4 stroke-1"
           icon="uil:check"
         />
       )}

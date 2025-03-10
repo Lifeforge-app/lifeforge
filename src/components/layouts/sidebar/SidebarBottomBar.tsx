@@ -20,19 +20,19 @@ function SidebarBottomBar(): React.ReactElement {
   return (
     <div
       className={clsx(
-        'flex-center w-full min-w-0 pb-4 pt-0',
+        'flex-center w-full min-w-0 pt-0 pb-4',
         sidebarExpanded && 'px-4'
       )}
     >
       <Menu as="div" className="relative w-full min-w-0">
         <MenuButton
           className={clsx(
-            'flex-between w-full min-w-0 gap-8 text-left rounded-md p-4',
+            'flex-between w-full min-w-0 gap-8 rounded-md p-4 text-left',
             sidebarExpanded && componentBgLighterWithHover
           )}
         >
           <div className="flex-center w-full min-w-0 gap-3">
-            <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-bg-100 dark:bg-bg-800">
+            <div className="bg-bg-100 dark:bg-bg-800 flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full">
               {userData.avatar !== '' ? (
                 <img
                   alt=""
@@ -40,7 +40,7 @@ function SidebarBottomBar(): React.ReactElement {
                   src={getAvatarURL()}
                 />
               ) : (
-                <Icon className="text-xl text-bg-500" icon="tabler:user" />
+                <Icon className="text-bg-500 text-xl" icon="tabler:user" />
               )}
             </div>
             <div
@@ -49,15 +49,15 @@ function SidebarBottomBar(): React.ReactElement {
                 sidebarExpanded ? 'flex' : 'hidden'
               )}
             >
-              <div className="font-semibold ">{userData?.name}</div>
-              <div className="w-full min-w-0 truncate text-sm text-bg-500">
+              <div className="font-semibold">{userData?.name}</div>
+              <div className="text-bg-500 w-full min-w-0 truncate text-sm">
                 {userData?.email}
               </div>
             </div>
           </div>
           <Icon
             className={clsx(
-              'size-5 shrink-0 stroke-[2px] text-bg-500',
+              'text-bg-500 size-5 shrink-0 stroke-[2px]',
               sidebarExpanded ? 'flex' : 'hidden'
             )}
             icon="ph:caret-up-down-bold"
@@ -66,7 +66,7 @@ function SidebarBottomBar(): React.ReactElement {
         <MenuItems
           transition
           anchor="top start"
-          className="z-9991 w-[var(--button-width)] min-w-64 overflow-hidden overscroll-contain rounded-md border border-bg-200 bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:border-bg-700 dark:bg-bg-800"
+          className="border-bg-200 bg-bg-100 dark:border-bg-700 dark:bg-bg-800 z-9991 w-[var(--button-width)] min-w-64 overflow-hidden overscroll-contain rounded-md border shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
         >
           <div className="py-1">
             <MenuItem

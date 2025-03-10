@@ -128,7 +128,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                 />
                 <div className="flex-between flex w-full min-w-0 gap-8">
                   <h1 className="flex w-full min-w-0 items-center gap-4 text-2xl font-semibold">
-                    <div className="flex-center size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
+                    <div className="flex-center bg-bg-200 dark:bg-bg-700/50 size-14 shrink-0 rounded-md shadow-md">
                       {albumData.cover !== '' ? (
                         <img
                           alt=""
@@ -139,7 +139,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                         />
                       ) : (
                         <Icon
-                          className="size-8 text-bg-500 dark:text-bg-500"
+                          className="text-bg-500 dark:text-bg-500 size-8"
                           icon="tabler:library-photo"
                         />
                       )}
@@ -148,7 +148,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                       <div className="flex items-center gap-2">
                         <span className="truncate">{albumData.name}</span>
                         <Icon
-                          className="size-5 shrink-0 text-bg-500"
+                          className="text-bg-500 size-5 shrink-0"
                           icon={
                             albumData.is_public ? 'tabler:world' : 'tabler:lock'
                           }
@@ -158,7 +158,7 @@ function PhotosAlbumGallery(): React.ReactElement {
                         switch (photos) {
                           case 'loading':
                             return (
-                              <span className="text-sm text-bg-500">
+                              <span className="text-bg-500 text-sm">
                                 <Icon
                                   className="size-5"
                                   icon="svg-spinners:180-ring"
@@ -167,31 +167,31 @@ function PhotosAlbumGallery(): React.ReactElement {
                             )
                           case 'error':
                             return (
-                              <span className="text-sm text-bg-500">Error</span>
+                              <span className="text-bg-500 text-sm">Error</span>
                             )
                           default:
                             return (
-                              <span className="flex items-center gap-2 text-sm font-medium text-bg-500">
+                              <span className="text-bg-500 flex items-center gap-2 text-sm font-medium">
                                 {photos.length === 0
                                   ? 'No photos added'
                                   : photos.length === 1
-                                  ? moment(photos[0].shot_time).format(
-                                      'DD MMM YYYY'
-                                    )
-                                  : `${moment(
-                                      photos[photos.length - 1].shot_time
-                                    ).format('DD MMM YYYY')} ${
-                                      moment(
-                                        photos[photos.length - 1].shot_time
-                                      ).format('DD MMM YYYY') ===
-                                      moment(photos[0].shot_time).format(
+                                    ? moment(photos[0].shot_time).format(
                                         'DD MMM YYYY'
                                       )
-                                        ? ''
-                                        : `to ${moment(
-                                            photos[0].shot_time
-                                          ).format('DD MMM YYYY')}`
-                                    }`}
+                                    : `${moment(
+                                        photos[photos.length - 1].shot_time
+                                      ).format('DD MMM YYYY')} ${
+                                        moment(
+                                          photos[photos.length - 1].shot_time
+                                        ).format('DD MMM YYYY') ===
+                                        moment(photos[0].shot_time).format(
+                                          'DD MMM YYYY'
+                                        )
+                                          ? ''
+                                          : `to ${moment(
+                                              photos[0].shot_time
+                                            ).format('DD MMM YYYY')}`
+                                      }`}
                                 <Icon
                                   className="size-1"
                                   icon="tabler:circle-filled"

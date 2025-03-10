@@ -48,7 +48,7 @@ function CodeTimeTopEntries({
                 className={clsx(
                   'rounded-md p-4 px-6 tracking-wide',
                   lastFor === last
-                    ? 'bg-bg-200 font-semibold text-bg-800 dark:bg-bg-700/50 dark:text-bg-50'
+                    ? 'bg-bg-200 text-bg-800 dark:bg-bg-700/50 dark:text-bg-50 font-semibold'
                     : 'text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-700/50'
                 )}
                 onClick={() => {
@@ -78,11 +78,11 @@ function CodeTimeTopEntries({
                           Object.entries(topEntries).slice(0, 5).length - 1 &&
                           'shrink-0 rounded-r-lg',
                         [
-                          'bg-red-500/20 border-red-500',
-                          'bg-orange-500/20 border-orange-500',
-                          'bg-yellow-500/20 border-yellow-500',
-                          'bg-blue-500/20 border-blue-500',
-                          'bg-emerald-500/20 border-emerald-500'
+                          'border-red-500 bg-red-500/20',
+                          'border-orange-500 bg-orange-500/20',
+                          'border-yellow-500 bg-yellow-500/20',
+                          'border-blue-500 bg-blue-500/20',
+                          'border-emerald-500 bg-emerald-500/20'
                         ][index]
                       )}
                       style={{
@@ -106,20 +106,20 @@ function CodeTimeTopEntries({
                     <li
                       key={key}
                       className={clsx(
-                        'flex-between relative flex gap-8 rounded-lg p-6 shadow-custom',
+                        'flex-between shadow-custom relative flex gap-8 rounded-lg p-6',
                         componentBg
                       )}
                     >
-                      <div className="flex items-center gap-4 break-all text-lg font-medium">
+                      <div className="flex items-center gap-4 text-lg font-medium break-all">
                         <div
                           className={clsx(
-                            'size-4 shrink-0 rounded-md border rounded-full',
+                            'size-4 shrink-0 rounded-full rounded-md border',
                             [
-                              'bg-red-500/20 border-red-500',
-                              'bg-orange-500/20 border-orange-500',
-                              'bg-yellow-500/20 border-yellow-500',
-                              'bg-blue-500/20 border-blue-500',
-                              'bg-emerald-500/20 border-emerald-500'
+                              'border-red-500 bg-red-500/20',
+                              'border-orange-500 bg-orange-500/20',
+                              'border-yellow-500 bg-yellow-500/20',
+                              'border-blue-500 bg-blue-500/20',
+                              'border-emerald-500 bg-emerald-500/20'
                             ][index]
                           )}
                         ></div>

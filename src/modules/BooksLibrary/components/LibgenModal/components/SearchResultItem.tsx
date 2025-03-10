@@ -24,9 +24,9 @@ function SearchResultItem({
         componentBgLighterWithHover
       )}
     >
-      <div className="flex-center relative inline-flex h-min min-h-80 w-56 shrink-0 flex-col overflow-hidden rounded-md bg-bg-200 dark:bg-bg-800">
+      <div className="flex-center bg-bg-200 dark:bg-bg-800 relative inline-flex h-min min-h-80 w-56 shrink-0 flex-col overflow-hidden rounded-md">
         <Icon
-          className="absolute left-1/2 top-1/2 size-24 -translate-x-1/2 -translate-y-1/2 text-bg-700"
+          className="text-bg-700 absolute top-1/2 left-1/2 size-24 -translate-x-1/2 -translate-y-1/2"
           icon="tabler:book-2"
         />
         {book.image !== '' && (
@@ -41,16 +41,16 @@ function SearchResultItem({
         )}
       </div>
       <div className="-mt-1 w-full">
-        <p className="mb-1 text-sm font-medium tracking-wide text-bg-500">
+        <p className="text-bg-500 mb-1 text-sm font-medium tracking-wide">
           {book.ISBN}
         </p>
         <h2 className="text-2xl font-semibold">
           {book.Title}{' '}
           {book.Edition !== '' && (
-            <span className="text-sm text-bg-500">({book.Edition} ed)</span>
+            <span className="text-bg-500 text-sm">({book.Edition} ed)</span>
           )}
         </h2>
-        <p className="mt-1 text-base font-light text-custom-500">
+        <p className="text-custom-500 mt-1 text-base font-light">
           {book['Author(s)']}
         </p>
         <div className="mt-6 flex flex-wrap gap-6 lg:grid lg:grid-cols-4">
@@ -71,7 +71,7 @@ function SearchResultItem({
             )
             .map((key: string) => (
               <div key={key}>
-                <p className="text-sm font-medium text-bg-500">{key}</p>
+                <p className="text-bg-500 text-sm font-medium">{key}</p>
                 <p className="text-base font-light">
                   {key.includes('Time')
                     ? moment(book[key]).format('MMM DD, YYYY')

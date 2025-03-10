@@ -27,9 +27,9 @@ export default function VolumeControl(): React.ReactElement {
         }}
       />
       <div className="flex items-center">
-        <Icon className="mr-4 text-xl text-bg-500" icon="tabler:volume" />
+        <Icon className="text-bg-500 mr-4 text-xl" icon="tabler:volume" />
         <input
-          className="secondary h-1 w-32 cursor-pointer overflow-hidden rounded-full bg-bg-200 dark:bg-bg-700"
+          className="secondary bg-bg-200 dark:bg-bg-700 h-1 w-32 cursor-pointer overflow-hidden rounded-full"
           max="100"
           type="range"
           value={volume}

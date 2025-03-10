@@ -55,8 +55,8 @@ function DefaultThemeColorSelector({
       <div className="relative mt-1 w-full lg:w-56">
         <ListboxButton
           className={clsx(
-            'flex w-full items-center gap-2 rounded-lg shadow-custom text-left outline-hidden transition-all focus:outline-hidden',
-            !themeColor.startsWith('#') ? 'py-4 pl-4 pr-10' : 'py-6 pl-6 pr-12',
+            'shadow-custom flex w-full items-center gap-2 rounded-lg text-left outline-hidden transition-all focus:outline-hidden',
+            !themeColor.startsWith('#') ? 'py-4 pr-10 pl-4' : 'py-6 pr-12 pl-6',
             componentBgWithHover
           )}
         >
@@ -65,7 +65,7 @@ function DefaultThemeColorSelector({
               'inline-block size-4 shrink-0 rounded-full',
               !themeColor.startsWith('#')
                 ? 'bg-custom-500'
-                : 'border-2 border-bg-500'
+                : 'border-bg-500 border-2'
             )}
           />
           <span className="-mt-px block truncate">
@@ -89,18 +89,18 @@ function DefaultThemeColorSelector({
               themeColor.startsWith('#') ? 'pr-4' : 'pr-2'
             )}
           >
-            <Icon className="size-5 text-bg-500" icon="tabler:chevron-down" />
+            <Icon className="text-bg-500 size-5" icon="tabler:chevron-down" />
           </span>
         </ListboxButton>
         <ListboxOptions
           transition
           anchor="bottom end"
-          className="h-64 min-w-80 w-[var(--button-width)] divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base text-bg-800 shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50"
+          className="divide-bg-200 bg-bg-100 text-bg-800 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50 h-64 w-[var(--button-width)] min-w-80 divide-y overflow-auto rounded-md py-1 text-base shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
         >
           {COLORS.map(color => (
             <ListboxOption
               key={color}
-              className="flex-between relative flex cursor-pointer select-none bg-transparent p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800"
+              className="flex-between hover:bg-bg-100 dark:hover:bg-bg-800 relative flex cursor-pointer bg-transparent p-4 transition-all select-none"
               value={`theme-${color}`}
             >
               {({ selected }) => (
@@ -109,7 +109,7 @@ function DefaultThemeColorSelector({
                     <span className="flex items-center gap-2">
                       <span
                         className={clsx(
-                          'inline-block size-4 rounded-full bg-custom-500',
+                          'bg-custom-500 inline-block size-4 rounded-full',
                           `theme-${color}`
                         )}
                       />
@@ -125,7 +125,7 @@ function DefaultThemeColorSelector({
                   </div>
                   {selected && (
                     <Icon
-                      className="block text-lg text-custom-500"
+                      className="text-custom-500 block text-lg"
                       icon="tabler:check"
                     />
                   )}
@@ -135,20 +135,20 @@ function DefaultThemeColorSelector({
           ))}
           <ListboxOption
             key="custom"
-            className="flex-between relative flex cursor-pointer select-none bg-transparent p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800"
+            className="flex-between hover:bg-bg-100 dark:hover:bg-bg-800 relative flex cursor-pointer bg-transparent p-4 transition-all select-none"
             value="theme-custom"
           >
             {({ selected }) => (
               <>
                 <div>
                   <span className="flex items-center gap-2">
-                    <span className="inline-block size-4 rounded-full border-2 border-bg-500" />
+                    <span className="border-bg-500 inline-block size-4 rounded-full border-2" />
                     {t('themeColorSelector.colors.custom')}
                   </span>
                 </div>
                 {selected && (
                   <Icon
-                    className="block text-lg text-custom-500"
+                    className="text-custom-500 block text-lg"
                     icon="tabler:check"
                   />
                 )}

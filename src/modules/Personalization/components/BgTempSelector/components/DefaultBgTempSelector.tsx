@@ -22,11 +22,11 @@ function DefaultBgTempSelector({
           <button
             key={index}
             className={clsx(
-              'flex size-8 items-center justify-center rounded-full bg-bg-500 ring-offset-2 ring-offset-bg-50 transition-all dark:ring-offset-bg-950',
+              'bg-bg-500 ring-offset-bg-50 dark:ring-offset-bg-950 flex size-8 items-center justify-center rounded-full ring-offset-2 transition-all',
               color,
               bgTemp === color
-                ? 'ring-2 ring-bg-500'
-                : 'hover:ring-2 hover:ring-bg-500'
+                ? 'ring-bg-500 ring-2'
+                : 'hover:ring-bg-500 hover:ring-2'
             )}
             onClick={() => {
               setBgTemp(color)
@@ -34,7 +34,7 @@ function DefaultBgTempSelector({
           >
             {bgTemp === color && (
               <Icon
-                className="size-4 text-bg-50 dark:text-bg-800"
+                className="text-bg-50 dark:text-bg-800 size-4"
                 icon="tabler:check"
               />
             )}
@@ -42,11 +42,11 @@ function DefaultBgTempSelector({
         ))}
       </div>
       <div className="flex-between flex w-full gap-2">
-        <span className="shrink-0 text-sm font-medium text-bg-500">
+        <span className="text-bg-500 shrink-0 text-sm font-medium">
           {t('bgTempSelector.cool')}
         </span>
         <span className="mt-px h-0.5 w-full bg-linear-to-r from-blue-500 to-red-500"></span>
-        <span className="shrink-0 text-sm font-medium text-bg-500">
+        <span className="text-bg-500 shrink-0 text-sm font-medium">
           {t('bgTempSelector.warm')}
         </span>
       </div>

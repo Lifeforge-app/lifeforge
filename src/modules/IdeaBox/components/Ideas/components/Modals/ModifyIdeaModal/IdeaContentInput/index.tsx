@@ -101,7 +101,7 @@ function IdeaContentInput({
             )}
             {ideaImage === null && (
               <>
-                <div className="mt-6 text-center font-medium uppercase tracking-widest text-bg-500">
+                <div className="text-bg-500 mt-6 text-center font-medium tracking-widest uppercase">
                   {t('imageUpload.orPasteLink')}
                 </div>
                 <TextInput

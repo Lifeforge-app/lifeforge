@@ -19,9 +19,9 @@ function ProgressIndicator({
       return (
         <div className="flex items-center justify-end gap-2">
           <p className="text-bg-500">{progress}%</p>
-          <div className="h-1 w-48 rounded-md bg-bg-500">
+          <div className="bg-bg-500 h-1 w-48 rounded-md">
             <div
-              className="h-full rounded-md bg-custom-500 transition-all"
+              className="bg-custom-500 h-full rounded-md transition-all"
               style={{
                 width: `${progress}%`
               }}

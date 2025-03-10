@@ -21,7 +21,7 @@ function CategoryToggleButton({
   return (
     <button
       className={clsx(
-        'flex w-1/2 items-center justify-center gap-2 rounded-md p-4 font-medium shadow-custom transition-all',
+        'shadow-custom flex w-1/2 items-center justify-center gap-2 rounded-md p-4 font-medium transition-all',
         categoryType === label.toLowerCase()
           ? `${activeBgColor} text-bg-800`
           : 'bg-bg-200 text-bg-500 dark:bg-bg-800/50'

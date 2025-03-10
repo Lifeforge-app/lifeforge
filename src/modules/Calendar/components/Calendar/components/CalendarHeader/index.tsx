@@ -44,7 +44,7 @@ function CalendarHeader({
       <div className="flex w-full gap-4 lg:w-auto">
         <div
           className={clsx(
-            'flex w-full gap-1 rounded-md p-2 shadow-custom',
+            'shadow-custom flex w-full gap-1 rounded-md p-2',
             componentBg
           )}
         >

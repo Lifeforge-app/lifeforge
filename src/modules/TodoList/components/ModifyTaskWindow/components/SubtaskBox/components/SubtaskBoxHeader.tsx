@@ -63,13 +63,13 @@ function SubtaskBoxHeader({
 
   return (
     <div className="flex-between flex w-full gap-6">
-      <div className="flex items-center gap-5 text-bg-500">
+      <div className="text-bg-500 flex items-center gap-5">
         <Icon className="size-6" icon="icon-park-outline:right-branch" />
         <h2 className="font-medium">{t('inputs.subtasks')}</h2>
       </div>
       <div className="flex items-center gap-2">
         <button
-          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-custom-500! dark:hover:bg-bg-800 dark:hover:text-custom-500!"
+          className="text-bg-500 hover:bg-bg-100 hover:text-custom-500! dark:hover:bg-bg-800 dark:hover:text-custom-500! rounded-lg p-2 transition-all"
           onClick={() => {
             AIGenerateSubtask().catch(console.error)
           }}
@@ -83,7 +83,7 @@ function SubtaskBoxHeader({
         </button>
         <SpicinessSelector setSpiciness={setSpiciness} spiciness={spiciness} />
         <button
-          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50"
+          className="text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50 rounded-lg p-2 transition-all"
           onClick={() => {
             setSubtasks(prev => {
               if (typeof prev === 'string') return prev

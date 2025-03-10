@@ -26,7 +26,7 @@ function Header({ itemCount }: { itemCount: number }): React.ReactElement {
             ? 'All'
             : 'Filtered'}{' '}
           {searchParams.get('favourite') === 'true' ? 'Favourite ' : ''}
-          Books <span className="text-base text-bg-500">({itemCount})</span>
+          Books <span className="text-bg-500 text-base">({itemCount})</span>
         </h1>
         <div className="flex items-center gap-6">
           <Menu as="div" className="relative z-50 hidden md:block">
@@ -44,7 +44,7 @@ function Header({ itemCount }: { itemCount: number }): React.ReactElement {
             <MenuItems
               transition
               anchor="bottom end"
-              className="mt-2 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
+              className="bg-bg-100 dark:bg-bg-800 mt-2 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
             >
               <MenuItem
                 icon="tabler:upload"

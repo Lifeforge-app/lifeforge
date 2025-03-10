@@ -11,10 +11,10 @@ function AuthSideImage(): React.ReactElement {
         className="h-full object-cover"
         src="/assets/login.jpg"
       />
-      <div className="absolute inset-0 bg-linear-to-br from-custom-500 to-custom-600 opacity-30" />
-      <div className="absolute inset-0 bg-bg-900/50" />
-      <p className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col text-center text-5xl font-semibold tracking-wide text-bg-50">
-        <span className="mb-4 text-2xl text-custom-400">
+      <div className="from-custom-500 to-custom-600 absolute inset-0 bg-linear-to-br opacity-30" />
+      <div className="bg-bg-900/50 absolute inset-0" />
+      <p className="text-bg-50 absolute top-1/2 left-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col text-center text-5xl font-semibold tracking-wide">
+        <span className="text-custom-400 mb-4 text-2xl">
           {t('sideImageDesc.part1')}
         </span>
         {t('sideImageDesc.part2')}

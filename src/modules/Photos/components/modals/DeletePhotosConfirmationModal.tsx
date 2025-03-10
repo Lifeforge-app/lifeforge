@@ -87,14 +87,14 @@ function DeletePhotosConfirmationModal({
 
   return (
     <ModalWrapper isOpen={customIsOpen ?? isDeletePhotosConfirmationModalOpen}>
-      <h1 className="text-2xl font-semibold text-bg-50">
+      <h1 className="text-bg-50 text-2xl font-semibold">
         Are you sure you want to delete{' '}
         {customPhotoToBeDeleted
           ? 'this photo'
           : `${selectedPhotos.length} photo`}
         {selectedPhotos.length > 1 ? 's' : ''}?
       </h1>
-      <p className="mt-2 text-bg-500">
+      <p className="text-bg-500 mt-2">
         This will move the photos to the trash. You can restore them from there.
       </p>
       <div className="mt-6 flex w-full flex-col-reverse justify-around gap-2 sm:flex-row">

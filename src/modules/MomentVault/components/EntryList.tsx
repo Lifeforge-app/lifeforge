@@ -38,7 +38,7 @@ function EntryList({
       {data => (
         <>
           <Pagination
-            className="my-6 pagination"
+            className="pagination my-6"
             currentPage={page}
             totalPages={data.totalPages}
             onPageChange={setPage}
@@ -55,7 +55,7 @@ function EntryList({
             ))}
           </div>
           <Pagination
-            className="mt-6 mb-24 md:mb-6 pagination"
+            className="pagination mt-6 mb-24 md:mb-6"
             currentPage={page}
             totalPages={data.totalPages}
             onPageChange={setPage}

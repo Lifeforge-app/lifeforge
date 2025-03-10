@@ -68,7 +68,7 @@ function EntryItem({
             )}
           >
             <Icon
-              className="absolute left-1/2 top-1/2 z-[-1] size-8 -translate-x-1/2 -translate-y-1/2 text-bg-200 dark:text-bg-700"
+              className="text-bg-200 dark:text-bg-700 absolute top-1/2 left-1/2 z-[-1] size-8 -translate-x-1/2 -translate-y-1/2"
               icon="tabler:shopping-bag"
             />
             {entry.image !== '' && (
@@ -121,7 +121,7 @@ function EntryItem({
             markAsCompleted().catch(console.error)
           }}
         />
-        <HamburgerMenu className="absolute right-4 top-4 sm:static">
+        <HamburgerMenu className="absolute top-4 right-4 sm:static">
           <MenuItem
             icon="tabler:pencil"
             text="Edit"

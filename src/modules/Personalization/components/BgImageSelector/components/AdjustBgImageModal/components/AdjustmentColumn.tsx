@@ -30,7 +30,7 @@ function AdjustmentColumn({
     >
       <div className="w-full">
         <input
-          className="range range-primary w-full bg-bg-200 dark:bg-bg-800"
+          className="range range-primary bg-bg-200 dark:bg-bg-800 w-full"
           max={max}
           min={0}
           step={1}
@@ -44,9 +44,9 @@ function AdjustmentColumn({
           {labels.map((label, index) => (
             <div
               key={`title-${label}-${index}`}
-              className="relative h-2 w-0.5 rounded-full bg-bg-500"
+              className="bg-bg-500 relative h-2 w-0.5 rounded-full"
             >
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-bg-500">
+              <div className="text-bg-500 absolute -bottom-4 left-1/2 -translate-x-1/2">
                 {label}
               </div>
             </div>

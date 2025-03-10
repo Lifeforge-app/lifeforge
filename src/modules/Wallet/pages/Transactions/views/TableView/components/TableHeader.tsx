@@ -12,7 +12,7 @@ function TableHeader({
 
   return (
     <thead>
-      <tr className="border-b-2 border-bg-200 text-bg-500 dark:border-bg-800">
+      <tr className="border-bg-200 text-bg-500 dark:border-bg-800 border-b-2">
         {[
           'Date',
           'Type',

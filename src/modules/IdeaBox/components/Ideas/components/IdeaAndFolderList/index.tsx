@@ -22,7 +22,7 @@ function IdeaAndFolderList(): React.ReactElement {
   } = useIdeaBoxContext()
 
   return (
-    <div className="mb-20 mt-6">
+    <div className="mt-6 mb-20">
       {debouncedSearchQuery.trim().length === 0 && selectedTags.length === 0 ? (
         <APIFallbackComponent data={entriesLoading ? 'loading' : entries}>
           {data => (

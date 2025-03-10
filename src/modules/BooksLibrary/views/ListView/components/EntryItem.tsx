@@ -60,11 +60,11 @@ export default function EntryItem({
     <li
       key={item.id}
       className={clsx(
-        'relative flex gap-4 rounded-lg p-4 shadow-custom transition-all',
+        'shadow-custom relative flex gap-4 rounded-lg p-4 transition-all',
         componentBgWithHover
       )}
     >
-      <div className="absolute right-3 top-4 z-20 flex">
+      <div className="absolute top-4 right-3 z-20 flex">
         <Button
           className={clsx('p-2!', item.is_favourite && 'text-red-500!')}
           icon={(() => {
@@ -108,7 +108,7 @@ export default function EntryItem({
 
       <div className="flex min-w-0 flex-1 flex-col">
         {typeof categories !== 'string' && (
-          <div className="flex items-center gap-1 text-sm font-medium text-bg-500">
+          <div className="text-bg-500 flex items-center gap-1 text-sm font-medium">
             {(() => {
               const category = categories.find(
                 category => category.id === item.category
@@ -116,7 +116,7 @@ export default function EntryItem({
 
               return category !== undefined ? (
                 <>
-                  <Icon className="size-4 text-bg-500" icon={category.icon} />{' '}
+                  <Icon className="text-bg-500 size-4" icon={category.icon} />{' '}
                   {category.name}
                 </>
               ) : (
@@ -128,10 +128,10 @@ export default function EntryItem({
         <div className="mr-20 line-clamp-3 text-lg font-semibold">
           {item.title}{' '}
           {item.edition !== '' && (
-            <span className="text-sm text-bg-500">({item.edition} ed)</span>
+            <span className="text-bg-500 text-sm">({item.edition} ed)</span>
           )}
         </div>
-        <div className="mr-20 text-sm font-medium text-custom-500">
+        <div className="text-custom-500 mr-20 text-sm font-medium">
           {item.authors}
         </div>
         <BookMeta item={item} />

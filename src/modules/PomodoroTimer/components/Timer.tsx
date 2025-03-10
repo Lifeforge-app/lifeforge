@@ -60,7 +60,7 @@ export default function Timer(): React.ReactElement {
     <div className="flex-center min-h-0 w-full flex-1 flex-col gap-12">
       <div className="flex-center relative flex-col">
         <div
-          className="radial-progress absolute text-bg-200 dark:text-bg-800"
+          className="radial-progress text-bg-200 dark:text-bg-800 absolute"
           role="progressbar"
           style={{
             // @ts-expect-error - Cannot fix lah this one ;-;
@@ -79,20 +79,20 @@ export default function Timer(): React.ReactElement {
             '--thickness': '20px'
           }}
         >
-          <div className="z-9999 mt-12 flex flex-col items-center gap-4 text-bg-800 dark:text-bg-50 ">
+          <div className="text-bg-800 dark:text-bg-50 z-9999 mt-12 flex flex-col items-center gap-4">
             <span className="text-7xl font-medium tracking-widest">
               {moment.utc(timeLeft * 1000).format('mm:ss')}
             </span>
-            <span className="text-lg font-medium uppercase tracking-widest text-custom-500">
+            <span className="text-custom-500 text-lg font-medium tracking-widest uppercase">
               {['Pomodoro', 'Short break', 'Long break'][currentSection]}
             </span>
             {isRunning ? (
-              <span className="text-lg font-medium tracking-widest text-bg-50">
+              <span className="text-bg-50 text-lg font-medium tracking-widest">
                 #{currentRoundBig}
               </span>
             ) : (
               <button
-                className="rounded-lg p-4 text-bg-800 hover:bg-bg-50 dark:bg-bg-900 dark:text-bg-50"
+                className="text-bg-800 hover:bg-bg-50 dark:bg-bg-900 dark:text-bg-50 rounded-lg p-4"
                 onClick={() => {
                   setIsRunning(true)
                 }}

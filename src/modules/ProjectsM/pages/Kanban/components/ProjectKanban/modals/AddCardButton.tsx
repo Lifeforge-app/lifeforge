@@ -14,7 +14,7 @@ function AddCardButton(): React.ReactElement {
         <div className="mb-4 w-full space-y-2">
           <input
             className={clsx(
-              'w-full rounded-md p-4 placeholder:text-bg-500',
+              'placeholder:text-bg-500 w-full rounded-md p-4',
               componentBgLighter
             )}
             placeholder="Enter a title or paste a link"
@@ -31,7 +31,7 @@ function AddCardButton(): React.ReactElement {
         </div>
       ) : (
         <button
-          className="mb-4 flex w-full items-center gap-2 rounded-md border-[1.5px] border-dashed border-bg-400 p-4 pl-3 font-medium text-bg-500 transition-all hover:border-bg-800 hover:bg-bg-200 dark:border-bg-500 dark:hover:border-bg-100 dark:hover:bg-bg-800/20 dark:hover:text-bg-50"
+          className="border-bg-400 text-bg-500 hover:border-bg-800 hover:bg-bg-200 dark:border-bg-500 dark:hover:border-bg-100 dark:hover:bg-bg-800/20 dark:hover:text-bg-50 mb-4 flex w-full items-center gap-2 rounded-md border-[1.5px] border-dashed p-4 pl-3 font-medium transition-all"
           onClick={() => {
             setIsFocused(true)
           }}
