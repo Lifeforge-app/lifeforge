@@ -8,8 +8,7 @@ import {
   drawLines,
   drawStations,
   clearSelection,
-  updateSelection,
-  centerMapOnStation
+  updateSelection
 } from '../utils/renderUtils'
 
 export const useRailwayMapRenderer = (): void => {
@@ -92,7 +91,10 @@ export const useRailwayMapRenderer = (): void => {
       bgTemp,
       finalTheme,
       selectedStation,
-      setSelectedStation
+      setSelectedStation,
+      svgRef,
+      gRef,
+      centerStation!
     )
   }, [filteredStations, shortestRoute, lines, bgTemp, centerStation])
 
@@ -108,15 +110,6 @@ export const useRailwayMapRenderer = (): void => {
           selectedStation,
           lines,
           bgTemp[finalTheme === 'dark' ? 900 : 50]
-        )
-        centerMapOnStation(
-          svgRef,
-          gRef,
-          selectedStation,
-          centerStation!,
-          2,
-          1000,
-          false
         )
       } else {
         clearSelection(g, bgTemp[finalTheme === 'dark' ? 900 : 50])
