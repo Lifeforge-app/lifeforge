@@ -95,6 +95,7 @@ export default function RailwayMapProvider({
   }
 
   function clearShortestRoute() {
+    if (typeof shortestRoute === 'string' || shortestRoute.length === 0) return
     setShortestRoute([])
   }
 
