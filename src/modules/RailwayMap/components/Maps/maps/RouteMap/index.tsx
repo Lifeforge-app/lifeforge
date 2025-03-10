@@ -18,7 +18,6 @@ function RouteMap(): React.ReactElement {
   const handleMapClick = (event: React.MouseEvent<SVGSVGElement>) => {
     const target = event.target as SVGElement
 
-    // 如果点击的不是站点（circle），则清除选中的站点
     if (
       !target.closest('circle.station') &&
       !target.closest('rect.interchange')
