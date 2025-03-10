@@ -1,20 +1,15 @@
 import React, { memo, useRef, useMemo } from 'react'
 import 'leaflet/dist/leaflet.css'
-import {
-  IRailwayMapLine,
-  IRailwayMapStation
-} from '@interfaces/railway_map_interfaces'
+import { useRailwayMapContext } from '@providers/RailwayMapProvider'
 import { useEarthMapRenderer } from './hooks/useEarthMapRenderer'
 
-function EarthMap({
-  lines,
-  stations,
-  filteredLinesCode
-}: {
-  lines: IRailwayMapLine[]
-  stations: IRailwayMapStation[]
-  filteredLinesCode: string[]
-}): React.ReactElement {
+function EarthMap(): React.ReactElement {
+  const {
+    lines,
+    stations,
+    filteredLines: filteredLinesCode
+  } = useRailwayMapContext()
+
   const filteredLines = useMemo(
     () => lines.filter(line => filteredLinesCode.includes(line.id)),
     [lines, filteredLinesCode]
@@ -30,7 +25,6 @@ function EarthMap({
 
   const mapRef = useRef<HTMLDivElement>(null)
 
-  // Use custom hook to handle all Leaflet rendering logic
   useEarthMapRenderer({
     mapRef,
     filteredLines,
@@ -38,7 +32,13 @@ function EarthMap({
     lines
   })
 
-  return <div ref={mapRef} style={{ height: '100%', width: '100%' }} />
+  return (
+    <div className="flex-1 overflow-hidden py-8">
+      <div className="shadow-custom h-full w-full overflow-hidden rounded-lg">
+        <div ref={mapRef} style={{ height: '100%', width: '100%' }} />
+      </div>
+    </div>
+  )
 }
 
 export default memo(EarthMap)

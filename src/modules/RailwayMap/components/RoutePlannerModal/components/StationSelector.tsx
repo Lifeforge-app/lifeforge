@@ -3,16 +3,12 @@ import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
 } from '@components/inputs'
-import {
-  IRailwayMapLine,
-  IRailwayMapStation
-} from '@interfaces/railway_map_interfaces'
-import StationCodes from './StationCode'
+import { IRailwayMapStation } from '@interfaces/railway_map_interfaces'
+import StationCodes from '../../StationCode'
 import { formatStationDisplay } from '../utils/stations'
 
 interface StationSelectorProps {
   stations: IRailwayMapStation[]
-  lines: IRailwayMapLine[]
   filteredStations: IRailwayMapStation[]
   value: string
   setValue: (value: string) => void
@@ -25,7 +21,6 @@ interface StationSelectorProps {
 
 const StationSelector: React.FC<StationSelectorProps> = ({
   stations,
-  lines,
   filteredStations,
   value,
   setValue,
@@ -51,7 +46,8 @@ const StationSelector: React.FC<StationSelectorProps> = ({
         <ListboxOrComboboxOption
           key={station.id}
           iconAtEnd
-          icon={<StationCodes codes={station.codes} lines={lines} />}
+          noCheckmark
+          icon={<StationCodes codes={station.codes} />}
           text={station.name}
           type="combobox"
           value={station.id}

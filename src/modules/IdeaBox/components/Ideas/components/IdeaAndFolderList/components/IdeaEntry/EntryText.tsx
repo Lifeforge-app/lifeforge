@@ -60,7 +60,7 @@ function EntryText({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
         )}
         <p
           className={clsx(
-            'whitespace-pre-wrap !select-text',
+            'break-all whitespace-pre-wrap !select-text',
             !expanded && 'line-clamp-6'
           )}
         >

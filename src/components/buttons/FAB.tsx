@@ -8,7 +8,9 @@ function FAB({
   text = '',
   hideWhen = 'sm',
   alwaysShow = false,
-  as
+  as,
+  isRed,
+  loading
 }: {
   onClick?: () => void
   icon?: string
@@ -16,6 +18,8 @@ function FAB({
   alwaysShow?: boolean
   text?: string
   as?: React.ElementType
+  isRed?: boolean
+  loading?: boolean
 }): React.ReactElement {
   return (
     <Button
@@ -31,6 +35,8 @@ function FAB({
           }[hideWhen]
       )}
       icon={icon}
+      isRed={isRed}
+      loading={loading}
       onClick={onClick}
     >
       {text}

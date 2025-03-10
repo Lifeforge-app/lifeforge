@@ -14,7 +14,7 @@ export const VIEW_TYPES = [
   ['tabler:route-alt-left', 'Route Map', 'route'],
   ['tabler:world', 'Earth Map', 'earth'],
   ['tabler:list', 'Station List', 'list']
-]
+] as const
 
 interface ViewTypeSwitcherProps {
   viewType: 'route' | 'earth' | 'list'
@@ -31,7 +31,7 @@ function ViewTypeSwitcher({
   return (
     <Listbox
       as="div"
-      className="relative hidden md:block"
+      className="relative hidden lg:block"
       value={viewType}
       onChange={value => {
         setViewType(value)

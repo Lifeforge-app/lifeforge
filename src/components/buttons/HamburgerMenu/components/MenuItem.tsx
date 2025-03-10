@@ -7,7 +7,7 @@ import { toCamelCase } from '@utils/strings'
 
 function getActiveClass(active?: boolean, isRed?: boolean): string {
   if (active === true) {
-    return `bg-bg-200/50 ${
+    return `bg-bg-200/50! ${
       isRed === true ? 'text-red-600' : 'text-bg-800 dark:text-bg-50'
     } dark:bg-bg-700`
   } else {
@@ -16,7 +16,7 @@ function getActiveClass(active?: boolean, isRed?: boolean): string {
 }
 
 function getToggleIconClass(isRed?: boolean): string {
-  return isRed === true ? 'text-red-600' : 'text-bg-800 dark:text-bg-50'
+  return isRed === true ? 'text-red-600' : 'text-bg-500'
 }
 
 function MenuItem({

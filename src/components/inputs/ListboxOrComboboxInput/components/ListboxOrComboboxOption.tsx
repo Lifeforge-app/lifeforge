@@ -13,7 +13,8 @@ function ListboxOrComboboxOption({
   iconAtEnd = false,
   color,
   type = 'listbox',
-  matchedSubstrings
+  matchedSubstrings,
+  noCheckmark = false
 }: {
   value: string | number | Record<string, any> | null
   text: string
@@ -22,6 +23,7 @@ function ListboxOrComboboxOption({
   color?: string
   type?: 'listbox' | 'combobox'
   matchedSubstrings?: Array<{ length: number; offset: number }>
+  noCheckmark?: boolean
 }): React.ReactElement {
   const Element =
     type === 'listbox' ? HeadlessListboxOption : HeadlessComboboxOption
@@ -93,7 +95,7 @@ function ListboxOrComboboxOption({
               ))}
             </span>
           </div>
-          {selected && (
+          {!noCheckmark && selected && (
             <Icon
               className="text-custom-500 block shrink-0 text-lg"
               icon="tabler:check"

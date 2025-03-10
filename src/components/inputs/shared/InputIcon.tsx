@@ -5,11 +5,13 @@ import React, { memo } from 'react'
 function InputIcon({
   icon,
   active,
-  isListbox
+  isListbox,
+  className
 }: {
   icon: string
   active: boolean
   isListbox?: boolean
+  className?: string
 }): React.ReactElement {
   return (
     <Icon
@@ -18,7 +20,8 @@ function InputIcon({
         !active && 'text-bg-500',
         isListbox === true
           ? 'group-data-open:text-custom-500!'
-          : 'group-focus-within:text-custom-500!'
+          : 'group-focus-within:text-custom-500!',
+        className
       )}
       icon={icon}
     />
