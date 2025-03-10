@@ -30,7 +30,7 @@ const InputLabel: React.FC<InputLabelProps> = ({
   const labelColorClasses = useMemo(
     () =>
       isListboxOrCombobox
-        ? 'group-data-open:text-custom-500!'
+        ? `${isCombobox && 'group-focus-within:text-custom-500!'} group-data-open:text-custom-500!`
         : 'group-focus-within:text-custom-500!',
     [isListboxOrCombobox]
   )

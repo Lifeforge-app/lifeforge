@@ -65,11 +65,11 @@ function ListboxOrComboboxInput(
         >
           <ListboxButton className="group flex w-full items-center pl-6">
             <InputIcon
-              isListbox
               active={
                 (value !== null && value.length !== 0) || customActive === true
               }
               icon={icon}
+              listboxOrCombobox="listbox"
             />
             <InputLabel
               isListboxOrCombobox
@@ -115,12 +115,12 @@ function ListboxOrComboboxInput(
         >
           <div className="group relative flex w-full items-center">
             <InputIcon
-              isListbox
               active={
                 (value !== null && value.length !== 0) || customActive === true
               }
               className="absolute left-6"
               icon={icon}
+              listboxOrCombobox="combobox"
             />
             <InputLabel
               isCombobox

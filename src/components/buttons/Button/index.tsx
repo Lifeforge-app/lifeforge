@@ -38,7 +38,7 @@ const defaultProps = {
 
 const renderIcon = (icon: string, loading: boolean, iconClassName?: string) => (
   <Icon
-    className={clsx('shrink-0 text-xl', iconClassName)}
+    className={clsx('size-5 shrink-0', iconClassName)}
     icon={loading ? 'svg-spinners:180-ring' : icon}
   />
 )

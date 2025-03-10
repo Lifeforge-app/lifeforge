@@ -78,6 +78,8 @@ function PlannerContent({
             .then(() => {
               setStartQuery('')
               setEndQuery('')
+              setStart('')
+              setEnd('')
               setSelectedStation(null)
               setRoutePlannerOpen(false)
             })

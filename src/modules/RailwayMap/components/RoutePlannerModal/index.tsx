@@ -7,8 +7,6 @@ import PlannerContent from './components/PlannerContent'
 function RoutePlannerModal(): React.ReactElement {
   const {
     clearShortestRoute,
-    setRoutePlannerStart: setStart,
-    setRoutePlannerEnd: setEnd,
     routePlannerOpen: isOpen,
     setRoutePlannerOpen
   } = useRailwayMapContext()
@@ -16,17 +14,11 @@ function RoutePlannerModal(): React.ReactElement {
   const [startQuery, setStartQuery] = useState('')
   const [endQuery, setEndQuery] = useState('')
 
-  const handleClearRoute = () => {
-    setStart('')
-    setEnd('')
-    setStartQuery('')
-    setEndQuery('')
-    clearShortestRoute()
-  }
-
   useEffect(() => {
     if (isOpen) {
-      handleClearRoute()
+      setStartQuery('')
+      setEndQuery('')
+      clearShortestRoute()
     }
   }, [isOpen])
 

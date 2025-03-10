@@ -9,7 +9,8 @@ import StationCodes from '../../StationCode'
 
 function DetailBox(): React.ReactElement {
   const { componentBg } = useThemeColors()
-  const { selectedStation } = useRailwayMapContext()
+  const { selectedStation, setRoutePlannerOpen, setRoutePlannerStart } =
+    useRailwayMapContext()
   const innerSelectedStation = useDebounce(
     selectedStation,
     selectedStation ? 0 : 500
@@ -39,7 +40,18 @@ function DetailBox(): React.ReactElement {
           <StationCodes codes={innerSelectedStation?.codes ?? []} />
         </div>
       </div>
-      <Button icon="tabler:info-circle" variant="no-bg" />
+      <div className="flex items-center gap-2">
+        <Button
+          icon="tabler:arrow-left-right"
+          variant="no-bg"
+          onClick={() => {
+            if (!selectedStation) return
+            setRoutePlannerStart(selectedStation.id)
+            setRoutePlannerOpen(true)
+          }}
+        />
+        <Button icon="tabler:info-circle" variant="no-bg" />
+      </div>
     </div>
   )
 }
