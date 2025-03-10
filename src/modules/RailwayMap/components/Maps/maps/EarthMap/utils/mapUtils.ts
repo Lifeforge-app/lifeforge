@@ -7,14 +7,11 @@ import {
 export const initializeMap = (element: HTMLDivElement): L.Map => {
   const map = L.map(element).setView([1.3521, 103.8198], 12)
 
-  L.tileLayer(
-    'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png',
-    {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      minZoom: 11
-    }
-  ).addTo(map)
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    minZoom: 11
+  }).addTo(map)
 
   return map
 }
