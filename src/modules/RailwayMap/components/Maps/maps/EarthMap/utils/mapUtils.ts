@@ -21,7 +21,6 @@ export const renderLines = (
   filteredLines: IRailwayMapLine[],
   polylineLayers: Record<string, L.Polyline>
 ): void => {
-  // Remove lines that are no longer in the filtered list
   Object.keys(polylineLayers).forEach(id => {
     const lineExists = filteredLines.some(line => line.id === id)
     if (!lineExists) {
@@ -30,7 +29,6 @@ export const renderLines = (
     }
   })
 
-  // Add or update lines
   filteredLines.forEach(line => {
     if (polylineLayers[line.id]) {
       map.removeLayer(polylineLayers[line.id])
@@ -108,7 +106,6 @@ export const renderStations = (
   lines: IRailwayMapLine[],
   stationMarkers: Record<string, L.Marker>
 ): void => {
-  // Remove stations that are no longer in the filtered list
   Object.keys(stationMarkers).forEach(id => {
     const stationExists = filteredStations.some(station => station.id === id)
     if (!stationExists) {
@@ -117,7 +114,6 @@ export const renderStations = (
     }
   })
 
-  // Add or update stations
   filteredStations.forEach(station => {
     if (stationMarkers[station.id]) {
       map.removeLayer(stationMarkers[station.id])
