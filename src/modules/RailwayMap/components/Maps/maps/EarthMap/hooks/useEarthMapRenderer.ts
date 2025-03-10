@@ -23,7 +23,6 @@ export const useEarthMapRenderer = ({
   const polylineLayers = useRef<Record<string, L.Polyline>>({})
   const stationMarkers = useRef<Record<string, L.Marker>>({})
 
-  // Initialize map
   useEffect(() => {
     if (mapRef.current && !mapInstanceRef.current) {
       mapInstanceRef.current = initializeMap(mapRef.current)
@@ -37,14 +36,12 @@ export const useEarthMapRenderer = ({
     }
   }, [mapRef])
 
-  // Update lines when filtered lines change
   useEffect(() => {
     if (!mapInstanceRef.current) return
 
     renderLines(mapInstanceRef.current, filteredLines, polylineLayers.current)
   }, [filteredLines])
 
-  // Update stations when filtered stations change
   useEffect(() => {
     if (!mapInstanceRef.current) return
 

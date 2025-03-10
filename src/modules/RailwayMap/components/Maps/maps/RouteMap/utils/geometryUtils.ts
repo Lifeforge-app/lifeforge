@@ -12,7 +12,6 @@ interface Point {
 export const roundedPolygon = (points: Point[], radius: number): string => {
   const qb: Point[] = []
 
-  // Calculate the control points for the rounded corners
   for (let index = 0; index < points.length; index++) {
     const first = points[index]
     const second = points[(index + 1) % points.length]
@@ -24,7 +23,6 @@ export const roundedPolygon = (points: Point[], radius: number): string => {
     qb.push({ x: second.x - dx, y: second.y - dy })
   }
 
-  // Build the SVG path
   let path = `M ${qb[0].x}, ${qb[0].y} L ${qb[1].x}, ${qb[1].y}`
   for (let index = 1; index < points.length; index++) {
     path += ` Q ${points[index].x},${points[index].y} ${qb[index * 2].x}, ${
