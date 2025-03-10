@@ -24,9 +24,9 @@ function AssetItem({
   const navigate = useNavigate()
 
   return (
-    <div className="relative space-y-4 rounded-lg bg-bg-100 p-4 shadow-custom dark:bg-bg-900">
+    <div className="bg-bg-100 shadow-custom dark:bg-bg-900 relative space-y-4 rounded-lg p-4">
       <div className="flex items-center gap-3">
-        <span className="w-min rounded-md bg-bg-200 p-2 text-bg-500 dark:bg-bg-800">
+        <span className="bg-bg-200 text-bg-500 dark:bg-bg-800 w-min rounded-md p-2">
           <Icon className="size-5" icon={asset.icon} />
         </span>
         <h2 className="text-xl font-medium">{asset.name}</h2>
@@ -37,7 +37,7 @@ function AssetItem({
           isAmountHidden ? 'items-center' : 'items-end'
         )}
       >
-        <span className="mr-2 text-3xl text-bg-500">RM</span>
+        <span className="text-bg-500 mr-2 text-3xl">RM</span>
         {isAmountHidden ? (
           <span className="flex items-center">
             {Array(4)
@@ -61,7 +61,7 @@ function AssetItem({
       >
         View Transactions
       </Button>
-      <HamburgerMenu className="absolute right-4 top-4">
+      <HamburgerMenu className="absolute top-4 right-4">
         <MenuItem
           icon="tabler:pencil"
           text="Edit"

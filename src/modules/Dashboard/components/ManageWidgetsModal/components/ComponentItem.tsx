@@ -101,7 +101,7 @@ function ComponentListItem({
   }
 
   return (
-    <li className="flex-between flex gap-8 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-800/50">
+    <li className="flex-between bg-bg-50 shadow-custom dark:bg-bg-800/50 flex gap-8 rounded-lg p-4">
       <div className="flex items-center gap-4">
         <div
           className={clsx(
@@ -115,7 +115,7 @@ function ComponentListItem({
         </div>
         <div className="flex flex-col">
           <div className="font-semibold">{t(`widgets.${id}.title`)}</div>
-          <div className="text-sm text-bg-500">
+          <div className="text-bg-500 text-sm">
             {t(`widgets.${id}.description`)}
           </div>
         </div>

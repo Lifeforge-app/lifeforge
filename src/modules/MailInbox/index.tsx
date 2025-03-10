@@ -118,7 +118,7 @@ function MailInbox(): React.ReactElement {
                   }
                 })()}
               </h1>
-              <span className="ml-2 mr-8 text-base text-bg-500">
+              <span className="text-bg-500 mr-8 ml-2 text-base">
                 (
                 {(() => {
                   if (typeof mails === 'string') {
@@ -132,7 +132,7 @@ function MailInbox(): React.ReactElement {
             </div>
 
             <button
-              className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
+              className="text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 -ml-4 rounded-lg p-4 transition-all lg:hidden"
               onClick={() => {
                 setSidebarOpen(true)
               }}

@@ -35,14 +35,14 @@ function ResultShowcase({
         }}
       >
         <div
-          className="absolute left-0 top-0 z-[-1] size-full bg-bg-50 dark:bg-bg-950"
+          className="bg-bg-50 dark:bg-bg-950 absolute top-0 left-0 z-[-1] size-full"
           style={{
             opacity: `${overlayOpacity}%`
           }}
         />
         <div
           className={clsx(
-            'flex size-full flex-col gap-4 rounded-lg p-4 shadow-custom',
+            'shadow-custom flex size-full flex-col gap-4 rounded-lg p-4',
             componentBg
           )}
         >
@@ -56,11 +56,11 @@ function ResultShowcase({
           <div className="flex gap-4">
             <div
               className={clsx(
-                'flex w-full flex-col sm:flex-row items-start gap-4 rounded-lg p-4 sm:items-center',
+                'flex w-full flex-col items-start gap-4 rounded-lg p-4 sm:flex-row sm:items-center',
                 componentBgLighter
               )}
             >
-              <span className="block rounded-md bg-custom-500/20 p-4 text-custom-500">
+              <span className="bg-custom-500/20 text-custom-500 block rounded-md p-4">
                 <Icon className="size-8" icon="tabler:box" />
               </span>
               <div className="flex flex-col">

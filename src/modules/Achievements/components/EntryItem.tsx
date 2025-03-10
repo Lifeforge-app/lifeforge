@@ -25,7 +25,7 @@ function EntryItem({
   return (
     <div
       className={clsx(
-        'flex items-start justify-between gap-4 rounded-lg p-4 shadow-custom',
+        'shadow-custom flex items-start justify-between gap-4 rounded-lg p-4',
         componentBg
       )}
     >
@@ -43,7 +43,7 @@ function EntryItem({
         />
         <div>
           <h2 className="text-lg font-semibold">{entry.title}</h2>
-          <p className="mt-1 text-sm text-bg-500">{entry.thoughts}</p>
+          <p className="text-bg-500 mt-1 text-sm">{entry.thoughts}</p>
         </div>
       </div>
       <HamburgerMenu className="relative">

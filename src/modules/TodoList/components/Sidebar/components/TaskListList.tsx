@@ -41,7 +41,7 @@ function TaskListList({
               ))}
             </>
           ) : (
-            <p className="text-center text-bg-500">{t('empty.lists')}</p>
+            <p className="text-bg-500 text-center">{t('empty.lists')}</p>
           )
         }
       </APIFallbackComponent>

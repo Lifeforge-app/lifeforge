@@ -7,7 +7,7 @@ function TaskDueDate({ entry }: { entry: ITodoListEntry }): React.ReactElement {
   return (
     <>
       {entry.done && entry.completed_at !== '' ? (
-        <div className="text-sm text-bg-500">
+        <div className="text-bg-500 text-sm">
           Completed: {moment(entry.completed_at).fromNow()}
         </div>
       ) : (

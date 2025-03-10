@@ -156,7 +156,7 @@ function CodeTimeTimeChart({
                 className={clsx(
                   'rounded-md p-4 px-6 tracking-wide',
                   lastFor === last
-                    ? 'bg-bg-200 font-semibold text-bg-800 dark:bg-bg-700/50 dark:text-bg-50'
+                    ? 'bg-bg-200 text-bg-800 dark:bg-bg-700/50 dark:text-bg-50 font-semibold'
                     : 'text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-700/50'
                 )}
                 onClick={() => {

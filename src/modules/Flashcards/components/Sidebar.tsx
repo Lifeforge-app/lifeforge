@@ -37,9 +37,9 @@ function Sidebar({
       ].map(([icon, name], index) => (
         <li
           key={index}
-          className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
+          className="text-bg-500 relative flex items-center gap-6 px-4 font-medium transition-all"
         >
-          <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800">
+          <div className="hover:bg-bg-100 dark:hover:bg-bg-800 flex w-full items-center gap-6 rounded-lg p-4 whitespace-nowrap">
             <Icon className="size-6 shrink-0" icon={icon} />
             <div className="flex-between flex w-full">{name}</div>
             <span className="text-sm">{Math.floor(Math.random() * 10)}</span>
@@ -55,9 +55,9 @@ function Sidebar({
             {tagsList.map((tag, index) => (
               <li
                 key={index}
-                className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
+                className="text-bg-500 relative flex items-center gap-6 px-4 font-medium transition-all"
               >
-                <div className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800">
+                <div className="hover:bg-bg-100 dark:hover:bg-bg-800 flex w-full items-center gap-6 rounded-lg p-4 whitespace-nowrap">
                   <div className="flex w-full items-center gap-6">
                     <span
                       className="block size-2 shrink-0 rounded-full"

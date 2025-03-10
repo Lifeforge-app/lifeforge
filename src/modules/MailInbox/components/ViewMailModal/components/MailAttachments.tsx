@@ -18,7 +18,7 @@ function MailAttachments({
       <h3 className="flex items-center gap-2">
         <Icon className="size-5" icon="tabler:paperclip" />
         <span className="text-lg font-medium">Attachments</span>
-        <span className="text-sm text-bg-500">
+        <span className="text-bg-500 text-sm">
           ({mail.attachments?.length})
         </span>
       </h3>
@@ -26,7 +26,7 @@ function MailAttachments({
         {mail.attachments?.map((attachment, index) => (
           <div
             key={index}
-            className={clsx('gap-2 p-4 shadow-custom', componentBg)}
+            className={clsx('shadow-custom gap-2 p-4', componentBg)}
           >
             <div className="flex-center aspect-square w-full">
               {[
@@ -53,7 +53,7 @@ function MailAttachments({
                 />
               ) : (
                 <Icon
-                  className="size-12 text-bg-300 dark:text-bg-700"
+                  className="text-bg-300 dark:text-bg-700 size-12"
                   icon={(() => {
                     const ext = attachment.file.split('.').pop()?.toLowerCase()
 
@@ -72,7 +72,7 @@ function MailAttachments({
             <div className="w-full min-w-0 truncate text-sm font-medium">
               {attachment.name}
             </div>
-            <div className="text-xs text-bg-500">
+            <div className="text-bg-500 text-xs">
               {cleanFileSize(attachment.size)}
             </div>
           </div>

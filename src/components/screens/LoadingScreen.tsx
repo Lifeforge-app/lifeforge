@@ -8,7 +8,7 @@ export default function LoadingScreen({
   return (
     <div className="flex-center size-full flex-col gap-6">
       <span className="loader"></span>
-      <p className="text-lg font-medium text-bg-500">{customMessage ?? ''}</p>
+      <p className="text-bg-500 text-lg font-medium">{customMessage ?? ''}</p>
     </div>
   )
 }

@@ -11,9 +11,9 @@ function VideoDetails({
   video: IYoutubeVideosStorageEntry
 }): React.ReactElement {
   return (
-    <div className="mt-6 flex flex-col justify-between md:mt-0 md:pl-4 md:pr-12">
+    <div className="mt-6 flex flex-col justify-between md:mt-0 md:pr-12 md:pl-4">
       <h3 className="text-xl font-semibold">{video.title}</h3>
-      <div className="mt-6 flex flex-wrap items-center gap-2 text-bg-500">
+      <div className="text-bg-500 mt-6 flex flex-wrap items-center gap-2">
         {video.channel !== undefined && (
           <p className="flex items-center gap-2">
             <img
@@ -30,7 +30,7 @@ function VideoDetails({
         {video.upload_date !== '' && (
           <>
             <Icon className="size-1" icon="tabler:circle-filled" />
-            <p className="flex shrink-0 items-center gap-1 whitespace-nowrap text-bg-500">
+            <p className="text-bg-500 flex shrink-0 items-center gap-1 whitespace-nowrap">
               <Icon className="mr-1 size-5" icon="tabler:clock" />
               {moment(video.upload_date).fromNow()}
             </p>
@@ -38,7 +38,7 @@ function VideoDetails({
         )}
 
         <Icon className="size-1" icon="tabler:circle-filled" />
-        <p className="flex shrink-0 items-center gap-1 whitespace-nowrap text-bg-500">
+        <p className="text-bg-500 flex shrink-0 items-center gap-1 whitespace-nowrap">
           <Icon className="mr-1 size-5" icon="tabler:ruler" />
           {(() => {
             const res = `${video.width}x${video.height}`
@@ -51,7 +51,7 @@ function VideoDetails({
           })()}
         </p>
         <Icon className="size-1" icon="tabler:circle-filled" />
-        <p className="flex shrink-0 items-center gap-1 whitespace-nowrap text-bg-500">
+        <p className="text-bg-500 flex shrink-0 items-center gap-1 whitespace-nowrap">
           <Icon className="mr-1 size-5" icon="tabler:file" />
           {cleanFileSize(video.filesize)}
         </p>

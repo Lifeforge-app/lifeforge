@@ -18,7 +18,7 @@ function ChipSelector({
     <div className="mt-4 flex items-center gap-2">
       <div
         className={clsx(
-          'flex pb-1 transition-all gap-2',
+          'flex gap-2 pb-1 transition-all',
           expanded ? 'flex-wrap' : 'overflow-x-auto'
         )}
       >
@@ -40,7 +40,7 @@ function ChipSelector({
           ))}
       </div>
       <button
-        className="flex-center h-8 grow gap-2 whitespace-nowrap rounded-full px-2 text-sm text-bg-500 transition-all duration-100 hover:text-bg-800 dark:hover:text-bg-100 md:grow-0"
+        className="flex-center text-bg-500 hover:text-bg-800 dark:hover:text-bg-100 h-8 grow gap-2 rounded-full px-2 text-sm whitespace-nowrap transition-all duration-100 md:grow-0"
         type="button"
         onClick={() => {
           setExpanded(!expanded)

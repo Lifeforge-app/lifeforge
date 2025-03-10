@@ -17,13 +17,13 @@ function CheckoutConfirmationModal({
   return (
     <ModalWrapper isOpen={isOpen}>
       <h1 className="text-2xl font-semibold">Before checking out...</h1>
-      <p className="mt-2 text-bg-500">
+      <p className="text-bg-500 mt-2">
         By clicking checkout, this set of items will be added into your wardrobe
         history. You can view them in the &quot;Histories&quot; page.
       </p>
-      <div className="mt-4 size-full rounded-lg bg-bg-200/70 p-6 shadow-custom transition-all focus-within:ring-1 focus-within:ring-bg-300 dark:bg-bg-800/50 dark:focus-within:ring-bg-500">
+      <div className="bg-bg-200/70 shadow-custom focus-within:ring-bg-300 dark:bg-bg-800/50 dark:focus-within:ring-bg-500 mt-4 size-full rounded-lg p-6 transition-all focus-within:ring-1">
         <textarea
-          className="h-max min-h-32 w-full resize-none bg-transparent caret-custom-500 placeholder:text-bg-500"
+          className="caret-custom-500 placeholder:text-bg-500 h-max min-h-32 w-full resize-none bg-transparent"
           placeholder="Any additional notes?"
           value={notes}
           onChange={e => {

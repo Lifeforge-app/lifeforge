@@ -21,7 +21,7 @@ function ScoreList({
         totalPages={Math.ceil(data.totalItems / data.perPage)}
         onPageChange={setPage}
       />
-      <ul className="my-4 divide-y divide-bg-200 dark:divide-bg-800/50">
+      <ul className="divide-bg-200 dark:divide-bg-800/50 my-4 divide-y">
         {data.data.map(entry => (
           <ScoreItem key={entry.id} cookie={cookie} entry={entry} />
         ))}

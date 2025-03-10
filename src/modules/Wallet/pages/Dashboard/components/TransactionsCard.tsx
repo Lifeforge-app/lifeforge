@@ -20,7 +20,7 @@ function TransactionsCard(): React.ReactElement {
       className="col-span-2 row-span-3"
       componentBesideTitle={
         <Link
-          className="flex items-center gap-2 rounded-lg p-2 font-medium text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50"
+          className="text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50 flex items-center gap-2 rounded-lg p-2 font-medium transition-all"
           to="/wallet/transactions"
         >
           <Icon className="text-xl" icon="tabler:chevron-right" />
@@ -40,7 +40,7 @@ function TransactionsCard(): React.ReactElement {
                     <>
                       <table className="hidden w-full text-base! lg:table">
                         <thead>
-                          <tr className="border-b-2 border-bg-200 text-center text-base text-bg-500 dark:border-bg-800">
+                          <tr className="border-bg-200 text-bg-500 dark:border-bg-800 border-b-2 text-center text-base">
                             {[
                               'date',
                               'type',
@@ -67,9 +67,9 @@ function TransactionsCard(): React.ReactElement {
                             return (
                               <tr
                                 key={transaction.id}
-                                className="border-b border-bg-200 dark:border-bg-800"
+                                className="border-bg-200 dark:border-bg-800 border-b"
                               >
-                                <td className="whitespace-nowrap py-2 text-center">
+                                <td className="py-2 text-center whitespace-nowrap">
                                   {moment(transaction.date).format('MMM DD')}
                                 </td>
                                 <td className="py-4 text-center">
@@ -97,7 +97,7 @@ function TransactionsCard(): React.ReactElement {
                                 <td className="py-2 text-center">
                                   {transaction.category !== '' ? (
                                     <Link
-                                      className="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm"
+                                      className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm whitespace-nowrap"
                                       style={{
                                         backgroundColor:
                                           categories.find(
@@ -148,7 +148,7 @@ function TransactionsCard(): React.ReactElement {
                           })}
                         </tbody>
                       </table>
-                      <ul className="flex flex-col divide-y divide-bg-800/50 lg:hidden">
+                      <ul className="divide-bg-800/50 flex flex-col divide-y lg:hidden">
                         {transactions.slice(0, 20).map(transaction => (
                           <li
                             key={transaction.id}
@@ -178,10 +178,10 @@ function TransactionsCard(): React.ReactElement {
                                   icon={
                                     transaction.type === 'transfer'
                                       ? 'tabler:transfer'
-                                      : categories.find(
+                                      : (categories.find(
                                           category =>
                                             category.id === transaction.category
-                                        )?.icon ?? 'tabler:currency-dollar'
+                                        )?.icon ?? 'tabler:currency-dollar')
                                   }
                                 />
                               </div>
@@ -189,7 +189,7 @@ function TransactionsCard(): React.ReactElement {
                                 <div className="w-full min-w-0 truncate font-semibold">
                                   {transaction.particulars}
                                 </div>
-                                <div className="text-sm text-bg-500">
+                                <div className="text-bg-500 text-sm">
                                   {transaction.type[0].toUpperCase() +
                                     transaction.type.slice(1)}
                                 </div>
@@ -208,7 +208,7 @@ function TransactionsCard(): React.ReactElement {
                                   {numberToMoney(transaction.amount)}
                                 </span>
                               </div>
-                              <div className="whitespace-nowrap text-right text-sm text-bg-500">
+                              <div className="text-bg-500 text-right text-sm whitespace-nowrap">
                                 {moment(transaction.date).format(
                                   'MMM DD, YYYY'
                                 )}

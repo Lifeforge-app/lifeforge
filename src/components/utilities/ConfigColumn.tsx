@@ -55,9 +55,9 @@ function ConfigColumn({
         )}
       >
         <div className="flex shrink items-center gap-4">
-          <Icon className="size-6 shrink-0 text-bg-500" icon={icon} />
+          <Icon className="text-bg-500 size-6 shrink-0" icon={icon} />
           <div>
-            <h3 className="flex w-full items-center gap-2 text-xl font-medium leading-normal md:w-auto">
+            <h3 className="flex w-full items-center gap-2 text-xl leading-normal font-medium md:w-auto">
               {title}
               {tooltip !== undefined && (
                 <span
@@ -66,7 +66,7 @@ function ConfigColumn({
                   )}`}
                 >
                   <Icon
-                    className="size-5 text-bg-500"
+                    className="text-bg-500 size-5"
                     icon="tabler:info-circle"
                   />
                 </span>
@@ -80,7 +80,7 @@ function ConfigColumn({
         </div>
         {tooltip !== undefined && (
           <Tooltip
-            className="z-9999 rounded-md! bg-bg-50 p-4! text-base! text-bg-800 shadow-custom dark:bg-bg-900 dark:text-bg-50"
+            className="bg-bg-50 text-bg-800 shadow-custom dark:bg-bg-900 dark:text-bg-50 z-9999 rounded-md! p-4! text-base!"
             classNameArrow="size-6!"
             id={`tooltip-${toDashCase(title?.toString() ?? '')}`}
             opacity={1}
@@ -92,7 +92,7 @@ function ConfigColumn({
         )}
       </div>
       {hasDivider && (
-        <div className="my-6 w-full border-b-[1.5px] border-bg-200 dark:border-bg-800/50" />
+        <div className="border-bg-200 dark:border-bg-800/50 my-6 w-full border-b-[1.5px]" />
       )}
     </>
   )

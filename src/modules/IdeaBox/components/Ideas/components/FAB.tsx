@@ -21,7 +21,7 @@ function FAB(): React.ReactElement {
     <>
       <Menu
         as="div"
-        className="group fixed bottom-6 right-6 z-9990 sm:bottom-12 sm:right-12"
+        className="group fixed right-6 bottom-6 z-9990 sm:right-12 sm:bottom-12"
       >
         {({ open }) => (
           <>
@@ -51,14 +51,14 @@ function FAB(): React.ReactElement {
                 <MenuItem key={name}>
                   <div
                     className={
-                      'group flex w-full items-center justify-end gap-4 whitespace-nowrap rounded-md py-2 pr-2'
+                      'group flex w-full items-center justify-end gap-4 rounded-md py-2 pr-2 whitespace-nowrap'
                     }
                   >
-                    <span className="text-bg-50 transition-all group-data-focus:text-bg-200">
+                    <span className="text-bg-50 group-data-focus:text-bg-200 transition-all">
                       {t(`entryType.${name.toLowerCase()}`)}
                     </span>
                     <button
-                      className="rounded-full bg-bg-100 text-bg-800 p-3 transition-all group-data-focus:bg-bg-200"
+                      className="bg-bg-100 text-bg-800 group-data-focus:bg-bg-200 rounded-full p-3 transition-all"
                       onClick={() => {
                         if (name === 'Folder') {
                           setExistedFolder(null)
@@ -80,13 +80,13 @@ function FAB(): React.ReactElement {
             </MenuItems>
             <div
               className={clsx(
-                'fixed left-0 top-0 size-full transition-transform',
+                'fixed top-0 left-0 size-full transition-transform',
                 open ? 'translate-x-0 duration-0' : 'translate-x-full delay-100'
               )}
             >
               <div
                 className={clsx(
-                  'size-full bg-bg-900/50 backdrop-blur-xs transition-opacity',
+                  'bg-bg-900/50 size-full backdrop-blur-xs transition-opacity',
                   open ? 'opacity-100' : 'opacity-0'
                 )}
               />

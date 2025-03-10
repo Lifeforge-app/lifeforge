@@ -37,11 +37,11 @@ function SidebarItemContent({
         {sidebarExpanded &&
           (isMainSidebarItem ? (
             <span className="flex-between flex w-full gap-2 truncate">
-              <span className="min-w-0 max-w-48 truncate">
+              <span className="max-w-48 min-w-0 truncate">
                 {t(`common.sidebar:modules.${toCamelCase(name)}.title`)}
               </span>
               {hasAI && (
-                <Icon className="size-4 text-custom-500" icon="mage:stars-c" />
+                <Icon className="text-custom-500 size-4" icon="mage:stars-c" />
               )}
             </span>
           ) : (

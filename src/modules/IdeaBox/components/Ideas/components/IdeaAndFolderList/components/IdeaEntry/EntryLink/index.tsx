@@ -34,7 +34,7 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
         dragRef(node)
       }}
       className={clsx(
-        'group relative my-4 flex flex-col items-start justify-between gap-2 rounded-lg p-4 shadow-custom',
+        'group shadow-custom relative my-4 flex flex-col items-start justify-between gap-2 rounded-lg p-4',
         componentBg,
         isDragging && 'cursor-move'
       )}
@@ -44,7 +44,7 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
     >
       {entry.pinned && (
         <Icon
-          className="absolute -left-2 -top-2 z-50 size-5 -rotate-90 text-red-500 drop-shadow-md"
+          className="absolute -top-2 -left-2 z-50 size-5 -rotate-90 text-red-500 drop-shadow-md"
           icon="tabler:pin"
         />
       )}
@@ -62,7 +62,7 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
         <EntryContextMenu entry={entry} />
       </div>
       <EntryContent entry={entry} />
-      <span className="text-sm text-bg-500">
+      <span className="text-bg-500 text-sm">
         {moment(entry.created).fromNow()}
       </span>
       <InFolderChip entry={entry} />

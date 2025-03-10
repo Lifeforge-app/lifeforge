@@ -32,14 +32,14 @@ export function SystemStatusCard({
 
   return (
     <div
-      className={clsx('space-y-4 rounded-lg p-6 shadow-custom', componentBg)}
+      className={clsx('shadow-custom space-y-4 rounded-lg p-6', componentBg)}
     >
       <div className="flex-between flex">
         <div className="flex items-center gap-2">
-          <Icon className="text-2xl text-bg-500" icon={icon} />
-          <h2 className="text-xl text-bg-500">{title}</h2>
+          <Icon className="text-bg-500 text-2xl" icon={icon} />
+          <h2 className="text-bg-500 text-xl">{title}</h2>
         </div>
-        <p className="shrink-0 rounded-md border border-bg-400 px-4 py-2 text-lg text-bg-500">
+        <p className="border-bg-400 text-bg-500 shrink-0 rounded-md border px-4 py-2 text-lg">
           {value.toFixed(2)} {unit}
         </p>
       </div>
@@ -54,7 +54,7 @@ export function SystemStatusCard({
           style={{ width: `${(value / 100) * 100}%` }}
         ></div>
       </div>
-      <p className="text-center text-lg text-bg-500">{description}</p>
+      <p className="text-bg-500 text-center text-lg">{description}</p>
     </div>
   )
 }

@@ -25,7 +25,7 @@ function ProjectHeader({
         }}
       />
       <div className="flex-between flex">
-        <h1 className="flex items-center gap-4 text-3xl font-semibold dark:text-bg-50">
+        <h1 className="dark:text-bg-50 flex items-center gap-4 text-3xl font-semibold">
           <div
             className="rounded-lg p-3"
             style={{
@@ -39,7 +39,7 @@ function ProjectHeader({
           <APIFallbackComponent data={statuses}>
             {statuses => (
               <div
-                className="ml-2 flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-widest shadow-custom"
+                className="shadow-custom ml-2 flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium tracking-widest uppercase"
                 style={{
                   backgroundColor:
                     statuses.find(e => e.id === projectData.status)?.color +

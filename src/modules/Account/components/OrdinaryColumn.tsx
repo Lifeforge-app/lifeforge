@@ -29,8 +29,8 @@ function OrdinaryColumn({
         icon={icon}
         title={t(`settings.title.${toCamelCase(title)}`)}
       >
-        <div className="flex-between gap-4 w-full">
-          <span className="whitespace-nowrap text-bg-500">
+        <div className="flex-between w-full gap-4">
+          <span className="text-bg-500 whitespace-nowrap">
             {(() => {
               if (userData[id] === '') {
                 return t('settings.empty')

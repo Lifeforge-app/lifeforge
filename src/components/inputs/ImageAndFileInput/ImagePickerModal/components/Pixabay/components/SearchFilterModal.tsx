@@ -161,7 +161,7 @@ function SearchFilterModal({
           buttonContent={
             <>
               <div
-                className="size-3 rounded-full border border-bg-200 dark:border-bg-700"
+                className="border-bg-200 dark:border-bg-700 size-3 rounded-full border"
                 style={{
                   backgroundColor: COLORS.find(l => l.id === filters.colors)
                     ?.color
@@ -217,8 +217,8 @@ function SearchFilterModal({
               className={clsx(
                 'inline-block size-4 rounded-full transition',
                 filters.isEditorsChoice
-                  ? 'translate-x-6 bg-bg-100'
-                  : 'translate-x-1 bg-bg-100 dark:bg-bg-500'
+                  ? 'bg-bg-100 translate-x-6'
+                  : 'bg-bg-100 dark:bg-bg-500 translate-x-1'
               )}
             />
           </Switch>

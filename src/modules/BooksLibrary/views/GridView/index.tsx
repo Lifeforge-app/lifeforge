@@ -22,18 +22,18 @@ function GridView({
         {Object.entries(processes).map(([key, value]) => (
           <li
             key={key}
-            className="relative flex w-full min-w-0 flex-col items-start rounded-lg bg-bg-50 p-4 transition-all dark:bg-bg-900"
+            className="bg-bg-50 dark:bg-bg-900 relative flex w-full min-w-0 flex-col items-start rounded-lg p-4 transition-all"
           >
-            <div className="flex-center absolute left-0 top-0 size-full rounded-lg bg-bg-50/50 p-8 text-center font-medium dark:bg-bg-900/70">
+            <div className="flex-center bg-bg-50/50 dark:bg-bg-900/70 absolute top-0 left-0 size-full rounded-lg p-8 text-center font-medium">
               Downloading... {value.percentage}
               <br />
               {value.downloaded}/{value.total}, {value.speed}/s, ETA:{' '}
               {value.ETA}s
             </div>
-            <div className="flex-center aspect-9/12 w-full rounded-lg bg-bg-200 p-2 dark:bg-bg-800">
-              <Icon className="size-16 text-bg-500" icon="tabler:clock" />
+            <div className="flex-center bg-bg-200 dark:bg-bg-800 aspect-9/12 w-full rounded-lg p-2">
+              <Icon className="text-bg-500 size-16" icon="tabler:clock" />
             </div>
-            <div className="mt-4 flex items-center gap-1 text-sm font-medium text-bg-500">
+            <div className="text-bg-500 mt-4 flex items-center gap-1 text-sm font-medium">
               {typeof categories !== 'string' &&
                 (() => {
                   const category = categories.find(
@@ -43,7 +43,7 @@ function GridView({
                   return category !== undefined ? (
                     <>
                       <Icon
-                        className="size-4 text-bg-500"
+                        className="text-bg-500 size-4"
                         icon={category.icon}
                       />{' '}
                       {category.name}
@@ -56,12 +56,12 @@ function GridView({
             <p className="mt-1 line-clamp-3 w-full min-w-0 text-xl font-medium">
               {value.metadata.title}{' '}
               {value.metadata.edition !== '' && (
-                <span className="text-sm text-bg-500">
+                <span className="text-bg-500 text-sm">
                   ({value.metadata.edition} ed)
                 </span>
               )}
             </p>
-            <div className="mt-0.5 line-clamp-3 break-all text-sm font-medium text-custom-500">
+            <div className="text-custom-500 mt-0.5 line-clamp-3 text-sm font-medium break-all">
               {value.metadata.authors}
             </div>
             <div className="mt-auto w-full min-w-0">

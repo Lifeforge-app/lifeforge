@@ -12,13 +12,13 @@ function DurationSlider(): React.ReactElement {
 
   return (
     <div className="flex w-full items-center gap-2 text-sm">
-      <span className="-mt-0.5 text-bg-500">
+      <span className="text-bg-500 -mt-0.5">
         {moment
           .utc(moment.duration(+currentDuration, 'seconds').asMilliseconds())
           .format(+currentDuration >= 3600 ? 'H:mm:ss' : 'm:ss')}
       </span>
       <input
-        className="main h-1 w-full cursor-pointer overflow-hidden rounded-full bg-bg-200 dark:bg-bg-700"
+        className="main bg-bg-200 dark:bg-bg-700 h-1 w-full cursor-pointer overflow-hidden rounded-full"
         max={currentMusic.duration}
         style={{
           backgroundSize: `${
@@ -32,7 +32,7 @@ function DurationSlider(): React.ReactElement {
           setCurrentDuration(+e.target.value)
         }}
       ></input>
-      <span className="-mt-0.5 text-bg-500">
+      <span className="text-bg-500 -mt-0.5">
         {moment
           .utc(
             moment.duration(+currentMusic.duration, 'seconds').asMilliseconds()

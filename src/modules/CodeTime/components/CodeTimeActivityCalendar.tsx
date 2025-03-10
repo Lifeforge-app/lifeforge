@@ -129,7 +129,7 @@ function CodeTimeActivityCalendar(): React.ReactElement {
                   className={clsx(
                     'flex items-start gap-2 rounded-lg p-4 px-8 font-medium sm:px-12',
                     year === firstYear + index
-                      ? 'bg-bg-200 font-semibold text-bg-800 dark:bg-bg-700/50 dark:text-bg-50'
+                      ? 'bg-bg-200 text-bg-800 dark:bg-bg-700/50 dark:text-bg-50 font-semibold'
                       : 'text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-700/50'
                   )}
                   onClick={() => {

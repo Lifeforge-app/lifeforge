@@ -68,16 +68,16 @@ function PhotosSidebar(): React.ReactElement {
                   <>
                     <li
                       key={album.id}
-                      className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all"
+                      className="text-bg-500 relative flex items-center gap-6 px-4 font-medium transition-all"
                     >
                       <Link
-                        className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100 hover:bg-bg-100 dark:hover:bg-bg-800"
+                        className="hover:bg-bg-100 dark:hover:bg-bg-800 flex w-full items-center gap-6 rounded-lg p-4 whitespace-nowrap transition-all duration-100"
                         to={`/photos/album/${album.id}`}
                         onClick={() => {
                           setSidebarOpen(false)
                         }}
                       >
-                        <div className="flex-center size-10 shrink-0 rounded-md bg-bg-200/50 shadow-xs dark:bg-bg-700/50">
+                        <div className="flex-center bg-bg-200/50 dark:bg-bg-700/50 size-10 shrink-0 rounded-md shadow-xs">
                           {album.cover !== '' ? (
                             <img
                               alt=""
@@ -88,24 +88,24 @@ function PhotosSidebar(): React.ReactElement {
                             />
                           ) : (
                             <Icon
-                              className="size-5 text-bg-300"
+                              className="text-bg-300 size-5"
                               icon="tabler:library-photo"
                             />
                           )}
                         </div>
-                        <div className="w-full truncate text-bg-500">
+                        <div className="text-bg-500 w-full truncate">
                           {album.name}
                         </div>
-                        <span className="text-sm text-bg-500">
+                        <span className="text-bg-500 text-sm">
                           {album.amount?.toLocaleString()}
                         </span>
                       </Link>
                     </li>
                   </>
                 ))}
-                <li className="relative flex items-center gap-6 px-4 font-medium text-bg-500 transition-all">
+                <li className="text-bg-500 relative flex items-center gap-6 px-4 font-medium transition-all">
                   <Link
-                    className="flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 hover:bg-bg-100 dark:hover:bg-bg-800"
+                    className="hover:bg-bg-100 dark:hover:bg-bg-800 flex w-full items-center gap-6 rounded-lg p-4 whitespace-nowrap"
                     to="/photos/album"
                     onClick={() => {
                       setSidebarOpen(false)
@@ -113,11 +113,11 @@ function PhotosSidebar(): React.ReactElement {
                   >
                     <div className="flex-center size-10 shrink-0">
                       <Icon
-                        className="size-6 text-bg-500"
+                        className="text-bg-500 size-6"
                         icon="tabler:arrow-right"
                       />
                     </div>
-                    <div className="w-full text-bg-500">
+                    <div className="text-bg-500 w-full">
                       {t('sidebar.photos.viewAllAlbum')}
                     </div>
                   </Link>

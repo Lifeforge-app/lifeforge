@@ -22,7 +22,7 @@ import './styles/index.css'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <main
-      className="flex h-dvh w-full overflow-hidden bg-bg-200/50 text-bg-800 dark:bg-bg-900/50 dark:text-bg-50"
+      className="bg-bg-200/50 text-bg-800 dark:bg-bg-900/50 dark:text-bg-50 flex h-dvh w-full overflow-hidden"
       id="app"
     >
       <App />

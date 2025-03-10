@@ -19,13 +19,13 @@ function VideoInfo({
 }): React.ReactElement {
   return (
     <>
-      <div className="relative w-64 shrink-0 overflow-hidden rounded-md border border-bg-800">
+      <div className="border-bg-800 relative w-64 shrink-0 overflow-hidden rounded-md border">
         <img
           alt=""
           className="size-full object-cover"
           src={videoInfo.thumbnail}
         />
-        <p className="absolute bottom-2 right-2 rounded-md bg-bg-900/70 px-1.5 py-0.5 text-bg-50">
+        <p className="bg-bg-900/70 text-bg-50 absolute right-2 bottom-2 rounded-md px-1.5 py-0.5">
           {moment
             .utc(
               moment.duration(videoInfo.duration, 'seconds').asMilliseconds()
@@ -35,15 +35,15 @@ function VideoInfo({
       </div>
       <div>
         <h2 className="line-clamp-2 text-2xl font-medium">{videoInfo.title}</h2>
-        <p className="mt-1 text-custom-500">{videoInfo.uploader}</p>
+        <p className="text-custom-500 mt-1">{videoInfo.uploader}</p>
         {videoInfo.uploadDate !== undefined && (
-          <p className="mt-4 text-bg-500">
+          <p className="text-bg-500 mt-4">
             {shortenBigNumber(+videoInfo.viewCount)} views •{' '}
             {moment(videoInfo.uploadDate, 'YYYYMMDD').fromNow()}
           </p>
         )}
         {videoInfo.likeCount !== undefined && (
-          <p className="mt-1 flex items-center gap-1 text-bg-500">
+          <p className="text-bg-500 mt-1 flex items-center gap-1">
             <Icon icon="uil:thumbs-up" />{' '}
             {shortenBigNumber(+videoInfo.likeCount)} likes
           </p>

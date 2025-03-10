@@ -19,7 +19,7 @@ function SideButtons({ music }: { music: IMusicEntry }): React.ReactElement {
     <div className="flex w-auto min-w-0 shrink-0 items-center justify-end sm:w-2/12">
       <button
         className={clsx(
-          'rounded-lg p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50',
+          'hover:bg-bg-100 dark:hover:bg-bg-800/50 rounded-lg p-4 transition-all',
           music.is_favourite
             ? 'text-red-500 hover:text-red-600'
             : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'

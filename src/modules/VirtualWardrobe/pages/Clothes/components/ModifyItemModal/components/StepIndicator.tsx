@@ -14,7 +14,7 @@ function StepIndicator({
   const { t } = useTranslation('modules.virtualWardrobe')
 
   return (
-    <ol className="flex w-full items-center text-sm font-medium text-bg-500 sm:text-base">
+    <ol className="text-bg-500 flex w-full items-center text-sm font-medium sm:text-base">
       {['Upload Photos', 'Basic Info', 'Appearance And Details'].map(
         (text, index) => (
           <li
@@ -29,11 +29,11 @@ function StepIndicator({
                 : 'after:bg-bg-300 dark:after:bg-bg-700'
             )}
           >
-            <div className="flex items-center whitespace-nowrap after:mx-2 after:content-['/'] sm:after:hidden ">
+            <div className="flex items-center whitespace-nowrap after:mx-2 after:content-['/'] sm:after:hidden">
               <span
                 className={clsx(
                   'mr-3 flex size-6 items-center justify-center rounded-full font-medium lg:size-10',
-                  index + 1 === step && 'border-2 border-custom-500',
+                  index + 1 === step && 'border-custom-500 border-2',
                   index + 1 < step &&
                     'bg-custom-500 text-bg-100 dark:text-bg-900',
                   index + 1 > step && 'bg-bg-500 text-bg-100 dark:text-bg-900'

@@ -20,7 +20,7 @@ function CategoryEntry({
 }): React.ReactElement {
   return (
     <div className="mb-6 w-full overflow-hidden">
-      <div className="relative mb-8 rounded-lg text-center text-2xl font-medium after:absolute after:-bottom-2 after:left-1/2 after:w-8 after:-translate-x-1/2 after:border-b-2 after:border-b-bg-800 dark:after:border-b-bg-200">
+      <div className="after:border-b-bg-800 dark:after:border-b-bg-200 relative mb-8 rounded-lg text-center text-2xl font-medium after:absolute after:-bottom-2 after:left-1/2 after:w-8 after:-translate-x-1/2 after:border-b-2">
         {category}
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] flex-wrap gap-4">

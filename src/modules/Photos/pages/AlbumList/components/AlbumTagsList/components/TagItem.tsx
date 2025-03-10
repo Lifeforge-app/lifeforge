@@ -16,7 +16,7 @@ function TagItem({
     <button
       key={tag.id}
       className={clsx(
-        'whitespace-nowrap rounded-full px-3 py-1 text-sm tracking-wider shadow-custom',
+        'shadow-custom rounded-full px-3 py-1 text-sm tracking-wider whitespace-nowrap',
         searchParams.getAll('tags')?.[0]?.split(',').includes(tag.id)
           ? 'bg-custom-500/20 text-custom-500 hover:bg-custom-500/40'
           : 'bg-bg-900 text-bg-500 hover:bg-bg-800'

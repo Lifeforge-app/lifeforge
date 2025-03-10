@@ -10,26 +10,26 @@ function DiskUsageCard({ disk }: { disk: IDiskUsage }): React.ReactElement {
   return (
     <div
       key={disk.name}
-      className={clsx('space-y-4 rounded-lg p-6 shadow-custom', componentBg)}
+      className={clsx('shadow-custom space-y-4 rounded-lg p-6', componentBg)}
     >
       <div className="flex-between flex w-full min-w-0">
         <div className="flex min-w-0 flex-1 items-center gap-2">
-          <Icon className="text-2xl text-bg-500" icon="streamline:hard-disk" />
-          <h2 className="mr-8 min-w-0 truncate text-xl text-bg-500">
+          <Icon className="text-bg-500 text-2xl" icon="streamline:hard-disk" />
+          <h2 className="text-bg-500 mr-8 min-w-0 truncate text-xl">
             {disk.name}
           </h2>
         </div>
-        <p className="shrink-0 rounded-md border border-bg-400 px-4 py-2 text-lg text-bg-500">
+        <p className="border-bg-400 text-bg-500 shrink-0 rounded-md border px-4 py-2 text-lg">
           {disk.size}B
         </p>
       </div>
       <div className="flex-between flex">
-        <p className="text-lg text-bg-500">Used</p>
-        <p className="text-lg text-bg-500">{disk.used}B</p>
+        <p className="text-bg-500 text-lg">Used</p>
+        <p className="text-bg-500 text-lg">{disk.used}B</p>
       </div>
       <div className="flex-between flex">
-        <p className="text-lg text-bg-500">Available</p>
-        <p className="text-lg text-bg-500">{disk.avail}B</p>
+        <p className="text-bg-500 text-lg">Available</p>
+        <p className="text-bg-500 text-lg">{disk.avail}B</p>
       </div>
       <div
         className={clsx(

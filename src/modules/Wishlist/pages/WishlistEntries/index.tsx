@@ -190,12 +190,12 @@ function WishlistEntries(): React.ReactElement {
         setEntries={setEntries}
         setOpenType={setModifyEntryModalOpenType}
       />
-      <Menu as="div" className="absolute bottom-6 right-6 z-50 block md:hidden">
+      <Menu as="div" className="absolute right-6 bottom-6 z-50 block md:hidden">
         <Button as={MenuButton} icon="tabler:plus" onClick={() => {}} />
         <MenuItems
           transition
           anchor="top end"
-          className="overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
+          className="bg-bg-100 dark:bg-bg-800 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
         >
           <MenuItem
             icon="tabler:plus"

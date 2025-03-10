@@ -185,7 +185,7 @@ function CFOPF2L(): React.ReactElement {
       </header>
       {sections.map((section, i) => (
         <section key={`section-${i + 1}`} className="my-8 space-y-4">
-          <p className="w-full text-center text-lg font-semibold tracking-wider text-custom-500">
+          <p className="text-custom-500 w-full text-center text-lg font-semibold tracking-wider">
             SECTION {i + 1}
           </p>
           <h2 className="text-center text-4xl font-semibold tracking-widest">
@@ -201,7 +201,7 @@ function CFOPF2L(): React.ReactElement {
                   <h4 className="pt-4 text-2xl font-semibold tracking-wider">
                     {subsubsection.name}
                   </h4>
-                  <p className="mt-2 text-lg text-bg-500">
+                  <p className="text-bg-500 mt-2 text-lg">
                     {subsubsection.desc}
                   </p>
                   <div className="mt-4 grid grid-cols-2 gap-2">
@@ -209,11 +209,11 @@ function CFOPF2L(): React.ReactElement {
                       <div
                         key={i}
                         className={clsx(
-                          'flex w-full items-center gap-6 rounded-md p-4 shadow-custom',
+                          'shadow-custom flex w-full items-center gap-6 rounded-md p-4',
                           componentBg
                         )}
                       >
-                        <div className="rounded-md bg-bg-800/50 p-1 pb-2">
+                        <div className="bg-bg-800/50 rounded-md p-1 pb-2">
                           <Cube pattern={pattern} />
                         </div>
                         <div className="space-y-2 text-lg font-medium">

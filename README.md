@@ -15,7 +15,7 @@
 ## ✅ The Solution
 
 Lifeforge is a personal management system designed to help you manage your life
-efficiently. Whether it's keeping track of tasks, organizing projects, 
+efficiently. Whether it's keeping track of tasks, organizing projects,
 setting personal goals, or managing financial statuses, Lifeforge has got you covered.
 
 ## 🧱 Modules

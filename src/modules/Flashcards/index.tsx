@@ -29,15 +29,15 @@ export default function Flashcards(): React.ReactElement {
         <Sidebar setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
         <ContentWrapperWithSidebar>
           <div className="flex-between flex">
-            <h1 className="text-3xl font-semibold  md:text-4xl">
-              All Decks <span className="text-base text-bg-500">(10)</span>
+            <h1 className="text-3xl font-semibold md:text-4xl">
+              All Decks <span className="text-bg-500 text-base">(10)</span>
             </h1>
             <div className="flex items-center gap-6">
               <Button icon="tabler:plus" onClick={() => {}}>
                 new deck
               </Button>
               <button
-                className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
+                className="text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 -ml-4 rounded-lg p-4 transition-all lg:hidden"
                 onClick={() => {}}
               >
                 <Icon className="text-2xl" icon="tabler:menu" />
@@ -58,7 +58,7 @@ export default function Flashcards(): React.ReactElement {
                     <Link
                       key={deck.id}
                       className={clsx(
-                        'group relative flex flex-col justify-start gap-6 rounded-lg p-8 shadow-custom',
+                        'group shadow-custom relative flex flex-col justify-start gap-6 rounded-lg p-8',
                         componentBgWithHover
                       )}
                       to={`/flashcards/${deck.id}`}
@@ -66,7 +66,7 @@ export default function Flashcards(): React.ReactElement {
                       <div className="space-y-2">
                         {deck.tag && (
                           <span
-                            className="relative isolate mb-1 w-min whitespace-nowrap rounded-full px-3 py-0.5 text-sm"
+                            className="relative isolate mb-1 w-min rounded-full px-3 py-0.5 text-sm whitespace-nowrap"
                             style={{
                               backgroundColor: `${deck.expand.tag.color}20`,
                               color: deck.expand.tag.color
@@ -75,29 +75,29 @@ export default function Flashcards(): React.ReactElement {
                             {deck.expand.tag.name}
                           </span>
                         )}
-                        <div className="text-xl font-medium ">{deck.name}</div>
-                        <p className="text-sm font-medium text-bg-500">
+                        <div className="text-xl font-medium">{deck.name}</div>
+                        <p className="text-bg-500 text-sm font-medium">
                           {deck.card_amount} cards
                         </p>
                       </div>
                       <div className="mt-auto space-y-2">
                         <progress
-                          className="progress h-2 w-full rounded-lg bg-bg-200 dark:bg-bg-700"
+                          className="progress bg-bg-200 dark:bg-bg-700 h-2 w-full rounded-lg"
                           max="100"
                           value={Math.floor(Math.random() * 100)}
                         ></progress>
-                        <p className="text-sm font-medium text-bg-500">
+                        <p className="text-bg-500 text-sm font-medium">
                           {Math.floor(Math.random() * 100)}% complete
                         </p>
                       </div>
-                      <button className="absolute right-4 top-4 hidden rounded-md p-2 text-bg-500 hover:bg-bg-700/30 hover:text-bg-50 group-hover:flex">
+                      <button className="text-bg-500 hover:bg-bg-700/30 hover:text-bg-50 absolute top-4 right-4 hidden rounded-md p-2 group-hover:flex">
                         <Icon className="size-5" icon="tabler:dots-vertical" />
                       </button>
                     </Link>
                   ))}
-                  <div className="flex-center relative h-full flex-col gap-4 rounded-lg border-2 border-dashed border-bg-500 p-12">
-                    <Icon className="size-8 text-bg-500" icon="tabler:plus" />
-                    <div className="text-xl font-semibold text-bg-500">
+                  <div className="flex-center border-bg-500 relative h-full flex-col gap-4 rounded-lg border-2 border-dashed p-12">
+                    <Icon className="text-bg-500 size-8" icon="tabler:plus" />
+                    <div className="text-bg-500 text-xl font-semibold">
                       Create new set
                     </div>
                   </div>

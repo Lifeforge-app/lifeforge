@@ -68,7 +68,7 @@ const SidebarEventBanner = (): React.ReactElement => {
   return (
     <div
       className={clsx(
-        'flex-between flex w-full gap-2 whitespace-nowrap rounded-tr-2xl p-4 text-lg font-medium',
+        'flex-between flex w-full gap-2 rounded-tr-2xl p-4 text-lg font-medium whitespace-nowrap',
         bgColor,
         textColor
       )}

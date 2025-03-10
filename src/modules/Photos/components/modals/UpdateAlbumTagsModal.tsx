@@ -65,14 +65,14 @@ function UpdateAlbumTagsModal({
 
   return (
     <ModalWrapper isOpen={isOpen}>
-      <div className="flex-between mb-8 flex ">
+      <div className="flex-between mb-8 flex">
         <h1 className="flex items-center gap-3 text-2xl font-semibold">
           <Icon className="size-7" icon="tabler:tags" />
           Modify Tags for {selectedAlbum?.name ?? 'Album'}
         </h1>
         {!loading && (
           <button
-            className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-100 dark:hover:bg-bg-800"
+            className="text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-800 rounded-md p-2 transition-all"
             onClick={() => {
               setOpen(false)
             }}
@@ -88,7 +88,7 @@ function UpdateAlbumTagsModal({
               <button
                 key={tag.id}
                 className={clsx(
-                  'rounded-full px-4 py-1 uppercase tracking-wider shadow-custom transition-all',
+                  'shadow-custom rounded-full px-4 py-1 tracking-wider uppercase transition-all',
                   selectedTags.includes(tag.id)
                     ? 'bg-custom-500/20 text-custom-500 hover:bg-custom-500/40'
                     : 'bg-bg-800 text-bg-500 hover:bg-bg-700'
@@ -106,7 +106,7 @@ function UpdateAlbumTagsModal({
                 {tag.name}
               </button>
             ))}
-            <button className="rounded-full bg-bg-800 px-4 py-1 uppercase tracking-wider text-bg-500 shadow-custom">
+            <button className="bg-bg-800 text-bg-500 shadow-custom rounded-full px-4 py-1 tracking-wider uppercase">
               <Icon className="size-4" icon="tabler:plus" />
             </button>
           </div>

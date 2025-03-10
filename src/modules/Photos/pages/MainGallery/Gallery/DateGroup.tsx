@@ -125,7 +125,7 @@ function DateGroup({
               </button>
             </div>
             {moment(date).format('LL')}
-            <span className="mb-0.5 block text-sm font-normal text-bg-500">
+            <span className="text-bg-500 mb-0.5 block text-sm font-normal">
               ({photosDimensions.length.toLocaleString()})
             </span>
           </h2>

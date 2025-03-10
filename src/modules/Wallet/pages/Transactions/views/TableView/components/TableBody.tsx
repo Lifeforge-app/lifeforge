@@ -41,7 +41,7 @@ function TableBody({
       {transactions.map(transaction => (
         <tr
           key={transaction.id}
-          className="border-b border-bg-200 dark:border-bg-800"
+          className="border-bg-200 dark:border-bg-800 border-b"
         >
           {(() => {
             const columns: Array<[string, React.FC<any>, Record<string, any>]> =

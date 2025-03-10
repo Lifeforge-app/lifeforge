@@ -12,12 +12,12 @@ function HamburgerSelectorWrapper({
 }): React.ReactElement {
   return (
     <>
-      <span className="flex items-center gap-4 p-4 text-bg-500">
+      <span className="text-bg-500 flex items-center gap-4 p-4">
         <Icon className="size-5" icon={icon} />
         {title}
       </span>
       <div className="p-4 pt-0">
-        <ul className="flex flex-col divide-y divide-bg-700 overflow-hidden rounded-md bg-bg-700/50">
+        <ul className="divide-bg-700 bg-bg-700/50 flex flex-col divide-y overflow-hidden rounded-md">
           {children}
         </ul>
       </div>

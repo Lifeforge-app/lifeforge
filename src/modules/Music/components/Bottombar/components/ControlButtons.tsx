@@ -48,7 +48,7 @@ export default function ControlButtons({
         onClick={lastMusic}
       />
       <IconButton
-        className="mx-2 rounded-full bg-bg-500 p-4 text-white shadow-custom hover:bg-custom-500! dark:bg-bg-100 dark:text-bg-800"
+        className="bg-bg-500 shadow-custom hover:bg-custom-500! dark:bg-bg-100 dark:text-bg-800 mx-2 rounded-full p-4 text-white"
         icon={
           isPlaying ? 'tabler:player-pause-filled' : 'tabler:player-play-filled'
         }

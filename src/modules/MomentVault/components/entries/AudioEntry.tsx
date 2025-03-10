@@ -102,7 +102,7 @@ function AudioEntry({
 
   return (
     <div
-      className={clsx('w-full rounded-md shadow-custom p-4', componentBg)}
+      className={clsx('shadow-custom w-full rounded-md p-4', componentBg)}
       id={`audio-entry-${entry.id}`}
     >
       <div className="flex items-center gap-4">
@@ -111,7 +111,7 @@ function AudioEntry({
           icon={isPlaying ? 'tabler:pause' : 'tabler:play'}
           onClick={onPlayPause}
         />
-        <div className="flex w-full items-center sm:flex-row gap-2 sm:gap-4 flex-col *:first:w-full">
+        <div className="flex w-full flex-col items-center gap-2 *:first:w-full sm:flex-row sm:gap-4">
           <WavesurferPlayer
             barGap={2}
             barRadius={100}
@@ -133,7 +133,7 @@ function AudioEntry({
             onPlay={() => setIsPlaying(true)}
             onReady={onReady}
           />
-          <p className="text-sm text-bg-500 whitespace-nowrap text-left w-full sm:w-auto">
+          <p className="text-bg-500 w-full text-left text-sm whitespace-nowrap sm:w-auto">
             {moment().startOf('day').seconds(currentTime).format('mm:ss')} /{' '}
             {moment().startOf('day').seconds(totalTime).format('mm:ss')}
           </p>
@@ -160,7 +160,7 @@ function AudioEntry({
         </HamburgerMenu>
       </div>
       {entry.transcription && (
-        <div className="mt-6 border-l-4 border-custom-500 pl-4">
+        <div className="border-custom-500 mt-6 border-l-4 pl-4">
           <p className="text-bg-500">{entry.transcription}</p>
         </div>
       )}

@@ -10,7 +10,7 @@ function Temperature({
 }): React.ReactElement {
   return (
     <WidgetWrapper>
-      <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
+      <h1 className="text-bg-500 mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon className="text-2xl" icon="tabler:thermometer" />
         <span className="ml-2">Temperature</span>
       </h1>

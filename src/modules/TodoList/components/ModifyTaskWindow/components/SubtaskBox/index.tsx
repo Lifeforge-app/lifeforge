@@ -33,7 +33,7 @@ function SubtaskBox({
   }, [])
 
   return (
-    <div className="mt-4 rounded-md bg-bg-200/50 p-[1.4rem] shadow-custom dark:bg-bg-800/50">
+    <div className="bg-bg-200/50 shadow-custom dark:bg-bg-800/50 mt-4 rounded-md p-[1.4rem]">
       <SubtaskBoxHeader
         notes={notes}
         setNewTask={setNewTask}

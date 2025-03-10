@@ -73,11 +73,11 @@ function Mood({
 
   return (
     <>
-      <div className="flex-center mt-4 size-full flex-col rounded-lg bg-bg-200/50 p-6 shadow-custom transition-all focus-within:ring-1 focus-within:ring-bg-500 dark:bg-bg-800/50">
+      <div className="flex-center bg-bg-200/50 shadow-custom focus-within:ring-bg-500 dark:bg-bg-800/50 mt-4 size-full flex-col rounded-lg p-6 transition-all focus-within:ring-1">
         {loading ? (
           <div className="flex size-full flex-col items-center justify-center gap-2">
             <Icon
-              className="size-8 text-bg-500"
+              className="text-bg-500 size-8"
               icon="svg-spinners:3-dots-scale"
             />
             <p className="text-bg-500">Predicting mood...</p>

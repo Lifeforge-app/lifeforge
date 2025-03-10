@@ -26,7 +26,7 @@ function EntryItem({
       className="flex-between relative mt-0 flex min-w-0 gap-4 p-6"
     >
       <Icon
-        className="pointer-events-auto z-50 size-7 shrink-0 text-bg-500"
+        className="text-bg-500 pointer-events-auto z-50 size-7 shrink-0"
         icon={
           {
             file:

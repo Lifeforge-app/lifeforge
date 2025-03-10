@@ -88,12 +88,12 @@ function EntryContextMenu({
   }
 
   return (
-    <Menu as="div" className="absolute right-2 top-2">
+    <Menu as="div" className="absolute top-2 right-2">
       <MenuButton>
         {({ open }) => (
           <div
             className={clsx(
-              'shrink-0 rounded-lg bg-bg-50 p-2 text-bg-500 opacity-0 hover:bg-bg-100 hover:text-bg-800 group-hover:opacity-100 dark:bg-bg-800 dark:text-bg-50 dark:hover:bg-bg-700 dark:hover:text-bg-50',
+              'bg-bg-50 text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:bg-bg-800 dark:text-bg-50 dark:hover:bg-bg-700 dark:hover:text-bg-50 shrink-0 rounded-lg p-2 opacity-0 group-hover:opacity-100',
               entry.type === 'image' && 'shadow-custom!',
               open && 'opacity-100!'
             )}
@@ -105,7 +105,7 @@ function EntryContextMenu({
       <MenuItems
         transition
         anchor="bottom end"
-        className="mt-2 min-w-56 overflow-hidden rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
+        className="bg-bg-100 dark:bg-bg-800 mt-2 min-w-56 overflow-hidden rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
       >
         {!entry.archived && (
           <MenuItem

@@ -166,7 +166,7 @@ function ModifyJournalEntryModal({
           )
         )}
       </ul>
-      <p className="mt-6 text-bg-500">
+      <p className="text-bg-500 mt-6">
         {(() => {
           switch (step) {
             case 1:

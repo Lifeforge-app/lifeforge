@@ -85,7 +85,7 @@ const ViewSelector = ({
   const views = ['bar', 'line']
 
   return (
-    <div className="flex items-center gap-2 rounded-md bg-bg-50 p-2 shadow-custom dark:bg-bg-800/50">
+    <div className="bg-bg-50 shadow-custom dark:bg-bg-800/50 flex items-center gap-2 rounded-md p-2">
       {views.map(viewType => (
         <button
           key={viewType}

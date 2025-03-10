@@ -79,7 +79,7 @@ function Weather(): React.ReactElement {
     <APIFallbackComponent data={METARData}>
       {data =>
         data !== 'none' ? (
-          <div className="mb-8 mt-6 grid w-full grid-cols-4 gap-4">
+          <div className="mt-6 mb-8 grid w-full grid-cols-4 gap-4">
             <FlightCategory data={data} />
             <RawMETARData data={data} />
             <SignificantWeather data={data} />

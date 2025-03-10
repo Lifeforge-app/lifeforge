@@ -38,15 +38,15 @@ function WishlistListItem({
       </div>
       <div className="w-full min-w-0 flex-1 space-y-2">
         <h2 className="truncate text-2xl font-semibold">{list.name}</h2>
-        <p className="min-w-0 text-bg-500">{list.description}</p>
+        <p className="text-bg-500 min-w-0">{list.description}</p>
       </div>
       <div className="text-right">
-        <div className="flex-between whitespace-nowrap text-sm text-bg-500">
+        <div className="flex-between text-bg-500 text-sm whitespace-nowrap">
           <p>{list.bought_count} bought</p>
           <p>{list.item_count} items</p>
         </div>
         <progress
-          className="progress h-2 w-full rounded-lg bg-bg-200 dark:bg-bg-700"
+          className="progress bg-bg-200 dark:bg-bg-700 h-2 w-full rounded-lg"
           max="100"
           value={
             list.bought_count !== 0
@@ -54,7 +54,7 @@ function WishlistListItem({
               : 0
           }
         ></progress>
-        <div className="flex-between text-sm text-bg-500">
+        <div className="flex-between text-bg-500 text-sm">
           <p>
             {list.bought_count === 0
               ? '0'
@@ -64,7 +64,7 @@ function WishlistListItem({
           <p>total RM{numberToMoney(list.total_amount)}</p>
         </div>
       </div>
-      <HamburgerMenu className="absolute right-4 top-4">
+      <HamburgerMenu className="absolute top-4 right-4">
         <MenuItem icon="tabler:pencil" text="Edit" onClick={onEdit} />
         <MenuItem isRed icon="tabler:trash" text="Delete" onClick={onDelete} />
       </HamburgerMenu>

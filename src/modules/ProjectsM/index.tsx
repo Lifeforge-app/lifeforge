@@ -34,7 +34,7 @@ function ProjectsM(): React.ReactElement {
         <div className="relative z-10 flex h-full flex-1 flex-col xl:ml-8">
           <div className="flex-between flex">
             <h1 className="text-3xl font-semibold lg:text-4xl">
-              All Projects <span className="text-base text-bg-500">(10)</span>
+              All Projects <span className="text-bg-500 text-base">(10)</span>
             </h1>
             <div className="flex items-center gap-6">
               <Button

@@ -15,7 +15,7 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }): React.ReactElement {
   return (
     <li
       key={item.id}
-      className="relative flex w-full min-w-0 flex-col items-start rounded-lg bg-bg-50 p-4 transition-all hover:bg-bg-200/70 dark:bg-bg-900 dark:hover:bg-bg-800/50"
+      className="bg-bg-50 hover:bg-bg-200/70 dark:bg-bg-900 dark:hover:bg-bg-800/50 relative flex w-full min-w-0 flex-col items-start rounded-lg p-4 transition-all"
     >
       <a
         className="absolute inset-0 z-10 size-full rounded-lg"
@@ -26,12 +26,12 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }): React.ReactElement {
         target="_blank"
       />
       <HamburgerMenu
-        className="absolute right-6 top-6 z-20"
+        className="absolute top-6 right-6 z-20"
         customTailwindColor="bg-bg-800/50 hover:bg-bg-700"
       >
         <EntryContextMenu item={item} />
       </HamburgerMenu>
-      <div className="flex-center aspect-9/12 w-full overflow-hidden rounded-lg bg-bg-200/70 shadow-custom dark:bg-bg-800/50">
+      <div className="flex-center bg-bg-200/70 shadow-custom dark:bg-bg-800/50 aspect-9/12 w-full overflow-hidden rounded-lg">
         <img
           alt=""
           className="h-full"
@@ -40,7 +40,7 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }): React.ReactElement {
           }/${item.thumbnail}`}
         />
       </div>
-      <div className="mt-4 flex items-center gap-1 text-sm font-medium text-bg-500">
+      <div className="text-bg-500 mt-4 flex items-center gap-1 text-sm font-medium">
         {typeof categories !== 'string' &&
           (() => {
             const category = categories.find(
@@ -49,7 +49,7 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }): React.ReactElement {
 
             return category !== undefined ? (
               <>
-                <Icon className="size-4 text-bg-500" icon={category.icon} />{' '}
+                <Icon className="text-bg-500 size-4" icon={category.icon} />{' '}
                 {category.name}
               </>
             ) : (
@@ -60,10 +60,10 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }): React.ReactElement {
       <div className="mt-1 line-clamp-3 w-full min-w-0 text-xl font-medium">
         {item.title}{' '}
         {item.edition !== '' && (
-          <span className="text-sm text-bg-500">({item.edition} ed)</span>
+          <span className="text-bg-500 text-sm">({item.edition} ed)</span>
         )}
       </div>
-      <div className="mt-0.5 line-clamp-3 break-all text-sm font-medium text-custom-500">
+      <div className="text-custom-500 mt-0.5 line-clamp-3 text-sm font-medium break-all">
         {item.authors}
       </div>
       <div className="mt-auto w-full min-w-0">

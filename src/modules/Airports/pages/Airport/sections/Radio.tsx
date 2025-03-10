@@ -18,7 +18,7 @@ function Radio(): React.ReactElement {
   return (
     <APIFallbackComponent data={radiosData}>
       {data => (
-        <ul className="mb-8 flex flex-col divide-y-2 divide-bg-800">
+        <ul className="divide-bg-800 mb-8 flex flex-col divide-y-2">
           {data.length > 0 ? (
             data.map(({ name, frequency }) => (
               <li

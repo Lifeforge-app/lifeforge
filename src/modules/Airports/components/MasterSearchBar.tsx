@@ -73,19 +73,19 @@ function MasterSearchBar(): React.ReactElement {
       {debouncedMasterSearchQuery.length >= 3 && (
         <div
           className={clsx(
-            'absolute z-50 mt-4 flex w-full flex-col rounded-md border-bg-800 bg-bg-50 shadow-custom dark:border-2 dark:bg-bg-900',
+            'border-bg-800 bg-bg-50 shadow-custom dark:bg-bg-900 absolute z-50 mt-4 flex w-full flex-col rounded-md dark:border-2',
             typeof searchResults === 'string' && 'pt-6'
           )}
         >
           <APIFallbackComponent data={searchResults}>
             {searchResults => (
               <Scrollbar autoHeight autoHeightMax={384} className="flex-1">
-                <div className="flex-1 divide-y divide-bg-200 dark:divide-bg-800">
+                <div className="divide-bg-200 dark:divide-bg-800 flex-1 divide-y">
                   {searchResults.length > 0 ? (
                     searchResults.map(airport => (
                       <Link
                         key={airport.id}
-                        className="flex-between flex w-full p-4 px-6 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50"
+                        className="flex-between hover:bg-bg-100 dark:hover:bg-bg-800/50 flex w-full p-4 px-6 transition-all"
                         to={`/airports/${airport.continentCode}/${airport.country.code}/${airport.region.code}/${airport.id}`}
                       >
                         <div className="flex items-center gap-4">
@@ -100,7 +100,7 @@ function MasterSearchBar(): React.ReactElement {
                             <p className="text-left text-xl font-medium">
                               {airport.name}
                             </p>
-                            <p className="text-left text-bg-500">
+                            <p className="text-bg-500 text-left">
                               {airport.locationName}, {airport.region.name},{' '}
                               {airport.country.name}
                             </p>

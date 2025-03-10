@@ -20,7 +20,7 @@ export default function EventItem({
 }): React.ReactElement {
   return (
     <button
-      className="rbc-event flex flex-row! items-center gap-2 rounded-md bg-bg-100 dark:bg-bg-800"
+      className="rbc-event bg-bg-100 dark:bg-bg-800 flex flex-row! items-center gap-2 rounded-md"
       style={{
         border: 'none'
       }}

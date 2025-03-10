@@ -111,9 +111,9 @@ function GalleryHeader(): React.ReactElement {
 
   return (
     <div className="flex-between mr-4 flex flex-col gap-4 sm:mr-16 sm:flex-row">
-      <h1 className="shrink-0 text-3xl font-semibold  md:text-4xl">
+      <h1 className="shrink-0 text-3xl font-semibold md:text-4xl">
         {t('sidebar.photos.allPhotos')}{' '}
-        <span className="text-base text-bg-500">
+        <span className="text-bg-500 text-base">
           ({typeof photos !== 'string' && photos.totalItems.toLocaleString()})
         </span>
       </h1>
@@ -133,10 +133,10 @@ function GalleryHeader(): React.ReactElement {
                 !fileImportLoading
                   ? 'Import photos'
                   : progress !== null
-                  ? `Importing ${progress.done.toLocaleString()}/${progress.total.toLocaleString()} (${Math.round(
-                      (progress.done / progress.total) * 100
-                    )}%)`
-                  : 'Importing'
+                    ? `Importing ${progress.done.toLocaleString()}/${progress.total.toLocaleString()} (${Math.round(
+                        (progress.done / progress.total) * 100
+                      )}%)`
+                    : 'Importing'
               }
               onClick={() => {
                 importFiles().catch(() => {})

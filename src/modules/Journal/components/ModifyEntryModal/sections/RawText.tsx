@@ -35,10 +35,10 @@ function RawText({
 
   return (
     <>
-      <div className="mt-4 size-full rounded-lg bg-bg-200/70 p-6 shadow-custom transition-all focus-within:ring-1 focus-within:ring-bg-300 dark:bg-bg-800/50 dark:focus-within:ring-bg-500">
+      <div className="bg-bg-200/70 shadow-custom focus-within:ring-bg-300 dark:bg-bg-800/50 dark:focus-within:ring-bg-500 mt-4 size-full rounded-lg p-6 transition-all focus-within:ring-1">
         <textarea
           ref={textAreaRef}
-          className="h-max w-full resize-none bg-transparent caret-custom-500 placeholder:text-bg-500"
+          className="caret-custom-500 placeholder:text-bg-500 h-max w-full resize-none bg-transparent"
           placeholder="What a beautiful day! Start writing here..."
           value={rawText}
           onChange={e => {

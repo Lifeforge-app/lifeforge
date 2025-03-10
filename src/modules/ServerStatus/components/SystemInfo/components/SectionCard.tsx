@@ -16,29 +16,29 @@ function SectionCard({
 
   return (
     <div
-      className={clsx('space-y-4 rounded-lg p-6 shadow-custom', componentBg)}
+      className={clsx('shadow-custom space-y-4 rounded-lg p-6', componentBg)}
     >
-      <h2 className="text-xl text-bg-500">
+      <h2 className="text-bg-500 text-xl">
         {title === 'mem' ? 'Memory' : camelCaseToTitleCase(title)}
       </h2>
       {!Array.isArray(value) ? (
-        <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-700">
+        <ul className="divide-bg-200 dark:divide-bg-700 flex flex-col divide-y">
           {Object.entries(value).map(([k, v]) => (
             <li key={k} className="flex justify-between p-4">
-              <span className="text-lg text-bg-500">
+              <span className="text-bg-500 text-lg">
                 {camelCaseToTitleCase(k)}
               </span>
-              <span className="w-1/2 break-all text-lg text-bg-500">
+              <span className="text-bg-500 w-1/2 text-lg break-all">
                 {(() => {
                   if (typeof v === 'object') {
                     return (
-                      <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-700">
+                      <ul className="divide-bg-200 dark:divide-bg-700 flex flex-col divide-y">
                         {Object.entries(v as any).map(([k, v]) => (
                           <li key={k} className="flex justify-between p-4">
-                            <span className="text-lg text-bg-500">
+                            <span className="text-bg-500 text-lg">
                               {camelCaseToTitleCase(k)}
                             </span>
-                            <span className="text-lg text-bg-500">
+                            <span className="text-bg-500 text-lg">
                               {formatBytes(v as any) || 'N/A'}
                             </span>
                           </li>
@@ -61,14 +61,14 @@ function SectionCard({
         value.map((v, i) => (
           <ul
             key={i}
-            className="flex flex-col divide-y divide-bg-200 dark:divide-bg-700"
+            className="divide-bg-200 dark:divide-bg-700 flex flex-col divide-y"
           >
             {Object.entries(v).map(([k, v]) => (
               <li key={k} className="flex justify-between p-4">
-                <span className="text-lg text-bg-500">
+                <span className="text-bg-500 text-lg">
                   {camelCaseToTitleCase(k)}
                 </span>
-                <span className="w-1/2 break-all text-lg text-bg-500">
+                <span className="text-bg-500 w-1/2 text-lg break-all">
                   {(k.includes('byte') &&
                     // @ts-expect-error - uhh lazy to fix for now =)
                     formatBytes(v)) ||

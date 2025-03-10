@@ -41,7 +41,7 @@ function TaskPriorityList({
               ))}
             </>
           ) : (
-            <p className="text-center text-bg-500">{t('empty.priorities')}</p>
+            <p className="text-bg-500 text-center">{t('empty.priorities')}</p>
           )
         }
       </APIFallbackComponent>

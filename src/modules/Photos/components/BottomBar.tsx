@@ -123,7 +123,7 @@ function BottomBar({
   return (
     <div
       className={clsx(
-        'flex-between absolute bottom-0 left-1/2 z-20 flex w-[calc(100%-6rem)] -translate-x-1/2 rounded-t-md bg-bg-50 p-4 shadow-[0px_0px_20px_0px_rgba(0,0,0,0.05)] transition-all dark:bg-bg-900',
+        'flex-between bg-bg-50 dark:bg-bg-900 absolute bottom-0 left-1/2 z-20 flex w-[calc(100%-6rem)] -translate-x-1/2 rounded-t-md p-4 shadow-[0px_0px_20px_0px_rgba(0,0,0,0.05)] transition-all',
         selectedPhotos.length === 0 ? 'translate-y-full' : 'translate-y-0'
       )}
     >
@@ -133,18 +133,18 @@ function BottomBar({
             setSelectedPhotos([])
           }}
         >
-          <Icon className="size-5 text-bg-500" icon="tabler:x" />
+          <Icon className="text-bg-500 size-5" icon="tabler:x" />
         </button>
-        <p className="text-lg text-bg-500">
+        <p className="text-bg-500 text-lg">
           {selectedPhotos.length.toLocaleString()} selected
         </p>
       </div>
       <div className="flex items-center gap-4">
-        <button className="rounded-md p-2 text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30">
+        <button className="text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30 rounded-md p-2">
           <Icon className="size-5" icon="tabler:share" />
         </button>
         <button
-          className="rounded-md p-2 text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30"
+          className="text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30 rounded-md p-2"
           onClick={() => {
             addToFavourites().catch(() => {})
           }}
@@ -152,7 +152,7 @@ function BottomBar({
           <Icon className="size-5" icon="tabler:star" />
         </button>
         <button
-          className="rounded-md p-2 text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30"
+          className="text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30 rounded-md p-2"
           onClick={() => {
             if (inAlbumGallery) {
               setRemovePhotosFromAlbumConfirmationModalOpen(true)
@@ -181,7 +181,7 @@ function BottomBar({
           />
         </button>
         <button
-          className="rounded-md p-2 text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30"
+          className="text-bg-500 hover:bg-bg-100 hover:text-bg-500 dark:hover:bg-bg-700/30 rounded-md p-2"
           disabled={isDownloadLoading}
           onClick={() => {
             requestBulkDownload().catch(() => {})

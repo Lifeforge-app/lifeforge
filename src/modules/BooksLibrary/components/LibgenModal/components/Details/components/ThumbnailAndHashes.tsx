@@ -20,17 +20,17 @@ function ThumbnailAndHashes({
         />
       ) : (
         <Icon
-          className="h-full w-64 text-bg-400 dark:text-bg-600"
+          className="text-bg-400 dark:text-bg-600 h-full w-64"
           icon="iconamoon:file-document-light"
         />
       )}
-      <h2 className="mb-2 mt-4 hidden w-full text-left font-medium md:block">
+      <h2 className="mt-4 mb-2 hidden w-full text-left font-medium md:block">
         Hashes
       </h2>
       <div className="hidden w-full flex-col gap-2 text-xs md:flex">
         {Object.entries(data.hashes).map(([key, value]) => (
           <div key={key} className="flex flex-col">
-            <span className="mb-0.5 text-bg-400 dark:text-bg-400">{key}</span>
+            <span className="text-bg-400 dark:text-bg-400 mb-0.5">{key}</span>
             {value.split(' ').map((hash, i) => (
               <span key={i} className="font-['JetBrains_Mono']">
                 {hash}

@@ -34,7 +34,7 @@ function Header({
       <div className="flex-between w-full min-w-0 gap-8">
         <h1
           className={clsx(
-            'flex items-center gap-4 w-full min-w-0 font-semibold',
+            'flex w-full min-w-0 items-center gap-4 font-semibold',
             typeof wishlistListDetails !== 'string'
               ? 'text-2xl sm:text-3xl'
               : 'text-2xl'
@@ -79,11 +79,11 @@ function Header({
                     <div className="w-full min-w-0">
                       <div className="flex items-end gap-2 text-2xl font-medium sm:text-3xl">
                         <span>{wishlistListDetails.name}</span>
-                        <div className="text-lg! text-bg-500">
+                        <div className="text-bg-500 text-lg!">
                           ({wishlistListDetails.item_count} items)
                         </div>
                       </div>
-                      <span className="block w-full min-w-0 truncate text-base text-bg-500">
+                      <span className="text-bg-500 block w-full min-w-0 truncate text-base">
                         {wishlistListDetails.description}{' '}
                       </span>
                     </div>
@@ -105,7 +105,7 @@ function Header({
           <MenuItems
             transition
             anchor="bottom end"
-            className="mt-2 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
+            className="bg-bg-100 dark:bg-bg-800 mt-2 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
           >
             <MenuItem
               icon="tabler:plus"

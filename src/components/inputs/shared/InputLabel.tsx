@@ -20,7 +20,7 @@ const InputLabel: React.FC<InputLabelProps> = ({
     if (!active) {
       return `top-1/2 -translate-y-1/2 ${
         isListboxOrCombobox
-          ? `${isCombobox && "group-focus-within:top-5 group-focus-within:text-[14px]"} group-data-open:top-5 group-data-open:text-[14px]`
+          ? `${isCombobox && 'group-focus-within:top-5 group-focus-within:text-[14px]'} group-data-open:top-5 group-data-open:text-[14px]`
           : 'group-focus-within:top-5 group-focus-within:text-[14px]'
       }`
     }
@@ -38,7 +38,7 @@ const InputLabel: React.FC<InputLabelProps> = ({
   return (
     <span
       className={clsx(
-        'pointer-events-none absolute left-[4.2rem] font-medium tracking-wide text-bg-500 transition-all',
+        'text-bg-500 pointer-events-none absolute left-[4.2rem] font-medium tracking-wide transition-all',
         labelColorClasses,
         labelPositionClasses
       )}

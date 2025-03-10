@@ -51,7 +51,7 @@ function EntryItem({
     <a
       key={entry.id}
       className={clsx(
-        'block rounded-lg p-4 shadow-custom transition-all',
+        'shadow-custom block rounded-lg p-4 transition-all',
         componentBgWithHover
       )}
       href={`${import.meta.env.VITE_API_HOST}/media/${entry.collectionId}/${
@@ -61,9 +61,9 @@ function EntryItem({
       target="_blank"
     >
       <div className="relative">
-        <div className="flex-center relative aspect-[1/1.4142] w-full overflow-hidden rounded-md bg-bg-100 dark:bg-bg-800">
+        <div className="flex-center bg-bg-100 dark:bg-bg-800 relative aspect-[1/1.4142] w-full overflow-hidden rounded-md">
           <Icon
-            className="absolute left-1/2 top-1/2 size-16 -translate-x-1/2 -translate-y-1/2 text-bg-300 dark:text-bg-700"
+            className="text-bg-300 dark:text-bg-700 absolute top-1/2 left-1/2 size-16 -translate-x-1/2 -translate-y-1/2"
             icon="mingcute:guitar-line"
           />
           <img
@@ -75,11 +75,11 @@ function EntryItem({
             }/${entry.id}/${entry.thumbnail}?thumb=500x0`}
           />
         </div>
-        <div className="absolute bottom-0 right-0 rounded-br-md rounded-tl-md bg-bg-500/80 p-1 px-2">
+        <div className="bg-bg-500/80 absolute right-0 bottom-0 rounded-tl-md rounded-br-md p-1 px-2">
           <p className="text-xs text-white">{entry.pageCount} pages</p>
         </div>
         <HamburgerMenu
-          className="absolute right-2 top-2 shrink-0"
+          className="absolute top-2 right-2 shrink-0"
           customTailwindColor="bg-bg-100 hover:bg-bg-200 shadow-custom dark:bg-bg-500/50 dark:hover:bg-bg-500/70"
         >
           <MenuItem
@@ -114,7 +114,7 @@ function EntryItem({
             <h3 className="truncate text-lg font-medium">{entry.name}</h3>
             {entry.type && (
               <Icon
-                className="size-5 shrink-0 text-bg-500"
+                className="text-bg-500 size-5 shrink-0"
                 icon={
                   {
                     fingerstyle: 'mingcute:guitar-line',
@@ -130,7 +130,7 @@ function EntryItem({
               />
             )}
           </div>
-          <p className="truncate text-sm text-bg-500">
+          <p className="text-bg-500 truncate text-sm">
             {entry.author || 'Unknown'}
           </p>
         </div>

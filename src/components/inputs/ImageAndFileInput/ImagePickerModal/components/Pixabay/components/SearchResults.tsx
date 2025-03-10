@@ -46,10 +46,10 @@ function SearchResults({
           renderPhoto={({ photo, imageProps: { src, alt, style } }) => (
             <button
               className={clsx(
-                'relative isolate block overflow-hidden rounded-md bg-bg-200 outline outline-2 transition-all dark:bg-bg-800/50',
+                'bg-bg-200 dark:bg-bg-800/50 relative isolate block overflow-hidden rounded-md outline outline-2 transition-all',
                 photo.fullResURL === file
                   ? 'outline-custom-500'
-                  : 'outline-transparent hover:outline-bg-500'
+                  : 'hover:outline-bg-500 outline-transparent'
               )}
               style={style}
               onClick={() => {

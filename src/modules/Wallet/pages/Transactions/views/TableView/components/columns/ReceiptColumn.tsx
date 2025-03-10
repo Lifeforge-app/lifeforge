@@ -17,7 +17,7 @@ function ReceiptColumn({
           <img
             alt=""
             className={
-              'mx-auto size-12 rounded-lg bg-bg-200 object-cover dark:bg-bg-800'
+              'bg-bg-200 dark:bg-bg-800 mx-auto size-12 rounded-lg object-cover'
             }
             src={`${
               import.meta.env.VITE_API_HOST

@@ -26,9 +26,9 @@ function JournalView({
   const [viewRaw, setViewRaw] = useState(false)
   return (
     <>
-      <div className="flex-between mb-6 mt-4 flex items-end!">
+      <div className="flex-between mt-4 mb-6 flex items-end!">
         <div className="flex flex-col gap-2">
-          <span className="text-lg font-medium text-bg-500">
+          <span className="text-bg-500 text-lg font-medium">
             {moment(date).format('MMMM Do, YYYY')} - {mood.emoji} {mood.text}
           </span>
           <h2 className="text-4xl font-semibold">
@@ -42,7 +42,7 @@ function JournalView({
         </span>
         {summarizedText.slice(1)}
       </p>
-      <hr className="mb-6 border-bg-500" />
+      <hr className="border-bg-500 mb-6" />
       <Markdown className="prose max-w-full!">{cleanedUpText}</Markdown>
 
       <Button
@@ -56,15 +56,15 @@ function JournalView({
       >
         {viewRaw ? 'Hide' : 'Show'} Raw
       </Button>
-      {viewRaw && <p className="mt-6 text-bg-500">{rawText}</p>}
+      {viewRaw && <p className="text-bg-500 mt-6">{rawText}</p>}
       {photos.length > 0 && (
         <>
-          <hr className="my-6 border-bg-500" />
+          <hr className="border-bg-500 my-6" />
           <h3 className="flex items-center gap-2 text-2xl font-semibold">
             <Icon className="size-6" icon="tabler:photo" />
             <span>
               Photos{' '}
-              <span className="text-sm text-bg-500">({photos.length})</span>
+              <span className="text-bg-500 text-sm">({photos.length})</span>
             </span>
           </h3>
           <div className="mt-4 flex flex-wrap gap-2">

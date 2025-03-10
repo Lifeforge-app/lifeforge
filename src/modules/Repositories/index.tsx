@@ -39,7 +39,7 @@ function Repositories(): React.ReactElement {
         <Sidebar setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
         <ContentWrapperWithSidebar>
           <div className="flex-between flex">
-            <h1 className="text-3xl font-semibold  md:text-4xl">
+            <h1 className="text-3xl font-semibold md:text-4xl">
               All Repositories{' '}
               {/* <span className="text-base text-bg-500">(10)</span> */}
             </h1>
@@ -48,7 +48,7 @@ function Repositories(): React.ReactElement {
                 new repo
               </Button>
               <button
-                className="-ml-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
+                className="text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 -ml-4 rounded-lg p-4 transition-all lg:hidden"
                 onClick={() => {
                   setSidebarOpen(true)
                 }}
@@ -69,20 +69,20 @@ function Repositories(): React.ReactElement {
                 {repos.map((repo, index) => (
                   <li
                     key={index}
-                    className="space-y-4 rounded-lg bg-bg-50 p-4 shadow-custom transition-all hover:shadow-[4px_4px_10px_0px_rgba(0,0,0,0.1)] dark:bg-bg-900"
+                    className="bg-bg-50 shadow-custom dark:bg-bg-900 space-y-4 rounded-lg p-4 transition-all hover:shadow-[4px_4px_10px_0px_rgba(0,0,0,0.1)]"
                   >
                     <div className="flex-between flex gap-4">
                       <div>
-                        <h2 className="text-lg font-semibold text-bg-800 dark:text-bg-50!">
+                        <h2 className="text-bg-800 dark:text-bg-50! text-lg font-semibold">
                           {repo.name}
                         </h2>
-                        <p className="mt-1 text-sm text-bg-500">
+                        <p className="text-bg-500 mt-1 text-sm">
                           {repo.description}
                         </p>
                       </div>
                       {repo.language !== '' && (
                         <span
-                          className="relative isolate mb-1 block w-min whitespace-nowrap rounded-full px-3 py-1 text-xs shadow-xs"
+                          className="relative isolate mb-1 block w-min rounded-full px-3 py-1 text-xs whitespace-nowrap shadow-xs"
                           style={{
                             backgroundColor: `${
                               LANGUAGE_COLORS[
@@ -98,7 +98,7 @@ function Repositories(): React.ReactElement {
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-6 text-sm text-bg-500">
+                    <div className="text-bg-500 flex items-center gap-6 text-sm">
                       <div className="flex items-center gap-2">
                         <Icon className="size-5" icon="tabler:clock" />
                         {moment(repo.updated_at).format('MMM Do, YYYY')}

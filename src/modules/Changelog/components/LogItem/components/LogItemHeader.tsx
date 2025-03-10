@@ -10,7 +10,7 @@ function LogItemHeader({
 }): React.ReactElement {
   return (
     <h3 className="mb-2 flex flex-col-reverse items-start justify-end gap-2 text-2xl font-semibold sm:flex-row sm:items-center sm:justify-start">
-      <span className="mb-0.5 text-sm text-bg-500 sm:mb-0 sm:w-24 sm:text-right">
+      <span className="text-bg-500 mb-0.5 text-sm sm:mb-0 sm:w-24 sm:text-right">
         <span className="inline sm:hidden">
           ({moment(entry.date_range[0]).format('MMM D, YYYY')} -{' '}
         </span>
@@ -19,10 +19,10 @@ function LogItemHeader({
       </span>
       <div
         className={clsx(
-          'mx-4 hidden size-4 rounded-full bg-bg-100 dark:bg-bg-950 sm:block outline outline-4 outline-bg-100 dark:outline-bg-950',
+          'bg-bg-100 dark:bg-bg-950 outline-bg-100 dark:outline-bg-950 mx-4 hidden size-4 rounded-full outline outline-4 sm:block',
           moment(entry.date_range[1]).isAfter(moment())
-            ? 'border-4 border-custom-500'
-            : 'border-2 border-bg-600'
+            ? 'border-custom-500 border-4'
+            : 'border-bg-600 border-2'
         )}
       />
       Ver. {entry.version}

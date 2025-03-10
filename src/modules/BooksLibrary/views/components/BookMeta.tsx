@@ -19,7 +19,7 @@ function BookMeta({
   return (
     <div
       className={clsx(
-        'mt-4 flex w-full min-w-0 flex-wrap gap-2 text-sm text-bg-500',
+        'text-bg-500 mt-4 flex w-full min-w-0 flex-wrap gap-2 text-sm',
         isGridView
           ? 'flex-col sm:flex-row sm:items-center'
           : 'flex-row items-center'
@@ -62,7 +62,7 @@ function BookMeta({
         })()}
       {item.year_published !== 0 && (
         <>
-          <p className="flex shrink-0 items-center whitespace-nowrap text-bg-500">
+          <p className="text-bg-500 flex shrink-0 items-center whitespace-nowrap">
             <Icon className="mr-1 size-4" icon="tabler:clock" />
             {item.year_published}
           </p>
@@ -76,12 +76,12 @@ function BookMeta({
         <>
           <p
             className={clsx(
-              'flex min-w-0 max-w-48 shrink-0 items-center whitespace-nowrap text-bg-500',
+              'text-bg-500 flex max-w-48 min-w-0 shrink-0 items-center whitespace-nowrap',
               isGridView ? 'w-full sm:w-auto' : 'w-auto'
             )}
           >
             <Icon className="mr-1 size-4 shrink-0" icon="tabler:user" />
-            <span className="w-full min-w-0 max-w-44 truncate">
+            <span className="w-full max-w-44 min-w-0 truncate">
               {item.publisher}
             </span>
           </p>
@@ -91,7 +91,7 @@ function BookMeta({
           />
         </>
       )}
-      <p className="flex shrink-0 items-center whitespace-nowrap text-bg-500">
+      <p className="text-bg-500 flex shrink-0 items-center whitespace-nowrap">
         <Icon className="mr-1 size-4" icon="tabler:dimensions" />
         {cleanFileSize(item.size)}
       </p>
@@ -99,7 +99,7 @@ function BookMeta({
         className={clsx('size-1', isGridView && 'hidden sm:block')}
         icon="tabler:circle-filled"
       />
-      <p className="flex shrink-0 items-center whitespace-nowrap text-bg-500">
+      <p className="text-bg-500 flex shrink-0 items-center whitespace-nowrap">
         <Icon className="mr-1 size-4" icon="tabler:file-text" />
         {item.extension}
       </p>

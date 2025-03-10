@@ -60,7 +60,7 @@ function AppRouter(): React.ReactElement {
             element={
               Comp !== undefined ? (
                 <Suspense
-                key={`${name}-${index}`}
+                  key={`${name}-${index}`}
                   fallback={
                     <LoadingScreen
                       customMessage={t('common.misc:loadingModule')}

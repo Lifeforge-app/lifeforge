@@ -47,7 +47,7 @@ function EntryItem<T extends boolean = false>({
   return (
     <li
       className={clsx(
-        'relative flex rounded-md p-4 group',
+        'group relative flex rounded-md p-4',
         isCartItem ? 'flex-row items-center gap-6' : 'flex-col',
         isCartItem ? componentBgLighter : componentBg
       )}
@@ -80,14 +80,14 @@ function EntryItem<T extends boolean = false>({
               />
               {entry.subcategory}
             </p>
-            <p className="text-xs font-semibold text-custom-500">
+            <p className="text-custom-500 text-xs font-semibold">
               {entry.brand === '' ? 'Unbranded' : entry.brand}
             </p>
             <p className="text-lg font-medium">{entry.name}</p>
           </div>
           {!isCartItem && (
             <div className="shrink-0">
-              <p className="mb-2 whitespace-nowrap text-right text-sm text-zinc-500">
+              <p className="mb-2 text-right text-sm whitespace-nowrap text-zinc-500">
                 Size: {entry.size}
               </p>
               <div className="mb-1.5 grid grid-cols-5 gap-1">
@@ -99,7 +99,7 @@ function EntryItem<T extends boolean = false>({
                 {entry.colors.map(color => (
                   <span
                     key={color}
-                    className="size-3 justify-self-end rounded-full border border-bg-500"
+                    className="border-bg-500 size-3 justify-self-end rounded-full border"
                     style={{
                       backgroundColor: VW_COLORS.find(c => c.name === color)
                         ?.hex
@@ -142,7 +142,7 @@ function EntryItem<T extends boolean = false>({
           >
             Add to Cart
           </Button>
-          <HamburgerMenu className="absolute right-4 top-4 hidden group-hover:block data-open:block">
+          <HamburgerMenu className="absolute top-4 right-4 hidden group-hover:block data-open:block">
             <MenuItem icon="tabler:pencil" text="Edit" onClick={onUpdate!} />
             <MenuItem
               isRed

@@ -77,7 +77,7 @@ function PhotosAlbumList(): React.ReactElement {
         <ModuleHeader
           actionButton={
             <button
-              className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
+              className="text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 rounded-lg p-4 transition-all lg:hidden"
               onClick={() => {
                 setSidebarOpen(true)
               }}

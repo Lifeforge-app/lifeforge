@@ -42,9 +42,9 @@ function MobileSlidingScrollbar(): React.ReactElement {
     >
       <div
         ref={mobileDateDisplayRef}
-        className="pointer-events-none absolute right-14 mt-1 hidden whitespace-nowrap rounded-t-sm border-b-2 border-custom-500 bg-bg-200 p-2 text-sm shadow-md group-hover:block dark:bg-bg-800 sm:right-3"
+        className="border-custom-500 bg-bg-200 dark:bg-bg-800 pointer-events-none absolute right-14 mt-1 hidden rounded-t-sm border-b-2 p-2 text-sm whitespace-nowrap shadow-md group-hover:block sm:right-3"
       ></div>
-      <div className="rounded-l-full bg-bg-200 p-4 shadow-xs dark:bg-bg-900">
+      <div className="bg-bg-200 dark:bg-bg-900 rounded-l-full p-4 shadow-xs">
         <Icon className="text-bg-500" icon="tabler:caret-up-down-filled" />
       </div>
     </div>

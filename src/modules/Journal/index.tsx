@@ -141,7 +141,7 @@ function Journal(): React.ReactElement {
         <ModuleHeader icon="tabler:book" title="Journal" />
         {masterPassword !== '' && (
           <Button
-            className="hidden lg:flex "
+            className="hidden lg:flex"
             icon="tabler:plus"
             onClick={() => {
               setExistedData(null)

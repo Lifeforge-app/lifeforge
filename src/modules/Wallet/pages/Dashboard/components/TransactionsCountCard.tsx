@@ -84,7 +84,7 @@ function TransactionsCountCard(): React.ReactElement {
       className="col-span-1 row-span-1 min-h-96 xl:min-h-0"
       componentBesideTitle={
         <Link
-          className="flex items-center gap-2 rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50"
+          className="text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50 flex items-center gap-2 rounded-lg p-2 transition-all"
           to="./transactions"
         >
           <Icon className="text-xl" icon="tabler:chevron-right" />
@@ -115,13 +115,13 @@ function TransactionsCountCard(): React.ReactElement {
                 >
                   <div className="flex w-full items-center gap-4">
                     <div
-                      className={clsx('rounded-md size-4 shrink-0', color)}
+                      className={clsx('size-4 shrink-0 rounded-md', color)}
                     ></div>
                     <div className="flex flex-col">
-                      <div className="font-semibold ">
+                      <div className="font-semibold">
                         {t(`transactionTypes.${type}`)}
                       </div>
-                      <div className="text-sm text-bg-500">
+                      <div className="text-bg-500 text-sm">
                         {amounts[type].count} {t('transactionCount')}
                       </div>
                     </div>
@@ -129,7 +129,7 @@ function TransactionsCountCard(): React.ReactElement {
                   <div className="flex w-full flex-row items-center justify-between sm:w-auto sm:flex-col sm:items-end">
                     <div
                       className={clsx(
-                        'flex gap-2 whitespace-nowrap text-right font-medium',
+                        'flex gap-2 text-right font-medium whitespace-nowrap',
                         isAmountHidden ? 'items-center' : 'items-end'
                       )}
                     >
@@ -155,7 +155,7 @@ function TransactionsCountCard(): React.ReactElement {
                         numberToMoney(amounts[type].amount)
                       )}
                     </div>
-                    <div className="text-right text-sm text-bg-500">
+                    <div className="text-bg-500 text-right text-sm">
                       {(
                         (amounts[type].amount /
                           transactions

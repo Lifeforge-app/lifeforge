@@ -63,12 +63,12 @@ function EntryItem({
       title={
         <>
           {entry.name}
-          <code className="text-sm text-bg-500">({entry.keyId})</code>
+          <code className="text-bg-500 text-sm">({entry.keyId})</code>
         </>
       }
     >
       <div className="w-full">
-        <code className="flex items-center md:justify-end gap-1 text-lg">
+        <code className="flex items-center gap-1 text-lg md:justify-end">
           {Array(12)
             .fill(0)
             .map((_, i) => (
@@ -76,11 +76,11 @@ function EntryItem({
             ))}
           <span className="ml-0.5">{entry.key}</span>
         </code>
-        <span className="text-sm text-bg-500">
+        <span className="text-bg-500 text-sm">
           Last updated: {moment(entry.updated).fromNow()}
         </span>
       </div>
-      <div className="flex gap-2 ml-2">
+      <div className="ml-2 flex gap-2">
         <Button
           className="p-2!"
           icon="tabler:copy"

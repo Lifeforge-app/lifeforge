@@ -71,7 +71,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
       className="col-span-1 row-span-3"
       componentBesideTitle={
         <Link
-          className="flex items-center gap-2 rounded-lg p-2 font-medium text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50"
+          className="text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/30 dark:hover:text-bg-50 flex items-center gap-2 rounded-lg p-2 font-medium transition-all"
           to="/wallet/transactions?type=expenses"
         >
           <Icon className="text-xl" icon="tabler:chevron-right" />
@@ -87,14 +87,14 @@ function ExpensesBreakdownCard(): React.ReactElement {
             {categories => (
               <>
                 <div className="relative mx-auto flex aspect-square w-4/5 min-w-0 flex-col gap-4">
-                  <div className="absolute left-1/2 top-1/2 mt-2 flex size-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center">
+                  <div className="absolute top-1/2 left-1/2 mt-2 flex size-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center">
                     <div
                       className={clsx(
                         'flex text-3xl font-medium sm:text-4xl',
                         isAmountHidden ? 'items-center' : 'items-end'
                       )}
                     >
-                      <span className="mr-1 text-xl text-bg-500">RM</span>
+                      <span className="text-bg-500 mr-1 text-xl">RM</span>
                       {typeof incomeExpenses !== 'string' &&
                         (isAmountHidden ? (
                           <span className="flex items-center">
@@ -112,7 +112,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                           numberToMoney(incomeExpenses.monthlyExpenses)
                         ))}
                     </div>
-                    <div className="mt-2 w-1/2 text-center text-sm text-bg-500 sm:text-base">
+                    <div className="text-bg-500 mt-2 w-1/2 text-center text-sm sm:text-base">
                       {t('widgets.expensesBreakdown.thisMonthsSpending')}
                     </div>
                   </div>
@@ -157,9 +157,9 @@ function ExpensesBreakdownCard(): React.ReactElement {
                       </div>
                     ))}
                 </div>
-                <div className="h-full  min-h-96 xl:min-h-0">
+                <div className="h-full min-h-96 xl:min-h-0">
                   <Scrollbar className="mb-4">
-                    <ul className="flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
+                    <ul className="divide-bg-200 dark:divide-bg-800 flex flex-col divide-y">
                       {categories
                         .filter(
                           category =>
@@ -169,7 +169,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                         .map(category => (
                           <Link
                             key={category.id}
-                            className="flex-between flex gap-4 rounded-md p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800/50"
+                            className="flex-between hover:bg-bg-100 dark:hover:bg-bg-800/50 flex gap-4 rounded-md p-4 transition-all"
                             to={`/wallet/transactions?type=expenses&category=${category.id}`}
                           >
                             <div className="flex items-center gap-4">
@@ -183,10 +183,10 @@ function ExpensesBreakdownCard(): React.ReactElement {
                                 <Icon className="size-6" icon={category.icon} />
                               </div>
                               <div className="flex flex-col">
-                                <div className="font-semibold ">
+                                <div className="font-semibold">
                                   {category.name}
                                 </div>
-                                <div className="text-sm text-bg-500">
+                                <div className="text-bg-500 text-sm">
                                   {
                                     thisMonthsTransactions.filter(
                                       transaction =>
@@ -227,7 +227,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                                     .toFixed(2)
                                 )}
                               </div>
-                              <div className="text-right text-sm text-bg-500">
+                              <div className="text-bg-500 text-right text-sm">
                                 {(
                                   (thisMonthsTransactions
                                     .filter(

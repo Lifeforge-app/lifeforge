@@ -59,7 +59,7 @@ function LanguageSelector(): React.ReactElement {
         <div className="relative mt-1 w-full md:w-64">
           <ListboxButton
             className={clsx(
-              'flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left shadow-custom outline-hidden transition-all focus:outline-hidden',
+              'shadow-custom flex w-full items-center gap-2 rounded-lg py-4 pr-10 pl-4 text-left outline-hidden transition-all focus:outline-hidden',
               componentBgWithHover
             )}
           >
@@ -71,18 +71,18 @@ function LanguageSelector(): React.ReactElement {
               {LANGUAGES.find(({ code }) => code === language)?.name}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <Icon className="size-5 text-bg-500" icon="tabler:chevron-down" />
+              <Icon className="text-bg-500 size-5" icon="tabler:chevron-down" />
             </span>
           </ListboxButton>
           <ListboxOptions
             transition
             anchor="bottom end"
-            className="max-h-56 w-80 divide-y divide-bg-200 overflow-auto rounded-md bg-bg-100 py-1 text-base text-bg-800 shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50"
+            className="divide-bg-200 bg-bg-100 text-bg-800 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50 max-h-56 w-80 divide-y overflow-auto rounded-md py-1 text-base shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
           >
             {LANGUAGES.map(({ name, code, icon }) => (
               <ListboxOption
                 key={code}
-                className="flex-between relative flex cursor-pointer select-none bg-transparent p-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800"
+                className="flex-between hover:bg-bg-100 dark:hover:bg-bg-800 relative flex cursor-pointer bg-transparent p-4 transition-all select-none"
                 value={code}
               >
                 {({ selected }) => (
@@ -95,7 +95,7 @@ function LanguageSelector(): React.ReactElement {
                     </div>
                     {selected && (
                       <Icon
-                        className="block text-lg text-custom-500"
+                        className="text-custom-500 block text-lg"
                         icon="tabler:check"
                       />
                     )}

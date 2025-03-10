@@ -138,7 +138,7 @@ function DashboardGrid({
           })()}
           {canLayoutChange && (
             <Icon
-              className="absolute bottom-0 right-0 text-2xl"
+              className="absolute right-0 bottom-0 text-2xl"
               icon="clarity:drag-handle-corner-line"
             />
           )}

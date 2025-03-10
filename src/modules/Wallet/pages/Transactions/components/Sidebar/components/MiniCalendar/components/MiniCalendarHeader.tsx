@@ -18,7 +18,7 @@ function MiniCalendarHeader({
 
   return (
     <div className="flex-between mb-4 flex gap-2">
-      <div className="whitespace-nowrap text-lg font-semibold ">
+      <div className="text-lg font-semibold whitespace-nowrap">
         {moment()
           .year(currentYear)
           .month(currentMonth)
@@ -27,7 +27,7 @@ function MiniCalendarHeader({
       </div>
       <div className="-mr-4 flex gap-1">
         <button
-          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-50 dark:hover:bg-bg-700/50"
+          className="text-bg-500 hover:bg-bg-100 hover:text-bg-50 dark:hover:bg-bg-700/50 rounded-lg p-2 transition-all"
           onClick={() => {
             setCurrentMonth(currentMonth - 1)
             if (currentMonth === 0) {
@@ -39,7 +39,7 @@ function MiniCalendarHeader({
           <Icon className="size-6" icon="uil:angle-left" />
         </button>
         <button
-          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-50 dark:hover:bg-bg-700/50"
+          className="text-bg-500 hover:bg-bg-100 hover:text-bg-50 dark:hover:bg-bg-700/50 rounded-lg p-2 transition-all"
           onClick={() => {
             setCurrentMonth(currentMonth + 1)
             if (currentMonth === 11) {

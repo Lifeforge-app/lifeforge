@@ -11,7 +11,7 @@ function TOC({ data }: { data: BookDetailProps }): React.ReactElement {
         ([key, value]) =>
           Boolean(data[key]) && (
             <div key={key}>
-              <h2 className="mb-3 mt-6 text-2xl font-semibold">{value}</h2>
+              <h2 className="mt-6 mb-3 text-2xl font-semibold">{value}</h2>
               <div
                 className="font-light"
                 dangerouslySetInnerHTML={{

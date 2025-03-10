@@ -25,7 +25,7 @@ function OTPInputBox({
         renderInput={props => (
           <input
             {...props}
-            className="mx-2 size-12! rounded-md border-[1.5px] border-bg-200 bg-bg-50 text-lg text-bg-800 shadow-custom dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200 md:size-16! md:text-2xl"
+            className="border-bg-200 bg-bg-50 text-bg-800 shadow-custom dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200 mx-2 size-12! rounded-md border-[1.5px] text-lg md:size-16! md:text-2xl"
             inputMode="numeric"
             onKeyDown={e => {
               if (e.key === 'Enter') {
@@ -186,7 +186,7 @@ function OTPScreen({
       <h2 className="text-center text-4xl font-semibold">
         {t('otp.messages.required.title')}
       </h2>
-      <p className="mb-8 text-center text-lg text-bg-500">
+      <p className="text-bg-500 mb-8 text-center text-lg">
         {t('otp.messages.required.desc')}
       </p>
       {otpSent ? (

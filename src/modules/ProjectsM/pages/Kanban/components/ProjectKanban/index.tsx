@@ -49,13 +49,13 @@ function ProjectKanban(): React.ReactElement {
           <Scrollbar>
             <div
               ref={containerRef}
-              className="mb-8 mt-6 flex h-full min-h-0 min-w-0 flex-1 gap-4"
+              className="mt-6 mb-8 flex h-full min-h-0 min-w-0 flex-1 gap-4"
             >
               {columns.map((column, id) => (
                 <div
                   key={id}
                   className={clsx(
-                    'flex h-min max-h-full w-96 shrink-0 flex-col rounded-lg border-t-4 p-6 pb-0 pr-4',
+                    'flex h-min max-h-full w-96 shrink-0 flex-col rounded-lg border-t-4 p-6 pr-4 pb-0',
                     componentBg
                   )}
                   style={{
@@ -65,7 +65,7 @@ function ProjectKanban(): React.ReactElement {
                   <div className="flex-between flex">
                     <h3 className="flex items-center gap-4">
                       <Icon className="text-2xl" icon={column.icon} />
-                      <span className="text-xl font-semibold ">
+                      <span className="text-xl font-semibold">
                         {column.name}
                       </span>
                     </h3>
@@ -98,7 +98,7 @@ function ProjectKanban(): React.ReactElement {
                       {column.entries?.map(entry => (
                         <li
                           key={entry.id}
-                          className="flex items-center gap-4 rounded-lg bg-bg-100 p-4 shadow-[2px_2px_3px_rgba(0,0,0,0.05)] hover:bg-bg-700/50 dark:bg-bg-700/30"
+                          className="bg-bg-100 hover:bg-bg-700/50 dark:bg-bg-700/30 flex items-center gap-4 rounded-lg p-4 shadow-[2px_2px_3px_rgba(0,0,0,0.05)]"
                         >
                           <span className="">{entry.title}</span>
                         </li>
@@ -109,7 +109,7 @@ function ProjectKanban(): React.ReactElement {
                 </div>
               ))}
               <button
-                className="flex h-min max-h-full w-72 shrink-0 flex-col items-center gap-2 rounded-lg border-2 border-dashed border-bg-400 p-8 text-bg-500 transition-all  hover:border-bg-800 hover:bg-bg-200 dark:border-bg-500 dark:hover:border-bg-100 dark:hover:bg-bg-800/20 dark:hover:text-bg-50"
+                className="border-bg-400 text-bg-500 hover:border-bg-800 hover:bg-bg-200 dark:border-bg-500 dark:hover:border-bg-100 dark:hover:bg-bg-800/20 dark:hover:text-bg-50 flex h-min max-h-full w-72 shrink-0 flex-col items-center gap-2 rounded-lg border-2 border-dashed p-8 transition-all"
                 onClick={() => {
                   setModifyColumnModalOpenType('create')
                   setExistedData(null)

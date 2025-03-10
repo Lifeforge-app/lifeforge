@@ -140,7 +140,7 @@ function ImagePreviewModal({
                 switch (name) {
                   case 'loading':
                     return (
-                      <div className="animate-pulse text-lg text-bg-50">
+                      <div className="text-bg-50 animate-pulse text-lg">
                         Loading...
                       </div>
                     )
@@ -152,7 +152,7 @@ function ImagePreviewModal({
                       </div>
                     )
                   default:
-                    return <div className="text-lg text-bg-50">{name}</div>
+                    return <div className="text-bg-50 text-lg">{name}</div>
                 }
               })()}
               <div className="flex items-center gap-4">

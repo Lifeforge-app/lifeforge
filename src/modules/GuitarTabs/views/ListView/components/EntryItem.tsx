@@ -25,7 +25,7 @@ function EntryItem({
     <li
       key={entry.id}
       className={clsx(
-        'relative rounded-lg shadow-custom transition-all',
+        'shadow-custom relative rounded-lg transition-all',
         componentBgWithHover
       )}
     >
@@ -39,7 +39,7 @@ function EntryItem({
         target="_blank"
       >
         <div className="flex w-full min-w-0 items-center gap-4">
-          <div className="flex-center w-12 rounded-lg bg-bg-200 dark:bg-bg-800">
+          <div className="flex-center bg-bg-200 dark:bg-bg-800 w-12 rounded-lg">
             <img
               alt=""
               className="h-full"
@@ -53,7 +53,7 @@ function EntryItem({
               <h3 className="truncate text-lg font-semibold">{entry.name}</h3>
               {entry.type !== '' && (
                 <Icon
-                  className="size-5 shrink-0 text-bg-500"
+                  className="text-bg-500 size-5 shrink-0"
                   icon={
                     {
                       fingerstyle: 'mingcute:guitar-line',
@@ -63,7 +63,7 @@ function EntryItem({
                 />
               )}
             </div>
-            <div className="flex w-full min-w-0 items-center gap-2 whitespace-nowrap text-sm font-medium text-bg-500">
+            <div className="text-bg-500 flex w-full min-w-0 items-center gap-2 text-sm font-medium whitespace-nowrap">
               <p className="min-w-0 truncate">
                 {entry.author !== '' ? entry.author : 'Unknown'}
               </p>

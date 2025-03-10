@@ -52,7 +52,7 @@ function IconPickerModal({
         <div className="flex-between mb-8 flex w-full">
           <GoBackButton onClick={() => setCurrentIconSet(null)} />
           <button
-            className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50"
+            className="text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50 rounded-md p-2 transition-all"
             onClick={() => {
               setCurrentIconSet(null)
               setSelectedIcon('')

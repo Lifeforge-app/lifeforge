@@ -107,7 +107,7 @@ function Passwords(): React.ReactElement {
           otpSuccess &&
           masterPassword !== '' && (
             <Button
-              className="hidden lg:flex "
+              className="hidden lg:flex"
               icon="tabler:plus"
               tProps={{ item: t('items.password') }}
               onClick={() => {

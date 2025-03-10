@@ -22,7 +22,7 @@ function Ceiling({ data }: { data: IAirportMETARData }): React.ReactElement {
   }, [data])
   return (
     <WidgetWrapper>
-      <h1 className="mb-2 flex items-center gap-2 text-xl font-semibold text-bg-500">
+      <h1 className="text-bg-500 mb-2 flex items-center gap-2 text-xl font-semibold">
         <Icon className="text-2xl" icon="tabler:arrow-bar-to-up" />
         <span className="ml-2">Celling</span>
       </h1>
@@ -39,7 +39,7 @@ function Ceiling({ data }: { data: IAirportMETARData }): React.ReactElement {
           <p className="text-center">({data.ceiling.meters_agl} m AGL)</p>
         </div>
       ) : (
-        <div className="flex flex-1 flex-col items-center justify-center gap-2 rounded-md bg-bg-500/20 p-4 text-bg-500">
+        <div className="bg-bg-500/20 text-bg-500 flex flex-1 flex-col items-center justify-center gap-2 rounded-md p-4">
           <p className="text-center text-3xl font-medium">No ceiling</p>
         </div>
       )}

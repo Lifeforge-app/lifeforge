@@ -25,7 +25,7 @@ function EntryItem({ entry }: { entry: IProjectsMEntry }): React.ReactElement {
   return (
     <li
       className={clsx(
-        'm-4 mt-0 flex items-center gap-4 rounded-lg shadow-custom transition-all',
+        'shadow-custom m-4 mt-0 flex items-center gap-4 rounded-lg transition-all',
         componentBgWithHover
       )}
     >
@@ -66,7 +66,7 @@ function EntryItem({ entry }: { entry: IProjectsMEntry }): React.ReactElement {
                 />
               )}
             </div>
-            <div className="text-sm text-bg-500">
+            <div className="text-bg-500 text-sm">
               {typeof categories !== 'string' &&
                 categories.find(l => l.id === entry.category)?.name}
             </div>

@@ -51,7 +51,7 @@ function AvatarColumn(): React.ReactElement {
         icon="tabler:camera"
         title={t('settings.title.profilePicture')}
       >
-        <div className="mr-4 flex size-12 items-center justify-center overflow-hidden rounded-full bg-bg-100 dark:bg-bg-800">
+        <div className="bg-bg-100 dark:bg-bg-800 mr-4 flex size-12 items-center justify-center overflow-hidden rounded-full">
           {userData.avatar !== '' ? (
             <img
               alt=""
@@ -59,7 +59,7 @@ function AvatarColumn(): React.ReactElement {
               src={getAvatarURL()}
             />
           ) : (
-            <Icon className="text-2xl text-bg-500" icon="tabler:user" />
+            <Icon className="text-bg-500 text-2xl" icon="tabler:user" />
           )}
         </div>
         <div className="flex items-center">

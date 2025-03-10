@@ -15,7 +15,7 @@ export default function DateWidget(): React.ReactElement {
     <div
       ref={ref}
       className={clsx(
-        'flex size-full gap-4 rounded-lg bg-custom-500 p-4 shadow-custom',
+        'bg-custom-500 shadow-custom flex size-full gap-4 rounded-lg p-4',
         isLightColor(theme) ? 'text-bg-800' : 'text-bg-50',
         (ref.current?.offsetHeight ?? 0) < 240
           ? 'flex-row items-end'
@@ -24,7 +24,7 @@ export default function DateWidget(): React.ReactElement {
     >
       <span
         className={clsx(
-          'flex aspect-square items-center justify-center rounded-md bg-bg-100 font-semibold text-custom-500 shadow-inner dark:bg-bg-900',
+          'bg-bg-100 text-custom-500 dark:bg-bg-900 flex aspect-square items-center justify-center rounded-md font-semibold shadow-inner',
           (ref.current?.offsetHeight ?? 0) < 160
             ? 'h-full text-4xl'
             : 'p-8 text-6xl'

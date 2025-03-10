@@ -66,7 +66,7 @@ function JournalList({
 
   return (
     <>
-      <div className="mb-8 mt-6 flex min-h-0 w-full flex-1 flex-col">
+      <div className="mt-6 mb-8 flex min-h-0 w-full flex-1 flex-col">
         <SearchInput
           namespace="modules.journal"
           searchQuery={searchQuery}

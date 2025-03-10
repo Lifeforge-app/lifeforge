@@ -116,7 +116,7 @@ function ModifyCategoriesModal({
             openType === 'update' ? 'mb-4' : 'mb-2'
           )}
         >
-          <span className="flex items-center gap-2 font-medium text-bg-500">
+          <span className="text-bg-500 flex items-center gap-2 font-medium">
             <Icon className="size-6" icon="tabler:apps" />
             {t('inputs.categoryType')}
           </span>

@@ -60,7 +60,7 @@ function Music(): React.ReactElement {
           setSearchQuery={setSearchQuery}
           stuffToSearch="music"
         />
-        <div className="relative flex size-full min-w-0 flex-col divide-y-2 divide-bg-200/50 dark:divide-bg-900">
+        <div className="divide-bg-200/50 dark:divide-bg-900 relative flex size-full min-w-0 flex-col divide-y-2">
           <Scrollbar>
             <APIFallbackComponent data={musics}>
               {musics =>

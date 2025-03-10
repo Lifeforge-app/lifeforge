@@ -129,7 +129,7 @@ function LockedFolderGallery(): React.ReactElement {
             <div className="flex-between flex">
               <h1 className="flex items-center gap-4 text-2xl font-semibold">
                 <>
-                  <div className="flex-center size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
+                  <div className="flex-center bg-bg-200 dark:bg-bg-700/50 size-14 shrink-0 rounded-md shadow-md">
                     <Icon className="size-7" icon="tabler:lock" />
                   </div>
                   <span className="space-y-1">
@@ -138,7 +138,7 @@ function LockedFolderGallery(): React.ReactElement {
                       switch (photos) {
                         case 'loading':
                           return (
-                            <span className="text-sm text-bg-500">
+                            <span className="text-bg-500 text-sm">
                               <Icon
                                 className="size-5"
                                 icon="svg-spinners:180-ring"
@@ -147,11 +147,11 @@ function LockedFolderGallery(): React.ReactElement {
                           )
                         case 'error':
                           return (
-                            <span className="text-sm text-bg-500">Error</span>
+                            <span className="text-bg-500 text-sm">Error</span>
                           )
                         default:
                           return (
-                            <span className="flex items-center gap-2 text-sm font-medium text-bg-500">
+                            <span className="text-bg-500 flex items-center gap-2 text-sm font-medium">
                               {photos.length.toLocaleString()} photos
                             </span>
                           )

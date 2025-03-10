@@ -22,19 +22,19 @@ function ListView({
         {Object.entries(processes).map(([key, value]) => (
           <li
             key={key}
-            className="relative flex items-center gap-4 rounded-lg bg-bg-50 p-4 shadow-custom dark:bg-bg-900"
+            className="bg-bg-50 shadow-custom dark:bg-bg-900 relative flex items-center gap-4 rounded-lg p-4"
           >
-            <div className="flex-center absolute left-0 top-0 size-full rounded-lg bg-bg-50/50 text-center font-medium dark:bg-bg-900/70">
+            <div className="flex-center bg-bg-50/50 dark:bg-bg-900/70 absolute top-0 left-0 size-full rounded-lg text-center font-medium">
               Downloading... {value.percentage}
               <br />
               {value.downloaded}/{value.total}, {value.speed}/s, ETA:{' '}
               {value.ETA}s
             </div>
-            <div className="flex-center aspect-9/12 w-20 rounded-lg bg-bg-200 p-2 dark:bg-bg-800">
-              <Icon className="size-8 text-bg-500" icon="tabler:clock" />
+            <div className="flex-center bg-bg-200 dark:bg-bg-800 aspect-9/12 w-20 rounded-lg p-2">
+              <Icon className="text-bg-500 size-8" icon="tabler:clock" />
             </div>
             <div className="flex min-w-0 flex-1 flex-col">
-              <div className="flex items-center gap-1 text-sm font-medium text-bg-500">
+              <div className="text-bg-500 flex items-center gap-1 text-sm font-medium">
                 {typeof categories !== 'string' &&
                   (() => {
                     const category = categories.find(
@@ -44,7 +44,7 @@ function ListView({
                     return category !== undefined ? (
                       <>
                         <Icon
-                          className="size-4 text-bg-500"
+                          className="text-bg-500 size-4"
                           icon={category.icon}
                         />{' '}
                         {category.name}
@@ -57,12 +57,12 @@ function ListView({
               <div className="text-lg font-semibold">
                 {value.metadata.title}{' '}
                 {value.metadata.edition !== '' && (
-                  <span className="text-sm text-bg-500">
+                  <span className="text-bg-500 text-sm">
                     ({value.metadata.edition} ed)
                   </span>
                 )}
               </div>
-              <div className="text-sm font-medium text-custom-500">
+              <div className="text-custom-500 text-sm font-medium">
                 {value.metadata.authors}
               </div>
               <BookMeta item={value.metadata} />

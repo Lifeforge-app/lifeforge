@@ -20,7 +20,7 @@ function QRCodeScanner({
         onClose={onClose}
       />
       {isOpen && (
-        <div className="w-full h-full relative aspect-square">
+        <div className="relative aspect-square h-full w-full">
           <Scanner
             allowMultiple={false}
             classNames={{

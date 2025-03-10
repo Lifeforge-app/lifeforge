@@ -30,7 +30,7 @@ function IncomeExpenseCard({
         <>
           <div className="flex h-full flex-col justify-evenly">
             <p className="flex w-full items-end justify-start gap-2 text-4xl font-medium xl:text-5xl">
-              <span className="-mb-0.5 text-2xl text-bg-500 xl:text-3xl">
+              <span className="text-bg-500 -mb-0.5 text-2xl xl:text-3xl">
                 RM
               </span>
               {isAmountHidden ? (

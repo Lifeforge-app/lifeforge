@@ -19,7 +19,7 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
   return OGQuery.isSuccess && OGQuery.data !== undefined ? (
     <button
       className={clsx(
-        'w-full text-left cursor-pointer space-y-2 rounded-md p-2',
+        'w-full cursor-pointer space-y-2 rounded-md p-2 text-left',
         componentBgLighterWithHover
       )}
       onClick={() => {
@@ -47,21 +47,21 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
           })()}
         />
       )}
-      <p className="text-xs font-medium text-custom-500">
+      <p className="text-custom-500 text-xs font-medium">
         {OGQuery.data.ogSiteName ?? new URL(entry.content).hostname}
       </p>
       {OGQuery.data.ogTitle !== undefined && (
         <p className="text-sm font-medium">{OGQuery.data.ogTitle}</p>
       )}
       {OGQuery.data.ogDescription !== undefined && (
-        <p className="mt-2 break-words text-xs text-bg-500">
+        <p className="text-bg-500 mt-2 text-xs break-words">
           {OGQuery.data.ogDescription}
         </p>
       )}
     </button>
   ) : (
     <a
-      className="break-all text-custom-500 underline underline-offset-2"
+      className="text-custom-500 break-all underline underline-offset-2"
       href={entry.content}
       rel="noreferrer"
       target="_blank"

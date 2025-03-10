@@ -191,24 +191,24 @@ function DNSRecords(): JSX.Element {
           value={selectedFilter}
           onChange={setSelectedFilter}
         >
-          <ListboxButton className="flex-between relative mt-6 flex w-40 gap-4 whitespace-nowrap rounded-lg bg-bg-50 p-4 text-left shadow-custom dark:bg-bg-900">
+          <ListboxButton className="flex-between bg-bg-50 shadow-custom dark:bg-bg-900 relative mt-6 flex w-40 gap-4 rounded-lg p-4 text-left whitespace-nowrap">
             <div className="flex items-center gap-4">
-              <Icon className="size-5 text-bg-500" icon="tabler:filter" />
+              <Icon className="text-bg-500 size-5" icon="tabler:filter" />
               {selectedFilter}
             </div>
-            <Icon className="size-5 text-bg-500" icon="tabler:chevron-down" />
+            <Icon className="text-bg-500 size-5" icon="tabler:chevron-down" />
           </ListboxButton>
           <ListboxOptions
             transition
             anchor="bottom end"
-            className="w-96 rounded-md bg-bg-100 text-bg-800 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800 dark:text-bg-50"
+            className="bg-bg-100 text-bg-800 dark:bg-bg-800 dark:text-bg-50 w-96 rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
           >
             <Scrollbar autoHeight autoHeightMax={300}>
               {FILTER_TYPE.map(type => (
                 <ListboxOption
                   key={type}
                   className={({ active }) =>
-                    `relative cursor-pointer select-none transition-all p-4 flex flex-between ${
+                    `flex-between relative flex cursor-pointer p-4 transition-all select-none ${
                       active
                         ? 'hover:bg-bg-100 dark:hover:bg-bg-700/50'
                         : 'bg-transparent!'
@@ -259,8 +259,8 @@ function DNSRecords(): JSX.Element {
             ) : (
               <table className="mb-8">
                 <thead>
-                  <tr className="border-b-2 border-bg-200 dark:border-bg-800">
-                    <th className="pl-4 pr-0">
+                  <tr className="border-bg-200 dark:border-bg-800 border-b-2">
+                    <th className="pr-0 pl-4">
                       <div
                         className={clsx(
                           'flex items-center justify-center overflow-hidden transition-all',
@@ -284,7 +284,7 @@ function DNSRecords(): JSX.Element {
                             selectedEntries.includes(record.line_index)
                           ) && (
                             <Icon
-                              className="mr-[2px] mt-px size-4 text-custom-500"
+                              className="text-custom-500 mt-px mr-[2px] size-4"
                               icon="uil:check"
                             />
                           )}
@@ -300,7 +300,7 @@ function DNSRecords(): JSX.Element {
                         {header}
                         <IconButton
                           className={clsx(
-                            'absolute right-4 top-1/2 -translate-y-1/2 !p-2 hover:bg-bg-800/50',
+                            'hover:bg-bg-800/50 absolute top-1/2 right-4 -translate-y-1/2 !p-2',
                             sortBy === header
                               ? 'text-bg-800 dark:text-bg-50'
                               : 'text-bg-500'
@@ -324,14 +324,14 @@ function DNSRecords(): JSX.Element {
                       key={record.line_index}
                       className={clsx(
                         isSelecting &&
-                          'cursor-pointer hover:bg-bg-200 dark:hover:bg-bg-900/50'
+                          'hover:bg-bg-200 dark:hover:bg-bg-900/50 cursor-pointer'
                       )}
                       onClick={() => {
                         if (!isSelecting) return
                         toggleSelected(record.line_index)
                       }}
                     >
-                      <td className="pl-4 pr-0">
+                      <td className="pr-0 pl-4">
                         <div
                           className={clsx(
                             'flex items-center justify-center overflow-hidden transition-all',
@@ -351,14 +351,14 @@ function DNSRecords(): JSX.Element {
                           >
                             {selectedEntries.includes(record.line_index) && (
                               <Icon
-                                className="mr-[2px] mt-px size-4 text-custom-500"
+                                className="text-custom-500 mt-px mr-[2px] size-4"
                                 icon="uil:check"
                               />
                             )}
                           </button>
                         </div>
                       </td>
-                      <td className="py-4 pl-4 pr-16">
+                      <td className="py-4 pr-16 pl-4">
                         {(() => {
                           const link =
                             record.dname_b64 +
@@ -383,22 +383,22 @@ function DNSRecords(): JSX.Element {
                           )
                         })()}
                       </td>
-                      <td className="p-4 pr-16 text-center text-bg-500">
+                      <td className="text-bg-500 p-4 pr-16 text-center">
                         {record.ttl}
                       </td>
-                      <td className="p-4 pr-16 text-center text-bg-500">
+                      <td className="text-bg-500 p-4 pr-16 text-center">
                         {record.record_type}
                       </td>
-                      <td className="break-all p-4 pr-16 text-bg-500">
+                      <td className="text-bg-500 p-4 pr-16 break-all">
                         {record.data_b64}
                       </td>
                       <td className="p-4 text-center">
                         <div className="flex w-full items-center justify-center gap-2">
-                          <button className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-200/20 hover:text-bg-800 dark:hover:bg-bg-800/50 dark:hover:text-bg-50">
+                          <button className="text-bg-500 hover:bg-bg-200/20 hover:text-bg-800 dark:hover:bg-bg-800/50 dark:hover:text-bg-50 rounded-md p-2 transition-all">
                             <Icon className="size-6" icon="tabler:pencil" />
                           </button>
                           <button
-                            className="rounded-md p-2 text-red-500 transition-all hover:bg-red-500/20 hover:text-red-600 disabled:text-bg-500 disabled:hover:bg-transparent disabled:hover:text-bg-500"
+                            className="disabled:text-bg-500 disabled:hover:text-bg-500 rounded-md p-2 text-red-500 transition-all hover:bg-red-500/20 hover:text-red-600 disabled:hover:bg-transparent"
                             disabled={deleteLoading !== -1}
                             onClick={() => {
                               setDeleteConfirmationModalOpen(record.line_index)

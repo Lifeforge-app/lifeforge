@@ -19,7 +19,7 @@ function PreviewContainer({
   return (
     <div className="flex-center flex-1">
       {preview !== null && (
-        <div className="relative flex min-h-32 w-full flex-col overflow-hidden rounded-lg bg-bg-200/50 p-6 shadow-custom dark:bg-bg-800/50">
+        <div className="bg-bg-200/50 shadow-custom dark:bg-bg-800/50 relative flex min-h-32 w-full flex-col overflow-hidden rounded-lg p-6">
           <div className="flex-between mb-6 ml-4 flex">
             <p className="w-full truncate">{fileName ?? file?.name}</p>
             <Button

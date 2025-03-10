@@ -41,7 +41,7 @@ function TaskTagList({
               ))}
             </>
           ) : (
-            <p className="text-center text-bg-500">{t('empty.tags')}</p>
+            <p className="text-bg-500 text-center">{t('empty.tags')}</p>
           )
         }
       </APIFallbackComponent>

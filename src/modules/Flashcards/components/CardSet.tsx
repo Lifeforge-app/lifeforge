@@ -119,7 +119,7 @@ function CardSet(): React.ReactElement {
                   return (
                     <>
                       {containerDetails.name}
-                      <span className="ml-4 rounded-full bg-custom-500/20 px-4 py-1.5 text-sm font-semibold text-custom-500">
+                      <span className="bg-custom-500/20 text-custom-500 ml-4 rounded-full px-4 py-1.5 text-sm font-semibold">
                         {containerDetails.card_amount} cards
                       </span>
                     </>
@@ -128,7 +128,7 @@ function CardSet(): React.ReactElement {
             })()}
           </h1>
           <div className="flex-center gap-2">
-            <button className="rounded-md p-4 text-bg-500 transition-all hover:bg-bg-800 hover:text-bg-50">
+            <button className="text-bg-500 hover:bg-bg-800 hover:text-bg-50 rounded-md p-4 transition-all">
               <Icon className="text-xl" icon="tabler:border-corners" />
             </button>
             <HamburgerMenu largerPadding className="relative">
@@ -155,12 +155,12 @@ function CardSet(): React.ReactElement {
                   <Icon className="text-3xl" icon="tabler:chevron-left" />
                 </button>
                 <div className="stack size-full">
-                  <div className="card h-full bg-custom-500 text-bg-800 shadow-md">
+                  <div className="card bg-custom-500 text-bg-800 h-full shadow-md">
                     <div className="card-body flex h-full flex-col">
                       <div className="flex-between card-title flex">
                         <h2 className="text-custom-800">#{currentIndex + 1}</h2>
                         <button
-                          className="rounded-md bg-custom-500/20 p-2 text-custom-800"
+                          className="bg-custom-500/20 text-custom-800 rounded-md p-2"
                           onClick={() => {
                             setIsShowingAnswer(!isShowingAnswer)
                           }}
@@ -178,8 +178,8 @@ function CardSet(): React.ReactElement {
                       </div>
                     </div>
                   </div>
-                  <div className="card h-full bg-custom-700 text-bg-800 opacity-100! shadow-sm"></div>
-                  <div className="card h-full bg-custom-900 text-bg-800 opacity-100! shadow-xs"></div>
+                  <div className="card bg-custom-700 text-bg-800 h-full opacity-100! shadow-sm"></div>
+                  <div className="card bg-custom-900 text-bg-800 h-full opacity-100! shadow-xs"></div>
                 </div>
                 <button
                   className="flex-center h-full shrink-0 p-4"

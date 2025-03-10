@@ -37,7 +37,7 @@ function Board({ data }: { data: SudokuBoard }): React.ReactElement {
                 ))}
             </div>
           ))}
-        <div className="absolute left-0 top-0 flex size-full justify-evenly">
+        <div className="absolute top-0 left-0 flex size-full justify-evenly">
           {Array(2)
             .fill(0)
             .map((_, j) => (
@@ -47,7 +47,7 @@ function Board({ data }: { data: SudokuBoard }): React.ReactElement {
               />
             ))}
         </div>
-        <div className="absolute left-0 top-0 flex size-full flex-col justify-evenly">
+        <div className="absolute top-0 left-0 flex size-full flex-col justify-evenly">
           {Array(2)
             .fill(0)
             .map((_, j) => (

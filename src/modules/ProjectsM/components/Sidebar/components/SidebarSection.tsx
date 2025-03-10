@@ -34,7 +34,7 @@ function SidebarSection({
               ))}
             </>
           ) : (
-            <p className="text-center text-bg-500">{t(`empty.${stuff}`)}</p>
+            <p className="text-bg-500 text-center">{t(`empty.${stuff}`)}</p>
           )
         }
       </APIFallbackComponent>

@@ -27,7 +27,7 @@ function LinkItem({
       className={clsx(
         'transition-all',
         isHighlighted
-          ? 'font-bold text-custom-500 hover:text-custom-600'
+          ? 'text-custom-500 hover:text-custom-600 font-bold'
           : 'text-bg-500',
         !isHighlighted &&
           to !== '' &&
@@ -42,7 +42,7 @@ function LinkItem({
 }
 
 function ChevronIcon(): React.ReactElement {
-  return <Icon className="size-5 text-bg-500" icon="tabler:chevron-right" />
+  return <Icon className="text-bg-500 size-5" icon="tabler:chevron-right" />
 }
 
 function Breadcrumbs({
@@ -100,7 +100,7 @@ function Breadcrumbs({
     <div
       className={clsx(
         'flex items-center gap-2',
-        airportID !== undefined ? 'mb-4 mt-2' : 'mt-6'
+        airportID !== undefined ? 'mt-2 mb-4' : 'mt-6'
       )}
     >
       {breadcrumbItems.map(

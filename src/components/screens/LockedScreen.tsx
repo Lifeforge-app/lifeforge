@@ -67,7 +67,7 @@ function LockedScreen({
     <div className="flex-center size-full flex-1 flex-col gap-4">
       <Icon className="size-28" icon="tabler:lock-access" />
       <h2 className="text-4xl font-semibold">{t(`vault.lockedMessage`)}</h2>
-      <p className="mb-8 text-center text-lg text-bg-500">
+      <p className="text-bg-500 mb-8 text-center text-lg">
         {t(`vault.passwordRequired`)}
       </p>
       <TextInput

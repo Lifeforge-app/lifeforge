@@ -19,9 +19,9 @@ function Header({
         className={clsx(
           'rounded-full px-3 py-1 text-sm font-semibold',
           {
-            active: 'text-green-500 bg-green-500/20',
+            active: 'bg-green-500/20 text-green-500',
             expired: 'text-bg-500 bg-bg-500/20',
-            scheduled: 'text-yellow-500 bg-yellow-500/20'
+            scheduled: 'bg-yellow-500/20 text-yellow-500'
           }[
             selectedNOTAMData.status.toLowerCase() as
               | 'active'

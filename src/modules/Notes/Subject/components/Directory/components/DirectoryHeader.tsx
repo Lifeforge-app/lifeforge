@@ -232,13 +232,13 @@ function DirectoryHeader({
                   <>
                     <div className="relative rounded-lg p-3">
                       <Icon
-                        className="text-2xl text-custom-500 sm:text-3xl"
+                        className="text-custom-500 text-2xl sm:text-3xl"
                         icon={currentPath.icon}
                       />
-                      <div className="absolute left-0 top-0 size-full rounded-lg bg-custom-500 opacity-20" />
+                      <div className="bg-custom-500 absolute top-0 left-0 size-full rounded-lg opacity-20" />
                     </div>
                     <div className="flex w-full min-w-0 flex-col gap-1">
-                      <div className="hidden items-center gap-1 text-sm text-bg-500 md:flex">
+                      <div className="text-bg-500 hidden items-center gap-1 text-sm md:flex">
                         {currentPath.path.map((path, index) => (
                           <>
                             <Link
@@ -258,7 +258,7 @@ function DirectoryHeader({
                             </Link>
                             {index !== currentPath.path.length - 1 && (
                               <Icon
-                                className="size-4 shrink-0 text-bg-500"
+                                className="text-bg-500 size-4 shrink-0"
                                 icon="tabler:chevron-right"
                               />
                             )}
@@ -275,10 +275,10 @@ function DirectoryHeader({
           })()}
         </div>
         <div className="flex items-center gap-4">
-          <button className="hidden rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/50 dark:hover:text-bg-100 md:block">
+          <button className="text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/50 dark:hover:text-bg-100 hidden rounded-lg p-4 transition-all md:block">
             <Icon className="text-2xl" icon="tabler:search" />
           </button>
-          <button className="hidden rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/50 dark:hover:text-bg-100 md:block">
+          <button className="text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-700/50 dark:hover:text-bg-100 hidden rounded-lg p-4 transition-all md:block">
             <Icon className="text-2xl" icon="tabler:filter" />
           </button>
           <Menu as="div" className="relative z-50 hidden md:block">
@@ -288,7 +288,7 @@ function DirectoryHeader({
             <MenuItems
               transition
               anchor="bottom end"
-              className="mt-2 w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
+              className="bg-bg-100 dark:bg-bg-800 mt-2 w-48 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
             >
               <MenuItem
                 icon="tabler:folder-plus"
@@ -298,7 +298,7 @@ function DirectoryHeader({
                   setExistedData(null)
                 }}
               />
-              <div className="w-full border-b border-bg-300 dark:border-bg-700" />
+              <div className="border-bg-300 dark:border-bg-700 w-full border-b" />
               <MenuItem
                 icon="ci:file-upload"
                 text="File upload"
@@ -311,7 +311,7 @@ function DirectoryHeader({
               />
             </MenuItems>
           </Menu>
-          <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100">
+          <button className="text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-100 rounded-lg p-4 transition-all">
             <Icon className="text-xl sm:text-2xl" icon="tabler:dots-vertical" />
           </button>
         </div>
@@ -321,7 +321,7 @@ function DirectoryHeader({
         <MenuItems
           transition
           anchor="bottom end"
-          className="w-48 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
+          className="bg-bg-100 dark:bg-bg-800 w-48 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
         >
           <MenuItem
             icon="tabler:folder-plus"
@@ -331,7 +331,7 @@ function DirectoryHeader({
               setExistedData(null)
             }}
           />
-          <div className="w-full border-b border-bg-300 dark:border-bg-700" />
+          <div className="border-bg-300 dark:border-bg-700 w-full border-b" />
           <MenuItem
             icon="ci:file-upload"
             text="File upload"

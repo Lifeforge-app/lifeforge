@@ -49,7 +49,7 @@ function TextContentInput({
         {innerTypeOfModifyIdea === 'text' ? (
           <textarea
             ref={inputRef as React.RefObject<HTMLTextAreaElement>}
-            className="mt-6 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-hidden placeholder:text-transparent focus:outline-hidden focus:placeholder:text-bg-500"
+            className="focus:placeholder:text-bg-500 mt-6 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-hidden placeholder:text-transparent focus:outline-hidden"
             placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, lorem euismod."
             value={ideaContent}
             onInput={e => {
@@ -61,7 +61,7 @@ function TextContentInput({
         ) : (
           <input
             ref={inputRef as React.RefObject<HTMLInputElement>}
-            className="mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-hidden focus:placeholder:text-bg-500"
+            className="focus:placeholder:text-bg-500 mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-hidden"
             placeholder="https://example.com"
             value={ideaLink}
             onChange={updateIdeaLink}

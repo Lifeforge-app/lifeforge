@@ -36,7 +36,7 @@ function EntryItem({
   return (
     <Link
       className={clsx(
-        'flex-between flex w-full rounded-lg p-4 px-6 shadow-custom transition-all',
+        'flex-between shadow-custom flex w-full rounded-lg p-4 px-6 transition-all',
         componentBgWithHover
       )}
       to={`/airports/${continentID}/${countryID}/${regionID}/${id}`}
@@ -51,10 +51,10 @@ function EntryItem({
         />
         <div>
           <p className="text-left text-xl font-medium">{name}</p>
-          <p className="text-left text-bg-500">{location}</p>
+          <p className="text-bg-500 text-left">{location}</p>
         </div>
       </div>
-      <Icon className="size-5 text-bg-500" icon="tabler:chevron-right" />
+      <Icon className="text-bg-500 size-5" icon="tabler:chevron-right" />
     </Link>
   )
 }

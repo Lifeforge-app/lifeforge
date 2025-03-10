@@ -29,7 +29,7 @@ function DashboardItem({
     <div
       ref={ref}
       className={clsx(
-        'flex size-full flex-col gap-4 rounded-lg p-6 shadow-custom',
+        'shadow-custom flex size-full flex-col gap-4 rounded-lg p-6',
         componentBg,
         className
       )}

@@ -28,7 +28,7 @@ function SpicinessHeader({
           <span>{SPICINESS_NAME[spiciness]}</span>
         </div>
       </div>
-      <p className="text-sm text-bg-500">How much breaking down do you need?</p>
+      <p className="text-bg-500 text-sm">How much breaking down do you need?</p>
     </>
   )
 }

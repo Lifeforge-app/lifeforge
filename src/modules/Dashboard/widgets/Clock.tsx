@@ -18,7 +18,7 @@ export default function Clock(): React.ReactElement {
     <div
       ref={ref}
       className={clsx(
-        'flex size-full gap-4 rounded-lg p-4 shadow-custom',
+        'shadow-custom flex size-full gap-4 rounded-lg p-4',
         componentBg,
         (ref.current?.offsetHeight ?? 0) < 160
           ? 'flex-between flex-row'
@@ -48,7 +48,7 @@ export default function Clock(): React.ReactElement {
         {time}
         <span
           className={clsx(
-            '-mb-0.5 ml-1 inline-block w-9 text-bg-500',
+            'text-bg-500 -mb-0.5 ml-1 inline-block w-9',
             (ref.current?.offsetHeight ?? 0) < 160 ? 'text-2xl' : 'text-4xl'
           )}
         >

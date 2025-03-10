@@ -47,7 +47,7 @@ function Header({
               return status === 'today' ? 'todays' : status
             })().toLowerCase()}Tasks`
           )}`.trim()}{' '}
-          <span className="text-base text-bg-500">({entries.length})</span>
+          <span className="text-bg-500 text-base">({entries.length})</span>
         </h1>
         <HeaderFilter
           items={{

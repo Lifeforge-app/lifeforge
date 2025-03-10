@@ -62,10 +62,10 @@ function OpenaiApiPricing(): React.ReactElement {
                       key={key}
                       className={clsx('p-6', componentBgLighter, 'rounded-lg')}
                     >
-                      <h2 className="relative pl-4 text-2xl font-semibold before:absolute before:left-0 before:top-0 before:h-full before:w-[4px] before:rounded-full before:bg-custom-500">
+                      <h2 className="before:bg-custom-500 relative pl-4 text-2xl font-semibold before:absolute before:top-0 before:left-0 before:h-full before:w-[4px] before:rounded-full">
                         {key}
                       </h2>
-                      <p className="mt-2 text-bg-500">{value.description}</p>
+                      <p className="text-bg-500 mt-2">{value.description}</p>
                       <div className="overflow-x-auto">
                         {(() => {
                           if (key.includes('Image')) {
@@ -100,7 +100,7 @@ function OpenaiApiPricing(): React.ReactElement {
                                           index !==
                                             Object.entries(value.data).length -
                                               1 &&
-                                            'border-b-2 border-bg-100 dark:border-bg-800'
+                                            'border-bg-100 dark:border-bg-800 border-b-2'
                                         )}
                                       >
                                         <td className="px-2">{model}</td>
@@ -110,17 +110,17 @@ function OpenaiApiPricing(): React.ReactElement {
                                               key={JSON.stringify(item)}
                                               className="flex"
                                             >
-                                              <div className="w-1/3 text-bg-700 dark:text-bg-300">
+                                              <div className="text-bg-700 dark:text-bg-300 w-1/3">
                                                 {item.quality}
                                               </div>
-                                              <div className="w-1/3 text-bg-700 dark:text-bg-300">
+                                              <div className="text-bg-700 dark:text-bg-300 w-1/3">
                                                 {item.resolution
                                                   .map((res: number[]) =>
                                                     res.join('x')
                                                   )
                                                   .join(', ')}
                                               </div>
-                                              <div className="w-1/3 text-bg-700 dark:text-bg-300">
+                                              <div className="text-bg-700 dark:text-bg-300 w-1/3">
                                                 {formatPrice(item.price)}
                                               </div>
                                             </div>
@@ -173,7 +173,7 @@ function OpenaiApiPricing(): React.ReactElement {
                                         index !==
                                           Object.entries(value.data).length -
                                             1 &&
-                                          'border-b-2 border-bg-100 dark:border-bg-800'
+                                          'border-bg-100 dark:border-bg-800 border-b-2'
                                       )}
                                     >
                                       <td className="px-2">{model}</td>
