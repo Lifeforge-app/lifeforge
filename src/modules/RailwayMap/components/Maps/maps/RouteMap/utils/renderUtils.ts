@@ -100,6 +100,32 @@ export const drawInterchange = (
   item.on('click', () => {
     setSelectedStation(station)
   })
+
+  item.on('mouseenter', () => {
+    item
+      .transition()
+      .duration(100)
+      .attr('stroke-width', 5)
+      .attr('width', 24)
+      .attr('height', 24 * station.map_data.width)
+      .attr('x', station.map_data.x - 12)
+      .attr('y', station.map_data.y - 12)
+      .attr('rx', 12)
+      .attr('ry', 12)
+  })
+
+  item.on('mouseleave', () => {
+    item
+      .transition()
+      .duration(100)
+      .attr('stroke-width', isSelected ? 5 : 3)
+      .attr('width', 20)
+      .attr('height', 20 * station.map_data.width)
+      .attr('x', station.map_data.x - 10)
+      .attr('y', station.map_data.y - 10)
+      .attr('rx', 10)
+      .attr('ry', 10)
+  })
 }
 
 export const drawStation = (
@@ -129,6 +155,18 @@ export const drawStation = (
 
   item.on('click', () => {
     setSelectedStation(station)
+  })
+
+  item.on('mouseenter', () => {
+    item.transition().duration(100).attr('r', 8).attr('stroke-width', 5)
+  })
+
+  item.on('mouseleave', () => {
+    item
+      .transition()
+      .duration(100)
+      .attr('r', 6)
+      .attr('stroke-width', isSelected ? 5 : 2)
   })
 }
 
