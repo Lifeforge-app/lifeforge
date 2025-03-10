@@ -62,7 +62,7 @@ function Changelog(): React.ReactElement {
       />
       <APIFallbackComponent data={data}>
         {() => (
-          <ul className="relative flex-1 isolate my-8 space-y-4">
+          <ul className="relative isolate my-8 flex-1 space-y-4">
             {filteredData.length > 0 ? (
               filteredData.map(entry => (
                 <LogItem key={entry.version} entry={entry} />
@@ -76,7 +76,7 @@ function Changelog(): React.ReactElement {
                 />
               </div>
             )}
-            <div className="absolute left-[calc(9rem+8px)] top-0 z-[-1] hidden h-full -translate-x-1/2 border-r-2 border-bg-200 dark:border-bg-700 sm:block" />
+            <div className="border-bg-200 dark:border-bg-700 absolute top-0 left-[calc(9rem+8px)] z-[-1] hidden h-full -translate-x-1/2 border-r-2 sm:block" />
           </ul>
         )}
       </APIFallbackComponent>

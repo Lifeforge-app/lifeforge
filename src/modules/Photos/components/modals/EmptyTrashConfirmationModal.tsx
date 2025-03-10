@@ -34,10 +34,10 @@ function EmptyTrashConfirmationModal({
 
   return (
     <ModalWrapper isOpen={isOpen}>
-      <h1 className="text-2xl font-semibold text-bg-50">
+      <h1 className="text-bg-50 text-2xl font-semibold">
         Are you sure you want empty the trash?
       </h1>
-      <p className="mt-2 text-bg-500">
+      <p className="text-bg-500 mt-2">
         This will permanently delete all the photos in the trash. You can&apos;t
         undo this action.
       </p>

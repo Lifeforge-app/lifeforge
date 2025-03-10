@@ -91,7 +91,7 @@ function AddMusicButton(): React.ReactElement {
       <MenuItems
         transition
         anchor="bottom end"
-        className="mt-2 w-64 overflow-hidden overscroll-contain rounded-md bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
+        className="bg-bg-100 dark:bg-bg-800 mt-2 w-64 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
       >
         <MenuItem
           icon={loading ? 'svg-spinners:180-ring' : 'uil:import'}
@@ -99,7 +99,7 @@ function AddMusicButton(): React.ReactElement {
           text="Import from NAS"
           onClick={importMusic}
         />
-        <div className="w-full border-b border-bg-300 dark:border-bg-700" />
+        <div className="border-bg-300 dark:border-bg-700 w-full border-b" />
         <MenuItem
           icon="tabler:brand-youtube"
           namespace="modules.music"

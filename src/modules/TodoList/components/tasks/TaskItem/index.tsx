@@ -97,7 +97,7 @@ function TaskItem({
       <li
         key={entry.id}
         className={clsx(
-          'flex-between relative isolate flex gap-4 rounded-lg p-4 pl-5 pr-6 shadow-custom transition-all',
+          'flex-between shadow-custom relative isolate flex gap-4 rounded-lg p-4 pr-6 pl-5 transition-all',
           lighter ? 'bg-bg-100/50 dark:bg-bg-800' : componentBgWithHover
         )}
       >
@@ -121,7 +121,7 @@ function TaskItem({
           </div>
         </div>
         <button
-          className="absolute left-0 top-0 size-full"
+          className="absolute top-0 left-0 size-full"
           onClick={() => {
             if (!isOuter) {
               setModifyTaskWindowOpenType('update')

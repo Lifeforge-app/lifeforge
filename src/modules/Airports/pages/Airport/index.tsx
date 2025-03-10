@@ -65,7 +65,7 @@ function Airport(): React.ReactElement {
                   />
                 </div>
                 <h1 className="flex flex-col text-3xl font-semibold">
-                  <span className="text-sm text-custom-500">
+                  <span className="text-custom-500 text-sm">
                     {toTitleCase(airportData.data.type.split('_').join(' '))}
                   </span>
                   {airportData.data.name}
@@ -97,7 +97,7 @@ function Airport(): React.ReactElement {
                   <div className="flex h-full flex-wrap items-start gap-x-12">
                     {airportData.data.iata && (
                       <div>
-                        <h2 className="mb-2 text-lg font-medium uppercase tracking-widest text-bg-500">
+                        <h2 className="text-bg-500 mb-2 text-lg font-medium tracking-widest uppercase">
                           ICAO
                         </h2>
                         <p className="text-4xl tracking-widest">
@@ -107,7 +107,7 @@ function Airport(): React.ReactElement {
                     )}
                     {airportData.data.iata && (
                       <div>
-                        <h2 className="mb-2 text-lg font-medium uppercase tracking-widest text-bg-500">
+                        <h2 className="text-bg-500 mb-2 text-lg font-medium tracking-widest uppercase">
                           IATA
                         </h2>
                         <p className="text-4xl tracking-widest">
@@ -117,7 +117,7 @@ function Airport(): React.ReactElement {
                     )}
                     {airportData.data.elevation && (
                       <div>
-                        <h2 className="mb-2 text-lg font-medium uppercase tracking-widest text-bg-500">
+                        <h2 className="text-bg-500 mb-2 text-lg font-medium tracking-widest uppercase">
                           Elevation
                         </h2>
                         <p className="text-4xl tracking-wide">
@@ -128,7 +128,7 @@ function Airport(): React.ReactElement {
                       </div>
                     )}
                     <div>
-                      <h2 className="mb-2 text-lg font-medium uppercase tracking-widest text-bg-500">
+                      <h2 className="text-bg-500 mb-2 text-lg font-medium tracking-widest uppercase">
                         Coordinates
                       </h2>
                       <p className="text-4xl tracking-wide">
@@ -175,9 +175,9 @@ function Airport(): React.ReactElement {
                     <button
                       key={index}
                       className={clsx(
-                        'flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all',
+                        'flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 p-4 tracking-widest uppercase transition-all',
                         section === name.toLowerCase()
-                          ? 'border-custom-500 font-medium text-custom-500'
+                          ? 'border-custom-500 text-custom-500 font-medium'
                           : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
                       )}
                       onClick={() => {
@@ -196,7 +196,7 @@ function Airport(): React.ReactElement {
                         return <Flights IATA={airportData.data.iata} />
                       } else {
                         return (
-                          <div className="mb-8 mt-6 w-full">
+                          <div className="mt-6 mb-8 w-full">
                             <EmptyStateScreen
                               icon="tabler:alert-triangle"
                               name="section"

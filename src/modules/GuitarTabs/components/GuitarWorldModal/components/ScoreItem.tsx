@@ -70,7 +70,7 @@ function ScoreItem({
         <p className="text-lg font-medium">
           {entry.name}
           {entry.subtitle !== '' && (
-            <span className="text-sm text-bg-500"> ({entry.subtitle})</span>
+            <span className="text-bg-500 text-sm"> ({entry.subtitle})</span>
           )}
         </p>
         <div className="flex items-center gap-3">
@@ -89,11 +89,11 @@ function ScoreItem({
           >
             {entry.category}
           </span>
-          <p className="mt-2 flex items-center text-sm text-bg-500">
+          <p className="text-bg-500 mt-2 flex items-center text-sm">
             <Icon className="mr-1 size-4" icon="tabler:user" />
             {entry.mainArtist}
           </p>
-          <p className="mt-2 flex items-center text-sm text-bg-500">
+          <p className="text-bg-500 mt-2 flex items-center text-sm">
             <Icon className="mr-1 size-4" icon="tabler:upload" />
             {entry.uploader}
           </p>

@@ -65,7 +65,8 @@ layer(base);
 
 @font-face {
   font-family: 'LTAIdentityMedium';
-  src: url('/fonts/LTAIdentity-Medium.woff2') format('woff2'),
+  src:
+    url('/fonts/LTAIdentity-Medium.woff2') format('woff2'),
     url('/fonts/LTAIdentity-Medium.woff') format('woff');
 }
 
@@ -153,7 +154,7 @@ code {
   color: rgb(244 244 245) !important;
   font-weight: 500 !important;
   letter-spacing: 0.1rem !important;
-  @apply text-center rounded-lg! py-2! focus:outline-hidden;
+  @apply rounded-lg! py-2! text-center focus:outline-hidden;
 }
 
 .w-color-editable-input span {
@@ -171,7 +172,7 @@ code {
 
 [data-rmiz],
 [data-rmiz-content] {
-  @apply w-full h-full;
+  @apply h-full w-full;
 }
 
 div[data-rmiz-modal-overlay] {
@@ -534,7 +535,7 @@ progress::-moz-progress-bar {
 }
 
 .Toastify__toast-container {
-  @apply sm:w-min sm:min-w-96 w-full;
+  @apply w-full sm:w-min sm:min-w-96;
 }
 
 .Toastify__toast-container * {
@@ -580,10 +581,7 @@ input:-webkit-autofill:active {
 }
 
 button[class^='react-calendar__navigation'] {
-  @apply flex flex-center rounded-md hover:bg-bg-200 dark:hover:bg-bg-700/50
-    focus:bg-bg-200 dark:focus:bg-bg-700/50 disabled:text-bg-500
-    disabled:bg-transparent disabled:hover:bg-transparent
-    dark:disabled:hover:bg-transparent;
+  @apply flex-center hover:bg-bg-200 dark:hover:bg-bg-700/50 focus:bg-bg-200 dark:focus:bg-bg-700/50 disabled:text-bg-500 flex rounded-md disabled:bg-transparent disabled:hover:bg-transparent dark:disabled:hover:bg-transparent;
 }
 
 .react-calendar__tile--now {
@@ -614,7 +612,7 @@ button[class^='react-calendar__navigation'] {
 }
 
 .rbc-date-cell {
-  @apply text-lg text-left p-2;
+  @apply p-2 text-left text-lg;
 }
 
 .rbc-header {
@@ -660,8 +658,7 @@ button[class^='react-calendar__navigation'] {
 }
 
 .music input[type='range'].main {
-  @apply appearance-none accent-custom-500 bg-linear-to-r from-custom-500
-    to-custom-500 bg-no-repeat;
+  @apply accent-custom-500 from-custom-500 to-custom-500 appearance-none bg-linear-to-r bg-no-repeat;
 }
 
 .music input[type='range'].secondary {
@@ -669,26 +666,26 @@ button[class^='react-calendar__navigation'] {
 }
 
 .music input[type='range']::-webkit-slider-thumb {
-  @apply appearance-none w-0 h-0 border-none;
+  @apply h-0 w-0 appearance-none border-none;
 }
 
 .music input[type='range']::-moz-range-thumb {
-  @apply appearance-none w-0 h-0 border-none;
+  @apply h-0 w-0 appearance-none border-none;
 }
 
 .music input[type='range']::-webkit-progress-value,
 .music input[type='range']::-moz-range-progress {
-  @apply rounded-full h-full;
+  @apply h-full rounded-full;
 }
 
 .music input[type='range'].main::-webkit-progress-value,
 .music input[type='range'].main::-moz-range-progress {
-  @apply appearance-none bg-custom-500! rounded-full h-full;
+  @apply bg-custom-500! h-full appearance-none rounded-full;
 }
 
 .music input[type='range'].secondary::-webkit-progress-value,
 .music input[type='range'].secondary::-moz-range-progress {
-  @apply appearance-none bg-bg-500 dark:bg-bg-100 rounded-full h-full;
+  @apply bg-bg-500 dark:bg-bg-100 h-full appearance-none rounded-full;
 }
 
 .prose * {
@@ -747,7 +744,7 @@ button[class^='react-calendar__navigation'] {
 
 .runway-tables table th,
 .runway-tables table td {
-  @apply py-4 px-6 border-b border-bg-200 dark:border-bg-700/50;
+  @apply border-bg-200 dark:border-bg-700/50 border-b px-6 py-4;
 }
 
 .runway-tables table td {

@@ -88,7 +88,7 @@ function IconSet({
         setValue={setCurrentTag}
         value={currentTag}
       />
-      <div className="min-h-0 flex-1 flex flex-col">
+      <div className="flex min-h-0 flex-1 flex-col">
         {filteredIconList.length ? (
           <AS className="mt-6">
             {({ width, height }: { width: number; height: number }) => {
@@ -138,7 +138,7 @@ function IconSet({
             }}
           </AS>
         ) : (
-          <div className="flex-1 flex-center">
+          <div className="flex-center flex-1">
             <EmptyStateScreen
               icon="tabler:icons-off"
               name="icon"

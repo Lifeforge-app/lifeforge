@@ -21,17 +21,17 @@ function SidebarHeader({
           !sidebarExpanded && 'overflow-hidden'
         )}
       >
-        <h1 className="ml-1 flex shrink-0 items-center gap-2 whitespace-nowrap text-xl font-semibold">
-          <Icon className="text-3xl text-custom-500" icon="tabler:hammer" />
+        <h1 className="ml-1 flex shrink-0 items-center gap-2 text-xl font-semibold whitespace-nowrap">
+          <Icon className="text-custom-500 text-3xl" icon="tabler:hammer" />
           {sidebarExpanded && (
             <div>
-              LifeForge<span className="text-2xl text-custom-500">.</span>
+              LifeForge<span className="text-custom-500 text-2xl">.</span>
             </div>
           )}
         </h1>
         {sidebarExpanded && (
           <button
-            className="p-6 text-bg-500 transition-all hover:text-bg-800 dark:hover:text-bg-50"
+            className="text-bg-500 hover:text-bg-800 dark:hover:text-bg-50 p-6 transition-all"
             onClick={toggleSidebar}
           >
             <Icon className="text-2xl" icon="tabler:menu" />

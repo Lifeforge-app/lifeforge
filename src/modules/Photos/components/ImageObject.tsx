@@ -96,23 +96,23 @@ function ImageObject({
             )}
             <button
               className={clsx(
-                'group/select-button flex-center absolute left-2.5 top-2.5 size-6 rounded-full transition-all',
+                'group/select-button flex-center absolute top-2.5 left-2.5 size-6 rounded-full transition-all',
                 selected
-                  ? 'flex bg-custom-500 opacity-100'
-                  : 'hidden bg-bg-200 opacity-50 hover:bg-bg-100! hover:opacity-100! group-hover/image:flex'
+                  ? 'bg-custom-500 flex opacity-100'
+                  : 'bg-bg-200 hover:bg-bg-100! hidden opacity-50 group-hover/image:flex hover:opacity-100!'
               )}
               onClick={toggleSelected}
             >
               <Icon
                 className={clsx(
-                  'stroke-bg-900 stroke-[2px] text-bg-800 transition-all',
+                  'stroke-bg-900 text-bg-800 stroke-[2px] transition-all',
                   !selected &&
                     'group-hover/select-button:stroke-bg-900 group-hover/select-button:text-bg-800'
                 )}
                 icon="tabler:check"
               />
             </button>
-            <div className="absolute right-2 top-2 flex items-center gap-2 text-bg-200 opacity-50">
+            <div className="text-bg-200 absolute top-2 right-2 flex items-center gap-2 opacity-50">
               {details.has_raw && (
                 <Icon className="size-5" icon="tabler:letter-r" />
               )}

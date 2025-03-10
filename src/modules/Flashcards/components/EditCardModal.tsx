@@ -113,13 +113,13 @@ function EditCardModal({
 
   return (
     <ModalWrapper isOpen={isOpen}>
-      <div className="flex-between mb-8 flex ">
+      <div className="flex-between mb-8 flex">
         <h1 className="flex items-center gap-3 text-2xl font-semibold">
           <Icon className="size-7" icon="tabler:pencil" />
           Edit Cards
         </h1>
         <button
-          className="hover: rounded-md p-2 text-bg-500 transition-all hover:bg-bg-100 dark:hover:bg-bg-800"
+          className="hover: text-bg-500 hover:bg-bg-100 dark:hover:bg-bg-800 rounded-md p-2 transition-all"
           onClick={onClose}
         >
           <Icon className="size-6" icon="tabler:x" />
@@ -127,23 +127,23 @@ function EditCardModal({
       </div>
       <table className="w-[50vw]">
         <thead>
-          <tr className="border-b border-bg-700 ">
-            <th className="w-8/12 p-4 text-left font-semibold text-bg-500">
+          <tr className="border-bg-700 border-b">
+            <th className="text-bg-500 w-8/12 p-4 text-left font-semibold">
               Question
             </th>
-            <th className="w-4/12 p-4 text-left font-semibold text-bg-500">
+            <th className="text-bg-500 w-4/12 p-4 text-left font-semibold">
               Answer
             </th>
-            <th className="w-min text-left font-semibold text-bg-500"></th>
+            <th className="text-bg-500 w-min text-left font-semibold"></th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-bg-700">
+        <tbody className="divide-bg-700 divide-y">
           {innerCards.map((card, index) => (
             <tr key={index}>
-              <td className="px-2 py-4 pr-4 ">
+              <td className="px-2 py-4 pr-4">
                 {currentlyEditingIndex === index ? (
                   <input
-                    className="w-full rounded-xs border border-bg-700 bg-transparent p-2"
+                    className="border-bg-700 w-full rounded-xs border bg-transparent p-2"
                     type="text"
                     value={card.question}
                     onChange={e => {
@@ -164,10 +164,10 @@ function EditCardModal({
                   </button>
                 )}
               </td>
-              <td className="pr-6 ">
+              <td className="pr-6">
                 {currentlyEditingIndex === index ? (
                   <input
-                    className="w-full rounded-xs border border-bg-700 bg-transparent p-2"
+                    className="border-bg-700 w-full rounded-xs border bg-transparent p-2"
                     type="text"
                     value={card.answer}
                     onChange={e => {
@@ -188,7 +188,7 @@ function EditCardModal({
                   </button>
                 )}
               </td>
-              <td className="w-min ">
+              <td className="w-min">
                 <button
                   onClick={() => {
                     if (card.id !== undefined) {
@@ -205,7 +205,7 @@ function EditCardModal({
         </tbody>
       </table>
       <button
-        className="flex-center mt-4 hidden w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-50 shadow-custom transition-all hover:bg-bg-800/50 dark:text-bg-50 sm:flex"
+        className="flex-center bg-bg-800 text-bg-50 shadow-custom hover:bg-bg-800/50 dark:text-bg-50 mt-4 hidden w-full gap-2 rounded-lg p-4 pr-5 font-semibold tracking-wider uppercase transition-all sm:flex"
         onClick={e => {
           setInnerCards([
             ...innerCards,
@@ -227,7 +227,7 @@ function EditCardModal({
 
       <div className="mt-12 flex flex-1 flex-col-reverse items-end gap-2 sm:flex-row">
         <button
-          className="flex-center h-16 w-full gap-2 rounded-lg bg-bg-800 p-4 pr-5 font-semibold uppercase tracking-wider text-bg-50 shadow-custom transition-all hover:bg-bg-200 dark:hover:bg-bg-700/50"
+          className="flex-center bg-bg-800 text-bg-50 shadow-custom hover:bg-bg-200 dark:hover:bg-bg-700/50 h-16 w-full gap-2 rounded-lg p-4 pr-5 font-semibold tracking-wider uppercase transition-all"
           disabled={loading}
           onClick={onClose}
         >

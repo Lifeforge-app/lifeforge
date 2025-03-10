@@ -42,7 +42,7 @@ function Wishlist(): React.ReactElement {
       <APIFallbackComponent data={lists}>
         {lists =>
           lists.length ? (
-            <div className="mb-14 mt-6 grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]">
+            <div className="mt-6 mb-14 grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]">
               {lists.map(list => (
                 <WishlistListItem
                   key={list.id}

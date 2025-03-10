@@ -30,14 +30,14 @@ function CodeTimeStatistics(): React.ReactElement {
               <div
                 key={key}
                 className={clsx(
-                  'flex-between flex w-full flex-col gap-2 rounded-lg p-3 shadow-custom sm:items-start sm:p-6',
+                  'flex-between shadow-custom flex w-full flex-col gap-2 rounded-lg p-3 sm:items-start sm:p-6',
                   componentBg
                 )}
               >
                 <div className="flex w-full flex-row items-center gap-2 sm:flex-col sm:items-start">
                   <div
                     className={clsx(
-                      'flex rounded-lg p-2 shadow-custom sm:p-4',
+                      'shadow-custom flex rounded-lg p-2 sm:p-4',
                       componentBgLighter
                     )}
                   >
@@ -59,17 +59,17 @@ function CodeTimeStatistics(): React.ReactElement {
                       }
                     />
                   </div>
-                  <div className="whitespace-nowrap text-lg text-bg-500">
+                  <div className="text-bg-500 text-lg whitespace-nowrap">
                     {t(`statisticType.${toCamelCase(key)}`)}
                   </div>
                 </div>
-                <div className="mt-2 whitespace-nowrap text-4xl font-semibold">
+                <div className="mt-2 text-4xl font-semibold whitespace-nowrap">
                   {index < 3 ? (
                     <HoursAndMinutesFromSeconds seconds={value} />
                   ) : (
                     <>
                       {value}
-                      <span className="pl-1 text-3xl font-normal text-bg-500">
+                      <span className="text-bg-500 pl-1 text-3xl font-normal">
                         days
                       </span>
                     </>

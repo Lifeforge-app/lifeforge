@@ -67,7 +67,7 @@ function Continents(): React.ReactElement {
                   <Link
                     key={id}
                     className={clsx(
-                      'flex-between flex w-full rounded-lg p-4 px-6 shadow-custom transition-all',
+                      'flex-between shadow-custom flex w-full rounded-lg p-4 px-6 transition-all',
                       componentBgWithHover
                     )}
                     to={`/airports/${id}`}
@@ -76,12 +76,12 @@ function Continents(): React.ReactElement {
                       <p className="text-left text-xl font-medium">
                         {CONTINENTS[id as keyof typeof CONTINENTS]}
                       </p>
-                      <p className="text-left text-bg-500">
+                      <p className="text-bg-500 text-left">
                         {amount.toLocaleString()} airports
                       </p>
                     </div>
                     <Icon
-                      className="size-5 text-bg-500"
+                      className="text-bg-500 size-5"
                       icon="tabler:chevron-right"
                     />
                   </Link>

@@ -35,7 +35,7 @@ function TransactionListItem({
   }
 
   return (
-    <div className="flex-between relative flex gap-12 border-b border-bg-200 py-4 pl-2 dark:border-bg-800/50">
+    <div className="flex-between border-bg-200 dark:border-bg-800/50 relative flex gap-12 border-b py-4 pl-2">
       <div className="flex w-full min-w-0 items-center gap-2 [@media(min-width:400px)]:gap-4">
         <div
           className="h-12 w-1 shrink-0 rounded-full"
@@ -46,7 +46,7 @@ function TransactionListItem({
           }}
         />
         <Icon
-          className="size-8 text-bg-500"
+          className="text-bg-500 size-8"
           icon={
             assets.find(asset => asset.id === transaction.asset)?.icon ?? ''
           }
@@ -73,16 +73,16 @@ function TransactionListItem({
                   setReceiptModalOpen(true)
                 }}
               >
-                <Icon className="size-5 text-bg-500" icon="tabler:file-text" />
+                <Icon className="text-bg-500 size-5" icon="tabler:file-text" />
               </button>
             )}
             {transaction.location !== '' && (
               <>
                 <span data-tooltip-id={`tooltip-location-${transaction.id}`}>
-                  <Icon className="size-5 text-bg-500" icon="tabler:map-pin" />
+                  <Icon className="text-bg-500 size-5" icon="tabler:map-pin" />
                 </span>
                 <Tooltip
-                  className="z-9999 rounded-md! bg-bg-50 p-4! text-base! text-bg-800 shadow-custom dark:bg-bg-800 dark:text-bg-50"
+                  className="bg-bg-50 text-bg-800 shadow-custom dark:bg-bg-800 dark:text-bg-50 z-9999 rounded-md! p-4! text-base!"
                   classNameArrow="size-6!"
                   id={`tooltip-location-${transaction.id}`}
                   opacity={1}
@@ -96,7 +96,7 @@ function TransactionListItem({
               </>
             )}
           </div>
-          <div className="flex items-center gap-2 text-sm font-medium text-bg-500">
+          <div className="text-bg-500 flex items-center gap-2 text-sm font-medium">
             <span className="block sm:hidden">
               {moment(transaction.date).format('DD MMM')}
             </span>

@@ -65,7 +65,7 @@ function ModalHeader({
         {actionButtonIcon !== undefined && (
           <button
             className={clsx(
-              'rounded-md p-2 transition-all hover:bg-bg-100 dark:hover:bg-bg-800',
+              'hover:bg-bg-100 dark:hover:bg-bg-800 rounded-md p-2 transition-all',
               actionButtonIsRed
                 ? 'text-red-500 hover:text-red-600'
                 : 'text-bg-500 hover:text-bg-200'

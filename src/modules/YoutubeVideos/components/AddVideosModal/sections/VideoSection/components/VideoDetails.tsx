@@ -24,9 +24,9 @@ function VideoDetails({
             <VideoInfo videoInfo={videoInfo} />
           </div>
           {loading && (
-            <div className="mt-6 h-4 w-full rounded-md bg-bg-200 dark:bg-bg-800">
+            <div className="bg-bg-200 dark:bg-bg-800 mt-6 h-4 w-full rounded-md">
               <div
-                className="h-full rounded-md bg-custom-500 transition-all duration-300"
+                className="bg-custom-500 h-full rounded-md transition-all duration-300"
                 style={{ width: `${progress}%` }}
               />
             </div>

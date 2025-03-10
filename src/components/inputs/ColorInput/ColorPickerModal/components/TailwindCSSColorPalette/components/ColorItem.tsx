@@ -20,9 +20,9 @@ function ColorItem({
     <li key={value} className="w-full">
       <button
         className={clsx(
-          'flex-center aspect-square w-full cursor-pointer rounded-md shadow-custom',
+          'flex-center shadow-custom aspect-square w-full cursor-pointer rounded-md',
           selected === value &&
-            'ring-2 ring-bg-900 ring-offset-2 ring-offset-bg-100 dark:ring-bg-50 dark:ring-offset-bg-900'
+            'ring-bg-900 ring-offset-bg-100 dark:ring-bg-50 dark:ring-offset-bg-900 ring-2 ring-offset-2'
         )}
         style={{ backgroundColor: value }}
         onClick={() => onSelect(colorHex)}
@@ -38,7 +38,7 @@ function ColorItem({
         )}
       </button>
       <p className="mt-2 text-xs font-medium">{name}</p>
-      <code className="block text-xs font-medium text-bg-500">{colorHex}</code>
+      <code className="text-bg-500 block text-xs font-medium">{colorHex}</code>
     </li>
   )
 }

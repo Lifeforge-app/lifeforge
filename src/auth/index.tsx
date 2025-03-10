@@ -20,19 +20,19 @@ function Auth(): React.ReactElement {
 
   return (
     <>
-      <section className="flex-center size-full flex-col overflow-y-auto px-8 pb-4 pt-12 sm:px-12 lg:w-1/2">
+      <section className="flex-center size-full flex-col overflow-y-auto px-8 pt-12 pb-4 sm:px-12 lg:w-1/2">
         <div className="flex-center size-full flex-col">
           <AuthHeader />
           <AuthForm />
         </div>
         <div className="mt-8 flex flex-col items-center justify-center gap-2">
-          <div className="flex items-center gap-2 text-bg-500">
+          <div className="text-bg-500 flex items-center gap-2">
             <Icon className="size-6" icon="tabler:creative-commons" />
             <Icon className="size-6" icon="tabler:creative-commons-by" />
             <Icon className="size-6" icon="tabler:creative-commons-nc" />
             <Icon className="size-6" icon="tabler:creative-commons-sa" />
           </div>
-          <p className="text-center text-sm text-bg-500">
+          <p className="text-bg-500 text-center text-sm">
             A project by{' '}
             <a
               className="text-custom-500 underline"

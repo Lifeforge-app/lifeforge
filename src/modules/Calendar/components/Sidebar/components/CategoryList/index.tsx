@@ -51,7 +51,7 @@ function CategoryList({
           <div className="flex h-full flex-col items-center justify-center gap-4 px-2">
             <Icon className="size-12" icon="tabler:article-off" />
             <p className="text-lg font-medium">Oops, no categories found.</p>
-            <p className="text-center text-sm text-bg-500">
+            <p className="text-bg-500 text-center text-sm">
               You can create categories by clicking the plus button above.
             </p>
           </div>

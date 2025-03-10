@@ -51,7 +51,7 @@ function RemovePhotosFromAlbumConfirmationModal({
         Are you sure you want to remove {selectedPhotos.length} photo
         {selectedPhotos.length > 1 ? 's' : ''} from the album?
       </h1>
-      <p className="mt-2 text-bg-500">
+      <p className="text-bg-500 mt-2">
         This will remove the photos from the album but not deleting them. You
         can add them back whenever you want.
       </p>

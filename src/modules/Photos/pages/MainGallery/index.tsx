@@ -45,13 +45,13 @@ function PhotosMainGallery(): React.ReactElement {
   return showGallery ? (
     <section
       className={
-        'absolute top-0 flex size-full min-h-0 flex-1 flex-col pl-4 pt-8 transition-all sm:pl-12'
+        'absolute top-0 flex size-full min-h-0 flex-1 flex-col pt-8 pl-4 transition-all sm:pl-12'
       }
     >
       <ModuleHeader
         actionButton={
           <button
-            className="mr-4 rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 lg:hidden"
+            className="text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800 dark:hover:text-bg-50 mr-4 rounded-lg p-4 transition-all lg:hidden"
             onClick={() => {
               setSidebarOpen(true)
             }}

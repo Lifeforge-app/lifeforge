@@ -31,7 +31,7 @@ function JournalListItem({
   return (
     <button
       className={clsx(
-        'w-full rounded-lg p-6 text-left shadow-custom',
+        'shadow-custom w-full rounded-lg p-6 text-left',
         componentBgWithHover
       )}
       onClick={() => {
@@ -41,7 +41,7 @@ function JournalListItem({
     >
       <div className="flex-between flex">
         <div className="flex flex-col gap-2">
-          <span className="flex items-center gap-2 text-sm font-medium text-bg-500">
+          <span className="text-bg-500 flex items-center gap-2 text-sm font-medium">
             {moment(entry.date).format('MMMM Do, YYYY')}
             <Icon className="size-1.5" icon="tabler:circle-filled" />
             {entry.wordCount?.toLocaleString()} words
@@ -54,7 +54,7 @@ function JournalListItem({
           {entry.photos.length > 0 && (
             <span
               className={clsx(
-                'flex items-center gap-2 whitespace-nowrap rounded-full px-3 py-1 text-base font-medium text-bg-400 shadow-custom',
+                'text-bg-400 shadow-custom flex items-center gap-2 rounded-full px-3 py-1 text-base font-medium whitespace-nowrap',
                 componentBgLighter
               )}
             >
@@ -64,7 +64,7 @@ function JournalListItem({
           )}
           <span
             className={clsx(
-              'block whitespace-nowrap rounded-full px-3 py-1 text-base font-medium shadow-custom',
+              'shadow-custom block rounded-full px-3 py-1 text-base font-medium whitespace-nowrap',
               componentBgLighter
             )}
           >
@@ -91,7 +91,7 @@ function JournalListItem({
           </HamburgerMenu>
         </div>
       </div>
-      <div className="mt-4 text-bg-500">{entry.content}</div>
+      <div className="text-bg-500 mt-4">{entry.content}</div>
     </button>
   )
 }

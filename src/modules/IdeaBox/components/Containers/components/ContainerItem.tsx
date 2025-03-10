@@ -27,11 +27,11 @@ function ContainerItem({
   return (
     <div
       className={clsx(
-        'group relative flex flex-col items-center justify-start gap-6 overflow-hidden rounded-lg shadow-custom',
+        'group shadow-custom relative flex flex-col items-center justify-start gap-6 overflow-hidden rounded-lg',
         componentBgWithHover
       )}
     >
-      <div className="flex-center aspect-video w-full bg-bg-200 dark:bg-bg-800">
+      <div className="flex-center bg-bg-200 dark:bg-bg-800 aspect-video w-full">
         {container.cover !== '' ? (
           <img
             alt=""
@@ -42,13 +42,13 @@ function ContainerItem({
           />
         ) : (
           <Icon
-            className="size-24 text-bg-300 dark:text-bg-700"
+            className="text-bg-300 dark:text-bg-700 size-24"
             icon="tabler:bulb"
           />
         )}
       </div>
       <div className="flex flex-col items-center justify-start gap-6 p-8 pt-0">
-        <div className="-mt-12 overflow-hidden rounded-lg bg-bg-950">
+        <div className="bg-bg-950 -mt-12 overflow-hidden rounded-lg">
           <div
             className="p-4"
             style={{
@@ -65,31 +65,29 @@ function ContainerItem({
             />
           </div>
         </div>
-        <div className="text-center text-2xl font-medium ">
-          {container.name}
-        </div>
+        <div className="text-center text-2xl font-medium">{container.name}</div>
         <div className="mt-auto flex items-center gap-4">
           <div className="flex items-center gap-2">
-            <Icon className="size-5 text-bg-500" icon="tabler:article" />
+            <Icon className="text-bg-500 size-5" icon="tabler:article" />
             <span className="text-bg-500">{container.text_count}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Icon className="size-5 text-bg-500" icon="tabler:link" />
+            <Icon className="text-bg-500 size-5" icon="tabler:link" />
             <span className="text-bg-500">{container.link_count}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Icon className="size-5 text-bg-500" icon="tabler:photo" />
+            <Icon className="text-bg-500 size-5" icon="tabler:photo" />
             <span className="text-bg-500">{container.image_count}</span>
           </div>
         </div>
       </div>
       <Link
-        className="absolute left-0 top-0 size-full"
+        className="absolute top-0 left-0 size-full"
         to={`/idea-box/${container.id}`}
       />
       <HamburgerMenu
         lighter
-        className="absolute right-4 top-4 overscroll-contain opacity-0 transition-all group-hover:opacity-100 data-open:opacity-100"
+        className="absolute top-4 right-4 overscroll-contain opacity-0 transition-all group-hover:opacity-100 data-open:opacity-100"
       >
         <MenuItem
           icon="tabler:pencil"

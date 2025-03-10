@@ -143,7 +143,7 @@ function Search({
         setValue={setCurrentIconSet}
         value={currentIconSet}
       />
-      <div className="min-h-0 flex-1 flex flex-col">
+      <div className="flex min-h-0 flex-1 flex-col">
         {filteredIconList.length > 0 ? (
           <AS className="mt-6">
             {({ width, height }: { width: number; height: number }) => {
@@ -193,7 +193,7 @@ function Search({
             }}
           </AS>
         ) : (
-          <div className="flex-1 flex-center h-full">
+          <div className="flex-center h-full flex-1">
             <EmptyStateScreen
               icon="tabler:icons-off"
               name="icon"

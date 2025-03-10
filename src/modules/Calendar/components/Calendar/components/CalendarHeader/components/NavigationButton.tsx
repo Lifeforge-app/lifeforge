@@ -10,7 +10,7 @@ function NavigationButton({
 }): React.ReactElement {
   return (
     <button
-      className="rounded-md p-2 text-bg-500 transition-all hover:bg-bg-900"
+      className="text-bg-500 hover:bg-bg-900 rounded-md p-2 transition-all"
       onClick={() => {
         onNavigate(direction)
       }}

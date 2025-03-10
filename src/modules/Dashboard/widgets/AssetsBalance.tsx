@@ -37,15 +37,15 @@ export default function AssetsBalance(): React.ReactElement {
               <Link
                 key={asset.id}
                 className={clsx(
-                  'flex-between flex h-full gap-4 rounded-lg bg-bg-100 p-2 pl-4 pr-0 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all',
+                  'flex-between bg-bg-100 flex h-full gap-4 rounded-lg p-2 pr-0 pl-4 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all',
                   componentBgLighterWithHover
                 )}
                 to={'/wallet/assets'}
               >
                 <div className="flex w-full min-w-0 items-center gap-4">
-                  <div className="rounded-md bg-bg-200 p-2 dark:bg-bg-700">
+                  <div className="bg-bg-200 dark:bg-bg-700 rounded-md p-2">
                     <Icon
-                      className="size-6 text-bg-500 dark:text-bg-100"
+                      className="text-bg-500 dark:text-bg-100 size-6"
                       icon={asset.icon}
                     />
                   </div>
@@ -53,7 +53,7 @@ export default function AssetsBalance(): React.ReactElement {
                     <div className="w-full min-w-0 truncate font-semibold">
                       {asset.name}
                     </div>
-                    <div className="flex items-center gap-1 text-sm text-bg-500">
+                    <div className="text-bg-500 flex items-center gap-1 text-sm">
                       RM{' '}
                       {showBalance ? (
                         numberToMoney(asset.balance)
@@ -73,7 +73,7 @@ export default function AssetsBalance(): React.ReactElement {
                     </div>
                   </div>
                 </div>
-                <button className="rounded-lg p-4 text-bg-300 transition-all dark:text-bg-700">
+                <button className="text-bg-300 dark:text-bg-700 rounded-lg p-4 transition-all">
                   <Icon className="text-xl" icon="tabler:chevron-right" />
                 </button>
               </Link>

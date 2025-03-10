@@ -36,12 +36,12 @@ function TMDBResultsList({
   return (
     <>
       <Pagination
-        className="mb-4 mt-6"
+        className="mt-6 mb-4"
         currentPage={page}
         totalPages={results.total_pages}
         onPageChange={setPage}
       />
-      <div className="w-full mt-6 space-y-2">
+      <div className="mt-6 w-full space-y-2">
         {results.results.map(entry => (
           <TMDBResultItem
             key={entry.id}

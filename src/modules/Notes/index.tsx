@@ -34,7 +34,7 @@ function Notes(): React.ReactElement {
                 <Link
                   key={workspace.id}
                   className={clsx(
-                    'group flex size-full flex-col items-center rounded-lg p-16 shadow-custom',
+                    'group shadow-custom flex size-full flex-col items-center rounded-lg p-16',
                     componentBgWithHover
                   )}
                   to={`/notes/${workspace.id}`}
@@ -46,7 +46,7 @@ function Notes(): React.ReactElement {
                     )}
                     icon={workspace.icon}
                   />
-                  <h2 className="mt-6 text-center text-2xl font-medium uppercase tracking-widest">
+                  <h2 className="mt-6 text-center text-2xl font-medium tracking-widest uppercase">
                     {workspace.name}
                   </h2>
                 </Link>

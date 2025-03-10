@@ -28,7 +28,7 @@ function LocalizationManager(): React.ReactElement {
   return (
     <ModuleWrapper>
       <div className="flex size-full items-center justify-center">
-        <p className="text-2xl font-medium text-bg-500">
+        <p className="text-bg-500 text-2xl font-medium">
           {t('fetch.redirecting')}
         </p>
       </div>

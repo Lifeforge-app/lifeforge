@@ -100,11 +100,11 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                     {albumList.map(album => (
                       <li
                         key={album.id}
-                        className="relative flex items-center gap-6 font-medium text-bg-500 transition-all"
+                        className="text-bg-500 relative flex items-center gap-6 font-medium transition-all"
                       >
                         <button
                           className={clsx(
-                            'flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all',
+                            'flex w-full items-center gap-6 rounded-lg p-4 whitespace-nowrap transition-all',
                             selectedAlbum === album.id
                               ? 'bg-bg-300 dark:bg-bg-800'
                               : 'hover:bg-bg-200 dark:hover:bg-bg-800/50'
@@ -113,7 +113,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                             selectAlbum(album.id)
                           }}
                         >
-                          <div className="flex-center size-10 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
+                          <div className="flex-center bg-bg-200 dark:bg-bg-700/50 size-10 shrink-0 rounded-md shadow-md">
                             {album.cover !== '' ? (
                               <img
                                 alt=""
@@ -124,21 +124,21 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                               />
                             ) : (
                               <Icon
-                                className="size-5 text-bg-500 dark:text-bg-500"
+                                className="text-bg-500 dark:text-bg-500 size-5"
                                 icon="tabler:library-photo"
                               />
                             )}
                           </div>
-                          <div className="w-full truncate text-left text-bg-500">
+                          <div className="text-bg-500 w-full truncate text-left">
                             {album.name}
                           </div>
                           {selectedAlbum === album.id ? (
                             <Icon
-                              className="size-6 text-bg-800 dark:text-custom-500!"
+                              className="text-bg-800 dark:text-custom-500! size-6"
                               icon="tabler:check"
                             />
                           ) : (
-                            <span className="text-sm text-bg-500">
+                            <span className="text-bg-500 text-sm">
                               {album.amount?.toLocaleString()}
                             </span>
                           )}
@@ -149,7 +149,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                 )}
               </APIFallbackComponent>
               {loading && (
-                <div className="absolute left-0 top-0 size-full"></div>
+                <div className="absolute top-0 left-0 size-full"></div>
               )}
             </ul>
             <Button

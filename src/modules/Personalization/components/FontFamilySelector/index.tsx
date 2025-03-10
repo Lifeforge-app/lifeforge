@@ -113,7 +113,7 @@ function FontFamilySelector(): React.ReactElement {
             <Icon className="size-5" icon="simple-icons:googlefonts" />
             {t('fontFamily.tooltipTitle')}
           </h3>
-          <p className="relative z-40 text-sm text-bg-500">
+          <p className="text-bg-500 relative z-40 text-sm">
             {t('fontFamily.tooltip')}
           </p>
         </>
@@ -128,7 +128,7 @@ function FontFamilySelector(): React.ReactElement {
         <div className="relative mt-1 w-full md:w-64">
           <ListboxButton
             className={clsx(
-              'flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left shadow-custom outline-hidden transition-all focus:outline-hidden',
+              'shadow-custom flex w-full items-center gap-2 rounded-lg py-4 pr-10 pl-4 text-left outline-hidden transition-all focus:outline-hidden',
               componentBgWithHover
             )}
           >
@@ -141,13 +141,13 @@ function FontFamilySelector(): React.ReactElement {
               {fontFamily}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <Icon className="size-5 text-bg-500" icon="tabler:chevron-down" />
+              <Icon className="text-bg-500 size-5" icon="tabler:chevron-down" />
             </span>
           </ListboxButton>
           <ListboxOptions
             transition
             anchor="bottom end"
-            className="h-72 w-80 divide-y divide-bg-200 rounded-md bg-bg-100 py-1 text-base text-bg-800 shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50"
+            className="divide-bg-200 bg-bg-100 text-bg-800 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50 h-72 w-80 divide-y rounded-md py-1 text-base shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
           >
             {allFonts.map(({ family }) => (
               <FontFamilyItem key={family} family={family} />

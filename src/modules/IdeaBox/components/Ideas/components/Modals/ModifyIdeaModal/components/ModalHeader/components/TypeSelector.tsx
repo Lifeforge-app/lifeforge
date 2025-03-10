@@ -23,12 +23,12 @@ function TypeSelector({
       as="div"
       className={clsx(
         'relative text-left',
-        inline ? 'hidden sm:inline' : 'mb-8 mt-4 block sm:hidden'
+        inline ? 'hidden sm:inline' : 'mt-4 mb-8 block sm:hidden'
       )}
     >
       <MenuButton
         className={clsx(
-          'flex-between inline-flex w-full rounded-md border-2 border-bg-300 sm:w-auto text-lg font-semibold tracking-wide text-bg-800 outline-hidden hover:bg-bg-100 focus:outline-hidden dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200',
+          'flex-between border-bg-300 text-bg-800 hover:bg-bg-100 dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200 inline-flex w-full rounded-md border-2 text-lg font-semibold tracking-wide outline-hidden focus:outline-hidden sm:w-auto',
           inline ? 'p-2 px-4' : 'p-4 px-6'
         )}
       >
@@ -39,8 +39,8 @@ function TypeSelector({
               innerTypeOfModifyIdea === 'text'
                 ? 'tabler:article'
                 : innerTypeOfModifyIdea === 'image'
-                ? 'tabler:photo'
-                : 'tabler:link'
+                  ? 'tabler:photo'
+                  : 'tabler:link'
             }
           />
           {t(`entryType.${innerTypeOfModifyIdea}`)}
@@ -54,7 +54,7 @@ function TypeSelector({
       <MenuItems
         transition
         anchor="bottom start"
-        className="z-9999 mt-2 overflow-hidden rounded-lg bg-bg-100 text-bg-800 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:bg-bg-800"
+        className="bg-bg-100 text-bg-800 dark:bg-bg-800 z-9999 mt-2 overflow-hidden rounded-lg shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
       >
         {[
           ['text', 'tabler:article'],

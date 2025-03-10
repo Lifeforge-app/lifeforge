@@ -50,7 +50,7 @@ function ThemeSelector(): React.ReactElement {
               <div className="relative rounded-lg p-2 lg:rounded-2xl">
                 {theme === id && (
                   <Icon
-                    className="absolute bottom-2 right-2.5 block size-6 text-xl text-custom-500"
+                    className="text-custom-500 absolute right-2.5 bottom-2 block size-6 text-xl"
                     icon="tabler:circle-check-filled"
                   />
                 )}
@@ -60,7 +60,7 @@ function ThemeSelector(): React.ReactElement {
             <p
               className={clsx(
                 'mt-4',
-                theme === id && 'font-medium text-custom-500'
+                theme === id && 'text-custom-500 font-medium'
               )}
             >
               {name}

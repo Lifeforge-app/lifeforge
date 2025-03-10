@@ -27,7 +27,7 @@ function EntryItem({
   return (
     <div
       key={mail.id}
-      className="flex-between cursor-pointer flex w-full gap-12 border-b border-bg-200 p-4 text-left transition-all hover:bg-bg-200/50 dark:border-bg-800/50 dark:hover:bg-bg-800/50"
+      className="flex-between border-bg-200 hover:bg-bg-200/50 dark:border-bg-800/50 dark:hover:bg-bg-800/50 flex w-full cursor-pointer gap-12 border-b p-4 text-left transition-all"
       role="button"
       tabIndex={0}
       onClick={e => {
@@ -59,7 +59,7 @@ function EntryItem({
           }}
         />
         <div className="w-full min-w-0">
-          <span className="block text-sm text-bg-500">
+          <span className="text-bg-500 block text-sm">
             {(() => {
               if (mail.from.name) {
                 return mail.from.name
@@ -82,22 +82,22 @@ function EntryItem({
               {mail.subject === '' ? 'No subject' : mail.subject}
             </span>
             {!mail.seen && (
-              <span className="rounded-full bg-custom-500/30 px-3 py-0.5 text-xs font-semibold text-custom-500">
+              <span className="bg-custom-500/30 text-custom-500 rounded-full px-3 py-0.5 text-xs font-semibold">
                 New
               </span>
             )}
           </div>
 
-          <p className="mt-1 truncate text-base font-light text-bg-500">
+          <p className="text-bg-500 mt-1 truncate text-base font-light">
             {mail.text.trim() || 'No content'}
           </p>
         </div>
       </div>
       <div className="flex shrink-0 items-center gap-2">
         {mail.attachments?.length > 0 && (
-          <Icon className="size-4 text-bg-500" icon="tabler:paperclip" />
+          <Icon className="text-bg-500 size-4" icon="tabler:paperclip" />
         )}
-        <span className="mr-2 text-sm text-bg-500">
+        <span className="text-bg-500 mr-2 text-sm">
           {moment(mail.date).fromNow()}
         </span>
         <Button

@@ -8,7 +8,7 @@ const LLC = LazyLoadComponent as any
 function FontFamilyItem({ family }: { family: string }): React.ReactElement {
   return (
     <ListboxOption
-      className="flex-between relative flex h-16 cursor-pointer select-none bg-transparent px-4 transition-all hover:bg-bg-100 dark:hover:bg-bg-800"
+      className="flex-between hover:bg-bg-100 dark:hover:bg-bg-800 relative flex h-16 cursor-pointer bg-transparent px-4 transition-all select-none"
       value={family}
     >
       {({ selected }) => (
@@ -25,7 +25,7 @@ function FontFamilyItem({ family }: { family: string }): React.ReactElement {
           </div>
           {selected && (
             <Icon
-              className="block text-lg text-custom-500"
+              className="text-custom-500 block text-lg"
               icon="tabler:check"
             />
           )}

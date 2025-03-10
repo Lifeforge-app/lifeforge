@@ -26,7 +26,7 @@ function SubjectItem({
   return (
     <div
       className={clsx(
-        'group relative flex size-full flex-col items-center rounded-lg p-8 shadow-custom transition-all',
+        'group shadow-custom relative flex size-full flex-col items-center rounded-lg p-8 transition-all',
         componentBgWithHover
       )}
     >
@@ -37,17 +37,17 @@ function SubjectItem({
         )}
         icon={subject.icon}
       />
-      <h2 className="mt-6 text-center text-2xl font-medium uppercase tracking-widest">
+      <h2 className="mt-6 text-center text-2xl font-medium tracking-widest uppercase">
         {subject.title}
       </h2>
-      <p className="mt-2 text-center text-sm text-bg-500">
+      <p className="text-bg-500 mt-2 text-center text-sm">
         {subject.description}
       </p>
       <Link
-        className="absolute left-0 top-0 size-full"
+        className="absolute top-0 left-0 size-full"
         to={`/notes/${workspace}/${subject.id}`}
       />
-      <HamburgerMenu className="absolute right-4 top-4 z-20">
+      <HamburgerMenu className="absolute top-4 right-4 z-20">
         <MenuItem
           icon="tabler:pencil"
           text="Edit"

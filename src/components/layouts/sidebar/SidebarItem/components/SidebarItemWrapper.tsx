@@ -15,13 +15,13 @@ function SidebarItemWrapper({
       className={clsx(
         'flex-center relative isolate px-4 transition-all',
         active
-          ? "font-semibold text-bg-800 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:bg-custom-500 after:content-[''] dark:text-bg-50"
+          ? "text-bg-800 after:bg-custom-500 dark:text-bg-50 font-semibold after:absolute after:top-1/2 after:right-0 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:content-['']"
           : 'text-bg-500 dark:text-bg-500'
       )}
     >
       <div
         className={clsx(
-          'flex-between cursor-pointer text-left group relative flex h-14 w-full gap-4 whitespace-nowrap rounded-lg pl-4 pr-3 transition-all duration-100',
+          'flex-between group relative flex h-14 w-full cursor-pointer gap-4 rounded-lg pr-3 pl-4 text-left whitespace-nowrap transition-all duration-100',
           active
             ? 'bg-bg-200/50 shadow-custom dark:bg-bg-800'
             : 'hover:bg-bg-200/30 dark:hover:bg-bg-800/30'

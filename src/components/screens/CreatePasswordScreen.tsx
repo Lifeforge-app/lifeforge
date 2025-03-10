@@ -77,7 +77,7 @@ function CreatePasswordScreen({
         <h2 className="text-4xl font-semibold">
           {t('vault.createPassword.title')}
         </h2>
-        <p className="mb-8 w-1/2 text-center text-lg text-bg-500">
+        <p className="text-bg-500 mb-8 w-1/2 text-center text-lg">
           {t('vault.createPassword.desc')}
         </p>
         <TextInput
@@ -145,7 +145,7 @@ function CreatePasswordScreen({
         <h1 className="text-2xl font-semibold">
           Make sure you remember your master password!
         </h1>
-        <p className="mt-2 text-bg-500">
+        <p className="text-bg-500 mt-2">
           This master password is unchangable for now! If you accidentally
           forget the password, you lose everything. This password is hashed and
           stored in your user profile, and it is not decryptable. It will be

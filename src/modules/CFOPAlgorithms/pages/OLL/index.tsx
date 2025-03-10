@@ -39,12 +39,12 @@ function CFOPF2L(): React.ReactElement {
             <li
               key={index}
               className={clsx(
-                'flex w-full items-center justify-between gap-8 rounded-md p-4 shadow-custom',
+                'shadow-custom flex w-full items-center justify-between gap-8 rounded-md p-4',
                 componentBg
               )}
             >
               <div className="flex items-center gap-8">
-                <div className="rounded-md bg-bg-200/70 p-2 dark:bg-bg-800/50">
+                <div className="bg-bg-200/70 dark:bg-bg-800/50 rounded-md p-2">
                   <div className="flex flex-col gap-0.5">
                     <div className="flex gap-0.5">
                       <div className="size-5"></div>
@@ -117,7 +117,7 @@ function CFOPF2L(): React.ReactElement {
                 </div>
                 <p className="text-xl">{algsetAlgs[index].alg[0]}</p>
               </div>
-              <p className="mr-8 text-xl text-bg-500">
+              <p className="text-bg-500 mr-8 text-xl">
                 {algsetAlgs[index].group}
               </p>
             </li>

@@ -27,43 +27,43 @@ function MovieItem({
     <div
       className={clsx(
         componentBg,
-        'p-6 rounded-md flex gap-6 items-center relative shadow-custom',
+        'shadow-custom relative flex items-center gap-6 rounded-md p-6',
         type === 'grid' ? 'flex-col' : 'flex-col md:flex-row'
       )}
     >
-      <div className="h-66 w-48 flex items-center rounded-md overflow-hidden justify-center shrink-0 bg-bg-200 dark:bg-bg-800 relative isolate">
+      <div className="bg-bg-200 dark:bg-bg-800 relative isolate flex h-66 w-48 shrink-0 items-center justify-center overflow-hidden rounded-md">
         <Icon
-          className="size-18 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-bg-300 dark:text-bg-700 z-[-1]"
+          className="text-bg-300 dark:text-bg-700 absolute top-1/2 left-1/2 z-[-1] size-18 -translate-x-1/2 -translate-y-1/2 transform"
           icon="tabler:movie"
         />
         <img
           alt=""
-          className="object-cover rounded-md w-full h-full"
+          className="h-full w-full rounded-md object-cover"
           src={`http://image.tmdb.org/t/p/w300/${data.poster}`}
         />
       </div>
-      <div className="w-full flex flex-col flex-1">
-        <p className="font-semibold text-custom-500 mb-1">
+      <div className="flex w-full flex-1 flex-col">
+        <p className="text-custom-500 mb-1 font-semibold">
           {moment(data.release_date).year()}
         </p>
         <h1 className="text-xl font-semibold">
           {data.title}
-          <span className="text-base font-medium text-bg-500">
+          <span className="text-bg-500 text-base font-medium">
             {' '}
             ({data.original_title})
           </span>
         </h1>
-        <p className="mt-2 line-clamp-2 text-bg-500">{data.overview}</p>
-        <div className="flex flex-1 flex-wrap items-center gap-x-8 gap-y-4 mt-4">
+        <p className="text-bg-500 mt-2 line-clamp-2">{data.overview}</p>
+        <div className="mt-4 flex flex-1 flex-wrap items-center gap-x-8 gap-y-4">
           <div className="space-y-2">
-            <div className="flex items-center gap-2 font-medium text-bg-500">
+            <div className="text-bg-500 flex items-center gap-2 font-medium">
               <Icon className="size-5" icon="tabler:category" />
               Genres
             </div>
             <div>{data.genres.join(', ')}</div>
           </div>
           <div className="space-y-2">
-            <div className="flex items-center gap-2 font-medium text-bg-500">
+            <div className="text-bg-500 flex items-center gap-2 font-medium">
               <Icon className="size-5" icon="tabler:calendar" />
               Release Date
             </div>
@@ -74,7 +74,7 @@ function MovieItem({
             </div>
           </div>
           <div className="space-y-2">
-            <div className="flex items-center gap-2 font-medium text-bg-500">
+            <div className="text-bg-500 flex items-center gap-2 font-medium">
               <Icon className="size-5" icon="tabler:clock" />
               Duration
             </div>
@@ -84,14 +84,14 @@ function MovieItem({
             </div>
           </div>
           <div className="space-y-2">
-            <div className="flex items-center gap-2 font-medium text-bg-500">
+            <div className="text-bg-500 flex items-center gap-2 font-medium">
               <Icon className="size-5" icon="uil:globe" />
               Language
             </div>
             <div>{data.language}</div>
           </div>
           <div className="space-y-2">
-            <div className="flex items-center gap-2 font-medium text-bg-500">
+            <div className="text-bg-500 flex items-center gap-2 font-medium">
               <Icon className="size-5" icon="tabler:flag" />
               Countries
             </div>
@@ -113,7 +113,7 @@ function MovieItem({
         </div>
         <div
           className={clsx(
-            'flex mt-6 gap-2',
+            'mt-6 flex gap-2',
             type === 'grid' ? 'flex-col' : 'flex-col md:flex-row'
           )}
         >

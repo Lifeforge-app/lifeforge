@@ -130,7 +130,7 @@ function ModifyEntryModal({
     formData.append('file', image.image instanceof File ? image.image : '')
     formData.append(
       'image',
-      image.image instanceof File ? '' : image.image ?? ''
+      image.image instanceof File ? '' : (image.image ?? '')
     )
     formData.append(
       'imageRemoved',

@@ -81,7 +81,7 @@ function ModuleItem({
   return (
     <li
       className={clsx(
-        'flex flex-col items-center rounded-lg p-4 shadow-custom',
+        'shadow-custom flex flex-col items-center rounded-lg p-4',
         componentBg
       )}
     >
@@ -89,7 +89,7 @@ function ModuleItem({
         <div className="flex items-center gap-4">
           <div className={clsx('rounded-lg p-3', componentBgLighter)}>
             <Icon
-              className="text-2xl text-custom-500 dark:text-bg-50"
+              className="text-custom-500 dark:text-bg-50 text-2xl"
               icon={module.icon}
             />
           </div>
@@ -115,7 +115,7 @@ function ModuleItem({
             }}
           />
           <button
-            className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-200 dark:hover:bg-bg-800/50"
+            className="text-bg-500 hover:bg-bg-200 dark:hover:bg-bg-800/50 rounded-lg p-2 transition-all"
             onClick={toggleExpandConfig}
           >
             <Icon
@@ -166,11 +166,11 @@ function ModuleItem({
                   case 'select':
                     return (
                       <div key={key} className="space-y-2">
-                        <label className="text-sm text-bg-500" htmlFor={key}>
+                        <label className="text-bg-500 text-sm" htmlFor={key}>
                           {property.name}
                         </label>
                         <select
-                          className="rounded-lg bg-bg-100 p-2 dark:bg-bg-800"
+                          className="bg-bg-100 dark:bg-bg-800 rounded-lg p-2"
                           id={key}
                         >
                           {property.options.map(option => (

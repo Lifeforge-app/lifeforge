@@ -78,7 +78,7 @@ function SearchTMDBModal({
     <ModalWrapper isOpen={isOpen} minWidth="70vw">
       <ModalHeader
         appendTitle={
-          <p className="shrink-0 text-right text-sm sm:text-base text-bg-500">
+          <p className="text-bg-500 shrink-0 text-right text-sm sm:text-base">
             powered by&nbsp;
             <a
               className="underline"
@@ -86,7 +86,7 @@ function SearchTMDBModal({
               rel="noreferrer"
               target="_blank"
             >
-              <img alt="TMDB" className="h-4 ml-2 inline" src={TMDBLogo} />
+              <img alt="TMDB" className="ml-2 inline h-4" src={TMDBLogo} />
             </a>
           </p>
         }
@@ -95,7 +95,7 @@ function SearchTMDBModal({
         title="Search TMDB"
         onClose={onClose}
       />
-      <div className="flex items-center gap-2 sm:flex-row flex-col">
+      <div className="flex flex-col items-center gap-2 sm:flex-row">
         <SearchInput
           hasTopMargin={false}
           namespace="modules.movies"
@@ -125,7 +125,7 @@ function SearchTMDBModal({
           search
         </Button>
       </div>
-      <div className="w-full mt-6">
+      <div className="mt-6 w-full">
         {(() => {
           if (searchLoading) {
             return (

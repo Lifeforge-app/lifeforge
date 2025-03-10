@@ -15,7 +15,7 @@ function Sidebar(): React.ReactElement {
     <>
       <aside
         className={clsx(
-          'absolute left-0 top-0 z-9990 flex h-full shrink-0 flex-col overflow-hidden rounded-r-2xl bg-bg-50 shadow-custom backdrop-blur-xs transition-all duration-300 dark:bg-bg-900 lg:relative lg:bg-bg-50/50 lg:backdrop-blur-xs lg:dark:bg-bg-900/50',
+          'bg-bg-50 shadow-custom dark:bg-bg-900 lg:bg-bg-50/50 lg:dark:bg-bg-900/50 absolute top-0 left-0 z-9990 flex h-full shrink-0 flex-col overflow-hidden rounded-r-2xl backdrop-blur-xs transition-all duration-300 lg:relative lg:backdrop-blur-xs',
           sidebarExpanded
             ? 'w-full min-w-80 sm:w-1/2 lg:w-3/12 xl:w-1/5'
             : 'w-0 min-w-0 sm:w-[5.4rem]'

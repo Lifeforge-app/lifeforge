@@ -69,7 +69,7 @@ function CategoriesSection({
                       />
                       <Icon
                         className={clsx(
-                          'absolute -bottom-2 -right-2 size-4 shrink-0',
+                          'absolute -right-2 -bottom-2 size-4 shrink-0',
                           {
                             income: 'text-green-500',
                             expenses: 'text-red-500',

@@ -93,12 +93,12 @@ function AlgEntry({
   return (
     <li
       className={clsx(
-        'flex w-full items-center justify-between gap-8 rounded-md p-4 shadow-custom',
+        'shadow-custom flex w-full items-center justify-between gap-8 rounded-md p-4',
         componentBg
       )}
     >
       <div className="flex items-center gap-8">
-        <div className="rounded-md bg-bg-200/70 p-2 dark:bg-bg-800/50">
+        <div className="bg-bg-200/70 dark:bg-bg-800/50 rounded-md p-2">
           <div ref={containerRef} className="relative flex flex-col gap-0.5">
             <div className="flex gap-0.5">
               <div className="size-5"></div>
@@ -163,13 +163,13 @@ function AlgEntry({
           </div>
         </div>
         <div>
-          <p className="text-lg font-semibold text-bg-500">
+          <p className="text-bg-500 text-lg font-semibold">
             {algsetAlgs[index].name}
           </p>
           <p className="text-xl">{algsetAlgs[index].alg[0]}</p>
         </div>
       </div>
-      <p className="mr-8 text-xl text-bg-500">{algsetAlgs[index].group}</p>
+      <p className="text-bg-500 mr-8 text-xl">{algsetAlgs[index].group}</p>
     </li>
   )
 }

@@ -39,7 +39,7 @@ function PhotosFavouritesGallery(): React.ReactElement {
             <div className="flex-between flex">
               <h1 className="flex items-center gap-4 text-2xl font-semibold">
                 <>
-                  <div className="flex-center size-14 shrink-0 rounded-md bg-bg-200 shadow-md dark:bg-bg-700/50">
+                  <div className="flex-center bg-bg-200 dark:bg-bg-700/50 size-14 shrink-0 rounded-md shadow-md">
                     <Icon className="size-7" icon="tabler:star-filled" />
                   </div>
                   <span className="space-y-1">
@@ -48,7 +48,7 @@ function PhotosFavouritesGallery(): React.ReactElement {
                       switch (photos) {
                         case 'loading':
                           return (
-                            <span className="text-sm text-bg-500">
+                            <span className="text-bg-500 text-sm">
                               <Icon
                                 className="size-5"
                                 icon="svg-spinners:180-ring"
@@ -57,11 +57,11 @@ function PhotosFavouritesGallery(): React.ReactElement {
                           )
                         case 'error':
                           return (
-                            <span className="text-sm text-bg-500">Error</span>
+                            <span className="text-bg-500 text-sm">Error</span>
                           )
                         default:
                           return (
-                            <span className="flex items-center gap-2 text-sm font-medium text-bg-500">
+                            <span className="text-bg-500 flex items-center gap-2 text-sm font-medium">
                               {photos.length.toLocaleString()} photos
                             </span>
                           )
@@ -71,7 +71,7 @@ function PhotosFavouritesGallery(): React.ReactElement {
                 </>
               </h1>
               <div className="flex-center gap-2">
-                <button className="rounded-lg p-4 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50">
+                <button className="text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50 rounded-lg p-4 transition-all">
                   <Icon className="text-2xl" icon="tabler:share" />
                 </button>
                 <HamburgerMenu largerPadding className="relative">

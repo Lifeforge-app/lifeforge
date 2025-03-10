@@ -17,14 +17,14 @@ function PlaylistInfo({
       />
       <div className="flex flex-col">
         <h1 className="text-xl font-semibold">{playlistInfo.title}</h1>
-        <p className="mt-1 font-medium text-custom-500">
+        <p className="text-custom-500 mt-1 font-medium">
           {playlistInfo.channel}
         </p>
-        <p className="mt-4 flex items-center gap-2 text-bg-500">
+        <p className="text-bg-500 mt-4 flex items-center gap-2">
           <Icon className="size-5" icon="tabler:movie" />
           {playlistInfo.total_videos} videos
         </p>
-        <p className="flex items-center gap-2 text-bg-500">
+        <p className="text-bg-500 flex items-center gap-2">
           <Icon className="size-5" icon="tabler:eye" />
           {shortenBigNumber(playlistInfo.views)} views
         </p>

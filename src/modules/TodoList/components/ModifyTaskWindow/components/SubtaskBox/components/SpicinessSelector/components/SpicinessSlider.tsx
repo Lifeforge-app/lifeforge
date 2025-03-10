@@ -22,7 +22,7 @@ function SpicinessSlider({
               'size-4 rounded-full',
               SPICINESS_COLOR[index][spiciness === index ? 1 : 2],
               spiciness === index &&
-                `ring-2 ring-offset-2 ring-offset-bg-50 dark:ring-offset-bg-800 ${SPICINESS_COLOR[index][3]}`
+                `ring-offset-bg-50 dark:ring-offset-bg-800 ring-2 ring-offset-2 ${SPICINESS_COLOR[index][3]}`
             )}
             onClick={() => {
               setSpiciness(index)
@@ -31,9 +31,9 @@ function SpicinessSlider({
         ))}
       </div>
       <div className="flex-between mt-2 flex w-full gap-2">
-        <span className="text-sm text-bg-500">Mild</span>
+        <span className="text-bg-500 text-sm">Mild</span>
         <span className="h-0.5 w-full rounded-full bg-linear-to-r from-lime-500 to-red-500" />
-        <span className="text-sm text-bg-500">Spicy</span>
+        <span className="text-bg-500 text-sm">Spicy</span>
       </div>
     </>
   )

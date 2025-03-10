@@ -117,7 +117,7 @@ function HamburgerMenu(props: MenuProps): React.ReactElement {
             anchor="bottom end"
             className={clsx(
               customWidth,
-              'mt-2 z-9991 overflow-hidden overscroll-contain rounded-md border border-bg-200 bg-bg-100 shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 dark:border-bg-700 dark:bg-bg-800'
+              'border-bg-200 bg-bg-100 dark:border-bg-700 dark:bg-bg-800 z-9991 mt-2 overflow-hidden overscroll-contain rounded-md border shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0'
             )}
           >
             {children}

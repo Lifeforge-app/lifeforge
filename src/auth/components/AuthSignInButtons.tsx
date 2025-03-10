@@ -58,11 +58,11 @@ function AuthSignInButton({
         Sign In
       </Button>
       <div className="flex items-center gap-3">
-        <div className="h-[2px] w-full bg-bg-500"></div>
-        <div className="shrink-0 font-medium text-bg-500">
+        <div className="bg-bg-500 h-[2px] w-full"></div>
+        <div className="text-bg-500 shrink-0 font-medium">
           {t('orSignInWith')}
         </div>
-        <div className="h-[2px] w-full bg-bg-500"></div>
+        <div className="bg-bg-500 h-[2px] w-full"></div>
       </div>
       <div className="flex w-full gap-4">
         <Button

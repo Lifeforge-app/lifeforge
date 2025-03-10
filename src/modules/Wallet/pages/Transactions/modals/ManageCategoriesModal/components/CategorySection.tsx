@@ -32,12 +32,12 @@ function CategorySection({
   return (
     <>
       <div className="flex-between flex gap-4">
-        <h2 className="flex items-center gap-2 text-lg font-medium text-bg-500">
+        <h2 className="text-bg-500 flex items-center gap-2 text-lg font-medium">
           <Icon className="size-6" icon={iconName} />
           {t('transactionTypes.' + type)}
         </h2>
         <button
-          className="rounded-lg p-2 text-bg-500 transition-all hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50"
+          className="text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50 rounded-lg p-2 transition-all"
           onClick={() => {
             setModifyCategoriesModalOpenType(type)
           }}
@@ -45,7 +45,7 @@ function CategorySection({
           <Icon className="size-5" icon="tabler:plus" />
         </button>
       </div>
-      <ul className="mb-4 flex flex-col divide-y divide-bg-200 dark:divide-bg-800">
+      <ul className="divide-bg-200 dark:divide-bg-800 mb-4 flex flex-col divide-y">
         {filteredCategories.length > 0 ? (
           filteredCategories.map(category => (
             <li key={category.id} className="flex-between flex gap-4 px-2 py-4">
@@ -64,7 +64,7 @@ function CategorySection({
                     }}
                   />
                 </div>
-                <div className="font-semibold ">{category.name}</div>
+                <div className="font-semibold">{category.name}</div>
               </div>
               <HamburgerMenu className="relative">
                 <MenuItem
@@ -88,7 +88,7 @@ function CategorySection({
             </li>
           ))
         ) : (
-          <p className="text-center text-bg-500">
+          <p className="text-bg-500 text-center">
             No {type === 'income' ? 'income' : 'expenses'} categories found
           </p>
         )}

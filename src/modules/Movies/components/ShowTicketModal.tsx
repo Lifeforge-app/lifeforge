@@ -25,11 +25,11 @@ function ShowTicketModal({
       />
       {entry && (
         <>
-          <div className="w-full h-auto p-8 aspect-square bg-white rounded-lg flex items-center justify-center">
-            <QRCodeSVG className="w-full h-full" value={entry.ticket_number} />,
+          <div className="flex aspect-square h-auto w-full items-center justify-center rounded-lg bg-white p-8">
+            <QRCodeSVG className="h-full w-full" value={entry.ticket_number} />,
           </div>
-          <h2 className="text-xl mt-6 font-medium">{entry.title}</h2>
-          <div className="mt-6 space-y-4 text-bg-500">
+          <h2 className="mt-6 text-xl font-medium">{entry.title}</h2>
+          <div className="text-bg-500 mt-6 space-y-4">
             <div className="flex items-center gap-2">
               <Icon className="size-5 shrink-0" icon="tabler:map-pin" />
               {entry.theatre_location}

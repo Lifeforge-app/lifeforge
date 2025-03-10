@@ -34,7 +34,7 @@ function EntryImage({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
         dragRef(node)
       }}
       className={clsx(
-        'group relative my-4 flex cursor-pointer items-start justify-between gap-2 rounded-lg p-4 shadow-custom',
+        'group shadow-custom relative my-4 flex cursor-pointer items-start justify-between gap-2 rounded-lg p-4',
         componentBg,
         isDragging && 'cursor-move'
       )}
@@ -44,7 +44,7 @@ function EntryImage({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
     >
       {entry.pinned && (
         <Icon
-          className="absolute -left-2 -top-2 z-50 size-5 -rotate-90 text-red-500 drop-shadow-md"
+          className="absolute -top-2 -left-2 z-50 size-5 -rotate-90 text-red-500 drop-shadow-md"
           icon="tabler:pin"
         />
       )}
@@ -56,7 +56,7 @@ function EntryImage({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
             ))}
           </div>
         )}
-        <h3 className="text-xl font-semibold ">{entry.title}</h3>
+        <h3 className="text-xl font-semibold">{entry.title}</h3>
         <Zoom
           ZoomContent={CustomZoomContent}
           zoomImg={{
@@ -68,13 +68,13 @@ function EntryImage({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
         >
           <img
             alt={''}
-            className="rounded-lg shadow-custom"
+            className="shadow-custom rounded-lg"
             src={`${import.meta.env.VITE_API_HOST}/media/${
               entry.collectionId
             }/${entry.id}/${entry.image}?thumb=500x0`}
           />
         </Zoom>
-        <span className="block text-sm text-bg-500">
+        <span className="text-bg-500 block text-sm">
           {moment(entry.created).fromNow()}
         </span>
         <InFolderChip entry={entry} />
