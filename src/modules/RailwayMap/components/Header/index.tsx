@@ -1,46 +1,96 @@
-import React from 'react'
-import { Button } from '@components/buttons'
-import { SearchInput } from '@components/inputs'
+import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Button, FAB } from '@components/buttons'
+import HamburgerSelectorWrapper from '@components/buttons/HamburgerMenu/components/HamburgerSelectorWrapper'
+import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import { useRailwayMapContext } from '@providers/RailwayMapProvider'
+import { toCamelCase } from '@utils/strings'
+import DetailBox from './components/DetailBox'
 import LineFilter from './components/LineFilter'
-import ViewTypeSwitcher from './components/ViewTypeSwitcher'
+import SearchBar from './components/SearchBar'
+import ViewTypeSwitcher, { VIEW_TYPES } from './components/ViewTypeSwitcher'
 
 function Header(): React.ReactElement {
+  const { t } = useTranslation('modules.railwayMap')
   const {
     viewType,
     setViewType,
-    searchQuery,
-    setSearchQuery,
-    lines,
-    filteredLines,
-    setFilteredLines,
-    routePlannerOpen,
-    setRoutePlannerOpen
+    setRoutePlannerOpen,
+    shortestRoute,
+    clearShortestRoute
   } = useRailwayMapContext()
+  const hasRoute = useMemo(
+    () => typeof shortestRoute !== 'string' && shortestRoute.length > 0,
+    [shortestRoute]
+  )
 
   return (
-    <div className="mt-6 flex items-center gap-2">
-      <ViewTypeSwitcher setViewType={setViewType} viewType={viewType} />
-      <SearchInput
-        hasTopMargin={false}
-        namespace="modules.railwayMap"
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        stuffToSearch="station"
+    <>
+      <ModuleHeader
+        actionButton={
+          <Button
+            className="hidden md:flex"
+            icon={hasRoute ? 'tabler:route-off' : 'tabler:route'}
+            isRed={hasRoute}
+            namespace="modules.railwayMap"
+            variant={hasRoute ? 'no-bg' : 'primary'}
+            onClick={() => {
+              if (hasRoute) {
+                clearShortestRoute()
+              } else {
+                setRoutePlannerOpen(true)
+              }
+            }}
+          >
+            {hasRoute ? 'clear Route' : 'Plan Route'}
+          </Button>
+        }
+        hamburgerMenuItems={
+          <>
+            <HamburgerSelectorWrapper
+              className="lg:hidden"
+              icon="tabler:eye"
+              title={t('viewTypes.selectorTitle')}
+            >
+              {VIEW_TYPES.map(([icon, title, value]) => (
+                <MenuItem
+                  key={value}
+                  icon={icon}
+                  isToggled={viewType === value}
+                  namespace={false}
+                  text={t(`viewTypes.${toCamelCase(title)}`)}
+                  onClick={() => {
+                    setViewType(value)
+                  }}
+                />
+              ))}
+            </HamburgerSelectorWrapper>
+            <LineFilter />
+          </>
+        }
+        icon="uil:subway"
+        title="Railway Map"
       />
-      <LineFilter
-        filteredLines={filteredLines}
-        lines={lines}
-        setFilteredLines={setFilteredLines}
-      />
-      <Button
-        icon="tabler:route"
-        variant={routePlannerOpen ? 'primary' : 'no-bg'}
+      <div className="mt-6 flex items-center gap-2">
+        <ViewTypeSwitcher setViewType={setViewType} viewType={viewType} />
+        <SearchBar />
+      </div>
+      <FAB
+        hideWhen="md"
+        icon={hasRoute ? 'tabler:route-off' : 'tabler:route'}
+        isRed={shortestRoute.length > 0}
+        loading={typeof shortestRoute === 'string'}
         onClick={() => {
-          setRoutePlannerOpen(!routePlannerOpen)
+          if (hasRoute) {
+            clearShortestRoute()
+          } else {
+            setRoutePlannerOpen(true)
+          }
         }}
       />
-    </div>
+      <DetailBox />
+    </>
   )
 }
 
