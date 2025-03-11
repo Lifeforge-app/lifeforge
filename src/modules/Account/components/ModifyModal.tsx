@@ -34,7 +34,7 @@ function ModifyModal({
 
     try {
       await fetchAPI('/user/settings', {
-        method: 'POST',
+        method: 'PATCH',
         body: {
           data: {
             [id]:
