@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 import { usePhotosContext } from '@providers/PhotosProvider'
+import React from 'react'
 
 function MobileSlidingScrollbar(): React.ReactElement {
   const { galleryWrapperRef, sideSliderRef, mobileDateDisplayRef, photos } =
@@ -42,9 +42,9 @@ function MobileSlidingScrollbar(): React.ReactElement {
     >
       <div
         ref={mobileDateDisplayRef}
-        className="border-custom-500 bg-bg-200 dark:bg-bg-800 pointer-events-none absolute right-14 mt-1 hidden rounded-t-sm border-b-2 p-2 text-sm whitespace-nowrap shadow-md group-hover:block sm:right-3"
+        className="border-custom-500 bg-bg-200 dark:bg-bg-800 pointer-events-none absolute right-14 mt-1 hidden whitespace-nowrap rounded-t-sm border-b-2 p-2 text-sm shadow-md group-hover:block sm:right-3"
       ></div>
-      <div className="bg-bg-200 dark:bg-bg-900 rounded-l-full p-4 shadow-xs">
+      <div className="bg-bg-200 dark:bg-bg-900 shadow-xs rounded-l-full p-4">
         <Icon className="text-bg-500" icon="tabler:caret-up-down-filled" />
       </div>
     </div>

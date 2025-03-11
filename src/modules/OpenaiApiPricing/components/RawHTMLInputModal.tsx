@@ -1,9 +1,11 @@
+import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useReducer } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import FormModal from '@components/modals/FormModal'
+
+import { FormModal } from '@lifeforge/ui'
+
 import { type IFieldProps } from '@interfaces/modal_interfaces'
-import fetchAPI from '@utils/fetchAPI'
 
 function RawHTMLInputModal({
   isOpen,

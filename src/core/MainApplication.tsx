@@ -1,5 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router'
+
 import Sidebar from '@components/layouts/sidebar/Sidebar'
 
 function MainApplication(): React.ReactElement {

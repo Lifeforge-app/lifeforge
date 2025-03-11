@@ -1,15 +1,17 @@
+import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
+import VW_COLORS from '@constants/virtual_wardrobe_colors'
 import { UseQueryResult } from '@tanstack/react-query'
 import React from 'react'
 import { useSearchParams } from 'react-router'
+
 import {
+  QueryWrapper,
   SidebarDivider,
   SidebarItem,
   SidebarTitle,
   SidebarWrapper
-} from '@components/layouts/sidebar'
-import QueryWrapper from '@components/screens/QueryWrapper'
-import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
-import VW_COLORS from '@constants/virtual_wardrobe_colors'
+} from '@lifeforge/ui'
+
 import { type IVirtualWardrobeSidebarData } from '@interfaces/virtual_wardrobe_interfaces'
 
 function Sidebar({

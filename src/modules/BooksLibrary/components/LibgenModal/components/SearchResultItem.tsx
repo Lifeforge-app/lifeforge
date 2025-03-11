@@ -2,8 +2,11 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
-import { Button } from '@components/buttons'
+
+import { Button } from '@lifeforge/ui'
+
 import useThemeColors from '@hooks/useThemeColor'
+
 import AddToLibraryButton from './AddToLibraryButton'
 
 function SearchResultItem({
@@ -26,7 +29,7 @@ function SearchResultItem({
     >
       <div className="flex-center bg-bg-200 dark:bg-bg-800 relative inline-flex h-min min-h-80 w-56 shrink-0 flex-col overflow-hidden rounded-md">
         <Icon
-          className="text-bg-700 absolute top-1/2 left-1/2 size-24 -translate-x-1/2 -translate-y-1/2"
+          className="text-bg-700 absolute left-1/2 top-1/2 size-24 -translate-x-1/2 -translate-y-1/2"
           icon="tabler:book-2"
         />
         {book.image !== '' && (

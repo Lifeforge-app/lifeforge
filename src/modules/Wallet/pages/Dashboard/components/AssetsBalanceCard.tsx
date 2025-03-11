@@ -1,15 +1,19 @@
 import { Icon } from '@iconify/react'
+import { useWalletContext } from '@providers/WalletProvider'
+import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import DashboardItem from '@components/utilities/DashboardItem'
-import Scrollbar from '@components/utilities/Scrollbar'
+
+import {
+  APIFallbackComponent,
+  DashboardItem,
+  EmptyStateScreen,
+  Scrollbar
+} from '@lifeforge/ui'
+
 import useThemeColors from '@hooks/useThemeColor'
-import { useWalletContext } from '@providers/WalletProvider'
-import { numberToMoney } from '@utils/strings'
 
 function AssetsBalanceCard(): React.ReactElement {
   const { componentBgLighterWithHover } = useThemeColors()
@@ -54,7 +58,7 @@ function AssetsBalanceCard(): React.ReactElement {
                     </div>
                     <div
                       className={clsx(
-                        'flex gap-2 text-right text-3xl font-medium whitespace-nowrap',
+                        'flex gap-2 whitespace-nowrap text-right text-3xl font-medium',
                         isAmountHidden ? 'items-center' : 'items-end'
                       )}
                     >

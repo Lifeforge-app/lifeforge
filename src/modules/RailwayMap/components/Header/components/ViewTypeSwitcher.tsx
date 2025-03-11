@@ -1,14 +1,16 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { toCamelCase } from '@utils/strings'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+
 import {
   ListboxOrComboboxOption,
   ListboxOrComboboxOptions
-} from '@components/inputs'
+} from '@lifeforge/ui'
+
 import useThemeColors from '@hooks/useThemeColor'
-import { toCamelCase } from '@utils/strings'
 
 export const VIEW_TYPES = [
   ['tabler:route-alt-left', 'Route Map', 'route'],
@@ -39,7 +41,7 @@ function ViewTypeSwitcher({
     >
       <ListboxButton
         className={clsx(
-          'flex-between shadow-custom flex gap-2 gap-12 rounded-md p-4',
+          'flex-between shadow-custom flex gap-12 gap-2 rounded-md p-4',
           componentBgWithHover
         )}
       >
@@ -50,7 +52,7 @@ function ViewTypeSwitcher({
               VIEW_TYPES.find(([, , value]) => value === viewType)?.[0] ?? ''
             }
           />
-          <span className="font-medium whitespace-nowrap">
+          <span className="whitespace-nowrap font-medium">
             {t(
               `viewTypes.${toCamelCase(
                 VIEW_TYPES.find(([, , value]) => value === viewType)?.[1] ?? ''

@@ -1,13 +1,15 @@
 import { Icon } from '@iconify/react'
+import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+
+import { APIFallbackComponent, Button } from '@lifeforge/ui'
+
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
-import fetchAPI from '@utils/fetchAPI'
+
 import FlightsTable from './components/FlightsTable'
 
 interface FlightData {
@@ -111,7 +113,7 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
               <button
                 key={index}
                 className={clsx(
-                  'flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 p-4 tracking-widest uppercase transition-all',
+                  'flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all',
                   location.hash.replace('#', '') === name.toLowerCase()
                     ? 'border-custom-500 text-custom-500 font-medium'
                     : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'

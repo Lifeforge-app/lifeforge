@@ -1,9 +1,11 @@
 import clsx from 'clsx'
 import React from 'react'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function EntryItem({
   entry,

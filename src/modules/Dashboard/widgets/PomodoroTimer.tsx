@@ -1,5 +1,6 @@
 import React from 'react'
-import DashboardItem from '@components/utilities/DashboardItem'
+
+import { DashboardItem } from '@lifeforge/ui'
 
 export default function PomodoroTimer(): React.ReactElement {
   return (

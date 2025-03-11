@@ -1,19 +1,23 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import { useDebounce } from '@uidotdev/usehooks'
-
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
-import { Button } from '@components/buttons'
-import HamburgerSelectorWrapper from '@components/buttons/HamburgerMenu/components/HamburgerSelectorWrapper'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { SearchInput } from '@components/inputs'
+
+import {
+  APIFallbackComponent,
+  Button,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  HamburgerMenuSelectorWrapper,
+  MenuItem,
+  SearchInput,
+  ViewModeSelector
+} from '@lifeforge/ui'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import ViewModeSelector from '@components/utilities/ViewModeSelector'
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
+
 import Header from './components/Header'
 import LibgenModal from './components/LibgenModal'
 import ModifyBookModal from './components/ModifyBookModal'
@@ -78,7 +82,7 @@ function BooksLibrary(): React.ReactElement {
       <ModuleHeader
         hamburgerMenuClassName="block md:hidden"
         hamburgerMenuItems={
-          <HamburgerSelectorWrapper icon="tabler:eye" title="View as">
+          <HamburgerMenuSelectorWrapper icon="tabler:eye" title="View as">
             {['grid', 'list'].map(type => (
               <MenuItem
                 key={type}
@@ -90,7 +94,7 @@ function BooksLibrary(): React.ReactElement {
                 }}
               />
             ))}
-          </HamburgerSelectorWrapper>
+          </HamburgerMenuSelectorWrapper>
         }
         icon="tabler:books"
         title="Books Library"
@@ -187,12 +191,12 @@ function BooksLibrary(): React.ReactElement {
           setExistedBookData(null)
         }}
       />
-      <Menu as="div" className="fixed right-6 bottom-6 z-50 block md:hidden">
+      <Menu as="div" className="fixed bottom-6 right-6 z-50 block md:hidden">
         <Button as={MenuButton} icon="tabler:plus" onClick={() => {}}></Button>
         <MenuItems
           transition
           anchor="top end"
-          className="bg-bg-100 dark:bg-bg-800 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:6px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+          className="bg-bg-100 dark:bg-bg-800 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 overflow-hidden overscroll-contain rounded-md shadow-lg transition duration-100 ease-out [--anchor-gap:6px]"
         >
           <MenuItem
             icon="tabler:upload"

@@ -3,19 +3,26 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import Scrollbar from '@components/utilities/Scrollbar'
-import Tabs from '@components/utilities/Tabs'
-import useFetch from '@hooks/useFetch'
+
+import {
+  APIFallbackComponent,
+  Button,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  MenuItem,
+  Scrollbar,
+  Tabs
+} from '@lifeforge/ui'
+
 import {
   type IWishlistEntry,
   type IWishlistList
 } from '@interfaces/wishlist_interfaces'
+
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
+import useFetch from '@hooks/useFetch'
+
 import EntryItem from './components/EntryItem'
 import FromOtherAppsModal from './components/FromOtherAppsModal'
 import Header from './components/Header'
@@ -190,12 +197,12 @@ function WishlistEntries(): React.ReactElement {
         setEntries={setEntries}
         setOpenType={setModifyEntryModalOpenType}
       />
-      <Menu as="div" className="absolute right-6 bottom-6 z-50 block md:hidden">
+      <Menu as="div" className="absolute bottom-6 right-6 z-50 block md:hidden">
         <Button as={MenuButton} icon="tabler:plus" onClick={() => {}} />
         <MenuItems
           transition
           anchor="top end"
-          className="bg-bg-100 dark:bg-bg-800 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+          className="bg-bg-100 dark:bg-bg-800 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 overflow-hidden overscroll-contain rounded-md shadow-lg transition duration-100 ease-out [--anchor-gap:8px]"
         >
           <MenuItem
             icon="tabler:plus"

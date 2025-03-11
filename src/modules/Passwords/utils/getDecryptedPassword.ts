@@ -1,7 +1,7 @@
-import { cookieParse } from 'pocketbase'
-import { toast } from 'react-toastify'
 import { decrypt, encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
+import { cookieParse } from 'pocketbase'
+import { toast } from 'react-toastify'
 
 export async function getDecryptedPassword(
   masterPassword: string,

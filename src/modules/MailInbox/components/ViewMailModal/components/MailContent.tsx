@@ -1,5 +1,6 @@
 import DOMPurify from 'dompurify'
 import React, { useMemo } from 'react'
+
 import { IMailInboxEntry } from '@interfaces/mail_inbox_interfaces'
 
 function MailContent({ mail }: { mail: IMailInboxEntry }): React.ReactElement {

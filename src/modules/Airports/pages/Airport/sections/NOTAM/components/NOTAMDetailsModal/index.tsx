@@ -1,11 +1,17 @@
 import React from 'react'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import Scrollbar from '@components/utilities/Scrollbar'
-import useFetch from '@hooks/useFetch'
+
+import {
+  APIFallbackComponent,
+  EmptyStateScreen,
+  ModalHeader,
+  ModalWrapper,
+  Scrollbar
+} from '@lifeforge/ui'
+
 import { type IAirportNOTAMEntry } from '@interfaces/airports_interfaces'
+
+import useFetch from '@hooks/useFetch'
+
 import Header from './components/Header'
 import PropsTable from './components/PropsTable'
 import RawCodeAndSummary from './components/RawCodeAndSummary'
@@ -26,7 +32,7 @@ function NOTAMDetailsModal({
   )
 
   return (
-    <ModalWrapper className="h-full md:min-w-[40vw]!" isOpen={isOpen}>
+    <ModalWrapper className="md:min-w-[40vw]! h-full" isOpen={isOpen}>
       <ModalHeader
         icon="uil:exclamation-octagon"
         title="NOTAM Details"

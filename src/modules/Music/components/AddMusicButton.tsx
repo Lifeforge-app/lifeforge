@@ -1,12 +1,12 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { useMusicContext } from '@providers/MusicProvider'
+import IntervalManager from '@utils/intervalManager'
 import { cookieParse } from 'pocketbase'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { useMusicContext } from '@providers/MusicProvider'
-import IntervalManager from '@utils/intervalManager'
+
+import { Button, MenuItem } from '@lifeforge/ui'
 
 const intervalManager = IntervalManager.getInstance()
 
@@ -91,7 +91,7 @@ function AddMusicButton(): React.ReactElement {
       <MenuItems
         transition
         anchor="bottom end"
-        className="bg-bg-100 dark:bg-bg-800 mt-2 w-64 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+        className="bg-bg-100 dark:bg-bg-800 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 mt-2 w-64 overflow-hidden overscroll-contain rounded-md shadow-lg transition duration-100 ease-out"
       >
         <MenuItem
           icon={loading ? 'svg-spinners:180-ring' : 'uil:import'}

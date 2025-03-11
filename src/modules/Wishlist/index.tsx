@@ -1,13 +1,21 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button, FAB } from '@components/buttons'
+
+import {
+  APIFallbackComponent,
+  Button,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  FAB
+} from '@lifeforge/ui'
+
+import { type IWishlistList } from '@interfaces/wishlist_interfaces'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+
 import useFetch from '@hooks/useFetch'
-import { type IWishlistList } from '@interfaces/wishlist_interfaces'
+
 import ModifyWishlistListModal from './components/ModifyWishlistModal'
 import WishlistListItem from './components/WishlistListItem'
 
@@ -42,7 +50,7 @@ function Wishlist(): React.ReactElement {
       <APIFallbackComponent data={lists}>
         {lists =>
           lists.length ? (
-            <div className="mt-6 mb-14 grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]">
+            <div className="mb-14 mt-6 grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]">
               {lists.map(list => (
                 <WishlistListItem
                   key={list.id}

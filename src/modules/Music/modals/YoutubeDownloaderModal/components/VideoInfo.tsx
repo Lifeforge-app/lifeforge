@@ -1,11 +1,12 @@
 import { Icon } from '@iconify/react'
+import { shortenBigNumber } from '@utils/strings'
 import moment from 'moment'
 import React from 'react'
+
 import {
   type IYoutubePlaylistVideoEntry,
   type IYoutubeVideoInfo
 } from '@interfaces/youtube_video_storage_interfaces'
-import { shortenBigNumber } from '@utils/strings'
 
 function VideoInfo({
   videoInfo
@@ -25,7 +26,7 @@ function VideoInfo({
           className="size-full object-cover"
           src={videoInfo.thumbnail}
         />
-        <p className="bg-bg-900/70 text-bg-50 absolute right-2 bottom-2 rounded-md px-1.5 py-0.5">
+        <p className="bg-bg-900/70 text-bg-50 absolute bottom-2 right-2 rounded-md px-1.5 py-0.5">
           {moment
             .utc(
               moment.duration(videoInfo.duration, 'seconds').asMilliseconds()

@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import WidgetWrapper from './WidgetWrapper'
+
 import { IAirportMETARData } from '..'
 import { METAR_CODES, METAR_ICONS } from '../constants/constants'
+import WidgetWrapper from './WidgetWrapper'
 
 function SignificantWeather({
   data

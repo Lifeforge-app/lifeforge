@@ -1,7 +1,9 @@
 import React from 'react'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import Pagination from '@components/utilities/Pagination'
+
+import { EmptyStateScreen, Pagination } from '@lifeforge/ui'
+
 import { IMovieSearchResults } from '@interfaces/movies_interfaces'
+
 import TMDBResultItem from './TMDBResultItem'
 
 function TMDBResultsList({
@@ -36,7 +38,7 @@ function TMDBResultsList({
   return (
     <>
       <Pagination
-        className="mt-6 mb-4"
+        className="mb-4 mt-6"
         currentPage={page}
         totalPages={results.total_pages}
         onPageChange={setPage}

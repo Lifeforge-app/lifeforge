@@ -1,15 +1,17 @@
 import { Icon } from '@iconify/react'
-
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import {
   ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
+  ListboxOrComboboxOption,
+  ModalHeader,
+  ModalWrapper
+} from '@lifeforge/ui'
+
 import { type Loadable } from '@interfaces/common'
 import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
+
 import PlaylistSection from './sections/PlaylistSection'
 import VideoSection from './sections/VideoSection'
 

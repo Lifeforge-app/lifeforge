@@ -1,10 +1,12 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React from 'react'
+
 import useThemeColors from '@hooks/useThemeColor'
-import WidgetWrapper from './WidgetWrapper'
+
 import { IAirportMETARData } from '..'
 import { METAR_CODES } from '../constants/constants'
+import WidgetWrapper from './WidgetWrapper'
 
 function Clouds({ data }: { data: IAirportMETARData }): React.ReactElement {
   const { componentBgLighter } = useThemeColors()

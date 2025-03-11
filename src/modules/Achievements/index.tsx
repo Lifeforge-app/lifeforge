@@ -1,17 +1,24 @@
 import { useQuery } from '@tanstack/react-query'
+import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button, FAB } from '@components/buttons'
+
+import {
+  Button,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  FAB,
+  QueryWrapper
+} from '@lifeforge/ui'
+
+import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import QueryWrapper from '@components/screens/QueryWrapper'
-import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
-import fetchAPI from '@utils/fetchAPI'
+
+import ModifyAchievementModal from './ModifyAchievementModal'
 import DifficultySelector from './components/DifficultySelector'
 import EntryItem from './components/EntryItem'
-import ModifyAchievementModal from './ModifyAchievementModal'
 
 function Achievements(): React.ReactElement {
   const { t } = useTranslation('modules.achievements')

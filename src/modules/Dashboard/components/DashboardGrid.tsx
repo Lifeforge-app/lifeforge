@@ -1,12 +1,12 @@
 import { Icon } from '@iconify/react'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import LoadingScreen from '@components/screens/LoadingScreen'
-import { useGlobalStateContext } from '@providers/GlobalStateProvider'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { EmptyStateScreen, LoadingScreen } from '@lifeforge/ui'
+
 import Achievements from '../widgets/Achievements'
 import AssetsBalance from '../widgets/AssetsBalance'
 import Bookshelf from '../widgets/Bookshelf'
@@ -138,7 +138,7 @@ function DashboardGrid({
           })()}
           {canLayoutChange && (
             <Icon
-              className="absolute right-0 bottom-0 text-2xl"
+              className="absolute bottom-0 right-0 text-2xl"
               icon="clarity:drag-handle-corner-line"
             />
           )}

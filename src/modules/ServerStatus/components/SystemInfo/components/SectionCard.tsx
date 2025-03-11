@@ -1,7 +1,8 @@
+import { camelCaseToTitleCase, formatBytes } from '@utils/strings'
 import clsx from 'clsx'
 import React from 'react'
+
 import useThemeColors from '@hooks/useThemeColor'
-import { camelCaseToTitleCase, formatBytes } from '@utils/strings'
 
 function SectionCard({
   key,
@@ -28,7 +29,7 @@ function SectionCard({
               <span className="text-bg-500 text-lg">
                 {camelCaseToTitleCase(k)}
               </span>
-              <span className="text-bg-500 w-1/2 text-lg break-all">
+              <span className="text-bg-500 w-1/2 break-all text-lg">
                 {(() => {
                   if (typeof v === 'object') {
                     return (
@@ -68,7 +69,7 @@ function SectionCard({
                 <span className="text-bg-500 text-lg">
                   {camelCaseToTitleCase(k)}
                 </span>
-                <span className="text-bg-500 w-1/2 text-lg break-all">
+                <span className="text-bg-500 w-1/2 break-all text-lg">
                   {(k.includes('byte') &&
                     // @ts-expect-error - uhh lazy to fix for now =)
                     formatBytes(v)) ||

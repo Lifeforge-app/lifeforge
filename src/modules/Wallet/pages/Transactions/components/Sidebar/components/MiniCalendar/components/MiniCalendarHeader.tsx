@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import moment from 'moment/min/moment-with-locales'
 import React from 'react'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 function MiniCalendarHeader({
   currentMonth,
@@ -18,7 +18,7 @@ function MiniCalendarHeader({
 
   return (
     <div className="flex-between mb-4 flex gap-2">
-      <div className="text-lg font-semibold whitespace-nowrap">
+      <div className="whitespace-nowrap text-lg font-semibold">
         {moment()
           .year(currentYear)
           .month(currentMonth)

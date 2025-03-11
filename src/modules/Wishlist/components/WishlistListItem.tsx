@@ -1,12 +1,14 @@
 import { Icon } from '@iconify/react'
+import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import React from 'react'
 import { Link } from 'react-router'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IWishlistList } from '@interfaces/wishlist_interfaces'
-import { numberToMoney } from '@utils/strings'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function WishlistListItem({
   list,
@@ -41,7 +43,7 @@ function WishlistListItem({
         <p className="text-bg-500 min-w-0">{list.description}</p>
       </div>
       <div className="text-right">
-        <div className="flex-between text-bg-500 text-sm whitespace-nowrap">
+        <div className="flex-between text-bg-500 whitespace-nowrap text-sm">
           <p>{list.bought_count} bought</p>
           <p>{list.item_count} items</p>
         </div>
@@ -64,7 +66,7 @@ function WishlistListItem({
           <p>total RM{numberToMoney(list.total_amount)}</p>
         </div>
       </div>
-      <HamburgerMenu className="absolute top-4 right-4">
+      <HamburgerMenu className="absolute right-4 top-4">
         <MenuItem icon="tabler:pencil" text="Edit" onClick={onEdit} />
         <MenuItem isRed icon="tabler:trash" text="Delete" onClick={onDelete} />
       </HamburgerMenu>

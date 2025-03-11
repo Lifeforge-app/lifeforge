@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import FormModal from '@components/modals/FormModal'
+
+import { FormModal } from '@lifeforge/ui'
+
 import {
-  IIdeaBoxContainerFormState,
-  type IIdeaBoxContainer
+  type IIdeaBoxContainer,
+  IIdeaBoxContainerFormState
 } from '@interfaces/ideabox_interfaces'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 

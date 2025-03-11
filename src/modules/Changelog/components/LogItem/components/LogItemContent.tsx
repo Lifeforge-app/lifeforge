@@ -1,6 +1,8 @@
 import React from 'react'
-import useThemeColors from '@hooks/useThemeColor'
+
 import { type IChangeLogVersion } from '@interfaces/changelog_interfaces'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function LogItemContent({
   entry
@@ -15,7 +17,7 @@ function LogItemContent({
         .map(subEntry => (
           <li key={subEntry.id} className="ml-4 sm:ml-44">
             <div className="inline-flex flex-col items-start md:flex-row md:gap-2">
-              <span className="font-semibold whitespace-nowrap">
+              <span className="whitespace-nowrap font-semibold">
                 {subEntry.feature}:
               </span>{' '}
               <span

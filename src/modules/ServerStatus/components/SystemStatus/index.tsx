@@ -1,14 +1,18 @@
 import { Icon } from '@iconify/react'
+import { formatBytes } from '@utils/strings'
 import moment from 'moment'
 import React, { useEffect } from 'react'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import useFetch from '@hooks/useFetch'
+
+import { APIFallbackComponent } from '@lifeforge/ui'
+
 import {
-  IMemoryUsage,
+  ICPUTemp,
   ICPUUSage,
-  ICPUTemp
+  IMemoryUsage
 } from '@interfaces/server_status_interfaces'
-import { formatBytes } from '@utils/strings'
+
+import useFetch from '@hooks/useFetch'
+
 import { SystemStatusCard } from './components/SystemStatusCard'
 
 function SystemStatus(): React.ReactElement {

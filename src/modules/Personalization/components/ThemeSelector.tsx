@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import ConfigColumn from '@components/utilities/ConfigColumn'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+
+import { ConfigColumn } from '@lifeforge/ui'
 
 function ThemeSelector(): React.ReactElement {
   const { theme, setTheme } = usePersonalizationContext()
@@ -50,7 +51,7 @@ function ThemeSelector(): React.ReactElement {
               <div className="relative rounded-lg p-2 lg:rounded-2xl">
                 {theme === id && (
                   <Icon
-                    className="text-custom-500 absolute right-2.5 bottom-2 block size-6 text-xl"
+                    className="text-custom-500 absolute bottom-2 right-2.5 block size-6 text-xl"
                     icon="tabler:circle-check-filled"
                   />
                 )}

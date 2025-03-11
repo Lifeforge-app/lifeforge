@@ -1,8 +1,8 @@
+import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import fetchAPI from '@utils/fetchAPI'
+
+import { Button, ModalWrapper } from '@lifeforge/ui'
 
 function EmptyTrashConfirmationModal({
   isOpen,

@@ -1,6 +1,7 @@
+import { BG_BLURS } from '@constants/bg_blurs'
 import clsx from 'clsx'
 import React from 'react'
-import { BG_BLURS } from '@constants/bg_blurs'
+
 import { usePersonalizationContext } from './PersonalizationProvider'
 
 function BackgroundProvider({
@@ -30,7 +31,7 @@ function BackgroundProvider({
     >
       {bgImage !== '' && (
         <div
-          className="absolute top-0 left-0 z-[-1] size-full"
+          className="absolute left-0 top-0 z-[-1] size-full"
           style={{
             backgroundColor: `color-mix(in oklab, var(--color-bg-${
               (theme === 'system' &&

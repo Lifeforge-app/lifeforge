@@ -1,13 +1,14 @@
+import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import React, { useMemo } from 'react'
 import { useSearchParams } from 'react-router'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { SidebarItem } from '@components/layouts/sidebar'
+
+import { MenuItem, SidebarItem } from '@lifeforge/ui'
+
 import {
-  type IBooksLibraryFileType,
   type IBooksLibraryCategory,
+  type IBooksLibraryFileType,
   type IBooksLibraryLanguage
 } from '@interfaces/books_library_interfaces'
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 
 const recordKeyInDB = {
   categories: 'category',

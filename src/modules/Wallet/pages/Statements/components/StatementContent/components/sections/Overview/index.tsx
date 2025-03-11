@@ -1,10 +1,11 @@
 import { Icon } from '@iconify/react'
+import { useWalletContext } from '@providers/WalletProvider'
+import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useMemo } from 'react'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import { useWalletContext } from '@providers/WalletProvider'
-import { numberToMoney } from '@utils/strings'
+
+import { APIFallbackComponent } from '@lifeforge/ui'
 
 function Overview({
   month,
@@ -26,7 +27,7 @@ function Overview({
 
   return (
     <>
-      <h2 className="mt-16 text-3xl font-semibold tracking-widest uppercase">
+      <h2 className="mt-16 text-3xl font-semibold uppercase tracking-widest">
         <span className="text-custom-500 print:text-lime-600">01. </span>
         Overview
       </h2>
@@ -43,7 +44,7 @@ function Overview({
             )}
           </p>
         </div>
-        <div className="bg-bg-200 dark:bg-bg-900 flex items-center justify-between p-3 print:bg-black/[3%]!">
+        <div className="bg-bg-200 dark:bg-bg-900 print:bg-black/[3%]! flex items-center justify-between p-3">
           <p className="text-xl">Expenses</p>
           <p className="text-lg">
             RM (
@@ -85,7 +86,7 @@ function Overview({
           })()}
         </div>
       </div>
-      <h2 className="mt-16 text-2xl font-semibold tracking-widest uppercase">
+      <h2 className="mt-16 text-2xl font-semibold uppercase tracking-widest">
         <span>1.1 </span>
         Assets
       </h2>
@@ -98,16 +99,16 @@ function Overview({
                   <th className="w-full p-3 text-left text-lg font-medium">
                     Assets
                   </th>
-                  <th className="p-3 text-lg font-medium whitespace-nowrap">
+                  <th className="whitespace-nowrap p-3 text-lg font-medium">
                     {moment()
                       .month(month - 1)
                       .format('MMM YYYY')}
                   </th>
-                  <th className="p-3 text-lg font-medium whitespace-nowrap">
+                  <th className="whitespace-nowrap p-3 text-lg font-medium">
                     {moment().month(month).format('MMM YYYY')}
                   </th>
                   <th
-                    className="p-3 text-lg font-medium whitespace-nowrap"
+                    className="whitespace-nowrap p-3 text-lg font-medium"
                     colSpan={2}
                   >
                     Change
@@ -187,15 +188,15 @@ function Overview({
 
                         return (
                           <>
-                            <td className="p-3 text-right text-lg whitespace-nowrap">
+                            <td className="whitespace-nowrap p-3 text-right text-lg">
                               {numberToMoney(lastMonthAmount)}
                             </td>
-                            <td className="p-3 text-right text-lg whitespace-nowrap">
+                            <td className="whitespace-nowrap p-3 text-right text-lg">
                               {numberToMoney(thatMonthAmount)}
                             </td>
                             <td
                               className={clsx(
-                                'p-3 text-right text-lg whitespace-nowrap',
+                                'whitespace-nowrap p-3 text-right text-lg',
                                 thatMonthAmount - lastMonthAmount < 0 &&
                                   'text-rose-600'
                               )}
@@ -210,7 +211,7 @@ function Overview({
                             </td>
                             <td
                               className={clsx(
-                                'p-3 text-right text-lg whitespace-nowrap',
+                                'whitespace-nowrap p-3 text-right text-lg',
                                 thatMonthAmount - lastMonthAmount < 0 &&
                                   'text-rose-600'
                               )}
@@ -280,7 +281,7 @@ function Overview({
                     return (
                       <>
                         <td
-                          className="p-3 text-right text-lg font-medium whitespace-nowrap"
+                          className="whitespace-nowrap p-3 text-right text-lg font-medium"
                           style={{
                             borderTop: '2px solid',
                             borderBottom: '6px double'
@@ -289,7 +290,7 @@ function Overview({
                           {numberToMoney(lastMonthAmount)}
                         </td>
                         <td
-                          className="p-3 text-right text-lg font-medium whitespace-nowrap"
+                          className="whitespace-nowrap p-3 text-right text-lg font-medium"
                           style={{
                             borderTop: '2px solid',
                             borderBottom: '6px double'
@@ -299,7 +300,7 @@ function Overview({
                         </td>
                         <td
                           className={clsx(
-                            'p-3 text-right text-lg font-medium whitespace-nowrap',
+                            'whitespace-nowrap p-3 text-right text-lg font-medium',
                             thatMonthAmount - lastMonthAmount < 0 &&
                               'text-rose-600'
                           )}
@@ -316,7 +317,7 @@ function Overview({
                         </td>
                         <td
                           className={clsx(
-                            'p-3 text-right text-lg font-medium whitespace-nowrap',
+                            'whitespace-nowrap p-3 text-right text-lg font-medium',
                             thatMonthAmount - lastMonthAmount < 0 &&
                               'text-rose-600'
                           )}
@@ -344,7 +345,7 @@ function Overview({
       </APIFallbackComponent>
       {['income', 'expenses'].map(type => (
         <div key={type}>
-          <h2 className="mt-16 text-2xl font-semibold tracking-widest uppercase">
+          <h2 className="mt-16 text-2xl font-semibold uppercase tracking-widest">
             <span>1.{type === 'income' ? '2' : '3'} </span>
             {type.charAt(0).toUpperCase() + type.slice(1)}
           </h2>
@@ -357,16 +358,16 @@ function Overview({
                       <th className="w-full p-3 text-left text-lg font-medium">
                         Category
                       </th>
-                      <th className="p-3 text-lg font-medium whitespace-nowrap">
+                      <th className="whitespace-nowrap p-3 text-lg font-medium">
                         {moment()
                           .month(month - 1)
                           .format('MMM YYYY')}
                       </th>
-                      <th className="p-3 text-lg font-medium whitespace-nowrap">
+                      <th className="whitespace-nowrap p-3 text-lg font-medium">
                         {moment().month(month).format('MMM YYYY')}
                       </th>
                       <th
-                        className="p-3 text-lg font-medium whitespace-nowrap"
+                        className="whitespace-nowrap p-3 text-lg font-medium"
                         colSpan={2}
                       >
                         Change
@@ -434,15 +435,15 @@ function Overview({
 
                             return (
                               <>
-                                <td className="p-3 text-right text-lg whitespace-nowrap">
+                                <td className="whitespace-nowrap p-3 text-right text-lg">
                                   {numberToMoney(lastMonthAmount)}
                                 </td>
-                                <td className="p-3 text-right text-lg whitespace-nowrap">
+                                <td className="whitespace-nowrap p-3 text-right text-lg">
                                   {numberToMoney(thatMonthAmount)}
                                 </td>
                                 <td
                                   className={clsx(
-                                    'p-3 text-right text-lg whitespace-nowrap',
+                                    'whitespace-nowrap p-3 text-right text-lg',
                                     (type === 'income'
                                       ? thatMonthAmount - lastMonthAmount
                                       : lastMonthAmount - thatMonthAmount) <
@@ -461,7 +462,7 @@ function Overview({
                                 </td>
                                 <td
                                   className={clsx(
-                                    'p-3 text-right text-lg whitespace-nowrap',
+                                    'whitespace-nowrap p-3 text-right text-lg',
                                     (type === 'income'
                                       ? thatMonthAmount - lastMonthAmount
                                       : lastMonthAmount - thatMonthAmount) <
@@ -520,7 +521,7 @@ function Overview({
                         return (
                           <>
                             <td
-                              className="p-3 text-right text-lg font-medium whitespace-nowrap"
+                              className="whitespace-nowrap p-3 text-right text-lg font-medium"
                               style={{
                                 borderTop: '2px solid',
                                 borderBottom: '6px double'
@@ -529,7 +530,7 @@ function Overview({
                               {numberToMoney(lastMonthAmount)}
                             </td>
                             <td
-                              className="p-3 text-right text-lg font-medium whitespace-nowrap"
+                              className="whitespace-nowrap p-3 text-right text-lg font-medium"
                               style={{
                                 borderTop: '2px solid',
                                 borderBottom: '6px double'
@@ -539,7 +540,7 @@ function Overview({
                             </td>
                             <td
                               className={clsx(
-                                'p-3 text-right text-lg font-medium whitespace-nowrap',
+                                'whitespace-nowrap p-3 text-right text-lg font-medium',
                                 (type === 'income'
                                   ? thatMonthAmount - lastMonthAmount
                                   : lastMonthAmount - thatMonthAmount) < 0 &&
@@ -560,7 +561,7 @@ function Overview({
                             </td>
                             <td
                               className={clsx(
-                                'p-3 text-right text-lg font-medium whitespace-nowrap',
+                                'whitespace-nowrap p-3 text-right text-lg font-medium',
                                 (type === 'income'
                                   ? thatMonthAmount - lastMonthAmount
                                   : lastMonthAmount - thatMonthAmount) < 0 &&

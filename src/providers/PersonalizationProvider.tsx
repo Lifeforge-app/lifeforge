@@ -1,3 +1,4 @@
+import { getColorPalette, hexToRgb } from '@utils/colors'
 import { cookieParse } from 'pocketbase'
 import React, {
   createContext,
@@ -8,10 +9,10 @@ import React, {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { getColorPalette, hexToRgb } from '@utils/colors'
-import { useAuthContext } from './AuthProvider'
+
 import THEME_COLOR_HEX from '../constants/theme_color_hex'
 import { type IFontFamily } from '../modules/Personalization/components/FontFamilySelector'
+import { useAuthContext } from './AuthProvider'
 
 type DashboardLayoutType = Record<
   string,

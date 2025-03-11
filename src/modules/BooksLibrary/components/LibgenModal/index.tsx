@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import { SearchInput } from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import LoadingScreen from '@components/screens/LoadingScreen'
-import Scrollbar from '@components/utilities/Scrollbar'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import fetchAPI from '@utils/fetchAPI'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+
+import {
+  Button,
+  EmptyStateScreen,
+  LoadingScreen,
+  ModalHeader,
+  ModalWrapper,
+  Pagination,
+  Scrollbar,
+  SearchInput
+} from '@lifeforge/ui'
+
+import AddToLibraryModal from '../AddToLibraryModal'
 import Details from './components/Details'
 import SearchResultItem from './components/SearchResultItem'
-import Pagination from '../../../../components/utilities/Pagination'
-import AddToLibraryModal from '../AddToLibraryModal'
 
 function LibgenModal(): React.ReactElement {
   const {

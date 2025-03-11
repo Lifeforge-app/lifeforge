@@ -1,7 +1,10 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import { SidebarTitle } from '@components/layouts/sidebar'
+
+import { SidebarTitle } from '@lifeforge/ui'
+
 import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
+
 import CategoryListItem from './components/CategoryListItem'
 
 function CategoryList({

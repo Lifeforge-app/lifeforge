@@ -1,13 +1,15 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import { useAuthContext } from '@providers/AuthProvider'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+
+import { MenuItem } from '@lifeforge/ui'
+
 import useThemeColors from '@hooks/useThemeColor'
-import { useAuthContext } from '@providers/AuthProvider'
-import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 
 function SidebarBottomBar(): React.ReactElement {
   const navigate = useNavigate()
@@ -20,7 +22,7 @@ function SidebarBottomBar(): React.ReactElement {
   return (
     <div
       className={clsx(
-        'flex-center w-full min-w-0 pt-0 pb-4',
+        'flex-center w-full min-w-0 pb-4 pt-0',
         sidebarExpanded && 'px-4'
       )}
     >
@@ -66,7 +68,7 @@ function SidebarBottomBar(): React.ReactElement {
         <MenuItems
           transition
           anchor="top start"
-          className="border-bg-200 bg-bg-100 dark:border-bg-700 dark:bg-bg-800 z-9991 w-[var(--button-width)] min-w-64 overflow-hidden overscroll-contain rounded-md border shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+          className="border-bg-200 bg-bg-100 dark:border-bg-700 dark:bg-bg-800 z-9991 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 w-[var(--button-width)] min-w-64 overflow-hidden overscroll-contain rounded-md border shadow-lg transition duration-100 ease-out [--anchor-gap:8px]"
         >
           <div className="py-1">
             <MenuItem

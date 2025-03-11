@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React, { useMemo } from 'react'
-import WidgetWrapper from './WidgetWrapper'
+
 import { IAirportMETARData } from '..'
+import WidgetWrapper from './WidgetWrapper'
 
 function Visibility({ data }: { data: IAirportMETARData }): React.ReactElement {
   const statusColor = useMemo(() => {

@@ -5,10 +5,12 @@ import { cookieParse } from 'pocketbase'
 import React from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { Button, FAB, GoBackButton } from '@components/buttons'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import useFetch from '@hooks/useFetch'
+
+import { Button, FAB, GoBackButton, MenuItem } from '@lifeforge/ui'
+
 import { type INotesEntry, type INotesPath } from '@interfaces/notes_interfaces'
+
+import useFetch from '@hooks/useFetch'
 
 function DirectoryHeader({
   updateNotesEntries,
@@ -199,7 +201,7 @@ function DirectoryHeader({
           )
         }}
       />
-      <div className="flex-between relative z-100 flex w-full gap-4 sm:gap-12">
+      <div className="flex-between z-100 relative flex w-full gap-4 sm:gap-12">
         <div
           className={clsx(
             'flex min-w-0 flex-1 items-center gap-4 font-semibold',
@@ -235,7 +237,7 @@ function DirectoryHeader({
                         className="text-custom-500 text-2xl sm:text-3xl"
                         icon={currentPath.icon}
                       />
-                      <div className="bg-custom-500 absolute top-0 left-0 size-full rounded-lg opacity-20" />
+                      <div className="bg-custom-500 absolute left-0 top-0 size-full rounded-lg opacity-20" />
                     </div>
                     <div className="flex w-full min-w-0 flex-col gap-1">
                       <div className="text-bg-500 hidden items-center gap-1 text-sm md:flex">
@@ -288,7 +290,7 @@ function DirectoryHeader({
             <MenuItems
               transition
               anchor="bottom end"
-              className="bg-bg-100 dark:bg-bg-800 mt-2 w-48 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+              className="bg-bg-100 dark:bg-bg-800 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 mt-2 w-48 overflow-hidden overscroll-contain rounded-md shadow-lg transition duration-100 ease-out"
             >
               <MenuItem
                 icon="tabler:folder-plus"
@@ -321,7 +323,7 @@ function DirectoryHeader({
         <MenuItems
           transition
           anchor="bottom end"
-          className="bg-bg-100 dark:bg-bg-800 w-48 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+          className="bg-bg-100 dark:bg-bg-800 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 w-48 overflow-hidden overscroll-contain rounded-md shadow-lg transition duration-100 ease-out [--anchor-gap:8px]"
         >
           <MenuItem
             icon="tabler:folder-plus"

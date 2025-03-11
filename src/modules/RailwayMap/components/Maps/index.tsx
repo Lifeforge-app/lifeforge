@@ -1,5 +1,6 @@
-import React from 'react'
 import { useRailwayMapContext } from '@providers/RailwayMapProvider'
+import React from 'react'
+
 import EarthMap from './maps/EarthMap'
 import RouteMap from './maps/RouteMap'
 

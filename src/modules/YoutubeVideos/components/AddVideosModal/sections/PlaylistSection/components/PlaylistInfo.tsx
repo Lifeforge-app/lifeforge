@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
-import { type IYoutubePlaylistEntry } from '@interfaces/youtube_video_storage_interfaces'
 import { shortenBigNumber } from '@utils/strings'
+import React from 'react'
+
+import { type IYoutubePlaylistEntry } from '@interfaces/youtube_video_storage_interfaces'
 
 function PlaylistInfo({
   playlistInfo

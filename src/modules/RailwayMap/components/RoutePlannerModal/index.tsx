@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
 import { useRailwayMapContext } from '@providers/RailwayMapProvider'
+import React, { useEffect, useState } from 'react'
+
+import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
+
 import PlannerContent from './components/PlannerContent'
 
 function RoutePlannerModal(): React.ReactElement {

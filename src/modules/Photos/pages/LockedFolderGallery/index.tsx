@@ -5,14 +5,21 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import PhotoAlbum from 'react-photo-album'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
-import Button from '@components/buttons/Button/index.tsx'
-import GoBackButton from '@components/buttons/GoBackButton.tsx'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem.tsx'
-import HamburgerMenu from '@components/buttons/HamburgerMenu/index.tsx'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper.tsx'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback.tsx'
-import useFetch from '@hooks/useFetch.ts'
+
+import {
+  APIFallbackComponent,
+  Button,
+  GoBackButton,
+  HamburgerMenu,
+  MenuItem
+} from '@lifeforge/ui'
+
 import { type IPhotoAlbumEntryItem } from '@interfaces/photos_interfaces.ts'
+
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
+import useFetch from '@hooks/useFetch.ts'
+
 import { usePhotosContext } from '../../../../providers/PhotosProvider.tsx'
 import BottomBar from '../../components/BottomBar.tsx'
 

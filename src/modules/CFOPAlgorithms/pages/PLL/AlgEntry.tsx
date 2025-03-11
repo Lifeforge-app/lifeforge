@@ -1,6 +1,8 @@
 import clsx from 'clsx'
 import React, { useEffect, useRef } from 'react'
+
 import useThemeColors from '@hooks/useThemeColor'
+
 import { algsetAlgs } from '../../algorithms/PLL'
 import { type DEFAULT_CUBE } from '../../scripts/genCube'
 

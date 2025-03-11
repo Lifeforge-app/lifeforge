@@ -1,11 +1,13 @@
 import { Icon } from '@iconify/react'
-import React, { useMemo } from 'react'
-import { IIdeaBoxTag } from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import { isLightColor } from '@utils/colors'
+import clsx from 'clsx'
+import React, { useMemo } from 'react'
+
+import { IIdeaBoxTag } from '@interfaces/ideabox_interfaces'
+
 import HamburgerButton from './components/HamburgerButton'
 import ItemCount from './components/ItemCount'
-import clsx from 'clsx'
 
 function TagItem({
   tag,

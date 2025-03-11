@@ -1,7 +1,9 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@components/buttons'
+
+import { Button } from '@lifeforge/ui'
+
 import TypeSelector from './components/TypeSelector'
 
 function ModalHeader({

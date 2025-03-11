@@ -1,23 +1,25 @@
+import { useWalletContext } from '@providers/WalletProvider'
+import fetchAPI from '@utils/fetchAPI'
 import { parse } from 'file-type-mime'
-
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { CreateOrModifyButton } from '@components/buttons'
+
 import {
+  CreateOrModifyButton,
   CurrencyInput,
   DateInput,
   ImageAndFileInput,
   ImagePickerModal,
-  TextInput,
-  LocationInput
-} from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
+  LocationInput,
+  ModalHeader,
+  ModalWrapper,
+  TextInput
+} from '@lifeforge/ui'
+
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
-import { useWalletContext } from '@providers/WalletProvider'
-import fetchAPI from '@utils/fetchAPI'
+
 import AssetsFromToSelector from './components/AssetsFromToSelector'
 import AssetsSelector from './components/AssetsSelector'
 import CategorySelector from './components/CategorySelector'

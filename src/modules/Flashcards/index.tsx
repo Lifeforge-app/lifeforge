@@ -3,17 +3,24 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 import { Link } from 'react-router'
-import { Button } from '@components/buttons'
-import { SearchInput } from '@components/inputs'
+
+import {
+  APIFallbackComponent,
+  Button,
+  Scrollbar,
+  SearchInput
+} from '@lifeforge/ui'
+
+import { type IFlashcardDeck } from '@interfaces/flashcard_interfaces'
+
 import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import Scrollbar from '@components/utilities/Scrollbar'
+
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
-import { type IFlashcardDeck } from '@interfaces/flashcard_interfaces'
+
 import Sidebar from './components/Sidebar'
 
 export default function Flashcards(): React.ReactElement {
@@ -58,7 +65,7 @@ export default function Flashcards(): React.ReactElement {
                     <Link
                       key={deck.id}
                       className={clsx(
-                        'group shadow-custom relative flex flex-col justify-start gap-6 rounded-lg p-8',
+                        'shadow-custom group relative flex flex-col justify-start gap-6 rounded-lg p-8',
                         componentBgWithHover
                       )}
                       to={`/flashcards/${deck.id}`}
@@ -66,7 +73,7 @@ export default function Flashcards(): React.ReactElement {
                       <div className="space-y-2">
                         {deck.tag && (
                           <span
-                            className="relative isolate mb-1 w-min rounded-full px-3 py-0.5 text-sm whitespace-nowrap"
+                            className="relative isolate mb-1 w-min whitespace-nowrap rounded-full px-3 py-0.5 text-sm"
                             style={{
                               backgroundColor: `${deck.expand.tag.color}20`,
                               color: deck.expand.tag.color
@@ -90,7 +97,7 @@ export default function Flashcards(): React.ReactElement {
                           {Math.floor(Math.random() * 100)}% complete
                         </p>
                       </div>
-                      <button className="text-bg-500 hover:bg-bg-700/30 hover:text-bg-50 absolute top-4 right-4 hidden rounded-md p-2 group-hover:flex">
+                      <button className="text-bg-500 hover:bg-bg-700/30 hover:text-bg-50 absolute right-4 top-4 hidden rounded-md p-2 group-hover:flex">
                         <Icon className="size-5" icon="tabler:dots-vertical" />
                       </button>
                     </Link>

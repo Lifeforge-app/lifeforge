@@ -6,11 +6,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import PhotoAlbum from 'react-photo-album'
 import { toast } from 'react-toastify'
 import useResizeObserver from 'use-resize-observer'
-import useOnScreen from '@hooks/useOnScreen'
+
 import {
   type IPhotosEntry,
   type IPhotosEntryDimensionsItem
 } from '@interfaces/photos_interfaces'
+
+import useOnScreen from '@hooks/useOnScreen'
+
 import { usePhotosContext } from '../../../../../providers/PhotosProvider'
 import ImageObject from '../../../components/ImageObject'
 

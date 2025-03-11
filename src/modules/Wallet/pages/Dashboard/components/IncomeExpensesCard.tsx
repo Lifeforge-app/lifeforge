@@ -1,11 +1,13 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
-import React from 'react'
-import DashboardItem from '@components/utilities/DashboardItem'
-import { type Loadable } from '@interfaces/common'
-import { type IWalletIncomeExpenses } from '@interfaces/wallet_interfaces'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
+import clsx from 'clsx'
+import React from 'react'
+
+import { DashboardItem } from '@lifeforge/ui'
+
+import { type Loadable } from '@interfaces/common'
+import { type IWalletIncomeExpenses } from '@interfaces/wallet_interfaces'
 
 function IncomeExpenseCard({
   title,

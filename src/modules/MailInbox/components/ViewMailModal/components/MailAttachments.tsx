@@ -1,10 +1,12 @@
+import FILE_ICONS from '@constants/file_icons'
 import { Icon } from '@iconify/react'
+import { cleanFileSize } from '@utils/strings'
 import clsx from 'clsx'
 import React from 'react'
-import FILE_ICONS from '@constants/file_icons'
-import useThemeColors from '@hooks/useThemeColor'
+
 import { IMailInboxEntry } from '@interfaces/mail_inbox_interfaces'
-import { cleanFileSize } from '@utils/strings'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function MailAttachments({
   mail

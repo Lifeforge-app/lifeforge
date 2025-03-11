@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
+import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { memo } from 'react'
-import useThemeColors from '@hooks/useThemeColor'
+
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
-import fetchAPI from '@utils/fetchAPI'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
   const { componentBgLighterWithHover } = useThemeColors()
@@ -54,7 +56,7 @@ function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
         <p className="text-sm font-medium">{OGQuery.data.ogTitle}</p>
       )}
       {OGQuery.data.ogDescription !== undefined && (
-        <p className="text-bg-500 mt-2 text-xs break-words">
+        <p className="text-bg-500 mt-2 break-words text-xs">
           {OGQuery.data.ogDescription}
         </p>
       )}

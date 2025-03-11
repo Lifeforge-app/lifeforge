@@ -1,13 +1,15 @@
 import { Icon } from '@iconify/react'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 import { useTranslation } from 'react-i18next'
 import { Tooltip } from 'react-tooltip'
-import QueryWrapper from '@components/screens/QueryWrapper'
+
+import { QueryWrapper } from '@lifeforge/ui'
+
 import useAPIQuery from '@hooks/useAPIQuery'
 import useThemeColors from '@hooks/useThemeColor'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 
 function CodeTimeActivityCalendar(): React.ReactElement {
   const { t } = useTranslation('modules.codeTime')

@@ -2,9 +2,12 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import QueryWrapper from '@components/screens/QueryWrapper'
+
+import { QueryWrapper } from '@lifeforge/ui'
+
 import useAPIQuery from '@hooks/useAPIQuery'
 import useThemeColors from '@hooks/useThemeColor'
+
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
 function CodeTimeTopEntries({
@@ -110,7 +113,7 @@ function CodeTimeTopEntries({
                         componentBg
                       )}
                     >
-                      <div className="flex items-center gap-4 text-lg font-medium break-all">
+                      <div className="flex items-center gap-4 break-all text-lg font-medium">
                         <div
                           className={clsx(
                             'size-4 shrink-0 rounded-full rounded-md border',

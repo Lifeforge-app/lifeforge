@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { BookDetailProps } from '..'
 
 function DataTable({ data }: { data: BookDetailProps }): React.ReactElement {
@@ -67,10 +68,10 @@ function DataTable({ data }: { data: BookDetailProps }): React.ReactElement {
                 key={k}
                 className="border-bg-300 dark:border-bg-700 border-b-2"
               >
-                <td className="border-bg-300 dark:border-bg-700 border-r-2 px-3 py-2 break-all">
+                <td className="border-bg-300 dark:border-bg-700 break-all border-r-2 px-3 py-2">
                   {k}
                 </td>
-                <td className="px-3 break-all">{(v as string) ?? 'N/A'}</td>
+                <td className="break-all px-3">{(v as string) ?? 'N/A'}</td>
               </tr>
             ))}
           </tbody>

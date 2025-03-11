@@ -1,7 +1,7 @@
-import React from 'react'
-import { SearchInput } from '@components/inputs'
-import ViewModeSelector from '@components/utilities/ViewModeSelector'
 import { useWalletContext } from '@providers/WalletProvider'
+import React from 'react'
+
+import { SearchInput, ViewModeSelector } from '@lifeforge/ui'
 
 function SearchBar({
   setView,

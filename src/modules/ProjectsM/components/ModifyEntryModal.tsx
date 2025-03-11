@@ -1,11 +1,11 @@
-import React, { useEffect, useReducer } from 'react'
-import { toast } from 'react-toastify'
-import FormModal from '@components/modals/FormModal'
-import ErrorScreen from '@components/screens/ErrorScreen'
-import LoadingScreen from '@components/screens/LoadingScreen'
-import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import fetchAPI from '@utils/fetchAPI'
+import React, { useEffect, useReducer } from 'react'
+import { toast } from 'react-toastify'
+
+import { ErrorScreen, FormModal, LoadingScreen } from '@lifeforge/ui'
+
+import { type IFieldProps } from '@interfaces/modal_interfaces'
 
 function ModifyEntryModal(): React.ReactElement {
   const {

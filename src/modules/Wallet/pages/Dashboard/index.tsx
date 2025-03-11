@@ -1,12 +1,13 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { useWalletContext } from '@providers/WalletProvider'
 import {
   ArcElement,
   BarElement,
   CategoryScale,
   Chart as ChartJS,
   Legend,
-  LinearScale,
   LineElement,
+  LinearScale,
   LogarithmicScale,
   PointElement,
   Title,
@@ -15,11 +16,12 @@ import {
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
-import { Button, FAB } from '@components/buttons'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+
+import { Button, FAB, MenuItem } from '@lifeforge/ui'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import { useWalletContext } from '@providers/WalletProvider'
+
 import AssetsBalanceCard from './components/AssetsBalanceCard'
 import ExpensesBreakdownCard from './components/ExpensesBreakdownCard'
 import IncomeExpenseCard from './components/IncomeExpensesCard'
@@ -64,7 +66,7 @@ function WalletDashboard(): React.ReactElement {
             <MenuItems
               transition
               anchor="bottom end"
-              className="bg-bg-100 dark:bg-bg-800 mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+              className="bg-bg-100 dark:bg-bg-800 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md shadow-lg transition duration-100 ease-out"
             >
               <MenuItem
                 icon="tabler:plus"
@@ -120,7 +122,7 @@ function WalletDashboard(): React.ReactElement {
         <MenuItems
           transition
           anchor="bottom end"
-          className="bg-bg-100 dark:bg-bg-800 w-48 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+          className="bg-bg-100 dark:bg-bg-800 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 w-48 overflow-hidden overscroll-contain rounded-md shadow-lg transition duration-100 ease-out [--anchor-gap:8px]"
         >
           <MenuItem
             icon="tabler:plus"

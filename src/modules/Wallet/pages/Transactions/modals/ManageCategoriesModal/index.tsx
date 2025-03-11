@@ -1,14 +1,19 @@
+import { useWalletContext } from '@providers/WalletProvider'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+
+import {
+  APIFallbackComponent,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  ModalHeader,
+  ModalWrapper
+} from '@lifeforge/ui'
+
 import { type IWalletCategory } from '@interfaces/wallet_interfaces'
-import { useWalletContext } from '@providers/WalletProvider'
-import CategorySection from './components/CategorySection'
+
 import ModifyCategoriesModal from '../ModifyCategoriesModal'
+import CategorySection from './components/CategorySection'
 
 function ManageCategoriesModal({
   isOpen,

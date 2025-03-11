@@ -1,10 +1,12 @@
 import { Icon } from '@iconify/react'
+import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
+
+import { Button } from '@lifeforge/ui'
+
 import { type IGuitarTabsGuitarWorldScoreEntry } from '@interfaces/guitar_tabs_interfaces'
-import fetchAPI from '@utils/fetchAPI'
 
 function ScoreItem({
   entry,

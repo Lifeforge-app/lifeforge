@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
-import React, { useMemo } from 'react'
-import { IIdeaBoxTag } from '@interfaces/ideabox_interfaces'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import { isLightColor } from '@utils/colors'
+import clsx from 'clsx'
+import React, { useMemo } from 'react'
+
+import { IIdeaBoxTag } from '@interfaces/ideabox_interfaces'
 
 function HamburgerButton({ tag }: { tag: IIdeaBoxTag }): React.ReactElement {
   const { selectedTags, setExistedTag, setModifyTagModalOpenType } =

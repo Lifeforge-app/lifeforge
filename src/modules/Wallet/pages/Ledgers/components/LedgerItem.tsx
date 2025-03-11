@@ -1,13 +1,15 @@
 import { Icon } from '@iconify/react'
+import { useWalletContext } from '@providers/WalletProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IWalletLedger } from '@interfaces/wallet_interfaces'
-import { useWalletContext } from '@providers/WalletProvider'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function LedgerItem({
   ledger,

@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { Button } from '@components/buttons'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import LoadingScreen from '@components/screens/LoadingScreen'
+
+import { Button, EmptyStateScreen, LoadingScreen } from '@lifeforge/ui'
+
 import { initLocale } from '../core/i18n'
 
 async function checkAPIStatus(): Promise<'production' | 'development' | false> {

@@ -2,8 +2,9 @@ import { Icon } from '@iconify/react'
 import type { Identifier, XYCoord } from 'dnd-core'
 import React, { useEffect, useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+
+import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type Loadable } from '@interfaces/common'
 import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
 

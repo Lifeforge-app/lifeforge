@@ -1,9 +1,11 @@
+import { encrypt } from '@utils/encryption'
+import fetchAPI from '@utils/fetchAPI'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import { encrypt } from '@utils/encryption'
-import fetchAPI from '@utils/fetchAPI'
+
+import { Button } from '@lifeforge/ui'
+
 import JournalView from '../../JournalView'
 
 function Review({

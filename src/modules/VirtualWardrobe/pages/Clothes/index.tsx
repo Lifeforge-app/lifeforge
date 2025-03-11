@@ -1,30 +1,37 @@
+import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
+import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import { SearchInput } from '@components/inputs'
+
+import {
+  Button,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  QueryWrapper,
+  Scrollbar,
+  SearchInput
+} from '@lifeforge/ui'
+
+import {
+  type IVirtualWardrobeEntry,
+  type IVirtualWardrobeSidebarData
+} from '@interfaces/virtual_wardrobe_interfaces'
+
 import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import QueryWrapper from '@components/screens/QueryWrapper'
-import Scrollbar from '@components/utilities/Scrollbar'
-import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
+
 import useAPIQuery from '@hooks/useAPIQuery'
-import {
-  type IVirtualWardrobeSidebarData,
-  type IVirtualWardrobeEntry
-} from '@interfaces/virtual_wardrobe_interfaces'
-import fetchAPI from '@utils/fetchAPI'
+
+import SessionCartModal from '../../components/SessionCartModal'
 import EntryItem from './components/EntryItem'
 import Header from './components/Header'
 import ModifyItemModal from './components/ModifyItemModal'
 import Sidebar from './components/Sidebar'
-import SessionCartModal from '../../components/SessionCartModal'
 
 function VirtualWardrobeClothes(): React.ReactElement {
   const { t } = useTranslation('modules.virtualWardrobe')

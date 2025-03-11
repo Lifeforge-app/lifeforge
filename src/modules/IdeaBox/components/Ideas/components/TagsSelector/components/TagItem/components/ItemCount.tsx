@@ -1,9 +1,10 @@
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
+import { isLightColor } from '@utils/colors'
 import clsx from 'clsx'
 import React, { useMemo } from 'react'
 import { useParams } from 'react-router'
+
 import { IIdeaBoxTag } from '@interfaces/ideabox_interfaces'
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
-import { isLightColor } from '@utils/colors'
 
 function ItemCount({
   tag,

@@ -1,8 +1,12 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import useFetch from '@hooks/useFetch'
+
+import { APIFallbackComponent } from '@lifeforge/ui'
+
 import { IDiskUsage } from '@interfaces/server_status_interfaces'
+
+import useFetch from '@hooks/useFetch'
+
 import DiskUsageCard from './components/DiskUsageCard'
 
 function DiskUsage(): React.ReactElement {

@@ -1,7 +1,8 @@
-import React from 'react'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
 import DASHBOARD_WIDGETS from '@constants/dashboard_widgets'
+import React from 'react'
+
+import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
+
 import ComponentListItem from './components/ComponentItem'
 
 function ManageWidgetsModal({

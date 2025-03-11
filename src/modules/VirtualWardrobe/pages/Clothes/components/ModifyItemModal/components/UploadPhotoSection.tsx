@@ -1,6 +1,6 @@
 import React from 'react'
-import { Button } from '@components/buttons'
-import { ImageAndFileInput } from '@components/inputs'
+
+import { Button, ImageAndFileInput } from '@lifeforge/ui'
 
 function UploadPhotoSection({
   step,

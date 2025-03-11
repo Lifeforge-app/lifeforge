@@ -1,12 +1,14 @@
 import { Icon } from '@iconify/react'
+import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { Link } from 'react-router'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IProjectsMEntry } from '@interfaces/projects_m_interfaces'
-import { useProjectsMContext } from '@providers/ProjectsMProvider'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function EntryItem({ entry }: { entry: IProjectsMEntry }): React.ReactElement {
   const {

@@ -1,11 +1,13 @@
-import React, { useEffect, useReducer } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import FormModal from '@components/modals/FormModal'
-import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import fetchAPI from '@utils/fetchAPI'
 import { toCamelCase } from '@utils/strings'
+import React, { useEffect, useReducer } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
+import { FormModal } from '@lifeforge/ui'
+
+import { type IFieldProps } from '@interfaces/modal_interfaces'
 
 function ModifyModal({
   stuff

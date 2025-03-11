@@ -1,7 +1,7 @@
 {
-  "name": "lifeforge",
+  "name": "lifeforge-web",
   "private": true,
-  "version": "24w47",
+  "version": "25w11",
   "type": "module",
   "license": "MIT",
   "scripts": {
@@ -13,8 +13,10 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
-    "@iconify/collections": "^1.0.510",
+    "@iconify/collections": "^1.0.526",
     "@iconify/react": "^5.2.0",
+    "@iconify/types": "^2.0.0",
+    "@lifeforge/ui": "^25.11.5",
     "@tailwindcss/postcss": "^4.0.0",
     "@tailwindcss/vite": "^4.0.7",
     "@tanstack/react-query": "^5.66.11",
@@ -34,6 +36,7 @@
     "crypto-js": "^4.2.0",
     "d3": "^7.9.0",
     "daisyui": "^5.0.0-beta.2",
+    "dnd-core": "^16.0.1",
     "dompurify": "^3.2.3",
     "emailjs-mime-parser": "^2.0.7",
     "eslint-plugin-react-compiler": "^19.0.0-beta-27714ef-20250124",
@@ -45,6 +48,7 @@
     "immutability-helper": "^3.1.1",
     "javascript-color-gradient": "^2.5.0",
     "leaflet": "^1.9.4",
+    "lodash": "^4.17.21",
     "moment": "^2.30.1",
     "pocketbase": "^0.21.5",
     "postcss": "^8.5.1",
@@ -57,6 +61,7 @@
     "react-big-calendar": "^1.17.1",
     "react-calendar": "^5.1.0",
     "react-chartjs-2": "^5.3.0",
+    "react-clock": "^5.1.0",
     "react-columns": "^1.2.1",
     "react-currency-input-field": "^3.9.0",
     "react-custom-scrollbars": "^4.2.1",
@@ -92,13 +97,15 @@
     "@stylistic/eslint-plugin-ts": "^2.13.0",
     "@tailwindcss/typography": "^0.5.16",
     "@tanstack/eslint-plugin-query": "^5.66.1",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/crypto-js": "^4.2.2",
     "@types/d3": "^7.4.3",
     "@types/javascript-color-gradient": "^2.4.2",
     "@types/leaflet": "^1.9.16",
+    "@types/lodash": "^4.17.16",
     "@types/node": "^20.17.16",
     "@types/prompts": "^2.4.9",
-    "@types/react": "npm:types-react@rc",
+    "@types/react": "^19.0.10",
     "@types/react-big-calendar": "^1.16.1",
     "@types/react-color": "^3.0.13",
     "@types/react-custom-scrollbars": "^4.0.13",
@@ -117,9 +124,10 @@
     "boxen": "^8.0.1",
     "chalk": "^5.4.1",
     "dotenv": "^16.4.7",
-    "eslint": "^9.18.0",
+    "eslint": "^9.22.0",
     "eslint-config-standard-with-typescript": "^40.0.0",
     "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-custom-alias": "^1.3.2",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-n": "^16.6.2",
@@ -129,14 +137,15 @@
     "eslint-plugin-react-refresh": "^0.4.18",
     "eslint-plugin-tailwindcss": "^3.18.0",
     "figlet": "^1.8.0",
-    "globals": "^15.14.0",
+    "globals": "^15.15.0",
     "mrm": "^4.1.22",
     "ora": "^8.1.1",
     "parent-require": "^1.0.0",
     "sass": "^1.83.4",
+    "source-map-explorer": "^2.5.3",
     "table": "^6.9.0",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.21.0",
+    "typescript-eslint": "^8.26.1",
     "vite": "^5.4.14",
     "vite-plugin-mkcert": "^1.17.6",
     "yargonaut": "^1.1.4",
@@ -145,5 +154,10 @@
   "overrides": {
     "@types/react": "npm:types-react@rc",
     "@types/react-dom": "npm:types-react-dom@rc"
+  },
+  "eslintConfig": {
+    "extends": [
+      "../configs/eslint.config.js"
+    ]
   }
 }

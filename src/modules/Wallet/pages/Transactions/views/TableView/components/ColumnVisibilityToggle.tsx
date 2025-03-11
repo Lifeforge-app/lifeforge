@@ -1,9 +1,12 @@
+import { toCamelCase } from '@utils/strings'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import HamburgerSelectorWrapper from '@components/buttons/HamburgerMenu/components/HamburgerSelectorWrapper'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { SidebarDivider } from '@components/layouts/sidebar'
-import { toCamelCase } from '@utils/strings'
+
+import {
+  HamburgerMenuSelectorWrapper,
+  MenuItem,
+  SidebarDivider
+} from '@lifeforge/ui'
 
 function ColumnVisibilityToggle({
   visibleColumn,
@@ -16,7 +19,7 @@ function ColumnVisibilityToggle({
   return (
     <>
       <SidebarDivider noMargin />
-      <HamburgerSelectorWrapper
+      <HamburgerMenuSelectorWrapper
         icon="tabler:eye"
         title={t('Columns Visibility')}
       >
@@ -44,7 +47,7 @@ function ColumnVisibilityToggle({
             }}
           />
         ))}
-      </HamburgerSelectorWrapper>
+      </HamburgerMenuSelectorWrapper>
     </>
   )
 }

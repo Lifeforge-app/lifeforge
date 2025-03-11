@@ -3,10 +3,12 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React from 'react'
 import { useNavigate, useParams } from 'react-router'
+
 import {
   ListboxOrComboboxOption,
   ListboxOrComboboxOptions
-} from '@components/inputs'
+} from '@lifeforge/ui'
+
 import useThemeColors from '@hooks/useThemeColor'
 
 const CONTINENTS = {
@@ -44,7 +46,7 @@ function ContinentSelector(): React.ReactElement {
         )}
       >
         <div className="flex items-center gap-2">
-          <span className="font-medium whitespace-nowrap">
+          <span className="whitespace-nowrap font-medium">
             {continentID === 'all'
               ? 'All Continents'
               : CONTINENTS[continentID as keyof typeof CONTINENTS]}

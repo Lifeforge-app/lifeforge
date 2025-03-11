@@ -1,7 +1,6 @@
 /* eslint-disable sonarjs/no-nested-functions */
 /* eslint-disable sonarjs/no-nested-conditional */
 import { Icon } from '@iconify/react'
-
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
@@ -9,20 +8,27 @@ import { useTranslation } from 'react-i18next'
 import PhotoAlbum from 'react-photo-album'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import GoBackButton from '@components/buttons/GoBackButton.tsx'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem.tsx'
-import HamburgerMenu from '@components/buttons/HamburgerMenu/index.tsx'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper.tsx'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback.tsx'
-import Scrollbar from '@components/utilities/Scrollbar.tsx'
-import useFetch from '@hooks/useFetch'
+
+import {
+  APIFallbackComponent,
+  GoBackButton,
+  HamburgerMenu,
+  MenuItem,
+  Scrollbar
+} from '@lifeforge/ui'
+
 import {
   type IPhotoAlbumEntryItem,
   type IPhotosAlbum
 } from '@interfaces/photos_interfaces.ts'
-import { usePhotosContext } from '../../../../providers/PhotosProvider'
-import BottomBar from '../../components/BottomBar'
-import ImageObject from '../../components/ImageObject'
+
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
+import useFetch from '@hooks/useFetch'
+
+import { usePhotosContext } from '../../../../providers/PhotosProvider.tsx'
+import BottomBar from '../../components/BottomBar.tsx'
+import ImageObject from '../../components/ImageObject.tsx'
 import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosConfirmationModal.tsx'
 import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal.tsx'
 import RemovePhotosFromAlbumConfirmationModal from '../../components/modals/RemovePhotosFromAlbumConfirmationModal.tsx.tsx'

@@ -1,8 +1,10 @@
+import { useMusicContext } from '@providers/MusicProvider'
 import React from 'react'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import { useMusicContext } from '@providers/MusicProvider'
+
+import { APIFallbackComponent } from '@lifeforge/ui'
+
 import MusicListItem from './components/MusicListItem'
 
 const AS = AutoSizer as any

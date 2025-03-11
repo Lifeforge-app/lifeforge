@@ -1,16 +1,21 @@
 import moment from 'moment'
 import React from 'react'
 import { Link } from 'react-router'
-import { Button } from '@components/buttons'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import DashboardItem from '@components/utilities/DashboardItem'
-import Scrollbar from '@components/utilities/Scrollbar'
-import useFetch from '@hooks/useFetch'
+
+import {
+  APIFallbackComponent,
+  Button,
+  DashboardItem,
+  EmptyStateScreen,
+  Scrollbar
+} from '@lifeforge/ui'
+
 import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
+
+import useFetch from '@hooks/useFetch'
 
 export default function TodaysEvent(): React.ReactElement {
   const [rawEvents] = useFetch<ICalendarEvent[]>('calendar/events')

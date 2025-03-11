@@ -1,10 +1,14 @@
 import moment from 'moment'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import HamburgerSelectorWrapper from '@components/buttons/HamburgerMenu/components/HamburgerSelectorWrapper'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { SidebarTitle } from '@components/layouts/sidebar'
+
+import {
+  HamburgerMenu,
+  HamburgerMenuSelectorWrapper,
+  MenuItem,
+  SidebarTitle
+} from '@lifeforge/ui'
+
 import MiniCalendarContent from './components/MiniCalendarContent'
 import MiniCalendarHeader from './components/MiniCalendarHeader'
 
@@ -35,7 +39,7 @@ function MiniCalendar(): React.ReactElement {
       <SidebarTitle
         customActionButton={
           <HamburgerMenu>
-            <HamburgerSelectorWrapper icon="tabler:eye" title="Toggle view">
+            <HamburgerMenuSelectorWrapper icon="tabler:eye" title="Toggle view">
               {VIEWS.map(([icon, id]) => (
                 <MenuItem
                   key={id}
@@ -49,7 +53,7 @@ function MiniCalendar(): React.ReactElement {
                   }}
                 />
               ))}
-            </HamburgerSelectorWrapper>
+            </HamburgerMenuSelectorWrapper>
           </HamburgerMenu>
         }
         name={t('sidebar.calendarHeatmap')}

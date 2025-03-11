@@ -1,13 +1,13 @@
 import { Icon } from '@iconify/react'
+import { useWalletContext } from '@providers/WalletProvider'
+import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { Button } from '@components/buttons'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+
+import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IWalletAsset } from '@interfaces/wallet_interfaces'
-import { useWalletContext } from '@providers/WalletProvider'
-import { numberToMoney } from '@utils/strings'
 
 function AssetItem({
   asset,
@@ -61,7 +61,7 @@ function AssetItem({
       >
         View Transactions
       </Button>
-      <HamburgerMenu className="absolute top-4 right-4">
+      <HamburgerMenu className="absolute right-4 top-4">
         <MenuItem
           icon="tabler:pencil"
           text="Edit"

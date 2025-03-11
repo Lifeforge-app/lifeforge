@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
+
 import { type SudokuBoard } from '@interfaces/sudoku_interfaces'
 
 function Board({ data }: { data: SudokuBoard }): React.ReactElement {
@@ -14,7 +15,7 @@ function Board({ data }: { data: SudokuBoard }): React.ReactElement {
               className={clsx(
                 'grid size-full grid-rows-9',
                 ![2, 5, 8].includes(j) &&
-                  'border-r border-zinc-500 print:border-zinc-400!'
+                  'print:border-zinc-400! border-r border-zinc-500'
               )}
             >
               {Array(9)
@@ -25,7 +26,7 @@ function Board({ data }: { data: SudokuBoard }): React.ReactElement {
                     className={clsx(
                       'size-full',
                       ![2, 5, 8].includes(k) &&
-                        'border-b border-zinc-500 print:border-zinc-400!'
+                        'print:border-zinc-400! border-b border-zinc-500'
                     )}
                   >
                     {data.mission[k * 9 + j] !== '0' && (
@@ -37,23 +38,23 @@ function Board({ data }: { data: SudokuBoard }): React.ReactElement {
                 ))}
             </div>
           ))}
-        <div className="absolute top-0 left-0 flex size-full justify-evenly">
+        <div className="absolute left-0 top-0 flex size-full justify-evenly">
           {Array(2)
             .fill(0)
             .map((_, j) => (
               <div
                 key={j}
-                className="h-full w-[2px] bg-zinc-800 dark:bg-zinc-100 print:bg-black!"
+                className="print:bg-black! h-full w-[2px] bg-zinc-800 dark:bg-zinc-100"
               />
             ))}
         </div>
-        <div className="absolute top-0 left-0 flex size-full flex-col justify-evenly">
+        <div className="absolute left-0 top-0 flex size-full flex-col justify-evenly">
           {Array(2)
             .fill(0)
             .map((_, j) => (
               <div
                 key={j}
-                className="h-[2px] w-full bg-zinc-800 dark:bg-zinc-100 print:bg-black!"
+                className="print:bg-black! h-[2px] w-full bg-zinc-800 dark:bg-zinc-100"
               />
             ))}
         </div>

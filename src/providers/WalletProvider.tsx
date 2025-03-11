@@ -1,9 +1,8 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import moment from 'moment'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
-import { Outlet } from 'react-router'
-import { useSearchParams } from 'react-router'
-import useFetch from '@hooks/useFetch'
+import { Outlet, useSearchParams } from 'react-router'
+
 import { type Loadable } from '@interfaces/common'
 import {
   type IWalletAsset,
@@ -12,6 +11,8 @@ import {
   type IWalletLedger,
   type IWalletTransaction
 } from '@interfaces/wallet_interfaces'
+
+import useFetch from '@hooks/useFetch'
 
 interface IWalletData {
   transactions: Loadable<IWalletTransaction[]>

@@ -1,17 +1,23 @@
 /* eslint-disable sonarjs/empty-string-repetition */
+import { useMusicContext } from '@providers/MusicProvider'
 import { useDebounce } from '@uidotdev/usehooks'
+import IntervalManager from '@utils/intervalManager'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import { TextInput } from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import useFetch from '@hooks/useFetch'
+
+import {
+  APIFallbackComponent,
+  Button,
+  ModalHeader,
+  ModalWrapper,
+  TextInput
+} from '@lifeforge/ui'
+
 import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
-import { useMusicContext } from '@providers/MusicProvider'
-import IntervalManager from '@utils/intervalManager'
+
+import useFetch from '@hooks/useFetch'
+
 import VideoInfo from './components/VideoInfo'
 
 const intervalManager = IntervalManager.getInstance()

@@ -1,15 +1,17 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
-
+import { usePhotosContext } from '@providers/PhotosProvider'
+import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@components/buttons'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import { usePhotosContext } from '@providers/PhotosProvider'
-import fetchAPI from '@utils/fetchAPI'
+
+import {
+  APIFallbackComponent,
+  Button,
+  ModalHeader,
+  ModalWrapper
+} from '@lifeforge/ui'
 
 function AddPhotosToAlbumModal(): React.ReactElement {
   const { t } = useTranslation('modules.photos')
@@ -104,7 +106,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                       >
                         <button
                           className={clsx(
-                            'flex w-full items-center gap-6 rounded-lg p-4 whitespace-nowrap transition-all',
+                            'flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all',
                             selectedAlbum === album.id
                               ? 'bg-bg-300 dark:bg-bg-800'
                               : 'hover:bg-bg-200 dark:hover:bg-bg-800/50'
@@ -149,7 +151,7 @@ function AddPhotosToAlbumModal(): React.ReactElement {
                 )}
               </APIFallbackComponent>
               {loading && (
-                <div className="absolute top-0 left-0 size-full"></div>
+                <div className="absolute left-0 top-0 size-full"></div>
               )}
             </ul>
             <Button

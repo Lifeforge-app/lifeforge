@@ -1,14 +1,16 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import { useQueryClient } from '@tanstack/react-query'
+import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+
+import { MenuItem } from '@lifeforge/ui'
+
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
-import fetchAPI from '@utils/fetchAPI'
 
 function EntryContextMenu({
   entry
@@ -88,7 +90,7 @@ function EntryContextMenu({
   }
 
   return (
-    <Menu as="div" className="absolute top-2 right-2">
+    <Menu as="div" className="absolute right-2 top-2">
       <MenuButton>
         {({ open }) => (
           <div
@@ -105,7 +107,7 @@ function EntryContextMenu({
       <MenuItems
         transition
         anchor="bottom end"
-        className="bg-bg-100 dark:bg-bg-800 mt-2 min-w-56 overflow-hidden rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+        className="bg-bg-100 dark:bg-bg-800 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 mt-2 min-w-56 overflow-hidden rounded-md shadow-lg transition duration-100 ease-out [--anchor-gap:var(--spacing-1)]"
       >
         {!entry.archived && (
           <MenuItem
