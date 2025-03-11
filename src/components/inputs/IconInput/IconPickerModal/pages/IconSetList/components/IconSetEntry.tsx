@@ -12,7 +12,7 @@ function IconSetEntry({
   return (
     <button
       key={iconSet.prefix}
-      className="bg-bg-50 shadow-custom dark:bg-bg-800 dark:hover:bg-bg-700/50 flex w-full grow flex-col overflow-hidden rounded-md transition-all hover:bg-white/70!"
+      className="bg-bg-50 shadow-custom dark:bg-bg-800 dark:hover:bg-bg-700/50 flex w-full grow flex-col overflow-hidden rounded-md transition-all hover:bg-bg-200/70"
       type="button"
       onClick={() => {
         setCurrentIconSet({ iconSet: iconSet.prefix })
