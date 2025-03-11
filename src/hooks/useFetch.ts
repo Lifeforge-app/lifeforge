@@ -1,6 +1,7 @@
 import { cookieParse } from 'pocketbase'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+
 import { type Loadable } from '@interfaces/common'
 
 function useFetch<T>(

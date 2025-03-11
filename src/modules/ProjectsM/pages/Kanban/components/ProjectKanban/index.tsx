@@ -2,14 +2,20 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import Scrollbar from '@components/utilities/Scrollbar'
+
+import {
+  APIFallbackComponent,
+  DeleteConfirmationModal,
+  HamburgerMenu,
+  MenuItem,
+  Scrollbar
+} from '@lifeforge/ui'
+
+import { type IProjectsMKanbanColumn } from '@interfaces/projects_m_interfaces'
+
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
-import { type IProjectsMKanbanColumn } from '@interfaces/projects_m_interfaces'
+
 import AddCardButton from './modals/AddCardButton'
 import ModifyCardModal from './modals/ModifyCardModal'
 import ModifyColumnsModal from './modals/ModifyColumnModal'
@@ -49,13 +55,13 @@ function ProjectKanban(): React.ReactElement {
           <Scrollbar>
             <div
               ref={containerRef}
-              className="mt-6 mb-8 flex h-full min-h-0 min-w-0 flex-1 gap-4"
+              className="mb-8 mt-6 flex h-full min-h-0 min-w-0 flex-1 gap-4"
             >
               {columns.map((column, id) => (
                 <div
                   key={id}
                   className={clsx(
-                    'flex h-min max-h-full w-96 shrink-0 flex-col rounded-lg border-t-4 p-6 pr-4 pb-0',
+                    'flex h-min max-h-full w-96 shrink-0 flex-col rounded-lg border-t-4 p-6 pb-0 pr-4',
                     componentBg
                   )}
                   style={{

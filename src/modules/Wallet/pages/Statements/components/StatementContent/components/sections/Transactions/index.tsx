@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react'
-import moment from 'moment'
-import React from 'react'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
 import { useWalletContext } from '@providers/WalletProvider'
 import { numberToMoney } from '@utils/strings'
+import moment from 'moment'
+import React from 'react'
+
+import { APIFallbackComponent } from '@lifeforge/ui'
 
 function Transactions({
   month,
@@ -16,7 +17,7 @@ function Transactions({
 
   return (
     <>
-      <h2 className="mt-16 text-3xl font-semibold tracking-widest uppercase">
+      <h2 className="mt-16 text-3xl font-semibold uppercase tracking-widest">
         <span className="text-custom-500 print:text-lime-600">02. </span>
         Transactions
       </h2>
@@ -89,7 +90,7 @@ function Transactions({
       </APIFallbackComponent>
       {['income', 'expenses', 'transfer'].map(type => (
         <div key={type}>
-          <h2 className="mt-16 text-2xl font-semibold tracking-widest uppercase">
+          <h2 className="mt-16 text-2xl font-semibold uppercase tracking-widest">
             <span>
               2.
               {type === 'income' ? '1' : type === 'expenses' ? '2' : '3'}{' '}
@@ -102,32 +103,32 @@ function Transactions({
                 <table className="mt-6 w-full">
                   <thead>
                     <tr className="bg-custom-500 text-white print:bg-lime-600">
-                      <th className="p-3 text-lg font-medium whitespace-nowrap">
+                      <th className="whitespace-nowrap p-3 text-lg font-medium">
                         Date
                       </th>
                       <th className="w-full p-3 text-left text-lg font-medium">
                         Particular
                       </th>
-                      <th className="p-3 text-lg font-medium whitespace-nowrap">
+                      <th className="whitespace-nowrap p-3 text-lg font-medium">
                         Asset
                       </th>
                       {type !== 'transfer' && (
-                        <th className="p-3 text-lg font-medium whitespace-nowrap">
+                        <th className="whitespace-nowrap p-3 text-lg font-medium">
                           Category
                         </th>
                       )}
-                      <th className="p-3 text-lg font-medium whitespace-nowrap">
+                      <th className="whitespace-nowrap p-3 text-lg font-medium">
                         Amount
                       </th>
                     </tr>
                     <tr className="bg-zinc-800 text-white print:bg-black/70">
-                      <th className="p-3 text-lg font-medium whitespace-nowrap"></th>
+                      <th className="whitespace-nowrap p-3 text-lg font-medium"></th>
                       <th className="w-full p-3 text-left text-lg font-medium"></th>
-                      <th className="p-3 text-lg font-medium whitespace-nowrap"></th>
+                      <th className="whitespace-nowrap p-3 text-lg font-medium"></th>
                       {type !== 'transfer' && (
-                        <th className="p-3 text-lg font-medium whitespace-nowrap"></th>
+                        <th className="whitespace-nowrap p-3 text-lg font-medium"></th>
                       )}
-                      <th className="p-3 text-lg font-medium whitespace-nowrap">
+                      <th className="whitespace-nowrap p-3 text-lg font-medium">
                         RM
                       </th>
                     </tr>
@@ -146,7 +147,7 @@ function Transactions({
                           key={transaction.id}
                           className="even:bg-bg-200 dark:even:bg-zinc-800/30 print:even:bg-black/[3%]"
                         >
-                          <td className="p-3 text-lg whitespace-nowrap">
+                          <td className="whitespace-nowrap p-3 text-lg">
                             {((type === 'transfer' && index % 2 === 0) ||
                               type !== 'transfer') &&
                               moment(transaction.date).format('MMM DD')}
@@ -155,7 +156,7 @@ function Transactions({
                             {transaction.particulars}
                           </td>
 
-                          <td className="p-3 text-lg whitespace-nowrap">
+                          <td className="whitespace-nowrap p-3 text-lg">
                             {typeof assets !== 'string' && (
                               <div className="flex items-center gap-2">
                                 <Icon
@@ -177,7 +178,7 @@ function Transactions({
                             )}
                           </td>
                           {type !== 'transfer' && (
-                            <td className="p-3 text-lg whitespace-nowrap">
+                            <td className="whitespace-nowrap p-3 text-lg">
                               {typeof categories !== 'string' && (
                                 <div className="flex items-center gap-2">
                                   <Icon
@@ -207,7 +208,7 @@ function Transactions({
                               )}
                             </td>
                           )}
-                          <td className="p-3 text-right text-lg whitespace-nowrap">
+                          <td className="whitespace-nowrap p-3 text-right text-lg">
                             {transaction.side === 'credit'
                               ? `(${numberToMoney(transaction.amount)})`
                               : numberToMoney(transaction.amount)}
@@ -216,13 +217,13 @@ function Transactions({
                       ))}
                     <tr className="even:bg-bg-200 dark:even:bg-zinc-800/30 print:even:bg-black/[3%]">
                       <td
-                        className="p-3 text-left text-xl font-semibold whitespace-nowrap"
+                        className="whitespace-nowrap p-3 text-left text-xl font-semibold"
                         colSpan={type !== 'transfer' ? 4 : 3}
                       >
                         Total {type.charAt(0).toUpperCase() + type.slice(1)}
                       </td>
                       <td
-                        className="p-3 text-right text-lg font-medium whitespace-nowrap"
+                        className="whitespace-nowrap p-3 text-right text-lg font-medium"
                         style={{
                           borderTop: '2px solid',
                           borderBottom: '6px double'

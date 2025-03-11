@@ -1,10 +1,11 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@components/buttons'
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
+
+import { Button } from '@lifeforge/ui'
 
 function FAB(): React.ReactElement {
   const { t } = useTranslation('modules.ideaBox')
@@ -21,7 +22,7 @@ function FAB(): React.ReactElement {
     <>
       <Menu
         as="div"
-        className="group fixed right-6 bottom-6 z-9990 sm:right-12 sm:bottom-12"
+        className="z-9990 group fixed bottom-6 right-6 sm:bottom-12 sm:right-12"
       >
         {({ open }) => (
           <>
@@ -39,7 +40,7 @@ function FAB(): React.ReactElement {
               transition
               anchor="top end"
               className={clsx(
-                'z-9999 mb-4 rounded-lg outline-hidden transition duration-100 ease-out [--anchor-gap:1rem] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0'
+                'z-9999 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 mb-4 rounded-lg transition duration-100 ease-out [--anchor-gap:1rem]'
               )}
             >
               {[
@@ -51,7 +52,7 @@ function FAB(): React.ReactElement {
                 <MenuItem key={name}>
                   <div
                     className={
-                      'group flex w-full items-center justify-end gap-4 rounded-md py-2 pr-2 whitespace-nowrap'
+                      'group flex w-full items-center justify-end gap-4 whitespace-nowrap rounded-md py-2 pr-2'
                     }
                   >
                     <span className="text-bg-50 group-data-focus:text-bg-200 transition-all">
@@ -80,13 +81,13 @@ function FAB(): React.ReactElement {
             </MenuItems>
             <div
               className={clsx(
-                'fixed top-0 left-0 size-full transition-transform',
+                'fixed left-0 top-0 size-full transition-transform',
                 open ? 'translate-x-0 duration-0' : 'translate-x-full delay-100'
               )}
             >
               <div
                 className={clsx(
-                  'bg-bg-900/50 size-full backdrop-blur-xs transition-opacity',
+                  'bg-bg-900/50 backdrop-blur-xs size-full transition-opacity',
                   open ? 'opacity-100' : 'opacity-0'
                 )}
               />

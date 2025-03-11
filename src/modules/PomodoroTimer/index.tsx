@@ -1,19 +1,26 @@
 import { Icon } from '@iconify/react'
+import { TodoListProvider } from '@providers/TodoListProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
+
+import {
+  APIFallbackComponent,
+  EmptyStateScreen,
+  Scrollbar
+} from '@lifeforge/ui'
+
+import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import Scrollbar from '@components/utilities/Scrollbar'
+
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
-import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
-import { TodoListProvider } from '@providers/TodoListProvider'
-import Timer from './components/Timer'
+
 import TaskItem from '../TodoList/components/tasks/TaskItem'
+import Timer from './components/Timer'
 
 export default function PomodoroTimer(): React.ReactElement {
   const { componentBg } = useThemeColors()

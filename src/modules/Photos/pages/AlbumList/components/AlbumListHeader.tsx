@@ -1,9 +1,8 @@
-import React from 'react'
-import { Button } from '@components/buttons'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { SearchInput } from '@components/inputs'
 import { usePhotosContext } from '@providers/PhotosProvider'
+import React from 'react'
+
+import { Button, HamburgerMenu, MenuItem, SearchInput } from '@lifeforge/ui'
+
 import AlbumTagsList from './AlbumTagsList'
 
 function AlbumListHeader({

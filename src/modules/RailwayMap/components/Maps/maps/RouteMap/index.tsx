@@ -1,8 +1,11 @@
+import { useRailwayMapContext } from '@providers/RailwayMapProvider'
 import clsx from 'clsx'
 import React from 'react'
-import LoadingScreen from '@components/screens/LoadingScreen'
+
+import { LoadingScreen } from '@lifeforge/ui'
+
 import useThemeColors from '@hooks/useThemeColor'
-import { useRailwayMapContext } from '@providers/RailwayMapProvider'
+
 import { useRailwayMapRenderer } from './hooks/useRailwayMapRenderer'
 
 function RouteMap(): React.ReactElement {

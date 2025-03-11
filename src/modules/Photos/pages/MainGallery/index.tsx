@@ -1,15 +1,17 @@
 import { Icon } from '@iconify/react'
-import React, { useEffect, useState } from 'react'
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { usePhotosContext } from '@providers/PhotosProvider'
-import GalleryContainer from './Gallery/GalleryContainer'
-import GalleryHeader from './Gallery/GalleryHeader'
+import React, { useEffect, useState } from 'react'
+
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+
+import PhotosSidebar from '../../components/PhotosSidebar'
 import AddPhotosToAlbumModal from '../../components/modals/AddPhotosToAlbumModal'
 import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosConfirmationModal'
 import ImagePreviewModal from '../../components/modals/ImagePreviewModal'
 import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
-import PhotosSidebar from '../../components/PhotosSidebar'
+import GalleryContainer from './Gallery/GalleryContainer'
+import GalleryHeader from './Gallery/GalleryHeader'
 
 function PhotosMainGallery(): React.ReactElement {
   const { sidebarExpanded } = useGlobalStateContext()
@@ -45,7 +47,7 @@ function PhotosMainGallery(): React.ReactElement {
   return showGallery ? (
     <section
       className={
-        'absolute top-0 flex size-full min-h-0 flex-1 flex-col pt-8 pl-4 transition-all sm:pl-12'
+        'absolute top-0 flex size-full min-h-0 flex-1 flex-col pl-4 pt-8 transition-all sm:pl-12'
       }
     >
       <ModuleHeader

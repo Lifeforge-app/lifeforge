@@ -3,8 +3,8 @@ import moment from 'moment'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
-import { DateInput } from '@components/inputs'
-import { SidebarTitle } from '@components/layouts/sidebar'
+
+import { DateInput, SidebarTitle } from '@lifeforge/ui'
 
 function DateRangeSelector(): React.ReactElement {
   const { t } = useTranslation('modules.wallet')

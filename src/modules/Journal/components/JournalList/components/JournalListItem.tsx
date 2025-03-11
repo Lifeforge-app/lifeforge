@@ -2,10 +2,12 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function JournalListItem({
   entry,
@@ -54,7 +56,7 @@ function JournalListItem({
           {entry.photos.length > 0 && (
             <span
               className={clsx(
-                'text-bg-400 shadow-custom flex items-center gap-2 rounded-full px-3 py-1 text-base font-medium whitespace-nowrap',
+                'text-bg-400 shadow-custom flex items-center gap-2 whitespace-nowrap rounded-full px-3 py-1 text-base font-medium',
                 componentBgLighter
               )}
             >
@@ -64,7 +66,7 @@ function JournalListItem({
           )}
           <span
             className={clsx(
-              'shadow-custom block rounded-full px-3 py-1 text-base font-medium whitespace-nowrap',
+              'shadow-custom block whitespace-nowrap rounded-full px-3 py-1 text-base font-medium',
               componentBgLighter
             )}
           >

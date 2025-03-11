@@ -5,25 +5,32 @@ import {
   ListboxOptions
 } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { type JSX, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { SearchInput } from '@components/inputs'
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import Scrollbar from '@components/utilities/Scrollbar'
-import useFetch from '@hooks/useFetch'
+
+import {
+  APIFallbackComponent,
+  Button,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  MenuItem,
+  Scrollbar,
+  SearchInput
+} from '@lifeforge/ui'
+
 import { type Loadable } from '@interfaces/common'
 import {
   DNSRecordType,
   type IDNSRecordEntry
 } from '@interfaces/dns_records_interfaces'
-import fetchAPI from '@utils/fetchAPI'
+
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
+import useFetch from '@hooks/useFetch'
+
 import IconButton from '../Music/components/Bottombar/components/IconButton'
 
 const FILTER_TYPE = ['All', 'A', 'AAAA', 'CNAME', 'TXT']
@@ -191,7 +198,7 @@ function DNSRecords(): JSX.Element {
           value={selectedFilter}
           onChange={setSelectedFilter}
         >
-          <ListboxButton className="flex-between bg-bg-50 shadow-custom dark:bg-bg-900 relative mt-6 flex w-40 gap-4 rounded-lg p-4 text-left whitespace-nowrap">
+          <ListboxButton className="flex-between bg-bg-50 shadow-custom dark:bg-bg-900 relative mt-6 flex w-40 gap-4 whitespace-nowrap rounded-lg p-4 text-left">
             <div className="flex items-center gap-4">
               <Icon className="text-bg-500 size-5" icon="tabler:filter" />
               {selectedFilter}
@@ -201,14 +208,14 @@ function DNSRecords(): JSX.Element {
           <ListboxOptions
             transition
             anchor="bottom end"
-            className="bg-bg-100 text-bg-800 dark:bg-bg-800 dark:text-bg-50 w-96 rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+            className="bg-bg-100 text-bg-800 dark:bg-bg-800 dark:text-bg-50 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 w-96 rounded-md shadow-lg transition duration-100 ease-out [--anchor-gap:8px]"
           >
             <Scrollbar autoHeight autoHeightMax={300}>
               {FILTER_TYPE.map(type => (
                 <ListboxOption
                   key={type}
                   className={({ active }) =>
-                    `flex-between relative flex cursor-pointer p-4 transition-all select-none ${
+                    `flex-between relative flex cursor-pointer select-none p-4 transition-all ${
                       active
                         ? 'hover:bg-bg-100 dark:hover:bg-bg-700/50'
                         : 'bg-transparent!'
@@ -260,7 +267,7 @@ function DNSRecords(): JSX.Element {
               <table className="mb-8">
                 <thead>
                   <tr className="border-bg-200 dark:border-bg-800 border-b-2">
-                    <th className="pr-0 pl-4">
+                    <th className="pl-4 pr-0">
                       <div
                         className={clsx(
                           'flex items-center justify-center overflow-hidden transition-all',
@@ -284,7 +291,7 @@ function DNSRecords(): JSX.Element {
                             selectedEntries.includes(record.line_index)
                           ) && (
                             <Icon
-                              className="text-custom-500 mt-px mr-[2px] size-4"
+                              className="text-custom-500 mr-[2px] mt-px size-4"
                               icon="uil:check"
                             />
                           )}
@@ -300,7 +307,7 @@ function DNSRecords(): JSX.Element {
                         {header}
                         <IconButton
                           className={clsx(
-                            'hover:bg-bg-800/50 absolute top-1/2 right-4 -translate-y-1/2 !p-2',
+                            'hover:bg-bg-800/50 absolute right-4 top-1/2 -translate-y-1/2 !p-2',
                             sortBy === header
                               ? 'text-bg-800 dark:text-bg-50'
                               : 'text-bg-500'
@@ -331,7 +338,7 @@ function DNSRecords(): JSX.Element {
                         toggleSelected(record.line_index)
                       }}
                     >
-                      <td className="pr-0 pl-4">
+                      <td className="pl-4 pr-0">
                         <div
                           className={clsx(
                             'flex items-center justify-center overflow-hidden transition-all',
@@ -351,14 +358,14 @@ function DNSRecords(): JSX.Element {
                           >
                             {selectedEntries.includes(record.line_index) && (
                               <Icon
-                                className="text-custom-500 mt-px mr-[2px] size-4"
+                                className="text-custom-500 mr-[2px] mt-px size-4"
                                 icon="uil:check"
                               />
                             )}
                           </button>
                         </div>
                       </td>
-                      <td className="py-4 pr-16 pl-4">
+                      <td className="py-4 pl-4 pr-16">
                         {(() => {
                           const link =
                             record.dname_b64 +
@@ -389,7 +396,7 @@ function DNSRecords(): JSX.Element {
                       <td className="text-bg-500 p-4 pr-16 text-center">
                         {record.record_type}
                       </td>
-                      <td className="text-bg-500 p-4 pr-16 break-all">
+                      <td className="text-bg-500 break-all p-4 pr-16">
                         {record.data_b64}
                       </td>
                       <td className="p-4 text-center">

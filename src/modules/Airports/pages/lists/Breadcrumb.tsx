@@ -100,7 +100,7 @@ function Breadcrumbs({
     <div
       className={clsx(
         'flex items-center gap-2',
-        airportID !== undefined ? 'mt-2 mb-4' : 'mt-6'
+        airportID !== undefined ? 'mb-4 mt-2' : 'mt-6'
       )}
     >
       {breadcrumbItems.map(

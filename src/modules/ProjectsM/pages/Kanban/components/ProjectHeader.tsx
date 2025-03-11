@@ -1,11 +1,12 @@
 import { Icon } from '@iconify/react'
+import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { GoBackButton } from '@components/buttons'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+
+import { APIFallbackComponent, GoBackButton } from '@lifeforge/ui'
+
 import { type IProjectsMEntry } from '@interfaces/projects_m_interfaces'
-import { useProjectsMContext } from '@providers/ProjectsMProvider'
 
 function ProjectHeader({
   projectData
@@ -39,7 +40,7 @@ function ProjectHeader({
           <APIFallbackComponent data={statuses}>
             {statuses => (
               <div
-                className="shadow-custom ml-2 flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium tracking-widest uppercase"
+                className="shadow-custom ml-2 flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-widest"
                 style={{
                   backgroundColor:
                     statuses.find(e => e.id === projectData.status)?.color +

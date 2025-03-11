@@ -1,16 +1,21 @@
 import { useQueryClient } from '@tanstack/react-query'
+import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+
+import {
+  APIFallbackComponent,
+  Button,
+  EmptyStateScreen,
+  ModalHeader,
+  ModalWrapper
+} from '@lifeforge/ui'
+
 import { Loadable } from '@interfaces/common'
 import { type IVirtualWardrobeEntry } from '@interfaces/virtual_wardrobe_interfaces'
-import fetchAPI from '@utils/fetchAPI'
-import CheckoutConfirmationModal from './components/CheckoutConfirmationModal'
+
 import EntryItem from '../../pages/Clothes/components/EntryItem'
+import CheckoutConfirmationModal from './components/CheckoutConfirmationModal'
 
 function SessionCartModal({
   isOpen,

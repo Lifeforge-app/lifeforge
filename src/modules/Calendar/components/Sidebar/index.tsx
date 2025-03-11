@@ -1,11 +1,13 @@
 import { UseQueryResult } from '@tanstack/react-query'
 import React from 'react'
-import { SidebarWrapper } from '@components/layouts/sidebar'
-import QueryWrapper from '@components/screens/QueryWrapper'
+
+import { QueryWrapper, SidebarWrapper } from '@lifeforge/ui'
+
 import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
+
 import CategoryList from './components/CategoryList'
 import MiniCalendar from './components/MiniCalendar'
 

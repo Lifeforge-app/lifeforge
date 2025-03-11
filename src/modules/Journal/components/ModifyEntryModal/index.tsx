@@ -1,13 +1,14 @@
+import { encrypt } from '@utils/encryption'
+import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { DateInput, TextInput } from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
+
+import { DateInput, ModalHeader, ModalWrapper, TextInput } from '@lifeforge/ui'
+
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
-import { encrypt } from '@utils/encryption'
-import fetchAPI from '@utils/fetchAPI'
+
 import Cleanup from './sections/Cleanup'
 import Mood from './sections/Mood'
 import Photos from './sections/Photos'
@@ -110,7 +111,7 @@ function ModifyJournalEntryModal({
 
   return (
     <ModalWrapper
-      className="h-max md:min-w-[40vw]!"
+      className="md:min-w-[40vw]! h-max"
       isOpen={openType !== null}
       modalRef={ref}
     >

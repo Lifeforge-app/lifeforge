@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react'
+import { useWalletContext } from '@providers/WalletProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
-import { SidebarItem, SidebarTitle } from '@components/layouts/sidebar'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import { useWalletContext } from '@providers/WalletProvider'
+
+import { APIFallbackComponent, SidebarItem, SidebarTitle } from '@lifeforge/ui'
 
 function CategoriesSection({
   setManageCategoriesModalOpen,
@@ -69,7 +69,7 @@ function CategoriesSection({
                       />
                       <Icon
                         className={clsx(
-                          'absolute -right-2 -bottom-2 size-4 shrink-0',
+                          'absolute -bottom-2 -right-2 size-4 shrink-0',
                           {
                             income: 'text-green-500',
                             expenses: 'text-red-500',

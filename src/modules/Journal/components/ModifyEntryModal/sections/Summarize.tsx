@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react'
-import React, { useEffect, useRef, useState } from 'react'
-import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
 import { encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
+import React, { useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
+
+import { Button } from '@lifeforge/ui'
 
 function Summarize({
   setStep,

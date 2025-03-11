@@ -1,6 +1,9 @@
 import React from 'react'
-import Scrollbar from '@components/utilities/Scrollbar'
+
+import { Scrollbar } from '@lifeforge/ui'
+
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
+
 import TableBody from './components/TableBody'
 import TableHeader from './components/TableHeader'
 

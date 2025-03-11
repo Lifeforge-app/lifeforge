@@ -1,3 +1,4 @@
+import fetchAPI from '@utils/fetchAPI'
 import React, {
   createContext,
   useCallback,
@@ -8,7 +9,7 @@ import React, {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import fetchAPI from '@utils/fetchAPI'
+
 import { AUTH_ERROR_MESSAGES } from '../constants/auth'
 
 interface IAuthData {

@@ -1,7 +1,8 @@
 import React from 'react'
 import { useParams } from 'react-router'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+
+import { APIFallbackComponent, EmptyStateScreen } from '@lifeforge/ui'
+
 import useFetch from '@hooks/useFetch'
 
 interface RadioData {

@@ -1,11 +1,17 @@
-import React, { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Button, FAB } from '@components/buttons'
-import HamburgerSelectorWrapper from '@components/buttons/HamburgerMenu/components/HamburgerSelectorWrapper'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import { useRailwayMapContext } from '@providers/RailwayMapProvider'
 import { toCamelCase } from '@utils/strings'
+import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+
+import {
+  Button,
+  FAB,
+  HamburgerMenuSelectorWrapper,
+  MenuItem
+} from '@lifeforge/ui'
+
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+
 import DetailBox from './components/DetailBox'
 import LineFilter from './components/LineFilter'
 import SearchBar from './components/SearchBar'
@@ -48,7 +54,7 @@ function Header(): React.ReactElement {
         }
         hamburgerMenuItems={
           <>
-            <HamburgerSelectorWrapper
+            <HamburgerMenuSelectorWrapper
               className="lg:hidden"
               icon="tabler:eye"
               title={t('viewTypes.selectorTitle')}
@@ -65,7 +71,7 @@ function Header(): React.ReactElement {
                   }}
                 />
               ))}
-            </HamburgerSelectorWrapper>
+            </HamburgerMenuSelectorWrapper>
             <LineFilter />
           </>
         }

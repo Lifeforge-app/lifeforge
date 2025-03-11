@@ -1,19 +1,24 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-
 import { useQueryClient } from '@tanstack/react-query'
+import fetchAPI from '@utils/fetchAPI'
+import IntervalManager from '@utils/intervalManager'
 import { cookieParse } from 'pocketbase'
 import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { type Id, toast } from 'react-toastify'
-import { Button, FAB } from '@components/buttons'
-import HamburgerSelectorWrapper from '@components/buttons/HamburgerMenu/components/HamburgerSelectorWrapper'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+
+import {
+  Button,
+  FAB,
+  HamburgerMenuSelectorWrapper,
+  MenuItem,
+  SidebarDivider
+} from '@lifeforge/ui'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import { SidebarDivider } from '@components/layouts/sidebar'
+
 import useThemeColors from '@hooks/useThemeColor'
-import fetchAPI from '@utils/fetchAPI'
-import IntervalManager from '@utils/intervalManager'
 
 const intervalManager = IntervalManager.getInstance()
 
@@ -184,7 +189,7 @@ function Header({
             <MenuItems
               transition
               anchor="bottom end"
-              className="bg-bg-100 dark:bg-bg-800 mt-2 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+              className="bg-bg-100 dark:bg-bg-800 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 mt-2 overflow-hidden overscroll-contain rounded-md shadow-lg transition duration-100 ease-out"
             >
               <MenuItem
                 icon="tabler:upload"
@@ -213,7 +218,7 @@ function Header({
             />
             <div className="block md:hidden">
               <SidebarDivider noMargin />
-              <HamburgerSelectorWrapper
+              <HamburgerMenuSelectorWrapper
                 icon="tabler:sort-ascending"
                 title="Sort by"
               >
@@ -232,9 +237,9 @@ function Header({
                     }}
                   />
                 ))}
-              </HamburgerSelectorWrapper>
+              </HamburgerMenuSelectorWrapper>
               <SidebarDivider noMargin />
-              <HamburgerSelectorWrapper icon="tabler:eye" title="View as">
+              <HamburgerMenuSelectorWrapper icon="tabler:eye" title="View as">
                 {['grid', 'list'].map(type => (
                   <MenuItem
                     key={type}
@@ -246,7 +251,7 @@ function Header({
                     }}
                   />
                 ))}
-              </HamburgerSelectorWrapper>
+              </HamburgerMenuSelectorWrapper>
             </div>
           </>
         }

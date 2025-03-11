@@ -1,16 +1,18 @@
 import { Icon } from '@iconify/react'
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import { useQueryClient } from '@tanstack/react-query'
+import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { Link, useParams } from 'react-router'
 import { toast } from 'react-toastify'
+
 import {
   IIdeaBoxEntry,
   type IIdeaBoxFolder
 } from '@interfaces/ideabox_interfaces'
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
-import fetchAPI from '@utils/fetchAPI'
+
 import FolderContextMenu from './FolderContextMenu'
 
 interface FolderItemProps {
@@ -124,7 +126,7 @@ function FolderItem({ folder }: FolderItemProps): React.ReactElement {
         drop(node)
       }}
       className={clsx(
-        'flex-between shadow-custom relative isolate flex rounded-md p-4 font-medium backdrop-blur-xs transition-all before:absolute before:top-0 before:left-0 before:size-full before:rounded-md before:transition-all hover:before:bg-white/5',
+        'flex-between shadow-custom backdrop-blur-xs relative isolate flex rounded-md p-4 font-medium transition-all before:absolute before:left-0 before:top-0 before:size-full before:rounded-md before:transition-all hover:before:bg-white/5',
         isOver && 'text-bg-50 dark:text-bg-800',
         isDragging && 'cursor-move'
       )}

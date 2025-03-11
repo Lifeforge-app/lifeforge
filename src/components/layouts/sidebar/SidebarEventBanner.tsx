@@ -1,12 +1,13 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
-import moment from 'moment'
-import React, { useMemo } from 'react'
-import useThemeColors from '@hooks/useThemeColor'
 import { useAuthContext } from '@providers/AuthProvider'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { isLightColor } from '@utils/colors'
 import { addNumberSuffix } from '@utils/strings'
+import clsx from 'clsx'
+import moment from 'moment'
+import React, { useMemo } from 'react'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 const getEventType = (userDOB: string): string => {
   const today = moment().format('MM-DD')
@@ -68,7 +69,7 @@ const SidebarEventBanner = (): React.ReactElement => {
   return (
     <div
       className={clsx(
-        'flex-between flex w-full gap-2 rounded-tr-2xl p-4 text-lg font-medium whitespace-nowrap',
+        'flex-between flex w-full gap-2 whitespace-nowrap rounded-tr-2xl p-4 text-lg font-medium',
         bgColor,
         textColor
       )}

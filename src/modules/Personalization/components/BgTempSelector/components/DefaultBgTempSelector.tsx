@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -45,7 +44,7 @@ function DefaultBgTempSelector({
         <span className="text-bg-500 shrink-0 text-sm font-medium">
           {t('bgTempSelector.cool')}
         </span>
-        <span className="mt-px h-0.5 w-full bg-linear-to-r from-blue-500 to-red-500"></span>
+        <span className="bg-linear-to-r mt-px h-0.5 w-full from-blue-500 to-red-500"></span>
         <span className="text-bg-500 shrink-0 text-sm font-medium">
           {t('bgTempSelector.warm')}
         </span>

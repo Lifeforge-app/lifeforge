@@ -1,7 +1,9 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React, { useState } from 'react'
-import { Button } from '@components/buttons'
+
+import { Button } from '@lifeforge/ui'
+
 import useThemeColors from '@hooks/useThemeColor'
 
 function AddCardButton(): React.ReactElement {

@@ -1,9 +1,13 @@
 import clsx from 'clsx'
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { GoBackButton } from '@components/buttons'
+
+import { GoBackButton } from '@lifeforge/ui'
+
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
 import useThemeColors from '@hooks/useThemeColor'
+
 import Cube from './Cube'
 
 const sections: Array<{

@@ -1,11 +1,16 @@
 import { Icon } from '@iconify/react'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@components/buttons'
-import { ColorInput, ColorPickerModal } from '@components/inputs'
-import ConfigColumn from '@components/utilities/ConfigColumn'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+
+import {
+  Button,
+  ColorInput,
+  ColorPickerModal,
+  ConfigColumn
+} from '@lifeforge/ui'
+
 import DefaultBgTempSelector from './components/DefaultBgTempSelector'
 
 function BgTempSelector(): React.ReactElement {

@@ -1,24 +1,32 @@
 import { Icon } from '@iconify/react'
+import { toTitleCase } from '@utils/strings'
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router'
-import { Button, GoBackButton } from '@components/buttons'
+
+import {
+  APIFallbackComponent,
+  Button,
+  EmptyStateScreen,
+  GoBackButton,
+  Scrollbar
+} from '@lifeforge/ui'
+
+import { type IAirportNOTAMEntry } from '@interfaces/airports_interfaces'
+
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import Scrollbar from '@components/utilities/Scrollbar'
+
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
-import { type IAirportNOTAMEntry } from '@interfaces/airports_interfaces'
-import { toTitleCase } from '@utils/strings'
+
+import Breadcrumbs from '../lists/Breadcrumb'
 import Flights from './sections/Flights'
 import NOTAM from './sections/NOTAM'
 import NOTAMDetailsModal from './sections/NOTAM/components/NOTAMDetailsModal'
 import Radio from './sections/Radio'
 import Runways from './sections/Runways'
 import Weather from './sections/Weather'
-import Breadcrumbs from '../lists/Breadcrumb'
 
 function Airport(): React.ReactElement {
   const { componentBg } = useThemeColors()
@@ -97,7 +105,7 @@ function Airport(): React.ReactElement {
                   <div className="flex h-full flex-wrap items-start gap-x-12">
                     {airportData.data.iata && (
                       <div>
-                        <h2 className="text-bg-500 mb-2 text-lg font-medium tracking-widest uppercase">
+                        <h2 className="text-bg-500 mb-2 text-lg font-medium uppercase tracking-widest">
                           ICAO
                         </h2>
                         <p className="text-4xl tracking-widest">
@@ -107,7 +115,7 @@ function Airport(): React.ReactElement {
                     )}
                     {airportData.data.iata && (
                       <div>
-                        <h2 className="text-bg-500 mb-2 text-lg font-medium tracking-widest uppercase">
+                        <h2 className="text-bg-500 mb-2 text-lg font-medium uppercase tracking-widest">
                           IATA
                         </h2>
                         <p className="text-4xl tracking-widest">
@@ -117,7 +125,7 @@ function Airport(): React.ReactElement {
                     )}
                     {airportData.data.elevation && (
                       <div>
-                        <h2 className="text-bg-500 mb-2 text-lg font-medium tracking-widest uppercase">
+                        <h2 className="text-bg-500 mb-2 text-lg font-medium uppercase tracking-widest">
                           Elevation
                         </h2>
                         <p className="text-4xl tracking-wide">
@@ -128,7 +136,7 @@ function Airport(): React.ReactElement {
                       </div>
                     )}
                     <div>
-                      <h2 className="text-bg-500 mb-2 text-lg font-medium tracking-widest uppercase">
+                      <h2 className="text-bg-500 mb-2 text-lg font-medium uppercase tracking-widest">
                         Coordinates
                       </h2>
                       <p className="text-4xl tracking-wide">
@@ -175,7 +183,7 @@ function Airport(): React.ReactElement {
                     <button
                       key={index}
                       className={clsx(
-                        'flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 p-4 tracking-widest uppercase transition-all',
+                        'flex w-full cursor-pointer items-center justify-center gap-2 border-b-2 p-4 uppercase tracking-widest transition-all',
                         section === name.toLowerCase()
                           ? 'border-custom-500 text-custom-500 font-medium'
                           : 'border-bg-400 text-bg-400 hover:border-bg-800 hover:text-bg-800 dark:border-bg-500 dark:text-bg-500 dark:hover:border-bg-200 dark:hover:text-bg-200'
@@ -196,7 +204,7 @@ function Airport(): React.ReactElement {
                         return <Flights IATA={airportData.data.iata} />
                       } else {
                         return (
-                          <div className="mt-6 mb-8 w-full">
+                          <div className="mb-8 mt-6 w-full">
                             <EmptyStateScreen
                               icon="tabler:alert-triangle"
                               name="section"

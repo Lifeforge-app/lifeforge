@@ -1,13 +1,18 @@
+import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import { TextInput } from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+
+import {
+  APIFallbackComponent,
+  Button,
+  ModalHeader,
+  ModalWrapper,
+  TextInput
+} from '@lifeforge/ui'
+
 import { Loadable } from '@interfaces/common'
 import { type IGuitarTabsGuitarWorldScores } from '@interfaces/guitar_tabs_interfaces'
-import fetchAPI from '@utils/fetchAPI'
+
 import ScoreList from './components/ScoreList'
 
 function GuitarWorldModal({

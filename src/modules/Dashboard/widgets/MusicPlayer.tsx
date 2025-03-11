@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react'
+import { useMusicContext } from '@providers/MusicProvider'
 import clsx from 'clsx'
 import React, { useRef } from 'react'
 import { useNavigate } from 'react-router'
-import { Button } from '@components/buttons'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import DashboardItem from '@components/utilities/DashboardItem'
-import { useMusicContext } from '@providers/MusicProvider'
+
+import { Button, DashboardItem, EmptyStateScreen } from '@lifeforge/ui'
+
 import ControlButtons from '../../Music/components/Bottombar/components/ControlButtons'
 
 export default function MusicPlayer(): React.ReactElement {
@@ -19,7 +19,7 @@ export default function MusicPlayer(): React.ReactElement {
         {currentMusic !== null ? (
           <>
             <div className="relative flex h-full min-h-0 flex-1 flex-col">
-              <div className="bg-bg-100 shadow-custom dark:bg-bg-800 absolute top-1/2 left-1/2 flex aspect-square h-full flex-1 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-md">
+              <div className="bg-bg-100 shadow-custom dark:bg-bg-800 absolute left-1/2 top-1/2 flex aspect-square h-full flex-1 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-md">
                 <Icon
                   className={clsx(
                     'aspect-square h-full w-1/2',

@@ -1,6 +1,7 @@
 import React from 'react'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+
+import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
 
 function ActionColumn({

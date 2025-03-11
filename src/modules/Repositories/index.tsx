@@ -1,15 +1,17 @@
+import LANGUAGE_COLORS from '@constants/language_colors'
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useState } from 'react'
-import { Button } from '@components/buttons'
-import { SearchInput } from '@components/inputs'
+
+import { APIFallbackComponent, Button, SearchInput } from '@lifeforge/ui'
+
 import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import LANGUAGE_COLORS from '@constants/language_colors'
+
 import useFetch from '@hooks/useFetch'
+
 import Sidebar from './Sidebar'
 
 interface IRepositoriesRepo {
@@ -82,7 +84,7 @@ function Repositories(): React.ReactElement {
                       </div>
                       {repo.language !== '' && (
                         <span
-                          className="relative isolate mb-1 block w-min rounded-full px-3 py-1 text-xs whitespace-nowrap shadow-xs"
+                          className="shadow-xs relative isolate mb-1 block w-min whitespace-nowrap rounded-full px-3 py-1 text-xs"
                           style={{
                             backgroundColor: `${
                               LANGUAGE_COLORS[

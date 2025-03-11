@@ -1,12 +1,15 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React from 'react'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
-import AudioPlayer from './AudioPlayer'
+
+import useThemeColors from '@hooks/useThemeColor'
+
 import DownloadMenu from '../../../components/DownloadMenu'
+import AudioPlayer from './AudioPlayer'
 
 function EntryItem({
   entry,
@@ -63,7 +66,7 @@ function EntryItem({
                 />
               )}
             </div>
-            <div className="text-bg-500 flex w-full min-w-0 items-center gap-2 text-sm font-medium whitespace-nowrap">
+            <div className="text-bg-500 flex w-full min-w-0 items-center gap-2 whitespace-nowrap text-sm font-medium">
               <p className="min-w-0 truncate">
                 {entry.author !== '' ? entry.author : 'Unknown'}
               </p>

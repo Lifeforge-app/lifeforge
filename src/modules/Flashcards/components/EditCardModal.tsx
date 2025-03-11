@@ -1,10 +1,11 @@
 import { Icon } from '@iconify/react'
+import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { CreateOrModifyButton } from '@components/buttons'
-import ModalWrapper from '@components/modals/ModalWrapper'
+
+import { CreateOrModifyButton, ModalWrapper } from '@lifeforge/ui'
+
 import { type IFlashcardCard } from '@interfaces/flashcard_interfaces'
-import fetchAPI from '@utils/fetchAPI'
 
 function EditCardModal({
   deck,
@@ -143,7 +144,7 @@ function EditCardModal({
               <td className="px-2 py-4 pr-4">
                 {currentlyEditingIndex === index ? (
                   <input
-                    className="border-bg-700 w-full rounded-xs border bg-transparent p-2"
+                    className="border-bg-700 rounded-xs w-full border bg-transparent p-2"
                     type="text"
                     value={card.question}
                     onChange={e => {
@@ -167,7 +168,7 @@ function EditCardModal({
               <td className="pr-6">
                 {currentlyEditingIndex === index ? (
                   <input
-                    className="border-bg-700 w-full rounded-xs border bg-transparent p-2"
+                    className="border-bg-700 rounded-xs w-full border bg-transparent p-2"
                     type="text"
                     value={card.answer}
                     onChange={e => {
@@ -205,7 +206,7 @@ function EditCardModal({
         </tbody>
       </table>
       <button
-        className="flex-center bg-bg-800 text-bg-50 shadow-custom hover:bg-bg-800/50 dark:text-bg-50 mt-4 hidden w-full gap-2 rounded-lg p-4 pr-5 font-semibold tracking-wider uppercase transition-all sm:flex"
+        className="flex-center bg-bg-800 text-bg-50 shadow-custom hover:bg-bg-800/50 dark:text-bg-50 mt-4 hidden w-full gap-2 rounded-lg p-4 pr-5 font-semibold uppercase tracking-wider transition-all sm:flex"
         onClick={e => {
           setInnerCards([
             ...innerCards,
@@ -227,7 +228,7 @@ function EditCardModal({
 
       <div className="mt-12 flex flex-1 flex-col-reverse items-end gap-2 sm:flex-row">
         <button
-          className="flex-center bg-bg-800 text-bg-50 shadow-custom hover:bg-bg-200 dark:hover:bg-bg-700/50 h-16 w-full gap-2 rounded-lg p-4 pr-5 font-semibold tracking-wider uppercase transition-all"
+          className="flex-center bg-bg-800 text-bg-50 shadow-custom hover:bg-bg-200 dark:hover:bg-bg-700/50 h-16 w-full gap-2 rounded-lg p-4 pr-5 font-semibold uppercase tracking-wider transition-all"
           disabled={loading}
           onClick={onClose}
         >

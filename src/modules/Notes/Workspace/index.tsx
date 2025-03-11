@@ -3,17 +3,24 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { GoBackButton } from '@components/buttons'
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import useFetch from '@hooks/useFetch'
+
+import {
+  APIFallbackComponent,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  GoBackButton
+} from '@lifeforge/ui'
+
 import {
   type INotesSubject,
   type INotesWorkspace
 } from '@interfaces/notes_interfaces'
+
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
+import useFetch from '@hooks/useFetch'
+
 import CreateSubjectButton from './components/CreateSubjectButton'
 import ModifySubjectModal from './components/ModifySubjectModal'
 import SubjectItem from './components/SubjectItem'

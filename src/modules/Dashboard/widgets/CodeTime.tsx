@@ -1,16 +1,16 @@
 /* eslint-disable import/named */
 import { Icon } from '@iconify/react'
+import { getDatesBetween } from '@utils/date'
 import { ChartOptions, ScriptableContext } from 'chart.js'
 import clsx from 'clsx'
 import moment from 'moment'
-import React, { useState, useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Bar, Line } from 'react-chartjs-2'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import LoadingScreen from '@components/screens/LoadingScreen'
-import DashboardItem from '@components/utilities/DashboardItem'
+
+import { DashboardItem, EmptyStateScreen, LoadingScreen } from '@lifeforge/ui'
+
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
-import { getDatesBetween } from '@utils/date'
 
 const msToTime = (ms: number): string => {
   const timeUnits = [

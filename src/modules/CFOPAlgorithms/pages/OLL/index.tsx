@@ -1,11 +1,15 @@
 import clsx from 'clsx'
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { GoBackButton } from '@components/buttons'
+
+import { GoBackButton } from '@lifeforge/ui'
+
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
 import useThemeColors from '@hooks/useThemeColor'
+
 import { algsetAlgs, algsetScrambles } from '../../algorithms/OLL'
-import { applyMoves, DEFAULT_CUBE } from '../../scripts/genCube'
+import { DEFAULT_CUBE, applyMoves } from '../../scripts/genCube'
 
 function CFOPF2L(): React.ReactElement {
   const navigate = useNavigate()

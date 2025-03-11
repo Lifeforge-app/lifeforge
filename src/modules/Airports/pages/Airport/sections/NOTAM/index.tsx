@@ -1,12 +1,14 @@
+import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import useFetch from '@hooks/useFetch'
+
+import { APIFallbackComponent, Button, EmptyStateScreen } from '@lifeforge/ui'
+
 import { type IAirportNOTAMEntry } from '@interfaces/airports_interfaces'
-import fetchAPI from '@utils/fetchAPI'
+
+import useFetch from '@hooks/useFetch'
+
 import NOTAMListItem from './components/NOTAMListItem'
 
 function NOTAM({

@@ -1,8 +1,10 @@
-import React from 'react'
-import { toast } from 'react-toastify'
-import type { ITodoSubtask } from '@interfaces/todo_list_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import fetchAPI from '@utils/fetchAPI'
+import React from 'react'
+import { toast } from 'react-toastify'
+
+import type { ITodoSubtask } from '@interfaces/todo_list_interfaces'
+
 import TaskCompletionCheckbox from './TaskCompletionCheckbox'
 
 function SubtaskItem({

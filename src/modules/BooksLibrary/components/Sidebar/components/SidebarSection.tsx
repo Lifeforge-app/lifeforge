@@ -1,8 +1,9 @@
+import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { SidebarTitle } from '@components/layouts/sidebar'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
+
+import { APIFallbackComponent, SidebarTitle } from '@lifeforge/ui'
+
 import SidebarItem from './SidebarItem'
 
 function SidebarSection({

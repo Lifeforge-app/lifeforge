@@ -1,9 +1,7 @@
 import React from 'react'
-import {
-  SidebarDivider,
-  SidebarTitle,
-  SidebarWrapper
-} from '@components/layouts/sidebar'
+
+import { SidebarDivider, SidebarTitle, SidebarWrapper } from '@lifeforge/ui'
+
 import TaskListList from './components/TaskListList'
 import TaskPriorityList from './components/TaskPriorityList'
 import TaskStatusList from './components/TaskStatusList'

@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import React from 'react'
 import { useSearchParams } from 'react-router'
+
 import { IPhotoAlbumTag } from '@interfaces/photos_interfaces'
 
 function TagItem({
@@ -16,7 +17,7 @@ function TagItem({
     <button
       key={tag.id}
       className={clsx(
-        'shadow-custom rounded-full px-3 py-1 text-sm tracking-wider whitespace-nowrap',
+        'shadow-custom whitespace-nowrap rounded-full px-3 py-1 text-sm tracking-wider',
         searchParams.getAll('tags')?.[0]?.split(',').includes(tag.id)
           ? 'bg-custom-500/20 text-custom-500 hover:bg-custom-500/40'
           : 'bg-bg-900 text-bg-500 hover:bg-bg-800'

@@ -1,8 +1,10 @@
 import React from 'react'
 import { useParams } from 'react-router'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+
+import { APIFallbackComponent, EmptyStateScreen } from '@lifeforge/ui'
+
 import useFetch from '@hooks/useFetch'
+
 import Barometer from './components/Barometer'
 import Ceiling from './components/Ceiling'
 import Clouds from './components/Clouds'
@@ -79,7 +81,7 @@ function Weather(): React.ReactElement {
     <APIFallbackComponent data={METARData}>
       {data =>
         data !== 'none' ? (
-          <div className="mt-6 mb-8 grid w-full grid-cols-4 gap-4">
+          <div className="mb-8 mt-6 grid w-full grid-cols-4 gap-4">
             <FlightCategory data={data} />
             <RawMETARData data={data} />
             <SignificantWeather data={data} />

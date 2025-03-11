@@ -1,9 +1,10 @@
 import clsx from 'clsx'
 import React from 'react'
+
+import StatementEndedText from '../StatementEndedText'
+import StatementHeader from './components/StatementHeader'
 import Overview from './components/sections/Overview'
 import Transactions from './components/sections/Transactions'
-import StatementHeader from './components/StatementHeader'
-import StatementEndedText from '../StatementEndedText'
 
 function StatementContent({
   contentRef,

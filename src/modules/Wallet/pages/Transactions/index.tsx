@@ -1,18 +1,23 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-
+import { useWalletContext } from '@providers/WalletProvider'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
-import { FAB } from '@components/buttons'
-import HamburgerSelectorWrapper from '@components/buttons/HamburgerMenu/components/HamburgerSelectorWrapper'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+
+import {
+  APIFallbackComponent,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  FAB,
+  HamburgerMenuSelectorWrapper,
+  MenuItem
+} from '@lifeforge/ui'
+
+import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
-import { useWalletContext } from '@providers/WalletProvider'
+
 import Header from './components/Header'
 import SearchBar from './components/SearchBar'
 import Sidebar from './components/Sidebar'
@@ -92,7 +97,7 @@ function Transactions(): React.ReactElement {
               }}
             />
             <div className="block md:hidden">
-              <HamburgerSelectorWrapper icon="tabler:eye" title="View as">
+              <HamburgerMenuSelectorWrapper icon="tabler:eye" title="View as">
                 {['list', 'table'].map(type => (
                   <MenuItem
                     key={type}
@@ -104,7 +109,7 @@ function Transactions(): React.ReactElement {
                     }}
                   />
                 ))}
-              </HamburgerSelectorWrapper>
+              </HamburgerMenuSelectorWrapper>
             </div>
             {view === 'table' && (
               <ColumnVisibilityToggle
@@ -191,7 +196,7 @@ function Transactions(): React.ReactElement {
                 <MenuItems
                   transition
                   anchor="bottom end"
-                  className="bg-bg-100 dark:bg-bg-800 w-48 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+                  className="bg-bg-100 dark:bg-bg-800 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 w-48 overflow-hidden overscroll-contain rounded-md shadow-lg transition duration-100 ease-out [--anchor-gap:8px]"
                 >
                   <MenuItem
                     icon="tabler:plus"

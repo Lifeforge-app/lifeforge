@@ -1,5 +1,7 @@
 /* eslint-disable import/named */
 import { Icon } from '@iconify/react'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import fetchAPI from '@utils/fetchAPI'
 import WavesurferPlayer from '@wavesurfer/react'
 import clsx from 'clsx'
 import moment from 'moment'
@@ -7,14 +9,13 @@ import { ListResult } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
-import { Button } from '@components/buttons'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { Loadable } from '@interfaces/common'
 import { IMomentVaultEntry } from '@interfaces/moment_vault_interfaces'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import fetchAPI from '@utils/fetchAPI'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function AudioEntry({
   entry,
@@ -39,7 +40,7 @@ function AudioEntry({
   const [isPlaying, setIsPlaying] = useState(false)
   const [transcriptionLoading, setTranscriptionLoading] = useState(false)
 
-  const onReady = (ws: WaveSurfer) => {
+  const onReady = (ws: any) => {
     setWavesurfer(ws)
     setTotalTime(ws.getDuration())
     setIsPlaying(false)
@@ -133,7 +134,7 @@ function AudioEntry({
             onPlay={() => setIsPlaying(true)}
             onReady={onReady}
           />
-          <p className="text-bg-500 w-full text-left text-sm whitespace-nowrap sm:w-auto">
+          <p className="text-bg-500 w-full whitespace-nowrap text-left text-sm sm:w-auto">
             {moment().startOf('day').seconds(currentTime).format('mm:ss')} /{' '}
             {moment().startOf('day').seconds(totalTime).format('mm:ss')}
           </p>

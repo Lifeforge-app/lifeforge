@@ -1,20 +1,25 @@
-import React, { Fragment, useMemo } from 'react'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import Scrollbar from '@components/utilities/Scrollbar'
-import { type IRoutes } from '@interfaces/routes_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import { titleToPath } from '@utils/strings'
-import SidebarDivider from './SidebarDivider'
-import SidebarItem from './SidebarItem'
-import SidebarTitle from './SidebarTitle'
+import React, { Fragment, useMemo } from 'react'
+
+import {
+  EmptyStateScreen,
+  Scrollbar,
+  SidebarDivider,
+  SidebarItem,
+  SidebarTitle
+} from '@lifeforge/ui'
+
+import { type IRoutes } from '@interfaces/routes_interfaces'
+
 import _ROUTES from '../../../core/routes_config.json'
 
 const ROUTES = _ROUTES as IRoutes[]
 
 function SidebarItems({ query }: { query: string }): React.ReactElement {
   const { userData } = useAuthContext()
-  const { sidebarExpanded } = useGlobalStateContext()
+  const { sidebarExpanded, toggleSidebar } = useGlobalStateContext()
   const filteredRoutes = useMemo(
     () =>
       ROUTES.filter(
@@ -61,7 +66,9 @@ function SidebarItems({ query }: { query: string }): React.ReactElement {
                     name={subItem.name}
                     prefix={item.prefix}
                     showAIIcon={subItem.hasAI === true}
+                    sidebarExpanded={sidebarExpanded}
                     subsection={subItem.subsection}
+                    toggleSidebar={toggleSidebar}
                   />
                 ))}
                 {index !== ROUTES.length - 1 && filteredModules.length > 0 && (

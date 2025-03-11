@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react'
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import React from 'react'
 import { Link, useParams } from 'react-router'
+
 import { IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 
 function InFolderChip({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
   const { setSearchQuery, setSelectedTags } = useIdeaBoxContext()

@@ -1,17 +1,19 @@
+import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { CreateOrModifyButton } from '@components/buttons'
+
 import {
+  CreateOrModifyButton,
   CurrencyInput,
   IconInput,
   IconPickerModal,
+  ModalHeader,
+  ModalWrapper,
   TextInput
-} from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
+} from '@lifeforge/ui'
+
 import { type IWalletAsset } from '@interfaces/wallet_interfaces'
-import fetchAPI from '@utils/fetchAPI'
 
 function ModifyAssetsModal({
   openType,

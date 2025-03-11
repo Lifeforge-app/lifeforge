@@ -1,14 +1,18 @@
+import { usePhotosContext } from '@providers/PhotosProvider'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+
+import {
+  APIFallbackComponent,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  HamburgerMenu,
+  MenuItem,
+  ModalHeader,
+  ModalWrapper
+} from '@lifeforge/ui'
+
 import { type IPhotoAlbumTag } from '@interfaces/photos_interfaces'
-import { usePhotosContext } from '@providers/PhotosProvider'
 
 function ManageTagsModal({
   isOpen,

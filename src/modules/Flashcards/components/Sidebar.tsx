@@ -1,15 +1,18 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
 import React from 'react'
+
 import {
+  APIFallbackComponent,
   SidebarDivider,
   SidebarItem,
   SidebarTitle,
   SidebarWrapper
-} from '@components/layouts/sidebar'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import useFetch from '@hooks/useFetch'
+} from '@lifeforge/ui'
+
 import { type IFlashcardTag } from '@interfaces/flashcard_interfaces'
+
+import useFetch from '@hooks/useFetch'
 
 function Sidebar({
   sidebarOpen,
@@ -39,7 +42,7 @@ function Sidebar({
           key={index}
           className="text-bg-500 relative flex items-center gap-6 px-4 font-medium transition-all"
         >
-          <div className="hover:bg-bg-100 dark:hover:bg-bg-800 flex w-full items-center gap-6 rounded-lg p-4 whitespace-nowrap">
+          <div className="hover:bg-bg-100 dark:hover:bg-bg-800 flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4">
             <Icon className="size-6 shrink-0" icon={icon} />
             <div className="flex-between flex w-full">{name}</div>
             <span className="text-sm">{Math.floor(Math.random() * 10)}</span>
@@ -57,7 +60,7 @@ function Sidebar({
                 key={index}
                 className="text-bg-500 relative flex items-center gap-6 px-4 font-medium transition-all"
               >
-                <div className="hover:bg-bg-100 dark:hover:bg-bg-800 flex w-full items-center gap-6 rounded-lg p-4 whitespace-nowrap">
+                <div className="hover:bg-bg-100 dark:hover:bg-bg-800 flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4">
                   <div className="flex w-full items-center gap-6">
                     <span
                       className="block size-2 shrink-0 rounded-full"

@@ -1,13 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
-import React, { useState } from 'react'
-import { Button } from '@components/buttons'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import useThemeColors from '@hooks/useThemeColor'
-import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import fetchAPI from '@utils/fetchAPI'
+import clsx from 'clsx'
+import React, { useState } from 'react'
+
+import { Button, HamburgerMenu } from '@lifeforge/ui'
+
+import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
+
+import useThemeColors from '@hooks/useThemeColor'
+
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
@@ -64,7 +67,7 @@ export default function EntryItem({
         componentBgWithHover
       )}
     >
-      <div className="absolute top-4 right-3 z-20 flex">
+      <div className="absolute right-3 top-4 z-20 flex">
         <Button
           className={clsx('p-2!', item.is_favourite && 'text-red-500!')}
           icon={(() => {

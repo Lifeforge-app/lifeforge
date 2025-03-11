@@ -1,15 +1,15 @@
 import { Icon } from '@iconify/react'
+import { decrypt, encrypt } from '@utils/encryption'
+import fetchAPI from '@utils/fetchAPI'
 import copy from 'copy-to-clipboard'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import ConfigColumn from '@components/utilities/ConfigColumn'
+
+import { Button, ConfigColumn, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IAPIKeyEntry } from '@interfaces/api_keys_interfaces'
-import { decrypt, encrypt } from '@utils/encryption'
-import fetchAPI from '@utils/fetchAPI'
+
 import { fetchChallenge } from '../utils/fetchChallenge'
 
 function EntryItem({

@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import React from 'react'
-import Scrollbar from '@components/utilities/Scrollbar'
+
+import { Scrollbar } from '@lifeforge/ui'
 
 function ModuleWrapper({
   children,

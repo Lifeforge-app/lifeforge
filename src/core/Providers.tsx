@@ -1,14 +1,15 @@
 // Providers.tsx
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import React from 'react'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
 import APIOnlineStatusProvider from '@providers/APIOnlineStatusProvider'
 import AuthProvider from '@providers/AuthProvider'
 import BackgroundProvider from '@providers/BackgroundProvider'
 import GlobalStateProvider from '@providers/GlobalStateProvider'
+import LifeforgeUIProviderWrapper from '@providers/LifeforgeUIProviderWrapper'
 import { MusicProvider } from '@providers/MusicProvider'
 import PersonalizationProvider from '@providers/PersonalizationProvider'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import React from 'react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 const queryClient = new QueryClient()
 
@@ -24,9 +25,11 @@ function Providers({
           <AuthProvider>
             <DndProvider backend={HTML5Backend}>
               <PersonalizationProvider>
-                <BackgroundProvider>
-                  <MusicProvider>{children}</MusicProvider>
-                </BackgroundProvider>
+                <LifeforgeUIProviderWrapper>
+                  <BackgroundProvider>
+                    <MusicProvider>{children}</MusicProvider>
+                  </BackgroundProvider>
+                </LifeforgeUIProviderWrapper>
               </PersonalizationProvider>
             </DndProvider>
           </AuthProvider>

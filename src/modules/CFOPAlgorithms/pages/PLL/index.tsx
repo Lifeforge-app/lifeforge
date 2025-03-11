@@ -1,10 +1,13 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { GoBackButton } from '@components/buttons'
+
+import { GoBackButton } from '@lifeforge/ui'
+
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import AlgEntry from './AlgEntry'
+
 import { algsetScrambles } from '../../algorithms/PLL'
-import { applyMoves, DEFAULT_CUBE } from '../../scripts/genCube'
+import { DEFAULT_CUBE, applyMoves } from '../../scripts/genCube'
+import AlgEntry from './AlgEntry'
 
 function CFOPPLL(): React.ReactElement {
   const navigate = useNavigate()

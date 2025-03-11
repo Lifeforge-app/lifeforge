@@ -6,32 +6,37 @@ import clsx from 'clsx'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
+
 import {
+  DeleteConfirmationModal,
+  EmptyStateScreen,
   ListboxOrComboboxOption,
   ListboxOrComboboxOptions,
-  SearchInput
-} from '@components/inputs'
-import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import QueryWrapper from '@components/screens/QueryWrapper'
-import Scrollbar from '@components/utilities/Scrollbar'
-import ViewModeSelector from '@components/utilities/ViewModeSelector'
-import useAPIQuery from '@hooks/useAPIQuery'
-import useThemeColors from '@hooks/useThemeColor'
+  Pagination,
+  QueryWrapper,
+  Scrollbar,
+  SearchInput,
+  ViewModeSelector
+} from '@lifeforge/ui'
+
 import {
   type IGuitarTabsEntry,
   type IGuitarTabsSidebarData
 } from '@interfaces/guitar_tabs_interfaces'
+
+import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
+
+import useAPIQuery from '@hooks/useAPIQuery'
+import useThemeColors from '@hooks/useThemeColor'
+
 import GuitarWorldModal from './components/GuitarWorldModal'
 import Header from './components/Header'
 import ModifyEntryModal from './components/ModifyEntryModal'
 import Sidebar from './components/Sidebar'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
-import Pagination from '../../components/utilities/Pagination'
 
 const SORT_TYPE = [
   ['tabler:clock', 'newest'],
@@ -200,7 +205,7 @@ function GuitarTabs(): React.ReactElement {
                     : ''
                 }`.trim()}
               </h1>
-              <span className="text-bg-500 mr-8 ml-2 text-base">
+              <span className="text-bg-500 ml-2 mr-8 text-base">
                 ({entriesQuery.data?.totalItems ?? 0})
               </span>
             </div>
@@ -239,7 +244,7 @@ function GuitarTabs(): React.ReactElement {
                       )?.[0] ?? 'tabler:clock'
                     }
                   />
-                  <span className="font-medium whitespace-nowrap">
+                  <span className="whitespace-nowrap font-medium">
                     {t(
                       `sortTypes.${
                         SORT_TYPE.find(

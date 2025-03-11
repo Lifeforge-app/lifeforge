@@ -3,17 +3,23 @@ import { useDebounce } from '@uidotdev/usehooks'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router'
-import { SearchInput } from '@components/inputs'
+
+import {
+  APIFallbackComponent,
+  EmptyStateScreen,
+  Scrollbar,
+  SearchInput
+} from '@lifeforge/ui'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import Scrollbar from '@components/utilities/Scrollbar'
+
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
-import Breadcrumbs from './Breadcrumb'
+
 import ContinentSelector from '../../components/ContinentSelector'
 import MasterSearchBar from '../../components/MasterSearchBar'
+import Breadcrumbs from './Breadcrumb'
 
 const CONTINENTS = {
   AF: 'Africa',

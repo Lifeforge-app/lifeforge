@@ -1,6 +1,8 @@
-import React from 'react'
-import Scrollbar from '@components/utilities/Scrollbar'
 import { useTodoListContext } from '@providers/TodoListProvider'
+import React from 'react'
+
+import { Scrollbar } from '@lifeforge/ui'
+
 import TaskItem from './TaskItem'
 
 function TaskList(): React.ReactElement {

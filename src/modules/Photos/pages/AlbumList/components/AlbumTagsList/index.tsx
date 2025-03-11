@@ -1,9 +1,11 @@
 import { Icon } from '@iconify/react'
+import { usePhotosContext } from '@providers/PhotosProvider'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import { usePhotosContext } from '@providers/PhotosProvider'
+
+import { APIFallbackComponent } from '@lifeforge/ui'
+
 import TagItem from './components/TagItem'
 
 function AlbumTagsList({
@@ -61,7 +63,7 @@ function AlbumTagsList({
               </button>
             </div>
             <button
-              className="text-bg-500 hover:bg-bg-900 mt-0.5 ml-2 rounded-full p-1 text-sm transition-all"
+              className="text-bg-500 hover:bg-bg-900 ml-2 mt-0.5 rounded-full p-1 text-sm transition-all"
               onClick={() => {
                 setTagsCollapsed(!tagsCollapsed)
               }}

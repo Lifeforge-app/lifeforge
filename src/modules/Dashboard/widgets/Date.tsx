@@ -1,10 +1,11 @@
-import clsx from 'clsx'
-import moment from 'moment/min/moment-with-locales'
-import React, { useRef } from 'react'
-import useThemeColors from '@hooks/useThemeColor'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { isLightColor } from '@utils/colors'
 import { arabicToChinese } from '@utils/strings'
+import clsx from 'clsx'
+import moment from 'moment/min/moment-with-locales'
+import React, { useRef } from 'react'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 export default function DateWidget(): React.ReactElement {
   const { language } = usePersonalizationContext()

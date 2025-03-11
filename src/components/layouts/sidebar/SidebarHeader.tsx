@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
 import clsx from 'clsx'
 import React from 'react'
-import { SearchInput } from '@components/inputs'
-import { useGlobalStateContext } from '@providers/GlobalStateProvider'
+
+import { SearchInput } from '@lifeforge/ui'
 
 function SidebarHeader({
   searchQuery,
@@ -21,7 +22,7 @@ function SidebarHeader({
           !sidebarExpanded && 'overflow-hidden'
         )}
       >
-        <h1 className="ml-1 flex shrink-0 items-center gap-2 text-xl font-semibold whitespace-nowrap">
+        <h1 className="ml-1 flex shrink-0 items-center gap-2 whitespace-nowrap text-xl font-semibold">
           <Icon className="text-custom-500 text-3xl" icon="tabler:hammer" />
           {sidebarExpanded && (
             <div>

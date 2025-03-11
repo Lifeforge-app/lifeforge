@@ -7,7 +7,7 @@ function PropsTable({ data }: { data: any }): React.ReactElement {
       <tbody>
         {data.qualification.location !== undefined && (
           <tr className="border-bg-200 dark:border-bg-800 border-b p-4">
-            <td className="w-1/2 px-2 py-4 font-semibold whitespace-nowrap">
+            <td className="w-1/2 whitespace-nowrap px-2 py-4 font-semibold">
               FIR
             </td>
             <td className="w-1/2 px-2 py-4">

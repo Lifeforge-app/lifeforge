@@ -2,8 +2,10 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
-import useThemeColors from '@hooks/useThemeColor'
+
 import { IMailInboxEntry } from '@interfaces/mail_inbox_interfaces'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function MailHeader({ mail }: { mail: IMailInboxEntry }): React.ReactElement {
   const { componentBgLighter } = useThemeColors()
@@ -29,7 +31,7 @@ function MailHeader({ mail }: { mail: IMailInboxEntry }): React.ReactElement {
         </div>
         <p className="text-bg-500 text-sm">{moment(mail.date).fromNow()}</p>
       </div>
-      <h1 className="mt-4 mb-6 text-2xl font-medium">{mail.subject}</h1>
+      <h1 className="mb-6 mt-4 text-2xl font-medium">{mail.subject}</h1>
     </div>
   )
 }

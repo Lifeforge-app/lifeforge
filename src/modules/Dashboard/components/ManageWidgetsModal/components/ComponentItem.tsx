@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react'
-import React, { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Switch } from '@components/buttons'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
+import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+
+import { Switch } from '@lifeforge/ui'
 
 function ComponentListItem({
   id,

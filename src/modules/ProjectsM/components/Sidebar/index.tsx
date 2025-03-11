@@ -1,12 +1,9 @@
-import React from 'react'
-import { useNavigate } from 'react-router'
-import { useSearchParams } from 'react-router'
-import {
-  SidebarDivider,
-  SidebarItem,
-  SidebarWrapper
-} from '@components/layouts/sidebar'
 import { useProjectsMContext } from '@providers/ProjectsMProvider'
+import React from 'react'
+import { useNavigate, useSearchParams } from 'react-router'
+
+import { SidebarDivider, SidebarItem, SidebarWrapper } from '@lifeforge/ui'
+
 import SidebarSection from './components/SidebarSection'
 
 function Sidebar(): React.ReactElement {

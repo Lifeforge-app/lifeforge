@@ -1,12 +1,15 @@
+import { useMusicContext } from '@providers/MusicProvider'
+import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { CreateOrModifyButton } from '@components/buttons'
-import { TextInput } from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import { useMusicContext } from '@providers/MusicProvider'
-import fetchAPI from '@utils/fetchAPI'
+
+import {
+  CreateOrModifyButton,
+  ModalHeader,
+  ModalWrapper,
+  TextInput
+} from '@lifeforge/ui'
 
 function ModifyMusicModal(): React.ReactElement {
   const { t } = useTranslation('modules.music')

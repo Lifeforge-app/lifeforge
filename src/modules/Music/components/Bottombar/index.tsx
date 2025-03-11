@@ -1,4 +1,5 @@
 import React from 'react'
+
 import ControlButtons from './components/ControlButtons'
 import DurationSlider from './components/DurationSlider'
 import MusicInfo from './components/MusicInfo'

@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
-import React, { useMemo } from 'react'
 import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import { isLightColor } from '@utils/colors'
+import clsx from 'clsx'
+import React, { useMemo } from 'react'
 
 function TagChip({ text }: { text: string }): React.ReactElement {
   const { selectedTags, tags } = useIdeaBoxContext()
@@ -33,7 +33,7 @@ function TagChip({ text }: { text: string }): React.ReactElement {
   return (
     <div
       className={clsx(
-        'flex items-center rounded-full px-3 py-1 text-sm shadow-xs',
+        'shadow-xs flex items-center rounded-full px-3 py-1 text-sm',
         tagColor
       )}
       style={{

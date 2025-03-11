@@ -1,5 +1,6 @@
 import React from 'react'
-import { SidebarWrapper } from '@components/layouts/sidebar'
+
+import { SidebarWrapper } from '@lifeforge/ui'
 
 function Sidebar({
   sidebarOpen,

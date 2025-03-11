@@ -1,10 +1,12 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
+
 import useThemeColors from '@hooks/useThemeColor'
-import WidgetWrapper from './WidgetWrapper'
+
 import { IAirportMETARData } from '..'
-import clsx from 'clsx'
+import WidgetWrapper from './WidgetWrapper'
 
 function RawMETARData({
   data

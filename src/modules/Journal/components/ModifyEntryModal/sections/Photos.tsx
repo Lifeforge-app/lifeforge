@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+
+import { Button, EmptyStateScreen } from '@lifeforge/ui'
 
 function Photos({
   setStep,
@@ -116,7 +116,7 @@ function Photos({
                 src={photo.preview}
               />
               <button
-                className="flex-center absolute top-0 left-0 size-full bg-red-900/50 opacity-0 transition-opacity duration-200 hover:opacity-100"
+                className="flex-center absolute left-0 top-0 size-full bg-red-900/50 opacity-0 transition-opacity duration-200 hover:opacity-100"
                 onClick={() => {
                   setPhotos(photos.filter(p => p.preview !== photo.preview))
                 }}

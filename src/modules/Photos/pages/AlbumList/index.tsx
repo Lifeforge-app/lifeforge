@@ -3,25 +3,31 @@ import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import Scrollbar from '@components/utilities/Scrollbar'
+
+import {
+  APIFallbackComponent,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  Scrollbar
+} from '@lifeforge/ui'
+
 import { type Loadable } from '@interfaces/common'
 import {
   type IPhotoAlbumTag,
   type IPhotosAlbum
 } from '@interfaces/photos_interfaces'
-import AlbumItem from './components/AlbumItem'
-import AlbumListHeader from './components/AlbumListHeader'
+
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
 import { usePhotosContext } from '../../../../providers/PhotosProvider'
+import PhotosSidebar from '../../components/PhotosSidebar'
 import ManageTagsModal from '../../components/modals/ManageTagsModal'
 import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
 import ModifyAlbumTagsModal from '../../components/modals/ModifyAlbumTagsModal'
 import UpdateAlbumTagsModal from '../../components/modals/UpdateAlbumTagsModal'
-import PhotosSidebar from '../../components/PhotosSidebar'
+import AlbumItem from './components/AlbumItem'
+import AlbumListHeader from './components/AlbumListHeader'
 
 function PhotosAlbumList(): React.ReactElement {
   const { albumList, refreshAlbumList, refreshPhotos, setSidebarOpen } =

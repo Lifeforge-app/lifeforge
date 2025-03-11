@@ -1,9 +1,14 @@
 import * as d3 from 'd3'
+
 import {
   IRailwayMapLine,
   IRailwayMapStation
 } from '@interfaces/railway_map_interfaces'
+
 import { roundedPolygon } from './geometryUtils'
+import { getLinesRequired } from './routeUtils'
+import { RouteData, getLine, ignoreStation } from './stationUtils'
+import { centerMapOnStation } from './zoomUtils'
 
 export type StationSelectionCallback = (
   station: IRailwayMapStation | null
@@ -267,7 +272,3 @@ export const drawLines = (
     })
   })
 }
-
-import { getLinesRequired } from './routeUtils'
-import { getLine, ignoreStation, RouteData } from './stationUtils'
-import { centerMapOnStation } from './zoomUtils'

@@ -1,11 +1,13 @@
+import fetchAPI from '@utils/fetchAPI'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import useAPIQuery from '@hooks/useAPIQuery'
+
 import {
   IRailwayMapLine,
   IRailwayMapStation
 } from '@interfaces/railway_map_interfaces'
-import fetchAPI from '@utils/fetchAPI'
+
+import useAPIQuery from '@hooks/useAPIQuery'
 
 interface IRailwayMapData {
   viewType: 'route' | 'earth' | 'list'

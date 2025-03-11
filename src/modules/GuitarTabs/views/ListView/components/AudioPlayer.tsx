@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Button } from '@components/buttons'
+
+import { Button } from '@lifeforge/ui'
 
 function AudioPlayer({ url }: { url: string }): React.ReactElement {
   const [audioPlayer, setAudioPlayer] = useState<any>(null)

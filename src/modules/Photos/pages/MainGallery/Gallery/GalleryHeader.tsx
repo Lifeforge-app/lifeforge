@@ -1,14 +1,12 @@
 /* eslint-disable sonarjs/no-nested-functions */
 /* eslint-disable sonarjs/no-nested-conditional */
-
+import { usePhotosContext } from '@providers/PhotosProvider'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { usePhotosContext } from '@providers/PhotosProvider'
+
+import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 function GalleryHeader(): React.ReactElement {
   const { t } = useTranslation('modules.photos')
@@ -184,7 +182,7 @@ function GalleryHeader(): React.ReactElement {
         )}
         <HamburgerMenu
           largerPadding
-          className="relative z-9989 hidden md:block"
+          className="z-9989 relative hidden md:block"
           customWidth="w-72"
         >
           <MenuItem

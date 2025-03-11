@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Button } from '@components/buttons'
-import ModalWrapper from '@components/modals/ModalWrapper'
+
+import { Button, ModalWrapper } from '@lifeforge/ui'
 
 function CheckoutConfirmationModal({
   isOpen,

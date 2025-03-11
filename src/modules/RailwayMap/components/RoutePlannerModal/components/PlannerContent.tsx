@@ -1,9 +1,11 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React, { useMemo } from 'react'
-import { Button } from '@components/buttons'
 import { useRailwayMapContext } from '@providers/RailwayMapProvider'
-import StationSelector from './StationSelector'
+import React, { useMemo } from 'react'
+
+import { Button } from '@lifeforge/ui'
+
 import { filterStations } from '../utils/stations'
+import StationSelector from './StationSelector'
 
 function PlannerContent({
   startQuery,

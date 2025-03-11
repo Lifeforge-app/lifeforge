@@ -1,17 +1,20 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { cookieParse } from 'pocketbase'
 import React, {
-  createContext,
   type ReactNode,
+  createContext,
   useContext,
   useEffect,
   useMemo,
   useState
 } from 'react'
 import { toast } from 'react-toastify'
-import useFetch from '@hooks/useFetch'
+
 import { type Loadable } from '@interfaces/common'
 import { type IMusicEntry } from '@interfaces/music_interfaces'
+
+import useFetch from '@hooks/useFetch'
+
 import { useAuthContext } from './AuthProvider'
 
 interface IMusicContext {

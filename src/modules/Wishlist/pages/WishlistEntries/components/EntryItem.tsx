@@ -1,17 +1,18 @@
 /* eslint-disable sonarjs/no-useless-react-setstate */
 import { Icon } from '@iconify/react'
+import fetchAPI from '@utils/fetchAPI'
+import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { Button, Checkbox } from '@components/buttons'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { Button, Checkbox, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type Loadable } from '@interfaces/common'
 import { type IWishlistEntry } from '@interfaces/wishlist_interfaces'
-import fetchAPI from '@utils/fetchAPI'
-import { numberToMoney } from '@utils/strings'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function EntryItem({
   entry,
@@ -68,7 +69,7 @@ function EntryItem({
             )}
           >
             <Icon
-              className="text-bg-200 dark:text-bg-700 absolute top-1/2 left-1/2 z-[-1] size-8 -translate-x-1/2 -translate-y-1/2"
+              className="text-bg-200 dark:text-bg-700 absolute left-1/2 top-1/2 z-[-1] size-8 -translate-x-1/2 -translate-y-1/2"
               icon="tabler:shopping-bag"
             />
             {entry.image !== '' && (
@@ -105,7 +106,7 @@ function EntryItem({
         <Button
           iconAtEnd
           as="a"
-          className="w-auto px-0! sm:px-4!"
+          className="px-0! sm:px-4! w-auto"
           href={entry.url}
           icon="iconamoon:arrow-top-right-1"
           namespace="modules.wishlist"
@@ -121,7 +122,7 @@ function EntryItem({
             markAsCompleted().catch(console.error)
           }}
         />
-        <HamburgerMenu className="absolute top-4 right-4 sm:static">
+        <HamburgerMenu className="absolute right-4 top-4 sm:static">
           <MenuItem
             icon="tabler:pencil"
             text="Edit"

@@ -1,22 +1,24 @@
 import { Icon } from '@iconify/react'
 import { hsvaToHex, hsvaToRgbaString } from '@uiw/react-color'
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
   BarElement,
-  Title,
-  Tooltip,
+  CategoryScale,
+  Chart as ChartJS,
   Legend,
+  LineElement,
+  LinearScale,
   PointElement,
-  LineElement
+  Title,
+  Tooltip
 } from 'chart.js'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useMemo, useState } from 'react'
 import { Chart } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-import QueryWrapper from '@components/screens/QueryWrapper'
+
+import { QueryWrapper } from '@lifeforge/ui'
+
 import useAPIQuery from '@hooks/useAPIQuery'
 
 ChartJS.register(

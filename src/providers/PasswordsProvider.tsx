@@ -1,9 +1,11 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { createContext, useContext, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
-import useFetch from '@hooks/useFetch'
+
 import { Loadable } from '@interfaces/common'
 import { IPasswordEntry } from '@interfaces/password_interfaces'
+
+import useFetch from '@hooks/useFetch'
 
 interface IPasswordsData {
   passwordList: Loadable<IPasswordEntry[]>

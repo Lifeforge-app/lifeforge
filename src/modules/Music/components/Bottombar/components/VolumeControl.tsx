@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 import { useMusicContext } from '@providers/MusicProvider'
+import React from 'react'
+
 import IconButton from './IconButton'
 
 export default function VolumeControl(): React.ReactElement {

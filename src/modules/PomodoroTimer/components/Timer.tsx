@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import { Button } from '@components/buttons'
+
+import { Button } from '@lifeforge/ui'
 
 export default function Timer(): React.ReactElement {
   // TODO: Implement UI to change time distribution
@@ -83,7 +84,7 @@ export default function Timer(): React.ReactElement {
             <span className="text-7xl font-medium tracking-widest">
               {moment.utc(timeLeft * 1000).format('mm:ss')}
             </span>
-            <span className="text-custom-500 text-lg font-medium tracking-widest uppercase">
+            <span className="text-custom-500 text-lg font-medium uppercase tracking-widest">
               {['Pomodoro', 'Short break', 'Long break'][currentSection]}
             </span>
             {isRunning ? (

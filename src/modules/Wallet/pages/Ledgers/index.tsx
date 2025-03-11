@@ -1,14 +1,21 @@
+import { useWalletContext } from '@providers/WalletProvider'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
-import { Button, FAB } from '@components/buttons'
+
+import {
+  APIFallbackComponent,
+  Button,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  FAB
+} from '@lifeforge/ui'
+
+import { type IWalletLedger } from '@interfaces/wallet_interfaces'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import { type IWalletLedger } from '@interfaces/wallet_interfaces'
-import { useWalletContext } from '@providers/WalletProvider'
+
 import LedgerItem from './components/LedgerItem'
 import ModifyLedgersModal from './components/ModifyLedgersModal'
 
@@ -56,7 +63,7 @@ function Ledgers(): React.ReactElement {
       <APIFallbackComponent data={ledgers}>
         {ledgers =>
           ledgers.length > 0 ? (
-            <div className="mt-6 mb-24 space-y-4 md:mb-6">
+            <div className="mb-24 mt-6 space-y-4 md:mb-6">
               {ledgers.map(ledger => (
                 <LedgerItem
                   key={ledger.id}

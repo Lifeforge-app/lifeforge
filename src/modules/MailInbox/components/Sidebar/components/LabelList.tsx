@@ -1,11 +1,11 @@
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { SidebarItem } from '@components/layouts/sidebar'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+
+import { APIFallbackComponent, MenuItem, SidebarItem } from '@lifeforge/ui'
+
 import { Loadable } from '@interfaces/common'
 import { IMailInboxLabel } from '@interfaces/mail_inbox_interfaces'
-import clsx from 'clsx'
 
 interface ILabelListStructure {
   label: IMailInboxLabel

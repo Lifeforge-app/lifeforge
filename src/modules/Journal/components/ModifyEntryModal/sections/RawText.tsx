@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
-import { Button } from '@components/buttons'
+
+import { Button } from '@lifeforge/ui'
 
 function RawText({
   openType,

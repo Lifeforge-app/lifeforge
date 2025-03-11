@@ -1,20 +1,22 @@
 import { Icon } from '@iconify/react'
+import { useAuthContext } from '@providers/AuthProvider'
+import { toCamelCase } from '@utils/strings'
 import clsx from 'clsx'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { Button, Switch } from '@components/buttons'
-import { TextInput } from '@components/inputs'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { Button, Switch, TextInput } from '@lifeforge/ui'
+
 import {
   type IModuleConfigInput,
   type IModuleConfigSelect,
   type IModuleConfigSwitch,
   type IModuleEntry
 } from '@interfaces/module_interfaces'
-import { useAuthContext } from '@providers/AuthProvider'
-import { toCamelCase } from '@utils/strings'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function ModuleItem({
   module,

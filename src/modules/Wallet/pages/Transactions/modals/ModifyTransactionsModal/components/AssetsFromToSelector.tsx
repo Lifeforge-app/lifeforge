@@ -1,5 +1,6 @@
-import React from 'react'
 import { useWalletContext } from '@providers/WalletProvider'
+import React from 'react'
+
 import AssetListbox from './AssetsListbox'
 
 function AssetsFromToSelector({

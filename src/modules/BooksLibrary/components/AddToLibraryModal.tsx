@@ -1,11 +1,14 @@
-import React, { useEffect, useReducer } from 'react'
-import { toast } from 'react-toastify'
-import FormModal from '@components/modals/FormModal'
-import useFetch from '@hooks/useFetch'
-import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
-import { type IFieldProps } from '@interfaces/modal_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import fetchAPI from '@utils/fetchAPI'
+import React, { useEffect, useReducer } from 'react'
+import { toast } from 'react-toastify'
+
+import { FormModal } from '@lifeforge/ui'
+
+import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
+import { type IFieldProps } from '@interfaces/modal_interfaces'
+
+import useFetch from '@hooks/useFetch'
 
 function AddToLibraryModal({
   isOpen,

@@ -1,17 +1,17 @@
 import { Icon } from '@iconify/react'
-
+import { usePhotosContext } from '@providers/PhotosProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation, useNavigate } from 'react-router'
+
 import {
+  APIFallbackComponent,
+  EmptyStateScreen,
   SidebarDivider,
   SidebarItem,
   SidebarTitle,
   SidebarWrapper
-} from '@components/layouts/sidebar'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import { usePhotosContext } from '@providers/PhotosProvider'
+} from '@lifeforge/ui'
 
 function PhotosSidebar(): React.ReactElement {
   const { t } = useTranslation('modules.photos')
@@ -71,13 +71,13 @@ function PhotosSidebar(): React.ReactElement {
                       className="text-bg-500 relative flex items-center gap-6 px-4 font-medium transition-all"
                     >
                       <Link
-                        className="hover:bg-bg-100 dark:hover:bg-bg-800 flex w-full items-center gap-6 rounded-lg p-4 whitespace-nowrap transition-all duration-100"
+                        className="hover:bg-bg-100 dark:hover:bg-bg-800 flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4 transition-all duration-100"
                         to={`/photos/album/${album.id}`}
                         onClick={() => {
                           setSidebarOpen(false)
                         }}
                       >
-                        <div className="flex-center bg-bg-200/50 dark:bg-bg-700/50 size-10 shrink-0 rounded-md shadow-xs">
+                        <div className="flex-center bg-bg-200/50 dark:bg-bg-700/50 shadow-xs size-10 shrink-0 rounded-md">
                           {album.cover !== '' ? (
                             <img
                               alt=""
@@ -105,7 +105,7 @@ function PhotosSidebar(): React.ReactElement {
                 ))}
                 <li className="text-bg-500 relative flex items-center gap-6 px-4 font-medium transition-all">
                   <Link
-                    className="hover:bg-bg-100 dark:hover:bg-bg-800 flex w-full items-center gap-6 rounded-lg p-4 whitespace-nowrap"
+                    className="hover:bg-bg-100 dark:hover:bg-bg-800 flex w-full items-center gap-6 whitespace-nowrap rounded-lg p-4"
                     to="/photos/album"
                     onClick={() => {
                       setSidebarOpen(false)

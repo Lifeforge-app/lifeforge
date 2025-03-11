@@ -1,13 +1,19 @@
 import clsx from 'clsx'
 import React, { useState } from 'react'
-import { Button } from '@components/buttons'
+
+import {
+  APIFallbackComponent,
+  Button,
+  EmptyStateScreen,
+  Scrollbar
+} from '@lifeforge/ui'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import Scrollbar from '@components/utilities/Scrollbar'
+
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
+
 import RawHTMLInputModal from './components/RawHTMLInputModal'
 
 function formatPrice(
@@ -62,7 +68,7 @@ function OpenaiApiPricing(): React.ReactElement {
                       key={key}
                       className={clsx('p-6', componentBgLighter, 'rounded-lg')}
                     >
-                      <h2 className="before:bg-custom-500 relative pl-4 text-2xl font-semibold before:absolute before:top-0 before:left-0 before:h-full before:w-[4px] before:rounded-full">
+                      <h2 className="before:bg-custom-500 relative pl-4 text-2xl font-semibold before:absolute before:left-0 before:top-0 before:h-full before:w-[4px] before:rounded-full">
                         {key}
                       </h2>
                       <p className="text-bg-500 mt-2">{value.description}</p>

@@ -1,13 +1,15 @@
-import * as d3 from 'd3'
-import { useEffect, useMemo, useRef } from 'react'
-import useThemeColors from '@hooks/useThemeColor'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { useRailwayMapContext } from '@providers/RailwayMapProvider'
+import * as d3 from 'd3'
+import { useEffect, useMemo, useRef } from 'react'
+
+import useThemeColors from '@hooks/useThemeColor'
+
 import {
-  setupZooming,
+  clearSelection,
   drawLines,
   drawStations,
-  clearSelection,
+  setupZooming,
   updateSelection
 } from '../utils/renderUtils'
 

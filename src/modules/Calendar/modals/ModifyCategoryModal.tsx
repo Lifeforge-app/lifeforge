@@ -1,9 +1,11 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useRef, useState } from 'react'
-import FormModal from '@components/modals/FormModal'
+
+import { FormModal } from '@lifeforge/ui'
+
 import {
-  ICalendarCategoryFormState,
-  type ICalendarCategory
+  type ICalendarCategory,
+  ICalendarCategoryFormState
 } from '@interfaces/calendar_interfaces'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 

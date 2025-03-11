@@ -1,6 +1,6 @@
 import React from 'react'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
+
+import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
 
 function ReceiptModal({
   isOpen,

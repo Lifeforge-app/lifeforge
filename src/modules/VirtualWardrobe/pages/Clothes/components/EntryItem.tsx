@@ -1,14 +1,15 @@
+import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
+import VW_COLORS from '@constants/virtual_wardrobe_colors'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useState } from 'react'
-import { Button } from '@components/buttons'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
-import VW_COLORS from '@constants/virtual_wardrobe_colors'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IVirtualWardrobeEntry } from '@interfaces/virtual_wardrobe_interfaces'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 interface IEntryItemCommonProps<T extends boolean> {
   entry: IVirtualWardrobeEntry
@@ -87,7 +88,7 @@ function EntryItem<T extends boolean = false>({
           </div>
           {!isCartItem && (
             <div className="shrink-0">
-              <p className="mb-2 text-right text-sm whitespace-nowrap text-zinc-500">
+              <p className="mb-2 whitespace-nowrap text-right text-sm text-zinc-500">
                 Size: {entry.size}
               </p>
               <div className="mb-1.5 grid grid-cols-5 gap-1">
@@ -142,7 +143,7 @@ function EntryItem<T extends boolean = false>({
           >
             Add to Cart
           </Button>
-          <HamburgerMenu className="absolute top-4 right-4 hidden group-hover:block data-open:block">
+          <HamburgerMenu className="data-open:block absolute right-4 top-4 hidden group-hover:block">
             <MenuItem icon="tabler:pencil" text="Edit" onClick={onUpdate!} />
             <MenuItem
               isRed

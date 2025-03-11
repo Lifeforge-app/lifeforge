@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link } from 'react-router'
+
 import { type IWalletLedger } from '@interfaces/wallet_interfaces'
 
 function LedgerColumn({
@@ -14,7 +15,7 @@ function LedgerColumn({
     <td className="p-2 text-center">
       {ledger !== '' ? (
         <Link
-          className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm whitespace-nowrap"
+          className="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm"
           style={{
             backgroundColor: ledgers.find(l => l.id === ledger)?.color + '20',
             color: ledgers.find(l => l.id === ledger)?.color

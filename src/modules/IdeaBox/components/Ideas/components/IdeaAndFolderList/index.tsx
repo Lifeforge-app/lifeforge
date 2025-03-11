@@ -1,8 +1,9 @@
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
+
+import { APIFallbackComponent, EmptyStateScreen } from '@lifeforge/ui'
+
 import FolderList from './components/FolderList'
 import IdeaList from './components/IdeaList'
 
@@ -22,7 +23,7 @@ function IdeaAndFolderList(): React.ReactElement {
   } = useIdeaBoxContext()
 
   return (
-    <div className="mt-6 mb-20">
+    <div className="mb-20 mt-6">
       {debouncedSearchQuery.trim().length === 0 && selectedTags.length === 0 ? (
         <APIFallbackComponent data={entriesLoading ? 'loading' : entries}>
           {data => (

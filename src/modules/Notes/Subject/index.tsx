@@ -2,12 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import useFetch from '@hooks/useFetch'
+
+import {
+  APIFallbackComponent,
+  DeleteConfirmationModal,
+  EmptyStateScreen
+} from '@lifeforge/ui'
+
 import { type INotesEntry } from '@interfaces/notes_interfaces'
+
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
+import useFetch from '@hooks/useFetch'
+
 import Directory from './components/Directory'
 import DirectoryHeader from './components/Directory/components/DirectoryHeader'
 import ModifyFolderModal from './components/ModifyFolderModal'

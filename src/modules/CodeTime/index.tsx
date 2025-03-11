@@ -2,6 +2,7 @@ import React from 'react'
 
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
 import CodeTimeActivityCalendar from './components/CodeTimeActivityCalendar'
 import CodeTimeStatistics from './components/CodeTimeStatistics'
 import CodeTimeTimeChart from './components/CodeTimeTimeChart'

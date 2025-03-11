@@ -1,17 +1,19 @@
 import { Icon } from '@iconify/react'
+import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
+
 import {
-  TextInput,
+  Button,
   ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
+  ListboxOrComboboxOption,
+  ModalHeader,
+  ModalWrapper,
+  TextInput
+} from '@lifeforge/ui'
+
 import { type IWishlistEntry } from '@interfaces/wishlist_interfaces'
-import fetchAPI from '@utils/fetchAPI'
 
 const PROVIDERS = [
   {

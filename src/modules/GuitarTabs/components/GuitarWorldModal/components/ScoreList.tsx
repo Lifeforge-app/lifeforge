@@ -1,6 +1,9 @@
 import React from 'react'
-import Pagination from '@components/utilities/Pagination'
+
+import { Pagination } from '@lifeforge/ui'
+
 import { type IGuitarTabsGuitarWorldScores } from '@interfaces/guitar_tabs_interfaces'
+
 import ScoreItem from './ScoreItem'
 
 function ScoreList({

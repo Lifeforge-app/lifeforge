@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react'
-
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+
 import { type IIdeaBoxFolder } from '@interfaces/ideabox_interfaces'
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
+
 import FolderItem from './components/FolderItem'
 
 function FolderList(): React.ReactElement {

@@ -1,13 +1,14 @@
 import { Icon } from '@iconify/react'
+import { useWalletContext } from '@providers/WalletProvider'
+import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
 import { Tooltip } from 'react-tooltip'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+
+import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
-import { useWalletContext } from '@providers/WalletProvider'
-import { numberToMoney } from '@utils/strings'
 
 function TransactionListItem({
   transaction,

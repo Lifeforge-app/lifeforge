@@ -1,10 +1,12 @@
 import moment from 'moment'
 import React, { useState } from 'react'
+
 import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
 import { type Loadable } from '@interfaces/common'
+
 import MiniCalendarContent from './components/MiniCalendarContent'
 import MiniCalendarHeader from './components/MiniCalendarHeader'
 

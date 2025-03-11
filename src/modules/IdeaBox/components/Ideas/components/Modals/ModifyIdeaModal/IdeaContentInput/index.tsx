@@ -1,10 +1,15 @@
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { TextInput, TagsInput } from '@components/inputs'
-import DnDContainer from '@components/inputs/ImageAndFileInput/ImagePickerModal/components/LocalUpload/components/DnDContainer'
-import PreviewContainer from '@components/inputs/ImageAndFileInput/ImagePickerModal/components/LocalUpload/components/PreviewContainer'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
+
+import {
+  APIFallbackComponent,
+  DnDContainer,
+  PreviewContainer,
+  TagsInput,
+  TextInput
+} from '@lifeforge/ui'
+
 import TextContentInput from './components/TextContentInput'
 
 function IdeaContentInput({
@@ -101,7 +106,7 @@ function IdeaContentInput({
             )}
             {ideaImage === null && (
               <>
-                <div className="text-bg-500 mt-6 text-center font-medium tracking-widest uppercase">
+                <div className="text-bg-500 mt-6 text-center font-medium uppercase tracking-widest">
                   {t('imageUpload.orPasteLink')}
                 </div>
                 <TextInput

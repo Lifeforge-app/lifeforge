@@ -4,16 +4,24 @@ import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { Button, GoBackButton } from '@components/buttons'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import useFetch from '@hooks/useFetch'
+
+import {
+  APIFallbackComponent,
+  Button,
+  GoBackButton,
+  HamburgerMenu,
+  MenuItem
+} from '@lifeforge/ui'
+
 import {
   type IFlashcardCard,
   type IFlashcardDeck
 } from '@interfaces/flashcard_interfaces'
+
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
+import useFetch from '@hooks/useFetch'
+
 import EditCardModal from './EditCardModal'
 
 function CardSet(): React.ReactElement {
@@ -178,8 +186,8 @@ function CardSet(): React.ReactElement {
                       </div>
                     </div>
                   </div>
-                  <div className="card bg-custom-700 text-bg-800 h-full opacity-100! shadow-sm"></div>
-                  <div className="card bg-custom-900 text-bg-800 h-full opacity-100! shadow-xs"></div>
+                  <div className="card bg-custom-700 text-bg-800 opacity-100! h-full shadow-sm"></div>
+                  <div className="card bg-custom-900 text-bg-800 opacity-100! shadow-xs h-full"></div>
                 </div>
                 <button
                   className="flex-center h-full shrink-0 p-4"

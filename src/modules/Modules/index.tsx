@@ -1,16 +1,20 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import LoadingScreen from '@components/screens/LoadingScreen'
-// import { type IModuleEntry } from '@interfaces/module_interfaces'
-import { type IRoutes } from '@interfaces/routes_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
 import fetchAPI from '@utils/fetchAPI'
 import { titleToPath, toCamelCase } from '@utils/strings'
-import ModuleItem from './ModuleItem'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
+import { LoadingScreen } from '@lifeforge/ui'
+
+import { type IRoutes } from '@interfaces/routes_interfaces'
+
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
 import _ROUTES from '../../core/routes_config.json'
+// import { type IModuleEntry } from '@interfaces/module_interfaces'
+import ModuleItem from './ModuleItem'
 
 const ROUTES = _ROUTES as IRoutes[]
 
@@ -129,7 +133,7 @@ function Modules(): React.ReactElement {
             route =>
               route.items.filter(route => route.togglable).length > 0 && (
                 <li key={route.title}>
-                  <h2 className="before:bg-custom-500 relative mb-6 pl-4 text-3xl font-semibold before:absolute before:top-1/2 before:left-0 before:h-8 before:w-1 before:-translate-y-1/2 before:rounded-full">
+                  <h2 className="before:bg-custom-500 relative mb-6 pl-4 text-3xl font-semibold before:absolute before:left-0 before:top-1/2 before:h-8 before:w-1 before:-translate-y-1/2 before:rounded-full">
                     {t(`categories.${toCamelCase(route.title)}`)}
                   </h2>
                   <ul className="space-y-2">

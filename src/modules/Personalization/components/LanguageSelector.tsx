@@ -5,12 +5,14 @@ import {
   ListboxOptions
 } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import ConfigColumn from '@components/utilities/ConfigColumn'
-import useThemeColors from '@hooks/useThemeColor'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+
+import { ConfigColumn } from '@lifeforge/ui'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 const LANGUAGES: Array<{
   name: string
@@ -59,7 +61,7 @@ function LanguageSelector(): React.ReactElement {
         <div className="relative mt-1 w-full md:w-64">
           <ListboxButton
             className={clsx(
-              'shadow-custom flex w-full items-center gap-2 rounded-lg py-4 pr-10 pl-4 text-left outline-hidden transition-all focus:outline-hidden',
+              'shadow-custom outline-hidden focus:outline-hidden flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left transition-all',
               componentBgWithHover
             )}
           >
@@ -77,12 +79,12 @@ function LanguageSelector(): React.ReactElement {
           <ListboxOptions
             transition
             anchor="bottom end"
-            className="divide-bg-200 bg-bg-100 text-bg-800 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50 max-h-56 w-80 divide-y overflow-auto rounded-md py-1 text-base shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+            className="divide-bg-200 bg-bg-100 text-bg-800 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50 focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 max-h-56 w-80 divide-y overflow-auto rounded-md py-1 text-base shadow-lg transition duration-100 ease-out [--anchor-gap:8px]"
           >
             {LANGUAGES.map(({ name, code, icon }) => (
               <ListboxOption
                 key={code}
-                className="flex-between hover:bg-bg-100 dark:hover:bg-bg-800 relative flex cursor-pointer bg-transparent p-4 transition-all select-none"
+                className="flex-between hover:bg-bg-100 dark:hover:bg-bg-800 relative flex cursor-pointer select-none bg-transparent p-4 transition-all"
                 value={code}
               >
                 {({ selected }) => (

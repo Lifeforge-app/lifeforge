@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import COLOR from 'tailwindcss/colors'
-import FormModal from '@components/modals/FormModal'
+
+import { FormModal } from '@lifeforge/ui'
+
 import {
-  IAchievementEntryFormState,
-  type IAchievementEntry
+  type IAchievementEntry,
+  IAchievementEntryFormState
 } from '@interfaces/achievements_interfaces'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 

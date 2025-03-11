@@ -1,13 +1,16 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import React from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import useThemeColors from '@hooks/useThemeColor'
+
 import {
   type IPhotoAlbumEntryItem,
   type IPhotosEntry
 } from '@interfaces/photos_interfaces'
+
+import useThemeColors from '@hooks/useThemeColor'
+
 import { usePhotosContext } from '../../../providers/PhotosProvider'
-import clsx from 'clsx'
 
 const LLI = LazyLoadImage as any
 
@@ -92,14 +95,14 @@ function ImageObject({
               </button>
             </div>
             {!selected && (
-              <div className="pointer-events-none absolute top-0 h-12 w-full bg-linear-to-t from-transparent to-black/50 opacity-0 transition-all group-hover/image:opacity-100" />
+              <div className="bg-linear-to-t pointer-events-none absolute top-0 h-12 w-full from-transparent to-black/50 opacity-0 transition-all group-hover/image:opacity-100" />
             )}
             <button
               className={clsx(
-                'group/select-button flex-center absolute top-2.5 left-2.5 size-6 rounded-full transition-all',
+                'group/select-button flex-center absolute left-2.5 top-2.5 size-6 rounded-full transition-all',
                 selected
                   ? 'bg-custom-500 flex opacity-100'
-                  : 'bg-bg-200 hover:bg-bg-100! hidden opacity-50 group-hover/image:flex hover:opacity-100!'
+                  : 'bg-bg-200 hover:bg-bg-100! hover:opacity-100! hidden opacity-50 group-hover/image:flex'
               )}
               onClick={toggleSelected}
             >
@@ -112,7 +115,7 @@ function ImageObject({
                 icon="tabler:check"
               />
             </button>
-            <div className="text-bg-200 absolute top-2 right-2 flex items-center gap-2 opacity-50">
+            <div className="text-bg-200 absolute right-2 top-2 flex items-center gap-2 opacity-50">
               {details.has_raw && (
                 <Icon className="size-5" icon="tabler:letter-r" />
               )}

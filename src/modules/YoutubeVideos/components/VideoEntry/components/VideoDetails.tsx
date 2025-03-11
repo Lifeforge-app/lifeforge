@@ -1,9 +1,10 @@
+import { VIDEO_RESOLUTIONS } from '@constants/video_res'
 import { Icon } from '@iconify/react'
+import { cleanFileSize } from '@utils/strings'
 import moment from 'moment'
 import React from 'react'
-import { VIDEO_RESOLUTIONS } from '@constants/video_res'
+
 import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
-import { cleanFileSize } from '@utils/strings'
 
 function VideoDetails({
   video
@@ -11,7 +12,7 @@ function VideoDetails({
   video: IYoutubeVideosStorageEntry
 }): React.ReactElement {
   return (
-    <div className="mt-6 flex flex-col justify-between md:mt-0 md:pr-12 md:pl-4">
+    <div className="mt-6 flex flex-col justify-between md:mt-0 md:pl-4 md:pr-12">
       <h3 className="text-xl font-semibold">{video.title}</h3>
       <div className="text-bg-500 mt-6 flex flex-wrap items-center gap-2">
         {video.channel !== undefined && (

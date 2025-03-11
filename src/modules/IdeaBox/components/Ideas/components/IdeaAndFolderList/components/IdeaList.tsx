@@ -1,8 +1,10 @@
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import React from 'react'
 // @ts-expect-error no types available
 import Column from 'react-columns'
+
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
+
 import EntryImage from './IdeaEntry/EntryImage'
 import EntryLink from './IdeaEntry/EntryLink'
 import EntryText from './IdeaEntry/EntryText'
@@ -12,7 +14,7 @@ function IdeaList({ data }: { data: IIdeaBoxEntry[] }): React.ReactElement {
 
   return (
     <Column
-      className="mb-8 shrink-0 overflow-x-visible!"
+      className="overflow-x-visible! mb-8 shrink-0"
       gap="0.5rem"
       queries={[
         {

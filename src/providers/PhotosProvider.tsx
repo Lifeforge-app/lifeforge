@@ -1,4 +1,5 @@
 /* eslint-disable sonarjs/no-nested-functions */
+import IntervalManager from '@utils/intervalManager'
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
 import React, {
@@ -9,17 +10,19 @@ import React, {
   useState
 } from 'react'
 import { Outlet } from 'react-router'
-import useFetch from '@hooks/useFetch'
+
 import { type Loadable } from '@interfaces/common'
 import {
   type IPhotoAlbumEntryItem,
-  type IPhotosEntry,
   type IPhotoAlbumTag,
   type IPhotosAlbum,
+  type IPhotosEntry,
   type IPhotosEntryDimensionsAll,
   type IPhotosEntryDimensionsPagination
 } from '@interfaces/photos_interfaces'
-import IntervalManager from '@utils/intervalManager'
+
+import useFetch from '@hooks/useFetch'
+
 import { useAuthContext } from './AuthProvider'
 
 const intervalManager = IntervalManager.getInstance()

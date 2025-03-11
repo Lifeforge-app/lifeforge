@@ -1,21 +1,27 @@
 import { Icon } from '@iconify/react'
+import { usePhotosContext } from '@providers/PhotosProvider'
+import forceDown from '@utils/forceDown'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import useFetch from '@hooks/useFetch'
+
+import {
+  Button,
+  HamburgerMenu,
+  MenuItem,
+  ModalHeader,
+  ModalWrapper
+} from '@lifeforge/ui'
+
 import {
   type IPhotoAlbumEntryItem,
   type IPhotosEntry,
   type IPhotosEntryDimensionsAll
 } from '@interfaces/photos_interfaces'
-import { usePhotosContext } from '@providers/PhotosProvider'
-import forceDown from '@utils/forceDown'
+
+import useFetch from '@hooks/useFetch'
+
 import DeletePhotosConfirmationModal from './DeletePhotosConfirmationModal'
 
 function ImagePreviewModal({

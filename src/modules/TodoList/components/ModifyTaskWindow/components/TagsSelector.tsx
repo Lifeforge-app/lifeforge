@@ -1,9 +1,7 @@
-import React from 'react'
-import {
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from '@components/inputs'
 import { useTodoListContext } from '@providers/TodoListProvider'
+import React from 'react'
+
+import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
 
 function TagsSelector({
   tags,

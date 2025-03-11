@@ -1,13 +1,13 @@
 import { UseQueryResult } from '@tanstack/react-query'
-
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import FormModal from '@components/modals/FormModal'
+
+import { DeleteConfirmationModal, FormModal } from '@lifeforge/ui'
+
 import {
-  ICalendarEventFormState,
   type ICalendarCategory,
-  type ICalendarEvent
+  type ICalendarEvent,
+  ICalendarEventFormState
 } from '@interfaces/calendar_interfaces'
 import { type IFieldProps } from '@interfaces/modal_interfaces'
 

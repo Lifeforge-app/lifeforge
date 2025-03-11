@@ -2,8 +2,9 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import moment from 'moment'
 import { QRCodeSVG } from 'qrcode.react'
 import React from 'react'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
+
+import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
+
 import { IMovieEntry } from '@interfaces/movies_interfaces'
 
 function ShowTicketModal({

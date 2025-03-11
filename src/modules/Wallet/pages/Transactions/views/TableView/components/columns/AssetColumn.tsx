@@ -2,8 +2,10 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React from 'react'
 import { Link } from 'react-router'
-import useThemeColors from '@hooks/useThemeColor'
+
 import { type IWalletAsset } from '@interfaces/wallet_interfaces'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function AssetColumn({
   asset,
@@ -18,7 +20,7 @@ function AssetColumn({
     <td className="p-2 text-center">
       <Link
         className={clsx(
-          'text-bg-500 dark:text-bg-400! inline-flex w-min items-center gap-1 rounded-full px-3 py-1 text-sm whitespace-nowrap',
+          'text-bg-500 dark:text-bg-400! inline-flex w-min items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm',
           componentBgLighter
         )}
         to={`/wallet/transactions?asset=${asset}`}

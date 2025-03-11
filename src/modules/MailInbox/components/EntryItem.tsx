@@ -2,9 +2,9 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
-import { Button, Checkbox } from '@components/buttons'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+
+import { Button, Checkbox, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IMailInboxEntry } from '@interfaces/mail_inbox_interfaces'
 
 function EntryItem({

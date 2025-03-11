@@ -3,7 +3,9 @@ import moment from 'moment'
 import React, { useState } from 'react'
 import Markdown from 'react-markdown'
 import Zoom from 'react-medium-image-zoom'
-import { Button } from '@components/buttons'
+
+import { Button } from '@lifeforge/ui'
+
 import CustomZoomContent from '../../IdeaBox/components/Ideas/components/IdeaAndFolderList/components/IdeaEntry/components/CustomZoomContent'
 
 function JournalView({
@@ -26,7 +28,7 @@ function JournalView({
   const [viewRaw, setViewRaw] = useState(false)
   return (
     <>
-      <div className="flex-between mt-4 mb-6 flex items-end!">
+      <div className="flex-between items-end! mb-6 mt-4 flex">
         <div className="flex flex-col gap-2">
           <span className="text-bg-500 text-lg font-medium">
             {moment(date).format('MMMM Do, YYYY')} - {mood.emoji} {mood.text}

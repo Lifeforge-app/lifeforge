@@ -3,15 +3,18 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router'
+
 import {
+  APIFallbackComponent,
   ListboxOrComboboxOption,
   ListboxOrComboboxOptions,
+  Scrollbar,
   SearchInput
-} from '@components/inputs'
+} from '@lifeforge/ui'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import Scrollbar from '@components/utilities/Scrollbar'
+
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
 
@@ -252,7 +255,7 @@ function ChangiFlightStatus(): React.ReactElement {
                   )?.[1] || 'tabler:plane-departure'
                 }
               />
-              <span className="font-medium whitespace-nowrap">
+              <span className="whitespace-nowrap font-medium">
                 {SEARCH_TYPE.find(
                   ([, , value]) => value === searchParams.get('type')
                 )?.[0] || 'Departure'}
@@ -282,7 +285,7 @@ function ChangiFlightStatus(): React.ReactElement {
       <Scrollbar className="mt-6 w-full flex-1">
         <APIFallbackComponent data={flights}>
           {flights => (
-            <table className="mr-8 mb-8 w-max">
+            <table className="mb-8 mr-8 w-max">
               <thead>
                 <tr className="border-bg-200 text-bg-500 dark:border-bg-800 border-b-2">
                   {[
@@ -316,10 +319,10 @@ function ChangiFlightStatus(): React.ReactElement {
                     key={flight.flight_number + flight.scheduled_time}
                     className="border-bg-200 dark:border-bg-800 border-b"
                   >
-                    <td className="p-2 text-center whitespace-nowrap">
+                    <td className="whitespace-nowrap p-2 text-center">
                       <div
                         className={clsx(
-                          'inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm whitespace-nowrap',
+                          'inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-sm',
                           STATUSES[flight.flight_status]?.[0],
                           STATUSES[flight.flight_status]?.[2]
                         )}
@@ -331,13 +334,13 @@ function ChangiFlightStatus(): React.ReactElement {
                         {flight.flight_status}
                       </div>
                     </td>
-                    <td className="p-2 text-center whitespace-nowrap">
+                    <td className="whitespace-nowrap p-2 text-center">
                       {flight.scheduled_time}
                     </td>
-                    <td className="p-2 text-center whitespace-nowrap">
+                    <td className="whitespace-nowrap p-2 text-center">
                       {flight.flight_number}
                     </td>
-                    <td className="p-2 text-center whitespace-nowrap">
+                    <td className="whitespace-nowrap p-2 text-center">
                       <div className="flex items-center gap-2">
                         {'AB'.includes(flight.aircraft_type[0]) ? (
                           <Icon
@@ -353,7 +356,7 @@ function ChangiFlightStatus(): React.ReactElement {
                         {flight.aircraft_type}
                       </div>
                     </td>
-                    <td className="p-2 text-left whitespace-nowrap">
+                    <td className="whitespace-nowrap p-2 text-left">
                       <div className="flex items-center gap-2">
                         <img
                           alt={flight.airline_details.name}
@@ -363,26 +366,26 @@ function ChangiFlightStatus(): React.ReactElement {
                         {flight.airline_details.name} ({flight.airline})
                       </div>
                     </td>
-                    <td className="p-2 text-center whitespace-nowrap">
+                    <td className="whitespace-nowrap p-2 text-center">
                       {flight.airport_details.name} ({flight.airport})
                     </td>
-                    <td className="p-2 text-center whitespace-nowrap">
+                    <td className="whitespace-nowrap p-2 text-center">
                       T{flight.terminal}
                     </td>
-                    <td className="p-2 text-center whitespace-nowrap">
+                    <td className="whitespace-nowrap p-2 text-center">
                       {(searchParams.get('type') ?? 'dep') === 'dep'
                         ? flight.current_gate
                         : flight.display_gate}
                     </td>
-                    <td className="p-2 text-center whitespace-nowrap">
+                    <td className="whitespace-nowrap p-2 text-center">
                       {(searchParams.get('type') ?? 'dep') === 'dep'
                         ? flight.check_in_row
                         : flight.display_belt}
                     </td>
-                    <td className="p-2 text-center whitespace-nowrap">
+                    <td className="whitespace-nowrap p-2 text-center">
                       {flight.estimated_timestamp}
                     </td>
-                    <td className="p-2 text-left whitespace-nowrap">
+                    <td className="whitespace-nowrap p-2 text-left">
                       {flight.slave_flights.join(', ')}
                     </td>
                   </tr>

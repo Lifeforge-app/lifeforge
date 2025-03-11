@@ -1,16 +1,19 @@
+import _ from 'lodash'
 import React, { useMemo } from 'react'
 import { useSearchParams } from 'react-router'
+
 import {
+  APIFallbackComponent,
   SidebarDivider,
   SidebarItem,
   SidebarTitle,
   SidebarWrapper
-} from '@components/layouts/sidebar'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+} from '@lifeforge/ui'
+
 import { Loadable } from '@interfaces/common'
 import { IMailInboxLabel } from '@interfaces/mail_inbox_interfaces'
+
 import LabelList from './components/LabelList'
-import { toDashCase } from '../../../../../tools/module-tools/utils/strings'
 
 function Sidebar({
   isOpen,
@@ -61,7 +64,7 @@ function Sidebar({
             {sidebarItems.map((item, index) => (
               <SidebarItem
                 key={index}
-                active={searchParams.get('label') === toDashCase(item.name)}
+                active={searchParams.get('label') === _.kebabCase(item.name)}
                 icon={item.icon}
                 name={item.name}
                 namespace="modules.mailInbox"
@@ -76,7 +79,7 @@ function Sidebar({
                     : undefined
                 }
                 onClick={() => {
-                  setSearchParams({ label: toDashCase(item.name) })
+                  setSearchParams({ label: _.kebabCase(item.name) })
                 }}
               />
             ))}

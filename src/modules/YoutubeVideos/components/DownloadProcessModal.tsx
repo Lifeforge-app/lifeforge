@@ -1,10 +1,15 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+
+import {
+  APIFallbackComponent,
+  EmptyStateScreen,
+  ModalHeader,
+  ModalWrapper
+} from '@lifeforge/ui'
+
 import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
+
 import VideoInfo from '../../Music/modals/YoutubeDownloaderModal/components/VideoInfo'
 
 function ProgressIndicator({

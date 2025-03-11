@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React from 'react'
 import { Link, useParams } from 'react-router'
+
 import useThemeColors from '@hooks/useThemeColor'
 
 const AIRPORT_TYPES = {

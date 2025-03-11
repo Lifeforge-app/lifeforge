@@ -1,11 +1,12 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
-import {
-  ListboxOrComboboxInput,
-  ListboxNullOption,
-  ListboxOrComboboxOption
-} from '@components/inputs'
 import { useWalletContext } from '@providers/WalletProvider'
+import React from 'react'
+
+import {
+  ListboxNullOption,
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption
+} from '@lifeforge/ui'
 
 function CategorySelector({
   category,

@@ -1,11 +1,13 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
+import APIRequestV2 from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+
 import { type Loadable } from '@interfaces/common'
 import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
-import APIRequestV2 from '@utils/fetchAPI'
+
 import SpicinessSelector from './SpicinessSelector'
 
 function SubtaskBoxHeader({

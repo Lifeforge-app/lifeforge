@@ -1,21 +1,24 @@
 import { Icon } from '@iconify/react'
+import { useWalletContext } from '@providers/WalletProvider'
+import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { CreateOrModifyButton } from '@components/buttons'
+
 import {
   ColorInput,
   ColorPickerModal,
+  CreateOrModifyButton,
   IconInput,
   IconPickerModal,
+  ModalHeader,
+  ModalWrapper,
   TextInput
-} from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
+} from '@lifeforge/ui'
+
 import { type IWalletCategory } from '@interfaces/wallet_interfaces'
-import { useWalletContext } from '@providers/WalletProvider'
-import fetchAPI from '@utils/fetchAPI'
+
 import CategoryToggleButton from './components/CategoryToggleButton'
 
 function ModifyCategoriesModal({

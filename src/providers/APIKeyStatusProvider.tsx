@@ -1,7 +1,9 @@
 import React from 'react'
+
+import { APIFallbackComponent, MissingAPIKeyScreen } from '@lifeforge/ui'
+
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import MissingAPIKeyScreen from '@components/screens/MissingAPIKeyScreen'
+
 import useFetch from '@hooks/useFetch'
 
 function APIKeyStatusProvider({

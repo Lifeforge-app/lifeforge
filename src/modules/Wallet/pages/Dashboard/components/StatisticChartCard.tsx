@@ -1,12 +1,15 @@
+import { useWalletContext } from '@providers/WalletProvider'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import DashboardItem from '@components/utilities/DashboardItem'
-import { useWalletContext } from '@providers/WalletProvider'
+
+import {
+  APIFallbackComponent,
+  DashboardItem,
+  EmptyStateScreen
+} from '@lifeforge/ui'
 
 const options = {
   maintainAspectRatio: false,

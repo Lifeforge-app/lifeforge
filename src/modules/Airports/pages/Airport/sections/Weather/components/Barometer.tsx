@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import WidgetWrapper from './WidgetWrapper'
+
 import { IAirportMETARData } from '..'
+import WidgetWrapper from './WidgetWrapper'
 
 function Barometer({ data }: { data: IAirportMETARData }): React.ReactElement {
   return (

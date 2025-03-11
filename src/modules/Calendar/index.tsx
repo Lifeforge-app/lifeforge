@@ -1,17 +1,19 @@
 import { useQuery } from '@tanstack/react-query'
+import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
-import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import QueryWrapper from '@components/screens/QueryWrapper'
-import Scrollbar from '@components/utilities/Scrollbar'
+
+import { DeleteConfirmationModal, QueryWrapper, Scrollbar } from '@lifeforge/ui'
+
 import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
-import fetchAPI from '@utils/fetchAPI'
+
+import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
+
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
 import ModifyCategoryModal from './modals/ModifyCategoryModal'

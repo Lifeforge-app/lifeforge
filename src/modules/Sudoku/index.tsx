@@ -1,11 +1,15 @@
 import React, { useRef } from 'react'
 import { useReactToPrint } from 'react-to-print'
-import { Button } from '@components/buttons'
+
+import { APIFallbackComponent, Button } from '@lifeforge/ui'
+
+import { type SudokuBoard } from '@interfaces/sudoku_interfaces'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+
 import useFetch from '@hooks/useFetch'
-import { type SudokuBoard } from '@interfaces/sudoku_interfaces'
+
 import Board from './components/Board'
 
 function Sudoku(): React.ReactElement {

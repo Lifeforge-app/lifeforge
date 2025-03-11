@@ -1,18 +1,26 @@
 import { Icon } from '@iconify/react'
+import { useTodoListContext } from '@providers/TodoListProvider'
+import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { Button, CreateOrModifyButton } from '@components/buttons'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { DateInput, TextInput } from '@components/inputs'
-import Scrollbar from '@components/utilities/Scrollbar'
-import useFetch from '@hooks/useFetch'
+
+import {
+  Button,
+  CreateOrModifyButton,
+  DateInput,
+  HamburgerMenu,
+  MenuItem,
+  Scrollbar,
+  TextInput
+} from '@lifeforge/ui'
+
 import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
-import { useTodoListContext } from '@providers/TodoListProvider'
-import fetchAPI from '@utils/fetchAPI'
+
+import useFetch from '@hooks/useFetch'
+
 import ListSelector from './components/ListSelector'
 import NotesInput from './components/NotesInput'
 import PrioritySelector from './components/PrioritySelector'
@@ -137,19 +145,19 @@ function ModifyTaskWindow(): React.ReactElement {
     <div
       ref={ref}
       className={clsx(
-        'bg-bg-900/20 fixed top-0 left-0 h-dvh w-full backdrop-blur-xs transition-all',
+        'bg-bg-900/20 backdrop-blur-xs fixed left-0 top-0 h-dvh w-full transition-all',
         innerOpenType !== null
           ? 'z-9990 opacity-100 [transition:z-index_0.1s_linear_0.1s,opacity_0.1s_linear_0.2s]'
           : 'z-0 opacity-0 [transition:z-index_0.1s_linear_0.2s,opacity_0.1s_linear_0.1s]'
       )}
     >
       <button
-        className="absolute top-0 left-0 size-full"
+        className="absolute left-0 top-0 size-full"
         onClick={closeWindow}
       />
       <div
         className={clsx(
-          'bg-bg-100 dark:bg-bg-900 absolute top-0 right-0 flex size-full flex-col p-8 transition-all duration-300 sm:w-4/5 md:w-3/5 lg:w-2/5',
+          'bg-bg-100 dark:bg-bg-900 absolute right-0 top-0 flex size-full flex-col p-8 transition-all duration-300 sm:w-4/5 md:w-3/5 lg:w-2/5',
           innerOpenType !== null && 'translate-x-0',
           innerOpenType === null && 'translate-x-full'
         )}

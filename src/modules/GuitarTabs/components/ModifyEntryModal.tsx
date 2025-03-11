@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import FormModal from '@components/modals/FormModal'
+
+import { FormModal } from '@lifeforge/ui'
+
 import {
-  IGuitarTabsEntryFormState,
-  type IGuitarTabsEntry
+  type IGuitarTabsEntry,
+  IGuitarTabsEntryFormState
 } from '@interfaces/guitar_tabs_interfaces'
 import { IFieldProps } from '@interfaces/modal_interfaces'
 

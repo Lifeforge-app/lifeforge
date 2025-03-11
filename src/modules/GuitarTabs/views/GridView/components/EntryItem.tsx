@@ -1,13 +1,16 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
+import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React from 'react'
 import { toast } from 'react-toastify'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
-import fetchAPI from '@utils/fetchAPI'
+
+import useThemeColors from '@hooks/useThemeColor'
+
 import DownloadMenu from '../../../components/DownloadMenu'
 import AudioPlayer from '../../ListView/components/AudioPlayer'
 
@@ -63,7 +66,7 @@ function EntryItem({
       <div className="relative">
         <div className="flex-center bg-bg-100 dark:bg-bg-800 relative aspect-[1/1.4142] w-full overflow-hidden rounded-md">
           <Icon
-            className="text-bg-300 dark:text-bg-700 absolute top-1/2 left-1/2 size-16 -translate-x-1/2 -translate-y-1/2"
+            className="text-bg-300 dark:text-bg-700 absolute left-1/2 top-1/2 size-16 -translate-x-1/2 -translate-y-1/2"
             icon="mingcute:guitar-line"
           />
           <img
@@ -75,11 +78,11 @@ function EntryItem({
             }/${entry.id}/${entry.thumbnail}?thumb=500x0`}
           />
         </div>
-        <div className="bg-bg-500/80 absolute right-0 bottom-0 rounded-tl-md rounded-br-md p-1 px-2">
+        <div className="bg-bg-500/80 absolute bottom-0 right-0 rounded-br-md rounded-tl-md p-1 px-2">
           <p className="text-xs text-white">{entry.pageCount} pages</p>
         </div>
         <HamburgerMenu
-          className="absolute top-2 right-2 shrink-0"
+          className="absolute right-2 top-2 shrink-0"
           customTailwindColor="bg-bg-100 hover:bg-bg-200 shadow-custom dark:bg-bg-500/50 dark:hover:bg-bg-500/70"
         >
           <MenuItem

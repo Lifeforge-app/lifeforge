@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { InputIcon, InputLabel, InputWrapper } from '@components/inputs'
+
+import { InputIcon, InputLabel, InputWrapper } from '@lifeforge/ui'
 
 function TextContentInput({
   innerTypeOfModifyIdea,
@@ -49,7 +50,7 @@ function TextContentInput({
         {innerTypeOfModifyIdea === 'text' ? (
           <textarea
             ref={inputRef as React.RefObject<HTMLTextAreaElement>}
-            className="focus:placeholder:text-bg-500 mt-6 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-hidden placeholder:text-transparent focus:outline-hidden"
+            className="focus:placeholder:text-bg-500 outline-hidden focus:outline-hidden mt-6 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent"
             placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, lorem euismod."
             value={ideaContent}
             onInput={e => {
@@ -61,7 +62,7 @@ function TextContentInput({
         ) : (
           <input
             ref={inputRef as React.RefObject<HTMLInputElement>}
-            className="focus:placeholder:text-bg-500 mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent focus:outline-hidden"
+            className="focus:placeholder:text-bg-500 focus:outline-hidden mt-6 h-8 w-full rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent"
             placeholder="https://example.com"
             value={ideaLink}
             onChange={updateIdeaLink}

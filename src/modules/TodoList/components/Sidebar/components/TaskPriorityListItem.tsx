@@ -1,9 +1,10 @@
+import { useTodoListContext } from '@providers/TodoListProvider'
 import React from 'react'
 import { useSearchParams } from 'react-router'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { SidebarItem } from '@components/layouts/sidebar'
+
+import { MenuItem, SidebarItem } from '@lifeforge/ui'
+
 import { type ITodoPriority } from '@interfaces/todo_list_interfaces'
-import { useTodoListContext } from '@providers/TodoListProvider'
 
 function TaskPriorityListItem({
   item,

@@ -2,10 +2,12 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React from 'react'
 import { Link } from 'react-router'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function ContainerItem({
   container,
@@ -27,7 +29,7 @@ function ContainerItem({
   return (
     <div
       className={clsx(
-        'group shadow-custom relative flex flex-col items-center justify-start gap-6 overflow-hidden rounded-lg',
+        'shadow-custom group relative flex flex-col items-center justify-start gap-6 overflow-hidden rounded-lg',
         componentBgWithHover
       )}
     >
@@ -82,12 +84,12 @@ function ContainerItem({
         </div>
       </div>
       <Link
-        className="absolute top-0 left-0 size-full"
+        className="absolute left-0 top-0 size-full"
         to={`/idea-box/${container.id}`}
       />
       <HamburgerMenu
         lighter
-        className="absolute top-4 right-4 overscroll-contain opacity-0 transition-all group-hover:opacity-100 data-open:opacity-100"
+        className="data-open:opacity-100 absolute right-4 top-4 overscroll-contain opacity-0 transition-all group-hover:opacity-100"
       >
         <MenuItem
           icon="tabler:pencil"

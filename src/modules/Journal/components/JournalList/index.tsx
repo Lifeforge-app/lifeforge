@@ -1,13 +1,18 @@
+import { encrypt } from '@utils/encryption'
+import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { SearchInput } from '@components/inputs'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+
+import {
+  APIFallbackComponent,
+  EmptyStateScreen,
+  SearchInput
+} from '@lifeforge/ui'
+
 import { type Loadable } from '@interfaces/common'
 import { type IJournalEntry } from '@interfaces/journal_interfaces'
-import { encrypt } from '@utils/encryption'
-import fetchAPI from '@utils/fetchAPI'
+
 import JournalListItem from './components/JournalListItem'
 
 function JournalList({
@@ -66,7 +71,7 @@ function JournalList({
 
   return (
     <>
-      <div className="mt-6 mb-8 flex min-h-0 w-full flex-1 flex-col">
+      <div className="mb-8 mt-6 flex min-h-0 w-full flex-1 flex-col">
         <SearchInput
           namespace="modules.journal"
           searchQuery={searchQuery}

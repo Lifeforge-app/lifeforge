@@ -1,9 +1,12 @@
 import clsx from 'clsx'
 import React from 'react'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
+
+import useThemeColors from '@hooks/useThemeColor'
+
 import VideoDetails from './components/VideoDetails'
 import VideoThumbnail from './components/VideoThumbnail'
 
@@ -35,7 +38,7 @@ function VideoEntry({
         <VideoThumbnail duration={video.duration} id={video.youtube_id} />
         <VideoDetails video={video} />
       </div>
-      <HamburgerMenu className="absolute top-4 right-4">
+      <HamburgerMenu className="absolute right-4 top-4">
         <MenuItem
           icon="tabler:brand-youtube"
           namespace="modules.youtubeVideos"

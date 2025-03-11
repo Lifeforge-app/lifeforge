@@ -1,6 +1,7 @@
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import moment from 'moment'
 import React, { useState } from 'react'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+
 import MiniCalendarDateItem from './MiniCalendarDateItem'
 
 function MiniCalendarContent({

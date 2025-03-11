@@ -2,10 +2,12 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React from 'react'
 import { Link, useParams } from 'react-router'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type INotesSubject } from '@interfaces/notes_interfaces'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function SubjectItem({
   subject,
@@ -26,7 +28,7 @@ function SubjectItem({
   return (
     <div
       className={clsx(
-        'group shadow-custom relative flex size-full flex-col items-center rounded-lg p-8 transition-all',
+        'shadow-custom group relative flex size-full flex-col items-center rounded-lg p-8 transition-all',
         componentBgWithHover
       )}
     >
@@ -37,17 +39,17 @@ function SubjectItem({
         )}
         icon={subject.icon}
       />
-      <h2 className="mt-6 text-center text-2xl font-medium tracking-widest uppercase">
+      <h2 className="mt-6 text-center text-2xl font-medium uppercase tracking-widest">
         {subject.title}
       </h2>
       <p className="text-bg-500 mt-2 text-center text-sm">
         {subject.description}
       </p>
       <Link
-        className="absolute top-0 left-0 size-full"
+        className="absolute left-0 top-0 size-full"
         to={`/notes/${workspace}/${subject.id}`}
       />
-      <HamburgerMenu className="absolute top-4 right-4 z-20">
+      <HamburgerMenu className="absolute right-4 top-4 z-20">
         <MenuItem
           icon="tabler:pencil"
           text="Edit"

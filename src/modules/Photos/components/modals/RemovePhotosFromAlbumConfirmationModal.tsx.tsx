@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import ModalWrapper from '@components/modals/ModalWrapper'
 import { usePhotosContext } from '@providers/PhotosProvider'
 import fetchAPI from '@utils/fetchAPI'
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
+
+import { Button, ModalWrapper } from '@lifeforge/ui'
 
 function RemovePhotosFromAlbumConfirmationModal({
   refreshPhotos,

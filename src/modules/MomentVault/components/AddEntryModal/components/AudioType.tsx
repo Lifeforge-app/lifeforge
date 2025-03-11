@@ -1,15 +1,18 @@
 import { Icon } from '@iconify/react'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import fetchAPI from '@utils/fetchAPI'
 import WavesurferPlayer from '@wavesurfer/react'
 import moment from 'moment'
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
-import { Button, CreateOrModifyButton } from '@components/buttons'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { Button, CreateOrModifyButton } from '@lifeforge/ui'
+
 import { IMomentVaultEntry } from '@interfaces/moment_vault_interfaces'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import fetchAPI from '@utils/fetchAPI'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function AudioType({
   onSuccess,
@@ -194,7 +197,7 @@ function AudioType({
                   onPlay={() => setIsPlaying(true)}
                   onReady={onReady}
                 />
-                <p className="text-bg-500 w-full text-left text-sm whitespace-nowrap sm:w-auto">
+                <p className="text-bg-500 w-full whitespace-nowrap text-left text-sm sm:w-auto">
                   {moment().startOf('day').seconds(currentTime).format('mm:ss')}{' '}
                   / {moment().startOf('day').seconds(totalTime).format('mm:ss')}
                 </p>

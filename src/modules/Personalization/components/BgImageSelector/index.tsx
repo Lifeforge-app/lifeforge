@@ -1,13 +1,17 @@
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import ConfigColumn from '@components/utilities/ConfigColumn'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import fetchAPI from '@utils/fetchAPI'
+
+import {
+  Button,
+  ConfigColumn,
+  DeleteConfirmationModal,
+  ImagePickerModal
+} from '@lifeforge/ui'
+
 import AdjustBgImageModal from './components/AdjustBgImageModal'
-import ImagePickerModal from '../../../../components/inputs/ImageAndFileInput/ImagePickerModal'
 
 function BgImageSelector(): React.ReactElement {
   const { t } = useTranslation('modules.personalization')

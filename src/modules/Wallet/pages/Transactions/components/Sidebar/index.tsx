@@ -1,11 +1,9 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
-import {
-  SidebarDivider,
-  SidebarItem,
-  SidebarWrapper
-} from '@components/layouts/sidebar'
+
+import { SidebarDivider, SidebarItem, SidebarWrapper } from '@lifeforge/ui'
+
 import AssetsSection from './components/AssetsSection'
 import CategoriesSection from './components/CategoriesSection'
 import DateRangeSelector from './components/DateRangeSelector'

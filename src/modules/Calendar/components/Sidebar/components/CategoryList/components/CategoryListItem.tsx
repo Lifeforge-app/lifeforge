@@ -1,7 +1,8 @@
 import React from 'react'
 import { useSearchParams } from 'react-router'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { SidebarItem } from '@components/layouts/sidebar'
+
+import { MenuItem, SidebarItem } from '@lifeforge/ui'
+
 import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
 
 function CategoryListItem({

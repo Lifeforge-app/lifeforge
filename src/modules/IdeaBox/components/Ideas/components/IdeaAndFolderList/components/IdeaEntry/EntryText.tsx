@@ -3,8 +3,11 @@ import clsx from 'clsx'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { useDrag } from 'react-dnd'
-import useThemeColors from '@hooks/useThemeColor'
+
 import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
+
+import useThemeColors from '@hooks/useThemeColor'
+
 import EntryContextMenu from './components/EntryContextMenu'
 import InFolderChip from './components/InFolderChip'
 import TagChip from './components/TagChip'
@@ -33,7 +36,7 @@ function EntryText({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
         dragRef(node)
       }}
       className={clsx(
-        'group shadow-custom relative my-4 flex w-full cursor-pointer items-start justify-between gap-2 rounded-lg p-4 text-left',
+        'shadow-custom group relative my-4 flex w-full cursor-pointer items-start justify-between gap-2 rounded-lg p-4 text-left',
         componentBg,
         isDragging && 'cursor-move'
       )}
@@ -46,7 +49,7 @@ function EntryText({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
     >
       {entry.pinned && (
         <Icon
-          className="absolute -top-2 -left-2 z-50 size-5 -rotate-90 text-red-500 drop-shadow-md"
+          className="absolute -left-2 -top-2 z-50 size-5 -rotate-90 text-red-500 drop-shadow-md"
           icon="tabler:pin"
         />
       )}
@@ -60,7 +63,7 @@ function EntryText({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
         )}
         <p
           className={clsx(
-            'break-all whitespace-pre-wrap !select-text',
+            '!select-text whitespace-pre-wrap break-all',
             !expanded && 'line-clamp-6'
           )}
         >

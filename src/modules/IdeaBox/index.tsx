@@ -1,16 +1,21 @@
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-
+import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { SearchInput } from '@components/inputs'
+
+import {
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  QueryWrapper,
+  SearchInput
+} from '@lifeforge/ui'
+
+import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import QueryWrapper from '@components/screens/QueryWrapper'
-import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
-import fetchAPI from '@utils/fetchAPI'
+
 import Containers from './components/Containers'
 import ModifyContainerModal from './components/Containers/components/ModifyContainerModal'
 

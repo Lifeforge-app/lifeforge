@@ -1,19 +1,27 @@
-import { useQuery } from '@tanstack/react-query'
-import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Button, FAB } from '@components/buttons'
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import CreatePasswordScreen from '@components/screens/CreatePasswordScreen'
-import LockedScreen from '@components/screens/LockedScreen'
-import OTPScreen from '@components/screens/OTPScreen'
-import QueryWrapper from '@components/screens/QueryWrapper'
-import useAPIQuery from '@hooks/useAPIQuery'
-import { type IAPIKeyEntry } from '@interfaces/api_keys_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
+import { useQuery } from '@tanstack/react-query'
 import { encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
+import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+
+import {
+  Button,
+  CreatePasswordScreen,
+  DeleteConfirmationModal,
+  FAB,
+  LockedScreen,
+  OTPScreen,
+  QueryWrapper
+} from '@lifeforge/ui'
+
+import { type IAPIKeyEntry } from '@interfaces/api_keys_interfaces'
+
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
+import useAPIQuery from '@hooks/useAPIQuery'
+
 import EntryItem from './components/EntryItem'
 import ModifyAPIKeyModal from './components/ModifyAPIKeyModal'
 
@@ -56,12 +64,7 @@ function APIKeys(): React.ReactElement {
     }
 
     if (userData?.hasAPIKeysMasterPassword === false) {
-      return (
-        <CreatePasswordScreen
-          endpoint="api-keys/auth"
-          keyInUserData="hasAPIKeysMasterPassword"
-        />
-      )
+      return <CreatePasswordScreen endpoint="api-keys/auth" />
     }
 
     if (masterPassword === '') {
@@ -77,7 +80,7 @@ function APIKeys(): React.ReactElement {
       <>
         <QueryWrapper query={entriesQuery}>
           {entries => (
-            <div className="mt-8 mb-24 flex-1 lg:mb-6">
+            <div className="mb-24 mt-8 flex-1 lg:mb-6">
               {entries.map((entry, idx) => (
                 <EntryItem
                   key={entry.id}
