@@ -1,11 +1,14 @@
 import { Icon } from '@iconify/react'
+import { toCamelCase } from '@utils/strings'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import QueryWrapper from '@components/screens/QueryWrapper'
+
+import { QueryWrapper } from '@lifeforge/ui'
+
 import useAPIQuery from '@hooks/useAPIQuery'
 import useThemeColors from '@hooks/useThemeColor'
-import { toCamelCase } from '@utils/strings'
+
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
 function CodeTimeStatistics(): React.ReactElement {
@@ -59,11 +62,11 @@ function CodeTimeStatistics(): React.ReactElement {
                       }
                     />
                   </div>
-                  <div className="text-bg-500 text-lg whitespace-nowrap">
+                  <div className="text-bg-500 whitespace-nowrap text-lg">
                     {t(`statisticType.${toCamelCase(key)}`)}
                   </div>
                 </div>
-                <div className="mt-2 text-4xl font-semibold whitespace-nowrap">
+                <div className="mt-2 whitespace-nowrap text-4xl font-semibold">
                   {index < 3 ? (
                     <HoursAndMinutesFromSeconds seconds={value} />
                   ) : (

@@ -1,9 +1,10 @@
+import { usePhotosContext } from '@providers/PhotosProvider'
 import moment from 'moment'
 import React from 'react'
-import { usePhotosContext } from '@providers/PhotosProvider'
-import Gallery from './Gallery'
+
 import MobileSlidingScrollbar from '../Scrollbars/MobileSlidingScrollbar'
 import TimelineScrollbar from '../Scrollbars/TimelineScrollbar'
+import Gallery from './Gallery'
 
 function GalleryContainer(): React.ReactElement {
   const {

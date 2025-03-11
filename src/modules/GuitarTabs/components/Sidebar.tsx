@@ -2,13 +2,15 @@ import { UseQueryResult } from '@tanstack/react-query'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
+
 import {
+  QueryWrapper,
   SidebarDivider,
   SidebarItem,
   SidebarTitle,
   SidebarWrapper
-} from '@components/layouts/sidebar'
-import QueryWrapper from '@components/screens/QueryWrapper'
+} from '@lifeforge/ui'
+
 import { type IGuitarTabsSidebarData } from '@interfaces/guitar_tabs_interfaces'
 
 function Sidebar({

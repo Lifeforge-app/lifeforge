@@ -1,10 +1,12 @@
 import { Icon } from '@iconify/react'
+import { isLightColor } from '@utils/colors'
 import clsx from 'clsx'
 import React from 'react'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+
+import { APIFallbackComponent } from '@lifeforge/ui'
+
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
-import { isLightColor } from '@utils/colors'
 
 export default function Quotes(): React.ReactElement {
   const [quote] = useFetch<string>('quotes')
@@ -13,7 +15,7 @@ export default function Quotes(): React.ReactElement {
   return (
     <div className="bg-custom-500 shadow-custom relative flex size-full flex-col items-center justify-center gap-2 rounded-lg p-6">
       <Icon
-        className="text-bg-800/10 absolute top-2 right-2 text-8xl"
+        className="text-bg-800/10 absolute right-2 top-2 text-8xl"
         icon="tabler:quote"
       />
       <Icon

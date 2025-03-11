@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import moment from 'moment/min/moment-with-locales'
 import React, { useRef, useState } from 'react'
+
 import useThemeColors from '@hooks/useThemeColor'
 
 export default function Clock(): React.ReactElement {

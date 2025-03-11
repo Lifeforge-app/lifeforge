@@ -1,13 +1,15 @@
 /* eslint-disable sonarjs/no-small-switch */
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
+
 import {
+  DeleteConfirmationModal,
   ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from '@components/inputs'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
+  ListboxOrComboboxOption,
+  ModalHeader,
+  ModalWrapper
+} from '@lifeforge/ui'
+
 import AudioType from './components/AudioType'
 
 const TYPES = [

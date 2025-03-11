@@ -1,12 +1,15 @@
 import moment from 'moment'
 import React, { useState } from 'react'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import DashboardItem from '@components/utilities/DashboardItem'
-import useFetch from '@hooks/useFetch'
+
+import { APIFallbackComponent, DashboardItem } from '@lifeforge/ui'
+
 import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
+
+import useFetch from '@hooks/useFetch'
+
 import MiniCalendarContent from '../../Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
 import MiniCalendarHeader from '../../Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'
 

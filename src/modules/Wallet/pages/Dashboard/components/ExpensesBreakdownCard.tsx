@@ -1,14 +1,13 @@
 import { Icon } from '@iconify/react'
+import { useWalletContext } from '@providers/WalletProvider'
+import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import React, { useMemo, useState } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import DashboardItem from '@components/utilities/DashboardItem'
-import Scrollbar from '@components/utilities/Scrollbar'
-import { useWalletContext } from '@providers/WalletProvider'
-import { numberToMoney } from '@utils/strings'
+
+import { APIFallbackComponent, DashboardItem, Scrollbar } from '@lifeforge/ui'
 
 const options2 = {
   responsive: true,
@@ -87,7 +86,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
             {categories => (
               <>
                 <div className="relative mx-auto flex aspect-square w-4/5 min-w-0 flex-col gap-4">
-                  <div className="absolute top-1/2 left-1/2 mt-2 flex size-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center">
+                  <div className="absolute left-1/2 top-1/2 mt-2 flex size-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center">
                     <div
                       className={clsx(
                         'flex text-3xl font-medium sm:text-4xl',

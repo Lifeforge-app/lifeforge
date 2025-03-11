@@ -1,15 +1,16 @@
 import { Icon } from '@iconify/react'
-
 import clsx from 'clsx'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+
 import {
   type IPhotoAlbumEntryItem,
   type IPhotosEntryDimensionsAll,
   type IPhotosEntryDimensionsItem
 } from '@interfaces/photos_interfaces'
+
 import { usePhotosContext } from '../../../providers/PhotosProvider'
 
 function BottomBar({

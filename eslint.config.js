@@ -5,9 +5,14 @@ import jsxA11y from 'eslint-plugin-jsx-a11y'
 import pluginReact from 'eslint-plugin-react'
 import reactCompiler from 'eslint-plugin-react-compiler'
 import sonarjs from 'eslint-plugin-sonarjs'
+import path from 'path'
+import process from 'process'
 // import tailwind from 'eslint-plugin-tailwindcss'
-import globals from 'globals'
 import tseslint from 'typescript-eslint'
+
+// Get the project root directory
+const projectRoot = process.cwd()
+const srcPath = path.resolve(projectRoot, 'src')
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -17,7 +22,6 @@ export default [
   {
     ignores: ['node_modules/', 'dist/', 'vite.config.ts', 'tailwind.config.cjs']
   },
-  { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
@@ -42,63 +46,23 @@ export default [
   {
     rules: {
       'import/no-named-as-default': 'off',
-      'import/no-named-as-default-member': 'off',
-      'import/order': [
-        1,
-        {
-          groups: [
-            'external',
-            'builtin',
-            'internal',
-            'sibling',
-            'parent',
-            'index'
-          ],
-          pathGroups: [
-            {
-              pattern: 'typedec',
-              group: 'internal'
-            },
-            {
-              pattern: 'providers',
-              group: 'internal'
-            },
-            {
-              pattern: 'components',
-              group: 'internal'
-            },
-            {
-              pattern: 'sidebar',
-              group: 'internal'
-            },
-            {
-              pattern: 'hooks',
-              group: 'internal'
-            }
-          ],
-          pathGroupsExcludedImportTypes: ['internal'],
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: true
-          }
-        }
-      ]
+      'import/no-named-as-default-member': 'off'
     },
     settings: {
       'import/resolver': {
         node: {
           extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts'],
-          moduleDirectory: ['node_modules', 'src/']
+          moduleDirectory: ['node_modules', 'src']
         },
         alias: {
           extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts'],
           map: [
-            ['@components', './src/components/'],
-            ['@providers', './src/providers/'],
-            ['@hooks', './src/hooks/'],
-            ['@interfaces', './src/interfaces/'],
-            ['@utils', './src/utils/'],
-            ['@constants', './src/constants/']
+            ['@components', path.resolve(srcPath, 'components')],
+            ['@providers', path.resolve(srcPath, 'providers')],
+            ['@hooks', path.resolve(srcPath, 'hooks')],
+            ['@interfaces', path.resolve(srcPath, 'interfaces')],
+            ['@utils', path.resolve(srcPath, 'utils')],
+            ['@constants', path.resolve(srcPath, 'constants')]
           ]
         }
       },
@@ -111,11 +75,7 @@ export default [
     files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
     ...jsxA11y.flatConfigs.recommended,
     languageOptions: {
-      ...jsxA11y.flatConfigs.recommended.languageOptions,
-      globals: {
-        ...globals.serviceworker,
-        ...globals.browser
-      }
+      ...jsxA11y.flatConfigs.recommended.languageOptions
     }
   },
   sonarjs.configs.recommended,

@@ -2,11 +2,12 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
-import { Button } from '@components/buttons'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { IMovieEntry } from '@interfaces/movies_interfaces'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function MovieItem({
   data,
@@ -31,9 +32,9 @@ function MovieItem({
         type === 'grid' ? 'flex-col' : 'flex-col md:flex-row'
       )}
     >
-      <div className="bg-bg-200 dark:bg-bg-800 relative isolate flex h-66 w-48 shrink-0 items-center justify-center overflow-hidden rounded-md">
+      <div className="bg-bg-200 dark:bg-bg-800 h-66 relative isolate flex w-48 shrink-0 items-center justify-center overflow-hidden rounded-md">
         <Icon
-          className="text-bg-300 dark:text-bg-700 absolute top-1/2 left-1/2 z-[-1] size-18 -translate-x-1/2 -translate-y-1/2 transform"
+          className="text-bg-300 dark:text-bg-700 size-18 absolute left-1/2 top-1/2 z-[-1] -translate-x-1/2 -translate-y-1/2 transform"
           icon="tabler:movie"
         />
         <img
@@ -137,7 +138,7 @@ function MovieItem({
           )}
         </div>
       </div>
-      <HamburgerMenu className="absolute top-4 right-4">
+      <HamburgerMenu className="absolute right-4 top-4">
         <MenuItem
           icon="tabler:ticket"
           namespace="modules.movies"

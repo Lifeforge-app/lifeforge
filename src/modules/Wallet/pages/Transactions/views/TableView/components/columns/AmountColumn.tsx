@@ -1,6 +1,6 @@
+import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import React from 'react'
-import { numberToMoney } from '@utils/strings'
 
 function AmountColumn({
   side,

@@ -1,21 +1,23 @@
+import { usePasswordContext } from '@providers/PasswordsProvider'
+import { encrypt } from '@utils/encryption'
+import fetchAPI from '@utils/fetchAPI'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { CreateOrModifyButton } from '@components/buttons'
+
 import {
   ColorInput,
   ColorPickerModal,
+  CreateOrModifyButton,
   IconInput,
   IconPickerModal,
+  ModalHeader,
+  ModalWrapper,
   TextInput
-} from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
+} from '@lifeforge/ui'
+
 import { IPasswordFormState } from '@interfaces/password_interfaces'
-import { usePasswordContext } from '@providers/PasswordsProvider'
-import { encrypt } from '@utils/encryption'
-import fetchAPI from '@utils/fetchAPI'
 
 function CreatePasswordModal(): React.ReactElement {
   const { t } = useTranslation('modules.passwords')

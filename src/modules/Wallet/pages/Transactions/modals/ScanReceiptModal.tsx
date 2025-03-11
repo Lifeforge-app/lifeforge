@@ -1,16 +1,22 @@
 import { Icon } from '@iconify/react'
+import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { Button, Switch } from '@components/buttons'
-import { ImageAndFileInput, ImagePickerModal } from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
+
+import {
+  Button,
+  ImageAndFileInput,
+  ImagePickerModal,
+  ModalHeader,
+  ModalWrapper,
+  Switch
+} from '@lifeforge/ui'
+
 import {
   IWalletReceiptScanResult,
   type IWalletTransaction
 } from '@interfaces/wallet_interfaces'
-import fetchAPI from '@utils/fetchAPI'
 
 function ScanReceiptModal({
   open,

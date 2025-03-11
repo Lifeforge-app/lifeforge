@@ -1,12 +1,14 @@
-import React from 'react'
-import { Button } from '@components/buttons'
-import {
-  CurrencyInput,
-  TextInput,
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from '@components/inputs'
 import VW_COLORS from '@constants/virtual_wardrobe_colors'
+import React from 'react'
+
+import {
+  Button,
+  CurrencyInput,
+  ListboxOrComboboxInput,
+  ListboxOrComboboxOption,
+  TextInput
+} from '@lifeforge/ui'
+
 import { IVirtualWardrobeFormState } from '@interfaces/virtual_wardrobe_interfaces'
 
 function AdditionalInfoSection({

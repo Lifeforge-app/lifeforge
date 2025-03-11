@@ -1,9 +1,11 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link } from 'react-router'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+
+import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
+
 import { usePhotosContext } from '../../../../../providers/PhotosProvider'
 
 function AlbumItem({
@@ -25,7 +27,7 @@ function AlbumItem({
       className="relative flex h-min w-full min-w-0 flex-col gap-1 p-4"
     >
       <Link
-        className="hover:bg-bg-900/[0.03] dark:hover:bg-bg-100/5 absolute top-0 left-0 size-full rounded-md transition-all duration-100"
+        className="hover:bg-bg-900/[0.03] dark:hover:bg-bg-100/5 absolute left-0 top-0 size-full rounded-md transition-all duration-100"
         to={`/photos/album/${album.id}`}
       />
       <div className="flex-center bg-bg-200 dark:bg-bg-800/50 pointer-events-none relative mb-2 h-52 rounded-lg shadow-lg">
@@ -56,7 +58,7 @@ function AlbumItem({
               .map(tag => (
                 <button
                   key={tag}
-                  className="bg-custom-500/20 text-custom-500 shadow-custom hover:bg-bg-300 mb-1 rounded-full px-3 py-1 text-xs tracking-wider uppercase"
+                  className="bg-custom-500/20 text-custom-500 shadow-custom hover:bg-bg-300 mb-1 rounded-full px-3 py-1 text-xs uppercase tracking-wider"
                 >
                   {albumTagList.find(t => t.id === tag)?.name}
                 </button>
@@ -70,7 +72,7 @@ function AlbumItem({
           {album.is_public ? 'Public' : 'Private'}
         </p>
       </div>
-      <HamburgerMenu className="absolute right-4 bottom-6">
+      <HamburgerMenu className="absolute bottom-6 right-4">
         <MenuItem
           icon="tabler:pencil"
           text="Rename"

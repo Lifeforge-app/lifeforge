@@ -5,17 +5,19 @@ import {
   Chart as ChartJS,
   Filler,
   Legend,
-  LinearScale,
   LineElement,
+  LinearScale,
   PointElement,
   Title,
   Tooltip
 } from 'chart.js'
 import React, { useRef, useState } from 'react'
 
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+import { MenuItem } from '@lifeforge/ui'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
 import DashboardGrid from './components/DashboardGrid'
 import ManageWidgetsModal from './components/ManageWidgetsModal'
 

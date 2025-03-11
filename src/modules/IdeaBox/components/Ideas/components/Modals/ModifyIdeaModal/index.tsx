@@ -1,17 +1,18 @@
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-
+import fetchAPI from '@utils/fetchAPI'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import ModalWrapper from '@components/modals/ModalWrapper'
+
+import { Button, ModalWrapper } from '@lifeforge/ui'
+
 import { IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
-import fetchAPI from '@utils/fetchAPI'
-import ModalHeader from './components/ModalHeader'
+
 import IdeaContentInput from './IdeaContentInput'
+import ModalHeader from './components/ModalHeader'
 
 function ModifyIdeaModal(): React.ReactElement {
   const {

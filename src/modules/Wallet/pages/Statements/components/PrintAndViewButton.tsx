@@ -1,6 +1,7 @@
 import React from 'react'
 import { useReactToPrint } from 'react-to-print'
-import { Button } from '@components/buttons'
+
+import { Button } from '@lifeforge/ui'
 
 function PrintAndViewButton({
   contentRef,

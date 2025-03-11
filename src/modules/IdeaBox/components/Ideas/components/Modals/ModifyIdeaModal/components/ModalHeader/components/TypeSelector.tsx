@@ -3,7 +3,8 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+
+import { MenuItem } from '@lifeforge/ui'
 
 function TypeSelector({
   inline = false,
@@ -23,12 +24,12 @@ function TypeSelector({
       as="div"
       className={clsx(
         'relative text-left',
-        inline ? 'hidden sm:inline' : 'mt-4 mb-8 block sm:hidden'
+        inline ? 'hidden sm:inline' : 'mb-8 mt-4 block sm:hidden'
       )}
     >
       <MenuButton
         className={clsx(
-          'flex-between border-bg-300 text-bg-800 hover:bg-bg-100 dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200 inline-flex w-full rounded-md border-2 text-lg font-semibold tracking-wide outline-hidden focus:outline-hidden sm:w-auto',
+          'flex-between border-bg-300 text-bg-800 hover:bg-bg-100 dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200 outline-hidden focus:outline-hidden inline-flex w-full rounded-md border-2 text-lg font-semibold tracking-wide sm:w-auto',
           inline ? 'p-2 px-4' : 'p-4 px-6'
         )}
       >
@@ -54,7 +55,7 @@ function TypeSelector({
       <MenuItems
         transition
         anchor="bottom start"
-        className="bg-bg-100 text-bg-800 dark:bg-bg-800 z-9999 mt-2 overflow-hidden rounded-lg shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+        className="bg-bg-100 text-bg-800 dark:bg-bg-800 z-9999 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 mt-2 overflow-hidden rounded-lg shadow-lg transition duration-100 ease-out"
       >
         {[
           ['text', 'tabler:article'],

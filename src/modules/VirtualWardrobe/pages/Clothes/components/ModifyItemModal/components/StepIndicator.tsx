@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
+import { toCamelCase } from '@utils/strings'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { toCamelCase } from '@utils/strings'
 
 function StepIndicator({
   step,

@@ -1,14 +1,14 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
+import { usePhotosContext } from '@providers/PhotosProvider'
+import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+
+import { APIFallbackComponent, Button, ModalWrapper } from '@lifeforge/ui'
+
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
-import { usePhotosContext } from '@providers/PhotosProvider'
-import fetchAPI from '@utils/fetchAPI'
 
 function UpdateAlbumTagsModal({
   isOpen,
@@ -88,7 +88,7 @@ function UpdateAlbumTagsModal({
               <button
                 key={tag.id}
                 className={clsx(
-                  'shadow-custom rounded-full px-4 py-1 tracking-wider uppercase transition-all',
+                  'shadow-custom rounded-full px-4 py-1 uppercase tracking-wider transition-all',
                   selectedTags.includes(tag.id)
                     ? 'bg-custom-500/20 text-custom-500 hover:bg-custom-500/40'
                     : 'bg-bg-800 text-bg-500 hover:bg-bg-700'
@@ -106,7 +106,7 @@ function UpdateAlbumTagsModal({
                 {tag.name}
               </button>
             ))}
-            <button className="bg-bg-800 text-bg-500 shadow-custom rounded-full px-4 py-1 tracking-wider uppercase">
+            <button className="bg-bg-800 text-bg-500 shadow-custom rounded-full px-4 py-1 uppercase tracking-wider">
               <Icon className="size-4" icon="tabler:plus" />
             </button>
           </div>

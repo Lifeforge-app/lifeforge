@@ -1,13 +1,18 @@
+import { useMusicContext } from '@providers/MusicProvider'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect } from 'react'
-import { SearchInput } from '@components/inputs'
+
+import {
+  APIFallbackComponent,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  Scrollbar,
+  SearchInput
+} from '@lifeforge/ui'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import Scrollbar from '@components/utilities/Scrollbar'
-import { useMusicContext } from '@providers/MusicProvider'
+
 import AddMusicButton from './components/AddMusicButton'
 import BottomBar from './components/Bottombar'
 import MusicList from './components/MusicList'

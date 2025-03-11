@@ -1,6 +1,8 @@
 import moment from 'moment'
 import React from 'react'
+
 import { type IMusicEntry } from '@interfaces/music_interfaces'
+
 import PlayStateIndicator from './components/PlayStateIndicator'
 import SideButtons from './components/SideButtons'
 

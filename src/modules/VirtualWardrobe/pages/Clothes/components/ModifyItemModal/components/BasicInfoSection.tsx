@@ -1,15 +1,17 @@
+import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
 import { Icon } from '@iconify/react'
+import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
+
 import {
-  TextInput,
+  Button,
   ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from '@components/inputs'
-import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
+  ListboxOrComboboxOption,
+  TextInput
+} from '@lifeforge/ui'
+
 import { IVirtualWardrobeFormState } from '@interfaces/virtual_wardrobe_interfaces'
-import fetchAPI from '@utils/fetchAPI'
 
 function BasicInfoSection({
   canVision,

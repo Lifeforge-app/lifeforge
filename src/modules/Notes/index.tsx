@@ -2,13 +2,16 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router'
+
+import { ErrorScreen, LoadingScreen } from '@lifeforge/ui'
+
+import { type INotesWorkspace } from '@interfaces/notes_interfaces'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import ErrorScreen from '@components/screens/ErrorScreen'
-import LoadingScreen from '@components/screens/LoadingScreen'
+
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
-import { type INotesWorkspace } from '@interfaces/notes_interfaces'
 
 function Notes(): React.ReactElement {
   const { componentBgWithHover } = useThemeColors()
@@ -34,7 +37,7 @@ function Notes(): React.ReactElement {
                 <Link
                   key={workspace.id}
                   className={clsx(
-                    'group shadow-custom flex size-full flex-col items-center rounded-lg p-16',
+                    'shadow-custom group flex size-full flex-col items-center rounded-lg p-16',
                     componentBgWithHover
                   )}
                   to={`/notes/${workspace.id}`}
@@ -46,7 +49,7 @@ function Notes(): React.ReactElement {
                     )}
                     icon={workspace.icon}
                   />
-                  <h2 className="mt-6 text-center text-2xl font-medium tracking-widest uppercase">
+                  <h2 className="mt-6 text-center text-2xl font-medium uppercase tracking-widest">
                     {workspace.name}
                   </h2>
                 </Link>

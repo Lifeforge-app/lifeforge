@@ -7,7 +7,7 @@ function AuthHeader(): React.ReactElement {
 
   return (
     <>
-      <h1 className="mb-8 flex items-center gap-2 text-3xl font-semibold whitespace-nowrap">
+      <h1 className="mb-8 flex items-center gap-2 whitespace-nowrap text-3xl font-semibold">
         <Icon className="text-custom-500 text-5xl" icon="tabler:hammer" />
         <div>
           LifeForge<span className="text-custom-500 text-4xl">.</span>

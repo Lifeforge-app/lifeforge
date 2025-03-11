@@ -1,11 +1,12 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import { useGlobalStateContext } from '@providers/GlobalStateProvider'
+import { toCamelCase } from '@utils/strings'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@components/buttons'
-import { useGlobalStateContext } from '@providers/GlobalStateProvider'
-import { toCamelCase } from '@utils/strings'
+
+import { Button } from '@lifeforge/ui'
 
 interface ModuleHeaderProps {
   icon?: string
@@ -51,7 +52,7 @@ function ModuleHeader({
           </div>
         )}
         <div className="w-full min-w-0 sm:space-y-1">
-          <h1 className="flex w-full min-w-0 items-end gap-3 text-2xl font-semibold whitespace-nowrap sm:text-3xl">
+          <h1 className="flex w-full min-w-0 items-end gap-3 whitespace-nowrap text-2xl font-semibold sm:text-3xl">
             <span className="block truncate">{t('title')}</span>
             <span className="text-bg-500 min-w-0 text-sm font-medium sm:text-base">
               {totalItems !== undefined
@@ -59,7 +60,7 @@ function ModuleHeader({
                 : ''}
             </span>
           </h1>
-          <div className="text-bg-500 w-full min-w-0 truncate text-sm whitespace-nowrap sm:text-base">
+          <div className="text-bg-500 w-full min-w-0 truncate whitespace-nowrap text-sm sm:text-base">
             {t('description')}
           </div>
         </div>
@@ -75,7 +76,7 @@ function ModuleHeader({
               <MenuItems
                 transition
                 anchor="bottom end"
-                className="bg-bg-100 dark:bg-bg-800 w-96 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+                className="bg-bg-100 dark:bg-bg-800 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 w-96 overflow-hidden overscroll-contain rounded-md shadow-lg transition duration-100 ease-out [--anchor-gap:8px]"
               >
                 <div className="text-bg-800 dark:border-bg-700 dark:text-bg-200 flex items-center gap-2 p-4">
                   <Icon className="size-6" icon="tabler:question-circle" />
@@ -103,7 +104,7 @@ function ModuleHeader({
             <MenuItems
               transition
               anchor="bottom end"
-              className="bg-bg-100 dark:bg-bg-800 mt-2 min-w-48 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+              className="bg-bg-100 dark:bg-bg-800 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 mt-2 min-w-48 overflow-hidden overscroll-contain rounded-md shadow-lg transition duration-100 ease-out"
             >
               {hamburgerMenuItems}
             </MenuItems>

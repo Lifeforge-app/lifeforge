@@ -1,14 +1,20 @@
+import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button, FAB } from '@components/buttons'
-import { SearchInput } from '@components/inputs'
+
+import {
+  APIFallbackComponent,
+  Button,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  FAB,
+  Scrollbar,
+  SearchInput
+} from '@lifeforge/ui'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import Scrollbar from '@components/utilities/Scrollbar'
-import { useProjectsMContext } from '@providers/ProjectsMProvider'
+
 import EntryItem from './components/EntryItem'
 import ModifyEntryModal from './components/ModifyEntryModal'
 import ModifyModal from './components/ModifyModal'

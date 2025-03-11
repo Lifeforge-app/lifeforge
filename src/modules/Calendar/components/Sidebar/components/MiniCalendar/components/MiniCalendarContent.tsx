@@ -1,11 +1,13 @@
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import moment from 'moment'
 import React from 'react'
+
 import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@interfaces/calendar_interfaces'
 import { type Loadable } from '@interfaces/common'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+
 import MiniCalendarDateItem from './MiniCalendarDateItem'
 
 function MiniCalendarContent({

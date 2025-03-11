@@ -1,7 +1,9 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+
 import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
+
 import ContainerItem from './components/ContainerItem'
 
 function Container({

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {
   type ICalendarCategory,
   type ICalendarEvent
@@ -20,7 +21,7 @@ export default function EventItem({
 }): React.ReactElement {
   return (
     <button
-      className="rbc-event bg-bg-100 dark:bg-bg-800 flex flex-row! items-center gap-2 rounded-md"
+      className="rbc-event bg-bg-100 dark:bg-bg-800 flex-row! flex items-center gap-2 rounded-md"
       style={{
         border: 'none'
       }}

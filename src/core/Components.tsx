@@ -1,5 +1,6 @@
 import React, { lazy } from 'react'
 import { Navigate } from 'react-router'
+
 import Statements from '../modules/Wallet/pages/Statements'
 
 const PhotosProvider = lazy(

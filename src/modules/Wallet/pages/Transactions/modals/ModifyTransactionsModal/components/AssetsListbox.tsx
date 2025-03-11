@@ -1,9 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
-import {
-  ListboxOrComboboxInput,
-  ListboxOrComboboxOption
-} from '@components/inputs'
+
+import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
 
 interface Asset {
   id: string

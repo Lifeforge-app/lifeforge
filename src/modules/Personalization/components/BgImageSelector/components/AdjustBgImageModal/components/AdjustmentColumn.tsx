@@ -1,5 +1,6 @@
 import React from 'react'
-import ConfigColumn from '@components/utilities/ConfigColumn'
+
+import { ConfigColumn } from '@lifeforge/ui'
 
 function AdjustmentColumn({
   icon,

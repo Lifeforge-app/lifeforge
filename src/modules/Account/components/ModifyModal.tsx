@@ -1,13 +1,17 @@
-import moment from 'moment'
-import React, { useRef, useState } from 'react'
-import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import { DateInput, TextInput } from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
 import { useAuthContext } from '@providers/AuthProvider'
 import fetchAPI from '@utils/fetchAPI'
 import { toCamelCase } from '@utils/strings'
+import moment from 'moment'
+import React, { useRef, useState } from 'react'
+import { toast } from 'react-toastify'
+
+import {
+  Button,
+  DateInput,
+  ModalHeader,
+  ModalWrapper,
+  TextInput
+} from '@lifeforge/ui'
 
 function ModifyModal({
   type,

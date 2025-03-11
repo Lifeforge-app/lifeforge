@@ -1,14 +1,15 @@
 import { Icon } from '@iconify/react'
+import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 import { Link } from 'react-router'
-import { Button } from '@components/buttons'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import DashboardItem from '@components/utilities/DashboardItem'
+
+import { APIFallbackComponent, Button, DashboardItem } from '@lifeforge/ui'
+
+import { type IWalletAsset } from '@interfaces/wallet_interfaces'
+
 import useFetch from '@hooks/useFetch'
 import useThemeColors from '@hooks/useThemeColor'
-import { type IWalletAsset } from '@interfaces/wallet_interfaces'
-import { numberToMoney } from '@utils/strings'
 
 export default function AssetsBalance(): React.ReactElement {
   const { componentBgLighterWithHover } = useThemeColors()
@@ -37,7 +38,7 @@ export default function AssetsBalance(): React.ReactElement {
               <Link
                 key={asset.id}
                 className={clsx(
-                  'flex-between bg-bg-100 flex h-full gap-4 rounded-lg p-2 pr-0 pl-4 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all',
+                  'flex-between bg-bg-100 flex h-full gap-4 rounded-lg p-2 pl-4 pr-0 shadow-[4px_4px_10px_rgba(0,0,0,0.1)] transition-all',
                   componentBgLighterWithHover
                 )}
                 to={'/wallet/assets'}

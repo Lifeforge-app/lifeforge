@@ -1,11 +1,14 @@
 import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import ConfigColumn from '@components/utilities/ConfigColumn'
+
+import { ConfigColumn } from '@lifeforge/ui'
+
 import useThemeColors from '@hooks/useThemeColor'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+
 import FontFamilyItem from './components/FontFamilyItem'
 
 export interface IFontFamily {
@@ -128,7 +131,7 @@ function FontFamilySelector(): React.ReactElement {
         <div className="relative mt-1 w-full md:w-64">
           <ListboxButton
             className={clsx(
-              'shadow-custom flex w-full items-center gap-2 rounded-lg py-4 pr-10 pl-4 text-left outline-hidden transition-all focus:outline-hidden',
+              'shadow-custom outline-hidden focus:outline-hidden flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left transition-all',
               componentBgWithHover
             )}
           >
@@ -138,7 +141,11 @@ function FontFamilySelector(): React.ReactElement {
                 fontFamily
               }}
             >
-              {fontFamily || <span className="text-bg-500">{t('fontFamily.pleaseSelect')}</span>}
+              {fontFamily || (
+                <span className="text-bg-500">
+                  {t('fontFamily.pleaseSelect')}
+                </span>
+              )}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <Icon className="text-bg-500 size-5" icon="tabler:chevron-down" />
@@ -147,7 +154,7 @@ function FontFamilySelector(): React.ReactElement {
           <ListboxOptions
             transition
             anchor="bottom end"
-            className="divide-bg-200 bg-bg-100 text-bg-800 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50 h-72 w-80 divide-y rounded-md py-1 text-base shadow-lg transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+            className="divide-bg-200 bg-bg-100 text-bg-800 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50 focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 h-72 w-80 divide-y rounded-md py-1 text-base shadow-lg transition duration-100 ease-out [--anchor-gap:8px]"
           >
             {allFonts.map(({ family }) => (
               <FontFamilyItem key={family} family={family} />

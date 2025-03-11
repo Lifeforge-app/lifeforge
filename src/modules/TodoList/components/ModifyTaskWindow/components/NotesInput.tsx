@@ -14,7 +14,7 @@ function NotesInput({
 
   return (
     <div
-      className="group border-bg-500 bg-bg-200/50 focus-within:border-custom-500! hover:bg-bg-200 dark:bg-bg-800/50 dark:hover:bg-bg-800/50 relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 transition-all"
+      className="border-bg-500 bg-bg-200/50 focus-within:border-custom-500! hover:bg-bg-200 dark:bg-bg-800/50 dark:hover:bg-bg-800/50 group relative mt-4 flex items-center gap-1 rounded-t-lg border-b-2 transition-all"
       onFocus={e => {
         ;(
           e.currentTarget.querySelector('textarea input') as HTMLInputElement
@@ -37,7 +37,7 @@ function NotesInput({
           {t('inputs.notes')}
         </span>
         <textarea
-          className="focus:placeholder:text-bg-500 mt-4 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide outline-hidden placeholder:text-transparent focus:outline-hidden"
+          className="focus:placeholder:text-bg-500 outline-hidden focus:outline-hidden mt-4 min-h-8 w-full resize-none rounded-lg bg-transparent p-6 pl-4 tracking-wide placeholder:text-transparent"
           placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
           value={notes}
           onInput={e => {

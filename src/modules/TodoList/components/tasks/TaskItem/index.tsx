@@ -1,10 +1,13 @@
-import clsx from 'clsx'
-import React from 'react'
-import useThemeColors from '@hooks/useThemeColor'
-import { type Loadable } from '@interfaces/common'
-import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
 import { useTodoListContext } from '@providers/TodoListProvider'
 import fetchAPI from '@utils/fetchAPI'
+import clsx from 'clsx'
+import React from 'react'
+
+import { type Loadable } from '@interfaces/common'
+import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
+
+import useThemeColors from '@hooks/useThemeColor'
+
 import SubtaskItem from './components/SubtaskItem'
 import TaskCompletionCheckbox from './components/TaskCompletionCheckbox'
 import TaskDueDate from './components/TaskDueDate'
@@ -97,7 +100,7 @@ function TaskItem({
       <li
         key={entry.id}
         className={clsx(
-          'flex-between shadow-custom relative isolate flex gap-4 rounded-lg p-4 pr-6 pl-5 transition-all',
+          'flex-between shadow-custom relative isolate flex gap-4 rounded-lg p-4 pl-5 pr-6 transition-all',
           lighter ? 'bg-bg-100/50 dark:bg-bg-800' : componentBgWithHover
         )}
       >
@@ -121,7 +124,7 @@ function TaskItem({
           </div>
         </div>
         <button
-          className="absolute top-0 left-0 size-full"
+          className="absolute left-0 top-0 size-full"
           onClick={() => {
             if (!isOuter) {
               setModifyTaskWindowOpenType('update')

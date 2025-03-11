@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react'
+import { useAuthContext } from '@providers/AuthProvider'
 import React, { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
-import { useAuthContext } from '@providers/AuthProvider'
+
 import AuthForm from './components/AuthForm'
 import AuthHeader from './components/AuthHeader'
 import AuthSideImage from './components/AuthSideImage'
@@ -20,7 +21,7 @@ function Auth(): React.ReactElement {
 
   return (
     <>
-      <section className="flex-center size-full flex-col overflow-y-auto px-8 pt-12 pb-4 sm:px-12 lg:w-1/2">
+      <section className="flex-center size-full flex-col overflow-y-auto px-8 pb-4 pt-12 sm:px-12 lg:w-1/2">
         <div className="flex-center size-full flex-col">
           <AuthHeader />
           <AuthForm />

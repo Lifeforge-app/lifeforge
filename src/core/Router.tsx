@@ -1,18 +1,20 @@
-import React, { Suspense, useCallback, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Route, Routes, useLocation, useNavigate } from 'react-router'
-import { ToastContainer } from 'react-toastify'
-import LoadingScreen from '@components/screens/LoadingScreen'
-import NotFoundScreen from '@components/screens/NotFoundScreen'
-import { type IRoutes } from '@interfaces/routes_interfaces'
 import APIKeyStatusProvider from '@providers/APIKeyStatusProvider'
 import { useAuthContext } from '@providers/AuthProvider'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { convertToDashCase, titleToPath } from '@utils/strings'
+import React, { Suspense, useCallback, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Route, Routes, useLocation, useNavigate } from 'react-router'
+import { ToastContainer } from 'react-toastify'
+
+import { LoadingScreen, NotFoundScreen } from '@lifeforge/ui'
+
+import { type IRoutes } from '@interfaces/routes_interfaces'
+
+import Auth from '../auth'
 import { COMPONENTS } from './Components'
 import MainApplication from './MainApplication'
 import _ROUTES from './routes_config.json'
-import Auth from '../auth'
 
 const ROUTES = _ROUTES as IRoutes[]
 

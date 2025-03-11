@@ -1,11 +1,14 @@
+import clsx from 'clsx'
 import React from 'react'
 import { type NavigateAction, type View } from 'react-big-calendar'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@components/buttons'
+
+import { Button } from '@lifeforge/ui'
+
 import useThemeColors from '@hooks/useThemeColor'
+
 import ChangeViewButton from './components/ChangeViewButton'
 import NavigationButton from './components/NavigationButton'
-import clsx from 'clsx'
 
 interface CalendarHeaderProps {
   label: string

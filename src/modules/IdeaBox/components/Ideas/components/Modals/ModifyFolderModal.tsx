@@ -1,9 +1,11 @@
+import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import FormModal from '@components/modals/FormModal'
+
+import { FormModal } from '@lifeforge/ui'
+
 import { IIdeaBoxFolderFormState } from '@interfaces/ideabox_interfaces'
 import { IFieldProps } from '@interfaces/modal_interfaces'
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 
 function ModifyFolderModal(): React.ReactElement {
   const {

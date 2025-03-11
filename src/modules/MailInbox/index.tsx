@@ -4,22 +4,29 @@ import { ListResult } from 'pocketbase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
-import { Button } from '@components/buttons'
-import { SearchInput } from '@components/inputs'
-import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import Pagination from '@components/utilities/Pagination'
-import Scrollbar from '@components/utilities/Scrollbar'
-import useFetch from '@hooks/useFetch'
+
+import {
+  APIFallbackComponent,
+  Button,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  Pagination,
+  Scrollbar,
+  SearchInput
+} from '@lifeforge/ui'
+
 import {
   IMailInboxEntry,
   IMailInboxLabel
 } from '@interfaces/mail_inbox_interfaces'
+
+import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
+
+import useFetch from '@hooks/useFetch'
+
 import EntryItem from './components/EntryItem'
 import Sidebar from './components/Sidebar'
 import ViewMailModal from './components/ViewMailModal'
@@ -118,7 +125,7 @@ function MailInbox(): React.ReactElement {
                   }
                 })()}
               </h1>
-              <span className="text-bg-500 mr-8 ml-2 text-base">
+              <span className="text-bg-500 ml-2 mr-8 text-base">
                 (
                 {(() => {
                   if (typeof mails === 'string') {

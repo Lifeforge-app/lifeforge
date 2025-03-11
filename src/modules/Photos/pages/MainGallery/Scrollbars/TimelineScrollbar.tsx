@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
+import { usePhotosContext } from '@providers/PhotosProvider.tsx'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useRef } from 'react'
-import { usePhotosContext } from '@providers/PhotosProvider.tsx'
 
 function TimelineScrollbar(): React.ReactElement {
   const {
@@ -21,7 +21,7 @@ function TimelineScrollbar(): React.ReactElement {
       {typeof photos !== 'string' && photos.totalItems !== 0 && (
         <>
           <div
-            className="group peer absolute top-0 right-0 h-full w-0 sm:w-16"
+            className="group peer absolute right-0 top-0 h-full w-0 sm:w-16"
             onClick={e => {
               if (galleryWrapperRef.current !== null) {
                 const galleryContainerHeight =
@@ -114,7 +114,7 @@ function TimelineScrollbar(): React.ReactElement {
                     .map(([year, date]) => (
                       <span
                         key={year}
-                        className="flex-center bg-bg-100 text-bg-500 dark:bg-bg-950 pointer-events-none absolute z-5 hidden h-4 w-full -translate-y-4 text-sm sm:flex"
+                        className="flex-center bg-bg-100 text-bg-500 dark:bg-bg-950 z-5 pointer-events-none absolute hidden h-4 w-full -translate-y-4 text-sm sm:flex"
                         style={{
                           top: `${eachDayDimensions[date as any]?.inTimeline}px`
                         }}

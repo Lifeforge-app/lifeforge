@@ -1,17 +1,23 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { Button, FAB } from '@components/buttons'
-import { SearchInput } from '@components/inputs'
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import CreatePasswordScreen from '@components/screens/CreatePasswordScreen'
-import OTPScreen from '@components/screens/OTPScreen'
 import { useAuthContext } from '@providers/AuthProvider'
 import { usePasswordContext } from '@providers/PasswordsProvider'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+
+import {
+  Button,
+  CreatePasswordScreen,
+  DeleteConfirmationModal,
+  FAB,
+  LockedScreen,
+  OTPScreen,
+  SearchInput
+} from '@lifeforge/ui'
+
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
 import CreatePasswordModal from './components/CreatePasswordModal'
 import PasswordList from './components/PasswordList'
-import LockedScreen from '../../components/screens/LockedScreen'
 
 function ModalsSection() {
   const {
@@ -71,12 +77,7 @@ function Passwords(): React.ReactElement {
     }
 
     if (userData?.hasMasterPassword === false) {
-      return (
-        <CreatePasswordScreen
-          endpoint="passwords/master"
-          keyInUserData="hasMasterPassword"
-        />
-      )
+      return <CreatePasswordScreen endpoint="passwords/master" />
     }
 
     return (

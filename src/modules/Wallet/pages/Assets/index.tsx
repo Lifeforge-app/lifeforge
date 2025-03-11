@@ -1,15 +1,22 @@
+import { useWalletContext } from '@providers/WalletProvider'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
-import { Button, FAB } from '@components/buttons'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
+
+import {
+  APIFallbackComponent,
+  Button,
+  DeleteConfirmationModal,
+  EmptyStateScreen,
+  FAB,
+  MenuItem
+} from '@lifeforge/ui'
+
+import { type IWalletAsset } from '@interfaces/wallet_interfaces'
+
 import ModuleHeader from '@components/layouts/module/ModuleHeader'
 import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import { type IWalletAsset } from '@interfaces/wallet_interfaces'
-import { useWalletContext } from '@providers/WalletProvider'
+
 import AssetItem from './components/AssetItem'
 import ModifyAssetsModal from './components/ModifyAssetsModal'
 
@@ -70,7 +77,7 @@ function Assets(): React.ReactElement {
       <APIFallbackComponent data={assets}>
         {assets =>
           assets.length > 0 ? (
-            <div className="mt-6 mb-24 grid grid-cols-1 gap-4 md:mb-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="mb-24 mt-6 grid grid-cols-1 gap-4 md:mb-6 md:grid-cols-2 lg:grid-cols-3">
               {assets.map(asset => (
                 <AssetItem
                   key={asset.id}

@@ -1,15 +1,15 @@
+import { useRailwayMapContext } from '@providers/RailwayMapProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import HamburgerSelectorWrapper from '@components/buttons/HamburgerMenu/components/HamburgerSelectorWrapper'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { useRailwayMapContext } from '@providers/RailwayMapProvider'
+
+import { HamburgerMenuSelectorWrapper, MenuItem } from '@lifeforge/ui'
 
 function LineFilter(): React.ReactElement {
   const { lines, filteredLines, setFilteredLines } = useRailwayMapContext()
   const { t } = useTranslation('modules.railwayMap')
 
   return (
-    <HamburgerSelectorWrapper
+    <HamburgerMenuSelectorWrapper
       icon="lucide:rail-symbol"
       title={t('railwayLinesSelectorTitle')}
     >
@@ -39,7 +39,7 @@ function LineFilter(): React.ReactElement {
           }}
         />
       ))}
-    </HamburgerSelectorWrapper>
+    </HamburgerMenuSelectorWrapper>
   )
 }
 

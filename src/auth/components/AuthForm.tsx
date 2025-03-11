@@ -1,10 +1,12 @@
 // import * as webauthn from '@passwordless-id/webauthn'
+import { AUTH_ERROR_MESSAGES } from '@constants/auth'
+import { useAuthContext } from '@providers/AuthProvider'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { TextInput } from '@components/inputs'
-import { AUTH_ERROR_MESSAGES } from '@constants/auth'
-import { useAuthContext } from '@providers/AuthProvider'
+
+import { TextInput } from '@lifeforge/ui'
+
 import AuthSignInButton from './AuthSignInButtons'
 
 function AuthForm(): React.ReactElement {

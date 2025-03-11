@@ -1,5 +1,7 @@
 import React from 'react'
+
 import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
+
 import VideoEntry from './VideoEntry'
 
 function VideoList({

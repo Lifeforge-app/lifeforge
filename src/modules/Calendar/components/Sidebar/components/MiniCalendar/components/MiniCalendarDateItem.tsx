@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useMemo } from 'react'
+
 import {
   type ICalendarCategory,
   type ICalendarEvent
@@ -66,7 +67,7 @@ function MiniCalendarDateItem({
         'relative isolate flex flex-col items-center gap-1 text-sm',
         !isInThisMonth && 'text-bg-300 dark:text-bg-600',
         isToday &&
-          "after:border-custom-500 after:bg-custom-500/10 font-semibold after:absolute after:top-1/2 after:left-1/2 after:z-[-1] after:size-10 after:-translate-x-1/2 after:-translate-y-5 after:rounded-md after:border after:content-['']"
+          "after:border-custom-500 after:bg-custom-500/10 font-semibold after:absolute after:left-1/2 after:top-1/2 after:z-[-1] after:size-10 after:-translate-x-1/2 after:-translate-y-5 after:rounded-md after:border after:content-['']"
       )}
     >
       <span>{actualIndex}</span>

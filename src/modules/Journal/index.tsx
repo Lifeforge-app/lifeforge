@@ -1,21 +1,27 @@
-import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import OTPScreen from '@components/screens/OTPScreen'
-import { type Loadable } from '@interfaces/common'
-import { type IJournalEntry } from '@interfaces/journal_interfaces'
 import { useAuthContext } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
+import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
+import {
+  Button,
+  CreatePasswordScreen,
+  DeleteConfirmationModal,
+  LockedScreen,
+  OTPScreen
+} from '@lifeforge/ui'
+
+import { type Loadable } from '@interfaces/common'
+import { type IJournalEntry } from '@interfaces/journal_interfaces'
+
+import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+
 import JournalList from './components/JournalList'
 import JournalViewModal from './components/JournalViewModal'
 import ModifyJournalEntryModal from './components/ModifyEntryModal'
-import CreatePasswordScreen from '../../components/screens/CreatePasswordScreen'
-import LockedScreen from '../../components/screens/LockedScreen'
 
 function Journal(): React.ReactElement {
   const { t } = useTranslation('modules.journal')
@@ -68,12 +74,7 @@ function Journal(): React.ReactElement {
     }
 
     if (userData?.hasJournalMasterPassword === false) {
-      return (
-        <CreatePasswordScreen
-          endpoint="journal/auth"
-          keyInUserData="hasJournalMasterPassword"
-        />
-      )
+      return <CreatePasswordScreen endpoint="journal/auth" />
     }
 
     if (masterPassword === '') {

@@ -1,9 +1,9 @@
+import { useTodoListContext } from '@providers/TodoListProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
-import { Button } from '@components/buttons'
-import HeaderFilter from '@components/utilities/HeaderFilter'
-import { useTodoListContext } from '@providers/TodoListProvider'
+
+import { Button, HeaderFilter } from '@lifeforge/ui'
 
 function Header({
   setSidebarOpen
@@ -59,7 +59,10 @@ function Header({
               data: tags.map(e => ({ ...e, icon: 'tabler:tag' }))
             },
             priority: {
-              data: priorities.map(e => ({ ...e, icon: 'tabler:adjustments' })),
+              data: priorities.map(e => ({
+                ...e,
+                icon: 'tabler:adjustments'
+              })),
               isColored: true
             }
           }}

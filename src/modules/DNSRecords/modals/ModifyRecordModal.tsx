@@ -1,7 +1,7 @@
 // import React, { useReducer, useState } from 'react'
-// import Input from '@components/ButtonsAndInputs/Input'
-// import Modal from '@components/Modals/Modal'
-// import ModalHeader from '@components/Modals/ModalHeader'
+// import Input from '@lifeforge/uiAndInputs/Input'
+// import Modal from '@lifeforge/ui'
+// import ModalHeader from '@lifeforge/ui'
 // import { type DNSRecordType } from '@interfaces/dns_records_interfaces'
 
 // interface IRecord {

@@ -1,9 +1,11 @@
 import L from 'leaflet'
-import { useEffect, RefObject, useRef } from 'react'
+import { RefObject, useEffect, useRef } from 'react'
+
 import {
   IRailwayMapLine,
   IRailwayMapStation
 } from '@interfaces/railway_map_interfaces'
+
 import { initializeMap, renderLines, renderStations } from '../utils/mapUtils'
 
 interface EarthMapRendererProps {

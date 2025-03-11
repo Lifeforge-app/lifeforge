@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
-import useFetch from '@hooks/useFetch'
+
+import { APIFallbackComponent, ModalHeader, ModalWrapper } from '@lifeforge/ui'
+
 import { IMailInboxEntry } from '@interfaces/mail_inbox_interfaces'
+
+import useFetch from '@hooks/useFetch'
+
 import MailAttachments from './components/MailAttachments'
 import MailContent from './components/MailContent'
 import MailHeader from './components/MailHeader'

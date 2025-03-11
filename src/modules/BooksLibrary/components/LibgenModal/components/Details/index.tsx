@@ -1,11 +1,13 @@
 import React from 'react'
-import { GoBackButton } from '@components/buttons'
-import APIFallbackComponent from '@components/screens/APIComponentWithFallback'
+
+import { APIFallbackComponent, GoBackButton } from '@lifeforge/ui'
+
 import useFetch from '@hooks/useFetch'
-import DataTable from './components/DataTable'
-import ThumbnailAndHashes from './components/ThumbnailAndHashes'
-import TOC from './components/TOC'
+
 import AddToLibraryButton from '../AddToLibraryButton'
+import DataTable from './components/DataTable'
+import TOC from './components/TOC'
+import ThumbnailAndHashes from './components/ThumbnailAndHashes'
 
 export interface BookDetailProps {
   image: string

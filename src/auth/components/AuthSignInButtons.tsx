@@ -1,9 +1,10 @@
+import { useAuthContext } from '@providers/AuthProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
-import Button from '@components/buttons/Button'
-import { useAuthContext } from '@providers/AuthProvider'
+
+import { Button } from '@lifeforge/ui'
 
 function AuthSignInButton({
   loading,

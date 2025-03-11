@@ -1,9 +1,10 @@
-import { Icon } from '@iconify/react'
-import React from 'react'
 import { BG_BLURS } from '@constants/bg_blurs'
-import useThemeColors from '@hooks/useThemeColor'
+import { Icon } from '@iconify/react'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
+import React from 'react'
+
+import useThemeColors from '@hooks/useThemeColor'
 
 function ResultShowcase({
   bgBrightness,
@@ -35,7 +36,7 @@ function ResultShowcase({
         }}
       >
         <div
-          className="bg-bg-50 dark:bg-bg-950 absolute top-0 left-0 z-[-1] size-full"
+          className="bg-bg-50 dark:bg-bg-950 absolute left-0 top-0 z-[-1] size-full"
           style={{
             opacity: `${overlayOpacity}%`
           }}

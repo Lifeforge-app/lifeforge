@@ -1,7 +1,10 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
+
+import { EmptyStateScreen } from '@lifeforge/ui'
+
 import { IMovieEntry } from '@interfaces/movies_interfaces'
+
 import MovieItem from './MovieItem'
 
 function MovieList({
@@ -35,7 +38,7 @@ function MovieList({
   }
 
   return (
-    <div className="mt-6 mb-24 space-y-4 md:mb-6">
+    <div className="mb-24 mt-6 space-y-4 md:mb-6">
       {data.map(item => (
         <MovieItem
           key={item.id}

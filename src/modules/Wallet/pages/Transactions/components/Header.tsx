@@ -1,11 +1,10 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { useWalletContext } from '@providers/WalletProvider'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
-import { Button } from '@components/buttons'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import HeaderFilter from '@components/utilities/HeaderFilter'
-import { useWalletContext } from '@providers/WalletProvider'
+
+import { Button, HeaderFilter, MenuItem } from '@lifeforge/ui'
 
 function Header({
   setModifyModalOpenType,
@@ -143,7 +142,7 @@ function Header({
             <MenuItems
               transition
               anchor="bottom end"
-              className="bg-bg-100 dark:bg-bg-800 mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+              className="bg-bg-100 dark:bg-bg-800 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 mt-2 min-w-[var(--button-width)] overflow-hidden overscroll-contain rounded-md shadow-lg transition duration-100 ease-out"
             >
               <MenuItem
                 icon="tabler:plus"

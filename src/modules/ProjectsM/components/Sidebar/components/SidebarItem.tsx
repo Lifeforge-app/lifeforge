@@ -1,14 +1,15 @@
+import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import React, { useMemo } from 'react'
 import { useSearchParams } from 'react-router'
-import MenuItem from '@components/buttons/HamburgerMenu/components/MenuItem'
-import { SidebarItem } from '@components/layouts/sidebar'
+
+import { MenuItem, SidebarItem } from '@lifeforge/ui'
+
 import {
   type IProjectsMCategory,
   type IProjectsMStatus,
   type IProjectsMTechnology,
   type IProjectsMVisibility
 } from '@interfaces/projects_m_interfaces'
-import { useProjectsMContext } from '@providers/ProjectsMProvider'
 
 function _SidebarItem({
   item,
@@ -65,6 +66,7 @@ function _SidebarItem({
             />
           </>
         }
+        needTranslate={false}
         icon={item.icon}
         name={item.name}
         number={Math.floor(Math.random() * 100)}

@@ -1,9 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
-import React from 'react'
-import HamburgerMenu from '@components/buttons/HamburgerMenu'
-import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
+import React from 'react'
+
+import { HamburgerMenu } from '@lifeforge/ui'
+
+import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
+
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
@@ -26,7 +29,7 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }): React.ReactElement {
         target="_blank"
       />
       <HamburgerMenu
-        className="absolute top-6 right-6 z-20"
+        className="absolute right-6 top-6 z-20"
         customTailwindColor="bg-bg-800/50 hover:bg-bg-700"
       >
         <EntryContextMenu item={item} />
@@ -63,7 +66,7 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }): React.ReactElement {
           <span className="text-bg-500 text-sm">({item.edition} ed)</span>
         )}
       </div>
-      <div className="text-custom-500 mt-0.5 line-clamp-3 text-sm font-medium break-all">
+      <div className="text-custom-500 mt-0.5 line-clamp-3 break-all text-sm font-medium">
         {item.authors}
       </div>
       <div className="mt-auto w-full min-w-0">

@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react'
+import { useMusicContext } from '@providers/MusicProvider'
 import clsx from 'clsx'
 import React, { useMemo } from 'react'
 import { toast } from 'react-toastify'
+
 import { IMusicEntry } from '@interfaces/music_interfaces'
-import { useMusicContext } from '@providers/MusicProvider'
 
 function PlayStateIndicator({
   music

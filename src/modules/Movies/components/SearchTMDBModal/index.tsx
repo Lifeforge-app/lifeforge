@@ -1,14 +1,19 @@
 import { useQueryClient } from '@tanstack/react-query'
+import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { Button } from '@components/buttons'
-import { SearchInput } from '@components/inputs'
-import ModalHeader from '@components/modals/ModalHeader'
-import ModalWrapper from '@components/modals/ModalWrapper'
-import EmptyStateScreen from '@components/screens/EmptyStateScreen'
-import LoadingScreen from '@components/screens/LoadingScreen'
+
+import {
+  Button,
+  EmptyStateScreen,
+  LoadingScreen,
+  ModalHeader,
+  ModalWrapper,
+  SearchInput
+} from '@lifeforge/ui'
+
 import { IMovieEntry, IMovieSearchResults } from '@interfaces/movies_interfaces'
-import fetchAPI from '@utils/fetchAPI'
+
 import TMDBLogo from './components/TMDBLogo.svg'
 import TMDBResultsList from './components/TMDBResultsList'
 

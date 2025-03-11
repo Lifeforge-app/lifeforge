@@ -1,10 +1,11 @@
+import { useAuthContext } from '@providers/AuthProvider'
+import { toCamelCase } from '@utils/strings'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Button from '@components/buttons/Button'
-import ConfigColumn from '@components/utilities/ConfigColumn'
-import { useAuthContext } from '@providers/AuthProvider'
-import { toCamelCase } from '@utils/strings'
+
+import { Button, ConfigColumn } from '@lifeforge/ui'
+
 import ModifyModal from './ModifyModal'
 
 function OrdinaryColumn({

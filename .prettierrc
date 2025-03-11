@@ -4,5 +4,18 @@
   "trailingComma": "none",
   "arrowParens": "avoid",
   "endOfLine": "auto",
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "plugins": [
+    "prettier-plugin-tailwindcss",
+    "@trivago/prettier-plugin-sort-imports"
+  ],
+  "importOrder": [
+    "^@lifeforge/(.*)$",
+    "^@core/(.*)$",
+    "^@interfaces/(.*)$",
+    "^@components/(.*)$",
+    "^@hooks/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }

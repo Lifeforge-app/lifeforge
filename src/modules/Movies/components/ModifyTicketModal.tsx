@@ -1,14 +1,15 @@
 import { useQueryClient } from '@tanstack/react-query'
+import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import DeleteConfirmationModal from '@components/modals/DeleteConfirmationModal'
-import FormModal from '@components/modals/FormModal'
+
+import { DeleteConfirmationModal, FormModal } from '@lifeforge/ui'
+
 import { IFieldProps } from '@interfaces/modal_interfaces'
 import {
   IMovieEntry,
   IMovieTicketFormState
 } from '@interfaces/movies_interfaces'
-import fetchAPI from '@utils/fetchAPI'
 
 function ModifyTicketModal({
   openType,

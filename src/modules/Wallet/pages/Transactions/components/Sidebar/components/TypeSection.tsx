@@ -1,11 +1,13 @@
+import { useWalletContext } from '@providers/WalletProvider'
+import { toCamelCase } from '@utils/strings'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import colors from 'tailwindcss/colors'
-import { SidebarItem, SidebarTitle } from '@components/layouts/sidebar'
+
+import { SidebarItem, SidebarTitle } from '@lifeforge/ui'
+
 import useThemeColors from '@hooks/useThemeColor'
-import { useWalletContext } from '@providers/WalletProvider'
-import { toCamelCase } from '@utils/strings'
 
 function TypeSection({
   setSidebarOpen

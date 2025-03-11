@@ -1,12 +1,14 @@
 import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import copy from 'copy-to-clipboard'
 import React, { useState } from 'react'
-import { Button } from '@components/buttons'
+
+import { Button } from '@lifeforge/ui'
+
 import { type Loadable } from '@interfaces/common'
 import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
-import fetchAPI from '@utils/fetchAPI'
 
 function ShareAlbumModal({
   albumId,
@@ -91,7 +93,7 @@ function ShareAlbumModal({
           <div className="bg-bg-700/50 text-bg-800 dark:text-bg-50 mt-4 flex gap-2 rounded-md p-3 shadow-md">
             <Icon className="size-6" icon="tabler:link" />
             <input
-              className="w-full bg-transparent focus:outline-hidden"
+              className="focus:outline-hidden w-full bg-transparent"
               type="text"
               value={`${
                 import.meta.env.VITE_PUBLIC_PORTAL_URL

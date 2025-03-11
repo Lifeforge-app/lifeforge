@@ -1,8 +1,8 @@
-import { useMemo } from 'react'
 import THEME_COLOR_HEX from '@constants/theme_color_hex'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { getColorPalette } from '@utils/colors'
 import { toCamelCase } from '@utils/strings'
+import { useMemo } from 'react'
 
 const bgTheme = {
   slate: {
