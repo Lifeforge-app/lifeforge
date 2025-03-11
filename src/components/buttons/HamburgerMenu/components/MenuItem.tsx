@@ -9,7 +9,7 @@ function getActiveClass(active?: boolean, isRed?: boolean): string {
   if (active === true) {
     return `bg-bg-200/50! ${
       isRed === true ? 'text-red-600' : 'text-bg-800 dark:text-bg-50'
-    } dark:bg-bg-700`
+    } dark:bg-bg-700/50!`
   } else {
     return isRed === true ? 'text-red-500' : 'text-bg-500'
   }
