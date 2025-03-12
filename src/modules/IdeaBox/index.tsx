@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -12,6 +11,8 @@ import {
   QueryWrapper,
   SearchInput
 } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import Containers from './components/Containers'
 import ModifyContainerModal from './components/Containers/components/ModifyContainerModal'

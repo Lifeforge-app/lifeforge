@@ -1,9 +1,10 @@
-import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { Button, ConfigColumn } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
 
 function PasswordColumn(): React.ReactElement {
   const { t } = useTranslation('modules.accountSettings')

@@ -1,6 +1,5 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
-import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,6 +12,8 @@ import {
 } from '@lifeforge/ui'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
+
+import fetchAPI from '@utils/fetchAPI'
 
 function AddPhotosToAlbumModal(): React.ReactElement {
   const { t } = useTranslation('modules.photos')

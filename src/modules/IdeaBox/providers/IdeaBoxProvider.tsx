@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -11,6 +10,8 @@ import {
   type IIdeaBoxFolder,
   type IIdeaBoxTag
 } from '@modules/IdeaBox/interfaces/ideabox_interfaces'
+
+import fetchAPI from '@utils/fetchAPI'
 
 interface IIdeaBoxData {
   pathValid: boolean

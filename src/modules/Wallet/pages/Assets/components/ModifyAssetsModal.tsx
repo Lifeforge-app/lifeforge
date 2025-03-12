@@ -1,4 +1,3 @@
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -12,6 +11,8 @@ import {
   ModalWrapper,
   TextInput
 } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { type IWalletAsset } from '../../../interfaces/wallet_interfaces'
 

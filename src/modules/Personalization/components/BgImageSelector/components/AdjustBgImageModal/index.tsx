@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 import { Button, ModalHeader, ModalWrapper, Scrollbar } from '@lifeforge/ui'
 
-import { BG_BLURS } from '../../../../../../core/constants/bg_blurs'
+import { BG_BLURS } from '../../../../../../core/providers/PersonalizationProvider/constants/bg_blurs'
 import AdjustmentColumn from './components/AdjustmentColumn'
 import ResultShowcase from './components/ResultShowcase'
 

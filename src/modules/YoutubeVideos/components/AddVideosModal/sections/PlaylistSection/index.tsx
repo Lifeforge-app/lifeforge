@@ -1,5 +1,4 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import IntervalManager from '@utils/intervalManager'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -9,6 +8,8 @@ import { APIFallbackComponent, TextInput } from '@lifeforge/ui'
 import { type Loadable } from '@interfaces/common'
 
 import useFetch from '@hooks/useFetch'
+
+import IntervalManager from '@utils/intervalManager'
 
 import {
   type IYoutubePlaylistEntry,

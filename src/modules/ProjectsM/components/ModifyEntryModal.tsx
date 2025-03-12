@@ -1,9 +1,10 @@
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
 
 import { ErrorScreen, FormModal, LoadingScreen } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { useProjectsMContext } from '../providers/ProjectsMProvider'
 

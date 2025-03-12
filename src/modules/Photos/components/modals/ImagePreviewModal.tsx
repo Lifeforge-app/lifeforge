@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import forceDown from '@utils/forceDown'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { useParams } from 'react-router'
@@ -16,6 +15,8 @@ import {
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
 import useFetch from '@hooks/useFetch'
+
+import forceDown from '@utils/forceDown'
 
 import {
   type IPhotoAlbumEntryItem,

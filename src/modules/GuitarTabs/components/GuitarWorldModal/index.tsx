@@ -1,4 +1,3 @@
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -9,6 +8,8 @@ import {
   ModalWrapper,
   TextInput
 } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { Loadable } from '../../../../core/interfaces/common'
 import { type IGuitarTabsGuitarWorldScores } from '../../interfaces/guitar_tabs_interfaces'

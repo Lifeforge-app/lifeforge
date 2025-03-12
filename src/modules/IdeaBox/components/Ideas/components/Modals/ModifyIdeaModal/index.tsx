@@ -1,6 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useParams } from 'react-router'
@@ -9,6 +8,8 @@ import { toast } from 'react-toastify'
 import { Button, ModalWrapper } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { IIdeaBoxEntry } from '../../../../../interfaces/ideabox_interfaces'
 import IdeaContentInput from './IdeaContentInput'

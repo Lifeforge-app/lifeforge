@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
@@ -19,6 +18,8 @@ import {
 import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
 
 import useFetch from '@hooks/useFetch'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { type ITodoSubtask } from '../../interfaces/todo_list_interfaces'
 import ListSelector from './components/ListSelector'

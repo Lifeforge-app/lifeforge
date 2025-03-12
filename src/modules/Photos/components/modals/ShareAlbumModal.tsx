@@ -1,6 +1,5 @@
 import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import copy from 'copy-to-clipboard'
 import React, { useState } from 'react'
@@ -8,6 +7,8 @@ import React, { useState } from 'react'
 import { Button } from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { type IPhotosAlbum } from '../../interfaces/photos_interfaces'
 

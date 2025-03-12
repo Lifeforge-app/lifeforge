@@ -1,4 +1,3 @@
-import fetchAPI from '@utils/fetchAPI'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -8,6 +7,8 @@ import {
 } from '@modules/RailwayMap/interfaces/railway_map_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
+
+import fetchAPI from '@utils/fetchAPI'
 
 interface IRailwayMapData {
   viewType: 'route' | 'earth' | 'list'

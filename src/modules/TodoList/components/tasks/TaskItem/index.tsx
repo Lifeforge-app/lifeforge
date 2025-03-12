@@ -1,4 +1,3 @@
-import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React from 'react'
 
@@ -7,6 +6,8 @@ import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider
 import { type Loadable } from '@interfaces/common'
 
 import useComponentBg from '@hooks/useComponentBg'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { type ITodoListEntry } from '../../../interfaces/todo_list_interfaces'
 import SubtaskItem from './components/SubtaskItem'
