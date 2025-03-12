@@ -1,22 +1,24 @@
-### 📌 dev 25w11 (3/9/2025 - 3/15/2025)
-- **Documentation**: Fixed bugs where section is not properly detected and highlighted  in the right bar when scrolled into view
-- **Railway Map**: Created this module
-- **Idea Box**: Fixed long unspaced text overflow problem
-- **Documentations**: Updated the installation and configuration part to adhere to the latest codebase structure
-- **Change Log**: Migrated all the change log entries from local database to Github
-- **Code**: Migrated the components into independent library `@lifeforge/ui`
-- **Railway Map**: Utilizes d3.js to draw route map
-- **Railway Map**: Utilizes leaflet to draw earth map of mrt lines and stations
-- **Railway Map**: Added feature to calculate and display the shortest route between any two stations
-- **Railway Map**: Enhanced animations when interacting with route map
-- **Code**: Replaced most utils function with pre-existing node modules
-- **UI**: Moved more reusable components into `@lifeforge/ui`
-- **Code**: Moved everything except `modules` into `core` folder
-- **Code**: Moved all providers, interfaces, and constants into each corresponding module folders
-- **Code**: Removed unused constant files
-- **Code**: Renamed `useXXXContext` into `useXXX`
-- **Code**: Moved all the theme-related states from `useThemeColors` hook into `usePersonalization` context provider
-- **Code**: Renamed `useThemeColors` hook to `useComponentsBg`
+### 📌 **dev 25w11 (3/9/2025 - 3/15/2025)**
+- **Documentation**: Resolved an issue where section detection and highlighting in the right navigation bar were inconsistent when scrolling.
+- **Railway Map**: Introduced this module.
+- **Idea Box**: Fixed text overflow issues caused by unspaced long strings.
+- **Documentation**: Updated the installation and configuration guide to align with the latest codebase structure.
+- **Change Log**: All change log entries were moved from the local database to a public GitHub repository for better accessibility.
+- **Code**: Refactored and modularized components into an independent package, `@lifeforge/ui`, to improve maintainability.
+- **Railway Map**: Integrated d3.js for dynamic and scalable route visualization.
+- **Railway Map**: Integrated Leaflet.js to render an interactive Earth map of MRT lines and stations.
+- **Railway Map**: Developed a feature to calculate and display the shortest route between any two stations.
+- **Railway Map**: Enhanced user interactions with smoother animations for route navigation.
+- **Code**: Replaced multiple custom utility functions with optimized, pre-existing Node.js modules.
+- **UI**: Abstracted and relocated reusable UI components to `@lifeforge/ui` for a more structured component architecture.
+- **Code**: Consolidated core logic by moving all non-module-specific files from `modules` into the `core` directory.
+- **Code**: We reorganized providers, interfaces, and constants into their respective module directories to better separate concerns.
+- **Code**: Eliminated redundant constant files to reduce unnecessary complexity.
+- **Code**: Standardized naming conventions by renaming `useXXXContext` to `useXXX` for clarity.
+- **Code**: Centralized theme-related states by moving them from the `useThemeColors` hook into the `usePersonalization` context provider.
+- **Code**: Renamed `useThemeColors` hook to `useComponentsBg` for better semantic alignment with its functionality.
+- **Change Log**: Asked ChatGPT to help refine all the change log entries from 25w01 until now.
+  
 ---
 
 ### 📌 dev 25w10 (3/2/2025 - 3/8/2025)
@@ -39,146 +41,166 @@
 - **Movies**: Implemented CRUD function for movie entry
 - **Movies**: User can now add ticket data to movie entry
 - **Localization**: Completely revamped the locale manager to adhere to the newest locale folder structure
+  
 ---
 
-### 📌 dev 25w09 (2/23/2025 - 3/1/2025)
-- **Moment Vault**: Added button to add transcript for audio after it's been created
-- **Code**: Refactored input change handler for forms in modals
-- **Code**: Renamed props of inputs for updating value uniformly to `setXXXX`
-- **Code**: Renamed `Modal` to `FormModal` and improved typing
-- **Code**: Refactored all the classNames to use `clsx` instead of template strings
-- **Code**: Fixed bugs where `Suspense` is not rendering fallback
-- **Code**: Started migration to `react-query`
-- **Moment Vault**: Added pagination
+### 📌 **dev 25w10 (3/2/2025 - 3/8/2025)**  
+- **Idea Box**: Resolved an issue where folders could be dragged and dropped into themselves.  
+- **Idea Box**: Fixed an intermittent bug where the tag icon would sometimes not appear.  
+- **Idea Box**: Improved filtering functionality — nested folder contents are now displayed when filtering by tags in a folder.  
+- **Moment Vault**: Fixed an issue where audio recordings were occasionally captured incorrectly.  
+- **Idea Box**: Titles are now optional for link-type ideas, improving flexibility.  
+- **Wallet**: Addressed a bug where switching from income/expenses to transfers while an asset was selected would cause an error.  
+- **Code**: Refactored the `APIRequest` function, renaming it to `fetchAPI` for clarity and maintainability.  
+- **Wallet**: Users can now toggle which transaction types are displayed in the calendar heatmap.  
+- **Wallet**: Category selections are now dynamically filtered based on the selected transaction type.  
+- **Code Time**: Introduced time charts to track project and language usage trends.  
+- **API Keys**: Moved this module from the "Settings" section to the "Confidentials" section for better organization.  
+- **API Keys**: Added a copy button for API keys, enhancing usability.  
+- **Code**: Clicking on the action button inside a text input now triggers the input field to focus automatically.  
+- **Code**: Implemented a QR Code Scanner component, which can be enabled in Form Modal or manually added.  
+- **Movies**: Introduced a new "Movies" module to the system.  
+- **Movies**: Implemented a search and import modal for fetching movie data from TMDB.  
+- **Movies**: Added full CRUD functionality for managing movie entries.  
+- **Movies**: Users can now attach ticket data to their movie entries.  
+- **Localization**: Completely reworked the locale manager to align with the latest locale folder architecture.
+   
 ---
 
-### 📌 dev 25w08 (2/16/2025 - 2/22/2025)
-- **Guitar Tabs**: Fixed bug where the text of the "sort by" selector doesn't reflect the real selected option
-- **Personalization**: Fixed bug where neutral variant of gray is overwritten by DaisyUI
-- **Moment Vault**: Created this module
-- **Moment Vault**: User can now record life events through audio and has option to transcribe to text through OpenAI Whisper
-- **API**: Started transforming API routes into `controller+service` model
-- **API**: Scraped started rewriting the entire test code
-- **Code**: Upgraded `react-router` to v7
+### 📌 **dev 25w08 (2/16/2025 - 2/22/2025)**  
+- **Guitar Tabs**: Fixed an issue where the "Sort By" selector text did not reflect the actual selected option.  
+- **Personalization**: Resolved a conflict where the neutral variant of gray was being overwritten by DaisyUI.  
+- **Moment Vault**: Introduced a new module for recording life events.  
+- **Moment Vault**: Users can now record life events as audio and optionally transcribe them to text using OpenAI Whisper.  
+- **API**: Began migrating API routes to a `controller + service` architecture for improved maintainability.  
+- **API**: Scrapped the initial test codebase and started rewriting all tests.  
+- **Code**: Upgraded `react-router` to version 7 for better routing performance and features.  
+
 ---
 
-### 📌 dev 25w07 (2/9/2025 - 2/15/2025)
-- **Code**: Refactored OTP screen and fixed dark mode color issue
+### 📌 **dev 25w07 (2/9/2025 - 2/15/2025)**  
+- **Code**: Refactored the OTP screen, fixing a dark mode color inconsistency.  
+
 ---
 
-### 📌 dev 25w06 (2/2/2025 - 2/8/2025)
-- **Code**: Rewritten TailwindCSS color palette in color picker to convert color from `oklch` back to `RGB`
-- **Mail Inbox**: User can now bulk select and delete mail entries
+### 📌 **dev 25w06 (2/2/2025 - 2/8/2025)**  
+- **Code**: Rewrote the TailwindCSS color palette in the color picker to correctly convert colors from `oklch` back to `RGB`.  
+- **Mail Inbox**: Implemented bulk selection and deletion of mail entries.  
+
 ---
 
-### 📌 dev 25w05 (1/26/2025 - 2/1/2025)
-- **Code**: Upgraded TailwindCSS to version 4.0
-- **Code**: Memoized all the values passed into context provider
-- **Mail Inbox**: Revamped the UI
-- **Mail Inbox**: Synced all the mails in Gmail inbox with my own database
-- **Mail Inbox**: Added sidebar, search bar and pagination
-- **Mail Inbox**: User can now view mail content in the UI
-- **Mail Inbox**: Incoming mails will now be listened and imported into database in real time
-- **Code**: Upgraded Headless UI into beta version with supports TailwindCSS 4.0
-- **Sidebar**: Icon will finally not flash when route changes
-- **UI**: Improved light mode consistency
-- **Code**: Added `react-compiler`
-- **Code**: Created reusable components for wrappers when there is subsidebar in each module
-- **Virtual Wardrobe**: Created session cart that temporarily stores user's clothes set ready to be checked out and saved as history
-- **Localization**: Completely revamped the folder structure of locale data, splitting translations into different namespace
-- **Code**: Rewritten utility function that converts number into currency format using `Intl.NumberFormat`
-- **Code**: Fixed mechanism bugs for pagination component
-- **Code**: Changed redundant code snippets to reusable component
-- **Localization**: Worked on parts that are originally not translated
-- **Code**: Major code refactoring
-- **Spotify**: Completely removed this module
-- **Code**: Added ESLint plugin that sorts component props alphabetically
+### 📌 **dev 25w05 (1/26/2025 - 2/1/2025)**  
+- **Code**: Upgraded TailwindCSS to version 4.0 for enhanced styling capabilities.  
+- **Code**: Memoized all values passed into context providers to optimize performance.  
+- **Mail Inbox**: Completely overhauled the UI for a better user experience.  
+- **Mail Inbox**: Integrated Gmail synchronization, storing all emails in a custom database.  
+- **Mail Inbox**: Added a sidebar, search bar, and pagination for better navigation.  
+- **Mail Inbox**: Enabled users to view mail content directly within the UI.  
+- **Mail Inbox**: Implemented real-time email synchronization, automatically importing incoming emails into the database.  
+- **Code**: Upgraded Headless UI to its beta version with full TailwindCSS 4.0 support.  
+- **Sidebar**: Fixed an issue where icons would flash when navigating between routes.  
+- **UI**: Improved light mode consistency across components.  
+- **Code**: Added `react-compiler` to optimize UI performance.  
+- **Code**: Created reusable wrapper components for modules containing sub-sidebars.  
+- **Virtual Wardrobe**: Introduced a session cart for temporarily storing clothing sets before checkout and history logging.  
+- **Localization**: Revamped the folder structure for locale data, segmenting translations into separate namespaces.  
+- **Code**: Rewrote the utility function for currency formatting using `Intl.NumberFormat`.  
+- **Code**: Fixed pagination component mechanism bugs.  
+- **Code**: Refactored redundant code snippets into reusable components.  
+- **Localization**: Completed translations for previously untranslated sections.  
+- **Code**: Performed a major codebase refactor for better maintainability.  
+- **Spotify**: Completely removed the Spotify module from the system.  
+- **Code**: Added an ESLint plugin to enforce alphabetical sorting of component props.  
+
 ---
 
-### 📌 dev 25w04 (1/19/2025 - 1/25/2025)
-- **Music**: Added spacebar hotkey to start and pause musics
-- **Code**: Upgraded all modules to the newest version
-- **Code**: Migrated from old version of ESLint to newest version
-- **Code**: Massive folder structure refactoring to `components` folder
-- **Code**: Uninstalled unused modules from `package.json`
-- **Code**: Massive code refactoring for `Button` component
-- **Passwords**: Used context provider to reduce code for transferring states among components
-- **Server Status**: Ultra-massive code refactoring
-- **Virtual Wardrobe**: Created this module
-- **Virtual Wardrobe**: CRUD action logic completed
-- **Virtual Wardrobe**: Added sidebar for filtering
-- **Code**: Moved routing and entry point files into `core` folder
+### 📌 **dev 25w04 (1/19/2025 - 1/25/2025)**  
+- **Music**: Added spacebar hotkey support for starting and pausing music playback.  
+- **Code**: Upgraded all project dependencies to their latest versions.  
+- **Code**: Migrated from an older ESLint version to the latest release for improved linting rules and performance.  
+- **Code**: Performed a large-scale folder structure refactoring, reorganizing components into a structured `components` directory.  
+- **Code**: Removed unused dependencies from `package.json` to optimize project size.  
+- **Code**: Significantly refactored the `Button` component for improved maintainability and performance.  
+- **Passwords**: Implemented context providers to streamline state management and reduce redundant code.  
+- **Server Status**: Conducted an extensive code refactor to enhance efficiency and maintainability.  
+- **Virtual Wardrobe**: Introduced the Virtual Wardrobe module for managing clothing items.  
+- **Virtual Wardrobe**: Completed CRUD functionalities for wardrobe entries.  
+- **Virtual Wardrobe**: Added a sidebar to enable filtering options.  
+- **Code**: Moved routing and entry point files into the `core` directory for a clearer architectural structure.  
+
 ---
 
-### 📌 dev 25w03 (1/12/2025 - 1/18/2025)
-- **UI**: Removed header and moved profile button to sidebar
-- **Wishlist**: Added button to visit website
-- **Code**: Go Back Button now uses reusable button component
-- **Code Time**: Fixed UI responsive issue
-- **Books Library**: Fixed light mode color issue in Libgen modal
-- **UI**: Made module header size smaller in smaller screen
-- **UI**: Fixed minor spacing issues
-- **Wallet**: Added features to parse data from receipt images utilizing Tesseract and GPT-4o-mini
-- **Code**: Created reusable component for checkbox
-- **Code**: Created reusable component for tabs selector
-- **Wishlist**: Implemented CRUD functionality for wishlist lists and entries and amount calculation logics
-- **Wishlist**: Revamped UI for wishlist list and entries page
-- **UI**: Added refresh button in API offline screen
-- **Wishlist**: Added puzzle world provider
+### 📌 **dev 25w03 (1/12/2025 - 1/18/2025)**  
+- **UI**: Removed the header and relocated the profile button to the sidebar for a cleaner layout.  
+- **Wishlist**: Added a direct link button to visit product websites.  
+- **Code**: Refactored the "Go Back" button to use a reusable button component.  
+- **Code Time**: Fixed UI responsiveness issues.  
+- **Books Library**: Resolved a color inconsistency issue in the Libgen modal when using light mode.  
+- **UI**: Reduced module header icon and text size for better mobile optimization.  
+- **UI**: Fixed minor spacing inconsistencies across the interface.  
+- **Wallet**: Implemented data extraction from receipt images using Tesseract OCR and GPT-4o-mini.  
+- **Code**: Created reusable checkbox components for consistent UI interactions.  
+- **Code**: Implemented a reusable tabs selector component.  
+- **Wishlist**: Developed full CRUD functionality for wishlist management, including automated amount calculations.  
+- **Wishlist**: Redesigned the wishlist list and entry UI for a more intuitive experience.  
+- **UI**: Added a refresh button to the API offline screen for improved usability.  
+- **Wishlist**: Integrated Puzzle World as a new wishlist provider.  
+
 ---
 
-### 📌 dev 25w02 (1/5/2025 - 1/11/2025)
-- **Wallet**: Fixed bug related to amount calculation between years in financial report
-- **UI**: Made header icon smaller in small screen size
-- **Wishlist**: Improved responsive design
-- **Code**: Updated `README.md` with newest info and screenshots
-- **Module Tools**: Renovated the entire utility tool
-- **Module Tools**: Added help screen
-- **Module Tools**: Added multilingual support
-- **Module Tools**: Added feature to list and delete modules
-- **Code**: Replaced `tsx` runtime with `bun run`
-- **API**: Integrated OpenAI's GPT 4o-mini model and created `fetchOpenAI` utility function
-- **Code**: Changed build options to split node modules into chunks when building production code
-- **OpenAI API Pricing**: Created this module to allow user to view OpenAI API pricing through the system
-- **UI**: Restructured the module categories
-- **UI**: Fixed modal layering problem for Pixabay search filter in image picker modal
-- **UI**: Fixed minor issues related to light mode
+### 📌 **dev 25w02 (1/5/2025 - 1/11/2025)**  
+- **Wallet**: Fixed an issue where financial reports displayed incorrect calculations across multiple years.  
+- **UI**: Reduced the header icon size for better adaptability on small screens.  
+- **Wishlist**: Improved responsiveness for a smoother mobile experience.  
+- **Code**: Updated `README.md` with the latest information and screenshots.  
+- **Module Tools**: Completely revamped the utility tool system.  
+- **Module Tools**: Added a help screen to guide users through features.  
+- **Module Tools**: Implemented multilingual support.  
+- **Module Tools**: Introduced the ability to list and delete modules dynamically.  
+- **Code**: Replaced the `tsx` runtime with `bun run` for improved build performance.  
+- **API**: Integrated OpenAI's GPT-4o-mini model and developed a `fetchOpenAI` utility function.  
+- **Code**: Modified build options to split Node modules into chunks during production builds for better performance.  
+- **OpenAI API Pricing**: Created a new module allowing users to view OpenAI API pricing directly within the system.  
+- **UI**: Reorganized module categories for a more intuitive user experience.  
+- **UI**: Fixed modal layering issues in the Pixabay search filter within the image picker modal.  
+- **UI**: Addressed minor light mode inconsistencies.  
+
 ---
 
-### 📌 dev 25w01 (12/29/2024 - 1/4/2025)
-- **Code**: Happy New Year!!!!
-- **Code**: Removed a lot of useless tailwind classes
-- **Code**: Improved type declaration for UI components
-- **Code**: Removed unused component props
-- **Code**: Created reusable component for `Switch`
-- **Code**: Fixed bugs for pagination component
-- **Code**: Renamed components props to more appropriate name
-- **Code**: Renamed `APIComponentWithFallback` to `APIFallbackComponent`
-- **Sidebar**: Code refactored once again
-- **Sidebar**: Improved type declaration
-- **UI**: More work on theme consistency
-- **Dashboard**: Removed previous quote API endpoint and switched to AI generated quotes
-- **Idea Box**: Fixed OG image ratio issue
-- **UI**: Fixed several responsive issues
-- **Wallet**: Corrected some texts the sidebar buttons
-- **Code**: Upgraded TailwindCSS to latest version
-- **UI**: Password input content is now hidden by default, and will only get revealed when user press and hold the eye button beside the input box
-- **Code**: Fixed several bugs on image upload modal
-- **Code**: Added file input option to modal component
-- **Code**: Upgraded Pocketbase to latest version
-- **Authentication**: Utilized OTP feature provided by pocketbase to replace previous OTP logic
-- **Idea Box**: User can now add cover image to their idea containers
-- **Idea Box**: Changes to idea contents will now be updated dynamically instead of refetching everything
-- **Idea Box**: Added latest update date display to image entry
-- **Idea Box**: Fixed bug where moving idea out of folder is not showing
-- **Code**: Major code refactoring
-- **Sudoku**: Created this module where user can generate and print sudoku boards
-- **Idea Box**: User can now add tags to their idea entries
-- **Idea Box**: User can now search ideas in each idea container and folder
-- **Idea Box**: Used context provider to reduce code for transferring states among components
-- **Journal**: Fixed bugs related to image display and upload
-- **Account**: Fixed responsive issue
-- **Wallet**: Increased resolution of receipt image being converted from PDF file
+### 📌 **dev 25w01 (12/29/2024 - 1/4/2025)**  
+- **Code**: 🎉 Happy New Year! 🎉  
+- **Code**: Removed excessive and unused TailwindCSS classes to optimize stylesheets.  
+- **Code**: Enhanced type declarations for UI components for better TypeScript support.  
+- **Code**: Removed unused component props to streamline prop management.  
+- **Code**: Developed a reusable `Switch` component for toggling states.  
+- **Code**: Fixed pagination component bugs affecting navigation.  
+- **Code**: Renamed various component props to more intuitive names.  
+- **Code**: Renamed `APIComponentWithFallback` to `APIFallbackComponent` for better clarity.  
+- **Sidebar**: Refactored sidebar logic for improved maintainability.  
+- **Sidebar**: Enhanced type declarations for sidebar components.  
+- **UI**: Continued improvements to theme consistency across dark and light modes.  
+- **Dashboard**: Switched the previous quote API to AI-generated quotes for dynamic content.  
+- **Idea Box**: Resolved an issue with OG image aspect ratio inconsistencies.  
+- **UI**: Fixed multiple responsive UI issues.  
+- **Wallet**: Corrected text inconsistencies in sidebar buttons.  
+- **Code**: Upgraded TailwindCSS to its latest stable version.  
+- **UI**: Password input fields are now hidden by default and will only reveal content when users press and hold the eye button.  
+- **Code**: Fixed multiple bugs related to the image upload modal.  
+- **Code**: Added a file input option within the form modal component.  
+- **Code**: Upgraded PocketBase to its latest version for improved performance and stability.  
+- **Authentication**: Switched to using PocketBase’s built-in OTP feature, replacing the previous OTP implementation.  
+- **Idea Box**: Users can now add cover images to idea containers for better visual organization.    
+- **Idea Box**: Added a latest update timestamp display for image entries.  
+- **Idea Box**: Fixed an issue where moving ideas out of folders was not properly reflected in the UI.  
+- **Code**: Conducted a major code refactor to optimize performance and readability.  
+- **Sudoku**: Introduced a new module allowing users to generate and print Sudoku boards.  
+- **Idea Box**: Implemented a tagging system, enabling users to categorize ideas with custom tags.  
+- **Idea Box**: Added search functionality within idea containers and folders.  
+- **Idea Box**: Utilized context providers to streamline state management between components.  
+- **Journal**: Fixed image display and upload bugs.  
+- **Account**: Addressed UI responsiveness issues.  
+- **Wallet**: Increased the resolution of receipt images extracted from PDF files for better accuracy.  
+
 ---
 
 ### 📌 dev 24w52 (12/22/2024 - 12/28/2024)
