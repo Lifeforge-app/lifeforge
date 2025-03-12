@@ -12,9 +12,7 @@ import {
   MenuItem,
   SearchInput,
   ViewModeSelector
-} from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
 
 import Header from './components/Header'
 import LibgenModal from './components/LibgenModal'

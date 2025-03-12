@@ -9,9 +9,7 @@ import {
   QueryWrapper,
   SearchInput,
   ViewModeSelector
-} from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
 
 import { IMovieEntry } from '@modules/Movies/interfaces/movies_interfaces'
 

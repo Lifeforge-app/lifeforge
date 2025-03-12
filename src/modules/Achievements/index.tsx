@@ -9,9 +9,7 @@ import {
   EmptyStateScreen,
   FAB,
   QueryWrapper
-} from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
 
 import ModifyAchievementModal from './ModifyAchievementModal'
 import DifficultySelector from './components/DifficultySelector'

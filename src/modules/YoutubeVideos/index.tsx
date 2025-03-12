@@ -8,8 +8,7 @@ import {
   EmptyStateScreen,
   FAB,
   Scrollbar
-} from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
+, ModuleWrapper } from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
 

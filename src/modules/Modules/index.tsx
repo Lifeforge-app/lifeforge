@@ -5,9 +5,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { LoadingScreen } from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+import { LoadingScreen , ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
 
 import { type IRoutes } from '../../core/interfaces/routes_interfaces'
 import _ROUTES from '../../core/routes_config.json'

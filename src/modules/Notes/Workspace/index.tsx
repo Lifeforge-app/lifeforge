@@ -9,9 +9,7 @@ import {
   DeleteConfirmationModal,
   EmptyStateScreen,
   GoBackButton
-} from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 
