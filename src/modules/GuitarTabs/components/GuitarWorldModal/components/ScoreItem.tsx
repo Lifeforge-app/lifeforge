@@ -107,7 +107,7 @@ function ScoreItem({
           className="shrink-0"
           icon={isAudioPlaying === true ? 'tabler:pause' : 'tabler:play'}
           loading={isAudioPlaying === 'loading'}
-          variant="no-bg"
+          variant="plain"
           onClick={() => {
             toggleMusicPlay().catch(console.error)
           }}
@@ -116,7 +116,7 @@ function ScoreItem({
           className="shrink-0"
           icon="tabler:download"
           loading={isDownloading}
-          variant="no-bg"
+          variant="plain"
           onClick={() => {
             downloadScore().catch(console.error)
           }}

@@ -64,7 +64,11 @@ function WishlistListItem({
           <p>total RM{list.total_amount.toFixed(2)}</p>
         </div>
       </div>
-      <HamburgerMenu className="absolute right-4 top-4">
+      <HamburgerMenu
+        classNames={{
+          wrapper: 'absolute right-4 top-4'
+        }}
+      >
         <MenuItem icon="tabler:pencil" text="Edit" onClick={onEdit} />
         <MenuItem isRed icon="tabler:trash" text="Delete" onClick={onDelete} />
       </HamburgerMenu>

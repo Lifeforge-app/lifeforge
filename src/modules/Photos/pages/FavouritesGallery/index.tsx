@@ -80,7 +80,7 @@ function PhotosFavouritesGallery() {
                 <button className="text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50 rounded-lg p-4 transition-all">
                   <Icon className="text-2xl" icon="tabler:share" />
                 </button>
-                <HamburgerMenu largerPadding className="relative">
+                <HamburgerMenu>
                   <MenuItem
                     icon="tabler:pencil"
                     text="Rename"

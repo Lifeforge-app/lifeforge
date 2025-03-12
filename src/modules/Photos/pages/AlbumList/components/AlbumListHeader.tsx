@@ -39,7 +39,7 @@ function AlbumListHeader({
             >
               create
             </Button>
-            <HamburgerMenu largerPadding>
+            <HamburgerMenu>
               <MenuItem
                 icon="tabler:tags"
                 text="Manage Tags"

@@ -205,10 +205,10 @@ function PhotosAlbumGallery() {
                   </h1>
                   <div className="flex-center gap-2">
                     <HamburgerMenu
-                      largerPadding
-                      className="relative"
+                      classNames={{
+                        menu: 'w-72'
+                      }}
                       customIcon="tabler:share"
-                      customWidth="w-72"
                     >
                       <ShareAlbumModal
                         albumId={id as string}
@@ -217,7 +217,7 @@ function PhotosAlbumGallery() {
                         setAlbumList={setAlbumList}
                       />
                     </HamburgerMenu>
-                    <HamburgerMenu largerPadding className="relative">
+                    <HamburgerMenu>
                       <MenuItem
                         icon="tabler:pencil"
                         text="Rename"

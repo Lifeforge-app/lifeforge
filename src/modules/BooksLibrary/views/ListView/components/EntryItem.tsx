@@ -73,7 +73,7 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
 
             return item.is_favourite ? 'tabler:heart-filled' : 'tabler:heart'
           })()}
-          variant="no-bg"
+          variant="plain"
           onClick={() => {
             addToFavourites().catch(console.error)
           }}

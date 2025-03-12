@@ -131,7 +131,7 @@ function EntryItem<T extends boolean = false>({
             className="mt-4"
             icon="tabler:plus"
             loading={addToCartLoading}
-            variant="no-bg"
+            variant="plain"
             onClick={() => {
               setAddToCartLoading(true)
               onAddToCart!()
@@ -143,7 +143,12 @@ function EntryItem<T extends boolean = false>({
           >
             Add to Cart
           </Button>
-          <HamburgerMenu className="data-open:block absolute right-4 top-4 hidden group-hover:block">
+          <HamburgerMenu
+            classNames={{
+              wrapper:
+                'data-open:block absolute right-4 top-4 hidden group-hover:block'
+            }}
+          >
             <MenuItem icon="tabler:pencil" text="Edit" onClick={onUpdate!} />
             <MenuItem
               isRed
@@ -159,7 +164,7 @@ function EntryItem<T extends boolean = false>({
           className="mt-4"
           icon="tabler:trash"
           loading={removeFromCartLoading}
-          variant="no-bg"
+          variant="plain"
           onClick={() => {
             setRemoveFromCartLoading(true)
             onRemoveFromCart!()

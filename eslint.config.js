@@ -1,3 +1,4 @@
+// Plugin imports grouped by type
 import pluginJs from '@eslint/js'
 import pluginQuery from '@tanstack/eslint-plugin-query'
 import importPlugin from 'eslint-plugin-import'
@@ -14,19 +15,53 @@ const srcPath = path.resolve(projectRoot, 'src')
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
+  // File patterns
   {
-    files: ['./src/**/*.{js,mjs,cjs,ts,jsx,tsx}']
-  },
-  {
+    files: ['./src/**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     ignores: ['node_modules/', 'dist/', 'vite.config.ts', 'tailwind.config.cjs']
   },
+
+  // Core ESLint configurations
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
+
+  // React configurations
   pluginReact.configs.flat.recommended,
+  {
+    plugins: {
+      'react-compiler': reactCompiler
+    },
+    rules: {
+      'react-compiler/react-compiler': 'error',
+      'react/react-in-jsx-scope': 'off'
+    }
+  },
+
+  // JSX A11y
+  {
+    files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
+    ...jsxA11y.flatConfigs.recommended,
+    languageOptions: {
+      ...jsxA11y.flatConfigs.recommended.languageOptions
+    }
+  },
+
+  // Import plugin configuration
   importPlugin.flatConfigs.recommended,
+
+  // Query plugin configuration
+  ...pluginQuery.configs['flat/recommended'],
+
+  // SonarJS
+  sonarjs.configs.recommended,
+
+  // Consolidated rules
   {
     rules: {
+      // TypeScript rules
       '@typescript-eslint/no-explicit-any': 'off',
+
+      // React rules
       'react/jsx-sort-props': [
         'error',
         {
@@ -37,14 +72,16 @@ export default [
           noSortAlphabetically: false,
           reservedFirst: true
         }
-      ]
-    }
-  },
-  {
-    rules: {
+      ],
+
+      // Import rules
       'import/no-named-as-default': 'off',
       'import/no-named-as-default-member': 'off'
-    },
+    }
+  },
+
+  // Consolidated settings
+  {
     settings: {
       'import/resolver': {
         node: {
@@ -66,28 +103,6 @@ export default [
       react: {
         version: 'detect'
       }
-    }
-  },
-  {
-    files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
-    ...jsxA11y.flatConfigs.recommended,
-    languageOptions: {
-      ...jsxA11y.flatConfigs.recommended.languageOptions
-    }
-  },
-  sonarjs.configs.recommended,
-  {
-    plugins: {
-      'react-compiler': reactCompiler
-    },
-    rules: {
-      'react-compiler/react-compiler': 'error'
-    }
-  },
-  ...pluginQuery.configs['flat/recommended'],
-  {
-    rules: {
-      'react/react-in-jsx-scope': 'off'
     }
   }
 ]

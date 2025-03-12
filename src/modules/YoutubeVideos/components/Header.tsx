@@ -110,7 +110,7 @@ function Header({
             <Button
               className="p-5"
               icon="tabler:download"
-              variant="no-bg"
+              variant="plain"
               onClick={() => {
                 setIsDownloadProcessModalOpen(true)
               }}

@@ -113,7 +113,7 @@ function PasswordEntryITem({
             })()}
             iconClassName="size-6"
             loading={loading}
-            variant="no-bg"
+            variant="plain"
             onClick={() => {
               if (decryptedPassword === null) {
                 ;(() => {
@@ -134,10 +134,10 @@ function PasswordEntryITem({
             className="p-2! hidden sm:flex"
             icon="tabler:copy"
             loading={copyLoading}
-            variant="no-bg"
+            variant="plain"
             onClick={copyPassword}
           />
-          <HamburgerMenu className="relative">
+          <HamburgerMenu>
             <MenuItem
               icon={password.pinned ? 'tabler:pin-filled' : 'tabler:pin'}
               text={password.pinned ? 'Unpin' : 'Pin'}

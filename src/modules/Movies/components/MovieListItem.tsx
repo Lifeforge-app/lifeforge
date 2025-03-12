@@ -129,7 +129,11 @@ function MovieListItem({
           )}
         </div>
       </div>
-      <HamburgerMenu className="absolute right-4 top-4">
+      <HamburgerMenu
+        classNames={{
+          wrapper: 'absolute right-4 top-4'
+        }}
+      >
         <MenuItem
           icon="tabler:ticket"
           namespace="modules.movies"

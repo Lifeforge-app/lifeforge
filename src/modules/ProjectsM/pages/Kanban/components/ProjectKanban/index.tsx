@@ -75,7 +75,7 @@ function ProjectKanban() {
                         {column.name}
                       </span>
                     </h3>
-                    <HamburgerMenu className="relative">
+                    <HamburgerMenu>
                       <MenuItem
                         icon="tabler:pencil"
                         text="Edit"

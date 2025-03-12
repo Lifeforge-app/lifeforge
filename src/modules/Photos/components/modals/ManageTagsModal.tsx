@@ -74,7 +74,7 @@ function ManageTagsModal({
                     <div className="flex items-center gap-4">
                       {tag.name} ({tag.count})
                     </div>
-                    <HamburgerMenu className="relative">
+                    <HamburgerMenu>
                       <MenuItem
                         icon="tabler:pencil"
                         text="Edit"

@@ -104,7 +104,7 @@ function VirtualWardrobeClothes() {
             {sessionCartItemsQuery.isSuccess && (
               <Button
                 icon="tabler:shopping-bag"
-                variant="no-bg"
+                variant="plain"
                 onClick={() => {
                   setSessionCartModalOpen(true)
                 }}

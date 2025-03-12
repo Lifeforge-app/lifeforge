@@ -112,7 +112,7 @@ function EntryItem({
           icon="iconamoon:arrow-top-right-1"
           namespace="modules.wishlist"
           target="_blank"
-          variant="no-bg"
+          variant="plain"
         >
           Visit Website
         </Button>
@@ -123,7 +123,11 @@ function EntryItem({
             markAsCompleted().catch(console.error)
           }}
         />
-        <HamburgerMenu className="absolute right-4 top-4 sm:static">
+        <HamburgerMenu
+          classNames={{
+            wrapper: 'absolute right-4 top-4 sm:static'
+          }}
+        >
           <MenuItem
             icon="tabler:pencil"
             text="Edit"

@@ -2,12 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import {
-  CreateOrModifyButton,
-  ModalHeader,
-  ModalWrapper,
-  TextInput
-} from '@lifeforge/ui'
+import { Button, ModalHeader, ModalWrapper, TextInput } from '@lifeforge/ui'
 
 import { useMusicContext } from '@modules/Music/providers/MusicProvider'
 
@@ -120,13 +115,15 @@ function ModifyMusicModal() {
           }
         }}
       />
-      <CreateOrModifyButton
+      <Button
+        icon="tabler:pencil"
         loading={loading}
-        type="rename"
         onClick={() => {
           onSubmitButtonClick().catch(console.error)
         }}
-      />
+      >
+        Rename
+      </Button>
     </ModalWrapper>
   )
 }

@@ -146,7 +146,7 @@ function Photos({
       <div className="flex-between mt-6 flex">
         <Button
           icon="tabler:arrow-left"
-          variant="no-bg"
+          variant="plain"
           onClick={() => {
             setStep(3)
           }}

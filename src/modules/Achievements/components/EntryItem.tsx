@@ -47,7 +47,7 @@ function EntryItem({
           <p className="text-bg-500 mt-1 text-sm">{entry.thoughts}</p>
         </div>
       </div>
-      <HamburgerMenu className="relative">
+      <HamburgerMenu>
         <MenuItem
           icon="tabler:pencil"
           text="Edit"

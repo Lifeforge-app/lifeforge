@@ -48,7 +48,11 @@ function SubjectItem({
         className="absolute left-0 top-0 size-full"
         to={`/notes/${workspace}/${subject.id}`}
       />
-      <HamburgerMenu className="absolute right-4 top-4 z-20">
+      <HamburgerMenu
+        classNames={{
+          wrapper: 'absolute right-4 top-4 z-20'
+        }}
+      >
         <MenuItem
           icon="tabler:pencil"
           text="Edit"

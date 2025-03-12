@@ -59,7 +59,7 @@ function BgImageSelector() {
             <Button
               className="w-1/2 md:w-auto"
               icon="tabler:adjustments"
-              variant="no-bg"
+              variant="plain"
               onClick={() => {
                 setAdjustBgImageModalOpen(true)
               }}
@@ -70,7 +70,7 @@ function BgImageSelector() {
               isRed
               className="w-1/2 md:w-auto"
               icon="tabler:trash"
-              variant="no-bg"
+              variant="plain"
               onClick={() => {
                 setDeleteBgImageConfirmationModalOpen(true)
               }}

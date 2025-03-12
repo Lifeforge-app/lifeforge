@@ -46,7 +46,7 @@ function OrdinaryColumn({
           </span>
           <Button
             icon="tabler:pencil"
-            variant="no-bg"
+            variant="plain"
             onClick={() => {
               setModifyModalOpen(true)
             }}

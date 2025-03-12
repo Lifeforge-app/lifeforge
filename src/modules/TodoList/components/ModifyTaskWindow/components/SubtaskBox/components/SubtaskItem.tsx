@@ -143,7 +143,7 @@ function SubtaskItem({
           <span>{subtask.title}</span>
         )}
       </div>
-      <HamburgerMenu className="relative">
+      <HamburgerMenu>
         <MenuItem
           icon="tabler:pencil"
           text="Edit"

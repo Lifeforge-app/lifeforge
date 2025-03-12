@@ -102,7 +102,7 @@ function EntryItem({
         <Button
           className="p-2!"
           icon="tabler:star"
-          variant="no-bg"
+          variant="plain"
           onClick={e => {
             e.stopPropagation()
           }}

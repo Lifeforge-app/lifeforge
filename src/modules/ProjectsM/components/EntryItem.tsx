@@ -88,7 +88,7 @@ function EntryItem({ entry }: { entry: IProjectsMEntry }) {
                 )
               })}
           </div>
-          <HamburgerMenu className="relative">
+          <HamburgerMenu>
             <MenuItem
               icon="tabler:pencil"
               text="Edit"

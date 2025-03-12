@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import {
+  Button,
   ColorInput,
   ColorPickerModal,
-  CreateOrModifyButton,
   IconInput,
   IconPickerModal,
   ModalHeader,
@@ -200,14 +200,16 @@ function CreatePasswordModal() {
             setValue={handleChange('password')}
             value={formState.password}
           />
-          <CreateOrModifyButton
+          <Button
             className="mt-6"
+            icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
             loading={loading}
-            type={openType}
             onClick={() => {
               onSubmit().catch(console.error)
             }}
-          />
+          >
+            {openType === 'create' ? 'Create' : 'Update'}
+          </Button>
         </form>
       </ModalWrapper>
       <IconPickerModal

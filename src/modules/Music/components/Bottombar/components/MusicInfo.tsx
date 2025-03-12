@@ -29,7 +29,13 @@ export default function MusicInfo() {
           <p className="text-bg-500 text-sm">{currentMusic.author}</p>
         </div>
       </div>
-      <HamburgerMenu className="relative md:hidden">sus</HamburgerMenu>
+      <HamburgerMenu
+        classNames={{
+          wrapper: 'md:hidden'
+        }}
+      >
+        sus
+      </HamburgerMenu>
     </div>
   )
 }

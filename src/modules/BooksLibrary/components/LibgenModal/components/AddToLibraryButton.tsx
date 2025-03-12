@@ -62,7 +62,7 @@ function AddToLibraryButton({
         Object.keys(processes).includes(md5) ||
         (typeof entries !== 'string' &&
           entries.some(entry => entry.md5 === md5))
-          ? 'no-bg'
+          ? 'plain'
           : 'primary'
       }
       onClick={() => {

@@ -85,12 +85,12 @@ function EntryItem({
           className="p-2!"
           icon="tabler:copy"
           loading={isCopying}
-          variant="no-bg"
+          variant="plain"
           onClick={() => {
             copyKey().catch(console.error)
           }}
         />
-        <HamburgerMenu className="relative">
+        <HamburgerMenu>
           <MenuItem
             icon="tabler:pencil"
             text="edit"

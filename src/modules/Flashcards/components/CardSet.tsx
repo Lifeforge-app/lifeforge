@@ -137,7 +137,7 @@ function CardSet() {
             <button className="text-bg-500 hover:bg-bg-800 hover:text-bg-50 rounded-md p-4 transition-all">
               <Icon className="text-xl" icon="tabler:border-corners" />
             </button>
-            <HamburgerMenu largerPadding className="relative">
+            <HamburgerMenu>
               <MenuItem
                 icon="tabler:pencil"
                 text="Edit Cards"

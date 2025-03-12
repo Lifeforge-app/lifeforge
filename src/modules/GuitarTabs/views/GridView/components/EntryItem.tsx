@@ -81,8 +81,9 @@ function EntryItem({
           <p className="text-xs text-white">{entry.pageCount} pages</p>
         </div>
         <HamburgerMenu
-          className="absolute right-2 top-2 shrink-0"
-          customTailwindColor="bg-bg-100 hover:bg-bg-200 shadow-custom dark:bg-bg-500/50 dark:hover:bg-bg-500/70"
+          classNames={{
+            wrapper: 'absolute right-2 top-2 shrink-0'
+          }}
         >
           <MenuItem
             icon={entry.isFavourite ? 'tabler:star-off' : 'tabler:star'}

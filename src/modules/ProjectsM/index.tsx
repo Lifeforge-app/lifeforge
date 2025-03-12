@@ -57,7 +57,7 @@ function ProjectsM() {
               <Button
                 className="xl:hidden"
                 icon="tabler:menu"
-                variant="no-bg"
+                variant="plain"
                 onClick={() => {
                   setSidebarOpen(true)
                 }}

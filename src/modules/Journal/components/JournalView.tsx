@@ -51,7 +51,7 @@ function JournalView({
         iconAtEnd
         className="mt-6"
         icon={viewRaw ? 'tabler:chevron-up' : 'tabler:chevron-down'}
-        variant="no-bg"
+        variant="plain"
         onClick={() => {
           setViewRaw(!viewRaw)
         }}

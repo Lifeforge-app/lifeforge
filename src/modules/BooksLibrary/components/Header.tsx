@@ -64,7 +64,7 @@ function Header({ itemCount }: { itemCount: number }) {
           <Button
             className="lg:hidden"
             icon="tabler:menu"
-            variant="no-bg"
+            variant="plain"
             onClick={() => {
               setSidebarOpen(true)
             }}
