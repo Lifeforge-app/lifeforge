@@ -1,6 +1,6 @@
 /* eslint-disable import/named */
 import { Icon } from '@iconify/react'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import fetchAPI from '@utils/fetchAPI'
 import WavesurferPlayer from '@wavesurfer/react'
 import clsx from 'clsx'
@@ -35,7 +35,7 @@ function AudioEntry({
     theme: lightOrDarkTheme,
     bgTempPalette,
     themeColor
-  } = usePersonalizationContext()
+  } = usePersonalization()
 
   const { componentBg } = useComponentBg()
   const [totalTime, setTotalTime] = useState(0)

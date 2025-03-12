@@ -5,7 +5,7 @@ import {
   ListboxOptions
 } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -43,7 +43,7 @@ const LANGUAGES: Array<{
 
 function LanguageSelector(): React.ReactElement {
   const { componentBgWithHover } = useComponentBg()
-  const { language, setLanguage } = usePersonalizationContext()
+  const { language, setLanguage } = usePersonalization()
   const { t } = useTranslation('modules.personalization')
 
   return (

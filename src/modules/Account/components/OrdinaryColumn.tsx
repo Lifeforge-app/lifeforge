@@ -1,4 +1,4 @@
-import { useAuthContext } from '@providers/AuthProvider'
+import { useAuth } from '@providers/AuthProvider'
 import _ from 'lodash'
 import moment from 'moment'
 import React, { useState } from 'react'
@@ -19,7 +19,7 @@ function OrdinaryColumn({
   icon: string
   type?: string
 }): React.ReactElement {
-  const { userData } = useAuthContext()
+  const { userData } = useAuth()
   const { t } = useTranslation('modules.accountSettings')
   const [modifyModalOpen, setModifyModalOpen] = useState(false)
 

@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { useAuthContext } from '@providers/AuthProvider'
+import { useAuth } from '@providers/AuthProvider'
 import clsx from 'clsx'
 import _ from 'lodash'
 import { cookieParse } from 'pocketbase'
@@ -35,7 +35,7 @@ function ModuleItem({
   function toggleExpandConfig(): void {
     setExpandConfig(!expandConfig)
   }
-  const { userData, setUserData } = useAuthContext()
+  const { userData, setUserData } = useAuth()
 
   const [originalModuleConfig, setOriginalModuleConfig] = useState(
     JSON.stringify(userData.moduleConfigs)

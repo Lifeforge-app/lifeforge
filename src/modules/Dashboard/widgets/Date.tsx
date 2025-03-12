@@ -1,4 +1,4 @@
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import moment from 'moment/min/moment-with-locales'
 import React, { useRef } from 'react'
@@ -7,7 +7,7 @@ import tinycolor from 'tinycolor2'
 import { arabicToChinese } from '@modules/Dashboard/utils/arabicToChineseNumber'
 
 export default function DateWidget(): React.ReactElement {
-  const { language, themeColor } = usePersonalizationContext()
+  const { language, themeColor } = usePersonalization()
   const ref = useRef<HTMLDivElement>(null)
 
   return (

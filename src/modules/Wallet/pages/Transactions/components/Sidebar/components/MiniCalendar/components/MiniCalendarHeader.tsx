@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import moment from 'moment/min/moment-with-locales'
 import React from 'react'
 
@@ -14,7 +14,7 @@ function MiniCalendarHeader({
   currentYear: number
   setCurrentYear: React.Dispatch<React.SetStateAction<number>>
 }): React.ReactElement {
-  const { language } = usePersonalizationContext()
+  const { language } = usePersonalization()
 
   return (
     <div className="flex-between mb-4 flex gap-2">

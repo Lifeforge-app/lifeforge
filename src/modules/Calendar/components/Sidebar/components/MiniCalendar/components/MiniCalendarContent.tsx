@@ -1,4 +1,4 @@
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import moment from 'moment'
 import React from 'react'
 
@@ -21,7 +21,7 @@ function MiniCalendarContent({
   events: ICalendarEvent[]
   categories: Loadable<ICalendarCategory[]>
 }): React.ReactElement {
-  const { language } = usePersonalizationContext()
+  const { language } = usePersonalization()
 
   return (
     <div className="grid grid-cols-7 gap-4">

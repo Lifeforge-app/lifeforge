@@ -1,7 +1,7 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { useAuthContext } from '@providers/AuthProvider'
-import { useGlobalStateContext } from '@providers/GlobalStateProvider'
+import { useAuth } from '@providers/AuthProvider'
+import { useGlobalState } from '@providers/GlobalStateProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { useNavigate } from 'react-router'
@@ -13,8 +13,8 @@ import useComponentBg from '@hooks/useComponentBg'
 
 function SidebarBottomBar(): React.ReactElement {
   const navigate = useNavigate()
-  const { sidebarExpanded, toggleSidebar } = useGlobalStateContext()
-  const { userData, getAvatarURL, logout } = useAuthContext()
+  const { sidebarExpanded, toggleSidebar } = useGlobalState()
+  const { userData, getAvatarURL, logout } = useAuth()
   const { componentBgLighterWithHover } = useComponentBg()
 
   if (!userData) return <></>

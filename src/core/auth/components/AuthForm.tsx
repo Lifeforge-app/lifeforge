@@ -1,5 +1,5 @@
 // import * as webauthn from '@passwordless-id/webauthn'
-import { useAuthContext } from '@providers/AuthProvider'
+import { useAuth } from '@providers/AuthProvider'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -18,7 +18,7 @@ function AuthForm(): React.ReactElement {
   const {
     authenticate,
     loginQuota: { quota, dismissQuota }
-  } = useAuthContext()
+  } = useAuth()
 
   function signIn(): void {
     if (emailOrUsername.length === 0 || password.length === 0) {

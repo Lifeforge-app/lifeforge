@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/pseudo-random */
-import { useAuthContext } from '@providers/AuthProvider'
+import { useAuth } from '@providers/AuthProvider'
 import { cookieParse } from 'pocketbase'
 import React, {
   type ReactNode,
@@ -76,7 +76,7 @@ export function MusicProvider({
 }: {
   children: ReactNode
 }): React.ReactElement {
-  const { auth } = useAuthContext()
+  const { auth } = useAuth()
   const [audio] = useState(new Audio())
   const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(false)

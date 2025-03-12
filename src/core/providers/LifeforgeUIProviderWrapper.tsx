@@ -2,14 +2,14 @@ import React from 'react'
 
 import { LifeforgeUIProvider } from '@lifeforge/ui'
 
-import { usePersonalizationContext } from './PersonalizationProvider'
+import { usePersonalization } from './PersonalizationProvider'
 
 function LifeforgeUIProviderWrapper({
   children
 }: {
   children: React.ReactNode
 }): React.ReactElement {
-  const personalization = usePersonalizationContext()
+  const personalization = usePersonalization()
 
   return (
     <LifeforgeUIProvider

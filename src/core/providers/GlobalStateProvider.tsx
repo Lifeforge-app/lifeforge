@@ -36,7 +36,7 @@ export default function GlobalStateProvider({
   )
 }
 
-export function useGlobalStateContext(): IGlobalState {
+export function useGlobalState(): IGlobalState {
   const context = useContext(GlobalStateContext)
   if (context === undefined) {
     throw new Error(

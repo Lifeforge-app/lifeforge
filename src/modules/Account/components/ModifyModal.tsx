@@ -1,4 +1,4 @@
-import { useAuthContext } from '@providers/AuthProvider'
+import { useAuth } from '@providers/AuthProvider'
 import fetchAPI from '@utils/fetchAPI'
 import _ from 'lodash'
 import moment from 'moment'
@@ -28,7 +28,7 @@ function ModifyModal({
   isOpen: boolean
   onClose: () => void
 }): React.ReactElement {
-  const { userData, setUserData } = useAuthContext()
+  const { userData, setUserData } = useAuth()
   const [value, setValue] = useState(userData[id])
   const [loading, setLoading] = useState(false)
   const modalRef = useRef<HTMLDivElement>(null)

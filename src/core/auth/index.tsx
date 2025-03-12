@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { useAuthContext } from '@providers/AuthProvider'
+import { useAuth } from '@providers/AuthProvider'
 import React, { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
 
@@ -8,7 +8,7 @@ import AuthHeader from './components/AuthHeader'
 import AuthSideImage from './components/AuthSideImage'
 
 function Auth(): React.ReactElement {
-  const { verifyOAuth } = useAuthContext()
+  const { verifyOAuth } = useAuth()
   const [searchParams] = useSearchParams()
 
   useEffect(() => {

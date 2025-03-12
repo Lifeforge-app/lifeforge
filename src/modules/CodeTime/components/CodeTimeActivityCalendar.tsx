@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
@@ -12,7 +12,7 @@ import useAPIQuery from '@hooks/useAPIQuery'
 
 function CodeTimeActivityCalendar(): React.ReactElement {
   const { t } = useTranslation('modules.codeTime')
-  const { theme, themeColor } = usePersonalizationContext()
+  const { theme, themeColor } = usePersonalization()
   const [year, setYear] = useState(new Date().getFullYear())
   const dataQuery = useAPIQuery<{
     data: Array<{

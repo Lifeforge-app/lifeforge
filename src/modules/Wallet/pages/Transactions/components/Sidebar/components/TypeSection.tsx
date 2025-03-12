@@ -1,4 +1,4 @@
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import _ from 'lodash'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -17,7 +17,7 @@ function TypeSection({
   const [searchParams, setSearchParams] = useSearchParams()
   const { t } = useTranslation('modules.wallet')
   const { filteredTransactions } = useWalletContext()
-  const { bgTempPalette } = usePersonalizationContext()
+  const { bgTempPalette } = usePersonalization()
 
   return (
     <>

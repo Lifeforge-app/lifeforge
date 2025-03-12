@@ -1,5 +1,5 @@
-import { useAuthContext } from '@providers/AuthProvider'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { useAuth } from '@providers/AuthProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import _ from 'lodash'
 import React, { Suspense, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -20,8 +20,8 @@ const ROUTES = _ROUTES as IRoutes[]
 
 function AppRouter(): React.ReactElement {
   const { t } = useTranslation('common.misc')
-  const { auth, authLoading, userData } = useAuthContext()
-  const { theme } = usePersonalizationContext()
+  const { auth, authLoading, userData } = useAuth()
+  const { theme } = usePersonalization()
   const location = useLocation()
   const navigate = useNavigate()
 

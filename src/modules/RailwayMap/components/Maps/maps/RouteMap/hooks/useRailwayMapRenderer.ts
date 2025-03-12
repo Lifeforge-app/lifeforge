@@ -1,4 +1,4 @@
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import * as d3 from 'd3'
 import { useEffect, useMemo, useRef } from 'react'
 
@@ -12,7 +12,7 @@ import {
 } from '../utils/renderUtils'
 
 export const useRailwayMapRenderer = (): void => {
-  const { theme, bgTempPalette } = usePersonalizationContext()
+  const { theme, bgTempPalette } = usePersonalization()
   const {
     filteredLines: filteredLinesCode,
     lines,

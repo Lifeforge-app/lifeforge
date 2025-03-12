@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { useAuthContext } from '@providers/AuthProvider'
+import { useAuth } from '@providers/AuthProvider'
 import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,7 +10,7 @@ import { Button, ConfigColumn, DeleteConfirmationModal } from '@lifeforge/ui'
 function AvatarColumn(): React.ReactElement {
   const { t } = useTranslation('modules.accountSettings')
   const [loading, setLoading] = useState(false)
-  const { getAvatarURL, userData, setUserData } = useAuthContext()
+  const { getAvatarURL, userData, setUserData } = useAuth()
   const [deleteAvatarConfirmationModal, setDeleteAvatarConfirmationModal] =
     useState(false)
 

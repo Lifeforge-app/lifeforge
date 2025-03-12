@@ -1,4 +1,4 @@
-import { useAuthContext } from '@providers/AuthProvider'
+import { useAuth } from '@providers/AuthProvider'
 import { useQuery } from '@tanstack/react-query'
 import { encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
@@ -25,7 +25,7 @@ import { type IAPIKeyEntry } from './interfaces/api_keys_interfaces'
 
 function APIKeys(): React.ReactElement {
   const { t } = useTranslation('modules.apiKeys')
-  const { userData } = useAuthContext()
+  const { userData } = useAuth()
   const [otpSuccess, setOtpSuccess] = useState(false)
   const [masterPassword, setMasterPassword] = useState<string>('')
   const [existingData, setExistingData] = useState<IAPIKeyEntry | null>(null)

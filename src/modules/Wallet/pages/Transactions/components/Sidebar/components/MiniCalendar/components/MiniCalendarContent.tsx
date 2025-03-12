@@ -1,4 +1,4 @@
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import moment from 'moment'
 import React, { useState } from 'react'
 
@@ -13,7 +13,7 @@ function MiniCalendarContent({
   currentYear: number
   viewsFilter: ('income' | 'expenses' | 'transfer')[]
 }): React.ReactElement {
-  const { language } = usePersonalizationContext()
+  const { language } = usePersonalization()
   const [nextToSelect, setNextToSelect] = useState<'start' | 'end'>('start')
 
   return (

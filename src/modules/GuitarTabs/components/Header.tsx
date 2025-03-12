@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import fetchAPI from '@utils/fetchAPI'
 import IntervalManager from '@utils/intervalManager'
@@ -44,7 +44,7 @@ function Header({
   const { t } = useTranslation('modules.guitarTabs')
   const [searchParams, setSearchParams] = useSearchParams()
   const toastId = useRef<Id>(null)
-  const { themeColor } = usePersonalizationContext()
+  const { themeColor } = usePersonalization()
 
   async function uploadFiles(): Promise<void> {
     const input = document.createElement('input')

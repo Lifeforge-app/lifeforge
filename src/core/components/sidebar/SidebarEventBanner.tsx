@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
-import { useAuthContext } from '@providers/AuthProvider'
-import { useGlobalStateContext } from '@providers/GlobalStateProvider'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { useAuth } from '@providers/AuthProvider'
+import { useGlobalState } from '@providers/GlobalStateProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useMemo } from 'react'
@@ -54,9 +54,9 @@ const getEventIcon = (eventType: string) => {
 }
 
 const SidebarEventBanner = (): React.ReactElement => {
-  const { sidebarExpanded } = useGlobalStateContext()
-  const { themeColor } = usePersonalizationContext()
-  const { userData } = useAuthContext()
+  const { sidebarExpanded } = useGlobalState()
+  const { themeColor } = usePersonalization()
+  const { userData } = useAuth()
 
   const eventType = useMemo(
     () => getEventType(userData?.dateOfBirth),

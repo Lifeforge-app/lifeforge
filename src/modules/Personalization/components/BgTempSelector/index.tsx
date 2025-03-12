@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,7 +14,7 @@ import {
 import DefaultBgTempSelector from './components/DefaultBgTempSelector'
 
 function BgTempSelector(): React.ReactElement {
-  const { bgTemp, setBgTemp } = usePersonalizationContext()
+  const { bgTemp, setBgTemp } = usePersonalization()
   const [customBgTemp, setCustomBgTemp] = useState<string>(
     bgTemp.startsWith('#') ? bgTemp : '#000000'
   )
