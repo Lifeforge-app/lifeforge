@@ -3,6 +3,7 @@
 - **Railway Map**: Created this module
 - **Idea Box**: Fixed long unspaced text overflow problem
 - **Documentations**: Updated the installation and configuration part to adhere to the latest codebase structure
+- **Change Log**: Migrated all the change log entries from local database to Github
 - **Code**: Migrated the components into independent library `@lifeforge/ui`
 - **Railway Map**: Utilizes d3.js to draw route map
 - **Railway Map**: Utilizes leaflet to draw earth map of mrt lines and stations
@@ -14,7 +15,7 @@
 - **Code**: Moved all providers, interfaces, and constants into each corresponding module folders
 - **Code**: Removed unused constant files
 - **Code**: Renamed `useXXXContext` into `useXXX`
-- **Code**: Moved all the theme related states from `useThemeColors` hook into `usePersonalization` context provider
+- **Code**: Moved all the theme-related states from `useThemeColors` hook into `usePersonalization` context provider
 - **Code**: Renamed `useThemeColors` hook to `useComponentsBg`
 ---
 
