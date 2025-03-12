@@ -71,7 +71,11 @@ function AlbumItem({
           {album.is_public ? 'Public' : 'Private'}
         </p>
       </div>
-      <HamburgerMenu className="absolute bottom-6 right-4">
+      <HamburgerMenu
+        classNames={{
+          wrapper: 'absolute bottom-6 right-4'
+        }}
+      >
         <MenuItem
           icon="tabler:pencil"
           text="Rename"

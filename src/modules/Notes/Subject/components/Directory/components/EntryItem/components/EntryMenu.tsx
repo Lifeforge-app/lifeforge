@@ -16,7 +16,7 @@ function EntryMenu({
   setDeleteFolderConfirmationModalOpen: (state: boolean) => void
 }) {
   return (
-    <HamburgerMenu className="relative">
+    <HamburgerMenu>
       <MenuItem
         icon="tabler:pencil"
         text="Rename"

@@ -56,7 +56,7 @@ function ModalHeader({
         <Button
           icon="tabler:x"
           iconClassName="size-6"
-          variant="no-bg"
+          variant="plain"
           onClick={() => {
             setOpenType(null)
           }}

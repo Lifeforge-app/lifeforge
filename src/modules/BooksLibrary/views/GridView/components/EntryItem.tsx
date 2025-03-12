@@ -27,8 +27,9 @@ function EntryItem({ item }: { item: IBooksLibraryEntry }) {
         target="_blank"
       />
       <HamburgerMenu
-        className="absolute right-6 top-6 z-20"
-        customTailwindColor="bg-bg-800/50 hover:bg-bg-700"
+        classNames={{
+          wrapper: 'absolute right-6 top-6 z-20'
+        }}
       >
         <EntryContextMenu item={item} />
       </HamburgerMenu>

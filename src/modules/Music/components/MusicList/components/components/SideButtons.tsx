@@ -35,7 +35,7 @@ function SideButtons({ music }: { music: IMusicEntry }) {
           icon={!music.is_favourite ? 'tabler:heart' : 'tabler:heart-filled'}
         />
       </button>
-      <HamburgerMenu largerPadding className="relative">
+      <HamburgerMenu>
         <MenuItem
           icon="tabler:download"
           text="Download"

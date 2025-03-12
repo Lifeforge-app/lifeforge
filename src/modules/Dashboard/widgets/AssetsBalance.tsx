@@ -21,7 +21,7 @@ export default function AssetsBalance() {
         <Button
           className="p-2!"
           icon={!showBalance ? 'tabler:eye-off' : 'tabler:eye'}
-          variant="no-bg"
+          variant="plain"
           onClick={() => {
             setShowBalance(!showBalance)
           }}

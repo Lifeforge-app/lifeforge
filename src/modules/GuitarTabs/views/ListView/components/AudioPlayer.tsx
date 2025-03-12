@@ -17,7 +17,7 @@ function AudioPlayer({ url }: { url: string }) {
       <Button
         className="p-2!"
         icon={isPlaying ? 'tabler:pause' : 'tabler:play'}
-        variant="no-bg"
+        variant="plain"
         onClick={e => {
           e.preventDefault()
           e.stopPropagation()

@@ -162,7 +162,7 @@ function TransactionListItem({
           {transaction.side === 'debit' ? '+' : '-'}
           {transaction.amount.toFixed(2)}
         </span>
-        <HamburgerMenu className="relative">
+        <HamburgerMenu>
           {transaction.type !== 'transfer' && (
             <MenuItem
               icon="tabler:pencil"

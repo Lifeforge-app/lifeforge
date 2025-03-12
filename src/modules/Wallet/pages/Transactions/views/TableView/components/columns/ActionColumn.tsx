@@ -21,7 +21,7 @@ function ActionColumn({
 }) {
   return (
     <td className="p-2">
-      <HamburgerMenu className="relative">
+      <HamburgerMenu>
         {transaction.type !== 'transfer' && (
           <MenuItem
             icon="tabler:pencil"

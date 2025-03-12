@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
 
-import { Button, CreateOrModifyButton } from '@lifeforge/ui'
+import { Button } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@modules/MomentVault/interfaces/moment_vault_interfaces'
 
@@ -214,7 +214,7 @@ function AudioType({
               className="mt-6 w-full"
               icon="tabler:transfer"
               loading={transcribeLoading}
-              variant="no-bg"
+              variant="plain"
               onClick={() => {
                 transcribeText()
               }}
@@ -242,13 +242,15 @@ function AudioType({
           {recording ? 'Stop' : 'Record'}
         </Button>
       </div>
-      <CreateOrModifyButton
+      <Button
         className="mt-8! w-full"
         disabled={!audioURL}
+        icon="tabler:plus"
         loading={submitLoading}
-        type="create"
         onClick={onSubmit}
-      />
+      >
+        Create
+      </Button>
     </>
   )
 }

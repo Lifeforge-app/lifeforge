@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import {
-  CreateOrModifyButton,
+  Button,
   CurrencyInput,
   IconInput,
   IconPickerModal,
@@ -128,13 +128,15 @@ function ModifyAssetsModal({
           setValue={updateAssetBalance}
           value={`${assetStartingBalance}`}
         />
-        <CreateOrModifyButton
+        <Button
+          icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
           loading={isLoading}
-          type={openType}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-        />
+        >
+          {openType === 'create' ? 'Create' : 'Update'}
+        </Button>
       </ModalWrapper>
       <IconPickerModal
         isOpen={iconSelectorOpen}

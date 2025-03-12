@@ -4,9 +4,9 @@ import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import {
+  Button,
   ColorInput,
   ColorPickerModal,
-  CreateOrModifyButton,
   IconInput,
   IconPickerModal,
   ModalHeader,
@@ -129,13 +129,15 @@ function ModifyColumnModal({
           setColor={setColumnColor}
           setColorPickerOpen={setColorPickerOpen}
         />
-        <CreateOrModifyButton
+        <Button
+          icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
           loading={isLoading}
-          type={openType}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-        />
+        >
+          {openType === 'update' ? 'Update' : 'Create'}
+        </Button>
       </ModalWrapper>
       <IconPickerModal
         isOpen={iconSelectorOpen}

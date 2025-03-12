@@ -81,7 +81,7 @@ function EntryItem({
           />
         )}
         <DownloadMenu entry={entry} />
-        <HamburgerMenu className="relative shrink-0">
+        <HamburgerMenu>
           <MenuItem
             icon="tabler:pencil"
             text="Edit"

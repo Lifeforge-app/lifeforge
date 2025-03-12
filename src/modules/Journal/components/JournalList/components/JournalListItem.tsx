@@ -71,7 +71,7 @@ function JournalListItem({
           >
             {entry.mood.emoji} {entry.mood.text}
           </span>
-          <HamburgerMenu className="relative">
+          <HamburgerMenu>
             <MenuItem
               disabled={editLoading}
               icon={editLoading ? 'svg-spinners:180-ring' : 'tabler:pencil'}

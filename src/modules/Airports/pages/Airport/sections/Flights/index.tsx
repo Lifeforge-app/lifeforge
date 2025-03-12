@@ -136,7 +136,7 @@ function Flights({ IATA }: { IATA: string }) {
             className="mt-6"
             icon="tabler:arrow-up"
             loading={previousPageLoading}
-            variant="no-bg"
+            variant="plain"
             onClick={() => {
               fetchPreviousPage().catch(console.error)
             }}
@@ -148,7 +148,7 @@ function Flights({ IATA }: { IATA: string }) {
             className="mb-8"
             icon="tabler:arrow-down"
             loading={nextPageLoading}
-            variant="no-bg"
+            variant="plain"
             onClick={() => {
               fetchNextPage().catch(console.error)
             }}

@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { CreateOrModifyButton, ModalWrapper } from '@lifeforge/ui'
+import { Button, ModalWrapper } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -235,13 +235,15 @@ function EditCardModal({
         >
           cancel
         </button>
-        <CreateOrModifyButton
+        <Button
+          icon="tabler:pencil"
           loading={loading}
-          type={'update'}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-        />
+        >
+          Update
+        </Button>
       </div>
     </ModalWrapper>
   )

@@ -186,7 +186,7 @@ function LockedFolderGallery() {
                     )}
                   </Button>
                 )}
-                <HamburgerMenu largerPadding className="relative">
+                <HamburgerMenu>
                   <MenuItem
                     icon="tabler:pencil"
                     text="Rename"

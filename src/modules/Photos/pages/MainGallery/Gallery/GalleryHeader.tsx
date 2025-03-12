@@ -118,9 +118,10 @@ function GalleryHeader() {
       </h1>
       <div className="flex-between flex w-full">
         <HamburgerMenu
-          largerPadding
-          className="relative block md:hidden"
-          customWidth="w-72"
+          classNames={{
+            wrapper: 'block md:hidden',
+            menu: 'w-72'
+          }}
         >
           {showImportButton && (
             <MenuItem
@@ -182,9 +183,10 @@ function GalleryHeader() {
           </Button>
         )}
         <HamburgerMenu
-          largerPadding
-          className="z-9989 relative hidden md:block"
-          customWidth="w-72"
+          classNames={{
+            wrapper: 'z-9989 relative hidden md:block',
+            menu: 'w-72'
+          }}
         >
           <MenuItem
             icon="tabler:photo-off"

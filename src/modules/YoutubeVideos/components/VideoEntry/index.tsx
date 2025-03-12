@@ -36,7 +36,11 @@ function VideoEntry({
         <VideoThumbnail duration={video.duration} id={video.youtube_id} />
         <VideoDetails video={video} />
       </div>
-      <HamburgerMenu className="absolute right-4 top-4">
+      <HamburgerMenu
+        classNames={{
+          wrapper: 'absolute right-4 top-4'
+        }}
+      >
         <MenuItem
           icon="tabler:brand-youtube"
           namespace="modules.youtubeVideos"

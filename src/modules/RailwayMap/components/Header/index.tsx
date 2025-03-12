@@ -39,7 +39,7 @@ function Header() {
             icon={hasRoute ? 'tabler:route-off' : 'tabler:route'}
             isRed={hasRoute}
             namespace="modules.railwayMap"
-            variant={hasRoute ? 'no-bg' : 'primary'}
+            variant={hasRoute ? 'plain' : 'primary'}
             onClick={() => {
               if (hasRoute) {
                 clearShortestRoute()

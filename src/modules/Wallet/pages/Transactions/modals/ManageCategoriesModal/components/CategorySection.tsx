@@ -66,7 +66,7 @@ function CategorySection({
                 </div>
                 <div className="font-semibold">{category.name}</div>
               </div>
-              <HamburgerMenu className="relative">
+              <HamburgerMenu>
                 <MenuItem
                   icon="tabler:pencil"
                   text="Edit"
