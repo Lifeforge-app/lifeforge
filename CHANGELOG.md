@@ -19,30 +19,32 @@
 - **Code**: Centralized theme-related states by moving them from the `useThemeColors` hook into the `usePersonalization` context provider.
 - **Code**: Renamed `useThemeColors` hook to `useComponentsBg` for better semantic alignment with its functionality.
 - **Change Log**: Asked ChatGPT to help refine all the change log entries from 25w01 until now.
+- **Code**: Removed unused typescript declarations like `function Component(): React.ReactElement {}`, etc.
+- **Code**: Refactored `PersonalizationProvider`.
+- **Code**: Moved routing logics and related files into `core/routes`.
 
 ---
 
-### 📌 dev 25w10 (3/2/2025 - 3/8/2025)
-
-- **Idea Box**: Fixed bug where folder can be dragged and dropped into itself
-- **Idea Box**: fixed bug where tag icon is not shown sometimes
-- **Idea Box**: Content in nested folders will now be shown as well when filter by tags in folder
-- **Moment Vault**: Fixed bug where audio is sometimes not being properly recorded
-- **Idea Box**: Title is now optional in link type idea
-- **Wallet**: Fixed bug where error will be thrown when switching from income/expenses to transfer and assets is selected
-- **Code**: Rewritten `APIRequest` function and rename it to `fetchAPI`
-- **Wallet**: User can now toggle types of transactions to be shown in the calendar heatmap
-- **Wallet**: Only the category related to selected transaction type will be shown
-- **Code Time**: Added time chart for projects and languages
-- **API Keys**: Moved this module from Settings section to Confidentials
-- **API Keys**: Added button for user to copy API keys
-- **Code**: Clicking on the action button in text input will now trigger the input box to focus
-- **Code**: Added QR Code Scanner component that can be enabled in Form Modal and also added manually
-- **Movies**: Created this module
-- **Movies**: Implemented modal to search and import movie data from TMDB
-- **Movies**: Implemented CRUD function for movie entry
-- **Movies**: User can now add ticket data to movie entry
-- **Localization**: Completely revamped the locale manager to adhere to the newest locale folder structure
+### 📌 **dev 25w10 (3/2/2025 - 3/8/2025)**  
+- **Idea Box**: Resolved an issue where folders could be dragged and dropped into themselves.  
+- **Idea Box**: Fixed an intermittent bug where the tag icon would sometimes not appear.  
+- **Idea Box**: Improved filtering functionality—nested folder contents are now displayed when filtering by tags in a folder.  
+- **Moment Vault**: Fixed an issue where audio recordings were occasionally not captured correctly.  
+- **Idea Box**: Titles are now optional for link-type ideas, improving flexibility.  
+- **Wallet**: Addressed a bug where switching from income/expenses to transfers while an asset was selected would cause an error.  
+- **Code**: Refactored the `APIRequest` function, renaming it to `fetchAPI` for clarity and maintainability.  
+- **Wallet**: Users can now toggle which transaction types are displayed in the calendar heatmap.  
+- **Wallet**: Category selections are now dynamically filtered based on the selected transaction type.  
+- **Code Time**: Introduced time charts to track project and language usage trends.  
+- **API Keys**: Moved this module from the "Settings" section to the "Confidentials" section for better organization.  
+- **API Keys**: Added a copy button for API keys, enhancing usability.  
+- **Code**: Clicking on the action button inside a text input now triggers the input field to focus automatically.  
+- **Code**: Implemented a QR Code Scanner component, which can be enabled in Form Modal or manually added.  
+- **Movies**: Introduced a new "Movies" module to the system.  
+- **Movies**: Implemented a search and import modal for fetching movie data from TMDB.  
+- **Movies**: Added full CRUD functionality for managing movie entries.  
+- **Movies**: Users can now attach ticket data to their movie entries.  
+- **Localization**: Completely restructured the locale manager to align with the latest locale folder architecture.  
 
 ---
 
