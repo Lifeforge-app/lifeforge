@@ -1,6 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
@@ -26,6 +25,8 @@ import {
 } from '@modules/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import SessionCartModal from '../../components/SessionCartModal'
 import EntryItem from './components/EntryItem'

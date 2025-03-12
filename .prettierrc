@@ -15,6 +15,7 @@
     "^@interfaces/(.*)$",
     "^@components/(.*)$",
     "^@hooks/(.*)$",
+    "^@utils/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true,

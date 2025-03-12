@@ -1,8 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useQueryClient } from '@tanstack/react-query'
-import fetchAPI from '@utils/fetchAPI'
-import IntervalManager from '@utils/intervalManager'
 import { cookieParse } from 'pocketbase'
 import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -17,6 +15,9 @@ import {
   ModuleHeader,
   SidebarDivider
 } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
+import IntervalManager from '@utils/intervalManager'
 
 const intervalManager = IntervalManager.getInstance()
 

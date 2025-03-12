@@ -1,5 +1,4 @@
 import { useQueryClient } from '@tanstack/react-query'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -12,6 +11,8 @@ import {
 } from '@lifeforge/ui'
 
 import { IVirtualWardrobeEntry } from '@modules/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { Loadable } from '../../../../core/interfaces/common'
 import EntryItem from '../../pages/Clothes/components/EntryItem'

@@ -1,9 +1,10 @@
-import fetchAPI from '@utils/fetchAPI'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Outlet } from 'react-router'
 import { toast } from 'react-toastify'
 
 import useFetch from '@hooks/useFetch'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import {
   type IBooksLibraryCategory,

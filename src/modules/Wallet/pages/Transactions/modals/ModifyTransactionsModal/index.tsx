@@ -1,4 +1,3 @@
-import fetchAPI from '@utils/fetchAPI'
 import { parse } from 'file-type-mime'
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
@@ -18,6 +17,8 @@ import {
 } from '@lifeforge/ui'
 
 import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { type IWalletTransaction } from '../../../../interfaces/wallet_interfaces'
 import AssetsFromToSelector from './components/AssetsFromToSelector'

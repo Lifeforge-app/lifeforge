@@ -5,7 +5,7 @@ import React from 'react'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-import { BG_BLURS } from '../../../../../../../core/constants/bg_blurs'
+import { BG_BLURS } from '../../../../../../../core/providers/PersonalizationProvider/constants/bg_blurs'
 
 function ResultShowcase({
   bgBrightness,

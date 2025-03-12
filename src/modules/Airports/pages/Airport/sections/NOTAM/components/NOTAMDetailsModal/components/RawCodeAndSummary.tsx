@@ -1,10 +1,11 @@
 import { Icon } from '@iconify/react'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import Markdown from 'react-markdown'
 import { toast } from 'react-toastify'
 
 import { Button } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
 
 function RawCodeAndSummary({
   id,

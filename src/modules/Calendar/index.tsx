@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 
 import {
@@ -11,6 +10,8 @@ import {
   QueryWrapper,
   Scrollbar
 } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'

@@ -1,5 +1,4 @@
 import { useQueryClient } from '@tanstack/react-query'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -10,6 +9,8 @@ import {
   IMovieEntry,
   IMovieTicketFormState
 } from '@modules/Movies/interfaces/movies_interfaces'
+
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyTicketModal({
   openType,

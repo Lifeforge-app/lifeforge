@@ -1,5 +1,4 @@
 import { useQueryClient } from '@tanstack/react-query'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -16,6 +15,8 @@ import {
   IMovieEntry,
   IMovieSearchResults
 } from '@modules/Movies/interfaces/movies_interfaces'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import TMDBLogo from './components/TMDBLogo.svg'
 import TMDBResultsList from './components/TMDBResultsList'

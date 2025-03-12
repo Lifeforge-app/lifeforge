@@ -1,5 +1,4 @@
 import { useAuth } from '@providers/AuthProvider'
-import fetchAPI from '@utils/fetchAPI'
 import _ from 'lodash'
 import moment from 'moment'
 import React, { useRef, useState } from 'react'
@@ -12,6 +11,8 @@ import {
   ModalWrapper,
   TextInput
 } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyModal({
   type,

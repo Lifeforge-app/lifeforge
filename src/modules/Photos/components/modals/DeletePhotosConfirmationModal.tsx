@@ -1,9 +1,10 @@
-import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 
 import { Button, ModalWrapper } from '@lifeforge/ui'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import {
   type IPhotoAlbumEntryItem,

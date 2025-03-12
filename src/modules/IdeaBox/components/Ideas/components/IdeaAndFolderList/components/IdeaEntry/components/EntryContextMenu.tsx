@@ -1,7 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
-import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React from 'react'
 import { useParams } from 'react-router'
@@ -10,6 +9,8 @@ import { toast } from 'react-toastify'
 import { MenuItem } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { type IIdeaBoxEntry } from '../../../../../../../interfaces/ideabox_interfaces'
 

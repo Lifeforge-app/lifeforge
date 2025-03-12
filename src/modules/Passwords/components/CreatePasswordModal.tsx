@@ -1,5 +1,3 @@
-import { encrypt } from '@utils/encryption'
-import fetchAPI from '@utils/fetchAPI'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -17,6 +15,9 @@ import {
 } from '@lifeforge/ui'
 
 import { usePasswordContext } from '@modules/Passwords/providers/PasswordsProvider'
+
+import { encrypt } from '@utils/encryption'
+import fetchAPI from '@utils/fetchAPI'
 
 import { IPasswordFormState } from '../interfaces/password_interfaces'
 

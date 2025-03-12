@@ -1,5 +1,4 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import IntervalManager from '@utils/intervalManager'
 import { cookieParse } from 'pocketbase'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,6 +7,8 @@ import { toast } from 'react-toastify'
 import { Button, MenuItem } from '@lifeforge/ui'
 
 import { useMusicContext } from '@modules/Music/providers/MusicProvider'
+
+import IntervalManager from '@utils/intervalManager'
 
 const intervalManager = IntervalManager.getInstance()
 

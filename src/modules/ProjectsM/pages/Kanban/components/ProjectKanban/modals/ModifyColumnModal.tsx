@@ -1,4 +1,3 @@
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
@@ -16,6 +15,8 @@ import {
 } from '@lifeforge/ui'
 
 import { type IProjectsMKanbanColumn } from '@modules/ProjectsM/interfaces/projects_m_interfaces'
+
+import fetchAPI from '@utils/fetchAPI'
 
 function ModifyColumnModal({
   openType,

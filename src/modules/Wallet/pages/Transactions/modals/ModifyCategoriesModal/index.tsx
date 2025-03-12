@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -17,6 +16,8 @@ import {
 } from '@lifeforge/ui'
 
 import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { type IWalletCategory } from '../../../../interfaces/wallet_interfaces'
 import CategoryToggleButton from './components/CategoryToggleButton'

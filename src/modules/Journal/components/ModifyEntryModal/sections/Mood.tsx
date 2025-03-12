@@ -1,10 +1,11 @@
 import { Icon } from '@iconify/react'
-import { encrypt } from '@utils/encryption'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, TextInput } from '@lifeforge/ui'
+
+import { encrypt } from '@utils/encryption'
+import fetchAPI from '@utils/fetchAPI'
 
 function Mood({
   setStep,

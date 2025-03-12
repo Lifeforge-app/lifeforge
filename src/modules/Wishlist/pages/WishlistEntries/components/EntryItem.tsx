@@ -1,6 +1,5 @@
 /* eslint-disable sonarjs/no-useless-react-setstate */
 import { Icon } from '@iconify/react'
-import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useState } from 'react'
@@ -11,6 +10,8 @@ import { Button, Checkbox, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { type Loadable } from '@interfaces/common'
 
 import useComponentBg from '@hooks/useComponentBg'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { type IWishlistEntry } from '../../../interfaces/wishlist_interfaces'
 

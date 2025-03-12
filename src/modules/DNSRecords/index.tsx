@@ -5,7 +5,6 @@ import {
   ListboxOptions
 } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { type JSX, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -25,6 +24,8 @@ import {
 import { type Loadable } from '@interfaces/common'
 
 import useFetch from '@hooks/useFetch'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import IconButton from '../Music/components/Bottombar/components/IconButton'
 import {

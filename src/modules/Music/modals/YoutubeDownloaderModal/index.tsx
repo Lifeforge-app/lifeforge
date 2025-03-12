@@ -1,6 +1,5 @@
 /* eslint-disable sonarjs/empty-string-repetition */
 import { useDebounce } from '@uidotdev/usehooks'
-import IntervalManager from '@utils/intervalManager'
 import { cookieParse } from 'pocketbase'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -16,6 +15,8 @@ import {
 import { useMusicContext } from '@modules/Music/providers/MusicProvider'
 
 import useFetch from '@hooks/useFetch'
+
+import IntervalManager from '@utils/intervalManager'
 
 import { type IYoutubeVideoInfo } from '../../../YoutubeVideos/interfaces/youtube_video_storage_interfaces'
 import VideoInfo from './components/VideoInfo'

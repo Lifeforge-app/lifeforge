@@ -1,7 +1,6 @@
 /* eslint-disable import/named */
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
-import fetchAPI from '@utils/fetchAPI'
 import WavesurferPlayer from '@wavesurfer/react'
 import clsx from 'clsx'
 import moment from 'moment'
@@ -15,6 +14,8 @@ import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 import { IMomentVaultEntry } from '@modules/MomentVault/interfaces/moment_vault_interfaces'
 
 import useComponentBg from '@hooks/useComponentBg'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { Loadable } from '../../../../core/interfaces/common'
 
