@@ -93,13 +93,14 @@ explore and discover within the project.
 ## ⌨️ Setup
 
 Setting up Lifeforge can be a bit challenging and may require some technical
-expertise and your own hardware. Full documentation will be released soon to
-assist with the setup process.
+expertise and your own hardware. A docker file is hopefully on the way, but for now, you have to install in manually.
+Visit the [Documentation](https://docs.lifeforge.melvinchia.dev)
+to see how to install and setup.
 
 ## 📈 Status
 
-Lifeforge is currently under active development, with new features being added
-regularly. If you encounter any bugs or issues, please report them
+Lifeforge is currently under active development, with the code structure rapidly changing.
+If you encounter any bugs or issues, please report them
 [here](https://github.com/melvinchia3636lifeforge/issues), and they will be
 addressed promptly.
 
@@ -107,7 +108,8 @@ addressed promptly.
 
 Lifeforge was inspired by the need for a unified personal management system that
 integrates various tools and resources to help streamline daily life, and also
-[this project](https://github.com/Volmarg/personal-management-system).
+[this project](https://github.com/Volmarg/personal-management-system). 
+For the full story, visit the [Documentation](https://docs.lifeforge.melvinchia.dev).
 
 ## 📄 License
 
