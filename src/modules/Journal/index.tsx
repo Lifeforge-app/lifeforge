@@ -1,4 +1,4 @@
-import { useAuthContext } from '@providers/AuthProvider'
+import { useAuth } from '@providers/AuthProvider'
 import { encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
@@ -24,7 +24,7 @@ import { type IJournalEntry } from './interfaces/journal_interfaces'
 
 function Journal(): React.ReactElement {
   const { t } = useTranslation('modules.journal')
-  const { userData } = useAuthContext()
+  const { userData } = useAuth()
   const [masterPassword, setMasterPassword] = useState<string>('')
   const [entries, setEntries] = useState<Loadable<IJournalEntry[]>>('loading')
   const [journalViewModalOpen, setJournalViewModalOpen] = useState(false)

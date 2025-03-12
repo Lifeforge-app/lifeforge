@@ -1,4 +1,4 @@
-import { useAuthContext } from '@providers/AuthProvider'
+import { useAuth } from '@providers/AuthProvider'
 import fetchAPI from '@utils/fetchAPI'
 import _ from 'lodash'
 import React from 'react'
@@ -87,7 +87,7 @@ const ROUTES = _ROUTES as IRoutes[]
 
 function Modules(): React.ReactElement {
   const { t } = useTranslation('common.sidebar')
-  const { userData, setUserData } = useAuthContext()
+  const { userData, setUserData } = useAuth()
 
   async function toggleModule(moduleName: string): Promise<void> {
     const newEnabledModules = userData.enabledModules.includes(

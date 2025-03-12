@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import fetchAPI from '@utils/fetchAPI'
 import WavesurferPlayer from '@wavesurfer/react'
 import moment from 'moment'
@@ -32,7 +32,7 @@ function AudioType({
     theme: lightOrDarkTheme,
     bgTempPalette,
     themeColor
-  } = usePersonalizationContext()
+  } = usePersonalization()
 
   const [recording, setRecording] = useState(false)
   const [totalTime, setTotalTime] = useState(0)

@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -24,7 +24,7 @@ function ComponentListItem({
     dashboardLayout: enabledWidgets,
     setDashboardLayout,
     setDashboardLayoutWithoutPost: setEnabledWidgets
-  } = usePersonalizationContext()
+  } = usePersonalization()
 
   const isEnabled = useMemo(() => {
     return Object.values(

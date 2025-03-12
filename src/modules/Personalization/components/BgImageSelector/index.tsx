@@ -1,4 +1,4 @@
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -15,8 +15,7 @@ import AdjustBgImageModal from './components/AdjustBgImageModal'
 
 function BgImageSelector(): React.ReactElement {
   const { t } = useTranslation('modules.personalization')
-  const { bgImage, setBgImage, setBackdropFilters } =
-    usePersonalizationContext()
+  const { bgImage, setBgImage, setBackdropFilters } = usePersonalization()
   const [imageSelectorModalOpen, setImageSelectorModalOpen] = useState(false)
   const [adjustBgImageModalOpen, setAdjustBgImageModalOpen] = useState(false)
   const [
