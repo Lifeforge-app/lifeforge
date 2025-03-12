@@ -1,9 +1,10 @@
-import { useTodoListContext } from '@providers/TodoListProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
 import { Button, HeaderFilter } from '@lifeforge/ui'
+
+import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
 
 function Header({
   setSidebarOpen

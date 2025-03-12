@@ -10,9 +10,7 @@ import WaveSurfer from 'wavesurfer.js'
 
 import { Button, CreateOrModifyButton } from '@lifeforge/ui'
 
-import { IMomentVaultEntry } from '@interfaces/moment_vault_interfaces'
-
-import useThemeColors from '@hooks/useThemeColor'
+import { IMomentVaultEntry } from '@modules/MomentVault/interfaces/moment_vault_interfaces'
 
 function AudioType({
   onSuccess,
@@ -30,8 +28,11 @@ function AudioType({
   setOverwriteAudioWarningModalOpen: (open: boolean) => void
 }): React.ReactElement {
   const { t } = useTranslation('modules.momentVault')
-  const { theme, bgTemp } = useThemeColors()
-  const { theme: lightOrDarkTheme } = usePersonalizationContext()
+  const {
+    theme: lightOrDarkTheme,
+    bgTempPalette,
+    themeColor
+  } = usePersonalizationContext()
 
   const [recording, setRecording] = useState(false)
   const [totalTime, setTotalTime] = useState(0)
@@ -179,9 +180,9 @@ function AudioType({
                   barGap={2}
                   barRadius={100}
                   barWidth={3}
-                  cursorColor={theme}
+                  cursorColor={themeColor}
                   height={50}
-                  progressColor={theme}
+                  progressColor={themeColor}
                   url={audioURL}
                   waveColor={
                     (lightOrDarkTheme === 'system' &&
@@ -189,8 +190,8 @@ function AudioType({
                       window.matchMedia('(prefers-color-scheme: dark)')
                         .matches) ||
                     lightOrDarkTheme === 'dark'
-                      ? bgTemp[700]
-                      : bgTemp[400]
+                      ? bgTempPalette[700]
+                      : bgTempPalette[400]
                   }
                   width="100%"
                   onPause={() => setIsPlaying(false)}

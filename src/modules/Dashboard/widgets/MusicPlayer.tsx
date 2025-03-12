@@ -1,10 +1,11 @@
 import { Icon } from '@iconify/react'
-import { useMusicContext } from '@providers/MusicProvider'
 import clsx from 'clsx'
 import React, { useRef } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Button, DashboardItem, EmptyStateScreen } from '@lifeforge/ui'
+
+import { useMusicContext } from '@modules/Music/providers/MusicProvider'
 
 import ControlButtons from '../../Music/components/Bottombar/components/ControlButtons'
 

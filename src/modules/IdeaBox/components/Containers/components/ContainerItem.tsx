@@ -5,9 +5,9 @@ import { Link } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
+import useComponentBg from '@hooks/useComponentBg'
 
-import useThemeColors from '@hooks/useThemeColor'
+import { type IIdeaBoxContainer } from '../../../interfaces/ideabox_interfaces'
 
 function ContainerItem({
   container,
@@ -24,7 +24,7 @@ function ContainerItem({
     React.SetStateAction<boolean>
   >
 }): React.ReactElement {
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
 
   return (
     <div

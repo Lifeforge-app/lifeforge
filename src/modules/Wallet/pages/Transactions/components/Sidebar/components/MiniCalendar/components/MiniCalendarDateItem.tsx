@@ -1,8 +1,9 @@
-import { useWalletContext } from '@providers/WalletProvider'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useMemo } from 'react'
 import { useSearchParams } from 'react-router'
+
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 interface MiniCalendarDateItemProps {
   index: number

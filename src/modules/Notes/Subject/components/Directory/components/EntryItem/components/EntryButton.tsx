@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 
-import { type INotesEntry } from '@interfaces/notes_interfaces'
+import { type INotesEntry } from '../../../../../../interfaces/notes_interfaces'
 
 function EntryButton({ entry }: { entry: INotesEntry }): React.ReactElement {
   return entry.type === 'folder' ? (

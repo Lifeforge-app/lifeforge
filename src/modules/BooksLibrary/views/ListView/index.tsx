@@ -1,11 +1,10 @@
 import { Icon } from '@iconify/react'
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import React from 'react'
 
 import { Scrollbar } from '@lifeforge/ui'
 
-import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
-
+import { type IBooksLibraryEntry } from '../../interfaces/books_library_interfaces'
+import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
 import BookMeta from '../components/BookMeta'
 import EntryItem from './components/EntryItem'
 

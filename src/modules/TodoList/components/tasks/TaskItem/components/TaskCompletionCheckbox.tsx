@@ -5,7 +5,7 @@ import React from 'react'
 import {
   type ITodoListEntry,
   type ITodoSubtask
-} from '@interfaces/todo_list_interfaces'
+} from '../../../../interfaces/todo_list_interfaces'
 
 function TaskCompletionCheckbox({
   entry,

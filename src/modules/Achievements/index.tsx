@@ -10,15 +10,13 @@ import {
   FAB,
   QueryWrapper
 } from '@lifeforge/ui'
-
-import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
 import ModifyAchievementModal from './ModifyAchievementModal'
 import DifficultySelector from './components/DifficultySelector'
 import EntryItem from './components/EntryItem'
+import { type IAchievementEntry } from './interfaces/achievements_interfaces'
 
 function Achievements(): React.ReactElement {
   const { t } = useTranslation('modules.achievements')

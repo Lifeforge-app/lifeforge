@@ -1,7 +1,8 @@
-import { useTodoListContext } from '@providers/TodoListProvider'
 import React from 'react'
 
 import { Scrollbar } from '@lifeforge/ui'
+
+import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
 
 import TaskItem from './TaskItem'
 

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 
 import { ConfigColumn } from '@lifeforge/ui'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 import FontFamilyItem from './components/FontFamilyItem'
 
@@ -89,7 +89,7 @@ const addFontsToStylesheet = (fonts: IFontFamily[]) => {
 }
 
 function FontFamilySelector(): React.ReactElement {
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
   const { fontFamily, setFontFamily } = usePersonalizationContext()
   const [allFonts, setAllFonts] = useState<IFontFamily[]>([])
   const { t } = useTranslation('modules.personalization')

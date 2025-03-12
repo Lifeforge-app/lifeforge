@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { TodoListProvider } from '@providers/TodoListProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,20 +9,20 @@ import {
   EmptyStateScreen,
   Scrollbar
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
-import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
+import { TodoListProvider } from '@modules/TodoList/providers/TodoListProvider'
 
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-
+import useComponentBg from '@hooks/useComponentBg'
 import useFetch from '@hooks/useFetch'
-import useThemeColors from '@hooks/useThemeColor'
 
 import TaskItem from '../TodoList/components/tasks/TaskItem'
+import { type ITodoListEntry } from '../TodoList/interfaces/todo_list_interfaces'
 import Timer from './components/Timer'
 
 export default function PomodoroTimer(): React.ReactElement {
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
   const { t } = useTranslation('modules.todoList')
   const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry[]>(
     'todo-list/entries?status=today'

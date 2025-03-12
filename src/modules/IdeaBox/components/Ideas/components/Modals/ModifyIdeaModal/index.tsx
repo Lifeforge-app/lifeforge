@@ -1,4 +1,3 @@
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import fetchAPI from '@utils/fetchAPI'
@@ -9,8 +8,9 @@ import { toast } from 'react-toastify'
 
 import { Button, ModalWrapper } from '@lifeforge/ui'
 
-import { IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
+import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
 
+import { IIdeaBoxEntry } from '../../../../../interfaces/ideabox_interfaces'
 import IdeaContentInput from './IdeaContentInput'
 import ModalHeader from './components/ModalHeader'
 

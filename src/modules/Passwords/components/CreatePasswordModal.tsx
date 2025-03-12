@@ -1,4 +1,3 @@
-import { usePasswordContext } from '@providers/PasswordsProvider'
 import { encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
 import { cookieParse } from 'pocketbase'
@@ -17,7 +16,9 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-import { IPasswordFormState } from '@interfaces/password_interfaces'
+import { usePasswordContext } from '@modules/Passwords/providers/PasswordsProvider'
+
+import { IPasswordFormState } from '../interfaces/password_interfaces'
 
 function CreatePasswordModal(): React.ReactElement {
   const { t } = useTranslation('modules.passwords')

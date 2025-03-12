@@ -1,10 +1,11 @@
-import {
-  SPICINESS_COLOR,
-  SPICINESS_NAME
-} from '@constants/todo_subtasks_generation_spiciness'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React from 'react'
+
+import {
+  SPICINESS_COLOR,
+  SPICINESS_NAME
+} from '@modules/TodoList/constants/todo_subtasks_generation_spiciness'
 
 function SpicinessHeader({
   spiciness

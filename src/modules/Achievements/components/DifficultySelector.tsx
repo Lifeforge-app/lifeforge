@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { IAchievementEntry } from '@interfaces/achievements_interfaces'
+import { IAchievementEntry } from '../interfaces/achievements_interfaces'
 
 function DifficultySelector({
   selectedDifficulty,

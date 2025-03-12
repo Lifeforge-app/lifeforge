@@ -1,8 +1,9 @@
-import { TodoListProvider } from '@providers/TodoListProvider'
 import React from 'react'
 
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
+
+import { TodoListProvider } from '@modules/TodoList/providers/TodoListProvider'
 
 import TodoListContainer from './components/TodoListContainer'
 

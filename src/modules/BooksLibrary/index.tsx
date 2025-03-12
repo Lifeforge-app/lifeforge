@@ -1,5 +1,4 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
@@ -14,15 +13,15 @@ import {
   SearchInput,
   ViewModeSelector
 } from '@lifeforge/ui'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
 import Header from './components/Header'
 import LibgenModal from './components/LibgenModal'
 import ModifyBookModal from './components/ModifyBookModal'
 import ModifyModal from './components/ModifyModal'
 import Sidebar from './components/Sidebar'
+import { useBooksLibraryContext } from './providers/BooksLibraryProvider'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
 

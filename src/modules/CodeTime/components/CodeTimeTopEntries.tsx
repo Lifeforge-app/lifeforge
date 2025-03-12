@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { QueryWrapper } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
@@ -16,7 +16,7 @@ function CodeTimeTopEntries({
   type: 'languages' | 'projects'
 }): React.ReactElement {
   const { t } = useTranslation('modules.codeTime')
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
   const [lastFor, setLastFor] = useState<'24 hours' | '7 days' | '30 days'>(
     '24 hours'
   )

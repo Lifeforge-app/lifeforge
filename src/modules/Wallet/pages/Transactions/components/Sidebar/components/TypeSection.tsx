@@ -1,5 +1,5 @@
-import { useWalletContext } from '@providers/WalletProvider'
-import { toCamelCase } from '@utils/strings'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import _ from 'lodash'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
@@ -7,7 +7,7 @@ import colors from 'tailwindcss/colors'
 
 import { SidebarItem, SidebarTitle } from '@lifeforge/ui'
 
-import useThemeColors from '@hooks/useThemeColor'
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 function TypeSection({
   setSidebarOpen
@@ -17,7 +17,7 @@ function TypeSection({
   const [searchParams, setSearchParams] = useSearchParams()
   const { t } = useTranslation('modules.wallet')
   const { filteredTransactions } = useWalletContext()
-  const { bgTemp } = useThemeColors()
+  const { bgTempPalette } = usePersonalizationContext()
 
   return (
     <>
@@ -37,8 +37,8 @@ function TypeSection({
           icon={icon}
           name={t(
             name.includes('All')
-              ? `sidebar.${toCamelCase(name)}`
-              : `transactionTypes.${toCamelCase(name)}`
+              ? `sidebar.${_.camelCase(name)}`
+              : `transactionTypes.${_.camelCase(name)}`
           )}
           number={
             typeof filteredTransactions !== 'string'
@@ -51,7 +51,7 @@ function TypeSection({
           }
           sideStripColor={
             {
-              'All Types': bgTemp[100],
+              'All Types': bgTempPalette[100],
               Income: colors.green[500],
               Expenses: colors.red[500],
               Transfer: colors.blue[500]

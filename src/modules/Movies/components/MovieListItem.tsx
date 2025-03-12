@@ -5,9 +5,9 @@ import React from 'react'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { IMovieEntry } from '@interfaces/movies_interfaces'
+import { IMovieEntry } from '@modules/Movies/interfaces/movies_interfaces'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 function MovieListItem({
   data,
@@ -20,7 +20,7 @@ function MovieListItem({
   onShowTicket: (id: string) => void
   onDelete: (entry: IMovieEntry) => void
 }): React.ReactElement {
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
 
   return (
     <div

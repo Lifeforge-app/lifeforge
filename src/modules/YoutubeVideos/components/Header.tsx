@@ -4,11 +4,9 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { Button, MenuItem, SearchInput } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
-import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-
+import { type IYoutubeVideoInfo } from '../interfaces/youtube_video_storage_interfaces'
 import DownloadProcessModal from './DownloadProcessModal'
 
 function Header({

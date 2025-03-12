@@ -2,7 +2,7 @@ import React from 'react'
 
 import { EmptyStateScreen, Pagination } from '@lifeforge/ui'
 
-import { IMovieSearchResults } from '@interfaces/movies_interfaces'
+import { IMovieSearchResults } from '@modules/Movies/interfaces/movies_interfaces'
 
 import TMDBResultItem from './TMDBResultItem'
 

@@ -1,10 +1,11 @@
 import { Icon } from '@iconify/react'
-import { usePhotosContext } from '@providers/PhotosProvider'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
+
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
 import TagItem from './components/TagItem'
 

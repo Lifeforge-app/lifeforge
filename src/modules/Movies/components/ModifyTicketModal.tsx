@@ -4,12 +4,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { DeleteConfirmationModal, FormModal } from '@lifeforge/ui'
+import { type IFieldProps } from '@lifeforge/ui'
 
-import { IFieldProps } from '@interfaces/modal_interfaces'
 import {
   IMovieEntry,
   IMovieTicketFormState
-} from '@interfaces/movies_interfaces'
+} from '@modules/Movies/interfaces/movies_interfaces'
 
 function ModifyTicketModal({
   openType,

@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { useRailwayMapContext } from '@providers/RailwayMapProvider'
 import React from 'react'
 
-import { IRailwayMapStation } from '@interfaces/railway_map_interfaces'
+import { IRailwayMapStation } from '@modules/RailwayMap/interfaces/railway_map_interfaces'
 
+import { useRailwayMapContext } from '../../../../../providers/RailwayMapProvider'
 import { centerMapOnStation } from '../../../../Maps/maps/RouteMap/utils/renderUtils'
 import StationCodes from '../../../../StationCode'
 

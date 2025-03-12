@@ -8,16 +8,14 @@ import {
   EmptyStateScreen,
   FAB
 } from '@lifeforge/ui'
-
-import { type IWishlistList } from '@interfaces/wishlist_interfaces'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 
 import ModifyWishlistListModal from './components/ModifyWishlistModal'
 import WishlistListItem from './components/WishlistListItem'
+import { type IWishlistList } from './interfaces/wishlist_interfaces'
 
 function Wishlist(): React.ReactElement {
   const { t } = useTranslation('modules.wishlist')

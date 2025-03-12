@@ -7,24 +7,22 @@ import { Link } from 'react-router'
 import {
   APIFallbackComponent,
   Button,
+  ContentWrapperWithSidebar,
+  LayoutWithSidebar,
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
-import { type IFlashcardDeck } from '@interfaces/flashcard_interfaces'
-
-import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
-
+import useComponentBg from '@hooks/useComponentBg'
 import useFetch from '@hooks/useFetch'
-import useThemeColors from '@hooks/useThemeColor'
 
 import Sidebar from './components/Sidebar'
+import { type IFlashcardDeck } from './interfaces/flashcard_interfaces'
 
 export default function Flashcards(): React.ReactElement {
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
   const [searchQuery, setSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [decks] = useFetch<IFlashcardDeck[]>('flashcards/deck/list')
@@ -32,7 +30,7 @@ export default function Flashcards(): React.ReactElement {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:cards" title="Flashcards" />
-      <SidebarAndContentWrapper>
+      <LayoutWithSidebar>
         <Sidebar setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
         <ContentWrapperWithSidebar>
           <div className="flex-between flex">
@@ -138,7 +136,7 @@ export default function Flashcards(): React.ReactElement {
                 </Link>
               ))} */}
         </ContentWrapperWithSidebar>
-      </SidebarAndContentWrapper>
+      </LayoutWithSidebar>
     </ModuleWrapper>
   )
 }

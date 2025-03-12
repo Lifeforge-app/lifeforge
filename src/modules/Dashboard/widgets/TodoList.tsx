@@ -1,4 +1,3 @@
-import { TodoListProvider } from '@providers/TodoListProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -10,11 +9,12 @@ import {
   Scrollbar
 } from '@lifeforge/ui'
 
-import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
+import { TodoListProvider } from '@modules/TodoList/providers/TodoListProvider'
 
 import useFetch from '@hooks/useFetch'
 
 import TaskItem from '../../TodoList/components/tasks/TaskItem'
+import { type ITodoListEntry } from '../../TodoList/interfaces/todo_list_interfaces'
 
 export default function TodoList(): React.ReactElement {
   const { t } = useTranslation('modules.todoList')

@@ -7,15 +7,14 @@ import PhotoAlbum from 'react-photo-album'
 import { toast } from 'react-toastify'
 import useResizeObserver from 'use-resize-observer'
 
+import useOnScreen from '@modules/Photos/hooks/useOnScreen'
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
+
+import ImageObject from '../../../components/ImageObject'
 import {
   type IPhotosEntry,
   type IPhotosEntryDimensionsItem
-} from '@interfaces/photos_interfaces'
-
-import useOnScreen from '@hooks/useOnScreen'
-
-import { usePhotosContext } from '../../../../../providers/PhotosProvider'
-import ImageObject from '../../../components/ImageObject'
+} from '../../../interfaces/photos_interfaces'
 
 function DateGroup({
   date,

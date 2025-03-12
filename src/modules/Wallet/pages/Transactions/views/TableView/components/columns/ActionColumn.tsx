@@ -2,7 +2,7 @@ import React from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
+import { type IWalletTransaction } from '../../../../../../interfaces/wallet_interfaces'
 
 function ActionColumn({
   transaction,

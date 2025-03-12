@@ -1,7 +1,6 @@
-import APIKeyStatusProvider from '@providers/APIKeyStatusProvider'
 import { useAuthContext } from '@providers/AuthProvider'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import { convertToDashCase, titleToPath } from '@utils/strings'
+import _ from 'lodash'
 import React, { Suspense, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route, Routes, useLocation, useNavigate } from 'react-router'
@@ -9,11 +8,12 @@ import { ToastContainer } from 'react-toastify'
 
 import { LoadingScreen, NotFoundScreen } from '@lifeforge/ui'
 
-import { type IRoutes } from '@interfaces/routes_interfaces'
+import APIKeyStatusProvider from '@modules/APIKeys/providers/APIKeyStatusProvider'
 
-import Auth from '../auth'
 import { COMPONENTS } from './Components'
 import MainApplication from './MainApplication'
+import Auth from './auth'
+import { type IRoutes } from './interfaces/routes_interfaces'
 import _ROUTES from './routes_config.json'
 
 const ROUTES = _ROUTES as IRoutes[]
@@ -88,7 +88,7 @@ function AppRouter(): React.ReactElement {
   useEffect(() => {
     const target =
       ROUTES.flatMap(e => e.items).filter(item =>
-        location.pathname.slice(1).startsWith(titleToPath(item.name))
+        location.pathname.slice(1).startsWith(_.kebabCase(item.name))
       )[0]?.name ?? ''
 
     document.title = `Lifeforge. ${target !== '' ? '- ' + target : ''}`
@@ -106,16 +106,14 @@ function AppRouter(): React.ReactElement {
               .filter(
                 item =>
                   !item.togglable ||
-                  userData.enabledModules.includes(titleToPath(item.name))
+                  userData.enabledModules.includes(_.kebabCase(item.name))
               )
               .map(item =>
                 item.provider !== undefined
                   ? (() => {
                       const Provider: React.FC =
                         COMPONENTS[
-                          convertToDashCase(
-                            item.name
-                          ) as keyof typeof COMPONENTS
+                          _.kebabCase(item.name) as keyof typeof COMPONENTS
                         ][
                           item.provider as keyof (typeof COMPONENTS)[keyof typeof COMPONENTS]
                         ]
@@ -124,11 +122,11 @@ function AppRouter(): React.ReactElement {
                         <Route
                           key={item.name}
                           element={<Provider />}
-                          path={'/' + titleToPath(item.name)}
+                          path={'/' + _.kebabCase(item.name)}
                         >
                           {renderRoutes(
                             item.routes,
-                            convertToDashCase(item.name),
+                            _.kebabCase(item.name),
                             true,
                             item.requiredAPIKeys
                           )}
@@ -137,7 +135,7 @@ function AppRouter(): React.ReactElement {
                     })()
                   : renderRoutes(
                       item.routes,
-                      convertToDashCase(item.name),
+                      _.kebabCase(item.name),
                       false,
                       item.requiredAPIKeys
                     )

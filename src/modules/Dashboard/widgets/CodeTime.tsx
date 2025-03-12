@@ -1,16 +1,26 @@
 /* eslint-disable import/named */
 import { Icon } from '@iconify/react'
-import { getDatesBetween } from '@utils/date'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { ChartOptions, ScriptableContext } from 'chart.js'
 import clsx from 'clsx'
-import moment from 'moment'
+import moment, { Moment } from 'moment'
 import React, { useMemo, useState } from 'react'
 import { Bar, Line } from 'react-chartjs-2'
+import tinycolor from 'tinycolor2'
 
 import { DashboardItem, EmptyStateScreen, LoadingScreen } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
-import useThemeColors from '@hooks/useThemeColor'
+
+const getDatesBetween = (start: Moment, end: Moment): Moment[] => {
+  if (!start.isValid() || !end.isValid() || start.isAfter(end, 'day')) {
+    return []
+  }
+
+  if (start.isSame(end, 'day')) return [start]
+
+  return [start].concat(getDatesBetween(start.clone().add(1, 'day'), end))
+}
 
 const msToTime = (ms: number): string => {
   const timeUnits = [
@@ -110,7 +120,7 @@ const ViewSelector = ({
 
 const CodeTime = (): React.ReactElement => {
   const [data] = useFetch<ICodeTimeEachDay[]>('code-time/each-day')
-  const { theme } = useThemeColors()
+  const { themeColor } = usePersonalizationContext()
   const [view, setView] = useState<'bar' | 'line'>('bar')
 
   const chartData = useMemo(() => {
@@ -138,32 +148,30 @@ const CodeTime = (): React.ReactElement => {
           backgroundColor: (context: ScriptableContext<'line'>) => {
             const ctx = context.chart.ctx
             const gradient = ctx.createLinearGradient(0, 0, 0, 250)
-            let finalTheme = theme
-            if (theme.startsWith('#')) {
-              const hex = theme.replace('#', '')
-              const r = parseInt(hex.substring(0, 2), 16)
-              const g = parseInt(hex.substring(2, 4), 16)
-              const b = parseInt(hex.substring(4, 6), 16)
-              finalTheme = `rgba(${r}, ${g}, ${b})`
-            }
-            gradient.addColorStop(0, finalTheme.replace(')', ', 0.5)'))
-            gradient.addColorStop(1, finalTheme.replace(')', ', 0)'))
+            gradient.addColorStop(
+              0,
+              tinycolor(themeColor).setAlpha(0.5).toRgbString()
+            )
+            gradient.addColorStop(
+              1,
+              tinycolor(themeColor).setAlpha(0).toRgbString()
+            )
             return gradient
           },
           fill: 'origin',
           lineTension: 0.3,
-          borderColor: theme,
+          borderColor: themeColor,
           borderWidth: 1,
           pointBorderColor: 'rgba(0, 0, 0, 0)',
           pointBackgroundColor: 'rgba(0, 0, 0, 0)',
-          pointHoverBackgroundColor: `${theme}80`,
-          pointHoverBorderColor: theme,
+          pointHoverBackgroundColor: `${themeColor}80`,
+          pointHoverBorderColor: themeColor,
           pointHoverBorderWidth: 2,
           pointHoverRadius: 6
         }
       ]
     }
-  }, [data, theme])
+  }, [data, themeColor])
 
   const renderContent = () => {
     if (!chartData) return <LoadingScreen />

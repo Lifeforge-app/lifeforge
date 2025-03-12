@@ -1,6 +1,4 @@
 import { Icon } from '@iconify/react'
-import { useWalletContext } from '@providers/WalletProvider'
-import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
@@ -8,7 +6,9 @@ import { Tooltip } from 'react-tooltip'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
+
+import { type IWalletTransaction } from '../../../../../interfaces/wallet_interfaces'
 
 function TransactionListItem({
   transaction,
@@ -161,7 +161,7 @@ function TransactionListItem({
           })}
         >
           {transaction.side === 'debit' ? '+' : '-'}
-          {numberToMoney(transaction.amount)}
+          {transaction.amount.toFixed(2)}
         </span>
         <HamburgerMenu className="relative">
           {transaction.type !== 'transfer' && (

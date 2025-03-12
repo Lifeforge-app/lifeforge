@@ -12,16 +12,14 @@ import {
   HamburgerMenu,
   MenuItem
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+
+import useFetch from '@hooks/useFetch'
 
 import {
   type IFlashcardCard,
   type IFlashcardDeck
-} from '@interfaces/flashcard_interfaces'
-
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-
-import useFetch from '@hooks/useFetch'
-
+} from '../interfaces/flashcard_interfaces'
 import EditCardModal from './EditCardModal'
 
 function CardSet(): React.ReactElement {

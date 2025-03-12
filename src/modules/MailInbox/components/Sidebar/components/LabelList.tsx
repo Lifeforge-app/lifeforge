@@ -4,8 +4,9 @@ import { useSearchParams } from 'react-router'
 
 import { APIFallbackComponent, MenuItem, SidebarItem } from '@lifeforge/ui'
 
-import { Loadable } from '@interfaces/common'
-import { IMailInboxLabel } from '@interfaces/mail_inbox_interfaces'
+import { IMailInboxLabel } from '@modules/MailInbox/interfaces/mail_inbox_interfaces'
+
+import { Loadable } from '../../../../../core/interfaces/common'
 
 interface ILabelListStructure {
   label: IMailInboxLabel

@@ -5,7 +5,7 @@ import React from 'react'
 
 import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
 
-import { IMovieEntry } from '@interfaces/movies_interfaces'
+import { IMovieEntry } from '@modules/Movies/interfaces/movies_interfaces'
 
 function ShowTicketModal({
   isOpen,

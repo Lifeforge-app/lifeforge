@@ -1,8 +1,9 @@
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import React from 'react'
 import { useParams } from 'react-router'
 
 import { DeleteConfirmationModal } from '@lifeforge/ui'
+
+import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
 
 function DeleteModals(): React.ReactElement {
   const { id, '*': path } = useParams<{ id: string; '*': string }>()

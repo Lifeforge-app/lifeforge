@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
 
 import { ConfigColumn } from '@lifeforge/ui'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 const LANGUAGES: Array<{
   name: string
@@ -42,7 +42,7 @@ const LANGUAGES: Array<{
 ]
 
 function LanguageSelector(): React.ReactElement {
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
   const { language, setLanguage } = usePersonalizationContext()
   const { t } = useTranslation('modules.personalization')
 

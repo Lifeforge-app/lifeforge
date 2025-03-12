@@ -1,7 +1,8 @@
-import { useTodoListContext } from '@providers/TodoListProvider'
 import React from 'react'
 
-import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
+import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
+
+import { type ITodoListEntry } from '../../../../interfaces/todo_list_interfaces'
 
 function TaskTags({ entry }: { entry: ITodoListEntry }): React.ReactElement {
   const { tags } = useTodoListContext()

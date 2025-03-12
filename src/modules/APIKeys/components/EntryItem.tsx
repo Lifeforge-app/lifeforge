@@ -8,8 +8,7 @@ import { toast } from 'react-toastify'
 
 import { Button, ConfigColumn, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IAPIKeyEntry } from '@interfaces/api_keys_interfaces'
-
+import { type IAPIKeyEntry } from '../interfaces/api_keys_interfaces'
 import { fetchChallenge } from '../utils/fetchChallenge'
 
 function EntryItem({

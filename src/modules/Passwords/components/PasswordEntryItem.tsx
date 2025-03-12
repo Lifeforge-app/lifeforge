@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { usePasswordContext } from '@providers/PasswordsProvider'
 import clsx from 'clsx'
 import copy from 'copy-to-clipboard'
 import React, { useState } from 'react'
@@ -7,10 +6,11 @@ import { toast } from 'react-toastify'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IPasswordEntry } from '@interfaces/password_interfaces'
+import { usePasswordContext } from '@modules/Passwords/providers/PasswordsProvider'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
+import { type IPasswordEntry } from '../interfaces/password_interfaces'
 import { getDecryptedPassword } from '../utils/getDecryptedPassword'
 
 function PasswordEntryITem({
@@ -26,7 +26,7 @@ function PasswordEntryITem({
     setExistedData,
     setModifyPasswordModalOpenType
   } = usePasswordContext()
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
   const [decryptedPassword, setDecryptedPassword] = useState<string | null>(
     null
   )

@@ -4,7 +4,7 @@ import { RefObject, useEffect, useRef } from 'react'
 import {
   IRailwayMapLine,
   IRailwayMapStation
-} from '@interfaces/railway_map_interfaces'
+} from '@modules/RailwayMap/interfaces/railway_map_interfaces'
 
 import { initializeMap, renderLines, renderStations } from '../utils/mapUtils'
 

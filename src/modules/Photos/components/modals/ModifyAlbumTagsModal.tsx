@@ -1,4 +1,3 @@
-import { usePhotosContext } from '@providers/PhotosProvider'
 import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,7 +10,9 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-import { type IPhotoAlbumTag } from '@interfaces/photos_interfaces'
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
+
+import { type IPhotoAlbumTag } from '../../interfaces/photos_interfaces'
 
 function ModifyAlbumTagsModal({
   openType,

@@ -1,8 +1,9 @@
-import { useTodoListContext } from '@providers/TodoListProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { APIFallbackComponent, SidebarTitle } from '@lifeforge/ui'
+
+import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
 
 import TaskListListItem from './TaskListListItem'
 

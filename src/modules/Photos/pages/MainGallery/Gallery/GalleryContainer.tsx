@@ -1,6 +1,7 @@
-import { usePhotosContext } from '@providers/PhotosProvider'
 import moment from 'moment'
 import React from 'react'
+
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
 import MobileSlidingScrollbar from '../Scrollbars/MobileSlidingScrollbar'
 import TimelineScrollbar from '../Scrollbars/TimelineScrollbar'

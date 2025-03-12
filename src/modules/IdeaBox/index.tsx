@@ -10,14 +10,12 @@ import {
   QueryWrapper,
   SearchInput
 } from '@lifeforge/ui'
-
-import { type IIdeaBoxContainer } from '@interfaces/ideabox_interfaces'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
 import Containers from './components/Containers'
 import ModifyContainerModal from './components/Containers/components/ModifyContainerModal'
+import { type IIdeaBoxContainer } from './interfaces/ideabox_interfaces'
 
 function IdeaBox(): React.ReactElement {
   const { t } = useTranslation('modules.ideaBox')

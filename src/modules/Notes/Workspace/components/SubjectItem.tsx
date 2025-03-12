@@ -5,9 +5,9 @@ import { Link, useParams } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type INotesSubject } from '@interfaces/notes_interfaces'
+import useComponentBg from '@hooks/useComponentBg'
 
-import useThemeColors from '@hooks/useThemeColor'
+import { type INotesSubject } from '../../interfaces/notes_interfaces'
 
 function SubjectItem({
   subject,
@@ -22,7 +22,7 @@ function SubjectItem({
   setExistedData: (data: any) => void
   setDeleteSubjectConfirmationModalOpen: (state: boolean) => void
 }): React.ReactElement {
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
   const { workspace } = useParams<{ workspace: string }>()
 
   return (

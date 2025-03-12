@@ -1,7 +1,7 @@
-import { useRailwayMapContext } from '@providers/RailwayMapProvider'
 import 'leaflet/dist/leaflet.css'
 import React, { memo, useMemo, useRef } from 'react'
 
+import { useRailwayMapContext } from '../../../../providers/RailwayMapProvider'
 import { useEarthMapRenderer } from './hooks/useEarthMapRenderer'
 
 function EarthMap(): React.ReactElement {

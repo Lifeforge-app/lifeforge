@@ -1,4 +1,3 @@
-import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -11,14 +10,14 @@ import {
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
 import EntryItem from './components/EntryItem'
 import ModifyEntryModal from './components/ModifyEntryModal'
 import ModifyModal from './components/ModifyModal'
 import Sidebar from './components/Sidebar'
+import { useProjectsMContext } from './providers/ProjectsMProvider'
 
 function ProjectsM(): React.ReactElement {
   const { t } = useTranslation('modules.projectsM')

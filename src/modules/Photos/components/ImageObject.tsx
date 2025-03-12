@@ -3,14 +3,14 @@ import clsx from 'clsx'
 import React from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
+
+import useComponentBg from '@hooks/useComponentBg'
+
 import {
   type IPhotoAlbumEntryItem,
   type IPhotosEntry
-} from '@interfaces/photos_interfaces'
-
-import useThemeColors from '@hooks/useThemeColor'
-
-import { usePhotosContext } from '../../../providers/PhotosProvider'
+} from '../interfaces/photos_interfaces'
 
 const LLI = LazyLoadImage as any
 
@@ -37,7 +37,7 @@ function ImageObject({
     details: (IPhotoAlbumEntryItem | IPhotosEntry) | null
   ) => void
 }): React.ReactElement {
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
   const { ready } = usePhotosContext()
 
   return (

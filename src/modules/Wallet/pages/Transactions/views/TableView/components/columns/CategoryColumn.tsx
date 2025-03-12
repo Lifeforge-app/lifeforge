@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import React from 'react'
 import { Link } from 'react-router'
 
-import { type IWalletCategory } from '@interfaces/wallet_interfaces'
+import { type IWalletCategory } from '../../../../../../interfaces/wallet_interfaces'
 
 function CategoryColumn({
   category,

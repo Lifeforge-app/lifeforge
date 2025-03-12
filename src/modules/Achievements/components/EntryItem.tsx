@@ -3,9 +3,9 @@ import React from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IAchievementEntry } from '@interfaces/achievements_interfaces'
+import useComponentBg from '@hooks/useComponentBg'
 
-import useThemeColors from '@hooks/useThemeColor'
+import { type IAchievementEntry } from '../interfaces/achievements_interfaces'
 
 function EntryItem({
   entry,
@@ -22,7 +22,7 @@ function EntryItem({
     React.SetStateAction<boolean>
   >
 }): React.ReactElement {
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
 
   return (
     <div

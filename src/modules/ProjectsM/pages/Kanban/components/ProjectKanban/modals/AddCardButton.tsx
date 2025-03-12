@@ -4,11 +4,11 @@ import React, { useState } from 'react'
 
 import { Button } from '@lifeforge/ui'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 function AddCardButton(): React.ReactElement {
   const [isFocused, setIsFocused] = useState(false)
-  const { componentBgLighter } = useThemeColors()
+  const { componentBgLighter } = useComponentBg()
 
   return (
     <li className="flex-center">

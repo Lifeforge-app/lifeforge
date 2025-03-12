@@ -1,4 +1,3 @@
-import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import React, { useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
@@ -9,7 +8,9 @@ import {
   type IProjectsMStatus,
   type IProjectsMTechnology,
   type IProjectsMVisibility
-} from '@interfaces/projects_m_interfaces'
+} from '@modules/ProjectsM/interfaces/projects_m_interfaces'
+
+import { useProjectsMContext } from '../../../providers/ProjectsMProvider'
 
 function _SidebarItem({
   item,

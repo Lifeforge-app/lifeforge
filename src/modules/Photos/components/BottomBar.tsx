@@ -5,13 +5,13 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
+
 import {
   type IPhotoAlbumEntryItem,
   type IPhotosEntryDimensionsAll,
   type IPhotosEntryDimensionsItem
-} from '@interfaces/photos_interfaces'
-
-import { usePhotosContext } from '../../../providers/PhotosProvider'
+} from '../interfaces/photos_interfaces'
 
 function BottomBar({
   photos,

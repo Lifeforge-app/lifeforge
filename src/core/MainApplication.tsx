@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router'
 
-import Sidebar from '@components/layouts/sidebar/Sidebar'
+import Sidebar from './components/sidebar/Sidebar'
 
 function MainApplication(): React.ReactElement {
   return (

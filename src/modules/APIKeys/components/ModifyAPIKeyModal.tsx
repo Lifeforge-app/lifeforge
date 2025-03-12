@@ -4,13 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
+import { type IFieldProps } from '@lifeforge/ui'
 
 import {
   type IAPIKeyEntry,
   IAPIKeyFormState
-} from '@interfaces/api_keys_interfaces'
-import { IFieldProps } from '@interfaces/modal_interfaces'
-
+} from '../interfaces/api_keys_interfaces'
 import { fetchChallenge } from '../utils/fetchChallenge'
 
 function ModifyAPIKeyModal({

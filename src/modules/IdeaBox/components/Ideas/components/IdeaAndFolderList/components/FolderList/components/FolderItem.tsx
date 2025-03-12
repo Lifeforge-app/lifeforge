@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
@@ -8,11 +7,12 @@ import { useDrag, useDrop } from 'react-dnd'
 import { Link, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
+import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
+
 import {
   IIdeaBoxEntry,
   type IIdeaBoxFolder
-} from '@interfaces/ideabox_interfaces'
-
+} from '../../../../../../../interfaces/ideabox_interfaces'
 import FolderContextMenu from './FolderContextMenu'
 
 interface FolderItemProps {

@@ -6,7 +6,8 @@ import { useDrag, useDrop } from 'react-dnd'
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
-import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
+
+import { type ITodoSubtask } from '../../../../../interfaces/todo_list_interfaces'
 
 function SubtaskItem({
   subtask,

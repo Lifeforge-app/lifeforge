@@ -1,4 +1,3 @@
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import React, { useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
@@ -8,7 +7,8 @@ import {
   type IBooksLibraryCategory,
   type IBooksLibraryFileType,
   type IBooksLibraryLanguage
-} from '@interfaces/books_library_interfaces'
+} from '../../../interfaces/books_library_interfaces'
+import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 
 const recordKeyInDB = {
   categories: 'category',

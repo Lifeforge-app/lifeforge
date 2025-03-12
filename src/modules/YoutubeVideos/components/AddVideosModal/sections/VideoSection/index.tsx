@@ -7,10 +7,9 @@ import { toast } from 'react-toastify'
 
 import { TextInput } from '@lifeforge/ui'
 
-import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
-
 import useFetch from '@hooks/useFetch'
 
+import { type IYoutubeVideoInfo } from '../../../../interfaces/youtube_video_storage_interfaces'
 import VideoDetails from './components/VideoDetails'
 import checkDownloadStatus from './functions/checkDownloadStatus'
 

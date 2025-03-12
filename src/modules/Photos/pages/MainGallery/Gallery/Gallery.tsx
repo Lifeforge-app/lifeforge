@@ -1,9 +1,10 @@
 /* eslint-disable sonarjs/no-nested-functions */
-import { usePhotosContext } from '@providers/PhotosProvider'
 import React, { useEffect } from 'react'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
 import { EmptyStateScreen } from '@lifeforge/ui'
+
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
 import BottomBar from '../../../components/BottomBar'
 import DateGroup from './DateGroup'

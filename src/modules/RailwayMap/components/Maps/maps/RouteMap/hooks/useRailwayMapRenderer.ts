@@ -1,10 +1,8 @@
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import { useRailwayMapContext } from '@providers/RailwayMapProvider'
 import * as d3 from 'd3'
 import { useEffect, useMemo, useRef } from 'react'
 
-import useThemeColors from '@hooks/useThemeColor'
-
+import { useRailwayMapContext } from '../../../../../providers/RailwayMapProvider'
 import {
   clearSelection,
   drawLines,
@@ -14,8 +12,7 @@ import {
 } from '../utils/renderUtils'
 
 export const useRailwayMapRenderer = (): void => {
-  const { bgTemp } = useThemeColors()
-  const { theme } = usePersonalizationContext()
+  const { theme, bgTempPalette } = usePersonalizationContext()
   const {
     filteredLines: filteredLinesCode,
     lines,
@@ -90,7 +87,7 @@ export const useRailwayMapRenderer = (): void => {
       filteredStations,
       shortestRoute,
       lines,
-      bgTemp,
+      bgTempPalette,
       finalTheme,
       selectedStation,
       setSelectedStation,
@@ -98,7 +95,7 @@ export const useRailwayMapRenderer = (): void => {
       gRef,
       centerStation!
     )
-  }, [filteredStations, shortestRoute, lines, bgTemp, centerStation])
+  }, [filteredStations, shortestRoute, lines, bgTempPalette, centerStation])
 
   useEffect(() => {
     if (!gRef.current || !isInitializedRef.current) return
@@ -111,10 +108,10 @@ export const useRailwayMapRenderer = (): void => {
           g,
           selectedStation,
           lines,
-          bgTemp[finalTheme === 'dark' ? 900 : 50]
+          bgTempPalette[finalTheme === 'dark' ? 900 : 50]
         )
       } else {
-        clearSelection(g, bgTemp[finalTheme === 'dark' ? 900 : 50])
+        clearSelection(g, bgTempPalette[finalTheme === 'dark' ? 900 : 50])
       }
     } catch (error) {
       console.error('Error updating station selection:', error)
