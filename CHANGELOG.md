@@ -22,6 +22,12 @@
 - **Code**: Removed unused typescript declarations like `function Component(): React.ReactElement {}`, etc.
 - **Code**: Refactored `PersonalizationProvider`.
 - **Code**: Moved routing logics and related files into `core/routes`.
+- **UI**: Renamed `no-bg` variant of button to `plain`.
+- **UI**: Added `tertiary` variant to button.
+- **UI**: Improved styling for button component.
+- **UI**: Started integrating Storybook for visualizing and documenting the deisgn system.
+- **UI**: Removed `CreateOrUpdateButton` component.
+- **UI**: Restructured the props of **HamburgerMenu** and remove redundant props.
 
 ---
 
