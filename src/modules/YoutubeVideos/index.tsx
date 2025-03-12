@@ -7,8 +7,9 @@ import {
   DeleteConfirmationModal,
   EmptyStateScreen,
   FAB,
+  ModuleWrapper,
   Scrollbar
-, ModuleWrapper } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
 

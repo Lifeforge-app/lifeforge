@@ -7,8 +7,10 @@ import {
   Button,
   DeleteConfirmationModal,
   EmptyStateScreen,
-  FAB
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+  FAB,
+  ModuleHeader,
+  ModuleWrapper
+} from '@lifeforge/ui'
 
 import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 

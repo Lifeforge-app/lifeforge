@@ -8,8 +8,10 @@ import {
   APIFallbackComponent,
   DeleteConfirmationModal,
   EmptyStateScreen,
+  ModuleHeader,
+  ModuleWrapper,
   Scrollbar
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 

@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import React, { useEffect } from 'react'
 
-import { APIFallbackComponent , EmptyStateScreen } from '@lifeforge/ui'
+import { APIFallbackComponent, EmptyStateScreen } from '@lifeforge/ui'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 

@@ -6,8 +6,9 @@ import { toast } from 'react-toastify'
 import {
   APIFallbackComponent,
   DeleteConfirmationModal,
-  EmptyStateScreen
-, ModuleWrapper } from '@lifeforge/ui'
+  EmptyStateScreen,
+  ModuleWrapper
+} from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 

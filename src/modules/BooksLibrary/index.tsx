@@ -10,9 +10,11 @@ import {
   EmptyStateScreen,
   HamburgerMenuSelectorWrapper,
   MenuItem,
+  ModuleHeader,
+  ModuleWrapper,
   SearchInput,
   ViewModeSelector
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import Header from './components/Header'
 import LibgenModal from './components/LibgenModal'

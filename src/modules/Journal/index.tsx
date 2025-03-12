@@ -10,8 +10,10 @@ import {
   CreatePasswordScreen,
   DeleteConfirmationModal,
   LockedScreen,
+  ModuleHeader,
+  ModuleWrapper,
   OTPScreen
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
 

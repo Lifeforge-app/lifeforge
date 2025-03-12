@@ -14,8 +14,9 @@ import {
   FAB,
   HamburgerMenuSelectorWrapper,
   MenuItem,
+  ModuleHeader,
   SidebarDivider
-, ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 const intervalManager = IntervalManager.getInstance()
 

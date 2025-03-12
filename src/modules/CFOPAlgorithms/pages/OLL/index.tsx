@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import React from 'react'
 import { useNavigate } from 'react-router'
 
-import { GoBackButton , ModuleWrapper } from '@lifeforge/ui'
+import { GoBackButton, ModuleWrapper } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 

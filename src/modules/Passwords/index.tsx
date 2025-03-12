@@ -8,9 +8,11 @@ import {
   DeleteConfirmationModal,
   FAB,
   LockedScreen,
+  ModuleHeader,
+  ModuleWrapper,
   OTPScreen,
   SearchInput
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import { usePasswordContext } from '@modules/Passwords/providers/PasswordsProvider'
 

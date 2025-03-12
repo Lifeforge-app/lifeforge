@@ -7,9 +7,11 @@ import {
   DeleteConfirmationModal,
   EmptyStateScreen,
   FAB,
+  ModuleHeader,
+  ModuleWrapper,
   Scrollbar,
   SearchInput
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import EntryItem from './components/EntryItem'
 import ModifyEntryModal from './components/ModifyEntryModal'

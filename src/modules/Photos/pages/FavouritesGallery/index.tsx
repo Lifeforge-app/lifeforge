@@ -8,8 +8,9 @@ import {
   APIFallbackComponent,
   GoBackButton,
   HamburgerMenu,
-  MenuItem
-, ModuleWrapper } from '@lifeforge/ui'
+  MenuItem,
+  ModuleWrapper
+} from '@lifeforge/ui'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 

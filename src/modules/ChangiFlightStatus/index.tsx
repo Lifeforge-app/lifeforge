@@ -8,9 +8,11 @@ import {
   APIFallbackComponent,
   ListboxOrComboboxOption,
   ListboxOrComboboxOptions,
+  ModuleHeader,
+  ModuleWrapper,
   Scrollbar,
   SearchInput
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 import useFetch from '@hooks/useFetch'

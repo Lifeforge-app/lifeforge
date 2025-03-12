@@ -12,10 +12,12 @@ import {
   DeleteConfirmationModal,
   EmptyStateScreen,
   LayoutWithSidebar,
+  ModuleHeader,
+  ModuleWrapper,
   Pagination,
   Scrollbar,
   SearchInput
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import {
   IMailInboxEntry,

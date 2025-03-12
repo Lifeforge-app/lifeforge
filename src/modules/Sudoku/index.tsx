@@ -1,7 +1,12 @@
 import React, { useRef } from 'react'
 import { useReactToPrint } from 'react-to-print'
 
-import { APIFallbackComponent, Button , ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+import {
+  APIFallbackComponent,
+  Button,
+  ModuleHeader,
+  ModuleWrapper
+} from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 

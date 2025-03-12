@@ -12,10 +12,12 @@ import {
   DeleteConfirmationModal,
   EmptyStateScreen,
   LayoutWithSidebar,
+  ModuleHeader,
+  ModuleWrapper,
   QueryWrapper,
   Scrollbar,
   SearchInput
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import VW_CATEGORIES from '@modules/VirtualWardrobe/constants/virtual_wardrobe_categories'
 import {
