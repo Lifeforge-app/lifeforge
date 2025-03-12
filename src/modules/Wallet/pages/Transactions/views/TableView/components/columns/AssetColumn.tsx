@@ -3,9 +3,9 @@ import clsx from 'clsx'
 import React from 'react'
 import { Link } from 'react-router'
 
-import { type IWalletAsset } from '@interfaces/wallet_interfaces'
+import useComponentBg from '@hooks/useComponentBg'
 
-import useThemeColors from '@hooks/useThemeColor'
+import { type IWalletAsset } from '../../../../../../interfaces/wallet_interfaces'
 
 function AssetColumn({
   asset,
@@ -14,7 +14,7 @@ function AssetColumn({
   asset: string
   assets: IWalletAsset[]
 }): React.ReactElement {
-  const { componentBgLighter } = useThemeColors()
+  const { componentBgLighter } = useComponentBg()
 
   return (
     <td className="p-2 text-center">

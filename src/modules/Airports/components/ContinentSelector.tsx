@@ -9,7 +9,7 @@ import {
   ListboxOrComboboxOptions
 } from '@lifeforge/ui'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 const CONTINENTS = {
   AF: 'Africa',
@@ -22,7 +22,7 @@ const CONTINENTS = {
 }
 
 function ContinentSelector(): React.ReactElement {
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
   const continentID = useParams().continentID ?? 'all'
   const navigate = useNavigate()
 

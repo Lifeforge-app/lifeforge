@@ -7,12 +7,11 @@ import {
   EmptyStateScreen,
   Scrollbar
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-
+import useComponentBg from '@hooks/useComponentBg'
 import useFetch from '@hooks/useFetch'
-import useThemeColors from '@hooks/useThemeColor'
 
 import RawHTMLInputModal from './components/RawHTMLInputModal'
 
@@ -31,7 +30,7 @@ function OpenaiApiPricing(): React.ReactElement {
   const [data, refreshData] =
     useFetch<Record<string, any>>('openai-api-pricing')
   const [isInputRawHTMLModalOpen, setIsInputRawHTMLModalOpen] = useState(false)
-  const { componentBgLighter } = useThemeColors()
+  const { componentBgLighter } = useComponentBg()
 
   return (
     <ModuleWrapper>

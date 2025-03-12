@@ -1,8 +1,9 @@
-import { useRailwayMapContext } from '@providers/RailwayMapProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { HamburgerMenuSelectorWrapper, MenuItem } from '@lifeforge/ui'
+
+import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
 
 function LineFilter(): React.ReactElement {
   const { lines, filteredLines, setFilteredLines } = useRailwayMapContext()

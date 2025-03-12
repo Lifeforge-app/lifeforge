@@ -1,4 +1,3 @@
-import { useTodoListContext } from '@providers/TodoListProvider'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useSearchParams } from 'react-router'
@@ -10,6 +9,8 @@ import {
   FAB,
   SearchInput
 } from '@lifeforge/ui'
+
+import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
 
 import ModifyListModal from '../modals/ModifyListModal'
 import ModifyPriorityModal from '../modals/ModifyPriorityModal'

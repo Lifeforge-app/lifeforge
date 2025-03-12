@@ -1,4 +1,3 @@
-import { usePhotosContext } from '@providers/PhotosProvider'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -12,7 +11,9 @@ import {
   ModalWrapper
 } from '@lifeforge/ui'
 
-import { type IPhotoAlbumTag } from '@interfaces/photos_interfaces'
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
+
+import { type IPhotoAlbumTag } from '../../interfaces/photos_interfaces'
 
 function ManageTagsModal({
   isOpen,

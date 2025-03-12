@@ -1,5 +1,4 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { useWalletContext } from '@providers/WalletProvider'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
@@ -12,12 +11,12 @@ import {
   HamburgerMenuSelectorWrapper,
   MenuItem
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
-import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-
+import { type IWalletTransaction } from '../../interfaces/wallet_interfaces'
 import Header from './components/Header'
 import SearchBar from './components/SearchBar'
 import Sidebar from './components/Sidebar'

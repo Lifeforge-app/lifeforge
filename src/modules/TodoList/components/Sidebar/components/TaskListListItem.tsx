@@ -1,10 +1,11 @@
-import { useTodoListContext } from '@providers/TodoListProvider'
 import React from 'react'
 import { useSearchParams } from 'react-router'
 
 import { MenuItem, SidebarItem } from '@lifeforge/ui'
 
-import { type ITodoListList } from '@interfaces/todo_list_interfaces'
+import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
+
+import { type ITodoListList } from '../../../interfaces/todo_list_interfaces'
 
 function TaskListListItem({
   item,

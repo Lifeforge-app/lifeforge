@@ -2,8 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 
 import { GoBackButton } from '@lifeforge/ui'
-
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { ModuleWrapper } from '@lifeforge/ui'
 
 import { algsetScrambles } from '../../algorithms/PLL'
 import { DEFAULT_CUBE, applyMoves } from '../../scripts/genCube'

@@ -8,10 +8,9 @@ import {
   Scrollbar
 } from '@lifeforge/ui'
 
-import { type IAirportNOTAMEntry } from '@interfaces/airports_interfaces'
-
 import useFetch from '@hooks/useFetch'
 
+import { type IAirportNOTAMEntry } from '../../../../../../interfaces/airports_interfaces'
 import Header from './components/Header'
 import PropsTable from './components/PropsTable'
 import RawCodeAndSummary from './components/RawCodeAndSummary'

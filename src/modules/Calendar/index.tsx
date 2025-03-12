@@ -2,20 +2,22 @@ import { useQuery } from '@tanstack/react-query'
 import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 
-import { DeleteConfirmationModal, QueryWrapper, Scrollbar } from '@lifeforge/ui'
-
 import {
-  type ICalendarCategory,
-  type ICalendarEvent
-} from '@interfaces/calendar_interfaces'
-
-import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
+  ContentWrapperWithSidebar,
+  DeleteConfirmationModal,
+  LayoutWithSidebar,
+  QueryWrapper,
+  Scrollbar
+} from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
+import {
+  type ICalendarCategory,
+  type ICalendarEvent
+} from './interfaces/calendar_interfaces'
 import ModifyCategoryModal from './modals/ModifyCategoryModal'
 import ModifyEventModal from './modals/ModifyEventModal'
 
@@ -60,7 +62,7 @@ function CalendarModule(): React.ReactElement {
     <>
       <ModuleWrapper>
         <ModuleHeader icon="tabler:calendar" title="Calendar" />
-        <SidebarAndContentWrapper>
+        <LayoutWithSidebar>
           <Sidebar
             categoriesQuery={categoriesQuery}
             events={events}
@@ -89,7 +91,7 @@ function CalendarModule(): React.ReactElement {
               </div>
             </Scrollbar>
           </ContentWrapperWithSidebar>
-        </SidebarAndContentWrapper>
+        </LayoutWithSidebar>
       </ModuleWrapper>
       <ModifyEventModal
         categoriesQuery={categoriesQuery}

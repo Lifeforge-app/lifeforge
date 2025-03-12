@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 
 import { FormModal } from '@lifeforge/ui'
+import { type IFieldProps } from '@lifeforge/ui'
 
 import {
   type IIdeaBoxContainer,
   IIdeaBoxContainerFormState
-} from '@interfaces/ideabox_interfaces'
-import { type IFieldProps } from '@interfaces/modal_interfaces'
+} from '../../../interfaces/ideabox_interfaces'
 
 function ModifyContainerModal({
   openType,

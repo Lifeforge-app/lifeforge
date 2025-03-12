@@ -14,9 +14,8 @@ import {
 import React, { useRef, useState } from 'react'
 
 import { MenuItem } from '@lifeforge/ui'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
 import DashboardGrid from './components/DashboardGrid'
 import ManageWidgetsModal from './components/ManageWidgetsModal'

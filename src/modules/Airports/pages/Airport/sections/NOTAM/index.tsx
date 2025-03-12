@@ -5,10 +5,9 @@ import { toast } from 'react-toastify'
 
 import { APIFallbackComponent, Button, EmptyStateScreen } from '@lifeforge/ui'
 
-import { type IAirportNOTAMEntry } from '@interfaces/airports_interfaces'
-
 import useFetch from '@hooks/useFetch'
 
+import { type IAirportNOTAMEntry } from '../../../../interfaces/airports_interfaces'
 import NOTAMListItem from './components/NOTAMListItem'
 
 function NOTAM({

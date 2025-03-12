@@ -8,8 +8,10 @@ import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
 import {
+  ContentWrapperWithSidebar,
   DeleteConfirmationModal,
   EmptyStateScreen,
+  LayoutWithSidebar,
   ListboxOrComboboxOption,
   ListboxOrComboboxOptions,
   Pagination,
@@ -18,23 +20,19 @@ import {
   SearchInput,
   ViewModeSelector
 } from '@lifeforge/ui'
-
-import {
-  type IGuitarTabsEntry,
-  type IGuitarTabsSidebarData
-} from '@interfaces/guitar_tabs_interfaces'
-
-import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
+import { ModuleWrapper } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 import GuitarWorldModal from './components/GuitarWorldModal'
 import Header from './components/Header'
 import ModifyEntryModal from './components/ModifyEntryModal'
 import Sidebar from './components/Sidebar'
+import {
+  type IGuitarTabsEntry,
+  type IGuitarTabsSidebarData
+} from './interfaces/guitar_tabs_interfaces'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
 
@@ -47,7 +45,7 @@ const SORT_TYPE = [
 
 function GuitarTabs(): React.ReactElement {
   const { t } = useTranslation('modules.guitarTabs')
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
   const queryClient = useQueryClient()
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [page, setPage] = useState<number>(1)
@@ -175,7 +173,7 @@ function GuitarTabs(): React.ReactElement {
         totalItems={entriesQuery.data?.totalItems ?? 0}
         view={view}
       />
-      <SidebarAndContentWrapper>
+      <LayoutWithSidebar>
         <Sidebar
           isOpen={sidebarOpen}
           setOpen={setSidebarOpen}
@@ -306,7 +304,7 @@ function GuitarTabs(): React.ReactElement {
             )}
           </QueryWrapper>
         </ContentWrapperWithSidebar>
-      </SidebarAndContentWrapper>
+      </LayoutWithSidebar>
       <ModifyEntryModal
         existingItem={existingEntry}
         isOpen={modifyEntryModalOpen}

@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { type IChangeLogVersion } from '@interfaces/changelog_interfaces'
+import useComponentBg from '@hooks/useComponentBg'
 
-import useThemeColors from '@hooks/useThemeColor'
+import { type IChangeLogVersion } from '../../../interfaces/changelog_interfaces'
 
 function LogItemContent({
   entry
 }: {
   entry: IChangeLogVersion
 }): React.ReactElement {
-  const { componentBgLighter } = useThemeColors()
+  const { componentBgLighter } = useComponentBg()
   return (
     <ul className="list-outside list-disc space-y-2">
       {entry.entries

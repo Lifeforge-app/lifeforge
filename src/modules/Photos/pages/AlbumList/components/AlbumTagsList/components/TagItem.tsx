@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import React from 'react'
 import { useSearchParams } from 'react-router'
 
-import { IPhotoAlbumTag } from '@interfaces/photos_interfaces'
+import { IPhotoAlbumTag } from '../../../../../interfaces/photos_interfaces'
 
 function TagItem({
   tag,

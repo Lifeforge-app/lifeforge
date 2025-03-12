@@ -4,11 +4,10 @@ import React from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
-
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 import DownloadMenu from '../../../components/DownloadMenu'
+import { type IGuitarTabsEntry } from '../../../interfaces/guitar_tabs_interfaces'
 import AudioPlayer from './AudioPlayer'
 
 function EntryItem({
@@ -22,7 +21,7 @@ function EntryItem({
   setModifyEntryModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }): React.ReactElement {
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
 
   return (
     <li

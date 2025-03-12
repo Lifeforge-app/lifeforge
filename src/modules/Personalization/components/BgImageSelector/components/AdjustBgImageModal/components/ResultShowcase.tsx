@@ -1,10 +1,11 @@
-import { BG_BLURS } from '@constants/bg_blurs'
 import { Icon } from '@iconify/react'
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import React from 'react'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
+
+import { BG_BLURS } from '../../../../../../../core/constants/bg_blurs'
 
 function ResultShowcase({
   bgBrightness,
@@ -20,7 +21,7 @@ function ResultShowcase({
   overlayOpacity: number
 }): React.ReactElement {
   const { bgImage } = usePersonalizationContext()
-  const { componentBgLighter, componentBg } = useThemeColors()
+  const { componentBgLighter, componentBg } = useComponentBg()
 
   return (
     <div

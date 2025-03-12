@@ -1,11 +1,11 @@
-import RailwayMapProvider from '@providers/RailwayMapProvider'
 import React, { memo } from 'react'
 
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { ModuleWrapper } from '@lifeforge/ui'
 
 import Header from './components/Header'
 import MapView from './components/Maps'
 import RoutePlannerModal from './components/RoutePlannerModal'
+import RailwayMapProvider from './providers/RailwayMapProvider'
 
 function RailwayMap(): React.ReactElement {
   return (

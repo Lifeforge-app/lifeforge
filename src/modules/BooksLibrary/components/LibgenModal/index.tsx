@@ -1,4 +1,3 @@
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -14,6 +13,7 @@ import {
   SearchInput
 } from '@lifeforge/ui'
 
+import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
 import AddToLibraryModal from '../AddToLibraryModal'
 import Details from './components/Details'
 import SearchResultItem from './components/SearchResultItem'

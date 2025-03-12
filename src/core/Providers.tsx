@@ -4,12 +4,13 @@ import AuthProvider from '@providers/AuthProvider'
 import BackgroundProvider from '@providers/BackgroundProvider'
 import GlobalStateProvider from '@providers/GlobalStateProvider'
 import LifeforgeUIProviderWrapper from '@providers/LifeforgeUIProviderWrapper'
-import { MusicProvider } from '@providers/MusicProvider'
 import PersonalizationProvider from '@providers/PersonalizationProvider'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+
+import { MusicProvider } from '@modules/Music/providers/MusicProvider'
 
 const queryClient = new QueryClient()
 

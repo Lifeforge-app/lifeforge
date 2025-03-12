@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import React from 'react'
 import { Link, useParams } from 'react-router'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 const AIRPORT_TYPES = {
   large_airport: ['text-yellow-500', 'uil:plane'],
@@ -26,7 +26,7 @@ function EntryItem({
   location: string
   type: string
 }): React.ReactElement {
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
 
   const { continentID, countryID, regionID } = useParams<{
     continentID?: string

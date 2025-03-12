@@ -11,8 +11,8 @@ import {
 } from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
-import { type IJournalEntry } from '@interfaces/journal_interfaces'
 
+import { type IJournalEntry } from '../../interfaces/journal_interfaces'
 import JournalListItem from './components/JournalListItem'
 
 function JournalList({

@@ -1,11 +1,10 @@
 import { Icon } from '@iconify/react'
-import { shortenBigNumber } from '@utils/strings'
+import humanNumber from 'human-number'
 import moment from 'moment'
 import React from 'react'
 
-import { type IYoutubePlaylistVideoEntry } from '@interfaces/youtube_video_storage_interfaces'
-
 import IconButton from '../../../../../../Music/components/Bottombar/components/IconButton'
+import { type IYoutubePlaylistVideoEntry } from '../../../../../interfaces/youtube_video_storage_interfaces'
 
 function ProgressOrButton({
   status,
@@ -91,7 +90,7 @@ function PlaylistVideoEntry({
           <h1 className="line-clamp-2 text-lg font-semibold">{video.title}</h1>
           <p className="text-custom-500 font-medium">{video.uploader}</p>
           <p className="text-bg-500 mt-2">
-            {shortenBigNumber(video.viewCount ?? 0)} views
+            {humanNumber(video.viewCount ?? 0)} views
           </p>
         </div>
       </div>

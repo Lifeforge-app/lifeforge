@@ -1,18 +1,17 @@
 import { Icon } from '@iconify/react'
-import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 import { Link } from 'react-router'
 
 import { APIFallbackComponent, Button, DashboardItem } from '@lifeforge/ui'
 
-import { type IWalletAsset } from '@interfaces/wallet_interfaces'
-
+import useComponentBg from '@hooks/useComponentBg'
 import useFetch from '@hooks/useFetch'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { type IWalletAsset } from '../../Wallet/interfaces/wallet_interfaces'
 
 export default function AssetsBalance(): React.ReactElement {
-  const { componentBgLighterWithHover } = useThemeColors()
+  const { componentBgLighterWithHover } = useComponentBg()
   const [assets] = useFetch<IWalletAsset[]>('wallet/assets')
   const [showBalance, setShowBalance] = useState(false)
 
@@ -57,7 +56,7 @@ export default function AssetsBalance(): React.ReactElement {
                     <div className="text-bg-500 flex items-center gap-1 text-sm">
                       RM{' '}
                       {showBalance ? (
-                        numberToMoney(asset.balance)
+                        asset.balance.toFixed(2)
                       ) : (
                         <span className="flex items-center">
                           {Array(4)

@@ -8,9 +8,8 @@ import {
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 

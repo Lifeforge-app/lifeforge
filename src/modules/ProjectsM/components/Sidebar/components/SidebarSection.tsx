@@ -1,9 +1,9 @@
-import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { APIFallbackComponent, SidebarTitle } from '@lifeforge/ui'
 
+import { useProjectsMContext } from '../../../providers/ProjectsMProvider'
 import SidebarItem from './SidebarItem'
 
 function SidebarSection({

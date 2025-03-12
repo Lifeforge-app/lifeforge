@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
-import { cleanFileSize } from '@utils/strings'
 import clsx from 'clsx'
+import prettyBytes from 'pretty-bytes'
 import React from 'react'
 
-import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
+import { type IBooksLibraryEntry } from '../../interfaces/books_library_interfaces'
+import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
 
 function BookMeta({
   item,
@@ -94,7 +94,7 @@ function BookMeta({
       )}
       <p className="text-bg-500 flex shrink-0 items-center whitespace-nowrap">
         <Icon className="mr-1 size-4" icon="tabler:dimensions" />
-        {cleanFileSize(item.size)}
+        {prettyBytes(item.size)}
       </p>
       <Icon
         className={clsx('size-1', isGridView && 'hidden sm:block')}

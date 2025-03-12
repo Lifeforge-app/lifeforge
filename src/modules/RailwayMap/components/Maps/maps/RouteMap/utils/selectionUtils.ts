@@ -3,7 +3,7 @@ import * as d3 from 'd3'
 import {
   IRailwayMapLine,
   IRailwayMapStation
-} from '@interfaces/railway_map_interfaces'
+} from '@modules/RailwayMap/interfaces/railway_map_interfaces'
 
 import { getLine } from './stationUtils'
 

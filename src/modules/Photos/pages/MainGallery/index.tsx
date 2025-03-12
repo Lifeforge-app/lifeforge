@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
-import { usePhotosContext } from '@providers/PhotosProvider'
 import React, { useEffect, useState } from 'react'
 
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
+import { ModuleHeader } from '@lifeforge/ui'
+
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
 import PhotosSidebar from '../../components/PhotosSidebar'
 import AddPhotosToAlbumModal from '../../components/modals/AddPhotosToAlbumModal'

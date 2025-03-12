@@ -3,12 +3,12 @@ import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
 
-import { IMailInboxEntry } from '@interfaces/mail_inbox_interfaces'
+import { IMailInboxEntry } from '@modules/MailInbox/interfaces/mail_inbox_interfaces'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 function MailHeader({ mail }: { mail: IMailInboxEntry }): React.ReactElement {
-  const { componentBgLighter } = useThemeColors()
+  const { componentBgLighter } = useComponentBg()
 
   return (
     <div className="w-full">

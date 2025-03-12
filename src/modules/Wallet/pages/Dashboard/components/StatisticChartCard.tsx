@@ -1,4 +1,3 @@
-import { useWalletContext } from '@providers/WalletProvider'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useMemo } from 'react'
@@ -10,6 +9,8 @@ import {
   DashboardItem,
   EmptyStateScreen
 } from '@lifeforge/ui'
+
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 const options = {
   maintainAspectRatio: false,

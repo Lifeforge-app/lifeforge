@@ -14,16 +14,14 @@ import {
   OTPScreen,
   QueryWrapper
 } from '@lifeforge/ui'
-
-import { type IAPIKeyEntry } from '@interfaces/api_keys_interfaces'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
 import EntryItem from './components/EntryItem'
 import ModifyAPIKeyModal from './components/ModifyAPIKeyModal'
+import { type IAPIKeyEntry } from './interfaces/api_keys_interfaces'
 
 function APIKeys(): React.ReactElement {
   const { t } = useTranslation('modules.apiKeys')

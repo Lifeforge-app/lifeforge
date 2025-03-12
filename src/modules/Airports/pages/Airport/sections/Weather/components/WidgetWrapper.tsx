@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import React from 'react'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 function WidgetWrapper({
   children,
@@ -10,7 +10,7 @@ function WidgetWrapper({
   children: React.ReactNode
   className?: string
 }): React.ReactElement {
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
 
   return (
     <div

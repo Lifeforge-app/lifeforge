@@ -6,12 +6,12 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import { useSearchParams } from 'react-router'
 
+import { type Loadable } from '@interfaces/common'
+
 import {
   type ICalendarCategory,
   type ICalendarEvent
-} from '@interfaces/calendar_interfaces'
-import { type Loadable } from '@interfaces/common'
-
+} from '../../interfaces/calendar_interfaces'
 import CalendarHeader from './components/CalendarHeader'
 import EventItem from './components/EventItem'
 

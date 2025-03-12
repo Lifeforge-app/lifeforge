@@ -10,9 +10,8 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-import { Loadable } from '@interfaces/common'
-import { type IGuitarTabsGuitarWorldScores } from '@interfaces/guitar_tabs_interfaces'
-
+import { Loadable } from '../../../../core/interfaces/common'
+import { type IGuitarTabsGuitarWorldScores } from '../../interfaces/guitar_tabs_interfaces'
 import ScoreList from './components/ScoreList'
 
 function GuitarWorldModal({

@@ -10,11 +10,10 @@ import {
   SearchInput,
   ViewModeSelector
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
-import { IMovieEntry } from '@interfaces/movies_interfaces'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { IMovieEntry } from '@modules/Movies/interfaces/movies_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

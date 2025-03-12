@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { type INotesEntry } from '@interfaces/notes_interfaces'
-
+import { type INotesEntry } from '../../../interfaces/notes_interfaces'
 import EntryItem from './components/EntryItem'
 
 function Directory({

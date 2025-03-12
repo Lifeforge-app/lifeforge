@@ -9,12 +9,10 @@ import { Tooltip } from 'react-tooltip'
 import { QueryWrapper } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-import useThemeColors from '@hooks/useThemeColor'
 
 function CodeTimeActivityCalendar(): React.ReactElement {
   const { t } = useTranslation('modules.codeTime')
-  const { theme } = usePersonalizationContext()
-  const { theme: themeColor } = useThemeColors()
+  const { theme, themeColor } = usePersonalizationContext()
   const [year, setYear] = useState(new Date().getFullYear())
   const dataQuery = useAPIQuery<{
     data: Array<{

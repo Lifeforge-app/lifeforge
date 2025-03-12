@@ -8,9 +8,8 @@ import {
   ModalWrapper
 } from '@lifeforge/ui'
 
-import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
-
 import VideoInfo from '../../Music/modals/YoutubeDownloaderModal/components/VideoInfo'
+import { type IYoutubeVideoInfo } from '../interfaces/youtube_video_storage_interfaces'
 
 function ProgressIndicator({
   status,

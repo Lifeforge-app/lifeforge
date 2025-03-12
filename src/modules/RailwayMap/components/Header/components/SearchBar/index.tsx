@@ -1,9 +1,9 @@
-import { useRailwayMapContext } from '@providers/RailwayMapProvider'
 import clsx from 'clsx'
 import React, { useMemo } from 'react'
 
 import { EmptyStateScreen, Scrollbar, SearchInput } from '@lifeforge/ui'
 
+import { useRailwayMapContext } from '../../../../providers/RailwayMapProvider'
 import SearchResultItem from './components/SearchResultItem'
 
 function SearchBar(): React.ReactElement {

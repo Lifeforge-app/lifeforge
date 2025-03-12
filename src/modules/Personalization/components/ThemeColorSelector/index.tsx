@@ -12,7 +12,8 @@ import {
 import DefaultThemeColorSelector from './components/DefaultThemeColorSelector'
 
 function ThemeColorSelector(): React.ReactElement {
-  const { themeColor, setThemeColor } = usePersonalizationContext()
+  const { rawThemeColor: themeColor, setThemeColor } =
+    usePersonalizationContext()
   const [customThemeColor, setCustomThemeColor] = useState<string>(
     themeColor.startsWith('#') ? themeColor : '#000000'
   )

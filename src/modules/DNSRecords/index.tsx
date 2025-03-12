@@ -19,19 +19,18 @@ import {
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
-import {
-  DNSRecordType,
-  type IDNSRecordEntry
-} from '@interfaces/dns_records_interfaces'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 
 import useFetch from '@hooks/useFetch'
 
 import IconButton from '../Music/components/Bottombar/components/IconButton'
+import {
+  DNSRecordType,
+  type IDNSRecordEntry
+} from './interfaces/dns_records_interfaces'
 
 const FILTER_TYPE = ['All', 'A', 'AAAA', 'CNAME', 'TXT']
 

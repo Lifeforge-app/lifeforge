@@ -2,14 +2,14 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React from 'react'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 import { IAirportMETARData } from '..'
 import { METAR_CODES } from '../constants/constants'
 import WidgetWrapper from './WidgetWrapper'
 
 function Clouds({ data }: { data: IAirportMETARData }): React.ReactElement {
-  const { componentBgLighter } = useThemeColors()
+  const { componentBgLighter } = useComponentBg()
 
   return (
     <WidgetWrapper className="col-span-4">

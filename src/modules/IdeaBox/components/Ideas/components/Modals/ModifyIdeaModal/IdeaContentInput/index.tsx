@@ -1,4 +1,3 @@
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -9,6 +8,8 @@ import {
   TagsInput,
   TextInput
 } from '@lifeforge/ui'
+
+import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
 
 import TextContentInput from './components/TextContentInput'
 

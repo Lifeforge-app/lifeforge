@@ -7,8 +7,7 @@ import { toast } from 'react-toastify'
 
 import { DateInput, ModalHeader, ModalWrapper, TextInput } from '@lifeforge/ui'
 
-import { type IJournalEntry } from '@interfaces/journal_interfaces'
-
+import { type IJournalEntry } from '../../interfaces/journal_interfaces'
 import Cleanup from './sections/Cleanup'
 import Mood from './sections/Mood'
 import Photos from './sections/Photos'

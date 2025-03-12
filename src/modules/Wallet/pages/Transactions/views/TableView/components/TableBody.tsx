@@ -1,8 +1,8 @@
-import { useWalletContext } from '@providers/WalletProvider'
 import React from 'react'
 
-import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
+import { type IWalletTransaction } from '../../../../../interfaces/wallet_interfaces'
 import ActionColumn from './columns/ActionColumn'
 import AmountColumn from './columns/AmountColumn'
 import AssetColumn from './columns/AssetColumn'

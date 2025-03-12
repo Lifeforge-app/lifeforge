@@ -5,12 +5,12 @@ import {
   ListboxOptions
 } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { toCamelCase } from '@utils/strings'
 import clsx from 'clsx'
+import _ from 'lodash'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 const COLORS = [
   'red',
@@ -43,7 +43,7 @@ function DefaultThemeColorSelector({
   customThemeColor: string
 }): React.ReactElement {
   const { t } = useTranslation('modules.personalization')
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
 
   return (
     <Listbox
@@ -72,7 +72,7 @@ function DefaultThemeColorSelector({
             {t(
               `themeColorSelector.colors.${
                 !themeColor.startsWith('#')
-                  ? toCamelCase(
+                  ? _.camelCase(
                       themeColor
                         .split('-')
                         .slice(1)
@@ -114,7 +114,7 @@ function DefaultThemeColorSelector({
                         )}
                       />
                       {t(
-                        `themeColorSelector.colors.${toCamelCase(
+                        `themeColorSelector.colors.${_.camelCase(
                           color
                             .split('-')
                             .map(e => e[0].toUpperCase() + e.slice(1))

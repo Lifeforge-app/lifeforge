@@ -5,10 +5,9 @@ import { toast } from 'react-toastify'
 
 import { APIFallbackComponent, ModalHeader, ModalWrapper } from '@lifeforge/ui'
 
-import { type IJournalEntry } from '@interfaces/journal_interfaces'
-
 import useFetch from '@hooks/useFetch'
 
+import { type IJournalEntry } from '../interfaces/journal_interfaces'
 import JournalView from './JournalView'
 
 function JournalViewModal({

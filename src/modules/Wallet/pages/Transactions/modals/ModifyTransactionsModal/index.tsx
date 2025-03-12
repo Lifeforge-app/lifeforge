@@ -1,4 +1,3 @@
-import { useWalletContext } from '@providers/WalletProvider'
 import fetchAPI from '@utils/fetchAPI'
 import { parse } from 'file-type-mime'
 import moment from 'moment'
@@ -18,8 +17,9 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
+import { type IWalletTransaction } from '../../../../interfaces/wallet_interfaces'
 import AssetsFromToSelector from './components/AssetsFromToSelector'
 import AssetsSelector from './components/AssetsSelector'
 import CategorySelector from './components/CategorySelector'

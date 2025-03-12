@@ -8,7 +8,8 @@ import React, { useState } from 'react'
 import { Button } from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
-import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
+
+import { type IPhotosAlbum } from '../../interfaces/photos_interfaces'
 
 function ShareAlbumModal({
   albumId,

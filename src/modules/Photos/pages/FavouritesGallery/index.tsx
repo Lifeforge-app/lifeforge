@@ -10,16 +10,15 @@ import {
   HamburgerMenu,
   MenuItem
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
 
-import { type IPhotoAlbumEntryItem } from '@interfaces/photos_interfaces.ts'
-
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
 import useFetch from '@hooks/useFetch.ts'
 
-import { usePhotosContext } from '../../../../providers/PhotosProvider.tsx'
 import BottomBar from '../../components/BottomBar.tsx'
 import ImageObject from '../../components/ImageObject.tsx'
+import { type IPhotoAlbumEntryItem } from '../../interfaces/photos_interfaces.ts'
 
 function PhotosFavouritesGallery(): React.ReactElement {
   const { selectedPhotos, setSelectedPhotos, setModifyAlbumModalOpenType } =

@@ -3,10 +3,9 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 
 import { GoBackButton } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
 
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 import Cube from './Cube'
 
@@ -166,7 +165,7 @@ const sections: Array<{
 
 function CFOPF2L(): React.ReactElement {
   const navigate = useNavigate()
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
 
   return (
     <ModuleWrapper>

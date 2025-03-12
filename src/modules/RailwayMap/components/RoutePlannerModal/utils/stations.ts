@@ -1,4 +1,4 @@
-import { IRailwayMapStation } from '@interfaces/railway_map_interfaces'
+import { IRailwayMapStation } from '@modules/RailwayMap/interfaces/railway_map_interfaces'
 
 export const filterStations = (stations: IRailwayMapStation[], query: string) =>
   stations.filter(

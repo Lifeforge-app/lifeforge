@@ -4,17 +4,16 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 
 import { ErrorScreen, LoadingScreen } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
-import { type INotesWorkspace } from '@interfaces/notes_interfaces'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-
+import useComponentBg from '@hooks/useComponentBg'
 import useFetch from '@hooks/useFetch'
-import useThemeColors from '@hooks/useThemeColor'
+
+import { type INotesWorkspace } from './interfaces/notes_interfaces'
 
 function Notes(): React.ReactElement {
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
   const [bounded, setBounded] = useState(false)
   const [data] = useFetch<INotesWorkspace[]>('notes/workspace/list', bounded)
 

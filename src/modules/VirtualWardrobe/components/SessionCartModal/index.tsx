@@ -11,9 +11,9 @@ import {
   ModalWrapper
 } from '@lifeforge/ui'
 
-import { Loadable } from '@interfaces/common'
-import { type IVirtualWardrobeEntry } from '@interfaces/virtual_wardrobe_interfaces'
+import { IVirtualWardrobeEntry } from '@modules/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
 
+import { Loadable } from '../../../../core/interfaces/common'
 import EntryItem from '../../pages/Clothes/components/EntryItem'
 import CheckoutConfirmationModal from './components/CheckoutConfirmationModal'
 

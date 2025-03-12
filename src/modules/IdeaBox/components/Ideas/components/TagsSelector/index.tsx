@@ -1,11 +1,11 @@
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import React, { useMemo } from 'react'
 import { useParams } from 'react-router'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
 
-import { IIdeaBoxTag } from '@interfaces/ideabox_interfaces'
+import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
 
+import { IIdeaBoxTag } from '../../../../interfaces/ideabox_interfaces'
 import TagItem from './components/TagItem'
 
 const sortFunc = (a: IIdeaBoxTag, b: IIdeaBoxTag) => {

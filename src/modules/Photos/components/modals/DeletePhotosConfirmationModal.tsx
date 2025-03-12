@@ -1,14 +1,15 @@
-import { usePhotosContext } from '@providers/PhotosProvider'
 import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 
 import { Button, ModalWrapper } from '@lifeforge/ui'
 
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
+
 import {
   type IPhotoAlbumEntryItem,
   type IPhotosEntry,
   type IPhotosEntryDimensionsAll
-} from '@interfaces/photos_interfaces'
+} from '../../interfaces/photos_interfaces'
 
 function DeletePhotosConfirmationModal({
   isInAlbumGallery = false,

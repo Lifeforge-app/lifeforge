@@ -2,7 +2,7 @@ import React from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type INotesEntry } from '@interfaces/notes_interfaces'
+import { type INotesEntry } from '../../../../../../interfaces/notes_interfaces'
 
 function EntryMenu({
   entry,

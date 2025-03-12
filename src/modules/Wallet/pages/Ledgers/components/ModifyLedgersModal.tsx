@@ -14,7 +14,7 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-import { type IWalletLedger } from '@interfaces/wallet_interfaces'
+import { type IWalletLedger } from '../../../interfaces/wallet_interfaces'
 
 function ModifyLedgersModal({
   openType,

@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
+import { type IFieldProps } from '@lifeforge/ui'
 
-import { type IFieldProps } from '@interfaces/modal_interfaces'
-import { type IWishlistList } from '@interfaces/wishlist_interfaces'
+import { type IWishlistList } from '../interfaces/wishlist_interfaces'
 
 function ModifyWishlistListModal({
   openType,

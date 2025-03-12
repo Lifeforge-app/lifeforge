@@ -1,6 +1,6 @@
 import { useAuthContext } from '@providers/AuthProvider'
 import fetchAPI from '@utils/fetchAPI'
-import { toCamelCase } from '@utils/strings'
+import _ from 'lodash'
 import moment from 'moment'
 import React, { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -71,7 +71,7 @@ function ModifyModal({
       <ModalHeader
         icon="tabler:pencil"
         namespace="modules.accountSettings"
-        title={`${toCamelCase(title)}.update`}
+        title={`${_.camelCase(title)}.update`}
         onClose={onClose}
       />
       {type !== 'date' ? (

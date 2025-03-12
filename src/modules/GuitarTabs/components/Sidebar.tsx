@@ -11,7 +11,7 @@ import {
   SidebarWrapper
 } from '@lifeforge/ui'
 
-import { type IGuitarTabsSidebarData } from '@interfaces/guitar_tabs_interfaces'
+import { type IGuitarTabsSidebarData } from '../interfaces/guitar_tabs_interfaces'
 
 function Sidebar({
   sidebarDataQuery,

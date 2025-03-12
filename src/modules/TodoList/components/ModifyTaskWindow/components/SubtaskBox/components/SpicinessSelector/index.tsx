@@ -1,7 +1,8 @@
-import { SPICINESS_COLOR } from '@constants/todo_subtasks_generation_spiciness'
 import React from 'react'
 
 import { HamburgerMenu } from '@lifeforge/ui'
+
+import { SPICINESS_COLOR } from '@modules/TodoList/constants/todo_subtasks_generation_spiciness'
 
 import SpicinessHeader from './components/SpicinessHeader'
 import SpicinessSlider from './components/SpicinessSlider'

@@ -1,12 +1,12 @@
-import { useWalletContext } from '@providers/WalletProvider'
 import React from 'react'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
 
 import { Scrollbar } from '@lifeforge/ui'
 
-import { type IWalletTransaction } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
+import { type IWalletTransaction } from '../../../../interfaces/wallet_interfaces'
 import TransactionListItem from './components/TransactionListItem'
 
 const AS = AutoSizer as any

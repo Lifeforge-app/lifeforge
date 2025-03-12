@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react'
-import { useWalletContext } from '@providers/WalletProvider'
-import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useMemo } from 'react'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
+
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 function Overview({
   month,
@@ -36,24 +36,24 @@ function Overview({
           <p className="text-xl">Income</p>
           <p className="text-lg">
             RM{' '}
-            {numberToMoney(
-              filteredTransactions.reduce((acc, curr) => {
+            {filteredTransactions
+              .reduce((acc, curr) => {
                 if (curr.type === 'income') return acc + curr.amount
                 return acc
               }, 0)
-            )}
+              .toFixed(2)}
           </p>
         </div>
         <div className="bg-bg-200 dark:bg-bg-900 print:bg-black/[3%]! flex items-center justify-between p-3">
           <p className="text-xl">Expenses</p>
           <p className="text-lg">
             RM (
-            {numberToMoney(
-              filteredTransactions.reduce((acc, curr) => {
+            {filteredTransactions
+              .reduce((acc, curr) => {
                 if (curr.type === 'expenses') return acc + curr.amount
                 return acc
               }, 0)
-            )}
+              .toFixed(2)}
             )
           </p>
         </div>
@@ -79,8 +79,8 @@ function Overview({
               >
                 RM{' '}
                 {netIncome >= 0
-                  ? numberToMoney(netIncome)
-                  : `(${numberToMoney(Math.abs(netIncome))})`}
+                  ? netIncome.toFixed(2)
+                  : `(${Math.abs(netIncome).toFixed(2)})`}
               </p>
             )
           })()}
@@ -189,10 +189,10 @@ function Overview({
                         return (
                           <>
                             <td className="whitespace-nowrap p-3 text-right text-lg">
-                              {numberToMoney(lastMonthAmount)}
+                              {lastMonthAmount.toFixed(2)}
                             </td>
                             <td className="whitespace-nowrap p-3 text-right text-lg">
-                              {numberToMoney(thatMonthAmount)}
+                              {thatMonthAmount.toFixed(2)}
                             </td>
                             <td
                               className={clsx(
@@ -202,11 +202,11 @@ function Overview({
                               )}
                             >
                               {thatMonthAmount - lastMonthAmount < 0
-                                ? `(${numberToMoney(
-                                    Math.abs(thatMonthAmount - lastMonthAmount)
-                                  )})`
-                                : numberToMoney(
+                                ? `(${Math.abs(
                                     thatMonthAmount - lastMonthAmount
+                                  ).toFixed(2)})`
+                                : (thatMonthAmount - lastMonthAmount).toFixed(
+                                    2
                                   )}
                             </td>
                             <td
@@ -287,7 +287,7 @@ function Overview({
                             borderBottom: '6px double'
                           }}
                         >
-                          {numberToMoney(lastMonthAmount)}
+                          {lastMonthAmount.toFixed(2)}
                         </td>
                         <td
                           className="whitespace-nowrap p-3 text-right text-lg font-medium"
@@ -296,7 +296,7 @@ function Overview({
                             borderBottom: '6px double'
                           }}
                         >
-                          {numberToMoney(thatMonthAmount)}
+                          {thatMonthAmount.toFixed(2)}
                         </td>
                         <td
                           className={clsx(
@@ -310,10 +310,10 @@ function Overview({
                           }}
                         >
                           {thatMonthAmount - lastMonthAmount < 0
-                            ? `(${numberToMoney(
-                                Math.abs(thatMonthAmount - lastMonthAmount)
-                              )})`
-                            : numberToMoney(thatMonthAmount - lastMonthAmount)}
+                            ? `(${Math.abs(
+                                thatMonthAmount - lastMonthAmount
+                              ).toFixed(2)})`
+                            : (thatMonthAmount - lastMonthAmount).toFixed(2)}
                         </td>
                         <td
                           className={clsx(
@@ -436,10 +436,10 @@ function Overview({
                             return (
                               <>
                                 <td className="whitespace-nowrap p-3 text-right text-lg">
-                                  {numberToMoney(lastMonthAmount)}
+                                  {lastMonthAmount.toFixed(2)}
                                 </td>
                                 <td className="whitespace-nowrap p-3 text-right text-lg">
-                                  {numberToMoney(thatMonthAmount)}
+                                  {thatMonthAmount.toFixed(2)}
                                 </td>
                                 <td
                                   className={clsx(
@@ -451,14 +451,12 @@ function Overview({
                                   )}
                                 >
                                   {thatMonthAmount - lastMonthAmount < 0
-                                    ? `(${numberToMoney(
-                                        Math.abs(
-                                          thatMonthAmount - lastMonthAmount
-                                        )
-                                      )})`
-                                    : numberToMoney(
+                                    ? `(${Math.abs(
                                         thatMonthAmount - lastMonthAmount
-                                      )}
+                                      ).toFixed(2)})`
+                                    : (
+                                        thatMonthAmount - lastMonthAmount
+                                      ).toFixed(2)}
                                 </td>
                                 <td
                                   className={clsx(
@@ -527,7 +525,7 @@ function Overview({
                                 borderBottom: '6px double'
                               }}
                             >
-                              {numberToMoney(lastMonthAmount)}
+                              {lastMonthAmount.toFixed(2)}
                             </td>
                             <td
                               className="whitespace-nowrap p-3 text-right text-lg font-medium"
@@ -536,7 +534,7 @@ function Overview({
                                 borderBottom: '6px double'
                               }}
                             >
-                              {numberToMoney(thatMonthAmount)}
+                              {thatMonthAmount.toFixed(2)}
                             </td>
                             <td
                               className={clsx(
@@ -552,11 +550,11 @@ function Overview({
                               }}
                             >
                               {thatMonthAmount - lastMonthAmount < 0
-                                ? `(${numberToMoney(
-                                    Math.abs(thatMonthAmount - lastMonthAmount)
-                                  )})`
-                                : numberToMoney(
+                                ? `(${Math.abs(
                                     thatMonthAmount - lastMonthAmount
+                                  ).toFixed(2)})`
+                                : (thatMonthAmount - lastMonthAmount).toFixed(
+                                    2
                                   )}
                             </td>
                             <td

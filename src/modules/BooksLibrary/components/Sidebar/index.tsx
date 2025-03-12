@@ -1,9 +1,9 @@
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import React from 'react'
 import { useSearchParams } from 'react-router'
 
 import { SidebarDivider, SidebarItem, SidebarWrapper } from '@lifeforge/ui'
 
+import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
 import SidebarSection from './components/SidebarSection'
 
 function Sidebar(): React.ReactElement {

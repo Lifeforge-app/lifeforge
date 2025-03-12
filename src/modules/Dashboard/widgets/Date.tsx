@@ -1,15 +1,13 @@
 import { usePersonalizationContext } from '@providers/PersonalizationProvider'
-import { isLightColor } from '@utils/colors'
-import { arabicToChinese } from '@utils/strings'
 import clsx from 'clsx'
 import moment from 'moment/min/moment-with-locales'
 import React, { useRef } from 'react'
+import tinycolor from 'tinycolor2'
 
-import useThemeColors from '@hooks/useThemeColor'
+import { arabicToChinese } from '@modules/Dashboard/utils/arabicToChineseNumber'
 
 export default function DateWidget(): React.ReactElement {
-  const { language } = usePersonalizationContext()
-  const { theme } = useThemeColors()
+  const { language, themeColor } = usePersonalizationContext()
   const ref = useRef<HTMLDivElement>(null)
 
   return (
@@ -17,7 +15,7 @@ export default function DateWidget(): React.ReactElement {
       ref={ref}
       className={clsx(
         'bg-custom-500 shadow-custom flex size-full gap-4 rounded-lg p-4',
-        isLightColor(theme) ? 'text-bg-800' : 'text-bg-50',
+        tinycolor(themeColor).isLight() ? 'text-bg-800' : 'text-bg-50',
         (ref.current?.offsetHeight ?? 0) < 240
           ? 'flex-row items-end'
           : 'flex-col items-start justify-end'

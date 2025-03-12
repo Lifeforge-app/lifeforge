@@ -5,11 +5,10 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button, DeleteConfirmationModal, FAB, MenuItem } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
-import { IMomentVaultEntry } from '@interfaces/moment_vault_interfaces'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { IMomentVaultEntry } from '@modules/MomentVault/interfaces/moment_vault_interfaces'
 
 import useFetch from '@hooks/useFetch'
 

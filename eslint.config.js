@@ -58,11 +58,11 @@ export default [
           extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts'],
           map: [
             ['@components', path.resolve(srcPath, 'components')],
-            ['@providers', path.resolve(srcPath, 'providers')],
-            ['@hooks', path.resolve(srcPath, 'hooks')],
-            ['@interfaces', path.resolve(srcPath, 'interfaces')],
-            ['@utils', path.resolve(srcPath, 'utils')],
-            ['@constants', path.resolve(srcPath, 'constants')]
+            ['@providers', path.resolve(srcPath, 'core/providers')],
+            ['@hooks', path.resolve(srcPath, 'core/hooks')],
+            ['@interfaces', path.resolve(srcPath, 'core/interfaces')],
+            ['@utils', path.resolve(srcPath, 'core/utils')],
+            ['@modules', path.resolve(srcPath, 'modules')]
           ]
         }
       },

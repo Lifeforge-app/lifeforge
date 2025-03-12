@@ -1,6 +1,4 @@
 import { Icon } from '@iconify/react'
-import { useWalletContext } from '@providers/WalletProvider'
-import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import React, { useMemo, useState } from 'react'
 import { Doughnut } from 'react-chartjs-2'
@@ -8,6 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
 import { APIFallbackComponent, DashboardItem, Scrollbar } from '@lifeforge/ui'
+
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 const options2 = {
   responsive: true,
@@ -108,7 +108,7 @@ function ExpensesBreakdownCard(): React.ReactElement {
                               ))}
                           </span>
                         ) : (
-                          numberToMoney(incomeExpenses.monthlyExpenses)
+                          incomeExpenses.monthlyExpenses.toFixed(2)
                         ))}
                     </div>
                     <div className="text-bg-500 mt-2 w-1/2 text-center text-sm sm:text-base">

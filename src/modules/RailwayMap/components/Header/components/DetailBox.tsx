@@ -1,17 +1,17 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { useRailwayMapContext } from '@providers/RailwayMapProvider'
 import { useDebounce } from '@uidotdev/usehooks'
 import clsx from 'clsx'
 import React from 'react'
 
 import { Button } from '@lifeforge/ui'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
+import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
 import StationCodes from '../../StationCode'
 
 function DetailBox(): React.ReactElement {
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
   const { selectedStation, setRoutePlannerOpen, setRoutePlannerStart } =
     useRailwayMapContext()
   const innerSelectedStation = useDebounce(

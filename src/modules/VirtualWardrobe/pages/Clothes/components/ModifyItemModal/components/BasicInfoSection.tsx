@@ -1,4 +1,3 @@
-import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
 import { Icon } from '@iconify/react'
 import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
@@ -11,7 +10,8 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-import { IVirtualWardrobeFormState } from '@interfaces/virtual_wardrobe_interfaces'
+import VW_CATEGORIES from '@modules/VirtualWardrobe/constants/virtual_wardrobe_categories'
+import { IVirtualWardrobeFormState } from '@modules/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
 
 function BasicInfoSection({
   canVision,

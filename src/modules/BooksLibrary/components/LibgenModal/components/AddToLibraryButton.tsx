@@ -1,8 +1,9 @@
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@lifeforge/ui'
+
+import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 
 function AddToLibraryButton({
   md5,

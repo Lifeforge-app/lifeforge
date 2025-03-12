@@ -1,12 +1,12 @@
 import { Icon } from '@iconify/react'
-import { shortenBigNumber } from '@utils/strings'
+import humanNumber from 'human-number'
 import moment from 'moment'
 import React from 'react'
 
 import {
   type IYoutubePlaylistVideoEntry,
   type IYoutubeVideoInfo
-} from '@interfaces/youtube_video_storage_interfaces'
+} from '../../../../YoutubeVideos/interfaces/youtube_video_storage_interfaces'
 
 function VideoInfo({
   videoInfo
@@ -39,14 +39,14 @@ function VideoInfo({
         <p className="text-custom-500 mt-1">{videoInfo.uploader}</p>
         {videoInfo.uploadDate !== undefined && (
           <p className="text-bg-500 mt-4">
-            {shortenBigNumber(+videoInfo.viewCount)} views •{' '}
+            {humanNumber(+videoInfo.viewCount)} views •{' '}
             {moment(videoInfo.uploadDate, 'YYYYMMDD').fromNow()}
           </p>
         )}
         {videoInfo.likeCount !== undefined && (
           <p className="text-bg-500 mt-1 flex items-center gap-1">
-            <Icon icon="uil:thumbs-up" />{' '}
-            {shortenBigNumber(+videoInfo.likeCount)} likes
+            <Icon icon="uil:thumbs-up" /> {humanNumber(+videoInfo.likeCount)}{' '}
+            likes
           </p>
         )}
       </div>

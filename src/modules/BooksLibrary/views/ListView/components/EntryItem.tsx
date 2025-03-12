@@ -1,16 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 
 import { Button, HamburgerMenu } from '@lifeforge/ui'
 
-import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
+import useComponentBg from '@hooks/useComponentBg'
 
-import useThemeColors from '@hooks/useThemeColor'
-
+import { type IBooksLibraryEntry } from '../../../interfaces/books_library_interfaces'
+import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
@@ -19,7 +18,7 @@ export default function EntryItem({
 }: {
   item: IBooksLibraryEntry
 }): React.ReactElement {
-  const { componentBgWithHover, componentBgLighter } = useThemeColors()
+  const { componentBgWithHover, componentBgLighter } = useComponentBg()
   const {
     categories: { data: categories },
     entries: { setData: setEntries }

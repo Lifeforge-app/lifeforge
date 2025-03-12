@@ -1,13 +1,13 @@
 import { Icon } from '@iconify/react'
-import { useWalletContext } from '@providers/WalletProvider'
-import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import React from 'react'
 import { useNavigate } from 'react-router'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IWalletAsset } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
+
+import { type IWalletAsset } from '../../../interfaces/wallet_interfaces'
 
 function AssetItem({
   asset,
@@ -47,7 +47,7 @@ function AssetItem({
               ))}
           </span>
         ) : (
-          numberToMoney(asset.balance)
+          asset.balance.toFixed(2)
         )}
       </p>
       <Button

@@ -1,4 +1,4 @@
-import { toCamelCase } from '@utils/strings'
+import _ from 'lodash'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -37,7 +37,7 @@ function ColumnVisibilityToggle({
           <MenuItem
             key={column}
             isToggled={visibleColumn.includes(column)}
-            text={t(`table.${toCamelCase(column)}`)}
+            text={t(`table.${_.camelCase(column)}`)}
             onClick={() => {
               if (visibleColumn.includes(column)) {
                 setVisibleColumn(visibleColumn.filter(e => e !== column))

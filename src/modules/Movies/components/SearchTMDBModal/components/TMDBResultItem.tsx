@@ -5,9 +5,9 @@ import React, { useState } from 'react'
 
 import { Button } from '@lifeforge/ui'
 
-import { IMovieSearchResult } from '@interfaces/movies_interfaces'
+import { IMovieSearchResult } from '@modules/Movies/interfaces/movies_interfaces'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 function TMDBResultItem({
   data,
@@ -18,7 +18,7 @@ function TMDBResultItem({
   onAddToLibrary: (id: number) => Promise<void>
   isAdded: boolean
 }): React.ReactElement {
-  const { componentBgLighter } = useThemeColors()
+  const { componentBgLighter } = useComponentBg()
   const [loading, setLoading] = useState(false)
 
   return (

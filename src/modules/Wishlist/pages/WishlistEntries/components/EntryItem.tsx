@@ -1,7 +1,6 @@
 /* eslint-disable sonarjs/no-useless-react-setstate */
 import { Icon } from '@iconify/react'
 import fetchAPI from '@utils/fetchAPI'
-import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useState } from 'react'
@@ -10,9 +9,10 @@ import { toast } from 'react-toastify'
 import { Button, Checkbox, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
-import { type IWishlistEntry } from '@interfaces/wishlist_interfaces'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
+
+import { type IWishlistEntry } from '../../../interfaces/wishlist_interfaces'
 
 function EntryItem({
   entry,
@@ -27,7 +27,7 @@ function EntryItem({
   onEdit: (entry: IWishlistEntry) => void
   onDelete: (entry: IWishlistEntry) => void
 }): React.ReactElement {
-  const { componentBg, componentBgLighter } = useThemeColors()
+  const { componentBg, componentBgLighter } = useComponentBg()
   const [bought, setBought] = useState(entry.bought)
 
   const toggleBought = () =>
@@ -86,7 +86,7 @@ function EntryItem({
             <h2 className="line-clamp-2 w-full min-w-0 text-lg font-medium text-zinc-500">
               {entry.name}
             </h2>
-            <p className="mt-2 text-2xl">RM {numberToMoney(entry.price)}</p>
+            <p className="mt-2 text-2xl">RM {entry.price.toFixed(2)}</p>
             {entry.bought && (
               <p className="mt-2 text-sm text-zinc-500">
                 Bought {moment(entry.bought_at).fromNow()}

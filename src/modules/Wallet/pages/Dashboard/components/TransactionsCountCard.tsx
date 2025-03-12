@@ -1,6 +1,4 @@
 import { Icon } from '@iconify/react'
-import { useWalletContext } from '@providers/WalletProvider'
-import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,10 +6,12 @@ import { Link } from 'react-router'
 
 import { APIFallbackComponent, DashboardItem, Scrollbar } from '@lifeforge/ui'
 
-import useThemeColors from '@hooks/useThemeColor'
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
+
+import useComponentBg from '@hooks/useComponentBg'
 
 function TransactionsCountCard(): React.ReactElement {
-  const { componentBgLighterWithHover } = useThemeColors()
+  const { componentBgLighterWithHover } = useComponentBg()
   const { transactions, isAmountHidden } = useWalletContext()
   const { t } = useTranslation('modules.wallet')
 
@@ -152,7 +152,7 @@ function TransactionsCountCard(): React.ReactElement {
                             ))}
                         </span>
                       ) : (
-                        numberToMoney(amounts[type].amount)
+                        amounts[type].amount.toFixed(2)
                       )}
                     </div>
                     <div className="text-bg-500 text-right text-sm">
