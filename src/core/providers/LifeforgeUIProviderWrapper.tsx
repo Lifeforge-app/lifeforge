@@ -3,6 +3,7 @@ import React from 'react'
 import { LifeforgeUIProvider } from '@lifeforge/ui'
 
 import { usePersonalization } from './PersonalizationProvider'
+import { useSidebarState } from './SidebarStateProvider'
 
 function LifeforgeUIProviderWrapper({
   children
@@ -10,6 +11,7 @@ function LifeforgeUIProviderWrapper({
   children: React.ReactNode
 }): React.ReactElement {
   const personalization = usePersonalization()
+  const { toggleSidebar, sidebarExpanded } = useSidebarState()
 
   return (
     <LifeforgeUIProvider
@@ -17,7 +19,9 @@ function LifeforgeUIProviderWrapper({
         apiHost: import.meta.env.VITE_API_HOST,
         googleAPIKey: import.meta.env.VITE_GOOGLE_API_KEY,
         ...personalization,
-        themeColor: personalization.rawThemeColor
+        themeColor: personalization.rawThemeColor,
+        sidebarExpanded,
+        toggleSidebar
       }}
     >
       {children}

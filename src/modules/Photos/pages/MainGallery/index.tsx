@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { useGlobalState } from '@providers/GlobalStateProvider'
+import { useSidebarState } from '@providers/SidebarStateProvider'
 import React, { useEffect, useState } from 'react'
 
 import { ModuleHeader } from '@lifeforge/ui'
@@ -15,7 +15,7 @@ import GalleryContainer from './Gallery/GalleryContainer'
 import GalleryHeader from './Gallery/GalleryHeader'
 
 function PhotosMainGallery(): React.ReactElement {
-  const { sidebarExpanded } = useGlobalState()
+  const { sidebarExpanded } = useSidebarState()
   const {
     setPhotoDimensions,
     hidePhotosInAlbum,

@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { useGlobalState } from '@providers/GlobalStateProvider'
+import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
 import React from 'react'
 
@@ -12,7 +12,7 @@ function SidebarHeader({
   searchQuery: string
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
 }): React.ReactElement {
-  const { sidebarExpanded, toggleSidebar } = useGlobalState()
+  const { sidebarExpanded, toggleSidebar } = useSidebarState()
 
   return (
     <>

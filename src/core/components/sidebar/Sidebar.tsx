@@ -1,4 +1,4 @@
-import { useGlobalState } from '@providers/GlobalStateProvider'
+import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 
@@ -10,7 +10,7 @@ import SidebarHeader from './SidebarHeader'
 import SidebarItems from './SidebarItems'
 
 function Sidebar(): React.ReactElement {
-  const { sidebarExpanded, toggleSidebar } = useGlobalState()
+  const { sidebarExpanded, toggleSidebar } = useSidebarState()
   const [searchQuery, setSearchQuery] = useState('')
 
   return (

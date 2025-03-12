@@ -1,5 +1,5 @@
 import { useAuth } from '@providers/AuthProvider'
-import { useGlobalState } from '@providers/GlobalStateProvider'
+import { useSidebarState } from '@providers/SidebarStateProvider'
 import _ from 'lodash'
 import React, { Fragment, useMemo } from 'react'
 
@@ -18,7 +18,7 @@ const ROUTES = _ROUTES as IRoutes[]
 
 function SidebarItems({ query }: { query: string }): React.ReactElement {
   const { userData } = useAuth()
-  const { sidebarExpanded, toggleSidebar } = useGlobalState()
+  const { sidebarExpanded, toggleSidebar } = useSidebarState()
   const filteredRoutes = useMemo(
     () =>
       ROUTES.filter(
