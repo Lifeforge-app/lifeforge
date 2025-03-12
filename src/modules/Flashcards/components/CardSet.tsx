@@ -10,8 +10,9 @@ import {
   Button,
   GoBackButton,
   HamburgerMenu,
-  MenuItem
-, ModuleWrapper } from '@lifeforge/ui'
+  MenuItem,
+  ModuleWrapper
+} from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 

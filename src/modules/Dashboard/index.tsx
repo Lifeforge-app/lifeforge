@@ -13,7 +13,7 @@ import {
 } from 'chart.js'
 import React, { useRef, useState } from 'react'
 
-import { MenuItem , ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+import { MenuItem, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
 import DashboardGrid from './components/DashboardGrid'
 import ManageWidgetsModal from './components/ManageWidgetsModal'

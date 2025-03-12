@@ -8,8 +8,10 @@ import {
   DeleteConfirmationModal,
   EmptyStateScreen,
   FAB,
+  ModuleHeader,
+  ModuleWrapper,
   QueryWrapper
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import ModifyAchievementModal from './ModifyAchievementModal'
 import DifficultySelector from './components/DifficultySelector'

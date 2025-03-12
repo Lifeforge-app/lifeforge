@@ -9,8 +9,9 @@ import {
   Button,
   EmptyStateScreen,
   GoBackButton,
+  ModuleWrapper,
   Scrollbar
-, ModuleWrapper } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 import useFetch from '@hooks/useFetch'

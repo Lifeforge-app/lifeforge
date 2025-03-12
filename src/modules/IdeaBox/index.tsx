@@ -7,9 +7,11 @@ import { useTranslation } from 'react-i18next'
 import {
   DeleteConfirmationModal,
   EmptyStateScreen,
+  ModuleHeader,
+  ModuleWrapper,
   QueryWrapper,
   SearchInput
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import Containers from './components/Containers'
 import ModifyContainerModal from './components/Containers/components/ModifyContainerModal'

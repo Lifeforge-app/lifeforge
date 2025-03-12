@@ -5,9 +5,11 @@ import { useParams } from 'react-router'
 import {
   APIFallbackComponent,
   EmptyStateScreen,
+  ModuleHeader,
+  ModuleWrapper,
   Scrollbar,
   SearchInput
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 

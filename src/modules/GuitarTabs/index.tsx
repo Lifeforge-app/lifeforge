@@ -14,12 +14,13 @@ import {
   LayoutWithSidebar,
   ListboxOrComboboxOption,
   ListboxOrComboboxOptions,
+  ModuleWrapper,
   Pagination,
   QueryWrapper,
   Scrollbar,
   SearchInput,
   ViewModeSelector
-, ModuleWrapper } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 import useComponentBg from '@hooks/useComponentBg'

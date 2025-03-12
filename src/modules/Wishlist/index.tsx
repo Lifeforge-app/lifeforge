@@ -6,8 +6,10 @@ import {
   Button,
   DeleteConfirmationModal,
   EmptyStateScreen,
-  FAB
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+  FAB,
+  ModuleHeader,
+  ModuleWrapper
+} from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 

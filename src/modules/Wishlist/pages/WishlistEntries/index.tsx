@@ -10,9 +10,10 @@ import {
   DeleteConfirmationModal,
   EmptyStateScreen,
   MenuItem,
+  ModuleWrapper,
   Scrollbar,
   Tabs
-, ModuleWrapper } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 
