@@ -7,10 +7,8 @@ import reactCompiler from 'eslint-plugin-react-compiler'
 import sonarjs from 'eslint-plugin-sonarjs'
 import path from 'path'
 import process from 'process'
-// import tailwind from 'eslint-plugin-tailwindcss'
 import tseslint from 'typescript-eslint'
 
-// Get the project root directory
 const projectRoot = process.cwd()
 const srcPath = path.resolve(projectRoot, 'src')
 
@@ -26,7 +24,6 @@ export default [
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   importPlugin.flatConfigs.recommended,
-  // ...tailwind.configs['flat/recommended'],
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
