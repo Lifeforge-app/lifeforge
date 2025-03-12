@@ -12,7 +12,10 @@ import {
   SearchInput
 } from '@lifeforge/ui'
 
-import { IMovieEntry, IMovieSearchResults } from '@interfaces/movies_interfaces'
+import {
+  IMovieEntry,
+  IMovieSearchResults
+} from '@modules/Movies/interfaces/movies_interfaces'
 
 import TMDBLogo from './components/TMDBLogo.svg'
 import TMDBResultsList from './components/TMDBResultsList'

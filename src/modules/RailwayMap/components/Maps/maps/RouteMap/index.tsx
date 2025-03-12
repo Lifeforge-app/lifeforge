@@ -1,15 +1,15 @@
-import { useRailwayMapContext } from '@providers/RailwayMapProvider'
 import clsx from 'clsx'
 import React from 'react'
 
 import { LoadingScreen } from '@lifeforge/ui'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
+import { useRailwayMapContext } from '../../../../providers/RailwayMapProvider'
 import { useRailwayMapRenderer } from './hooks/useRailwayMapRenderer'
 
 function RouteMap(): React.ReactElement {
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
   const {
     routeMapSVGRef: svgRef,
     routeMapGRef: gRef,

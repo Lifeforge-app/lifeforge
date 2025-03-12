@@ -3,13 +3,13 @@ import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
 
 import { DeleteConfirmationModal, FormModal } from '@lifeforge/ui'
+import { type IFieldProps } from '@lifeforge/ui'
 
 import {
   type ICalendarCategory,
   type ICalendarEvent,
   ICalendarEventFormState
-} from '@interfaces/calendar_interfaces'
-import { type IFieldProps } from '@interfaces/modal_interfaces'
+} from '../interfaces/calendar_interfaces'
 
 interface ModifyEventModalProps {
   openType: 'create' | 'update' | null

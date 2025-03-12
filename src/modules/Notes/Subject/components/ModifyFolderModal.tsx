@@ -12,7 +12,7 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-import { type INotesEntry } from '@interfaces/notes_interfaces'
+import { type INotesEntry } from '../../interfaces/notes_interfaces'
 
 function ModifyFolderModal({
   openType,

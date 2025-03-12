@@ -1,7 +1,7 @@
 import {
   IRailwayMapLine,
   IRailwayMapStation
-} from '@interfaces/railway_map_interfaces'
+} from '@modules/RailwayMap/interfaces/railway_map_interfaces'
 
 export type RouteData = IRailwayMapStation[] | 'loading' | 'error'
 

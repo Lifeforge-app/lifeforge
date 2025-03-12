@@ -1,10 +1,11 @@
-import { VIDEO_RESOLUTIONS } from '@constants/video_res'
 import { Icon } from '@iconify/react'
-import { cleanFileSize } from '@utils/strings'
 import moment from 'moment'
+import prettyBytes from 'pretty-bytes'
 import React from 'react'
 
-import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
+import { VIDEO_RESOLUTIONS } from '@modules/YoutubeVideos/constants/video_res'
+
+import { type IYoutubeVideosStorageEntry } from '../../../interfaces/youtube_video_storage_interfaces'
 
 function VideoDetails({
   video
@@ -54,7 +55,7 @@ function VideoDetails({
         <Icon className="size-1" icon="tabler:circle-filled" />
         <p className="text-bg-500 flex shrink-0 items-center gap-1 whitespace-nowrap">
           <Icon className="mr-1 size-5" icon="tabler:file" />
-          {cleanFileSize(video.filesize)}
+          {prettyBytes(video.filesize)}
         </p>
       </div>
     </div>

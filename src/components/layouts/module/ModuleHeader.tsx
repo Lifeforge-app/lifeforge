@@ -1,8 +1,8 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useGlobalStateContext } from '@providers/GlobalStateProvider'
-import { toCamelCase } from '@utils/strings'
 import clsx from 'clsx'
+import _ from 'lodash'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -30,7 +30,7 @@ function ModuleHeader({
   customElement
 }: ModuleHeaderProps): React.ReactElement {
   const { t } = useTranslation([
-    `modules.${toCamelCase(title?.toString() ?? '')}`,
+    `modules.${_.camelCase(title?.toString() ?? '')}`,
     'common.misc'
   ])
   const { toggleSidebar, sidebarExpanded } = useGlobalStateContext()

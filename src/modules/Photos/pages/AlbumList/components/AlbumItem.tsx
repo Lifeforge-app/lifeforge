@@ -4,9 +4,9 @@ import { Link } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
-import { usePhotosContext } from '../../../../../providers/PhotosProvider'
+import { type IPhotosAlbum } from '../../../interfaces/photos_interfaces'
 
 function AlbumItem({
   album,

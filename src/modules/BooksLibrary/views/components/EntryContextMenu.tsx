@@ -1,10 +1,10 @@
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import forceDown from '@utils/forceDown'
 import React, { useState } from 'react'
 
 import { MenuItem } from '@lifeforge/ui'
 
-import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
+import { type IBooksLibraryEntry } from '../../interfaces/books_library_interfaces'
+import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
 
 export default function EntryContextMenu({
   item

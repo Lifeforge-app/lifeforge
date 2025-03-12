@@ -3,15 +3,14 @@ import React, { useState } from 'react'
 
 import { APIFallbackComponent, DashboardItem } from '@lifeforge/ui'
 
-import {
-  type ICalendarCategory,
-  type ICalendarEvent
-} from '@interfaces/calendar_interfaces'
-
 import useFetch from '@hooks/useFetch'
 
 import MiniCalendarContent from '../../Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
 import MiniCalendarHeader from '../../Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'
+import {
+  type ICalendarCategory,
+  type ICalendarEvent
+} from '../../Calendar/interfaces/calendar_interfaces'
 
 export default function MiniCalendar(): React.ReactElement {
   const [currentMonth, setCurrentMonth] = useState(moment().month())

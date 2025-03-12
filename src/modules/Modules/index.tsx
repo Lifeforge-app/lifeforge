@@ -1,17 +1,15 @@
 import { useAuthContext } from '@providers/AuthProvider'
 import fetchAPI from '@utils/fetchAPI'
-import { titleToPath, toCamelCase } from '@utils/strings'
+import _ from 'lodash'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { LoadingScreen } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
-import { type IRoutes } from '@interfaces/routes_interfaces'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-
+import { type IRoutes } from '../../core/interfaces/routes_interfaces'
 import _ROUTES from '../../core/routes_config.json'
 // import { type IModuleEntry } from '@interfaces/module_interfaces'
 import ModuleItem from './ModuleItem'
@@ -44,7 +42,6 @@ const ROUTES = _ROUTES as IRoutes[]
 //   { name: 'Photos', icon: 'tabler:camera' },
 //   { name: 'Music', icon: 'tabler:music' },
 //   { name: 'Guitar Tabs', icon: 'mingcute:guitar-line' },
-//   { name: 'Repositories', icon: 'tabler:git-branch' },
 //   { name: 'Pomodoro Timer', icon: 'tabler:clock-bolt' },
 //   { name: 'Flashcards', icon: 'tabler:cards' },
 //   {
@@ -96,12 +93,12 @@ function Modules(): React.ReactElement {
 
   async function toggleModule(moduleName: string): Promise<void> {
     const newEnabledModules = userData.enabledModules.includes(
-      titleToPath(moduleName)
+      _.kebabCase(moduleName)
     )
       ? userData.enabledModules.filter(
-          (module: string) => module !== titleToPath(moduleName)
+          (module: string) => module !== _.kebabCase(moduleName)
         )
-      : [...userData.enabledModules, titleToPath(moduleName)]
+      : [...userData.enabledModules, _.kebabCase(moduleName)]
 
     setUserData({
       ...userData,
@@ -134,7 +131,7 @@ function Modules(): React.ReactElement {
               route.items.filter(route => route.togglable).length > 0 && (
                 <li key={route.title}>
                   <h2 className="before:bg-custom-500 relative mb-6 pl-4 text-3xl font-semibold before:absolute before:left-0 before:top-1/2 before:h-8 before:w-1 before:-translate-y-1/2 before:rounded-full">
-                    {t(`categories.${toCamelCase(route.title)}`)}
+                    {t(`categories.${_.camelCase(route.title)}`)}
                   </h2>
                   <ul className="space-y-2">
                     {route.items
@@ -143,7 +140,7 @@ function Modules(): React.ReactElement {
                         <ModuleItem
                           key={index}
                           enabled={userData.enabledModules.includes(
-                            titleToPath(route.name)
+                            _.kebabCase(route.name)
                           )}
                           module={route}
                           toggleModule={() => {

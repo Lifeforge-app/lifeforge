@@ -1,8 +1,14 @@
-import { camelCaseToTitleCase, formatBytes } from '@utils/strings'
 import clsx from 'clsx'
+import prettyBytes from 'pretty-bytes'
 import React from 'react'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
+
+function camelCaseToTitleCase(text: string): string {
+  return text
+    ?.replace(/([A-Z])/g, ' $1')
+    .replace(/^./, str => str.toUpperCase())
+}
 
 function SectionCard({
   key,
@@ -13,7 +19,7 @@ function SectionCard({
   title: string
   value: Record<string, unknown> | Record<string, unknown>[] | string
 }): React.ReactElement {
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
 
   return (
     <div
@@ -40,7 +46,7 @@ function SectionCard({
                               {camelCaseToTitleCase(k)}
                             </span>
                             <span className="text-bg-500 text-lg">
-                              {formatBytes(v as any) || 'N/A'}
+                              {prettyBytes(v as any) || 'N/A'}
                             </span>
                           </li>
                         ))}
@@ -49,7 +55,7 @@ function SectionCard({
                   }
 
                   if (key === 'mem') {
-                    return formatBytes(v as any)
+                    return prettyBytes(v as any)
                   }
 
                   return String(v) || 'N/A'
@@ -72,7 +78,7 @@ function SectionCard({
                 <span className="text-bg-500 w-1/2 break-all text-lg">
                   {(k.includes('byte') &&
                     // @ts-expect-error - uhh lazy to fix for now =)
-                    formatBytes(v)) ||
+                    prettyBytes(v)) ||
                     'N/A'}
                 </span>
               </li>

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { IIdeaBoxFolder } from '@interfaces/ideabox_interfaces'
+import { IIdeaBoxFolder } from '../../../../../../../interfaces/ideabox_interfaces'
 
 function FolderContextMenu({
   folder,

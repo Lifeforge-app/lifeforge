@@ -1,5 +1,3 @@
-import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
-import VW_COLORS from '@constants/virtual_wardrobe_colors'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
@@ -7,9 +5,11 @@ import React, { useState } from 'react'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IVirtualWardrobeEntry } from '@interfaces/virtual_wardrobe_interfaces'
+import VW_CATEGORIES from '@modules/VirtualWardrobe/constants/virtual_wardrobe_categories'
+import VW_COLORS from '@modules/VirtualWardrobe/constants/virtual_wardrobe_colors'
+import { IVirtualWardrobeEntry } from '@modules/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 interface IEntryItemCommonProps<T extends boolean> {
   entry: IVirtualWardrobeEntry
@@ -41,7 +41,7 @@ function EntryItem<T extends boolean = false>({
   onAddToCart,
   onRemoveFromCart
 }: IEntryItemProps<T>): React.ReactElement {
-  const { componentBg, componentBgLighter } = useThemeColors()
+  const { componentBg, componentBgLighter } = useComponentBg()
   const [addToCartLoading, setAddToCartLoading] = useState(false)
   const [removeFromCartLoading, setRemoveFromCartLoading] = useState(false)
 

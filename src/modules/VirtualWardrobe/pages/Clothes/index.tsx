@@ -1,4 +1,3 @@
-import VW_CATEGORIES from '@constants/virtual_wardrobe_categories'
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import fetchAPI from '@utils/fetchAPI'
@@ -9,21 +8,22 @@ import { toast } from 'react-toastify'
 
 import {
   Button,
+  ContentWrapperWithSidebar,
   DeleteConfirmationModal,
   EmptyStateScreen,
+  LayoutWithSidebar,
   QueryWrapper,
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
+import VW_CATEGORIES from '@modules/VirtualWardrobe/constants/virtual_wardrobe_categories'
 import {
   type IVirtualWardrobeEntry,
   type IVirtualWardrobeSidebarData
-} from '@interfaces/virtual_wardrobe_interfaces'
-
-import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+} from '@modules/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
@@ -129,7 +129,7 @@ function VirtualWardrobeClothes(): React.ReactElement {
         icon="tabler:shirt"
         title="Virtual Wardrobe"
       />
-      <div className="mt-6 flex min-h-0 w-full flex-1">
+      <LayoutWithSidebar>
         <Sidebar
           isOpen={sidebarOpen}
           setOpen={setSidebarOpen}
@@ -226,7 +226,7 @@ function VirtualWardrobeClothes(): React.ReactElement {
             }}
           </QueryWrapper>
         </ContentWrapperWithSidebar>
-      </div>
+      </LayoutWithSidebar>
       <ModifyItemModal
         existedData={existedData}
         openType={modifyItemModalOpenType}

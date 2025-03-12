@@ -1,4 +1,3 @@
-import { useWalletContext } from '@providers/WalletProvider'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -10,8 +9,9 @@ import {
   ModalWrapper
 } from '@lifeforge/ui'
 
-import { type IWalletCategory } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
+import { type IWalletCategory } from '../../../../interfaces/wallet_interfaces'
 import ModifyCategoriesModal from '../ModifyCategoriesModal'
 import CategorySection from './components/CategorySection'
 

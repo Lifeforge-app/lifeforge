@@ -2,12 +2,12 @@ import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect, useRef, useState } from 'react'
 
 import { FormModal } from '@lifeforge/ui'
+import { type IFieldProps } from '@lifeforge/ui'
 
 import {
   type ICalendarCategory,
   ICalendarCategoryFormState
-} from '@interfaces/calendar_interfaces'
-import { type IFieldProps } from '@interfaces/modal_interfaces'
+} from '../interfaces/calendar_interfaces'
 
 interface ModifyCategoryModalProps {
   openType: 'create' | 'update' | null

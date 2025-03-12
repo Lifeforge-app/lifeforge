@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { APIFallbackComponent, ModalHeader, ModalWrapper } from '@lifeforge/ui'
 
-import { IMailInboxEntry } from '@interfaces/mail_inbox_interfaces'
+import { IMailInboxEntry } from '@modules/MailInbox/interfaces/mail_inbox_interfaces'
 
 import useFetch from '@hooks/useFetch'
 

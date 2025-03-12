@@ -8,13 +8,11 @@ import {
   DeleteConfirmationModal,
   EmptyStateScreen
 } from '@lifeforge/ui'
-
-import { type INotesEntry } from '@interfaces/notes_interfaces'
-
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { ModuleWrapper } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 
+import { type INotesEntry } from '../interfaces/notes_interfaces'
 import Directory from './components/Directory'
 import DirectoryHeader from './components/Directory/components/DirectoryHeader'
 import ModifyFolderModal from './components/ModifyFolderModal'

@@ -5,9 +5,9 @@ import React from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IJournalEntry } from '@interfaces/journal_interfaces'
+import useComponentBg from '@hooks/useComponentBg'
 
-import useThemeColors from '@hooks/useThemeColor'
+import { type IJournalEntry } from '../../../interfaces/journal_interfaces'
 
 function JournalListItem({
   entry,
@@ -28,7 +28,7 @@ function JournalListItem({
   updateEntry: (id: string) => Promise<void>
   editLoading: boolean
 }): React.ReactElement {
-  const { componentBgWithHover, componentBgLighter } = useThemeColors()
+  const { componentBgWithHover, componentBgLighter } = useComponentBg()
 
   return (
     <button

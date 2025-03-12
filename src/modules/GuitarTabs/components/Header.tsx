@@ -1,4 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import fetchAPI from '@utils/fetchAPI'
 import IntervalManager from '@utils/intervalManager'
@@ -15,10 +16,7 @@ import {
   MenuItem,
   SidebarDivider
 } from '@lifeforge/ui'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-
-import useThemeColors from '@hooks/useThemeColor'
+import { ModuleHeader } from '@lifeforge/ui'
 
 const intervalManager = IntervalManager.getInstance()
 
@@ -46,7 +44,7 @@ function Header({
   const { t } = useTranslation('modules.guitarTabs')
   const [searchParams, setSearchParams] = useSearchParams()
   const toastId = useRef<Id>(null)
-  const { theme } = useThemeColors()
+  const { themeColor } = usePersonalizationContext()
 
   async function uploadFiles(): Promise<void> {
     const input = document.createElement('input')
@@ -154,7 +152,7 @@ function Header({
           toast.update(toastId.current, {
             progress,
             progressStyle: {
-              background: theme
+              background: themeColor
             }
           })
         }

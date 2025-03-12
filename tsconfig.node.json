@@ -5,13 +5,12 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
-
     "paths": {
       "@components/*": ["./src/components/general/*"],
       "@providers/*": ["./src/providers/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@interfaces/*": ["./src/interfaces/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@hooks/*": ["./src/core/hooks/*"],
+      "@interfaces/*": ["./src/core/interfaces/*"],
+      "@utils/*": ["./src/core/utils/*"]
     }
   },
   "include": ["vite.config.ts"]

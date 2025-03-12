@@ -1,19 +1,19 @@
 import { Icon } from '@iconify/react'
-import { toCamelCase } from '@utils/strings'
 import clsx from 'clsx'
+import _ from 'lodash'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { QueryWrapper } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
 function CodeTimeStatistics(): React.ReactElement {
   const { t } = useTranslation('modules.codeTime')
-  const { componentBg, componentBgLighter } = useThemeColors()
+  const { componentBg, componentBgLighter } = useComponentBg()
   const statsQuery = useAPIQuery<Record<string, number>>(
     'code-time/statistics',
     ['code-time', 'statistics']
@@ -63,7 +63,7 @@ function CodeTimeStatistics(): React.ReactElement {
                     />
                   </div>
                   <div className="text-bg-500 whitespace-nowrap text-lg">
-                    {t(`statisticType.${toCamelCase(key)}`)}
+                    {t(`statisticType.${_.camelCase(key)}`)}
                   </div>
                 </div>
                 <div className="mt-2 whitespace-nowrap text-4xl font-semibold">

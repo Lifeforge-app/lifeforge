@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import React from 'react'
 
-import { type SudokuBoard } from '@interfaces/sudoku_interfaces'
+import { type SudokuBoard } from '../interfaces/sudoku_interfaces'
 
 function Board({ data }: { data: SudokuBoard }): React.ReactElement {
   return (

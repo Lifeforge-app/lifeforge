@@ -1,4 +1,3 @@
-import { useMusicContext } from '@providers/MusicProvider'
 import { useDebounce } from '@uidotdev/usehooks'
 import React, { useEffect } from 'react'
 
@@ -9,9 +8,10 @@ import {
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { useMusicContext } from '@modules/Music/providers/MusicProvider'
 
 import AddMusicButton from './components/AddMusicButton'
 import BottomBar from './components/Bottombar'

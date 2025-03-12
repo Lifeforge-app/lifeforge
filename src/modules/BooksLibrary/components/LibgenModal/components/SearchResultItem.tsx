@@ -5,7 +5,7 @@ import React from 'react'
 
 import { Button } from '@lifeforge/ui'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 import AddToLibraryButton from './AddToLibraryButton'
 
@@ -18,7 +18,7 @@ function SearchResultItem({
   setViewDetailsFor: (id: string) => void
   setAddToLibraryFor: (id: string) => void
 }): React.ReactElement {
-  const { componentBgLighterWithHover } = useThemeColors()
+  const { componentBgLighterWithHover } = useComponentBg()
 
   return (
     <li

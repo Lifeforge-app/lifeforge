@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 
 import { CreateOrModifyButton, ModalWrapper } from '@lifeforge/ui'
 
-import { type IFlashcardCard } from '@interfaces/flashcard_interfaces'
+import { type IFlashcardCard } from '../interfaces/flashcard_interfaces'
 
 function EditCardModal({
   deck,

@@ -1,14 +1,13 @@
 import { Icon } from '@iconify/react'
-import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import React from 'react'
 import { Link } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IWishlistList } from '@interfaces/wishlist_interfaces'
+import useComponentBg from '@hooks/useComponentBg'
 
-import useThemeColors from '@hooks/useThemeColor'
+import { type IWishlistList } from '../interfaces/wishlist_interfaces'
 
 function WishlistListItem({
   list,
@@ -19,7 +18,7 @@ function WishlistListItem({
   onEdit: () => void
   onDelete: () => void
 }): React.ReactElement {
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
 
   return (
     <Link
@@ -63,7 +62,7 @@ function WishlistListItem({
               : Math.round((list.bought_count / list.item_count) * 100)}
             %
           </p>
-          <p>total RM{numberToMoney(list.total_amount)}</p>
+          <p>total RM{list.total_amount.toFixed(2)}</p>
         </div>
       </div>
       <HamburgerMenu className="absolute right-4 top-4">

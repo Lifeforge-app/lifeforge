@@ -16,18 +16,12 @@ import {
   MenuItem,
   Scrollbar
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
 
-import {
-  type IPhotoAlbumEntryItem,
-  type IPhotosAlbum,
-  type IPhotosEntry
-} from '@interfaces/photos_interfaces.ts'
-
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
 import useFetch from '@hooks/useFetch'
 
-import { usePhotosContext } from '../../../../providers/PhotosProvider.tsx'
 import BottomBar from '../../components/BottomBar.tsx'
 import ImageObject from '../../components/ImageObject.tsx'
 import DeletePhotosConfirmationModal from '../../components/modals/DeletePhotosConfirmationModal.tsx'
@@ -35,6 +29,11 @@ import ImagePreviewModal from '../../components/modals/ImagePreviewModal.tsx'
 import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal.tsx'
 import RemovePhotosFromAlbumConfirmationModal from '../../components/modals/RemovePhotosFromAlbumConfirmationModal.tsx.tsx'
 import ShareAlbumModal from '../../components/modals/ShareAlbumModal.tsx'
+import {
+  type IPhotoAlbumEntryItem,
+  type IPhotosAlbum,
+  type IPhotosEntry
+} from '../../interfaces/photos_interfaces.ts'
 
 function PhotosAlbumGallery(): React.ReactElement {
   const { t } = useTranslation('modules.photos')

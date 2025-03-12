@@ -1,5 +1,6 @@
-import { useWalletContext } from '@providers/WalletProvider'
 import React from 'react'
+
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 import AssetListbox from './AssetsListbox'
 

@@ -1,22 +1,21 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
-import { usePhotosContext } from '@providers/PhotosProvider'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import PhotoAlbum from 'react-photo-album'
 
 import { APIFallbackComponent, Button, EmptyStateScreen } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
-import { type IPhotoAlbumEntryItem } from '@interfaces/photos_interfaces'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
 import useFetch from '@hooks/useFetch'
 
 import ImageObject from '../../components/ImageObject'
 import PhotosSidebar from '../../components/PhotosSidebar'
 import EmptyTrashConfirmationModal from '../../components/modals/EmptyTrashConfirmationModal'
+import { type IPhotoAlbumEntryItem } from '../../interfaces/photos_interfaces'
 
 function PhotosTrash(): React.ReactElement {
   const { t } = useTranslation('modules.photos')

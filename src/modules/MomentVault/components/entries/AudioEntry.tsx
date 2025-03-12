@@ -12,10 +12,11 @@ import WaveSurfer from 'wavesurfer.js'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { Loadable } from '@interfaces/common'
-import { IMomentVaultEntry } from '@interfaces/moment_vault_interfaces'
+import { IMomentVaultEntry } from '@modules/MomentVault/interfaces/moment_vault_interfaces'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
+
+import { Loadable } from '../../../../core/interfaces/common'
 
 function AudioEntry({
   entry,
@@ -30,10 +31,13 @@ function AudioEntry({
   onDelete: (data: IMomentVaultEntry) => void
   addEntryModalOpenType: 'text' | 'audio' | 'photo' | 'video' | null
 }): React.ReactElement {
-  const { theme, bgTemp } = useThemeColors()
-  const { theme: lightOrDarkTheme } = usePersonalizationContext()
+  const {
+    theme: lightOrDarkTheme,
+    bgTempPalette,
+    themeColor
+  } = usePersonalizationContext()
 
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
   const [totalTime, setTotalTime] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
   const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null)
@@ -117,17 +121,17 @@ function AudioEntry({
             barGap={2}
             barRadius={100}
             barWidth={3}
-            cursorColor={theme}
+            cursorColor={themeColor}
             height={50}
-            progressColor={theme}
+            progressColor={themeColor}
             url={`${import.meta.env.VITE_API_HOST}/media/${entry.file}`}
             waveColor={
               (lightOrDarkTheme === 'system' &&
                 window.matchMedia &&
                 window.matchMedia('(prefers-color-scheme: dark)').matches) ||
               lightOrDarkTheme === 'dark'
-                ? bgTemp[700]
-                : bgTemp[400]
+                ? bgTempPalette[700]
+                : bgTempPalette[400]
             }
             width="100%"
             onPause={() => setIsPlaying(false)}

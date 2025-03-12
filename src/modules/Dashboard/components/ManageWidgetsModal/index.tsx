@@ -1,7 +1,8 @@
-import DASHBOARD_WIDGETS from '@constants/dashboard_widgets'
 import React from 'react'
 
 import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
+
+import DASHBOARD_WIDGETS from '@modules/Dashboard/constants/dashboard_widgets'
 
 import ComponentListItem from './components/ComponentItem'
 

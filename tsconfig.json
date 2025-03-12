@@ -20,11 +20,11 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@components/*": ["./src/components/*"],
-      "@providers/*": ["./src/providers/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@interfaces/*": ["./src/interfaces/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@constants/*": ["./src/constants/*"]
+      "@providers/*": ["./src/core/providers/*"],
+      "@hooks/*": ["./src/core/hooks/*"],
+      "@interfaces/*": ["./src/core/interfaces/*"],
+      "@utils/*": ["./src/core/utils/*"],
+      "@modules/*": ["./src/modules/*"]
     }
   },
   "include": ["./src/**/*"],

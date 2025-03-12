@@ -1,11 +1,11 @@
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
+import { type IFieldProps } from '@lifeforge/ui'
 
-import { type IFieldProps } from '@interfaces/modal_interfaces'
+import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function ModifyBookModal(): React.ReactElement {
   const {

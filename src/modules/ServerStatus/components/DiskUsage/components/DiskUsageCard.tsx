@@ -2,12 +2,12 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React from 'react'
 
-import { IDiskUsage } from '@interfaces/server_status_interfaces'
+import useComponentBg from '@hooks/useComponentBg'
 
-import useThemeColors from '@hooks/useThemeColor'
+import { IDiskUsage } from '../../../interfaces/server_status_interfaces'
 
 function DiskUsageCard({ disk }: { disk: IDiskUsage }): React.ReactElement {
-  const { componentBg, componentBgLighter } = useThemeColors()
+  const { componentBg, componentBgLighter } = useComponentBg()
 
   return (
     <div

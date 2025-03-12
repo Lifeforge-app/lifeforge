@@ -7,14 +7,14 @@ import { toast } from 'react-toastify'
 import { APIFallbackComponent, TextInput } from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
+
+import useFetch from '@hooks/useFetch'
+
 import {
   type IYoutubePlaylistEntry,
   type IYoutubePlaylistVideoEntry,
   type IYoutubeVideosStorageEntry
-} from '@interfaces/youtube_video_storage_interfaces'
-
-import useFetch from '@hooks/useFetch'
-
+} from '../../../../interfaces/youtube_video_storage_interfaces'
 import PlaylistDetails from './components/PlaylistDetails'
 
 const intervalManager = IntervalManager.getInstance()

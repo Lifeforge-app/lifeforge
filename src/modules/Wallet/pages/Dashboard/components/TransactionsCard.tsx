@@ -1,6 +1,4 @@
 import { Icon } from '@iconify/react'
-import { useWalletContext } from '@providers/WalletProvider'
-import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
@@ -13,6 +11,8 @@ import {
   EmptyStateScreen,
   Scrollbar
 } from '@lifeforge/ui'
+
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 function TransactionsCard(): React.ReactElement {
   const { transactions, categories } = useWalletContext()
@@ -143,7 +143,7 @@ function TransactionsCard(): React.ReactElement {
                                     )}
                                   >
                                     {transaction.side === 'debit' ? '+' : '-'}
-                                    {numberToMoney(transaction.amount)}
+                                    {transaction.amount.toFixed(2)}
                                   </span>
                                 </td>
                               </tr>
@@ -208,7 +208,7 @@ function TransactionsCard(): React.ReactElement {
                                   )}
                                 >
                                   {transaction.side === 'debit' ? '+' : '-'}
-                                  {numberToMoney(transaction.amount)}
+                                  {transaction.amount.toFixed(2)}
                                 </span>
                               </div>
                               <div className="text-bg-500 whitespace-nowrap text-right text-sm">

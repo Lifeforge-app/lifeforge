@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { useWalletContext } from '@providers/WalletProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -7,9 +6,11 @@ import { useNavigate } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IWalletLedger } from '@interfaces/wallet_interfaces'
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
+
+import { type IWalletLedger } from '../../../interfaces/wallet_interfaces'
 
 function LedgerItem({
   ledger,
@@ -27,7 +28,7 @@ function LedgerItem({
   >
 }): React.ReactElement {
   const { t } = useTranslation('modules.wallet')
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
   const navigate = useNavigate()
   const { transactions } = useWalletContext()
 

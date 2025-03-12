@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
-
-import { type IFieldProps } from '@interfaces/modal_interfaces'
+import { type IFieldProps } from '@lifeforge/ui'
 
 function RawHTMLInputModal({
   isOpen,

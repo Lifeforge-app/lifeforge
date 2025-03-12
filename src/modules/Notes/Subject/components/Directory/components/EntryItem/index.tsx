@@ -1,9 +1,9 @@
-import FILE_ICONS from '@constants/file_icons'
 import { Icon } from '@iconify/react'
 import React from 'react'
 
-import { type INotesEntry } from '@interfaces/notes_interfaces'
+import FILE_ICONS from '@modules/Notes/constants/file_icons'
 
+import { type INotesEntry } from '../../../../../interfaces/notes_interfaces'
 import EntryButton from './components/EntryButton'
 import EntryCreationDate from './components/EntryCreationDate'
 import EntryMenu from './components/EntryMenu'

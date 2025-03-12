@@ -1,9 +1,10 @@
-import { useWalletContext } from '@providers/WalletProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useSearchParams } from 'react-router'
 
 import { APIFallbackComponent, SidebarItem, SidebarTitle } from '@lifeforge/ui'
+
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 function LedgerSection({
   setSidebarOpen

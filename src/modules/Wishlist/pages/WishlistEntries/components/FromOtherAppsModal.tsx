@@ -13,7 +13,7 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-import { type IWishlistEntry } from '@interfaces/wishlist_interfaces'
+import { type IWishlistEntry } from '../../../interfaces/wishlist_interfaces'
 
 const PROVIDERS = [
   {

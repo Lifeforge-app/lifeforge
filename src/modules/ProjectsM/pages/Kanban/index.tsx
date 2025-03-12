@@ -3,10 +3,9 @@ import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
 
-import { type IProjectsMEntry } from '@interfaces/projects_m_interfaces'
-
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { type IProjectsMEntry } from '@modules/ProjectsM/interfaces/projects_m_interfaces'
 
 import useFetch from '@hooks/useFetch'
 

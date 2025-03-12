@@ -1,18 +1,17 @@
 import { Icon } from '@iconify/react'
-import { formatBytes } from '@utils/strings'
 import moment from 'moment'
+import prettyBytes from 'pretty-bytes'
 import React, { useEffect } from 'react'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
+
+import useFetch from '@hooks/useFetch'
 
 import {
   ICPUTemp,
   ICPUUSage,
   IMemoryUsage
-} from '@interfaces/server_status_interfaces'
-
-import useFetch from '@hooks/useFetch'
-
+} from '../../interfaces/server_status_interfaces'
 import { SystemStatusCard } from './components/SystemStatusCard'
 
 function SystemStatus(): React.ReactElement {
@@ -79,7 +78,7 @@ function SystemStatus(): React.ReactElement {
             valueKey: 'percent',
             unit: '%',
             description: (data: IMemoryUsage) =>
-              `${formatBytes(data.used)} / ${formatBytes(data.total)} used`
+              `${prettyBytes(data.used)} / ${prettyBytes(data.total)} used`
           },
           {
             data: cpuTemp,

@@ -8,22 +8,21 @@ import { useSearchParams } from 'react-router'
 import {
   APIFallbackComponent,
   Button,
+  ContentWrapperWithSidebar,
   DeleteConfirmationModal,
   EmptyStateScreen,
+  LayoutWithSidebar,
   Pagination,
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
 import {
   IMailInboxEntry,
   IMailInboxLabel
-} from '@interfaces/mail_inbox_interfaces'
-
-import ContentWrapperWithSidebar from '@components/layouts/module/ContentWrapperWithSidebar'
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-import SidebarAndContentWrapper from '@components/layouts/module/SidebarAndContentWrapper'
+} from '@modules/MailInbox/interfaces/mail_inbox_interfaces'
 
 import useFetch from '@hooks/useFetch'
 
@@ -95,7 +94,7 @@ function MailInbox(): React.ReactElement {
         icon="tabler:mail"
         title="Mail Inbox"
       />
-      <SidebarAndContentWrapper>
+      <LayoutWithSidebar>
         <Sidebar
           allMailsCount={typeof mails === 'string' ? 0 : mails.totalItems}
           isOpen={sidebarOpen}
@@ -294,7 +293,7 @@ function MailInbox(): React.ReactElement {
             </APIFallbackComponent>
           </div>
         </ContentWrapperWithSidebar>
-      </SidebarAndContentWrapper>
+      </LayoutWithSidebar>
       <ViewMailModal
         openFor={viewMailFor}
         onClose={() => setViewMailFor(null)}

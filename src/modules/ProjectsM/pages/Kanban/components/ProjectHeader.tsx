@@ -1,12 +1,13 @@
 import { Icon } from '@iconify/react'
-import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { useNavigate } from 'react-router'
 
 import { APIFallbackComponent, GoBackButton } from '@lifeforge/ui'
 
-import { type IProjectsMEntry } from '@interfaces/projects_m_interfaces'
+import { type IProjectsMEntry } from '@modules/ProjectsM/interfaces/projects_m_interfaces'
+
+import { useProjectsMContext } from '../../../providers/ProjectsMProvider'
 
 function ProjectHeader({
   projectData

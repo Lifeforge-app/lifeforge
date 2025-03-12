@@ -12,16 +12,15 @@ import {
   LockedScreen,
   OTPScreen
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
-import { type IJournalEntry } from '@interfaces/journal_interfaces'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 
 import JournalList from './components/JournalList'
 import JournalViewModal from './components/JournalViewModal'
 import ModifyJournalEntryModal from './components/ModifyEntryModal'
+import { type IJournalEntry } from './interfaces/journal_interfaces'
 
 function Journal(): React.ReactElement {
   const { t } = useTranslation('modules.journal')

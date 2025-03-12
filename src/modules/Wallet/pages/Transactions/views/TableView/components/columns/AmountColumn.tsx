@@ -1,4 +1,3 @@
-import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import React from 'react'
 
@@ -18,7 +17,7 @@ function AmountColumn({
         })}
       >
         {side === 'debit' ? '+' : '-'}
-        {numberToMoney(amount)}
+        {amount.toFixed(2)}
       </span>
     </td>
   )

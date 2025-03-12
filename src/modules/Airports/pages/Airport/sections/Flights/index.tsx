@@ -7,8 +7,8 @@ import { toast } from 'react-toastify'
 
 import { APIFallbackComponent, Button } from '@lifeforge/ui'
 
+import useComponentBg from '@hooks/useComponentBg'
 import useFetch from '@hooks/useFetch'
-import useThemeColors from '@hooks/useThemeColor'
 
 import FlightsTable from './components/FlightsTable'
 
@@ -25,7 +25,7 @@ interface FlightData {
 }
 
 function Flights({ IATA }: { IATA: string }): React.ReactElement {
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
   const [nextPageNum, setPageNum] = useState([-1, 1])
   const location = useLocation()
   const [flightsData, , setFlightsData] = useFetch<FlightData[]>(

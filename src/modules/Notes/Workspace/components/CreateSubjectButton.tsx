@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import React from 'react'
 
-import { type INotesSubject } from '@interfaces/notes_interfaces'
+import { type INotesSubject } from '../../interfaces/notes_interfaces'
 
 function CreateSubjectButton({
   setModifySubjectModalOpenType,

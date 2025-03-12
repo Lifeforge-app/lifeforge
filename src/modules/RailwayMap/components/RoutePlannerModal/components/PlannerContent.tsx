@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { useRailwayMapContext } from '@providers/RailwayMapProvider'
 import React, { useMemo } from 'react'
 
 import { Button } from '@lifeforge/ui'
 
+import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
 import { filterStations } from '../utils/stations'
 import StationSelector from './StationSelector'
 

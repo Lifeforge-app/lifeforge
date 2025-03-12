@@ -1,12 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import React from 'react'
 
 import { HamburgerMenu } from '@lifeforge/ui'
 
-import { type IBooksLibraryEntry } from '@interfaces/books_library_interfaces'
-
+import { type IBooksLibraryEntry } from '../../../interfaces/books_library_interfaces'
+import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 

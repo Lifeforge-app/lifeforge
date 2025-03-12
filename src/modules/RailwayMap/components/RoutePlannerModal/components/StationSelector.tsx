@@ -2,7 +2,7 @@ import React from 'react'
 
 import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
 
-import { IRailwayMapStation } from '@interfaces/railway_map_interfaces'
+import { IRailwayMapStation } from '@modules/RailwayMap/interfaces/railway_map_interfaces'
 
 import StationCodes from '../../StationCode'
 import { formatStationDisplay } from '../utils/stations'

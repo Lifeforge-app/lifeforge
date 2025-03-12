@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { usePhotosContext } from '@providers/PhotosProvider'
 import forceDown from '@utils/forceDown'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
@@ -14,14 +13,15 @@ import {
   ModalWrapper
 } from '@lifeforge/ui'
 
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
+
+import useFetch from '@hooks/useFetch'
+
 import {
   type IPhotoAlbumEntryItem,
   type IPhotosEntry,
   type IPhotosEntryDimensionsAll
-} from '@interfaces/photos_interfaces'
-
-import useFetch from '@hooks/useFetch'
-
+} from '../../interfaces/photos_interfaces'
 import DeletePhotosConfirmationModal from './DeletePhotosConfirmationModal'
 
 function ImagePreviewModal({

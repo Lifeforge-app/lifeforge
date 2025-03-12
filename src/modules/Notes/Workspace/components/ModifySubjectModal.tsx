@@ -14,7 +14,7 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-import { type INotesSubject } from '@interfaces/notes_interfaces'
+import { type INotesSubject } from '../../interfaces/notes_interfaces'
 
 function ModifySubjectModal({
   openType,

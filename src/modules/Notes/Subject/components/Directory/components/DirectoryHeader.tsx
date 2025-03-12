@@ -8,9 +8,12 @@ import { toast } from 'react-toastify'
 
 import { Button, FAB, GoBackButton, MenuItem } from '@lifeforge/ui'
 
-import { type INotesEntry, type INotesPath } from '@interfaces/notes_interfaces'
-
 import useFetch from '@hooks/useFetch'
+
+import {
+  type INotesEntry,
+  type INotesPath
+} from '../../../../interfaces/notes_interfaces'
 
 function DirectoryHeader({
   updateNotesEntries,

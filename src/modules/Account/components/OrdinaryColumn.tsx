@@ -1,5 +1,5 @@
 import { useAuthContext } from '@providers/AuthProvider'
-import { toCamelCase } from '@utils/strings'
+import _ from 'lodash'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,9 +26,9 @@ function OrdinaryColumn({
   return (
     <>
       <ConfigColumn
-        desc={t(`settings.desc.${toCamelCase(title)}`)}
+        desc={t(`settings.desc.${_.camelCase(title)}`)}
         icon={icon}
-        title={t(`settings.title.${toCamelCase(title)}`)}
+        title={t(`settings.title.${_.camelCase(title)}`)}
       >
         <div className="flex-between w-full gap-4">
           <span className="text-bg-500 whitespace-nowrap">

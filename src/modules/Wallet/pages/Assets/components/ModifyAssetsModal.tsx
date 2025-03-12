@@ -13,7 +13,7 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-import { type IWalletAsset } from '@interfaces/wallet_interfaces'
+import { type IWalletAsset } from '../../../interfaces/wallet_interfaces'
 
 function ModifyAssetsModal({
   openType,

@@ -4,13 +4,14 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
+import { type IFieldProps } from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
-import { type IFieldProps } from '@interfaces/modal_interfaces'
+
 import {
   type IWishlistEntry,
   type IWishlistList
-} from '@interfaces/wishlist_interfaces'
+} from '../../../interfaces/wishlist_interfaces'
 
 function ModifyEntryModal({
   openType,

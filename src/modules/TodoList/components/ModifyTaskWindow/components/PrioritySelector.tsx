@@ -1,8 +1,9 @@
 // PriorityListbox.tsx
-import { useTodoListContext } from '@providers/TodoListProvider'
 import React from 'react'
 
 import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
+
+import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
 
 function PrioritySelector({
   priority,

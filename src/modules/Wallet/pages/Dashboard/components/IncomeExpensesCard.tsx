@@ -1,13 +1,14 @@
 import { Icon } from '@iconify/react'
-import { useWalletContext } from '@providers/WalletProvider'
-import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import React from 'react'
 
 import { DashboardItem } from '@lifeforge/ui'
 
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
+
 import { type Loadable } from '@interfaces/common'
-import { type IWalletIncomeExpenses } from '@interfaces/wallet_interfaces'
+
+import { type IWalletIncomeExpenses } from '../../../interfaces/wallet_interfaces'
 
 function IncomeExpenseCard({
   title,
@@ -48,9 +49,9 @@ function IncomeExpenseCard({
                     ))}
                 </span>
               ) : (
-                numberToMoney(
-                  +data[`total${title}` as 'totalIncome' | 'totalExpenses']
-                )
+                +data[
+                  `total${title}` as 'totalIncome' | 'totalExpenses'
+                ].toFixed(2)
               )}
             </p>
             <p>
@@ -74,11 +75,9 @@ function IncomeExpenseCard({
                       ))}
                   </span>
                 ) : (
-                  numberToMoney(
-                    +data[
-                      `monthly${title}` as 'monthlyIncome' | 'monthlyExpenses'
-                    ]
-                  )
+                  +data[
+                    `monthly${title}` as 'monthlyIncome' | 'monthlyExpenses'
+                  ].toFixed(2)
                 )}
               </span>{' '}
               from this month

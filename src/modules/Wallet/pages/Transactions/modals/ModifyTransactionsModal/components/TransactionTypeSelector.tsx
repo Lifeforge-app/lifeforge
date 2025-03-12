@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { toCamelCase } from '@utils/strings'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -42,10 +41,11 @@ function TransactionTypeSelector({
           />
           <span className="-mt-px block truncate">
             {t(
-              `transactionTypes.${toCamelCase(
-                TRANSACTION_TYPES.find(l => l.id === transactionType)?.name ??
-                  ''
-              )}`
+              `transactionTypes.${
+                TRANSACTION_TYPES.find(
+                  l => l.id === transactionType
+                )?.name.toLowerCase() ?? ''
+              }`
             ) ?? 'None'}
           </span>
         </>
@@ -61,7 +61,7 @@ function TransactionTypeSelector({
         <ListboxOrComboboxOption
           key={i}
           color={color}
-          text={t(`transactionTypes.${toCamelCase(name)}`)}
+          text={t(`transactionTypes.${name.toLowerCase()}`)}
           value={id}
         />
       ))}

@@ -1,19 +1,20 @@
-import FILE_ICONS from '@constants/file_icons'
 import { Icon } from '@iconify/react'
-import { cleanFileSize } from '@utils/strings'
 import clsx from 'clsx'
+import prettyBytes from 'pretty-bytes'
 import React from 'react'
 
-import { IMailInboxEntry } from '@interfaces/mail_inbox_interfaces'
+import FILE_ICONS from '@modules/MailInbox/components/constants/file_icons'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
+
+import { IMailInboxEntry } from '../../../interfaces/mail_inbox_interfaces'
 
 function MailAttachments({
   mail
 }: {
   mail: IMailInboxEntry
 }): React.ReactElement {
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
 
   return (
     <div className="mt-6">
@@ -75,7 +76,7 @@ function MailAttachments({
               {attachment.name}
             </div>
             <div className="text-bg-500 text-xs">
-              {cleanFileSize(attachment.size)}
+              {prettyBytes(attachment.size)}
             </div>
           </div>
         ))}

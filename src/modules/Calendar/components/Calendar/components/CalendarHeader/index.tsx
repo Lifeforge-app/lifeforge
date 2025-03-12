@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Button } from '@lifeforge/ui'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 import ChangeViewButton from './components/ChangeViewButton'
 import NavigationButton from './components/NavigationButton'
@@ -28,7 +28,7 @@ function CalendarHeader({
   setModifyEventModalOpenType
 }: CalendarHeaderProps): React.ReactElement {
   const { t } = useTranslation('modules.calendar')
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
 
   return (
     <div className="mb-4 flex w-full flex-col items-end justify-between gap-4 lg:flex-row">

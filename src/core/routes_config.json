@@ -251,14 +251,6 @@
         "togglable": true
       },
       {
-        "name": "Repositories",
-        "icon": "tabler:git-branch",
-        "routes": {
-          "repositories": "repositories"
-        },
-        "togglable": true
-      },
-      {
         "name": "Guitar Tabs",
         "icon": "mingcute:guitar-line",
         "routes": {

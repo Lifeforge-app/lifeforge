@@ -1,16 +1,16 @@
 import { Icon } from '@iconify/react'
-import { isLightColor } from '@utils/colors'
+import { usePersonalizationContext } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import React from 'react'
+import tinycolor from 'tinycolor2'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
-import useThemeColors from '@hooks/useThemeColor'
 
 export default function Quotes(): React.ReactElement {
   const [quote] = useFetch<string>('quotes')
-  const { theme } = useThemeColors()
+  const { themeColor } = usePersonalizationContext()
 
   return (
     <div className="bg-custom-500 shadow-custom relative flex size-full flex-col items-center justify-center gap-2 rounded-lg p-6">
@@ -27,7 +27,7 @@ export default function Quotes(): React.ReactElement {
           <div
             className={clsx(
               'text-center text-xl font-medium',
-              isLightColor(theme) ? 'text-bg-800' : 'text-bg-50'
+              tinycolor(themeColor).isLight() ? 'text-bg-800' : 'text-bg-50'
             )}
           >
             {quote}

@@ -3,17 +3,16 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 
 import { GoBackButton } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
 
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 import { algsetAlgs, algsetScrambles } from '../../algorithms/OLL'
 import { DEFAULT_CUBE, applyMoves } from '../../scripts/genCube'
 
 function CFOPF2L(): React.ReactElement {
   const navigate = useNavigate()
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
 
   return (
     <ModuleWrapper>

@@ -1,8 +1,9 @@
-import { useTodoListContext } from '@providers/TodoListProvider'
 import React from 'react'
 import { useSearchParams } from 'react-router'
 
 import { APIFallbackComponent, SidebarItem } from '@lifeforge/ui'
+
+import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
 
 function TaskStatusList({
   setSidebarOpen

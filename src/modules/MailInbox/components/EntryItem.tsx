@@ -5,7 +5,7 @@ import React from 'react'
 
 import { Button, Checkbox, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IMailInboxEntry } from '@interfaces/mail_inbox_interfaces'
+import { type IMailInboxEntry } from '@modules/MailInbox/interfaces/mail_inbox_interfaces'
 
 function EntryItem({
   mail,

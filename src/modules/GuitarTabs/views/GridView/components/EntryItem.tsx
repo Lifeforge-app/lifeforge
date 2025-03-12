@@ -7,11 +7,10 @@ import { toast } from 'react-toastify'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IGuitarTabsEntry } from '@interfaces/guitar_tabs_interfaces'
-
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 import DownloadMenu from '../../../components/DownloadMenu'
+import { IGuitarTabsEntry } from '../../../interfaces/guitar_tabs_interfaces'
 import AudioPlayer from '../../ListView/components/AudioPlayer'
 
 function EntryItem({
@@ -28,7 +27,7 @@ function EntryItem({
   queryKey: unknown[]
 }): React.ReactElement {
   const queryClient = useQueryClient()
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
 
   async function favouriteTab(): Promise<void> {
     try {

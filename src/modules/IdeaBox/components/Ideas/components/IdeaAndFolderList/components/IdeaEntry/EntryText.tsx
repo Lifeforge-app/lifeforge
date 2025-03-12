@@ -4,17 +4,16 @@ import moment from 'moment'
 import React, { useState } from 'react'
 import { useDrag } from 'react-dnd'
 
-import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
+import useComponentBg from '@hooks/useComponentBg'
 
-import useThemeColors from '@hooks/useThemeColor'
-
+import { type IIdeaBoxEntry } from '../../../../../../interfaces/ideabox_interfaces'
 import EntryContextMenu from './components/EntryContextMenu'
 import InFolderChip from './components/InFolderChip'
 import TagChip from './components/TagChip'
 
 function EntryText({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
   const [expanded, setExpanded] = useState(false)
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
   const [{ opacity, isDragging }, dragRef] = useDrag(
     () => ({
       type: 'IDEA',

@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
-import { shortenBigNumber } from '@utils/strings'
+import humanNumber from 'human-number'
 import React from 'react'
 
-import { type IYoutubePlaylistEntry } from '@interfaces/youtube_video_storage_interfaces'
+import { type IYoutubePlaylistEntry } from '../../../../../interfaces/youtube_video_storage_interfaces'
 
 function PlaylistInfo({
   playlistInfo
@@ -27,7 +27,7 @@ function PlaylistInfo({
         </p>
         <p className="text-bg-500 flex items-center gap-2">
           <Icon className="size-5" icon="tabler:eye" />
-          {shortenBigNumber(playlistInfo.views)} views
+          {humanNumber(playlistInfo.views)} views
         </p>
       </div>
     </div>

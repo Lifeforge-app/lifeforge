@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import React, { useEffect, useRef } from 'react'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 import { algsetAlgs } from '../../algorithms/PLL'
 import { type DEFAULT_CUBE } from '../../scripts/genCube'
@@ -24,7 +24,7 @@ function AlgEntry({
 }): React.ReactElement {
   const refs = useRef<Array<HTMLDivElement | null>>(Array(9).map(() => null))
   const containerRef = useRef<HTMLDivElement>(null)
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
 
   useEffect(() => {
     if (!refs.current.every(Boolean) || containerRef.current === null) return

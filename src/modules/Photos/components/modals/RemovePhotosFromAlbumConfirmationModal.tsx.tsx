@@ -1,9 +1,10 @@
-import { usePhotosContext } from '@providers/PhotosProvider'
 import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, ModalWrapper } from '@lifeforge/ui'
+
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
 function RemovePhotosFromAlbumConfirmationModal({
   refreshPhotos,

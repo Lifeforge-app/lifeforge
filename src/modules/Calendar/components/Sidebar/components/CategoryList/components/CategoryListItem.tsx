@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router'
 
 import { MenuItem, SidebarItem } from '@lifeforge/ui'
 
-import { type ICalendarCategory } from '@interfaces/calendar_interfaces'
+import { type ICalendarCategory } from '../../../../../interfaces/calendar_interfaces'
 
 function CategoryListItem({
   item,

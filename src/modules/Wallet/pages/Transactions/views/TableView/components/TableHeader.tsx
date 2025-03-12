@@ -1,5 +1,5 @@
-import { toCamelCase } from '@utils/strings'
 import clsx from 'clsx'
+import _ from 'lodash'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -34,7 +34,7 @@ function TableHeader({
                   column === 'Particulars' && 'text-left'
                 )}
               >
-                {column !== '' && t(`table.${toCamelCase(column)}`)}
+                {column !== '' && t(`table.${_.camelCase(column)}`)}
               </th>
             )
         )}

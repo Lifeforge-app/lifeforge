@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IWalletCategory } from '@interfaces/wallet_interfaces'
+import { type IWalletCategory } from '../../../../../interfaces/wallet_interfaces'
 
 interface CategorySectionProps {
   categories: IWalletCategory[]

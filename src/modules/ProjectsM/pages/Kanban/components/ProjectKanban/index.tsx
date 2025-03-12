@@ -11,17 +11,17 @@ import {
   Scrollbar
 } from '@lifeforge/ui'
 
-import { type IProjectsMKanbanColumn } from '@interfaces/projects_m_interfaces'
+import { type IProjectsMKanbanColumn } from '@modules/ProjectsM/interfaces/projects_m_interfaces'
 
+import useComponentBg from '@hooks/useComponentBg'
 import useFetch from '@hooks/useFetch'
-import useThemeColors from '@hooks/useThemeColor'
 
 import AddCardButton from './modals/AddCardButton'
 import ModifyCardModal from './modals/ModifyCardModal'
 import ModifyColumnsModal from './modals/ModifyColumnModal'
 
 function ProjectKanban(): React.ReactElement {
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
   const { id } = useParams()
   const [columns, refreshColumns] = useFetch<IProjectsMKanbanColumn[]>(
     `projects-m/kanban/column/${id}`

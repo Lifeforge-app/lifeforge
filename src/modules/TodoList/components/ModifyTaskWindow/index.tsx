@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { useTodoListContext } from '@providers/TodoListProvider'
 import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import moment from 'moment'
@@ -17,10 +16,11 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
+import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
 
 import useFetch from '@hooks/useFetch'
 
+import { type ITodoSubtask } from '../../interfaces/todo_list_interfaces'
 import ListSelector from './components/ListSelector'
 import NotesInput from './components/NotesInput'
 import PrioritySelector from './components/PrioritySelector'

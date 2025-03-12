@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import { EmptyStateScreen } from '@lifeforge/ui'
 
-import { IMovieEntry } from '@interfaces/movies_interfaces'
+import { IMovieEntry } from '@modules/Movies/interfaces/movies_interfaces'
 
 import MovieItem from './MovieItem'
 

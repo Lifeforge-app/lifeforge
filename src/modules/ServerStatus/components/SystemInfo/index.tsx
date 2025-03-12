@@ -1,13 +1,12 @@
 import { Icon } from '@iconify/react'
-import { formatBytes } from '@utils/strings'
+import prettyBytes from 'pretty-bytes'
 import React from 'react'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
 
-import { ISystemInfo } from '@interfaces/server_status_interfaces'
-
 import useFetch from '@hooks/useFetch'
 
+import { ISystemInfo } from '../../interfaces/server_status_interfaces'
 import SectionCard from './components/SectionCard'
 
 function SystemInfo(): React.ReactElement {
@@ -26,7 +25,7 @@ function SystemInfo(): React.ReactElement {
               <SectionCard
                 key={key}
                 title={key}
-                value={typeof value === 'number' ? formatBytes(value) : value}
+                value={typeof value === 'number' ? prettyBytes(value) : value}
               />
             ))}
           </>

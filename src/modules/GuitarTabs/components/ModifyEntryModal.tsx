@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { FormModal } from '@lifeforge/ui'
+import { type IFieldProps } from '@lifeforge/ui'
 
 import {
   type IGuitarTabsEntry,
   IGuitarTabsEntryFormState
-} from '@interfaces/guitar_tabs_interfaces'
-import { IFieldProps } from '@interfaces/modal_interfaces'
+} from '../interfaces/guitar_tabs_interfaces'
 
 const TYPES = [
   { id: 'fingerstyle', icon: 'mingcute:guitar-line' },

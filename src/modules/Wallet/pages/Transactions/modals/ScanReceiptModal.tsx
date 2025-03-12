@@ -16,7 +16,7 @@ import {
 import {
   IWalletReceiptScanResult,
   type IWalletTransaction
-} from '@interfaces/wallet_interfaces'
+} from '../../../interfaces/wallet_interfaces'
 
 function ScanReceiptModal({
   open,

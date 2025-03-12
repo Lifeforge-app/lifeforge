@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { usePhotosContext } from '@providers/PhotosProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation, useNavigate } from 'react-router'
@@ -12,6 +11,8 @@ import {
   SidebarTitle,
   SidebarWrapper
 } from '@lifeforge/ui'
+
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
 function PhotosSidebar(): React.ReactElement {
   const { t } = useTranslation('modules.photos')

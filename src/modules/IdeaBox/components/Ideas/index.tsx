@@ -1,10 +1,12 @@
-import IdeaBoxProvider, { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import React from 'react'
 import { useParams } from 'react-router'
 
 import { SearchInput } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
 
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import IdeaBoxProvider, {
+  useIdeaBoxContext
+} from '@modules/IdeaBox/providers/IdeaBoxProvider'
 
 import ContainerHeader from './components/ContainerHeader'
 import FAB from './components/FAB'

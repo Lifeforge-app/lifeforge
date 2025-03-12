@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next'
 import COLOR from 'tailwindcss/colors'
 
 import { FormModal } from '@lifeforge/ui'
+import { type IFieldProps } from '@lifeforge/ui'
 
 import {
   type IAchievementEntry,
   IAchievementEntryFormState
-} from '@interfaces/achievements_interfaces'
-import { type IFieldProps } from '@interfaces/modal_interfaces'
+} from './interfaces/achievements_interfaces'
 
 const difficulties = [
   ['easy', 'green'],

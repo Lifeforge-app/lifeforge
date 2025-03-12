@@ -1,6 +1,4 @@
 import { Icon } from '@iconify/react'
-import { useWalletContext } from '@providers/WalletProvider'
-import { numberToMoney } from '@utils/strings'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,10 +11,12 @@ import {
   Scrollbar
 } from '@lifeforge/ui'
 
-import useThemeColors from '@hooks/useThemeColor'
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
+
+import useComponentBg from '@hooks/useComponentBg'
 
 function AssetsBalanceCard(): React.ReactElement {
-  const { componentBgLighterWithHover } = useThemeColors()
+  const { componentBgLighterWithHover } = useComponentBg()
   const navigate = useNavigate()
   const { assets, isAmountHidden } = useWalletContext()
   const { t } = useTranslation('modules.wallet')
@@ -76,7 +76,7 @@ function AssetsBalanceCard(): React.ReactElement {
                             ))}
                         </span>
                       ) : (
-                        <span>{numberToMoney(+asset.balance)}</span>
+                        <span>{+asset.balance.toFixed(2)}</span>
                       )}
                     </div>
                   </Link>

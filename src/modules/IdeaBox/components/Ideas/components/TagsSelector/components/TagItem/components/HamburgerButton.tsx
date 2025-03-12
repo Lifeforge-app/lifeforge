@@ -1,10 +1,11 @@
 import { Icon } from '@iconify/react'
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
-import { isLightColor } from '@utils/colors'
 import clsx from 'clsx'
 import React, { useMemo } from 'react'
+import tinycolor from 'tinycolor2'
 
-import { IIdeaBoxTag } from '@interfaces/ideabox_interfaces'
+import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
+
+import { IIdeaBoxTag } from '../../../../../../../interfaces/ideabox_interfaces'
 
 function HamburgerButton({ tag }: { tag: IIdeaBoxTag }): React.ReactElement {
   const { selectedTags, setExistedTag, setModifyTagModalOpenType } =
@@ -19,7 +20,7 @@ function HamburgerButton({ tag }: { tag: IIdeaBoxTag }): React.ReactElement {
       return 'text-custom-500 hover:bg-custom-500/30 hover:text-custom-500'
     }
 
-    return isLightColor(tag.color)
+    return tinycolor(tag.color).isLight()
       ? 'text-bg-800 hover:bg-bg-800 hover:text-bg-100'
       : 'text-bg-100 hover:bg-bg-100 hover:text-bg-800'
   }, [selectedTags, tag])

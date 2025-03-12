@@ -1,13 +1,14 @@
-import { useTodoListContext } from '@providers/TodoListProvider'
 import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React from 'react'
 
+import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
+
 import { type Loadable } from '@interfaces/common'
-import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
+import { type ITodoListEntry } from '../../../interfaces/todo_list_interfaces'
 import SubtaskItem from './components/SubtaskItem'
 import TaskCompletionCheckbox from './components/TaskCompletionCheckbox'
 import TaskDueDate from './components/TaskDueDate'
@@ -29,7 +30,7 @@ function TaskItem({
   setEntries?: React.Dispatch<React.SetStateAction<Loadable<ITodoListEntry[]>>>
   refreshEntries?: () => void
 }): React.ReactElement {
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
   const {
     entries: innerEntries,
     lists,

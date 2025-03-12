@@ -1,10 +1,10 @@
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
 import React from 'react'
 // @ts-expect-error no types available
 import Column from 'react-columns'
 
-import { type IIdeaBoxEntry } from '@interfaces/ideabox_interfaces'
+import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
 
+import { type IIdeaBoxEntry } from '../../../../../interfaces/ideabox_interfaces'
 import EntryImage from './IdeaEntry/EntryImage'
 import EntryLink from './IdeaEntry/EntryLink'
 import EntryText from './IdeaEntry/EntryText'

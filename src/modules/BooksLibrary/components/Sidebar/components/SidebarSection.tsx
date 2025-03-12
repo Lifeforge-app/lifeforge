@@ -1,9 +1,9 @@
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { APIFallbackComponent, SidebarTitle } from '@lifeforge/ui'
 
+import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 import SidebarItem from './SidebarItem'
 
 function SidebarSection({

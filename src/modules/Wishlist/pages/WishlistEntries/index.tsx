@@ -13,16 +13,14 @@ import {
   Scrollbar,
   Tabs
 } from '@lifeforge/ui'
-
-import {
-  type IWishlistEntry,
-  type IWishlistList
-} from '@interfaces/wishlist_interfaces'
-
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { ModuleWrapper } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 
+import {
+  IWishlistEntry,
+  IWishlistList
+} from '../../interfaces/wishlist_interfaces'
 import EntryItem from './components/EntryItem'
 import FromOtherAppsModal from './components/FromOtherAppsModal'
 import Header from './components/Header'

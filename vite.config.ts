@@ -26,16 +26,15 @@ export default defineConfig({
   resolve: {
     alias: {
       '@components': path.resolve(__dirname, './src/components'),
-      '@providers': path.resolve(__dirname, './src/providers'),
-      '@hooks': path.resolve(__dirname, './src/hooks'),
-      '@interfaces': path.resolve(__dirname, './src/interfaces'),
-      '@utils': path.resolve(__dirname, './src/utils'),
-      '@constants': path.resolve(__dirname, './src/constants')
+      '@providers': path.resolve(__dirname, './src/core/providers'),
+      '@hooks': path.resolve(__dirname, './src/core/hooks'),
+      '@interfaces': path.resolve(__dirname, './src/core/interfaces'),
+      '@utils': path.resolve(__dirname, './src/core/utils'),
+      '@modules': path.resolve(__dirname, './src/modules')
     }
   },
   build: {
     target: 'esnext',
-    sourcemap: true,
     rollupOptions: {
       output: {
         manualChunks(id) {

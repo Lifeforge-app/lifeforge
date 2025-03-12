@@ -10,12 +10,12 @@ import {
   Scrollbar
 } from '@lifeforge/ui'
 
+import useFetch from '@hooks/useFetch'
+
 import {
   type ICalendarCategory,
   type ICalendarEvent
-} from '@interfaces/calendar_interfaces'
-
-import useFetch from '@hooks/useFetch'
+} from '../../Calendar/interfaces/calendar_interfaces'
 
 export default function TodaysEvent(): React.ReactElement {
   const [rawEvents] = useFetch<ICalendarEvent[]>('calendar/events')

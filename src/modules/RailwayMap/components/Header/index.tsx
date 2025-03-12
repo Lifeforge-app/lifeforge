@@ -1,5 +1,4 @@
-import { useRailwayMapContext } from '@providers/RailwayMapProvider'
-import { toCamelCase } from '@utils/strings'
+import _ from 'lodash'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -9,9 +8,9 @@ import {
   HamburgerMenuSelectorWrapper,
   MenuItem
 } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-
+import { useRailwayMapContext } from '../../providers/RailwayMapProvider'
 import DetailBox from './components/DetailBox'
 import LineFilter from './components/LineFilter'
 import SearchBar from './components/SearchBar'
@@ -65,7 +64,7 @@ function Header(): React.ReactElement {
                   icon={icon}
                   isToggled={viewType === value}
                   namespace={false}
-                  text={t(`viewTypes.${toCamelCase(title)}`)}
+                  text={t(`viewTypes.${_.camelCase(title)}`)}
                   onClick={() => {
                     setViewType(value)
                   }}

@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
 
-import { type ITodoListEntry } from '@interfaces/todo_list_interfaces'
+import { type ITodoListEntry } from '../../../../interfaces/todo_list_interfaces'
 
 function TaskDueDate({ entry }: { entry: ITodoListEntry }): React.ReactElement {
   return (

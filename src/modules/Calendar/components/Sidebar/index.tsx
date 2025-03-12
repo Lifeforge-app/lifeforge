@@ -6,8 +6,7 @@ import { QueryWrapper, SidebarWrapper } from '@lifeforge/ui'
 import {
   type ICalendarCategory,
   type ICalendarEvent
-} from '@interfaces/calendar_interfaces'
-
+} from '../../interfaces/calendar_interfaces'
 import CategoryList from './components/CategoryList'
 import MiniCalendar from './components/MiniCalendar'
 

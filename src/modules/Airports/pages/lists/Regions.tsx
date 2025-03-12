@@ -10,12 +10,11 @@ import {
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-
+import useComponentBg from '@hooks/useComponentBg'
 import useFetch from '@hooks/useFetch'
-import useThemeColors from '@hooks/useThemeColor'
 
 import ContinentSelector from '../../components/ContinentSelector'
 import MasterSearchBar from '../../components/MasterSearchBar'
@@ -31,7 +30,7 @@ const CONTINENTS = {
 }
 
 function Regions(): React.ReactElement {
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
   const { countryID, continentID } = useParams()
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)

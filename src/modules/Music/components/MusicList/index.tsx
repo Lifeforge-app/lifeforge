@@ -1,9 +1,10 @@
-import { useMusicContext } from '@providers/MusicProvider'
 import React from 'react'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
+
+import { useMusicContext } from '@modules/Music/providers/MusicProvider'
 
 import MusicListItem from './components/MusicListItem'
 

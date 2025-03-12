@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import React from 'react'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 function FlightsTable({
   data
@@ -18,7 +18,7 @@ function FlightsTable({
     status: string
   }>
 }): React.ReactElement {
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
   return (
     <table className="mb-4 w-full border-separate border-spacing-0">
       <thead className="sticky top-[7.2rem]">

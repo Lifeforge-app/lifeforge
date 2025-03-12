@@ -10,17 +10,15 @@ import {
   EmptyStateScreen,
   GoBackButton
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
+
+import useFetch from '@hooks/useFetch'
 
 import {
   type INotesSubject,
   type INotesWorkspace
-} from '@interfaces/notes_interfaces'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-
-import useFetch from '@hooks/useFetch'
-
+} from '../interfaces/notes_interfaces'
 import CreateSubjectButton from './components/CreateSubjectButton'
 import ModifySubjectModal from './components/ModifySubjectModal'
 import SubjectItem from './components/SubjectItem'

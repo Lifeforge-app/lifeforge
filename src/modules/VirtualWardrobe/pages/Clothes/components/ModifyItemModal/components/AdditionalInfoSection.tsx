@@ -1,4 +1,3 @@
-import VW_COLORS from '@constants/virtual_wardrobe_colors'
 import React from 'react'
 
 import {
@@ -9,7 +8,8 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-import { IVirtualWardrobeFormState } from '@interfaces/virtual_wardrobe_interfaces'
+import VW_COLORS from '@modules/VirtualWardrobe/constants/virtual_wardrobe_colors'
+import { IVirtualWardrobeFormState } from '@modules/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
 
 function AdditionalInfoSection({
   step,

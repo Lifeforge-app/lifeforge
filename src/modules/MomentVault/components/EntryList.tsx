@@ -4,9 +4,9 @@ import React, { useEffect } from 'react'
 
 import { APIFallbackComponent, Pagination } from '@lifeforge/ui'
 
-import { Loadable } from '@interfaces/common'
-import { IMomentVaultEntry } from '@interfaces/moment_vault_interfaces'
+import { IMomentVaultEntry } from '@modules/MomentVault/interfaces/moment_vault_interfaces'
 
+import { Loadable } from '../../../core/interfaces/common'
 import AudioEntry from './entries/AudioEntry'
 
 function EntryList({

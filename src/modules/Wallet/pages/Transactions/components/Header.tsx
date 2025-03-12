@@ -1,10 +1,11 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { useWalletContext } from '@providers/WalletProvider'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
 import { Button, HeaderFilter, MenuItem } from '@lifeforge/ui'
+
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 function Header({
   setModifyModalOpenType,

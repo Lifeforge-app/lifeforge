@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { toTitleCase } from '@utils/strings'
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
@@ -12,14 +11,12 @@ import {
   GoBackButton,
   Scrollbar
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
 
-import { type IAirportNOTAMEntry } from '@interfaces/airports_interfaces'
-
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-
+import useComponentBg from '@hooks/useComponentBg'
 import useFetch from '@hooks/useFetch'
-import useThemeColors from '@hooks/useThemeColor'
 
+import { type IAirportNOTAMEntry } from '../../interfaces/airports_interfaces'
 import Breadcrumbs from '../lists/Breadcrumb'
 import Flights from './sections/Flights'
 import NOTAM from './sections/NOTAM'
@@ -29,7 +26,7 @@ import Runways from './sections/Runways'
 import Weather from './sections/Weather'
 
 function Airport(): React.ReactElement {
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
   const [searchParams, setSearchParams] = useSearchParams()
   const section = searchParams.get('section')
   const { airportID, countryID, continentID, regionID } = useParams()
@@ -74,7 +71,12 @@ function Airport(): React.ReactElement {
                 </div>
                 <h1 className="flex flex-col text-3xl font-semibold">
                   <span className="text-custom-500 text-sm">
-                    {toTitleCase(airportData.data.type.split('_').join(' '))}
+                    {airportData.data.type
+                      .split('_')
+                      .map((word: string) => {
+                        return word.charAt(0).toUpperCase() + word.slice(1)
+                      })
+                      .join(' ')}
                   </span>
                   {airportData.data.name}
                 </h1>

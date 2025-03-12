@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React from 'react'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 interface SystemStatusCardProps {
   icon: string
@@ -21,7 +21,7 @@ export function SystemStatusCard({
   colorThresholds,
   description
 }: SystemStatusCardProps): React.ReactElement {
-  const { componentBg, componentBgLighter } = useThemeColors()
+  const { componentBg, componentBgLighter } = useComponentBg()
 
   let colorClass = 'bg-green-500'
 

@@ -9,17 +9,16 @@ import {
   FAB,
   Scrollbar
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
-import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
-
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
 
 import useFetch from '@hooks/useFetch'
 
 import AddVideosModal from './components/AddVideosModal'
 import Header from './components/Header'
 import VideoList from './components/VideoList'
+import { type IYoutubeVideosStorageEntry } from './interfaces/youtube_video_storage_interfaces'
 
 function YoutubeVideos(): React.ReactElement {
   const { t } = useTranslation('modules.youtubeVideos')

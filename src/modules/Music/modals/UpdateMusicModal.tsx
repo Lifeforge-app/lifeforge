@@ -1,4 +1,3 @@
-import { useMusicContext } from '@providers/MusicProvider'
 import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,6 +9,8 @@ import {
   ModalWrapper,
   TextInput
 } from '@lifeforge/ui'
+
+import { useMusicContext } from '@modules/Music/providers/MusicProvider'
 
 function ModifyMusicModal(): React.ReactElement {
   const { t } = useTranslation('modules.music')

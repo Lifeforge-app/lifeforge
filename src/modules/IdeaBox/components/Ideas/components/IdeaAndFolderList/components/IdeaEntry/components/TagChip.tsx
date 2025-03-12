@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react'
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
-import { isLightColor } from '@utils/colors'
 import clsx from 'clsx'
 import React, { useMemo } from 'react'
+import tinycolor from 'tinycolor2'
+
+import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
 
 function TagChip({ text }: { text: string }): React.ReactElement {
   const { selectedTags, tags } = useIdeaBoxContext()
@@ -27,7 +28,7 @@ function TagChip({ text }: { text: string }): React.ReactElement {
       return 'bg-custom-500/30 text-custom-500'
     }
 
-    return isLightColor(metadata.color) ? 'text-bg-800' : 'text-bg-100'
+    return tinycolor(metadata.color).isLight() ? 'text-bg-800' : 'text-bg-100'
   }, [active, metadata])
 
   return (

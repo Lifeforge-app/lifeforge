@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
-import { useWalletContext } from '@providers/WalletProvider'
-import { numberToMoney } from '@utils/strings'
 import moment from 'moment'
 import React from 'react'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
+
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 function Transactions({
   month,
@@ -210,8 +210,8 @@ function Transactions({
                           )}
                           <td className="whitespace-nowrap p-3 text-right text-lg">
                             {transaction.side === 'credit'
-                              ? `(${numberToMoney(transaction.amount)})`
-                              : numberToMoney(transaction.amount)}
+                              ? `(${transaction.amount.toFixed(2)})`
+                              : transaction.amount.toFixed(2)}
                           </td>
                         </tr>
                       ))}
@@ -254,8 +254,8 @@ function Transactions({
                           return (
                             <span className="font-medium">
                               {amount < 0
-                                ? `(${numberToMoney(Math.abs(amount))})`
-                                : numberToMoney(amount)}
+                                ? `(${Math.abs(amount).toFixed(2)})`
+                                : amount.toFixed(2)}
                             </span>
                           )
                         })()}

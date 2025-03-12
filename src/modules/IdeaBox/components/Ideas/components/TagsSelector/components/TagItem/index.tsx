@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react'
-import { useIdeaBoxContext } from '@providers/IdeaBoxProvider'
-import { isLightColor } from '@utils/colors'
 import clsx from 'clsx'
 import React, { useMemo } from 'react'
+import tinycolor from 'tinycolor2'
 
-import { IIdeaBoxTag } from '@interfaces/ideabox_interfaces'
+import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
 
+import { IIdeaBoxTag } from '../../../../../../interfaces/ideabox_interfaces'
 import HamburgerButton from './components/HamburgerButton'
 import ItemCount from './components/ItemCount'
 
@@ -29,7 +29,7 @@ function TagItem({
       return 'bg-custom-500/30 text-custom-500'
     }
 
-    return isLightColor(tag.color) ? 'text-bg-800' : 'text-bg-100'
+    return tinycolor(tag.color).isLight() ? 'text-bg-800' : 'text-bg-100'
   }, [selectedTags, tag])
 
   return (

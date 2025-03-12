@@ -1,5 +1,5 @@
-import { toCamelCase } from '@utils/strings'
 import clsx from 'clsx'
+import _ from 'lodash'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -27,7 +27,7 @@ function ChangeViewButton({
         onView(view.toLowerCase() as 'month' | 'week' | 'day' | 'agenda')
       }}
     >
-      {t(`view.${toCamelCase(view)}`)}
+      {t(`view.${_.camelCase(view)}`)}
     </button>
   )
 }

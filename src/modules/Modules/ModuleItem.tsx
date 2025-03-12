@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useAuthContext } from '@providers/AuthProvider'
-import { toCamelCase } from '@utils/strings'
 import clsx from 'clsx'
+import _ from 'lodash'
 import { cookieParse } from 'pocketbase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,14 +9,14 @@ import { toast } from 'react-toastify'
 
 import { Button, Switch, TextInput } from '@lifeforge/ui'
 
+import useComponentBg from '@hooks/useComponentBg'
+
 import {
   type IModuleConfigInput,
   type IModuleConfigSelect,
   type IModuleConfigSwitch,
   type IModuleEntry
-} from '@interfaces/module_interfaces'
-
-import useThemeColors from '@hooks/useThemeColor'
+} from './interfaces/module_interfaces'
 
 function ModuleItem({
   module,
@@ -27,9 +27,9 @@ function ModuleItem({
   enabled: boolean
   toggleModule: (moduleName: string) => void
 }): React.ReactElement {
-  const { componentBg, componentBgLighter } = useThemeColors()
+  const { componentBg, componentBgLighter } = useComponentBg()
   const [expandConfig, setExpandConfig] = useState(false)
-  const { t } = useTranslation(`modules.${toCamelCase(module.name)}`)
+  const { t } = useTranslation(`modules.${_.camelCase(module.name)}`)
   const [saveLoading, setButtonLoading] = useState(false)
 
   function toggleExpandConfig(): void {

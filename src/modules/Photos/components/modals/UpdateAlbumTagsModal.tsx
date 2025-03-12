@@ -1,6 +1,5 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
-import { usePhotosContext } from '@providers/PhotosProvider'
 import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
@@ -8,7 +7,9 @@ import { toast } from 'react-toastify'
 
 import { APIFallbackComponent, Button, ModalWrapper } from '@lifeforge/ui'
 
-import { type IPhotosAlbum } from '@interfaces/photos_interfaces'
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
+
+import { type IPhotosAlbum } from '../../interfaces/photos_interfaces'
 
 function UpdateAlbumTagsModal({
   isOpen,

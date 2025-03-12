@@ -1,12 +1,12 @@
 import React from 'react'
 
 import { type Loadable } from '@interfaces/common'
+
 import {
   type IYoutubePlaylistEntry,
   type IYoutubePlaylistVideoEntry,
   type IYoutubeVideosStorageEntry
-} from '@interfaces/youtube_video_storage_interfaces'
-
+} from '../../../../../interfaces/youtube_video_storage_interfaces'
 import PlaylistInfo from './PlaylistInfo'
 import PlaylistVideoEntry from './PlaylistVideoEntry'
 

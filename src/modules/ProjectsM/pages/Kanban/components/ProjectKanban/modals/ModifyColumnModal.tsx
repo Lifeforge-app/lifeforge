@@ -15,7 +15,7 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-import { type IProjectsMKanbanColumn } from '@interfaces/projects_m_interfaces'
+import { type IProjectsMKanbanColumn } from '@modules/ProjectsM/interfaces/projects_m_interfaces'
 
 function ModifyColumnModal({
   openType,

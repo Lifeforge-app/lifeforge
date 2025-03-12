@@ -1,7 +1,8 @@
-import { usePhotosContext } from '@providers/PhotosProvider'
 import React from 'react'
 
 import { Button, HamburgerMenu, MenuItem, SearchInput } from '@lifeforge/ui'
+
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
 import AlbumTagsList from './AlbumTagsList'
 

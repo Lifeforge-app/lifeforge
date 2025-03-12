@@ -1,4 +1,3 @@
-import { usePasswordContext } from '@providers/PasswordsProvider'
 import fetchAPI from '@utils/fetchAPI'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -6,8 +5,9 @@ import { toast } from 'react-toastify'
 
 import { APIFallbackComponent, EmptyStateScreen } from '@lifeforge/ui'
 
-import { IPasswordEntry } from '@interfaces/password_interfaces'
+import { usePasswordContext } from '@modules/Passwords/providers/PasswordsProvider'
 
+import { IPasswordEntry } from '../interfaces/password_interfaces'
 import PasswordEntryItem from './PasswordEntryItem'
 
 function PasswordList(): React.ReactElement {

@@ -1,5 +1,4 @@
 import { useAuthContext } from '@providers/AuthProvider'
-import { usePasswordContext } from '@providers/PasswordsProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -12,9 +11,10 @@ import {
   OTPScreen,
   SearchInput
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { usePasswordContext } from '@modules/Passwords/providers/PasswordsProvider'
 
 import CreatePasswordModal from './components/CreatePasswordModal'
 import PasswordList from './components/PasswordList'

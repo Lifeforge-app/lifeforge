@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
-import { usePhotosContext } from '@providers/PhotosProvider.tsx'
 import clsx from 'clsx'
 import moment from 'moment'
 import React, { useRef } from 'react'
+
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
 function TimelineScrollbar(): React.ReactElement {
   const {

@@ -2,10 +2,10 @@ import clsx from 'clsx'
 import moment from 'moment/min/moment-with-locales'
 import React, { useRef, useState } from 'react'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 export default function Clock(): React.ReactElement {
-  const { componentBg } = useThemeColors()
+  const { componentBg } = useComponentBg()
   const [time, setTime] = useState(moment().format('HH:mm'))
   const [seocond, setSecond] = useState(moment().format('ss') as any)
   const ref = useRef<HTMLDivElement>(null)

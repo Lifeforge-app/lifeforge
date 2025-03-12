@@ -8,8 +8,7 @@ import { ImagePickerModal, ModalHeader, ModalWrapper } from '@lifeforge/ui'
 import {
   type IVirtualWardrobeEntry,
   IVirtualWardrobeFormState
-} from '@interfaces/virtual_wardrobe_interfaces'
-
+} from '../../../../interfaces/virtual_wardrobe_interfaces'
 import AdditionalInfoSection from './components/AdditionalInfoSection'
 import BasicInfoSection from './components/BasicInfoSection'
 import StepIndicator from './components/StepIndicator'

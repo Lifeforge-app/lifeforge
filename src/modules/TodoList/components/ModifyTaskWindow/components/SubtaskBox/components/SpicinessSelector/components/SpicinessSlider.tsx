@@ -1,9 +1,10 @@
+import clsx from 'clsx'
+import React from 'react'
+
 import {
   SPICINESS_COLOR,
   SPICINESS_NAME
-} from '@constants/todo_subtasks_generation_spiciness'
-import clsx from 'clsx'
-import React from 'react'
+} from '@modules/TodoList/constants/todo_subtasks_generation_spiciness'
 
 function SpicinessSlider({
   spiciness,

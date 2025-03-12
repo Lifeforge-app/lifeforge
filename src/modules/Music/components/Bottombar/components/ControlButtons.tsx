@@ -1,7 +1,8 @@
-import { useMusicContext } from '@providers/MusicProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { toast } from 'react-toastify'
+
+import { useMusicContext } from '@modules/Music/providers/MusicProvider'
 
 import IconButton from './IconButton'
 

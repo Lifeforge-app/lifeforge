@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
-import { toCamelCase } from '@utils/strings'
 import clsx from 'clsx'
+import _ from 'lodash'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -45,7 +45,7 @@ function StepIndicator({
                   index + 1
                 )}
               </span>{' '}
-              {t(`steps.${toCamelCase(text)}`)}
+              {t(`steps.${_.camelCase(text)}`)}
             </div>
           </li>
         )

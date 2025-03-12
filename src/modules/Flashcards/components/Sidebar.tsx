@@ -10,9 +10,9 @@ import {
   SidebarWrapper
 } from '@lifeforge/ui'
 
-import { type IFlashcardTag } from '@interfaces/flashcard_interfaces'
-
 import useFetch from '@hooks/useFetch'
+
+import { type IFlashcardTag } from '../interfaces/flashcard_interfaces'
 
 function Sidebar({
   sidebarOpen,

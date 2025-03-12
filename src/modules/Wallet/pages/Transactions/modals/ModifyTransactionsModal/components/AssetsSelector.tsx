@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { useWalletContext } from '@providers/WalletProvider'
 import React from 'react'
 
 import {
@@ -7,6 +6,8 @@ import {
   ListboxOrComboboxInput,
   ListboxOrComboboxOption
 } from '@lifeforge/ui'
+
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 function AssetsSelector({
   transactionAsset,

@@ -2,10 +2,9 @@ import React from 'react'
 
 import { APIFallbackComponent, Button } from '@lifeforge/ui'
 
-import { Loadable } from '@interfaces/common'
-import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
-
+import { Loadable } from '../../../../../../../core/interfaces/common'
 import VideoInfo from '../../../../../../Music/modals/YoutubeDownloaderModal/components/VideoInfo'
+import { type IYoutubeVideoInfo } from '../../../../../interfaces/youtube_video_storage_interfaces'
 
 function VideoDetails({
   videoInfo,

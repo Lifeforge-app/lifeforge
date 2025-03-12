@@ -10,22 +10,22 @@ import {
   EmptyStateScreen,
   Scrollbar
 } from '@lifeforge/ui'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
+
+import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
 import { type Loadable } from '@interfaces/common'
-import {
-  type IPhotoAlbumTag,
-  type IPhotosAlbum
-} from '@interfaces/photos_interfaces'
 
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
-
-import { usePhotosContext } from '../../../../providers/PhotosProvider'
 import PhotosSidebar from '../../components/PhotosSidebar'
 import ManageTagsModal from '../../components/modals/ManageTagsModal'
 import ModifyAlbumModal from '../../components/modals/ModifyAlbumModal'
 import ModifyAlbumTagsModal from '../../components/modals/ModifyAlbumTagsModal'
 import UpdateAlbumTagsModal from '../../components/modals/UpdateAlbumTagsModal'
+import {
+  type IPhotoAlbumTag,
+  type IPhotosAlbum
+} from '../../interfaces/photos_interfaces'
 import AlbumItem from './components/AlbumItem'
 import AlbumListHeader from './components/AlbumListHeader'
 

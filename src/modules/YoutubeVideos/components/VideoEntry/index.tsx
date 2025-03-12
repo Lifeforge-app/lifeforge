@@ -3,10 +3,9 @@ import React from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IYoutubeVideosStorageEntry } from '@interfaces/youtube_video_storage_interfaces'
+import useComponentBg from '@hooks/useComponentBg'
 
-import useThemeColors from '@hooks/useThemeColor'
-
+import { type IYoutubeVideosStorageEntry } from '../../interfaces/youtube_video_storage_interfaces'
 import VideoDetails from './components/VideoDetails'
 import VideoThumbnail from './components/VideoThumbnail'
 
@@ -19,7 +18,7 @@ function VideoEntry({
   setVideoToDelete: (video: IYoutubeVideosStorageEntry) => void
   setIsConfirmDeleteModalOpen: (value: boolean) => void
 }): React.ReactElement {
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
 
   return (
     <a

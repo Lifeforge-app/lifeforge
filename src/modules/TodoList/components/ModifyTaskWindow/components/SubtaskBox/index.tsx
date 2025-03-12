@@ -4,8 +4,8 @@ import React, { useCallback, useState } from 'react'
 import { APIFallbackComponent } from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
-import { type ITodoSubtask } from '@interfaces/todo_list_interfaces'
 
+import { type ITodoSubtask } from '../../../../interfaces/todo_list_interfaces'
 import SubtaskBoxHeader from './components/SubtaskBoxHeader'
 import SubtaskItem from './components/SubtaskItem'
 

@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 
 import { Button } from '@lifeforge/ui'
 
-import { type IGuitarTabsGuitarWorldScoreEntry } from '@interfaces/guitar_tabs_interfaces'
+import { type IGuitarTabsGuitarWorldScoreEntry } from '../../../interfaces/guitar_tabs_interfaces'
 
 function ScoreItem({
   entry,

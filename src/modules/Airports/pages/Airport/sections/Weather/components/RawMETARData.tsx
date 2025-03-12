@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import moment from 'moment'
 import React from 'react'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
 
 import { IAirportMETARData } from '..'
 import WidgetWrapper from './WidgetWrapper'
@@ -13,7 +13,7 @@ function RawMETARData({
 }: {
   data: IAirportMETARData
 }): React.ReactElement {
-  const { componentBgLighter } = useThemeColors()
+  const { componentBgLighter } = useComponentBg()
 
   return (
     <WidgetWrapper className="col-span-3">

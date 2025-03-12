@@ -1,14 +1,15 @@
 import { Icon } from '@iconify/react'
-import { useProjectsMContext } from '@providers/ProjectsMProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { Link } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type IProjectsMEntry } from '@interfaces/projects_m_interfaces'
+import { type IProjectsMEntry } from '@modules/ProjectsM/interfaces/projects_m_interfaces'
 
-import useThemeColors from '@hooks/useThemeColor'
+import useComponentBg from '@hooks/useComponentBg'
+
+import { useProjectsMContext } from '../providers/ProjectsMProvider'
 
 function EntryItem({ entry }: { entry: IProjectsMEntry }): React.ReactElement {
   const {
@@ -22,7 +23,7 @@ function EntryItem({ entry }: { entry: IProjectsMEntry }): React.ReactElement {
     visibilities: { data: visibilities },
     technologies: { data: technologies }
   } = useProjectsMContext()
-  const { componentBgWithHover } = useThemeColors()
+  const { componentBgWithHover } = useComponentBg()
 
   return (
     <li

@@ -6,15 +6,13 @@ import {
   MenuItem,
   SearchInput
 } from '@lifeforge/ui'
-
-import { type IChangeLogVersion } from '@interfaces/changelog_interfaces'
-
-import ModuleHeader from '@components/layouts/module/ModuleHeader'
-import ModuleWrapper from '@components/layouts/module/ModuleWrapper'
+import { ModuleWrapper } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 
 import LogItem from './components/LogItem'
+import { type IChangeLogVersion } from './interfaces/changelog_interfaces'
 
 function Changelog(): React.ReactElement {
   const [data, refreshData] = useFetch<IChangeLogVersion[]>('change-log')

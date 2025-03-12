@@ -7,8 +7,11 @@ import { useNavigate, useParams } from 'react-router'
 
 import { Button, GoBackButton, MenuItem } from '@lifeforge/ui'
 
-import { Loadable } from '@interfaces/common'
-import { IWishlistEntry, IWishlistList } from '@interfaces/wishlist_interfaces'
+import { Loadable } from '../../../../../core/interfaces/common'
+import {
+  IWishlistEntry,
+  IWishlistList
+} from '../../../interfaces/wishlist_interfaces'
 
 function Header({
   wishlistListDetails,

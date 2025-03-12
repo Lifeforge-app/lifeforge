@@ -1,13 +1,13 @@
-import { useBooksLibraryContext } from '@providers/BooksLibraryProvider'
 import fetchAPI from '@utils/fetchAPI'
-import { toCamelCase } from '@utils/strings'
+import _ from 'lodash'
 import React, { useEffect, useReducer } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
+import { type IFieldProps } from '@lifeforge/ui'
 
-import { type IFieldProps } from '@interfaces/modal_interfaces'
+import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function ModifyModal({
   stuff
@@ -101,7 +101,7 @@ function ModifyModal({
       namespace="modules.booksLibrary"
       openType={openType}
       setData={setData}
-      title={`${toCamelCase(singleStuff)}.${openType}`}
+      title={`${_.camelCase(singleStuff)}.${openType}`}
       onClose={() => {
         setOpenType(null)
       }}

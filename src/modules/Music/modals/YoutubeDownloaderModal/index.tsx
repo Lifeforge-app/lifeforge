@@ -1,5 +1,4 @@
 /* eslint-disable sonarjs/empty-string-repetition */
-import { useMusicContext } from '@providers/MusicProvider'
 import { useDebounce } from '@uidotdev/usehooks'
 import IntervalManager from '@utils/intervalManager'
 import { cookieParse } from 'pocketbase'
@@ -14,10 +13,11 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-import { type IYoutubeVideoInfo } from '@interfaces/youtube_video_storage_interfaces'
+import { useMusicContext } from '@modules/Music/providers/MusicProvider'
 
 import useFetch from '@hooks/useFetch'
 
+import { type IYoutubeVideoInfo } from '../../../YoutubeVideos/interfaces/youtube_video_storage_interfaces'
 import VideoInfo from './components/VideoInfo'
 
 const intervalManager = IntervalManager.getInstance()

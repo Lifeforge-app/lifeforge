@@ -1,8 +1,9 @@
-import { useWalletContext } from '@providers/WalletProvider'
 import moment from 'moment'
 import React, { useEffect, useMemo } from 'react'
 
 import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
+
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 function YearMonthInput({
   month,
