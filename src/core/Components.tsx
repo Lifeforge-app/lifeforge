@@ -47,7 +47,6 @@ const BooksLibraryProvider = lazy(
     await import('@modules/BooksLibrary/providers/BooksLibraryProvider')
 )
 const BooksLibrary = lazy(async () => await import('@modules/BooksLibrary'))
-const Changelog = lazy(async () => await import('@modules/Changelog'))
 const Notes = lazy(async () => await import('@modules/Notes'))
 const NotesCategory = lazy(async () => await import('@modules/Notes/Workspace'))
 const NotesSubject = lazy(async () => await import('@modules/Notes/Subject'))
@@ -207,9 +206,6 @@ export const COMPONENTS = {
   },
   'data-backup': {
     'data-backup': ServerStatus // TODO
-  },
-  'change-log': {
-    'change-log': Changelog
   },
   'mail-inbox': {
     'mail-inbox': MailInbox
