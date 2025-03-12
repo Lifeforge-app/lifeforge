@@ -30,7 +30,7 @@ function ContainerHeader() {
             navigate(location.pathname.split('/').slice(0, -1).join('/'))
           }}
         />
-        <HamburgerMenu largerPadding className="relative">
+        <HamburgerMenu>
           <MenuItem
             icon={viewArchived ? 'tabler:archive-off' : 'tabler:archive'}
             namespace="modules.ideaBox"

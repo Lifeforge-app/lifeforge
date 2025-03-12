@@ -2,12 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import {
-  CreateOrModifyButton,
-  ModalHeader,
-  ModalWrapper,
-  TextInput
-} from '@lifeforge/ui'
+import { Button, ModalHeader, ModalWrapper, TextInput } from '@lifeforge/ui'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
@@ -126,13 +121,15 @@ function ModifyAlbumModal({
           }
         }}
       />
-      <CreateOrModifyButton
+      <Button
+        icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
         loading={loading}
-        type={openType as 'create' | 'rename'}
         onClick={() => {
           onSubmitButtonClick().catch(console.error)
         }}
-      />
+      >
+        {openType === 'create' ? 'Create' : 'Rename'}
+      </Button>
     </ModalWrapper>
   )
 }

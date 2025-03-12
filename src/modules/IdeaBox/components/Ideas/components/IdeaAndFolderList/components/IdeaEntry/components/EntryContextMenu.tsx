@@ -1,11 +1,8 @@
-import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
-import clsx from 'clsx'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import { MenuItem } from '@lifeforge/ui'
+import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
 
@@ -87,71 +84,52 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
   }
 
   return (
-    <Menu as="div" className="absolute right-2 top-2">
-      <MenuButton>
-        {({ open }) => (
-          <div
-            className={clsx(
-              'bg-bg-50 text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:bg-bg-800 dark:text-bg-50 dark:hover:bg-bg-700 dark:hover:text-bg-50 shrink-0 rounded-lg p-2 opacity-0 group-hover:opacity-100',
-              entry.type === 'image' && 'shadow-custom!',
-              open && 'opacity-100!'
-            )}
-          >
-            <Icon className="text-xl" icon="tabler:dots-vertical" />
-          </div>
-        )}
-      </MenuButton>
-      <MenuItems
-        transition
-        anchor="bottom end"
-        className="bg-bg-100 dark:bg-bg-800 outline-hidden focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 mt-2 min-w-56 overflow-hidden rounded-md shadow-lg transition duration-100 ease-out [--anchor-gap:var(--spacing-1)]"
-      >
-        {!entry.archived && (
-          <MenuItem
-            icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
-            text={entry.pinned ? 'Unpin' : 'Pin'}
-            onClick={() => {
-              pinIdea().catch(console.error)
-            }}
-          />
-        )}
+    <HamburgerMenu classNames={{ wrapper: 'absolute right-2 top-2' }}>
+      {!entry.archived && (
         <MenuItem
-          icon={entry.archived ? 'tabler:archive-off' : 'tabler:archive'}
-          text={entry.archived ? 'Unarchive' : 'Archive'}
+          icon={entry.pinned ? 'tabler:pinned-off' : 'tabler:pin'}
+          text={entry.pinned ? 'Unpin' : 'Pin'}
           onClick={() => {
-            archiveIdea().catch(console.error)
+            pinIdea().catch(console.error)
           }}
         />
+      )}
+      <MenuItem
+        icon={entry.archived ? 'tabler:archive-off' : 'tabler:archive'}
+        text={entry.archived ? 'Unarchive' : 'Archive'}
+        onClick={() => {
+          archiveIdea().catch(console.error)
+        }}
+      />
+      <MenuItem
+        icon="tabler:pencil"
+        text="Edit"
+        onClick={() => {
+          setTypeOfModifyIdea(entry.type)
+          setExistedEntry(entry)
+          setModifyIdeaModalOpenType('update')
+        }}
+      />
+      {!debouncedSearchQuery && selectedTags.length === 0 && (
         <MenuItem
-          icon="tabler:pencil"
-          text="Edit"
+          icon="tabler:folder-minus"
+          namespace="modules.ideaBox"
+          text="Remove from folder"
           onClick={() => {
-            setTypeOfModifyIdea(entry.type)
-            setExistedEntry(entry)
-            setModifyIdeaModalOpenType('update')
+            removeFromFolder().catch(console.error)
           }}
         />
-        {!debouncedSearchQuery && selectedTags.length === 0 && (
-          <MenuItem
-            icon="tabler:folder-minus"
-            namespace="modules.ideaBox"
-            text="Remove from folder"
-            onClick={() => {
-              removeFromFolder().catch(console.error)
-            }}
-          />
-        )}
-        <MenuItem
-          isRed
-          icon="tabler:trash"
-          text="Delete"
-          onClick={() => {
-            setExistedEntry(entry)
-            setDeleteIdeaConfirmationModalOpen(true)
-          }}
-        />
-      </MenuItems>
-    </Menu>
+      )}
+      <MenuItem
+        isRed
+        icon="tabler:trash"
+        text="Delete"
+        onClick={() => {
+          setExistedEntry(entry)
+          setDeleteIdeaConfirmationModalOpen(true)
+        }}
+      />
+    </HamburgerMenu>
   )
 }
 

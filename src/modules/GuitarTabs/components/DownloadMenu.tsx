@@ -6,7 +6,7 @@ import { type IGuitarTabsEntry } from '../interfaces/guitar_tabs_interfaces'
 
 function DownloadMenu({ entry }: { entry: IGuitarTabsEntry }) {
   return (
-    <HamburgerMenu className="relative shrink-0" customIcon="tabler:download">
+    <HamburgerMenu customIcon="tabler:download">
       <MenuItem
         icon="tabler:file-text"
         text="PDF"

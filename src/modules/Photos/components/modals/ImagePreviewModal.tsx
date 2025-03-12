@@ -164,10 +164,10 @@ function ImagePreviewModal({
               })()}
               <div className="flex items-center gap-4">
                 <HamburgerMenu
-                  lighter
-                  className="relative"
+                  classNames={{
+                    menu: 'w-56'
+                  }}
                   customIcon="tabler:download"
-                  customWidth="w-56"
                 >
                   {data.has_raw && (
                     <MenuItem
@@ -190,12 +190,16 @@ function ImagePreviewModal({
                   isRed
                   className="p-2!"
                   icon="tabler:trash"
-                  variant="no-bg"
+                  variant="plain"
                   onClick={() => {
                     setDeletePhotosConfirmationModalOpen(true)
                   }}
                 />
-                <HamburgerMenu lighter className="relative" customWidth="w-56">
+                <HamburgerMenu
+                  classNames={{
+                    menu: 'w-56'
+                  }}
+                >
                   {beingDisplayedInAlbum && (
                     <MenuItem
                       icon="tabler:album"
@@ -211,7 +215,7 @@ function ImagePreviewModal({
                 <Button
                   className="h-full"
                   icon="tabler:chevron-left"
-                  variant="no-bg"
+                  variant="plain"
                   onClick={onPreviousPhoto}
                 />
               )}
@@ -233,7 +237,7 @@ function ImagePreviewModal({
                 <Button
                   className="h-full"
                   icon="tabler:chevron-right"
-                  variant="no-bg"
+                  variant="plain"
                   onClick={onNextPhoto}
                 />
               )}

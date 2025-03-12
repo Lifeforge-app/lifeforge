@@ -57,7 +57,7 @@ function TMDBResultItem({
           icon="tabler:plus"
           loading={loading}
           namespace="movies"
-          variant={isAdded ? 'no-bg' : 'primary'}
+          variant={isAdded ? 'plain' : 'primary'}
           onClick={() => {
             setLoading(true)
             onAddToLibrary(data.id).finally(() => setLoading(false))

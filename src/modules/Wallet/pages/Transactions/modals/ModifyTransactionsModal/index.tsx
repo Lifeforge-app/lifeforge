@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import {
-  CreateOrModifyButton,
+  Button,
   CurrencyInput,
   DateInput,
   ImageAndFileInput,
@@ -285,13 +285,15 @@ function ModifyTransactionsModal({
             }}
           />
         </div>
-        <CreateOrModifyButton
+        <Button
+          icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
           loading={loading}
-          type={openType === 'update' ? 'update' : 'create'}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-        />
+        >
+          {openType === 'create' ? 'Create' : 'Update'}
+        </Button>
       </ModalWrapper>
       <ImagePickerModal
         acceptedMimeTypes={{

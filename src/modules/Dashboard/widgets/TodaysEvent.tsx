@@ -28,7 +28,7 @@ export default function TodaysEvent() {
           className="p-2!"
           icon="tabler:chevron-right"
           to="/calendar"
-          variant="no-bg"
+          variant="plain"
         />
       }
       icon="tabler:calendar"

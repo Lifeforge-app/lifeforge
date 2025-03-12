@@ -87,8 +87,9 @@ function ContainerItem({
         to={`/idea-box/${container.id}`}
       />
       <HamburgerMenu
-        lighter
-        className="data-open:opacity-100 absolute right-4 top-4 overscroll-contain opacity-0 transition-all group-hover:opacity-100"
+        classNames={{
+          wrapper: 'absolute z-[9999] right-4 top-4'
+        }}
       >
         <MenuItem
           icon="tabler:pencil"

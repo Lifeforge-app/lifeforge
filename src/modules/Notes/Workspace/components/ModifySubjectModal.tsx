@@ -5,7 +5,7 @@ import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import {
-  CreateOrModifyButton,
+  Button,
   IconInput,
   IconPickerModal,
   ModalHeader,
@@ -134,13 +134,15 @@ function ModifySubjectModal({
           setIcon={setSubjectIcon}
           setIconSelectorOpen={setIconSelectorOpen}
         />
-        <CreateOrModifyButton
+        <Button
+          icon={innerOpenType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
           loading={loading}
-          type={innerOpenType}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-        />
+        >
+          {innerOpenType === 'create' ? 'Create' : 'Update'}
+        </Button>
       </ModalWrapper>
       <IconPickerModal
         isOpen={iconSelectorOpen}

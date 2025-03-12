@@ -45,14 +45,14 @@ function DetailBox() {
       <div className="flex items-center gap-2">
         <Button
           icon="tabler:arrow-left-right"
-          variant="no-bg"
+          variant="plain"
           onClick={() => {
             if (!selectedStation) return
             setRoutePlannerStart(selectedStation.id)
             setRoutePlannerOpen(true)
           }}
         />
-        <Button icon="tabler:info-circle" variant="no-bg" />
+        <Button icon="tabler:info-circle" variant="plain" />
       </div>
     </div>
   )

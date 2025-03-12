@@ -4,12 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import {
-  CreateOrModifyButton,
-  ModalHeader,
-  ModalWrapper,
-  TextInput
-} from '@lifeforge/ui'
+import { Button, ModalHeader, ModalWrapper, TextInput } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -118,13 +113,15 @@ function ModifyFolderModal({
             }
           }}
         />
-        <CreateOrModifyButton
+        <Button
+          icon={innerOpenType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
           loading={loading}
-          type={innerOpenType}
           onClick={() => {
             onSubmitButtonClick().catch(console.error)
           }}
-        />
+        >
+          {innerOpenType === 'create' ? 'Create' : 'Update'}
+        </Button>
       </ModalWrapper>
     </>
   )

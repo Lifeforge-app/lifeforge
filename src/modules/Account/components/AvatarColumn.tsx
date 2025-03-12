@@ -66,7 +66,7 @@ function AvatarColumn() {
           <Button
             icon="tabler:upload"
             loading={loading}
-            variant="no-bg"
+            variant="plain"
             onClick={() => {
               changeAvatar()
             }}
@@ -76,7 +76,7 @@ function AvatarColumn() {
           <Button
             isRed
             icon="tabler:trash"
-            variant="no-bg"
+            variant="plain"
             onClick={() => {
               setDeleteAvatarConfirmationModal(true)
             }}

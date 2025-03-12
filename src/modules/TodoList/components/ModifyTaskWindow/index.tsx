@@ -7,7 +7,6 @@ import { toast } from 'react-toastify'
 
 import {
   Button,
-  CreateOrModifyButton,
   DateInput,
   HamburgerMenu,
   MenuItem,
@@ -177,7 +176,7 @@ function ModifyTaskWindow() {
               />
               {t(`modals.tasks.${innerOpenType ?? 'create'}`)}
             </h1>
-            <HamburgerMenu largerPadding className="relative">
+            <HamburgerMenu>
               <MenuItem
                 isRed
                 icon="tabler:trash"
@@ -231,14 +230,18 @@ function ModifyTaskWindow() {
             >
               cancel
             </Button>
-            <CreateOrModifyButton
+            <Button
               className="w-full"
+              icon={
+                innerOpenType === 'update' ? 'tabler:pencil' : 'tabler:plus'
+              }
               loading={loading}
-              type={innerOpenType}
               onClick={() => {
                 onSubmitButtonClick().catch(console.error)
               }}
-            />
+            >
+              {innerOpenType === 'update' ? 'Update' : 'Create'}
+            </Button>
           </div>
         </Scrollbar>
       </div>

@@ -21,12 +21,14 @@ function FolderContextMenu({
     React.SetStateAction<boolean>
   >
 }) {
+  console.log(isOver) //TODO
+
   return (
     <HamburgerMenu
-      smallerPadding
-      className="relative"
-      customHoverColor={`${folder.color}20`}
-      style={{ color: !isOver ? folder.color : '' }}
+      classNames={{
+        button: 'p-2!',
+        wrapper: 'relative z-10'
+      }}
     >
       {folder.parent !== '' && (
         <MenuItem
