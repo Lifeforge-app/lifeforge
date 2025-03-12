@@ -2,8 +2,7 @@ import clsx from 'clsx'
 import React from 'react'
 import { Link } from 'react-router'
 
-import { ModuleWrapper } from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+import { ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 

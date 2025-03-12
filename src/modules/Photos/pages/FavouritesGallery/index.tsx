@@ -9,8 +9,7 @@ import {
   GoBackButton,
   HamburgerMenu,
   MenuItem
-} from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
+, ModuleWrapper } from '@lifeforge/ui'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 

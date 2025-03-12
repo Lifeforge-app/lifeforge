@@ -16,9 +16,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
-import { Button, FAB, MenuItem } from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+import { Button, FAB, MenuItem , ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
 
 import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 

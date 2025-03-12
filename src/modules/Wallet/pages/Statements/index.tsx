@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react'
 
-import { ModuleWrapper } from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+import { ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
 
 import PrintAndViewButton from './components/PrintAndViewButton'
 import StatementContent from './components/StatementContent'

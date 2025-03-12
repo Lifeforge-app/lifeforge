@@ -67,9 +67,9 @@ function _SidebarItem({
             />
           </>
         }
-        needTranslate={false}
         icon={item.icon}
         name={item.name}
+        needTranslate={false}
         number={Math.floor(Math.random() * 100)}
         sideStripColor={
           stuff === 'statuses' ? (item as IProjectsMStatus).color : undefined

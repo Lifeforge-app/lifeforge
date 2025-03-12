@@ -12,8 +12,7 @@ import {
   MenuItem,
   Scrollbar,
   Tabs
-} from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
+, ModuleWrapper } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 

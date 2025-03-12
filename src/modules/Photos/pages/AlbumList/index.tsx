@@ -9,9 +9,7 @@ import {
   DeleteConfirmationModal,
   EmptyStateScreen,
   Scrollbar
-} from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 

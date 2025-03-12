@@ -19,8 +19,7 @@ import {
   Scrollbar,
   SearchInput,
   ViewModeSelector
-} from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
+, ModuleWrapper } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 import useComponentBg from '@hooks/useComponentBg'
