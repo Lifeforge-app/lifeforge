@@ -9,9 +9,7 @@ import {
   FAB,
   Scrollbar,
   SearchInput
-} from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
 
 import EntryItem from './components/EntryItem'
 import ModifyEntryModal from './components/ModifyEntryModal'

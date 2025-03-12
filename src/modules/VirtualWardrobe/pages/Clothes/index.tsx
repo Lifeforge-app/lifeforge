@@ -15,9 +15,7 @@ import {
   QueryWrapper,
   Scrollbar,
   SearchInput
-} from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
 
 import VW_CATEGORIES from '@modules/VirtualWardrobe/constants/virtual_wardrobe_categories'
 import {

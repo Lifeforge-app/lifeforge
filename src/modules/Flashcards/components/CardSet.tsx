@@ -11,8 +11,7 @@ import {
   GoBackButton,
   HamburgerMenu,
   MenuItem
-} from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
+, ModuleWrapper } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 

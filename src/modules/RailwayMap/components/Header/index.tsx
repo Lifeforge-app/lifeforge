@@ -7,8 +7,7 @@ import {
   FAB,
   HamburgerMenuSelectorWrapper,
   MenuItem
-} from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+, ModuleHeader } from '@lifeforge/ui'
 
 import { useRailwayMapContext } from '../../providers/RailwayMapProvider'
 import DetailBox from './components/DetailBox'

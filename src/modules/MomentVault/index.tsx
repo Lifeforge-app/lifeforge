@@ -4,9 +4,7 @@ import { ListResult } from 'pocketbase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Button, DeleteConfirmationModal, FAB, MenuItem } from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+import { Button, DeleteConfirmationModal, FAB, MenuItem , ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@modules/MomentVault/interfaces/moment_vault_interfaces'
 

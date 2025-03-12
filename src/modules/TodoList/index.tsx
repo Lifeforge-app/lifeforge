@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { ModuleWrapper } from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+import { ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
 
 import { TodoListProvider } from '@modules/TodoList/providers/TodoListProvider'
 

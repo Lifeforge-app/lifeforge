@@ -10,9 +10,7 @@ import {
   FAB,
   HamburgerMenuSelectorWrapper,
   MenuItem
-} from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
 
 import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 

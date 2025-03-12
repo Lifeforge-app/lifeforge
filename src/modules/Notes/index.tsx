@@ -3,9 +3,7 @@ import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 
-import { ErrorScreen, LoadingScreen } from '@lifeforge/ui'
-import { ModuleWrapper } from '@lifeforge/ui'
-import { ModuleHeader } from '@lifeforge/ui'
+import { ErrorScreen, LoadingScreen , ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 import useFetch from '@hooks/useFetch'
