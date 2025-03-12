@@ -1,4 +1,4 @@
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useMemo } from 'react'
 
 export default function useComponentBg(): {
@@ -8,7 +8,7 @@ export default function useComponentBg(): {
   componentBgLighterWithHover: string
   darkerComponentBgWithHover: string
 } {
-  const { bgImage } = usePersonalizationContext()
+  const { bgImage } = usePersonalization()
 
   const componentBg = useMemo(() => {
     if (bgImage !== '') return 'bg-bg-50/50 backdrop-blur-xs dark:bg-bg-900/50'

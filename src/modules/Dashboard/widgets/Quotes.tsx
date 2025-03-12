@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import React from 'react'
 import tinycolor from 'tinycolor2'
@@ -10,7 +10,7 @@ import useFetch from '@hooks/useFetch'
 
 export default function Quotes(): React.ReactElement {
   const [quote] = useFetch<string>('quotes')
-  const { themeColor } = usePersonalizationContext()
+  const { themeColor } = usePersonalization()
 
   return (
     <div className="bg-custom-500 shadow-custom relative flex size-full flex-col items-center justify-center gap-2 rounded-lg p-6">

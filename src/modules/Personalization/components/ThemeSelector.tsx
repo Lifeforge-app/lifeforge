@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { ConfigColumn } from '@lifeforge/ui'
 
 function ThemeSelector(): React.ReactElement {
-  const { theme, setTheme } = usePersonalizationContext()
+  const { theme, setTheme } = usePersonalization()
   const { t } = useTranslation('modules.personalization')
 
   return (

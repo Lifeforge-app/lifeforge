@@ -1,4 +1,4 @@
-import { useAuthContext } from '@providers/AuthProvider'
+import { useAuth } from '@providers/AuthProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -46,7 +46,7 @@ function ModalsSection() {
 
 function Passwords(): React.ReactElement {
   const { t } = useTranslation('modules.passwords')
-  const { userData } = useAuthContext()
+  const { userData } = useAuth()
   const {
     masterPassword,
     setMasterPassword,

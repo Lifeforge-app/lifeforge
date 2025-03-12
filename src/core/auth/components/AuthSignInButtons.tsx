@@ -1,4 +1,4 @@
-import { useAuthContext } from '@providers/AuthProvider'
+import { useAuth } from '@providers/AuthProvider'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
@@ -15,7 +15,7 @@ function AuthSignInButton({
   loading: boolean
   signIn: () => void
 }): React.ReactElement {
-  const { auth } = useAuthContext()
+  const { auth } = useAuth()
   const { t } = useTranslation('common.auth')
   const [searchParams] = useSearchParams()
 

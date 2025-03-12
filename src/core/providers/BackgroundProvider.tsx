@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import React from 'react'
 
 import { BG_BLURS } from '../constants/bg_blurs'
-import { usePersonalizationContext } from './PersonalizationProvider'
+import { usePersonalization } from './PersonalizationProvider'
 
 function BackgroundProvider({
   children
@@ -13,7 +13,7 @@ function BackgroundProvider({
     bgImage,
     theme,
     backdropFilters: { brightness, blur, contrast, saturation, overlayOpacity }
-  } = usePersonalizationContext()
+  } = usePersonalization()
 
   return (
     <div

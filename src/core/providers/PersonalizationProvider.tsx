@@ -16,7 +16,7 @@ import tinycolor from 'tinycolor2'
 import { type IFontFamily } from '@modules/Personalization/components/FontFamilySelector'
 
 import THEME_COLOR_HEX from '../constants/theme_color_hex'
-import { useAuthContext } from './AuthProvider'
+import { useAuth } from './AuthProvider'
 
 type DashboardLayoutType = Record<
   string,
@@ -171,7 +171,7 @@ export default function PersonalizationProvider({
 }: {
   children: React.ReactNode
 }): React.ReactElement {
-  const { userData } = useAuthContext()
+  const { userData } = useAuth()
   const { i18n } = useTranslation()
 
   const [fontFamily, setFontFamily] = useState<string>('Wix Madefor Text')
@@ -671,7 +671,7 @@ export default function PersonalizationProvider({
   )
 }
 
-export function usePersonalizationContext(): IPersonalizationData {
+export function usePersonalization(): IPersonalizationData {
   const context = useContext(PersonalizationContext)
   if (context === undefined) {
     throw new Error(

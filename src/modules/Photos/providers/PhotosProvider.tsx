@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-nested-functions */
-import { useAuthContext } from '@providers/AuthProvider'
+import { useAuth } from '@providers/AuthProvider'
 import IntervalManager from '@utils/intervalManager'
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
@@ -97,7 +97,7 @@ interface IPhotosData {
 export const PhotosContext = createContext<IPhotosData | undefined>(undefined)
 
 export default function PhotosProvider(): React.ReactElement {
-  const { userData } = useAuthContext()
+  const { userData } = useAuth()
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [useTimelineScrollbar] = useState(

@@ -1,6 +1,6 @@
 /* eslint-disable import/named */
 import { Icon } from '@iconify/react'
-import { usePersonalizationContext } from '@providers/PersonalizationProvider'
+import { usePersonalization } from '@providers/PersonalizationProvider'
 import { ChartOptions, ScriptableContext } from 'chart.js'
 import clsx from 'clsx'
 import moment, { Moment } from 'moment'
@@ -120,7 +120,7 @@ const ViewSelector = ({
 
 const CodeTime = (): React.ReactElement => {
   const [data] = useFetch<ICodeTimeEachDay[]>('code-time/each-day')
-  const { themeColor } = usePersonalizationContext()
+  const { themeColor } = usePersonalization()
   const [view, setView] = useState<'bar' | 'line'>('bar')
 
   const chartData = useMemo(() => {

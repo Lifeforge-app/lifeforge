@@ -294,7 +294,7 @@ export default function AuthProvider({
   return <AuthContext value={value}>{children}</AuthContext>
 }
 
-export function useAuthContext(): IAuthData {
+export function useAuth(): IAuthData {
   const context = useContext(AuthContext)
   if (!context) {
     throw new Error('useAuthContext must be used within an AuthProvider')
