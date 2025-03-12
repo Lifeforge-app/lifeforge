@@ -108,7 +108,7 @@ addressed promptly.
 
 Lifeforge was inspired by the need for a unified personal management system that
 integrates various tools and resources to help streamline daily life, and also
-[this project](https://github.com/Volmarg/personal-management-system). 
+[this project](https://github.com/Volmarg/personal-management-system).
 For the full story, visit the [Documentation](https://docs.lifeforge.melvinchia.dev).
 
 ## 📄 License

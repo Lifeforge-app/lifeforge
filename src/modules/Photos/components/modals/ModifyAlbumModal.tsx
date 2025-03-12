@@ -1,4 +1,3 @@
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -11,6 +10,8 @@ import {
 } from '@lifeforge/ui'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { type IPhotosAlbum } from '../../interfaces/photos_interfaces'
 

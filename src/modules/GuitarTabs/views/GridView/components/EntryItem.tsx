@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
-import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React from 'react'
 import { toast } from 'react-toastify'
@@ -8,6 +7,8 @@ import { toast } from 'react-toastify'
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import DownloadMenu from '../../../components/DownloadMenu'
 import { IGuitarTabsEntry } from '../../../interfaces/guitar_tabs_interfaces'

@@ -1,4 +1,5 @@
 ### 📌 **dev 25w11 (3/9/2025 - 3/15/2025)**
+
 - **Documentation**: Resolved an issue where section detection and highlighting in the right navigation bar were inconsistent when scrolling.
 - **Railway Map**: Introduced this module.
 - **Idea Box**: Fixed text overflow issues caused by unspaced long strings.
@@ -18,10 +19,11 @@
 - **Code**: Centralized theme-related states by moving them from the `useThemeColors` hook into the `usePersonalization` context provider.
 - **Code**: Renamed `useThemeColors` hook to `useComponentsBg` for better semantic alignment with its functionality.
 - **Change Log**: Asked ChatGPT to help refine all the change log entries from 25w01 until now.
-  
+
 ---
 
 ### 📌 dev 25w10 (3/2/2025 - 3/8/2025)
+
 - **Idea Box**: Fixed bug where folder can be dragged and dropped into itself
 - **Idea Box**: fixed bug where tag icon is not shown sometimes
 - **Idea Box**: Content in nested folders will now be shown as well when filter by tags in folder
@@ -41,169 +43,179 @@
 - **Movies**: Implemented CRUD function for movie entry
 - **Movies**: User can now add ticket data to movie entry
 - **Localization**: Completely revamped the locale manager to adhere to the newest locale folder structure
-  
+
 ---
 
-### 📌 **dev 25w10 (3/2/2025 - 3/8/2025)**  
-- **Idea Box**: Resolved an issue where folders could be dragged and dropped into themselves.  
-- **Idea Box**: Fixed an intermittent bug where the tag icon would sometimes not appear.  
-- **Idea Box**: Improved filtering functionality — nested folder contents are now displayed when filtering by tags in a folder.  
-- **Moment Vault**: Fixed an issue where audio recordings were occasionally captured incorrectly.  
-- **Idea Box**: Titles are now optional for link-type ideas, improving flexibility.  
-- **Wallet**: Addressed a bug where switching from income/expenses to transfers while an asset was selected would cause an error.  
-- **Code**: Refactored the `APIRequest` function, renaming it to `fetchAPI` for clarity and maintainability.  
-- **Wallet**: Users can now toggle which transaction types are displayed in the calendar heatmap.  
-- **Wallet**: Category selections are now dynamically filtered based on the selected transaction type.  
-- **Code Time**: Introduced time charts to track project and language usage trends.  
-- **API Keys**: Moved this module from the "Settings" section to the "Confidentials" section for better organization.  
-- **API Keys**: Added a copy button for API keys, enhancing usability.  
-- **Code**: Clicking on the action button inside a text input now triggers the input field to focus automatically.  
-- **Code**: Implemented a QR Code Scanner component, which can be enabled in Form Modal or manually added.  
-- **Movies**: Introduced a new "Movies" module to the system.  
-- **Movies**: Implemented a search and import modal for fetching movie data from TMDB.  
-- **Movies**: Added full CRUD functionality for managing movie entries.  
-- **Movies**: Users can now attach ticket data to their movie entries.  
+### 📌 **dev 25w10 (3/2/2025 - 3/8/2025)**
+
+- **Idea Box**: Resolved an issue where folders could be dragged and dropped into themselves.
+- **Idea Box**: Fixed an intermittent bug where the tag icon would sometimes not appear.
+- **Idea Box**: Improved filtering functionality — nested folder contents are now displayed when filtering by tags in a folder.
+- **Moment Vault**: Fixed an issue where audio recordings were occasionally captured incorrectly.
+- **Idea Box**: Titles are now optional for link-type ideas, improving flexibility.
+- **Wallet**: Addressed a bug where switching from income/expenses to transfers while an asset was selected would cause an error.
+- **Code**: Refactored the `APIRequest` function, renaming it to `fetchAPI` for clarity and maintainability.
+- **Wallet**: Users can now toggle which transaction types are displayed in the calendar heatmap.
+- **Wallet**: Category selections are now dynamically filtered based on the selected transaction type.
+- **Code Time**: Introduced time charts to track project and language usage trends.
+- **API Keys**: Moved this module from the "Settings" section to the "Confidentials" section for better organization.
+- **API Keys**: Added a copy button for API keys, enhancing usability.
+- **Code**: Clicking on the action button inside a text input now triggers the input field to focus automatically.
+- **Code**: Implemented a QR Code Scanner component, which can be enabled in Form Modal or manually added.
+- **Movies**: Introduced a new "Movies" module to the system.
+- **Movies**: Implemented a search and import modal for fetching movie data from TMDB.
+- **Movies**: Added full CRUD functionality for managing movie entries.
+- **Movies**: Users can now attach ticket data to their movie entries.
 - **Localization**: Completely reworked the locale manager to align with the latest locale folder architecture.
-   
----
-
-### 📌 **dev 25w08 (2/16/2025 - 2/22/2025)**  
-- **Guitar Tabs**: Fixed an issue where the "Sort By" selector text did not reflect the actual selected option.  
-- **Personalization**: Resolved a conflict where the neutral variant of gray was being overwritten by DaisyUI.  
-- **Moment Vault**: Introduced a new module for recording life events.  
-- **Moment Vault**: Users can now record life events as audio and optionally transcribe them to text using OpenAI Whisper.  
-- **API**: Began migrating API routes to a `controller + service` architecture for improved maintainability.  
-- **API**: Scrapped the initial test codebase and started rewriting all tests.  
-- **Code**: Upgraded `react-router` to version 7 for better routing performance and features.  
 
 ---
 
-### 📌 **dev 25w07 (2/9/2025 - 2/15/2025)**  
-- **Code**: Refactored the OTP screen, fixing a dark mode color inconsistency.  
+### 📌 **dev 25w08 (2/16/2025 - 2/22/2025)**
+
+- **Guitar Tabs**: Fixed an issue where the "Sort By" selector text did not reflect the actual selected option.
+- **Personalization**: Resolved a conflict where the neutral variant of gray was being overwritten by DaisyUI.
+- **Moment Vault**: Introduced a new module for recording life events.
+- **Moment Vault**: Users can now record life events as audio and optionally transcribe them to text using OpenAI Whisper.
+- **API**: Began migrating API routes to a `controller + service` architecture for improved maintainability.
+- **API**: Scrapped the initial test codebase and started rewriting all tests.
+- **Code**: Upgraded `react-router` to version 7 for better routing performance and features.
 
 ---
 
-### 📌 **dev 25w06 (2/2/2025 - 2/8/2025)**  
-- **Code**: Rewrote the TailwindCSS color palette in the color picker to correctly convert colors from `oklch` back to `RGB`.  
-- **Mail Inbox**: Implemented bulk selection and deletion of mail entries.  
+### 📌 **dev 25w07 (2/9/2025 - 2/15/2025)**
+
+- **Code**: Refactored the OTP screen, fixing a dark mode color inconsistency.
 
 ---
 
-### 📌 **dev 25w05 (1/26/2025 - 2/1/2025)**  
-- **Code**: Upgraded TailwindCSS to version 4.0 for enhanced styling capabilities.  
-- **Code**: Memoized all values passed into context providers to optimize performance.  
-- **Mail Inbox**: Completely overhauled the UI for a better user experience.  
-- **Mail Inbox**: Integrated Gmail synchronization, storing all emails in a custom database.  
-- **Mail Inbox**: Added a sidebar, search bar, and pagination for better navigation.  
-- **Mail Inbox**: Enabled users to view mail content directly within the UI.  
-- **Mail Inbox**: Implemented real-time email synchronization, automatically importing incoming emails into the database.  
-- **Code**: Upgraded Headless UI to its beta version with full TailwindCSS 4.0 support.  
-- **Sidebar**: Fixed an issue where icons would flash when navigating between routes.  
-- **UI**: Improved light mode consistency across components.  
-- **Code**: Added `react-compiler` to optimize UI performance.  
-- **Code**: Created reusable wrapper components for modules containing sub-sidebars.  
-- **Virtual Wardrobe**: Introduced a session cart for temporarily storing clothing sets before checkout and history logging.  
-- **Localization**: Revamped the folder structure for locale data, segmenting translations into separate namespaces.  
-- **Code**: Rewrote the utility function for currency formatting using `Intl.NumberFormat`.  
-- **Code**: Fixed pagination component mechanism bugs.  
-- **Code**: Refactored redundant code snippets into reusable components.  
-- **Localization**: Completed translations for previously untranslated sections.  
-- **Code**: Performed a major codebase refactor for better maintainability.  
-- **Spotify**: Completely removed the Spotify module from the system.  
-- **Code**: Added an ESLint plugin to enforce alphabetical sorting of component props.  
+### 📌 **dev 25w06 (2/2/2025 - 2/8/2025)**
+
+- **Code**: Rewrote the TailwindCSS color palette in the color picker to correctly convert colors from `oklch` back to `RGB`.
+- **Mail Inbox**: Implemented bulk selection and deletion of mail entries.
 
 ---
 
-### 📌 **dev 25w04 (1/19/2025 - 1/25/2025)**  
-- **Music**: Added spacebar hotkey support for starting and pausing music playback.  
-- **Code**: Upgraded all project dependencies to their latest versions.  
-- **Code**: Migrated from an older ESLint version to the latest release for improved linting rules and performance.  
-- **Code**: Performed a large-scale folder structure refactoring, reorganizing components into a structured `components` directory.  
-- **Code**: Removed unused dependencies from `package.json` to optimize project size.  
-- **Code**: Significantly refactored the `Button` component for improved maintainability and performance.  
-- **Passwords**: Implemented context providers to streamline state management and reduce redundant code.  
-- **Server Status**: Conducted an extensive code refactor to enhance efficiency and maintainability.  
-- **Virtual Wardrobe**: Introduced the Virtual Wardrobe module for managing clothing items.  
-- **Virtual Wardrobe**: Completed CRUD functionalities for wardrobe entries.  
-- **Virtual Wardrobe**: Added a sidebar to enable filtering options.  
-- **Code**: Moved routing and entry point files into the `core` directory for a clearer architectural structure.  
+### 📌 **dev 25w05 (1/26/2025 - 2/1/2025)**
+
+- **Code**: Upgraded TailwindCSS to version 4.0 for enhanced styling capabilities.
+- **Code**: Memoized all values passed into context providers to optimize performance.
+- **Mail Inbox**: Completely overhauled the UI for a better user experience.
+- **Mail Inbox**: Integrated Gmail synchronization, storing all emails in a custom database.
+- **Mail Inbox**: Added a sidebar, search bar, and pagination for better navigation.
+- **Mail Inbox**: Enabled users to view mail content directly within the UI.
+- **Mail Inbox**: Implemented real-time email synchronization, automatically importing incoming emails into the database.
+- **Code**: Upgraded Headless UI to its beta version with full TailwindCSS 4.0 support.
+- **Sidebar**: Fixed an issue where icons would flash when navigating between routes.
+- **UI**: Improved light mode consistency across components.
+- **Code**: Added `react-compiler` to optimize UI performance.
+- **Code**: Created reusable wrapper components for modules containing sub-sidebars.
+- **Virtual Wardrobe**: Introduced a session cart for temporarily storing clothing sets before checkout and history logging.
+- **Localization**: Revamped the folder structure for locale data, segmenting translations into separate namespaces.
+- **Code**: Rewrote the utility function for currency formatting using `Intl.NumberFormat`.
+- **Code**: Fixed pagination component mechanism bugs.
+- **Code**: Refactored redundant code snippets into reusable components.
+- **Localization**: Completed translations for previously untranslated sections.
+- **Code**: Performed a major codebase refactor for better maintainability.
+- **Spotify**: Completely removed the Spotify module from the system.
+- **Code**: Added an ESLint plugin to enforce alphabetical sorting of component props.
 
 ---
 
-### 📌 **dev 25w03 (1/12/2025 - 1/18/2025)**  
-- **UI**: Removed the header and relocated the profile button to the sidebar for a cleaner layout.  
-- **Wishlist**: Added a direct link button to visit product websites.  
-- **Code**: Refactored the "Go Back" button to use a reusable button component.  
-- **Code Time**: Fixed UI responsiveness issues.  
-- **Books Library**: Resolved a color inconsistency issue in the Libgen modal when using light mode.  
-- **UI**: Reduced module header icon and text size for better mobile optimization.  
-- **UI**: Fixed minor spacing inconsistencies across the interface.  
-- **Wallet**: Implemented data extraction from receipt images using Tesseract OCR and GPT-4o-mini.  
-- **Code**: Created reusable checkbox components for consistent UI interactions.  
-- **Code**: Implemented a reusable tabs selector component.  
-- **Wishlist**: Developed full CRUD functionality for wishlist management, including automated amount calculations.  
-- **Wishlist**: Redesigned the wishlist list and entry UI for a more intuitive experience.  
-- **UI**: Added a refresh button to the API offline screen for improved usability.  
-- **Wishlist**: Integrated Puzzle World as a new wishlist provider.  
+### 📌 **dev 25w04 (1/19/2025 - 1/25/2025)**
+
+- **Music**: Added spacebar hotkey support for starting and pausing music playback.
+- **Code**: Upgraded all project dependencies to their latest versions.
+- **Code**: Migrated from an older ESLint version to the latest release for improved linting rules and performance.
+- **Code**: Performed a large-scale folder structure refactoring, reorganizing components into a structured `components` directory.
+- **Code**: Removed unused dependencies from `package.json` to optimize project size.
+- **Code**: Significantly refactored the `Button` component for improved maintainability and performance.
+- **Passwords**: Implemented context providers to streamline state management and reduce redundant code.
+- **Server Status**: Conducted an extensive code refactor to enhance efficiency and maintainability.
+- **Virtual Wardrobe**: Introduced the Virtual Wardrobe module for managing clothing items.
+- **Virtual Wardrobe**: Completed CRUD functionalities for wardrobe entries.
+- **Virtual Wardrobe**: Added a sidebar to enable filtering options.
+- **Code**: Moved routing and entry point files into the `core` directory for a clearer architectural structure.
 
 ---
 
-### 📌 **dev 25w02 (1/5/2025 - 1/11/2025)**  
-- **Wallet**: Fixed an issue where financial reports displayed incorrect calculations across multiple years.  
-- **UI**: Reduced the header icon size for better adaptability on small screens.  
-- **Wishlist**: Improved responsiveness for a smoother mobile experience.  
-- **Code**: Updated `README.md` with the latest information and screenshots.  
-- **Module Tools**: Completely revamped the utility tool system.  
-- **Module Tools**: Added a help screen to guide users through features.  
-- **Module Tools**: Implemented multilingual support.  
-- **Module Tools**: Introduced the ability to list and delete modules dynamically.  
-- **Code**: Replaced the `tsx` runtime with `bun run` for improved build performance.  
-- **API**: Integrated OpenAI's GPT-4o-mini model and developed a `fetchOpenAI` utility function.  
-- **Code**: Modified build options to split Node modules into chunks during production builds for better performance.  
-- **OpenAI API Pricing**: Created a new module allowing users to view OpenAI API pricing directly within the system.  
-- **UI**: Reorganized module categories for a more intuitive user experience.  
-- **UI**: Fixed modal layering issues in the Pixabay search filter within the image picker modal.  
-- **UI**: Addressed minor light mode inconsistencies.  
+### 📌 **dev 25w03 (1/12/2025 - 1/18/2025)**
+
+- **UI**: Removed the header and relocated the profile button to the sidebar for a cleaner layout.
+- **Wishlist**: Added a direct link button to visit product websites.
+- **Code**: Refactored the "Go Back" button to use a reusable button component.
+- **Code Time**: Fixed UI responsiveness issues.
+- **Books Library**: Resolved a color inconsistency issue in the Libgen modal when using light mode.
+- **UI**: Reduced module header icon and text size for better mobile optimization.
+- **UI**: Fixed minor spacing inconsistencies across the interface.
+- **Wallet**: Implemented data extraction from receipt images using Tesseract OCR and GPT-4o-mini.
+- **Code**: Created reusable checkbox components for consistent UI interactions.
+- **Code**: Implemented a reusable tabs selector component.
+- **Wishlist**: Developed full CRUD functionality for wishlist management, including automated amount calculations.
+- **Wishlist**: Redesigned the wishlist list and entry UI for a more intuitive experience.
+- **UI**: Added a refresh button to the API offline screen for improved usability.
+- **Wishlist**: Integrated Puzzle World as a new wishlist provider.
 
 ---
 
-### 📌 **dev 25w01 (12/29/2024 - 1/4/2025)**  
-- **Code**: 🎉 Happy New Year! 🎉  
-- **Code**: Removed excessive and unused TailwindCSS classes to optimize stylesheets.  
-- **Code**: Enhanced type declarations for UI components for better TypeScript support.  
-- **Code**: Removed unused component props to streamline prop management.  
-- **Code**: Developed a reusable `Switch` component for toggling states.  
-- **Code**: Fixed pagination component bugs affecting navigation.  
-- **Code**: Renamed various component props to more intuitive names.  
-- **Code**: Renamed `APIComponentWithFallback` to `APIFallbackComponent` for better clarity.  
-- **Sidebar**: Refactored sidebar logic for improved maintainability.  
-- **Sidebar**: Enhanced type declarations for sidebar components.  
-- **UI**: Continued improvements to theme consistency across dark and light modes.  
-- **Dashboard**: Switched the previous quote API to AI-generated quotes for dynamic content.  
-- **Idea Box**: Resolved an issue with OG image aspect ratio inconsistencies.  
-- **UI**: Fixed multiple responsive UI issues.  
-- **Wallet**: Corrected text inconsistencies in sidebar buttons.  
-- **Code**: Upgraded TailwindCSS to its latest stable version.  
-- **UI**: Password input fields are now hidden by default and will only reveal content when users press and hold the eye button.  
-- **Code**: Fixed multiple bugs related to the image upload modal.  
-- **Code**: Added a file input option within the form modal component.  
-- **Code**: Upgraded PocketBase to its latest version for improved performance and stability.  
-- **Authentication**: Switched to using PocketBase’s built-in OTP feature, replacing the previous OTP implementation.  
-- **Idea Box**: Users can now add cover images to idea containers for better visual organization.    
-- **Idea Box**: Added a latest update timestamp display for image entries.  
-- **Idea Box**: Fixed an issue where moving ideas out of folders was not properly reflected in the UI.  
-- **Code**: Conducted a major code refactor to optimize performance and readability.  
-- **Sudoku**: Introduced a new module allowing users to generate and print Sudoku boards.  
-- **Idea Box**: Implemented a tagging system, enabling users to categorize ideas with custom tags.  
-- **Idea Box**: Added search functionality within idea containers and folders.  
-- **Idea Box**: Utilized context providers to streamline state management between components.  
-- **Journal**: Fixed image display and upload bugs.  
-- **Account**: Addressed UI responsiveness issues.  
-- **Wallet**: Increased the resolution of receipt images extracted from PDF files for better accuracy.  
+### 📌 **dev 25w02 (1/5/2025 - 1/11/2025)**
+
+- **Wallet**: Fixed an issue where financial reports displayed incorrect calculations across multiple years.
+- **UI**: Reduced the header icon size for better adaptability on small screens.
+- **Wishlist**: Improved responsiveness for a smoother mobile experience.
+- **Code**: Updated `README.md` with the latest information and screenshots.
+- **Module Tools**: Completely revamped the utility tool system.
+- **Module Tools**: Added a help screen to guide users through features.
+- **Module Tools**: Implemented multilingual support.
+- **Module Tools**: Introduced the ability to list and delete modules dynamically.
+- **Code**: Replaced the `tsx` runtime with `bun run` for improved build performance.
+- **API**: Integrated OpenAI's GPT-4o-mini model and developed a `fetchOpenAI` utility function.
+- **Code**: Modified build options to split Node modules into chunks during production builds for better performance.
+- **OpenAI API Pricing**: Created a new module allowing users to view OpenAI API pricing directly within the system.
+- **UI**: Reorganized module categories for a more intuitive user experience.
+- **UI**: Fixed modal layering issues in the Pixabay search filter within the image picker modal.
+- **UI**: Addressed minor light mode inconsistencies.
+
+---
+
+### 📌 **dev 25w01 (12/29/2024 - 1/4/2025)**
+
+- **Code**: 🎉 Happy New Year! 🎉
+- **Code**: Removed excessive and unused TailwindCSS classes to optimize stylesheets.
+- **Code**: Enhanced type declarations for UI components for better TypeScript support.
+- **Code**: Removed unused component props to streamline prop management.
+- **Code**: Developed a reusable `Switch` component for toggling states.
+- **Code**: Fixed pagination component bugs affecting navigation.
+- **Code**: Renamed various component props to more intuitive names.
+- **Code**: Renamed `APIComponentWithFallback` to `APIFallbackComponent` for better clarity.
+- **Sidebar**: Refactored sidebar logic for improved maintainability.
+- **Sidebar**: Enhanced type declarations for sidebar components.
+- **UI**: Continued improvements to theme consistency across dark and light modes.
+- **Dashboard**: Switched the previous quote API to AI-generated quotes for dynamic content.
+- **Idea Box**: Resolved an issue with OG image aspect ratio inconsistencies.
+- **UI**: Fixed multiple responsive UI issues.
+- **Wallet**: Corrected text inconsistencies in sidebar buttons.
+- **Code**: Upgraded TailwindCSS to its latest stable version.
+- **UI**: Password input fields are now hidden by default and will only reveal content when users press and hold the eye button.
+- **Code**: Fixed multiple bugs related to the image upload modal.
+- **Code**: Added a file input option within the form modal component.
+- **Code**: Upgraded PocketBase to its latest version for improved performance and stability.
+- **Authentication**: Switched to using PocketBase’s built-in OTP feature, replacing the previous OTP implementation.
+- **Idea Box**: Users can now add cover images to idea containers for better visual organization.
+- **Idea Box**: Added a latest update timestamp display for image entries.
+- **Idea Box**: Fixed an issue where moving ideas out of folders was not properly reflected in the UI.
+- **Code**: Conducted a major code refactor to optimize performance and readability.
+- **Sudoku**: Introduced a new module allowing users to generate and print Sudoku boards.
+- **Idea Box**: Implemented a tagging system, enabling users to categorize ideas with custom tags.
+- **Idea Box**: Added search functionality within idea containers and folders.
+- **Idea Box**: Utilized context providers to streamline state management between components.
+- **Journal**: Fixed image display and upload bugs.
+- **Account**: Addressed UI responsiveness issues.
+- **Wallet**: Increased the resolution of receipt images extracted from PDF files for better accuracy.
 
 ---
 
 ### 📌 dev 24w52 (12/22/2024 - 12/28/2024)
+
 - **Idea Box**: User can now create folders inside folders (nested folder is now a thing)
 - **UI**: Reduced background blur and opacity for modal component
 - **UI**: Fixed overflow bugs related to the height of module wrapper
@@ -242,29 +254,37 @@
 - **Dashboard**: Removed ask AI FAB for now
 - **UI**: Color consistency fixed
 - **Wallet**: Fixed issue related to component height
+
 ---
 
 ### 📌 dev 24w51 (12/15/2024 - 12/21/2024)
+
 - **Code**: Fixed bugs on API status detection provider
 - **Wallet**: Fixed minor bugs on route parameters
+
 ---
 
 ### 📌 dev 24w50 (12/8/2024 - 12/14/2024)
+
 - **API Keys**: The time when each key is last updated will now be shown
 - **Guitar Tabs**: Removed suspicious potential credentials left behind
+
 ---
 
 ### 📌 dev 24w49 (12/1/2024 - 12/7/2024)
+
 - **Wishlist**: User can now paste a link of any shopee product and the system will automatically parse data using OCR
-- **Code**: Changes made to components folder structure 
+- **Code**: Changes made to components folder structure
 - **Code**: Made image upload modal universal and reusable so that all modules can share the same
 - **Dashboard**: Minor bug fixes to the display of Today's Event widget
 - **Code**: Image upload modal can now also upload files
 - **Journal**: Word count of each entry will now be shown in the entry list
 - **UI**: Bug fixes on password input
+
 ---
 
 ### 📌 dev 24w48 (11/24/2024 - 11/30/2024)
+
 - **Journal**: Fixed bugs related to image display and upload
 - **Personalization**: User can now add background image to their system
 - **Personalization**: User can now adjust their background image filters like brightness, contrast, saturation, etc.
@@ -296,9 +316,11 @@
 - **Code**: Close button in the modal component now uses our own reusable button component
 - **Wallet**: Transaction location will now only be shown in full when user hover over the tooltip (if applicable)
 - **Wallet**: Changes made on transaction date for the purpose of UI responsiveness
+
 ---
 
 ### 📌 dev 24w47 (11/17/2024 - 11/23/2024)
+
 - **Wallet**: Category and Asset is now required in adding income or expenses transactions
 - **Code**: Minor code refactoring
 - **Idea Box**: Fixed bugs due to API route changes
@@ -311,9 +333,11 @@
 - **Wallet**: Minor improvements made to date range selection
 - **Guitar Tabs**: Added select box for user to select sorting mode of their tab entries
 - **Guitar Tabs**: Added module for user to download tabs straightaway from `https://www.guitarworld.com.cn/`
+
 ---
 
 ### 📌 dev 24w46 (11/10/2024 - 11/16/2024)
+
 - **Journal**: Fixed bugs related to image displaying
 - **Code**: Created reusable component for header filtering chips
 - **Code**: Query parameters are now presented as URL hash to prevent page rerendering
@@ -326,22 +350,30 @@
 - **Wallet**: User can now select date range in calendar heatmap in transaction tab
 - **Code**: Minor code refactoring
 - **Code**: Upgraded the model used by Groq to Llama 3.2
+
 ---
 
 ### 📌 dev 24w45 (11/3/2024 - 11/9/2024)
+
 - **Code**: Moved all codebases from my own account into a specialized organization
+
 ---
 
 ### 📌 dev 24w44 (10/27/2024 - 11/2/2024)
+
 - **API**: Removed useless typescript declarations
+
 ---
 
 ### 📌 dev 24w42 (10/13/2024 - 10/19/2024)
+
 - **API**: Moved code from `app.ts` to `index.ts` to reduce redundancy
 - **API**: Created `routes.ts` and moved all the module route declarations into it
+
 ---
 
 ### 📌 dev 24w41 (10/6/2024 - 10/12/2024)
+
 - **Personalization**: Fixed UI responsiveness issue
 - **UI**: Fixed minor light mode issue
 - **API**: Implemented custom function to list all routes in the API
@@ -350,20 +382,24 @@
 - **API**: Started working on API integration test for each module
 - **API**: Implemented mechanism to parse docs from JSDoc-like inline endpoint documentation inspired by Open API documentation standard
 - **API**: Completely revamped the design API explorer, added a lot more information
+
 ---
 
 ### 📌 dev 24w39 (9/22/2024 - 9/28/2024)
+
 - **Icon Selector**: Chip selector is now collapsed by default to prevent squeezing the height of the icon list
 - **Icon Selector**: Some more code refactoring
 - **Sidebar**: Some bug fixes on the subsection expand and collapse mechanism
 - **Todo List**: User can now define their own set of priorities
-- **Code**: Improved consistency of sidebar items inside individual module 
+- **Code**: Improved consistency of sidebar items inside individual module
 - **Sidebar**: Refactored code for sidebar item
 - **Code**: The `updateValue` props can now be passed in the set state action function straightaway
 - **Code**: Migrated from using `yarn` to `bun` as package manager for the project
+
 ---
 
 ### 📌 dev 24w38 (9/15/2024 - 9/21/2024)
+
 - **Icon Selector**: UI fix for light theme
 - **Icon Selector**: Code refactored
 - **UI**: Modal overlay background color is now lighter in light mode
@@ -395,9 +431,11 @@
 - **Modules**: Modules in the list are now separated by their categories in the sidebar
 - **Mail Inbox**: Some changes to the UI
 - **API**: Integrated lazy loading routes for faster startup speed
+
 ---
 
 ### 📌 dev 24w37 (9/8/2024 - 9/14/2024)
+
 - **Youtube Video Storage**: User can now download multiple videos asynchronously
 - **Youtube Video Storage**: User can now view their download progresses through the UI
 - **Youtube Video Storage**: Added option for user to watch the video on YouTube
@@ -417,9 +455,11 @@
 - **Youtube Video Storage**: Mobile responsive done
 - **Personalization**: Minor UI bug fixes
 - **Icon Selector**: Integrated `react-virtualized` for virtualized icon list, leading to massive improvement in performance
+
 ---
 
 ### 📌 dev 24w36 (9/1/2024 - 9/7/2024)
+
 - **Personalization**: Improvements on UI feedback
 - **Localization Manager**: Users will now be redirected back to the page they were located before they click the sidebar button
 - **Code**: Created a CLI tools with AI integration in module name and description translation to streamline module creation
@@ -430,9 +470,11 @@
 - **Youtube Video Storage**: User can now download individual video from YouTube with progress being shown in the UI
 - **Youtube Video Storage**: Downloaded videos are now being listed in the UI
 - **Youtube Video Storage**: User can now delete unwanted videos in their storage
+
 ---
 
 ### 📌 dev 24w35 (8/25/2024 - 8/31/2024)
+
 - **Guitar Tabs**: User can now attach audio and musescore files to their tabs if the uploaded filenames are the same
 - **API**: Reconfigured SAMBA server and renamed `uploads` folder to `medium`
 - **Photos**: Changed the position of sidebar and header in main gallery
@@ -459,9 +501,11 @@
 - **DNS Records**: User can now delete individual records
 - **DNS Records**: User can now bulk select records and delete
 - **API**: System will now check if the API endpoint is working before loading everything
+
 ---
 
 ### 📌 dev 24w34 (8/18/2024 - 8/24/2024)
+
 - **Code**: Started recovering after almost two months worth of data completely lost
 - **Photos**: Fixed bugs where data failed to load properly when there is no photo entry records
 - **UI**: Fixed some bottom margin issues
@@ -470,43 +514,53 @@
 - **Change Log**: Tried my best to recover almost two months' worth of change log entries by looking at each Git commits
 - **Codetime**: Freed up a lot of space in database by revamping how the codetime entries are stored
 - **Documentation**: Added steps for configuring `pdf-thumbnails` in backend config section
+
 ---
 
 ### 📌 dev 24w31 (7/28/2024 - 8/3/2024)
+
 - **Code**: Updated HeadlessUI to the newest version
 - **Code**: Migrated frontend hosting to Netlify cuz my Vercel quota exceeded
 - **API**: Renamed all nouns to plural for better consistency
 - **Wallet**: Integrated `react-virtualized` for virtualized list, leading to massive improvement in performance
 - **API**: Migrated to Typescript!!!
 - **API**: Created reusable functions for CRUD actions
+
 ---
 
 ### 📌 dev 24w30 (7/21/2024 - 7/27/2024)
+
 - **Code**: Created custom hooks for getting hex code of current theme color
 - **Guitar Tabs**: User can now choose between grid view and list view
 - **Airports**: Massive code refactoring
+
 ---
 
 ### 📌 dev 24w29 (7/14/2024 - 7/20/2024)
+
 - **Guitar Tabs**: User can now open guitar tab PDFs by clicking on the entry
 - **Music List**: Integrated `react-virtualized` for virtualized list, leading to massive improvement in performance
 - **Guitar Tabs**: Added empty state screen when there is no guitar tabs
 - **Icon Selector**: Removed statically defined icon set categories and replaced it with dynamically generated one
 - **Photos**: Changed how dimensions are acquired from images
+
 ---
 
 ### 📌 dev 24w27 (6/30/2024 - 7/6/2024)
+
 - **Journal**: Completely revamped the way of writing journal, integrating AI to help summarize the journal
 - **Journal**: Post-completion code refactoring done
 - **Code**: Created reusable screen for creating password and lock screen
 - **Wallet**: Created date range filter in transaction sidebar
 - **Airports**: Added section to view radio frequencies of each airport
 - **Books Library**: Refactored the code
+
 ---
 
 ### 📌 dev 24w26 (6/23/2024 - 6/29/2024)
+
 - **Code**: A lot more code refactoring
-- **Code**: No need to check if the data is actually the data instead of "loading" or "error" anymore every time when using `APIComponentWithFallback` 
+- **Code**: No need to check if the data is actually the data instead of "loading" or "error" anymore every time when using `APIComponentWithFallback`
 - **Projects (M)**: Started working on the Kanban board of each project
 - **Projects (M)**: Used context provider to reduce code for transferring states among components
 - **Airports**: Started working on this module for displaying airport data, just because I can
@@ -514,16 +568,18 @@
 - **Idea Box**: User can now straightaway paste image into the idea box
 - **Journal**: Journals are now encrypted with password, just like the Password Vault
 - **Photos**: Created archived gallery, but yet to implement password functionality
+
 ---
 
 ### 📌 dev 24w25 (6/16/2024 - 6/22/2024)
+
 - **Guitar Tabs**: Started working on this module
 - **Dashboard**: Today's Event widget now displays real data from the calendar
 - **Code**: Minor code refactoring here and there
 - **Account**: User can now change their account settings like avatar, username, etc., and reset their password in the UI
 - **API**: Removed redundant action statements in endpoint that can be indicated by HTTP methods
 - **Code**: Refactored code for `Button` component
-- **Guitar Tabs**: Implemented necessary  CRUD functionality
+- **Guitar Tabs**: Implemented necessary CRUD functionality
 - **Code**: Finally decided to change the name in `package.json`
 - **Documentation**: Created documentation for the project
 - **About**: Removed this useless stuff
@@ -537,9 +593,11 @@
 - **UI**: Header will now retract when sidebar or modal is opened
 - **UI**: Changed default theme color from teal to lime
 - **Wallet**: Wallet balances are now dynamically derived from starting balances and transactions
+
 ---
 
 ### 📌 dev 24w24 (6/9/2024 - 6/15/2024)
+
 - **Code**: Upgraded Iconify to newest versio
 - **Code**: Changed `w-x h-x` into `size-x` for better readability
 - **UI**: Added icon for sidebar item indicating modules with AI integration
@@ -563,7 +621,7 @@
 - **Wallet**: Some more code refactoring
 - **Code**: Changed `@typedec` alias to `@interfaces`
 - **Wallet**: Used context provider to reduce code for transferring states among components
-- **Wallet**: User can now click to view the receipt in transaction list view 
+- **Wallet**: User can now click to view the receipt in transaction list view
 - **Localization**: Added language support for Bahasa Malaysia
 - **Code**: Changed LICENSE from `MIT` to `CC BY-NC-SA 4.0`
 - **Wallet**: Data in the dashboard is now real
@@ -580,9 +638,11 @@
 - **API**: Fixed a lot of potential vulnerability
 - **API**: Added rate-limiting logic to unauthenticated user
 - **API**: CSS stylesheet for API explorer is now statically served
+
 ---
 
 ### 📌 dev 24w23 (6/2/2024 - 6/8/2024)
+
 - **Dashboard**: Fixed theme color issue
 - **Password**: UI mobile responsive done
 - **Password**: Password returned from the server is now encrypted as well
@@ -594,9 +654,11 @@
 - **UI**: Better color consistency
 - **Wallet**: Added button for user to create transaction in wallet dashboard
 - **Photos**: Migrated from using `react-photo-gallery` library to `react-photo-album` due to incompatibility with newest version of React
+
 ---
 
 ### 📌 dev 24w22 (5/26/2024 - 6/1/2024)
+
 - **Code**: Added content for README.md and LICENSE
 - **Code**: Finally renamed github repo to "Lifeforge".
 - **Dashboard**: The graph in Codetime module now uses the theme color
@@ -611,9 +673,11 @@
 - **UI**: Page title will now be updated according to the module the user is using
 - **Code**: Updated React to version 19
 - **Wallet**: User can now view, create, update, and delete transactions through the app
+
 ---
 
 ### 📌 dev 24w21 (5/19/2024 - 5/25/2024)
+
 - **Music**: Refactored the code
 - **Music**: Created global `MusicContext` so that music will play across all modules
 - **Code**: Change all the `useContext(SomeContext)` into `useSomeContext()`
@@ -649,9 +713,11 @@
 - **Server Status**: Removed gauge component since it causes huge performance issue on mobile
 - **UI**: Mobile responsive view done for a lot of modules
 - **Code**: Created import alias `@utils` for utility functions
+
 ---
 
 ### 📌 dev 24w20 (5/12/2024 - 5/18/2024)
+
 - **Code**: Replaced `items-center justify-center` utility class with `flex-center`
 - **Code**: Created reusable component `ModalHeader`
 - **Code**: Created reusable component `Button`
@@ -692,9 +758,11 @@
 - **Music**: User can mark their music as favourites
 - **UI**: Fixed some light mode background color issues
 - **Music**: User can play, pause, play last, play next, play repeatedly, shuffle musics, etc. just like any other music player can do
+
 ---
 
 ### 📌 dev 24w19 (5/5/2024 - 5/11/2024)
+
 - **Photos**: Removed sorting stuff from API to increase loading speed
 - **Todo List**: Added date picker when creating task so user won't have to manually input anymore
 - **Todo List**: Increased gap between tags in task item
@@ -708,9 +776,11 @@
 - **Todo List**: Overdue task will now be shown in red color
 - **Todo List**: Tags count will now update correctly when task is deleted
 - **Todo List**: Filtered tag and list will now show in the header
+
 ---
 
 ### 📌 dev 24w18 (4/28/2024 - 5/4/2024)
+
 - **Photos**: Fixed bugs where user cannot remove photos from album
 - **Photos**: Fixed bugs where user cannot bulk download photos
 - **Photos**: User can now add tags to albums
@@ -720,9 +790,11 @@
 - **API**: Deployed API to vercel
 - **API**: Changed development host from `api.lifeforge.thecodeblog.net` to `dev.lifeforge.thecodeblog.net`
 - **Todo List**: Empty state screen will now show when there is no task availabke
+
 ---
 
 ### 📌 dev 24w16 (4/14/2024 - 4/20/2024)
+
 - **Code**: Refactored a lot of import statements by using aliases
 - **Code**: Extracted all the type declaration code into a separate folder
 - **Code**: Used ESlint to sort the import statements
@@ -735,9 +807,11 @@
 - **Repositories **: Completed setup for Gitea in the server
 - **API**: Slightly redesigned the explorer page and added description for each endpoint
 - **Repositories**: All the repos are now listed in the UI
+
 ---
 
 ### 📌 dev 24w15 (4/7/2024 - 4/13/2024)
+
 - **Notes**: User is now able to view PDF files in the app itself.
 - **Code**: Added `manifest.json` to the codebase and now LifeForge can become its own standalone app.
 - **UI**: Fixed password input font size
@@ -753,15 +827,19 @@
 - **Authentication**: All the authentication logic is now done through the API. There is no direct connection between the front end and the database.
 - **API**: Created asyncWrapper for handling errors and removed all the try catch blocks in each endpoint
 - **Authentication**: Removed Github OAuth login for now
+
 ---
 
 ### 📌 dev 24w14 (3/31/2024 - 4/6/2024)
+
 - **Flashcards**: Users are now able to paste bulk entries into flash card decks
 - **API**: Split me and my brother's instances
 - **Photos**: User is now able to mark photos as favourite
+
 ---
 
 ### 📌 dev 24w13 (3/24/2024 - 3/30/2024)
+
 - **Photos**: Users are now able to download photos from gallery (single)
 - **Change Log**: Change logs can now be viewed by different account
 - **Todo List**: User can now delete task through UI
@@ -773,27 +851,33 @@
 - **Flashcards**: Added button to randomly select flashcards
 - **Flashcards**: Users are now able to modify and create cards in decks
 - **Change Log**: Fixed bug of which the Regex will only replace one `code` tag in each entry
+
 ---
 
 ### 📌 dev 24w12 (3/17/2024 - 3/23/2024)
+
 - **Todo List**: User can now create and modify task through UI
 - **Code**: Used lazy loading to split large code base into chunks when production code is built.
 - **Photos**: Updated logic bug when deleting photos
 - **Personalization**: Added side margin to theme selector in mobile view
 - **Todo List**: Fixed task overflow issue
 - **Todo List**: Separated pending and completed tasks
+
 ---
 
 ### 📌 dev 24w11 (3/10/2024 - 3/16/2024)
+
 - **Photos**: User can now remove photos from album through UI
 - **Photos**: User can now rename photo albums
 - **Photos**: Fixed album name overflow issue
 - **Code**: Added ESLint to API code for cleaner code
 - **Photos**: EVEN LARGER PERFORMANCE IMPROVEMENT: Images will now be fetched as needed (grouped by date)
 - **Photos**: Fixed date arrangement bugs
+
 ---
 
 ### 📌 dev 24w10 (3/3/2024 - 3/9/2024)
+
 - **Photos**: Made timeline date display being updated while scrolling more accurate
 - **Change Log**: Added search feature
 - **Change Log**: Display versions from latest to oldest
@@ -824,9 +908,11 @@
 - **API**: Removed some unused data to increase the transfer speed
 - **Photos**: HUGE PERFORMANCE IMPROVEMENT: Photos will now only be loaded when they are in the viewport.
 - **Photos**: Fixed bug of which you cannot bulk select photos that were not shot on the same date
+
 ---
 
 ### 📌 dev 24w09 (2/25/2024 - 3/2/2024)
+
 - **Code**: Fixed hot reload bug
 - **Server**: Moved from RaspberryPi to my old PC for slightly better CPU performance
 - **Server**: Created brand new instance for my brother
@@ -834,12 +920,14 @@
 - **Photos**: UI completed, looks and functions really identical to Google Photos
 - **Server Status**: Added system uptime indicator
 - **Photos**: Refactored messy code
-- **Photos**: Added mechanics to select  / select all photos
+- **Photos**: Added mechanics to select / select all photos
 - **Authentication**: Fixed bugs that allows user to access main UI after failed login attempt
 - **UI**: Made password input font size larger
+
 ---
 
 ### 📌 dev 24w07 (2/11/2024 - 2/17/2024)
+
 - **Spotify**: Fixed authentication logic
 - **Project (K)**: File uploading and downloading logic completed
 - **UI**: Fixed opacity issue with custom theme colors
@@ -851,9 +939,11 @@
 - **Project (K)**: User is now able to filter projects using sidebar
 - **Project (K)**: Project status can now be updated through UI
 - **Server Status**: Added CPU and Memory usage meter and system information list
+
 ---
 
 ### 📌 dev 24w06 (2/4/2024 - 2/10/2024)
+
 - **Spotify**: Added position slider
 - **API**: changed all the PUT method to POST
 - **Code**: Created reusable ModuleWrapper component
@@ -863,9 +953,11 @@
 - **Projects (K)**: Started sketching out UI / UX
 - **API**: Renovated authentication logic so that unauthorized personnel cannot access any API
 - **Projects (K)**: Started working on file uploading logic
+
 ---
 
 ### 📌 dev 24w05 (1/28/2024 - 2/3/2024)
+
 - **Notes**: Browse notes using a file explorer like interface
 - **Notes**: Directory navigation mechanics completed
 - **Notes**: Files and folder upload mechanics completed
@@ -891,23 +983,29 @@
 - **Todo List**: Data are now synced with database
 - **Todo List**: Added modals to create tags and lists
 - **Spotify**: Made a Spotify controller for some reason =)
+
 ---
 
 ### 📌 dev 24w04 (1/21/2024 - 1/27/2024)
+
 - **Sidebar**: Subsection items for notes module is now bounded to database
 - **Icon Picker**: Changed the code logic to adhere to the new API data structure
 - **Notes**: Notes subjects are categorized by workspaces
 - **Notes**: Added modal to create, modify and delete subjects
 - **Notes**: Added different icons for each file format
+
 ---
 
 ### 📌 dev 24w03 (1/14/2024 - 1/20/2024)
+
 - **Bug fix**: Module sidebar's behaviour is now separated from the main sidebar.
 - **Change Log**: Change log entries are now stored inside database and are loaded dynamically into the UI
 - **Change Log**: UI improvements.
+
 ---
 
 ### 📌 dev 24w02 (1/7/2024 - 1/13/2024)
+
 - **Personalization**: UI to change the theme and accent color of the application from the personalization page.
 - **Personalization**: Added option to change the accent color of the application.
 - **Personalization**: Personalization linked with the user account in database, so that the settings are synced across devices.
@@ -915,17 +1013,20 @@
 - **Code Snippets**: Data synced to database, no more dummy data.
 - **Code Snippets**: Create, update, and delete labels and languages from the UI.
 - **Code Snippets**: View snippets by clicking on the list entry.
+
 ---
 
 ### 📌 dev 24w01 (12/31/2023 - 1/6/2024)
+
 - **Idea Box**: Containers and ideas data synced to database, no more dummy data.
 - **Idea Box**: Create, update, and delete containers and ideas from the UI.
 - **Idea Box**: Search containers and ideas.
 - **Idea Box**: Zoom image by clicking on it.
 - **Idea Box**: Pin ideas to the top.
-- **Change Log**: Added this change log with the naming convention of ` Ver. [year]w[week number] `
+- **Change Log**: Added this change log with the naming convention of `Ver. [year]w[week number]`
 - **API**: Added API explorer at the root of the API.
 - **API**: Integrated Code Time API into the main API.
 - **UI**: Added backdrop blur when modals are open.
 - **Code**: Moved API host into `.env ` file.
+
 ---

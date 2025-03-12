@@ -1,4 +1,3 @@
-import { encrypt } from '@utils/encryption'
 import React, { useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
@@ -6,6 +5,8 @@ import { toast } from 'react-toastify'
 import { APIFallbackComponent, ModalHeader, ModalWrapper } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
+
+import { encrypt } from '@utils/encryption'
 
 import { type IJournalEntry } from '../interfaces/journal_interfaces'
 import JournalView from './JournalView'

@@ -1,6 +1,5 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { useAuth } from '@providers/AuthProvider'
-import IntervalManager from '@utils/intervalManager'
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
 import React, {
@@ -24,6 +23,8 @@ import {
 import { type Loadable } from '@interfaces/common'
 
 import useFetch from '@hooks/useFetch'
+
+import IntervalManager from '@utils/intervalManager'
 
 const intervalManager = IntervalManager.getInstance()
 

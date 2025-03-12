@@ -1,5 +1,3 @@
-import { encrypt } from '@utils/encryption'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -11,6 +9,9 @@ import {
 } from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
+
+import { encrypt } from '@utils/encryption'
+import fetchAPI from '@utils/fetchAPI'
 
 import { type IJournalEntry } from '../../interfaces/journal_interfaces'
 import JournalListItem from './components/JournalListItem'

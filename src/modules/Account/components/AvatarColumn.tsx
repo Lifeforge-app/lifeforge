@@ -1,11 +1,12 @@
 import { Icon } from '@iconify/react'
 import { useAuth } from '@providers/AuthProvider'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { Button, ConfigColumn, DeleteConfirmationModal } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
 
 function AvatarColumn(): React.ReactElement {
   const { t } = useTranslation('modules.accountSettings')

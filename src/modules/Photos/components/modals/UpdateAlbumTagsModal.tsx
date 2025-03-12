@@ -1,6 +1,5 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
-import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -8,6 +7,8 @@ import { toast } from 'react-toastify'
 import { APIFallbackComponent, Button, ModalWrapper } from '@lifeforge/ui'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { type IPhotosAlbum } from '../../interfaces/photos_interfaces'
 

@@ -1,4 +1,3 @@
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -12,6 +11,8 @@ import {
   Scrollbar,
   SearchInput
 } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
 import AddToLibraryModal from '../AddToLibraryModal'

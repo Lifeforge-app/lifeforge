@@ -1,4 +1,3 @@
-import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -6,6 +5,8 @@ import { toast } from 'react-toastify'
 import { APIFallbackComponent, Button, EmptyStateScreen } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { type IAirportNOTAMEntry } from '../../../../interfaces/airports_interfaces'
 import NOTAMListItem from './components/NOTAMListItem'

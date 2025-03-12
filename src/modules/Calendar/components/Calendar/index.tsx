@@ -1,5 +1,4 @@
 import { useQueryClient } from '@tanstack/react-query'
-import fetchAPI from '@utils/fetchAPI'
 import moment from 'moment'
 import React, { useCallback } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
@@ -7,6 +6,8 @@ import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import { useSearchParams } from 'react-router'
 
 import { type Loadable } from '@interfaces/common'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import {
   type ICalendarCategory,

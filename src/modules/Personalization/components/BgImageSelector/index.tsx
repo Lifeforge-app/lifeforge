@@ -1,5 +1,4 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -10,6 +9,8 @@ import {
   DeleteConfirmationModal,
   ImagePickerModal
 } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import AdjustBgImageModal from './components/AdjustBgImageModal'
 

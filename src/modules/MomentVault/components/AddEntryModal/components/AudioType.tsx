@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
-import fetchAPI from '@utils/fetchAPI'
 import WavesurferPlayer from '@wavesurfer/react'
 import moment from 'moment'
 import React, { useRef, useState } from 'react'
@@ -11,6 +10,8 @@ import WaveSurfer from 'wavesurfer.js'
 import { Button, CreateOrModifyButton } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@modules/MomentVault/interfaces/moment_vault_interfaces'
+
+import fetchAPI from '@utils/fetchAPI'
 
 function AudioType({
   onSuccess,

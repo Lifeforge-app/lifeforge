@@ -1,11 +1,12 @@
-import { encrypt } from '@utils/encryption'
-import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { DateInput, ModalHeader, ModalWrapper, TextInput } from '@lifeforge/ui'
+
+import { encrypt } from '@utils/encryption'
+import fetchAPI from '@utils/fetchAPI'
 
 import { type IJournalEntry } from '../../interfaces/journal_interfaces'
 import Cleanup from './sections/Cleanup'

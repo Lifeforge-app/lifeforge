@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
@@ -9,6 +8,8 @@ import { APIFallbackComponent, Button } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 import useFetch from '@hooks/useFetch'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import FlightsTable from './components/FlightsTable'
 

@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -12,6 +11,8 @@ import {
   ModuleWrapper,
   QueryWrapper
 } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import ModifyAchievementModal from './ModifyAchievementModal'
 import DifficultySelector from './components/DifficultySelector'

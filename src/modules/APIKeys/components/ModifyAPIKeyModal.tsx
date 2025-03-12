@@ -1,10 +1,11 @@
-import { decrypt, encrypt } from '@utils/encryption'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
+
+import { decrypt, encrypt } from '@utils/encryption'
+import fetchAPI from '@utils/fetchAPI'
 
 import {
   type IAPIKeyEntry,

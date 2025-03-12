@@ -1,7 +1,8 @@
 /* eslint-disable sonarjs/use-type-alias */
 import { UseMutationResult, useMutation } from '@tanstack/react-query'
-import fetchAPI from '@utils/fetchAPI'
 import { toast } from 'react-toastify'
+
+import fetchAPI from '@utils/fetchAPI'
 
 function useModifyMutation<T>(
   type: 'create' | 'update',

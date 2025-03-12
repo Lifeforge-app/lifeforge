@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -12,6 +11,8 @@ import {
 
 import VW_CATEGORIES from '@modules/VirtualWardrobe/constants/virtual_wardrobe_categories'
 import { IVirtualWardrobeFormState } from '@modules/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
+
+import fetchAPI from '@utils/fetchAPI'
 
 function BasicInfoSection({
   canVision,

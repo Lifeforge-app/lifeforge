@@ -1,11 +1,12 @@
 import { useAuth } from '@providers/AuthProvider'
-import fetchAPI from '@utils/fetchAPI'
 import _ from 'lodash'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { LoadingScreen, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { type IRoutes } from '../../core/interfaces/routes_interfaces'
 import _ROUTES from '../../core/routes_config.json'

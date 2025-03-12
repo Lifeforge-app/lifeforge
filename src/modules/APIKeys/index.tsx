@@ -1,7 +1,5 @@
 import { useAuth } from '@providers/AuthProvider'
 import { useQuery } from '@tanstack/react-query'
-import { encrypt } from '@utils/encryption'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -18,6 +16,9 @@ import {
 } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
+
+import { encrypt } from '@utils/encryption'
+import fetchAPI from '@utils/fetchAPI'
 
 import EntryItem from './components/EntryItem'
 import ModifyAPIKeyModal from './components/ModifyAPIKeyModal'

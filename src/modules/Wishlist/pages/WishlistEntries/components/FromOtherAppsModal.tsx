@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -12,6 +11,8 @@ import {
   ModalWrapper,
   TextInput
 } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { type IWishlistEntry } from '../../../interfaces/wishlist_interfaces'
 

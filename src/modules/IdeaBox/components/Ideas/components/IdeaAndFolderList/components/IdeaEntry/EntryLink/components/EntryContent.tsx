@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
-import fetchAPI from '@utils/fetchAPI'
 import clsx from 'clsx'
 import React, { memo } from 'react'
 
 import useComponentBg from '@hooks/useComponentBg'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { type IIdeaBoxEntry } from '../../../../../../../../interfaces/ideabox_interfaces'
 

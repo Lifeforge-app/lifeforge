@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react'
-import fetchAPI from '@utils/fetchAPI'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { CreateOrModifyButton, ModalWrapper } from '@lifeforge/ui'
+
+import fetchAPI from '@utils/fetchAPI'
 
 import { type IFlashcardCard } from '../interfaces/flashcard_interfaces'
 
