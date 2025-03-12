@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 import { Button, EmptyStateScreen, LoadingScreen } from '@lifeforge/ui'
 
@@ -41,7 +41,7 @@ export default function APIOnlineStatusProvider({
   children
 }: {
   children: React.ReactNode
-}): React.ReactElement {
+}) {
   const [isOnline, setIsOnline] = useState<boolean | 'loading'>('loading')
   const [environment, setEnvironment] = useState<
     'production' | 'development' | null
@@ -112,7 +112,7 @@ export default function APIOnlineStatusProvider({
 }
 
 export function useAPIOnlineStatus(): IAPIOnlineStatus {
-  const context = React.useContext(APIOnlineStatusContext)
+  const context = useContext(APIOnlineStatusContext)
   if (context === undefined) {
     throw new Error(
       'useAPIOnlineStatus must be used within a APIOnlineStatusProvider'

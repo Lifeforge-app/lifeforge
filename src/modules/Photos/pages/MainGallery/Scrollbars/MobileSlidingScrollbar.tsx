@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
-function MobileSlidingScrollbar(): React.ReactElement {
+function MobileSlidingScrollbar() {
   const { galleryWrapperRef, sideSliderRef, mobileDateDisplayRef, photos } =
     usePhotosContext()
 

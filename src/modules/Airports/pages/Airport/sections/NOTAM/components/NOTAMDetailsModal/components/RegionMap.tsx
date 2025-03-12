@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   Circle,
   CircleMarker,
@@ -18,7 +17,7 @@ function RegionMap({
       area: Array<[number, number]>
     }
   }
-}): React.ReactElement {
+}) {
   return (
     <div className="mt-6 h-96 overflow-hidden rounded-md">
       <MapContainer

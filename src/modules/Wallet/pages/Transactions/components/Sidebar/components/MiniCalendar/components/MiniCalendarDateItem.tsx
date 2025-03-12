@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import moment from 'moment'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
@@ -90,7 +90,7 @@ function MiniCalendarDateItem({
   nextToSelect,
   setNextToSelect,
   viewsFilter
-}: MiniCalendarDateItemProps): React.ReactElement {
+}: MiniCalendarDateItemProps) {
   const [searchParams, setSearchParams] = useSearchParams()
   const { transactions } = useWalletContext()
 

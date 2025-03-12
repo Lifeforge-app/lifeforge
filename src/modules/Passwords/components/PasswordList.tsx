@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -11,7 +10,7 @@ import fetchAPI from '@utils/fetchAPI'
 import { IPasswordEntry } from '../interfaces/password_interfaces'
 import PasswordEntryItem from './PasswordEntryItem'
 
-function PasswordList(): React.ReactElement {
+function PasswordList() {
   const { t } = useTranslation('modules.passwords')
   const {
     setModifyPasswordModalOpenType,
@@ -20,7 +19,7 @@ function PasswordList(): React.ReactElement {
     setPasswordList
   } = usePasswordContext()
 
-  async function pinPassword(id: string): Promise<void> {
+  async function pinPassword(id: string) {
     const mapPasswords = (p: IPasswordEntry) =>
       p.id === id ? { ...p, pinned: !p.pinned } : p
     const sortPasswords = (a: IPasswordEntry, b: IPasswordEntry) => {

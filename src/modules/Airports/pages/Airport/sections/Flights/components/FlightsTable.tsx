@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -17,7 +16,7 @@ function FlightsTable({
     airline: string
     status: string
   }>
-}): React.ReactElement {
+}) {
   const { componentBg } = useComponentBg()
   return (
     <table className="mb-4 w-full border-separate border-spacing-0">

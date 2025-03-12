@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
@@ -17,7 +17,7 @@ function Header({
   >
   setUploadReceiptModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
-}): React.ReactElement {
+}) {
   const {
     categories,
     assets,

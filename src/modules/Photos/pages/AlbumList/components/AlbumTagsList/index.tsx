@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
@@ -15,7 +15,7 @@ function AlbumTagsList({
   setModifyAlbumTagModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'rename' | false>
   >
-}): React.ReactElement {
+}) {
   const { albumTagList } = usePhotosContext()
   const [tagsCollapsed, setTagsCollapsed] = useState(true)
   const [searchParams, setSearchParams] = useSearchParams()

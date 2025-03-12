@@ -1,6 +1,5 @@
 import { useAuth } from '@providers/AuthProvider'
 import _ from 'lodash'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -8,8 +7,8 @@ import { LoadingScreen, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { type IRoutes } from '../../core/interfaces/routes_interfaces'
-import _ROUTES from '../../core/routes_config.json'
+import _ROUTES from '../../core/routes/constants/routes_config.json'
+import { type IRoutes } from '../../core/routes/interfaces/routes_interfaces'
 // import { type IModuleEntry } from '@interfaces/module_interfaces'
 import ModuleItem from './ModuleItem'
 
@@ -86,11 +85,11 @@ const ROUTES = _ROUTES as IRoutes[]
 //   }
 // ]
 
-function Modules(): React.ReactElement {
+function Modules() {
   const { t } = useTranslation('common.sidebar')
   const { userData, setUserData } = useAuth()
 
-  async function toggleModule(moduleName: string): Promise<void> {
+  async function toggleModule(moduleName: string) {
     const newEnabledModules = userData.enabledModules.includes(
       _.kebabCase(moduleName)
     )

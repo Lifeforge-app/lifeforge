@@ -1,8 +1,6 @@
-import React from 'react'
-
 import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
-function NutritionsTracker(): React.ReactElement {
+function NutritionsTracker() {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:leaf" title="Nutritions Tracker" />

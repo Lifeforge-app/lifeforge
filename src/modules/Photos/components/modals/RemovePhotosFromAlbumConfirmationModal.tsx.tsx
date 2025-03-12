@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, ModalWrapper } from '@lifeforge/ui'
@@ -13,7 +13,7 @@ function RemovePhotosFromAlbumConfirmationModal({
 }: {
   refreshPhotos: () => void
   albumId: string
-}): React.ReactElement {
+}) {
   const {
     selectedPhotos,
     setSelectedPhotos,
@@ -23,7 +23,7 @@ function RemovePhotosFromAlbumConfirmationModal({
   } = usePhotosContext()
   const [loading, setLoading] = useState(false)
 
-  async function deleteData(): Promise<void> {
+  async function deleteData() {
     if (selectedPhotos.length === 0) return
 
     setLoading(true)

@@ -1,8 +1,6 @@
-import React from 'react'
-
 import { DashboardItem } from '@lifeforge/ui'
 
-export default function Spotify(): React.ReactElement {
+export default function Spotify() {
   return (
     <DashboardItem icon="tabler:brand-spotify" title="Spotify"></DashboardItem>
   )

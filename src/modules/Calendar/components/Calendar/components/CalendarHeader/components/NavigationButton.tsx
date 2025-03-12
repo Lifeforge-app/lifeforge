@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 function NavigationButton({
   direction,
@@ -7,7 +6,7 @@ function NavigationButton({
 }: {
   direction: 'PREV' | 'NEXT'
   onNavigate: (direction: 'PREV' | 'NEXT') => void
-}): React.ReactElement {
+}) {
   return (
     <button
       className="text-bg-500 hover:bg-bg-900 rounded-md p-2 transition-all"

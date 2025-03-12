@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -19,7 +18,7 @@ import ModifyModal from './components/ModifyModal'
 import Sidebar from './components/Sidebar'
 import { useProjectsMContext } from './providers/ProjectsMProvider'
 
-function ProjectsM(): React.ReactElement {
+function ProjectsM() {
   const { t } = useTranslation('modules.projectsM')
   const {
     miscellaneous: {

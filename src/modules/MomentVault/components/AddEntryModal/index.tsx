@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-small-switch */
 import { Icon } from '@iconify/react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   DeleteConfirmationModal,
@@ -45,7 +45,7 @@ function AddEntryModal({
   setOpenType: (type: 'text' | 'audio' | 'photo' | 'video' | null) => void
   onClose: () => void
   refreshData: () => void
-}): React.ReactElement {
+}) {
   const [overwriteAudioWarningModalOpen, setOverwriteAudioWarningModalOpen] =
     useState(false)
   const [audioURL, setAudioURL] = useState<string | null>(null)

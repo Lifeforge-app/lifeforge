@@ -1,5 +1,5 @@
 import update from 'immutability-helper'
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
 
@@ -19,7 +19,7 @@ function SubtaskBox({
   notes: string
   subtasks: Loadable<ITodoSubtask[]>
   setSubtasks: React.Dispatch<React.SetStateAction<Loadable<ITodoSubtask[]>>>
-}): React.ReactElement {
+}) {
   const [spiciness, setSpiciness] = useState(0)
   const [newTask, setNewTask] = useState('')
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { Button, ModalWrapper } from '@lifeforge/ui'
 
@@ -10,7 +10,7 @@ function CheckoutConfirmationModal({
   isOpen: boolean
   onClose: () => void
   onConfirm: (notes: string) => Promise<void>
-}): React.ReactElement {
+}) {
   const [loading, setLoading] = useState(false)
   const [notes, setNotes] = useState('')
 

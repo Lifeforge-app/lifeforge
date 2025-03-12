@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -13,7 +13,7 @@ import { useMusicContext } from '@modules/Music/providers/MusicProvider'
 
 import fetchAPI from '@utils/fetchAPI'
 
-function ModifyMusicModal(): React.ReactElement {
+function ModifyMusicModal() {
   const { t } = useTranslation('modules.music')
   const {
     isModifyMusicModalOpen: isOpen,
@@ -26,7 +26,7 @@ function ModifyMusicModal(): React.ReactElement {
   const [loading, setLoading] = useState(false)
   const ref = useRef<HTMLInputElement>(null)
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     if (musicName.trim().length === 0 || musicAuthor.trim().length === 0) {
       toast.error(t('input.error.fieldEmpty'))
       return

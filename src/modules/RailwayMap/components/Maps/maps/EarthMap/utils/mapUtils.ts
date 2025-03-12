@@ -21,7 +21,7 @@ export const renderLines = (
   map: L.Map,
   filteredLines: IRailwayMapLine[],
   polylineLayers: Record<string, L.Polyline>
-): void => {
+) => {
   Object.keys(polylineLayers).forEach(id => {
     const lineExists = filteredLines.some(line => line.id === id)
     if (!lineExists) {
@@ -106,7 +106,7 @@ export const renderStations = (
   filteredStations: IRailwayMapStation[],
   lines: IRailwayMapLine[],
   stationMarkers: Record<string, L.Marker>
-): void => {
+) => {
   Object.keys(stationMarkers).forEach(id => {
     const stationExists = filteredStations.some(station => station.id === id)
     if (!stationExists) {

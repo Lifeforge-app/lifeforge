@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { APIFallbackComponent, SidebarTitle } from '@lifeforge/ui'
@@ -10,7 +9,7 @@ function SidebarSection({
   stuff
 }: {
   stuff: 'categories' | 'technologies' | 'visibilities' | 'statuses'
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.projectsM')
   const { data, setExistedData, setModifyDataModalOpenType } =
     useProjectsMContext()[stuff]

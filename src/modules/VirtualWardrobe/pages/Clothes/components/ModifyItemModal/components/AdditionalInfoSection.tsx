@@ -1,5 +1,3 @@
-import React from 'react'
-
 import {
   Button,
   CurrencyInput,
@@ -29,7 +27,7 @@ function AdditionalInfoSection({
   handleChange: (
     field: keyof IVirtualWardrobeFormState
   ) => (value: string | string[]) => void
-}): React.ReactElement {
+}) {
   return (
     <>
       <div className="mt-6 space-y-4">

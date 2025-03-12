@@ -2,13 +2,7 @@
 import { useAuth } from '@providers/AuthProvider'
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { Outlet } from 'react-router'
 
 import {
@@ -97,7 +91,7 @@ interface IPhotosData {
 
 export const PhotosContext = createContext<IPhotosData | undefined>(undefined)
 
-export default function PhotosProvider(): React.ReactElement {
+export default function PhotosProvider() {
   const { userData } = useAuth()
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -158,7 +152,7 @@ export default function PhotosProvider(): React.ReactElement {
     >
   >({})
 
-  function updateEachDayDimensions(): void {
+  function updateEachDayDimensions() {
     if (
       typeof photoDimensions !== 'string' &&
       galleryWrapperRef.current !== null &&
@@ -195,7 +189,7 @@ export default function PhotosProvider(): React.ReactElement {
     }
   }
 
-  function _refreshPhotos(): void {
+  function _refreshPhotos() {
     setReady(false)
     refreshPhotoDimensions()
   }
@@ -226,7 +220,7 @@ export default function PhotosProvider(): React.ReactElement {
     return data
   }
 
-  function refreshPhotoDimensions(): void {
+  function refreshPhotoDimensions() {
     setPhotoDimensions('loading')
     fetch(
       `${import.meta.env.VITE_API_HOST}/photos/entries/dimensions/async-get${

@@ -3,7 +3,6 @@ import { Icon } from '@iconify/react'
 import { useAuth } from '@providers/AuthProvider'
 import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
-import React from 'react'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -11,7 +10,7 @@ import { MenuItem } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-function SidebarBottomBar(): React.ReactElement {
+function SidebarBottomBar() {
   const navigate = useNavigate()
   const { sidebarExpanded, toggleSidebar } = useSidebarState()
   const { userData, getAvatarURL, logout } = useAuth()

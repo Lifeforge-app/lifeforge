@@ -1,5 +1,4 @@
 import moment from 'moment'
-import React from 'react'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
@@ -7,7 +6,7 @@ import MobileSlidingScrollbar from '../Scrollbars/MobileSlidingScrollbar'
 import TimelineScrollbar from '../Scrollbars/TimelineScrollbar'
 import Gallery from './Gallery'
 
-function GalleryContainer(): React.ReactElement {
+function GalleryContainer() {
   const {
     sideSliderRef,
     timelineDateDisplayRef,

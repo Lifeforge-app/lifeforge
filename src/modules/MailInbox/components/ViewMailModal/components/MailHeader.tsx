@@ -1,13 +1,12 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
-import React from 'react'
 
 import { IMailInboxEntry } from '@modules/MailInbox/interfaces/mail_inbox_interfaces'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-function MailHeader({ mail }: { mail: IMailInboxEntry }): React.ReactElement {
+function MailHeader({ mail }: { mail: IMailInboxEntry }) {
   const { componentBgLighter } = useComponentBg()
 
   return (

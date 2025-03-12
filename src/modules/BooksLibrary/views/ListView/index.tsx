@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 import { Scrollbar } from '@lifeforge/ui'
 
@@ -8,11 +7,7 @@ import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
 import BookMeta from '../components/BookMeta'
 import EntryItem from './components/EntryItem'
 
-function ListView({
-  books
-}: {
-  books: IBooksLibraryEntry[]
-}): React.ReactElement {
+function ListView({ books }: { books: IBooksLibraryEntry[] }) {
   const {
     miscellaneous: { processes },
     categories: { data: categories }

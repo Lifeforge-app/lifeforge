@@ -1,5 +1,5 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 import {
   APIFallbackComponent,
@@ -19,7 +19,7 @@ import MusicList from './components/MusicList'
 import ModifyMusicModal from './modals/UpdateMusicModal'
 import YoutubeDownloaderModal from './modals/YoutubeDownloaderModal'
 
-function Music(): React.ReactElement {
+function Music() {
   const {
     searchQuery,
     setSearchQuery,
@@ -34,7 +34,7 @@ function Music(): React.ReactElement {
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
 
   useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent): void => {
+    const handleKeyPress = (e: KeyboardEvent) => {
       if (e.code === 'Space' && (e.target as HTMLElement).tagName !== 'INPUT') {
         e.preventDefault()
         if (currentMusic !== null) {

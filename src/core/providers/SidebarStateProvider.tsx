@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 interface ISidebarState {
   sidebarExpanded: boolean
@@ -11,10 +11,10 @@ export default function SidebarStateProvider({
   children
 }: {
   children: React.ReactNode
-}): React.ReactElement {
+}) {
   const [sidebarExpanded, setSidebarExpanded] = useState(true)
 
-  function toggleSidebar(): void {
+  function toggleSidebar() {
     setSidebarExpanded(!sidebarExpanded)
   }
 

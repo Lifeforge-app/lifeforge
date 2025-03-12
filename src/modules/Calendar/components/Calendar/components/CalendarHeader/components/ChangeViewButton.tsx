@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import _ from 'lodash'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 function ChangeViewButton({
@@ -11,7 +10,7 @@ function ChangeViewButton({
   view: string
   currentView: string
   onView: (view: 'month' | 'week' | 'day' | 'agenda' | 'work_week') => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.calendar')
 
   return (

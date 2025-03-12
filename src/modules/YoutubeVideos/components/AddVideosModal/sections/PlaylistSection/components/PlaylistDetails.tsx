@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { type Loadable } from '@interfaces/common'
 
 import {
@@ -30,7 +28,7 @@ function PlaylistDetails({
       progress: number
     }
   >
-}): React.ReactElement {
+}) {
   return (
     <div className="flex flex-col space-y-2">
       <PlaylistInfo playlistInfo={playlistInfo} />

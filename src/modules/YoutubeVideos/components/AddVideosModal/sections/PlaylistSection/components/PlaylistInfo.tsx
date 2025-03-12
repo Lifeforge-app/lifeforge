@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import humanNumber from 'human-number'
-import React from 'react'
 
 import { type IYoutubePlaylistEntry } from '../../../../../interfaces/youtube_video_storage_interfaces'
 
@@ -8,7 +7,7 @@ function PlaylistInfo({
   playlistInfo
 }: {
   playlistInfo: IYoutubePlaylistEntry
-}): React.ReactElement {
+}) {
   return (
     <div className="mb-8 flex space-x-4">
       <img

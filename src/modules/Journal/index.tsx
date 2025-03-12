@@ -1,5 +1,5 @@
 import { useAuth } from '@providers/AuthProvider'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -23,7 +23,7 @@ import JournalViewModal from './components/JournalViewModal'
 import ModifyJournalEntryModal from './components/ModifyEntryModal'
 import { type IJournalEntry } from './interfaces/journal_interfaces'
 
-function Journal(): React.ReactElement {
+function Journal() {
   const { t } = useTranslation('modules.journal')
   const { userData } = useAuth()
   const [masterPassword, setMasterPassword] = useState<string>('')
@@ -42,7 +42,7 @@ function Journal(): React.ReactElement {
   const [existedData, setExistedData] = useState<IJournalEntry | null>(null)
   const [otpSuccess, setOtpSuccess] = useState(false)
 
-  async function fetchData(): Promise<void> {
+  async function fetchData() {
     setEntries('loading')
 
     try {

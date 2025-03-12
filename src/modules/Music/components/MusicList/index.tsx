@@ -1,4 +1,3 @@
-import React from 'react'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
 
@@ -11,11 +10,7 @@ import MusicListItem from './components/MusicListItem'
 const AS = AutoSizer as any
 const L = List as any
 
-function MusicList({
-  debouncedSearchQuery
-}: {
-  debouncedSearchQuery: string
-}): React.ReactElement {
+function MusicList({ debouncedSearchQuery }: { debouncedSearchQuery: string }) {
   const { musics } = useMusicContext()
 
   return (

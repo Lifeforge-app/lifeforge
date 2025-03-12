@@ -1,10 +1,8 @@
-import React from 'react'
-
 import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
 
 import { type ITodoListEntry } from '../../../../interfaces/todo_list_interfaces'
 
-function TaskHeader({ entry }: { entry: ITodoListEntry }): React.ReactElement {
+function TaskHeader({ entry }: { entry: ITodoListEntry }) {
   const { priorities } = useTodoListContext()
 
   if (typeof priorities === 'string') return <></>

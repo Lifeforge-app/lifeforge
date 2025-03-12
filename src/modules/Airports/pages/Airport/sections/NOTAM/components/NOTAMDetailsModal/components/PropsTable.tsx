@@ -1,7 +1,6 @@
 import moment from 'moment'
-import React from 'react'
 
-function PropsTable({ data }: { data: any }): React.ReactElement {
+function PropsTable({ data }: { data: any }) {
   return (
     <table className="mt-6 w-full">
       <tbody>

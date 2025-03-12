@@ -1,6 +1,4 @@
-import React from 'react'
-
-function StatementEndedText(): React.ReactElement {
+function StatementEndedText() {
   return (
     <div className="my-12 flex items-center gap-4">
       <div className="h-[3px] w-full bg-zinc-800 print:bg-black/70" />

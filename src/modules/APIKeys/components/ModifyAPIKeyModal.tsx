@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
@@ -25,7 +25,7 @@ function ModifyAPIKeyModal({
   existingData: IAPIKeyEntry | null
   masterPassword: string
   challenge: string
-}): React.ReactElement {
+}) {
   const [formState, setFormState] = useState<IAPIKeyFormState>({
     id: '',
     name: '',
@@ -72,7 +72,7 @@ function ModifyAPIKeyModal({
     }
   ]
 
-  async function fetchKey(): Promise<void> {
+  async function fetchKey() {
     const challenge = await fetchChallenge()
 
     try {

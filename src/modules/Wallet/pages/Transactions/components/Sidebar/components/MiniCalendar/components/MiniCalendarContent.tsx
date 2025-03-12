@@ -1,6 +1,6 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import moment from 'moment'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import MiniCalendarDateItem from './MiniCalendarDateItem'
 
@@ -12,7 +12,7 @@ function MiniCalendarContent({
   currentMonth: number
   currentYear: number
   viewsFilter: ('income' | 'expenses' | 'transfer')[]
-}): React.ReactElement {
+}) {
   const { language } = usePersonalization()
   const [nextToSelect, setNextToSelect] = useState<'start' | 'end'>('start')
 

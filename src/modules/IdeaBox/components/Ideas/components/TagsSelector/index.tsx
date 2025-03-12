@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useParams } from 'react-router'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
@@ -15,7 +15,7 @@ const sortFunc = (a: IIdeaBoxTag, b: IIdeaBoxTag) => {
   return b.count - a.count
 }
 
-function TagsSelector(): React.ReactElement {
+function TagsSelector() {
   const { '*': path } = useParams<{ '*': string }>()
   const {
     tags,

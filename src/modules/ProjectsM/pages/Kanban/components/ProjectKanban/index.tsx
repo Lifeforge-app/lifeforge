@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
 
 import {
@@ -20,7 +20,7 @@ import AddCardButton from './modals/AddCardButton'
 import ModifyCardModal from './modals/ModifyCardModal'
 import ModifyColumnsModal from './modals/ModifyColumnModal'
 
-function ProjectKanban(): React.ReactElement {
+function ProjectKanban() {
   const { componentBg } = useComponentBg()
   const { id } = useParams()
   const [columns, refreshColumns] = useFetch<IProjectsMKanbanColumn[]>(

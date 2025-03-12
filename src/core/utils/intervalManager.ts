@@ -20,12 +20,12 @@ class IntervalManager {
     return id
   }
 
-  public clearInterval(id: NodeJS.Timeout): void {
+  public clearInterval(id: NodeJS.Timeout) {
     clearInterval(id)
     this.intervals.delete(id)
   }
 
-  public clearAllIntervals(): void {
+  public clearAllIntervals() {
     for (const id of this.intervals) {
       clearInterval(id)
     }

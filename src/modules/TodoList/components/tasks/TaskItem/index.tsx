@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 
 import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
 
@@ -30,7 +29,7 @@ function TaskItem({
   entries?: ITodoListEntry[]
   setEntries?: React.Dispatch<React.SetStateAction<Loadable<ITodoListEntry[]>>>
   refreshEntries?: () => void
-}): React.ReactElement {
+}) {
   const { componentBgWithHover } = useComponentBg()
   const {
     entries: innerEntries,
@@ -42,7 +41,7 @@ function TaskItem({
     setModifyTaskWindowOpenType
   } = useTodoListContext()
 
-  async function toggleTaskCompletion(): Promise<void> {
+  async function toggleTaskCompletion() {
     if (typeof innerEntries === 'string') return
 
     if (!isOuter) {

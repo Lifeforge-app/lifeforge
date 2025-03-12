@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@lifeforge/ui'
@@ -11,7 +11,7 @@ function AddToLibraryButton({
 }: {
   md5: string
   setAddToLibraryFor: (id: string) => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.booksLibrary')
   const {
     entries: { data: entries },

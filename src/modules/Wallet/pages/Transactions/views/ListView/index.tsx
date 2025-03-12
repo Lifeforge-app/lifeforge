@@ -1,4 +1,3 @@
-import React from 'react'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
 
@@ -26,7 +25,7 @@ function ListView({
   setDeleteTransactionsConfirmationOpen: React.Dispatch<boolean>
   setReceiptModalOpen: React.Dispatch<boolean>
   setReceiptToView: React.Dispatch<string>
-}): React.ReactElement {
+}) {
   const { filteredTransactions: transactions } = useWalletContext()
 
   return (

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { InputIcon, InputLabel, InputWrapper } from '@lifeforge/ui'
@@ -15,7 +15,7 @@ function TextContentInput({
   ideaLink: string
   updateIdeaContent: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
   updateIdeaLink: (e: React.ChangeEvent<HTMLInputElement>) => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.ideaBox')
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null)
 

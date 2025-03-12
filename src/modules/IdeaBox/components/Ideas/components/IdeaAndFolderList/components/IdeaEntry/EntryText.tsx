@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useDrag } from 'react-dnd'
 
 import useComponentBg from '@hooks/useComponentBg'
@@ -11,7 +11,7 @@ import EntryContextMenu from './components/EntryContextMenu'
 import InFolderChip from './components/InFolderChip'
 import TagChip from './components/TagChip'
 
-function EntryText({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
+function EntryText({ entry }: { entry: IIdeaBoxEntry }) {
   const [expanded, setExpanded] = useState(false)
   const { componentBg } = useComponentBg()
   const [{ opacity, isDragging }, dragRef] = useDrag(

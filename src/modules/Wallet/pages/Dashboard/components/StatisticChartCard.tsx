@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import moment from 'moment'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 
@@ -37,7 +37,7 @@ const options = {
   }
 }
 
-function StatisticChardCard(): React.ReactElement {
+function StatisticChardCard() {
   const { transactions } = useWalletContext()
   const dates = useMemo(() => {
     if (typeof transactions === 'string') {

@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
@@ -21,7 +20,7 @@ function EntryItem({
   setDeleteAchievementConfirmationModalOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
-}): React.ReactElement {
+}) {
   const { componentBg } = useComponentBg()
 
   return (

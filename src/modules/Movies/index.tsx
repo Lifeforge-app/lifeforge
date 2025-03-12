@@ -1,5 +1,5 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -23,7 +23,7 @@ import MovieList from './components/MovieList'
 import SearchTMDBModal from './components/SearchTMDBModal'
 import ShowTicketModal from './components/ShowTicketModal'
 
-function Movies(): React.ReactElement {
+function Movies() {
   const { t } = useTranslation('modules.movies')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [searchTMDBModal, setSearchTMDBModal] = useState(false)

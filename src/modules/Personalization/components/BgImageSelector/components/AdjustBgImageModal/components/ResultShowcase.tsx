@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
-import React from 'react'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -19,7 +18,7 @@ function ResultShowcase({
   bgContrast: number
   bgSaturation: number
   overlayOpacity: number
-}): React.ReactElement {
+}) {
   const { bgImage } = usePersonalization()
   const { componentBgLighter, componentBg } = useComponentBg()
 

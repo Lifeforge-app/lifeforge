@@ -1,7 +1,7 @@
 import { useAuth } from '@providers/AuthProvider'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import _ from 'lodash'
-import React, { Suspense, useCallback, useEffect } from 'react'
+import { Suspense, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route, Routes, useLocation, useNavigate } from 'react-router'
 import { ToastContainer } from 'react-toastify'
@@ -10,15 +10,15 @@ import { LoadingScreen, NotFoundScreen } from '@lifeforge/ui'
 
 import APIKeyStatusProvider from '@modules/APIKeys/providers/APIKeyStatusProvider'
 
-import { COMPONENTS } from './Components'
-import MainApplication from './MainApplication'
-import Auth from './auth'
+import { COMPONENTS } from '../Components'
+import MainApplication from '../MainApplication'
+import Auth from '../auth'
+import _ROUTES from './constants/routes_config.json'
 import { type IRoutes } from './interfaces/routes_interfaces'
-import _ROUTES from './routes_config.json'
 
 const ROUTES = _ROUTES as IRoutes[]
 
-function AppRouter(): React.ReactElement {
+function AppRouter() {
   const { t } = useTranslation('common.misc')
   const { auth, authLoading, userData } = useAuth()
   const { theme } = usePersonalization()
@@ -50,7 +50,7 @@ function AppRouter(): React.ReactElement {
       name: string,
       isNested: boolean = false,
       APIKeys: string[] = []
-    ): React.ReactElement[] => {
+    ) => {
       return Object.entries(routes).map(([route, path], index) => {
         const Comp = COMPONENTS[name as keyof typeof COMPONENTS][
           route as keyof (typeof COMPONENTS)[keyof typeof COMPONENTS]

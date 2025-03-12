@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
@@ -20,7 +19,7 @@ function EntryItem({
   setExistingEntry: React.Dispatch<React.SetStateAction<IGuitarTabsEntry>>
   setModifyEntryModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-}): React.ReactElement {
+}) {
   const { componentBgWithHover } = useComponentBg()
 
   return (

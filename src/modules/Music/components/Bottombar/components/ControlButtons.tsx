@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 import { toast } from 'react-toastify'
 
 import { useMusicContext } from '@modules/Music/providers/MusicProvider'
@@ -12,7 +11,7 @@ export default function ControlButtons({
 }: {
   isWidget?: boolean
   isFull?: boolean
-}): React.ReactElement {
+}) {
   const {
     currentMusic,
     isPlaying,

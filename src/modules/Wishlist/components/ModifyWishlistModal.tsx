@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -19,7 +19,7 @@ function ModifyWishlistListModal({
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   updateWishlistList: () => void
   existedData: IWishlistList | null
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.wishlist')
   const [data, setData] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -58,7 +58,7 @@ function ModifyWishlistListModal({
     }
   ]
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     const { name, description, icon, color } = data
     if (
       name.trim().length === 0 ||

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import moment from 'moment'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { type Loadable } from '@interfaces/common'
 
@@ -27,7 +27,7 @@ function MiniCalendarDateItem({
   date,
   events,
   categories
-}: MiniCalendarDateItemProps): React.ReactElement {
+}: MiniCalendarDateItemProps) {
   const isInThisMonth = useMemo(
     () => !(firstDay > index || index - firstDay + 1 > lastDate),
     [firstDay, index, lastDate]

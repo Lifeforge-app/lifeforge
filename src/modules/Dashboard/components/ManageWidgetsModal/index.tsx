@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
 
 import DASHBOARD_WIDGETS from '@modules/Dashboard/constants/dashboard_widgets'
@@ -14,7 +12,7 @@ function ManageWidgetsModal({
   isOpen: boolean
   onClose: () => void
   setReady: React.Dispatch<React.SetStateAction<boolean>>
-}): React.ReactElement {
+}) {
   return (
     <ModalWrapper isOpen={isOpen} minWidth="40vw">
       <ModalHeader

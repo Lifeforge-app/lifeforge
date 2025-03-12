@@ -1,6 +1,5 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import _ from 'lodash'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import colors from 'tailwindcss/colors'
@@ -13,7 +12,7 @@ function TypeSection({
   setSidebarOpen
 }: {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
-}): React.ReactElement {
+}) {
   const [searchParams, setSearchParams] = useSearchParams()
   const { t } = useTranslation('modules.wallet')
   const { filteredTransactions } = useWalletContext()

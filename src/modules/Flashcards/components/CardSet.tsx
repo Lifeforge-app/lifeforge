@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -22,7 +22,7 @@ import {
 } from '../interfaces/flashcard_interfaces'
 import EditCardModal from './EditCardModal'
 
-function CardSet(): React.ReactElement {
+function CardSet() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const [valid] = useFetch<boolean>(`flashcards/deck/valid/${id}`)
@@ -46,19 +46,19 @@ function CardSet(): React.ReactElement {
     }
   }, [valid])
 
-  const gotoNextCard = (): void => {
+  const gotoNextCard = () => {
     if (currentIndex + 1 < cards.length) {
       setCurrentIndex(currentIndex + 1)
     }
   }
 
-  const gotoLastCard = (): void => {
+  const gotoLastCard = () => {
     if (currentIndex - 1 >= 0) {
       setCurrentIndex(currentIndex - 1)
     }
   }
 
-  const pickRandomCard = (): void => {
+  const pickRandomCard = () => {
     let innerNotSelected = [...notSelected]
     if (notSelected.length === 0) {
       const newArr = Array(cards?.length)

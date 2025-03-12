@@ -1,12 +1,10 @@
-import React from 'react'
-
 import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
 import { TodoListProvider } from '@modules/TodoList/providers/TodoListProvider'
 
 import TodoListContainer from './components/TodoListContainer'
 
-function TodoList(): React.ReactElement {
+function TodoList() {
   return (
     <>
       <ModuleWrapper>

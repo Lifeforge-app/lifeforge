@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -9,7 +9,7 @@ import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider
 
 import fetchAPI from '@utils/fetchAPI'
 
-function ModifyListModal(): React.ReactElement {
+function ModifyListModal() {
   const { t } = useTranslation('modules.todoList')
   const {
     modifyListModalOpenType: openType,
@@ -46,7 +46,7 @@ function ModifyListModal(): React.ReactElement {
     }
   ]
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     const { name, icon, color } = data
     if (
       name.trim().length === 0 ||

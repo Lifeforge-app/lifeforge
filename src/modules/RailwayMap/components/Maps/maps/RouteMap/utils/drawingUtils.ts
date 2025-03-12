@@ -23,7 +23,7 @@ export const addStationInteraction = (
   svgRef: React.RefObject<SVGSVGElement | null>,
   gRef: React.RefObject<SVGGElement | null>,
   centerStation: IRailwayMapStation
-): void => {
+) => {
   element.on('click', () => {
     setSelectedStation(station)
     centerMapOnStation(svgRef, gRef, station, centerStation, 2, 1000, false)
@@ -34,7 +34,7 @@ export const drawText = (
   g: d3.Selection<SVGGElement, unknown, null, undefined>,
   station: IRailwayMapStation,
   fill: string
-): void => {
+) => {
   g.append('text')
     .attr('x', station.map_data.x + (station.map_data.textOffsetX || 0))
     .attr('y', station.map_data.y + (station.map_data.textOffsetY || 0))
@@ -67,7 +67,7 @@ export const drawInterchange = (
   svgRef: React.RefObject<SVGSVGElement | null>,
   gRef: React.RefObject<SVGGElement | null>,
   centerStation: IRailwayMapStation
-): void => {
+) => {
   const attributes = {
     id: `station-${station.id}`,
     class: 'interchange',
@@ -135,7 +135,7 @@ export const drawStation = (
   svgRef: React.RefObject<SVGSVGElement | null>,
   gRef: React.RefObject<SVGGElement | null>,
   centerStation: IRailwayMapStation
-): void => {
+) => {
   const attributes = {
     id: `station-${station.id}`,
     class: 'station',
@@ -187,7 +187,7 @@ export const drawStations = (
   svgRef: React.RefObject<SVGSVGElement | null>,
   gRef: React.RefObject<SVGGElement | null>,
   centerStation: IRailwayMapStation
-): void => {
+) => {
   filteredStations.forEach(station => {
     if (ignoreStation(station, shortestRoute)) return
 
@@ -243,7 +243,7 @@ export const drawLines = (
   g: d3.Selection<SVGGElement, unknown, null, undefined>,
   filteredLines: IRailwayMapLine[],
   shortestRoute: RouteData
-): void => {
+) => {
   filteredLines.forEach(line => {
     if (typeof shortestRoute !== 'string' && shortestRoute.length > 0) {
       const linesRequired = getLinesRequired(shortestRoute)

@@ -1,5 +1,3 @@
-import React from 'react'
-
 import {
   APIFallbackComponent,
   EmptyStateScreen,
@@ -24,7 +22,7 @@ function NOTAMDetailsModal({
   isOpen: boolean
   selectedNOTAMData: IAirportNOTAMEntry | null
   onClose: () => void
-}): React.ReactElement {
+}) {
   const [NOTAMData] = useFetch<any>(
     `airports/NOTAM/${selectedNOTAMData?.id}`,
     isOpen && selectedNOTAMData !== null

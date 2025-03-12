@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useSearchParams } from 'react-router'
 
@@ -20,7 +20,7 @@ import ModifyTaskWindow from './ModifyTaskWindow'
 import Sidebar from './Sidebar'
 import TaskList from './tasks/TaskList'
 
-function TodoListContainer(): React.ReactElement {
+function TodoListContainer() {
   const { t } = useTranslation('modules.todoList')
   const [searchParams, setSearchParams] = useSearchParams()
   const {

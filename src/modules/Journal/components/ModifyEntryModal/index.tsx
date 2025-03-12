@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -26,7 +26,7 @@ function ModifyJournalEntryModal({
   onClose: () => void
   existedData: IJournalEntry | null
   masterPassword: string
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.journal')
   const [step, setStep] = useState<number>(1)
   const [date, setDate] = useState<string>(new Date().toISOString())
@@ -52,7 +52,7 @@ function ModifyJournalEntryModal({
   const [titleGenerationLoading, setTitleGenerationLoading] = useState(false)
   const ref = useRef<HTMLInputElement>(null)
 
-  async function generateTitle(): Promise<void> {
+  async function generateTitle() {
     setTitle('')
 
     if (cleanedUpText === '') {

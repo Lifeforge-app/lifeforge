@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import PhotoAlbum from 'react-photo-album'
 import { useNavigate } from 'react-router'
 
@@ -20,7 +20,7 @@ import BottomBar from '../../components/BottomBar.tsx'
 import ImageObject from '../../components/ImageObject.tsx'
 import { type IPhotoAlbumEntryItem } from '../../interfaces/photos_interfaces.ts'
 
-function PhotosFavouritesGallery(): React.ReactElement {
+function PhotosFavouritesGallery() {
   const { selectedPhotos, setSelectedPhotos, setModifyAlbumModalOpenType } =
     usePhotosContext()
   const navigate = useNavigate()

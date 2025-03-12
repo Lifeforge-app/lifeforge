@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
@@ -17,7 +16,7 @@ function VideoEntry({
   video: IYoutubeVideosStorageEntry
   setVideoToDelete: (video: IYoutubeVideosStorageEntry) => void
   setIsConfirmDeleteModalOpen: (value: boolean) => void
-}): React.ReactElement {
+}) {
   const { componentBgWithHover } = useComponentBg()
 
   return (

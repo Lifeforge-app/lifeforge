@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
@@ -21,7 +20,7 @@ function TransactionTypeSelector({
 }: {
   transactionType: string
   setTransactionType: (type: 'income' | 'expenses' | 'transfer') => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.wallet')
 
   return (

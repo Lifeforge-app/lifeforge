@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 import { useSearchParams } from 'react-router'
 
 import { IPhotoAlbumTag } from '../../../../../interfaces/photos_interfaces'
@@ -10,7 +9,7 @@ function TagItem({
 }: {
   tag: IPhotoAlbumTag
   onClick: (id: string) => void
-}): React.ReactElement {
+}) {
   const [searchParams] = useSearchParams()
 
   return (

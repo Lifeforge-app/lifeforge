@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
 
@@ -23,7 +22,7 @@ function AssetListbox({
   onAssetChange,
   label,
   iconName
-}: AssetListboxProps): React.ReactElement {
+}: AssetListboxProps) {
   return (
     <ListboxOrComboboxInput
       buttonContent={

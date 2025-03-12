@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { EmptyStateScreen } from '@lifeforge/ui'
@@ -19,7 +18,7 @@ function MovieGrid({
   onShowTicket: (id: string) => void
   onDelete: (entry: IMovieEntry) => void
   onNewMovie: () => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation(['modules.movies', 'common.buttons'])
 
   if (!data.length) {

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   ContentWrapperWithSidebar,
@@ -22,7 +22,7 @@ import {
 import ModifyCategoryModal from './modals/ModifyCategoryModal'
 import ModifyEventModal from './modals/ModifyEventModal'
 
-function CalendarModule(): React.ReactElement {
+function CalendarModule() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const rawEventsQuery = useQuery<ICalendarEvent[]>({
     queryKey: ['calendar', 'events'],

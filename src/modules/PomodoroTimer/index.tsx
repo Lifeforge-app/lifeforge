@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
@@ -21,7 +20,7 @@ import TaskItem from '../TodoList/components/tasks/TaskItem'
 import { type ITodoListEntry } from '../TodoList/interfaces/todo_list_interfaces'
 import Timer from './components/Timer'
 
-export default function PomodoroTimer(): React.ReactElement {
+export default function PomodoroTimer() {
   const { componentBg } = useComponentBg()
   const { t } = useTranslation('modules.todoList')
   const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry[]>(

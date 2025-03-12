@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { FormModal } from '@lifeforge/ui'
@@ -24,7 +24,7 @@ function ModifyEntryModal({
   onClose: () => void
   existingItem: IGuitarTabsEntry | null
   queryKey: unknown[]
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.guitarTabs')
 
   const [formState, setFormState] = useState<IGuitarTabsEntryFormState>({

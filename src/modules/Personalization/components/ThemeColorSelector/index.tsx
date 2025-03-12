@@ -1,5 +1,5 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -11,7 +11,7 @@ import {
 
 import DefaultThemeColorSelector from './components/DefaultThemeColorSelector'
 
-function ThemeColorSelector(): React.ReactElement {
+function ThemeColorSelector() {
   const { rawThemeColor: themeColor, setThemeColor } = usePersonalization()
   const [customThemeColor, setCustomThemeColor] = useState<string>(
     themeColor.startsWith('#') ? themeColor : '#000000'

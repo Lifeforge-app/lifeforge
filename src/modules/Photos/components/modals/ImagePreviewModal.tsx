@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -47,7 +47,7 @@ function ImagePreviewModal({
   refreshPhotos: () => void
   onNextPhoto?: () => void
   onPreviousPhoto?: () => void
-}): React.ReactElement {
+}) {
   const { refreshAlbumList } = usePhotosContext()
   const { id: albumId } = useParams<{ id: string }>()
   const [name] = useFetch<string>(
@@ -57,7 +57,7 @@ function ImagePreviewModal({
   const [deleteConfirmationModalOpen, setDeletePhotosConfirmationModalOpen] =
     useState(false)
 
-  async function requestDownload(isRaw: boolean): Promise<void> {
+  async function requestDownload(isRaw: boolean) {
     if (data === null) {
       return
     }
@@ -92,7 +92,7 @@ function ImagePreviewModal({
     }
   }
 
-  function setAsCover(): void {
+  function setAsCover() {
     if (data === null) {
       return
     }

@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 
 function AmountColumn({
   side,
@@ -7,7 +6,7 @@ function AmountColumn({
 }: {
   side: 'debit' | 'credit'
   amount: number
-}): React.ReactElement {
+}) {
   return (
     <td className="p-2 text-center">
       <span

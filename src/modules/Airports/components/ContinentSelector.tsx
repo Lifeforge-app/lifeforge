@@ -1,7 +1,6 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { useNavigate, useParams } from 'react-router'
 
 import {
@@ -21,7 +20,7 @@ const CONTINENTS = {
   SA: 'South America'
 }
 
-function ContinentSelector(): React.ReactElement {
+function ContinentSelector() {
   const { componentBg } = useComponentBg()
   const continentID = useParams().continentID ?? 'all'
   const navigate = useNavigate()

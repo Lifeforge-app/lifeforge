@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@lifeforge/ui'
@@ -20,7 +19,7 @@ function ModalHeader({
   setInnerTypeOfModifyIdea: React.Dispatch<
     React.SetStateAction<'text' | 'image' | 'link'>
   >
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.ideaBox')
 
   return (

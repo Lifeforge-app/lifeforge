@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import WavesurferPlayer from '@wavesurfer/react'
 import moment from 'moment'
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
@@ -27,7 +27,7 @@ function AudioType({
   transcription: string | null
   setTranscription: (transcription: string | null) => void
   setOverwriteAudioWarningModalOpen: (open: boolean) => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.momentVault')
   const {
     theme: lightOrDarkTheme,

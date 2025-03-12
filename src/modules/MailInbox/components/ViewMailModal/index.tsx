@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { APIFallbackComponent, ModalHeader, ModalWrapper } from '@lifeforge/ui'
 
@@ -18,7 +18,7 @@ function ViewMailModal({
   openFor: string | null
   onClose: () => void
   onSeen: () => void
-}): React.ReactElement {
+}) {
   const [mailContent] = useFetch<IMailInboxEntry>(
     `mail-inbox/entries/${openFor}`,
     openFor !== null

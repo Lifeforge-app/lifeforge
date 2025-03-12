@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 
 function NOTAMListItem({
   data,
@@ -10,7 +9,7 @@ function NOTAMListItem({
   data: any
   setSelectedNOTAMData: React.Dispatch<React.SetStateAction<any>>
   setViewDetailsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-}): React.ReactElement {
+}) {
   return (
     <button
       className="bg-bg-50 shadow-custom hover:bg-bg-100 dark:bg-bg-900 dark:hover:bg-bg-800/50 w-full space-y-4 rounded-lg p-4 text-left transition-all"

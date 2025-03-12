@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -85,15 +85,13 @@ interface IIdeaBoxData {
   >
 }
 
-export const IdeaBoxContext = React.createContext<IIdeaBoxData | undefined>(
-  undefined
-)
+export const IdeaBoxContext = createContext<IIdeaBoxData | undefined>(undefined)
 
 export default function IdeaBoxProvider({
   children
 }: {
   children: React.ReactNode
-}): React.ReactElement {
+}) {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
@@ -193,7 +191,7 @@ export default function IdeaBoxProvider({
     setDeleteFolderConfirmationModalOpen
   ] = useState(false)
 
-  function onPasteImage(event: ClipboardEvent): void {
+  function onPasteImage(event: ClipboardEvent) {
     if (modifyIdeaModalOpenType !== null) return
 
     const items = event.clipboardData?.items

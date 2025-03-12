@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
@@ -10,7 +9,7 @@ import forceDown from '@utils/forceDown'
 
 import { IMusicEntry } from '../../../../interfaces/music_interfaces'
 
-function SideButtons({ music }: { music: IMusicEntry }): React.ReactElement {
+function SideButtons({ music }: { music: IMusicEntry }) {
   const {
     toggleFavourite,
     setIsModifyMusicModalOpen,

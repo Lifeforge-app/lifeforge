@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSearchParams } from 'react-router'
 
 import { MenuItem, SidebarItem } from '@lifeforge/ui'
@@ -13,7 +12,7 @@ function TaskPriorityListItem({
 }: {
   item: ITodoPriority
   setSidebarOpen: (value: boolean) => void
-}): React.ReactElement {
+}) {
   const [searchParams, setSearchParams] = useSearchParams()
   const {
     setSelectedPriority: setSelectedData,

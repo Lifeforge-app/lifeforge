@@ -1,6 +1,6 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { APIFallbackComponent, TextInput } from '@lifeforge/ui'
@@ -31,7 +31,7 @@ function PlaylistSection({
   videos: Loadable<IYoutubeVideosStorageEntry[]>
   isOpen: boolean
   setIsVideoDownloading: (value: boolean) => void
-}): React.ReactElement {
+}) {
   const [playlistUrl, setPlaylistUrl] = useState<string>('')
   const debouncedPlaylistUrl = useDebounce(playlistUrl, 500)
   const [playlistInfo] = useFetch<IYoutubePlaylistEntry>(
@@ -81,7 +81,7 @@ function PlaylistSection({
     return [] as any
   }
 
-  function downloadVideo(metadata: IYoutubePlaylistVideoEntry): void {
+  function downloadVideo(metadata: IYoutubePlaylistVideoEntry) {
     if (downloadingVideos.current.has(metadata.id)) {
       toast.error('Video is already being downloaded')
       return

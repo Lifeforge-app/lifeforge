@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { APIFallbackComponent, MenuItem, SidebarItem } from '@lifeforge/ui'
@@ -86,7 +86,7 @@ function LabelChildList({
 }: {
   label: ILabelListStructure
   level?: number
-}): React.ReactElement {
+}) {
   const [searchParams, setSearchParams] = useSearchParams()
   const [collapsed, setCollapsed] = useState(false)
 
@@ -142,7 +142,7 @@ function LabelList({
 }: {
   list: ILabelListStructure[]
   level?: number
-}): React.ReactElement {
+}) {
   return (
     <div>
       {list.map(label => (
@@ -152,11 +152,7 @@ function LabelList({
   )
 }
 
-function MasterLabelList({
-  labels
-}: {
-  labels: Loadable<IMailInboxLabel[]>
-}): React.ReactElement {
+function MasterLabelList({ labels }: { labels: Loadable<IMailInboxLabel[]> }) {
   const [labelList, setLabelList] =
     useState<Loadable<ILabelListStructure[]>>('loading')
 

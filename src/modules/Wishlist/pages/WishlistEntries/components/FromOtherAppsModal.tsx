@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -51,13 +51,13 @@ function FromOtherAppsModal({
   setExistedData: React.Dispatch<
     React.SetStateAction<Partial<IWishlistEntry> | null>
   >
-}): React.ReactElement {
+}) {
   const { id } = useParams<{ id: string }>()
   const [provider, setProvider] = useState('')
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState<'loading' | 'error' | false>(false)
 
-  async function fetchData(): Promise<void> {
+  async function fetchData() {
     setLoading('loading')
 
     try {

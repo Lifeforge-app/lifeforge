@@ -1,12 +1,10 @@
-import React from 'react'
-
 import { Scrollbar } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
 
 import TaskItem from './TaskItem'
 
-function TaskList(): React.ReactElement {
+function TaskList() {
   const { entries } = useTodoListContext()
 
   return (

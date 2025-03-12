@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -57,7 +56,7 @@ function IdeaContentInput({
   updateIdeaContent: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
   updateIdeaLink: (e: React.ChangeEvent<HTMLInputElement>) => void
   debouncedImageLink: string
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.ideaBox')
   const { tags } = useIdeaBoxContext()
 

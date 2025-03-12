@@ -1,5 +1,5 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Button, ModalHeader, ModalWrapper, Scrollbar } from '@lifeforge/ui'
 
@@ -13,7 +13,7 @@ function AdjustBgImageModal({
 }: {
   isOpen: boolean
   onClose: () => void
-}): React.ReactElement {
+}) {
   const { setBackdropFilters, backdropFilters } = usePersonalization()
   const [bgBlur, setBgBlur] = useState<keyof typeof BG_BLURS>(
     backdropFilters.blur
@@ -75,7 +75,7 @@ function AdjustBgImageModal({
     }
   ]
 
-  function onSaveChanges(): void {
+  function onSaveChanges() {
     setBackdropFilters({
       ...backdropFilters,
       blur: bgBlur,

@@ -2,7 +2,7 @@ import { Switch } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import copy from 'copy-to-clipboard'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { Button } from '@lifeforge/ui'
 
@@ -22,10 +22,10 @@ function ShareAlbumModal({
   publicity: boolean
   setAlbumData: React.Dispatch<React.SetStateAction<Loadable<IPhotosAlbum>>>
   setAlbumList: React.Dispatch<React.SetStateAction<Loadable<IPhotosAlbum[]>>>
-}): React.ReactElement {
+}) {
   const [isCopied, setIsCopied] = useState(false)
 
-  async function changePublicity(): Promise<void> {
+  async function changePublicity() {
     setAlbumData(prev => {
       if (prev === 'loading' || prev === 'error') {
         return prev

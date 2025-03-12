@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/no-nested-conditional */
 import { Icon } from '@iconify/react'
 import { ListResult } from 'pocketbase'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
@@ -30,7 +30,7 @@ import EntryItem from './components/EntryItem'
 import Sidebar from './components/Sidebar'
 import ViewMailModal from './components/ViewMailModal'
 
-function MailInbox(): React.ReactElement {
+function MailInbox() {
   const [searchParams] = useSearchParams()
   const { t } = useTranslation('modules.mailInbox')
   const [page, setPage] = useState(1)

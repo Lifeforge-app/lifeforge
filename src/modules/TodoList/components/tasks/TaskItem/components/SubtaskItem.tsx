@@ -1,4 +1,3 @@
-import React from 'react'
 import { toast } from 'react-toastify'
 
 import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
@@ -14,10 +13,10 @@ function SubtaskItem({
 }: {
   entry: ITodoSubtask
   parentId: string
-}): React.ReactElement {
+}) {
   const { setEntries, entries, refreshEntries } = useTodoListContext()
 
-  async function toggleSubTaskCompletion(): Promise<void> {
+  async function toggleSubTaskCompletion() {
     if (typeof entries !== 'string' && setEntries !== undefined) {
       setEntries(
         entries.map(e =>

@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
@@ -19,7 +19,7 @@ function AddToLibraryModal({
   isOpen: boolean
   onClose: () => void
   md5: string | null
-}): React.ReactElement {
+}) {
   const {
     categories: { data: categories },
     languages: { data: languages }
@@ -163,7 +163,7 @@ function AddToLibraryModal({
     }
   ]
 
-  async function onSubmit(): Promise<void> {
+  async function onSubmit() {
     try {
       await fetchAPI(`books-library/libgen/add-to-library/${md5}`, {
         method: 'POST',

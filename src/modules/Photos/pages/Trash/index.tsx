@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import PhotoAlbum from 'react-photo-album'
 
@@ -21,7 +21,7 @@ import PhotosSidebar from '../../components/PhotosSidebar'
 import EmptyTrashConfirmationModal from '../../components/modals/EmptyTrashConfirmationModal'
 import { type IPhotoAlbumEntryItem } from '../../interfaces/photos_interfaces'
 
-function PhotosTrash(): React.ReactElement {
+function PhotosTrash() {
   const { t } = useTranslation('modules.photos')
   const { selectedPhotos, setSelectedPhotos } = usePhotosContext()
   const [photos, refreshPhotos] =

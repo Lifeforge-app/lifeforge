@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import prettyBytes from 'pretty-bytes'
-import React from 'react'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -18,7 +17,7 @@ function SectionCard({
   key: string
   title: string
   value: Record<string, unknown> | Record<string, unknown>[] | string
-}): React.ReactElement {
+}) {
   const { componentBg } = useComponentBg()
 
   return (

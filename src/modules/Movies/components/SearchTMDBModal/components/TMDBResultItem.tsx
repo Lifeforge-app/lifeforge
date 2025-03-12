@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import moment from 'moment'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { Button } from '@lifeforge/ui'
 
@@ -17,7 +17,7 @@ function TMDBResultItem({
   data: IMovieSearchResult
   onAddToLibrary: (id: number) => Promise<void>
   isAdded: boolean
-}): React.ReactElement {
+}) {
   const { componentBgLighter } = useComponentBg()
   const [loading, setLoading] = useState(false)
 

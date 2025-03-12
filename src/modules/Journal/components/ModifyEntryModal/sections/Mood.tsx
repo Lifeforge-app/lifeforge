@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, TextInput } from '@lifeforge/ui'
@@ -27,9 +27,9 @@ function Mood({
     emoji: string
   }
   masterPassword: string
-}): React.ReactElement {
+}) {
   const [loading, setLoading] = useState(false)
-  async function fetchSummarizedText(): Promise<void> {
+  async function fetchSummarizedText() {
     setMood({
       text: '',
       emoji: ''

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 
 import { FormModal } from '@lifeforge/ui'
@@ -8,7 +8,7 @@ import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
 
 import { IIdeaBoxTagFormState } from '../../../../interfaces/ideabox_interfaces'
 
-function ModifyTagModal(): React.ReactElement {
+function ModifyTagModal() {
   const {
     modifyTagModalOpenType: openType,
     setModifyTagModalOpenType: setOpenType,

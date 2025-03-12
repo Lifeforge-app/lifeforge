@@ -1,6 +1,6 @@
 import { useAuth } from '@providers/AuthProvider'
 import { useQuery } from '@tanstack/react-query'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -24,7 +24,7 @@ import EntryItem from './components/EntryItem'
 import ModifyAPIKeyModal from './components/ModifyAPIKeyModal'
 import { type IAPIKeyEntry } from './interfaces/api_keys_interfaces'
 
-function APIKeys(): React.ReactElement {
+function APIKeys() {
   const { t } = useTranslation('modules.apiKeys')
   const { userData } = useAuth()
   const [otpSuccess, setOtpSuccess] = useState(false)

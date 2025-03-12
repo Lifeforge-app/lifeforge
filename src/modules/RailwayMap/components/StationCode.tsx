@@ -1,8 +1,6 @@
-import React from 'react'
-
 import { useRailwayMapContext } from '../providers/RailwayMapProvider'
 
-const StationCodes = ({ codes }: { codes: string[] }): React.ReactElement => {
+const StationCodes = ({ codes }: { codes: string[] }) => {
   const { lines } = useRailwayMapContext()
 
   return (

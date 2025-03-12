@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import React, { useEffect, useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -10,11 +10,7 @@ import fetchAPI from '@utils/fetchAPI'
 
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
-function ModifyModal({
-  stuff
-}: {
-  stuff: 'categories' | 'languages'
-}): React.ReactElement {
+function ModifyModal({ stuff }: { stuff: 'categories' | 'languages' }) {
   const { t } = useTranslation('modules.booksLibrary')
   const {
     modifyDataModalOpenType: openType,
@@ -64,7 +60,7 @@ function ModifyModal({
     }
   }, [openType, existedData])
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     const { name, icon } = data
     if (name.trim().length === 0 || icon.trim().length === 0) {
       toast.error(t('input.error.fieldEmpty'))

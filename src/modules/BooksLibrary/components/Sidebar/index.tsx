@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSearchParams } from 'react-router'
 
 import { SidebarDivider, SidebarItem, SidebarWrapper } from '@lifeforge/ui'
@@ -6,7 +5,7 @@ import { SidebarDivider, SidebarItem, SidebarWrapper } from '@lifeforge/ui'
 import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
 import SidebarSection from './components/SidebarSection'
 
-function Sidebar(): React.ReactElement {
+function Sidebar() {
   const [searchParams, setSearchParams] = useSearchParams()
   const {
     miscellaneous: { sidebarOpen, setSidebarOpen }

@@ -1,6 +1,6 @@
 import { parse } from 'file-type-mime'
 import moment from 'moment'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -39,7 +39,7 @@ function ModifyTransactionsModal({
   setExistedData: React.Dispatch<
     React.SetStateAction<IWalletTransaction | null>
   >
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.wallet')
   const { refreshAssets, refreshTransactions } = useWalletContext()
   const [particular, setParticular] = useState('')
@@ -64,7 +64,7 @@ function ModifyTransactionsModal({
 
   const ref = useRef<HTMLInputElement>(null)
 
-  async function getImagePreview(file: File): Promise<void> {
+  async function getImagePreview(file: File) {
     const mime = parse(await file.arrayBuffer())
     if (mime?.mime.includes('image')) {
       const reader = new FileReader()
@@ -121,7 +121,7 @@ function ModifyTransactionsModal({
     }
   }, [openType, existedData])
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     if (transactionType === 'transfer') {
       if (!fromAsset || !toAsset) {
         toast.error('Please fill in the from and to assets.')

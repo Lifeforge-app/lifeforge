@@ -35,7 +35,7 @@ export function interpolateColors(
   theme: 'light' | 'dark' | 'system',
   color: string,
   type: 'bg' | 'theme'
-): void {
+) {
   const colorPalette = getColorPalette(
     color,
     type,
@@ -58,7 +58,7 @@ export function interpolateColors(
   })
 }
 
-export function clearCustomColorProperties(type: 'bg' | 'theme'): void {
+export function clearCustomColorProperties(type: 'bg' | 'theme') {
   const number = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
 
   for (let i = 0; i < number.length; i++) {

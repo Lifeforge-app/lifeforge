@@ -8,7 +8,7 @@ import {
 function useRawThemeColorEffect(
   rawThemeColor: string,
   theme: 'light' | 'dark' | 'system'
-): void {
+) {
   useEffect(() => {
     if (rawThemeColor) {
       document.body.classList.remove(

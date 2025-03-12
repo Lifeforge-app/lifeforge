@@ -1,7 +1,7 @@
 import { useAuth } from '@providers/AuthProvider'
 import _ from 'lodash'
 import moment from 'moment'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button, ConfigColumn } from '@lifeforge/ui'
@@ -18,7 +18,7 @@ function OrdinaryColumn({
   id: string
   icon: string
   type?: string
-}): React.ReactElement {
+}) {
   const { userData } = useAuth()
   const { t } = useTranslation('modules.accountSettings')
   const [modifyModalOpen, setModifyModalOpen] = useState(false)

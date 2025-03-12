@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 
 import {
   SPICINESS_COLOR,
@@ -12,7 +11,7 @@ function SpicinessSlider({
 }: {
   spiciness: number
   setSpiciness: (spiciness: number) => void
-}): React.ReactElement {
+}) {
   return (
     <>
       <div className="mt-4 flex items-center justify-evenly gap-2">

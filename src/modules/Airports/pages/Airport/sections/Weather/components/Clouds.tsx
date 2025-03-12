@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -8,7 +7,7 @@ import { IAirportMETARData } from '..'
 import { METAR_CODES } from '../constants/constants'
 import WidgetWrapper from './WidgetWrapper'
 
-function Clouds({ data }: { data: IAirportMETARData }): React.ReactElement {
+function Clouds({ data }: { data: IAirportMETARData }) {
   const { componentBgLighter } = useComponentBg()
 
   return (

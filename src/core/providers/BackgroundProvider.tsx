@@ -1,14 +1,9 @@
 import clsx from 'clsx'
-import React from 'react'
 
 import { usePersonalization } from './PersonalizationProvider'
 import { BG_BLURS } from './PersonalizationProvider/constants/bg_blurs'
 
-function BackgroundProvider({
-  children
-}: {
-  children: React.ReactNode
-}): React.ReactElement {
+function BackgroundProvider({ children }: { children: React.ReactNode }) {
   const {
     bgImage,
     theme,
