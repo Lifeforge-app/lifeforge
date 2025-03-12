@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -21,7 +21,7 @@ function AlgEntry({
 }: {
   cube: typeof DEFAULT_CUBE
   index: number
-}): React.ReactElement {
+}) {
   const refs = useRef<Array<HTMLDivElement | null>>(Array(9).map(() => null))
   const containerRef = useRef<HTMLDivElement>(null)
   const { componentBg } = useComponentBg()

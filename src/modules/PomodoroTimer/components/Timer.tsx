@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Button } from '@lifeforge/ui'
 
-export default function Timer(): React.ReactElement {
+export default function Timer() {
   // TODO: Implement UI to change time distribution
   const [timeDistribution] = useState([1500, 300, 900])
   const [currentRoundBig, setCurrentRoundBig] = useState(1)

@@ -4,7 +4,7 @@ import { usePersonalization } from '@providers/PersonalizationProvider'
 import { ChartOptions, ScriptableContext } from 'chart.js'
 import clsx from 'clsx'
 import moment, { Moment } from 'moment'
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Bar, Line } from 'react-chartjs-2'
 import tinycolor from 'tinycolor2'
 
@@ -118,7 +118,7 @@ const ViewSelector = ({
   )
 }
 
-const CodeTime = (): React.ReactElement => {
+const CodeTime = () => {
   const [data] = useFetch<ICodeTimeEachDay[]>('code-time/each-day')
   const { themeColor } = usePersonalization()
   const [view, setView] = useState<'bar' | 'line'>('bar')

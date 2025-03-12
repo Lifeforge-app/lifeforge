@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps'
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router'
 
 import {
@@ -25,7 +25,7 @@ import Radio from './sections/Radio'
 import Runways from './sections/Runways'
 import Weather from './sections/Weather'
 
-function Airport(): React.ReactElement {
+function Airport() {
   const { componentBg } = useComponentBg()
   const [searchParams, setSearchParams] = useSearchParams()
   const section = searchParams.get('section')

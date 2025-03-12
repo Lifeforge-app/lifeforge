@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 import { Link } from 'react-router'
 
 import { type IWalletLedger } from '../../../../../../interfaces/wallet_interfaces'
@@ -10,7 +9,7 @@ function LedgerColumn({
 }: {
   ledger: string
   ledgers: IWalletLedger[]
-}): React.ReactElement {
+}) {
   return (
     <td className="p-2 text-center">
       {ledger !== '' ? (

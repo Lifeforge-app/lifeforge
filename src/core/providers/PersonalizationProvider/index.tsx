@@ -1,11 +1,5 @@
 import _ from 'lodash'
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import fetchAPI from '@utils/fetchAPI'
@@ -25,7 +19,7 @@ import {
 } from './interfaces/personalization_provider_interfaces'
 import { getColorPalette } from './utils/themeColors'
 
-async function updateUserData(data: Record<string, unknown>): Promise<void> {
+async function updateUserData(data: Record<string, unknown>) {
   try {
     await fetchAPI('/user/personalization', {
       method: 'PATCH',
@@ -46,7 +40,7 @@ export default function PersonalizationProvider({
   children
 }: {
   children: React.ReactNode
-}): React.ReactElement {
+}) {
   const { userData } = useAuth()
 
   const [fontFamily, setFontFamily] = useState<string>('Wix Madefor Text')
@@ -152,43 +146,37 @@ export default function PersonalizationProvider({
   useBgTempEffect(bgTemp, theme)
   useLanguageEffect(language)
 
-  async function changeFontFamily(font: string): Promise<void> {
+  async function changeFontFamily(font: string) {
     setFontFamily(font)
     await updateUserData({ fontFamily: font })
   }
 
-  async function changeTheme(
-    theme: 'light' | 'dark' | 'system'
-  ): Promise<void> {
+  async function changeTheme(theme: 'light' | 'dark' | 'system') {
     setTheme(theme)
     await updateUserData({ theme })
   }
 
-  async function changeThemeColor(color: string): Promise<void> {
+  async function changeThemeColor(color: string) {
     setRawThemeColor(color)
     await updateUserData({ color: color.replace('theme-', '') })
   }
 
-  async function changeBgTemp(color: string): Promise<void> {
+  async function changeBgTemp(color: string) {
     setBgTemp(color)
     await updateUserData({ bgTemp: color.replace('bg-', '') })
   }
 
-  async function changeBackdropFilters(
-    filters: IBackdropFilters
-  ): Promise<void> {
+  async function changeBackdropFilters(filters: IBackdropFilters) {
     setBackdropFilters(filters)
     await updateUserData({ backdropFilters: filters })
   }
 
-  async function changeLanguage(language: string): Promise<void> {
+  async function changeLanguage(language: string) {
     setLanguage(language)
     await updateUserData({ language })
   }
 
-  async function changeDashboardLayout(
-    layout: DashboardLayoutType
-  ): Promise<void> {
+  async function changeDashboardLayout(layout: DashboardLayoutType) {
     setDashboardLayout(layout)
     await updateUserData({ dashboardLayout: layout })
   }

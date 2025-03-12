@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
@@ -14,7 +13,7 @@ import {
 
 import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
-function TransactionsCard(): React.ReactElement {
+function TransactionsCard() {
   const { transactions, categories } = useWalletContext()
   const { t } = useTranslation('modules.wallet')
 

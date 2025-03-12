@@ -1,12 +1,10 @@
-import React from 'react'
-
 import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
 import AvatarColumn from './components/AvatarColumn'
 import OrdinaryColumn from './components/OrdinaryColumn'
 import PasswordColumn from './components/PasswordColumn'
 
-function Account(): React.ReactElement {
+function Account() {
   return (
     <ModuleWrapper>
       <ModuleHeader title="Account Settings" />

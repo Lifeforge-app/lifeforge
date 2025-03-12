@@ -1,7 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 
@@ -23,7 +22,7 @@ function Header({
   setModifyEntryModalOpenType: (value: 'create' | 'update' | null) => void
   setExistedData: (value: Partial<IWishlistEntry> | null) => void
   setFromOtherAppsModalOpen: (value: boolean) => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.wishlist')
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()

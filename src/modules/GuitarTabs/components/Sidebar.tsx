@@ -1,5 +1,4 @@
 import { UseQueryResult } from '@tanstack/react-query'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
@@ -21,7 +20,7 @@ function Sidebar({
   sidebarDataQuery: UseQueryResult<IGuitarTabsSidebarData>
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.guitarTabs')
   const [searchParams, setSearchParams] = useSearchParams()
 

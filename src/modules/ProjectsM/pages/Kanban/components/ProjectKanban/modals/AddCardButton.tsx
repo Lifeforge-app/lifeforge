@@ -1,12 +1,12 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { Button } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-function AddCardButton(): React.ReactElement {
+function AddCardButton() {
   const [isFocused, setIsFocused] = useState(false)
   const { componentBgLighter } = useComponentBg()
 

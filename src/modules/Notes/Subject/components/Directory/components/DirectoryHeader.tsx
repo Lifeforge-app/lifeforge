@@ -2,7 +2,7 @@ import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { cookieParse } from 'pocketbase'
-import React from 'react'
+import { useRef } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -25,7 +25,7 @@ function DirectoryHeader({
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedData: React.Dispatch<React.SetStateAction<INotesEntry | null>>
-}): React.ReactElement {
+}) {
   const {
     workspace,
     subject,
@@ -41,10 +41,10 @@ function DirectoryHeader({
     path: INotesPath[]
   }>(`notes/entries/path/${workspace}/${subject}/${path}`)
 
-  const toastId = React.useRef<any>(undefined)
+  const toastId = useRef<any>(undefined)
   const navigate = useNavigate()
 
-  function uploadFiles(): void {
+  function uploadFiles() {
     const fileInput = document.createElement('input')
     fileInput.type = 'file'
     fileInput.multiple = true
@@ -97,7 +97,7 @@ function DirectoryHeader({
     })
   }
 
-  function uploadFolders(): void {
+  function uploadFolders() {
     const fileInput = document.createElement('input')
     fileInput.type = 'file'
     fileInput.multiple = true

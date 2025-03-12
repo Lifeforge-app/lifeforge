@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 import { HamburgerMenu } from '@lifeforge/ui'
 
@@ -9,7 +8,7 @@ import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
-function EntryItem({ item }: { item: IBooksLibraryEntry }): React.ReactElement {
+function EntryItem({ item }: { item: IBooksLibraryEntry }) {
   const {
     categories: { data: categories }
   } = useBooksLibraryContext()

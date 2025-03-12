@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useAuth } from '@providers/AuthProvider'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -8,14 +8,14 @@ import { Button, ConfigColumn, DeleteConfirmationModal } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
-function AvatarColumn(): React.ReactElement {
+function AvatarColumn() {
   const { t } = useTranslation('modules.accountSettings')
   const [loading, setLoading] = useState(false)
   const { getAvatarURL, userData, setUserData } = useAuth()
   const [deleteAvatarConfirmationModal, setDeleteAvatarConfirmationModal] =
     useState(false)
 
-  function changeAvatar(): void {
+  function changeAvatar() {
     const input = document.createElement('input')
     input.type = 'file'
     input.accept = 'image/*'

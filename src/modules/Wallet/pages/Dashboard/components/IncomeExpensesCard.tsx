@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 
 import { DashboardItem } from '@lifeforge/ui'
 
@@ -18,7 +17,7 @@ function IncomeExpenseCard({
   title: string
   icon: string
   data: Loadable<IWalletIncomeExpenses>
-}): React.ReactElement {
+}) {
   const isIncome = title.toLowerCase() === 'income'
   const { isAmountHidden } = useWalletContext()
 

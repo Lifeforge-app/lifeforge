@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -28,7 +28,7 @@ function ModifyAssetsModal({
   existedData: IWalletAsset | null
   setExistedData: React.Dispatch<React.SetStateAction<IWalletAsset | null>>
   refreshAssets: () => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.wallet')
   const [assetName, setAssetName] = useState('')
   const [assetIcon, setAssetIcon] = useState('')
@@ -52,11 +52,11 @@ function ModifyAssetsModal({
     }
   }, [openType, existedData])
 
-  function updateAssetBalance(value: string | undefined): void {
+  function updateAssetBalance(value: string | undefined) {
     setAssetStartingBalance(value ?? '')
   }
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     if (
       assetName.trim().length === 0 ||
       !assetStartingBalance ||

@@ -7,7 +7,6 @@ import {
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import _ from 'lodash'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import useComponentBg from '@hooks/useComponentBg'
@@ -41,7 +40,7 @@ function DefaultThemeColorSelector({
   themeColor: string
   setThemeColor: (color: string) => void
   customThemeColor: string
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.personalization')
   const { componentBgWithHover } = useComponentBg()
 

@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import tinycolor from 'tinycolor2'
 
 import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
@@ -17,7 +17,7 @@ function TagItem({
   tag: IIdeaBoxTag
   countHashMap: Map<string, number>
   onSelect: (tagName: string) => void
-}): React.ReactElement {
+}) {
   const { selectedTags } = useIdeaBoxContext()
 
   const tagColor = useMemo(() => {

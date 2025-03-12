@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -17,7 +17,7 @@ import Directory from './components/Directory'
 import DirectoryHeader from './components/Directory/components/DirectoryHeader'
 import ModifyFolderModal from './components/ModifyFolderModal'
 
-function NotesSubject(): React.ReactElement {
+function NotesSubject() {
   const {
     subject,
     '*': path,

@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -15,7 +15,7 @@ import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
 import fetchAPI from '@utils/fetchAPI'
 
-function AddPhotosToAlbumModal(): React.ReactElement {
+function AddPhotosToAlbumModal() {
   const { t } = useTranslation('modules.photos')
   const {
     photos,
@@ -31,11 +31,11 @@ function AddPhotosToAlbumModal(): React.ReactElement {
   const [selectedAlbum, setSelectedAlbum] = useState('')
   const [loading, setLoading] = useState(false)
 
-  function selectAlbum(id: string): void {
+  function selectAlbum(id: string) {
     setSelectedAlbum(id)
   }
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     if (
       typeof photos === 'string' ||
       typeof albumList === 'string' ||

@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 function CategoryToggleButton({
@@ -15,7 +14,7 @@ function CategoryToggleButton({
   iconName: string
   label: string
   activeBgColor: string
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.wallet')
 
   return (

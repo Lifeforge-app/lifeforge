@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { SidebarDivider, SidebarTitle, SidebarWrapper } from '@lifeforge/ui'
 
 import TaskListList from './components/TaskListList'
@@ -13,7 +11,7 @@ function Sidebar({
 }: {
   isOpen: boolean
   setOpen: (value: boolean) => void
-}): React.ReactElement {
+}) {
   return (
     <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
       <SidebarTitle name="tasks" namespace="modules.todoList" />

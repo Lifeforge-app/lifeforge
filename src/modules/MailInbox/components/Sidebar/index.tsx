@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
 import {
@@ -25,7 +25,7 @@ function Sidebar({
   setOpen: (value: boolean) => void
   allMailsCount: number
   labels: Loadable<IMailInboxLabel[]>
-}): React.ReactElement {
+}) {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const sidebarItems = useMemo(() => {

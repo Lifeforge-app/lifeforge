@@ -1,12 +1,11 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 
 import useComponentBg from '@hooks/useComponentBg'
 
 import { IDiskUsage } from '../../../interfaces/server_status_interfaces'
 
-function DiskUsageCard({ disk }: { disk: IDiskUsage }): React.ReactElement {
+function DiskUsageCard({ disk }: { disk: IDiskUsage }) {
   const { componentBg, componentBgLighter } = useComponentBg()
 
   return (

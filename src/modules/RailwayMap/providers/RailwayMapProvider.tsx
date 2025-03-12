@@ -1,4 +1,11 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 import { toast } from 'react-toastify'
 
 import {
@@ -40,15 +47,15 @@ interface IRailwayMapData {
   centerStation: IRailwayMapStation | undefined
 }
 
-export const RailwayMapContext = React.createContext<
-  IRailwayMapData | undefined
->(undefined)
+export const RailwayMapContext = createContext<IRailwayMapData | undefined>(
+  undefined
+)
 
 export default function RailwayMapProvider({
   children
 }: {
   children: React.ReactNode
-}): React.ReactElement {
+}) {
   const [viewType, setViewType] = useState<'route' | 'earth' | 'list'>('route')
   const [searchQuery, setSearchQuery] = useState('')
   const linesQuery = useAPIQuery<IRailwayMapLine[]>('railway-map/lines', [

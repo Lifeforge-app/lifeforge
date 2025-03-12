@@ -1,13 +1,8 @@
 import clsx from 'clsx'
 import _ from 'lodash'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-function TableHeader({
-  visibleColumn
-}: {
-  visibleColumn: string[]
-}): React.ReactElement {
+function TableHeader({ visibleColumn }: { visibleColumn: string[] }) {
   const { t } = useTranslation('modules.wallet')
 
   return (

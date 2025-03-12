@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { ConfigColumn } from '@lifeforge/ui'
 
 function AdjustmentColumn({
@@ -20,7 +18,7 @@ function AdjustmentColumn({
   labels: string[]
   max: number
   needDivider?: boolean
-}): React.ReactElement {
+}) {
   return (
     <ConfigColumn
       noDefaultBreakpoints

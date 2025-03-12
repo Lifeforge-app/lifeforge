@@ -1,12 +1,12 @@
 import { cookieParse } from 'pocketbase'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { ModuleWrapper } from '@lifeforge/ui'
 
-function LocalizationManager(): React.ReactElement {
+function LocalizationManager() {
   const { t } = useTranslation('modules.localizationManager')
   const navigate = useNavigate()
 

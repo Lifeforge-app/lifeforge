@@ -2,7 +2,6 @@ import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import _ from 'lodash'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -23,10 +22,7 @@ interface ViewTypeSwitcherProps {
   setViewType: (viewType: 'route' | 'earth' | 'list') => void
 }
 
-function ViewTypeSwitcher({
-  viewType,
-  setViewType
-}: ViewTypeSwitcherProps): React.ReactElement {
+function ViewTypeSwitcher({ viewType, setViewType }: ViewTypeSwitcherProps) {
   const { componentBgWithHover } = useComponentBg()
   const { t } = useTranslation('modules.railwayMap')
 

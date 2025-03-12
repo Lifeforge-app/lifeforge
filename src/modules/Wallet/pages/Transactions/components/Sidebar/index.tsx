@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
@@ -21,7 +20,7 @@ function Sidebar({
   setManageCategoriesModalOpen: React.Dispatch<
     React.SetStateAction<boolean | 'new'>
   >
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.wallet')
   const [searchParams, setSearchParams] = useSearchParams()
 

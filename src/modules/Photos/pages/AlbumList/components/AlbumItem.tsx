@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 import { Link } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -18,7 +17,7 @@ function AlbumItem({
   setSelectedAlbum: (album: IPhotosAlbum) => void
   setDeleteModalOpen: (open: boolean) => void
   setUpdateAlbumTagsModalOpen: (open: boolean) => void
-}): React.ReactElement {
+}) {
   const { setModifyAlbumModalOpenType, albumTagList } = usePhotosContext()
 
   return (

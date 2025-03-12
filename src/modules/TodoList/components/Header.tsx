@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
@@ -10,7 +9,7 @@ function Header({
   setSidebarOpen
 }: {
   setSidebarOpen: (value: boolean) => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.todoList')
   const {
     entries,

@@ -10,7 +10,7 @@ import { getLine } from './stationUtils'
 export const clearSelection = (
   g: d3.Selection<SVGGElement, unknown, null, undefined>,
   initialFill: string
-): void => {
+) => {
   const elements = g.selectAll('circle, rect')
   if (elements.empty()) return
 
@@ -28,7 +28,7 @@ export const updateSelection = (
   selectedStation: IRailwayMapStation,
   lines: IRailwayMapLine[],
   initialFill: string
-): void => {
+) => {
   clearSelection(g, initialFill)
 
   const stationElement = g.select(`#station-${selectedStation.id}`)

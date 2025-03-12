@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { APIFallbackComponent, Button, ModalWrapper } from '@lifeforge/ui'
@@ -20,7 +20,7 @@ function UpdateAlbumTagsModal({
   isOpen: boolean
   setOpen: (value: boolean) => void
   selectedAlbum: IPhotosAlbum | null
-}): React.ReactElement {
+}) {
   const { albumTagList, setAlbumList, refreshAlbumTagList } = usePhotosContext()
   const [loading, setLoading] = useState(false)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
@@ -31,7 +31,7 @@ function UpdateAlbumTagsModal({
     }
   }, [selectedAlbum])
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     setLoading(true)
 
     try {

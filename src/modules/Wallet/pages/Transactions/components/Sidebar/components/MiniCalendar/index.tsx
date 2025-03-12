@@ -1,5 +1,5 @@
 import moment from 'moment'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -18,7 +18,7 @@ const VIEWS = [
   ['tabler:transfer', 'transfer']
 ] as const
 
-function MiniCalendar(): React.ReactElement {
+function MiniCalendar() {
   const { t } = useTranslation('modules.wallet')
   const [currentMonth, setCurrentMonth] = useState(moment().month())
   const [currentYear, setCurrentYear] = useState(moment().year())

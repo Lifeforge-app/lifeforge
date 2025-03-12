@@ -1,5 +1,5 @@
 import moment from 'moment'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { APIFallbackComponent, DashboardItem } from '@lifeforge/ui'
 
@@ -12,7 +12,7 @@ import {
   type ICalendarEvent
 } from '../../Calendar/interfaces/calendar_interfaces'
 
-export default function MiniCalendar(): React.ReactElement {
+export default function MiniCalendar() {
   const [currentMonth, setCurrentMonth] = useState(moment().month())
   const [currentYear, setCurrentYear] = useState(moment().year())
 

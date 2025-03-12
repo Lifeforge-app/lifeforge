@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -33,7 +33,7 @@ function ScanReceiptModal({
   setModifyModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.wallet')
   const [file, setFile] = useState<File | string | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
@@ -41,7 +41,7 @@ function ScanReceiptModal({
   const [keepReceiptAfterScan, setKeepReceiptAfterScan] = useState(true)
   const [loading, setLoading] = useState(false)
 
-  async function onSubmit(): Promise<void> {
+  async function onSubmit() {
     if (file === null) {
       toast.error('Please select a file')
       return

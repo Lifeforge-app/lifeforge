@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { useNavigate } from 'react-router'
 
 import { APIFallbackComponent, GoBackButton } from '@lifeforge/ui'
@@ -9,11 +8,7 @@ import { type IProjectsMEntry } from '@modules/ProjectsM/interfaces/projects_m_i
 
 import { useProjectsMContext } from '../../../providers/ProjectsMProvider'
 
-function ProjectHeader({
-  projectData
-}: {
-  projectData: IProjectsMEntry
-}): React.ReactElement {
+function ProjectHeader({ projectData }: { projectData: IProjectsMEntry }) {
   const {
     statuses: { data: statuses }
   } = useProjectsMContext()

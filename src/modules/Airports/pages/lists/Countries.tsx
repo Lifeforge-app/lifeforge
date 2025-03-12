@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router'
 
 import {
@@ -30,7 +30,7 @@ const CONTINENTS = {
   SA: 'South America'
 }
 
-function Countries(): React.ReactElement {
+function Countries() {
   const { componentBgWithHover } = useComponentBg()
   const { continentID } = useParams()
   const [searchQuery, setSearchQuery] = useState('')

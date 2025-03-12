@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { IAirportMETARData } from '..'
 import WidgetWrapper from './WidgetWrapper'
 
-function Ceiling({ data }: { data: IAirportMETARData }): React.ReactElement {
+function Ceiling({ data }: { data: IAirportMETARData }) {
   const statusColor = useMemo(() => {
     if (!data.ceiling) {
       return ''

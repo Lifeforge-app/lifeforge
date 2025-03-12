@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { Link, useParams } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -21,7 +20,7 @@ function SubjectItem({
   >
   setExistedData: (data: any) => void
   setDeleteSubjectConfirmationModalOpen: (state: boolean) => void
-}): React.ReactElement {
+}) {
   const { componentBgWithHover } = useComponentBg()
   const { workspace } = useParams<{ workspace: string }>()
 

@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import prettyBytes from 'pretty-bytes'
-import React from 'react'
 
 import FILE_ICONS from '@modules/MailInbox/components/constants/file_icons'
 
@@ -9,11 +8,7 @@ import useComponentBg from '@hooks/useComponentBg'
 
 import { IMailInboxEntry } from '../../../interfaces/mail_inbox_interfaces'
 
-function MailAttachments({
-  mail
-}: {
-  mail: IMailInboxEntry
-}): React.ReactElement {
+function MailAttachments({ mail }: { mail: IMailInboxEntry }) {
   const { componentBg } = useComponentBg()
 
   return (

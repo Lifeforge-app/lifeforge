@@ -1,9 +1,8 @@
-import React from 'react'
 import { Outlet } from 'react-router'
 
 import Sidebar from './components/sidebar/Sidebar'
 
-function MainApplication(): React.ReactElement {
+function MainApplication() {
   return (
     <>
       <Sidebar />

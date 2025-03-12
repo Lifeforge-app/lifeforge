@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { cookieParse } from 'pocketbase'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -22,7 +22,7 @@ function BottomBar({
     | IPhotosEntryDimensionsItem[]
     | IPhotoAlbumEntryItem[]
   inAlbumGallery?: boolean
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.photos')
   const {
     selectedPhotos,
@@ -34,7 +34,7 @@ function BottomBar({
   } = usePhotosContext()
   const [isDownloadLoading, setIsDownloadLoading] = useState(false)
 
-  async function requestBulkDownload(): Promise<void> {
+  async function requestBulkDownload() {
     if (selectedPhotos.length === 0) {
       return
     }
@@ -79,7 +79,7 @@ function BottomBar({
     }
   }
 
-  async function addToFavourites(): Promise<void> {
+  async function addToFavourites() {
     if (selectedPhotos.length === 0) {
       return
     }

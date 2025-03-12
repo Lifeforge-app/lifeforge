@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 
 import { EmptyStateScreen, LoadingScreen } from '@lifeforge/ui'
@@ -63,13 +63,13 @@ function DashboardGrid({
 }: {
   wrapperRef: React.RefObject<HTMLDivElement | null>
   canLayoutChange: boolean
-}): React.ReactElement {
+}) {
   const { sidebarExpanded } = useSidebarState()
   const [width, setWidth] = useState(0)
   const { dashboardLayout: enabledWidgets, setDashboardLayout } =
     usePersonalization()
 
-  function handleResize(): void {
+  function handleResize() {
     if (wrapperRef.current !== null) {
       setWidth(wrapperRef.current.offsetWidth)
     }
@@ -88,7 +88,7 @@ function DashboardGrid({
     }
   }, [wrapperRef.current])
 
-  const onLayoutChange = (_: any, layouts: any): void => {
+  const onLayoutChange = (_: any, layouts: any) => {
     setDashboardLayout(layouts)
   }
 

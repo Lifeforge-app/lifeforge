@@ -1,15 +1,10 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 import { IAirportMETARData } from '..'
 import { METAR_CODES, METAR_ICONS } from '../constants/constants'
 import WidgetWrapper from './WidgetWrapper'
 
-function SignificantWeather({
-  data
-}: {
-  data: IAirportMETARData
-}): React.ReactElement {
+function SignificantWeather({ data }: { data: IAirportMETARData }) {
   return (
     <WidgetWrapper className="col-span-2">
       <h1 className="text-bg-500 mb-2 flex items-center gap-2 text-xl font-semibold">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -19,7 +19,7 @@ function NOTAM({
     React.SetStateAction<IAirportNOTAMEntry | null>
   >
   setViewDetailsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-}): React.ReactElement {
+}) {
   const { airportID } = useParams()
   const [NOTAMData] = useFetch<IAirportNOTAMEntry[] | 'none'>(
     `airports/airport/${airportID}/NOTAM`
@@ -28,7 +28,7 @@ function NOTAM({
   const [currentPage, setCurrentPage] = useState(-1)
   const [hasNextPage, setHasNextPage] = useState(true)
 
-  async function fetchNextPage(): Promise<void> {
+  async function fetchNextPage() {
     if (!hasNextPage) return
 
     setLoading(true)

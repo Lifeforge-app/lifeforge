@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
@@ -16,7 +16,7 @@ function ModifyContainerModal({
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   existedData: IIdeaBoxContainer | null
-}): React.ReactElement {
+}) {
   const [formState, setFormState] = useState<IIdeaBoxContainerFormState>({
     name: '',
     icon: '',

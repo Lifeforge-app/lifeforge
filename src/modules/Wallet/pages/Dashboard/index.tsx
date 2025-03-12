@@ -12,7 +12,6 @@ import {
   Title,
   Tooltip
 } from 'chart.js'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
@@ -46,7 +45,7 @@ ChartJS.register(
   LogarithmicScale
 )
 
-function WalletDashboard(): React.ReactElement {
+function WalletDashboard() {
   const navigate = useNavigate()
   const { t } = useTranslation(['common.buttons', 'modules.wallet'])
   const { incomeExpenses, isAmountHidden, toggleAmountVisibility } =

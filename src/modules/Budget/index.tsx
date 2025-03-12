@@ -1,8 +1,6 @@
-import React from 'react'
-
 import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
-function Budgets(): React.ReactElement {
+function Budgets() {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:calculator" title="Budgets" />

@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Switch } from '@lifeforge/ui'
@@ -18,7 +18,7 @@ function ComponentListItem({
   minW?: number
   minH?: number
   setReady: React.Dispatch<React.SetStateAction<boolean>>
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.dashboard')
   const {
     dashboardLayout: enabledWidgets,
@@ -32,7 +32,7 @@ function ComponentListItem({
     ).some(e => e.find(i => i.i === id) !== undefined)
   }, [enabledWidgets, id])
 
-  function addComponent(): void {
+  function addComponent() {
     const newEnabledWidgets = { ...enabledWidgets }
 
     if (Object.keys(newEnabledWidgets).length === 0) {
@@ -73,7 +73,7 @@ function ComponentListItem({
     }, 100)
   }
 
-  function removeComponent(): void {
+  function removeComponent() {
     const newEnabledWidgets = Object.fromEntries(
       Object.entries({ ...enabledWidgets }).map(([k, value]) => [
         k,
@@ -90,7 +90,7 @@ function ComponentListItem({
     }, 100)
   }
 
-  function toggleComponent(): void {
+  function toggleComponent() {
     setReady(false)
 
     if (isEnabled) {

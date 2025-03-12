@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 import AssetListbox from './AssetsListbox'
@@ -14,7 +12,7 @@ function AssetsFromToSelector({
   setFromAsset: React.Dispatch<React.SetStateAction<string | null>>
   toAsset: string | null
   setToAsset: React.Dispatch<React.SetStateAction<string | null>>
-}): React.ReactElement {
+}) {
   const { assets } = useWalletContext()
 
   if (assets === 'loading') {

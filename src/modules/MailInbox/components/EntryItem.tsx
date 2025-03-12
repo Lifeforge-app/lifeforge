@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
-import React from 'react'
 
 import { Button, Checkbox, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
@@ -23,7 +22,7 @@ function EntryItem({
   hasSelected: boolean
   onShiftSelect: (mailId: string) => void
   onSelect: (mailId: string) => void
-}): React.ReactElement {
+}) {
   return (
     <div
       key={mail.id}

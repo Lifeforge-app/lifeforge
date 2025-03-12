@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { Button, HamburgerMenu, MenuItem, SearchInput } from '@lifeforge/ui'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
@@ -18,7 +16,7 @@ function AlbumListHeader({
   setModifyAlbumTagModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'rename' | false>
   >
-}): React.ReactElement {
+}) {
   const { albumList, setModifyAlbumModalOpenType } = usePhotosContext()
 
   return (

@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -25,10 +25,10 @@ function SubtaskBoxHeader({
   setNewTask: React.Dispatch<React.SetStateAction<string>>
   summary: string
   notes: string
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.todoList')
   const [AIGenerateLoading, setAIGenerateLoading] = useState(false)
-  async function AIGenerateSubtask(): Promise<void> {
+  async function AIGenerateSubtask() {
     if (summary === '') {
       toast.error('Task summary cannot be empty.')
       return

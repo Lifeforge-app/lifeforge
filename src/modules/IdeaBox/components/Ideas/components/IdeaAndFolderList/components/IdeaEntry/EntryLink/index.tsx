@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
-import React from 'react'
 import { useDrag } from 'react-dnd'
 
 import useComponentBg from '@hooks/useComponentBg'
@@ -12,7 +11,7 @@ import InFolderChip from '../components/InFolderChip'
 import TagChip from '../components/TagChip'
 import EntryContent from './components/EntryContent'
 
-function EntryLink({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
+function EntryLink({ entry }: { entry: IIdeaBoxEntry }) {
   const { componentBg } = useComponentBg()
 
   const [{ opacity, isDragging }, dragRef] = useDrag(

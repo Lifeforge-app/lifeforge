@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Markdown from 'react-markdown'
 import Zoom from 'react-medium-image-zoom'
 
@@ -24,7 +24,7 @@ function JournalView({
   summarizedText: string
   rawText: string
   photos: Array<{ preview: string }> | string[]
-}): React.ReactElement {
+}) {
   const [viewRaw, setViewRaw] = useState(false)
   return (
     <>

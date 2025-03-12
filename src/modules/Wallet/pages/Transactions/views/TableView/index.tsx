@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { Scrollbar } from '@lifeforge/ui'
 
 import { type IWalletTransaction } from '../../../../interfaces/wallet_interfaces'
@@ -22,7 +20,7 @@ function TableView({
   setDeleteTransactionsConfirmationOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
-}): React.ReactElement {
+}) {
   return (
     <Scrollbar>
       <table className="mb-16 w-max min-w-full">

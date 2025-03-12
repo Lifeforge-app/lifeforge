@@ -1,13 +1,8 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 import { BookDetailProps } from '..'
 
-function ThumbnailAndHashes({
-  data
-}: {
-  data: BookDetailProps
-}): React.ReactElement {
+function ThumbnailAndHashes({ data }: { data: BookDetailProps }) {
   return (
     <aside className="flex-center top-0 h-full flex-col md:sticky">
       {data.image !== '../img/blank.png' ? (

@@ -1,8 +1,6 @@
-import React from 'react'
-
 import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
-function AsciiTextGenerator(): React.ReactElement {
+function AsciiTextGenerator() {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:terminal" title="ASCII Text Generator" />

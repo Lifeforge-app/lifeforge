@@ -1,7 +1,4 @@
-export default async function forceDown(
-  url: string,
-  filename: string
-): Promise<void> {
+export default async function forceDown(url: string, filename: string) {
   await fetch(url)
     .then(async function (t) {
       const content = await t.blob()

@@ -1,6 +1,5 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 import {
   APIFallbackComponent,
@@ -20,7 +19,7 @@ function Sidebar({
 }: {
   sidebarOpen: boolean
   setSidebarOpen: (value: boolean) => void
-}): React.ReactElement {
+}) {
   const [tagsList] = useFetch<IFlashcardTag[]>('flashcards/tag/list')
 
   return (

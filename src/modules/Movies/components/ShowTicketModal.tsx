@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import moment from 'moment'
 import { QRCodeSVG } from 'qrcode.react'
-import React from 'react'
 
 import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
 
@@ -15,7 +14,7 @@ function ShowTicketModal({
   isOpen: boolean
   onClose: () => void
   entry: IMovieEntry | undefined
-}): React.ReactElement {
+}) {
   return (
     <ModalWrapper isOpen={isOpen} maxWidth="20rem">
       <ModalHeader

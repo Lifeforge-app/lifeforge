@@ -1,5 +1,5 @@
 import moment from 'moment'
-import React, { useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
 
@@ -15,7 +15,7 @@ function YearMonthInput({
   setMonth: (value: number | null) => void
   year: number | null
   setYear: (value: number | null) => void
-}): React.ReactElement {
+}) {
   const { transactions } = useWalletContext()
 
   const yearsOptions = useMemo(() => {

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { MenuItem, SidebarItem } from '@lifeforge/ui'
@@ -26,7 +26,7 @@ function _SidebarItem({
   stuff: 'categories' | 'languages' | 'fileTypes'
   fallbackIcon?: string
   hasHamburgerMenu?: boolean
-}): React.ReactElement {
+}) {
   const [searchParams, setSearchParams] = useSearchParams()
   const {
     entries: { data: entries },

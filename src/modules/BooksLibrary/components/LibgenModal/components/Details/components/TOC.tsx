@@ -1,8 +1,6 @@
-import React from 'react'
-
 import { BookDetailProps } from '..'
 
-function TOC({ data }: { data: BookDetailProps }): React.ReactElement {
+function TOC({ data }: { data: BookDetailProps }) {
   return (
     <>
       {Object.entries({

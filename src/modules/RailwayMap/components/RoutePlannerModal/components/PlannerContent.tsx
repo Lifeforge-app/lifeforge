@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { Button } from '@lifeforge/ui'
 
@@ -17,7 +17,7 @@ function PlannerContent({
   endQuery: string
   setStartQuery: (query: string) => void
   setEndQuery: (query: string) => void
-}): React.ReactElement {
+}) {
   const {
     fetchShortestRoute,
     routePlannerLoading: loading,

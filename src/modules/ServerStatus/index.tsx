@@ -1,12 +1,10 @@
-import React from 'react'
-
 import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
 import APIEnvironment from './components/APIEnvironment'
 import SystemInfo from './components/SystemInfo'
 import SystemStatus from './components/SystemStatus'
 
-function ServerStatus(): React.ReactElement {
+function ServerStatus() {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:server" title="Server Status" />

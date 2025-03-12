@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 import {
   APIFallbackComponent,
@@ -17,7 +16,7 @@ function ProgressIndicator({
 }: {
   status: 'completed' | 'failed' | 'in_progress' | null
   progress: number
-}): React.ReactElement {
+}) {
   switch (status) {
     case 'in_progress':
       return (
@@ -70,7 +69,7 @@ function DownloadProcessModal({
       >
     | 'loading'
     | 'error'
-}): React.ReactElement {
+}) {
   return (
     <ModalWrapper isOpen={isOpen} minWidth="70vw">
       <ModalHeader

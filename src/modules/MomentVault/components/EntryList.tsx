@@ -1,6 +1,6 @@
 /* eslint-disable import/named */
 import { ListResult } from 'pocketbase'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { APIFallbackComponent, Pagination } from '@lifeforge/ui'
 
@@ -25,7 +25,7 @@ function EntryList({
     React.SetStateAction<Loadable<ListResult<IMomentVaultEntry>>>
   >
   addEntryModalOpenType: 'text' | 'audio' | 'photo' | 'video' | null
-}): React.ReactElement {
+}) {
   useEffect(() => {
     const els = document.querySelectorAll<HTMLDivElement>('.pagination')
 

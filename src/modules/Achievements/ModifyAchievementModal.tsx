@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import COLOR from 'tailwindcss/colors'
 
@@ -27,7 +27,7 @@ function ModifyAchievementModal({
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   existedData: IAchievementEntry | null
   currentDifficulty: IAchievementEntry['difficulty']
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.achievements')
   const [formState, setFormState] = useState<IAchievementEntryFormState>({
     title: '',

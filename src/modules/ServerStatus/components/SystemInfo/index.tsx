@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import prettyBytes from 'pretty-bytes'
-import React from 'react'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
 
@@ -9,7 +8,7 @@ import useFetch from '@hooks/useFetch'
 import { ISystemInfo } from '../../interfaces/server_status_interfaces'
 import SectionCard from './components/SectionCard'
 
-function SystemInfo(): React.ReactElement {
+function SystemInfo() {
   const [systemInfo] = useFetch<ISystemInfo>('server/info')
 
   return (

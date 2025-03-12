@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { Button } from '@lifeforge/ui'
 
@@ -12,10 +12,10 @@ function RawText({
   rawText: string
   setRawText: React.Dispatch<React.SetStateAction<string>>
   setStep: React.Dispatch<React.SetStateAction<number>>
-}): React.ReactElement {
+}) {
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
-  function updateTextAreaHeight(): void {
+  function updateTextAreaHeight() {
     if (textAreaRef.current !== null) {
       textAreaRef.current.style.height = 'auto'
       textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px'

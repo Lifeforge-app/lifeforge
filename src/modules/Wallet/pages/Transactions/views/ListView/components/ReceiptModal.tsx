@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
 
 function ReceiptModal({
@@ -10,7 +8,7 @@ function ReceiptModal({
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   receiptSrc: string
-}): React.ReactElement {
+}) {
   return (
     <ModalWrapper isOpen={isOpen}>
       <ModalHeader

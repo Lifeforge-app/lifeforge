@@ -1,4 +1,3 @@
-import React from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
 
 import { SidebarDivider, SidebarItem, SidebarWrapper } from '@lifeforge/ui'
@@ -6,7 +5,7 @@ import { SidebarDivider, SidebarItem, SidebarWrapper } from '@lifeforge/ui'
 import { useProjectsMContext } from '../../providers/ProjectsMProvider'
 import SidebarSection from './components/SidebarSection'
 
-function Sidebar(): React.ReactElement {
+function Sidebar() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { sidebarOpen, setSidebarOpen } = useProjectsMContext().miscellaneous

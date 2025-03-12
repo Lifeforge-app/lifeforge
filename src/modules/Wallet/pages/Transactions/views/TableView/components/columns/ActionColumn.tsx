@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { type IWalletTransaction } from '../../../../../../interfaces/wallet_interfaces'
@@ -20,7 +18,7 @@ function ActionColumn({
   setDeleteTransactionsConfirmationOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
-}): React.ReactElement {
+}) {
   return (
     <td className="p-2">
       <HamburgerMenu className="relative">

@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import copy from 'copy-to-clipboard'
 import moment from 'moment'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, ConfigColumn, HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -28,9 +28,9 @@ function EntryItem({
   >
   setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   masterPassword: string
-}): React.ReactElement {
+}) {
   const [isCopying, setIsCopying] = useState(false)
-  async function copyKey(): Promise<void> {
+  async function copyKey() {
     const challenge = await fetchChallenge()
     setIsCopying(true)
 

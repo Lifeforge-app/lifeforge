@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { APIFallbackComponent, SidebarTitle } from '@lifeforge/ui'
@@ -16,7 +15,7 @@ function SidebarSection({
   fallbackIcon?: string
   hasActionButton?: boolean
   hasHamburgerMenu?: boolean
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.booksLibrary')
   const { data, setExistedData, setModifyDataModalOpenType } =
     useBooksLibraryContext()[stuff]

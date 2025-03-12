@@ -1,12 +1,7 @@
 import clsx from 'clsx'
-import React from 'react'
 import { Link } from 'react-router'
 
-function TypeColumn({
-  type
-}: {
-  type: 'income' | 'expenses' | 'transfer'
-}): React.ReactElement {
+function TypeColumn({ type }: { type: 'income' | 'expenses' | 'transfer' }) {
   return (
     <td className="p-4 text-center">
       <Link

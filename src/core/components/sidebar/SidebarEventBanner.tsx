@@ -4,7 +4,7 @@ import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
 import moment from 'moment'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import tinycolor from 'tinycolor2'
 
 function addNumberSuffix(number: number): string {
@@ -53,7 +53,7 @@ const getEventIcon = (eventType: string) => {
   return iconMap[eventType] || ''
 }
 
-const SidebarEventBanner = (): React.ReactElement => {
+const SidebarEventBanner = () => {
   const { sidebarExpanded } = useSidebarState()
   const { themeColor } = usePersonalization()
   const { userData } = useAuth()

@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import { cookieParse } from 'pocketbase'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import PhotoAlbum from 'react-photo-album'
 import { useNavigate } from 'react-router'
@@ -24,7 +24,7 @@ import { type IPhotoAlbumEntryItem } from '../../interfaces/photos_interfaces.ts
 
 const LLI = LazyLoadImage as any
 
-function LockedFolderGallery(): React.ReactElement {
+function LockedFolderGallery() {
   const { setSelectedPhotos, setModifyAlbumModalOpenType } = usePhotosContext()
   const navigate = useNavigate()
   const [photos, refreshPhotos] =
@@ -40,7 +40,7 @@ function LockedFolderGallery(): React.ReactElement {
     }
   }, [])
 
-  async function importFiles(): Promise<void> {
+  async function importFiles() {
     setFileImportLoading(true)
     setProgress(0)
 

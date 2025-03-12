@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, ModalWrapper } from '@lifeforge/ui'
@@ -13,10 +13,10 @@ function EmptyTrashConfirmationModal({
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   refreshPhotos: () => void
-}): React.ReactElement {
+}) {
   const [loading, setLoading] = useState(false)
 
-  async function deleteData(): Promise<void> {
+  async function deleteData() {
     setLoading(true)
 
     try {

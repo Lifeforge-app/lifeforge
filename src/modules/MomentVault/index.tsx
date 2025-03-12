@@ -1,7 +1,7 @@
 /* eslint-disable import/named */
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { ListResult } from 'pocketbase'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -20,7 +20,7 @@ import useFetch from '@hooks/useFetch'
 import AddEntryModal from './components/AddEntryModal'
 import EntryList from './components/EntryList'
 
-function MomentVault(): React.ReactElement {
+function MomentVault() {
   const { t } = useTranslation('modules.momentVault')
   const [page, setPage] = useState(1)
   const [data, refreshData, setData] = useFetch<ListResult<IMomentVaultEntry>>(

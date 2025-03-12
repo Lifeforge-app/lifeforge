@@ -1,4 +1,3 @@
-import React from 'react'
 import Zoom from 'react-medium-image-zoom'
 
 function ReceiptColumn({
@@ -9,7 +8,7 @@ function ReceiptColumn({
   collectionId: string
   id: string
   receipt: string
-}): React.ReactElement {
+}) {
   return (
     <td className="p-2 text-center">
       {receipt !== '' ? (

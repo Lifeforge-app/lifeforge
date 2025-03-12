@@ -1,4 +1,3 @@
-import React from 'react'
 import { useParams } from 'react-router'
 
 import { ModuleWrapper, SearchInput } from '@lifeforge/ui'
@@ -16,7 +15,7 @@ import ModifyIdeaModal from './components/Modals/ModifyIdeaModal'
 import ModifyTagModal from './components/Modals/ModifyTagModal'
 import TagsSelector from './components/TagsSelector'
 
-function IdeasInsideProvider(): React.ReactElement {
+function IdeasInsideProvider() {
   const { '*': path } = useParams<{ '*': string }>()
   const { searchQuery, setSearchQuery, viewArchived } = useIdeaBoxContext()
 
@@ -42,7 +41,7 @@ function IdeasInsideProvider(): React.ReactElement {
   )
 }
 
-function Ideas(): React.ReactElement {
+function Ideas() {
   return (
     <IdeaBoxProvider>
       <IdeasInsideProvider />

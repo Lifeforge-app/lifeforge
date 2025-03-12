@@ -1,7 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { MenuItem } from '@lifeforge/ui'
@@ -16,7 +15,7 @@ function TypeSelector({
   setInnerTypeOfModifyIdea: React.Dispatch<
     React.SetStateAction<'text' | 'image' | 'link'>
   >
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.ideaBox')
 
   return (

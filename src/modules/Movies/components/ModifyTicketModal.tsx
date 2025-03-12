@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { DeleteConfirmationModal, FormModal } from '@lifeforge/ui'
@@ -22,7 +22,7 @@ function ModifyTicketModal({
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   existedData: IMovieEntry | null
   queryKey: unknown[]
-}): React.ReactElement {
+}) {
   const queryClient = useQueryClient()
   const [
     deleteTicketConfirmationModalOpen,

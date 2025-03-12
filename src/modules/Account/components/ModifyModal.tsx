@@ -1,7 +1,7 @@
 import { useAuth } from '@providers/AuthProvider'
 import _ from 'lodash'
 import moment from 'moment'
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import {
@@ -28,13 +28,13 @@ function ModifyModal({
   icon: string
   isOpen: boolean
   onClose: () => void
-}): React.ReactElement {
+}) {
   const { userData, setUserData } = useAuth()
   const [value, setValue] = useState(userData[id])
   const [loading, setLoading] = useState(false)
   const modalRef = useRef<HTMLDivElement>(null)
 
-  async function onSubmit(): Promise<void> {
+  async function onSubmit() {
     setLoading(true)
 
     try {

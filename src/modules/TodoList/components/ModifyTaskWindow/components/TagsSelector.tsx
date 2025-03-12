@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
@@ -10,7 +8,7 @@ function TagsSelector({
 }: {
   tags: string[]
   setTags: (tags: string[]) => void
-}): React.ReactElement {
+}) {
   const { tags: tagsList } = useTodoListContext()
 
   if (typeof tagsList === 'string') return <></>

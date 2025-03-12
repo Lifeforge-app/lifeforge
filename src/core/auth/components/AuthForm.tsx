@@ -1,6 +1,6 @@
 // import * as webauthn from '@passwordless-id/webauthn'
 import { useAuth } from '@providers/AuthProvider'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -9,7 +9,7 @@ import { TextInput } from '@lifeforge/ui'
 import { AUTH_ERROR_MESSAGES } from '../constants/auth'
 import AuthSignInButton from './AuthSignInButtons'
 
-function AuthForm(): React.ReactElement {
+function AuthForm() {
   const [emailOrUsername, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -20,7 +20,7 @@ function AuthForm(): React.ReactElement {
     loginQuota: { quota, dismissQuota }
   } = useAuth()
 
-  function signIn(): void {
+  function signIn() {
     if (emailOrUsername.length === 0 || password.length === 0) {
       toast.error(t(AUTH_ERROR_MESSAGES.EMPTY_FIELDS))
       return

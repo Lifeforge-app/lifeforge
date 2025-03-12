@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSearchParams } from 'react-router'
 
 import { MenuItem, SidebarItem } from '@lifeforge/ui'
@@ -13,7 +12,7 @@ function TaskTagListItem({
 }: {
   item: ITodoListTag
   setSidebarOpen: (value: boolean) => void
-}): React.ReactElement {
+}) {
   const [searchParams, setSearchParams] = useSearchParams()
   const {
     setModifyTagModalOpenType: setModifyModalOpenType,

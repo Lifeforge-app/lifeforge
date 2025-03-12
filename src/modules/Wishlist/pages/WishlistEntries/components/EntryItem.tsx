@@ -2,7 +2,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, Checkbox, HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -27,7 +27,7 @@ function EntryItem({
   setEntries: React.Dispatch<React.SetStateAction<Loadable<IWishlistEntry[]>>>
   onEdit: (entry: IWishlistEntry) => void
   onDelete: (entry: IWishlistEntry) => void
-}): React.ReactElement {
+}) {
   const { componentBg, componentBgLighter } = useComponentBg()
   const [bought, setBought] = useState(entry.bought)
 
@@ -39,7 +39,7 @@ function EntryItem({
       return prev.filter(e => e.id !== entry.id)
     })
 
-  async function markAsCompleted(): Promise<void> {
+  async function markAsCompleted() {
     setBought(!bought)
 
     try {

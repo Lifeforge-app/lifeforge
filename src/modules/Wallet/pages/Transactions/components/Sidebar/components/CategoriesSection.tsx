@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
@@ -16,7 +15,7 @@ function CategoriesSection({
     React.SetStateAction<boolean | 'new'>
   >
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.wallet')
   const [searchParams, setSearchParams] = useSearchParams()
   const { categories, filteredTransactions } = useWalletContext()

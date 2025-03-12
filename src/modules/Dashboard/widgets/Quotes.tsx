@@ -1,14 +1,13 @@
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
-import React from 'react'
 import tinycolor from 'tinycolor2'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 
-export default function Quotes(): React.ReactElement {
+export default function Quotes() {
   const [quote] = useFetch<string>('quotes')
   const { themeColor } = usePersonalization()
 

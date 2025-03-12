@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 
@@ -28,7 +28,7 @@ import ReceiptModal from './views/ListView/components/ReceiptModal'
 import TableView from './views/TableView'
 import ColumnVisibilityToggle from './views/TableView/components/ColumnVisibilityToggle'
 
-function Transactions(): React.ReactElement {
+function Transactions() {
   const { t } = useTranslation('modules.wallet')
   const {
     transactions,

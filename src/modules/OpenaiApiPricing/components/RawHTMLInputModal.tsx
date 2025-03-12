@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -15,7 +15,7 @@ function RawHTMLInputModal({
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   refreshData: () => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.openaiApiPricing')
   const [data, setData] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -33,7 +33,7 @@ function RawHTMLInputModal({
     }
   ]
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     const { raw } = data
     if (raw.trim() === '') {
       toast.error(t('input.error.fieldEmpty'))

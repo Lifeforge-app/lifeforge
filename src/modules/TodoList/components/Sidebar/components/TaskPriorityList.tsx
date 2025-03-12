@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { APIFallbackComponent, SidebarTitle } from '@lifeforge/ui'
@@ -11,7 +10,7 @@ function TaskPriorityList({
   setSidebarOpen
 }: {
   setSidebarOpen: (value: boolean) => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.todoList')
   const {
     setModifyPriorityModalOpenType: setModifyModalOpenType,

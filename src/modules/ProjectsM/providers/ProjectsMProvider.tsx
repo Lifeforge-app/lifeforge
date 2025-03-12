@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
 
 import {
@@ -70,11 +70,11 @@ interface IProjectsMData {
   }
 }
 
-export const ProjectsMContext = React.createContext<IProjectsMData | undefined>(
+export const ProjectsMContext = createContext<IProjectsMData | undefined>(
   undefined
 )
 
-export default function ProjectsMProvider(): React.ReactElement {
+export default function ProjectsMProvider() {
   const [searchQuery, setSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 

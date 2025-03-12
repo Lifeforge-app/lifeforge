@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { Link } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -11,7 +10,7 @@ import useComponentBg from '@hooks/useComponentBg'
 
 import { useProjectsMContext } from '../providers/ProjectsMProvider'
 
-function EntryItem({ entry }: { entry: IProjectsMEntry }): React.ReactElement {
+function EntryItem({ entry }: { entry: IProjectsMEntry }) {
   const {
     entries: {
       setExistedData,

@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { useNavigate } from 'react-router'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -19,7 +18,7 @@ function AssetItem({
   setSelectedData: React.Dispatch<React.SetStateAction<IWalletAsset | null>>
   setModifyModalOpenType: React.Dispatch<'create' | 'update' | null>
   setDeleteAssetsConfirmationOpen: React.Dispatch<boolean>
-}): React.ReactElement {
+}) {
   const { isAmountHidden } = useWalletContext()
   const navigate = useNavigate()
 

@@ -2,7 +2,7 @@ import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import { cookieParse } from 'pocketbase'
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { type Id, toast } from 'react-toastify'
@@ -40,14 +40,14 @@ function Header({
   view: 'grid' | 'list'
   setView: React.Dispatch<React.SetStateAction<'grid' | 'list'>>
   queryKey: unknown[]
-}): React.ReactElement {
+}) {
   const queryClient = useQueryClient()
   const { t } = useTranslation('modules.guitarTabs')
   const [searchParams, setSearchParams] = useSearchParams()
   const toastId = useRef<Id>(null)
   const { themeColor } = usePersonalization()
 
-  async function uploadFiles(): Promise<void> {
+  async function uploadFiles() {
     const input = document.createElement('input')
     input.type = 'file'
     input.multiple = true
@@ -141,7 +141,7 @@ function Header({
     }
   }
 
-  function updateProgressBar(progress: number): void {
+  function updateProgressBar(progress: number) {
     if (toastId.current === null) {
       toastId.current = toast('Upload in Progress', {
         progress,
@@ -161,7 +161,7 @@ function Header({
     }
   }
 
-  async function downloadAll(): Promise<void> {
+  async function downloadAll() {
     try {
       await fetchAPI('guitar-tabs/entries/download-all')
 

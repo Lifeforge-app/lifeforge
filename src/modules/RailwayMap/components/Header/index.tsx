@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -16,7 +16,7 @@ import LineFilter from './components/LineFilter'
 import SearchBar from './components/SearchBar'
 import ViewTypeSwitcher, { VIEW_TYPES } from './components/ViewTypeSwitcher'
 
-function Header(): React.ReactElement {
+function Header() {
   const { t } = useTranslation('modules.railwayMap')
   const {
     viewType,

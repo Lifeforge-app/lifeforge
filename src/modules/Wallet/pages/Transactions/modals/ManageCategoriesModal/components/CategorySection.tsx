@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -24,7 +23,7 @@ function CategorySection({
   setModifyCategoriesModalOpenType,
   setExistedData,
   setDeleteCategoriesConfirmationOpen
-}: CategorySectionProps): React.ReactElement {
+}: CategorySectionProps) {
   const { t } = useTranslation('modules.wallet')
   const filteredCategories = categories.filter(
     category => category.type === type

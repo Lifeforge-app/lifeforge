@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import {
@@ -19,7 +19,7 @@ import AddToLibraryModal from '../AddToLibraryModal'
 import Details from './components/Details'
 import SearchResultItem from './components/SearchResultItem'
 
-function LibgenModal(): React.ReactElement {
+function LibgenModal() {
   const {
     miscellaneous: { libgenModalOpen: isOpen, setLibgenModalOpen: setOpen }
   } = useBooksLibraryContext()
@@ -36,7 +36,7 @@ function LibgenModal(): React.ReactElement {
   const [viewDetailsFor, setViewDetailsFor] = useState<string | null>(null)
   const [addToLibraryFor, setAddToLibraryFor] = useState<string | null>(null)
 
-  async function fetchBookResults(page: number): Promise<void> {
+  async function fetchBookResults(page: number) {
     setLoading(true)
 
     try {
@@ -61,7 +61,7 @@ function LibgenModal(): React.ReactElement {
     }
   }
 
-  async function searchBooks(): Promise<void> {
+  async function searchBooks() {
     if (loading) return
 
     if (searchQuery.trim() === '') {

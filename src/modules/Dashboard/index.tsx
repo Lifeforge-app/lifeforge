@@ -11,7 +11,7 @@ import {
   Title,
   Tooltip
 } from 'chart.js'
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { MenuItem, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
@@ -31,7 +31,7 @@ ChartJS.register(
   Filler
 )
 
-function Dashboard(): React.ReactElement {
+function Dashboard() {
   const wrapperRef = useRef<HTMLDivElement>(null)
 
   const [canLayoutChange, setCanLayoutChange] = useState(false)

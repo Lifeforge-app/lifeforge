@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router'
 
 import {
@@ -21,7 +21,7 @@ import useFetch from '@hooks/useFetch'
 import Sidebar from './components/Sidebar'
 import { type IFlashcardDeck } from './interfaces/flashcard_interfaces'
 
-export default function Flashcards(): React.ReactElement {
+export default function Flashcards() {
   const { componentBgWithHover } = useComponentBg()
   const [searchQuery, setSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)

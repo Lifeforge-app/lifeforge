@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSearchParams } from 'react-router'
 
 import { MenuItem, SidebarItem } from '@lifeforge/ui'
@@ -13,7 +12,7 @@ function TaskListListItem({
 }: {
   item: ITodoListList
   setSidebarOpen: (value: boolean) => void
-}): React.ReactElement {
+}) {
   const [searchParams, setSearchParams] = useSearchParams()
   const {
     setSelectedList: setSelectedData,

@@ -1,5 +1,4 @@
 import _ from 'lodash'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -14,7 +13,7 @@ function ColumnVisibilityToggle({
 }: {
   visibleColumn: string[]
   setVisibleColumn: React.Dispatch<React.SetStateAction<string[]>>
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.wallet')
   return (
     <>

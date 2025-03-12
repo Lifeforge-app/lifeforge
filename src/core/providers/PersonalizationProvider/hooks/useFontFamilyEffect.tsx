@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { IFontFamily } from '@modules/Personalization/components/FontFamilySelector'
 
-function useFontFamily(fontFamily: string): void {
+function useFontFamily(fontFamily: string) {
   useEffect(() => {
     fetch(
       `https://www.googleapis.com/webfonts/v1/webfonts?family=${fontFamily.replace(

@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
 
 function ModifyCardModal({
@@ -8,7 +6,7 @@ function ModifyCardModal({
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-}): React.ReactElement {
+}) {
   return (
     <ModalWrapper isOpen={openType !== null} minHeight="70vh" minWidth="60vw">
       <ModalHeader
