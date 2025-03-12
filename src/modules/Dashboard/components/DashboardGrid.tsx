@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
-import { useGlobalState } from '@providers/GlobalStateProvider'
 import { usePersonalization } from '@providers/PersonalizationProvider'
+import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
@@ -64,7 +64,7 @@ function DashboardGrid({
   wrapperRef: React.RefObject<HTMLDivElement | null>
   canLayoutChange: boolean
 }): React.ReactElement {
-  const { sidebarExpanded } = useGlobalState()
+  const { sidebarExpanded } = useSidebarState()
   const [width, setWidth] = useState(0)
   const { dashboardLayout: enabledWidgets, setDashboardLayout } =
     usePersonalization()
