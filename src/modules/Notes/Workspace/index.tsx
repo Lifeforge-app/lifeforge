@@ -8,8 +8,10 @@ import {
   APIFallbackComponent,
   DeleteConfirmationModal,
   EmptyStateScreen,
-  GoBackButton
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+  GoBackButton,
+  ModuleHeader,
+  ModuleWrapper
+} from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 

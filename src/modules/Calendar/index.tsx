@@ -6,9 +6,11 @@ import {
   ContentWrapperWithSidebar,
   DeleteConfirmationModal,
   LayoutWithSidebar,
+  ModuleHeader,
+  ModuleWrapper,
   QueryWrapper,
   Scrollbar
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'

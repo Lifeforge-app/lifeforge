@@ -5,8 +5,10 @@ import {
   APIFallbackComponent,
   Button,
   EmptyStateScreen,
+  ModuleHeader,
+  ModuleWrapper,
   Scrollbar
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 import useFetch from '@hooks/useFetch'

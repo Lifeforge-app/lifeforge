@@ -6,10 +6,12 @@ import {
   Button,
   DeleteConfirmationModal,
   FAB,
+  ModuleHeader,
+  ModuleWrapper,
   QueryWrapper,
   SearchInput,
   ViewModeSelector
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import { IMovieEntry } from '@modules/Movies/interfaces/movies_interfaces'
 

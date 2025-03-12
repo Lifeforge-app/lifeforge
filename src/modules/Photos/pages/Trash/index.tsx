@@ -4,7 +4,13 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import PhotoAlbum from 'react-photo-album'
 
-import { APIFallbackComponent, Button, EmptyStateScreen , ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+import {
+  APIFallbackComponent,
+  Button,
+  EmptyStateScreen,
+  ModuleHeader,
+  ModuleWrapper
+} from '@lifeforge/ui'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import { APIFallbackComponent , ModuleWrapper } from '@lifeforge/ui'
+import { APIFallbackComponent, ModuleWrapper } from '@lifeforge/ui'
 
 import { type IProjectsMEntry } from '@modules/ProjectsM/interfaces/projects_m_interfaces'
 

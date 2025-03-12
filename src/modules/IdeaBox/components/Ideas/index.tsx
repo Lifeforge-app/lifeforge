@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router'
 
-import { SearchInput , ModuleWrapper } from '@lifeforge/ui'
+import { ModuleWrapper, SearchInput } from '@lifeforge/ui'
 
 import IdeaBoxProvider, {
   useIdeaBoxContext

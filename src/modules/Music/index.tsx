@@ -5,9 +5,11 @@ import {
   APIFallbackComponent,
   DeleteConfirmationModal,
   EmptyStateScreen,
+  ModuleHeader,
+  ModuleWrapper,
   Scrollbar,
   SearchInput
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import { useMusicContext } from '@modules/Music/providers/MusicProvider'
 

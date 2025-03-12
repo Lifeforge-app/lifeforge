@@ -16,9 +16,11 @@ import {
   DeleteConfirmationModal,
   EmptyStateScreen,
   MenuItem,
+  ModuleHeader,
+  ModuleWrapper,
   Scrollbar,
   SearchInput
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
 

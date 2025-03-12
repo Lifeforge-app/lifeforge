@@ -14,8 +14,9 @@ import {
   GoBackButton,
   HamburgerMenu,
   MenuItem,
+  ModuleWrapper,
   Scrollbar
-, ModuleWrapper } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 

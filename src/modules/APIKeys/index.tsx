@@ -11,9 +11,11 @@ import {
   DeleteConfirmationModal,
   FAB,
   LockedScreen,
+  ModuleHeader,
+  ModuleWrapper,
   OTPScreen,
   QueryWrapper
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

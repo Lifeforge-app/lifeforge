@@ -1,6 +1,10 @@
 import React from 'react'
 
-import { APIFallbackComponent, MissingAPIKeyScreen , ModuleWrapper } from '@lifeforge/ui'
+import {
+  APIFallbackComponent,
+  MissingAPIKeyScreen,
+  ModuleWrapper
+} from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
 import APIEnvironment from './components/APIEnvironment'
 import SystemInfo from './components/SystemInfo'

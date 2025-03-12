@@ -9,8 +9,10 @@ import {
   EmptyStateScreen,
   FAB,
   HamburgerMenuSelectorWrapper,
-  MenuItem
-, ModuleWrapper , ModuleHeader } from '@lifeforge/ui'
+  MenuItem,
+  ModuleHeader,
+  ModuleWrapper
+} from '@lifeforge/ui'
 
 import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
