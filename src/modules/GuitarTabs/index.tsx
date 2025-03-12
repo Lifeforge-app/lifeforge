@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import clsx from 'clsx'
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
@@ -43,7 +43,7 @@ const SORT_TYPE = [
   ['tabler:abc', 'name']
 ]
 
-function GuitarTabs(): React.ReactElement {
+function GuitarTabs() {
   const { t } = useTranslation('modules.guitarTabs')
   const { componentBgWithHover } = useComponentBg()
   const queryClient = useQueryClient()

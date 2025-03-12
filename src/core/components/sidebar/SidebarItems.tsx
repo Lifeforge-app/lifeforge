@@ -1,7 +1,7 @@
 import { useAuth } from '@providers/AuthProvider'
 import { useSidebarState } from '@providers/SidebarStateProvider'
 import _ from 'lodash'
-import React, { Fragment, useMemo } from 'react'
+import { Fragment, useMemo } from 'react'
 
 import {
   EmptyStateScreen,
@@ -11,12 +11,12 @@ import {
   SidebarTitle
 } from '@lifeforge/ui'
 
-import { type IRoutes } from '../../../core/interfaces/routes_interfaces'
-import _ROUTES from '../../../core/routes_config.json'
+import _ROUTES from '../../routes/constants/routes_config.json'
+import { type IRoutes } from '../../routes/interfaces/routes_interfaces'
 
 const ROUTES = _ROUTES as IRoutes[]
 
-function SidebarItems({ query }: { query: string }): React.ReactElement {
+function SidebarItems({ query }: { query: string }) {
   const { userData } = useAuth()
   const { sidebarExpanded, toggleSidebar } = useSidebarState()
   const filteredRoutes = useMemo(

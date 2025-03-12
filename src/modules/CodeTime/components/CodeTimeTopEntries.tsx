@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { QueryWrapper } from '@lifeforge/ui'
@@ -10,11 +10,7 @@ import useComponentBg from '@hooks/useComponentBg'
 
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
-function CodeTimeTopEntries({
-  type
-}: {
-  type: 'languages' | 'projects'
-}): React.ReactElement {
+function CodeTimeTopEntries({ type }: { type: 'languages' | 'projects' }) {
   const { t } = useTranslation('modules.codeTime')
   const { componentBg } = useComponentBg()
   const [lastFor, setLastFor] = useState<'24 hours' | '7 days' | '30 days'>(

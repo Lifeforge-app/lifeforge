@@ -1,4 +1,3 @@
-import React from 'react'
 import { useParams } from 'react-router'
 
 import { APIFallbackComponent, EmptyStateScreen } from '@lifeforge/ui'
@@ -10,7 +9,7 @@ interface RadioData {
   frequency: string
 }
 
-function Radio(): React.ReactElement {
+function Radio() {
   const { airportID } = useParams()
   const [radiosData] = useFetch<RadioData[]>(
     `airports/airport/${airportID}/radios`

@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button } from '@lifeforge/ui'
@@ -19,18 +19,18 @@ function Cleanup({
   setCleanedUpText: React.Dispatch<React.SetStateAction<string>>
   cleanedUpText: string
   masterPassword: string
-}): React.ReactElement {
+}) {
   const [loading, setLoading] = useState(false)
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
-  function updateTextAreaHeight(): void {
+  function updateTextAreaHeight() {
     if (textAreaRef.current !== null) {
       textAreaRef.current.style.height = 'auto'
       textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px'
     }
   }
 
-  async function fetchSummarizedText(): Promise<void> {
+  async function fetchSummarizedText() {
     setCleanedUpText('')
 
     if (rawText === '') {

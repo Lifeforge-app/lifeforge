@@ -6,7 +6,7 @@ import {
 } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { type JSX, useEffect, useState } from 'react'
+import { type JSX, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import {
@@ -38,7 +38,7 @@ const FILTER_TYPE = ['All', 'A', 'AAAA', 'CNAME', 'TXT']
 function DNSRecords(): JSX.Element {
   const [rawRecords, updateRawRecords] =
     useFetch<IDNSRecordEntry[]>('dns-records/list')
-  const [searchQuery, setSearchQuery] = React.useState<string>('')
+  const [searchQuery, setSearchQuery] = useState<string>('')
   const [serial, setSerial] = useState('')
   const [selectedFilter, setSelectedFilter] = useState(FILTER_TYPE[0])
   const [selectedEntries, setSelectedEntries] = useState<number[]>([])
@@ -51,7 +51,7 @@ function DNSRecords(): JSX.Element {
   const [deleteConfirmationModalOpen, setDeleteConfirmationModalOpen] =
     useState<boolean | number>(false)
 
-  async function removeRecord(index: number | number[]): Promise<void> {
+  async function removeRecord(index: number | number[]) {
     if (serial === '') {
       toast.error('Serial not found, try reloading the page')
     }
@@ -84,7 +84,7 @@ function DNSRecords(): JSX.Element {
     }
   }
 
-  function toggleSelected(index: number | 'all'): void {
+  function toggleSelected(index: number | 'all') {
     if (typeof filteredRecords === 'string') return
 
     if (index === 'all') {

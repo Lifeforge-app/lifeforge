@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useParams } from 'react-router'
 import tinycolor from 'tinycolor2'
 
@@ -7,13 +7,7 @@ import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
 
 import { IIdeaBoxTag } from '../../../../../../../interfaces/ideabox_interfaces'
 
-function ItemCount({
-  tag,
-  count
-}: {
-  tag: IIdeaBoxTag
-  count: number
-}): React.ReactElement {
+function ItemCount({ tag, count }: { tag: IIdeaBoxTag; count: number }) {
   const { '*': path } = useParams<{ '*': string }>()
   const { debouncedSearchQuery, selectedTags } = useIdeaBoxContext()
 

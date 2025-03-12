@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { Button, HamburgerMenu } from '@lifeforge/ui'
 
@@ -14,11 +14,7 @@ import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'
 import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
-export default function EntryItem({
-  item
-}: {
-  item: IBooksLibraryEntry
-}): React.ReactElement {
+export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
   const { componentBgWithHover, componentBgLighter } = useComponentBg()
   const {
     categories: { data: categories },
@@ -27,7 +23,7 @@ export default function EntryItem({
 
   const [addToFavouritesLoading, setAddToFavouritesLoading] = useState(false)
 
-  async function addToFavourites(): Promise<void> {
+  async function addToFavourites() {
     setAddToFavouritesLoading(true)
 
     try {

@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import _ from 'lodash'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { QueryWrapper } from '@lifeforge/ui'
@@ -11,7 +10,7 @@ import useComponentBg from '@hooks/useComponentBg'
 
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 
-function CodeTimeStatistics(): React.ReactElement {
+function CodeTimeStatistics() {
   const { t } = useTranslation('modules.codeTime')
   const { componentBg, componentBgLighter } = useComponentBg()
   const statsQuery = useAPIQuery<Record<string, number>>(

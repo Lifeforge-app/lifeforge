@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useDebounce } from '@uidotdev/usehooks'
 import clsx from 'clsx'
-import React from 'react'
 
 import { Button } from '@lifeforge/ui'
 
@@ -10,7 +9,7 @@ import useComponentBg from '@hooks/useComponentBg'
 import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
 import StationCodes from '../../StationCode'
 
-function DetailBox(): React.ReactElement {
+function DetailBox() {
   const { componentBg } = useComponentBg()
   const { selectedStation, setRoutePlannerOpen, setRoutePlannerStart } =
     useRailwayMapContext()

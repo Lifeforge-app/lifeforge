@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -34,7 +34,7 @@ import Header from './components/Header'
 import ModifyItemModal from './components/ModifyItemModal'
 import Sidebar from './components/Sidebar'
 
-function VirtualWardrobeClothes(): React.ReactElement {
+function VirtualWardrobeClothes() {
   const { t } = useTranslation('modules.virtualWardrobe')
   const queryClient = useQueryClient()
   const [searchParams] = useSearchParams()
@@ -71,7 +71,7 @@ function VirtualWardrobeClothes(): React.ReactElement {
     ['virtual-wardrobe', 'session-cart-items']
   )
 
-  async function handleAddToCart(entry: IVirtualWardrobeEntry): Promise<void> {
+  async function handleAddToCart(entry: IVirtualWardrobeEntry) {
     if (sessionCartItemsQuery.data?.some(item => item.id === entry.id)) {
       toast.info('Item already in cart')
       return

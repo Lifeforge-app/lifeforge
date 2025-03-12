@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
@@ -36,7 +35,7 @@ function ImageObject({
   setImagePreviewOpenFor: (
     details: (IPhotoAlbumEntryItem | IPhotosEntry) | null
   ) => void
-}): React.ReactElement {
+}) {
   const { componentBg } = useComponentBg()
   const { ready } = usePhotosContext()
 

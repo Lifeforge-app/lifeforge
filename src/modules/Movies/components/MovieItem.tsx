@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import moment from 'moment'
-import React from 'react'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
@@ -21,7 +20,7 @@ function MovieItem({
   onShowTicket: (id: string) => void
   onDelete: (entry: IMovieEntry) => void
   type: 'grid' | 'list'
-}): React.ReactElement {
+}) {
   const { componentBg } = useComponentBg()
 
   return (

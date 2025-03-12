@@ -1,4 +1,3 @@
-import React from 'react'
 // @ts-expect-error no types available
 import Column from 'react-columns'
 
@@ -9,7 +8,7 @@ import EntryImage from './IdeaEntry/EntryImage'
 import EntryLink from './IdeaEntry/EntryLink'
 import EntryText from './IdeaEntry/EntryText'
 
-function IdeaList({ data }: { data: IIdeaBoxEntry[] }): React.ReactElement {
+function IdeaList({ data }: { data: IIdeaBoxEntry[] }) {
   const { selectedTags } = useIdeaBoxContext()
 
   return (

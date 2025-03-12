@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -18,7 +18,7 @@ import Containers from './components/Containers'
 import ModifyContainerModal from './components/Containers/components/ModifyContainerModal'
 import { type IIdeaBoxContainer } from './interfaces/ideabox_interfaces'
 
-function IdeaBox(): React.ReactElement {
+function IdeaBox() {
   const { t } = useTranslation('modules.ideaBox')
   const query = useQuery<IIdeaBoxContainer[]>({
     queryKey: ['idea-box', 'containers'],

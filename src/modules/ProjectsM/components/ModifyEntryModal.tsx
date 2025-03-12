@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
 
 import { ErrorScreen, FormModal, LoadingScreen } from '@lifeforge/ui'
@@ -8,7 +8,7 @@ import fetchAPI from '@utils/fetchAPI'
 
 import { useProjectsMContext } from '../providers/ProjectsMProvider'
 
-function ModifyEntryModal(): React.ReactElement {
+function ModifyEntryModal() {
   const {
     entries: {
       refreshData: refreshEntries,
@@ -154,7 +154,7 @@ function ModifyEntryModal(): React.ReactElement {
     return <LoadingScreen />
   }
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     const { name, icon, color, category, status, visibility } = data
     if (
       name.trim().length === 0 ||

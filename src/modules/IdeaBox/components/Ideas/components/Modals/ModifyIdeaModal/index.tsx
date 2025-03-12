@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -15,7 +15,7 @@ import { IIdeaBoxEntry } from '../../../../../interfaces/ideabox_interfaces'
 import IdeaContentInput from './IdeaContentInput'
 import ModalHeader from './components/ModalHeader'
 
-function ModifyIdeaModal(): React.ReactElement {
+function ModifyIdeaModal() {
   const {
     modifyIdeaModalOpenType: openType,
     setModifyIdeaModalOpenType: setOpenType,
@@ -57,13 +57,11 @@ function ModifyIdeaModal(): React.ReactElement {
     onDrop
   })
 
-  function updateIdeaContent(
-    event: React.FormEvent<HTMLTextAreaElement>
-  ): void {
+  function updateIdeaContent(event: React.FormEvent<HTMLTextAreaElement>) {
     setIdeaContent(event.currentTarget.value)
   }
 
-  function updateIdeaLink(event: React.ChangeEvent<HTMLInputElement>): void {
+  function updateIdeaLink(event: React.ChangeEvent<HTMLInputElement>) {
     setIdeaLink(event.target.value)
   }
 
@@ -127,7 +125,7 @@ function ModifyIdeaModal(): React.ReactElement {
     }
   }, [debouncedImageLink])
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     switch (innerTypeOfModifyIdea) {
       case 'text':
         if (ideaContent.trim().length === 0) {
@@ -220,7 +218,7 @@ function ModifyIdeaModal(): React.ReactElement {
     }
   }
 
-  function onPasteImage(event: ClipboardEvent): void {
+  function onPasteImage(event: ClipboardEvent) {
     const items = event.clipboardData?.items
 
     let pastedImage: DataTransferItem | undefined

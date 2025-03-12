@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router'
 
 import { APIFallbackComponent, Button, DashboardItem } from '@lifeforge/ui'
@@ -10,7 +10,7 @@ import useFetch from '@hooks/useFetch'
 
 import { type IWalletAsset } from '../../Wallet/interfaces/wallet_interfaces'
 
-export default function AssetsBalance(): React.ReactElement {
+export default function AssetsBalance() {
   const { componentBgLighterWithHover } = useComponentBg()
   const [assets] = useFetch<IWalletAsset[]>('wallet/assets')
   const [showBalance, setShowBalance] = useState(false)

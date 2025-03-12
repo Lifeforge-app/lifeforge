@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -25,7 +25,7 @@ interface FlightData {
   status: string
 }
 
-function Flights({ IATA }: { IATA: string }): React.ReactElement {
+function Flights({ IATA }: { IATA: string }) {
   const { componentBg } = useComponentBg()
   const [nextPageNum, setPageNum] = useState([-1, 1])
   const location = useLocation()
@@ -39,7 +39,7 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
   const [nextPageLoading, setNextPageLoading] = useState(false)
   const navigate = useNavigate()
 
-  async function fetchPreviousPage(): Promise<void> {
+  async function fetchPreviousPage() {
     setPreviousPageLoading(true)
 
     try {
@@ -65,7 +65,7 @@ function Flights({ IATA }: { IATA: string }): React.ReactElement {
     }
   }
 
-  async function fetchNextPage(): Promise<void> {
+  async function fetchNextPage() {
     setNextPageLoading(true)
 
     try {

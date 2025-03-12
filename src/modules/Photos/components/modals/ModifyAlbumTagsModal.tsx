@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -25,14 +25,14 @@ function ModifyAlbumTagsModal({
   setOpenType: (value: 'create' | 'rename' | false) => void
   targetTag?: IPhotoAlbumTag
   refreshTagData?: () => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.photos')
   const { setAlbumTagList } = usePhotosContext()
   const [tagName, setTagName] = useState('')
   const [loading, setLoading] = useState(false)
   const ref = useRef<HTMLInputElement>(null)
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     if (tagName.trim().length === 0) {
       toast.error(t('input.error.fieldEmpty'))
       return

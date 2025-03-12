@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
-import React from 'react'
 import { Tooltip } from 'react-tooltip'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -24,7 +23,7 @@ function TransactionListItem({
   setReceiptModalOpen: React.Dispatch<boolean>
   setReceiptToView: React.Dispatch<string>
   setSelectedData: React.Dispatch<IWalletTransaction | null>
-}): React.ReactElement {
+}) {
   const { categories, ledgers, assets } = useWalletContext()
 
   if (

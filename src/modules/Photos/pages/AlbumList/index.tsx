@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/no-nested-conditional */
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
 import {
@@ -29,7 +29,7 @@ import {
 import AlbumItem from './components/AlbumItem'
 import AlbumListHeader from './components/AlbumListHeader'
 
-function PhotosAlbumList(): React.ReactElement {
+function PhotosAlbumList() {
   const { albumList, refreshAlbumList, refreshPhotos, setSidebarOpen } =
     usePhotosContext()
   const [selectedAlbum, setSelectedAlbum] = useState<IPhotosAlbum | null>(null)

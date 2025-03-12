@@ -1,17 +1,12 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import prettyBytes from 'pretty-bytes'
-import React from 'react'
 
 import { VIDEO_RESOLUTIONS } from '@modules/YoutubeVideos/constants/video_res'
 
 import { type IYoutubeVideosStorageEntry } from '../../../interfaces/youtube_video_storage_interfaces'
 
-function VideoDetails({
-  video
-}: {
-  video: IYoutubeVideosStorageEntry
-}): React.ReactElement {
+function VideoDetails({ video }: { video: IYoutubeVideosStorageEntry }) {
   return (
     <div className="mt-6 flex flex-col justify-between md:mt-0 md:pl-4 md:pr-12">
       <h3 className="text-xl font-semibold">{video.title}</h3>

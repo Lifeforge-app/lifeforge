@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 
 import {
   type ITodoListEntry,
@@ -13,7 +12,7 @@ function TaskCompletionCheckbox({
 }: {
   entry: ITodoListEntry | ITodoSubtask
   toggleTaskCompletion: (id: string) => void
-}): React.ReactElement {
+}) {
   return (
     <button
       className={clsx(

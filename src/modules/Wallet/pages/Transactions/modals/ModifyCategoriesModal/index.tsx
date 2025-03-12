@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -34,7 +34,7 @@ function ModifyCategoriesModal({
   >
   existedData: IWalletCategory | null
   setExistedData: React.Dispatch<React.SetStateAction<IWalletCategory | null>>
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.wallet')
   const { refreshCategories } = useWalletContext()
   const [categoryType, setCategoryType] = useState<'income' | 'expenses'>(
@@ -65,7 +65,7 @@ function ModifyCategoriesModal({
     }
   }, [openType, existedData])
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     if (
       categoryName.trim().length === 0 ||
       !categoryColor ||

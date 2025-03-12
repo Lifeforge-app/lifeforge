@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 const COLORS = ['bg-slate', 'bg-gray', 'bg-zinc', 'bg-neutral', 'bg-stone']
@@ -11,7 +10,7 @@ function DefaultBgTempSelector({
 }: {
   bgTemp: string
   setBgTemp: (value: string) => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.personalization')
 
   return (

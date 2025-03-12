@@ -1,5 +1,5 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { createContext, useContext, useMemo, useState } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
 
 import { IPasswordEntry } from '@modules/Passwords/interfaces/password_interfaces'
@@ -39,7 +39,7 @@ export const PasswordsContext = createContext<IPasswordsData | undefined>(
   undefined
 )
 
-export default function PasswordsProvider(): React.ReactElement {
+export default function PasswordsProvider() {
   const [otpSuccess, setOtpSuccess] = useState(false)
   const [masterPassword, setMasterPassword] = useState('')
   const [modifyPasswordModalOpenType, setModifyPasswordModalOpenType] =

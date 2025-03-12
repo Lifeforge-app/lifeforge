@@ -1,11 +1,10 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { HamburgerMenuSelectorWrapper, MenuItem } from '@lifeforge/ui'
 
 import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
 
-function LineFilter(): React.ReactElement {
+function LineFilter() {
   const { lines, filteredLines, setFilteredLines } = useRailwayMapContext()
   const { t } = useTranslation('modules.railwayMap')
 

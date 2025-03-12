@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Button, DashboardItem, EmptyStateScreen } from '@lifeforge/ui'
@@ -9,7 +9,7 @@ import { useMusicContext } from '@modules/Music/providers/MusicProvider'
 
 import ControlButtons from '../../Music/components/Bottombar/components/ControlButtons'
 
-export default function MusicPlayer(): React.ReactElement {
+export default function MusicPlayer() {
   const { currentMusic, isPlaying } = useMusicContext()
   const navigate = useNavigate()
   const ref = useRef<HTMLDivElement>(null)

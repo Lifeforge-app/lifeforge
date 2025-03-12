@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation, useNavigate } from 'react-router'
 
@@ -14,7 +13,7 @@ import {
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
-function PhotosSidebar(): React.ReactElement {
+function PhotosSidebar() {
   const { t } = useTranslation('modules.photos')
   const {
     photos,

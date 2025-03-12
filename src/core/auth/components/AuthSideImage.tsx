@@ -1,7 +1,6 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-function AuthSideImage(): React.ReactElement {
+function AuthSideImage() {
   const { t } = useTranslation('common.auth')
 
   return (

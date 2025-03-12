@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSearchParams } from 'react-router'
 
 import { APIFallbackComponent, SidebarItem } from '@lifeforge/ui'
@@ -9,7 +8,7 @@ function TaskStatusList({
   setSidebarOpen
 }: {
   setSidebarOpen: (value: boolean) => void
-}): React.ReactElement {
+}) {
   const [searchParams, setSearchParams] = useSearchParams()
   const { statusCounter } = useTodoListContext()
 

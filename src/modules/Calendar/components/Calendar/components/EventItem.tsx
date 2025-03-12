@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { type Loadable } from '@interfaces/common'
 
 import {
@@ -19,7 +17,7 @@ export default function EventItem({
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedData: React.Dispatch<React.SetStateAction<ICalendarEvent | null>>
-}): React.ReactElement {
+}) {
   return (
     <button
       className="rbc-event bg-bg-100 dark:bg-bg-800 flex-row! flex items-center gap-2 rounded-md"

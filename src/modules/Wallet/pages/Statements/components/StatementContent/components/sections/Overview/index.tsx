@@ -1,19 +1,13 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
 
 import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
-function Overview({
-  month,
-  year
-}: {
-  month: number
-  year: number
-}): React.ReactElement {
+function Overview({ month, year }: { month: number; year: number }) {
   const { transactions, assets, categories } = useWalletContext()
   const filteredTransactions = useMemo(() => {
     if (typeof transactions === 'string') return []

@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/empty-string-repetition */
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { TextInput } from '@lifeforge/ui'
@@ -25,7 +25,7 @@ function VideoSection({
 }: {
   isOpen: boolean
   setIsVideoDownloading: (value: boolean) => void
-}): React.ReactElement {
+}) {
   const [videoUrl, setVideoUrl] = useState<string>('')
   const debouncedVideoUrl = useDebounce(videoUrl, 500)
   const [videoInfo] = useFetch<IYoutubeVideoInfo>(
@@ -37,7 +37,7 @@ function VideoSection({
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
 
-  function downloadVideo(): void {
+  function downloadVideo() {
     setLoading(true)
     setProgress(0)
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -27,7 +27,7 @@ function Header({
   needsProgressCheck: boolean
   setNeedsProgressCheck: (value: boolean) => void
   isAddVideosModalOpen: boolean
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.youtubeVideos')
   const [isDownloadProcessModalOpen, setIsDownloadProcessModalOpen] =
     useState(false)
@@ -43,7 +43,7 @@ function Header({
   >({})
   const [isFirstTime, setIsFirstTime] = useState(true)
 
-  async function checkProgress(): Promise<void> {
+  async function checkProgress() {
     if (!needsProgressCheck && !isFirstTime) return
     setIsFirstTime(false)
 

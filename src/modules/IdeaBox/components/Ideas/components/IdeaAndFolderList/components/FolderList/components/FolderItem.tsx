@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
-import React from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { Link, useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -47,7 +46,7 @@ function getStyle({
   }
 }
 
-function FolderItem({ folder }: FolderItemProps): React.ReactElement {
+function FolderItem({ folder }: FolderItemProps) {
   const {
     setModifyFolderModalOpenType,
     setDeleteFolderConfirmationModalOpen,
@@ -88,7 +87,7 @@ function FolderItem({ folder }: FolderItemProps): React.ReactElement {
   }: {
     targetId: string
     type: 'idea' | 'folder'
-  }): Promise<void> => {
+  }) => {
     if (type === 'folder' && targetId === folder.id) return
 
     try {
@@ -105,7 +104,7 @@ function FolderItem({ folder }: FolderItemProps): React.ReactElement {
     }
   }
 
-  const removeFromFolder = async (): Promise<void> => {
+  const removeFromFolder = async () => {
     try {
       await fetchAPI(`idea-box/folders/move/${folder.id}`, {
         method: 'DELETE'

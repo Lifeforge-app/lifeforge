@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import {
   APIFallbackComponent,
@@ -26,7 +26,7 @@ function hasBatch(prices: any[]): boolean {
   return prices.some(e => Object.keys(e).includes('batch'))
 }
 
-function OpenaiApiPricing(): React.ReactElement {
+function OpenaiApiPricing() {
   const [data, refreshData] =
     useFetch<Record<string, any>>('openai-api-pricing')
   const [isInputRawHTMLModalOpen, setIsInputRawHTMLModalOpen] = useState(false)

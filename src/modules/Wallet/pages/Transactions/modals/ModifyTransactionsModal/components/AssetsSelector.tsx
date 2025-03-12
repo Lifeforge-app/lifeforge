@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 import {
   ListboxNullOption,
@@ -15,7 +14,7 @@ function AssetsSelector({
 }: {
   transactionAsset: string | null
   setTransactionAsset: React.Dispatch<React.SetStateAction<string | null>>
-}): React.ReactElement {
+}) {
   const { assets } = useWalletContext()
 
   if (assets === 'loading') {

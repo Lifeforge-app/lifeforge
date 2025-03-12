@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { useReactToPrint } from 'react-to-print'
 
 import {
@@ -13,7 +13,7 @@ import useFetch from '@hooks/useFetch'
 import Board from './components/Board'
 import { type SudokuBoard } from './interfaces/sudoku_interfaces'
 
-function Sudoku(): React.ReactElement {
+function Sudoku() {
   const [data, refreshData] = useFetch<SudokuBoard[]>('sudoku/evil')
   const boardRef = useRef<HTMLDivElement>(null)
   const reactToPrintFn = useReactToPrint({ contentRef: boardRef })

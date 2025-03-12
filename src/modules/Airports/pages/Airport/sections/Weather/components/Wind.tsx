@@ -1,11 +1,10 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 
 import { IAirportMETARData } from '..'
 import WidgetWrapper from './WidgetWrapper'
 
-function Wind({ data }: { data: IAirportMETARData }): React.ReactElement {
+function Wind({ data }: { data: IAirportMETARData }) {
   return (
     <WidgetWrapper>
       <h1 className="text-bg-500 mb-2 flex items-center gap-2 text-xl font-semibold">

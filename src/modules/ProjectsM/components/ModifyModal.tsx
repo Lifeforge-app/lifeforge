@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import React, { useEffect, useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -14,7 +14,7 @@ function ModifyModal({
   stuff
 }: {
   stuff: 'categories' | 'technologies' | 'visibilities' | 'statuses'
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.projectsM')
   const {
     modifyDataModalOpenType: openType,
@@ -77,7 +77,7 @@ function ModifyModal({
     }
   }, [openType, existedData])
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     const { name, icon, color } = data
     if (
       name.trim().length === 0 ||

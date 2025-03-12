@@ -1,12 +1,11 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 
 import { GoBackButton, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
 
-function ContainerHeader(): React.ReactElement {
+function ContainerHeader() {
   const {
     pathDetails,
     pathDetailsLoading,

@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { ImagePickerModal, ModalHeader, ModalWrapper } from '@lifeforge/ui'
@@ -27,7 +27,7 @@ function ModifyItemModal({
   refreshEntries: () => void
   existedData: IVirtualWardrobeEntry | null
   queryKey: unknown[]
-}): React.ReactElement {
+}) {
   const queryClient = useQueryClient()
   const [step, setStep] = useState<number>(1)
   const [frontImage, setFrontImage] = useState<File | null>(null)
@@ -52,12 +52,12 @@ function ModifyItemModal({
   const [submitButtonLoading, setSubmitButtonLoading] = useState<boolean>(false)
 
   function handleChange(field: keyof IVirtualWardrobeFormState) {
-    return (value: string | string[]): void => {
+    return (value: string | string[]) => {
       setFormState({ ...formState, [field]: value })
     }
   }
 
-  async function onSubmit(): Promise<void> {
+  async function onSubmit() {
     if (
       (['name', 'category', 'subcategory', 'size', 'colors'] as const).some(
         key =>

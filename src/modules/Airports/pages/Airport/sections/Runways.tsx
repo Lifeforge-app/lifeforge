@@ -1,10 +1,8 @@
-import React from 'react'
-
 import { APIFallbackComponent, EmptyStateScreen } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 
-function Runways({ code }: { code: string }): React.ReactElement {
+function Runways({ code }: { code: string }) {
   const [runways] = useFetch<
     Array<{
       name: string

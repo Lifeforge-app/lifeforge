@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import humanNumber from 'human-number'
 import moment from 'moment'
-import React from 'react'
 
 import IconButton from '../../../../../../Music/components/Bottombar/components/IconButton'
 import { type IYoutubePlaylistVideoEntry } from '../../../../../interfaces/youtube_video_storage_interfaces'
@@ -16,7 +15,7 @@ function ProgressOrButton({
   progress: number
   video: IYoutubePlaylistVideoEntry
   downloadVideo: (metadata: IYoutubePlaylistVideoEntry) => void
-}): React.ReactElement {
+}) {
   switch (status) {
     case 'in_progress':
       return (
@@ -69,7 +68,7 @@ function PlaylistVideoEntry({
   downloadVideo: (metadata: IYoutubePlaylistVideoEntry) => void
   status: 'completed' | 'failed' | 'in_progress' | null
   progress: number
-}): React.ReactElement {
+}) {
   return (
     <div key={video.id} className="flex items-center justify-between gap-8">
       <div className="flex space-x-2">

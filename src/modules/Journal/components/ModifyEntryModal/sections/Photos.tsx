@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, EmptyStateScreen } from '@lifeforge/ui'
@@ -26,10 +25,8 @@ function Photos({
   >
   openType: 'create' | 'update' | null
   originalPhotosLength: number
-}): React.ReactElement {
-  async function uploadPhotos(
-    e: React.ChangeEvent<HTMLInputElement>
-  ): Promise<void> {
+}) {
+  async function uploadPhotos(e: React.ChangeEvent<HTMLInputElement>) {
     const files = e.target.files
     if (files === null) {
       return
@@ -63,7 +60,7 @@ function Photos({
     setPhotos([...photos, ...final])
   }
 
-  function onUploadClick(): void {
+  function onUploadClick() {
     if (photos.length >= 50) {
       toast.error('You can only upload up to 50 photos')
       return

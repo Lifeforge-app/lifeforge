@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
@@ -10,7 +10,7 @@ import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-function TransactionsCountCard(): React.ReactElement {
+function TransactionsCountCard() {
   const { componentBgLighterWithHover } = useComponentBg()
   const { transactions, isAmountHidden } = useWalletContext()
   const { t } = useTranslation('modules.wallet')

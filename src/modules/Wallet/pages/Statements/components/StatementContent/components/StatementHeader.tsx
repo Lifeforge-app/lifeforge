@@ -1,14 +1,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
-import React from 'react'
 
-function StatementHeader({
-  month,
-  year
-}: {
-  month: number
-  year: number
-}): React.ReactElement {
+function StatementHeader({ month, year }: { month: number; year: number }) {
   return (
     <>
       <h1 className="mb-8 hidden items-center gap-2 text-4xl font-medium print:flex">

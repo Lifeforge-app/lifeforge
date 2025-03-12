@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-nested-functions */
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { APIFallbackComponent, EmptyStateScreen } from '@lifeforge/ui'
 
@@ -8,7 +8,7 @@ import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 import BottomBar from '../../../components/BottomBar'
 import DateGroup from './DateGroup'
 
-function Gallery(): React.ReactElement {
+function Gallery() {
   const { photos, selectedPhotos, setSelectedPhotos } = usePhotosContext()
 
   useEffect(() => {

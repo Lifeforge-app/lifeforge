@@ -1,9 +1,8 @@
-import React from 'react'
 import { Link } from 'react-router'
 
 import { type INotesEntry } from '../../../../../../interfaces/notes_interfaces'
 
-function EntryButton({ entry }: { entry: INotesEntry }): React.ReactElement {
+function EntryButton({ entry }: { entry: INotesEntry }) {
   return entry.type === 'folder' ? (
     <Link
       className="hover:bg-bg-100 dark:hover:bg-bg-900 absolute left-0 top-0 size-full rounded-lg transition-all"

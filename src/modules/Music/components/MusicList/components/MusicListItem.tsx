@@ -1,5 +1,4 @@
 import moment from 'moment'
-import React from 'react'
 
 import { type IMusicEntry } from '../../../interfaces/music_interfaces'
 import PlayStateIndicator from './components/PlayStateIndicator'
@@ -11,7 +10,7 @@ function formatDuration(duration: string): string {
     .format(+duration >= 3600 ? 'HH:mm:ss' : 'mm:ss')
 }
 
-function MusicListItem({ music }: { music: IMusicEntry }): React.ReactElement {
+function MusicListItem({ music }: { music: IMusicEntry }) {
   return (
     <div className="flex w-full min-w-0 items-center py-2">
       <div className="flex w-full min-w-0 items-center gap-2 sm:w-7/12 sm:shrink-0 lg:w-5/12">

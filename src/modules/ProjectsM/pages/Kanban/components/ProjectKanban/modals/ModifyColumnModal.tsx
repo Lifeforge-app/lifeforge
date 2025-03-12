@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -32,7 +32,7 @@ function ModifyColumnModal({
     React.SetStateAction<IProjectsMKanbanColumn | null>
   >
   refreshColumns: () => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.projectsM')
   const { id } = useParams()
   const [columnName, setColumnName] = useState('')
@@ -58,7 +58,7 @@ function ModifyColumnModal({
     }
   }, [openType, existedData])
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     if (
       columnName.trim().length === 0 ||
       !columnColor ||

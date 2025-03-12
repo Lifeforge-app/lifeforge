@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 
 const RED = 0xef4444
@@ -19,7 +19,7 @@ const COLORS = {
   '-': GRAY
 }
 
-function Cube({ pattern }: { pattern: string }): React.ReactElement {
+function Cube({ pattern }: { pattern: string }) {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

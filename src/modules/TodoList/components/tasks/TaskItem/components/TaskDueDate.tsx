@@ -1,10 +1,9 @@
 import clsx from 'clsx'
 import moment from 'moment'
-import React from 'react'
 
 import { type ITodoListEntry } from '../../../../interfaces/todo_list_interfaces'
 
-function TaskDueDate({ entry }: { entry: ITodoListEntry }): React.ReactElement {
+function TaskDueDate({ entry }: { entry: ITodoListEntry }) {
   return (
     <>
       {entry.done && entry.completed_at !== '' ? (

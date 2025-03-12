@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/no-nested-functions */
 /* eslint-disable sonarjs/no-nested-conditional */
 import { cookieParse } from 'pocketbase'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -9,7 +9,7 @@ import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { usePhotosContext } from '@modules/Photos/providers/PhotosProvider'
 
-function GalleryHeader(): React.ReactElement {
+function GalleryHeader() {
   const { t } = useTranslation('modules.photos')
   const {
     refreshPhotos,
@@ -27,7 +27,7 @@ function GalleryHeader(): React.ReactElement {
   } | null>(null)
   const [isFirstLoad, setIsFirstLoad] = useState(true)
 
-  async function importFiles(): Promise<void> {
+  async function importFiles() {
     setFileImportLoading(true)
     setProgress(null)
 

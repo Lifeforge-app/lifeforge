@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
-import React from 'react'
 
 import { SearchInput } from '@lifeforge/ui'
 
@@ -11,7 +10,7 @@ function SidebarHeader({
 }: {
   searchQuery: string
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
-}): React.ReactElement {
+}) {
   const { sidebarExpanded, toggleSidebar } = useSidebarState()
 
   return (

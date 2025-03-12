@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { APIFallbackComponent, GoBackButton } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
@@ -27,7 +25,7 @@ function Details({
   id: string
   onClose: () => void
   setAddToLibraryFor: (id: string) => void
-}): React.ReactElement {
+}) {
   const [book] = useFetch<BookDetailProps>(
     `books-library/libgen/details/${id}`,
     Boolean(id)

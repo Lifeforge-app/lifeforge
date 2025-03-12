@@ -1,6 +1,5 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import moment from 'moment'
-import React from 'react'
 
 import { type Loadable } from '@interfaces/common'
 
@@ -20,7 +19,7 @@ function MiniCalendarContent({
   currentYear: number
   events: ICalendarEvent[]
   categories: Loadable<ICalendarCategory[]>
-}): React.ReactElement {
+}) {
   const { language } = usePersonalization()
 
   return (

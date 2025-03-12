@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { Button, ImageAndFileInput } from '@lifeforge/ui'
 
 function UploadPhotoSection({
@@ -26,7 +24,7 @@ function UploadPhotoSection({
   backPreview: string | null
   setBackPreview: (value: string | null) => void
   setOpenImagePickerFor: (value: 'front' | 'back') => void
-}): React.ReactElement {
+}) {
   return (
     <>
       <div className="mt-6 flex gap-4">

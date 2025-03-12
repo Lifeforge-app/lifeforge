@@ -1,7 +1,6 @@
 import moment from 'moment'
-import React from 'react'
 
-function DateColumn({ date }: { date: string }): React.ReactElement {
+function DateColumn({ date }: { date: string }) {
   return (
     <td className="whitespace-nowrap p-2 text-center">
       {moment(date).format('MMM DD, YYYY')}

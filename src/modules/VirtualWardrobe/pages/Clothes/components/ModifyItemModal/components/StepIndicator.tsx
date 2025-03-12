@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import _ from 'lodash'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 function StepIndicator({
@@ -10,7 +9,7 @@ function StepIndicator({
 }: {
   step: number
   openType: 'create' | 'update' | null
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.virtualWardrobe')
 
   return (

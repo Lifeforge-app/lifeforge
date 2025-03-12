@@ -1,17 +1,13 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { toast } from 'react-toastify'
 
 import { useMusicContext } from '@modules/Music/providers/MusicProvider'
 
 import { IMusicEntry } from '../../../../interfaces/music_interfaces'
 
-function PlayStateIndicator({
-  music
-}: {
-  music: IMusicEntry
-}): React.ReactElement {
+function PlayStateIndicator({ music }: { music: IMusicEntry }) {
   const { currentMusic, isPlaying, togglePlay } = useMusicContext()
 
   const stateIcon = useMemo(() => {

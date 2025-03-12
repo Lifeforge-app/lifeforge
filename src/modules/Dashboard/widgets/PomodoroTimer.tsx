@@ -1,8 +1,6 @@
-import React from 'react'
-
 import { DashboardItem } from '@lifeforge/ui'
 
-export default function PomodoroTimer(): React.ReactElement {
+export default function PomodoroTimer() {
   return (
     <DashboardItem
       icon="tabler:clock-bolt"

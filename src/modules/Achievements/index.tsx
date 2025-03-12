@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -19,7 +19,7 @@ import DifficultySelector from './components/DifficultySelector'
 import EntryItem from './components/EntryItem'
 import { type IAchievementEntry } from './interfaces/achievements_interfaces'
 
-function Achievements(): React.ReactElement {
+function Achievements() {
   const { t } = useTranslation('modules.achievements')
   const [selectedDifficulty, setSelectedDifficulty] =
     useState<IAchievementEntry['difficulty']>('impossible')

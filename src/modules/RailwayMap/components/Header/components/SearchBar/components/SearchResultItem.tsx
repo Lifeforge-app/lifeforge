@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
-import React from 'react'
 
 import { IRailwayMapStation } from '@modules/RailwayMap/interfaces/railway_map_interfaces'
 
@@ -7,11 +6,7 @@ import { useRailwayMapContext } from '../../../../../providers/RailwayMapProvide
 import { centerMapOnStation } from '../../../../Maps/maps/RouteMap/utils/renderUtils'
 import StationCodes from '../../../../StationCode'
 
-function SearchResultItem({
-  station
-}: {
-  station: IRailwayMapStation
-}): React.ReactElement {
+function SearchResultItem({ station }: { station: IRailwayMapStation }) {
   const {
     viewType,
     routeMapSVGRef,

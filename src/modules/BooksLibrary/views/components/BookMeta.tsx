@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import prettyBytes from 'pretty-bytes'
-import React from 'react'
 
 import { type IBooksLibraryEntry } from '../../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'
@@ -12,7 +11,7 @@ function BookMeta({
 }: {
   item: IBooksLibraryEntry | Record<string, any>
   isGridView?: boolean
-}): React.ReactElement {
+}) {
   const {
     languages: { data: languages }
   } = useBooksLibraryContext()

@@ -1,5 +1,5 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -25,7 +25,7 @@ function ModifyFolderModal({
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   updateNotesEntries: () => void
   existedData: INotesEntry | null
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.notes')
   const {
     workspace,
@@ -41,7 +41,7 @@ function ModifyFolderModal({
   const [folderName, setFolderName] = useState('')
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     if (folderName.trim().length === 0) {
       toast.error(t('input.error.fieldEmpty'))
       return

@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
-import React from 'react'
 import { useDrag } from 'react-dnd'
 import Zoom from 'react-medium-image-zoom'
 
@@ -13,7 +12,7 @@ import EntryContextMenu from './components/EntryContextMenu'
 import InFolderChip from './components/InFolderChip'
 import TagChip from './components/TagChip'
 
-function EntryImage({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
+function EntryImage({ entry }: { entry: IIdeaBoxEntry }) {
   const { componentBg } = useComponentBg()
   const [{ opacity, isDragging }, dragRef] = useDrag(
     () => ({

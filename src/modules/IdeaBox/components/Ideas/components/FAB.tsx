@@ -1,14 +1,13 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
 
-function FAB(): React.ReactElement {
+function FAB() {
   const { t } = useTranslation('modules.ideaBox')
   const {
     setTypeOfModifyIdea,

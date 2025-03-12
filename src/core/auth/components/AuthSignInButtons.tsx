@@ -1,5 +1,4 @@
 import { useAuth } from '@providers/AuthProvider'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -14,12 +13,12 @@ function AuthSignInButton({
   password: string
   loading: boolean
   signIn: () => void
-}): React.ReactElement {
+}) {
   const { auth } = useAuth()
   const { t } = useTranslation('common.auth')
   const [searchParams] = useSearchParams()
 
-  async function signInWithProvider(providerName: string): Promise<void> {
+  async function signInWithProvider(providerName: string) {
     const provider = await fetch(
       `${
         import.meta.env.VITE_API_HOST

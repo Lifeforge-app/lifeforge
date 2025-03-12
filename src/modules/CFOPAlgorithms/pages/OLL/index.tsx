@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 import { useNavigate } from 'react-router'
 
 import { GoBackButton, ModuleWrapper } from '@lifeforge/ui'
@@ -9,7 +8,7 @@ import useComponentBg from '@hooks/useComponentBg'
 import { algsetAlgs, algsetScrambles } from '../../algorithms/OLL'
 import { DEFAULT_CUBE, applyMoves } from '../../scripts/genCube'
 
-function CFOPF2L(): React.ReactElement {
+function CFOPF2L() {
   const navigate = useNavigate()
   const { componentBg } = useComponentBg()
 

@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 
 function Header({
   data,
@@ -8,7 +7,7 @@ function Header({
 }: {
   data: any
   selectedNOTAMData: any
-}): React.ReactElement {
+}) {
   return (
     <div className="flex-between flex w-full">
       <h1 className="flex items-center gap-2 text-2xl font-semibold">

@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 
 import StatementEndedText from '../StatementEndedText'
 import StatementHeader from './components/StatementHeader'
@@ -16,7 +15,7 @@ function StatementContent({
   showStatement: boolean
   month: number
   year: number
-}): React.ReactElement {
+}) {
   return (
     <div
       ref={contentRef}

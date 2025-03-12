@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
-import React from 'react'
 
 import { Button } from '@lifeforge/ui'
 
@@ -17,7 +16,7 @@ function SearchResultItem({
   book: Record<string, any>
   setViewDetailsFor: (id: string) => void
   setAddToLibraryFor: (id: string) => void
-}): React.ReactElement {
+}) {
   const { componentBgLighterWithHover } = useComponentBg()
 
   return (

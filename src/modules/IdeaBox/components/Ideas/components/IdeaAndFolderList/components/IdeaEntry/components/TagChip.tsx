@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import tinycolor from 'tinycolor2'
 
 import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
 
-function TagChip({ text }: { text: string }): React.ReactElement {
+function TagChip({ text }: { text: string }) {
   const { selectedTags, tags } = useIdeaBoxContext()
   const metadata = useMemo(
     () =>

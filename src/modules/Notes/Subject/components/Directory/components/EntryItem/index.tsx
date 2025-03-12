@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 import FILE_ICONS from '@modules/Notes/constants/file_icons'
 
@@ -21,7 +20,7 @@ function EntryItem({
   >
   setExistedData: (data: any) => void
   setDeleteFolderConfirmationModalOpen: (state: boolean) => void
-}): React.ReactElement {
+}) {
   return (
     <li
       key={entry.id}

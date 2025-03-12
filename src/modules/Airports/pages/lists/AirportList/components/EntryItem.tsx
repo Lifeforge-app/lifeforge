@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { Link, useParams } from 'react-router'
 
 import useComponentBg from '@hooks/useComponentBg'
@@ -25,7 +24,7 @@ function EntryItem({
   name: string
   location: string
   type: string
-}): React.ReactElement {
+}) {
   const { componentBgWithHover } = useComponentBg()
 
   const { continentID, countryID, regionID } = useParams<{

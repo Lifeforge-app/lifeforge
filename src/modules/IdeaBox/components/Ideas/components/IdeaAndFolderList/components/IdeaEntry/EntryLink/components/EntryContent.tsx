@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
-import React, { memo } from 'react'
+import { memo } from 'react'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -8,7 +8,7 @@ import fetchAPI from '@utils/fetchAPI'
 
 import { type IIdeaBoxEntry } from '../../../../../../../../interfaces/ideabox_interfaces'
 
-function EntryContent({ entry }: { entry: IIdeaBoxEntry }): React.ReactElement {
+function EntryContent({ entry }: { entry: IIdeaBoxEntry }) {
   const { componentBgLighterWithHover } = useComponentBg()
   const OGQuery = useQuery<Record<string, any>>({
     queryKey: ['idea-box', 'og', entry.id],

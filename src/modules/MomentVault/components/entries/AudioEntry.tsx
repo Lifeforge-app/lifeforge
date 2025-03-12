@@ -5,7 +5,7 @@ import WavesurferPlayer from '@wavesurfer/react'
 import clsx from 'clsx'
 import moment from 'moment'
 import { ListResult } from 'pocketbase'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
 
@@ -31,7 +31,7 @@ function AudioEntry({
   >
   onDelete: (data: IMomentVaultEntry) => void
   addEntryModalOpenType: 'text' | 'audio' | 'photo' | 'video' | null
-}): React.ReactElement {
+}) {
   const {
     theme: lightOrDarkTheme,
     bgTempPalette,
@@ -61,7 +61,7 @@ function AudioEntry({
     }
   }
 
-  async function addTranscription(): Promise<void> {
+  async function addTranscription() {
     setTranscriptionLoading(true)
 
     try {

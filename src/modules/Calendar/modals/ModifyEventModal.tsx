@@ -1,6 +1,6 @@
 import { UseQueryResult } from '@tanstack/react-query'
 import moment from 'moment'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { DeleteConfirmationModal, FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
@@ -23,7 +23,7 @@ function ModifyEventModal({
   setOpenType,
   existedData,
   categoriesQuery
-}: ModifyEventModalProps): React.ReactElement {
+}: ModifyEventModalProps) {
   const [formState, setFormState] = useState<ICalendarEventFormState>({
     title: '',
     start: '',

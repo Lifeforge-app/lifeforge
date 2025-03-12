@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { Link, useParams } from 'react-router'
+import { Fragment } from 'react/jsx-runtime'
 
 const CONTINENTS = {
   AF: 'Africa',
@@ -21,7 +21,7 @@ function LinkItem({
   to: string
   isHighlighted: boolean
   children: React.ReactNode
-}): React.ReactElement {
+}) {
   return (
     <Link
       className={clsx(
@@ -41,15 +41,11 @@ function LinkItem({
   )
 }
 
-function ChevronIcon(): React.ReactElement {
+function ChevronIcon() {
   return <Icon className="text-bg-500 size-5" icon="tabler:chevron-right" />
 }
 
-function Breadcrumbs({
-  breadcrumbs
-}: {
-  breadcrumbs: string[]
-}): React.ReactElement {
+function Breadcrumbs({ breadcrumbs }: { breadcrumbs: string[] }) {
   const { continentID, countryID, regionID, airportID } = useParams<{
     continentID?: string
     countryID?: string
@@ -106,12 +102,12 @@ function Breadcrumbs({
       {breadcrumbItems.map(
         (item, index) =>
           item.show && (
-            <React.Fragment key={index}>
+            <Fragment key={index}>
               {index > 0 && <ChevronIcon />}
               <LinkItem isHighlighted={item.isHighlighted} to={item.to}>
                 {item.label}
               </LinkItem>
-            </React.Fragment>
+            </Fragment>
           )
       )}
     </div>

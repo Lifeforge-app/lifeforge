@@ -3,7 +3,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import PhotoAlbum from 'react-photo-album'
 import { useNavigate, useParams } from 'react-router'
@@ -33,7 +33,7 @@ import {
   type IPhotosAlbum
 } from '../../interfaces/photos_interfaces.ts'
 
-function PhotosAlbumGallery(): React.ReactElement {
+function PhotosAlbumGallery() {
   const { id } = useParams<{
     id: string
   }>()
@@ -69,7 +69,7 @@ function PhotosAlbumGallery(): React.ReactElement {
     }
   }, [])
 
-  async function requestBulkDownload(): Promise<void> {
+  async function requestBulkDownload() {
     if (typeof photos === 'string') {
       return
     }

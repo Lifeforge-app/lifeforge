@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -9,7 +9,7 @@ import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider
 
 import fetchAPI from '@utils/fetchAPI'
 
-function ModifyTagModal(): React.ReactElement {
+function ModifyTagModal() {
   const { t } = useTranslation('modules.todoList')
   const {
     modifyTagModalOpenType: openType,
@@ -34,7 +34,7 @@ function ModifyTagModal(): React.ReactElement {
     }
   ]
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     if (data.name.trim().length === 0) {
       toast.error(t('input.error.fieldEmpty'))
       return

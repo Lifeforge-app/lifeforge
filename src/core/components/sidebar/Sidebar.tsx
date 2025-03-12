@@ -1,6 +1,6 @@
 import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { SidebarItem } from '@lifeforge/ui'
 
@@ -9,7 +9,7 @@ import SidebarEventBanner from './SidebarEventBanner'
 import SidebarHeader from './SidebarHeader'
 import SidebarItems from './SidebarItems'
 
-function Sidebar(): React.ReactElement {
+function Sidebar() {
   const { sidebarExpanded, toggleSidebar } = useSidebarState()
   const [searchQuery, setSearchQuery] = useState('')
 

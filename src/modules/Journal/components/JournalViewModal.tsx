@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -21,7 +21,7 @@ function JournalViewModal({
   isOpen: boolean
   onClose: () => void
   masterPassword: string
-}): React.ReactElement {
+}) {
   const navigate = useNavigate()
   const [valid, , setValid] = useFetch<boolean>(
     `journal/entries/valid/${id}`,

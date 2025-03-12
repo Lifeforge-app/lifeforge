@@ -1,7 +1,7 @@
 import { Listbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useSearchParams } from 'react-router'
 
 import {
@@ -219,7 +219,7 @@ const SEARCH_TYPE = [
   ['Arrivals', 'tabler:plane-arrival', 'arr']
 ]
 
-function ChangiFlightStatus(): React.ReactElement {
+function ChangiFlightStatus() {
   const { componentBgWithHover } = useComponentBg()
   const [searchQuery, setSearchQuery] = useState('')
   const [searchParams, setSearchParams] = useSearchParams()

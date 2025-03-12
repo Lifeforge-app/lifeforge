@@ -1,6 +1,6 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import moment from 'moment'
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { Outlet, useSearchParams } from 'react-router'
 
 import {
@@ -33,11 +33,9 @@ interface IWalletData {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const WalletContext = React.createContext<IWalletData | undefined>(
-  undefined
-)
+export const WalletContext = createContext<IWalletData | undefined>(undefined)
 
-export default function WalletProvider(): React.ReactElement {
+export default function WalletProvider() {
   const [searchParams] = useSearchParams()
   const [isAmountHidden, toggleAmountVisibility] = useState(true)
   const [transactions, refreshTransactions] = useFetch<IWalletTransaction[]>(

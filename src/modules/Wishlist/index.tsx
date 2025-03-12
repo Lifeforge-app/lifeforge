@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -17,7 +17,7 @@ import ModifyWishlistListModal from './components/ModifyWishlistModal'
 import WishlistListItem from './components/WishlistListItem'
 import { type IWishlistList } from './interfaces/wishlist_interfaces'
 
-function Wishlist(): React.ReactElement {
+function Wishlist() {
   const { t } = useTranslation('modules.wishlist')
   const [lists, refreshLists, setLists] =
     useFetch<IWishlistList[]>('wishlist/lists')

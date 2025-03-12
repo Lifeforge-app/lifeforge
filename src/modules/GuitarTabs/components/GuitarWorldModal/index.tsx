@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import {
@@ -21,7 +21,7 @@ function GuitarWorldModal({
 }: {
   isOpen: boolean
   onClose: () => void
-}): React.ReactElement {
+}) {
   const [cookie, setCookie] = useState('')
   const [proceedLoading, setProceedLoading] = useState(false)
   const [showData, setShowData] = useState(false)
@@ -29,7 +29,7 @@ function GuitarWorldModal({
   const [data, setData] =
     useState<Loadable<IGuitarTabsGuitarWorldScores>>('loading')
 
-  async function fetchData(page: number): Promise<void> {
+  async function fetchData(page: number) {
     if (cookie.trim() === '') {
       toast.error('Please enter a cookie')
       return

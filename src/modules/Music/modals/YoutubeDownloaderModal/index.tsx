@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/empty-string-repetition */
 import { useDebounce } from '@uidotdev/usehooks'
 import { cookieParse } from 'pocketbase'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import {
@@ -26,7 +26,7 @@ const intervalManager = IntervalManager.getInstance()
 const URL_REGEX =
   /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/(watch\?v=|embed\/|v\/|.+\?v=)?(?<id>[A-Za-z0-9_-]{11})(\S*)?$/
 
-function YoutubeDownloaderModal(): React.ReactElement {
+function YoutubeDownloaderModal() {
   const {
     isYoutubeDownloaderOpen: isOpen,
     setIsYoutubeDownloaderOpen,
@@ -60,7 +60,7 @@ function YoutubeDownloaderModal(): React.ReactElement {
     return 'failed'
   }
 
-  function downloadVideo(): void {
+  function downloadVideo() {
     setLoading(true)
     fetch(
       `${import.meta.env.VITE_API_HOST}/music/youtube/async-download/${

@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 import { APIFallbackComponent, DashboardItem, Scrollbar } from '@lifeforge/ui'
 
@@ -7,7 +6,7 @@ import useFetch from '@hooks/useFetch'
 
 import { type IDiskUsage } from '../../ServerStatus/interfaces/server_status_interfaces'
 
-export default function StorageStatus(): React.ReactElement {
+export default function StorageStatus() {
   const [diskUsage] = useFetch<IDiskUsage[]>('server/disks')
 
   return (

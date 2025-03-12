@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSearchParams } from 'react-router'
 
 import { MenuItem, SidebarItem } from '@lifeforge/ui'
@@ -19,7 +18,7 @@ function CategoryListItem({
     React.SetStateAction<'create' | 'update' | null>
   >
   setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-}): React.ReactElement {
+}) {
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (

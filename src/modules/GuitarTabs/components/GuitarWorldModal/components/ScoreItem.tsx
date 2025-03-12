@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button } from '@lifeforge/ui'
@@ -15,7 +15,7 @@ function ScoreItem({
 }: {
   entry: IGuitarTabsGuitarWorldScoreEntry
   cookie: string
-}): React.ReactElement {
+}) {
   const [audioInstance, setAudioInstance] = useState<HTMLAudioElement | null>(
     null
   )
@@ -24,7 +24,7 @@ function ScoreItem({
   )
   const [isDownloading, setIsDownloading] = useState<boolean>(false)
 
-  async function toggleMusicPlay(): Promise<void> {
+  async function toggleMusicPlay() {
     if (audioInstance !== null) {
       if (isAudioPlaying === true) {
         audioInstance.pause()
@@ -45,7 +45,7 @@ function ScoreItem({
     setIsAudioPlaying(true)
   }
 
-  async function downloadScore(): Promise<void> {
+  async function downloadScore() {
     setIsDownloading(true)
 
     try {

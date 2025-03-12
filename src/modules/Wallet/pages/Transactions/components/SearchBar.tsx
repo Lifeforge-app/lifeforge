@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { SearchInput, ViewModeSelector } from '@lifeforge/ui'
 
 import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
@@ -10,7 +8,7 @@ function SearchBar({
 }: {
   setView: React.Dispatch<React.SetStateAction<'table' | 'list'>>
   view: 'table' | 'list'
-}): React.ReactElement {
+}) {
   const { searchQuery, setSearchQuery } = useWalletContext()
 
   return (

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { MenuItem, SidebarItem } from '@lifeforge/ui'
@@ -22,7 +22,7 @@ function _SidebarItem({
     | IProjectsMTechnology
     | IProjectsMStatus
   stuff: 'categories' | 'visibilities' | 'technologies' | 'statuses'
-}): React.ReactElement {
+}) {
   const [searchParams, setSearchParams] = useSearchParams()
   const {
     miscellaneous: { setSidebarOpen },

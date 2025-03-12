@@ -1,5 +1,4 @@
 import { UseQueryResult } from '@tanstack/react-query'
-import React from 'react'
 
 import { QueryWrapper, SidebarWrapper } from '@lifeforge/ui'
 
@@ -31,7 +30,7 @@ function Sidebar({
   setDeleteCategoryConfirmationModalOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
-}): React.ReactElement {
+}) {
   return (
     <SidebarWrapper isOpen={sidebarOpen} setOpen={setSidebarOpen}>
       <QueryWrapper query={categoriesQuery}>

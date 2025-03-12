@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { Link } from 'react-router'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -17,7 +16,7 @@ function WishlistListItem({
   list: IWishlistList
   onEdit: () => void
   onDelete: () => void
-}): React.ReactElement {
+}) {
   const { componentBgWithHover } = useComponentBg()
 
   return (

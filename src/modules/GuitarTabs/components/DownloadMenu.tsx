@@ -1,16 +1,10 @@
-import React from 'react'
-
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import forceDown from '@utils/forceDown'
 
 import { type IGuitarTabsEntry } from '../interfaces/guitar_tabs_interfaces'
 
-function DownloadMenu({
-  entry
-}: {
-  entry: IGuitarTabsEntry
-}): React.ReactElement {
+function DownloadMenu({ entry }: { entry: IGuitarTabsEntry }) {
   return (
     <HamburgerMenu className="relative shrink-0" customIcon="tabler:download">
       <MenuItem

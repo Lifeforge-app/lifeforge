@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { LifeforgeUIProvider } from '@lifeforge/ui'
 
 import { usePersonalization } from './PersonalizationProvider'
@@ -9,7 +7,7 @@ function LifeforgeUIProviderWrapper({
   children
 }: {
   children: React.ReactNode
-}): React.ReactElement {
+}) {
   const personalization = usePersonalization()
   const { toggleSidebar, sidebarExpanded } = useSidebarState()
 

@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import { memo } from 'react'
 
 import { ModuleWrapper } from '@lifeforge/ui'
 
@@ -7,7 +7,7 @@ import MapView from './components/Maps'
 import RoutePlannerModal from './components/RoutePlannerModal'
 import RailwayMapProvider from './providers/RailwayMapProvider'
 
-function RailwayMap(): React.ReactElement {
+function RailwayMap() {
   return (
     <ModuleWrapper>
       <RailwayMapProvider>

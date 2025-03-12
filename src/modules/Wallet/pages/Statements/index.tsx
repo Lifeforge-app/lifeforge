@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
@@ -6,7 +6,7 @@ import PrintAndViewButton from './components/PrintAndViewButton'
 import StatementContent from './components/StatementContent'
 import YearMonthInput from './components/YearMonthInput'
 
-function Statements(): React.ReactElement {
+function Statements() {
   const [year, setYear] = useState<number | null>(null)
   const [month, setMonth] = useState<number | null>(null)
   const [showStatement, setShowStatement] = useState(false)

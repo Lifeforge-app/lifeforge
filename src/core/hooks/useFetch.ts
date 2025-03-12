@@ -18,7 +18,7 @@ function useFetch<T>(
 ] {
   const [data, setData] = useState<Loadable<T>>('loading')
 
-  function fetchData(): void {
+  function fetchData() {
     if (changeStateWhenLoading) {
       setData('loading')
     }

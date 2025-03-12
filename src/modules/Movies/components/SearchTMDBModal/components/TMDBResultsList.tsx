@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { EmptyStateScreen, Pagination } from '@lifeforge/ui'
 
 import { IMovieSearchResults } from '@modules/Movies/interfaces/movies_interfaces'
@@ -18,7 +16,7 @@ function TMDBResultsList({
   setPage: (page: number) => void
   onAddToLibrary: (id: number) => Promise<void>
   entriesIDs: number[]
-}): React.ReactElement {
+}) {
   if (results === null) {
     return <></>
   }

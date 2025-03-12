@@ -1,5 +1,5 @@
 import { cookieParse } from 'pocketbase'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -21,7 +21,7 @@ import fetchAPI from '@utils/fetchAPI'
 
 import { IPasswordFormState } from '../interfaces/password_interfaces'
 
-function CreatePasswordModal(): React.ReactElement {
+function CreatePasswordModal() {
   const { t } = useTranslation('modules.passwords')
   const {
     masterPassword,
@@ -45,12 +45,12 @@ function CreatePasswordModal(): React.ReactElement {
   const [loading, setLoading] = useState(false)
 
   function handleChange(field: keyof IPasswordFormState) {
-    return (value: string): void => {
+    return (value: string) => {
       setFormState({ ...formState, [field]: value })
     }
   }
 
-  async function onSubmit(): Promise<void> {
+  async function onSubmit() {
     if (Object.values(formState).some(value => value.trim() === '')) {
       toast.error(t('input.error.fieldEmpty'))
       return

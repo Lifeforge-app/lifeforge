@@ -1,5 +1,5 @@
 import moment from 'moment'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { type Loadable } from '@interfaces/common'
 
@@ -16,7 +16,7 @@ function MiniCalendar({
 }: {
   events: ICalendarEvent[]
   categories: Loadable<ICalendarCategory[]>
-}): React.ReactElement {
+}) {
   const [currentMonth, setCurrentMonth] = useState(moment().month())
   const [currentYear, setCurrentYear] = useState(moment().year())
 

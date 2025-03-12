@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -38,7 +38,7 @@ function JournalList({
   setExistedData: React.Dispatch<React.SetStateAction<IJournalEntry | null>>
   fetchData: () => Promise<void>
   entries: Loadable<IJournalEntry[]>
-}): React.ReactElement {
+}) {
   const [searchQuery, setSearchQuery] = useState('')
   const [editLoading, setEditLoading] = useState(false)
   const { t } = useTranslation('modules.journal')
@@ -49,7 +49,7 @@ function JournalList({
     }
   }, [masterPassword])
 
-  async function updateEntry(id: string): Promise<void> {
+  async function updateEntry(id: string) {
     setEditLoading(true)
 
     try {

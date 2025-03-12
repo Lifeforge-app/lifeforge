@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 
@@ -18,7 +18,7 @@ import { type IWalletLedger } from '../../interfaces/wallet_interfaces'
 import LedgerItem from './components/LedgerItem'
 import ModifyLedgersModal from './components/ModifyLedgersModal'
 
-function Ledgers(): React.ReactElement {
+function Ledgers() {
   const { t } = useTranslation('modules.wallet')
   const { ledgers, refreshLedgers } = useWalletContext()
   const [modifyLedgersModalOpenType, setModifyModalOpenType] = useState<

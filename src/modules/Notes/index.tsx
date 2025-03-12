@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 
 import {
@@ -15,7 +15,7 @@ import useFetch from '@hooks/useFetch'
 
 import { type INotesWorkspace } from './interfaces/notes_interfaces'
 
-function Notes(): React.ReactElement {
+function Notes() {
   const { componentBgWithHover } = useComponentBg()
   const [bounded, setBounded] = useState(false)
   const [data] = useFetch<INotesWorkspace[]>('notes/workspace/list', bounded)

@@ -1,10 +1,8 @@
-import React from 'react'
-
 import { useRailwayMapContext } from '../../providers/RailwayMapProvider'
 import EarthMap from './maps/EarthMap'
 import RouteMap from './maps/RouteMap'
 
-function MapView(): React.ReactElement {
+function MapView() {
   const { viewType } = useRailwayMapContext()
 
   if (viewType === 'earth') {

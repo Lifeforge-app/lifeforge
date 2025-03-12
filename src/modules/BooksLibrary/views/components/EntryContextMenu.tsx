@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { MenuItem } from '@lifeforge/ui'
 
@@ -11,7 +11,7 @@ export default function EntryContextMenu({
   item
 }: {
   item: IBooksLibraryEntry
-}): React.ReactElement {
+}) {
   const {
     entries: {
       setExistedData,

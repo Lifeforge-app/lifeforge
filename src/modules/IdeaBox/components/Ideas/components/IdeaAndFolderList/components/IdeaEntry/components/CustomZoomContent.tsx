@@ -1,9 +1,7 @@
-import React from 'react'
-
 function CustomZoomContent({
   img
 }: {
-  buttonUnzoom: React.ReactElement
+  buttonUnzoom: React.ReactNode
   modalState: 'LOADING' | 'LOADED' | 'UNLOADING' | 'UNLOADED'
   img: any
 }): React.ReactElement {

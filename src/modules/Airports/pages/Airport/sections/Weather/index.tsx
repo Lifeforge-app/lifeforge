@@ -1,4 +1,3 @@
-import React from 'react'
 import { useParams } from 'react-router'
 
 import { APIFallbackComponent, EmptyStateScreen } from '@lifeforge/ui'
@@ -71,7 +70,7 @@ export interface Wind {
   gust_mps: number
 }
 
-function Weather(): React.ReactElement {
+function Weather() {
   const { airportID } = useParams()
   const [METARData] = useFetch<IAirportMETARData | 'none'>(
     `airports/airport/${airportID}/METAR`

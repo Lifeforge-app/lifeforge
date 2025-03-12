@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -21,7 +21,7 @@ function ManageCategoriesModal({
 }: {
   isOpen: boolean | 'new'
   onClose: () => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.wallet')
   const { categories, refreshCategories } = useWalletContext()
   const [modifyCategoriesModalOpenType, setModifyCategoriesModalOpenType] =

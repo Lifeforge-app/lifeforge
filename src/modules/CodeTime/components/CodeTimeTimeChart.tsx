@@ -13,7 +13,7 @@ import {
 } from 'chart.js'
 import clsx from 'clsx'
 import moment from 'moment'
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Chart } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 
@@ -32,11 +32,7 @@ ChartJS.register(
   LineElement
 )
 
-function CodeTimeTimeChart({
-  type
-}: {
-  type: 'projects' | 'languages'
-}): React.ReactElement {
+function CodeTimeTimeChart({ type }: { type: 'projects' | 'languages' }) {
   const { t } = useTranslation('modules.codeTime')
   const [lastFor, setLastFor] = useState<7 | 30>(7)
   const dataQuery = useAPIQuery<any[]>(

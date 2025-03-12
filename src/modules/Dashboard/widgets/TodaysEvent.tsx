@@ -1,5 +1,4 @@
 import moment from 'moment'
-import React from 'react'
 import { Link } from 'react-router'
 
 import {
@@ -17,7 +16,7 @@ import {
   type ICalendarEvent
 } from '../../Calendar/interfaces/calendar_interfaces'
 
-export default function TodaysEvent(): React.ReactElement {
+export default function TodaysEvent() {
   const [rawEvents] = useFetch<ICalendarEvent[]>('calendar/events')
   const [categories] = useFetch<ICalendarCategory[]>('calendar/categories')
 

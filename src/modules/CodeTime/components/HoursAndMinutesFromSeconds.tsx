@@ -1,10 +1,8 @@
-import React from 'react'
-
 export default function HoursAndMinutesFromSeconds({
   seconds
 }: {
   seconds: number
-}): React.ReactElement {
+}) {
   return (
     <>
       {Math.floor(seconds / 60) > 0 ? (

@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import { UseQueryResult } from '@tanstack/react-query'
-import React from 'react'
 
 import { HeaderFilter } from '@lifeforge/ui'
 
@@ -19,7 +18,7 @@ function Header({
   entriesQuery: UseQueryResult<IVirtualWardrobeEntry[]>
   sidebarDataQuery: UseQueryResult<IVirtualWardrobeSidebarData>
   setSidebarOpen: (open: boolean) => void
-}): React.ReactElement {
+}) {
   return (
     <header className="flex-between flex w-full">
       <div>

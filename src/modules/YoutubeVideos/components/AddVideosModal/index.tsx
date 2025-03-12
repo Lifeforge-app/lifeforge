@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -34,7 +34,7 @@ function AddVideosModal({
   isOpen: boolean
   onClose: (isVideoDownloading: boolean) => void
   videos: Loadable<IYoutubeVideosStorageEntry[]>
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.youtubeVideos')
   const [selectedResourceType, setSelectedResourceType] = useState<
     'video' | 'playlist'

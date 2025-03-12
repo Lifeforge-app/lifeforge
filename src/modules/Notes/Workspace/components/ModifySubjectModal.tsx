@@ -1,5 +1,5 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -27,7 +27,7 @@ function ModifySubjectModal({
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   updateSubjectList: () => void
   existedData: INotesSubject | null
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.notes')
   const { workspace } = useParams<{ workspace: string }>()
   const [loading, setLoading] = useState(false)
@@ -37,7 +37,7 @@ function ModifySubjectModal({
   const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     if (
       subjectName.trim().length === 0 ||
       subjectIcon.trim().length === 0 ||

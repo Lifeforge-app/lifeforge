@@ -87,5 +87,10 @@ export default [
       'react-compiler/react-compiler': 'error'
     }
   },
-  ...pluginQuery.configs['flat/recommended']
+  ...pluginQuery.configs['flat/recommended'],
+  {
+    rules: {
+      'react/react-in-jsx-scope': 'off'
+    }
+  }
 ]

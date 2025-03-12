@@ -1,4 +1,4 @@
-// import React, { useReducer, useState } from 'react'
+// import { useReducer, useState } from 'react'
 // import Input from '@lifeforge/uiAndInputs/Input'
 // import Modal from '@lifeforge/ui'
 // import ModalHeader from '@lifeforge/ui'
@@ -17,7 +17,7 @@
 // }: {
 //   openType: string
 //   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-// }): React.ReactElement {
+// }) {
 //   const [data, setData] = useReducer(
 //     (state, newState) => ({ ...state, ...newState }),
 //     {
@@ -28,7 +28,7 @@
 //     }
 //   )
 
-//   function updateValue(key: string, value: string): void {
+//   function updateValue(key: string, value: string) {
 //     setData({ [key]: value })
 //   }
 

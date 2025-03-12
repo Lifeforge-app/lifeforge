@@ -1,9 +1,8 @@
 import moment from 'moment'
-import React from 'react'
 
 import { useMusicContext } from '@modules/Music/providers/MusicProvider'
 
-function DurationSlider(): React.ReactElement {
+function DurationSlider() {
   const { audio, currentDuration, setCurrentDuration, currentMusic } =
     useMusicContext()
 

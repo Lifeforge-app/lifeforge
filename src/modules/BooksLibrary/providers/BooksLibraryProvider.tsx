@@ -1,4 +1,11 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 import { Outlet } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -88,11 +95,11 @@ interface IBooksLibraryData {
   }
 }
 
-export const BooksLibraryContext = React.createContext<
-  IBooksLibraryData | undefined
->(undefined)
+export const BooksLibraryContext = createContext<IBooksLibraryData | undefined>(
+  undefined
+)
 
-export default function BooksLibraryProvider(): React.ReactElement {
+export default function BooksLibraryProvider() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [libgenModalOpen, setLibgenModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -141,7 +148,7 @@ export default function BooksLibraryProvider(): React.ReactElement {
     >
   >({})
 
-  async function checkProgress(): Promise<void> {
+  async function checkProgress() {
     try {
       const data = await fetchAPI<
         Record<

@@ -20,7 +20,7 @@ export const useEarthMapRenderer = ({
   filteredLines,
   filteredStations,
   lines
-}: EarthMapRendererProps): void => {
+}: EarthMapRendererProps) => {
   const mapInstanceRef = useRef<L.Map | null>(null)
   const polylineLayers = useRef<Record<string, L.Polyline>>({})
   const stationMarkers = useRef<Record<string, L.Marker>>({})

@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 import { type NavigateAction, type View } from 'react-big-calendar'
 import { useTranslation } from 'react-i18next'
 
@@ -26,7 +25,7 @@ function CalendarHeader({
   onNavigate,
   onView,
   setModifyEventModalOpenType
-}: CalendarHeaderProps): React.ReactElement {
+}: CalendarHeaderProps) {
   const { t } = useTranslation('modules.calendar')
   const { componentBg } = useComponentBg()
 

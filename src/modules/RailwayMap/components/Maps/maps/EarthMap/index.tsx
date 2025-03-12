@@ -1,10 +1,10 @@
 import 'leaflet/dist/leaflet.css'
-import React, { memo, useMemo, useRef } from 'react'
+import { memo, useMemo, useRef } from 'react'
 
 import { useRailwayMapContext } from '../../../../providers/RailwayMapProvider'
 import { useEarthMapRenderer } from './hooks/useEarthMapRenderer'
 
-function EarthMap(): React.ReactElement {
+function EarthMap() {
   const {
     lines,
     stations,

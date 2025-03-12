@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Markdown from 'react-markdown'
 import { toast } from 'react-toastify'
 
@@ -15,11 +15,11 @@ function RawCodeAndSummary({
   id: string
   raw: string
   isOpen: boolean
-}): React.ReactElement {
+}) {
   const [summary, setSummary] = useState<string | null>(null)
   const [summarizeButtonLoading, setSummarizeButtonLoading] = useState(false)
 
-  async function summarizeWithAI(): Promise<void> {
+  async function summarizeWithAI() {
     setSummarizeButtonLoading(true)
 
     try {

@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 
 import {
@@ -23,7 +23,7 @@ const AIRPORT_TYPES = {
   closed: ['text-red-500', 'tabler:ban']
 }
 
-function MasterSearchBar(): React.ReactElement {
+function MasterSearchBar() {
   const [masterSearchQuery, setMasterSearchQuery] = useState('')
   const debouncedMasterSearchQuery = useDebounce(masterSearchQuery, 500)
   const [searchResults, , setSearchResults] = useFetch<

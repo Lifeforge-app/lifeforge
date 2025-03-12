@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { Link } from 'react-router'
 
 import useComponentBg from '@hooks/useComponentBg'
@@ -13,7 +12,7 @@ function AssetColumn({
 }: {
   asset: string
   assets: IWalletAsset[]
-}): React.ReactElement {
+}) {
   const { componentBgLighter } = useComponentBg()
 
   return (

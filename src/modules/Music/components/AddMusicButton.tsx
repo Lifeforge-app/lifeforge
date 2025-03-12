@@ -1,6 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { cookieParse } from 'pocketbase'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -12,7 +11,7 @@ import IntervalManager from '@utils/intervalManager'
 
 const intervalManager = IntervalManager.getInstance()
 
-function AddMusicButton(): React.ReactElement {
+function AddMusicButton() {
   const { t } = useTranslation('modules.music')
   const { loading, setIsYoutubeDownloaderOpen, setLoading, refreshMusics } =
     useMusicContext()
@@ -37,7 +36,7 @@ function AddMusicButton(): React.ReactElement {
     return 'failed'
   }
 
-  function importMusic(): void {
+  function importMusic() {
     setLoading(true)
 
     fetch(`${import.meta.env.VITE_API_HOST}/music/entries/import`, {

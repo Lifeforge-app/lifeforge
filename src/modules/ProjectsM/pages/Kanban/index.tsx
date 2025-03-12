@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -11,7 +11,7 @@ import useFetch from '@hooks/useFetch'
 import ProjectHeader from './components/ProjectHeader'
 import ProjectKanban from './components/ProjectKanban'
 
-function Kanban(): React.ReactElement {
+function Kanban() {
   const navigate = useNavigate()
   const { id } = useParams()
   const [valid] = useFetch<boolean>(`projects-m/entries/valid/${id}`)

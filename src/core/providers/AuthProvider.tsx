@@ -1,4 +1,4 @@
-import React, {
+import {
   createContext,
   useCallback,
   useContext,
@@ -42,7 +42,7 @@ export default function AuthProvider({
   children
 }: {
   children: React.ReactNode
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('common.auth')
   const [auth, _setAuth] = useState(false)
   const [userData, _setUserData] = useState<any>(null)
@@ -50,14 +50,14 @@ export default function AuthProvider({
   const [authLoading, setAuthLoading] = useState(true)
 
   const setAuth = useCallback(
-    (value: boolean): void => {
+    (value: boolean) => {
       _setAuth(value)
     },
     [_setAuth]
   )
 
   const setUserData = useCallback(
-    (data: any): void => {
+    (data: any) => {
       _setUserData(data)
     },
     [_setUserData]
@@ -90,7 +90,7 @@ export default function AuthProvider({
     }
   }, [])
 
-  const dismissQuota = useCallback((): void => {
+  const dismissQuota = useCallback(() => {
     const _quota = updateQuota()
 
     if (_quota - 1 <= 0) {
@@ -181,7 +181,7 @@ export default function AuthProvider({
   )
 
   const verifyOAuth = useCallback(
-    async (code: string, state: string): Promise<void> => {
+    async (code: string, state: string) => {
       try {
         const storedState = localStorage.getItem('authState')
         const storedProvider = localStorage.getItem('authProvider')
@@ -228,7 +228,7 @@ export default function AuthProvider({
     [verifyToken]
   )
 
-  const logout = useCallback((): void => {
+  const logout = useCallback(() => {
     setAuth(false)
     document.cookie = `token=; path=/; expires=${new Date(0).toUTCString()}`
     setUserData(null)

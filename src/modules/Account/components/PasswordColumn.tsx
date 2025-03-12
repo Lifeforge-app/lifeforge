@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -6,11 +6,11 @@ import { Button, ConfigColumn } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
-function PasswordColumn(): React.ReactElement {
+function PasswordColumn() {
   const { t } = useTranslation('modules.accountSettings')
   const [loading, setLoading] = useState(false)
 
-  async function onPasswordChange(): Promise<void> {
+  async function onPasswordChange() {
     setLoading(true)
 
     try {

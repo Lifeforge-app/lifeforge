@@ -1,6 +1,6 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
 import {
@@ -25,7 +25,7 @@ import { useBooksLibraryContext } from './providers/BooksLibraryProvider'
 import GridView from './views/GridView'
 import ListView from './views/ListView'
 
-function BooksLibrary(): React.ReactElement {
+function BooksLibrary() {
   const [searchParams] = useSearchParams()
   const {
     entries: {

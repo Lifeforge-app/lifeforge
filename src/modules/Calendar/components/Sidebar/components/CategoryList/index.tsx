@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 import { SidebarTitle } from '@lifeforge/ui'
 
@@ -20,7 +19,7 @@ function CategoryList({
   setDeleteCategoryConfirmationModalOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
-}): React.ReactElement {
+}) {
   return (
     <>
       <section className="flex w-full min-w-0 flex-1 flex-col">

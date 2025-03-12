@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
@@ -40,7 +40,7 @@ function EntryItem<T extends boolean = false>({
   onDelete,
   onAddToCart,
   onRemoveFromCart
-}: IEntryItemProps<T>): React.ReactElement {
+}: IEntryItemProps<T>) {
   const { componentBg, componentBgLighter } = useComponentBg()
   const [addToCartLoading, setAddToCartLoading] = useState(false)
   const [removeFromCartLoading, setRemoveFromCartLoading] = useState(false)

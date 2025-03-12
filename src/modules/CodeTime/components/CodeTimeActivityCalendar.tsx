@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import { cloneElement, useEffect, useState } from 'react'
 import ActivityCalendar from 'react-activity-calendar'
 import { useTranslation } from 'react-i18next'
 import { Tooltip } from 'react-tooltip'
@@ -10,7 +10,7 @@ import { QueryWrapper } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
-function CodeTimeActivityCalendar(): React.ReactElement {
+function CodeTimeActivityCalendar() {
   const { t } = useTranslation('modules.codeTime')
   const { theme, themeColor } = usePersonalization()
   const [year, setYear] = useState(new Date().getFullYear())
@@ -84,7 +84,7 @@ function CodeTimeActivityCalendar(): React.ReactElement {
                     } spent on {{year}}`
                   }}
                   renderBlock={(block, activity) =>
-                    React.cloneElement(block, {
+                    cloneElement(block, {
                       'data-tooltip-id': 'react-tooltip',
                       'data-tooltip-html': `${
                         Math.floor(activity.count / 60) > 0

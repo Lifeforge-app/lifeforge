@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { type IGuitarTabsEntry } from '../../interfaces/guitar_tabs_interfaces'
 import EntryItem from './components/EntryItem'
 
@@ -13,7 +11,7 @@ function ListView({
   setExistingEntry: React.Dispatch<React.SetStateAction<any>>
   setModifyEntryModalOpen: React.Dispatch<React.SetStateAction<boolean>>
   setDeleteConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-}): React.ReactElement {
+}) {
   return (
     <ul className="mb-6 space-y-4">
       {entries.map(entry => (

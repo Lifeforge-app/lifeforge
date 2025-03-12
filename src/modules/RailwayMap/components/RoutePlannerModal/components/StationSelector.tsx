@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
 
 import { IRailwayMapStation } from '@modules/RailwayMap/interfaces/railway_map_interfaces'

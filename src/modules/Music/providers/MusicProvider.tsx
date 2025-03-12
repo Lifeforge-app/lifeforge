@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { useAuth } from '@providers/AuthProvider'
 import { cookieParse } from 'pocketbase'
-import React, {
+import {
   type ReactNode,
   createContext,
   useContext,
@@ -71,11 +71,7 @@ interface IMusicContext {
 
 const MusicContext = createContext<IMusicContext | undefined>(undefined)
 
-export function MusicProvider({
-  children
-}: {
-  children: ReactNode
-}): React.ReactElement {
+export function MusicProvider({ children }: { children: ReactNode }) {
   const { auth } = useAuth()
   const [audio] = useState(new Audio())
   const [searchQuery, setSearchQuery] = useState('')
@@ -98,7 +94,7 @@ export function MusicProvider({
   ] = useState(false)
   const [isModifyMusicModalOpen, setIsModifyMusicModalOpen] = useState(false)
 
-  const playMusic = async (music: IMusicEntry): Promise<void> => {
+  const playMusic = async (music: IMusicEntry) => {
     setCurrentMusic(music)
     audio.src = `${import.meta.env.VITE_API_HOST}/media/${music.collectionId}/${
       music.id
@@ -108,7 +104,7 @@ export function MusicProvider({
     await audio.play()
   }
 
-  async function toggleFavourite(targetMusic: IMusicEntry): Promise<void> {
+  async function toggleFavourite(targetMusic: IMusicEntry) {
     const toggleFavouriteInMusics = (
       prevMusics: Loadable<IMusicEntry[]>
     ): Loadable<IMusicEntry[]> => {
@@ -159,7 +155,7 @@ export function MusicProvider({
     }
   }
 
-  async function togglePlay(music: IMusicEntry): Promise<void> {
+  async function togglePlay(music: IMusicEntry) {
     if (currentMusic?.id === music.id) {
       if (isPlaying) {
         audio.pause()
@@ -172,14 +168,14 @@ export function MusicProvider({
     }
   }
 
-  const stopMusic = (): void => {
+  const stopMusic = () => {
     audio.pause()
     setCurrentDuration(0)
     setCurrentMusic(null)
     setIsPlaying(false)
   }
 
-  const lastMusic = (): void => {
+  const lastMusic = () => {
     if (typeof musics !== 'string') {
       const currentIndex = musics.findIndex(
         music => music.id === currentMusic?.id
@@ -192,7 +188,7 @@ export function MusicProvider({
     }
   }
 
-  const nextMusic = (): void => {
+  const nextMusic = () => {
     if (typeof musics !== 'string') {
       const currentIndex = musics.findIndex(
         music => music.id === currentMusic?.id
@@ -207,7 +203,7 @@ export function MusicProvider({
     }
   }
 
-  const shuffleMusic = (): void => {
+  const shuffleMusic = () => {
     if (typeof musics !== 'string') {
       const randomIndex = Math.floor(Math.random() * musics.length)
       playMusic(musics[randomIndex]).catch(err => {
@@ -217,7 +213,7 @@ export function MusicProvider({
   }
 
   useEffect(() => {
-    const onEnd = (): void => {
+    const onEnd = () => {
       if (isShuffle) {
         shuffleMusic()
       } else if (isRepeat) {
@@ -231,7 +227,7 @@ export function MusicProvider({
       }
     }
 
-    const updateDuration = (): void => {
+    const updateDuration = () => {
       setCurrentDuration(audio.currentTime)
     }
 

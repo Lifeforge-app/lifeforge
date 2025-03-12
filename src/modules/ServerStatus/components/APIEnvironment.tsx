@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react'
 import { useAPIOnlineStatus } from '@providers/APIOnlineStatusProvider'
 import clsx from 'clsx'
-import React from 'react'
 
-function APIEnvironment(): React.ReactElement {
+function APIEnvironment() {
   const { environment } = useAPIOnlineStatus()
 
   return (

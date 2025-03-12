@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { Button, ModalWrapper } from '@lifeforge/ui'
 
@@ -26,7 +26,7 @@ function DeletePhotosConfirmationModal({
   setPhotos: (
     photos: IPhotosEntryDimensionsAll | IPhotoAlbumEntryItem[]
   ) => void
-}): React.ReactElement {
+}) {
   const {
     selectedPhotos,
     setSelectedPhotos,
@@ -36,7 +36,7 @@ function DeletePhotosConfirmationModal({
   } = usePhotosContext()
   const [loading, setLoading] = useState(false)
 
-  async function deleteData(): Promise<void> {
+  async function deleteData() {
     if (!customPhotoToBeDeleted && selectedPhotos.length === 0) {
       return
     }

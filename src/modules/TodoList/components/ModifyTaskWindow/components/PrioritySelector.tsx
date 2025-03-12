@@ -1,6 +1,4 @@
 // PriorityListbox.tsx
-import React from 'react'
-
 import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
@@ -11,7 +9,7 @@ function PrioritySelector({
 }: {
   priority: string | null
   setPriority: React.Dispatch<React.SetStateAction<string | null>>
-}): React.ReactElement {
+}) {
   const { priorities } = useTodoListContext()
 
   if (typeof priorities === 'string') return <></>

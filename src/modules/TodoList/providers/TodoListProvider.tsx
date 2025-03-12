@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
 import {
@@ -76,15 +76,11 @@ interface ITodoListData {
   setEntries: React.Dispatch<React.SetStateAction<Loadable<ITodoListEntry[]>>>
 }
 
-export const TodoListContext = React.createContext<ITodoListData | undefined>(
+export const TodoListContext = createContext<ITodoListData | undefined>(
   undefined
 )
 
-export function TodoListProvider({
-  children
-}: {
-  children: React.ReactNode
-}): React.ReactElement {
+export function TodoListProvider({ children }: { children: React.ReactNode }) {
   const [searchParams] = useSearchParams()
   const [statusCounter, refreshStatusCounter] =
     useFetch<ITodoListStatusCounter>('todo-list/entries/status-counter')

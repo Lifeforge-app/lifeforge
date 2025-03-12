@@ -1,5 +1,5 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -20,7 +20,7 @@ import Header from './components/Header'
 import VideoList from './components/VideoList'
 import { type IYoutubeVideosStorageEntry } from './interfaces/youtube_video_storage_interfaces'
 
-function YoutubeVideos(): React.ReactElement {
+function YoutubeVideos() {
   const { t } = useTranslation('modules.youtubeVideos')
   const [isAddVideosModalOpen, setIsAddVideosModalOpen] = useState(false)
   const [videos, refreshVideos, setVideos] = useFetch<

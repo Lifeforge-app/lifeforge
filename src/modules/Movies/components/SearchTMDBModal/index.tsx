@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import {
@@ -31,7 +31,7 @@ function SearchTMDBModal({
   onClose: () => void
   entriesIDs: number[]
   queryKey: unknown[]
-}): React.ReactElement {
+}) {
   const queryClient = useQueryClient()
   const [searchQuery, setSearchQuery] = useState('')
   const [searchLoading, setSearchLoading] = useState(false)
@@ -59,7 +59,7 @@ function SearchTMDBModal({
     }
   }
 
-  async function addToLibrary(id: number): Promise<void> {
+  async function addToLibrary(id: number) {
     try {
       const data = await fetchAPI<IMovieEntry>(`movies/entries/${id}`, {
         method: 'POST'

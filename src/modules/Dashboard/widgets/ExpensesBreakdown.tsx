@@ -1,8 +1,6 @@
-import React from 'react'
-
 import { DashboardItem } from '@lifeforge/ui'
 
-export default function ExpensesBreakdown(): React.ReactElement {
+export default function ExpensesBreakdown() {
   return (
     <DashboardItem
       icon="tabler:chart-pie"

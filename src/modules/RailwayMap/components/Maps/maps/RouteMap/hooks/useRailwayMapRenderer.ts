@@ -11,7 +11,7 @@ import {
   updateSelection
 } from '../utils/renderUtils'
 
-export const useRailwayMapRenderer = (): void => {
+export const useRailwayMapRenderer = () => {
   const { theme, bgTempPalette } = usePersonalization()
   const {
     filteredLines: filteredLinesCode,

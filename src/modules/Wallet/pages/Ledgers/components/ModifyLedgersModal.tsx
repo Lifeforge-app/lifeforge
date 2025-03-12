@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -29,7 +29,7 @@ function ModifyLedgersModal({
   existedData: IWalletLedger | null
   setExistedData: React.Dispatch<React.SetStateAction<IWalletLedger | null>>
   refreshLedgers: () => void
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.wallet')
   const [ledgerName, setLedgerName] = useState('')
   const [ledgerIcon, setLedgerIcon] = useState('')
@@ -54,7 +54,7 @@ function ModifyLedgersModal({
     }
   }, [openType, existedData])
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     if (
       ledgerName.trim().length === 0 ||
       !ledgerColor ||

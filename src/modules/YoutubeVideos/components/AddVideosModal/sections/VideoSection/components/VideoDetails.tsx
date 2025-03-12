@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { APIFallbackComponent, Button } from '@lifeforge/ui'
 
 import { Loadable } from '../../../../../../../core/interfaces/common'
@@ -16,7 +14,7 @@ function VideoDetails({
   downloadVideo: () => void
   loading: boolean
   progress: number
-}): React.ReactElement {
+}) {
   return (
     <APIFallbackComponent data={videoInfo}>
       {videoInfo => (

@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import type { Identifier, XYCoord } from 'dnd-core'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -23,7 +23,7 @@ function SubtaskItem({
   moveTask: (from: number, to: number) => void
   newTask: string
   setNewTask: React.Dispatch<React.SetStateAction<string>>
-}): React.ReactElement {
+}) {
   const ref = useRef<HTMLDivElement>(null)
   const editInputRef = useRef<HTMLInputElement>(null)
   const [isEditing, setIsEditing] = useState(false)

@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
 import { cookieParse } from 'pocketbase'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import PhotoAlbum from 'react-photo-album'
 import { toast } from 'react-toastify'
 import useResizeObserver from 'use-resize-observer'
@@ -30,7 +30,7 @@ function DateGroup({
   setSelectedPhotos: (photos: string[]) => void
   toggleSelectAll: () => void
   isSelectedAll: boolean
-}): React.ReactElement {
+}) {
   const {
     photos: allPhotos,
     updateEachDayDimensions,
@@ -170,7 +170,7 @@ function DateGroup({
                 setImagePreviewOpenFor={setImagePreviewModalOpenFor}
                 toggleSelected={(
                   e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>
-                ): void => {
+                ) => {
                   if (photo.key !== undefined) {
                     if (
                       selectedPhotos.find(image => image === photo.key) !==

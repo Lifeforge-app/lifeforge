@@ -1,5 +1,4 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
@@ -7,7 +6,7 @@ import { Button, HeaderFilter, MenuItem } from '@lifeforge/ui'
 
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
-function Header({ itemCount }: { itemCount: number }): React.ReactElement {
+function Header({ itemCount }: { itemCount: number }) {
   const { t } = useTranslation('modules.booksLibrary')
   const {
     categories: { data: categories },

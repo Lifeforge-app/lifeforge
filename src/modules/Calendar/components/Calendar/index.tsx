@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import moment from 'moment'
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import { useSearchParams } from 'react-router'
@@ -33,7 +33,7 @@ function CalendarComponent({
   categories,
   setModifyEventModalOpenType,
   setExistedData
-}: CalendarComponentProps): React.ReactElement {
+}: CalendarComponentProps) {
   const [searchParams] = useSearchParams()
   const queryClient = useQueryClient()
 
@@ -45,7 +45,7 @@ function CalendarComponent({
     event: ICalendarEvent
     start: Date
     end: Date
-  }): Promise<void> {
+  }) {
     queryClient.setQueryData(
       ['calendar', 'events'],
       (prevEvents: ICalendarEvent[]) => {

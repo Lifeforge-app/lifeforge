@@ -1,6 +1,5 @@
 // App.tsx
 import 'leaflet/dist/leaflet.css'
-import React from 'react'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'react-calendar/dist/Calendar.css'
@@ -15,12 +14,12 @@ import 'react-tooltip/dist/react-tooltip.css'
 import 'react-virtualized/styles.css'
 
 import Providers from './Providers.tsx'
-import AppRouter from './Router.tsx'
 import './i18n'
+import AppRouter from './routes/Router.tsx'
 import './styles/index.css'
 import './styles/react-resizable.css'
 
-function App(): React.ReactElement {
+function App() {
   return (
     <BrowserRouter>
       <main

@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
@@ -8,7 +8,7 @@ import fetchAPI from '@utils/fetchAPI'
 
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
-function ModifyBookModal(): React.ReactElement {
+function ModifyBookModal() {
   const {
     entries: {
       modifyDataModalOpenType,
@@ -143,7 +143,7 @@ function ModifyBookModal(): React.ReactElement {
     }
   ]
 
-  async function onSubmit(): Promise<void> {
+  async function onSubmit() {
     if (data.title.trim() === '') {
       toast.error('Title cannot be empty')
     }

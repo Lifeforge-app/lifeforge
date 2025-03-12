@@ -1,4 +1,3 @@
-import React from 'react'
 import { useReactToPrint } from 'react-to-print'
 
 import { Button } from '@lifeforge/ui'
@@ -11,7 +10,7 @@ function PrintAndViewButton({
   contentRef: React.RefObject<HTMLDivElement | null>
   showStatement: boolean
   setShowStatement: (value: boolean) => void
-}): React.ReactElement {
+}) {
   const reactToPrintFn = useReactToPrint({ contentRef })
 
   return (

@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
@@ -16,7 +15,7 @@ import useFetch from '@hooks/useFetch'
 import TaskItem from '../../TodoList/components/tasks/TaskItem'
 import { type ITodoListEntry } from '../../TodoList/interfaces/todo_list_interfaces'
 
-export default function TodoList(): React.ReactElement {
+export default function TodoList() {
   const { t } = useTranslation('modules.todoList')
   const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry[]>(
     'todo-list/entries?status=today'

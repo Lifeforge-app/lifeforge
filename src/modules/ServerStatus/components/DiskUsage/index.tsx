@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
 
@@ -8,7 +7,7 @@ import useFetch from '@hooks/useFetch'
 import { IDiskUsage } from '../../interfaces/server_status_interfaces'
 import DiskUsageCard from './components/DiskUsageCard'
 
-function DiskUsage(): React.ReactElement {
+function DiskUsage() {
   const [diskUsage] = useFetch<IDiskUsage[]>('server/disks')
 
   return (

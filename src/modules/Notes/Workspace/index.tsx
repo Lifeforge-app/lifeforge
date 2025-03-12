@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -23,7 +23,7 @@ import CreateSubjectButton from './components/CreateSubjectButton'
 import ModifySubjectModal from './components/ModifySubjectModal'
 import SubjectItem from './components/SubjectItem'
 
-function NotesCategory(): React.ReactElement {
+function NotesCategory() {
   const { t } = useTranslation('modules.notes')
   const { workspace } = useParams<{ workspace: string }>()
   const [valid] = useFetch<boolean>(`notes/workspace/valid/${workspace}`)

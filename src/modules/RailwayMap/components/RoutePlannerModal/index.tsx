@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
 
 import { useRailwayMapContext } from '../../providers/RailwayMapProvider'
 import PlannerContent from './components/PlannerContent'
 
-function RoutePlannerModal(): React.ReactElement {
+function RoutePlannerModal() {
   const {
     clearShortestRoute,
     routePlannerOpen: isOpen,

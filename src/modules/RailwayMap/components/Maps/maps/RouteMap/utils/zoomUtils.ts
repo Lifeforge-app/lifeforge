@@ -8,7 +8,7 @@ export const setupZooming = (
   svg: d3.Selection<SVGSVGElement, unknown, null, undefined>,
   g: d3.Selection<SVGGElement, unknown, null, undefined>,
   centerStation: IRailwayMapStation
-): void => {
+) => {
   const svgNode = svg.node()
   if (!svgNode) return
 
@@ -53,7 +53,7 @@ export const centerMapOnStation = (
   scale = 2,
   duration = 1000,
   needZoom = true
-): void => {
+) => {
   if (!station.map_data || !svgRef.current || !gRef.current) return
 
   const svg = d3.select(svgRef.current)

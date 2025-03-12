@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import humanNumber from 'human-number'
 import moment from 'moment'
-import React from 'react'
 
 import {
   type IYoutubePlaylistVideoEntry,
@@ -17,7 +16,7 @@ function VideoInfo({
         likeCount?: number
         uploadDate?: string
       })
-}): React.ReactElement {
+}) {
   return (
     <>
       <div className="border-bg-800 relative w-64 shrink-0 overflow-hidden rounded-md border">

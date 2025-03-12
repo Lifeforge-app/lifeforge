@@ -1,5 +1,4 @@
 import { UseQueryResult } from '@tanstack/react-query'
-import React from 'react'
 import { useSearchParams } from 'react-router'
 
 import {
@@ -23,7 +22,7 @@ function Sidebar({
   isOpen: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   sidebarDataQuery: UseQueryResult<IVirtualWardrobeSidebarData>
-}): React.ReactElement {
+}) {
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (

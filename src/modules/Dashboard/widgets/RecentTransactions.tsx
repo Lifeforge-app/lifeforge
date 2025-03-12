@@ -1,8 +1,6 @@
-import React from 'react'
-
 import { DashboardItem } from '@lifeforge/ui'
 
-export default function RecentTransactions(): React.ReactElement {
+export default function RecentTransactions() {
   return (
     <DashboardItem
       icon="tabler:history"

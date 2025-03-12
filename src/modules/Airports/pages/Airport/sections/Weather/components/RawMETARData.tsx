@@ -1,18 +1,13 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
-import React from 'react'
 
 import useComponentBg from '@hooks/useComponentBg'
 
 import { IAirportMETARData } from '..'
 import WidgetWrapper from './WidgetWrapper'
 
-function RawMETARData({
-  data
-}: {
-  data: IAirportMETARData
-}): React.ReactElement {
+function RawMETARData({ data }: { data: IAirportMETARData }) {
   const { componentBgLighter } = useComponentBg()
 
   return (

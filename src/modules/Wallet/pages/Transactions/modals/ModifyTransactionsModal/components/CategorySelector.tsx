@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 
 import {
   ListboxNullOption,
@@ -17,7 +16,7 @@ function CategorySelector({
   category: string | null
   setCategory: React.Dispatch<React.SetStateAction<string | null>>
   transactionType: string
-}): React.ReactElement {
+}) {
   const { categories } = useWalletContext()
 
   if (categories === 'loading') {

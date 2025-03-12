@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { Pagination } from '@lifeforge/ui'
 
 import { type IGuitarTabsGuitarWorldScores } from '../../../interfaces/guitar_tabs_interfaces'
@@ -15,7 +13,7 @@ function ScoreList({
   page: number
   setPage: (page: number) => void
   cookie: string
-}): React.ReactElement {
+}) {
   return (
     <>
       <Pagination

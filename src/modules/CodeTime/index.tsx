@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
 import CodeTimeActivityCalendar from './components/CodeTimeActivityCalendar'
@@ -7,7 +5,7 @@ import CodeTimeStatistics from './components/CodeTimeStatistics'
 import CodeTimeTimeChart from './components/CodeTimeTimeChart'
 import CodeTimeTopEntries from './components/CodeTimeTopEntries'
 
-export default function CodeTime(): React.ReactElement {
+export default function CodeTime() {
   return (
     <ModuleWrapper>
       <ModuleHeader icon="tabler:code" title="Code Time" />

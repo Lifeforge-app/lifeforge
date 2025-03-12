@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { HamburgerMenu } from '@lifeforge/ui'
 
 import { SPICINESS_COLOR } from '@modules/TodoList/constants/todo_subtasks_generation_spiciness'
@@ -13,7 +11,7 @@ function SpicinessSelector({
 }: {
   spiciness: number
   setSpiciness: (spiciness: number) => void
-}): React.ReactElement {
+}) {
   return (
     <HamburgerMenu
       className="z-9999 relative"

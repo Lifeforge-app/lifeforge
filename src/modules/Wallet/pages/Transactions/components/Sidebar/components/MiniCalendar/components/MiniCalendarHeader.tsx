@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import moment from 'moment/min/moment-with-locales'
-import React from 'react'
 
 function MiniCalendarHeader({
   currentMonth,
@@ -13,7 +12,7 @@ function MiniCalendarHeader({
   setCurrentMonth: React.Dispatch<React.SetStateAction<number>>
   currentYear: number
   setCurrentYear: React.Dispatch<React.SetStateAction<number>>
-}): React.ReactElement {
+}) {
   const { language } = usePersonalization()
 
   return (

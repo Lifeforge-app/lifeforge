@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 import { Link } from 'react-router'
 
 import { type IWalletCategory } from '../../../../../../interfaces/wallet_interfaces'
@@ -10,7 +9,7 @@ function CategoryColumn({
 }: {
   category: string
   categories: IWalletCategory[]
-}): React.ReactElement {
+}) {
   return (
     <td className="p-2 text-center">
       {category !== '' ? (

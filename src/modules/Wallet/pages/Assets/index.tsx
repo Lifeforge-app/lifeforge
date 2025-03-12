@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 
@@ -19,7 +19,7 @@ import { type IWalletAsset } from '../../interfaces/wallet_interfaces'
 import AssetItem from './components/AssetItem'
 import ModifyAssetsModal from './components/ModifyAssetsModal'
 
-function Assets(): React.ReactElement {
+function Assets() {
   const { t } = useTranslation('modules.wallet')
   const { assets, refreshAssets, isAmountHidden, toggleAmountVisibility } =
     useWalletContext()

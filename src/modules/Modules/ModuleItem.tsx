@@ -3,7 +3,7 @@ import { useAuth } from '@providers/AuthProvider'
 import clsx from 'clsx'
 import _ from 'lodash'
 import { cookieParse } from 'pocketbase'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -26,13 +26,13 @@ function ModuleItem({
   module: IModuleEntry
   enabled: boolean
   toggleModule: (moduleName: string) => void
-}): React.ReactElement {
+}) {
   const { componentBg, componentBgLighter } = useComponentBg()
   const [expandConfig, setExpandConfig] = useState(false)
   const { t } = useTranslation(`modules.${_.camelCase(module.name)}`)
   const [saveLoading, setButtonLoading] = useState(false)
 
-  function toggleExpandConfig(): void {
+  function toggleExpandConfig() {
     setExpandConfig(!expandConfig)
   }
   const { userData, setUserData } = useAuth()
@@ -45,7 +45,7 @@ function ModuleItem({
     Object.assign({}, userData.moduleConfigs)
   )
 
-  function saveConfig(): void {
+  function saveConfig() {
     setButtonLoading(true)
     fetch(`${import.meta.env.VITE_API_HOST}/user/module/config`, {
       method: 'PUT',

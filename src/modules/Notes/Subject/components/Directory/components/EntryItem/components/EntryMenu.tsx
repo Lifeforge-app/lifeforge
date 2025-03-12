@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { type INotesEntry } from '../../../../../../interfaces/notes_interfaces'
@@ -16,7 +14,7 @@ function EntryMenu({
   >
   setExistedData: (data: any) => void
   setDeleteFolderConfirmationModalOpen: (state: boolean) => void
-}): React.ReactElement {
+}) {
   return (
     <HamburgerMenu className="relative">
       <MenuItem

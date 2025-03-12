@@ -1,5 +1,5 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 
 import {
@@ -28,7 +28,7 @@ const AIRPORT_TYPES = {
   closed: ['text-red-500', 'tabler:ban']
 }
 
-function AirportsList(): React.ReactElement {
+function AirportsList() {
   const { regionID } = useParams()
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)

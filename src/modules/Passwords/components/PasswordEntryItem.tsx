@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import copy from 'copy-to-clipboard'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -19,7 +19,7 @@ function PasswordEntryITem({
 }: {
   password: IPasswordEntry
   pinPassword: (id: string) => Promise<void>
-}): React.ReactElement {
+}) {
   const {
     masterPassword,
     setIsDeletePasswordConfirmationModalOpen,
@@ -33,7 +33,7 @@ function PasswordEntryITem({
   const [loading, setLoading] = useState(false)
   const [copyLoading, setCopyLoading] = useState(false)
 
-  async function copyPassword(): Promise<void> {
+  async function copyPassword() {
     setCopyLoading(true)
     if (decryptedPassword !== null) {
       copy(decryptedPassword)

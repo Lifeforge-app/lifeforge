@@ -1,14 +1,7 @@
 import moment from 'moment'
-import React from 'react'
 import { Tooltip } from 'react-tooltip'
 
-function EntryCreationDate({
-  id,
-  date
-}: {
-  id: string
-  date: string
-}): React.ReactElement {
+function EntryCreationDate({ id, date }: { id: string; date: string }) {
   return (
     <div className="z-50 hidden w-1/5 shrink-0 items-center md:flex">
       <div

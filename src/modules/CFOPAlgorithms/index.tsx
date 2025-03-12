@@ -1,12 +1,11 @@
 import clsx from 'clsx'
-import React from 'react'
 import { Link } from 'react-router'
 
 import { ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-function CFOPAlgorithms(): React.ReactElement {
+function CFOPAlgorithms() {
   const { componentBgWithHover } = useComponentBg()
 
   return (

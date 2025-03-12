@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -28,7 +28,7 @@ import PrioritySelector from './components/PrioritySelector'
 import SubtaskBox from './components/SubtaskBox'
 import TagsSelector from './components/TagsSelector'
 
-function ModifyTaskWindow(): React.ReactElement {
+function ModifyTaskWindow() {
   const { t } = useTranslation('modules.todoList')
   const {
     modifyTaskWindowOpenType: openType,
@@ -61,7 +61,7 @@ function ModifyTaskWindow(): React.ReactElement {
   const summaryInputRef = useRef<HTMLInputElement>(null)
   const ref = useRef<HTMLInputElement>(null)
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     if (openType === null) return
 
     if (summary.trim().length === 0) {
@@ -105,11 +105,11 @@ function ModifyTaskWindow(): React.ReactElement {
     }
   }
 
-  function updateNotes(event: React.FormEvent<HTMLTextAreaElement>): void {
+  function updateNotes(event: React.FormEvent<HTMLTextAreaElement>) {
     setNotes(event.currentTarget.value)
   }
 
-  function closeWindow(): void {
+  function closeWindow() {
     setInnerOpenType(null)
     setTimeout(() => {
       setOpenType(null)

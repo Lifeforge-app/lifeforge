@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import {
@@ -36,10 +36,10 @@ function BasicInfoSection({
     field: keyof IVirtualWardrobeFormState
   ) => (value: string | string[]) => void
   canGoBack: boolean
-}): React.ReactElement {
+}) {
   const [visionLoading, setVisionLoading] = useState(false)
 
-  async function onVision(): Promise<void> {
+  async function onVision() {
     if (frontImage === null || backImage === null) {
       return
     }

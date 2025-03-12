@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import prettyBytes from 'pretty-bytes'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
 
@@ -14,7 +14,7 @@ import {
 } from '../../interfaces/server_status_interfaces'
 import { SystemStatusCard } from './components/SystemStatusCard'
 
-function SystemStatus(): React.ReactElement {
+function SystemStatus() {
   const [memoryUsage, refreshMemoryUsage] = useFetch<IMemoryUsage>(
     'server/memory',
     true,

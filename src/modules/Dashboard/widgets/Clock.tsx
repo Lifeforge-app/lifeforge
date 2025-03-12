@@ -1,10 +1,10 @@
 import clsx from 'clsx'
 import moment from 'moment/min/moment-with-locales'
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-export default function Clock(): React.ReactElement {
+export default function Clock() {
   const { componentBg } = useComponentBg()
   const [time, setTime] = useState(moment().format('HH:mm'))
   const [seocond, setSecond] = useState(moment().format('ss') as any)

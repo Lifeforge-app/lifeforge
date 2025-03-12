@@ -2,7 +2,6 @@ import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
-import React from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
@@ -14,11 +13,7 @@ import fetchAPI from '@utils/fetchAPI'
 
 import { type IIdeaBoxEntry } from '../../../../../../../interfaces/ideabox_interfaces'
 
-function EntryContextMenu({
-  entry
-}: {
-  entry: IIdeaBoxEntry
-}): React.ReactElement {
+function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
   const {
     setTypeOfModifyIdea,
     setModifyIdeaModalOpenType,
@@ -32,7 +27,7 @@ function EntryContextMenu({
 
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
-  async function pinIdea(): Promise<void> {
+  async function pinIdea() {
     try {
       await fetchAPI(`idea-box/ideas/pin/${entry.id}`, {
         method: 'POST'
@@ -57,7 +52,7 @@ function EntryContextMenu({
     }
   }
 
-  async function archiveIdea(): Promise<void> {
+  async function archiveIdea() {
     try {
       await fetchAPI(`idea-box/ideas/archive/${entry.id}`, {
         method: 'POST'
@@ -76,7 +71,7 @@ function EntryContextMenu({
     }
   }
 
-  async function removeFromFolder(): Promise<void> {
+  async function removeFromFolder() {
     try {
       await fetchAPI(`idea-box/ideas/move/${entry.id}`, {
         method: 'DELETE'

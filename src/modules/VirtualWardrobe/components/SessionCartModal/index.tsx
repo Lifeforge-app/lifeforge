@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import {
@@ -29,12 +29,12 @@ function SessionCartModal({
   cartItems: Loadable<IVirtualWardrobeEntry[]>
 
   refreshEntries: () => void
-}): React.ReactElement {
+}) {
   const queryClient = useQueryClient()
   const [checkoutConfirmationModalOpen, setCheckoutConfirmationModalOpen] =
     useState(false)
 
-  async function handleRemoveFromCart(entryId: string): Promise<void> {
+  async function handleRemoveFromCart(entryId: string) {
     try {
       await fetchAPI(`virtual-wardrobe/session/${entryId}`, {
         method: 'DELETE'
@@ -53,7 +53,7 @@ function SessionCartModal({
     }
   }
 
-  async function handleCheckout(notes: string): Promise<void> {
+  async function handleCheckout(notes: string) {
     try {
       await fetchAPI('virtual-wardrobe/session/checkout', {
         method: 'POST',

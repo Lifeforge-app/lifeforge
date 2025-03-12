@@ -1,5 +1,3 @@
-import React from 'react'
-
 import {
   APIFallbackComponent,
   MissingAPIKeyScreen,
@@ -14,7 +12,7 @@ function APIKeyStatusProvider({
 }: {
   APIKeys: string[]
   children: React.ReactNode
-}): React.ReactElement {
+}) {
   const [hasRequiredAPIKeys] = useFetch<boolean>(
     `api-keys/check?keys=${encodeURIComponent(APIKeys.join(','))}`,
     APIKeys.length > 0

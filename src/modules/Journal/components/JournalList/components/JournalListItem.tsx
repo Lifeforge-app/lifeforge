@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
-import React from 'react'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
@@ -27,7 +26,7 @@ function JournalListItem({
   setExistedData: React.Dispatch<React.SetStateAction<IJournalEntry | null>>
   updateEntry: (id: string) => Promise<void>
   editLoading: boolean
-}): React.ReactElement {
+}) {
   const { componentBgWithHover, componentBgLighter } = useComponentBg()
 
   return (

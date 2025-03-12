@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
@@ -7,7 +6,7 @@ import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
 import { type IIdeaBoxFolder } from '../../../../../../interfaces/ideabox_interfaces'
 import FolderItem from './components/FolderItem'
 
-function FolderList(): React.ReactElement {
+function FolderList() {
   const { t } = useTranslation('modules.ideaBox')
   const { folders } = useIdeaBoxContext()
 

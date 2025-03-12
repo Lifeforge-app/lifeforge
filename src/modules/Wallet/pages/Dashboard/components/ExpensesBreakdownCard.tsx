@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
@@ -20,7 +20,7 @@ const options2 = {
   cutout: '80%'
 }
 
-function ExpensesBreakdownCard(): React.ReactElement {
+function ExpensesBreakdownCard() {
   const { categories, transactions, incomeExpenses, isAmountHidden } =
     useWalletContext()
   // TODO

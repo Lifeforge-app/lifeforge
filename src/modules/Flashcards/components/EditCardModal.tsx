@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { CreateOrModifyButton, ModalWrapper } from '@lifeforge/ui'
@@ -22,7 +22,7 @@ function EditCardModal({
   cards: IFlashcardCard[]
   refreshCards: () => void
   refreshContainerDetails: () => void
-}): React.ReactElement {
+}) {
   const [innerCards, setInnerCards] = useState<
     Array<
       IFlashcardCard & {
@@ -34,7 +34,7 @@ function EditCardModal({
   const [currentlyEditingIndex, setCurrentlyEditingIndex] = useState<number>(-1)
   const [toBeDeletedId, setToBeDeletedId] = useState<string[]>([])
 
-  async function onSubmitButtonClick(): Promise<void> {
+  async function onSubmitButtonClick() {
     const updatedCards = innerCards.filter(card => card.type !== null)
 
     if (updatedCards.length === 0 && toBeDeletedId.length === 0) {
@@ -76,7 +76,7 @@ function EditCardModal({
 
   useEffect(() => {
     // onpaste
-    const handlePaste = (e: ClipboardEvent): void => {
+    const handlePaste = (e: ClipboardEvent) => {
       e.preventDefault()
       const text = e.clipboardData?.getData('text')
 

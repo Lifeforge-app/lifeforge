@@ -1,19 +1,15 @@
 import clsx from 'clsx'
 import moment from 'moment'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
 import { DateInput, SidebarTitle } from '@lifeforge/ui'
 
-function DateRangeSelector(): React.ReactElement {
+function DateRangeSelector() {
   const { t } = useTranslation('modules.wallet')
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const handleDateChange = (
-    date: string,
-    type: 'start_date' | 'end_date'
-  ): void => {
+  const handleDateChange = (date: string, type: 'start_date' | 'end_date') => {
     if (date === '') {
       searchParams.delete(type)
       setSearchParams(searchParams)

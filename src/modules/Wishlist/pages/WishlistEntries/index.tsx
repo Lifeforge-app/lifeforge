@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -26,7 +26,7 @@ import FromOtherAppsModal from './components/FromOtherAppsModal'
 import Header from './components/Header'
 import ModifyEntryModal from './components/ModifyEntryModal'
 
-function WishlistEntries(): React.ReactElement {
+function WishlistEntries() {
   const { t } = useTranslation('modules.wishlist')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()

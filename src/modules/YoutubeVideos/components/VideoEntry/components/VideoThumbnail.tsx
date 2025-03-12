@@ -1,14 +1,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
-import React from 'react'
 
-function VideoThumbnail({
-  id,
-  duration
-}: {
-  id: string
-  duration: number
-}): React.ReactElement {
+function VideoThumbnail({ id, duration }: { id: string; duration: number }) {
   return (
     <div className="border-bg-300 bg-bg-200 dark:border-bg-800 dark:bg-bg-800/50 relative aspect-video w-full shrink-0 overflow-hidden rounded-md border md:w-56">
       <Icon

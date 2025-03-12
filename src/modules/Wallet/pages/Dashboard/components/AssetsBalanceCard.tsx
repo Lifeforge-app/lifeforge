@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router'
 
@@ -15,7 +14,7 @@ import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 import useComponentBg from '@hooks/useComponentBg'
 
-function AssetsBalanceCard(): React.ReactElement {
+function AssetsBalanceCard() {
   const { componentBgLighterWithHover } = useComponentBg()
   const navigate = useNavigate()
   const { assets, isAmountHidden } = useWalletContext()

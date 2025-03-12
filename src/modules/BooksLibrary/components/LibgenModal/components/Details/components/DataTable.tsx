@@ -1,8 +1,6 @@
-import React from 'react'
-
 import { BookDetailProps } from '..'
 
-function DataTable({ data }: { data: BookDetailProps }): React.ReactElement {
+function DataTable({ data }: { data: BookDetailProps }) {
   const renderContent = (key: string, value: any) => {
     if (typeof value === 'string') {
       return value

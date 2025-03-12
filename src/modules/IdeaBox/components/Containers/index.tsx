@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { type IIdeaBoxContainer } from '../../interfaces/ideabox_interfaces'
@@ -19,7 +18,7 @@ function Container({
   setDeleteContainerConfirmationModalOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
-}): React.ReactElement {
+}) {
   const { t } = useTranslation(['modules.ideaBox', 'common.buttons'])
 
   return (

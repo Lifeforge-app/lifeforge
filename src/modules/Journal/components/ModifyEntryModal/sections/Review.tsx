@@ -1,5 +1,5 @@
 import moment from 'moment'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button } from '@lifeforge/ui'
@@ -43,10 +43,10 @@ function Review({
   masterPassword: string
   onClose: () => void
   openType: 'create' | 'update' | null
-}): React.ReactElement {
+}) {
   const [loading, setLoading] = useState(false)
 
-  async function onSubmit(): Promise<void> {
+  async function onSubmit() {
     setLoading(true)
 
     try {

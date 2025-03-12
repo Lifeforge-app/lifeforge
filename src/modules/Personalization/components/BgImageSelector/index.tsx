@@ -1,5 +1,5 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -14,7 +14,7 @@ import fetchAPI from '@utils/fetchAPI'
 
 import AdjustBgImageModal from './components/AdjustBgImageModal'
 
-function BgImageSelector(): React.ReactElement {
+function BgImageSelector() {
   const { t } = useTranslation('modules.personalization')
   const { bgImage, setBgImage, setBackdropFilters } = usePersonalization()
   const [imageSelectorModalOpen, setImageSelectorModalOpen] = useState(false)
@@ -24,7 +24,7 @@ function BgImageSelector(): React.ReactElement {
     setDeleteBgImageConfirmationModalOpen
   ] = useState(false)
 
-  async function onSubmit(url: string | File): Promise<void> {
+  async function onSubmit(url: string | File) {
     try {
       const data = await fetchAPI<string>('user/personalization/bg-image', {
         method: 'PUT',

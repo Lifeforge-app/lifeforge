@@ -9,7 +9,7 @@ function useThemeEffect(
   theme: 'light' | 'dark' | 'system',
   rawThemeColor: string,
   bgTemp: string
-): void {
+) {
   useEffect(() => {
     if (
       (theme === 'system' &&

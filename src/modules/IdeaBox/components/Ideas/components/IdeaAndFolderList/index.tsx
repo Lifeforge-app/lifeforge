@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { APIFallbackComponent, EmptyStateScreen } from '@lifeforge/ui'
@@ -8,7 +7,7 @@ import { useIdeaBoxContext } from '@modules/IdeaBox/providers/IdeaBoxProvider'
 import FolderList from './components/FolderList'
 import IdeaList from './components/IdeaList'
 
-function IdeaAndFolderList(): React.ReactElement {
+function IdeaAndFolderList() {
   const { t } = useTranslation('modules.ideaBox')
   const {
     entries,

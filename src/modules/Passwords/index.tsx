@@ -1,5 +1,4 @@
 import { useAuth } from '@providers/AuthProvider'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -44,7 +43,7 @@ function ModalsSection() {
   )
 }
 
-function Passwords(): React.ReactElement {
+function Passwords() {
   const { t } = useTranslation('modules.passwords')
   const { userData } = useAuth()
   const {

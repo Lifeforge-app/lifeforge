@@ -2,7 +2,7 @@ import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ConfigColumn } from '@lifeforge/ui'
@@ -88,7 +88,7 @@ const addFontsToStylesheet = (fonts: IFontFamily[]) => {
   })
 }
 
-function FontFamilySelector(): React.ReactElement {
+function FontFamilySelector() {
   const { componentBgWithHover } = useComponentBg()
   const { fontFamily, setFontFamily } = usePersonalization()
   const [allFonts, setAllFonts] = useState<IFontFamily[]>([])

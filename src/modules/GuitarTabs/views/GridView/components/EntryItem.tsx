@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
-import React from 'react'
 import { toast } from 'react-toastify'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
@@ -26,11 +25,11 @@ function EntryItem({
   setExistingEntry: (value: IGuitarTabsEntry) => void
   setDeleteConfirmationModalOpen: (value: boolean) => void
   queryKey: unknown[]
-}): React.ReactElement {
+}) {
   const queryClient = useQueryClient()
   const { componentBgWithHover } = useComponentBg()
 
-  async function favouriteTab(): Promise<void> {
+  async function favouriteTab() {
     try {
       await fetchAPI(`guitar-tabs/entries/favourite/${entry.id}`, {
         method: 'POST'

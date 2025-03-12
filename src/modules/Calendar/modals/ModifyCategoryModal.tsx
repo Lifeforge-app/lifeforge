@@ -1,5 +1,5 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
@@ -19,7 +19,7 @@ function ModifyCategoryModal({
   openType,
   setOpenType,
   existedData
-}: ModifyCategoryModalProps): React.ReactElement {
+}: ModifyCategoryModalProps) {
   const modalRef = useRef<HTMLDivElement>(null)
   const innerOpenType = useDebounce(openType, openType === null ? 300 : 0)
   const [data, setData] = useState<ICalendarCategoryFormState>({

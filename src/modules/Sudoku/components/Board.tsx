@@ -1,9 +1,8 @@
 import clsx from 'clsx'
-import React from 'react'
 
 import { type SudokuBoard } from '../interfaces/sudoku_interfaces'
 
-function Board({ data }: { data: SudokuBoard }): React.ReactElement {
+function Board({ data }: { data: SudokuBoard }) {
   return (
     <div className="aspect-square size-full p-4">
       <div className="relative grid size-full grid-cols-9 border-[3px] border-zinc-800 dark:border-zinc-100 print:border-black">

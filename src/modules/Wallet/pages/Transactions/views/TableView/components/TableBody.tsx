@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 import { type IWalletTransaction } from '../../../../../interfaces/wallet_interfaces'
@@ -30,7 +28,7 @@ function TableBody({
   setDeleteTransactionsConfirmationOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
-}): React.ReactElement {
+}) {
   const {
     assets,
     ledgers,

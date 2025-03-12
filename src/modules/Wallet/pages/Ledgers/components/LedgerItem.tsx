@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
@@ -26,7 +25,7 @@ function LedgerItem({
   setDeleteLedgersConfirmationOpen: React.Dispatch<
     React.SetStateAction<boolean>
   >
-}): React.ReactElement {
+}) {
   const { t } = useTranslation('modules.wallet')
   const { componentBgWithHover } = useComponentBg()
   const navigate = useNavigate()
