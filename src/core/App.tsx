@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import 'react-tooltip/dist/react-tooltip.css'
 import 'react-virtualized/styles.css'
 
+import '@lifeforge/ui/dist/index.css'
+
 import Providers from './Providers.tsx'
 import './i18n'
 import AppRouter from './routes/Router.tsx'

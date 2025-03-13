@@ -1,6 +1,11 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
-import { Button, EmptyStateScreen, LoadingScreen } from '@lifeforge/ui'
+import {
+  Button,
+  EmptyStateScreen,
+  LifeforgeUIProvider,
+  LoadingScreen
+} from '@lifeforge/ui'
 
 import { initLocale } from '../i18n'
 
@@ -67,35 +72,37 @@ export default function APIOnlineStatusProvider({
 
   if (isOnline === false) {
     return (
-      <EmptyStateScreen
-        customCTAButton={
-          <Button
-            className="bg-black! text-white!"
-            icon="tabler:refresh"
-            onClick={() => {
-              setIsOnline('loading')
-              checkAPIStatus()
-                .then(status => {
-                  if (status !== false) {
-                    initLocale()
-                  }
-                  setEnvironment(status === false ? null : status)
-                  setIsOnline(status !== false)
-                })
-                .catch(() => {
-                  setIsOnline(false)
-                })
-            }}
-          >
-            Retry
-          </Button>
-        }
-        description="The API is currently offline. Please try again later. If you are the developer, please check the API status."
-        icon="tabler:wifi-off"
-        name={false}
-        namespace={false}
-        title="API is Offline"
-      />
+      <LifeforgeUIProvider>
+        <EmptyStateScreen
+          customCTAButton={
+            <Button
+              className="bg-black! text-white!"
+              icon="tabler:refresh"
+              onClick={() => {
+                setIsOnline('loading')
+                checkAPIStatus()
+                  .then(status => {
+                    if (status !== false) {
+                      initLocale()
+                    }
+                    setEnvironment(status === false ? null : status)
+                    setIsOnline(status !== false)
+                  })
+                  .catch(() => {
+                    setIsOnline(false)
+                  })
+              }}
+            >
+              Retry
+            </Button>
+          }
+          description="The API is currently offline. Please try again later. If you are the developer, please check the API status."
+          icon="tabler:wifi-off"
+          name={false}
+          namespace={false}
+          title="API is Offline"
+        />
+      </LifeforgeUIProvider>
     )
   }
 
