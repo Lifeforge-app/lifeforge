@@ -28,6 +28,7 @@
 - **UI**: Started integrating Storybook for visualizing and documenting the deisgn system.
 - **UI**: Removed `CreateOrUpdateButton` component.
 - **UI**: Restructured the props of **HamburgerMenu** and remove redundant props.
+- **API**: Renamed `uplaods` folder to `medium`.
 
 ---
 
