@@ -1,4 +1,3 @@
-import { hexToRgba, hsvaToRgba, rgbaToHsva } from '@uiw/react-color'
 import Gradient from 'javascript-color-gradient'
 import tinycolor from 'tinycolor2'
 
@@ -10,11 +9,11 @@ export function getColorPalette(
   let finalColor = color
 
   if (type === 'bg') {
-    const { r, g, b } = hexToRgba(color)
-    let { h, s, v: l } = rgbaToHsva({ r, g, b, a: 1 })
-    l = theme === 'dark' ? 0.4 : 0.7
-    const { r: r2, g: g2, b: b2 } = hsvaToRgba({ h, s, v: l, a: 1 })
-    finalColor = tinycolor({ r: r2, g: g2, b: b2 }).toHexString()
+    const colorInstance = tinycolor(color).toHsl()
+
+    colorInstance.l = theme === 'dark' ? 0.4 : 0.7
+
+    finalColor = tinycolor(colorInstance).toHexString()
   }
 
   const gradientArray = new Gradient()
@@ -53,7 +52,7 @@ export function interpolateColors(
   Object.entries(colorPalette).forEach(([key, value]) => {
     document.body.style.setProperty(
       `--color-${type === 'bg' ? 'bg' : 'custom'}-${key}`,
-      `rgb(${Object.values(hexToRgba(value)).slice(0, -1).join(' ')})`
+      tinycolor(value).toRgbString()
     )
   })
 }
