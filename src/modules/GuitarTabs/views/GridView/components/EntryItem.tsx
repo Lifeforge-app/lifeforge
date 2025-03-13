@@ -35,15 +35,7 @@ function EntryItem({
         method: 'POST'
       })
 
-      queryClient.setQueryData(queryKey, (data: IGuitarTabsEntry[]) => {
-        return data.map(item => {
-          if (item.id === entry.id) {
-            return { ...item, isFavourite: !item.isFavourite }
-          }
-
-          return item
-        })
-      })
+      queryClient.invalidateQueries({ queryKey })
     } catch {
       toast.error('Failed to add to favourites')
     }
