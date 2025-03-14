@@ -29,12 +29,12 @@ export default function TodoList() {
           <APIFallbackComponent data={entries}>
             {entries => (
               <div className="flex flex-1 flex-col">
-                <ul className="flex flex-1 flex-col gap-4 px-4 pb-4">
+                <ul className="flex flex-1 flex-col gap-4">
                   {entries.length > 0 ? (
                     entries.map(entry => (
                       <TaskItem
                         key={entry.id}
-                        isOuter
+                        isInDashboardWidget
                         lighter
                         entries={entries}
                         entry={entry}
