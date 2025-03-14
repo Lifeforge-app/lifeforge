@@ -28,7 +28,6 @@ function PasswordColumn() {
   return (
     <ConfigColumn
       desc={t('settings.desc.password')}
-      hasDivider={false}
       icon="tabler:key"
       title={t('settings.title.password')}
     >

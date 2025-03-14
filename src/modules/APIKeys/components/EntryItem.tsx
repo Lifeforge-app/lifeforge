@@ -6,9 +6,9 @@ import { toast } from 'react-toastify'
 
 import { Button, ConfigColumn, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { decrypt, encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
 
+import { decrypt, encrypt } from '../../../core/security/utils/encryption'
 import { type IAPIKeyEntry } from '../interfaces/api_keys_interfaces'
 import { fetchChallenge } from '../utils/fetchChallenge'
 

@@ -75,7 +75,6 @@ function CalendarModule() {
         <LayoutWithSidebar>
           <Sidebar
             categoriesQuery={categoriesQuery}
-            events={events}
             modifyCategoryModalOpenType={modifyCategoryOpenType}
             setDeleteCategoryConfirmationModalOpen={
               setDeleteCategoryConfirmationModalOpen

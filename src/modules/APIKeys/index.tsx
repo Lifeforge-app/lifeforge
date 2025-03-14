@@ -1,25 +1,25 @@
 import { useAuth } from '@providers/AuthProvider'
+import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
+import LockedScreen from '@security/components/LockedScreen'
+import OTPScreen from '@security/components/OTPScreen'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
   Button,
-  CreatePasswordScreen,
   DeleteConfirmationModal,
   FAB,
-  LockedScreen,
   ModuleHeader,
   ModuleWrapper,
-  OTPScreen,
   QueryWrapper
 } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 
-import { encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
 
+import { encrypt } from '../../core/security/utils/encryption'
 import EntryItem from './components/EntryItem'
 import ModifyAPIKeyModal from './components/ModifyAPIKeyModal'
 import { type IAPIKeyEntry } from './interfaces/api_keys_interfaces'
