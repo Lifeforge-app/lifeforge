@@ -11,7 +11,7 @@ import { type IIdeaBoxEntry } from '../../../../../../../../interfaces/ideabox_i
 function EntryContent({ entry }: { entry: IIdeaBoxEntry }) {
   const { componentBgLighterWithHover } = useComponentBg()
   const OGQuery = useQuery<Record<string, any>>({
-    queryKey: ['idea-box', 'og', entry.id],
+    queryKey: ['idea-box', 'og', entry.id, entry.content],
     queryFn: () =>
       fetchAPI(`idea-box/og-data/${entry.id}`, {
         raiseError: false

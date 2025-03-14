@@ -62,7 +62,7 @@ function EntryLink({ entry }: { entry: IIdeaBoxEntry }) {
         )}
         <EntryContextMenu entry={entry} />
       </div>
-      <EntryContent entry={entry} />
+      <EntryContent key={entry.content} entry={entry} />
       <span className="text-bg-500 text-sm">
         {moment(entry.created).fromNow()}
       </span>
