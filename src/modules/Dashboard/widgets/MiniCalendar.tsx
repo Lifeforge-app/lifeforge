@@ -1,8 +1,9 @@
 import moment from 'moment'
 import { useState } from 'react'
 
-import { APIFallbackComponent, DashboardItem } from '@lifeforge/ui'
+import { DashboardItem, QueryWrapper } from '@lifeforge/ui'
 
+import useAPIQuery from '@hooks/useAPIQuery'
 import useFetch from '@hooks/useFetch'
 
 import MiniCalendarContent from '../../Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
@@ -16,31 +17,46 @@ export default function MiniCalendar() {
   const [currentMonth, setCurrentMonth] = useState(moment().month())
   const [currentYear, setCurrentYear] = useState(moment().year())
 
-  const [events] = useFetch<ICalendarEvent[]>('calendar/events')
+  const startDate = moment()
+    .year(currentYear)
+    .month(currentMonth)
+    .startOf('month')
+    .format('YYYY-MM-DD')
+  const endDate = moment()
+    .year(currentYear)
+    .month(currentMonth)
+    .endOf('month')
+    .format('YYYY-MM-DD')
+
+  const eventsQuery = useAPIQuery<ICalendarEvent[]>(
+    `calendar/events?start=${startDate}&end=${endDate}`,
+    ['calendar', 'events', currentYear, currentMonth]
+  )
+
   const [categories] = useFetch<ICalendarCategory[]>('calendar/categories')
 
   return (
     <DashboardItem icon="tabler:calendar" title="mini Calendar">
-      <APIFallbackComponent data={events}>
-        {events => (
-          <div className="size-full">
-            <div className="px-2">
-              <MiniCalendarHeader
-                currentMonth={currentMonth}
-                currentYear={currentYear}
-                setCurrentMonth={setCurrentMonth}
-                setCurrentYear={setCurrentYear}
-              />
-            </div>
+      <div className="size-full">
+        <div className="px-2">
+          <MiniCalendarHeader
+            currentMonth={currentMonth}
+            currentYear={currentYear}
+            setCurrentMonth={setCurrentMonth}
+            setCurrentYear={setCurrentYear}
+          />
+        </div>
+        <QueryWrapper query={eventsQuery}>
+          {events => (
             <MiniCalendarContent
               categories={categories}
               currentMonth={currentMonth}
               currentYear={currentYear}
               events={events}
             />
-          </div>
-        )}
-      </APIFallbackComponent>
+          )}
+        </QueryWrapper>
+      </div>
     </DashboardItem>
   )
 }
