@@ -29,6 +29,8 @@
 - **UI**: Removed `CreateOrUpdateButton` component.
 - **UI**: Restructured the props of **HamburgerMenu** and remove redundant props.
 - **API**: Renamed `uplaods` folder to `medium`.
+- **API**: Splitted the subroutes for `/users` route into multiple files.
+- **API**: Continued working on Controller + Service refactoring.
 
 ---
 
