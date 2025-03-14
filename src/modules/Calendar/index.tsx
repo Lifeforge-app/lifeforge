@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import moment from 'moment'
+import { useEffect, useMemo, useState } from 'react'
 
 import {
   ContentWrapperWithSidebar,
@@ -11,7 +11,7 @@ import {
   Scrollbar
 } from '@lifeforge/ui'
 
-import fetchAPI from '@utils/fetchAPI'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
@@ -24,14 +24,11 @@ import ModifyEventModal from './modals/ModifyEventModal'
 
 function CalendarModule() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const rawEventsQuery = useQuery<ICalendarEvent[]>({
-    queryKey: ['calendar', 'events'],
-    queryFn: () => fetchAPI('calendar/events')
-  })
-  const categoriesQuery = useQuery<ICalendarCategory[]>({
-    queryKey: ['calendar', 'categories'],
-    queryFn: () => fetchAPI('calendar/categories')
-  })
+
+  const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
+    'calendar/categories',
+    ['calendar', 'categories']
+  )
   const [events, setEvents] = useState<ICalendarEvent[]>([])
   const [modifyEventModalOpenType, setModifyEventModalOpenType] = useState<
     'create' | 'update' | null
@@ -46,6 +43,18 @@ function CalendarModule() {
   >(null)
   const [existedCategoryData, setExistedCategoryData] =
     useState<ICalendarCategory | null>(null)
+  const [start, setStart] = useState(
+    moment().startOf('month').format('YYYY-MM-DD')
+  )
+  const [end, setEnd] = useState(moment().endOf('month').format('YYYY-MM-DD'))
+  const eventQueryKey = useMemo(
+    () => ['calendar', 'events', start, end],
+    [start, end]
+  )
+  const rawEventsQuery = useAPIQuery<ICalendarEvent[]>(
+    `calendar/events?start=${start}&end=${end}`,
+    eventQueryKey
+  )
 
   useEffect(() => {
     if (rawEventsQuery.isSuccess && rawEventsQuery.data) {
@@ -84,8 +93,11 @@ function CalendarModule() {
                     <CalendarComponent
                       categories={categories}
                       events={events}
+                      queryKey={eventQueryKey}
+                      setEnd={setEnd}
                       setExistedData={setExistedData}
                       setModifyEventModalOpenType={setModifyEventModalOpenType}
+                      setStart={setStart}
                     />
                   )}
                 </QueryWrapper>
