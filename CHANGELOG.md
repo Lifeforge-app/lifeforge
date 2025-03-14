@@ -31,6 +31,7 @@
 - **API**: Renamed `uplaods` folder to `medium`.
 - **API**: Splitted the subroutes for `/users` route into multiple files.
 - **API**: Continued working on Controller + Service refactoring.
+- **Idea Box**: Fixed bugs where link content doesn't get updated, and OG data remains the same after updating link.
 
 ---
 
