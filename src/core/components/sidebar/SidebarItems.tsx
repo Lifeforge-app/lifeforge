@@ -62,7 +62,7 @@ function SidebarItems({ query }: { query: string }) {
                     autoActive
                     isMainSidebarItem
                     icon={subItem.icon ?? ''}
-                    name={subItem.name}
+                    name={subItem.name.replace('-', ' ')}
                     prefix={item.prefix}
                     showAIIcon={subItem.hasAI === true}
                     sidebarExpanded={sidebarExpanded}

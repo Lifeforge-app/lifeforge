@@ -48,7 +48,7 @@ export default function PomodoroTimer() {
                         entries.map(entry => (
                           <TaskItem
                             key={entry.id}
-                            isOuter
+                            isInDashboardWidget
                             lighter
                             entries={entries}
                             entry={entry}

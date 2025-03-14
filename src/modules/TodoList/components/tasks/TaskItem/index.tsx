@@ -1,5 +1,7 @@
 import clsx from 'clsx'
 
+import { Checkbox } from '@lifeforge/ui'
+
 import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
 
 import { type Loadable } from '@interfaces/common'
@@ -10,7 +12,6 @@ import fetchAPI from '@utils/fetchAPI'
 
 import { type ITodoListEntry } from '../../../interfaces/todo_list_interfaces'
 import SubtaskItem from './components/SubtaskItem'
-import TaskCompletionCheckbox from './components/TaskCompletionCheckbox'
 import TaskDueDate from './components/TaskDueDate'
 import TaskHeader from './components/TaskHeader'
 import TaskTags from './components/TaskTags'
@@ -18,14 +19,14 @@ import TaskTags from './components/TaskTags'
 function TaskItem({
   entry,
   lighter,
-  isOuter,
+  isInDashboardWidget,
   entries,
   setEntries,
   refreshEntries
 }: {
   entry: ITodoListEntry
   lighter?: boolean
-  isOuter?: boolean
+  isInDashboardWidget?: boolean
   entries?: ITodoListEntry[]
   setEntries?: React.Dispatch<React.SetStateAction<Loadable<ITodoListEntry[]>>>
   refreshEntries?: () => void
@@ -44,7 +45,7 @@ function TaskItem({
   async function toggleTaskCompletion() {
     if (typeof innerEntries === 'string') return
 
-    if (!isOuter) {
+    if (!isInDashboardWidget) {
       setInnerEntries(
         innerEntries.map(e =>
           e.id === entry.id
@@ -76,7 +77,7 @@ function TaskItem({
       })
 
       setTimeout(() => {
-        if (!isOuter) {
+        if (!isInDashboardWidget) {
           refreshInnerEntries()
         } else {
           if (refreshEntries) {
@@ -86,7 +87,7 @@ function TaskItem({
         refreshStatusCounter()
       }, 500)
     } catch {
-      if (!isOuter) {
+      if (!isInDashboardWidget) {
         refreshInnerEntries()
       } else {
         if (refreshEntries) {
@@ -105,7 +106,7 @@ function TaskItem({
           lighter ? 'bg-bg-100/50 dark:bg-bg-800' : componentBgWithHover
         )}
       >
-        <div className="flex items-center gap-4">
+        <div className="flex items-center w-full min-w-0 gap-4">
           {typeof lists !== 'string' && entry.list !== '' && (
             <span
               className="h-10 w-1 shrink-0 rounded-full"
@@ -114,7 +115,7 @@ function TaskItem({
               }}
             />
           )}
-          <div>
+          <div className="w-full min-w-0">
             <TaskHeader entry={entry} />
             {(entry.due_date || entry.tags.length > 0) && (
               <div className="mt-1 flex items-center gap-2">
@@ -124,19 +125,19 @@ function TaskItem({
             )}
           </div>
         </div>
+        <Checkbox
+          checked={entry.done}
+          onChange={() => {
+            toggleTaskCompletion()
+          }}
+        />
         <button
           className="absolute left-0 top-0 size-full"
           onClick={() => {
-            if (!isOuter) {
+            if (!isInDashboardWidget) {
               setModifyTaskWindowOpenType('update')
               setSelectedTask(entry)
             }
-          }}
-        />
-        <TaskCompletionCheckbox
-          entry={entry}
-          toggleTaskCompletion={() => {
-            toggleTaskCompletion().catch(console.error)
           }}
         />
       </li>

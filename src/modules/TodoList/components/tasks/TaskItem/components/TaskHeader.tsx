@@ -8,8 +8,8 @@ function TaskHeader({ entry }: { entry: ITodoListEntry }) {
   if (typeof priorities === 'string') return <></>
 
   return (
-    <div className="flex items-center gap-2 font-semibold">
-      <span>{entry.summary}</span>
+    <div className="flex items-center w-full min-w-0 gap-2 font-semibold">
+      <span className="truncate min-w-0">{entry.summary}</span>
       {entry.priority !== '' && (
         <span
           className="-mb-1 block size-2 shrink-0 rounded-full"

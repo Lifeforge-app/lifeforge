@@ -88,7 +88,7 @@ function ContainerItem({
       />
       <HamburgerMenu
         classNames={{
-          wrapper: 'absolute z-[9999] right-4 top-4'
+          wrapper: 'absolute z-[100] right-4 top-4'
         }}
       >
         <MenuItem

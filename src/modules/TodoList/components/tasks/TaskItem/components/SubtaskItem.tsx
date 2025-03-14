@@ -1,11 +1,12 @@
 import { toast } from 'react-toastify'
 
+import { Checkbox } from '@lifeforge/ui'
+
 import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
 
 import fetchAPI from '@utils/fetchAPI'
 
 import type { ITodoSubtask } from '../../../../interfaces/todo_list_interfaces'
-import TaskCompletionCheckbox from './TaskCompletionCheckbox'
 
 function SubtaskItem({
   entry,
@@ -53,12 +54,7 @@ function SubtaskItem({
   return (
     <div className="flex-between bg-bg-50 shadow-custom dark:bg-bg-900 flex rounded-md p-6">
       {entry.title}
-      <TaskCompletionCheckbox
-        entry={entry}
-        toggleTaskCompletion={() => {
-          toggleSubTaskCompletion().catch(console.error)
-        }}
-      />
+      <Checkbox checked={entry.done} onChange={toggleSubTaskCompletion} />
     </div>
   )
 }
