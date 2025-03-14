@@ -30,7 +30,8 @@ export default defineConfig({
       '@hooks': path.resolve(__dirname, './src/core/hooks'),
       '@interfaces': path.resolve(__dirname, './src/core/interfaces'),
       '@utils': path.resolve(__dirname, './src/core/utils'),
-      '@modules': path.resolve(__dirname, './src/modules')
+      '@modules': path.resolve(__dirname, './src/modules'),
+      '@security': path.resolve(__dirname, './src/core/security')
     }
   },
   build: {

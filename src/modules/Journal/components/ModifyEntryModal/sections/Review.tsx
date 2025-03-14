@@ -4,9 +4,9 @@ import { toast } from 'react-toastify'
 
 import { Button } from '@lifeforge/ui'
 
-import { encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
 
+import { encrypt } from '../../../../../core/security/utils/encryption'
 import JournalView from '../../JournalView'
 
 function Review({

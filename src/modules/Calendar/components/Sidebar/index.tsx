@@ -2,15 +2,11 @@ import { UseQueryResult } from '@tanstack/react-query'
 
 import { QueryWrapper, SidebarWrapper } from '@lifeforge/ui'
 
-import {
-  type ICalendarCategory,
-  type ICalendarEvent
-} from '../../interfaces/calendar_interfaces'
+import { type ICalendarCategory } from '../../interfaces/calendar_interfaces'
 import CategoryList from './components/CategoryList'
 import MiniCalendar from './components/MiniCalendar'
 
 function Sidebar({
-  events,
   categoriesQuery,
   sidebarOpen,
   setSidebarOpen,
@@ -18,7 +14,6 @@ function Sidebar({
   setExistedData,
   setDeleteCategoryConfirmationModalOpen
 }: {
-  events: ICalendarEvent[]
   categoriesQuery: UseQueryResult<ICalendarCategory[]>
   sidebarOpen: boolean
   setSidebarOpen: (value: boolean) => void
@@ -36,7 +31,7 @@ function Sidebar({
       <QueryWrapper query={categoriesQuery}>
         {categories => (
           <>
-            <MiniCalendar categories={categories} events={events} />
+            <MiniCalendar categories={categories} />
             <CategoryList
               categories={categories}
               setDeleteCategoryConfirmationModalOpen={

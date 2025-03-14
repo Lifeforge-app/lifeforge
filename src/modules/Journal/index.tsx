@@ -1,23 +1,23 @@
 import { useAuth } from '@providers/AuthProvider'
+import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
+import LockedScreen from '@security/components/LockedScreen'
+import OTPScreen from '@security/components/OTPScreen'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import {
   Button,
-  CreatePasswordScreen,
   DeleteConfirmationModal,
-  LockedScreen,
   ModuleHeader,
-  ModuleWrapper,
-  OTPScreen
+  ModuleWrapper
 } from '@lifeforge/ui'
 
 import { type Loadable } from '@interfaces/common'
 
-import { encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
 
+import { encrypt } from '../../core/security/utils/encryption'
 import JournalList from './components/JournalList'
 import JournalViewModal from './components/JournalViewModal'
 import ModifyJournalEntryModal from './components/ModifyEntryModal'

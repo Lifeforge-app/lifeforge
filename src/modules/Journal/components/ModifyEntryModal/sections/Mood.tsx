@@ -4,8 +4,9 @@ import { toast } from 'react-toastify'
 
 import { Button, TextInput } from '@lifeforge/ui'
 
-import { encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
+
+import { encrypt } from '../../../../../core/security/utils/encryption'
 
 function Mood({
   setStep,

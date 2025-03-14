@@ -4,9 +4,9 @@ import { toast } from 'react-toastify'
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
 
-import { decrypt, encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
 
+import { decrypt, encrypt } from '../../../core/security/utils/encryption'
 import {
   type IAPIKeyEntry,
   IAPIKeyFormState
