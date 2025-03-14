@@ -17,7 +17,7 @@ import {
 } from '../../Calendar/interfaces/calendar_interfaces'
 
 export default function TodaysEvent() {
-  const [rawEvents] = useFetch<ICalendarEvent[]>('calendar/events')
+  const [rawEvents] = useFetch<ICalendarEvent[]>('calendar/events/today')
   const [categories] = useFetch<ICalendarCategory[]>('calendar/categories')
 
   return (

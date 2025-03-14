@@ -20,19 +20,25 @@ const localizer = momentLocalizer(moment)
 const DnDCalendar: any = withDragAndDrop(Calendar)
 
 interface CalendarComponentProps {
+  queryKey: unknown[]
   events: ICalendarEvent[]
   categories: Loadable<ICalendarCategory[]>
   setModifyEventModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
   setExistedData: React.Dispatch<React.SetStateAction<ICalendarEvent | null>>
+  setStart: React.Dispatch<React.SetStateAction<string>>
+  setEnd: React.Dispatch<React.SetStateAction<string>>
 }
 
 function CalendarComponent({
+  queryKey,
   events,
   categories,
   setModifyEventModalOpenType,
-  setExistedData
+  setExistedData,
+  setStart,
+  setEnd
 }: CalendarComponentProps) {
   const [searchParams] = useSearchParams()
   const queryClient = useQueryClient()
@@ -46,21 +52,18 @@ function CalendarComponent({
     start: Date
     end: Date
   }) {
-    queryClient.setQueryData(
-      ['calendar', 'events'],
-      (prevEvents: ICalendarEvent[]) => {
-        return prevEvents.map(prevEvent => {
-          if (prevEvent.id === event.id) {
-            return {
-              ...prevEvent,
-              start,
-              end
-            }
+    queryClient.setQueryData(queryKey, (prevEvents: ICalendarEvent[]) => {
+      return prevEvents.map(prevEvent => {
+        if (prevEvent.id === event.id) {
+          return {
+            ...prevEvent,
+            start,
+            end
           }
-          return prevEvent
-        })
-      }
-    )
+        }
+        return prevEvent
+      })
+    })
 
     try {
       await fetchAPI<ICalendarEvent>(`calendar/events/${event.id}`, {
@@ -73,7 +76,9 @@ function CalendarComponent({
         }
       })
     } catch {
-      queryClient.invalidateQueries({ queryKey: ['calendar', 'events'] })
+      queryClient.invalidateQueries({
+        queryKey: queryKey
+      })
     }
   }
 
@@ -137,6 +142,10 @@ function CalendarComponent({
       }}
       onEventResize={(e: any) => {
         updateEvent(e).catch(console.error)
+      }}
+      onRangeChange={({ start, end }: { start: Date; end: Date }) => {
+        setStart(moment(start).format('YYYY-MM-DD'))
+        setEnd(moment(end).format('YYYY-MM-DD'))
       }}
       onSelectSlot={handleSelectSlot}
     />
