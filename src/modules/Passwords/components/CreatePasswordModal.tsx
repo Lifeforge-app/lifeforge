@@ -16,9 +16,9 @@ import {
 
 import { usePasswordContext } from '@modules/Passwords/providers/PasswordsProvider'
 
-import { encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
 
+import { encrypt } from '../../../core/security/utils/encryption'
 import { IPasswordFormState } from '../interfaces/password_interfaces'
 
 function CreatePasswordModal() {

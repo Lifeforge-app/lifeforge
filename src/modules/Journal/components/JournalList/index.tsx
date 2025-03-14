@@ -10,9 +10,9 @@ import {
 
 import { type Loadable } from '@interfaces/common'
 
-import { encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
 
+import { encrypt } from '../../../../core/security/utils/encryption'
 import { type IJournalEntry } from '../../interfaces/journal_interfaces'
 import JournalListItem from './components/JournalListItem'
 

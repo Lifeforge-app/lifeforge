@@ -96,7 +96,8 @@ export default [
             ['@hooks', path.resolve(srcPath, 'core/hooks')],
             ['@interfaces', path.resolve(srcPath, 'core/interfaces')],
             ['@utils', path.resolve(srcPath, 'core/utils')],
-            ['@modules', path.resolve(srcPath, 'modules')]
+            ['@modules', path.resolve(srcPath, 'modules')],
+            ['@security', path.resolve(srcPath, 'core/security')]
           ]
         }
       },

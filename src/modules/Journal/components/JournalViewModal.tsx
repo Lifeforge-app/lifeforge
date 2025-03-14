@@ -6,8 +6,7 @@ import { APIFallbackComponent, ModalHeader, ModalWrapper } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 
-import { encrypt } from '@utils/encryption'
-
+import { encrypt } from '../../../core/security/utils/encryption'
 import { type IJournalEntry } from '../interfaces/journal_interfaces'
 import JournalView from './JournalView'
 

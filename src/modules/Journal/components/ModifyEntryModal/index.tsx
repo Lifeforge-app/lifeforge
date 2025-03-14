@@ -5,9 +5,9 @@ import { toast } from 'react-toastify'
 
 import { DateInput, ModalHeader, ModalWrapper, TextInput } from '@lifeforge/ui'
 
-import { encrypt } from '@utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
 
+import { encrypt } from '../../../../core/security/utils/encryption'
 import { type IJournalEntry } from '../../interfaces/journal_interfaces'
 import Cleanup from './sections/Cleanup'
 import Mood from './sections/Mood'
