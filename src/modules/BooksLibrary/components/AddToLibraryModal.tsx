@@ -1,14 +1,13 @@
-import { useEffect, useReducer } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { FormModal } from '@lifeforge/ui'
-import { type IFieldProps } from '@lifeforge/ui'
+import { FormModal, type IFieldProps } from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { type IBooksLibraryEntry } from '../interfaces/books_library_interfaces'
+import { IBooksLibraryFormSate } from '../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function AddToLibraryModal({
@@ -24,14 +23,37 @@ function AddToLibraryModal({
     categories: { data: categories },
     languages: { data: languages }
   } = useBooksLibraryContext()
-  const [fetchedData] = useFetch<IBooksLibraryEntry>(
-    `books-library/libgen/local-library-data/${md5}`,
-    md5 !== null
-  )
+  const [fetchedData] = useFetch<{
+    md5: string
+    thumbnail: string
+    authors: string
+    edition: string
+    extension: string
+    isbn: string
+    languages: string[]
+    publisher: string
+    size: string
+    title: string
+    year_published: string
+  }>(`books-library/libgen/local-library-data/${md5}`, md5 !== null)
 
-  const [data, setData] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
+  const [data, setData] = useState<IBooksLibraryFormSate>({
+    authors: '',
+    category: '',
+    edition: '',
+    extension: '',
+    isbn: '',
+    languages: [],
+    md5: '',
+    publisher: '',
+    size: '',
+    thumbnail: '',
+    title: '',
+    year_published: ''
+  })
+
+  useEffect(() => {
+    setData({
       authors: '',
       category: '',
       edition: '',
@@ -44,27 +66,10 @@ function AddToLibraryModal({
       thumbnail: '',
       title: '',
       year_published: ''
-    }
-  )
-
-  useEffect(() => {
-    setData({
-      authors: '',
-      category: '',
-      edition: '',
-      extension: '',
-      isbn: '',
-      languages: [],
-      md5,
-      publisher: '',
-      size: '',
-      thumbnail: '',
-      title: '',
-      year_published: ''
     })
   }, [md5])
 
-  const FIELDS: IFieldProps<typeof data>[] = [
+  const FIELDS: IFieldProps<IBooksLibraryFormSate>[] = [
     {
       id: 'md5',
       label: 'MD5',
@@ -186,7 +191,8 @@ function AddToLibraryModal({
           .filter(lang =>
             fetchedData.languages.some(name => name === lang.name)
           )
-          .map(lang => lang.id)
+          .map(lang => lang.id),
+        category: ''
       })
     }
   }, [fetchedData, languages])

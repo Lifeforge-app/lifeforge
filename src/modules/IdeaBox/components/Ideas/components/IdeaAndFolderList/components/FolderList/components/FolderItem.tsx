@@ -95,7 +95,14 @@ function FolderItem({ folder }: FolderItemProps) {
         method: 'POST'
       })
       queryClient.setQueryData(
-        ['idea-box', type === 'idea' ? 'ideas' : 'folders', id, path],
+        (
+          [
+            'idea-box',
+            type === 'idea' ? 'ideas' : 'folders',
+            id,
+            path
+          ] as unknown[]
+        ).concat(type === 'idea' ? [false] : []),
         (prev: IIdeaBoxEntry[] | IIdeaBoxFolder[]) =>
           prev.filter(item => item.id !== targetId)
       )

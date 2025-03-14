@@ -304,6 +304,13 @@ function ModifyIdeaModal() {
       />
       <Button
         className="mt-6"
+        disabled={
+          (innerTypeOfModifyIdea === 'text' &&
+            ideaContent.trim().length === 0) ||
+          (innerTypeOfModifyIdea === 'link' &&
+            (ideaLink.trim().length === 0 ||
+              !ideaLink.match(/^http(s)?:\/\/.+/)))
+        }
         icon={
           !loading
             ? {

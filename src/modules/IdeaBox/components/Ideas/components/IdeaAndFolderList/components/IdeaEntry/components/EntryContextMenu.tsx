@@ -25,6 +25,18 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
   const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
   async function pinIdea() {
+    const updateFunc = (prev: IIdeaBoxEntry[]) =>
+      prev
+        .map(idea =>
+          idea.id === entry.id ? { ...idea, pinned: !idea.pinned } : idea
+        )
+        .sort((a, b) => {
+          if (a.pinned === b.pinned) {
+            return a.created < b.created ? 1 : -1
+          }
+          return a.pinned ? -1 : 1
+        })
+
     try {
       await fetchAPI(`idea-box/ideas/pin/${entry.id}`, {
         method: 'POST'
@@ -32,17 +44,12 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
 
       queryClient.setQueryData(
         ['idea-box', 'ideas', id!, path!, viewArchived],
-        (prev: IIdeaBoxEntry[]) =>
-          prev
-            .map(idea =>
-              idea.id === entry.id ? { ...idea, pinned: !idea.pinned } : idea
-            )
-            .sort((a, b) => {
-              if (a.pinned === b.pinned) {
-                return a.created < b.created ? 1 : -1
-              }
-              return a.pinned ? -1 : 1
-            })
+        updateFunc
+      )
+
+      queryClient.setQueryData(
+        ['idea-box', 'search', id, path, selectedTags, debouncedSearchQuery],
+        updateFunc
       )
     } catch {
       toast.error(`Failed to ${entry.pinned ? 'unpin' : 'pin'} idea`)
