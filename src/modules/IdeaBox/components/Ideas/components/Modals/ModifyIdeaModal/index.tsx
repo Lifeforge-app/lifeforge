@@ -175,8 +175,10 @@ function ModifyIdeaModal() {
             innerOpenType === 'update'
               ? {
                   title: ideaTitle.trim(),
-                  content: ideaContent.trim(),
-                  link: ideaLink.trim(),
+                  content:
+                    innerTypeOfModifyIdea === 'text'
+                      ? ideaContent.trim()
+                      : ideaLink.trim(),
                   type: innerTypeOfModifyIdea,
                   tags: ideaTags
                 }
@@ -184,30 +186,23 @@ function ModifyIdeaModal() {
         }
       )
 
-      if (innerOpenType === 'update') {
-        const updateFunc = (prev: IIdeaBoxEntry[]) =>
-          prev.map(idea => (idea.id === existedEntry?.id ? data : idea))
+      const updateFunc = (prev: IIdeaBoxEntry[]) =>
+        innerOpenType === 'update'
+          ? prev.map(idea => (idea.id === existedEntry?.id ? data : idea))
+          : [
+              ...prev.filter(e => e.pinned),
+              data,
+              ...prev.filter(e => !e.pinned)
+            ]
 
-        queryClient.setQueryData(
-          ['idea-box', 'ideas', id, path, viewArchived],
-          updateFunc
-        )
-        queryClient.setQueryData(
-          ['idea-box', 'search', id, path, selectedTags, debouncedSearchQuery],
-          updateFunc
-        )
-      } else {
-        const updateFunc = (prev: IIdeaBoxEntry[]) => [data, ...prev]
-
-        queryClient.setQueryData(
-          ['idea-box', 'ideas', id, path, viewArchived],
-          updateFunc
-        )
-        queryClient.setQueryData(
-          ['idea-box', 'search', id, path, selectedTags, debouncedSearchQuery],
-          updateFunc
-        )
-      }
+      queryClient.setQueryData(
+        ['idea-box', 'ideas', id, path, viewArchived],
+        updateFunc
+      )
+      queryClient.setQueryData(
+        ['idea-box', 'search', id, path, selectedTags, debouncedSearchQuery],
+        updateFunc
+      )
 
       queryClient.invalidateQueries({ queryKey: ['idea-box', 'tags', id] })
       setOpenType(null)
