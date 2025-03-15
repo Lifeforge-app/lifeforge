@@ -20,7 +20,9 @@ function OTPScreen({
 }) {
   const { t } = useTranslation('common.vault')
   const [otpSent, setOtpSent] = useState(false)
-  const [otpId, setOtpId] = useState(localStorage.getItem('otpId') ?? '')
+  const [otpId, setOtpId] = useState(
+    localStorage.getItem(`otpId:${endpoint}`) ?? ''
+  )
   const [otpCooldown, setOtpCooldown] = useState(
     localStorage.getItem(`otpCooldown:${endpoint}`)
       ? Math.floor(
@@ -52,6 +54,7 @@ function OTPScreen({
       setOtpId(data)
       setOtpCooldown(60)
       const coolDown = new Date().getTime() + 60000
+      localStorage.setItem(`otpId:${endpoint}`, data)
       localStorage.setItem(`otpCooldown:${endpoint}`, coolDown.toString())
       toast.success(t('otp.messages.success'))
     } catch {
