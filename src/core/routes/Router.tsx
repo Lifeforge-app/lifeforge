@@ -10,9 +10,9 @@ import { LoadingScreen, NotFoundScreen } from '@lifeforge/ui'
 
 import APIKeyStatusProvider from '@modules/APIKeys/providers/APIKeyStatusProvider'
 
-import { COMPONENTS } from '../Components'
 import MainApplication from '../MainApplication'
 import Auth from '../auth'
+import { COMPONENTS } from './Components'
 import _ROUTES from './constants/routes_config.json'
 import { type IRoutes } from './interfaces/routes_interfaces'
 
