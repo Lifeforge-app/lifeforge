@@ -78,7 +78,7 @@ function SystemStatus() {
             valueKey: 'percent',
             unit: '%',
             description: (data: IMemoryUsage) =>
-              `${prettyBytes(data.used)} / ${prettyBytes(data.total)} used`
+              `${prettyBytes(+data.used)} / ${prettyBytes(+data.total)} used`
           },
           {
             data: cpuTemp,

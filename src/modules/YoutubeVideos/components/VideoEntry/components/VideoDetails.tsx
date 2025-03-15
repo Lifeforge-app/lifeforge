@@ -50,7 +50,7 @@ function VideoDetails({ video }: { video: IYoutubeVideosStorageEntry }) {
         <Icon className="size-1" icon="tabler:circle-filled" />
         <p className="text-bg-500 flex shrink-0 items-center gap-1 whitespace-nowrap">
           <Icon className="mr-1 size-5" icon="tabler:file" />
-          {prettyBytes(video.filesize)}
+          {prettyBytes(+video.filesize)}
         </p>
       </div>
     </div>
