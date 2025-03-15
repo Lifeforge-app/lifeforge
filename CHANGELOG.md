@@ -31,8 +31,10 @@
 - **API**: Renamed `uplaods` folder to `medium`.
 - **API**: Splitted the subroutes for `/users` route into multiple files.
 - **API**: Continued working on Controller + Service refactoring.
-- **Idea Box**: Fixed bugs where link content doesn't get updated, and OG data remains the same after updating link.
+- **Idea Box**: Fixed bugs where link content doesn't get updated, and OG data remains the same after updating the link.
 - **Authentication**: Two-factor authentication via an external authenticator app has been added as a toggable security mechanism.
+- **Authentication**: If a user doesn't have an authenticator app available, they can now choose to perform 2FA with email OTP.
+- **Authentication**: Improved error handling logic.
 
 ---
 
