@@ -1,13 +1,13 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
-import { decrypt } from '@security/utils/encryption'
 import clsx from 'clsx'
 import { cookieParse } from 'pocketbase'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { LoadingScreen } from '@lifeforge/ui'
+
+import { decrypt } from '@security/utils/encryption'
 
 import useComponentBg from '@hooks/useComponentBg'
 

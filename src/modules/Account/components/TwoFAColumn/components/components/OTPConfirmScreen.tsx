@@ -1,9 +1,10 @@
-import OTPInputBox from '@security/components/OTPScreen/components/OTPInputBox'
-import { encrypt } from '@security/utils/encryption'
 import { cookieParse } from 'pocketbase'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+
+import OTPInputBox from '@security/components/OTPScreen/components/OTPInputBox'
+import { encrypt } from '@security/utils/encryption'
 
 import fetchAPI from '@utils/fetchAPI'
 
