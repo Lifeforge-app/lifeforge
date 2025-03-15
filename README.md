@@ -101,7 +101,7 @@ to see how to install and setup.
 
 Lifeforge is currently under active development, with the code structure rapidly changing.
 If you encounter any bugs or issues, please report them
-[here](https://github.com/melvinchia3636lifeforge/issues), and they will be
+[here](https://github.com/Lifeforge-app/lifeforge/issues), and they will be
 addressed promptly.
 
 ## 💡 Inspirations
