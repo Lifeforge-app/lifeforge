@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
+import { DashboardLayoutType } from '@providers/PersonalizationProvider/interfaces/personalization_provider_interfaces'
 import clsx from 'clsx'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -33,7 +34,7 @@ function ComponentListItem({
   }, [enabledWidgets, id])
 
   function addComponent() {
-    const newEnabledWidgets = { ...enabledWidgets }
+    const newEnabledWidgets = JSON.parse(JSON.stringify(enabledWidgets))
 
     if (Object.keys(newEnabledWidgets).length === 0) {
       for (const breakpoint of ['lg', 'md', 'sm', 'xs', 'xxs']) {
@@ -41,15 +42,19 @@ function ComponentListItem({
           {
             x: 0,
             y: 0,
-            w: 4,
-            h: 4,
+            w: minW ?? 4,
+            h: minH ?? 4,
             minW: minW ?? 1,
             minH: minH ?? 1,
             i: id
           }
         ]
       }
-      setEnabledWidgets(newEnabledWidgets)
+      setDashboardLayout(newEnabledWidgets)
+      setTimeout(() => {
+        setReady(true)
+      }, 100)
+
       return
     }
 
@@ -75,14 +80,14 @@ function ComponentListItem({
 
   function removeComponent() {
     const newEnabledWidgets = Object.fromEntries(
-      Object.entries({ ...enabledWidgets }).map(([k, value]) => [
-        k,
-        value.filter(i => i.i !== id)
-      ])
+      Object.entries(
+        JSON.parse(JSON.stringify(enabledWidgets)) as DashboardLayoutType
+      ).map(([k, value]) => [k, value.filter(i => i.i !== id)])
     )
-    setDashboardLayout(newEnabledWidgets)
     if (Object.values(newEnabledWidgets).every(e => e.length === 0)) {
       setDashboardLayout({})
+    } else {
+      setDashboardLayout(newEnabledWidgets)
     }
 
     setTimeout(() => {
