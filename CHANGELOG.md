@@ -38,6 +38,7 @@
 - **Code**: Migrated `VITE_GOOGLE_API_KEY` from `.env` file to the API key vault.
 - **Personalization**: The availability of the font family selector now depends on the presence of `gcloud` key in the API key vault.
 - **UI**: Location selector will now be disabled if there is no `gcloud` key found in the API key vault.
+- **Localization**: The sign-in button to the localization manager will now only be shown if there is `VITE_LOCALIZATION_MANAGER_URL` present in the frontend `.env` file
 
 ---
 
