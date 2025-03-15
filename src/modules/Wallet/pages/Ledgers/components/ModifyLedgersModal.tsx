@@ -2,20 +2,15 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import {
-  Button,
-  ColorInput,
-  ColorPickerModal,
-  IconInput,
-  IconPickerModal,
-  ModalHeader,
-  ModalWrapper,
-  TextInput
-} from '@lifeforge/ui'
+import { FormModal } from '@lifeforge/ui'
+import type { IFieldProps } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { type IWalletLedger } from '../../../interfaces/wallet_interfaces'
+import {
+  type IWalletLedger,
+  IWalletLedgerFormState
+} from '../../../interfaces/wallet_interfaces'
 
 function ModifyLedgersModal({
   openType,
@@ -31,51 +26,64 @@ function ModifyLedgersModal({
   refreshLedgers: () => void
 }) {
   const { t } = useTranslation('modules.wallet')
-  const [ledgerName, setLedgerName] = useState('')
-  const [ledgerIcon, setLedgerIcon] = useState('')
-  const [ledgerColor, setLedgerColor] = useState<string>('#FFFFFF')
-  const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
-  const [colorPickerOpen, setColorPickerOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [formState, setFormState] = useState<IWalletLedgerFormState>({
+    name: '',
+    icon: '',
+    color: ''
+  })
+
+  const FIELDS: IFieldProps<IWalletLedgerFormState>[] = [
+    {
+      id: 'name',
+      label: 'Ledger name',
+      icon: 'tabler:book',
+      placeholder: 'My Ledgers',
+      type: 'text'
+    },
+    {
+      id: 'icon',
+      label: 'Ledger icon',
+      type: 'icon'
+    },
+    {
+      id: 'color',
+      label: 'Ledger color',
+      type: 'color'
+    }
+  ]
 
   useEffect(() => {
     if (openType) {
       if (openType === 'update') {
         if (existedData) {
-          setLedgerName(existedData.name)
-          setLedgerIcon(existedData.icon)
-          setLedgerColor(existedData.color)
+          setFormState({
+            name: existedData.name,
+            icon: existedData.icon,
+            color: existedData.color
+          })
         }
       } else {
-        setLedgerName('')
-        setLedgerIcon('')
-        setLedgerColor('#FFFFFF')
+        setFormState({
+          name: '',
+          icon: '',
+          color: ''
+        })
       }
     }
   }, [openType, existedData])
 
-  async function onSubmitButtonClick() {
-    if (
-      ledgerName.trim().length === 0 ||
-      !ledgerColor ||
-      ledgerIcon.trim().length === 0
-    ) {
+  async function onSubmit() {
+    if (Object.values(formState).some(value => value.trim() === '')) {
       toast.error(t('input.error.fieldEmpty'))
       return
     }
-
-    setIsLoading(true)
 
     try {
       await fetchAPI(
         `wallet/ledgers${openType === 'update' ? '/' + existedData?.id : ''}`,
         {
           method: openType === 'create' ? 'POST' : 'PATCH',
-          body: {
-            name: ledgerName,
-            icon: ledgerIcon,
-            color: ledgerColor
-          }
+          body: formState
         }
       )
 
@@ -84,67 +92,25 @@ function ModifyLedgersModal({
       setOpenType(null)
     } catch {
       toast.error(t('input.error.failed'))
-    } finally {
-      setIsLoading(false)
     }
   }
 
   return (
-    <>
-      <ModalWrapper className="sm:min-w-[30rem]" isOpen={openType !== null}>
-        <ModalHeader
-          icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
-          namespace="modules.wallet"
-          title={`ledgers.${openType}`}
-          onClose={() => {
-            setOpenType(null)
-          }}
-        />
-        <TextInput
-          darker
-          icon="tabler:book"
-          name="Ledger name"
-          namespace="modules.wallet"
-          placeholder="My Ledgers"
-          setValue={setLedgerName}
-          value={ledgerName}
-        />
-        <IconInput
-          icon={ledgerIcon}
-          name="Ledger icon"
-          namespace="modules.wallet"
-          setIcon={setLedgerIcon}
-          setIconSelectorOpen={setIconSelectorOpen}
-        />
-        <ColorInput
-          color={ledgerColor}
-          name="Ledger color"
-          namespace="modules.wallet"
-          setColor={setLedgerColor}
-          setColorPickerOpen={setColorPickerOpen}
-        />
-        <Button
-          icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
-          loading={isLoading}
-          onClick={() => {
-            onSubmitButtonClick().catch(console.error)
-          }}
-        >
-          {openType === 'update' ? 'Update' : 'Create'}
-        </Button>
-      </ModalWrapper>
-      <IconPickerModal
-        isOpen={iconSelectorOpen}
-        setOpen={setIconSelectorOpen}
-        setSelectedIcon={setLedgerIcon}
-      />
-      <ColorPickerModal
-        color={ledgerColor}
-        isOpen={colorPickerOpen}
-        setColor={setLedgerColor}
-        setOpen={setColorPickerOpen}
-      />
-    </>
+    <FormModal
+      data={formState}
+      fields={FIELDS}
+      icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
+      isOpen={openType !== null}
+      namespace="modules.wallet"
+      openType={openType}
+      setData={setFormState}
+      title={`ledgers.${openType}`}
+      onClose={() => {
+        setExistedData(null)
+        setOpenType(null)
+      }}
+      onSubmit={onSubmit}
+    />
   )
 }
 

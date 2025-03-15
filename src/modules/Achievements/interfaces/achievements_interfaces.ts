@@ -6,10 +6,9 @@ interface IAchievementEntry extends BasePBCollection {
   difficulty: 'easy' | 'medium' | 'hard' | 'impossible'
 }
 
-interface IAchievementEntryFormState {
-  title: string
-  thoughts: string
-  difficulty: 'easy' | 'medium' | 'hard' | 'impossible'
-}
+type IAchievementEntryFormState = Omit<
+  IAchievementEntry,
+  keyof BasePBCollection
+>
 
 export type { IAchievementEntry, IAchievementEntryFormState }
