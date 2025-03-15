@@ -1,4 +1,6 @@
+/* eslint-disable react-compiler/react-compiler */
 import { useAuth } from '@providers/AuthProvider'
+import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -7,12 +9,14 @@ import { Button } from '@lifeforge/ui'
 
 function AuthSignInButton({
   loading,
-  signIn
+  signIn,
+  providers
 }: {
   emailOrUsername: string
   password: string
   loading: boolean
   signIn: () => void
+  providers: string[]
 }) {
   const { auth } = useAuth()
   const { t } = useTranslation('common.auth')
@@ -57,47 +61,38 @@ function AuthSignInButton({
       >
         Sign In
       </Button>
-      <div className="flex items-center gap-3">
-        <div className="bg-bg-500 h-[2px] w-full"></div>
-        <div className="text-bg-500 shrink-0 font-medium">
-          {t('orSignInWith')}
-        </div>
-        <div className="bg-bg-500 h-[2px] w-full"></div>
-      </div>
-      <div className="flex w-full gap-4">
-        <Button
-          className="w-full"
-          icon="uil:github"
-          loading={
-            loading ||
-            auth ||
-            (searchParams.get('code') !== null &&
-              searchParams.get('state') !== null)
-          }
-          variant="secondary"
-          onClick={() => {
-            signInWithProvider('github').catch(console.error)
-          }}
-        >
-          Github
-        </Button>
-        <Button
-          className="w-full"
-          icon="uil:google"
-          loading={
-            loading ||
-            auth ||
-            (searchParams.get('code') !== null &&
-              searchParams.get('state') !== null)
-          }
-          variant="secondary"
-          onClick={() => {
-            signInWithProvider('google').catch(console.error)
-          }}
-        >
-          Google
-        </Button>
-      </div>
+      {providers.length && (
+        <>
+          <div className="flex items-center gap-3">
+            <div className="bg-bg-500 h-[2px] w-full"></div>
+            <div className="text-bg-500 shrink-0 font-medium">
+              {t('orAuthenticateWith')}
+            </div>
+            <div className="bg-bg-500 h-[2px] w-full"></div>
+          </div>
+          <div className="flex w-full gap-4">
+            {providers.map(provider => (
+              <Button
+                key={provider}
+                className="w-full"
+                icon={`uil:${provider}`}
+                loading={
+                  loading ||
+                  auth ||
+                  (searchParams.get('code') !== null &&
+                    searchParams.get('state') !== null)
+                }
+                variant="secondary"
+                onClick={() => {
+                  signInWithProvider(provider).catch(console.error)
+                }}
+              >
+                {_.capitalize(provider)}
+              </Button>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   )
 }

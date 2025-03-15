@@ -1,4 +1,5 @@
 import {
+  RefObject,
   createContext,
   useCallback,
   useContext,
@@ -8,11 +9,10 @@ import {
   useState
 } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 
 import fetchAPI from '@utils/fetchAPI'
-
-import { AUTH_ERROR_MESSAGES } from '../auth/constants/auth'
 
 interface IAuthData {
   auth: boolean
@@ -23,8 +23,13 @@ interface IAuthData {
   }: {
     email: string
     password: string
-  }) => Promise<string>
-  authenticateWith2FA: ({ otp }: { otp: string }) => Promise<string | void>
+  }) => Promise<string | void>
+  authenticateWith2FA: ({
+    otp
+  }: {
+    otp: string
+    type: 'email' | 'app'
+  }) => Promise<string | void>
   verifyToken: (token: string) => Promise<{ success: boolean; userData: any }>
   verifyOAuth: (code: string, state: string) => void
   logout: () => void
@@ -38,6 +43,7 @@ interface IAuthData {
   getAvatarURL: () => string
   twoFAModalOpen: boolean
   setTwoFAModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  tid: RefObject<string>
 }
 
 export const AuthContext = createContext<IAuthData | undefined>(undefined)
@@ -53,6 +59,7 @@ export default function AuthProvider({
   const [quota, setQuota] = useState(5)
   const [authLoading, setAuthLoading] = useState(true)
   const [twoFAModalOpen, setTwoFAModalOpen] = useState(false)
+  const navigate = useNavigate()
   const tid = useRef('')
 
   const setAuth = useCallback(
@@ -109,7 +116,7 @@ export default function AuthProvider({
       return
     }
 
-    toast.error(AUTH_ERROR_MESSAGES.QUOTA_EXCEEDED)
+    toast.error(t('messages.quotaExceeded'))
   }, [updateQuota])
 
   const verifyToken = useCallback(
@@ -147,7 +154,7 @@ export default function AuthProvider({
     }: {
       email: string
       password: string
-    }): Promise<string> => {
+    }): Promise<string | void> => {
       const res = fetch(`${import.meta.env.VITE_API_HOST}/user/auth/login`, {
         method: 'POST',
         headers: {
@@ -176,18 +183,18 @@ export default function AuthProvider({
               tid.current = data.tid
               return '2FA required'
             } else {
-              return AUTH_ERROR_MESSAGES.UNKNOWN_ERROR
+              throw new Error()
             }
           } else {
             if (data.message === 'Invalid credentials') {
-              return AUTH_ERROR_MESSAGES.INVALID_CREDENTIALS
+              return 'invalid'
             }
 
-            return AUTH_ERROR_MESSAGES.UNKNOWN_ERROR
+            throw new Error()
           }
         })
         .catch(() => {
-          return AUTH_ERROR_MESSAGES.UNKNOWN_ERROR
+          toast.error(t('messages.unknownError'))
         })
 
       return await res
@@ -196,7 +203,13 @@ export default function AuthProvider({
   )
 
   const authenticateWith2FA = useCallback(
-    async ({ otp }: { otp: string }): Promise<void> => {
+    async ({
+      otp,
+      type
+    }: {
+      otp: string
+      type: 'email' | 'app'
+    }): Promise<void> => {
       try {
         const res = await fetch(
           `${import.meta.env.VITE_API_HOST}/user/2fa/verify`,
@@ -205,7 +218,7 @@ export default function AuthProvider({
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ otp, tid: tid.current })
+            body: JSON.stringify({ otp, tid: tid.current, type })
           }
         )
 
@@ -262,7 +275,7 @@ export default function AuthProvider({
 
         if (typeof token !== 'string') {
           if (token.state !== '2fa_required') {
-            throw new Error('Invalid login attempt')
+            throw new Error()
           }
           setTwoFAModalOpen(true)
           tid.current = token.tid
@@ -288,10 +301,9 @@ export default function AuthProvider({
           .finally(() => {
             setAuthLoading(false)
           })
-      } catch (err) {
-        console.log(err)
-        window.location.href = '/auth'
-        toast.error('Invalid login attempt')
+      } catch {
+        navigate('/auth')
+        toast.error(toast.error(t('messages.invalidLoginAttempt')))
       }
     },
     [verifyToken]
@@ -359,9 +371,10 @@ export default function AuthProvider({
       setUserData,
       getAvatarURL,
       twoFAModalOpen,
-      setTwoFAModalOpen
+      setTwoFAModalOpen,
+      tid
     }),
-    [auth, quota, authLoading, userData, twoFAModalOpen]
+    [auth, quota, authLoading, userData, twoFAModalOpen, tid]
   )
 
   return <AuthContext value={value}>{children}</AuthContext>
