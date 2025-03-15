@@ -1,18 +1,26 @@
+import clsx from 'clsx'
 import OtpInput from 'react-otp-input'
 
 import { Button } from '@lifeforge/ui'
 
+import useComponentBg from '@hooks/useComponentBg'
+
 function OTPInputBox({
   otp,
   setOtp,
-  verityOTP,
-  verifyOtpLoading
+  verifyOTP,
+  verifyOtpLoading,
+  buttonFullWidth,
+  lighter
 }: {
   otp: string
   setOtp: (otp: string) => void
-  verityOTP: (otp: string) => Promise<void>
+  verifyOTP: (otp: string) => Promise<void>
   verifyOtpLoading: boolean
+  buttonFullWidth?: boolean
+  lighter?: boolean
 }) {
+  const { componentBgLighter, componentBg } = useComponentBg()
   return (
     <>
       <OtpInput
@@ -21,11 +29,14 @@ function OTPInputBox({
         renderInput={props => (
           <input
             {...props}
-            className="border-bg-200 bg-bg-50 text-bg-800 shadow-custom dark:border-bg-800 dark:bg-bg-900 dark:text-bg-200 mx-2 size-12! rounded-md border-[1.5px] text-lg md:size-16! md:text-2xl"
+            className={clsx(
+              'border-bg-200 text-bg-800 shadow-custom dark:border-bg-800 dark:text-bg-200 mx-2 size-12! rounded-md border-[1.5px] text-lg md:size-16! md:text-2xl',
+              lighter ? componentBgLighter : componentBg
+            )}
             inputMode="numeric"
             onKeyDown={e => {
               if (e.key === 'Enter') {
-                verityOTP(otp).catch(err => {
+                verifyOTP(otp).catch(err => {
                   console.error(err)
                 })
               }
@@ -37,13 +48,13 @@ function OTPInputBox({
       />
       <Button
         iconAtEnd
-        className="mt-6 w-full md:w-3/4 xl:w-1/2"
+        className={clsx('mt-6 w-full', !buttonFullWidth && 'md:w-3/4 xl:w-1/2')}
         icon="tabler:arrow-right"
         loading={verifyOtpLoading}
         namespace="common.vault"
         tKey="otp"
         onClick={() => {
-          verityOTP(otp).catch(err => {
+          verifyOTP(otp).catch(err => {
             console.error(err)
           })
         }}

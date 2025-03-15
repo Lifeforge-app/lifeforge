@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router'
 import AuthForm from './components/AuthForm'
 import AuthHeader from './components/AuthHeader'
 import AuthSideImage from './components/AuthSideImage'
+import TwoFAModal from './components/TwoFAModal'
 
 function Auth() {
   const { verifyOAuth } = useAuth()
@@ -16,6 +17,7 @@ function Auth() {
     const state = searchParams.get('state')
 
     if (!code || !state) return
+
     verifyOAuth(code, state)
   }, [searchParams])
 
@@ -57,6 +59,7 @@ function Auth() {
         </div>
       </section>
       <AuthSideImage />
+      <TwoFAModal />
     </>
   )
 }

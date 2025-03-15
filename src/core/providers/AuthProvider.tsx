@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState
 } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -23,6 +24,7 @@ interface IAuthData {
     email: string
     password: string
   }) => Promise<string>
+  authenticateWith2FA: ({ otp }: { otp: string }) => Promise<string | void>
   verifyToken: (token: string) => Promise<{ success: boolean; userData: any }>
   verifyOAuth: (code: string, state: string) => void
   logout: () => void
@@ -34,6 +36,8 @@ interface IAuthData {
   userData: any
   setUserData: React.Dispatch<React.SetStateAction<any>>
   getAvatarURL: () => string
+  twoFAModalOpen: boolean
+  setTwoFAModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const AuthContext = createContext<IAuthData | undefined>(undefined)
@@ -48,6 +52,8 @@ export default function AuthProvider({
   const [userData, _setUserData] = useState<any>(null)
   const [quota, setQuota] = useState(5)
   const [authLoading, setAuthLoading] = useState(true)
+  const [twoFAModalOpen, setTwoFAModalOpen] = useState(false)
+  const tid = useRef('')
 
   const setAuth = useCallback(
     (value: boolean) => {
@@ -151,18 +157,27 @@ export default function AuthProvider({
       })
         .then(async res => {
           const data = await res.json()
-          if (res.ok && data.state === 'success') {
-            window.localStorage.setItem('quota', '5')
-            window.localStorage.removeItem('lastQuotaExceeded')
 
-            document.cookie = `token=${data.token}; path=/; expires=${new Date(
-              Date.now() + 7 * 24 * 60 * 60 * 1000
-            ).toUTCString()}`
+          if (res.ok) {
+            if (data.state === 'success') {
+              window.localStorage.setItem('quota', '5')
+              window.localStorage.removeItem('lastQuotaExceeded')
 
-            setUserData(data.userData)
-            setAuth(true)
+              document.cookie = `token=${data.token}; path=/; expires=${new Date(
+                Date.now() + 7 * 24 * 60 * 60 * 1000
+              ).toUTCString()}`
 
-            return 'success: ' + data.userData.name
+              setUserData(data.userData)
+              setAuth(true)
+
+              return 'success: ' + data.userData.name
+            } else if (data.state === '2fa_required') {
+              setTwoFAModalOpen(true)
+              tid.current = data.tid
+              return '2FA required'
+            } else {
+              return AUTH_ERROR_MESSAGES.UNKNOWN_ERROR
+            }
           } else {
             if (data.message === 'Invalid credentials') {
               return AUTH_ERROR_MESSAGES.INVALID_CREDENTIALS
@@ -176,6 +191,44 @@ export default function AuthProvider({
         })
 
       return await res
+    },
+    []
+  )
+
+  const authenticateWith2FA = useCallback(
+    async ({ otp }: { otp: string }): Promise<void> => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_HOST}/user/2fa/verify`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ otp, tid: tid.current })
+          }
+        )
+
+        const data = await res.json()
+
+        if (res.ok && data.state === 'success') {
+          window.localStorage.setItem('quota', '5')
+          window.localStorage.removeItem('lastQuotaExceeded')
+
+          document.cookie = `token=${data.token}; path=/; expires=${new Date(
+            Date.now() + 7 * 24 * 60 * 60 * 1000
+          ).toUTCString()}`
+
+          setUserData(data.userData)
+          setAuth(true)
+
+          return data.userData.name
+        } else {
+          throw new Error('Invalid OTP')
+        }
+      } catch {
+        throw new Error('Invalid OTP')
+      }
     },
     []
   )
@@ -196,10 +249,25 @@ export default function AuthProvider({
           throw new Error('Invalid state')
         }
 
-        const token = await fetchAPI<string>('user/auth/oauth-verify', {
+        const token = await fetchAPI<
+          | string
+          | {
+              state: string
+              tid: string
+            }
+        >('user/auth/oauth-verify', {
           method: 'POST',
           body: { code, provider: storedProvider }
         })
+
+        if (typeof token !== 'string') {
+          if (token.state !== '2fa_required') {
+            throw new Error('Invalid login attempt')
+          }
+          setTwoFAModalOpen(true)
+          tid.current = token.tid
+          return
+        }
 
         document.cookie = `token=${token}; path=/; expires=${new Date(
           Date.now() + 7 * 24 * 60 * 60 * 1000
@@ -220,7 +288,8 @@ export default function AuthProvider({
           .finally(() => {
             setAuthLoading(false)
           })
-      } catch {
+      } catch (err) {
+        console.log(err)
         window.location.href = '/auth'
         toast.error('Invalid login attempt')
       }
@@ -277,6 +346,7 @@ export default function AuthProvider({
       auth,
       setAuth,
       authenticate,
+      authenticateWith2FA,
       verifyToken,
       verifyOAuth,
       logout,
@@ -287,9 +357,11 @@ export default function AuthProvider({
       authLoading,
       userData,
       setUserData,
-      getAvatarURL
+      getAvatarURL,
+      twoFAModalOpen,
+      setTwoFAModalOpen
     }),
-    [auth, quota, authLoading, userData]
+    [auth, quota, authLoading, userData, twoFAModalOpen]
   )
 
   return <AuthContext value={value}>{children}</AuthContext>

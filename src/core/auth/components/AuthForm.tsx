@@ -32,6 +32,10 @@ function AuthForm() {
     setLoading(true)
     authenticate({ email: emailOrUsername, password })
       .then(res => {
+        if (res === '2FA required') {
+          return
+        }
+
         if (!res.startsWith('success')) {
           toast.error(res)
           if (res === AUTH_ERROR_MESSAGES.INVALID_CREDENTIALS) {
