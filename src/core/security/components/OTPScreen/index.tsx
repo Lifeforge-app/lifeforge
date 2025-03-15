@@ -52,7 +52,7 @@ function OTPScreen({
       setOtpId(data)
       setOtpCooldown(60)
       const coolDown = new Date().getTime() + 60000
-      localStorage.setItem('otpCooldown', coolDown.toString())
+      localStorage.setItem(`otpCooldown:${endpoint}`, coolDown.toString())
       toast.success(t('otp.messages.success'))
     } catch {
       toast.error(t('otp.messages.failed'))
