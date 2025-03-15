@@ -45,7 +45,7 @@ function SectionCard({
                               {camelCaseToTitleCase(k)}
                             </span>
                             <span className="text-bg-500 text-lg">
-                              {prettyBytes(v as any) || 'N/A'}
+                              {prettyBytes(+(v as any)) || 'N/A'}
                             </span>
                           </li>
                         ))}
@@ -54,7 +54,7 @@ function SectionCard({
                   }
 
                   if (key === 'mem') {
-                    return prettyBytes(v as any)
+                    return prettyBytes(+(v as any))
                   }
 
                   return String(v) || 'N/A'
@@ -77,7 +77,7 @@ function SectionCard({
                 <span className="text-bg-500 w-1/2 break-all text-lg">
                   {(k.includes('byte') &&
                     // @ts-expect-error - uhh lazy to fix for now =)
-                    prettyBytes(v)) ||
+                    prettyBytes(+v)) ||
                     'N/A'}
                 </span>
               </li>
