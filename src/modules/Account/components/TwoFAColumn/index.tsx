@@ -1,3 +1,4 @@
+import { useAuth } from '@providers/AuthProvider'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -7,7 +8,7 @@ import EnableTwoFAModal from './components/EnableTwoFAModal'
 
 function TwoFAColumn() {
   const { t } = useTranslation('modules.accountSettings')
-  const [isEnabled] = useState(false)
+  const { userData, setUserData } = useAuth()
   const [enableTwoFAModalOpen, setEnableTwoFAModalOpen] = useState(false)
 
   return (
@@ -19,12 +20,12 @@ function TwoFAColumn() {
         title={t('settings.title.twoFA')}
       >
         <span className="text-bg-500">
-          {isEnabled ? 'Enabled' : 'Disabled'}
+          {userData.twoFAEnabled ? 'Enabled' : 'Disabled'}
         </span>
         <Switch
-          checked={false}
+          checked={userData.twoFAEnabled}
           onChange={() => {
-            if (!isEnabled) {
+            if (!userData.twoFAEnabled) {
               setEnableTwoFAModalOpen(true)
             }
           }}
@@ -34,6 +35,13 @@ function TwoFAColumn() {
         isOpen={enableTwoFAModalOpen}
         onClose={() => {
           setEnableTwoFAModalOpen(false)
+        }}
+        onSuccess={() => {
+          setEnableTwoFAModalOpen(false)
+          setUserData({
+            ...userData,
+            twoFAEnabled: true
+          })
         }}
       />
     </>
