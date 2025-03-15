@@ -18,7 +18,7 @@ function EnableTwoFAModal({
   onClose: () => void
   onSuccess: () => void
 }): React.ReactElement {
-  const [otpSuccess, setOtpSuccess] = useState(true)
+  const [otpSuccess, setOtpSuccess] = useState(false)
   const { componentBgLighter } = useComponentBg()
 
   return (
@@ -37,6 +37,7 @@ function EnableTwoFAModal({
           )}
         >
           <OTPScreen
+            buttonsFullWidth
             callback={() => {
               setOtpSuccess(true)
             }}

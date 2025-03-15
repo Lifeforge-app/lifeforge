@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -13,10 +14,12 @@ import ResendOTPButton from './components/ResendOTPButton'
 
 function OTPScreen({
   endpoint,
-  callback
+  callback,
+  buttonsFullWidth
 }: {
   endpoint: string
   callback: () => void
+  buttonsFullWidth?: boolean
 }) {
   const { t } = useTranslation('common.vault')
   const [otpSent, setOtpSent] = useState(false)
@@ -127,12 +130,14 @@ function OTPScreen({
         {otpSent ? (
           <>
             <OTPInputBox
+              buttonFullWidth={buttonsFullWidth}
               otp={otp}
               setOtp={setOtp}
               verifyOTP={verityOTP}
               verifyOtpLoading={verifyOtpLoading}
             />
             <ResendOTPButton
+              buttonFullWidth={buttonsFullWidth}
               otpCooldown={otpCooldown}
               requestOTP={requestOTP}
               sendOtpLoading={sendOtpLoading}
@@ -141,7 +146,10 @@ function OTPScreen({
         ) : (
           <>
             <Button
-              className="w-full md:w-3/4 xl:w-1/2"
+              className={clsx(
+                'w-full',
+                !buttonsFullWidth && 'md:w-3/4 xl:w-1/2'
+              )}
               icon="tabler:mail"
               loading={sendOtpLoading}
               namespace="common.vault"
