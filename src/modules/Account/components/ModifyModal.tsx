@@ -77,6 +77,7 @@ function ModifyModal({
       />
       {type !== 'date' ? (
         <TextInput
+          darker
           icon={icon}
           name={title}
           namespace="modules.accountSettings"

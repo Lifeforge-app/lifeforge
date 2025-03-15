@@ -6,10 +6,9 @@ import { toast } from 'react-toastify'
 
 import { TextInput } from '@lifeforge/ui'
 
-import { AUTH_ERROR_MESSAGES } from '../constants/auth'
 import AuthSignInButton from './AuthSignInButtons'
 
-function AuthForm() {
+function AuthForm({ providers }: { providers: string[] }) {
   const [emailOrUsername, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -22,7 +21,7 @@ function AuthForm() {
 
   function signIn() {
     if (emailOrUsername.length === 0 || password.length === 0) {
-      toast.error(t(AUTH_ERROR_MESSAGES.EMPTY_FIELDS))
+      toast.error(t('messages.invalidFields'))
       return
     }
     if (quota === 0) {
@@ -32,22 +31,31 @@ function AuthForm() {
     setLoading(true)
     authenticate({ email: emailOrUsername, password })
       .then(res => {
-        if (res === '2FA required') {
+        if (res === '2FA required' || !res) {
           return
         }
 
-        if (!res.startsWith('success')) {
-          toast.error(res)
-          if (res === AUTH_ERROR_MESSAGES.INVALID_CREDENTIALS) {
-            dismissQuota()
-          }
-        } else {
-          toast.success(t('welcome') + res.split(' ').slice(1).join(' '))
+        if (res === 'invalid') {
+          toast.error(t('messages.invalidCredentials'))
+          dismissQuota()
+          return
         }
-        setLoading(false)
+
+        if (res.startsWith('success')) {
+          toast.success(
+            t('messages.welcomeBack', {
+              name: res.split(' ').slice(1).join(' ')
+            })
+          )
+        } else {
+          throw new Error()
+        }
       })
       .catch(() => {
-        toast.error(t(AUTH_ERROR_MESSAGES.UNKNOWN_ERROR))
+        toast.error(t(`messages.unknownError`))
+      })
+      .finally(() => {
+        setLoading(false)
       })
   }
 
@@ -89,6 +97,7 @@ function AuthForm() {
         emailOrUsername={emailOrUsername}
         loading={loading}
         password={password}
+        providers={providers}
         signIn={signIn}
       />
     </div>
