@@ -11,7 +11,9 @@ const DASHBOARD_WIDGETS: Record<
     minW: 2
   },
   clock: {
-    icon: 'tabler:clock'
+    icon: 'tabler:clock',
+    minW: 2,
+    minH: 1
   },
   quotes: {
     icon: 'tabler:quote'
@@ -21,7 +23,7 @@ const DASHBOARD_WIDGETS: Record<
   },
   miniCalendar: {
     icon: 'tabler:calendar',
-    minH: 3,
+    minH: 4,
     minW: 2
   },
   todaysEvent: {
@@ -67,7 +69,9 @@ const DASHBOARD_WIDGETS: Record<
     icon: 'tabler:coin'
   },
   serverStatus: {
-    icon: 'tabler:server'
+    icon: 'tabler:server',
+    minW: 2,
+    minH: 2
   },
   storageStatus: {
     icon: 'tabler:database'
