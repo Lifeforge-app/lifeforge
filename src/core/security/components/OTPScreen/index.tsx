@@ -22,9 +22,10 @@ function OTPScreen({
   const [otpSent, setOtpSent] = useState(false)
   const [otpId, setOtpId] = useState(localStorage.getItem('otpId') ?? '')
   const [otpCooldown, setOtpCooldown] = useState(
-    localStorage.getItem('otpCooldown')
+    localStorage.getItem(`otpCooldown:${endpoint}`)
       ? Math.floor(
-          (Number(localStorage.getItem('otpCooldown')) - new Date().getTime()) /
+          (Number(localStorage.getItem(`otpCooldown:${endpoint}`)) -
+            new Date().getTime()) /
             1000
         )
       : 0
@@ -81,7 +82,7 @@ function OTPScreen({
 
       if (data) {
         callback()
-        localStorage.removeItem('otpCooldown')
+        localStorage.removeItem(`otpCooldown:${endpoint}`)
         toast.success(t('otp.messages.verify.success'))
       } else {
         toast.error(t('otp.messages.verify.failed'))
