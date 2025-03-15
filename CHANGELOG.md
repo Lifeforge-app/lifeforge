@@ -35,6 +35,9 @@
 - **Authentication**: Two-factor authentication via an external authenticator app has been added as a toggable security mechanism.
 - **Authentication**: If a user doesn't have an authenticator app available, they can now choose to perform 2FA with email OTP.
 - **Authentication**: Improved error handling logic.
+- **Code**: Migrated `VITE_GOOGLE_API_KEY` from `.env` file to the API key vault.
+- **Personalization**: The availability of the font family selector now depends on the presence of `gcloud` key in the API key vault.
+- **UI**: Location selector will now be disabled if there is no `gcloud` key found in the API key vault.
 
 ---
 
