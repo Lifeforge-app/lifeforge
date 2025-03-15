@@ -5,58 +5,15 @@ import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ConfigColumn } from '@lifeforge/ui'
+import { ConfigColumn, Tooltip } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
+import fetchAPI from '@utils/fetchAPI'
+
 import FontFamilyItem from './components/FontFamilyItem'
 
-export interface IFontFamily {
-  family: string
-  variants: string[]
-  subsets: string[]
-  version: string
-  lastModified: Date
-  files: Record<string, string>
-  category: Category
-  kind: Kind
-  menu: string
-  colorCapabilities?: ColorCapability[]
-}
-
-enum Category {
-  Display = 'display',
-  Handwriting = 'handwriting',
-  Monospace = 'monospace',
-  SansSerif = 'sans-serif',
-  Serif = 'serif'
-}
-
-enum ColorCapability {
-  COLRv0 = 'COLRv0',
-  COLRv1 = 'COLRv1',
-  SVG = 'SVG'
-}
-
-export enum Kind {
-  WebfontsWebfont = 'webfonts#webfont'
-}
-
-const GOOGLE_FONTS_API_URL =
-  'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyACIfnP46cNm8nP9HaMafF0hwI9X0hyyg4'
-
-const fetchFonts = async () => {
-  try {
-    const response = await fetch(GOOGLE_FONTS_API_URL)
-    const data = await response.json()
-    return data.items || []
-  } catch (error) {
-    console.error('Error fetching Google Fonts:', error)
-    return []
-  }
-}
-
-const addFontsToStylesheet = (fonts: IFontFamily[]) => {
+const addFontsToStylesheet = (fonts: any[]) => {
   const sheet = window.document.styleSheets[0]
 
   fonts.forEach(font => {
@@ -89,16 +46,26 @@ const addFontsToStylesheet = (fonts: IFontFamily[]) => {
 }
 
 function FontFamilySelector() {
+  const { t } = useTranslation('modules.personalization')
+  const [enabled, setEnabled] = useState(false)
   const { componentBgWithHover } = useComponentBg()
   const { fontFamily, setFontFamily } = usePersonalization()
-  const [allFonts, setAllFonts] = useState<IFontFamily[]>([])
-  const { t } = useTranslation('modules.personalization')
+  const [allFonts, setAllFonts] = useState<any[]>([])
 
   useEffect(() => {
     const loadFonts = async () => {
-      const fonts = await fetchFonts()
-      setAllFonts(fonts)
-      addFontsToStylesheet(fonts)
+      const fonts = await fetchAPI<{
+        enabled: boolean
+        items: any[]
+      }>('/user/personalization/fonts')
+      setEnabled(fonts.enabled)
+
+      if (!fonts.enabled) {
+        return
+      }
+
+      setAllFonts(fonts.items)
+      addFontsToStylesheet(fonts.items)
     }
 
     loadFonts()
@@ -122,46 +89,74 @@ function FontFamilySelector() {
         </>
       }
     >
-      <Listbox
-        value={fontFamily}
-        onChange={font => {
-          setFontFamily(font)
-        }}
-      >
-        <div className="relative mt-1 w-full md:w-64">
-          <ListboxButton
-            className={clsx(
-              'shadow-custom outline-hidden focus:outline-hidden flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left transition-all',
-              componentBgWithHover
-            )}
-          >
-            <span
-              className="-mt-px block truncate"
-              style={{
-                fontFamily
-              }}
-            >
-              {fontFamily || (
-                <span className="text-bg-500">
-                  {t('fontFamily.pleaseSelect')}
-                </span>
+      {enabled ? (
+        <Listbox
+          value={fontFamily}
+          onChange={font => {
+            setFontFamily(font)
+          }}
+        >
+          <div className="relative mt-1 w-full md:w-64">
+            <ListboxButton
+              className={clsx(
+                'shadow-custom outline-hidden focus:outline-hidden flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left transition-all',
+                componentBgWithHover
               )}
-            </span>
-            <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <Icon className="text-bg-500 size-5" icon="tabler:chevron-down" />
-            </span>
-          </ListboxButton>
-          <ListboxOptions
-            transition
-            anchor="bottom end"
-            className="divide-bg-200 bg-bg-100 text-bg-800 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50 focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 h-72 w-80 divide-y rounded-md py-1 text-base shadow-lg transition duration-100 ease-out [--anchor-gap:8px]"
+            >
+              <span
+                className="-mt-px block truncate"
+                style={{
+                  fontFamily
+                }}
+              >
+                {fontFamily || (
+                  <span className="text-bg-500">
+                    {t('fontFamily.pleaseSelect')}
+                  </span>
+                )}
+              </span>
+              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                <Icon
+                  className="text-bg-500 size-5"
+                  icon="tabler:chevron-down"
+                />
+              </span>
+            </ListboxButton>
+            <ListboxOptions
+              transition
+              anchor="bottom end"
+              className="divide-bg-200 bg-bg-100 text-bg-800 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50 focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 h-72 w-80 divide-y rounded-md py-1 text-base shadow-lg transition duration-100 ease-out [--anchor-gap:8px]"
+            >
+              {allFonts.map(({ family }) => (
+                <FontFamilyItem key={family} family={family} />
+              ))}
+            </ListboxOptions>
+          </div>
+        </Listbox>
+      ) : (
+        <p className="text-bg-500 flex items-center gap-2">
+          {t('fontFamily.disabled.title')}
+          <Tooltip
+            icon="tabler:info-circle"
+            id="fontFamilyDisabled"
+            tooltipProps={{
+              clickable: true
+            }}
           >
-            {allFonts.map(({ family }) => (
-              <FontFamilyItem key={family} family={family} />
-            ))}
-          </ListboxOptions>
-        </div>
-      </Listbox>
+            <p className="text-bg-500 max-w-84">
+              {t('fontFamily.disabled.tooltip')}{' '}
+              <a
+                className="font-medium underline text-custom-500 decoration-custom-500 decoration-2"
+                href="https://docs.lifeforge.melvinchia.dev/user-guide/personalization#font-family"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Customization Guide
+              </a>
+            </p>
+          </Tooltip>
+        </p>
+      )}
     </ConfigColumn>
   )
 }

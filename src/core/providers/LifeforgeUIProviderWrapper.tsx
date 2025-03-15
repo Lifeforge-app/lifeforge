@@ -15,7 +15,6 @@ function LifeforgeUIProviderWrapper({
     <LifeforgeUIProvider
       personalization={{
         apiHost: import.meta.env.VITE_API_HOST,
-        googleAPIKey: import.meta.env.VITE_GOOGLE_API_KEY,
         ...personalization,
         themeColor: personalization.rawThemeColor,
         sidebarExpanded,
