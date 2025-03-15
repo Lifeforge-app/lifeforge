@@ -58,20 +58,7 @@ function CreatePasswordModal() {
 
     setLoading(true)
 
-    const challenge = await fetch('passwords/password/challenge', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
-      }
-    }).then(async res => {
-      const data = await res.json()
-      if (res.ok && data.state === 'success') {
-        return data.data
-      } else {
-        throw new Error('Failed to get challenge')
-      }
-    })
-
+    const challenge = await fetchAPI<string>('passwords/password/challenge')
     const encryptedMaster = encrypt(masterPassword, challenge)
 
     try {

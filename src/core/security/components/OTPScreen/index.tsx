@@ -125,8 +125,8 @@ function OTPScreen({
             <OTPInputBox
               otp={otp}
               setOtp={setOtp}
+              verifyOTP={verityOTP}
               verifyOtpLoading={verifyOtpLoading}
-              verityOTP={verityOTP}
             />
             <ResendOTPButton
               otpCooldown={otpCooldown}
