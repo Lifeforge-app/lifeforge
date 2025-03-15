@@ -1,7 +1,9 @@
 import clsx from 'clsx'
 import React, { useState } from 'react'
 
-import { ModalHeader, ModalWrapper, OTPScreen } from '@lifeforge/ui'
+import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
+
+import OTPScreen from '@security/components/OTPScreen'
 
 import useComponentBg from '@hooks/useComponentBg'
 

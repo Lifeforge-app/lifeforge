@@ -10,7 +10,7 @@
   ],
   "importOrder": [
     "^@lifeforge/(.*)$",
-    "^@core/(.*)$",
+    "^@security/(.*)$",
     "^@modules/(.*)$",
     "^@interfaces/(.*)$",
     "^@components/(.*)$",

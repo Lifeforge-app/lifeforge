@@ -1,7 +1,4 @@
 import { useAuth } from '@providers/AuthProvider'
-import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
-import LockedScreen from '@security/components/LockedScreen'
-import OTPScreen from '@security/components/OTPScreen'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -12,6 +9,10 @@ import {
   ModuleWrapper,
   SearchInput
 } from '@lifeforge/ui'
+
+import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
+import LockedScreen from '@security/components/LockedScreen'
+import OTPScreen from '@security/components/OTPScreen'
 
 import { usePasswordContext } from '@modules/Passwords/providers/PasswordsProvider'
 

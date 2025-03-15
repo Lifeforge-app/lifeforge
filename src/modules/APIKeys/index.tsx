@@ -1,7 +1,4 @@
 import { useAuth } from '@providers/AuthProvider'
-import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
-import LockedScreen from '@security/components/LockedScreen'
-import OTPScreen from '@security/components/OTPScreen'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,6 +11,10 @@ import {
   ModuleWrapper,
   QueryWrapper
 } from '@lifeforge/ui'
+
+import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
+import LockedScreen from '@security/components/LockedScreen'
+import OTPScreen from '@security/components/OTPScreen'
 
 import useAPIQuery from '@hooks/useAPIQuery'
 

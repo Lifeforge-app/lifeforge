@@ -35,26 +35,27 @@
 
 ---
 
-### 📌 **dev 25w10 (3/2/2025 - 3/8/2025)**  
-- **Idea Box**: Resolved an issue where folders could be dragged and dropped into themselves.  
-- **Idea Box**: Fixed an intermittent bug where the tag icon would sometimes not appear.  
-- **Idea Box**: Improved filtering functionality—nested folder contents are now displayed when filtering by tags in a folder.  
-- **Moment Vault**: Fixed an issue where audio recordings were occasionally not captured correctly.  
-- **Idea Box**: Titles are now optional for link-type ideas, improving flexibility.  
-- **Wallet**: Addressed a bug where switching from income/expenses to transfers while an asset was selected would cause an error.  
-- **Code**: Refactored the `APIRequest` function, renaming it to `fetchAPI` for clarity and maintainability.  
-- **Wallet**: Users can now toggle which transaction types are displayed in the calendar heatmap.  
-- **Wallet**: Category selections are now dynamically filtered based on the selected transaction type.  
-- **Code Time**: Introduced time charts to track project and language usage trends.  
-- **API Keys**: Moved this module from the "Settings" section to the "Confidentials" section for better organization.  
-- **API Keys**: Added a copy button for API keys, enhancing usability.  
-- **Code**: Clicking on the action button inside a text input now triggers the input field to focus automatically.  
-- **Code**: Implemented a QR Code Scanner component, which can be enabled in Form Modal or manually added.  
-- **Movies**: Introduced a new "Movies" module to the system.  
-- **Movies**: Implemented a search and import modal for fetching movie data from TMDB.  
-- **Movies**: Added full CRUD functionality for managing movie entries.  
-- **Movies**: Users can now attach ticket data to their movie entries.  
-- **Localization**: Completely restructured the locale manager to align with the latest locale folder architecture.  
+### 📌 **dev 25w10 (3/2/2025 - 3/8/2025)**
+
+- **Idea Box**: Resolved an issue where folders could be dragged and dropped into themselves.
+- **Idea Box**: Fixed an intermittent bug where the tag icon would sometimes not appear.
+- **Idea Box**: Improved filtering functionality—nested folder contents are now displayed when filtering by tags in a folder.
+- **Moment Vault**: Fixed an issue where audio recordings were occasionally not captured correctly.
+- **Idea Box**: Titles are now optional for link-type ideas, improving flexibility.
+- **Wallet**: Addressed a bug where switching from income/expenses to transfers while an asset was selected would cause an error.
+- **Code**: Refactored the `APIRequest` function, renaming it to `fetchAPI` for clarity and maintainability.
+- **Wallet**: Users can now toggle which transaction types are displayed in the calendar heatmap.
+- **Wallet**: Category selections are now dynamically filtered based on the selected transaction type.
+- **Code Time**: Introduced time charts to track project and language usage trends.
+- **API Keys**: Moved this module from the "Settings" section to the "Confidentials" section for better organization.
+- **API Keys**: Added a copy button for API keys, enhancing usability.
+- **Code**: Clicking on the action button inside a text input now triggers the input field to focus automatically.
+- **Code**: Implemented a QR Code Scanner component, which can be enabled in Form Modal or manually added.
+- **Movies**: Introduced a new "Movies" module to the system.
+- **Movies**: Implemented a search and import modal for fetching movie data from TMDB.
+- **Movies**: Added full CRUD functionality for managing movie entries.
+- **Movies**: Users can now attach ticket data to their movie entries.
+- **Localization**: Completely restructured the locale manager to align with the latest locale folder architecture.
 
 ---
 
