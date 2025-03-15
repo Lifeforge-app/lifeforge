@@ -27,7 +27,7 @@ function ModifyAPIKeyModal({
   challenge: string
 }) {
   const [formState, setFormState] = useState<IAPIKeyFormState>({
-    id: '',
+    keyId: '',
     name: '',
     description: '',
     icon: '',
@@ -41,7 +41,7 @@ function ModifyAPIKeyModal({
       type: 'text',
       placeholder: 'id-of-the-api-key',
       label: 'Key ID',
-      id: 'id'
+      id: 'keyId'
     },
     {
       icon: 'tabler:key',
@@ -90,7 +90,7 @@ function ModifyAPIKeyModal({
       }
 
       setFormState({
-        id: existingData.keyId,
+        keyId: existingData.keyId,
         name: existingData.name,
         description: existingData.description,
         icon: existingData.icon,
@@ -110,7 +110,7 @@ function ModifyAPIKeyModal({
     } else {
       setIsFetchingKey(false)
       setFormState({
-        id: '',
+        keyId: '',
         name: '',
         description: '',
         icon: '',

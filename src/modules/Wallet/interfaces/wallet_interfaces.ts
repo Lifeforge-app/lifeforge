@@ -7,15 +7,25 @@ interface IWalletAsset extends BasePBCollection {
   starting_balance: number
 }
 
+type IWalletAssetFormState = {
+  name: string
+  icon: string
+  starting_balance: string
+}
+
 interface IWalletLedger extends BasePBCollection {
   name: string
   icon: string
   color: string
 }
 
+type IWalletLedgerFormState = Omit<IWalletLedger, keyof BasePBCollection>
+
 interface IWalletCategory extends IWalletLedger {
   type: 'income' | 'expenses'
 }
+
+type IWalletCategoryFormState = Omit<IWalletCategory, keyof BasePBCollection>
 
 interface IWalletTransaction extends BasePBCollection {
   type: 'income' | 'expenses' | 'transfer'
@@ -46,9 +56,12 @@ interface IWalletReceiptScanResult {
 
 export type {
   IWalletAsset,
+  IWalletAssetFormState,
   IWalletCategory,
+  IWalletCategoryFormState,
   IWalletIncomeExpenses,
   IWalletLedger,
+  IWalletLedgerFormState,
   IWalletTransaction,
   IWalletReceiptScanResult
 }

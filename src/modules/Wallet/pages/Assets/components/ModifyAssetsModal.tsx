@@ -2,19 +2,15 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import {
-  Button,
-  CurrencyInput,
-  IconInput,
-  IconPickerModal,
-  ModalHeader,
-  ModalWrapper,
-  TextInput
-} from '@lifeforge/ui'
+import { FormModal } from '@lifeforge/ui'
+import type { IFieldProps } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { type IWalletAsset } from '../../../interfaces/wallet_interfaces'
+import type {
+  IWalletAsset,
+  IWalletAssetFormState
+} from '../../../interfaces/wallet_interfaces'
 
 function ModifyAssetsModal({
   openType,
@@ -30,54 +26,69 @@ function ModifyAssetsModal({
   refreshAssets: () => void
 }) {
   const { t } = useTranslation('modules.wallet')
-  const [assetName, setAssetName] = useState('')
-  const [assetIcon, setAssetIcon] = useState('')
-  const [assetStartingBalance, setAssetStartingBalance] = useState<string>('')
-  const [iconSelectorOpen, setIconSelectorOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [formState, setFormState] = useState<IWalletAssetFormState>({
+    name: '',
+    icon: '',
+    starting_balance: ''
+  })
+
+  const FIELDS: IFieldProps<IWalletAssetFormState>[] = [
+    {
+      id: 'name',
+      label: 'Asset name',
+      icon: 'tabler:wallet',
+      placeholder: 'My assets',
+      type: 'text'
+    },
+    {
+      id: 'icon',
+      label: 'Asset icon',
+      type: 'icon'
+    },
+    {
+      id: 'starting_balance',
+      label: 'Initial Balance',
+      icon: 'tabler:currency-dollar',
+      placeholder: '0.00',
+      type: 'text'
+    }
+  ]
 
   useEffect(() => {
     if (openType) {
       if (openType === 'update') {
         if (existedData) {
-          setAssetName(existedData.name)
-          setAssetIcon(existedData.icon)
-          setAssetStartingBalance(`${existedData.starting_balance}`)
+          setFormState({
+            name: existedData.name,
+            icon: existedData.icon,
+            starting_balance: existedData.starting_balance.toString()
+          })
         }
       } else {
-        setAssetName('')
-        setAssetIcon('')
-        setAssetStartingBalance('')
+        setFormState({
+          name: '',
+          icon: '',
+          starting_balance: ''
+        })
       }
     }
   }, [openType, existedData])
 
-  function updateAssetBalance(value: string | undefined) {
-    setAssetStartingBalance(value ?? '')
-  }
-
-  async function onSubmitButtonClick() {
+  async function onSubmit() {
     if (
-      assetName.trim().length === 0 ||
-      !assetStartingBalance ||
-      assetIcon.trim().length === 0
+      Object.values(formState).some(value => value.trim() === '') &&
+      !parseFloat(formState.starting_balance)
     ) {
       toast.error(t('input.error.fieldEmpty'))
       return
     }
-
-    setIsLoading(true)
 
     try {
       await fetchAPI(
         `wallet/assets${openType === 'update' ? '/' + existedData?.id : ''}`,
         {
           method: openType === 'create' ? 'POST' : 'PATCH',
-          body: {
-            name: assetName,
-            icon: assetIcon,
-            starting_balance: assetStartingBalance
-          }
+          body: formState
         }
       )
 
@@ -86,64 +97,25 @@ function ModifyAssetsModal({
       setOpenType(null)
     } catch {
       toast.error(t('input.error.failed'))
-    } finally {
-      setIsLoading(false)
     }
   }
 
   return (
-    <>
-      <ModalWrapper className="sm:min-w-[30rem]" isOpen={openType !== null}>
-        <ModalHeader
-          icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-          namespace="modules.wallet"
-          title={`assets.${openType}`}
-          onClose={() => {
-            setOpenType(null)
-          }}
-        />
-        <TextInput
-          darker
-          icon="tabler:wallet"
-          name="Asset name"
-          namespace="modules.wallet"
-          placeholder="My assets"
-          setValue={setAssetName}
-          value={assetName}
-        />
-        <IconInput
-          icon={assetIcon}
-          name="Asset icon"
-          namespace="modules.wallet"
-          setIcon={setAssetIcon}
-          setIconSelectorOpen={setIconSelectorOpen}
-        />
-        <CurrencyInput
-          darker
-          className="mt-6"
-          icon="tabler:currency-dollar"
-          name="Initial Balance"
-          namespace="modules.wallet"
-          placeholder="0.00"
-          setValue={updateAssetBalance}
-          value={`${assetStartingBalance}`}
-        />
-        <Button
-          icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
-          loading={isLoading}
-          onClick={() => {
-            onSubmitButtonClick().catch(console.error)
-          }}
-        >
-          {openType === 'create' ? 'Create' : 'Update'}
-        </Button>
-      </ModalWrapper>
-      <IconPickerModal
-        isOpen={iconSelectorOpen}
-        setOpen={setIconSelectorOpen}
-        setSelectedIcon={setAssetIcon}
-      />
-    </>
+    <FormModal
+      data={formState}
+      fields={FIELDS}
+      icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
+      isOpen={openType !== null}
+      namespace="modules.wallet"
+      openType={openType}
+      setData={setFormState}
+      title={`assets.${openType}`}
+      onClose={() => {
+        setExistedData(null)
+        setOpenType(null)
+      }}
+      onSubmit={onSubmit}
+    />
   )
 }
 

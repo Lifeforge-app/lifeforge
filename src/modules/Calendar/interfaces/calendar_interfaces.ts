@@ -7,12 +7,7 @@ interface ICalendarEvent extends BasePBCollection {
   category: string
 }
 
-interface ICalendarEventFormState {
-  title: string
-  start: string
-  end: string
-  category: string
-}
+type ICalendarEventFormState = Omit<ICalendarEvent, keyof BasePBCollection>
 
 interface ICalendarCategory extends BasePBCollection {
   color: string
@@ -21,11 +16,10 @@ interface ICalendarCategory extends BasePBCollection {
   amount: number
 }
 
-interface ICalendarCategoryFormState {
-  name: string
-  icon: string
-  color: string
-}
+type ICalendarCategoryFormState = Omit<
+  ICalendarCategory,
+  keyof BasePBCollection | 'amount'
+>
 
 export type {
   ICalendarCategory,
