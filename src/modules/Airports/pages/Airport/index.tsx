@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router'
@@ -83,27 +82,25 @@ function Airport() {
               </div>
               <Scrollbar>
                 <div className="flex gap-12">
-                  <APIProvider apiKey={import.meta.env.VITE_GOOGLE_API_KEY}>
-                    <Map
-                      className="h-96 w-full overflow-hidden rounded-lg shadow-lg"
-                      defaultCenter={{
+                  {/* <Map
+                    className="h-96 w-full overflow-hidden rounded-lg shadow-lg"
+                    defaultCenter={{
+                      lat: parseFloat(airportData.data.latitude),
+                      lng: parseFloat(airportData.data.longitude)
+                    }}
+                    defaultZoom={13}
+                    disableDefaultUI={true}
+                    gestureHandling={'greedy'}
+                    mapTypeId="satellite"
+                    style={{ width: '100%', height: '24rem' }}
+                  >
+                    <Marker
+                      position={{
                         lat: parseFloat(airportData.data.latitude),
                         lng: parseFloat(airportData.data.longitude)
                       }}
-                      defaultZoom={13}
-                      disableDefaultUI={true}
-                      gestureHandling={'greedy'}
-                      mapTypeId="satellite"
-                      style={{ width: '100%', height: '24rem' }}
-                    >
-                      <Marker
-                        position={{
-                          lat: parseFloat(airportData.data.latitude),
-                          lng: parseFloat(airportData.data.longitude)
-                        }}
-                      />
-                    </Map>
-                  </APIProvider>
+                    />
+                  </Map> */}
                   <div className="flex h-full flex-wrap items-start gap-x-12">
                     {airportData.data.iata && (
                       <div>

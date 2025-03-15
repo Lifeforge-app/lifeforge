@@ -43,7 +43,7 @@ export default function PersonalizationProvider({
 }) {
   const { userData } = useAuth()
 
-  const [fontFamily, setFontFamily] = useState<string>('Wix Madefor Text')
+  const [fontFamily, setFontFamily] = useState<string>('Onest')
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system')
   const [rawThemeColor, setRawThemeColor] = useState('theme-lime')
   const [bgTemp, setBgTemp] = useState<
