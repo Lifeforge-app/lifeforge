@@ -204,9 +204,6 @@ export const COMPONENTS = {
   'server-status': {
     'server-status': ServerStatus
   },
-  'data-backup': {
-    'data-backup': ServerStatus // TODO
-  },
   'mail-inbox': {
     'mail-inbox': MailInbox
   },
