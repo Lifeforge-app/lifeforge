@@ -39,6 +39,7 @@
 - **Personalization**: The availability of the font family selector now depends on the presence of `gcloud` key in the API key vault.
 - **UI**: Location selector will now be disabled if there is no `gcloud` key found in the API key vault.
 - **Localization**: The sign-in button to the localization manager will now only be shown if there is `VITE_LOCALIZATION_MANAGER_URL` present in the frontend `.env` file
+- **UI**: Main sidebar item with a subsection will now open the subsection menu without navigating anywhere.
 
 ---
 
