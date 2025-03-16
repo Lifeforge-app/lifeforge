@@ -256,6 +256,12 @@ export default function IdeaBoxProvider({
     }
   }, [modifyIdeaModalOpenType])
 
+  useEffect(() => {
+    if (path === '') {
+      tagsQuery.refetch()
+    }
+  }, [entriesQuery.data, foldersQuery.data])
+
   const value = useMemo(
     () => ({
       pathValid: pathValidQuery.data ?? false,
