@@ -1,14 +1,17 @@
 /* eslint-disable import/named */
-import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { ChartOptions, ScriptableContext } from 'chart.js'
-import clsx from 'clsx'
 import moment, { Moment } from 'moment'
 import { useMemo, useState } from 'react'
 import { Bar, Line } from 'react-chartjs-2'
 import tinycolor from 'tinycolor2'
 
-import { DashboardItem, EmptyStateScreen, LoadingScreen } from '@lifeforge/ui'
+import {
+  DashboardItem,
+  EmptyStateScreen,
+  LoadingScreen,
+  ViewModeSelector
+} from '@lifeforge/ui'
 
 import useFetch from '@hooks/useFetch'
 
@@ -83,39 +86,6 @@ const chartOptions: ChartOptions = {
 interface ICodeTimeEachDay {
   date: string
   duration: number
-}
-
-const ViewSelector = ({
-  view,
-  setView
-}: {
-  view: 'bar' | 'line'
-  setView: React.Dispatch<React.SetStateAction<'bar' | 'line'>>
-}) => {
-  const views = ['bar', 'line']
-
-  return (
-    <div className="bg-bg-50 shadow-custom dark:bg-bg-800/50 flex items-center gap-2 rounded-md p-2">
-      {views.map(viewType => (
-        <button
-          key={viewType}
-          className={clsx(
-            'flex items-center gap-2 rounded-md p-2 px-4 transition-all',
-            viewType === view
-              ? 'bg-bg-200/50 dark:bg-bg-700/50'
-              : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
-          )}
-          onClick={() => setView(viewType as 'bar' | 'line')}
-        >
-          <Icon
-            className="size-6"
-            icon={viewType === 'bar' ? 'tabler:chart-bar' : 'tabler:chart-line'}
-          />
-          {viewType[0].toUpperCase() + viewType.slice(1)}
-        </button>
-      ))}
-    </div>
-  )
 }
 
 const CodeTime = () => {
@@ -198,7 +168,23 @@ const CodeTime = () => {
 
   return (
     <DashboardItem
-      componentBesideTitle={<ViewSelector setView={setView} view={view} />}
+      componentBesideTitle={
+        <ViewModeSelector
+          className="mt-0!"
+          options={[
+            {
+              icon: 'tabler:chart-bar',
+              value: 'bar'
+            },
+            {
+              icon: 'tabler:chart-line',
+              value: 'line'
+            }
+          ]}
+          setViewMode={setView}
+          viewMode={view}
+        />
+      }
       icon="tabler:chart-line"
       title="Code Time"
     >
