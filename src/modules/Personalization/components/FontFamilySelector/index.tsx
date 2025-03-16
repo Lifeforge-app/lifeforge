@@ -1,17 +1,15 @@
-import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
-import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ConfigColumn, Tooltip } from '@lifeforge/ui'
+import { ConfigColumn } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import FontFamilyItem from './components/FontFamilyItem'
+import FontFamilyList from './components/FontFamilyList'
 
 const addFontsToStylesheet = (fonts: any[]) => {
   const sheet = window.document.styleSheets[0]
@@ -47,7 +45,7 @@ const addFontsToStylesheet = (fonts: any[]) => {
 
 function FontFamilySelector() {
   const { t } = useTranslation('modules.personalization')
-  const [enabled, setEnabled] = useState(false)
+  const [enabled, setEnabled] = useState<'loading' | boolean>('loading')
   const { componentBgWithHover } = useComponentBg()
   const { fontFamily, setFontFamily } = usePersonalization()
   const [allFonts, setAllFonts] = useState<any[]>([])
@@ -89,74 +87,13 @@ function FontFamilySelector() {
         </>
       }
     >
-      {enabled ? (
-        <Listbox
-          value={fontFamily}
-          onChange={font => {
-            setFontFamily(font)
-          }}
-        >
-          <div className="relative mt-1 w-full md:w-64">
-            <ListboxButton
-              className={clsx(
-                'shadow-custom outline-hidden focus:outline-hidden flex w-full items-center gap-2 rounded-lg py-4 pl-4 pr-10 text-left transition-all',
-                componentBgWithHover
-              )}
-            >
-              <span
-                className="-mt-px block truncate"
-                style={{
-                  fontFamily
-                }}
-              >
-                {fontFamily || (
-                  <span className="text-bg-500">
-                    {t('fontFamily.pleaseSelect')}
-                  </span>
-                )}
-              </span>
-              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                <Icon
-                  className="text-bg-500 size-5"
-                  icon="tabler:chevron-down"
-                />
-              </span>
-            </ListboxButton>
-            <ListboxOptions
-              transition
-              anchor="bottom end"
-              className="divide-bg-200 bg-bg-100 text-bg-800 dark:divide-bg-800 dark:border-bg-700 dark:bg-bg-900 dark:text-bg-50 focus:outline-hidden data-closed:scale-95 data-closed:opacity-0 h-72 w-80 divide-y rounded-md py-1 text-base shadow-lg transition duration-100 ease-out [--anchor-gap:8px]"
-            >
-              {allFonts.map(({ family }) => (
-                <FontFamilyItem key={family} family={family} />
-              ))}
-            </ListboxOptions>
-          </div>
-        </Listbox>
-      ) : (
-        <p className="text-bg-500 flex items-center gap-2">
-          {t('fontFamily.disabled.title')}
-          <Tooltip
-            icon="tabler:info-circle"
-            id="fontFamilyDisabled"
-            tooltipProps={{
-              clickable: true
-            }}
-          >
-            <p className="text-bg-500 max-w-84">
-              {t('fontFamily.disabled.tooltip')}{' '}
-              <a
-                className="font-medium underline text-custom-500 decoration-custom-500 decoration-2"
-                href="https://docs.lifeforge.melvinchia.dev/user-guide/personalization#font-family"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Customization Guide
-              </a>
-            </p>
-          </Tooltip>
-        </p>
-      )}
+      <FontFamilyList
+        allFonts={allFonts}
+        componentBgWithHover={componentBgWithHover}
+        enabled={enabled}
+        fontFamily={fontFamily}
+        setFontFamily={setFontFamily}
+      />
     </ConfigColumn>
   )
 }
