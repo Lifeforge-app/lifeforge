@@ -122,9 +122,6 @@ const MinecraftServerList = lazy(
 const AsciiTextGenerator = lazy(
   async () => await import('@modules/AsciiTextGenerator')
 )
-const OpenaiApiPricing = lazy(
-  async () => await import('@modules/OpenaiApiPricing')
-)
 const NutritionsTracker = lazy(
   async () => await import('@modules/NutritionsTracker')
 )
@@ -280,9 +277,6 @@ export const COMPONENTS = {
   },
   'ascii-text-generator': {
     'ascii-text-generator': AsciiTextGenerator
-  },
-  'openai-api-pricing': {
-    'openai-api-pricing': OpenaiApiPricing
   },
   'nutritions-tracker': {
     'nutritions-tracker': NutritionsTracker
