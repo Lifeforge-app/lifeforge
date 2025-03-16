@@ -117,7 +117,7 @@ function EntryContextMenu({ entry }: { entry: IIdeaBoxEntry }) {
           setModifyIdeaModalOpenType('update')
         }}
       />
-      {!debouncedSearchQuery && selectedTags.length === 0 && (
+      {!debouncedSearchQuery && selectedTags.length === 0 && path !== '' && (
         <MenuItem
           icon="tabler:folder-minus"
           namespace="modules.ideaBox"
