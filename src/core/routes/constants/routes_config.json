@@ -439,14 +439,6 @@
           "minecraft-server-list": "minecraft-server-list"
         },
         "togglable": true
-      },
-      {
-        "name": "OpenAI API Pricing",
-        "icon": "tabler:brand-openai",
-        "routes": {
-          "openai-api-pricing": "openai-api-pricing"
-        },
-        "togglable": true
       }
     ]
   },
