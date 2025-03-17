@@ -14,7 +14,7 @@ function APIKeyStatusProvider({
   children: React.ReactNode
 }) {
   const [hasRequiredAPIKeys] = useFetch<boolean>(
-    `api-keys/check?keys=${encodeURIComponent(APIKeys.join(','))}`,
+    `api-keys/entries/check?keys=${encodeURIComponent(APIKeys.join(','))}`,
     APIKeys.length > 0
   )
 
