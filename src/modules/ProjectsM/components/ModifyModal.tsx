@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { useEffect, useReducer } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -29,14 +29,11 @@ function ModifyModal({
     visibilities: 'visibility',
     statuses: 'status'
   }[stuff]
-  const [data, setData] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      name: '',
-      icon: '',
-      ...(stuff === 'statuses' && { color: '' })
-    }
-  )
+  const [data, setData] = useState({
+    name: '',
+    icon: '',
+    ...(stuff === 'statuses' && { color: '' })
+  })
   const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',

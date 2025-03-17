@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { useEffect, useReducer } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -23,13 +23,10 @@ function ModifyModal({ stuff }: { stuff: 'categories' | 'languages' }) {
     categories: 'category',
     languages: 'language'
   }[stuff]
-  const [data, setData] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      name: '',
-      icon: ''
-    }
-  )
+  const [data, setData] = useState({
+    name: '',
+    icon: ''
+  })
   const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',
