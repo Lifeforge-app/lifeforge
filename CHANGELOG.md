@@ -5,6 +5,7 @@
 - **API**: Improved error handling logic.
 - **API**: Restructured the `src` folder such that there are only two main folders: `modules` and `core`.
 - **API**: Removed unused files.
+- **Code**: Replaced all `useReducer` with `useState`.
 
 ---
 
