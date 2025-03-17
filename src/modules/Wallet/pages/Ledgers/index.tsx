@@ -20,7 +20,7 @@ import ModifyLedgersModal from './components/ModifyLedgersModal'
 
 function Ledgers() {
   const { t } = useTranslation('modules.wallet')
-  const { ledgers, refreshLedgers } = useWalletContext()
+  const { ledgers } = useWalletContext()
   const [modifyLedgersModalOpenType, setModifyModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
@@ -92,7 +92,6 @@ function Ledgers() {
       <ModifyLedgersModal
         existedData={selectedData}
         openType={modifyLedgersModalOpenType}
-        refreshLedgers={refreshLedgers}
         setExistedData={setSelectedData}
         setOpenType={setModifyModalOpenType}
       />
@@ -102,7 +101,7 @@ function Ledgers() {
         isOpen={deleteLedgersConfirmationOpen}
         itemName="ledger account"
         nameKey="name"
-        updateDataList={refreshLedgers}
+        queryKey={['wallet', 'ledgers']}
         onClose={() => {
           setDeleteLedgersConfirmationOpen(false)
           setSelectedData(null)

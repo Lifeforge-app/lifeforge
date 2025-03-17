@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
 import type { IFieldProps } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import type {
   IWalletAsset,
@@ -16,16 +12,13 @@ function ModifyAssetsModal({
   openType,
   setOpenType,
   existedData,
-  setExistedData,
-  refreshAssets
+  setExistedData
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   existedData: IWalletAsset | null
   setExistedData: React.Dispatch<React.SetStateAction<IWalletAsset | null>>
-  refreshAssets: () => void
 }) {
-  const { t } = useTranslation('modules.wallet')
   const [formState, setFormState] = useState<IWalletAssetFormState>({
     name: '',
     icon: '',
@@ -35,6 +28,7 @@ function ModifyAssetsModal({
   const FIELDS: IFieldProps<IWalletAssetFormState>[] = [
     {
       id: 'name',
+      required: true,
       label: 'Asset name',
       icon: 'tabler:wallet',
       placeholder: 'My assets',
@@ -42,11 +36,13 @@ function ModifyAssetsModal({
     },
     {
       id: 'icon',
+      required: true,
       label: 'Asset icon',
       type: 'icon'
     },
     {
       id: 'starting_balance',
+      required: true,
       label: 'Initial Balance',
       icon: 'tabler:currency-dollar',
       placeholder: '0.00',
@@ -74,47 +70,23 @@ function ModifyAssetsModal({
     }
   }, [openType, existedData])
 
-  async function onSubmit() {
-    if (
-      Object.values(formState).some(value => value.trim() === '') &&
-      !parseFloat(formState.starting_balance)
-    ) {
-      toast.error(t('input.error.fieldEmpty'))
-      return
-    }
-
-    try {
-      await fetchAPI(
-        `wallet/assets${openType === 'update' ? '/' + existedData?.id : ''}`,
-        {
-          method: openType === 'create' ? 'POST' : 'PATCH',
-          body: formState
-        }
-      )
-
-      refreshAssets()
-      setExistedData(null)
-      setOpenType(null)
-    } catch {
-      toast.error(t('input.error.failed'))
-    }
-  }
-
   return (
     <FormModal
       data={formState}
+      endpoint="wallet/assets"
       fields={FIELDS}
       icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
+      id={existedData?.id}
       isOpen={openType !== null}
       namespace="modules.wallet"
       openType={openType}
+      queryKey={['wallet', 'assets']}
       setData={setFormState}
       title={`assets.${openType}`}
       onClose={() => {
         setExistedData(null)
         setOpenType(null)
       }}
-      onSubmit={onSubmit}
     />
   )
 }

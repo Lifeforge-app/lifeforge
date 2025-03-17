@@ -13,20 +13,21 @@ import {
 
 import { type Loadable } from '@interfaces/common'
 
+import useAPIQuery from '@hooks/useAPIQuery'
 import useFetch from '@hooks/useFetch'
 
 interface IWalletData {
   transactions: Loadable<IWalletTransaction[]>
   filteredTransactions: IWalletTransaction[]
-  ledgers: Loadable<IWalletLedger[]>
-  assets: Loadable<IWalletAsset[]>
-  categories: Loadable<IWalletCategory[]>
-  incomeExpenses: Loadable<IWalletIncomeExpenses>
+  ledgers: IWalletLedger[]
+  ledgersLoading: boolean
+  assets: IWalletAsset[]
+  assetsLoading: boolean
+  categories: IWalletCategory[]
+  categoriesLoading: boolean
+  incomeExpenses: IWalletIncomeExpenses
+  incomeExpensesLoading: boolean
   refreshTransactions: () => void
-  refreshAssets: () => void
-  refreshLedgers: () => void
-  refreshCategories: () => void
-  refreshIncomeExpenses: () => void
   isAmountHidden: boolean
   toggleAmountVisibility: React.Dispatch<React.SetStateAction<boolean>>
   searchQuery: string
@@ -41,16 +42,24 @@ export default function WalletProvider() {
   const [transactions, refreshTransactions] = useFetch<IWalletTransaction[]>(
     'wallet/transactions'
   )
-  const [assets, refreshAssets] = useFetch<IWalletAsset[]>('wallet/assets')
-  const [ledgers, refreshLedgers] = useFetch<IWalletLedger[]>('wallet/ledgers')
-  const [categories, refreshCategories] =
-    useFetch<IWalletCategory[]>('wallet/categories')
-  const [incomeExpenses, refreshIncomeExpenses] =
-    useFetch<IWalletIncomeExpenses>(
-      `wallet/transactions/income-expenses?year=${new Date().getFullYear()}&month=${
-        new Date().getMonth() + 1
-      }`
-    )
+  const assetsQuery = useAPIQuery<IWalletAsset[]>('wallet/assets', [
+    'wallet',
+    'assets'
+  ])
+  const ledgersQuery = useAPIQuery<IWalletLedger[]>('wallet/ledgers', [
+    'wallet',
+    'ledgers'
+  ])
+  const categoriesQuery = useAPIQuery<IWalletCategory[]>('wallet/categories', [
+    'wallet',
+    'categories'
+  ])
+  const incomeExpensesQuery = useAPIQuery<IWalletIncomeExpenses>(
+    `wallet/transactions/income-expenses?year=${new Date().getFullYear()}&month=${
+      new Date().getMonth() + 1
+    }`,
+    ['wallet', 'transactions', 'income-expenses']
+  )
   const [filteredTransactions, setFilteredTransactions] = useState<
     IWalletTransaction[]
   >([])
@@ -106,15 +115,20 @@ export default function WalletProvider() {
     () => ({
       transactions,
       filteredTransactions,
-      ledgers,
-      assets,
-      categories,
-      incomeExpenses,
+      ledgers: ledgersQuery.data ?? [],
+      ledgersLoading: ledgersQuery.isLoading,
+      assets: assetsQuery.data ?? [],
+      assetsLoading: assetsQuery.isLoading,
+      categories: categoriesQuery.data ?? [],
+      categoriesLoading: categoriesQuery.isLoading,
+      incomeExpenses: incomeExpensesQuery.data ?? {
+        monthlyExpenses: 0,
+        monthlyIncome: 0,
+        totalExpenses: 0,
+        totalIncome: 0
+      },
+      incomeExpensesLoading: incomeExpensesQuery.isLoading,
       refreshTransactions,
-      refreshAssets,
-      refreshLedgers,
-      refreshCategories,
-      refreshIncomeExpenses,
       isAmountHidden,
       toggleAmountVisibility,
       searchQuery,
@@ -123,10 +137,14 @@ export default function WalletProvider() {
     [
       transactions,
       filteredTransactions,
-      ledgers,
-      assets,
-      categories,
-      incomeExpenses,
+      ledgersQuery.data,
+      ledgersQuery.isLoading,
+      assetsQuery.data,
+      assetsQuery.isLoading,
+      categoriesQuery.data,
+      categoriesQuery.isLoading,
+      incomeExpensesQuery.data,
+      incomeExpensesQuery.isLoading,
       isAmountHidden,
       searchQuery
     ]

@@ -23,7 +23,7 @@ function ManageCategoriesModal({
   onClose: () => void
 }) {
   const { t } = useTranslation('modules.wallet')
-  const { categories, refreshCategories } = useWalletContext()
+  const { categories } = useWalletContext()
   const [modifyCategoriesModalOpenType, setModifyCategoriesModalOpenType] =
     useState<'income' | 'expenses' | 'update' | null>(null)
   const [existedData, setExistedData] = useState<IWalletCategory | null>(null)
@@ -91,7 +91,6 @@ function ManageCategoriesModal({
       <ModifyCategoriesModal
         existedData={existedData}
         openType={modifyCategoriesModalOpenType}
-        setExistedData={setExistedData}
         setOpenType={setModifyCategoriesModalOpenType}
       />
       <DeleteConfirmationModal
@@ -100,7 +99,7 @@ function ManageCategoriesModal({
         isOpen={deleteCategoriesConfirmationOpen}
         itemName="category"
         nameKey="name"
-        updateDataList={refreshCategories}
+        queryKey={['wallet', 'categories']}
         onClose={() => {
           setDeleteCategoriesConfirmationOpen(false)
         }}

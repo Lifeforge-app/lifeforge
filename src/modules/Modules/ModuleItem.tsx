@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
 import { useAuth } from '@providers/AuthProvider'
 import clsx from 'clsx'
+import { parse as parseCookie } from 'cookie'
 import _ from 'lodash'
-import { cookieParse } from 'pocketbase'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -51,7 +51,7 @@ function ModuleItem({
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        Authorization: `Bearer ${parseCookie(document.cookie).token}`
       },
       body: JSON.stringify({
         id: userData.id,

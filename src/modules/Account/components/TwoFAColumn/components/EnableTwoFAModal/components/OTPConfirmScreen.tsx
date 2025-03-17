@@ -1,4 +1,4 @@
-import { cookieParse } from 'pocketbase'
+import { parse as parseCookie } from 'cookie'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -28,7 +28,7 @@ function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
         body: {
           otp: encrypt(
             encrypt(otp, challenge),
-            cookieParse(document.cookie).token
+            parseCookie(document.cookie).token ?? ''
           )
         }
       })

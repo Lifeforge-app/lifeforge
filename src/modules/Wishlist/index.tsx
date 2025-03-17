@@ -2,16 +2,16 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
-  APIFallbackComponent,
   Button,
   DeleteConfirmationModal,
   EmptyStateScreen,
   FAB,
   ModuleHeader,
-  ModuleWrapper
+  ModuleWrapper,
+  QueryWrapper
 } from '@lifeforge/ui'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import ModifyWishlistListModal from './components/ModifyWishlistModal'
 import WishlistListItem from './components/WishlistListItem'
@@ -19,8 +19,10 @@ import { type IWishlistList } from './interfaces/wishlist_interfaces'
 
 function Wishlist() {
   const { t } = useTranslation('modules.wishlist')
-  const [lists, refreshLists, setLists] =
-    useFetch<IWishlistList[]>('wishlist/lists')
+  const listsQuery = useAPIQuery<IWishlistList[]>('wishlist/lists', [
+    'wishlist',
+    'lists'
+  ])
   const [existedData, setExistedData] = useState<IWishlistList | null>(null)
   const [modifyWishlistListModalOpenType, setModifyWishlistListModalOpenType] =
     useState<'create' | 'update' | null>(null)
@@ -45,7 +47,7 @@ function Wishlist() {
         icon="tabler:heart"
         title="Wishlist"
       />
-      <APIFallbackComponent data={lists}>
+      <QueryWrapper query={listsQuery}>
         {lists =>
           lists.length ? (
             <div className="mb-14 mt-6 grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]">
@@ -72,12 +74,11 @@ function Wishlist() {
             />
           )
         }
-      </APIFallbackComponent>
+      </QueryWrapper>
       <ModifyWishlistListModal
         existedData={existedData}
         openType={modifyWishlistListModalOpenType}
         setOpenType={setModifyWishlistListModalOpenType}
-        updateWishlistList={refreshLists}
       />
       <DeleteConfirmationModal
         apiEndpoint="wishlist/lists"
@@ -85,12 +86,7 @@ function Wishlist() {
         isOpen={deleteConfirmationModalOpen}
         itemName="wishlist"
         nameKey="name"
-        updateDataList={() => {
-          setLists(prev => {
-            if (typeof prev === 'string') return prev
-            return prev.filter(list => list.id !== existedData?.id)
-          })
-        }}
+        queryKey={['wishlist', 'lists']}
         onClose={() => {
           setDeleteConfirmationModalOpen(false)
         }}

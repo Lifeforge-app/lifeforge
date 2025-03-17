@@ -25,6 +25,7 @@ function ModifyPriorityModal() {
   const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',
+      required: true,
       label: 'Priority name',
       icon: 'tabler:sort-ascending-numbers',
       placeholder: 'Priority name',
@@ -32,6 +33,7 @@ function ModifyPriorityModal() {
     },
     {
       id: 'color',
+      required: true,
       label: 'Priority color',
       type: 'color'
     }

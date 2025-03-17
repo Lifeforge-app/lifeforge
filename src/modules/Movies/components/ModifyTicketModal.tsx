@@ -41,6 +41,7 @@ function ModifyTicketModal({
   const FIELDS: IFieldProps<IMovieTicketFormState>[] = [
     {
       id: 'ticket_number',
+      required: true,
       label: 'Ticket number',
       icon: 'tabler:ticket',
       placeholder: '123456789',

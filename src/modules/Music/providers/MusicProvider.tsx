@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { useAuth } from '@providers/AuthProvider'
-import { cookieParse } from 'pocketbase'
+import { parse as parseCookie } from 'cookie'
 import {
   type ReactNode,
   createContext,
@@ -129,7 +129,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${cookieParse(document.cookie).token}`
+            Authorization: `Bearer ${parseCookie(document.cookie).token}`
           }
         }
       )

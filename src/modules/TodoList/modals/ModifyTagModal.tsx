@@ -24,6 +24,7 @@ function ModifyTagModal() {
   const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',
+      required: true,
       label: 'Tag name',
       icon: 'tabler:tag',
       placeholder: 'Tag name',

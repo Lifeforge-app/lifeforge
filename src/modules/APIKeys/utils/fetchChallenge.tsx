@@ -1,5 +1,5 @@
+import { parse as parseCookie } from 'cookie'
 import { t } from 'i18next'
-import { cookieParse } from 'pocketbase'
 import { toast } from 'react-toastify'
 
 export async function fetchChallenge(): Promise<string> {
@@ -8,7 +8,7 @@ export async function fetchChallenge(): Promise<string> {
     {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        Authorization: `Bearer ${parseCookie(document.cookie).token}`
       }
     }
   ).then(async res => {

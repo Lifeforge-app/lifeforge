@@ -31,6 +31,7 @@ function ModifyCategoryModal({
   const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',
+      required: true,
       label: 'Category name',
       icon: 'tabler:category',
       placeholder: 'Category name',
@@ -38,11 +39,13 @@ function ModifyCategoryModal({
     },
     {
       id: 'icon',
+      required: true,
       label: 'Category icon',
       type: 'icon'
     },
     {
       id: 'color',
+      required: true,
       label: 'Category color',
       type: 'color'
     }

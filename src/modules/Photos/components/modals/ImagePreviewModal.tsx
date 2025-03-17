@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { cookieParse } from 'pocketbase'
+import { parse as parseCookie } from 'cookie'
 import { useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -69,7 +69,7 @@ function ImagePreviewModal({
         }?raw=${isRaw}&isInAlbum=${beingDisplayedInAlbum}`,
         {
           headers: {
-            Authorization: `Bearer ${cookieParse(document.cookie).token}`
+            Authorization: `Bearer ${parseCookie(document.cookie).token}`
           }
         }
       )
@@ -105,7 +105,7 @@ function ImagePreviewModal({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+          Authorization: `Bearer ${parseCookie(document.cookie).token}`
         }
       }
     )

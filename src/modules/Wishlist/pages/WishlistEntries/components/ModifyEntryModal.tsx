@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -5,7 +6,7 @@ import { toast } from 'react-toastify'
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
 
-import { type Loadable } from '@interfaces/common'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -17,19 +18,24 @@ import {
 function ModifyEntryModal({
   openType,
   setOpenType,
-  setEntries,
   existedData,
-  collectionId,
-  lists
+  queryKey
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  setEntries: React.Dispatch<React.SetStateAction<Loadable<IWishlistEntry[]>>>
   existedData: Partial<IWishlistEntry> | null
-  collectionId: string
-  lists: Loadable<IWishlistList[]>
+  queryKey: unknown[]
 }) {
+  const queryClient = useQueryClient()
   const { t } = useTranslation('modules.wishlist')
+  const listsQuery = useAPIQuery<IWishlistList[]>('wishlist/lists', [
+    'wishlist',
+    'lists'
+  ])
+  const collectionIdQuery = useAPIQuery<string>(
+    'wishlist/entries/collection-id',
+    ['wishlist', 'entries', 'collection-id']
+  )
   const [data, setData] = useState({
     list: '',
     url: '',
@@ -44,13 +50,14 @@ function ModifyEntryModal({
   const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'list',
+      required: true,
       label: 'Wishlist Name',
       icon: 'tabler:list',
       type: 'listbox',
       options:
-        typeof lists === 'string'
+        listsQuery.isLoading || !listsQuery.data
           ? []
-          : lists.map(list => ({
+          : listsQuery.data.map(list => ({
               value: list.id,
               text: list.name,
               icon: list.icon,
@@ -66,6 +73,7 @@ function ModifyEntryModal({
     },
     {
       id: 'name',
+      required: true,
       label: 'Product Name',
       icon: 'tabler:tag',
       placeholder: 'Product name',
@@ -87,10 +95,8 @@ function ModifyEntryModal({
 
   function updateDataList(data: IWishlistEntry | 'removed') {
     if (openType === 'update') {
-      setEntries(prev => {
-        if (typeof prev === 'string') {
-          return prev
-        }
+      queryClient.setQueryData<IWishlistEntry[]>(queryKey, prev => {
+        if (!prev) return prev
 
         if (data === 'removed') {
           return prev.filter(entry => entry.id !== existedData?.id)
@@ -98,10 +104,8 @@ function ModifyEntryModal({
         return prev.map(entry => (entry.id === existedData?.id ? data : entry))
       })
     } else {
-      setEntries(prev => {
-        if (typeof prev === 'string') {
-          return prev
-        }
+      queryClient.setQueryData<IWishlistEntry[]>(queryKey, prev => {
+        if (!prev) return prev
 
         if (data === 'removed') {
           return prev
@@ -202,7 +206,7 @@ function ModifyEntryModal({
             if (existedData.image?.startsWith('https://'))
               return existedData.image
 
-            return `${import.meta.env.VITE_API_HOST}/media/${collectionId}/${
+            return `${import.meta.env.VITE_API_HOST}/media/${collectionIdQuery.data}/${
               existedData.id
             }/${existedData.image}`
           })()

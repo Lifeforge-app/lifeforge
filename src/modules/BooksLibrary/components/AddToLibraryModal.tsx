@@ -102,6 +102,7 @@ function AddToLibraryModal({
     },
     {
       id: 'title',
+      required: true,
       label: 'Book Title',
       icon: 'tabler:book',
       placeholder: 'Title of the Book',
@@ -116,6 +117,7 @@ function AddToLibraryModal({
     },
     {
       id: 'authors',
+      required: true,
       label: 'Authors',
       icon: 'tabler:users',
       placeholder: 'Authors',
@@ -123,6 +125,7 @@ function AddToLibraryModal({
     },
     {
       id: 'publisher',
+      required: true,
       label: 'Publisher',
       icon: 'tabler:building',
       placeholder: 'Publisher',
@@ -130,6 +133,7 @@ function AddToLibraryModal({
     },
     {
       id: 'year_published',
+      required: true,
       label: 'Publication Year',
       icon: 'tabler:calendar',
       placeholder: '20xx',
@@ -137,6 +141,7 @@ function AddToLibraryModal({
     },
     {
       id: 'languages',
+      required: true,
       label: 'Languages',
       icon: 'tabler:language',
       type: 'listbox',

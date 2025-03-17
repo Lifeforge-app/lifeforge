@@ -107,6 +107,7 @@ function CalendarModule() {
       </ModuleWrapper>
       <ModifyEventModal
         categoriesQuery={categoriesQuery}
+        eventQueryKey={eventQueryKey}
         existedData={existedData}
         openType={modifyEventModalOpenType}
         setOpenType={setModifyEventModalOpenType}

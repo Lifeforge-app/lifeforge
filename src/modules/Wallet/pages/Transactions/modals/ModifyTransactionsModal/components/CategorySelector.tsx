@@ -19,14 +19,6 @@ function CategorySelector({
 }) {
   const { categories } = useWalletContext()
 
-  if (categories === 'loading') {
-    return <div>Loading...</div>
-  }
-
-  if (categories === 'error') {
-    return <div>Error</div>
-  }
-
   return (
     <ListboxOrComboboxInput
       required
