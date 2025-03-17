@@ -36,7 +36,7 @@ function EntryItem({
 
     try {
       const data = await fetchAPI<string>(
-        `api-keys/${entry.id}?master=${encodeURIComponent(
+        `api-keys/entries/${entry.id}?master=${encodeURIComponent(
           encrypt(masterPassword, challenge)
         )}`
       )

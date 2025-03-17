@@ -77,7 +77,7 @@ function ModifyAPIKeyModal({
 
     try {
       const data = await fetchAPI<string>(
-        `api-keys/${existingData?.id}?master=${encodeURIComponent(
+        `api-keys/entries/${existingData?.id}?master=${encodeURIComponent(
           encrypt(masterPassword, challenge)
         )}`
       )
@@ -122,7 +122,7 @@ function ModifyAPIKeyModal({
   return (
     <FormModal
       data={formState}
-      endpoint="api-keys"
+      endpoint="api-keys/entries"
       fields={FIELDS}
       getFinalData={async originalData => {
         const challenge = await fetchChallenge()
