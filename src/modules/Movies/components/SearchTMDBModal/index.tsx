@@ -49,7 +49,7 @@ function SearchTMDBModal({
     setSearchLoading(true)
     try {
       const data = await fetchAPI<IMovieSearchResults>(
-        `movies/search?q=${encodeURIComponent(searchQuery)}&page=${page}`
+        `movies/tmdb/search?q=${encodeURIComponent(searchQuery)}&page=${page}`
       )
       setSearchResults(data)
     } catch {

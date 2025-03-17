@@ -39,7 +39,7 @@ function APIKeys() {
     queryKey: ['api-keys', 'entries', masterPassword, challenge],
     queryFn: () =>
       fetchAPI(
-        'api-keys?master=' +
+        'api-keys/entries?master=' +
           encodeURIComponent(encrypt(masterPassword, challenge!))
       ),
     enabled: !!masterPassword && !!challenge
@@ -107,7 +107,7 @@ function APIKeys() {
           }}
         />
         <DeleteConfirmationModal
-          apiEndpoint="api-keys"
+          apiEndpoint="api-keys/entries"
           data={existingData}
           isOpen={deleteConfirmationModalOpen}
           itemName="API Key"
