@@ -16,6 +16,8 @@
 - **Code**: Pruned unused dependencies.
 - **Code**: Renamed entry file from `main.tsx` to `index.tsx`.
 - **Code**: Removed `pocketbase` from frontend.
+- **Code**: Continued migration to `FormModal` and `useAPIQuery`.
+- **Code**: Fixed bugs where the locale for page title and description for subsection pages were not displayed.
 
 ---
 
@@ -31,6 +33,7 @@
 - **Railway Map**: Integrated Leaflet.js to render an interactive Earth map of MRT lines and stations.
 - **Railway Map**: Developed a feature to calculate and display the shortest route between any two stations.
 - **Railway Map**: Enhanced user interactions with smoother animations for route navigation.
+- **Calendar**: Data is now fetched based on the selected date range instead of everything.
 - **Code**: Replaced multiple custom utility functions with optimized, pre-existing Node.js modules.
 - **UI**: Abstracted and relocated reusable UI components to `@lifeforge/ui` for a more structured component architecture.
 - **Code**: Consolidated core logic by moving all non-module-specific files from `modules` into the `core` directory.
