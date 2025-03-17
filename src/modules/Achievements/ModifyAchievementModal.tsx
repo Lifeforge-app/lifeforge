@@ -38,6 +38,7 @@ function ModifyAchievementModal({
   const FIELDS: IFieldProps<IAchievementEntryFormState>[] = [
     {
       id: 'title',
+      required: true,
       label: 'Achievement title',
       icon: 'tabler:award',
       placeholder: 'My achievement',
@@ -45,6 +46,7 @@ function ModifyAchievementModal({
     },
     {
       id: 'thoughts',
+      required: true,
       label: 'Achievement thoughts',
       icon: 'tabler:bubble-text',
       placeholder: 'My thoughts',
@@ -52,6 +54,7 @@ function ModifyAchievementModal({
     },
     {
       id: 'difficulty',
+      required: true,
       label: 'Achievement difficulty',
       icon: 'tabler:list',
       type: 'listbox',

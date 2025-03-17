@@ -15,6 +15,7 @@
 - **Code**: Removed modules that are just empty shells.
 - **Code**: Pruned unused dependencies.
 - **Code**: Renamed entry file from `main.tsx` to `index.tsx`.
+- **Code**: Removed `pocketbase` from frontend.
 
 ---
 

@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/empty-string-repetition */
 import { useDebounce } from '@uidotdev/usehooks'
-import { cookieParse } from 'pocketbase'
+import { parse as parseCookie } from 'cookie'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -49,7 +49,7 @@ function YoutubeDownloaderModal() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+          Authorization: `Bearer ${parseCookie(document.cookie).token}`
         }
       }
     )
@@ -70,7 +70,7 @@ function YoutubeDownloaderModal() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+          Authorization: `Bearer ${parseCookie(document.cookie).token}`
         },
         body: JSON.stringify({
           metadata: videoInfo

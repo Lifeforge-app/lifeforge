@@ -1,4 +1,4 @@
-import { cookieParse } from 'pocketbase'
+import { parse as parseCookie } from 'cookie'
 
 export default async function checkDownloadStatus(id: string): Promise<{
   status: 'completed' | 'failed' | 'in_progress'
@@ -10,7 +10,7 @@ export default async function checkDownloadStatus(id: string): Promise<{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookieParse(document.cookie).token} `
+        Authorization: `Bearer ${parseCookie(document.cookie).token} `
       },
       body: JSON.stringify({ id: [id] })
     }

@@ -1,13 +1,9 @@
-import { cookieParse } from 'pocketbase'
+import { parse as parseCookie } from 'cookie'
 
 interface ApiResponse<T> {
   state: 'success' | 'error'
   data?: T
   message?: string
-}
-
-interface CookieData {
-  token?: string
 }
 
 function getRequestBody(body: any, isJSON: boolean): any {
@@ -41,7 +37,7 @@ export default async function fetchAPI<T>(
       body instanceof Blob
     )
 
-  const cookies = cookieParse(document.cookie) as CookieData
+  const cookies = parseCookie(document.cookie)
   const token = cookies.token ?? ''
 
   try {

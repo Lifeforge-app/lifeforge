@@ -17,14 +17,6 @@ function LedgerSelector({
 }) {
   const { ledgers } = useWalletContext()
 
-  if (ledgers === 'loading') {
-    return <div>Loading...</div>
-  }
-
-  if (ledgers === 'error') {
-    return <div>Error</div>
-  }
-
   return (
     <ListboxOrComboboxInput
       buttonContent={

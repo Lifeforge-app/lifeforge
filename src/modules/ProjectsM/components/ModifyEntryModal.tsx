@@ -36,6 +36,7 @@ function ModifyEntryModal() {
   const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',
+      required: true,
       type: 'text',
       label: 'Project name',
       icon: 'tabler:book',
@@ -43,16 +44,19 @@ function ModifyEntryModal() {
     },
     {
       id: 'icon',
+      required: true,
       type: 'icon',
       label: 'Project icon'
     },
     {
       id: 'color',
+      required: true,
       type: 'color',
       label: 'Project color'
     },
     {
       id: 'category',
+      required: true,
       type: 'listbox',
       label: 'Project category',
       icon: 'tabler:category',
@@ -68,6 +72,7 @@ function ModifyEntryModal() {
     },
     {
       id: 'status',
+      required: true,
       type: 'listbox',
       label: 'Project status',
       icon: 'tabler:info-circle',
@@ -84,6 +89,7 @@ function ModifyEntryModal() {
     },
     {
       id: 'visibility',
+      required: true,
       type: 'listbox',
       label: 'Project visibility',
       icon: 'tabler:eye',

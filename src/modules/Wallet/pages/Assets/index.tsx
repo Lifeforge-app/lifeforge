@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 
 import {
-  APIFallbackComponent,
   Button,
   DeleteConfirmationModal,
   EmptyStateScreen,
@@ -21,8 +20,7 @@ import ModifyAssetsModal from './components/ModifyAssetsModal'
 
 function Assets() {
   const { t } = useTranslation('modules.wallet')
-  const { assets, refreshAssets, isAmountHidden, toggleAmountVisibility } =
-    useWalletContext()
+  const { assets, isAmountHidden, toggleAmountVisibility } = useWalletContext()
   const [modifyAssetsModalOpenType, setModifyModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
@@ -73,36 +71,30 @@ function Assets() {
         icon="tabler:wallet"
         title="Assets"
       />
-      <APIFallbackComponent data={assets}>
-        {assets =>
-          assets.length > 0 ? (
-            <div className="mb-24 mt-6 grid grid-cols-1 gap-4 md:mb-6 md:grid-cols-2 lg:grid-cols-3">
-              {assets.map(asset => (
-                <AssetItem
-                  key={asset.id}
-                  asset={asset}
-                  setDeleteAssetsConfirmationOpen={
-                    setDeleteAssetsConfirmationOpen
-                  }
-                  setModifyModalOpenType={setModifyModalOpenType}
-                  setSelectedData={setSelectedData}
-                />
-              ))}
-            </div>
-          ) : (
-            <EmptyStateScreen
-              ctaContent="new"
-              ctaTProps={{
-                item: t('items.asset')
-              }}
-              icon="tabler:wallet-off"
-              name="assets"
-              namespace="modules.wallet"
-              onCTAClick={setModifyModalOpenType}
+      {assets.length > 0 ? (
+        <div className="mb-24 mt-6 grid grid-cols-1 gap-4 md:mb-6 md:grid-cols-2 lg:grid-cols-3">
+          {assets.map(asset => (
+            <AssetItem
+              key={asset.id}
+              asset={asset}
+              setDeleteAssetsConfirmationOpen={setDeleteAssetsConfirmationOpen}
+              setModifyModalOpenType={setModifyModalOpenType}
+              setSelectedData={setSelectedData}
             />
-          )
-        }
-      </APIFallbackComponent>
+          ))}
+        </div>
+      ) : (
+        <EmptyStateScreen
+          ctaContent="new"
+          ctaTProps={{
+            item: t('items.asset')
+          }}
+          icon="tabler:wallet-off"
+          name="assets"
+          namespace="modules.wallet"
+          onCTAClick={setModifyModalOpenType}
+        />
+      )}
       {assets.length > 0 && (
         <FAB
           icon="tabler:plus"
@@ -115,7 +107,6 @@ function Assets() {
       <ModifyAssetsModal
         existedData={selectedData}
         openType={modifyAssetsModalOpenType}
-        refreshAssets={refreshAssets}
         setExistedData={setSelectedData}
         setOpenType={setModifyModalOpenType}
       />
@@ -125,7 +116,7 @@ function Assets() {
         isOpen={deleteAssetsConfirmationOpen}
         itemName="asset account"
         nameKey="name"
-        updateDataList={refreshAssets}
+        queryKey={['wallet', 'assets']}
         onClose={() => {
           setDeleteAssetsConfirmationOpen(false)
           setSelectedData(null)

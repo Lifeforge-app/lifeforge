@@ -1,6 +1,6 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
-import { cookieParse } from 'pocketbase'
+import { parse as parseCookie } from 'cookie'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -32,7 +32,7 @@ function QRCodeDisplay() {
       const challenge = await fetchAPI<string>('/user/2fa/challenge')
       const link = await fetchAPI<string>('/user/2fa/link')
 
-      const decrypted1 = decrypt(link, cookieParse(document.cookie).token)
+      const decrypted1 = decrypt(link, parseCookie(document.cookie).token ?? '')
       const decrypted2 = decrypt(decrypted1, challenge)
 
       setLink(decrypted2)

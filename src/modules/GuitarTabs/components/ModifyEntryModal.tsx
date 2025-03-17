@@ -36,6 +36,7 @@ function ModifyEntryModal({
   const FIELDS: IFieldProps<IGuitarTabsEntryFormState>[] = [
     {
       id: 'name',
+      required: true,
       label: 'Music Name',
       icon: 'tabler:music',
       placeholder: 'A cool tab',
@@ -50,6 +51,7 @@ function ModifyEntryModal({
     },
     {
       id: 'type',
+      required: true,
       label: 'Score Type',
       icon: 'tabler:category',
       type: 'listbox',

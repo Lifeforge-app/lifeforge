@@ -1,4 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
@@ -30,14 +31,10 @@ import ColumnVisibilityToggle from './views/TableView/components/ColumnVisibilit
 
 function Transactions() {
   const { t } = useTranslation('modules.wallet')
-  const {
-    transactions,
-    refreshTransactions,
-    refreshAssets,
-    refreshCategories,
-    filteredTransactions
-  } = useWalletContext()
+  const { transactions, refreshTransactions, filteredTransactions } =
+    useWalletContext()
 
+  const queryClient = useQueryClient()
   const [modifyTransactionsModalOpenType, setModifyModalOpenType] = useState<
     'create' | 'update' | null
   >(null)
@@ -233,7 +230,7 @@ function Transactions() {
         itemName="transaction"
         updateDataList={() => {
           refreshTransactions()
-          refreshAssets()
+          queryClient.invalidateQueries({ queryKey: ['wallet', 'categories'] })
         }}
         onClose={() => {
           setDeleteTransactionsConfirmationOpen(false)
@@ -245,7 +242,7 @@ function Transactions() {
         onClose={() => {
           setManageCategoriesModalOpen(false)
           refreshTransactions()
-          refreshCategories()
+          queryClient.invalidateQueries({ queryKey: ['wallet', 'categories'] })
         }}
       />
       <ReceiptModal

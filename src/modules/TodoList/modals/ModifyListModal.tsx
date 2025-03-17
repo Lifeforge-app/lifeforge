@@ -26,6 +26,7 @@ function ModifyListModal() {
   const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',
+      required: true,
       label: 'List name',
       icon: 'tabler:list',
       placeholder: 'List name',
@@ -33,11 +34,13 @@ function ModifyListModal() {
     },
     {
       id: 'icon',
+      required: true,
       label: 'List icon',
       type: 'icon'
     },
     {
       id: 'color',
+      required: true,
       label: 'List color',
       type: 'color'
     }

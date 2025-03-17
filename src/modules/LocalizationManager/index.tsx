@@ -1,4 +1,4 @@
-import { cookieParse } from 'pocketbase'
+import { parse as parseCookie } from 'cookie'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -11,7 +11,7 @@ function LocalizationManager() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const token = cookieParse(document.cookie).token
+    const token = parseCookie(document.cookie).token
 
     if (!token) {
       window.location.href = '/'

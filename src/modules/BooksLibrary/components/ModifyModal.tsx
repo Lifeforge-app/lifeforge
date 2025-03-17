@@ -32,11 +32,13 @@ function ModifyModal({ stuff }: { stuff: 'categories' | 'languages' }) {
       id: 'name',
       label: `${singleStuff} name`,
       icon: 'tabler:book',
+      required: true,
       placeholder: `Project ${singleStuff}`,
       type: 'text'
     },
     {
       id: 'icon',
+      required: true,
       label: `${singleStuff} icon`,
       type: 'icon'
     }

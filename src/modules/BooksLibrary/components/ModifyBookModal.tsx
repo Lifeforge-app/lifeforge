@@ -82,6 +82,7 @@ function ModifyBookModal() {
     },
     {
       id: 'title',
+      required: true,
       label: 'Book Title',
       icon: 'tabler:book',
       placeholder: 'Title of the Book',
@@ -96,6 +97,7 @@ function ModifyBookModal() {
     },
     {
       id: 'authors',
+      required: true,
       label: 'Authors',
       icon: 'tabler:users',
       placeholder: 'Authors',
@@ -103,6 +105,7 @@ function ModifyBookModal() {
     },
     {
       id: 'publisher',
+      required: true,
       label: 'Publisher',
       icon: 'tabler:building',
       placeholder: 'Publisher',
@@ -110,6 +113,7 @@ function ModifyBookModal() {
     },
     {
       id: 'year_published',
+      required: true,
       label: 'Publication Year',
       icon: 'tabler:calendar',
       placeholder: '20xx',
@@ -117,6 +121,7 @@ function ModifyBookModal() {
     },
     {
       id: 'languages',
+      required: true,
       label: 'Languages',
       icon: 'tabler:language',
       type: 'listbox',

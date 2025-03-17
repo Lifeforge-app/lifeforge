@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { parse } from 'file-type-mime'
 import moment from 'moment'
 import { useEffect, useRef, useState } from 'react'
@@ -41,7 +42,8 @@ function ModifyTransactionsModal({
   >
 }) {
   const { t } = useTranslation('modules.wallet')
-  const { refreshAssets, refreshTransactions } = useWalletContext()
+  const queryClient = useQueryClient()
+  const { refreshTransactions } = useWalletContext()
   const [particular, setParticular] = useState('')
   const [transactionType, setTransactionType] = useState<
     'income' | 'expenses' | 'transfer'
@@ -174,7 +176,7 @@ function ModifyTransactionsModal({
       )
 
       refreshTransactions()
-      refreshAssets()
+      queryClient.invalidateQueries({ queryKey: ['wallet', 'transactions'] })
       setExistedData(null)
       setOpenType(null)
     } catch {

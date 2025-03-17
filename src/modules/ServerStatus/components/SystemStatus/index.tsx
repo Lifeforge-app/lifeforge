@@ -18,24 +18,18 @@ function SystemStatus() {
   const [memoryUsage, refreshMemoryUsage] = useFetch<IMemoryUsage>(
     'server/memory',
     true,
-    'GET',
-    undefined,
     false,
     false
   )
   const [cpuUsage, refreshCPUUsage] = useFetch<ICPUUSage>(
     'server/cpu',
     true,
-    'GET',
-    undefined,
     false,
     false
   )
   const [cpuTemp, refreshCPUTemp] = useFetch<ICPUTemp>(
     'server/cpu-temp',
     true,
-    'GET',
-    undefined,
     false,
     false
   )

@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { cookieParse } from 'pocketbase'
+import { parse as parseCookie } from 'cookie'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -49,7 +49,7 @@ function BottomBar({
         {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${cookieParse(document.cookie).token}`,
+            Authorization: `Bearer ${parseCookie(document.cookie).token}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -92,7 +92,7 @@ function BottomBar({
         {
           method: 'PATCH',
           headers: {
-            Authorization: `Bearer ${cookieParse(document.cookie).token}`,
+            Authorization: `Bearer ${parseCookie(document.cookie).token}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({

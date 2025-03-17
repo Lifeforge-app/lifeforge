@@ -15,14 +15,6 @@ function AssetsFromToSelector({
 }) {
   const { assets } = useWalletContext()
 
-  if (assets === 'loading') {
-    return <div>Loading...</div>
-  }
-
-  if (assets === 'error') {
-    return <div>Error</div>
-  }
-
   return (
     <>
       <AssetListbox

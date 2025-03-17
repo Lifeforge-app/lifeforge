@@ -1,8 +1,8 @@
 /* eslint-disable sonarjs/no-nested-functions */
 /* eslint-disable sonarjs/no-nested-conditional */
 import { Icon } from '@iconify/react'
+import { parse as parseCookie } from 'cookie'
 import moment from 'moment'
-import { cookieParse } from 'pocketbase'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import PhotoAlbum from 'react-photo-album'
@@ -84,7 +84,7 @@ function PhotosAlbumGallery() {
         {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${cookieParse(document.cookie).token}`,
+            Authorization: `Bearer ${parseCookie(document.cookie).token}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({

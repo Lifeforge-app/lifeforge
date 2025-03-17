@@ -7,6 +7,7 @@ import { Bar, Line } from 'react-chartjs-2'
 import tinycolor from 'tinycolor2'
 
 import {
+  APIFallbackComponent,
   DashboardItem,
   EmptyStateScreen,
   LoadingScreen,
@@ -188,8 +189,10 @@ const CodeTime = () => {
       icon="tabler:chart-line"
       title="Code Time"
     >
-      <div className="flex-center size-full min-h-0 flex-1">
-        {renderContent()}
+      <div className="flex-1">
+        <APIFallbackComponent data={data}>
+          {() => <>{renderContent()}</>}
+        </APIFallbackComponent>
       </div>
     </DashboardItem>
   )

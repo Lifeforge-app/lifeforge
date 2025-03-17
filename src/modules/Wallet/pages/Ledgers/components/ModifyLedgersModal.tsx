@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
 import type { IFieldProps } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import {
   type IWalletLedger,
@@ -16,16 +12,13 @@ function ModifyLedgersModal({
   openType,
   setOpenType,
   existedData,
-  setExistedData,
-  refreshLedgers
+  setExistedData
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   existedData: IWalletLedger | null
   setExistedData: React.Dispatch<React.SetStateAction<IWalletLedger | null>>
-  refreshLedgers: () => void
 }) {
-  const { t } = useTranslation('modules.wallet')
   const [formState, setFormState] = useState<IWalletLedgerFormState>({
     name: '',
     icon: '',
@@ -35,6 +28,7 @@ function ModifyLedgersModal({
   const FIELDS: IFieldProps<IWalletLedgerFormState>[] = [
     {
       id: 'name',
+      required: true,
       label: 'Ledger name',
       icon: 'tabler:book',
       placeholder: 'My Ledgers',
@@ -42,11 +36,13 @@ function ModifyLedgersModal({
     },
     {
       id: 'icon',
+      required: true,
       label: 'Ledger icon',
       type: 'icon'
     },
     {
       id: 'color',
+      required: true,
       label: 'Ledger color',
       type: 'color'
     }
@@ -72,44 +68,23 @@ function ModifyLedgersModal({
     }
   }, [openType, existedData])
 
-  async function onSubmit() {
-    if (Object.values(formState).some(value => value.trim() === '')) {
-      toast.error(t('input.error.fieldEmpty'))
-      return
-    }
-
-    try {
-      await fetchAPI(
-        `wallet/ledgers${openType === 'update' ? '/' + existedData?.id : ''}`,
-        {
-          method: openType === 'create' ? 'POST' : 'PATCH',
-          body: formState
-        }
-      )
-
-      refreshLedgers()
-      setExistedData(null)
-      setOpenType(null)
-    } catch {
-      toast.error(t('input.error.failed'))
-    }
-  }
-
   return (
     <FormModal
       data={formState}
+      endpoint="wallet/ledgers"
       fields={FIELDS}
       icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
+      id={existedData?.id}
       isOpen={openType !== null}
       namespace="modules.wallet"
       openType={openType}
+      queryKey={['wallet', 'ledgers']}
       setData={setFormState}
       title={`ledgers.${openType}`}
       onClose={() => {
         setExistedData(null)
         setOpenType(null)
       }}
-      onSubmit={onSubmit}
     />
   )
 }

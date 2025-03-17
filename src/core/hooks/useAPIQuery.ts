@@ -3,10 +3,11 @@ import { useQuery } from '@tanstack/react-query'
 
 import fetchAPI from '@utils/fetchAPI'
 
-function useAPIQuery<T>(endpoint: string, key: unknown[]) {
+function useAPIQuery<T>(endpoint: string, key: unknown[], enabled = true) {
   return useQuery<T>({
     queryKey: key,
-    queryFn: () => fetchAPI(endpoint)
+    queryFn: () => fetchAPI(endpoint),
+    enabled
   })
 }
 

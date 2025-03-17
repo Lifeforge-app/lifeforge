@@ -1,20 +1,21 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import {
-  APIFallbackComponent,
   Button,
   DeleteConfirmationModal,
   EmptyStateScreen,
   MenuItem,
   ModuleWrapper,
+  QueryWrapper,
   Scrollbar,
   Tabs
 } from '@lifeforge/ui'
 
+import useAPIQuery from '@hooks/useAPIQuery'
 import useFetch from '@hooks/useFetch'
 
 import {
@@ -30,19 +31,19 @@ function WishlistEntries() {
   const { t } = useTranslation('modules.wishlist')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
-  const [lists] = useFetch<IWishlistList[]>('wishlist/lists')
   const [valid] = useFetch<boolean>(`wishlist/lists/valid/${id}`)
   const [activeTab, setActiveTab] = useState('wishlist')
   const [wishlistListDetails] = useFetch<IWishlistList>(
     `wishlist/lists/${id}`,
     valid === true
   )
-  const [entries, , setEntries] = useFetch<IWishlistEntry[]>(
-    `wishlist/entries/${id}?bought=${activeTab === 'bought'}`,
-    valid === true
+  const queryKey = useMemo(
+    () => [`wishlist`, `entries`, id, activeTab === 'bought'],
+    [id, activeTab]
   )
-  const [collectionId] = useFetch<string>(
-    'wishlist/entries/collection-id',
+  const entriesQuery = useAPIQuery<IWishlistEntry[]>(
+    `wishlist/entries/${id}?bought=${activeTab === 'bought'}`,
+    queryKey,
     valid === true
   )
   const [isFromOtherAppsModalOpen, setFromOtherAppsModalOpen] = useState(false)
@@ -81,86 +82,79 @@ function WishlistEntries() {
         setModifyEntryModalOpenType={setModifyEntryModalOpenType}
         wishlistListDetails={wishlistListDetails}
       />
-      <Tabs
-        active={activeTab}
-        className="mt-6"
-        enabled={['wishlist', 'bought']}
-        items={[
-          {
-            id: 'wishlist',
-            name: t('tabs.wishlist'),
-            icon: 'tabler:heart',
-            amount: (() => {
-              if (
-                typeof entries === 'string' ||
-                typeof wishlistListDetails === 'string'
-              ) {
-                return 0
-              }
+      <QueryWrapper query={entriesQuery}>
+        {entries => (
+          <>
+            <Tabs
+              active={activeTab}
+              className="mt-6"
+              enabled={['wishlist', 'bought']}
+              items={[
+                {
+                  id: 'wishlist',
+                  name: t('tabs.wishlist'),
+                  icon: 'tabler:heart',
+                  amount: (() => {
+                    if (
+                      typeof entries === 'string' ||
+                      typeof wishlistListDetails === 'string'
+                    ) {
+                      return 0
+                    }
 
-              return activeTab === 'wishlist'
-                ? entries.length
-                : wishlistListDetails.item_count - entries.length
-            })()
-          },
-          {
-            id: 'bought',
-            name: t('tabs.bought'),
-            icon: 'tabler:check',
-            amount: (() => {
-              if (
-                typeof entries === 'string' ||
-                typeof wishlistListDetails === 'string'
-              ) {
-                return 0
-              }
+                    return activeTab === 'wishlist'
+                      ? entries.length
+                      : wishlistListDetails.item_count - entries.length
+                  })()
+                },
+                {
+                  id: 'bought',
+                  name: t('tabs.bought'),
+                  icon: 'tabler:check',
+                  amount: (() => {
+                    if (
+                      typeof entries === 'string' ||
+                      typeof wishlistListDetails === 'string'
+                    ) {
+                      return 0
+                    }
 
-              return activeTab === 'bought'
-                ? entries.length
-                : wishlistListDetails.item_count - entries.length
-            })()
-          }
-        ]}
-        onNavClick={setActiveTab}
-      />
-      <APIFallbackComponent data={collectionId}>
-        {collectionId => (
-          <APIFallbackComponent data={entries}>
-            {entries => {
-              if (entries.length === 0) {
-                return (
-                  <EmptyStateScreen
-                    ctaContent="new"
-                    ctaTProps={{
-                      item: t('items.entry')
-                    }}
-                    icon="tabler:shopping-cart-off"
-                    name="entries"
-                    namespace="modules.wishlist"
-                  />
-                )
-              }
-
-              return (
-                <Scrollbar>
-                  <ul className="mb-14 flex flex-col space-y-2 sm:mb-6">
-                    {entries.map(entry => (
-                      <EntryItem
-                        key={entry.id}
-                        collectionId={collectionId}
-                        entry={entry}
-                        setEntries={setEntries}
-                        onDelete={handleDelete}
-                        onEdit={handleEdit}
-                      />
-                    ))}
-                  </ul>
-                </Scrollbar>
-              )
-            }}
-          </APIFallbackComponent>
+                    return activeTab === 'bought'
+                      ? entries.length
+                      : wishlistListDetails.item_count - entries.length
+                  })()
+                }
+              ]}
+              onNavClick={setActiveTab}
+            />
+            {entries.length === 0 ? (
+              <EmptyStateScreen
+                ctaContent="new"
+                ctaTProps={{
+                  item: t('items.entry')
+                }}
+                icon="tabler:shopping-cart-off"
+                name="entries"
+                namespace="modules.wishlist"
+              />
+            ) : (
+              <Scrollbar>
+                <ul className="mb-14 flex flex-col space-y-2 sm:mb-6">
+                  {entries.map(entry => (
+                    <EntryItem
+                      key={entry.id}
+                      entry={entry}
+                      queryKey={queryKey}
+                      onDelete={handleDelete}
+                      onEdit={handleEdit}
+                    />
+                  ))}
+                </ul>
+              </Scrollbar>
+            )}
+          </>
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
       <FromOtherAppsModal
         isOpen={isFromOtherAppsModalOpen}
         setExistedData={setExistedData}
@@ -175,24 +169,15 @@ function WishlistEntries() {
         isOpen={deleteEntryConfirmationModalOpen}
         itemName="entry"
         nameKey="name"
-        updateDataList={() => {
-          setEntries(prev => {
-            if (typeof prev === 'string') {
-              return prev
-            }
-            return prev.filter(e => e.id !== existedData?.id)
-          })
-        }}
+        queryKey={queryKey}
         onClose={() => {
           setDeleteEntryConfirmationModalOpen(false)
         }}
       />
       <ModifyEntryModal
-        collectionId={collectionId}
         existedData={existedData}
-        lists={lists}
         openType={modifyEntryModalOpenType}
-        setEntries={setEntries}
+        queryKey={queryKey}
         setOpenType={setModifyEntryModalOpenType}
       />
       <Menu as="div" className="absolute bottom-6 right-6 z-50 block md:hidden">

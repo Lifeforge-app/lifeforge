@@ -16,13 +16,15 @@ interface ModifyEventModalProps {
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
   existedData: ICalendarEvent | null
   categoriesQuery: UseQueryResult<ICalendarCategory[]>
+  eventQueryKey: unknown[]
 }
 
 function ModifyEventModal({
   openType,
   setOpenType,
   existedData,
-  categoriesQuery
+  categoriesQuery,
+  eventQueryKey
 }: ModifyEventModalProps) {
   const [formState, setFormState] = useState<ICalendarEventFormState>({
     title: '',
@@ -35,6 +37,7 @@ function ModifyEventModal({
   const FIELDS: IFieldProps<ICalendarEventFormState>[] = [
     {
       id: 'title',
+      required: true,
       label: 'Event title',
       icon: 'tabler:calendar',
       type: 'text',
@@ -42,6 +45,7 @@ function ModifyEventModal({
     },
     {
       id: 'start',
+      required: true,
       label: 'Start time',
       icon: 'tabler:clock',
       type: 'datetime',
@@ -50,6 +54,7 @@ function ModifyEventModal({
     },
     {
       id: 'end',
+      required: true,
       label: 'End time',
       icon: 'tabler:clock',
       type: 'datetime',
@@ -58,6 +63,7 @@ function ModifyEventModal({
     },
     {
       id: 'category',
+      required: true,
       label: 'Event Category',
       icon: 'tabler:list',
       type: 'listbox',
@@ -139,7 +145,7 @@ function ModifyEventModal({
         isOpen={isDeleteConfirmationModalOpen}
         itemName="event"
         nameKey="title"
-        queryKey={['calendar', 'events']}
+        queryKey={eventQueryKey}
         onClose={() => {
           setIsDeleteConfirmationModalOpen(false)
           setOpenType(null)

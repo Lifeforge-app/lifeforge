@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-nested-functions */
 /* eslint-disable sonarjs/no-nested-conditional */
-import { cookieParse } from 'pocketbase'
+import { parse as parseCookie } from 'cookie'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -34,7 +34,7 @@ function GalleryHeader() {
     fetch(`${import.meta.env.VITE_API_HOST}/photos/entries/import`, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        Authorization: `Bearer ${parseCookie(document.cookie).token}`
       }
     })
       .then(async response => {
@@ -50,7 +50,7 @@ function GalleryHeader() {
               `${import.meta.env.VITE_API_HOST}/photos/entries/import/progress`,
               {
                 headers: {
-                  Authorization: `Bearer ${cookieParse(document.cookie).token}`
+                  Authorization: `Bearer ${parseCookie(document.cookie).token}`
                 }
               }
             ).then(async response => await response.json())
@@ -82,7 +82,7 @@ function GalleryHeader() {
         `${import.meta.env.VITE_API_HOST}/photos/entries/import/progress`,
         {
           headers: {
-            Authorization: `Bearer ${cookieParse(document.cookie).token}`
+            Authorization: `Bearer ${parseCookie(document.cookie).token}`
           }
         }
       ).then(async response => await response.json())

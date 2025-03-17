@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { cookieParse } from 'pocketbase'
+import { parse as parseCookie } from 'cookie'
 import { useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import PhotoAlbum from 'react-photo-album'
@@ -49,7 +49,7 @@ function LockedFolderGallery() {
       {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+          Authorization: `Bearer ${parseCookie(document.cookie).token}`
         }
       }
     )
@@ -66,7 +66,7 @@ function LockedFolderGallery() {
               `${import.meta.env.VITE_API_HOST}/photos/entries/import/progress`,
               {
                 headers: {
-                  Authorization: `Bearer ${cookieParse(document.cookie).token}`
+                  Authorization: `Bearer ${parseCookie(document.cookie).token}`
                 }
               }
             ).then(async response => await response.json())
@@ -97,7 +97,7 @@ function LockedFolderGallery() {
         `${import.meta.env.VITE_API_HOST}/photos/entries/import/progress`,
         {
           headers: {
-            Authorization: `Bearer ${cookieParse(document.cookie).token}`
+            Authorization: `Bearer ${parseCookie(document.cookie).token}`
           }
         }
       ).then(async response => await response.json())

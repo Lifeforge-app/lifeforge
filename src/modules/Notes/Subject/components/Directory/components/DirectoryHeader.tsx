@@ -1,7 +1,7 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { cookieParse } from 'pocketbase'
+import { parse as parseCookie } from 'cookie'
 import { useRef } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
@@ -75,7 +75,7 @@ function DirectoryHeader({
         {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${cookieParse(document.cookie).token}`
+            Authorization: `Bearer ${parseCookie(document.cookie).token}`
           },
           body: formData
         }
@@ -144,7 +144,7 @@ function DirectoryHeader({
           {
             method: 'POST',
             headers: {
-              Authorization: `Bearer ${cookieParse(document.cookie).token}`
+              Authorization: `Bearer ${parseCookie(document.cookie).token}`
             },
             body: formData
           }
