@@ -129,7 +129,7 @@ function ModifyEventModal({
         modalRef={ref}
         namespace="modules.calendar"
         openType={openType}
-        queryKey={['calendar', 'events']}
+        queryKey={eventQueryKey}
         setData={setFormState}
         title={`event.${openType}`}
         onActionButtonClick={() => {
