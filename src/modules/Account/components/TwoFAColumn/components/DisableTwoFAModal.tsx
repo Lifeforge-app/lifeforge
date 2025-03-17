@@ -20,7 +20,7 @@ function DisableTwoFAModal({
   onClose: () => void
   onSuccess: () => void
 }) {
-  const { t } = useTranslation('modules.accountSettings')
+  const { t } = useTranslation('core.accountSettings')
   const { componentBgLighter } = useComponentBg()
   const [otpSuccess, setOtpSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -44,7 +44,7 @@ function DisableTwoFAModal({
     <ModalWrapper isOpen={isOpen}>
       <ModalHeader
         icon="tabler:lock-access-off"
-        namespace="modules.accountSettings"
+        namespace="core.accountSettings"
         title="disable2FA"
         onClose={onClose}
       />

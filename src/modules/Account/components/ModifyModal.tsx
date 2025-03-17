@@ -71,7 +71,7 @@ function ModifyModal({
     <ModalWrapper isOpen={isOpen} minWidth="30rem" modalRef={modalRef}>
       <ModalHeader
         icon="tabler:pencil"
-        namespace="modules.accountSettings"
+        namespace="core.accountSettings"
         title={`${_.camelCase(title)}.update`}
         onClose={onClose}
       />
@@ -80,7 +80,7 @@ function ModifyModal({
           darker
           icon={icon}
           name={title}
-          namespace="modules.accountSettings"
+          namespace="core.accountSettings"
           placeholder={`Enter new ${title}`}
           setValue={setValue}
           value={value}
@@ -97,7 +97,7 @@ function ModifyModal({
           icon={icon}
           modalRef={modalRef}
           name={title}
-          namespace="modules.accountSettings"
+          namespace="core.accountSettings"
           setDate={setValue}
         />
       )}

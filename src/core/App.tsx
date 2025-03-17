@@ -13,7 +13,7 @@ import '@lifeforge/ui/dist/index.css'
 
 import Providers from './Providers.tsx'
 import './i18n'
-import AppRouter from './routes/Router.tsx'
+import AppRouter from './routes/index.tsx'
 import './styles/index.css'
 
 function App() {

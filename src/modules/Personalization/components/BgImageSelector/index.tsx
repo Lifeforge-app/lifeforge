@@ -15,7 +15,7 @@ import fetchAPI from '@utils/fetchAPI'
 import AdjustBgImageModal from './components/AdjustBgImageModal'
 
 function BgImageSelector() {
-  const { t } = useTranslation('modules.personalization')
+  const { t } = useTranslation('core.personalization')
   const { bgImage, setBgImage, setBackdropFilters } = usePersonalization()
   const [imageSelectorModalOpen, setImageSelectorModalOpen] = useState(false)
   const [adjustBgImageModalOpen, setAdjustBgImageModalOpen] = useState(false)

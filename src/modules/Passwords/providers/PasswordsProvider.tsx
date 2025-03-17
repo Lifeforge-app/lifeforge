@@ -110,7 +110,9 @@ export default function PasswordsProvider() {
 export function usePasswordContext(): IPasswordsData {
   const context = useContext(PasswordsContext)
   if (context === undefined) {
-    throw new Error('useIdeaBoxContext must be used within a IdeaBoxProvider')
+    throw new Error(
+      'usePasswordContext must be used within a PasswordsProvider'
+    )
   }
   return context
 }

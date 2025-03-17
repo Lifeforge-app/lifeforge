@@ -22,7 +22,7 @@ function FontFamilyList({
   setFontFamily,
   allFonts
 }: FontFamilyListProps) {
-  const { t } = useTranslation('modules.personalization')
+  const { t } = useTranslation('core.personalization')
 
   if (enabled === 'loading') {
     return <Icon className="size-6 text-bg-500" icon="svg-spinners:180-ring" />

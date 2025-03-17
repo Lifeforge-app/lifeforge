@@ -7,7 +7,7 @@ import { Button, ConfigColumn } from '@lifeforge/ui'
 import fetchAPI from '@utils/fetchAPI'
 
 function PasswordColumn() {
-  const { t } = useTranslation('modules.accountSettings')
+  const { t } = useTranslation('core.accountSettings')
   const [loading, setLoading] = useState(false)
 
   async function onPasswordChange() {
@@ -35,7 +35,7 @@ function PasswordColumn() {
         className="w-full whitespace-nowrap md:w-auto"
         icon="tabler:key"
         loading={loading}
-        namespace="modules.accountSettings"
+        namespace="core.accountSettings"
         variant="secondary"
         onClick={() => {
           onPasswordChange().catch(console.error)

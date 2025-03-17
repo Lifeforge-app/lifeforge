@@ -20,7 +20,7 @@ function BgTempSelector() {
   )
   const [colorPickerModalOpen, setColorPickerModalOpen] =
     useState<boolean>(false)
-  const { t } = useTranslation(['modules.personalization', 'common.buttons'])
+  const { t } = useTranslation(['core.personalization', 'common.buttons'])
 
   return (
     <ConfigColumn
@@ -55,7 +55,7 @@ function BgTempSelector() {
               color={customBgTemp}
               hasTopMargin={false}
               name="Color Hex"
-              namespace="modules.personalization"
+              namespace="core.personalization"
               setColor={setCustomBgTemp}
               setColorPickerOpen={setColorPickerModalOpen}
             />

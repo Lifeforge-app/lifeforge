@@ -9,7 +9,7 @@ import { encrypt } from '@security/utils/encryption'
 import fetchAPI from '@utils/fetchAPI'
 
 function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
-  const { t } = useTranslation('modules.accountSettings')
+  const { t } = useTranslation('core.accountSettings')
   const [otp, setOtp] = useState('')
   const [verifyOtpLoading, setVerifyOtpLoading] = useState(false)
 

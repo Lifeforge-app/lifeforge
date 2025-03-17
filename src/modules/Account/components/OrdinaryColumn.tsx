@@ -20,7 +20,7 @@ function OrdinaryColumn({
   type?: string
 }) {
   const { userData } = useAuth()
-  const { t } = useTranslation('modules.accountSettings')
+  const { t } = useTranslation('core.accountSettings')
   const [modifyModalOpen, setModifyModalOpen] = useState(false)
 
   return (

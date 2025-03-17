@@ -41,7 +41,7 @@ function DefaultThemeColorSelector({
   setThemeColor: (color: string) => void
   customThemeColor: string
 }) {
-  const { t } = useTranslation('modules.personalization')
+  const { t } = useTranslation('core.personalization')
   const { componentBgWithHover } = useComponentBg()
 
   return (
