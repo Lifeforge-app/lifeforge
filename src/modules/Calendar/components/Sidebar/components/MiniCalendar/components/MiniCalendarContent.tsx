@@ -1,8 +1,6 @@
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import moment from 'moment'
 
-import { type Loadable } from '@interfaces/common'
-
 import {
   type ICalendarCategory,
   type ICalendarEvent
@@ -18,7 +16,7 @@ function MiniCalendarContent({
   currentMonth: number
   currentYear: number
   events: ICalendarEvent[]
-  categories: Loadable<ICalendarCategory[]>
+  categories: ICalendarCategory[]
 }) {
   const { language } = usePersonalization()
 

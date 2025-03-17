@@ -11,7 +11,6 @@ import {
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { Loadable } from '../../../../core/interfaces/common'
 import { type IGuitarTabsGuitarWorldScores } from '../../interfaces/guitar_tabs_interfaces'
 import ScoreList from './components/ScoreList'
 
@@ -26,8 +25,9 @@ function GuitarWorldModal({
   const [proceedLoading, setProceedLoading] = useState(false)
   const [showData, setShowData] = useState(false)
   const [page, setPage] = useState(1)
-  const [data, setData] =
-    useState<Loadable<IGuitarTabsGuitarWorldScores>>('loading')
+  const [data, setData] = useState<
+    IGuitarTabsGuitarWorldScores | 'loading' | 'error'
+  >('loading')
 
   async function fetchData(page: number) {
     if (cookie.trim() === '') {
