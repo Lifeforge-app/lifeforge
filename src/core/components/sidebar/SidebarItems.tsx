@@ -52,7 +52,7 @@ function SidebarItems({ query }: { query: string }) {
             )
 
             return (
-              <Fragment key={`section-${item.title}`}>
+              <Fragment key={`section-${item.title || item.items[0].name}`}>
                 {item.title !== '' &&
                   filteredModules.length > 0 &&
                   sidebarExpanded && <SidebarTitle name={item.title} />}

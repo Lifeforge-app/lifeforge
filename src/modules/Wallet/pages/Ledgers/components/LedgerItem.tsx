@@ -32,14 +32,21 @@ function LedgerItem({
   const { transactions } = useWalletContext()
 
   return (
-    <button
+    <div
+      aria-label={`View ${ledger.name} transactions`}
       className={clsx(
-        'flex-between shadow-custom relative flex w-full gap-4 rounded-lg p-4 transition-all',
+        'flex-between shadow-custom relative flex w-full gap-4 rounded-lg p-4 transition-all cursor-pointer',
         componentBgWithHover
       )}
-      type="button"
+      role="button"
+      tabIndex={0}
       onClick={() => {
         navigate(`/wallet/transactions?ledger=${ledger.id}`)
+      }}
+      onKeyDown={e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          navigate(`/wallet/transactions?ledger=${ledger.id}`)
+        }
       }}
     >
       <div className="flex items-center gap-3">
@@ -87,7 +94,7 @@ function LedgerItem({
           }}
         />
       </HamburgerMenu>
-    </button>
+    </div>
   )
 }
 

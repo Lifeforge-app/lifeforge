@@ -31,8 +31,7 @@ import ColumnVisibilityToggle from './views/TableView/components/ColumnVisibilit
 
 function Transactions() {
   const { t } = useTranslation('modules.wallet')
-  const { transactions, refreshTransactions, filteredTransactions } =
-    useWalletContext()
+  const { transactions, filteredTransactions } = useWalletContext()
 
   const queryClient = useQueryClient()
   const [modifyTransactionsModalOpenType, setModifyModalOpenType] = useState<
@@ -116,7 +115,9 @@ function Transactions() {
           </>
         }
         icon="tabler:arrows-exchange"
+        namespace="modules.wallet"
         title="Transactions"
+        tKey="subsectionsTitleAndDesc"
       />
       <div className="mt-6 flex min-h-0 w-full min-w-0 flex-1">
         <Sidebar
@@ -228,8 +229,8 @@ function Transactions() {
         data={selectedData}
         isOpen={deleteTransactionsConfirmationOpen}
         itemName="transaction"
+        queryKey={['wallet', 'transactions']}
         updateDataList={() => {
-          refreshTransactions()
           queryClient.invalidateQueries({ queryKey: ['wallet', 'categories'] })
         }}
         onClose={() => {
@@ -241,7 +242,6 @@ function Transactions() {
         isOpen={isManageCategoriesModalOpen}
         onClose={() => {
           setManageCategoriesModalOpen(false)
-          refreshTransactions()
           queryClient.invalidateQueries({ queryKey: ['wallet', 'categories'] })
         }}
       />
