@@ -9,6 +9,7 @@
 - **API**: Removed all try-catch blocks from the controllers and services and moved them to the `asyncWrapper`.
 - **API**: Moved locale-related files of each module to their respective directories.
 - **API**: Moved `.env` files to the `env` directory.
+- **API**: Migrated bundler from `pkgroll` to `bun`.
 - **Code**: Replaced all `useReducer` with `useState`.
 - **Code**: Reconstructed routing mechanism, combining all route configurations into a single file.
 - **Code**: Removed modules that are just empty shells.
