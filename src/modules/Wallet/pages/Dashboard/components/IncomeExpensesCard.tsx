@@ -5,8 +5,6 @@ import { DashboardItem } from '@lifeforge/ui'
 
 import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
-import { type Loadable } from '@interfaces/common'
-
 import { type IWalletIncomeExpenses } from '../../../interfaces/wallet_interfaces'
 
 function IncomeExpenseCard({
@@ -16,7 +14,7 @@ function IncomeExpenseCard({
 }: {
   title: string
   icon: string
-  data: Loadable<IWalletIncomeExpenses>
+  data: IWalletIncomeExpenses
 }) {
   const isIncome = title.toLowerCase() === 'income'
   const { isAmountHidden } = useWalletContext()

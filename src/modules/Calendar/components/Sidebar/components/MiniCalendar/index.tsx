@@ -3,8 +3,6 @@ import { useState } from 'react'
 
 import { QueryWrapper } from '@lifeforge/ui'
 
-import { type Loadable } from '@interfaces/common'
-
 import useAPIQuery from '@hooks/useAPIQuery'
 
 import {
@@ -14,11 +12,7 @@ import {
 import MiniCalendarContent from './components/MiniCalendarContent'
 import MiniCalendarHeader from './components/MiniCalendarHeader'
 
-function MiniCalendar({
-  categories
-}: {
-  categories: Loadable<ICalendarCategory[]>
-}) {
+function MiniCalendar({ categories }: { categories: ICalendarCategory[] }) {
   const [currentMonth, setCurrentMonth] = useState(moment().month())
   const [currentYear, setCurrentYear] = useState(moment().year())
   const startDate = moment()
