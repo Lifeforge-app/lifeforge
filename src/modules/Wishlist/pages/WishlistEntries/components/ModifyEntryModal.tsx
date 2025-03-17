@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -30,19 +30,16 @@ function ModifyEntryModal({
   lists: Loadable<IWishlistList[]>
 }) {
   const { t } = useTranslation('modules.wishlist')
-  const [data, setData] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      list: '',
-      url: '',
-      name: '',
-      price: '',
-      image: {
-        image: null as File | string | null,
-        preview: null as string | null
-      }
+  const [data, setData] = useState({
+    list: '',
+    url: '',
+    name: '',
+    price: '',
+    image: {
+      image: null as File | string | null,
+      preview: null as string | null
     }
-  )
+  })
 
   const FIELDS: IFieldProps<typeof data>[] = [
     {
@@ -163,7 +160,16 @@ function ModifyEntryModal({
   }
 
   useEffect(() => {
-    const newData: Record<string, any> = {
+    const newData: {
+      list: string
+      url: string
+      name: string
+      price: number
+      image: {
+        image: string | File | null
+        preview: string | null
+      }
+    } = {
       list: '',
       url: '',
       name: '',
@@ -173,10 +179,12 @@ function ModifyEntryModal({
         preview: null
       }
     }
+
     if (existedData !== null) {
       for (const key in newData) {
         if (key in existedData) {
-          newData[key] = existedData[key as keyof typeof existedData]
+          // @ts-expect-error - lazy to fix
+          newData[key] = existedData[key as keyof typeof existedData] ?? ''
         }
       }
 
@@ -201,7 +209,10 @@ function ModifyEntryModal({
         }
       })
     } else {
-      setData(newData)
+      setData({
+        ...newData,
+        price: ''
+      })
     }
   }, [openType, existedData])
 

@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -17,14 +17,11 @@ function ModifyListModal() {
     refreshLists,
     selectedList
   } = useTodoListContext()
-  const [data, setData] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      name: '',
-      icon: '',
-      color: ''
-    }
-  )
+  const [data, setData] = useState({
+    name: '',
+    icon: '',
+    color: ''
+  })
 
   const FIELDS: IFieldProps<typeof data>[] = [
     {

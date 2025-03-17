@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -21,15 +21,12 @@ function ModifyWishlistListModal({
   existedData: IWishlistList | null
 }) {
   const { t } = useTranslation('modules.wishlist')
-  const [data, setData] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      name: '',
-      description: '',
-      icon: '',
-      color: ''
-    }
-  )
+  const [data, setData] = useState({
+    name: '',
+    description: '',
+    icon: '',
+    color: ''
+  })
 
   const FIELDS: IFieldProps<typeof data>[] = [
     {
