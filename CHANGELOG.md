@@ -5,7 +5,15 @@
 - **API**: Improved error handling logic.
 - **API**: Restructured the `src` folder such that there are only two main folders: `modules` and `core`.
 - **API**: Removed unused files.
+- **API**: Removed `validationMiddleware` and replaced it with `asyncWrapper` with covers error handling as well.
+- **API**: Removed all try-catch blocks from the controllers and services and moved them to the `asyncWrapper`.
+- **API**: Moved locale-related files of each module to their respective directories.
+- **API**: Moved `.env` files to the `env` directory.
 - **Code**: Replaced all `useReducer` with `useState`.
+- **Code**: Reconstructed routing mechanism, combining all route configurations into a single file.
+- **Code**: Removed modules that are just empty shells.
+- **Code**: Pruned unused dependencies.
+- **Code**: Renamed entry file from `main.tsx` to `index.tsx`.
 
 ---
 
