@@ -47,7 +47,7 @@ function Dashboard() {
             <>
               <MenuItem
                 icon={canLayoutChange ? 'tabler:lock-open' : 'tabler:lock'}
-                namespace="modules.dashboard"
+                namespace="core.dashboard"
                 text={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
                 onClick={() => {
                   setCanLayoutChange(!canLayoutChange)
@@ -55,7 +55,7 @@ function Dashboard() {
               />
               <MenuItem
                 icon="tabler:apps"
-                namespace="modules.dashboard"
+                namespace="core.dashboard"
                 text="Manage Widgets"
                 onClick={() => {
                   setManageWidgetsModalOpen(true)

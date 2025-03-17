@@ -7,83 +7,9 @@ import { LoadingScreen, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import _ROUTES from '../../core/routes/constants/routes_config.json'
-import { type IRoutes } from '../../core/routes/interfaces/routes_interfaces'
+import ROUTES from '../../core/routes/Routes'
 // import { type IModuleEntry } from '@interfaces/module_interfaces'
 import ModuleItem from './ModuleItem'
-
-const ROUTES = _ROUTES as IRoutes[]
-
-// const MODULES: IModuleEntry[] = [
-//   {
-//     name: 'Projects (M)',
-//     icon: 'tabler:clipboard',
-//     config: {
-//       githubAPIKey: {
-//         type: 'input',
-//         icon: 'tabler:brand-github',
-//         name: 'GitHub API Key',
-//         placeholder: '••••••••••••••••',
-//         isPassword: true
-//       }
-//     }
-//   },
-//   {
-//     name: 'Projects (K)',
-//     icon: 'tabler:clipboard'
-//   },
-//   { name: 'Idea Box', icon: 'tabler:bulb' },
-//   { name: 'Todo List', icon: 'tabler:list-check' },
-//   { name: 'Calendar', icon: 'tabler:calendar' },
-//   { name: 'Spotify', icon: 'tabler:brand-spotify' },
-//   { name: 'Code Time', icon: 'tabler:code' },
-//   { name: 'Photos', icon: 'tabler:camera' },
-//   { name: 'Music', icon: 'tabler:music' },
-//   { name: 'Guitar Tabs', icon: 'mingcute:guitar-line' },
-//   { name: 'Pomodoro Timer', icon: 'tabler:clock-bolt' },
-//   { name: 'Flashcards', icon: 'tabler:cards' },
-//   {
-//     name: 'Notes',
-//     icon: 'tabler:notebook'
-//   },
-//   {
-//     name: 'Books Library',
-//     icon: 'tabler:books'
-//   },
-//   { name: 'Journal', icon: 'tabler:book' },
-//   { name: 'Achievements', icon: 'tabler:award' },
-//   {
-//     name: 'Wallet',
-//     icon: 'tabler:currency-dollar'
-//   },
-//   {
-//     name: 'Budgets',
-//     icon: 'tabler:coin'
-//   },
-//   { name: 'Wish List', icon: 'tabler:heart' },
-//   { name: 'Contacts', icon: 'tabler:users' },
-//   { name: 'Passwords', icon: 'tabler:key' },
-//   {
-//     name: 'Flight Status',
-//     icon: 'tabler:plane'
-//   },
-//   {
-//     name: 'Airline Information',
-//     icon: 'tabler:line'
-//   },
-//   {
-//     name: 'Mail Inbox',
-//     icon: 'tabler:inbox'
-//   },
-//   {
-//     name: 'DNS Records',
-//     icon: 'tabler:cloud'
-//   },
-//   {
-//     name: 'Blog Posts',
-//     icon: 'tabler:file-text'
-//   }
-// ]
 
 function Modules() {
   const { t } = useTranslation('common.sidebar')

@@ -18,7 +18,7 @@ function ThemeColorSelector() {
   )
   const [colorPickerModalOpen, setColorPickerModalOpen] =
     useState<boolean>(false)
-  const { t } = useTranslation('modules.personalization')
+  const { t } = useTranslation('core.personalization')
 
   return (
     <ConfigColumn
@@ -40,7 +40,7 @@ function ThemeColorSelector() {
               color={customThemeColor}
               hasTopMargin={false}
               name="Color Hex"
-              namespace="modules.personalization"
+              namespace="core.personalization"
               setColor={setCustomThemeColor}
               setColorPickerOpen={setColorPickerModalOpen}
             />

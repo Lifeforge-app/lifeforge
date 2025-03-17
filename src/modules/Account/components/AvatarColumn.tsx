@@ -9,7 +9,7 @@ import { Button, ConfigColumn, DeleteConfirmationModal } from '@lifeforge/ui'
 import fetchAPI from '@utils/fetchAPI'
 
 function AvatarColumn() {
-  const { t } = useTranslation('modules.accountSettings')
+  const { t } = useTranslation('core.accountSettings')
   const [loading, setLoading] = useState(false)
   const { getAvatarURL, userData, setUserData } = useAuth()
   const [deleteAvatarConfirmationModal, setDeleteAvatarConfirmationModal] =

@@ -44,7 +44,7 @@ const addFontsToStylesheet = (fonts: any[]) => {
 }
 
 function FontFamilySelector() {
-  const { t } = useTranslation('modules.personalization')
+  const { t } = useTranslation('core.personalization')
   const [enabled, setEnabled] = useState<'loading' | boolean>('loading')
   const { componentBgWithHover } = useComponentBg()
   const { fontFamily, setFontFamily } = usePersonalization()

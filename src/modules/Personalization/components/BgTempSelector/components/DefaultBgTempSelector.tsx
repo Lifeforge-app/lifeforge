@@ -11,7 +11,7 @@ function DefaultBgTempSelector({
   bgTemp: string
   setBgTemp: (value: string) => void
 }) {
-  const { t } = useTranslation('modules.personalization')
+  const { t } = useTranslation('core.personalization')
 
   return (
     <div className="flex w-full flex-col items-center gap-2 xl:w-auto">

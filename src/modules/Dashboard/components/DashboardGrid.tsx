@@ -101,7 +101,7 @@ function DashboardGrid({
       <EmptyStateScreen
         icon="tabler:apps-off"
         name="widget"
-        namespace="modules.dashboard"
+        namespace="core.dashboard"
       />
     </div>
   ) : (

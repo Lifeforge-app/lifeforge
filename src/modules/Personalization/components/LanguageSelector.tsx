@@ -43,7 +43,7 @@ const LANGUAGES: Array<{
 function LanguageSelector() {
   const { componentBgWithHover } = useComponentBg()
   const { language, setLanguage } = usePersonalization()
-  const { t } = useTranslation('modules.personalization')
+  const { t } = useTranslation('core.personalization')
 
   return (
     <ConfigColumn

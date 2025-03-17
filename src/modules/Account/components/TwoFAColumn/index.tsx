@@ -9,7 +9,7 @@ import DisableTwoFAModal from './components/DisableTwoFAModal'
 import EnableTwoFAModal from './components/EnableTwoFAModal'
 
 function TwoFAColumn() {
-  const { t } = useTranslation('modules.accountSettings')
+  const { t } = useTranslation('core.accountSettings')
   const { userData, setUserData } = useAuth()
   const [toggleTwoFAModalOpen, setToggleTwoFAModalOpen] = useState(false)
 

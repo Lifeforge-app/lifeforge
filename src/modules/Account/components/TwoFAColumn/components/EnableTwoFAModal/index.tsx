@@ -25,7 +25,7 @@ function EnableTwoFAModal({
     <ModalWrapper isOpen={isOpen}>
       <ModalHeader
         icon="tabler:lock-access"
-        namespace="modules.accountSettings"
+        namespace="core.accountSettings"
         title="enable2FA"
         onClose={onClose}
       />

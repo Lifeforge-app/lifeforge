@@ -99,7 +99,7 @@ export default function TodaysEvent() {
                   smaller
                   icon="tabler:calendar-off"
                   name="event"
-                  namespace="modules.dashboard"
+                  namespace="core.dashboard"
                   tKey="widgets.todaysEvent"
                 />
               </div>

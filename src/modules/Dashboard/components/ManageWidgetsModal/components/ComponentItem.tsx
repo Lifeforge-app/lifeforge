@@ -20,7 +20,7 @@ function ComponentListItem({
   minH?: number
   setReady: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-  const { t } = useTranslation('modules.dashboard')
+  const { t } = useTranslation('core.dashboard')
   const {
     dashboardLayout: enabledWidgets,
     setDashboardLayout,

@@ -7,7 +7,7 @@ import { ConfigColumn } from '@lifeforge/ui'
 
 function ThemeSelector() {
   const { theme, setTheme } = usePersonalization()
-  const { t } = useTranslation('modules.personalization')
+  const { t } = useTranslation('core.personalization')
 
   return (
     <ConfigColumn

@@ -60,7 +60,7 @@ export default function MusicPlayer() {
             }
             icon="tabler:disc-off"
             name="music"
-            namespace="modules.dashboard"
+            namespace="core.dashboard"
             tKey="widgets.musicPlayer"
           />
         )}
