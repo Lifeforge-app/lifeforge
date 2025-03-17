@@ -69,7 +69,9 @@ function Assets() {
           </>
         }
         icon="tabler:wallet"
+        namespace="modules.wallet"
         title="Assets"
+        tKey="subsectionsTitleAndDesc"
       />
       {assets.length > 0 ? (
         <div className="mb-24 mt-6 grid grid-cols-1 gap-4 md:mb-6 md:grid-cols-2 lg:grid-cols-3">

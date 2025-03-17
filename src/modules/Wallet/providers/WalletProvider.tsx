@@ -11,13 +11,11 @@ import {
   type IWalletTransaction
 } from '@modules/Wallet/interfaces/wallet_interfaces'
 
-import { type Loadable } from '@interfaces/common'
-
 import useAPIQuery from '@hooks/useAPIQuery'
-import useFetch from '@hooks/useFetch'
 
 interface IWalletData {
-  transactions: Loadable<IWalletTransaction[]>
+  transactions: IWalletTransaction[]
+  transactionsLoading: boolean
   filteredTransactions: IWalletTransaction[]
   ledgers: IWalletLedger[]
   ledgersLoading: boolean
@@ -27,7 +25,6 @@ interface IWalletData {
   categoriesLoading: boolean
   incomeExpenses: IWalletIncomeExpenses
   incomeExpensesLoading: boolean
-  refreshTransactions: () => void
   isAmountHidden: boolean
   toggleAmountVisibility: React.Dispatch<React.SetStateAction<boolean>>
   searchQuery: string
@@ -39,8 +36,9 @@ export const WalletContext = createContext<IWalletData | undefined>(undefined)
 export default function WalletProvider() {
   const [searchParams] = useSearchParams()
   const [isAmountHidden, toggleAmountVisibility] = useState(true)
-  const [transactions, refreshTransactions] = useFetch<IWalletTransaction[]>(
-    'wallet/transactions'
+  const transactionsQuery = useAPIQuery<IWalletTransaction[]>(
+    'wallet/transactions',
+    ['wallet', 'transactions']
   )
   const assetsQuery = useAPIQuery<IWalletAsset[]>('wallet/assets', [
     'wallet',
@@ -67,10 +65,10 @@ export default function WalletProvider() {
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
 
   useEffect(() => {
-    if (typeof transactions === 'string') return
+    if (transactionsQuery.isLoading || !transactionsQuery.data) return
 
     setFilteredTransactions(
-      transactions
+      transactionsQuery.data
         .filter(transaction => {
           return ['type', 'category', 'asset', 'ledger'].every(
             item =>
@@ -109,11 +107,17 @@ export default function WalletProvider() {
           )
         })
     )
-  }, [searchParams, transactions, debouncedSearchQuery])
+  }, [
+    searchParams,
+    transactionsQuery.data,
+    transactionsQuery.isLoading,
+    debouncedSearchQuery
+  ])
 
   const value = useMemo(
     () => ({
-      transactions,
+      transactions: transactionsQuery.data ?? [],
+      transactionsLoading: transactionsQuery.isLoading,
       filteredTransactions,
       ledgers: ledgersQuery.data ?? [],
       ledgersLoading: ledgersQuery.isLoading,
@@ -128,14 +132,14 @@ export default function WalletProvider() {
         totalIncome: 0
       },
       incomeExpensesLoading: incomeExpensesQuery.isLoading,
-      refreshTransactions,
       isAmountHidden,
       toggleAmountVisibility,
       searchQuery,
       setSearchQuery
     }),
     [
-      transactions,
+      transactionsQuery.data,
+      transactionsQuery.isLoading,
       filteredTransactions,
       ledgersQuery.data,
       ledgersQuery.isLoading,

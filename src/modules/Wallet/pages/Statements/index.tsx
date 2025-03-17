@@ -14,7 +14,12 @@ function Statements() {
 
   return (
     <ModuleWrapper>
-      <ModuleHeader icon="tabler:file-text" title="Financial Statements" />
+      <ModuleHeader
+        icon="tabler:file-text"
+        namespace="modules.wallet"
+        title="Financial Statements"
+        tKey="subsectionsTitleAndDesc"
+      />
       <YearMonthInput
         month={month}
         setMonth={setMonth}
