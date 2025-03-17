@@ -5,8 +5,6 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import { useSearchParams } from 'react-router'
 
-import { type Loadable } from '@interfaces/common'
-
 import fetchAPI from '@utils/fetchAPI'
 
 import {
@@ -22,7 +20,7 @@ const DnDCalendar: any = withDragAndDrop(Calendar)
 interface CalendarComponentProps {
   queryKey: unknown[]
   events: ICalendarEvent[]
-  categories: Loadable<ICalendarCategory[]>
+  categories: ICalendarCategory[]
   setModifyEventModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >

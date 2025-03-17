@@ -6,7 +6,6 @@ import { useNavigate, useParams } from 'react-router'
 
 import { Button, GoBackButton, MenuItem } from '@lifeforge/ui'
 
-import { Loadable } from '../../../../../core/interfaces/common'
 import {
   IWishlistEntry,
   IWishlistList
@@ -18,7 +17,7 @@ function Header({
   setExistedData,
   setFromOtherAppsModalOpen
 }: {
-  wishlistListDetails: Loadable<IWishlistList>
+  wishlistListDetails: IWishlistList
   setModifyEntryModalOpenType: (value: 'create' | 'update' | null) => void
   setExistedData: (value: Partial<IWishlistEntry> | null) => void
   setFromOtherAppsModalOpen: (value: boolean) => void
@@ -43,57 +42,31 @@ function Header({
               : 'text-2xl'
           )}
         >
-          {(() => {
-            switch (wishlistListDetails) {
-              case 'loading':
-                return (
-                  <>
-                    <span className="small-loader-light"></span>
-                    Loading...
-                  </>
-                )
-              case 'error':
-                return (
-                  <>
-                    <Icon
-                      className="mt-0.5 size-7 text-red-500"
-                      icon="tabler:alert-triangle"
-                    />
-                    Failed to fetch data from server.
-                  </>
-                )
-              default:
-                return (
-                  <>
-                    <div
-                      className="rounded-lg p-3"
-                      style={{
-                        backgroundColor: wishlistListDetails.color + '20'
-                      }}
-                    >
-                      <Icon
-                        className="text-2xl sm:text-3xl"
-                        icon={wishlistListDetails.icon}
-                        style={{
-                          color: wishlistListDetails.color
-                        }}
-                      />
-                    </div>
-                    <div className="w-full min-w-0">
-                      <div className="flex items-end gap-2 text-2xl font-medium sm:text-3xl">
-                        <span>{wishlistListDetails.name}</span>
-                        <div className="text-bg-500 text-lg!">
-                          ({wishlistListDetails.item_count} items)
-                        </div>
-                      </div>
-                      <span className="text-bg-500 block w-full min-w-0 truncate text-base">
-                        {wishlistListDetails.description}{' '}
-                      </span>
-                    </div>
-                  </>
-                )
-            }
-          })()}
+          <div
+            className="rounded-lg p-3"
+            style={{
+              backgroundColor: wishlistListDetails.color + '20'
+            }}
+          >
+            <Icon
+              className="text-2xl sm:text-3xl"
+              icon={wishlistListDetails.icon}
+              style={{
+                color: wishlistListDetails.color
+              }}
+            />
+          </div>
+          <div className="w-full min-w-0">
+            <div className="flex items-end gap-2 text-2xl font-medium sm:text-3xl">
+              <span>{wishlistListDetails.name}</span>
+              <div className="text-bg-500 text-lg!">
+                ({wishlistListDetails.item_count} items)
+              </div>
+            </div>
+            <span className="text-bg-500 block w-full min-w-0 truncate text-base">
+              {wishlistListDetails.description}{' '}
+            </span>
+          </div>
         </h1>
         <Menu as="div" className="relative z-50 hidden md:block">
           <Button

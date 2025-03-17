@@ -33,8 +33,9 @@ function WishlistEntries() {
   const { id } = useParams<{ id: string }>()
   const [valid] = useFetch<boolean>(`wishlist/lists/valid/${id}`)
   const [activeTab, setActiveTab] = useState('wishlist')
-  const [wishlistListDetails] = useFetch<IWishlistList>(
+  const wishlistListDetailsQuery = useAPIQuery<IWishlistList>(
     `wishlist/lists/${id}`,
+    [`wishlist`, `lists`, id],
     valid === true
   )
   const queryKey = useMemo(
@@ -76,82 +77,88 @@ function WishlistEntries() {
 
   return (
     <ModuleWrapper>
-      <Header
-        setExistedData={setExistedData}
-        setFromOtherAppsModalOpen={setFromOtherAppsModalOpen}
-        setModifyEntryModalOpenType={setModifyEntryModalOpenType}
-        wishlistListDetails={wishlistListDetails}
-      />
-      <QueryWrapper query={entriesQuery}>
-        {entries => (
+      <QueryWrapper query={wishlistListDetailsQuery}>
+        {wishlistListDetails => (
           <>
-            <Tabs
-              active={activeTab}
-              className="mt-6"
-              enabled={['wishlist', 'bought']}
-              items={[
-                {
-                  id: 'wishlist',
-                  name: t('tabs.wishlist'),
-                  icon: 'tabler:heart',
-                  amount: (() => {
-                    if (
-                      typeof entries === 'string' ||
-                      typeof wishlistListDetails === 'string'
-                    ) {
-                      return 0
-                    }
-
-                    return activeTab === 'wishlist'
-                      ? entries.length
-                      : wishlistListDetails.item_count - entries.length
-                  })()
-                },
-                {
-                  id: 'bought',
-                  name: t('tabs.bought'),
-                  icon: 'tabler:check',
-                  amount: (() => {
-                    if (
-                      typeof entries === 'string' ||
-                      typeof wishlistListDetails === 'string'
-                    ) {
-                      return 0
-                    }
-
-                    return activeTab === 'bought'
-                      ? entries.length
-                      : wishlistListDetails.item_count - entries.length
-                  })()
-                }
-              ]}
-              onNavClick={setActiveTab}
+            <Header
+              setExistedData={setExistedData}
+              setFromOtherAppsModalOpen={setFromOtherAppsModalOpen}
+              setModifyEntryModalOpenType={setModifyEntryModalOpenType}
+              wishlistListDetails={wishlistListDetails}
             />
-            {entries.length === 0 ? (
-              <EmptyStateScreen
-                ctaContent="new"
-                ctaTProps={{
-                  item: t('items.entry')
-                }}
-                icon="tabler:shopping-cart-off"
-                name="entries"
-                namespace="modules.wishlist"
-              />
-            ) : (
-              <Scrollbar>
-                <ul className="mb-14 flex flex-col space-y-2 sm:mb-6">
-                  {entries.map(entry => (
-                    <EntryItem
-                      key={entry.id}
-                      entry={entry}
-                      queryKey={queryKey}
-                      onDelete={handleDelete}
-                      onEdit={handleEdit}
+            <QueryWrapper query={entriesQuery}>
+              {entries => (
+                <>
+                  <Tabs
+                    active={activeTab}
+                    className="mt-6"
+                    enabled={['wishlist', 'bought']}
+                    items={[
+                      {
+                        id: 'wishlist',
+                        name: t('tabs.wishlist'),
+                        icon: 'tabler:heart',
+                        amount: (() => {
+                          if (
+                            typeof entries === 'string' ||
+                            typeof wishlistListDetails === 'string'
+                          ) {
+                            return 0
+                          }
+
+                          return activeTab === 'wishlist'
+                            ? entries.length
+                            : wishlistListDetails.item_count - entries.length
+                        })()
+                      },
+                      {
+                        id: 'bought',
+                        name: t('tabs.bought'),
+                        icon: 'tabler:check',
+                        amount: (() => {
+                          if (
+                            typeof entries === 'string' ||
+                            typeof wishlistListDetails === 'string'
+                          ) {
+                            return 0
+                          }
+
+                          return activeTab === 'bought'
+                            ? entries.length
+                            : wishlistListDetails.item_count - entries.length
+                        })()
+                      }
+                    ]}
+                    onNavClick={setActiveTab}
+                  />
+                  {entries.length === 0 ? (
+                    <EmptyStateScreen
+                      ctaContent="new"
+                      ctaTProps={{
+                        item: t('items.entry')
+                      }}
+                      icon="tabler:shopping-cart-off"
+                      name="entries"
+                      namespace="modules.wishlist"
                     />
-                  ))}
-                </ul>
-              </Scrollbar>
-            )}
+                  ) : (
+                    <Scrollbar>
+                      <ul className="mb-14 flex flex-col space-y-2 sm:mb-6">
+                        {entries.map(entry => (
+                          <EntryItem
+                            key={entry.id}
+                            entry={entry}
+                            queryKey={queryKey}
+                            onDelete={handleDelete}
+                            onEdit={handleEdit}
+                          />
+                        ))}
+                      </ul>
+                    </Scrollbar>
+                  )}
+                </>
+              )}
+            </QueryWrapper>
           </>
         )}
       </QueryWrapper>

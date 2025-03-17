@@ -2,8 +2,6 @@ import clsx from 'clsx'
 import moment from 'moment'
 import { useMemo } from 'react'
 
-import { type Loadable } from '@interfaces/common'
-
 import {
   type ICalendarCategory,
   type ICalendarEvent
@@ -16,7 +14,7 @@ interface MiniCalendarDateItemProps {
   lastDate: number
   date: Date
   events: ICalendarEvent[]
-  categories: Loadable<ICalendarCategory[]>
+  categories: ICalendarCategory[]
 }
 
 function MiniCalendarDateItem({

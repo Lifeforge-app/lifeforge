@@ -1,5 +1,3 @@
-import { type Loadable } from '@interfaces/common'
-
 import {
   type ICalendarCategory,
   type ICalendarEvent
@@ -12,7 +10,7 @@ export default function EventItem({
   setExistedData
 }: {
   event: ICalendarEvent
-  categories: Loadable<ICalendarCategory[]>
+  categories: ICalendarCategory[]
   setModifyEventModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
   >
