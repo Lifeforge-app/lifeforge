@@ -57,7 +57,9 @@ function Ledgers() {
           )
         }
         icon="tabler:book"
+        namespace="modules.wallet"
         title="Ledgers"
+        tKey="subsectionsTitleAndDesc"
       />
       <APIFallbackComponent data={ledgers}>
         {ledgers =>

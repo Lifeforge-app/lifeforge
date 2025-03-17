@@ -17,8 +17,6 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
-
 import fetchAPI from '@utils/fetchAPI'
 
 import { type IWalletTransaction } from '../../../../interfaces/wallet_interfaces'
@@ -43,7 +41,6 @@ function ModifyTransactionsModal({
 }) {
   const { t } = useTranslation('modules.wallet')
   const queryClient = useQueryClient()
-  const { refreshTransactions } = useWalletContext()
   const [particular, setParticular] = useState('')
   const [transactionType, setTransactionType] = useState<
     'income' | 'expenses' | 'transfer'
@@ -165,7 +162,7 @@ function ModifyTransactionsModal({
     setLoading(true)
 
     try {
-      await fetchAPI(
+      const res = await fetchAPI<IWalletTransaction>(
         `wallet/transactions${
           openType === 'update' ? `/${existedData?.id}` : ''
         }`,
@@ -175,7 +172,21 @@ function ModifyTransactionsModal({
         }
       )
 
-      refreshTransactions()
+      queryClient.setQueryData<IWalletTransaction[]>(
+        ['wallet', 'transactions'],
+        prev => {
+          if (openType === 'create') {
+            return prev ? [...prev, res] : [res]
+          }
+
+          if (openType === 'update') {
+            return prev?.map(transaction =>
+              transaction.id === res.id ? res : transaction
+            )
+          }
+        }
+      )
+
       queryClient.invalidateQueries({ queryKey: ['wallet', 'transactions'] })
       setExistedData(null)
       setOpenType(null)
