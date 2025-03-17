@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import { parse as parseCookie } from 'cookie'
 import moment from 'moment'
-import { cookieParse } from 'pocketbase'
 import { useEffect, useRef, useState } from 'react'
 import PhotoAlbum from 'react-photo-album'
 import { toast } from 'react-toastify'
@@ -64,7 +64,7 @@ function DateGroup({
         {
           method: 'GET',
           headers: {
-            Authorization: `Bearer ${cookieParse(document.cookie).token}`
+            Authorization: `Bearer ${parseCookie(document.cookie).token}`
           }
         }
       )

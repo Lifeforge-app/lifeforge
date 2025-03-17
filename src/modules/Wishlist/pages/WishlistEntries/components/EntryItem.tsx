@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/no-useless-react-setstate */
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import moment from 'moment'
 import { useState } from 'react'
@@ -7,8 +8,7 @@ import { toast } from 'react-toastify'
 
 import { Button, Checkbox, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type Loadable } from '@interfaces/common'
-
+import useAPIQuery from '@hooks/useAPIQuery'
 import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
@@ -17,25 +17,27 @@ import { type IWishlistEntry } from '../../../interfaces/wishlist_interfaces'
 
 function EntryItem({
   entry,
-  collectionId,
-  setEntries,
   onEdit,
-  onDelete
+  onDelete,
+  queryKey
 }: {
   entry: IWishlistEntry
-  collectionId: string
-  setEntries: React.Dispatch<React.SetStateAction<Loadable<IWishlistEntry[]>>>
   onEdit: (entry: IWishlistEntry) => void
   onDelete: (entry: IWishlistEntry) => void
+  queryKey: unknown[]
 }) {
+  const queryClient = useQueryClient()
+  const collectionIdQuery = useAPIQuery<string>(
+    'wishlist/entries/collection-id',
+    ['wishlist', 'entries', 'collection-id']
+  )
   const { componentBg, componentBgLighter } = useComponentBg()
   const [bought, setBought] = useState(entry.bought)
 
   const toggleBought = () =>
-    setEntries(prev => {
-      if (typeof prev === 'string') {
-        return prev
-      }
+    queryClient.setQueryData<IWishlistEntry[]>(queryKey, prev => {
+      if (!prev) return prev
+
       return prev.filter(e => e.id !== entry.id)
     })
 
@@ -77,7 +79,7 @@ function EntryItem({
               <img
                 alt=""
                 className="size-full rounded-md"
-                src={`${import.meta.env.VITE_API_HOST}/media/${collectionId}/${
+                src={`${import.meta.env.VITE_API_HOST}/media/${collectionIdQuery.data}/${
                   entry.id
                 }/${entry.image}`}
               />

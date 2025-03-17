@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/no-nested-functions */
 import { useAuth } from '@providers/AuthProvider'
+import { parse as parseCookie } from 'cookie'
 import moment from 'moment'
-import { cookieParse } from 'pocketbase'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { Outlet } from 'react-router'
 
@@ -203,7 +203,7 @@ export default function PhotosProvider() {
       `${import.meta.env.VITE_API_HOST}/photos/entries/dimensions/async-res`,
       {
         headers: {
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+          Authorization: `Bearer ${parseCookie(document.cookie).token}`
         }
       }
     )
@@ -228,7 +228,7 @@ export default function PhotosProvider() {
       }`,
       {
         headers: {
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+          Authorization: `Bearer ${parseCookie(document.cookie).token}`
         }
       }
     )

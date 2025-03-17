@@ -1,26 +1,19 @@
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { type IWishlistList } from '../interfaces/wishlist_interfaces'
 
 function ModifyWishlistListModal({
   openType,
   setOpenType,
-  updateWishlistList,
   existedData
 }: {
   openType: 'create' | 'update' | null
   setOpenType: React.Dispatch<React.SetStateAction<'create' | 'update' | null>>
-  updateWishlistList: () => void
   existedData: IWishlistList | null
 }) {
-  const { t } = useTranslation('modules.wishlist')
   const [data, setData] = useState({
     name: '',
     description: '',
@@ -31,6 +24,7 @@ function ModifyWishlistListModal({
   const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',
+      required: true,
       label: 'Wishlist name',
       icon: 'tabler:list',
       placeholder: 'My wishlist',
@@ -45,49 +39,17 @@ function ModifyWishlistListModal({
     },
     {
       id: 'icon',
+      required: true,
       label: 'Wishlist icon',
       type: 'icon'
     },
     {
       id: 'color',
+      required: true,
       label: 'Wishlist color',
       type: 'color'
     }
   ]
-
-  async function onSubmitButtonClick() {
-    const { name, description, icon, color } = data
-    if (
-      name.trim().length === 0 ||
-      color.trim().length === 0 ||
-      icon.trim().length === 0
-    ) {
-      toast.error(t('input.error.fieldEmpty'))
-      return
-    }
-
-    const wishlist = {
-      name: name.trim(),
-      description: description.trim(),
-      color: color.trim(),
-      icon: icon.trim()
-    }
-
-    try {
-      await fetchAPI(
-        'wishlist/lists' + (openType === 'update' ? `/${existedData?.id}` : ''),
-        {
-          method: openType === 'create' ? 'POST' : 'PATCH',
-          body: wishlist
-        }
-      )
-
-      setOpenType(null)
-      updateWishlistList()
-    } catch {
-      toast.error('Error')
-    }
-  }
 
   useEffect(() => {
     if (openType === 'update' && existedData !== null) {
@@ -105,6 +67,7 @@ function ModifyWishlistListModal({
   return (
     <FormModal
       data={data}
+      endpoint="wishlist/lists"
       fields={FIELDS}
       icon={
         {
@@ -112,15 +75,16 @@ function ModifyWishlistListModal({
           update: 'tabler:pencil'
         }[openType!]
       }
+      id={existedData?.id}
       isOpen={openType !== null}
       namespace="modules.wishlist"
       openType={openType}
+      queryKey={['wishlist', 'lists']}
       setData={setData}
       title={`wishlist.${openType}`}
       onClose={() => {
         setOpenType(null)
       }}
-      onSubmit={onSubmitButtonClick}
     />
   )
 }

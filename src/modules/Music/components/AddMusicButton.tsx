@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { cookieParse } from 'pocketbase'
+import { parse as parseCookie } from 'cookie'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
@@ -25,7 +25,7 @@ function AddMusicButton() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+          Authorization: `Bearer ${parseCookie(document.cookie).token}`
         }
       }
     )
@@ -43,7 +43,7 @@ function AddMusicButton() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        Authorization: `Bearer ${parseCookie(document.cookie).token}`
       }
     })
       .then(async res => {

@@ -37,6 +37,7 @@ function ModifyModal({
   const FIELDS: IFieldProps<typeof data>[] = [
     {
       id: 'name',
+      required: true,
       label: `${singleStuff} name`,
       icon: 'tabler:book',
       placeholder: `Project ${singleStuff}`,
@@ -44,12 +45,14 @@ function ModifyModal({
     },
     {
       id: 'icon',
+      required: true,
       label: `${singleStuff} icon`,
       type: 'icon'
     },
     ...(stuff === 'statuses'
       ? [
           {
+            required: true,
             id: 'color' as const,
             label: `${singleStuff} color`,
             type: 'color' as const

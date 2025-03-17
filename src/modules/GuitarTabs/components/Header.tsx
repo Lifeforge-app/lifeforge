@@ -1,7 +1,7 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useQueryClient } from '@tanstack/react-query'
-import { cookieParse } from 'pocketbase'
+import { parse as parseCookie } from 'cookie'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
@@ -69,7 +69,7 @@ function Header({
         fetch(`${import.meta.env.VITE_API_HOST}/guitar-tabs/entries/upload`, {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${cookieParse(document.cookie).token}`
+            Authorization: `Bearer ${parseCookie(document.cookie).token}`
           },
           body: formData
         })
@@ -126,7 +126,7 @@ function Header({
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${cookieParse(document.cookie).token}`
+          Authorization: `Bearer ${parseCookie(document.cookie).token}`
         }
       }
     )

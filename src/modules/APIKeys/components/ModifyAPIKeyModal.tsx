@@ -39,6 +39,7 @@ function ModifyAPIKeyModal({
     {
       icon: 'tabler:id',
       type: 'text',
+      required: true,
       placeholder: 'id-of-the-api-key',
       label: 'Key ID',
       id: 'keyId'
@@ -46,6 +47,7 @@ function ModifyAPIKeyModal({
     {
       icon: 'tabler:key',
       type: 'text',
+      required: true,
       placeholder: 'My API Key',
       label: 'Key Name',
       id: 'name'
@@ -53,18 +55,21 @@ function ModifyAPIKeyModal({
     {
       icon: 'tabler:info-circle',
       type: 'text',
+      required: true,
       placeholder: 'A short description of this key',
       label: 'Key Description',
       id: 'description'
     },
     {
       type: 'icon',
+      required: true,
       label: 'Key Icon',
       id: 'icon'
     },
     {
       icon: 'tabler:key',
       type: 'text',
+      required: true,
       isPassword: true,
       placeholder: '••••••••••••••••',
       label: 'API Key',

@@ -29,6 +29,7 @@ function ModifyContainerModal({
   const FIELDS: IFieldProps<typeof formState>[] = [
     {
       id: 'name',
+      required: true,
       label: 'Container name',
       icon: 'tabler:cube',
       placeholder: 'My container',
@@ -36,11 +37,13 @@ function ModifyContainerModal({
     },
     {
       id: 'icon',
+      required: true,
       label: 'Container icon',
       type: 'icon'
     },
     {
       id: 'color',
+      required: true,
       label: 'Container color',
       type: 'color'
     },

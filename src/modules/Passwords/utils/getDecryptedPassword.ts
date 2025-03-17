@@ -1,4 +1,4 @@
-import { cookieParse } from 'pocketbase'
+import { parse as parseCookie } from 'cookie'
 import { toast } from 'react-toastify'
 
 import fetchAPI from '@utils/fetchAPI'
@@ -20,7 +20,7 @@ export async function getDecryptedPassword(
       body: JSON.stringify({ master: encryptedMaster }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookieParse(document.cookie).token}`
+        Authorization: `Bearer ${parseCookie(document.cookie).token}`
       }
     }
   )

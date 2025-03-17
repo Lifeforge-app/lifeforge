@@ -24,6 +24,7 @@ function ModifyFolderModal() {
   const FIELDS: IFieldProps<IIdeaBoxFolderFormState>[] = [
     {
       id: 'name',
+      required: true,
       label: 'Folder name',
       icon: 'tabler:folder',
       placeholder: 'My Folder',
@@ -31,11 +32,13 @@ function ModifyFolderModal() {
     },
     {
       id: 'icon',
+      required: true,
       label: 'Folder icon',
       type: 'icon'
     },
     {
       id: 'color',
+      required: true,
       label: 'Folder color',
       type: 'color'
     }
