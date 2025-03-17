@@ -1,18 +1,22 @@
-interface IRoutesItem {
+export interface RouteItem {
   name: string
   icon: string
-  routes: Record<string, string>
-  provider?: string
-  subsection?: string[][]
+  provider?:
+    | React.LazyExoticComponent<React.ComponentType<any>>
+    | (() => React.ReactElement)
+  routes: Record<
+    string,
+    | React.LazyExoticComponent<React.ComponentType<any>>
+    | (() => React.ReactElement)
+  >
   togglable: boolean
   hasAI?: boolean
-  hidden?: boolean
   requiredAPIKeys?: string[]
-  deprecated?: boolean
+  subsection?: [string, string, string][]
+  hidden?: boolean
 }
 
-export interface IRoutes {
+export interface RouteCategory {
   title: string
-  prefix?: string
-  items: IRoutesItem[]
+  items: RouteItem[]
 }

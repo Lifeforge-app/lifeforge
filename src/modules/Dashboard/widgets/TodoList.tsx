@@ -51,7 +51,7 @@ export default function TodoList() {
                       }}
                       icon="tabler:calendar-smile"
                       name="today"
-                      namespace="modules.dashboard"
+                      namespace="core.dashboard"
                       tKey="widgets.todoList"
                       onCTAClick={() => {
                         navigate('/todo-list#new')

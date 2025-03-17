@@ -11,10 +11,7 @@ import {
   SidebarTitle
 } from '@lifeforge/ui'
 
-import _ROUTES from '../../routes/constants/routes_config.json'
-import { type IRoutes } from '../../routes/interfaces/routes_interfaces'
-
-const ROUTES = _ROUTES as IRoutes[]
+import ROUTES from '../../routes/Routes'
 
 function SidebarItems({ query }: { query: string }) {
   const { userData } = useAuth()
@@ -66,7 +63,6 @@ function SidebarItems({ query }: { query: string }) {
                     isMainSidebarItem
                     icon={subItem.icon ?? ''}
                     name={subItem.name.replace('-', ' ')}
-                    prefix={item.prefix}
                     showAIIcon={subItem.hasAI === true}
                     sidebarExpanded={sidebarExpanded}
                     subsection={subItem.subsection}

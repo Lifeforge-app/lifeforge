@@ -138,9 +138,9 @@ export default function ProjectsMProvider() {
   )
 
   return (
-    <ProjectsMContext value={value}>
+    <ProjectsMContext.Provider value={value}>
       <Outlet />
-    </ProjectsMContext>
+    </ProjectsMContext.Provider>
   )
 }
 

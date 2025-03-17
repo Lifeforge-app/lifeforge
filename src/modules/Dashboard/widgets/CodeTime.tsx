@@ -151,7 +151,7 @@ const CodeTime = () => {
           smaller
           icon="tabler:database-off"
           name="data"
-          namespace="modules.dashboard"
+          namespace="core.dashboard"
           tKey="widgets.codeTime"
         />
       )
