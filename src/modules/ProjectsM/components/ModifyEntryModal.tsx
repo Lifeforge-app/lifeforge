@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { ErrorScreen, FormModal, LoadingScreen } from '@lifeforge/ui'
@@ -23,18 +23,15 @@ function ModifyEntryModal() {
     technologies: { data: technologies }
   } = useProjectsMContext()
 
-  const [data, setData] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      name: '',
-      icon: '',
-      color: '',
-      category: '',
-      status: '',
-      visibility: '',
-      technologies: [] as string[]
-    }
-  )
+  const [data, setData] = useState({
+    name: '',
+    icon: '',
+    color: '',
+    category: '',
+    status: '',
+    visibility: '',
+    technologies: [] as string[]
+  })
 
   const FIELDS: IFieldProps<typeof data>[] = [
     {

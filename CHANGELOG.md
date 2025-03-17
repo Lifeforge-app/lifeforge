@@ -1,3 +1,13 @@
+### 📌 **dev 25w12 (3/16/2025 - 3/22/2025)**
+
+- **API**: Moved type interfaces to their respective module directories for better organization.
+- **API**: Continued working on Controller + Service refactoring.
+- **API**: Improved error handling logic.
+- **API**: Restructured the `src` folder such that there are only two main folders: `modules` and `core`.
+- **API**: Removed unused files.
+
+---
+
 ### 📌 **dev 25w11 (3/9/2025 - 3/15/2025)**
 
 - **Documentation**: Resolved an issue where section detection and highlighting in the right navigation bar were inconsistent when scrolling.

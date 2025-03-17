@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
@@ -21,28 +21,33 @@ function ModifyBookModal() {
     categories: { data: categories }
   } = useBooksLibraryContext()
 
-  const [data, setData] = useReducer(
-    (state, newState) => ({
-      ...state,
-      ...Object.fromEntries(
-        Object.entries(newState).filter(([key]) => key in state)
-      )
-    }),
-    {
-      authors: '',
-      category: '',
-      edition: '',
-      extension: '',
-      isbn: '',
-      languages: [],
-      md5: '',
-      publisher: '',
-      size: '',
-      thumbnail: '',
-      title: '',
-      year_published: ''
-    }
-  )
+  const [data, setData] = useState<{
+    authors: string
+    category: string
+    edition: string
+    extension: string
+    isbn: string
+    languages: string[]
+    md5: string
+    publisher: string
+    size: string | number
+    thumbnail: string
+    title: string
+    year_published: string | number
+  }>({
+    authors: '',
+    category: '',
+    edition: '',
+    extension: '',
+    isbn: '',
+    languages: [],
+    md5: '',
+    publisher: '',
+    size: '',
+    thumbnail: '',
+    title: '',
+    year_published: ''
+  })
 
   const FIELDS: IFieldProps<typeof data>[] = [
     {
@@ -149,7 +154,7 @@ function ModifyBookModal() {
     }
 
     if (data.year_published === '') {
-      setData({ year_published: 0 })
+      setData({ ...data, year_published: '' })
     }
 
     try {
@@ -168,9 +173,9 @@ function ModifyBookModal() {
 
   useEffect(() => {
     if (existedData !== null) {
-      setData(existedData)
+      setData({ ...data, ...existedData })
       if (existedData.year_published === 0) {
-        setData({ year_published: '' })
+        setData({ ...data, year_published: '' })
       }
     }
   }, [existedData])
