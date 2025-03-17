@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { DashboardItem, QueryWrapper } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-import useFetch from '@hooks/useFetch'
 
 import MiniCalendarContent from '../../Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
 import MiniCalendarHeader from '../../Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'
@@ -33,7 +32,10 @@ export default function MiniCalendar() {
     ['calendar', 'events', currentYear, currentMonth]
   )
 
-  const [categories] = useFetch<ICalendarCategory[]>('calendar/categories')
+  const categoriesQuery = useAPIQuery<ICalendarCategory[]>(
+    'calendar/categories',
+    ['calendar', 'categories']
+  )
 
   return (
     <DashboardItem icon="tabler:calendar" title="mini Calendar">
@@ -46,14 +48,18 @@ export default function MiniCalendar() {
             setCurrentYear={setCurrentYear}
           />
         </div>
-        <QueryWrapper query={eventsQuery}>
-          {events => (
-            <MiniCalendarContent
-              categories={categories}
-              currentMonth={currentMonth}
-              currentYear={currentYear}
-              events={events}
-            />
+        <QueryWrapper query={categoriesQuery}>
+          {categories => (
+            <QueryWrapper query={eventsQuery}>
+              {events => (
+                <MiniCalendarContent
+                  categories={categories}
+                  currentMonth={currentMonth}
+                  currentYear={currentYear}
+                  events={events}
+                />
+              )}
+            </QueryWrapper>
           )}
         </QueryWrapper>
       </div>
