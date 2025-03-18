@@ -2,6 +2,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useAPIQuery } from '@lifeforge/core'
 import {
   Button,
   DeleteConfirmationModal,
@@ -14,8 +15,6 @@ import {
 } from '@lifeforge/ui'
 
 import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import ModifyTicketModal from './components/ModifyTicketModal'
 import MovieGrid from './components/MovieGrid'

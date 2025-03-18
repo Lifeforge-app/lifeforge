@@ -3,9 +3,8 @@ import { useAuth } from '@providers/AuthProvider'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
 
+import { useAPIQuery } from '@lifeforge/core'
 import { QueryWrapper } from '@lifeforge/ui'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import AuthForm from './components/AuthForm'
 import AuthHeader from './components/AuthHeader'

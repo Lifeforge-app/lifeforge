@@ -1,5 +1,4 @@
 /* eslint-disable sonarjs/pseudo-random */
-import { type IMusicEntry } from '@apps/Music/interfaces/music_interfaces'
 import { useAuth } from '@providers/AuthProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import { parse as parseCookie } from 'cookie'
@@ -13,7 +12,9 @@ import {
 } from 'react'
 import { toast } from 'react-toastify'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from '@lifeforge/core'
+
+import { type IMusicEntry } from '@apps/Music/interfaces/music_interfaces'
 
 interface IMusicContext {
   // Audio related

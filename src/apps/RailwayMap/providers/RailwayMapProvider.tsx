@@ -9,13 +9,12 @@ import {
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from '@lifeforge/core'
+import { useAPIQuery } from '@lifeforge/core'
 
 import {
   IRailwayMapLine,
   IRailwayMapStation
 } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 interface IRailwayMapData {
   viewType: 'route' | 'earth' | 'list'

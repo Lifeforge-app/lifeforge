@@ -3,9 +3,9 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useAPIQuery } from '@lifeforge/core'
 import { QueryWrapper } from '@lifeforge/ui'
 
-import useAPIQuery from '@hooks/useAPIQuery'
 import useComponentBg from '@hooks/useComponentBg'
 
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'

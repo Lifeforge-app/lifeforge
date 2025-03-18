@@ -4,6 +4,7 @@ import { ListResult } from 'pocketbase'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useAPIQuery } from '@lifeforge/core'
 import {
   Button,
   DeleteConfirmationModal,
@@ -14,8 +15,6 @@ import {
 } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import AddEntryModal from './components/AddEntryModal'
 import EntryList from './components/EntryList'

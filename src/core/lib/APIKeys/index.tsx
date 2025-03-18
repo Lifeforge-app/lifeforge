@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { fetchAPI } from '@lifeforge/core'
+import { useAPIQuery } from '@lifeforge/core'
 import {
   Button,
   DeleteConfirmationModal,
@@ -16,8 +17,6 @@ import {
 import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
 import LockedScreen from '@security/components/LockedScreen'
 import OTPScreen from '@security/components/OTPScreen'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import { encrypt } from '../../security/utils/encryption'
 import EntryItem from './components/EntryItem'

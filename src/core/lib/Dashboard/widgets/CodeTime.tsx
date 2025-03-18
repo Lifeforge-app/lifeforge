@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react'
 import { Bar, Line } from 'react-chartjs-2'
 import tinycolor from 'tinycolor2'
 
+import { useAPIQuery } from '@lifeforge/core'
 import {
   DashboardItem,
   EmptyStateScreen,
@@ -13,8 +14,6 @@ import {
   QueryWrapper,
   ViewModeSelector
 } from '@lifeforge/ui'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 const getDatesBetween = (start: Moment, end: Moment): Moment[] => {
   if (!start.isValid() || !end.isValid() || start.isAfter(end, 'day')) {

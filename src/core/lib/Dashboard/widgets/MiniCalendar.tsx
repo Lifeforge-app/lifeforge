@@ -1,6 +1,7 @@
 import moment from 'moment'
 import { useState } from 'react'
 
+import { useAPIQuery } from '@lifeforge/core'
 import { DashboardItem, QueryWrapper } from '@lifeforge/ui'
 
 import MiniCalendarContent from '@apps/Calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
@@ -9,8 +10,6 @@ import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@apps/Calendar/interfaces/calendar_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 export default function MiniCalendar() {
   const [currentMonth, setCurrentMonth] = useState(moment().month())

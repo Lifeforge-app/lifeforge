@@ -1,6 +1,7 @@
 import moment from 'moment'
 import { useEffect, useMemo, useState } from 'react'
 
+import { useAPIQuery } from '@lifeforge/core'
 import {
   ContentWrapperWithSidebar,
   DeleteConfirmationModal,
@@ -10,8 +11,6 @@ import {
   QueryWrapper,
   Scrollbar
 } from '@lifeforge/ui'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'

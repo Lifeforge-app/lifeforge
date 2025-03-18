@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useAPIQuery } from '@lifeforge/core'
 import {
   Button,
   DeleteConfirmationModal,
@@ -10,8 +11,6 @@ import {
   ModuleWrapper,
   QueryWrapper
 } from '@lifeforge/ui'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import ModifyWishlistListModal from './components/ModifyWishlistModal'
 import WishlistListItem from './components/WishlistListItem'

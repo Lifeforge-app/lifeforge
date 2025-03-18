@@ -1,11 +1,11 @@
-import { type IProjectsMEntry } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
+import { useAPIQuery } from '@lifeforge/core'
 import { ModuleWrapper, QueryWrapper } from '@lifeforge/ui'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { type IProjectsMEntry } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
 
 import ProjectHeader from './components/ProjectHeader'
 import ProjectKanban from './components/ProjectKanban'

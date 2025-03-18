@@ -1,8 +1,7 @@
 import { Icon } from '@iconify/react'
 
+import { useAPIQuery } from '@lifeforge/core'
 import { QueryWrapper } from '@lifeforge/ui'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import { IDiskUsage } from '../../interfaces/server_status_interfaces'
 import DiskUsageCard from './components/DiskUsageCard'

@@ -1,10 +1,11 @@
-import { IPasswordEntry } from '@apps/Passwords/interfaces/password_interfaces'
 import { UseQueryResult } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { createContext, useContext, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from '@lifeforge/core'
+
+import { IPasswordEntry } from '@apps/Passwords/interfaces/password_interfaces'
 
 interface IPasswordsData {
   passwordListQuery: UseQueryResult<IPasswordEntry[]>

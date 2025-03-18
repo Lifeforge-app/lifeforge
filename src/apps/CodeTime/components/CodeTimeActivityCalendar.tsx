@@ -6,9 +6,8 @@ import ActivityCalendar from 'react-activity-calendar'
 import { useTranslation } from 'react-i18next'
 import { Tooltip } from 'react-tooltip'
 
+import { useAPIQuery } from '@lifeforge/core'
 import { QueryWrapper } from '@lifeforge/ui'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 function CodeTimeActivityCalendar() {
   const { t } = useTranslation('apps.codeTime')

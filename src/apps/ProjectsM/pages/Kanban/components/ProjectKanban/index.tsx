@@ -1,9 +1,9 @@
-import { type IProjectsMKanbanColumn } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
 
+import { useAPIQuery } from '@lifeforge/core'
 import {
   DeleteConfirmationModal,
   HamburgerMenu,
@@ -12,7 +12,8 @@ import {
   Scrollbar
 } from '@lifeforge/ui'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { type IProjectsMKanbanColumn } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
+
 import useComponentBg from '@hooks/useComponentBg'
 
 import AddCardButton from './modals/AddCardButton'

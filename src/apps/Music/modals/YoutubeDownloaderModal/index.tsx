@@ -5,7 +5,7 @@ import { parse as parseCookie } from 'cookie'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { IntervalManager } from '@lifeforge/core'
+import { IntervalManager, useAPIQuery } from '@lifeforge/core'
 import {
   Button,
   ModalHeader,
@@ -15,8 +15,6 @@ import {
 } from '@lifeforge/ui'
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import { type IYoutubeVideoInfo } from '../../../YoutubeVideos/interfaces/youtube_video_storage_interfaces'
 import VideoInfo from './components/VideoInfo'

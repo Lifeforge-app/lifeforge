@@ -1,6 +1,7 @@
 import moment from 'moment'
 import { Link } from 'react-router'
 
+import { useAPIQuery } from '@lifeforge/core'
 import {
   APIFallbackComponent,
   Button,
@@ -14,8 +15,6 @@ import {
   type ICalendarCategory,
   type ICalendarEvent
 } from '@apps/Calendar/interfaces/calendar_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 export default function TodaysEvent() {
   const rawEventsQuery = useAPIQuery<ICalendarEvent[]>(

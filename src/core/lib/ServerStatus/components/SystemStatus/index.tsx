@@ -3,9 +3,8 @@ import moment from 'moment'
 import prettyBytes from 'pretty-bytes'
 import { useEffect } from 'react'
 
+import { useAPIQuery } from '@lifeforge/core'
 import { QueryWrapper } from '@lifeforge/ui'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import {
   ICPUTemp,

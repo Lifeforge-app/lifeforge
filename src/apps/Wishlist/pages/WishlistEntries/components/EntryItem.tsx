@@ -7,9 +7,9 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from '@lifeforge/core'
+import { useAPIQuery } from '@lifeforge/core'
 import { Button, Checkbox, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import useAPIQuery from '@hooks/useAPIQuery'
 import useComponentBg from '@hooks/useComponentBg'
 
 import { type IWishlistEntry } from '../../../interfaces/wishlist_interfaces'

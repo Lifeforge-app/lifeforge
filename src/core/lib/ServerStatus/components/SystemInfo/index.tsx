@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react'
 import prettyBytes from 'pretty-bytes'
 
+import { useAPIQuery } from '@lifeforge/core'
 import { QueryWrapper } from '@lifeforge/ui'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import { ISystemInfo } from '../../interfaces/server_status_interfaces'
 import SectionCard from './components/SectionCard'

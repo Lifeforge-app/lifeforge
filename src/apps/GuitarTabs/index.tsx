@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
+import { useAPIQuery } from '@lifeforge/core'
 import {
   ContentWrapperWithSidebar,
   DeleteConfirmationModal,
@@ -22,7 +23,6 @@ import {
   ViewModeSelector
 } from '@lifeforge/ui'
 
-import useAPIQuery from '@hooks/useAPIQuery'
 import useComponentBg from '@hooks/useComponentBg'
 
 import GuitarWorldModal from './components/GuitarWorldModal'

@@ -1,3 +1,8 @@
+import { createContext, useContext, useMemo, useState } from 'react'
+import { Outlet } from 'react-router'
+
+import { useAPIQuery } from '@lifeforge/core'
+
 import {
   type IProjectsMCategory,
   type IProjectsMEntry,
@@ -5,10 +10,6 @@ import {
   type IProjectsMTechnology,
   type IProjectsMVisibility
 } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
-import { createContext, useContext, useMemo, useState } from 'react'
-import { Outlet } from 'react-router'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 type ModifyModalOpenType = 'create' | 'update' | null
 

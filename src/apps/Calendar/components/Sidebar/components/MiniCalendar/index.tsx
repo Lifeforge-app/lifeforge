@@ -1,9 +1,8 @@
 import moment from 'moment'
 import { useState } from 'react'
 
+import { useAPIQuery } from '@lifeforge/core'
 import { QueryWrapper } from '@lifeforge/ui'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import {
   type ICalendarCategory,

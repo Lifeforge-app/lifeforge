@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
+import { useAPIQuery } from '@lifeforge/core'
 import {
   Button,
   DeleteConfirmationModal,
@@ -14,8 +15,6 @@ import {
   Scrollbar,
   Tabs
 } from '@lifeforge/ui'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import {
   IWishlistEntry,

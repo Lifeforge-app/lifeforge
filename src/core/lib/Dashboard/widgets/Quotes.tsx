@@ -3,9 +3,8 @@ import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import tinycolor from 'tinycolor2'
 
+import { useAPIQuery } from '@lifeforge/core'
 import { QueryWrapper } from '@lifeforge/ui'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 export default function Quotes() {
   const quoteQuery = useAPIQuery<string>('quotes', ['quotes'])

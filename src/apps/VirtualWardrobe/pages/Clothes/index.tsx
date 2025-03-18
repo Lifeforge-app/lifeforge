@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from '@lifeforge/core'
+import { useAPIQuery } from '@lifeforge/core'
 import {
   Button,
   ContentWrapperWithSidebar,
@@ -24,8 +25,6 @@ import {
   type IVirtualWardrobeEntry,
   type IVirtualWardrobeSidebarData
 } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import SessionCartModal from '../../components/SessionCartModal'
 import EntryItem from './components/EntryItem'

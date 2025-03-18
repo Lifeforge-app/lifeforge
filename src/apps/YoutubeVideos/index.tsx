@@ -3,6 +3,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useAPIQuery } from '@lifeforge/core'
 import {
   APIFallbackComponent,
   DeleteConfirmationModal,
@@ -12,8 +13,6 @@ import {
   QueryWrapper,
   Scrollbar
 } from '@lifeforge/ui'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import AddVideosModal from './components/AddVideosModal'
 import Header from './components/Header'

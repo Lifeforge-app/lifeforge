@@ -1,14 +1,13 @@
 import { useRef } from 'react'
 import { useReactToPrint } from 'react-to-print'
 
+import { useAPIQuery } from '@lifeforge/core'
 import {
   Button,
   ModuleHeader,
   ModuleWrapper,
   QueryWrapper
 } from '@lifeforge/ui'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 import Board from './components/Board'
 import { type SudokuBoard } from './interfaces/sudoku_interfaces'

@@ -1,6 +1,5 @@
+import { useAPIQuery } from '@lifeforge/core'
 import { MissingAPIKeyScreen, ModuleWrapper, QueryWrapper } from '@lifeforge/ui'
-
-import useAPIQuery from '@hooks/useAPIQuery'
 
 function APIKeyStatusProvider({
   APIKeys,

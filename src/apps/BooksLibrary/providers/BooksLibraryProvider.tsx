@@ -11,8 +11,7 @@ import { Outlet } from 'react-router'
 import { toast } from 'react-toastify'
 
 import { fetchAPI } from '@lifeforge/core'
-
-import useAPIQuery from '@hooks/useAPIQuery'
+import { useAPIQuery } from '@lifeforge/core'
 
 import {
   type IBooksLibraryCategory,

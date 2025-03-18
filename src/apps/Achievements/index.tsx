@@ -1,8 +1,7 @@
-import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { fetchAPI } from '@lifeforge/core'
+import { useAPIQuery } from '@lifeforge/core'
 import {
   Button,
   DeleteConfirmationModal,
@@ -22,10 +21,10 @@ function Achievements() {
   const { t } = useTranslation('apps.achievements')
   const [selectedDifficulty, setSelectedDifficulty] =
     useState<IAchievementEntry['difficulty']>('impossible')
-  const entriesQuery = useQuery<IAchievementEntry[]>({
-    queryKey: ['achievements/entries', selectedDifficulty],
-    queryFn: () => fetchAPI(`achievements/entries/${selectedDifficulty}`)
-  })
+  const entriesQuery = useAPIQuery<IAchievementEntry[]>(
+    `achievements/entries/${selectedDifficulty}`,
+    ['achievements/entries', selectedDifficulty]
+  )
 
   const [modifyAchievementModalOpenType, setModifyAchievementModalOpenType] =
     useState<'create' | 'update' | null>(null)
