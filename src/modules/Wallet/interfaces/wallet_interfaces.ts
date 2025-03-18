@@ -1,6 +1,6 @@
-import type BasePBCollection from '@interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
-interface IWalletAsset extends BasePBCollection {
+interface IWalletAsset extends RecordModel {
   name: string
   icon: string
   balance: number
@@ -13,21 +13,30 @@ type IWalletAssetFormState = {
   starting_balance: string
 }
 
-interface IWalletLedger extends BasePBCollection {
+interface IWalletLedger extends RecordModel {
   name: string
   icon: string
   color: string
 }
 
-type IWalletLedgerFormState = Omit<IWalletLedger, keyof BasePBCollection>
+type IWalletLedgerFormState = {
+  name: string
+  icon: string
+  color: string
+}
 
 interface IWalletCategory extends IWalletLedger {
   type: 'income' | 'expenses'
 }
 
-type IWalletCategoryFormState = Omit<IWalletCategory, keyof BasePBCollection>
+type IWalletCategoryFormState = {
+  name: string
+  icon: string
+  color: string
+  type: 'income' | 'expenses'
+}
 
-interface IWalletTransaction extends BasePBCollection {
+interface IWalletTransaction extends RecordModel {
   type: 'income' | 'expenses' | 'transfer'
   side: 'debit' | 'credit'
   particulars: string

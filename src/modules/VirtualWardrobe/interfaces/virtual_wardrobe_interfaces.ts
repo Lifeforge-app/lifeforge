@@ -1,4 +1,4 @@
-import type BasePBCollection from '@interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
 interface IVirtualWardrobeSidebarData {
   total: number
@@ -10,7 +10,7 @@ interface IVirtualWardrobeSidebarData {
   colors: Record<string, number>
 }
 
-interface IVirtualWardrobeEntry extends BasePBCollection {
+interface IVirtualWardrobeEntry extends RecordModel {
   name: string
   category: string
   subcategory: string
