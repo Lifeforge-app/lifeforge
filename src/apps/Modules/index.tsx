@@ -1,9 +1,8 @@
-import { useAuth } from '@providers/AuthProvider'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { fetchAPI } from '@lifeforge/core'
+import { fetchAPI, useAuth } from '@lifeforge/core'
 import { LoadingScreen, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
 import ROUTES from '../../core/routes/Routes'

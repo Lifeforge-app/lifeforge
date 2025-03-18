@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import WavesurferPlayer from '@wavesurfer/react'
 import moment from 'moment'
 import { useRef, useState } from 'react'
@@ -7,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
 
+import { usePersonalization } from '@lifeforge/core'
 import { fetchAPI } from '@lifeforge/core'
 import { Button } from '@lifeforge/ui'
 

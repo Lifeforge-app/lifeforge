@@ -1,6 +1,7 @@
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import * as d3 from 'd3'
 import { useEffect, useMemo, useRef } from 'react'
+
+import { usePersonalization } from '@lifeforge/core'
 
 import { useRailwayMapContext } from '../../../../../providers/RailwayMapProvider'
 import {

@@ -1,9 +1,9 @@
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import colors from 'tailwindcss/colors'
 
+import { usePersonalization } from '@lifeforge/core'
 import { SidebarItem, SidebarTitle } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'

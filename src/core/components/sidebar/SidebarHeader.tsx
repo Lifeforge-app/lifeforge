@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
-import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
 
+import { useSidebarState } from '@lifeforge/core'
 import { SearchInput } from '@lifeforge/ui'
 
 function SidebarHeader({

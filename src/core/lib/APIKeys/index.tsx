@@ -1,8 +1,8 @@
-import { useAuth } from '@providers/AuthProvider'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useAuth } from '@lifeforge/core'
 import { fetchAPI } from '@lifeforge/core'
 import { useAPIQuery } from '@lifeforge/core'
 import {

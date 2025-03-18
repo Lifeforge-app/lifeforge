@@ -1,5 +1,6 @@
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useMemo } from 'react'
+
+import { usePersonalization } from '@lifeforge/core'
 
 export default function useComponentBg(): {
   componentBg: string

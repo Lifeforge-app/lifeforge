@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import moment from 'moment/min/moment-with-locales'
+
+import { usePersonalization } from '@lifeforge/core'
 
 function MiniCalendarHeader({
   currentMonth,

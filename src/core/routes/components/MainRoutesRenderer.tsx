@@ -1,7 +1,7 @@
-import { useAuth } from '@providers/AuthProvider'
 import _ from 'lodash'
 import { Route, Routes } from 'react-router'
 
+import { useAuth } from '@lifeforge/core'
 import { NotFoundScreen } from '@lifeforge/ui'
 
 import MainApplication from '../../MainApplication'

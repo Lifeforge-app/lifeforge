@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import tinycolor from 'tinycolor2'
 
+import { usePersonalization } from '@lifeforge/core'
 import { useAPIQuery } from '@lifeforge/core'
 import { QueryWrapper } from '@lifeforge/ui'
 

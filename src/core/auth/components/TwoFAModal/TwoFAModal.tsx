@@ -1,8 +1,8 @@
-import { useAuth } from '@providers/AuthProvider'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { useAuth } from '@lifeforge/core'
 import { Button, ModalHeader, ModalWrapper } from '@lifeforge/ui'
 
 import UsingAuthApp from './components/UsingAuthApp'

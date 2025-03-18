@@ -1,5 +1,4 @@
 /* eslint-disable sonarjs/pseudo-random */
-import { useAuth } from '@providers/AuthProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import { parse as parseCookie } from 'cookie'
 import {
@@ -12,6 +11,7 @@ import {
 } from 'react'
 import { toast } from 'react-toastify'
 
+import { useAuth } from '@lifeforge/core'
 import { useAPIQuery } from '@lifeforge/core'
 
 import { type IMusicEntry } from '@apps/Music/interfaces/music_interfaces'

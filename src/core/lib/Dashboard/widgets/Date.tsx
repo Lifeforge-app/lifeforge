@@ -1,8 +1,9 @@
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import moment from 'moment/min/moment-with-locales'
 import { useRef } from 'react'
 import tinycolor from 'tinycolor2'
+
+import { usePersonalization } from '@lifeforge/core'
 
 import { arabicToChinese } from '../utils/arabicToChineseNumber'
 

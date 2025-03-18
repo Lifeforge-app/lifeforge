@@ -1,6 +1,6 @@
-import { useAuth } from '@providers/AuthProvider'
 import { useLocation } from 'react-router'
 
+import { useAuth } from '@lifeforge/core'
 import { LoadingScreen } from '@lifeforge/ui'
 
 import Auth from '../auth'

@@ -1,7 +1,7 @@
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { usePersonalization } from '@lifeforge/core'
 import {
   Button,
   ColorInput,

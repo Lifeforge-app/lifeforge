@@ -1,10 +1,10 @@
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import { parse as parseCookie } from 'cookie'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { usePersonalization } from '@lifeforge/core'
 import { fetchAPI } from '@lifeforge/core'
 import { LoadingScreen } from '@lifeforge/ui'
 

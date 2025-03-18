@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
-import { useAuth } from '@providers/AuthProvider'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
 
+import { useAuth } from '@lifeforge/core'
 import { useAPIQuery } from '@lifeforge/core'
 import { QueryWrapper } from '@lifeforge/ui'
 

@@ -1,6 +1,6 @@
-import { useAuth } from '@providers/AuthProvider'
 import { useTranslation } from 'react-i18next'
 
+import { useAuth } from '@lifeforge/core'
 import {
   Button,
   DeleteConfirmationModal,

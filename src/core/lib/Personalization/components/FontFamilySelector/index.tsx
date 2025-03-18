@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { usePersonalization } from '@lifeforge/core'
 import { fetchAPI } from '@lifeforge/core'
 import { ConfigColumn } from '@lifeforge/ui'
 

@@ -1,10 +1,10 @@
 /* eslint-disable react-compiler/react-compiler */
-import { useAuth } from '@providers/AuthProvider'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
+import { useAuth } from '@lifeforge/core'
 import { Button } from '@lifeforge/ui'
 
 function AuthSignInButton({

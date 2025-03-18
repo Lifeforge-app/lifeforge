@@ -1,9 +1,9 @@
-import { useAuth } from '@providers/AuthProvider'
 import _ from 'lodash'
 import moment from 'moment'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useAuth } from '@lifeforge/core'
 import { Button, ConfigColumn } from '@lifeforge/ui'
 
 import ModifyModal from './ModifyModal'

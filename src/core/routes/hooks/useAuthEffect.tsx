@@ -1,6 +1,7 @@
-import { useAuth } from '@providers/AuthProvider'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
+
+import { useAuth } from '@lifeforge/core'
 
 function useAuthEffect() {
   const { auth, authLoading } = useAuth()

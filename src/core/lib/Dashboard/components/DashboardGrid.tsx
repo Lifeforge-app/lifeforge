@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
-import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 
+import { useSidebarState } from '@lifeforge/core'
+import { usePersonalization } from '@lifeforge/core'
 import { EmptyStateScreen, LoadingScreen } from '@lifeforge/ui'
 
 import Achievements from '../widgets/Achievements'

@@ -1,8 +1,8 @@
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { usePersonalization } from '@lifeforge/core'
 import { fetchAPI } from '@lifeforge/core'
 import {
   Button,

@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
-import { useAPIOnlineStatus } from '@providers/APIOnlineStatusProvider'
 import clsx from 'clsx'
+
+import { useAPIOnlineStatus } from '@lifeforge/core'
 
 function APIEnvironment() {
   const { environment } = useAPIOnlineStatus()

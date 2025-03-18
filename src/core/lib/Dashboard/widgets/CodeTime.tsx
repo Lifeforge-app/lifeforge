@@ -1,11 +1,11 @@
 /* eslint-disable import/named */
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import { ChartOptions, ScriptableContext } from 'chart.js'
 import moment, { Moment } from 'moment'
 import { useMemo, useState } from 'react'
 import { Bar, Line } from 'react-chartjs-2'
 import tinycolor from 'tinycolor2'
 
+import { usePersonalization } from '@lifeforge/core'
 import { useAPIQuery } from '@lifeforge/core'
 import {
   DashboardItem,

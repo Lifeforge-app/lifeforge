@@ -1,5 +1,4 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import { parse as parseCookie } from 'cookie'
 import { useRef } from 'react'
@@ -7,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { type Id, toast } from 'react-toastify'
 
+import { usePersonalization } from '@lifeforge/core'
 import { IntervalManager, fetchAPI } from '@lifeforge/core'
 import {
   Button,

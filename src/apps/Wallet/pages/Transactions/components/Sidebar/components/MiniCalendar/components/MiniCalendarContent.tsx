@@ -1,6 +1,7 @@
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import moment from 'moment'
 import { useState } from 'react'
+
+import { usePersonalization } from '@lifeforge/core'
 
 import MiniCalendarDateItem from './MiniCalendarDateItem'
 

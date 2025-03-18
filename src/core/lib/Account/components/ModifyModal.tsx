@@ -1,9 +1,9 @@
-import { useAuth } from '@providers/AuthProvider'
 import _ from 'lodash'
 import moment from 'moment'
 import { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { useAuth } from '@lifeforge/core'
 import { fetchAPI } from '@lifeforge/core'
 import {
   Button,

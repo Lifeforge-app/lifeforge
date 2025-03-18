@@ -1,8 +1,8 @@
-import { useAuth } from '@providers/AuthProvider'
-import { useSidebarState } from '@providers/SidebarStateProvider'
 import _ from 'lodash'
 import { Fragment, useMemo } from 'react'
 
+import { useSidebarState } from '@lifeforge/core'
+import { useAuth } from '@lifeforge/core'
 import {
   EmptyStateScreen,
   Scrollbar,

@@ -1,11 +1,21 @@
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useEffect, useState } from 'react'
 
+import { usePersonalization } from '@lifeforge/core'
 import { Button, ModalHeader, ModalWrapper, Scrollbar } from '@lifeforge/ui'
 
-import { BG_BLURS } from '../../../../../../providers/PersonalizationProvider/constants/bg_blurs'
 import AdjustmentColumn from './components/AdjustmentColumn'
 import ResultShowcase from './components/ResultShowcase'
+
+export const BG_BLURS = {
+  none: '0px',
+  sm: '4px',
+  base: '8px',
+  md: '12px',
+  lg: '16px',
+  xl: '24px',
+  '2xl': '40px',
+  '3xl': '64px'
+}
 
 function AdjustBgImageModal({
   isOpen,

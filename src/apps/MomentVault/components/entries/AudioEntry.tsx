@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import WavesurferPlayer from '@wavesurfer/react'
 import clsx from 'clsx'
@@ -9,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
 
+import { usePersonalization } from '@lifeforge/core'
 import { fetchAPI } from '@lifeforge/core'
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 

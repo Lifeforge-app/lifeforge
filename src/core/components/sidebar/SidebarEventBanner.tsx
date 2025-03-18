@@ -1,11 +1,12 @@
 import { Icon } from '@iconify/react'
-import { useAuth } from '@providers/AuthProvider'
-import { usePersonalization } from '@providers/PersonalizationProvider'
-import { useSidebarState } from '@providers/SidebarStateProvider'
 import clsx from 'clsx'
 import moment from 'moment'
 import { useMemo } from 'react'
 import tinycolor from 'tinycolor2'
+
+import { useSidebarState } from '@lifeforge/core'
+import { usePersonalization } from '@lifeforge/core'
+import { useAuth } from '@lifeforge/core'
 
 function addNumberSuffix(number: number): string {
   const suffixes = ['th', 'st', 'nd', 'rd']

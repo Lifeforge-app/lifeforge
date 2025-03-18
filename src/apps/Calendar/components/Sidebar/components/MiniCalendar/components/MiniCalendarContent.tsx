@@ -1,5 +1,6 @@
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import moment from 'moment'
+
+import { usePersonalization } from '@lifeforge/core'
 
 import {
   type ICalendarCategory,

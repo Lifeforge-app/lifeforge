@@ -5,10 +5,10 @@ import {
   ListboxOptions
 } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { usePersonalization } from '@providers/PersonalizationProvider'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
+import { usePersonalization } from '@lifeforge/core'
 import { ConfigColumn } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
