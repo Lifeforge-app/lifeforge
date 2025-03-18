@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/no-small-switch */
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 
 import {
@@ -36,16 +37,17 @@ const TYPES = [
 ]
 
 function AddEntryModal({
+  entriesQueryKey,
   openType,
   setOpenType,
-  onClose,
-  refreshData
+  onClose
 }: {
+  entriesQueryKey: unknown[]
   openType: 'text' | 'audio' | 'photo' | 'video' | null
   setOpenType: (type: 'text' | 'audio' | 'photo' | 'video' | null) => void
   onClose: () => void
-  refreshData: () => void
 }) {
+  const queryClient = useQueryClient()
   const [overwriteAudioWarningModalOpen, setOverwriteAudioWarningModalOpen] =
     useState(false)
   const [audioURL, setAudioURL] = useState<string | null>(null)
@@ -111,7 +113,9 @@ function AddEntryModal({
                     transcription={transcription}
                     onSuccess={() => {
                       onClose()
-                      refreshData()
+                      queryClient.invalidateQueries({
+                        queryKey: entriesQueryKey
+                      })
                     }}
                   />
                 )

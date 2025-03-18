@@ -321,6 +321,7 @@ function GuitarTabs() {
         itemName="guitar tab"
         nameKey="title"
         queryKey={queryKey}
+        queryUpdateType="invalidate"
         onClose={() => {
           setDeleteConfirmationModalOpen(false)
         }}

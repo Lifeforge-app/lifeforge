@@ -16,26 +16,25 @@ import OTPScreen from '@security/components/OTPScreen'
 
 import { usePasswordContext } from '@modules/Passwords/providers/PasswordsProvider'
 
-import CreatePasswordModal from './components/CreatePasswordModal'
+import ModifyPasswordModal from './components/ModifyPasswordModal'
 import PasswordList from './components/PasswordList'
 
 function ModalsSection() {
   const {
     existedData,
     isDeletePasswordConfirmationModalOpen,
-    setIsDeletePasswordConfirmationModalOpen,
-    refreshPasswordList
+    setIsDeletePasswordConfirmationModalOpen
   } = usePasswordContext()
   return (
     <>
-      <CreatePasswordModal />
+      <ModifyPasswordModal />
       <DeleteConfirmationModal
         apiEndpoint="passwords/password"
         customText={`Are you sure you want to delete the password for ${existedData?.name}? This action is irreversible.`}
         data={existedData}
         isOpen={isDeletePasswordConfirmationModalOpen}
         itemName="password"
-        updateDataList={refreshPasswordList}
+        queryKey={['passwords', 'entries']}
         onClose={() => {
           setIsDeletePasswordConfirmationModalOpen(false)
         }}

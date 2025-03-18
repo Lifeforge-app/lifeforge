@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 
 import { TextInput } from '@lifeforge/ui'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import IntervalManager from '@utils/intervalManager'
 
@@ -28,10 +28,11 @@ function VideoSection({
 }) {
   const [videoUrl, setVideoUrl] = useState<string>('')
   const debouncedVideoUrl = useDebounce(videoUrl, 500)
-  const [videoInfo] = useFetch<IYoutubeVideoInfo>(
+  const videoInfoQuery = useAPIQuery<IYoutubeVideoInfo>(
     `youtube-videos/video/get-info/${
       debouncedVideoUrl.match(URL_REGEX)?.groups?.id
     }`,
+    ['youtube-videos', 'video', 'get-info', debouncedVideoUrl],
     URL_REGEX.test(debouncedVideoUrl)
   )
   const [loading, setLoading] = useState(false)
@@ -60,7 +61,7 @@ function VideoSection({
           Authorization: `Bearer ${parseCookie(document.cookie).token} `
         },
         body: JSON.stringify({
-          metadata: videoInfo
+          metadata: videoInfoQuery.data
         })
       }
     )
@@ -134,7 +135,7 @@ function VideoSection({
           downloadVideo={downloadVideo}
           loading={loading}
           progress={progress}
-          videoInfo={videoInfo}
+          videoInfoQuery={videoInfoQuery}
         />
       )}
     </>

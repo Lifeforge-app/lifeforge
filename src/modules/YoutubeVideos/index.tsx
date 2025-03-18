@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,12 +9,11 @@ import {
   EmptyStateScreen,
   FAB,
   ModuleWrapper,
+  QueryWrapper,
   Scrollbar
 } from '@lifeforge/ui'
 
-import { type Loadable } from '@interfaces/common'
-
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import AddVideosModal from './components/AddVideosModal'
 import Header from './components/Header'
@@ -21,11 +21,13 @@ import VideoList from './components/VideoList'
 import { type IYoutubeVideosStorageEntry } from './interfaces/youtube_video_storage_interfaces'
 
 function YoutubeVideos() {
+  const queryClient = useQueryClient()
   const { t } = useTranslation('modules.youtubeVideos')
   const [isAddVideosModalOpen, setIsAddVideosModalOpen] = useState(false)
-  const [videos, refreshVideos, setVideos] = useFetch<
-    IYoutubeVideosStorageEntry[]
-  >('youtube-videos/video')
+  const videosQuery = useAPIQuery<IYoutubeVideosStorageEntry[]>(
+    'youtube-videos/video',
+    ['youtube-videos', 'video']
+  )
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
     useState(false)
   const [videoToDelete, setVideoToDelete] =
@@ -34,23 +36,24 @@ function YoutubeVideos() {
   const [needsProgressCheck, setNeedsProgressCheck] = useState(true)
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query, 500)
-  const [filteredVideos, setFilteredVideos] =
-    useState<Loadable<IYoutubeVideosStorageEntry[]>>('loading')
+  const [filteredVideos, setFilteredVideos] = useState<
+    IYoutubeVideosStorageEntry[]
+  >([])
 
   useEffect(() => {
-    if (typeof videos === 'string') {
-      setFilteredVideos(videos)
+    if (!videosQuery.data) {
+      setFilteredVideos([])
       return
     }
 
     setFilteredVideos(
-      videos.filter(
+      videosQuery.data.filter(
         v =>
           v.title.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
           v.channel?.name.toLowerCase().includes(debouncedQuery.toLowerCase())
       )
     )
-  }, [videos, debouncedQuery])
+  }, [videosQuery.data, debouncedQuery])
 
   return (
     <ModuleWrapper>
@@ -58,14 +61,13 @@ function YoutubeVideos() {
         isAddVideosModalOpen={isAddVideosModalOpen}
         needsProgressCheck={needsProgressCheck}
         query={query}
-        refreshVideos={refreshVideos}
         setIsAddVideosModalOpen={setIsAddVideosModalOpen}
         setNeedsProgressCheck={setNeedsProgressCheck}
         setQuery={setQuery}
-        videosLength={videos.length}
+        videosLength={videosQuery.data?.length ?? 0}
       />
       <Scrollbar className="mt-6">
-        <APIFallbackComponent data={videos}>
+        <QueryWrapper query={videosQuery}>
           {videos =>
             videos.length === 0 ? (
               <EmptyStateScreen
@@ -77,7 +79,9 @@ function YoutubeVideos() {
                 name="videos"
                 namespace="modules.youtubeVideos"
                 onCTAClick={() => {
-                  refreshVideos()
+                  queryClient.invalidateQueries({
+                    queryKey: ['youtube-videos', 'video']
+                  })
                   setIsAddVideosModalOpen(true)
                 }}
               />
@@ -101,28 +105,30 @@ function YoutubeVideos() {
               </APIFallbackComponent>
             )
           }
-        </APIFallbackComponent>
+        </QueryWrapper>
       </Scrollbar>
       <AddVideosModal
         isOpen={isAddVideosModalOpen}
-        videos={videos}
+        videos={videosQuery.data ?? []}
         onClose={(isVideoDownloading: boolean) => {
           setIsAddVideosModalOpen(false)
           if (isVideoDownloading) {
             setNeedsProgressCheck(true)
           }
-          refreshVideos()
         }}
       />
       <DeleteConfirmationModal
         apiEndpoint="youtube-videos/video"
         customCallback={async () => {
-          setVideos(prevVideos => {
-            if (typeof prevVideos === 'string') return prevVideos
-            if (videoToDelete === undefined) return prevVideos
+          queryClient.setQueryData<IYoutubeVideosStorageEntry[]>(
+            ['youtube-videos', 'video'],
+            prevVideos => {
+              if (!prevVideos) return prevVideos
+              if (videoToDelete === undefined) return prevVideos
 
-            return prevVideos.filter(v => v.id !== videoToDelete.id)
-          })
+              return prevVideos.filter(v => v.id !== videoToDelete.id)
+            }
+          )
           setVideoToDelete(undefined)
         }}
         data={videoToDelete}
@@ -136,7 +142,9 @@ function YoutubeVideos() {
       <FAB
         hideWhen="md"
         onClick={() => {
-          refreshVideos()
+          queryClient.invalidateQueries({
+            queryKey: ['youtube-videos', 'video']
+          })
           setIsAddVideosModalOpen(true)
         }}
       />

@@ -14,7 +14,6 @@ import { IVirtualWardrobeEntry } from '@modules/VirtualWardrobe/interfaces/virtu
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { Loadable } from '../../../../core/interfaces/common'
 import EntryItem from '../../pages/Clothes/components/EntryItem'
 import CheckoutConfirmationModal from './components/CheckoutConfirmationModal'
 
@@ -26,7 +25,7 @@ function SessionCartModal({
 }: {
   isOpen: boolean
   onClose: () => void
-  cartItems: Loadable<IVirtualWardrobeEntry[]>
+  cartItems: IVirtualWardrobeEntry[]
 
   refreshEntries: () => void
 }) {

@@ -9,8 +9,6 @@ import {
   ModalWrapper
 } from '@lifeforge/ui'
 
-import { type Loadable } from '@interfaces/common'
-
 import { type IYoutubeVideosStorageEntry } from '../../interfaces/youtube_video_storage_interfaces'
 import PlaylistSection from './sections/PlaylistSection'
 import VideoSection from './sections/VideoSection'
@@ -33,7 +31,7 @@ function AddVideosModal({
 }: {
   isOpen: boolean
   onClose: (isVideoDownloading: boolean) => void
-  videos: Loadable<IYoutubeVideosStorageEntry[]>
+  videos: IYoutubeVideosStorageEntry[]
 }) {
   const { t } = useTranslation('modules.youtubeVideos')
   const [selectedResourceType, setSelectedResourceType] = useState<

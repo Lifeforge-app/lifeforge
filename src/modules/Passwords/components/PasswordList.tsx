@@ -1,7 +1,8 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { APIFallbackComponent, EmptyStateScreen } from '@lifeforge/ui'
+import { EmptyStateScreen, QueryWrapper } from '@lifeforge/ui'
 
 import { usePasswordContext } from '@modules/Passwords/providers/PasswordsProvider'
 
@@ -11,12 +12,13 @@ import { IPasswordEntry } from '../interfaces/password_interfaces'
 import PasswordEntryItem from './PasswordEntryItem'
 
 function PasswordList() {
+  const queryClient = useQueryClient()
   const { t } = useTranslation('modules.passwords')
   const {
+    passwordListQuery,
     setModifyPasswordModalOpenType,
     setExistedData,
-    filteredPasswordList,
-    setPasswordList
+    filteredPasswordList
   } = usePasswordContext()
 
   async function pinPassword(id: string) {
@@ -33,26 +35,29 @@ function PasswordList() {
         method: 'POST'
       })
 
-      setPasswordList(prev => {
-        if (prev === 'loading' || prev === 'error') return prev
+      queryClient.setQueryData<IPasswordEntry[]>(
+        ['passwords', 'entries'],
+        prev => {
+          if (!prev) return prev
 
-        return prev.map(mapPasswords).sort(sortPasswords)
-      })
+          return prev.map(mapPasswords).sort(sortPasswords)
+        }
+      )
     } catch {
       toast.error(t('error.pin'))
-      setPasswordList('error')
+      queryClient.invalidateQueries({ queryKey: ['passwords', 'entries'] })
     }
   }
 
   return (
-    <APIFallbackComponent data={filteredPasswordList}>
-      {filteredPasswordList =>
+    <QueryWrapper query={passwordListQuery}>
+      {() =>
         filteredPasswordList.length === 0 ? (
           <EmptyStateScreen
             ctaContent="new"
             ctaTProps={{ item: t('items.password') }}
             icon="tabler:key-off"
-            name="password"
+            name={passwordListQuery.data?.length ? 'search' : 'passwords'}
             namespace="modules.passwords"
             onCTAClick={() => {
               setModifyPasswordModalOpenType('create')
@@ -71,7 +76,7 @@ function PasswordList() {
           </div>
         )
       }
-    </APIFallbackComponent>
+    </QueryWrapper>
   )
 }
 

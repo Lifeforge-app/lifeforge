@@ -1,5 +1,3 @@
-import { type Loadable } from '@interfaces/common'
-
 import {
   type IYoutubePlaylistEntry,
   type IYoutubePlaylistVideoEntry,
@@ -20,7 +18,7 @@ function PlaylistDetails({
   downloadVideo: (metadata: IYoutubePlaylistVideoEntry) => void
   downloadingVideos: React.RefObject<Set<string>>
   downloadedVideos: Set<string>
-  videos: Loadable<IYoutubeVideosStorageEntry[]>
+  videos: IYoutubeVideosStorageEntry[]
   processes: Record<
     string,
     {

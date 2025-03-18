@@ -1,29 +1,29 @@
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import type { Identifier, XYCoord } from 'dnd-core'
 import { useEffect, useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import { type Loadable } from '@interfaces/common'
-
 import { type ITodoSubtask } from '../../../../../interfaces/todo_list_interfaces'
 
 function SubtaskItem({
   subtask,
   subtasks,
-  setSubtasks,
   moveTask,
   newTask,
-  setNewTask
+  setNewTask,
+  taskId
 }: {
   subtask: ITodoSubtask
   subtasks: ITodoSubtask[]
-  setSubtasks: React.Dispatch<React.SetStateAction<Loadable<ITodoSubtask[]>>>
   moveTask: (from: number, to: number) => void
   newTask: string
   setNewTask: React.Dispatch<React.SetStateAction<string>>
+  taskId: string
 }) {
+  const queryClient = useQueryClient()
   const ref = useRef<HTMLDivElement>(null)
   const editInputRef = useRef<HTMLInputElement>(null)
   const [isEditing, setIsEditing] = useState(false)
@@ -122,11 +122,15 @@ function SubtaskItem({
             onBlur={e => {
               setIsEditing(false)
               if (e.target.value === '') {
-                setSubtasks(subtasks.filter(task => task.id !== subtask.id))
+                queryClient.setQueryData<ITodoSubtask[]>(
+                  ['todo-list', 'subtasks', taskId],
+                  subtasks.filter(task => task.id !== subtask.id)
+                )
               }
             }}
             onChange={e => {
-              setSubtasks(
+              queryClient.setQueryData<ITodoSubtask[]>(
+                ['todo-list', 'subtasks', taskId],
                 subtasks.map(task =>
                   task.id === subtask.id
                     ? {
@@ -159,7 +163,10 @@ function SubtaskItem({
           icon="tabler:trash"
           text="Delete"
           onClick={() => {
-            setSubtasks(subtasks.filter(task => task.id !== subtask.id))
+            queryClient.setQueryData(
+              ['todo-list', 'subtasks', taskId],
+              subtasks.filter(task => task.id !== subtask.id)
+            )
           }}
         />
       </HamburgerMenu>

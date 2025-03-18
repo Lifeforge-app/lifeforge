@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -11,7 +12,6 @@ import DownloadProcessModal from './DownloadProcessModal'
 
 function Header({
   videosLength,
-  refreshVideos,
   setIsAddVideosModalOpen,
   query,
   setQuery,
@@ -20,7 +20,6 @@ function Header({
   isAddVideosModalOpen
 }: {
   videosLength: number
-  refreshVideos: () => void
   setIsAddVideosModalOpen: (value: boolean) => void
   query: string
   setQuery: (value: string) => void
@@ -28,6 +27,7 @@ function Header({
   setNeedsProgressCheck: (value: boolean) => void
   isAddVideosModalOpen: boolean
 }) {
+  const queryClient = useQueryClient()
   const { t } = useTranslation('modules.youtubeVideos')
   const [isDownloadProcessModalOpen, setIsDownloadProcessModalOpen] =
     useState(false)
@@ -68,7 +68,9 @@ function Header({
         Object.keys(processes).length === 0
       ) {
         if (!isFirstTime) {
-          refreshVideos()
+          queryClient.invalidateQueries({
+            queryKey: ['youtube-videos', 'video']
+          })
         }
         setNeedsProgressCheck(false)
       }
@@ -96,7 +98,9 @@ function Header({
             icon="tabler:plus"
             tProps={{ item: t('items.video') }}
             onClick={() => {
-              refreshVideos()
+              queryClient.invalidateQueries({
+                queryKey: ['youtube-videos', 'video']
+              })
               setIsAddVideosModalOpen(true)
             }}
           >
@@ -129,7 +133,11 @@ function Header({
           <MenuItem
             icon="tabler:refresh"
             text="Refresh"
-            onClick={refreshVideos}
+            onClick={() => {
+              queryClient.invalidateQueries({
+                queryKey: ['youtube-videos', 'video']
+              })
+            }}
           />
         }
         icon="tabler:brand-youtube"
@@ -147,7 +155,9 @@ function Header({
         processes={processes}
         onClose={() => {
           setIsDownloadProcessModalOpen(false)
-          refreshVideos()
+          queryClient.invalidateQueries({
+            queryKey: ['youtube-videos', 'video']
+          })
         }}
       />
     </>

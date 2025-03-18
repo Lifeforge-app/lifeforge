@@ -1,10 +1,9 @@
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 
 import { Checkbox } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
-
-import { type Loadable } from '@interfaces/common'
 
 import useComponentBg from '@hooks/useComponentBg'
 
@@ -19,25 +18,18 @@ import TaskTags from './components/TaskTags'
 function TaskItem({
   entry,
   lighter,
-  isInDashboardWidget,
-  entries,
-  setEntries,
-  refreshEntries
+  isInDashboardWidget
 }: {
   entry: ITodoListEntry
   lighter?: boolean
   isInDashboardWidget?: boolean
-  entries?: ITodoListEntry[]
-  setEntries?: React.Dispatch<React.SetStateAction<Loadable<ITodoListEntry[]>>>
-  refreshEntries?: () => void
 }) {
+  const queryClient = useQueryClient()
   const { componentBgWithHover } = useComponentBg()
   const {
+    entriesQueryKey,
     entries: innerEntries,
     lists,
-    setEntries: setInnerEntries,
-    refreshEntries: refreshInnerEntries,
-    refreshStatusCounter,
     setSelectedTask,
     setModifyTaskWindowOpenType
   } = useTodoListContext()
@@ -45,31 +37,17 @@ function TaskItem({
   async function toggleTaskCompletion() {
     if (typeof innerEntries === 'string') return
 
-    if (!isInDashboardWidget) {
-      setInnerEntries(
-        innerEntries.map(e =>
-          e.id === entry.id
-            ? {
-                ...e,
-                done: !e.done
-              }
-            : e
-        )
+    queryClient.setQueryData<ITodoListEntry[]>(
+      entriesQueryKey,
+      innerEntries.map(e =>
+        e.id === entry.id
+          ? {
+              ...e,
+              done: !e.done
+            }
+          : e
       )
-    } else {
-      if (entries && setEntries) {
-        setEntries(
-          entries.map(e =>
-            e.id === entry.id
-              ? {
-                  ...e,
-                  done: !e.done
-                }
-              : e
-          )
-        )
-      }
-    }
+    )
 
     try {
       await fetchAPI(`todo-list/entries/toggle/${entry.id}`, {
@@ -77,23 +55,14 @@ function TaskItem({
       })
 
       setTimeout(() => {
-        if (!isInDashboardWidget) {
-          refreshInnerEntries()
-        } else {
-          if (refreshEntries) {
-            refreshEntries()
-          }
-        }
-        refreshStatusCounter()
+        queryClient.invalidateQueries({ queryKey: entriesQueryKey })
+
+        queryClient.invalidateQueries({
+          queryKey: ['todo-list', 'status-counter']
+        })
       }, 500)
     } catch {
-      if (!isInDashboardWidget) {
-        refreshInnerEntries()
-      } else {
-        if (refreshEntries) {
-          refreshEntries()
-        }
-      }
+      queryClient.invalidateQueries({ queryKey: entriesQueryKey })
     }
   }
 

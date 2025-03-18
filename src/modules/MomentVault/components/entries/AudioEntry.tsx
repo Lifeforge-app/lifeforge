@@ -1,10 +1,10 @@
-/* eslint-disable import/named */
 import { Icon } from '@iconify/react'
 import { usePersonalization } from '@providers/PersonalizationProvider'
+import { useQueryClient } from '@tanstack/react-query'
 import WavesurferPlayer from '@wavesurfer/react'
 import clsx from 'clsx'
 import moment from 'moment'
-import { ListResult } from 'pocketbase'
+import type { ListResult } from 'pocketbase'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
@@ -17,18 +17,14 @@ import useComponentBg from '@hooks/useComponentBg'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { Loadable } from '../../../../core/interfaces/common'
-
 function AudioEntry({
+  entriesQueryKey,
   entry,
-  setData,
   onDelete,
   addEntryModalOpenType
 }: {
+  entriesQueryKey: unknown[]
   entry: IMomentVaultEntry
-  setData: React.Dispatch<
-    React.SetStateAction<Loadable<ListResult<IMomentVaultEntry>>>
-  >
   onDelete: (data: IMomentVaultEntry) => void
   addEntryModalOpenType: 'text' | 'audio' | 'photo' | 'video' | null
 }) {
@@ -38,6 +34,7 @@ function AudioEntry({
     themeColor
   } = usePersonalization()
 
+  const queryClient = useQueryClient()
   const { componentBg } = useComponentBg()
   const [totalTime, setTotalTime] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
@@ -72,25 +69,26 @@ function AudioEntry({
         }
       )
 
-      setData(prev => {
-        if (typeof prev === 'string') {
-          return prev
-        }
+      queryClient.setQueryData<ListResult<IMomentVaultEntry>>(
+        entriesQueryKey,
+        prev => {
+          if (!prev) return prev
 
-        const newData = prev.items.map(item => {
-          if (item.id === entry.id) {
-            return {
-              ...item,
-              transcription: data
+          const newData = prev.items.map(item => {
+            if (item.id === entry.id) {
+              return {
+                ...item,
+                transcription: data
+              }
             }
+            return item
+          })
+          return {
+            ...prev,
+            items: newData
           }
-          return item
-        })
-        return {
-          ...prev,
-          items: newData
         }
-      })
+      )
     } catch {
       toast.error('Failed to transcribe audio')
     } finally {

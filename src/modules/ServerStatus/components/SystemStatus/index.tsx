@@ -3,9 +3,9 @@ import moment from 'moment'
 import prettyBytes from 'pretty-bytes'
 import { useEffect } from 'react'
 
-import { APIFallbackComponent } from '@lifeforge/ui'
+import { QueryWrapper } from '@lifeforge/ui'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import {
   ICPUTemp,
@@ -15,36 +15,27 @@ import {
 import { SystemStatusCard } from './components/SystemStatusCard'
 
 function SystemStatus() {
-  const [memoryUsage, refreshMemoryUsage] = useFetch<IMemoryUsage>(
-    'server/memory',
-    true,
-    false,
-    false
-  )
-  const [cpuUsage, refreshCPUUsage] = useFetch<ICPUUSage>(
-    'server/cpu',
-    true,
-    false,
-    false
-  )
-  const [cpuTemp, refreshCPUTemp] = useFetch<ICPUTemp>(
-    'server/cpu-temp',
-    true,
-    false,
-    false
-  )
+  const memoryUsageQuery = useAPIQuery<IMemoryUsage>('server/memory', [
+    'server',
+    'memory'
+  ])
+  const cpuUsageQuery = useAPIQuery<ICPUUSage>('server/cpu', ['server', 'cpu'])
+  const cpuTempQuery = useAPIQuery<ICPUTemp>('server/cpu-temp', [
+    'server',
+    'cpu-temp'
+  ])
 
   useEffect(() => {
     const interval = setInterval(async () => {
-      refreshMemoryUsage()
-      refreshCPUUsage()
-      refreshCPUTemp()
+      memoryUsageQuery.refetch()
+      cpuUsageQuery.refetch()
+      cpuTempQuery.refetch()
     }, 1000)
 
     return () => {
       clearInterval(interval)
     }
-  }, [refreshMemoryUsage, refreshCPUUsage, refreshCPUTemp])
+  }, [])
 
   return (
     <div className="mt-16 flex w-full flex-col gap-6">
@@ -55,7 +46,7 @@ function SystemStatus() {
       <div className="grid gap-6 lg:grid-cols-3">
         {[
           {
-            data: cpuUsage,
+            data: cpuUsageQuery,
             icon: 'tabler:cpu',
             title: 'CPU Usage',
             valueKey: 'usage',
@@ -66,7 +57,7 @@ function SystemStatus() {
               )} uptime`
           },
           {
-            data: memoryUsage,
+            data: memoryUsageQuery,
             icon: 'gg:smartphone-ram',
             title: 'Memory Usage',
             valueKey: 'percent',
@@ -75,16 +66,16 @@ function SystemStatus() {
               `${prettyBytes(+data.used)} / ${prettyBytes(+data.total)} used`
           },
           {
-            data: cpuTemp,
+            data: cpuTempQuery,
             icon: 'tabler:thermometer',
             title: 'CPU Temperature',
             valueKey: 'main',
             unit: '°C',
             description: (data: ICPUTemp) => `${data.max}°C max`
           }
-        ].map(({ data, icon, title, valueKey, unit, description }, index) => (
-          <APIFallbackComponent key={index} data={data}>
-            {data => (
+        ].map(({ data, icon, title, valueKey, unit, description }) => (
+          <QueryWrapper key={title} query={data as any}>
+            {(data: any) => (
               <SystemStatusCard
                 colorThresholds={{ high: 80, medium: 60 }}
                 description={description(data as any)}
@@ -94,7 +85,7 @@ function SystemStatus() {
                 value={data[valueKey as keyof typeof data]}
               />
             )}
-          </APIFallbackComponent>
+          </QueryWrapper>
         ))}
       </div>
     </div>

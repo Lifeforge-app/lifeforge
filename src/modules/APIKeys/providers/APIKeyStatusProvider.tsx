@@ -1,10 +1,6 @@
-import {
-  APIFallbackComponent,
-  MissingAPIKeyScreen,
-  ModuleWrapper
-} from '@lifeforge/ui'
+import { MissingAPIKeyScreen, ModuleWrapper, QueryWrapper } from '@lifeforge/ui'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 function APIKeyStatusProvider({
   APIKeys,
@@ -13,15 +9,16 @@ function APIKeyStatusProvider({
   APIKeys: string[]
   children: React.ReactNode
 }) {
-  const [hasRequiredAPIKeys] = useFetch<boolean>(
+  const hasRequiredAPIKeysQuery = useAPIQuery<boolean>(
     `api-keys/entries/check?keys=${encodeURIComponent(APIKeys.join(','))}`,
+    ['api-keys', 'entries', 'check', APIKeys.join(',')],
     APIKeys.length > 0
   )
 
   return (
     <>
       {APIKeys.length > 0 ? (
-        <APIFallbackComponent data={hasRequiredAPIKeys}>
+        <QueryWrapper query={hasRequiredAPIKeysQuery}>
           {hasRequiredAPIKeys =>
             hasRequiredAPIKeys ? (
               <>{children}</>
@@ -31,7 +28,7 @@ function APIKeyStatusProvider({
               </ModuleWrapper>
             )
           }
-        </APIFallbackComponent>
+        </QueryWrapper>
       ) : (
         children
       )}

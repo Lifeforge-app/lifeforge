@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useSearchParams } from 'react-router'
@@ -21,15 +22,12 @@ import Sidebar from './Sidebar'
 import TaskList from './tasks/TaskList'
 
 function TodoListContainer() {
+  const queryClient = useQueryClient()
   const { t } = useTranslation('modules.todoList')
   const [searchParams, setSearchParams] = useSearchParams()
   const {
+    entriesQueryKey,
     entries,
-    refreshPriorities,
-    refreshLists,
-    refreshTagsList,
-    refreshEntries,
-    refreshStatusCounter,
     setModifyTaskWindowOpenType,
     deleteTaskConfirmationModalOpen,
     setDeleteTaskConfirmationModalOpen,
@@ -109,13 +107,17 @@ function TodoListContainer() {
         isOpen={deleteTaskConfirmationModalOpen}
         itemName="task"
         nameKey="summary"
-        updateDataList={refreshEntries}
+        queryKey={entriesQueryKey}
         onClose={() => {
           setDeleteTaskConfirmationModalOpen(false)
-          refreshPriorities()
-          refreshLists()
-          refreshTagsList()
-          refreshStatusCounter()
+          queryClient.invalidateQueries({
+            queryKey: ['todo-list', 'priorities']
+          })
+          queryClient.invalidateQueries({ queryKey: ['todo-list', 'lists'] })
+          queryClient.invalidateQueries({ queryKey: ['todo-list', 'tags'] })
+          queryClient.invalidateQueries({
+            queryKey: ['todo-list', 'status-counter']
+          })
         }}
       />
       {entries.length > 0 && (
@@ -133,7 +135,7 @@ function TodoListContainer() {
         data={selectedPriority}
         isOpen={deletePriorityConfirmationModalOpen}
         itemName="priority"
-        updateDataList={refreshPriorities}
+        queryKey={['todo-list', 'priorities']}
         onClose={() => {
           setDeletePriorityConfirmationModalOpen(false)
         }}
@@ -145,7 +147,7 @@ function TodoListContainer() {
         data={selectedList}
         isOpen={deleteListConfirmationModalOpen}
         itemName="list"
-        updateDataList={refreshLists}
+        queryKey={['todo-list', 'lists']}
         onClose={() => {
           setDeleteListConfirmationModalOpen(false)
         }}
@@ -157,7 +159,7 @@ function TodoListContainer() {
         data={selectedTag}
         isOpen={deleteTagConfirmationModalOpen}
         itemName="tag"
-        updateDataList={refreshTagsList}
+        queryKey={['todo-list', 'tags']}
         onClose={() => {
           setDeleteTagConfirmationModalOpen(false)
         }}

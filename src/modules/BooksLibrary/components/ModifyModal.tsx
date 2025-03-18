@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import _ from 'lodash'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,13 +12,13 @@ import fetchAPI from '@utils/fetchAPI'
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function ModifyModal({ stuff }: { stuff: 'categories' | 'languages' }) {
+  const queryClient = useQueryClient()
   const { t } = useTranslation('modules.booksLibrary')
   const {
     modifyDataModalOpenType: openType,
     setModifyDataModalOpenType: setOpenType,
     existedData,
-    setExistedData,
-    refreshData
+    setExistedData
   } = useBooksLibraryContext()[stuff]
   const singleStuff = {
     categories: 'category',
@@ -80,7 +81,7 @@ function ModifyModal({ stuff }: { stuff: 'categories' | 'languages' }) {
         }
       )
 
-      refreshData()
+      queryClient.invalidateQueries({ queryKey: ['books-library', stuff] })
       setExistedData(null)
       setOpenType(null)
     } catch {

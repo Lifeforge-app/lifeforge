@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import {
   createContext,
   useContext,
@@ -9,7 +10,7 @@ import {
 import { Outlet } from 'react-router'
 import { toast } from 'react-toastify'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -25,7 +26,7 @@ type ModifyModalOpenType = 'create' | 'update' | null
 function useBooksLibraryCommonState<T>(
   endpoint: string
 ): IBooksLibraryCommon<T> {
-  const [data, refreshData, setData] = useFetch<T[]>(endpoint)
+  const dataQuery = useAPIQuery<T[]>(endpoint, endpoint.split('/'))
   const [modifyDataModalOpenType, setModifyDataModalOpenType] =
     useState<ModifyModalOpenType>(null)
   const [existedData, setExistedData] = useState<T | null>(null)
@@ -33,9 +34,8 @@ function useBooksLibraryCommonState<T>(
     useState(false)
 
   return {
-    data,
-    refreshData,
-    setData,
+    data: dataQuery.data ?? [],
+    loading: dataQuery.isLoading,
     modifyDataModalOpenType,
     setModifyDataModalOpenType,
     existedData,
@@ -46,9 +46,8 @@ function useBooksLibraryCommonState<T>(
 }
 
 interface IBooksLibraryCommon<T> {
-  data: T[] | 'loading' | 'error'
-  refreshData: () => void
-  setData: React.Dispatch<React.SetStateAction<T[] | 'loading' | 'error'>>
+  data: T[]
+  loading: boolean
   modifyDataModalOpenType: 'create' | 'update' | null
   setModifyDataModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
@@ -90,7 +89,6 @@ interface IBooksLibraryData {
       nameKey: string
       setOpen: React.Dispatch<React.SetStateAction<boolean>>
       setData: React.Dispatch<React.SetStateAction<any>>
-      updateDataList: () => void
     }>
   }
 }
@@ -100,6 +98,7 @@ export const BooksLibraryContext = createContext<IBooksLibraryData | undefined>(
 )
 
 export default function BooksLibraryProvider() {
+  const queryClient = useQueryClient()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [libgenModalOpen, setLibgenModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -126,8 +125,7 @@ export default function BooksLibraryProvider() {
     itemName: key,
     nameKey: 'name',
     setOpen: state.setDeleteDataConfirmationOpen,
-    setData: state.setExistedData,
-    updateDataList: state.refreshData
+    setData: state.setExistedData
   }))
 
   const lastProcessesLength = useRef<number | null>(null)
@@ -176,8 +174,12 @@ export default function BooksLibraryProvider() {
         lastProcessesLength !== null &&
         lastProcessesLength.current !== Object.keys(processes).length
       ) {
-        entriesState.refreshData()
-        fileTypesState.refreshData()
+        queryClient.invalidateQueries({
+          queryKey: ['books-library', 'entries']
+        })
+        queryClient.invalidateQueries({
+          queryKey: ['books-library', 'file-types']
+        })
       }
       lastProcessesLength.current = Object.keys(processes).length
       setIsFirstTime(false)

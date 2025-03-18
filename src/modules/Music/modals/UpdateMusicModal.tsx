@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -8,13 +9,15 @@ import { useMusicContext } from '@modules/Music/providers/MusicProvider'
 
 import fetchAPI from '@utils/fetchAPI'
 
+import { IMusicEntry } from '../interfaces/music_interfaces'
+
 function ModifyMusicModal() {
+  const queryClient = useQueryClient()
   const { t } = useTranslation('modules.music')
   const {
     isModifyMusicModalOpen: isOpen,
     setIsModifyMusicModalOpen: setOpen,
-    existedData: targetMusic,
-    setMusics
+    existedData: targetMusic
   } = useMusicContext()
   const [musicName, setMusicName] = useState('')
   const [musicAuthor, setMusicAuthor] = useState('')
@@ -41,10 +44,8 @@ function ModifyMusicModal() {
       })
 
       setOpen(false)
-      setMusics(prev => {
-        if (typeof prev === 'string') {
-          return prev
-        }
+      queryClient.setQueryData<IMusicEntry[]>(['music', 'entries'], prev => {
+        if (!prev) return prev
 
         return prev.map(music => {
           if (music.id === targetMusic?.id) {

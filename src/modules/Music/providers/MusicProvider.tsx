@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/pseudo-random */
 import { useAuth } from '@providers/AuthProvider'
+import { useQueryClient } from '@tanstack/react-query'
 import { parse as parseCookie } from 'cookie'
 import {
   type ReactNode,
@@ -13,9 +14,7 @@ import { toast } from 'react-toastify'
 
 import { type IMusicEntry } from '@modules/Music/interfaces/music_interfaces'
 
-import { type Loadable } from '@interfaces/common'
-
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 interface IMusicContext {
   // Audio related
@@ -35,9 +34,7 @@ interface IMusicContext {
   nextMusic: () => void
 
   // Music list related
-  musics: Loadable<IMusicEntry[]>
-  refreshMusics: () => void
-  setMusics: React.Dispatch<React.SetStateAction<Loadable<IMusicEntry[]>>>
+  musics: IMusicEntry[]
   toggleFavourite: (music: IMusicEntry) => Promise<void>
 
   // Search related
@@ -72,12 +69,14 @@ interface IMusicContext {
 const MusicContext = createContext<IMusicContext | undefined>(undefined)
 
 export function MusicProvider({ children }: { children: ReactNode }) {
+  const queryClient = useQueryClient()
   const { auth } = useAuth()
   const [audio] = useState(new Audio())
   const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(false)
-  const [musics, refreshMusics, setMusics] = useFetch<IMusicEntry[]>(
+  const musicsQuery = useAPIQuery<IMusicEntry[]>(
     'music/entries',
+    ['music', 'entries'],
     auth
   )
   const [isYoutubeDownloaderOpen, setIsYoutubeDownloaderOpen] = useState(false)
@@ -105,20 +104,15 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   }
 
   async function toggleFavourite(targetMusic: IMusicEntry) {
-    const toggleFavouriteInMusics = (
-      prevMusics: Loadable<IMusicEntry[]>
-    ): Loadable<IMusicEntry[]> => {
-      if (typeof prevMusics !== 'string') {
-        return prevMusics.map(music =>
+    queryClient.setQueryData<IMusicEntry[]>(
+      ['music', 'entries'],
+      prevMusics =>
+        prevMusics?.map(music =>
           music.id === targetMusic.id
             ? { ...music, is_favourite: !music.is_favourite }
             : music
-        )
-      }
-      return prevMusics
-    }
-
-    setMusics(toggleFavouriteInMusics(musics))
+        ) ?? []
+    )
 
     try {
       const response = await fetch(
@@ -150,7 +144,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
           : prevMusic
       )
     } catch (err) {
-      setMusics(toggleFavouriteInMusics(musics))
+      queryClient.invalidateQueries({ queryKey: ['music', 'entries'] })
       toast.error(`Oops! Couldn't add music to favourites! ${err as string}`)
     }
   }
@@ -176,40 +170,39 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   }
 
   const lastMusic = () => {
-    if (typeof musics !== 'string') {
-      const currentIndex = musics.findIndex(
-        music => music.id === currentMusic?.id
-      )
-      if (currentIndex - 1 >= 0) {
-        playMusic(musics[currentIndex - 1]).catch(err => {
-          toast.error(`Failed to play music. Error: ${err}`)
-        })
-      }
+    if (!musicsQuery.data) return
+
+    const currentIndex = musicsQuery.data.findIndex(
+      music => music.id === currentMusic?.id
+    )
+    if (currentIndex - 1 >= 0) {
+      playMusic(musicsQuery.data[currentIndex - 1]).catch(err => {
+        toast.error(`Failed to play music. Error: ${err}`)
+      })
     }
   }
 
   const nextMusic = () => {
-    if (typeof musics !== 'string') {
-      const currentIndex = musics.findIndex(
-        music => music.id === currentMusic?.id
-      )
-      if (currentIndex + 1 < musics.length) {
-        playMusic(musics[currentIndex + 1]).catch(err => {
-          toast.error(`Failed to play music. Error: ${err}`)
-        })
-      } else {
-        stopMusic()
-      }
+    if (!musicsQuery.data) return
+
+    const currentIndex = musicsQuery.data.findIndex(
+      music => music.id === currentMusic?.id
+    )
+    if (currentIndex + 1 < musicsQuery.data.length) {
+      playMusic(musicsQuery.data[currentIndex + 1]).catch(err => {
+        toast.error(`Failed to play music. Error: ${err}`)
+      })
+    } else {
+      stopMusic()
     }
   }
 
   const shuffleMusic = () => {
-    if (typeof musics !== 'string') {
-      const randomIndex = Math.floor(Math.random() * musics.length)
-      playMusic(musics[randomIndex]).catch(err => {
-        toast.error(`Failed to play music. Error: ${err}`)
-      })
-    }
+    if (!musicsQuery.data) return
+    const randomIndex = Math.floor(Math.random() * musicsQuery.data.length)
+    playMusic(musicsQuery.data[randomIndex]).catch(err => {
+      toast.error(`Failed to play music. Error: ${err}`)
+    })
   }
 
   useEffect(() => {
@@ -239,7 +232,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
       audio.removeEventListener('ended', onEnd)
       clearInterval(interval)
     }
-  }, [audio, musics, currentMusic, isShuffle, isRepeat])
+  }, [audio, musicsQuery.data, currentMusic, isShuffle, isRepeat])
 
   const value = useMemo(
     () => ({
@@ -260,9 +253,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
       nextMusic,
 
       // Music list related
-      musics,
-      refreshMusics,
-      setMusics,
+      musics: musicsQuery.data ?? [],
       toggleFavourite,
 
       // Search related
@@ -297,9 +288,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
       currentMusic,
       currentDuration,
       volume,
-      musics,
-      refreshMusics,
-      setMusics,
+      musicsQuery.data,
       searchQuery,
       loading,
       isYoutubeDownloaderOpen,

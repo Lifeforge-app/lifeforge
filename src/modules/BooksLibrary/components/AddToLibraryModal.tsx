@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 
 import { FormModal, type IFieldProps } from '@lifeforge/ui'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import fetchAPI from '@utils/fetchAPI'
 
@@ -23,7 +23,7 @@ function AddToLibraryModal({
     categories: { data: categories },
     languages: { data: languages }
   } = useBooksLibraryContext()
-  const [fetchedData] = useFetch<{
+  const fetchedDataQuery = useAPIQuery<{
     md5: string
     thumbnail: string
     authors: string
@@ -35,7 +35,11 @@ function AddToLibraryModal({
     size: string
     title: string
     year_published: string
-  }>(`books-library/libgen/local-library-data/${md5}`, md5 !== null)
+  }>(
+    `books-library/libgen/local-library-data/${md5}`,
+    ['books-library', 'libgen', 'local-library-data', md5],
+    md5 !== null
+  )
 
   const [data, setData] = useState<IBooksLibraryFormSate>({
     authors: '',
@@ -189,18 +193,18 @@ function AddToLibraryModal({
   }
 
   useEffect(() => {
-    if (typeof fetchedData !== 'string' && typeof languages !== 'string') {
+    if (fetchedDataQuery.data && typeof languages !== 'string') {
       setData({
-        ...fetchedData,
+        ...fetchedDataQuery.data,
         languages: languages
           .filter(lang =>
-            fetchedData.languages.some(name => name === lang.name)
+            fetchedDataQuery.data.languages.some(name => name === lang.name)
           )
           .map(lang => lang.id),
         category: ''
       })
     }
-  }, [fetchedData, languages])
+  }, [fetchedDataQuery.data, languages])
 
   return (
     <FormModal
@@ -208,7 +212,7 @@ function AddToLibraryModal({
       fields={FIELDS}
       icon="majesticons:book-plus-line"
       isOpen={isOpen}
-      loading={typeof fetchedData === 'string'}
+      loading={fetchedDataQuery.isLoading}
       namespace="modules.booksLibrary"
       setData={setData}
       submitButtonProps={{
