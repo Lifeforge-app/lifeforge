@@ -39,7 +39,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Dashboard',
         icon: <IconDashboard />,
         routes: {
-          dashboard: lazy(() => import('@modules/Dashboard'))
+          dashboard: lazy(() => import('../lib/Dashboard'))
         },
         togglable: false
       }
@@ -52,11 +52,11 @@ export const ROUTES: RouteCategory[] = [
         name: 'Projects (M)',
         icon: <IconClipboard />,
         provider: lazy(
-          () => import('@modules/ProjectsM/providers/ProjectsMProvider')
+          () => import('@apps/ProjectsM/providers/ProjectsMProvider')
         ),
         routes: {
-          '': lazy(() => import('@modules/ProjectsM')),
-          ':id': lazy(() => import('@modules/ProjectsM/pages/Kanban'))
+          '': lazy(() => import('@apps/ProjectsM')),
+          ':id': lazy(() => import('@apps/ProjectsM/pages/Kanban'))
         },
         togglable: true
       },
@@ -64,10 +64,8 @@ export const ROUTES: RouteCategory[] = [
         name: 'Idea Box',
         icon: <IconBulb />,
         routes: {
-          'idea-box': lazy(() => import('@modules/IdeaBox')),
-          'idea-box/:id/*': lazy(
-            () => import('@modules/IdeaBox/components/Ideas')
-          )
+          'idea-box': lazy(() => import('@apps/IdeaBox')),
+          'idea-box/:id/*': lazy(() => import('@apps/IdeaBox/components/Ideas'))
         },
         togglable: true
       },
@@ -75,7 +73,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Todo List',
         icon: <IconListCheck />,
         routes: {
-          'todo-list': lazy(() => import('@modules/TodoList'))
+          'todo-list': lazy(() => import('@apps/TodoList'))
         },
         togglable: true,
         hasAI: true,
@@ -85,7 +83,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Calendar',
         icon: <IconCalendar />,
         routes: {
-          calendar: lazy(() => import('@modules/Calendar'))
+          calendar: lazy(() => import('@apps/Calendar'))
         },
         togglable: true
       },
@@ -93,7 +91,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Code Time',
         icon: <IconCode />,
         routes: {
-          'code-time': lazy(() => import('@modules/CodeTime'))
+          'code-time': lazy(() => import('@apps/CodeTime'))
         },
         togglable: true
       }
@@ -111,7 +109,7 @@ export const ROUTES: RouteCategory[] = [
         icon: <IconHistory />,
         hasAI: true,
         routes: {
-          'moment-vault': lazy(() => import('@modules/MomentVault'))
+          'moment-vault': lazy(() => import('@apps/MomentVault'))
         },
         togglable: true,
         requiredAPIKeys: ['openai']
@@ -120,7 +118,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Achievements',
         icon: <IconAward />,
         routes: {
-          achievements: lazy(() => import('@modules/Achievements'))
+          achievements: lazy(() => import('@apps/Achievements'))
         },
         togglable: true
       },
@@ -142,10 +140,10 @@ export const ROUTES: RouteCategory[] = [
         routes: {
           'virtual-wardrobe': () => <Navigate to="/virtual-wardrobe/clothes" />,
           'virtual-wardrobe/clothes': lazy(
-            () => import('@modules/VirtualWardrobe/pages/Clothes')
+            () => import('@apps/VirtualWardrobe/pages/Clothes')
           ),
           'virtual-wardrobe/outfits': lazy(
-            () => import('@modules/VirtualWardrobe/pages/Outfits')
+            () => import('@apps/VirtualWardrobe/pages/Outfits')
           )
         },
         togglable: true
@@ -154,7 +152,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Movies',
         icon: <IconMovie />,
         routes: {
-          movies: lazy(() => import('@modules/Movies'))
+          movies: lazy(() => import('@apps/Movies'))
         },
         togglable: true,
         requiredAPIKeys: ['tmdb']
@@ -167,9 +165,7 @@ export const ROUTES: RouteCategory[] = [
       {
         name: 'Wallet',
         icon: <IconCurrencyDollar />,
-        provider: lazy(
-          () => import('@modules/Wallet/providers/WalletProvider')
-        ),
+        provider: lazy(() => import('@apps/Wallet/providers/WalletProvider')),
         hasAI: true,
         subsection: [
           { name: 'Dashboard', icon: <IconDashboard />, path: '' },
@@ -187,13 +183,11 @@ export const ROUTES: RouteCategory[] = [
           }
         ],
         routes: {
-          '': lazy(() => import('@modules/Wallet/pages/Dashboard')),
-          transactions: lazy(
-            () => import('@modules/Wallet/pages/Transactions')
-          ),
-          assets: lazy(() => import('@modules/Wallet/pages/Assets')),
-          ledgers: lazy(() => import('@modules/Wallet/pages/Ledgers')),
-          statements: lazy(() => import('@modules/Wallet/pages/Statements'))
+          '': lazy(() => import('@apps/Wallet/pages/Dashboard')),
+          transactions: lazy(() => import('@apps/Wallet/pages/Transactions')),
+          assets: lazy(() => import('@apps/Wallet/pages/Assets')),
+          ledgers: lazy(() => import('@apps/Wallet/pages/Ledgers')),
+          statements: lazy(() => import('@apps/Wallet/pages/Statements'))
         },
         togglable: true
       },
@@ -201,9 +195,9 @@ export const ROUTES: RouteCategory[] = [
         name: 'Wishlist',
         icon: <IconHeart />,
         routes: {
-          wishlist: lazy(() => import('@modules/Wishlist')),
+          wishlist: lazy(() => import('@apps/Wishlist')),
           'wishlist/:id': lazy(
-            () => import('@modules/Wishlist/pages/WishlistEntries')
+            () => import('@apps/Wishlist/pages/WishlistEntries')
           )
         },
         togglable: true,
@@ -218,10 +212,10 @@ export const ROUTES: RouteCategory[] = [
         name: 'Books Library',
         icon: <IconBooks />,
         provider: lazy(
-          () => import('@modules/BooksLibrary/providers/BooksLibraryProvider')
+          () => import('@apps/BooksLibrary/providers/BooksLibraryProvider')
         ),
         routes: {
-          '': lazy(() => import('@modules/BooksLibrary'))
+          '': lazy(() => import('@apps/BooksLibrary'))
         },
         togglable: true
       },
@@ -229,7 +223,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Music',
         icon: <IconMusic />,
         routes: {
-          music: lazy(() => import('@modules/Music'))
+          music: lazy(() => import('@apps/Music'))
         },
         togglable: true
       },
@@ -237,7 +231,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Guitar Tabs',
         icon: 'mingcute:guitar-line',
         routes: {
-          'guitar-tabs': lazy(() => import('@modules/GuitarTabs'))
+          'guitar-tabs': lazy(() => import('@apps/GuitarTabs'))
         },
         togglable: true
       },
@@ -245,7 +239,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Youtube Videos',
         icon: 'tabler:brand-youtube',
         routes: {
-          'youtube-videos': lazy(() => import('@modules/YoutubeVideos'))
+          'youtube-videos': lazy(() => import('@apps/YoutubeVideos'))
         },
         togglable: true
       }
@@ -258,10 +252,10 @@ export const ROUTES: RouteCategory[] = [
         name: 'Passwords',
         icon: <IconKey />,
         provider: lazy(
-          () => import('@modules/Passwords/providers/PasswordsProvider')
+          () => import('@apps/Passwords/providers/PasswordsProvider')
         ),
         routes: {
-          '': lazy(() => import('@modules/Passwords'))
+          '': lazy(() => import('@apps/Passwords'))
         },
         togglable: true
       },
@@ -269,7 +263,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'API Keys',
         icon: <IconPassword />,
         routes: {
-          'api-keys': lazy(() => import('@modules/APIKeys'))
+          'api-keys': lazy(() => import('../lib/APIKeys'))
         },
         togglable: false
       }
@@ -282,7 +276,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Railway Map',
         icon: 'uil:subway',
         routes: {
-          'railway-map': lazy(() => import('@modules/RailwayMap'))
+          'railway-map': lazy(() => import('@apps/RailwayMap'))
         },
         togglable: true
       }
@@ -295,7 +289,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Sudoku',
         icon: 'uil:table',
         routes: {
-          sudoku: lazy(() => import('@modules/Sudoku'))
+          sudoku: lazy(() => import('@apps/Sudoku'))
         },
         togglable: true
       }
@@ -308,7 +302,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Personalization',
         icon: <IconPalette />,
         routes: {
-          personalization: lazy(() => import('@modules/Personalization'))
+          personalization: lazy(() => import('../lib/Personalization'))
         },
         togglable: false,
         requiredAPIKeys: ['pixabay']
@@ -317,7 +311,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Modules',
         icon: <IconPlug />,
         routes: {
-          modules: lazy(() => import('@modules/Modules'))
+          modules: lazy(() => import('@apps/Modules'))
         },
         togglable: false
       },
@@ -325,7 +319,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Server Status',
         icon: <IconServer />,
         routes: {
-          'server-status': lazy(() => import('@modules/ServerStatus'))
+          'server-status': lazy(() => import('../lib/ServerStatus'))
         },
         togglable: false
       }
@@ -339,7 +333,7 @@ export const ROUTES: RouteCategory[] = [
         icon: 'mingcute:translate-line',
         routes: {
           'localization-manager': lazy(
-            () => import('@modules/LocalizationManager')
+            () => import('../lib/LocalizationManager')
           )
         },
         togglable: false
@@ -365,7 +359,7 @@ export const ROUTES: RouteCategory[] = [
         name: 'Account Settings',
         icon: <IconUserCog />,
         routes: {
-          account: lazy(() => import('@modules/Account'))
+          account: lazy(() => import('../lib/Account'))
         },
         togglable: false,
         hidden: true
