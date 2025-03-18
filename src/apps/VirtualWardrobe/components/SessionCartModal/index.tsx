@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import {
   APIFallbackComponent,
   Button,
@@ -11,8 +12,6 @@ import {
 } from '@lifeforge/ui'
 
 import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import EntryItem from '../../pages/Clothes/components/EntryItem'
 import CheckoutConfirmationModal from './components/CheckoutConfirmationModal'

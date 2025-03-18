@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { DeleteConfirmationModal, FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
 
@@ -9,8 +10,6 @@ import {
   IMovieEntry,
   IMovieTicketFormState
 } from '@apps/Movies/interfaces/movies_interfaces'
-
-import fetchAPI from '@utils/fetchAPI'
 
 function ModifyTicketModal({
   openType,

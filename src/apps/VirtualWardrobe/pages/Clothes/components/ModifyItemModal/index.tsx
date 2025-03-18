@@ -2,9 +2,8 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { ImagePickerModal, ModalHeader, ModalWrapper } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import {
   type IVirtualWardrobeEntry,

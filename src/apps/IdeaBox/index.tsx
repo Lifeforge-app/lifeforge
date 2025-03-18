@@ -3,6 +3,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { fetchAPI } from '@lifeforge/core'
 import {
   DeleteConfirmationModal,
   EmptyStateScreen,
@@ -11,8 +12,6 @@ import {
   QueryWrapper,
   SearchInput
 } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import Containers from './components/Containers'
 import ModifyContainerModal from './components/Containers/components/ModifyContainerModal'

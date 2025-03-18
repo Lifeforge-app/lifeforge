@@ -1,6 +1,5 @@
+import { forceDown } from '@lifeforge/core'
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
-
-import forceDown from '@utils/forceDown'
 
 import { type IGuitarTabsEntry } from '../interfaces/guitar_tabs_interfaces'
 

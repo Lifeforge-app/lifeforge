@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from '@lifeforge/core'
 
 import { useAuth } from '../AuthProvider'
 import { BG_THEME } from './constants/bg_theme'

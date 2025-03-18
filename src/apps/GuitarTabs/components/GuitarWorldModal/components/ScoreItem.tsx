@@ -3,9 +3,8 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { Button } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { type IGuitarTabsGuitarWorldScoreEntry } from '../../../interfaces/guitar_tabs_interfaces'
 

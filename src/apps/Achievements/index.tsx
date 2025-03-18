@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { fetchAPI } from '@lifeforge/core'
 import {
   Button,
   DeleteConfirmationModal,
@@ -11,8 +12,6 @@ import {
   ModuleWrapper,
   QueryWrapper
 } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import ModifyAchievementModal from './ModifyAchievementModal'
 import DifficultySelector from './components/DifficultySelector'

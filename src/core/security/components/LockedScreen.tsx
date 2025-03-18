@@ -3,9 +3,8 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { Button, TextInput } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { encrypt } from '../utils/encryption'
 

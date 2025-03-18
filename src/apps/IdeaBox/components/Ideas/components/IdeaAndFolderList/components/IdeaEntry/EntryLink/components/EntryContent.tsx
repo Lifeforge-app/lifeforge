@@ -2,9 +2,9 @@ import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { memo } from 'react'
 
-import useComponentBg from '@hooks/useComponentBg'
+import { fetchAPI } from '@lifeforge/core'
 
-import fetchAPI from '@utils/fetchAPI'
+import useComponentBg from '@hooks/useComponentBg'
 
 import { type IIdeaBoxEntry } from '../../../../../../../../interfaces/ideabox_interfaces'
 

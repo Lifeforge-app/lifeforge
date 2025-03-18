@@ -1,7 +1,7 @@
 /* eslint-disable @tanstack/query/exhaustive-deps */
 import { useQuery } from '@tanstack/react-query'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from '@lifeforge/core'
 
 function useAPIQuery<T>(endpoint: string, key: unknown[], enabled = true) {
   return useQuery<T>({

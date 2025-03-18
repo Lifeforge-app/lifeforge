@@ -9,13 +9,12 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
 
+import { fetchAPI } from '@lifeforge/core'
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
 
 import useComponentBg from '@hooks/useComponentBg'
-
-import fetchAPI from '@utils/fetchAPI'
 
 function AudioEntry({
   entriesQueryKey,

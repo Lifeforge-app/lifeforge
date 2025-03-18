@@ -4,11 +4,10 @@ import { parse as parseCookie } from 'cookie'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { IntervalManager } from '@lifeforge/core'
 import { Button, MenuItem } from '@lifeforge/ui'
 
 import { useMusicContext } from '@apps/Music/providers/MusicProvider'
-
-import IntervalManager from '@utils/intervalManager'
 
 const intervalManager = IntervalManager.getInstance()
 

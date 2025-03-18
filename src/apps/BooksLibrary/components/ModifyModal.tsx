@@ -4,10 +4,9 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 

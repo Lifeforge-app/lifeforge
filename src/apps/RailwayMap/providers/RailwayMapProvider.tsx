@@ -1,8 +1,4 @@
 import {
-  IRailwayMapLine,
-  IRailwayMapStation
-} from '@apps/RailwayMap/interfaces/railway_map_interfaces'
-import {
   createContext,
   useContext,
   useEffect,
@@ -12,9 +8,14 @@ import {
 } from 'react'
 import { toast } from 'react-toastify'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { fetchAPI } from '@lifeforge/core'
 
-import fetchAPI from '@utils/fetchAPI'
+import {
+  IRailwayMapLine,
+  IRailwayMapStation
+} from '@apps/RailwayMap/interfaces/railway_map_interfaces'
+
+import useAPIQuery from '@hooks/useAPIQuery'
 
 interface IRailwayMapData {
   viewType: 'route' | 'earth' | 'list'

@@ -2,11 +2,10 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { EmptyStateScreen, QueryWrapper } from '@lifeforge/ui'
 
 import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { IPasswordEntry } from '../interfaces/password_interfaces'
 import PasswordEntryItem from './PasswordEntryItem'

@@ -2,11 +2,10 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { type IIdeaBoxEntry } from '../../../../../../../interfaces/ideabox_interfaces'
 

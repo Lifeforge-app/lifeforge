@@ -4,11 +4,10 @@ import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useState } from 'react'
 
+import { fetchAPI } from '@lifeforge/core'
 import { Button, HamburgerMenu } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { type IBooksLibraryEntry } from '../../../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../../../providers/BooksLibraryProvider'

@@ -4,6 +4,7 @@ import moment from 'moment'
 import { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import {
   Button,
   DateInput,
@@ -11,8 +12,6 @@ import {
   ModalWrapper,
   TextInput
 } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 function ModifyModal({
   type,

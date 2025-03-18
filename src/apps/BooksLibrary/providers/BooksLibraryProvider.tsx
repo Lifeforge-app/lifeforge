@@ -10,9 +10,9 @@ import {
 import { Outlet } from 'react-router'
 import { toast } from 'react-toastify'
 
-import useAPIQuery from '@hooks/useAPIQuery'
+import { fetchAPI } from '@lifeforge/core'
 
-import fetchAPI from '@utils/fetchAPI'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import {
   type IBooksLibraryCategory,

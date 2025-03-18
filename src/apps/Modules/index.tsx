@@ -3,9 +3,8 @@ import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { LoadingScreen, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import ROUTES from '../../core/routes/Routes'
 import ModuleItem from './ModuleItem'

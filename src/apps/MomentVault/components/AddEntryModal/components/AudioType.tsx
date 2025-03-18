@@ -7,11 +7,10 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import WaveSurfer from 'wavesurfer.js'
 
+import { fetchAPI } from '@lifeforge/core'
 import { Button } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
-
-import fetchAPI from '@utils/fetchAPI'
 
 function AudioType({
   onSuccess,

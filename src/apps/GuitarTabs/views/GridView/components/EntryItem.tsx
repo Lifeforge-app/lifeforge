@@ -3,11 +3,10 @@ import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import DownloadMenu from '../../../components/DownloadMenu'
 import { IGuitarTabsEntry } from '../../../interfaces/guitar_tabs_interfaces'

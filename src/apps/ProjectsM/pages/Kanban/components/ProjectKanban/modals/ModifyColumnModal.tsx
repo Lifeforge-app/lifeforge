@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import {
   Button,
   ColorInput,
@@ -15,8 +16,6 @@ import {
 } from '@lifeforge/ui'
 
 import { type IProjectsMKanbanColumn } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
-
-import fetchAPI from '@utils/fetchAPI'
 
 function ModifyColumnModal({
   openType,

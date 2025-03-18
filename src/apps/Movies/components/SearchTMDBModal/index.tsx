@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import {
   Button,
   EmptyStateScreen,
@@ -15,8 +16,6 @@ import {
   IMovieEntry,
   IMovieSearchResults
 } from '@apps/Movies/interfaces/movies_interfaces'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import TMDBLogo from './components/TMDBLogo.svg'
 import TMDBResultsList from './components/TMDBResultsList'

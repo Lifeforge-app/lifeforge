@@ -5,9 +5,9 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { ITodoSubtask } from '@apps/TodoList/interfaces/todo_list_interfaces'
+import { fetchAPI } from '@lifeforge/core'
 
-import APIRequestV2 from '@utils/fetchAPI'
+import { ITodoSubtask } from '@apps/TodoList/interfaces/todo_list_interfaces'
 
 import SpicinessSelector from './SpicinessSelector'
 
@@ -38,17 +38,14 @@ function SubtaskBoxHeader({
     setAIGenerateLoading(true)
 
     try {
-      const data = await APIRequestV2<string[]>(
-        'todo-list/subtasks/ai-generate',
-        {
-          method: 'POST',
-          body: {
-            summary,
-            notes,
-            level: spiciness
-          }
+      const data = await fetchAPI<string[]>('todo-list/subtasks/ai-generate', {
+        method: 'POST',
+        body: {
+          summary,
+          notes,
+          level: spiciness
         }
-      )
+      })
 
       setAIGenerateLoading(false)
       queryClient.setQueryData<ITodoSubtask[]>(

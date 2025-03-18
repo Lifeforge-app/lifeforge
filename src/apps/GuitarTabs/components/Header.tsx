@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { type Id, toast } from 'react-toastify'
 
+import { IntervalManager, fetchAPI } from '@lifeforge/core'
 import {
   Button,
   FAB,
@@ -15,9 +16,6 @@ import {
   ModuleHeader,
   SidebarDivider
 } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
-import IntervalManager from '@utils/intervalManager'
 
 const intervalManager = IntervalManager.getInstance()
 

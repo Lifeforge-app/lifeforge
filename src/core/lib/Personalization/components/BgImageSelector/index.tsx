@@ -3,14 +3,13 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import {
   Button,
   ConfigColumn,
   DeleteConfirmationModal,
   ImagePickerModal
 } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import AdjustBgImageModal from './components/AdjustBgImageModal'
 

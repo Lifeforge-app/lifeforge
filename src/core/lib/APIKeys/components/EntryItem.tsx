@@ -4,9 +4,8 @@ import moment from 'moment'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { Button, ConfigColumn, HamburgerMenu, MenuItem } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { decrypt, encrypt } from '../../../security/utils/encryption'
 import { type IAPIKeyEntry } from '../interfaces/api_keys_interfaces'

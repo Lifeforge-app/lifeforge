@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import {
   Button,
   ColorInput,
@@ -15,8 +16,6 @@ import {
 } from '@lifeforge/ui'
 
 import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { encrypt } from '../../../core/security/utils/encryption'
 import {

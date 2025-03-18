@@ -3,9 +3,8 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { Button, MenuItem, ModuleHeader, SearchInput } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { type IYoutubeVideoInfo } from '../interfaces/youtube_video_storage_interfaces'
 import DownloadProcessModal from './DownloadProcessModal'

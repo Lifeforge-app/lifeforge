@@ -1,12 +1,12 @@
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 
+import { fetchAPI } from '@lifeforge/core'
 import { Checkbox } from '@lifeforge/ui'
 
-import useComponentBg from '@hooks/useComponentBg'
+import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
-import fetchAPI from '@utils/fetchAPI'
+import useComponentBg from '@hooks/useComponentBg'
 
 import { type ITodoListEntry } from '../../../interfaces/todo_list_interfaces'
 import SubtaskItem from './components/SubtaskItem'

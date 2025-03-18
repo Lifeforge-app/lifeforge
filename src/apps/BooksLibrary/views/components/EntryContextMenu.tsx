@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
+import { forceDown } from '@lifeforge/core'
 import { MenuItem } from '@lifeforge/ui'
-
-import forceDown from '@utils/forceDown'
 
 import { type IBooksLibraryEntry } from '../../interfaces/books_library_interfaces'
 import { useBooksLibraryContext } from '../../providers/BooksLibraryProvider'

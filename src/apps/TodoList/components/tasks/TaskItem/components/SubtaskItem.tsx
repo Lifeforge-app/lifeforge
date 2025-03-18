@@ -1,10 +1,10 @@
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { Checkbox } from '@lifeforge/ui'
 
-import fetchAPI from '@utils/fetchAPI'
+import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import type {
   ITodoListEntry,

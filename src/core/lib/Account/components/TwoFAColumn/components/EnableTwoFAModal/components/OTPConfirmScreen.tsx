@@ -3,10 +3,10 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
+
 import OTPInputBox from '@security/components/OTPScreen/components/OTPInputBox'
 import { encrypt } from '@security/utils/encryption'
-
-import fetchAPI from '@utils/fetchAPI'
 
 function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
   const { t } = useTranslation('core.accountSettings')

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from '@lifeforge/core'
 
 function useFontFamily(fontFamily: string) {
   async function updateFontFamily() {

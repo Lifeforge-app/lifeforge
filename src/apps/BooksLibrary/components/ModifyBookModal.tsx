@@ -2,10 +2,9 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 

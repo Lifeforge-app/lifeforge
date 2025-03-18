@@ -5,7 +5,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import { useSearchParams } from 'react-router'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from '@lifeforge/core'
 
 import {
   type ICalendarCategory,

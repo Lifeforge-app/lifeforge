@@ -5,13 +5,12 @@ import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { LoadingScreen } from '@lifeforge/ui'
 
 import { decrypt } from '@security/utils/encryption'
 
 import useComponentBg from '@hooks/useComponentBg'
-
-import fetchAPI from '@utils/fetchAPI'
 
 function QRCodeDisplay() {
   const { componentBgLighter } = useComponentBg()

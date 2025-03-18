@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { fetchAPI } from '@lifeforge/core'
 import {
   Button,
   DeleteConfirmationModal,
@@ -17,8 +18,6 @@ import LockedScreen from '@security/components/LockedScreen'
 import OTPScreen from '@security/components/OTPScreen'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { encrypt } from '../../security/utils/encryption'
 import EntryItem from './components/EntryItem'

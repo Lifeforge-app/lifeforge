@@ -3,11 +3,10 @@ import { parse as parseCookie } from 'cookie'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { IntervalManager } from '@lifeforge/core'
 import { QueryWrapper, TextInput } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-
-import IntervalManager from '@utils/intervalManager'
 
 import {
   type IYoutubePlaylistEntry,

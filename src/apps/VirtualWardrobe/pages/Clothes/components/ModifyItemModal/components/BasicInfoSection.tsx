@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import {
   Button,
   ListboxOrComboboxInput,
@@ -11,8 +12,6 @@ import {
 
 import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
 import { IVirtualWardrobeFormState } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
-
-import fetchAPI from '@utils/fetchAPI'
 
 function BasicInfoSection({
   canVision,

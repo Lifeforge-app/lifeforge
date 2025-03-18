@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { decrypt, encrypt } from '../../../security/utils/encryption'
 import {

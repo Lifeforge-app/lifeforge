@@ -3,13 +3,12 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { Button, ModalHeader, ModalWrapper } from '@lifeforge/ui'
 
 import OTPScreen from '@security/components/OTPScreen'
 
 import useComponentBg from '@hooks/useComponentBg'
-
-import fetchAPI from '@utils/fetchAPI'
 
 function DisableTwoFAModal({
   isOpen,

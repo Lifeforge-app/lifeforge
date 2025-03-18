@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import {
   Button,
   ImageAndFileInput,
@@ -11,8 +12,6 @@ import {
   ModalWrapper,
   Switch
 } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import {
   IWalletReceiptScanResult,

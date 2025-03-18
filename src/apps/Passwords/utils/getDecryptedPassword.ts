@@ -1,7 +1,7 @@
 import { parse as parseCookie } from 'cookie'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from '@lifeforge/core'
 
 import { decrypt, encrypt } from '../../../core/security/utils/encryption'
 

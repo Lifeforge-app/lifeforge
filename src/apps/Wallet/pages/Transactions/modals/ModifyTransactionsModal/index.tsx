@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import {
   Button,
   CurrencyInput,
@@ -16,8 +17,6 @@ import {
   ModalWrapper,
   TextInput
 } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { type IWalletTransaction } from '../../../../interfaces/wallet_interfaces'
 import AssetsFromToSelector from './components/AssetsFromToSelector'

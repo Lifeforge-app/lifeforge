@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import {
   Button,
   ListboxOrComboboxInput,
@@ -11,8 +12,6 @@ import {
   ModalWrapper,
   TextInput
 } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { type IWishlistEntry } from '../../../interfaces/wishlist_interfaces'
 

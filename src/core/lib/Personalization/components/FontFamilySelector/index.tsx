@@ -3,11 +3,10 @@ import { usePersonalization } from '@providers/PersonalizationProvider'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { fetchAPI } from '@lifeforge/core'
 import { ConfigColumn } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import FontFamilyList from './components/FontFamilyList'
 

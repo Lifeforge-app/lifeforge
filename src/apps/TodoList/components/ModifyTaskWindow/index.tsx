@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import {
   Button,
   DateInput,
@@ -19,8 +20,6 @@ import {
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import {
   ITodoListEntry,

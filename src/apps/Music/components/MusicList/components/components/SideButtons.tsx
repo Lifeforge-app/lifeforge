@@ -1,10 +1,10 @@
-import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
+import { forceDown } from '@lifeforge/core'
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import forceDown from '@utils/forceDown'
+import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
 import { IMusicEntry } from '../../../../interfaces/music_interfaces'
 

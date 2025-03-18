@@ -1,16 +1,17 @@
-import {
-  IIdeaBoxContainer,
-  type IIdeaBoxEntry,
-  type IIdeaBoxFolder,
-  type IIdeaBoxTag
-} from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import fetchAPI from '@utils/fetchAPI'
+import { fetchAPI } from '@lifeforge/core'
+
+import {
+  IIdeaBoxContainer,
+  type IIdeaBoxEntry,
+  type IIdeaBoxFolder,
+  type IIdeaBoxTag
+} from '@apps/IdeaBox/interfaces/ideabox_interfaces'
 
 interface IIdeaBoxData {
   pathValid: boolean

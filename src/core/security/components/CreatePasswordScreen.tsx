@@ -4,9 +4,8 @@ import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { fetchAPI } from '@lifeforge/core'
 import { Button, ModalWrapper, TextInput } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 function CreatePasswordScreen({ endpoint }: { endpoint: string }) {
   const { t } = useTranslation('common.vault')
