@@ -168,27 +168,6 @@ export const ROUTES: RouteCategory[] = [
     ]
   },
   {
-    title: 'Health & Fitness',
-    items: [
-      {
-        name: 'Workout',
-        icon: 'tabler:barbell',
-        routes: {
-          workout: lazy(() => import('@modules/Workout'))
-        },
-        togglable: true
-      },
-      {
-        name: 'Nutritions Tracker',
-        icon: 'tabler:leaf',
-        routes: {
-          'nutritions-tracker': lazy(() => import('@modules/NutritionsTracker'))
-        },
-        togglable: true
-      }
-    ]
-  },
-  {
     title: 'Finance',
     items: [
       {
@@ -227,14 +206,6 @@ export const ROUTES: RouteCategory[] = [
         },
         togglable: true,
         hasAI: true
-      },
-      {
-        name: 'Budgets',
-        icon: 'tabler:calculator',
-        routes: {
-          budgets: lazy(() => import('@modules/Budget'))
-        },
-        togglable: true
       }
     ]
   },
@@ -295,14 +266,6 @@ export const ROUTES: RouteCategory[] = [
           'youtube-videos': lazy(() => import('@modules/YoutubeVideos'))
         },
         togglable: true
-      },
-      {
-        name: '3D Models',
-        icon: 'tabler:cube',
-        routes: {
-          '3d-models': lazy(() => import('@modules/3dModels'))
-        },
-        togglable: true
       }
     ]
   },
@@ -317,33 +280,12 @@ export const ROUTES: RouteCategory[] = [
         },
         togglable: true,
         requiredAPIKeys: ['gmail']
-      },
-      {
-        name: 'DNS Records',
-        icon: 'tabler:cloud',
-        routes: {
-          'dns-records': lazy(() => import('@modules/DNSRecords'))
-        },
-        togglable: true,
-        requiredAPIKeys: ['cpanel']
-      },
-      {
-        name: 'Blog Posts',
-        icon: 'tabler:file-text',
-        routes: {},
-        togglable: true
       }
     ]
   },
   {
     title: 'Confidential',
     items: [
-      {
-        name: 'Contacts',
-        icon: 'tabler:users',
-        routes: {},
-        togglable: true
-      },
       {
         name: 'Passwords',
         icon: 'tabler:key',
@@ -444,16 +386,6 @@ export const ROUTES: RouteCategory[] = [
         icon: 'uil:table',
         routes: {
           sudoku: lazy(() => import('@modules/Sudoku'))
-        },
-        togglable: true
-      },
-      {
-        name: 'ASCII Text Generator',
-        icon: 'tabler:terminal',
-        routes: {
-          'ascii-text-generator': lazy(
-            () => import('@modules/AsciiTextGenerator')
-          )
         },
         togglable: true
       }
