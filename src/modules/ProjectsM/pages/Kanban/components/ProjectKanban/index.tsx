@@ -24,7 +24,7 @@ function ProjectKanban() {
   const { componentBg } = useComponentBg()
   const { id } = useParams()
   const [columns, refreshColumns] = useFetch<IProjectsMKanbanColumn[]>(
-    `projects-m/kanban/column/${id}`
+    `projects-m/kanban/columns/${id}`
   )
   const [modifyColumnModalOpenType, setModifyColumnModalOpenType] = useState<
     'create' | 'update' | null
@@ -140,7 +140,7 @@ function ProjectKanban() {
         setOpenType={setModifyCardModalOpenType}
       />
       <DeleteConfirmationModal
-        apiEndpoint="projects-m/kanban/column"
+        apiEndpoint="projects-m/kanban/columns"
         data={existedData}
         isOpen={deleteColumnConfirmationModalOpen}
         itemName="column"

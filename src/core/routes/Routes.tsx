@@ -1,3 +1,40 @@
+import {
+  IconArrowsExchange,
+  IconAward,
+  IconBook,
+  IconBooks,
+  IconBulb,
+  IconCalendar,
+  IconCamera,
+  IconCards,
+  IconClipboard,
+  IconClockBolt,
+  IconCode,
+  IconCube,
+  IconCurrencyDollar,
+  IconDashboard,
+  IconFileText,
+  IconHeart,
+  IconHistory,
+  IconInfoCircle,
+  IconKey,
+  IconLayout,
+  IconLine,
+  IconList,
+  IconListCheck,
+  IconMail,
+  IconMovie,
+  IconMusic,
+  IconNotebook,
+  IconPalette,
+  IconPassword,
+  IconPlane,
+  IconPlug,
+  IconServer,
+  IconShirt,
+  IconUserCog,
+  IconWallet
+} from '@tabler/icons-react'
 import { lazy } from 'react'
 import { Navigate } from 'react-router'
 
@@ -9,7 +46,7 @@ export const ROUTES: RouteCategory[] = [
     items: [
       {
         name: 'Dashboard',
-        icon: 'tabler:dashboard',
+        icon: <IconDashboard />,
         routes: {
           dashboard: lazy(() => import('@modules/Dashboard'))
         },
@@ -22,7 +59,7 @@ export const ROUTES: RouteCategory[] = [
     items: [
       {
         name: 'Projects (M)',
-        icon: 'tabler:clipboard',
+        icon: <IconClipboard />,
         provider: lazy(
           () => import('@modules/ProjectsM/providers/ProjectsMProvider')
         ),
@@ -34,7 +71,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Idea Box',
-        icon: 'tabler:bulb',
+        icon: <IconBulb />,
         routes: {
           'idea-box': lazy(() => import('@modules/IdeaBox')),
           'idea-box/:id/*': lazy(
@@ -45,7 +82,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Todo List',
-        icon: 'tabler:list-check',
+        icon: <IconListCheck />,
         routes: {
           'todo-list': lazy(() => import('@modules/TodoList'))
         },
@@ -55,7 +92,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Calendar',
-        icon: 'tabler:calendar',
+        icon: <IconCalendar />,
         routes: {
           calendar: lazy(() => import('@modules/Calendar'))
         },
@@ -63,7 +100,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Code Time',
-        icon: 'tabler:code',
+        icon: <IconCode />,
         routes: {
           'code-time': lazy(() => import('@modules/CodeTime'))
         },
@@ -76,7 +113,7 @@ export const ROUTES: RouteCategory[] = [
     items: [
       {
         name: 'Pomodoro Timer',
-        icon: 'tabler:clock-bolt',
+        icon: <IconClockBolt />,
         routes: {
           'pomodoro-timer': lazy(() => import('@modules/PomodoroTimer'))
         },
@@ -84,7 +121,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Flashcards',
-        icon: 'tabler:cards',
+        icon: <IconCards />,
         routes: {
           flashcards: lazy(() => import('@modules/Flashcards')),
           'flashcards/:id': lazy(
@@ -95,7 +132,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Notes',
-        icon: 'tabler:notebook',
+        icon: <IconNotebook />,
         routes: {
           notes: lazy(() => import('@modules/Notes')),
           'notes/:workspace': lazy(() => import('@modules/Notes/Workspace')),
@@ -112,7 +149,7 @@ export const ROUTES: RouteCategory[] = [
     items: [
       {
         name: 'Moment Vault',
-        icon: 'tabler:history',
+        icon: <IconHistory />,
         hasAI: true,
         routes: {
           'moment-vault': lazy(() => import('@modules/MomentVault'))
@@ -122,7 +159,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Journal',
-        icon: 'tabler:book',
+        icon: <IconBook />,
         hasAI: true,
         routes: {
           journal: lazy(() => import('@modules/Journal'))
@@ -132,7 +169,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Achievements',
-        icon: 'tabler:award',
+        icon: <IconAward />,
         routes: {
           achievements: lazy(() => import('@modules/Achievements'))
         },
@@ -140,10 +177,18 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Virtual Wardrobe',
-        icon: 'tabler:shirt',
+        icon: <IconShirt />,
         subsection: [
-          ['Virtual Wardrobe Clothes', 'tabler:shirt', 'clothes'],
-          ['Virtual Wardrobe Outfits', 'tabler:layout', 'outfits']
+          {
+            name: 'Virtual Wardrobe Clothes',
+            icon: <IconShirt />,
+            path: 'clothes'
+          },
+          {
+            name: 'Virtual Wardrobe Outfits',
+            icon: <IconLayout />,
+            path: 'outfits'
+          }
         ],
         routes: {
           'virtual-wardrobe': () => <Navigate to="/virtual-wardrobe/clothes" />,
@@ -158,7 +203,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Movies',
-        icon: 'tabler:movie',
+        icon: <IconMovie />,
         routes: {
           movies: lazy(() => import('@modules/Movies'))
         },
@@ -172,17 +217,25 @@ export const ROUTES: RouteCategory[] = [
     items: [
       {
         name: 'Wallet',
-        icon: 'tabler:currency-dollar',
+        icon: <IconCurrencyDollar />,
         provider: lazy(
           () => import('@modules/Wallet/providers/WalletProvider')
         ),
         hasAI: true,
         subsection: [
-          ['Dashboard', 'tabler:dashboard', ''],
-          ['Transactions', 'tabler:arrows-exchange', 'transactions'],
-          ['Assets', 'tabler:wallet', 'assets'],
-          ['Ledgers', 'tabler:book', 'ledgers'],
-          ['Financial Statements', 'tabler:file-text', 'statements']
+          { name: 'Dashboard', icon: <IconDashboard />, path: '' },
+          {
+            name: 'Transactions',
+            icon: <IconArrowsExchange />,
+            path: 'transactions'
+          },
+          { name: 'Assets', icon: <IconWallet />, path: 'assets' },
+          { name: 'Ledgers', icon: <IconBook />, path: 'ledgers' },
+          {
+            name: 'Financial Statements',
+            icon: <IconFileText />,
+            path: 'statements'
+          }
         ],
         routes: {
           '': lazy(() => import('@modules/Wallet/pages/Dashboard')),
@@ -197,7 +250,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Wishlist',
-        icon: 'tabler:heart',
+        icon: <IconHeart />,
         routes: {
           wishlist: lazy(() => import('@modules/Wishlist')),
           'wishlist/:id': lazy(
@@ -214,7 +267,7 @@ export const ROUTES: RouteCategory[] = [
     items: [
       {
         name: 'Books Library',
-        icon: 'tabler:books',
+        icon: <IconBooks />,
         provider: lazy(
           () => import('@modules/BooksLibrary/providers/BooksLibraryProvider')
         ),
@@ -225,7 +278,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Photos',
-        icon: 'tabler:camera',
+        icon: <IconCamera />,
         provider: lazy(
           () => import('@modules/Photos/providers/PhotosProvider')
         ),
@@ -245,7 +298,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Music',
-        icon: 'tabler:music',
+        icon: <IconMusic />,
         routes: {
           music: lazy(() => import('@modules/Music'))
         },
@@ -274,7 +327,7 @@ export const ROUTES: RouteCategory[] = [
     items: [
       {
         name: 'Mail Inbox',
-        icon: 'tabler:mail',
+        icon: <IconMail />,
         routes: {
           'mail-inbox': lazy(() => import('@modules/MailInbox'))
         },
@@ -288,7 +341,7 @@ export const ROUTES: RouteCategory[] = [
     items: [
       {
         name: 'Passwords',
-        icon: 'tabler:key',
+        icon: <IconKey />,
         provider: lazy(
           () => import('@modules/Passwords/providers/PasswordsProvider')
         ),
@@ -299,7 +352,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'API Keys',
-        icon: 'tabler:password',
+        icon: <IconPassword />,
         routes: {
           'api-keys': lazy(() => import('@modules/APIKeys'))
         },
@@ -344,10 +397,18 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Changi Airport',
-        icon: 'tabler:plane',
+        icon: <IconPlane />,
         subsection: [
-          ['Flight Status', 'tabler:list', 'changi-flight-status'],
-          ['Airline Information', 'tabler:line', '']
+          {
+            name: 'Flight Status',
+            icon: <IconList />,
+            path: 'changi-flight-status'
+          },
+          {
+            name: 'Airline Information',
+            icon: <IconLine />,
+            path: ''
+          }
         ],
         routes: {
           'changi-airport': () => (
@@ -361,7 +422,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'CFOP Algorithms',
-        icon: 'tabler:cube',
+        icon: <IconCube />,
         routes: {
           'cfop-algorithms': lazy(() => import('@modules/CFOPAlgorithms')),
           'cfop-algorithms/f2l': lazy(
@@ -396,7 +457,7 @@ export const ROUTES: RouteCategory[] = [
     items: [
       {
         name: 'Personalization',
-        icon: 'tabler:palette',
+        icon: <IconPalette />,
         routes: {
           personalization: lazy(() => import('@modules/Personalization'))
         },
@@ -405,7 +466,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Modules',
-        icon: 'tabler:plug',
+        icon: <IconPlug />,
         routes: {
           modules: lazy(() => import('@modules/Modules'))
         },
@@ -413,7 +474,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Server Status',
-        icon: 'tabler:server',
+        icon: <IconServer />,
         routes: {
           'server-status': lazy(() => import('@modules/ServerStatus'))
         },
@@ -441,7 +502,7 @@ export const ROUTES: RouteCategory[] = [
     items: [
       {
         name: 'Documentation',
-        icon: 'tabler:info-circle',
+        icon: <IconInfoCircle />,
         routes: {
           documentation: () => {
             window.location.href =
@@ -453,7 +514,7 @@ export const ROUTES: RouteCategory[] = [
       },
       {
         name: 'Account Settings',
-        icon: 'tabler:user-cog',
+        icon: <IconUserCog />,
         routes: {
           account: lazy(() => import('@modules/Account'))
         },

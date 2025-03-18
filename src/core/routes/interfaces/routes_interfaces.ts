@@ -1,6 +1,6 @@
 export interface RouteItem {
   name: string
-  icon: string
+  icon: React.ReactElement | string
   provider?:
     | React.LazyExoticComponent<React.ComponentType<any>>
     | (() => React.ReactElement)
@@ -12,7 +12,11 @@ export interface RouteItem {
   togglable: boolean
   hasAI?: boolean
   requiredAPIKeys?: string[]
-  subsection?: [string, string, string][]
+  subsection?: {
+    name: string
+    icon: React.ReactElement | string
+    path: string
+  }[]
   hidden?: boolean
 }
 
