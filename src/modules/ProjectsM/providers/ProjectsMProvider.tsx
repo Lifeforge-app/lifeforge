@@ -9,12 +9,15 @@ import {
   type IProjectsMVisibility
 } from '@modules/ProjectsM/interfaces/projects_m_interfaces'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 type ModifyModalOpenType = 'create' | 'update' | null
 
-function useProjectsMCommonState<T>(endpoint: string): IProjectsMCommon<T> {
-  const [data, refreshData] = useFetch<T[]>(endpoint)
+function useProjectsMCommonState<T>(
+  endpoint: string,
+  key: unknown[]
+): IProjectsMCommon<T> {
+  const dataQuery = useAPIQuery<T[]>(endpoint, key)
   const [modifyDataModalOpenType, setModifyDataModalOpenType] =
     useState<ModifyModalOpenType>(null)
   const [existedData, setExistedData] = useState<T | null>(null)
@@ -22,8 +25,8 @@ function useProjectsMCommonState<T>(endpoint: string): IProjectsMCommon<T> {
     useState(false)
 
   return {
-    data,
-    refreshData,
+    data: dataQuery.data ?? [],
+    loading: dataQuery.isLoading,
     modifyDataModalOpenType,
     setModifyDataModalOpenType,
     existedData,
@@ -34,8 +37,8 @@ function useProjectsMCommonState<T>(endpoint: string): IProjectsMCommon<T> {
 }
 
 interface IProjectsMCommon<T> {
-  data: T[] | 'loading' | 'error'
-  refreshData: () => void
+  data: T[]
+  loading: boolean
   modifyDataModalOpenType: 'create' | 'update' | null
   setModifyDataModalOpenType: React.Dispatch<
     React.SetStateAction<'create' | 'update' | null>
@@ -65,7 +68,6 @@ interface IProjectsMData {
       nameKey: string
       setOpen: React.Dispatch<React.SetStateAction<boolean>>
       setData: React.Dispatch<React.SetStateAction<any>>
-      updateDataList: () => void
     }>
   }
 }
@@ -78,19 +80,25 @@ export default function ProjectsMProvider() {
   const [searchQuery, setSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  const entriesState =
-    useProjectsMCommonState<IProjectsMEntry>('projects-m/entries')
+  const entriesState = useProjectsMCommonState<IProjectsMEntry>(
+    'projects-m/entries',
+    ['projects-m', 'entries']
+  )
   const categoriesState = useProjectsMCommonState<IProjectsMCategory>(
-    'projects-m/categories'
+    'projects-m/categories',
+    ['projects-m', 'categories']
   )
   const statusesState = useProjectsMCommonState<IProjectsMStatus>(
-    'projects-m/statuses'
+    'projects-m/statuses',
+    ['projects-m', 'statuses']
   )
   const visibilitiesState = useProjectsMCommonState<IProjectsMVisibility>(
-    'projects-m/visibilities'
+    'projects-m/visibilities',
+    ['projects-m', 'visibilities']
   )
   const technologiesState = useProjectsMCommonState<IProjectsMTechnology>(
-    'projects-m/technologies'
+    'projects-m/technologies',
+    ['projects-m', 'technologies']
   )
 
   const deleteModalConfigs = Object.entries({
@@ -106,8 +114,7 @@ export default function ProjectsMProvider() {
     itemName: key,
     nameKey: 'name',
     setOpen: state.setDeleteDataConfirmationOpen,
-    setData: state.setExistedData,
-    updateDataList: state.refreshData
+    setData: state.setExistedData
   }))
 
   const value = useMemo(

@@ -72,7 +72,7 @@ function ModifyColumnModal({
 
     try {
       await fetchAPI(
-        `projects-m/kanban/column${
+        `projects-m/kanban/columns${
           openType === 'update' ? `/${existedData?.id}` : `/${id}`
         }`,
         {

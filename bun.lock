@@ -7,7 +7,8 @@
         "@headlessui/react": "^2.2.0",
         "@iconify/react": "^5.2.0",
         "@iconify/types": "^2.0.0",
-        "@lifeforge/ui": "^0.25.12-22",
+        "@lifeforge/ui": "^0.25.12-23",
+        "@tabler/icons-react": "^3.31.0",
         "@tailwindcss/postcss": "^4.0.0",
         "@tailwindcss/vite": "^4.0.7",
         "@tanstack/react-query": "^5.66.11",
@@ -275,7 +276,7 @@
 
     "@kurkle/color": ["@kurkle/color@0.3.4", "", {}, "sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w=="],
 
-    "@lifeforge/ui": ["@lifeforge/ui@0.25.12-22", "", { "dependencies": { "@headlessui/react": "^2.2.0", "@iconify/collections": "^1.0.526", "@iconify/react": "^5.2.0", "@tailwindcss/vite": "^4.0.13", "@tanstack/react-query": "^5.66.11", "@uidotdev/usehooks": "^2.4.1", "@uiw/react-color": "^2.3.4", "@yudiel/react-qr-scanner": "^2.2.1", "clsx": "^2.1.1", "color-sorter": "^6.1.2", "crypto-js": "^4.2.0", "eslint-plugin-react-compiler": "^19.0.0-beta-bafa41b-20250307", "eslint-plugin-sonarjs": "^3.0.2", "file-type-mime": "^0.4.5", "javascript-color-gradient": "^2.5.0", "lodash": "^4.17.21", "pocketbase": "^0.21.5", "react-currency-input-field": "^3.10.0", "react-custom-scrollbars": "^4.2.1", "react-date-picker": "^11.0.0", "react-datetime-picker": "^6.0.1", "react-dropzone": "^14.3.5", "react-i18next": "^15.4.1", "react-medium-image-zoom": "^5.2.13", "react-otp-input": "^3.1.1", "react-photo-album": "^2.4.1", "react-router": "^7.2.0", "react-toastify": "^10.0.6", "react-tooltip": "^5.28.0", "react-virtualized": "^9.22.6", "tailwindcss": "^4.0.13", "tinycolor2": "^1.6.0", "typescript-eslint": "^8.26.1", "vite-tsconfig-paths": "^5.1.4" }, "peerDependencies": { "react": "^19.0.0" } }, "sha512-k9beGKeLLyK3SH79xGrBoa346mjs1gALtbrzkRSv5fwCiJJXtMdW6POs2+hThFEGTUZ/EAxn2RQAXiRBpf5M0A=="],
+    "@lifeforge/ui": ["@lifeforge/ui@0.25.12-23", "", { "dependencies": { "@headlessui/react": "^2.2.0", "@iconify/collections": "^1.0.526", "@iconify/react": "^5.2.0", "@tailwindcss/vite": "^4.0.13", "@tanstack/react-query": "^5.66.11", "@uidotdev/usehooks": "^2.4.1", "@uiw/react-color": "^2.3.4", "@yudiel/react-qr-scanner": "^2.2.1", "clsx": "^2.1.1", "color-sorter": "^6.1.2", "crypto-js": "^4.2.0", "eslint-plugin-react-compiler": "^19.0.0-beta-bafa41b-20250307", "eslint-plugin-sonarjs": "^3.0.2", "file-type-mime": "^0.4.5", "javascript-color-gradient": "^2.5.0", "lodash": "^4.17.21", "pocketbase": "^0.21.5", "react-currency-input-field": "^3.10.0", "react-custom-scrollbars": "^4.2.1", "react-date-picker": "^11.0.0", "react-datetime-picker": "^6.0.1", "react-dropzone": "^14.3.5", "react-i18next": "^15.4.1", "react-medium-image-zoom": "^5.2.13", "react-otp-input": "^3.1.1", "react-photo-album": "^2.4.1", "react-router": "^7.2.0", "react-toastify": "^10.0.6", "react-tooltip": "^5.28.0", "react-virtualized": "^9.22.6", "tailwindcss": "^4.0.13", "tinycolor2": "^1.6.0", "typescript-eslint": "^8.26.1", "vite-tsconfig-paths": "^5.1.4" }, "peerDependencies": { "react": "^19.0.0" } }, "sha512-TETb4wuNq+/oqGfpNQCpKerVHEWl1HgxqJas4YZUJuk0O0zJIhkTjoe1H2Ykmb9Pc8MTIMppEDO7nmo2DGX5Xw=="],
 
     "@nodelib/fs.scandir": ["@nodelib/fs.scandir@2.1.5", "", { "dependencies": { "@nodelib/fs.stat": "2.0.5", "run-parallel": "^1.1.9" } }, "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="],
 
@@ -378,6 +379,10 @@
     "@rtsao/scc": ["@rtsao/scc@1.1.0", "", {}, "sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g=="],
 
     "@swc/helpers": ["@swc/helpers@0.5.15", "", { "dependencies": { "tslib": "^2.8.0" } }, "sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g=="],
+
+    "@tabler/icons": ["@tabler/icons@3.31.0", "", {}, "sha512-dblAdeKY3+GA1U+Q9eziZ0ooVlZMHsE8dqP0RkwvRtEsAULoKOYaCUOcJ4oW1DjWegdxk++UAt2SlQVnmeHv+g=="],
+
+    "@tabler/icons-react": ["@tabler/icons-react@3.31.0", "", { "dependencies": { "@tabler/icons": "3.31.0" }, "peerDependencies": { "react": ">= 16" } }, "sha512-2rrCM5y/VnaVKnORpDdAua9SEGuJKVqPtWxeQ/vUVsgaUx30LDgBZph7/lterXxDY1IKR6NO//HDhWiifXTi3w=="],
 
     "@tailwindcss/node": ["@tailwindcss/node@4.0.13", "", { "dependencies": { "enhanced-resolve": "^5.18.1", "jiti": "^2.4.2", "tailwindcss": "4.0.13" } }, "sha512-P9TmtE9Vew0vv5FwyD4bsg/dHHsIsAuUXkenuGUc5gm8fYgaxpdoxIKngCyEMEQxyCKR8PQY5V5VrrKNOx7exg=="],
 

@@ -114,7 +114,7 @@ function ProjectsM() {
           isOpen={config.isOpen}
           itemName={config.itemName}
           nameKey={config.nameKey}
-          updateDataList={config.updateDataList}
+          queryKey={['projects-m', config.itemName]}
           onClose={() => {
             config.setOpen(false)
             config.setData(null)

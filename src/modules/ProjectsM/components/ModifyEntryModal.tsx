@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
 
-import { ErrorScreen, FormModal, LoadingScreen } from '@lifeforge/ui'
+import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { useProjectsMContext } from '../providers/ProjectsMProvider'
 
 function ModifyEntryModal() {
   const {
     entries: {
-      refreshData: refreshEntries,
       modifyDataModalOpenType: openType,
       setModifyDataModalOpenType: setOpenType,
       setExistedData,
@@ -141,70 +137,23 @@ function ModifyEntryModal() {
     }
   }, [openType, existedData])
 
-  if (
-    [categories, statuses, visibilities, technologies].some(
-      data => data === 'error'
-    )
-  ) {
-    return <ErrorScreen message="Failed to fetch data" />
-  }
-
-  if (
-    [categories, statuses, visibilities, technologies].some(
-      data => data === 'loading'
-    )
-  ) {
-    return <LoadingScreen />
-  }
-
-  async function onSubmitButtonClick() {
-    const { name, icon, color, category, status, visibility } = data
-    if (
-      name.trim().length === 0 ||
-      !color ||
-      icon.trim().length === 0 ||
-      !category ||
-      !status ||
-      !visibility
-    ) {
-      toast.error('Please fill in all the required fields.')
-      return
-    }
-
-    try {
-      await fetchAPI(
-        `projects-m/entries${
-          openType === 'update' ? `/${existedData?.id}` : ''
-        }`,
-        {
-          method: openType === 'create' ? 'POST' : 'PATCH',
-          body: data
-        }
-      )
-
-      refreshEntries()
-      setExistedData(null)
-      setOpenType(null)
-    } catch {
-      toast.error('Error')
-    }
-  }
-
   return (
     <FormModal
       data={data}
+      endpoint="projects-m/entries"
       fields={FIELDS}
       icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
+      id={existedData?.id}
       isOpen={openType !== null}
       namespace="modules.projectsM"
       openType={openType}
+      queryKey={['projects-m', 'entries']}
       setData={setData}
       title={`project.${openType}`}
       onClose={() => {
         setOpenType(null)
         setExistedData(null)
       }}
-      onSubmit={onSubmitButtonClick}
     />
   )
 }
