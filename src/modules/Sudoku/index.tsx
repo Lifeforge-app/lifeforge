@@ -2,26 +2,29 @@ import { useRef } from 'react'
 import { useReactToPrint } from 'react-to-print'
 
 import {
-  APIFallbackComponent,
   Button,
   ModuleHeader,
-  ModuleWrapper
+  ModuleWrapper,
+  QueryWrapper
 } from '@lifeforge/ui'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import Board from './components/Board'
 import { type SudokuBoard } from './interfaces/sudoku_interfaces'
 
 function Sudoku() {
-  const [data, refreshData] = useFetch<SudokuBoard[]>('sudoku/evil')
+  const dataQuery = useAPIQuery<SudokuBoard[]>('sudoku/evil', [
+    'sudoku',
+    'evil'
+  ])
   const boardRef = useRef<HTMLDivElement>(null)
   const reactToPrintFn = useReactToPrint({ contentRef: boardRef })
 
   return (
     <ModuleWrapper>
       <ModuleHeader icon="uil:table" title="Sudoku" />
-      <APIFallbackComponent data={data}>
+      <QueryWrapper query={dataQuery}>
         {data => (
           <div className="mt-6 space-y-2">
             <Button
@@ -38,7 +41,7 @@ function Sudoku() {
               icon="uil:sync"
               variant="secondary"
               onClick={() => {
-                refreshData()
+                dataQuery.refetch()
               }}
             >
               Refresh
@@ -55,7 +58,7 @@ function Sudoku() {
             </div>
           </div>
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
     </ModuleWrapper>
   )
 }

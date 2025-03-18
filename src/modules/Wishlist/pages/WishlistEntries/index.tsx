@@ -16,7 +16,6 @@ import {
 } from '@lifeforge/ui'
 
 import useAPIQuery from '@hooks/useAPIQuery'
-import useFetch from '@hooks/useFetch'
 
 import {
   IWishlistEntry,
@@ -31,12 +30,17 @@ function WishlistEntries() {
   const { t } = useTranslation('modules.wishlist')
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
-  const [valid] = useFetch<boolean>(`wishlist/lists/valid/${id}`)
+  const validQuery = useAPIQuery<boolean>(`wishlist/lists/valid/${id}`, [
+    `wishlist`,
+    `lists`,
+    `valid`,
+    id
+  ])
   const [activeTab, setActiveTab] = useState('wishlist')
   const wishlistListDetailsQuery = useAPIQuery<IWishlistList>(
     `wishlist/lists/${id}`,
     [`wishlist`, `lists`, id],
-    valid === true
+    validQuery.data === true
   )
   const queryKey = useMemo(
     () => [`wishlist`, `entries`, id, activeTab === 'bought'],
@@ -45,7 +49,7 @@ function WishlistEntries() {
   const entriesQuery = useAPIQuery<IWishlistEntry[]>(
     `wishlist/entries/${id}?bought=${activeTab === 'bought'}`,
     queryKey,
-    valid === true
+    validQuery.data === true
   )
   const [isFromOtherAppsModalOpen, setFromOtherAppsModalOpen] = useState(false)
   const [existedData, setExistedData] =
@@ -59,11 +63,11 @@ function WishlistEntries() {
   ] = useState(false)
 
   useEffect(() => {
-    if (typeof valid === 'boolean' && !valid) {
+    if (typeof validQuery.data === 'boolean' && !validQuery.data) {
       toast.error('Invalid ID')
       navigate('/wishlist')
     }
-  }, [valid])
+  }, [validQuery.data])
 
   const handleEdit = (entry: IWishlistEntry) => {
     setExistedData(entry)

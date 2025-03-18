@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useState } from 'react'
 
@@ -15,10 +16,10 @@ import BookMeta from '../../components/BookMeta'
 import EntryContextMenu from '../../components/EntryContextMenu'
 
 export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
+  const queryClient = useQueryClient()
   const { componentBgWithHover, componentBgLighter } = useComponentBg()
   const {
-    categories: { data: categories },
-    entries: { setData: setEntries }
+    categories: { data: categories }
   } = useBooksLibraryContext()
 
   const [addToFavouritesLoading, setAddToFavouritesLoading] = useState(false)
@@ -34,20 +35,23 @@ export default function EntryItem({ item }: { item: IBooksLibraryEntry }) {
         }
       )
 
-      setEntries(prevEntries => {
-        if (typeof prevEntries === 'string') return prevEntries
+      queryClient.setQueryData<IBooksLibraryEntry[]>(
+        ['books-library', 'entries'],
+        prevEntries => {
+          if (!prevEntries) return []
 
-        return prevEntries.map(entry => {
-          if (entry.id === item.id) {
-            return {
-              ...entry,
-              is_favourite: !entry.is_favourite
+          return prevEntries.map(entry => {
+            if (entry.id === item.id) {
+              return {
+                ...entry,
+                is_favourite: !entry.is_favourite
+              }
             }
-          }
 
-          return entry
-        })
-      })
+            return entry
+          })
+        }
+      )
     } catch {
       console.error('Failed to add to favourites')
     } finally {

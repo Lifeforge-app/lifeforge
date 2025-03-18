@@ -1,15 +1,18 @@
 import { Icon } from '@iconify/react'
 import prettyBytes from 'pretty-bytes'
 
-import { APIFallbackComponent } from '@lifeforge/ui'
+import { QueryWrapper } from '@lifeforge/ui'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import { ISystemInfo } from '../../interfaces/server_status_interfaces'
 import SectionCard from './components/SectionCard'
 
 function SystemInfo() {
-  const [systemInfo] = useFetch<ISystemInfo>('server/info')
+  const systemInfoQuery = useAPIQuery<ISystemInfo>('server/info', [
+    'server',
+    'info'
+  ])
 
   return (
     <div className="mb-8 mt-16 flex w-full flex-col gap-6">
@@ -17,7 +20,7 @@ function SystemInfo() {
         <Icon className="text-3xl" icon="tabler:info-circle" />
         <span className="ml-2">System Information</span>
       </h1>
-      <APIFallbackComponent data={systemInfo}>
+      <QueryWrapper query={systemInfoQuery}>
         {systemInfo => (
           <>
             {Object.entries(systemInfo).map(([key, value]) => (
@@ -29,7 +32,7 @@ function SystemInfo() {
             ))}
           </>
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
     </div>
   )
 }

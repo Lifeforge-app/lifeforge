@@ -1,22 +1,23 @@
-import { APIFallbackComponent, Button } from '@lifeforge/ui'
+import { UseQueryResult } from '@tanstack/react-query'
 
-import { Loadable } from '../../../../../../../core/interfaces/common'
+import { Button, QueryWrapper } from '@lifeforge/ui'
+
 import VideoInfo from '../../../../../../Music/modals/YoutubeDownloaderModal/components/VideoInfo'
 import { type IYoutubeVideoInfo } from '../../../../../interfaces/youtube_video_storage_interfaces'
 
 function VideoDetails({
-  videoInfo,
+  videoInfoQuery,
   downloadVideo,
   loading,
   progress
 }: {
-  videoInfo: Loadable<IYoutubeVideoInfo>
+  videoInfoQuery: UseQueryResult<IYoutubeVideoInfo>
   downloadVideo: () => void
   loading: boolean
   progress: number
 }) {
   return (
-    <APIFallbackComponent data={videoInfo}>
+    <QueryWrapper query={videoInfoQuery}>
       {videoInfo => (
         <>
           <div className="mt-6 flex w-full gap-6">
@@ -40,7 +41,7 @@ function VideoDetails({
           </Button>
         </>
       )}
-    </APIFallbackComponent>
+    </QueryWrapper>
   )
 }
 

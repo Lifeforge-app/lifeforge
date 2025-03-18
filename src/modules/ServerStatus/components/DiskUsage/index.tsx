@@ -1,14 +1,17 @@
 import { Icon } from '@iconify/react'
 
-import { APIFallbackComponent } from '@lifeforge/ui'
+import { QueryWrapper } from '@lifeforge/ui'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import { IDiskUsage } from '../../interfaces/server_status_interfaces'
 import DiskUsageCard from './components/DiskUsageCard'
 
 function DiskUsage() {
-  const [diskUsage] = useFetch<IDiskUsage[]>('server/disks')
+  const diskUsageQuery = useAPIQuery<IDiskUsage[]>('server/disks', [
+    'server',
+    'disks'
+  ])
 
   return (
     <div className="mt-16 flex w-full flex-col gap-6">
@@ -16,7 +19,7 @@ function DiskUsage() {
         <Icon className="text-3xl" icon="tabler:chart-pie" />
         <span className="ml-2">Disks Usage</span>
       </h1>
-      <APIFallbackComponent data={diskUsage}>
+      <QueryWrapper query={diskUsageQuery}>
         {diskUsage => (
           <div className="grid gap-6 lg:grid-cols-2">
             {diskUsage.map(disk => (
@@ -24,7 +27,7 @@ function DiskUsage() {
             ))}
           </div>
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
     </div>
   )
 }

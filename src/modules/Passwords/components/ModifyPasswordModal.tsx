@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -18,16 +19,19 @@ import { usePasswordContext } from '@modules/Passwords/providers/PasswordsProvid
 import fetchAPI from '@utils/fetchAPI'
 
 import { encrypt } from '../../../core/security/utils/encryption'
-import { IPasswordFormState } from '../interfaces/password_interfaces'
+import {
+  IPasswordEntry,
+  IPasswordFormState
+} from '../interfaces/password_interfaces'
 
-function CreatePasswordModal() {
+function ModifyPasswordModal() {
+  const queryClient = useQueryClient()
   const { t } = useTranslation('modules.passwords')
   const {
     masterPassword,
     modifyPasswordModalOpenType: openType,
     existedData,
-    setModifyPasswordModalOpenType,
-    refreshPasswordList
+    setModifyPasswordModalOpenType
   } = usePasswordContext()
 
   const [formState, setFormState] = useState<IPasswordFormState>({
@@ -61,7 +65,7 @@ function CreatePasswordModal() {
     const encryptedMaster = encrypt(masterPassword, challenge)
 
     try {
-      await fetchAPI(
+      const data = await fetchAPI<IPasswordEntry>(
         `passwords/password${
           openType === 'update' ? `/${existedData?.id}` : ''
         }`,
@@ -75,7 +79,23 @@ function CreatePasswordModal() {
         }
       )
 
-      refreshPasswordList()
+      queryClient.setQueryData<IPasswordEntry[]>(
+        ['passwords', 'entries'],
+        prev => {
+          if (!prev) return prev
+
+          if (openType === 'create') {
+            return [...prev, data]
+          }
+
+          return prev.map(password => {
+            if (password.id === existedData?.id) {
+              return data
+            }
+            return password
+          })
+        }
+      )
     } catch {
       toast.error('Failed to create password')
     } finally {
@@ -213,4 +233,4 @@ function CreatePasswordModal() {
   )
 }
 
-export default CreatePasswordModal
+export default ModifyPasswordModal

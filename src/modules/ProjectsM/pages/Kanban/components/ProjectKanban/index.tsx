@@ -4,17 +4,17 @@ import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
 
 import {
-  APIFallbackComponent,
   DeleteConfirmationModal,
   HamburgerMenu,
   MenuItem,
+  QueryWrapper,
   Scrollbar
 } from '@lifeforge/ui'
 
 import { type IProjectsMKanbanColumn } from '@modules/ProjectsM/interfaces/projects_m_interfaces'
 
+import useAPIQuery from '@hooks/useAPIQuery'
 import useComponentBg from '@hooks/useComponentBg'
-import useFetch from '@hooks/useFetch'
 
 import AddCardButton from './modals/AddCardButton'
 import ModifyCardModal from './modals/ModifyCardModal'
@@ -23,8 +23,9 @@ import ModifyColumnsModal from './modals/ModifyColumnModal'
 function ProjectKanban() {
   const { componentBg } = useComponentBg()
   const { id } = useParams()
-  const [columns, refreshColumns] = useFetch<IProjectsMKanbanColumn[]>(
-    `projects-m/kanban/columns/${id}`
+  const columnsQuery = useAPIQuery<IProjectsMKanbanColumn[]>(
+    `projects-m/kanban/columns/${id}`,
+    ['projects-m', 'kanban', 'columns', id]
   )
   const [modifyColumnModalOpenType, setModifyColumnModalOpenType] = useState<
     'create' | 'update' | null
@@ -46,11 +47,11 @@ function ProjectKanban() {
     if (containerRef.current !== null) {
       setContainerHeight(containerRef.current.clientHeight)
     }
-  }, [columns])
+  }, [columnsQuery.data])
 
   return (
     <>
-      <APIFallbackComponent data={columns}>
+      <QueryWrapper query={columnsQuery}>
         {columns => (
           <Scrollbar>
             <div
@@ -127,11 +128,13 @@ function ProjectKanban() {
             </div>
           </Scrollbar>
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
       <ModifyColumnsModal
         existedData={existedData}
         openType={modifyColumnModalOpenType}
-        refreshColumns={refreshColumns}
+        refreshColumns={() => {
+          columnsQuery.refetch()
+        }}
         setExistedData={setExistedData}
         setOpenType={setModifyColumnModalOpenType}
       />
@@ -145,7 +148,9 @@ function ProjectKanban() {
         isOpen={deleteColumnConfirmationModalOpen}
         itemName="column"
         nameKey="name"
-        updateDataList={refreshColumns}
+        updateDataList={() => {
+          columnsQuery.refetch()
+        }}
         onClose={() => {
           setDeleteColumnConfirmationModalOpen(false)
         }}

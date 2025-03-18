@@ -1,20 +1,14 @@
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
 
-import fetchAPI from '@utils/fetchAPI'
-
 function ModifyListModal() {
-  const { t } = useTranslation('modules.todoList')
   const {
     modifyListModalOpenType: openType,
     setModifyListModalOpenType: setOpenType,
-    refreshLists,
     selectedList
   } = useTodoListContext()
   const [data, setData] = useState({
@@ -46,34 +40,6 @@ function ModifyListModal() {
     }
   ]
 
-  async function onSubmitButtonClick() {
-    const { name, icon, color } = data
-    if (
-      name.trim().length === 0 ||
-      icon.trim().length === 0 ||
-      color.trim().length === 0
-    ) {
-      toast.error(t('input.error.fieldEmpty'))
-      return
-    }
-
-    try {
-      await fetchAPI(
-        'todo-list/lists' +
-          (openType === 'update' ? `/${selectedList?.id}` : ''),
-        {
-          method: openType === 'create' ? 'POST' : 'PATCH',
-          body: data
-        }
-      )
-
-      setOpenType(null)
-      refreshLists()
-    } catch {
-      toast.error('Error')
-    }
-  }
-
   useEffect(() => {
     if (openType === 'update' && selectedList !== null) {
       setData(selectedList)
@@ -89,6 +55,7 @@ function ModifyListModal() {
   return (
     <FormModal
       data={data}
+      endpoint="todo-list/lists"
       fields={FIELDS}
       icon={`${
         {
@@ -96,15 +63,16 @@ function ModifyListModal() {
           update: 'tabler:pencil'
         }[openType!]
       }`}
+      id={selectedList?.id}
       isOpen={openType !== null}
       namespace="modules.todoList"
       openType={openType}
+      queryKey={['todo-list', 'lists']}
       setData={setData}
       title={`list.${openType}`}
       onClose={() => {
         setOpenType(null)
       }}
-      onSubmit={onSubmitButtonClick}
     />
   )
 }

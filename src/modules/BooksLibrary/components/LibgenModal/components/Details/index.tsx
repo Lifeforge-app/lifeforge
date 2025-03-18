@@ -1,6 +1,6 @@
-import { APIFallbackComponent, GoBackButton } from '@lifeforge/ui'
+import { GoBackButton, QueryWrapper } from '@lifeforge/ui'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import AddToLibraryButton from '../AddToLibraryButton'
 import DataTable from './components/DataTable'
@@ -26,8 +26,9 @@ function Details({
   onClose: () => void
   setAddToLibraryFor: (id: string) => void
 }) {
-  const [book] = useFetch<BookDetailProps>(
+  const booksQuery = useAPIQuery<BookDetailProps>(
     `books-library/libgen/details/${id}`,
+    ['books-library', 'libgen', 'details', id],
     Boolean(id)
   )
 
@@ -35,7 +36,7 @@ function Details({
     <>
       <GoBackButton onClick={onClose} />
       <div className="mt-4">
-        <APIFallbackComponent data={book}>
+        <QueryWrapper query={booksQuery}>
           {data => (
             <section className="flex flex-1 flex-col justify-center gap-8 md:flex-row">
               <ThumbnailAndHashes data={data} />
@@ -71,7 +72,7 @@ function Details({
               </div>
             </section>
           )}
-        </APIFallbackComponent>
+        </QueryWrapper>
       </div>
     </>
   )

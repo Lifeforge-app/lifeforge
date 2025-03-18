@@ -2,11 +2,11 @@ import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import { APIFallbackComponent, ModuleWrapper } from '@lifeforge/ui'
+import { ModuleWrapper, QueryWrapper } from '@lifeforge/ui'
 
 import { type IProjectsMEntry } from '@modules/ProjectsM/interfaces/projects_m_interfaces'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import ProjectHeader from './components/ProjectHeader'
 import ProjectKanban from './components/ProjectKanban'
@@ -14,33 +14,39 @@ import ProjectKanban from './components/ProjectKanban'
 function Kanban() {
   const navigate = useNavigate()
   const { id } = useParams()
-  const [valid] = useFetch<boolean>(`projects-m/entries/valid/${id}`)
-  const [projectData] = useFetch<IProjectsMEntry>(
+  const validQuery = useAPIQuery<boolean>(`projects-m/entries/valid/${id}`, [
+    'projects-m',
+    'entries',
+    'valid',
+    id
+  ])
+  const projectDataQuery = useAPIQuery<IProjectsMEntry>(
     `projects-m/entries/${id}`,
-    valid === true
+    ['projects-m', 'entries', id],
+    validQuery.data === true
   )
 
   useEffect(() => {
-    if (typeof valid === 'boolean' && !valid) {
+    if (typeof validQuery.data === 'boolean' && !validQuery.data) {
       toast.error('Invalid ID')
       navigate('/projects-m')
     }
-  }, [valid])
+  }, [validQuery.data])
 
   return (
     <ModuleWrapper>
-      <APIFallbackComponent data={valid}>
+      <QueryWrapper query={validQuery}>
         {() => (
-          <APIFallbackComponent data={projectData}>
+          <QueryWrapper query={projectDataQuery}>
             {projectData => (
               <>
                 <ProjectHeader projectData={projectData} />
                 <ProjectKanban />
               </>
             )}
-          </APIFallbackComponent>
+          </QueryWrapper>
         )}
-      </APIFallbackComponent>
+      </QueryWrapper>
     </ModuleWrapper>
   )
 }

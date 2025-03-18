@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
 import { Checkbox } from '@lifeforge/ui'
@@ -6,7 +7,10 @@ import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider
 
 import fetchAPI from '@utils/fetchAPI'
 
-import type { ITodoSubtask } from '../../../../interfaces/todo_list_interfaces'
+import type {
+  ITodoListEntry,
+  ITodoSubtask
+} from '../../../../interfaces/todo_list_interfaces'
 
 function SubtaskItem({
   entry,
@@ -15,38 +19,37 @@ function SubtaskItem({
   entry: ITodoSubtask
   parentId: string
 }) {
-  const { setEntries, entries, refreshEntries } = useTodoListContext()
+  const { entriesQueryKey } = useTodoListContext()
+  const queryClient = useQueryClient()
 
   async function toggleSubTaskCompletion() {
-    if (typeof entries !== 'string' && setEntries !== undefined) {
-      setEntries(
-        entries.map(e =>
-          e.id === parentId
-            ? {
-                ...e,
-                subtasks: e.subtasks.map(subtask =>
-                  subtask.id === entry.id
-                    ? {
-                        ...subtask,
-                        done: !subtask.done
-                      }
-                    : subtask
-                )
-              }
-            : e
-        )
-      )
-    }
+    queryClient.setQueryData<ITodoListEntry[]>(entriesQueryKey, data => {
+      if (data === undefined) {
+        return
+      }
+
+      return data.map(list => {
+        if (list.id === parentId) {
+          return {
+            ...list,
+            subtasks: list.subtasks.map(subtask =>
+              subtask.id === entry.id
+                ? { ...subtask, done: !subtask.done }
+                : subtask
+            )
+          }
+        }
+
+        return list
+      })
+    })
 
     try {
       await fetchAPI(`todo-list/subtasks/toggle/${entry.id}`, {
         method: 'PATCH'
       })
     } catch {
-      if (refreshEntries !== undefined) {
-        refreshEntries()
-      }
-
+      queryClient.invalidateQueries({ queryKey: entriesQueryKey })
       toast.error('Failed to update subtask completion status')
     }
   }

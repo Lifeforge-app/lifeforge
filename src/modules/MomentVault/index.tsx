@@ -15,7 +15,7 @@ import {
 
 import { IMomentVaultEntry } from '@modules/MomentVault/interfaces/moment_vault_interfaces'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import AddEntryModal from './components/AddEntryModal'
 import EntryList from './components/EntryList'
@@ -23,8 +23,9 @@ import EntryList from './components/EntryList'
 function MomentVault() {
   const { t } = useTranslation('modules.momentVault')
   const [page, setPage] = useState(1)
-  const [data, refreshData, setData] = useFetch<ListResult<IMomentVaultEntry>>(
-    `/moment-vault/entries?page=${page}`
+  const dataQuery = useAPIQuery<ListResult<IMomentVaultEntry>>(
+    `/moment-vault/entries?page=${page}`,
+    ['moment-vault', 'entries', page]
   )
   const [addEntryModalOpenType, setAddEntryModalOpenType] = useState<
     'text' | 'audio' | 'photo' | 'video' | null
@@ -94,9 +95,8 @@ function MomentVault() {
       />
       <EntryList
         addEntryModalOpenType={addEntryModalOpenType}
-        data={data}
+        dataQuery={dataQuery}
         page={page}
-        setData={setData}
         setPage={setPage}
         onDelete={(data: IMomentVaultEntry) => {
           setExistedData(data)
@@ -145,8 +145,8 @@ function MomentVault() {
         </MenuItems>
       </Menu>
       <AddEntryModal
+        entriesQueryKey={['moment-vault', 'entries', page]}
         openType={addEntryModalOpenType}
-        refreshData={refreshData}
         setOpenType={setAddEntryModalOpenType}
         onClose={() => {
           setAddEntryModalOpenType(null)
@@ -157,7 +157,8 @@ function MomentVault() {
         data={existedData}
         isOpen={deleteEntryConfirmationModalOpen}
         itemName="entry"
-        updateDataList={refreshData}
+        queryKey={['moment-vault', 'entries', page]}
+        queryUpdateType="invalidate"
         onClose={() => setDeleteEntryConfirmationModalOpen(false)}
       />
     </ModuleWrapper>

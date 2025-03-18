@@ -1,18 +1,21 @@
 import { Icon } from '@iconify/react'
 
-import { APIFallbackComponent, DashboardItem, Scrollbar } from '@lifeforge/ui'
+import { DashboardItem, QueryWrapper, Scrollbar } from '@lifeforge/ui'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import { type IDiskUsage } from '../../ServerStatus/interfaces/server_status_interfaces'
 
 export default function StorageStatus() {
-  const [diskUsage] = useFetch<IDiskUsage[]>('server/disks')
+  const diskUsageQuery = useAPIQuery<IDiskUsage[]>('server/disks', [
+    'server',
+    'disks'
+  ])
 
   return (
     <DashboardItem icon="tabler:server" title="Storage Status">
       <Scrollbar>
-        <APIFallbackComponent data={diskUsage}>
+        <QueryWrapper query={diskUsageQuery}>
           {diskUsage => (
             <div className="divide-bg-200 dark:divide-bg-700 -mt-4 flex max-h-96 flex-col divide-y">
               {diskUsage.map(disk => (
@@ -49,7 +52,7 @@ export default function StorageStatus() {
               ))}
             </div>
           )}
-        </APIFallbackComponent>
+        </QueryWrapper>
       </Scrollbar>
     </DashboardItem>
   )
