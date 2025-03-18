@@ -16,7 +16,8 @@
 - **Code**: Pruned unused dependencies.
 - **Code**: Renamed entry file from `main.tsx` to `index.tsx`.
 - **Code**: Removed `pocketbase` from frontend.
-- **Code**: Continued migration to `FormModal` and `useAPIQuery`.
+- **Code**: Continued migration to `FormModal`.
+- **Code**: Co
 - **Code**: Fixed bugs where the locale for page title and description for subsection pages were not displayed.
 
 ---

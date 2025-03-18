@@ -4,8 +4,7 @@ import { Route } from 'react-router'
 
 import { LoadingScreen } from '@lifeforge/ui'
 
-import APIKeyStatusProvider from '@modules/APIKeys/providers/APIKeyStatusProvider'
-
+import APIKeyStatusProvider from '../../lib/APIKeys/providers/APIKeyStatusProvider'
 import { RouteItem } from '../interfaces/routes_interfaces'
 
 function ChildRoutesRenderer({

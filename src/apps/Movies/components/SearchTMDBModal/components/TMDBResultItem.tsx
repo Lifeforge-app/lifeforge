@@ -1,0 +1,72 @@
+import { IMovieSearchResult } from '@apps/Movies/interfaces/movies_interfaces'
+import { Icon } from '@iconify/react/dist/iconify.js'
+import clsx from 'clsx'
+import moment from 'moment'
+import { useState } from 'react'
+
+import { Button } from '@lifeforge/ui'
+
+import useComponentBg from '@hooks/useComponentBg'
+
+function TMDBResultItem({
+  data,
+  onAddToLibrary,
+  isAdded
+}: {
+  data: IMovieSearchResult
+  onAddToLibrary: (id: number) => Promise<void>
+  isAdded: boolean
+}) {
+  const { componentBgLighter } = useComponentBg()
+  const [loading, setLoading] = useState(false)
+
+  return (
+    <div
+      className={clsx(
+        componentBgLighter,
+        'shadow-custom flex flex-col items-center gap-6 rounded-md p-4 md:flex-row'
+      )}
+    >
+      <div className="bg-bg-200 dark:bg-bg-800 relative isolate h-48 w-32 shrink-0">
+        <Icon
+          className="text-bg-300 dark:text-bg-700 size-18 absolute left-1/2 top-1/2 z-[-1] -translate-x-1/2 -translate-y-1/2 transform"
+          icon="tabler:movie"
+        />
+        <img
+          alt=""
+          className="rounded-md object-contain"
+          src={`http://image.tmdb.org/t/p/w154/${data.poster_path}`}
+        />
+      </div>
+      <div className="w-full">
+        <p className="text-custom-500 font-semibold">
+          {moment(data.release_date).year()}
+        </p>
+        <h1 className="text-xl font-semibold">
+          {data.title}
+          <span className="text-bg-500 text-base font-medium">
+            {' '}
+            ({data.original_title})
+          </span>
+        </h1>
+        <p className="text-bg-500 mt-2 line-clamp-2">{data.overview}</p>
+        <Button
+          className="mt-4 w-full"
+          disabled={isAdded}
+          icon="tabler:plus"
+          loading={loading}
+          namespace="movies"
+          variant={isAdded ? 'plain' : 'primary'}
+          onClick={() => {
+            setLoading(true)
+            onAddToLibrary(data.id).finally(() => setLoading(false))
+          }}
+        >
+          {isAdded ? 'Already in Library' : 'Add to Library'}
+        </Button>
+      </div>
+    </div>
+  )
+}
+
+export default TMDBResultItem
