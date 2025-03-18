@@ -1,12 +1,8 @@
 import _ from 'lodash'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 
 import { FormModal } from '@lifeforge/ui'
 import { type IFieldProps } from '@lifeforge/ui'
-
-import fetchAPI from '@utils/fetchAPI'
 
 import { useProjectsMContext } from '../providers/ProjectsMProvider'
 
@@ -15,14 +11,13 @@ function ModifyModal({
 }: {
   stuff: 'categories' | 'technologies' | 'visibilities' | 'statuses'
 }) {
-  const { t } = useTranslation('modules.projectsM')
   const {
     modifyDataModalOpenType: openType,
     setModifyDataModalOpenType: setOpenType,
     existedData,
-    setExistedData,
-    refreshData
+    setExistedData
   } = useProjectsMContext()[stuff]
+
   const singleStuff = {
     categories: 'category',
     technologies: 'technology',
@@ -77,55 +72,23 @@ function ModifyModal({
     }
   }, [openType, existedData])
 
-  async function onSubmitButtonClick() {
-    const { name, icon, color } = data
-    if (
-      name.trim().length === 0 ||
-      icon.trim().length === 0 ||
-      (stuff === 'statuses' && !color)
-    ) {
-      toast.error(t('input.error.fieldEmpty'))
-      return
-    }
-
-    try {
-      await fetchAPI(
-        `projects-m/${stuff}${
-          openType === 'update' ? `/${existedData?.id}` : ''
-        }`,
-        {
-          method: openType === 'create' ? 'POST' : 'PATCH',
-          body: {
-            name,
-            icon,
-            ...(stuff === 'statuses' && { color })
-          }
-        }
-      )
-
-      refreshData()
-      setExistedData(null)
-      setOpenType(null)
-    } catch {
-      toast.error(t('input.error.somethingWentWrong'))
-    }
-  }
-
   return (
     <FormModal
       data={data}
+      endpoint={`projects-m/${stuff}`}
       fields={FIELDS}
       icon={openType === 'update' ? 'tabler:pencil' : 'tabler:plus'}
+      id={existedData?.id}
       isOpen={openType !== null}
       namespace="modules.projectsM"
       openType={openType}
+      queryKey={['projects-m', stuff]}
       setData={setData}
       title={`${_.camelCase(singleStuff)}.${openType}`}
       onClose={() => {
         setOpenType(null)
         setExistedData(null)
       }}
-      onSubmit={onSubmitButtonClick}
     />
   )
 }
