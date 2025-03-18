@@ -1,9 +1,7 @@
 import { parse as parseCookie } from 'cookie'
 import { toast } from 'react-toastify'
 
-import { fetchAPI } from '@lifeforge/core'
-
-import { decrypt, encrypt } from '../../../core/security/utils/encryption'
+import { decrypt, encrypt, fetchAPI } from '@lifeforge/core'
 
 export async function getDecryptedPassword(
   masterPassword: string,

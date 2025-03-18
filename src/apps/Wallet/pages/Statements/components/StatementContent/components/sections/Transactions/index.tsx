@@ -1,8 +1,9 @@
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
+
+import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
 function Transactions({ month, year }: { month: number; year: number }) {
   const { transactions, assets, categories } = useWalletContext()

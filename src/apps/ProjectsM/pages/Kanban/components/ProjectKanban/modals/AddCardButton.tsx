@@ -2,9 +2,8 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useState } from 'react'
 
+import { useComponentBg } from '@lifeforge/core'
 import { Button } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 function AddCardButton() {
   const [isFocused, setIsFocused] = useState(false)

@@ -1,11 +1,11 @@
-import { type IProjectsMEntry } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { Link } from 'react-router'
 
+import { useComponentBg } from '@lifeforge/core'
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import useComponentBg from '@hooks/useComponentBg'
+import { type IProjectsMEntry } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
 
 import { useProjectsMContext } from '../providers/ProjectsMProvider'
 

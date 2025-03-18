@@ -1,8 +1,9 @@
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
 
 import { Scrollbar } from '@lifeforge/ui'
+
+import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
 import { type IWalletTransaction } from '../../../../interfaces/wallet_interfaces'
 import TransactionListItem from './components/TransactionListItem'

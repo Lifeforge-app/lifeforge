@@ -9,7 +9,7 @@ import clsx from 'clsx'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
-import useComponentBg from '@hooks/useComponentBg'
+import { useComponentBg } from '@lifeforge/core'
 
 const COLORS = [
   'red',

@@ -2,11 +2,10 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import moment from 'moment'
 
+import { useComponentBg } from '@lifeforge/core'
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { IMovieEntry } from '@apps/Movies/interfaces/movies_interfaces'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 function MovieItem({
   data,

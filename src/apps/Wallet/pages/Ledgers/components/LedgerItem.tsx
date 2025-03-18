@@ -3,11 +3,10 @@ import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
+import { useComponentBg } from '@lifeforge/core'
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import { type IWalletLedger } from '../../../interfaces/wallet_interfaces'
 

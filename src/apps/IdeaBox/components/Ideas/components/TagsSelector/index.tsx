@@ -1,8 +1,9 @@
-import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 import { useMemo } from 'react'
 import { useParams } from 'react-router'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
+
+import { useIdeaBoxContext } from '@apps/IdeaBox/providers/IdeaBoxProvider'
 
 import { IIdeaBoxTag } from '../../../../interfaces/ideabox_interfaces'
 import TagItem from './components/TagItem'

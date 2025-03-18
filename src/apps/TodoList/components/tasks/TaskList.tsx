@@ -1,6 +1,6 @@
-import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
-
 import { Scrollbar } from '@lifeforge/ui'
+
+import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
 
 import TaskItem from './TaskItem'
 

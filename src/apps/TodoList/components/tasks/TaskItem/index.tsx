@@ -2,11 +2,10 @@ import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 
 import { fetchAPI } from '@lifeforge/core'
+import { useComponentBg } from '@lifeforge/core'
 import { Checkbox } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@apps/TodoList/providers/TodoListProvider'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import { type ITodoListEntry } from '../../../interfaces/todo_list_interfaces'
 import SubtaskItem from './components/SubtaskItem'

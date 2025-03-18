@@ -1,14 +1,14 @@
-import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
-import VW_COLORS from '@apps/VirtualWardrobe/constants/virtual_wardrobe_colors'
-import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
 import { useState } from 'react'
 
+import { useComponentBg } from '@lifeforge/core'
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import useComponentBg from '@hooks/useComponentBg'
+import VW_CATEGORIES from '@apps/VirtualWardrobe/constants/virtual_wardrobe_categories'
+import VW_COLORS from '@apps/VirtualWardrobe/constants/virtual_wardrobe_colors'
+import { IVirtualWardrobeEntry } from '@apps/VirtualWardrobe/interfaces/virtual_wardrobe_interfaces'
 
 interface IEntryItemCommonProps<T extends boolean> {
   entry: IVirtualWardrobeEntry

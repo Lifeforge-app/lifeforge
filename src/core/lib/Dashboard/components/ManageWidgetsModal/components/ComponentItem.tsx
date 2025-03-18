@@ -80,6 +80,7 @@ function ComponentListItem({
   function removeComponent() {
     const newEnabledWidgets = Object.fromEntries(
       Object.entries(JSON.parse(JSON.stringify(enabledWidgets)) as any).map(
+        // @ts-expect-error - ignore for now lol
         ([k, value]) => [k, value.filter(i => i.i !== id)]
       )
     )

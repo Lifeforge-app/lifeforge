@@ -6,9 +6,8 @@ import { toast } from 'react-toastify'
 
 import { useSidebarState } from '@lifeforge/core'
 import { useAuth } from '@lifeforge/core'
+import { useComponentBg } from '@lifeforge/core'
 import { MenuItem } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 function SidebarBottomBar() {
   const navigate = useNavigate()

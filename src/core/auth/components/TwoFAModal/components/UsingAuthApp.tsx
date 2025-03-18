@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import OTPInputBox from '@security/components/OTPScreen/components/OTPInputBox'
+import { OTPInputBox } from '@lifeforge/core'
 
 function UsingAuthApp({
   callback

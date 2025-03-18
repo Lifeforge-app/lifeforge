@@ -4,9 +4,8 @@ import { useTranslation } from 'react-i18next'
 
 import { usePersonalization } from '@lifeforge/core'
 import { fetchAPI } from '@lifeforge/core'
+import { useComponentBg } from '@lifeforge/core'
 import { ConfigColumn } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import FontFamilyList from './components/FontFamilyList'
 

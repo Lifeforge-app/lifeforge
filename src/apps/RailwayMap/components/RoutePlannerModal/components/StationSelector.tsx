@@ -1,6 +1,6 @@
-import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
-
 import { ListboxOrComboboxInput, ListboxOrComboboxOption } from '@lifeforge/ui'
+
+import { IRailwayMapStation } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
 
 import StationCodes from '../../StationCode'
 import { formatStationDisplay } from '../utils/stations'

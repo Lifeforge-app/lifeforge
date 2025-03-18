@@ -10,11 +10,10 @@ import WaveSurfer from 'wavesurfer.js'
 
 import { usePersonalization } from '@lifeforge/core'
 import { fetchAPI } from '@lifeforge/core'
+import { useComponentBg } from '@lifeforge/core'
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@apps/MomentVault/interfaces/moment_vault_interfaces'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 function AudioEntry({
   entriesQueryKey,

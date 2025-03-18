@@ -2,9 +2,15 @@ import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useAuth } from '@lifeforge/core'
-import { fetchAPI } from '@lifeforge/core'
-import { useAPIQuery } from '@lifeforge/core'
+import {
+  CreatePasswordScreen,
+  LockedScreen,
+  OTPScreen,
+  encrypt,
+  fetchAPI,
+  useAPIQuery,
+  useAuth
+} from '@lifeforge/core'
 import {
   Button,
   DeleteConfirmationModal,
@@ -14,11 +20,6 @@ import {
   QueryWrapper
 } from '@lifeforge/ui'
 
-import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
-import LockedScreen from '@security/components/LockedScreen'
-import OTPScreen from '@security/components/OTPScreen'
-
-import { encrypt } from '../../security/utils/encryption'
 import EntryItem from './components/EntryItem'
 import ModifyAPIKeyModal from './components/ModifyAPIKeyModal'
 import { type IAPIKeyEntry } from './interfaces/api_keys_interfaces'

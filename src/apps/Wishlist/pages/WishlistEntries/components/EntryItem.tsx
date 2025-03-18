@@ -8,9 +8,8 @@ import { toast } from 'react-toastify'
 
 import { fetchAPI } from '@lifeforge/core'
 import { useAPIQuery } from '@lifeforge/core'
+import { useComponentBg } from '@lifeforge/core'
 import { Button, Checkbox, HamburgerMenu, MenuItem } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import { type IWishlistEntry } from '../../../interfaces/wishlist_interfaces'
 

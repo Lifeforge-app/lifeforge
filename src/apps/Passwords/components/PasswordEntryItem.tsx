@@ -1,13 +1,13 @@
-import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import copy from 'copy-to-clipboard'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { useComponentBg } from '@lifeforge/core'
 import { Button, HamburgerMenu, MenuItem } from '@lifeforge/ui'
 
-import useComponentBg from '@hooks/useComponentBg'
+import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
 
 import { type IPasswordEntry } from '../interfaces/password_interfaces'
 import { getDecryptedPassword } from '../utils/getDecryptedPassword'

@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
+import { useComponentBg } from '@lifeforge/core'
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import DownloadMenu from '../../../components/DownloadMenu'
 import { type IGuitarTabsEntry } from '../../../interfaces/guitar_tabs_interfaces'

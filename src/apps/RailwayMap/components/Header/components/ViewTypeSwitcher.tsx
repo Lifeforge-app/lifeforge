@@ -4,12 +4,11 @@ import clsx from 'clsx'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
+import { useComponentBg } from '@lifeforge/core'
 import {
   ListboxOrComboboxOption,
   ListboxOrComboboxOptions
 } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 export const VIEW_TYPES = [
   ['tabler:route-alt-left', 'Route Map', 'route'],

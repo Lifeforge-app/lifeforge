@@ -2,9 +2,8 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
 
+import { useComponentBg } from '@lifeforge/core'
 import { Button } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import AddToLibraryButton from './AddToLibraryButton'
 

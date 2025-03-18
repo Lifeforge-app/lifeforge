@@ -1,10 +1,11 @@
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import moment from 'moment'
 import { Tooltip } from 'react-tooltip'
 
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
+
+import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
 import { type IWalletTransaction } from '../../../../../interfaces/wallet_interfaces'
 

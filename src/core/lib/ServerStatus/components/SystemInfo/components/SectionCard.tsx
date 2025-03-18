@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import prettyBytes from 'pretty-bytes'
 
-import useComponentBg from '@hooks/useComponentBg'
+import { useComponentBg } from '@lifeforge/core'
 
 function camelCaseToTitleCase(text: string): string {
   return text

@@ -1,7 +1,8 @@
-import { VIDEO_RESOLUTIONS } from '@apps/YoutubeVideos/constants/video_res'
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import prettyBytes from 'pretty-bytes'
+
+import { VIDEO_RESOLUTIONS } from '@apps/YoutubeVideos/constants/video_res'
 
 import { type IYoutubeVideosStorageEntry } from '../../../interfaces/youtube_video_storage_interfaces'
 

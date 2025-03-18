@@ -1,12 +1,12 @@
-import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { Link } from 'react-router'
 
+import { useComponentBg } from '@lifeforge/core'
 import { APIFallbackComponent, Button, DashboardItem } from '@lifeforge/ui'
 
-import useComponentBg from '@hooks/useComponentBg'
+import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
 
 export default function AssetsBalance() {
   const { assets } = useWalletContext()

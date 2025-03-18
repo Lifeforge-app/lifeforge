@@ -2,8 +2,7 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
 import { usePersonalization } from '@lifeforge/core'
-
-import useComponentBg from '@hooks/useComponentBg'
+import { useComponentBg } from '@lifeforge/core'
 
 const BG_BLURS = {
   none: '0px',

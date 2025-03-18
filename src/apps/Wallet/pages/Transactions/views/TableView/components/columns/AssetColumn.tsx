@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { Link } from 'react-router'
 
-import useComponentBg from '@hooks/useComponentBg'
+import { useComponentBg } from '@lifeforge/core'
 
 import { type IWalletAsset } from '../../../../../../interfaces/wallet_interfaces'
 

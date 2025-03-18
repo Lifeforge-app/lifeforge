@@ -1,5 +1,6 @@
-import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 import moment from 'moment'
+
+import { useMusicContext } from '@apps/Music/providers/MusicProvider'
 
 function DurationSlider() {
   const { audio, currentDuration, setCurrentDuration, currentMusic } =

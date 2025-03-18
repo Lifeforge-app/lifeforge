@@ -3,8 +3,7 @@ import clsx from 'clsx'
 import { memo } from 'react'
 
 import { fetchAPI } from '@lifeforge/core'
-
-import useComponentBg from '@hooks/useComponentBg'
+import { useComponentBg } from '@lifeforge/core'
 
 import { type IIdeaBoxEntry } from '../../../../../../../../interfaces/ideabox_interfaces'
 

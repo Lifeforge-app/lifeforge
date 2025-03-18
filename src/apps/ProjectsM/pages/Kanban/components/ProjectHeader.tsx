@@ -1,9 +1,10 @@
-import { type IProjectsMEntry } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useNavigate } from 'react-router'
 
 import { APIFallbackComponent, GoBackButton } from '@lifeforge/ui'
+
+import { type IProjectsMEntry } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
 
 import { useProjectsMContext } from '../../../providers/ProjectsMProvider'
 

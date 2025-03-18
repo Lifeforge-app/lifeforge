@@ -4,9 +4,8 @@ import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
 import { useAPIQuery } from '@lifeforge/core'
+import { useComponentBg } from '@lifeforge/core'
 import { QueryWrapper } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import HoursAndMinutesFromSeconds from './HoursAndMinutesFromSeconds'
 

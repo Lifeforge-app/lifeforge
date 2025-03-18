@@ -1,8 +1,7 @@
 import _ from 'lodash'
 import { Fragment, useMemo } from 'react'
 
-import { useSidebarState } from '@lifeforge/core'
-import { useAuth } from '@lifeforge/core'
+import { useAuth, useSidebarState } from '@lifeforge/core'
 import {
   EmptyStateScreen,
   Scrollbar,

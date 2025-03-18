@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router'
 
 import { useAPIQuery } from '@lifeforge/core'
+import { useComponentBg } from '@lifeforge/core'
 import {
   DeleteConfirmationModal,
   HamburgerMenu,
@@ -13,8 +14,6 @@ import {
 } from '@lifeforge/ui'
 
 import { type IProjectsMKanbanColumn } from '@apps/ProjectsM/interfaces/projects_m_interfaces'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import AddCardButton from './modals/AddCardButton'
 import ModifyCardModal from './modals/ModifyCardModal'

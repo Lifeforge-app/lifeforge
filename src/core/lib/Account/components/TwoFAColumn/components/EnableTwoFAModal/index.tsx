@@ -1,11 +1,8 @@
 import clsx from 'clsx'
 import React, { useState } from 'react'
 
+import { OTPScreen, useComponentBg } from '@lifeforge/core'
 import { ModalHeader, ModalWrapper } from '@lifeforge/ui'
-
-import OTPScreen from '@security/components/OTPScreen'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import TwoFAEnableProcedure from './components/TwoFAEnableProcedure'
 

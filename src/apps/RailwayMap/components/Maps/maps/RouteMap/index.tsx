@@ -1,8 +1,7 @@
 import clsx from 'clsx'
 
+import { useComponentBg } from '@lifeforge/core'
 import { LoadingScreen } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import { useRailwayMapContext } from '../../../../providers/RailwayMapProvider'
 import { useRailwayMapRenderer } from './hooks/useRailwayMapRenderer'

@@ -4,7 +4,7 @@ import moment from 'moment'
 import { useDrag } from 'react-dnd'
 import Zoom from 'react-medium-image-zoom'
 
-import useComponentBg from '@hooks/useComponentBg'
+import { useComponentBg } from '@lifeforge/core'
 
 import { type IIdeaBoxEntry } from '../../../../../../interfaces/ideabox_interfaces'
 import CustomZoomContent from './components/CustomZoomContent'

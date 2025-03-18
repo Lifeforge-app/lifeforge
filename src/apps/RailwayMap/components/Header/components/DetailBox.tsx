@@ -2,9 +2,8 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import { useDebounce } from '@uidotdev/usehooks'
 import clsx from 'clsx'
 
+import { useComponentBg } from '@lifeforge/core'
 import { Button } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import { useRailwayMapContext } from '../../../providers/RailwayMapProvider'
 import StationCodes from '../../StationCode'

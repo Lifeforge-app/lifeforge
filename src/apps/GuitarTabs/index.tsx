@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
 import { useAPIQuery } from '@lifeforge/core'
+import { useComponentBg } from '@lifeforge/core'
 import {
   ContentWrapperWithSidebar,
   DeleteConfirmationModal,
@@ -22,8 +23,6 @@ import {
   SearchInput,
   ViewModeSelector
 } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import GuitarWorldModal from './components/GuitarWorldModal'
 import Header from './components/Header'

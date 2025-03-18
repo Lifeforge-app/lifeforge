@@ -4,11 +4,10 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
+import { useComponentBg } from '@lifeforge/core'
 import { APIFallbackComponent, DashboardItem, Scrollbar } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 function TransactionsCountCard() {
   const { componentBgLighterWithHover } = useComponentBg()

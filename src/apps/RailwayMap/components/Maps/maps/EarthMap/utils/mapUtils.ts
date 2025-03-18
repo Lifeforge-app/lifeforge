@@ -1,8 +1,9 @@
+import L from 'leaflet'
+
 import {
   IRailwayMapLine,
   IRailwayMapStation
 } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
-import L from 'leaflet'
 
 export const initializeMap = (element: HTMLDivElement): L.Map => {
   const map = L.map(element).setView([1.3521, 103.8198], 12)

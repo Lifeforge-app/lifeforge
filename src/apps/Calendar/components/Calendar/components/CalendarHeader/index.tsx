@@ -2,9 +2,8 @@ import clsx from 'clsx'
 import { type NavigateAction, type View } from 'react-big-calendar'
 import { useTranslation } from 'react-i18next'
 
+import { useComponentBg } from '@lifeforge/core'
 import { Button } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import ChangeViewButton from './components/ChangeViewButton'
 import NavigationButton from './components/NavigationButton'

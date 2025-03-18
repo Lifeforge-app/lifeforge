@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import moment from 'moment/min/moment-with-locales'
 import { useRef, useState } from 'react'
 
-import useComponentBg from '@hooks/useComponentBg'
+import { useComponentBg } from '@lifeforge/core'
 
 export default function Clock() {
   const { componentBg } = useComponentBg()

@@ -9,9 +9,8 @@ import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
 import { usePersonalization } from '@lifeforge/core'
+import { useComponentBg } from '@lifeforge/core'
 import { ConfigColumn } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 const LANGUAGES: Array<{
   name: string

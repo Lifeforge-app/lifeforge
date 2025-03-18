@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router'
 
+import { useComponentBg } from '@lifeforge/core'
 import {
   APIFallbackComponent,
   DashboardItem,
@@ -11,8 +12,6 @@ import {
 } from '@lifeforge/ui'
 
 import { useWalletContext } from '@apps/Wallet/providers/WalletProvider'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 function AssetsBalanceCard() {
   const { componentBgLighterWithHover } = useComponentBg()

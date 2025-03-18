@@ -1,8 +1,9 @@
+import * as d3 from 'd3'
+
 import {
   IRailwayMapLine,
   IRailwayMapStation
 } from '@apps/RailwayMap/interfaces/railway_map_interfaces'
-import * as d3 from 'd3'
 
 import { roundedPolygon } from './geometryUtils'
 import { getLinesRequired } from './routeUtils'

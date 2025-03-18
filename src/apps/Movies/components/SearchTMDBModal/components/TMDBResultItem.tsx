@@ -1,12 +1,12 @@
-import { IMovieSearchResult } from '@apps/Movies/interfaces/movies_interfaces'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import clsx from 'clsx'
 import moment from 'moment'
 import { useState } from 'react'
 
+import { useComponentBg } from '@lifeforge/core'
 import { Button } from '@lifeforge/ui'
 
-import useComponentBg from '@hooks/useComponentBg'
+import { IMovieSearchResult } from '@apps/Movies/interfaces/movies_interfaces'
 
 function TMDBResultItem({
   data,

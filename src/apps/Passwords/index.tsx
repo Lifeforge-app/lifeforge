@@ -1,6 +1,11 @@
 import { useTranslation } from 'react-i18next'
 
-import { useAuth } from '@lifeforge/core'
+import {
+  CreatePasswordScreen,
+  LockedScreen,
+  OTPScreen,
+  useAuth
+} from '@lifeforge/core'
 import {
   Button,
   DeleteConfirmationModal,
@@ -9,10 +14,6 @@ import {
   ModuleWrapper,
   SearchInput
 } from '@lifeforge/ui'
-
-import CreatePasswordScreen from '@security/components/CreatePasswordScreen'
-import LockedScreen from '@security/components/LockedScreen'
-import OTPScreen from '@security/components/OTPScreen'
 
 import { usePasswordContext } from '@apps/Passwords/providers/PasswordsProvider'
 

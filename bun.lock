@@ -7,7 +7,7 @@
         "@headlessui/react": "^2.2.0",
         "@iconify/react": "^5.2.0",
         "@iconify/types": "^2.0.0",
-        "@lifeforge/core": "^0.25.12-24",
+        "@lifeforge/core": "^0.25.12-30",
         "@lifeforge/ui": "^0.25.12-27",
         "@tabler/icons-react": "^3.31.0",
         "@tailwindcss/postcss": "^4.0.0",
@@ -278,7 +278,7 @@
 
     "@kurkle/color": ["@kurkle/color@0.3.4", "", {}, "sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w=="],
 
-    "@lifeforge/core": ["@lifeforge/core@0.25.12-24", "", { "dependencies": { "@lifeforge/ui": "^0.25.12-27", "@tanstack/react-query": "^5.69.0", "cookie": "^1.0.2", "crypto-js": "^4.2.0", "i18next-http-backend": "^3.0.2", "react-dnd": "^16.0.1", "react-dnd-html5-backend": "^16.0.1" }, "peerDependencies": { "react": "^19.0.0" } }, "sha512-wxIBM8kOsUiN3+C4D53bzEvJHWfyRkXXzInuAVsydmTnmC08Lj8RSnSCuyhGZnqpJuVZD4V2bBciDL6KXylG1A=="],
+    "@lifeforge/core": ["@lifeforge/core@0.25.12-30", "", { "dependencies": { "@lifeforge/ui": "^0.25.12-27", "@tanstack/react-query": "^5.69.0", "cookie": "^1.0.2", "crypto-js": "^4.2.0", "i18next-http-backend": "^3.0.2", "moment": "^2.30.1", "react-dnd": "^16.0.1", "react-dnd-html5-backend": "^16.0.1" }, "peerDependencies": { "react": "^19.0.0" } }, "sha512-ptyAnpWej41ZOfHdOvSEKwJ0ZnNo062s/eSfMpr580phuGudyNzCP/L0BK7mlX9azfGleP4T6x/rQ6WjcHRsbQ=="],
 
     "@lifeforge/ui": ["@lifeforge/ui@0.25.12-27", "", { "dependencies": { "@headlessui/react": "^2.2.0", "@iconify/collections": "^1.0.526", "@iconify/react": "^5.2.0", "@tailwindcss/vite": "^4.0.13", "@tanstack/react-query": "^5.69.0", "@uidotdev/usehooks": "^2.4.1", "@uiw/react-color": "^2.3.4", "@yudiel/react-qr-scanner": "^2.2.1", "clsx": "^2.1.1", "color-sorter": "^6.1.2", "crypto-js": "^4.2.0", "eslint-plugin-react-compiler": "^19.0.0-beta-bafa41b-20250307", "eslint-plugin-sonarjs": "^3.0.2", "file-type-mime": "^0.4.5", "javascript-color-gradient": "^2.5.0", "lodash": "^4.17.21", "pocketbase": "^0.21.5", "react-currency-input-field": "^3.10.0", "react-custom-scrollbars": "^4.2.1", "react-date-picker": "^11.0.0", "react-datetime-picker": "^6.0.1", "react-dropzone": "^14.3.5", "react-i18next": "^15.4.1", "react-medium-image-zoom": "^5.2.13", "react-otp-input": "^3.1.1", "react-photo-album": "^2.4.1", "react-router": "^7.2.0", "react-toastify": "^10.0.6", "react-tooltip": "^5.28.0", "react-virtualized": "^9.22.6", "tailwindcss": "^4.0.13", "tinycolor2": "^1.6.0", "typescript-eslint": "^8.26.1", "vite-tsconfig-paths": "^5.1.4" }, "peerDependencies": { "react": "^19.0.0" } }, "sha512-lRcuTdhpDfC0DYX7CWhd/26Ajt9upYjVRHFKWJMq5HOBp3Pz8m2p+usiT7lsXC/b6JT/yGimSZ28XNRYPyQBdg=="],
 

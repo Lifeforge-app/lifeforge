@@ -1,9 +1,10 @@
+import { Icon } from '@iconify/react'
+import clsx from 'clsx'
+
 import {
   SPICINESS_COLOR,
   SPICINESS_NAME
 } from '@apps/TodoList/constants/todo_subtasks_generation_spiciness'
-import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 
 function SpicinessHeader({ spiciness }: { spiciness: number }) {
   return (

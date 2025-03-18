@@ -1,8 +1,7 @@
 import clsx from 'clsx'
 
+import { useComponentBg } from '@lifeforge/core'
 import { HamburgerMenu, MenuItem } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import { type IYoutubeVideosStorageEntry } from '../../interfaces/youtube_video_storage_interfaces'
 import VideoDetails from './components/VideoDetails'

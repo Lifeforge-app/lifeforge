@@ -4,9 +4,8 @@ import _ from 'lodash'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useComponentBg } from '@lifeforge/core'
 import { Switch } from '@lifeforge/ui'
-
-import useComponentBg from '@hooks/useComponentBg'
 
 import { RouteItem } from '../../core/routes/interfaces/routes_interfaces'
 
