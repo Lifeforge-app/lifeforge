@@ -1,4 +1,4 @@
-import BasePBCollection from '../../../core/interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
 interface IMovieSearchResult {
   adult: boolean
@@ -24,7 +24,7 @@ interface IMovieSearchResults {
   total_results: number
 }
 
-interface IMovieEntry extends BasePBCollection {
+interface IMovieEntry extends RecordModel {
   tmdb_id: number
   title: string
   original_title: string

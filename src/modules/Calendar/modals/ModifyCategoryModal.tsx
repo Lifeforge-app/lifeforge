@@ -28,7 +28,7 @@ function ModifyCategoryModal({
     color: '#FFFFFF'
   })
 
-  const FIELDS: IFieldProps<typeof data>[] = [
+  const FIELDS: IFieldProps<ICalendarCategoryFormState>[] = [
     {
       id: 'name',
       required: true,

@@ -1,6 +1,6 @@
-import type BasePBCollection from '@interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
-interface IAPIKeyEntry extends BasePBCollection {
+interface IAPIKeyEntry extends RecordModel {
   keyId: string
   name: string
   description: string
@@ -8,6 +8,12 @@ interface IAPIKeyEntry extends BasePBCollection {
   key: string
 }
 
-type IAPIKeyFormState = Omit<IAPIKeyEntry, keyof BasePBCollection>
+type IAPIKeyFormState = {
+  keyId: string
+  name: string
+  description: string
+  icon: string
+  key: string
+}
 
 export type { IAPIKeyEntry, IAPIKeyFormState }

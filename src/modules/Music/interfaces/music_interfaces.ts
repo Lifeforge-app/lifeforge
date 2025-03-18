@@ -1,6 +1,6 @@
-import type BasePBCollection from '@interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
-interface IMusicEntry extends BasePBCollection {
+interface IMusicEntry extends RecordModel {
   name: string
   author: string
   duration: string

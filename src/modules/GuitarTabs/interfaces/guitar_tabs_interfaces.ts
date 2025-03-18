@@ -1,6 +1,6 @@
-import type BasePBCollection from '@interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
-interface IGuitarTabsEntry extends BasePBCollection {
+interface IGuitarTabsEntry extends RecordModel {
   name: string
   author: string
   thumbnail: string

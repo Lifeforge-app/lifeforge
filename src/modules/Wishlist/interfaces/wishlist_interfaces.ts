@@ -1,6 +1,6 @@
-import type BasePBCollection from '@interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
-interface IWishlistList extends BasePBCollection {
+interface IWishlistList extends RecordModel {
   name: string
   description: string
   icon: string
@@ -10,7 +10,7 @@ interface IWishlistList extends BasePBCollection {
   bought_count: number
 }
 
-interface IWishlistEntry extends BasePBCollection {
+interface IWishlistEntry extends RecordModel {
   name: string
   url: string
   price: number

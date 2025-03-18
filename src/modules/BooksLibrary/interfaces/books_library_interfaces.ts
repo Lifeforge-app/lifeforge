@@ -1,6 +1,6 @@
-import type BasePBCollection from '@interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
-interface IBooksLibraryEntry extends BasePBCollection {
+interface IBooksLibraryEntry extends RecordModel {
   md5: string
   authors: string
   category: string
@@ -32,19 +32,19 @@ interface IBooksLibraryFormSate {
   year_published: string
 }
 
-interface IBooksLibraryCategory extends BasePBCollection {
+interface IBooksLibraryCategory extends RecordModel {
   name: string
   icon: string
   count: number
 }
 
-interface IBooksLibraryLanguage extends BasePBCollection {
+interface IBooksLibraryLanguage extends RecordModel {
   name: string
   icon: string
   count: number
 }
 
-interface IBooksLibraryFileType extends BasePBCollection {
+interface IBooksLibraryFileType extends RecordModel {
   name: string
   icon: never
   count: number

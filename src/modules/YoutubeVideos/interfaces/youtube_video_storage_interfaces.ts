@@ -1,4 +1,4 @@
-import type BasePBCollection from '@interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
 interface IYoutubeVideoInfo {
   title: string
@@ -10,7 +10,7 @@ interface IYoutubeVideoInfo {
   thumbnail: string
 }
 
-interface IYoutubeVideosStorageEntry extends BasePBCollection {
+interface IYoutubeVideosStorageEntry extends RecordModel {
   youtube_id: string
   title: string
   upload_date?: string

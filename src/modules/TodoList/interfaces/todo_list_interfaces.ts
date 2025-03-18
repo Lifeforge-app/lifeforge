@@ -1,6 +1,6 @@
-import type BasePBCollection from '@interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
-interface ITodoListEntry extends BasePBCollection {
+interface ITodoListEntry extends RecordModel {
   due_date: string
   list: string
   notes: string
@@ -19,20 +19,20 @@ interface ITodoSubtask {
   hasChanged?: boolean
 }
 
-interface ITodoPriority extends BasePBCollection {
+interface ITodoPriority extends RecordModel {
   color: string
   name: string
   amount: number
 }
 
-interface ITodoListList extends BasePBCollection {
+interface ITodoListList extends RecordModel {
   color: string
   icon: string
   name: string
   amount: number
 }
 
-interface ITodoListTag extends BasePBCollection {
+interface ITodoListTag extends RecordModel {
   amount: number
   color: string
   name: string
