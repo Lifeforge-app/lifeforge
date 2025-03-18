@@ -2,10 +2,16 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -19,16 +25,32 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@components/*": ["./src/components/*"],
-      "@providers/*": ["./src/core/providers/*"],
-      "@hooks/*": ["./src/core/hooks/*"],
-      "@interfaces/*": ["./src/core/interfaces/*"],
-      "@utils/*": ["./src/core/utils/*"],
-      "@modules/*": ["./src/modules/*"],
-      "@security/*": ["./src/core/security/*"]
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@providers/*": [
+        "./src/core/providers/*"
+      ],
+      "@hooks/*": [
+        "./src/core/hooks/*"
+      ],
+      "@interfaces/*": [
+        "./src/core/interfaces/*"
+      ],
+      "@utils/*": [
+        "./src/core/utils/*"
+      ],
+      "@apps/*": [
+        "./src/apps/*"
+      ],
+      "@security/*": [
+        "./src/core/security/*"
+      ]
     }
   },
-  "include": ["./src/**/*"],
+  "include": [
+    "./src/**/*"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
