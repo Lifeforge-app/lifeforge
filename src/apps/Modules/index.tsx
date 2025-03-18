@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import { fetchAPI, useAuth } from '@lifeforge/core'
 import { LoadingScreen, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 
-import ROUTES from '../../core/routes/Routes'
+import ROUTES from '../../core/Routes'
 import ModuleItem from './ModuleItem'
 
 function Modules() {

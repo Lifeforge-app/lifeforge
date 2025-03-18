@@ -10,7 +10,7 @@ import {
   SidebarTitle
 } from '@lifeforge/ui'
 
-import ROUTES from '../../routes/Routes'
+import ROUTES from '../../../Routes'
 
 function SidebarItems({ query }: { query: string }) {
   const { userData } = useAuth()
