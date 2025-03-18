@@ -6,13 +6,11 @@ import { Link } from 'react-router'
 import { APIFallbackComponent, Button, DashboardItem } from '@lifeforge/ui'
 
 import useComponentBg from '@hooks/useComponentBg'
-import useFetch from '@hooks/useFetch'
-
-import { type IWalletAsset } from '../../Wallet/interfaces/wallet_interfaces'
+import { useWalletContext } from '@modules/Wallet/providers/WalletProvider'
 
 export default function AssetsBalance() {
+  const {assets} = useWalletContext()  
   const { componentBgLighterWithHover } = useComponentBg()
-  const [assets] = useFetch<IWalletAsset[]>('wallet/assets')
   const [showBalance, setShowBalance] = useState(false)
 
   return (
