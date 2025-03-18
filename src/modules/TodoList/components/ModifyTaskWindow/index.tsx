@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import moment from 'moment'
 import { useEffect, useRef, useState } from 'react'
@@ -10,17 +11,21 @@ import {
   DateInput,
   HamburgerMenu,
   MenuItem,
+  QueryWrapper,
   Scrollbar,
   TextInput
 } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@modules/TodoList/providers/TodoListProvider'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import fetchAPI from '@utils/fetchAPI'
 
-import { type ITodoSubtask } from '../../interfaces/todo_list_interfaces'
+import {
+  ITodoListEntry,
+  type ITodoSubtask
+} from '../../interfaces/todo_list_interfaces'
 import ListSelector from './components/ListSelector'
 import NotesInput from './components/NotesInput'
 import PrioritySelector from './components/PrioritySelector'
@@ -28,23 +33,21 @@ import SubtaskBox from './components/SubtaskBox'
 import TagsSelector from './components/TagsSelector'
 
 function ModifyTaskWindow() {
+  const queryClient = useQueryClient()
   const { t } = useTranslation('modules.todoList')
   const {
+    entriesQueryKey,
     modifyTaskWindowOpenType: openType,
     setModifyTaskWindowOpenType: setOpenType,
     selectedTask,
     setSelectedTask,
-    refreshEntries,
-    refreshTagsList,
-    refreshPriorities,
-    refreshLists,
-    refreshStatusCounter,
     setDeleteTaskConfirmationModalOpen
   } = useTodoListContext()
 
   const [summary, setSummary] = useState('')
-  const [subtasks, , setSubtasks] = useFetch<ITodoSubtask[]>(
+  const subTasksQuery = useAPIQuery<ITodoSubtask[]>(
     `todo-list/subtasks/list/${selectedTask?.id}`,
+    ['todo-list', 'subtasks', selectedTask?.id],
     (selectedTask?.subtasks.length ?? 0) > 0 && openType === 'update'
   )
 
@@ -73,7 +76,7 @@ function ModifyTaskWindow() {
     const task = {
       summary: summary.trim(),
       notes: notes.trim(),
-      subtasks,
+      subtasks: subTasksQuery.data ?? [],
       due_date: moment(dueDate).format('yyyy-MM-DD 23:59:59Z'),
       priority,
       list,
@@ -81,7 +84,7 @@ function ModifyTaskWindow() {
     }
 
     try {
-      await fetchAPI(
+      const data = await fetchAPI<ITodoListEntry>(
         'todo-list/entries' +
           (innerOpenType === 'update' ? `/${selectedTask?.id}` : ''),
         {
@@ -92,11 +95,29 @@ function ModifyTaskWindow() {
 
       setOpenType(null)
       setSelectedTask(null)
-      refreshEntries()
-      refreshTagsList()
-      refreshPriorities()
-      refreshLists()
-      refreshStatusCounter()
+
+      queryClient.setQueryData<ITodoListEntry[]>(entriesQueryKey, entries => {
+        if (!entries) return []
+
+        if (innerOpenType === 'create') {
+          return [data, ...entries]
+        }
+
+        return entries.map(entry => {
+          if (entry.id === data.id) {
+            return data
+          }
+
+          return entry
+        })
+      })
+
+      queryClient.invalidateQueries({
+        queryKey: ['todo-list', 'status-counter']
+      })
+      queryClient.invalidateQueries({ queryKey: ['todo-list', 'tags'] })
+      queryClient.invalidateQueries({ queryKey: ['todo-list', 'priorities'] })
+      queryClient.invalidateQueries({ queryKey: ['todo-list', 'lists'] })
     } catch {
       toast.error('Error')
     } finally {
@@ -137,7 +158,6 @@ function ModifyTaskWindow() {
       setPriority(null)
       setList(null)
       setTags([])
-      setSubtasks([])
     }
   }, [selectedTask, openType])
 
@@ -200,12 +220,16 @@ function ModifyTaskWindow() {
               setValue={setSummary}
               value={summary}
             />
-            <SubtaskBox
-              notes={notes}
-              setSubtasks={setSubtasks}
-              subtasks={subtasks}
-              summary={summary}
-            />
+            <QueryWrapper query={subTasksQuery}>
+              {subtasks => (
+                <SubtaskBox
+                  notes={notes}
+                  subtasks={subtasks}
+                  summary={summary}
+                  taskId={selectedTask?.id ?? ''}
+                />
+              )}
+            </QueryWrapper>
             <DateInput
               darker
               date={dueDate}

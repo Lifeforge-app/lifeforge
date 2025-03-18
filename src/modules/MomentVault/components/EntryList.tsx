@@ -1,29 +1,25 @@
 /* eslint-disable import/named */
+import { UseQueryResult } from '@tanstack/react-query'
 import { ListResult } from 'pocketbase'
 import { useEffect } from 'react'
 
-import { APIFallbackComponent, Pagination } from '@lifeforge/ui'
+import { Pagination, QueryWrapper } from '@lifeforge/ui'
 
 import { IMomentVaultEntry } from '@modules/MomentVault/interfaces/moment_vault_interfaces'
 
-import { Loadable } from '../../../core/interfaces/common'
 import AudioEntry from './entries/AudioEntry'
 
 function EntryList({
-  data,
+  dataQuery,
   page,
   setPage,
   onDelete,
-  setData,
   addEntryModalOpenType
 }: {
-  data: Loadable<ListResult<IMomentVaultEntry>>
+  dataQuery: UseQueryResult<ListResult<IMomentVaultEntry>>
   page: number
   setPage: (page: number) => void
   onDelete: (data: IMomentVaultEntry) => void
-  setData: React.Dispatch<
-    React.SetStateAction<Loadable<ListResult<IMomentVaultEntry>>>
-  >
   addEntryModalOpenType: 'text' | 'audio' | 'photo' | 'video' | null
 }) {
   useEffect(() => {
@@ -33,10 +29,10 @@ function EntryList({
       el.style.willChange = 'opacity, transform'
       el.getBoundingClientRect()
     })
-  }, [data])
+  }, [dataQuery.data])
 
   return (
-    <APIFallbackComponent data={data}>
+    <QueryWrapper query={dataQuery}>
       {data => (
         <>
           <Pagination
@@ -50,8 +46,8 @@ function EntryList({
               <AudioEntry
                 key={entry.id}
                 addEntryModalOpenType={addEntryModalOpenType}
+                entriesQueryKey={['moment-vault', 'entries', page]}
                 entry={entry}
-                setData={setData}
                 onDelete={onDelete}
               />
             ))}
@@ -64,7 +60,7 @@ function EntryList({
           />
         </>
       )}
-    </APIFallbackComponent>
+    </QueryWrapper>
   )
 }
 

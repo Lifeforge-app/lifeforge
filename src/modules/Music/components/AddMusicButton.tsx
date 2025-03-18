@@ -1,4 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { useQueryClient } from '@tanstack/react-query'
 import { parse as parseCookie } from 'cookie'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
@@ -12,9 +13,9 @@ import IntervalManager from '@utils/intervalManager'
 const intervalManager = IntervalManager.getInstance()
 
 function AddMusicButton() {
+  const queryClient = useQueryClient()
   const { t } = useTranslation('modules.music')
-  const { loading, setIsYoutubeDownloaderOpen, setLoading, refreshMusics } =
-    useMusicContext()
+  const { loading, setIsYoutubeDownloaderOpen, setLoading } = useMusicContext()
 
   async function checkImportProgress(): Promise<
     'completed' | 'failed' | 'in_progress'
@@ -57,7 +58,9 @@ function AddMusicButton() {
                   toast.success('Music imported successfully!')
                   intervalManager.clearAllIntervals()
                   setLoading(false)
-                  refreshMusics()
+                  queryClient.invalidateQueries({
+                    queryKey: ['music', 'entries']
+                  })
                   break
                 case 'failed':
                   toast.error('Failed to import music!')

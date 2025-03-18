@@ -3,11 +3,9 @@ import { parse as parseCookie } from 'cookie'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { APIFallbackComponent, TextInput } from '@lifeforge/ui'
+import { QueryWrapper, TextInput } from '@lifeforge/ui'
 
-import { type Loadable } from '@interfaces/common'
-
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import IntervalManager from '@utils/intervalManager'
 
@@ -28,16 +26,17 @@ function PlaylistSection({
   isOpen,
   setIsVideoDownloading
 }: {
-  videos: Loadable<IYoutubeVideosStorageEntry[]>
+  videos: IYoutubeVideosStorageEntry[]
   isOpen: boolean
   setIsVideoDownloading: (value: boolean) => void
 }) {
   const [playlistUrl, setPlaylistUrl] = useState<string>('')
   const debouncedPlaylistUrl = useDebounce(playlistUrl, 500)
-  const [playlistInfo] = useFetch<IYoutubePlaylistEntry>(
+  const playlistInfoQuery = useAPIQuery<IYoutubePlaylistEntry>(
     `/youtube-videos/playlist/get-info/${
       debouncedPlaylistUrl.match(URL_REGEX)?.groups?.list
     }`,
+    ['youtube-videos', 'playlist', 'get-info', debouncedPlaylistUrl],
     URL_REGEX.test(debouncedPlaylistUrl)
   )
   const [processes, setProcesses] = useState<
@@ -169,7 +168,7 @@ function PlaylistSection({
       />
       <div className="mt-6">
         {URL_REGEX.test(playlistUrl) && (
-          <APIFallbackComponent data={playlistInfo}>
+          <QueryWrapper query={playlistInfoQuery}>
             {playlistInfo => (
               <PlaylistDetails
                 downloadedVideos={downloadedVideos}
@@ -180,7 +179,7 @@ function PlaylistSection({
                 videos={videos}
               />
             )}
-          </APIFallbackComponent>
+          </QueryWrapper>
         )}
       </div>
     </>

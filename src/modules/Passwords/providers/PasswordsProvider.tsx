@@ -1,20 +1,15 @@
+import { UseQueryResult } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { createContext, useContext, useMemo, useState } from 'react'
 import { Outlet } from 'react-router'
 
 import { IPasswordEntry } from '@modules/Passwords/interfaces/password_interfaces'
 
-import useFetch from '@hooks/useFetch'
-
-import { Loadable } from '../../../core/interfaces/common'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 interface IPasswordsData {
-  passwordList: Loadable<IPasswordEntry[]>
-  filteredPasswordList: Loadable<IPasswordEntry[]>
-  refreshPasswordList: () => void
-  setPasswordList: React.Dispatch<
-    React.SetStateAction<Loadable<IPasswordEntry[]>>
-  >
+  passwordListQuery: UseQueryResult<IPasswordEntry[]>
+  filteredPasswordList: IPasswordEntry[]
 
   otpSuccess: boolean
   masterPassword: string
@@ -40,7 +35,7 @@ export const PasswordsContext = createContext<IPasswordsData | undefined>(
 )
 
 export default function PasswordsProvider() {
-  const [otpSuccess, setOtpSuccess] = useState(false)
+  const [otpSuccess, setOtpSuccess] = useState(true)
   const [masterPassword, setMasterPassword] = useState('')
   const [modifyPasswordModalOpenType, setModifyPasswordModalOpenType] =
     useState<'create' | 'update' | null>(null)
@@ -51,12 +46,18 @@ export default function PasswordsProvider() {
   ] = useState(false)
   const [existedData, setExistedData] = useState<IPasswordEntry | null>(null)
   const debouncedQuery = useDebounce(query, 500)
-  const [passwordList, refreshPasswordList, setPasswordList] = useFetch<
-    IPasswordEntry[]
-  >('passwords/password', masterPassword !== '')
+  const passwordListQuery = useAPIQuery<IPasswordEntry[]>(
+    'passwords/password',
+    ['passwords', 'entries'],
+    masterPassword !== ''
+  )
 
   const filteredPasswordList = useMemo(() => {
-    if (debouncedQuery === '' || typeof passwordList === 'string') {
+    const passwordList = passwordListQuery.data
+    if (!passwordList) {
+      return []
+    }
+    if (debouncedQuery === '') {
       return passwordList
     }
     return passwordList.filter(
@@ -64,14 +65,12 @@ export default function PasswordsProvider() {
         password.name.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
         password.website.toLowerCase().includes(debouncedQuery.toLowerCase())
     )
-  }, [debouncedQuery, passwordList])
+  }, [debouncedQuery, passwordListQuery.data])
 
   const value = useMemo(
     () => ({
-      passwordList,
+      passwordListQuery,
       filteredPasswordList,
-      refreshPasswordList,
-      setPasswordList,
 
       otpSuccess,
       masterPassword,
@@ -88,7 +87,7 @@ export default function PasswordsProvider() {
       setExistedData
     }),
     [
-      passwordList,
+      passwordListQuery,
       filteredPasswordList,
 
       otpSuccess,

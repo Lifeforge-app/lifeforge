@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect } from 'react'
 
@@ -24,13 +25,13 @@ function Music() {
     searchQuery,
     setSearchQuery,
     musics,
-    refreshMusics,
     currentMusic,
     existedData,
     togglePlay,
     isDeleteMusicConfirmationModalOpen,
     setIsDeleteMusicConfirmationModalOpen
   } = useMusicContext()
+  const queryClient = useQueryClient()
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 500)
 
   useEffect(() => {
@@ -102,7 +103,11 @@ function Music() {
         isOpen={isDeleteMusicConfirmationModalOpen}
         itemName="music"
         nameKey="name"
-        updateDataList={refreshMusics}
+        updateDataList={() => {
+          queryClient.invalidateQueries({
+            queryKey: ['music', 'entries']
+          })
+        }}
         onClose={() => {
           setIsDeleteMusicConfirmationModalOpen(false)
         }}

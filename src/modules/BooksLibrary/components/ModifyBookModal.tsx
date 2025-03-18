@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -9,13 +10,13 @@ import fetchAPI from '@utils/fetchAPI'
 import { useBooksLibraryContext } from '../providers/BooksLibraryProvider'
 
 function ModifyBookModal() {
+  const queryClient = useQueryClient()
   const {
     entries: {
       modifyDataModalOpenType,
       setModifyDataModalOpenType,
       existedData,
-      setExistedData,
-      refreshData
+      setExistedData
     },
     languages: { data: languages },
     categories: { data: categories }
@@ -170,7 +171,7 @@ function ModifyBookModal() {
 
       setModifyDataModalOpenType(null)
       setExistedData(null)
-      refreshData()
+      queryClient.invalidateQueries({ queryKey: ['books-library', 'entries'] })
     } catch {
       toast.error('Failed to update book data')
     }

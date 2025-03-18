@@ -9,17 +9,23 @@ import {
   type ITodoPriority
 } from '@modules/TodoList/interfaces/todo_list_interfaces'
 
-import useFetch from '@hooks/useFetch'
-
-import { Loadable } from '../../../core/interfaces/common'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 interface ITodoListData {
+  entriesQueryKey: unknown[]
   // Data
-  priorities: Loadable<ITodoPriority[]>
-  lists: Loadable<ITodoListList[]>
-  tags: Loadable<ITodoListTag[]>
-  entries: Loadable<ITodoListEntry[]>
-  statusCounter: Loadable<ITodoListStatusCounter>
+  priorities: ITodoPriority[]
+  lists: ITodoListList[]
+  tags: ITodoListTag[]
+  entries: ITodoListEntry[]
+  statusCounter: ITodoListStatusCounter
+
+  prioritiesLoading: boolean
+  listsLoading: boolean
+  tagsLoading: boolean
+  entriesLoading: boolean
+  statusCounterLoading: boolean
+
   selectedTask: ITodoListEntry | null
   selectedPriority: ITodoPriority | null
   selectedList: ITodoListList | null
@@ -34,13 +40,6 @@ interface ITodoListData {
   deletePriorityConfirmationModalOpen: boolean
   deleteListConfirmationModalOpen: boolean
   deleteTagConfirmationModalOpen: boolean
-
-  // Refresh Functions
-  refreshPriorities: () => void
-  refreshLists: () => void
-  refreshTagsList: () => void
-  refreshEntries: () => void
-  refreshStatusCounter: () => void
 
   // Setters
   setModifyTaskWindowOpenType: React.Dispatch<
@@ -73,7 +72,6 @@ interface ITodoListData {
     React.SetStateAction<ITodoPriority | null>
   >
   setSelectedTag: React.Dispatch<React.SetStateAction<ITodoListTag | null>>
-  setEntries: React.Dispatch<React.SetStateAction<Loadable<ITodoListEntry[]>>>
 }
 
 export const TodoListContext = createContext<ITodoListData | undefined>(
@@ -82,20 +80,42 @@ export const TodoListContext = createContext<ITodoListData | undefined>(
 
 export function TodoListProvider({ children }: { children: React.ReactNode }) {
   const [searchParams] = useSearchParams()
-  const [statusCounter, refreshStatusCounter] =
-    useFetch<ITodoListStatusCounter>('todo-list/entries/status-counter')
-  const [priorities, refreshPriorities] = useFetch<ITodoPriority[]>(
-    'todo-list/priorities'
+  const statusCounterQuery = useAPIQuery<ITodoListStatusCounter>(
+    'todo-list/entries/status-counter',
+    ['todo-list', 'entries', 'status-counter']
   )
-  const [lists, refreshLists] = useFetch<ITodoListList[]>('todo-list/lists')
-  const [tagsList, refreshTagsList] = useFetch<ITodoListTag[]>('todo-list/tags')
-  const [entries, refreshEntries, setEntries] = useFetch<ITodoListEntry[]>(
+  const prioritiesQuery = useAPIQuery<ITodoPriority[]>('todo-list/priorities', [
+    'todo-list',
+    'priorities'
+  ])
+  const listsQuery = useAPIQuery<ITodoListList[]>('todo-list/lists', [
+    'todo-list',
+    'lists'
+  ])
+  const tagsListQuery = useAPIQuery<ITodoListTag[]>('todo-list/tags', [
+    'todo-list',
+    'tags'
+  ])
+  const entriesQueryKey = useMemo(
+    () => [
+      'todo-list',
+      'entries',
+      searchParams.get('status') ?? '',
+      searchParams.get('tag') ?? '',
+      searchParams.get('list') ?? '',
+      searchParams.get('priority') ?? ''
+    ],
+    [searchParams]
+  )
+
+  const entriesQuery = useAPIQuery<ITodoListEntry[]>(
     `todo-list/entries?${
       searchParams.get('status') !== null &&
       `status=${searchParams.get('status')}`
     }&tag=${searchParams.get('tag') ?? ''}&list=${
       searchParams.get('list') ?? ''
-    }&priority=${searchParams.get('priority') ?? ''}`
+    }&priority=${searchParams.get('priority') ?? ''}`,
+    entriesQueryKey
   )
   const [modifyTaskWindowOpenType, setModifyTaskWindowOpenType] = useState<
     'create' | 'update' | null
@@ -126,11 +146,24 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo(
     () => ({
-      priorities,
-      lists,
-      tags: tagsList,
-      entries,
-      statusCounter,
+      entriesQueryKey,
+      priorities: prioritiesQuery.data ?? [],
+      lists: listsQuery.data ?? [],
+      tags: tagsListQuery.data ?? [],
+      entries: entriesQuery.data ?? [],
+      statusCounter: statusCounterQuery.data ?? {
+        all: 0,
+        completed: 0,
+        pending: 0,
+        overdue: 0,
+        scheduled: 0,
+        today: 0
+      },
+      prioritiesLoading: prioritiesQuery.isLoading,
+      listsLoading: listsQuery.isLoading,
+      tagsLoading: tagsListQuery.isLoading,
+      entriesLoading: entriesQuery.isLoading,
+      statusCounterLoading: statusCounterQuery.isLoading,
       selectedTask,
       selectedPriority,
       selectedList,
@@ -143,11 +176,6 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
       deletePriorityConfirmationModalOpen,
       deleteListConfirmationModalOpen,
       deleteTagConfirmationModalOpen,
-      refreshLists,
-      refreshPriorities,
-      refreshTagsList,
-      refreshEntries,
-      refreshStatusCounter,
       setModifyTaskWindowOpenType,
       setModifyPriorityModalOpenType,
       setModifyListModalOpenType,
@@ -159,15 +187,20 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
       setSelectedTask,
       setSelectedList,
       setSelectedPriority,
-      setSelectedTag,
-      setEntries
+      setSelectedTag
     }),
     [
-      priorities,
-      lists,
-      tagsList,
-      entries,
-      statusCounter,
+      entriesQueryKey,
+      prioritiesQuery.data,
+      listsQuery.data,
+      tagsListQuery.data,
+      entriesQuery.data,
+      statusCounterQuery.data,
+      prioritiesQuery.isLoading,
+      listsQuery.isLoading,
+      tagsListQuery.isLoading,
+      entriesQuery.isLoading,
+      statusCounterQuery.isLoading,
       selectedTask,
       selectedPriority,
       selectedList,

@@ -1,4 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
@@ -26,17 +27,17 @@ import GridView from './views/GridView'
 import ListView from './views/ListView'
 
 function BooksLibrary() {
+  const queryClient = useQueryClient()
   const [searchParams] = useSearchParams()
   const {
     entries: {
       data: entries,
-      refreshData: refreshEntries,
       deleteDataConfirmationModalOpen: deleteBookConfirmationModalOpen,
       setDeleteDataConfirmationOpen: setDeleteBookConfirmationModalOpen,
       existedData: existedBookData,
       setExistedData: setExistedBookData
     },
-    fileTypes: { data: fileTypes, refreshData: refreshFileTypes },
+    fileTypes: { data: fileTypes },
     miscellaneous: {
       deleteModalConfigs,
       searchQuery,
@@ -168,7 +169,7 @@ function BooksLibrary() {
           isOpen={config.isOpen}
           itemName={config.itemName}
           nameKey={config.nameKey}
-          updateDataList={config.updateDataList}
+          queryKey={['books-library', config.itemName]}
           onClose={() => {
             config.setOpen(false)
             config.setData(null)
@@ -182,8 +183,12 @@ function BooksLibrary() {
         itemName="book"
         nameKey="title"
         updateDataList={() => {
-          refreshEntries()
-          refreshFileTypes()
+          queryClient.invalidateQueries({
+            queryKey: ['books-library', 'entries']
+          })
+          queryClient.invalidateQueries({
+            queryKey: ['books-library', 'file-types']
+          })
         }}
         onClose={() => {
           setDeleteBookConfirmationModalOpen(false)

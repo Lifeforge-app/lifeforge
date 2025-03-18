@@ -1,38 +1,44 @@
+import { useQueryClient } from '@tanstack/react-query'
 import update from 'immutability-helper'
 import { useCallback, useState } from 'react'
 
 import { APIFallbackComponent } from '@lifeforge/ui'
-
-import { type Loadable } from '@interfaces/common'
 
 import { type ITodoSubtask } from '../../../../interfaces/todo_list_interfaces'
 import SubtaskBoxHeader from './components/SubtaskBoxHeader'
 import SubtaskItem from './components/SubtaskItem'
 
 function SubtaskBox({
+  taskId,
   summary,
   notes,
-  subtasks,
-  setSubtasks
+  subtasks
 }: {
+  taskId: string
   summary: string
   notes: string
-  subtasks: Loadable<ITodoSubtask[]>
-  setSubtasks: React.Dispatch<React.SetStateAction<Loadable<ITodoSubtask[]>>>
+  subtasks: ITodoSubtask[]
 }) {
+  const queryClient = useQueryClient()
   const [spiciness, setSpiciness] = useState(0)
   const [newTask, setNewTask] = useState('')
 
   const moveTask = useCallback((dragIndex: number, hoverIndex: number) => {
-    setSubtasks((prevCards: Loadable<ITodoSubtask[]>) => {
-      if (typeof prevCards === 'string') return prevCards
-      return update(prevCards, {
-        $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, prevCards[dragIndex]]
-        ]
-      })
-    })
+    queryClient.setQueryData<ITodoSubtask[]>(
+      ['todo-list', 'subtasks', taskId],
+      prevCards => {
+        if (!prevCards) {
+          return []
+        }
+
+        return update(prevCards, {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, prevCards[dragIndex]]
+          ]
+        })
+      }
+    )
   }, [])
 
   return (
@@ -41,9 +47,9 @@ function SubtaskBox({
         notes={notes}
         setNewTask={setNewTask}
         setSpiciness={setSpiciness}
-        setSubtasks={setSubtasks}
         spiciness={spiciness}
         summary={summary}
+        taskId={taskId}
       />
       <APIFallbackComponent data={subtasks}>
         {subtasks =>
@@ -55,9 +61,9 @@ function SubtaskBox({
                   moveTask={moveTask}
                   newTask={newTask}
                   setNewTask={setNewTask}
-                  setSubtasks={setSubtasks}
                   subtask={subtask}
                   subtasks={subtasks}
+                  taskId={taskId}
                 />
               ))}
             </div>

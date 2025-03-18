@@ -1,20 +1,21 @@
 /* eslint-disable sonarjs/empty-string-repetition */
+import { useQueryClient } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { parse as parseCookie } from 'cookie'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import {
-  APIFallbackComponent,
   Button,
   ModalHeader,
   ModalWrapper,
+  QueryWrapper,
   TextInput
 } from '@lifeforge/ui'
 
 import { useMusicContext } from '@modules/Music/providers/MusicProvider'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 import IntervalManager from '@utils/intervalManager'
 
@@ -27,16 +28,15 @@ const URL_REGEX =
   /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/(watch\?v=|embed\/|v\/|.+\?v=)?(?<id>[A-Za-z0-9_-]{11})(\S*)?$/
 
 function YoutubeDownloaderModal() {
-  const {
-    isYoutubeDownloaderOpen: isOpen,
-    setIsYoutubeDownloaderOpen,
-    refreshMusics
-  } = useMusicContext()
+  const queryClient = useQueryClient()
+  const { isYoutubeDownloaderOpen: isOpen, setIsYoutubeDownloaderOpen } =
+    useMusicContext()
   const [loading, setLoading] = useState(false)
   const [videoURLinput, setVideoURLInput] = useState('')
   const videoURL = useDebounce(videoURLinput, 500)
-  const [videoInfo] = useFetch<IYoutubeVideoInfo>(
+  const videoInfoQuery = useAPIQuery<IYoutubeVideoInfo>(
     `/music/youtube/get-info/${videoURL.match(URL_REGEX)?.groups?.id}`,
+    ['music', 'youtube', 'get-info', videoURL.match(URL_REGEX)?.groups?.id],
     URL_REGEX.test(videoURL)
   )
 
@@ -73,7 +73,7 @@ function YoutubeDownloaderModal() {
           Authorization: `Bearer ${parseCookie(document.cookie).token}`
         },
         body: JSON.stringify({
-          metadata: videoInfo
+          metadata: videoInfoQuery.data
         })
       }
     )
@@ -89,7 +89,9 @@ function YoutubeDownloaderModal() {
                   intervalManager.clearAllIntervals()
                   setLoading(false)
                   setIsYoutubeDownloaderOpen(false)
-                  refreshMusics()
+                  queryClient.invalidateQueries({
+                    queryKey: ['music', 'entries']
+                  })
                   break
                 case 'failed':
                   toast.error('Failed to download music!')
@@ -125,7 +127,9 @@ function YoutubeDownloaderModal() {
         title="Download from YouTube"
         onClose={() => {
           setIsYoutubeDownloaderOpen(false)
-          refreshMusics()
+          queryClient.invalidateQueries({
+            queryKey: ['music', 'entries']
+          })
         }}
       />
       <TextInput
@@ -139,7 +143,7 @@ function YoutubeDownloaderModal() {
         value={videoURLinput}
       />
       {URL_REGEX.test(videoURL) && (
-        <APIFallbackComponent data={videoInfo}>
+        <QueryWrapper query={videoInfoQuery}>
           {videoInfo => (
             <>
               <div className="mt-6 flex w-full gap-6">
@@ -155,7 +159,7 @@ function YoutubeDownloaderModal() {
               </Button>
             </>
           )}
-        </APIFallbackComponent>
+        </QueryWrapper>
       )}
     </ModalWrapper>
   )

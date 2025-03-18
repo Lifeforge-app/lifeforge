@@ -7,14 +7,14 @@ import { Bar, Line } from 'react-chartjs-2'
 import tinycolor from 'tinycolor2'
 
 import {
-  APIFallbackComponent,
   DashboardItem,
   EmptyStateScreen,
   LoadingScreen,
+  QueryWrapper,
   ViewModeSelector
 } from '@lifeforge/ui'
 
-import useFetch from '@hooks/useFetch'
+import useAPIQuery from '@hooks/useAPIQuery'
 
 const getDatesBetween = (start: Moment, end: Moment): Moment[] => {
   if (!start.isValid() || !end.isValid() || start.isAfter(end, 'day')) {
@@ -90,12 +90,16 @@ interface ICodeTimeEachDay {
 }
 
 const CodeTime = () => {
-  const [data] = useFetch<ICodeTimeEachDay[]>('code-time/each-day')
+  const dataQuery = useAPIQuery<ICodeTimeEachDay[]>('code-time/each-day', [
+    'code-time',
+    'each-day'
+  ])
   const { themeColor } = usePersonalization()
   const [view, setView] = useState<'bar' | 'line'>('bar')
 
   const chartData = useMemo(() => {
-    if (typeof data === 'string') return null
+    const data = dataQuery.data
+    if (dataQuery.isLoading) return 'Loading'
     if (!data || data.length === 0) return 'No data'
 
     const labels = getDatesBetween(
@@ -142,7 +146,7 @@ const CodeTime = () => {
         }
       ]
     }
-  }, [data, themeColor])
+  }, [dataQuery.data, dataQuery.isLoading, themeColor])
 
   const renderContent = () => {
     if (!chartData) return <LoadingScreen />
@@ -161,7 +165,7 @@ const CodeTime = () => {
       case 'bar':
         return <Bar data={chartData as any} options={chartOptions as any} />
       case 'line':
-        return <Line data={chartData} options={chartOptions as any} />
+        return <Line data={chartData as any} options={chartOptions as any} />
       default:
         return null
     }
@@ -190,9 +194,9 @@ const CodeTime = () => {
       title="Code Time"
     >
       <div className="flex-1">
-        <APIFallbackComponent data={data}>
+        <QueryWrapper query={dataQuery}>
           {() => <>{renderContent()}</>}
-        </APIFallbackComponent>
+        </QueryWrapper>
       </div>
     </DashboardItem>
   )
