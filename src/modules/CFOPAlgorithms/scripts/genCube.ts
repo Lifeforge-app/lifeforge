@@ -256,8 +256,6 @@ function applyMove(cube: Cube, move: string): Cube {
     newCube.right = rotateFaceCounter(bottom)
   }
 
-  // Add logic for r, l, u, d, f, b, and their counterclockwise counterparts.
-
   return newCube
 }
 

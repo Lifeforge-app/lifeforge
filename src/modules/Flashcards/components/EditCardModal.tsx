@@ -75,7 +75,6 @@ function EditCardModal({
   }
 
   useEffect(() => {
-    // onpaste
     const handlePaste = (e: ClipboardEvent) => {
       e.preventDefault()
       const text = e.clipboardData?.getData('text')

@@ -164,7 +164,6 @@ function DirectoryHeader({
 
         const progress = uploaded / files.length
 
-        // check if we already displayed a toast
         if (toastId.current === undefined) {
           toastId.current = toast(
             <span className="flex items-center gap-2">
