@@ -55,7 +55,7 @@ function Cube({ pattern }: { pattern: string }) {
     const renderer = new THREE.WebGLRenderer()
     renderer.setClearColor(0xffffff, 0)
     renderer.setSize(72, 72)
-    renderer.setPixelRatio(window.devicePixelRatio) // This line increases the resolution
+    renderer.setPixelRatio(window.devicePixelRatio)
     ref.current.appendChild(renderer.domElement)
 
     const cubeSize = 0.6
@@ -153,7 +153,7 @@ function Cube({ pattern }: { pattern: string }) {
             const edge = new THREE.Mesh(edgeGeometry, edgeMaterial)
             edge.position.set(-cubeSize / 2, 0, cubeSize / 2)
             edge.position.add(cube.position)
-            rubiksCube.add(edge) // Add the edges to the scene
+            rubiksCube.add(edge)
           }
 
           if (y === 2 && z === 2) {

@@ -8,7 +8,6 @@ import { LoadingScreen, ModuleHeader, ModuleWrapper } from '@lifeforge/ui'
 import fetchAPI from '@utils/fetchAPI'
 
 import ROUTES from '../../core/routes/Routes'
-// import { type IModuleEntry } from '@interfaces/module_interfaces'
 import ModuleItem from './ModuleItem'
 
 function Modules() {
