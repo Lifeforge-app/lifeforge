@@ -5,12 +5,8 @@ import {
   IconBooks,
   IconBulb,
   IconCalendar,
-  IconCamera,
-  IconCards,
   IconClipboard,
-  IconClockBolt,
   IconCode,
-  IconCube,
   IconCurrencyDollar,
   IconDashboard,
   IconFileText,
@@ -19,16 +15,11 @@ import {
   IconInfoCircle,
   IconKey,
   IconLayout,
-  IconLine,
-  IconList,
   IconListCheck,
-  IconMail,
   IconMovie,
   IconMusic,
-  IconNotebook,
   IconPalette,
   IconPassword,
-  IconPlane,
   IconPlug,
   IconServer,
   IconShirt,
@@ -110,39 +101,7 @@ export const ROUTES: RouteCategory[] = [
   },
   {
     title: 'Study',
-    items: [
-      {
-        name: 'Pomodoro Timer',
-        icon: <IconClockBolt />,
-        routes: {
-          'pomodoro-timer': lazy(() => import('@modules/PomodoroTimer'))
-        },
-        togglable: true
-      },
-      {
-        name: 'Flashcards',
-        icon: <IconCards />,
-        routes: {
-          flashcards: lazy(() => import('@modules/Flashcards')),
-          'flashcards/:id': lazy(
-            () => import('@modules/Flashcards/components/CardSet')
-          )
-        },
-        togglable: true
-      },
-      {
-        name: 'Notes',
-        icon: <IconNotebook />,
-        routes: {
-          notes: lazy(() => import('@modules/Notes')),
-          'notes/:workspace': lazy(() => import('@modules/Notes/Workspace')),
-          'notes/:workspace/:subject/*': lazy(
-            () => import('@modules/Notes/Subject')
-          )
-        },
-        togglable: true
-      }
-    ]
+    items: []
   },
   {
     title: 'Lifestyle',
@@ -156,16 +115,6 @@ export const ROUTES: RouteCategory[] = [
         },
         togglable: true,
         requiredAPIKeys: ['openai']
-      },
-      {
-        name: 'Journal',
-        icon: <IconBook />,
-        hasAI: true,
-        routes: {
-          journal: lazy(() => import('@modules/Journal'))
-        },
-        togglable: true,
-        requiredAPIKeys: ['groq']
       },
       {
         name: 'Achievements',
@@ -277,26 +226,6 @@ export const ROUTES: RouteCategory[] = [
         togglable: true
       },
       {
-        name: 'Photos',
-        icon: <IconCamera />,
-        provider: lazy(
-          () => import('@modules/Photos/providers/PhotosProvider')
-        ),
-        routes: {
-          '': lazy(() => import('@modules/Photos/pages/MainGallery')),
-          album: lazy(() => import('@modules/Photos/pages/AlbumList')),
-          'album/:id': lazy(() => import('@modules/Photos/pages/AlbumGallery')),
-          favourites: lazy(
-            () => import('@modules/Photos/pages/FavouritesGallery')
-          ),
-          'locked-folder': lazy(
-            () => import('@modules/Photos/pages/LockedFolderGallery')
-          ),
-          trash: lazy(() => import('@modules/Photos/pages/Trash'))
-        },
-        togglable: true
-      },
-      {
         name: 'Music',
         icon: <IconMusic />,
         routes: {
@@ -319,20 +248,6 @@ export const ROUTES: RouteCategory[] = [
           'youtube-videos': lazy(() => import('@modules/YoutubeVideos'))
         },
         togglable: true
-      }
-    ]
-  },
-  {
-    title: 'External Management',
-    items: [
-      {
-        name: 'Mail Inbox',
-        icon: <IconMail />,
-        routes: {
-          'mail-inbox': lazy(() => import('@modules/MailInbox'))
-        },
-        togglable: true,
-        requiredAPIKeys: ['gmail']
       }
     ]
   },
@@ -368,72 +283,6 @@ export const ROUTES: RouteCategory[] = [
         icon: 'uil:subway',
         routes: {
           'railway-map': lazy(() => import('@modules/RailwayMap'))
-        },
-        togglable: true
-      },
-      {
-        name: 'Airports',
-        icon: 'ic:round-connecting-airports',
-        routes: {
-          airports: lazy(
-            () => import('@modules/Airports/pages/lists/Continents')
-          ),
-          'airports/:continentID': lazy(
-            () => import('@modules/Airports/pages/lists/Countries')
-          ),
-          'airports/:continentID/:countryID': lazy(
-            () => import('@modules/Airports/pages/lists/Regions')
-          ),
-          'airports/:continentID/:countryID/:regionID': lazy(
-            () => import('@modules/Airports/pages/lists/AirportList')
-          ),
-          'airports/:continentID/:countryID/:regionID/:airportID': lazy(
-            () => import('@modules/Airports/pages/Airport')
-          )
-        },
-        togglable: true,
-        hasAI: true,
-        requiredAPIKeys: ['groq']
-      },
-      {
-        name: 'Changi Airport',
-        icon: <IconPlane />,
-        subsection: [
-          {
-            name: 'Flight Status',
-            icon: <IconList />,
-            path: 'changi-flight-status'
-          },
-          {
-            name: 'Airline Information',
-            icon: <IconLine />,
-            path: ''
-          }
-        ],
-        routes: {
-          'changi-airport': () => (
-            <Navigate to="/changi-airport/changi-flight-status" />
-          ),
-          'changi-airport/changi-flight-status': lazy(
-            () => import('@modules/ChangiFlightStatus')
-          )
-        },
-        togglable: true
-      },
-      {
-        name: 'CFOP Algorithms',
-        icon: <IconCube />,
-        routes: {
-          'cfop-algorithms': lazy(() => import('@modules/CFOPAlgorithms')),
-          'cfop-algorithms/f2l': lazy(
-            () => import('@modules/CFOPAlgorithms/pages/F2L')
-          ),
-          'cfop-algorithms/oll': lazy(
-            () => import('@modules/CFOPAlgorithms/pages/OLL')
-          ),
-          'cfop-algorithms/pll': lazy(
-            () => import('@modules/CFOPAlgorithms/pages/PLL')
-          )
         },
         togglable: true
       }
