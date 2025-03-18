@@ -14,28 +14,24 @@ export function arabicToChinese(
     specialTwenty
   )
 
-  // Handle special cases for tens
   chineseNumber = removeLeadingOne(chineseNumber, digits[1], units[1])
   chineseNumber = removeTrailingZero(chineseNumber)
 
   return chineseNumber
 }
 
-// Helper to get digit mappings based on format
 function getDigitMapping(format: 'simplified' | 'traditional'): string[] {
   return format === 'simplified'
     ? ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九']
     : ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
 }
 
-// Helper to get unit mappings based on format
 function getUnitMapping(format: 'simplified' | 'traditional'): string[] {
   return format === 'simplified'
     ? ['', '十', '百', '千', '万', '十', '百', '千', '亿']
     : ['', '拾', '佰', '仟', '萬', '拾', '佰', '仟', '億']
 }
 
-// Helper function to convert number to Chinese format
 function convertNumberToChinese(
   numStr: string,
   digits: string[],
@@ -75,7 +71,6 @@ function convertNumberToChinese(
   return result.join('')
 }
 
-// Remove leading 'one' for tens place
 function removeLeadingOne(
   chineseNumber: string,
   one: string,
@@ -87,7 +82,6 @@ function removeLeadingOne(
   return chineseNumber
 }
 
-// Remove trailing zero
 function removeTrailingZero(chineseNumber: string): string {
   return chineseNumber.endsWith('零')
     ? chineseNumber.slice(0, -1)
