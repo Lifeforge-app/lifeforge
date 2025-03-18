@@ -1,6 +1,6 @@
-import BasePBCollection from '../../../core/interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
-interface IMomentVaultEntry extends BasePBCollection {
+interface IMomentVaultEntry extends RecordModel {
   type: 'text' | 'audio' | 'video' | 'photo'
   content: string
   file?: string | undefined

@@ -1,6 +1,6 @@
-import BasePBCollection from '../../../core/interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
-interface IRailwayMapLine extends BasePBCollection {
+interface IRailwayMapLine extends RecordModel {
   country: string
   type: string
   name: string
@@ -10,7 +10,7 @@ interface IRailwayMapLine extends BasePBCollection {
   map_paths: [number, number][][]
 }
 
-interface IRailwayMapStation extends BasePBCollection {
+interface IRailwayMapStation extends RecordModel {
   name: string
   codes: string[]
   lines: string[]

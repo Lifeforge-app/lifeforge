@@ -1,6 +1,6 @@
-import type BasePBCollection from '@interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
-interface IProjectsMEntry extends BasePBCollection {
+interface IProjectsMEntry extends RecordModel {
   name: string
   icon: string
   color: string
@@ -10,32 +10,32 @@ interface IProjectsMEntry extends BasePBCollection {
   technologies: string[]
 }
 
-interface IProjectsMCategory extends BasePBCollection {
+interface IProjectsMCategory extends RecordModel {
   name: string
   icon: string
 }
 
-interface IProjectsMStatus extends BasePBCollection {
+interface IProjectsMStatus extends RecordModel {
   name: string
   icon: string
   color: string
 }
 
-interface IProjectsMVisibility extends BasePBCollection {
+interface IProjectsMVisibility extends RecordModel {
   name: string
   icon: string
 }
 
-interface IProjectsMTechnology extends BasePBCollection {
+interface IProjectsMTechnology extends RecordModel {
   name: string
   icon: string
 }
 
-interface IProjectsMKanbanEntry extends BasePBCollection {
+interface IProjectsMKanbanEntry extends RecordModel {
   title: string
 }
 
-interface IProjectsMKanbanColumn extends BasePBCollection {
+interface IProjectsMKanbanColumn extends RecordModel {
   name: string
   icon: string
   color: string

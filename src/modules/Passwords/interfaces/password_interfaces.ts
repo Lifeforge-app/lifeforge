@@ -1,6 +1,6 @@
-import type BasePBCollection from '@interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
-interface IPasswordEntry extends BasePBCollection {
+interface IPasswordEntry extends RecordModel {
   color: string
   icon: string
   name: string

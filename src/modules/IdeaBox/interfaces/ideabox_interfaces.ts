@@ -1,6 +1,6 @@
-import type BasePBCollection from '@interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
-interface IIdeaBoxContainer extends BasePBCollection {
+interface IIdeaBoxContainer extends RecordModel {
   name: string
   color: string
   icon: string
@@ -20,7 +20,7 @@ interface IIdeaBoxContainerFormState {
   }
 }
 
-interface IIdeaBoxFolder extends BasePBCollection {
+interface IIdeaBoxFolder extends RecordModel {
   color: string
   icon: string
   name: string
@@ -34,7 +34,7 @@ interface IIdeaBoxFolderFormState {
   icon: string
 }
 
-interface IIdeaBoxEntry extends BasePBCollection {
+interface IIdeaBoxEntry extends RecordModel {
   folder: string | IIdeaBoxFolder
   container: string
   content: string
@@ -47,7 +47,7 @@ interface IIdeaBoxEntry extends BasePBCollection {
   fullPath?: string
 }
 
-interface IIdeaBoxTag extends BasePBCollection {
+interface IIdeaBoxTag extends RecordModel {
   name: string
   color: string
   icon: string

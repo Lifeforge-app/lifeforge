@@ -1,14 +1,15 @@
-import type BasePBCollection from '@interfaces/pb_interfaces'
+import type { RecordModel } from 'pocketbase'
 
-interface IAchievementEntry extends BasePBCollection {
+interface IAchievementEntry extends RecordModel {
   title: string
   thoughts: string
   difficulty: 'easy' | 'medium' | 'hard' | 'impossible'
 }
 
-type IAchievementEntryFormState = Omit<
-  IAchievementEntry,
-  keyof BasePBCollection
->
+type IAchievementEntryFormState = {
+  title: string
+  thoughts: string
+  difficulty: 'easy' | 'medium' | 'hard' | 'impossible'
+}
 
 export type { IAchievementEntry, IAchievementEntryFormState }
