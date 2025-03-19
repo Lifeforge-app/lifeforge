@@ -4,7 +4,7 @@ layer(base);
 layer(base);
 
 @import 'tailwindcss';
-@source "../../../node_modules/@lifeforge/ui/dist";
+@source "../../node_modules/@lifeforge/ui/dist";
 
 @plugin 'daisyui';
 @plugin '@tailwindcss/typography';
