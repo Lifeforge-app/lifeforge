@@ -769,3 +769,7 @@ button[class^='react-calendar__navigation'] {
 .bg-neutral {
   background-color: var(--color-bg-500);
 }
+
+.tabler-icon {
+  @apply size-6 shrink-0;
+}
